@@ -142,14 +142,14 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '11 damage; M<2 prone',
-							tier2: '17 damage; M<2 prone',
-							tier3: '20 damage; M<2 prone'
-						}),
-						effect: 'The dragon makes a free strike against each slagged target knocked prone by this ability.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '11 damage; M<2 prone',
+								tier2: '17 damage; M<2 prone',
+								tier3: '20 damage; M<2 prone'
+							})),
+							FactoryLogic.createAbilitySectionText('The dragon makes a free strike against each slagged target knocked prone by this ability.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -167,8 +167,9 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in burst',
 						cost: 1,
-						effect: 'The dragon expels blistering steam straight down, dealing 7 fire damage to each target. The dragon then shifts up to their speed vertically and adds the fly keyword to their movement until the end of the round.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The dragon expels blistering steam straight down, dealing 7 fire damage to each target. The dragon then shifts up to their speed vertically and adds the fly keyword to their movement until the end of the round.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -179,8 +180,9 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						keywords: [],
 						distance: [],
 						target: 'Self (while flying)',
-						effect: 'The dragon can use this ability once per round. They continue to give oﬀ steam to extend the duration of their ﬂight for an additional round. Each creature under the dragon when they use this ability takes 7 ﬁre damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The dragon can use this ability once per round. They continue to give oﬀ steam to extend the duration of their ﬂight for an additional round. Each creature under the dragon when they use this ability takes 7 ﬁre damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -191,13 +193,14 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All creatures and objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: 'push 5',
-							tier2: 'push 7',
-							tier3: 'push 10 (ignores stability)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: 'push 5',
+								tier2: 'push 7',
+								tier3: 'push 10 (ignores stability)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -208,8 +211,9 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						cost: 1,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The dragon plumets to the ground and uses Forge Hammer Tail. They deal an additional 4 damage for each square they fell.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The dragon plumets to the ground and uses Forge Hammer Tail. They deal an additional 4 damage for each square they fell.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -225,14 +229,15 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 6 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '4 fire damage, I<2 frightened (save ends)',
-							tier2: '6 fire damage, I<3 frightened (save ends)',
-							tier3: '8 fire damage, I<4 frightened (save ends)'
-						}),
-						effect: 'The dragon roars, venting scorching air in every direction.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '4 fire damage, I<2 frightened (save ends)',
+								tier2: '6 fire damage, I<3 frightened (save ends)',
+								tier3: '8 fire damage, I<4 frightened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The dragon roars, venting scorching air in every direction.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -243,8 +248,9 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Shields embedded under their scales emerge, giving the dragon damage immunity 6 at the start of each round for the rest of the encounter. The dragon loses this immunity for the rest of the round if they take any damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Shields embedded under their scales emerge, giving the dragon damage immunity 6 at the start of each round for the rest of the encounter. The dragon loses this immunity for the rest of the round if they take any damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

@@ -323,8 +323,9 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self (while hiding)',
-						effect: 'The needler isn’t revealed after using their next action.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The needler isn’t revealed after using their next action.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -382,8 +383,9 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The slink jumps 3 squares. If the slink lands in cover or concealment, they can immediately hide.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The slink jumps 3 squares. If the slink lands in cover or concealment, they can immediately hide.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -519,8 +521,9 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The daybringer expands their throat to resemble the sun until the start of their next turn. Each non-minion angulotl who starts their turn within 10 of the daybringer gains 5 temporary Stamina and has their Speed increased by 3 until the end of their turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The daybringer expands their throat to resemble the sun until the start of their next turn. Each non-minion angulotl who starts their turn within 10 of the daybringer gains 5 temporary Stamina and has their Speed increased by 3 until the end of their turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -530,8 +533,8 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						type: FactoryLogic.type.createTrigger('The target targets the daybringer or an ally with a strike that isn\'t a critical hit.'),
 						distance: [ FactoryLogic.distance.createMelee(5) ],
 						target: 'One creature',
-						effect: 'The daybringer reduces the power roll result by 1 tier.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The daybringer reduces the power roll result by 1 tier.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -553,8 +556,9 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'Ten **angulotl pollywogs** escape the daybringer\'s back and waddle into unoccupied squares within distance.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Ten **angulotl pollywogs** escape the daybringer\'s back and waddle into unoccupied squares within distance.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -568,8 +572,9 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 8 })
 						],
 						target: 'Self and all allies in the burst',
-						effect: 'Each target jumps 4 and makes a free strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target jumps 4 and makes a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -580,8 +585,9 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('') ],
 						target: 'All enemies in the burst',
-						effect: 'The encounter map dries up and becomes illuminated. Each wet enemy has the wet condition end and takes 6 acid damage. All angulotls have a double edge on their next attack.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The encounter map dries up and becomes illuminated. Each wet enemy has the wet condition end and takes 6 acid damage. All angulotls have a double edge on their next attack.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

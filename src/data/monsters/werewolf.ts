@@ -102,7 +102,6 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						effect: 'A creature afflicted with lycanthropy accumulates 2 ferocity at the end of each of their turns whenever they’re in combat. Their ferocity does not disappear after completing a respite; they must complete the Find a Cure project to end this condition.',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -110,6 +109,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 								tier2: '13 damage; 4 ferocity',
 								tier3: '16 damage; 5 ferocity'
 							})),
+							FactoryLogic.createAbilitySectionText('A creature afflicted with lycanthropy accumulates 2 ferocity at the end of each of their turns whenever they’re in combat. Their ferocity does not disappear after completing a respite; they must complete the Find a Cure project to end this condition.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -144,8 +144,9 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						cost: 5,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The werewolf shifts up to their speed and uses Claws against each creature who comes within 1 of the werewolf during the move. The werewolf makes one power roll against all targets.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The werewolf shifts up to their speed and uses Claws against each creature who comes within 1 of the werewolf during the move. The werewolf makes one power roll against all targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -155,8 +156,9 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The werewolf jumps 4 squares. If they end this movement at a wall, the werewolf jumps off the wall 4 squares and makes a melee free strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The werewolf jumps 4 squares. If they end this movement at a wall, the werewolf jumps off the wall 4 squares and makes a melee free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -167,8 +169,9 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						cost: 2,
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The target is knocked prone and takes 5 damage before executing the ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is knocked prone and takes 5 damage before executing the ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -202,8 +205,9 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 						type: FactoryLogic.type.createVillainAction(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The werewolf changes into a massive wolf, pushing adjacent creatures out of their way and moving into a square that can accommodate their new size. Until they die or the end of the encounter, their Speed is 10, their Size is 3, and their Stability is 2. Each of the werewolf’s strikes deal an additional 3 damage and inflict an additional 1 ferocity. The potency of the werewolf’s Accursed Bite increases by 1.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The werewolf changes into a massive wolf, pushing adjacent creatures out of their way and moving into a square that can accommodate their new size. Until they die or the end of the encounter, their Speed is 10, their Size is 3, and their Stability is 2. Each of the werewolf’s strikes deal an additional 3 damage and inflict an additional 1 ferocity. The potency of the werewolf’s Accursed Bite increases by 1.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

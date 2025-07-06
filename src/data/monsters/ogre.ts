@@ -174,8 +174,9 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 adjacent creature or object',
-						effect: 'Slide 5.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Slide 5.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -276,8 +277,9 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The juggernaut moves up to their speed and makes a free strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The juggernaut moves up to their speed and makes a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

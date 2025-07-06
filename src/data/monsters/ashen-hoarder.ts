@@ -96,14 +96,15 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '10 damage; one target M<2 bleeding (save ends); other target A<2 grabbed',
-							tier2: '15 damage; one target M<3 bleeding (save ends); other target A<3 grabbed',
-							tier3: '18 damage; one target M<4 bleeding (save ends); other target A<4 grabbed'
-						}),
-						effect: 'The ashen hoarder can have up to two Size 1 creatures grabbed at the same time.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '10 damage; one target M<2 bleeding (save ends); other target A<2 grabbed',
+								tier2: '15 damage; one target M<3 bleeding (save ends); other target A<3 grabbed',
+								tier3: '18 damage; one target M<4 bleeding (save ends); other target A<4 grabbed'
+							})),
+							FactoryLogic.createAbilitySectionText('The ashen hoarder can have up to two Size 1 creatures grabbed at the same time.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -114,13 +115,13 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 20 }) ],
 						target: 'All enemies in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '4 damage; A<2 weakened (save ends)',
-							tier2: '8 damage; A<3 weakened (save ends)',
-							tier3: '11 damage; A<4 weakened (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '4 damage; A<2 weakened (save ends)',
+								tier2: '8 damage; A<3 weakened (save ends)',
+								tier3: '11 damage; A<4 weakened (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -143,14 +144,14 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 1, within: 1 }) ],
 						target: 'All creatures in the line',
 						cost: 3,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '6 corruption damage; M<2 impaled (save ends)',
-							tier2: '11 corruption damage; M<3 impaled (save ends)',
-							tier3: '14 corruption damage; M<4 impaled (save ends)'
-						}),
-						effect: 'An impaled creature is restrained and bleeding until the condition ends. Each impaled creature moves whenever the ashen hoarder moves. The ashen hoarder can have no more than 3 creatures impaled with this ability at a time.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '6 corruption damage; M<2 impaled (save ends)',
+								tier2: '11 corruption damage; M<3 impaled (save ends)',
+								tier3: '14 corruption damage; M<4 impaled (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('An impaled creature is restrained and bleeding until the condition ends. Each impaled creature moves whenever the ashen hoarder moves. The ashen hoarder can have no more than 3 creatures impaled with this ability at a time.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -167,8 +168,9 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The ashen hoarder moves up to twice their speed in a straight line. Each creature and object in the ashen hoarder’s way is either moved into the nearest unoccupied square to the side or M<3 is pushed forward until the end of the ashen hoarder’s movement. A target that is force moved into an obstacle is dazed (save ends).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The ashen hoarder moves up to twice their speed in a straight line. Each creature and object in the ashen hoarder’s way is either moved into the nearest unoccupied square to the side or M<3 is pushed forward until the end of the ashen hoarder’s movement. A target that is force moved into an obstacle is dazed (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -180,8 +182,9 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 2,
-						effect: 'The ashen hoarder halves the incoming damage. If an impaled creature was used in place of spending Malice on this ability, the impaled creature takes the other half of the damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The ashen hoarder halves the incoming damage. If an impaled creature was used in place of spending Malice on this ability, the impaled creature takes the other half of the damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -207,14 +210,15 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 8, value2: 3, within: 1 }) ],
 						target: 'All creatures in the line',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '6 damage, vertical push 2 staight upward',
-							tier2: '11 damage, vertical push 3 staight upward',
-							tier3: '14 damage, vertical push 4 staight upward'
-						}),
-						effect: 'Each target that would normally fall prone is instead restrained (save ends).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '6 damage, vertical push 2 staight upward',
+								tier2: '11 damage, vertical push 3 staight upward',
+								tier3: '14 damage, vertical push 4 staight upward'
+							})),
+							FactoryLogic.createAbilitySectionText('Each target that would normally fall prone is instead restrained (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -225,8 +229,9 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 10, within: 20 }) ],
 						target: 'Special',
-						effect: 'The Ashen Hoarder sprays out a rain of zombie mines brimming with necrotic energy. Six size 1M zombie mines appear in unoccupied squares within distance. An enemy that moves into a square adjacent to a zombie mine or starts their turn there causes the zombie mine to explode, dealing 4 corruption damage to each creature adjacent to the mine. A zombie explosion can trigger other zombie mines adjacent to it to also explode. At the start of each of the ashen hoarders’s turns, each zombie mine can be moved 2 squares.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The Ashen Hoarder sprays out a rain of zombie mines brimming with necrotic energy. Six size 1M zombie mines appear in unoccupied squares within distance. An enemy that moves into a square adjacent to a zombie mine or starts their turn there causes the zombie mine to explode, dealing 4 corruption damage to each creature adjacent to the mine. A zombie explosion can trigger other zombie mines adjacent to it to also explode. At the start of each of the ashen hoarders’s turns, each zombie mine can be moved 2 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -237,8 +242,9 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The Ashen Hoarder moves up to their speed and makes a Claw and Blade attack with a double edge against a single target. On a tier-3 result, the ashen hoarder then uses Impale without spending malice.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The Ashen Hoarder moves up to their speed and makes a Claw and Blade attack with a double edge against a single target. On a tier-3 result, the ashen hoarder then uses Impale without spending malice.')
+						]
 					})
 				})
 			]

@@ -313,8 +313,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
 						],
 						target: 'Self and all allies in the burst',
-						effect: 'The damage is reduced by half for the cannonfall and each target also affected by the triggering ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The damage is reduced by half for the cannonfall and each target also affected by the triggering ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -436,8 +437,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object',
-						effect: 'The hijack psychically latches their sickle onto the target and closes the distance between them. If the target is larger than the hijack, the hijack moves adjacent to the target. Otherwise, the target is pulled 4 squares toward the hijack.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The hijack psychically latches their sickle onto the target and closes the distance between them. If the target is larger than the hijack, the hijack moves adjacent to the target. Otherwise, the target is pulled 4 squares toward the hijack.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -847,8 +849,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature',
-						effect: 'The target can spend 1 Recovery. Until the end of their next turn, their speed is doubled.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target can spend 1 Recovery. Until the end of their next turn, their speed is doubled.')
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({

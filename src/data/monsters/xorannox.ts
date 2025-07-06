@@ -134,8 +134,8 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in the burst',
-						effect: 'Xorannox shifts up to his speed before or after using this ability.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('Xorannox shifts up to his speed before or after using this ability.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
 								tier1: 'Vertical push 3',
@@ -153,8 +153,9 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Xorannox commands all eyestalks to move up to their speed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Xorannox commands all eyestalks to move up to their speed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -166,8 +167,9 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 2, within: 1 }) ],
 						target: 'Special',
-						effect: 'Xorannox ends all ongoing supernatural effects and suppresses supernatural effects from equipment in the affected area. New supernatural effects cannot activate in the affected area until the end of Xorannox’s next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Xorannox ends all ongoing supernatural effects and suppresses supernatural effects from equipment in the affected area. New supernatural effects cannot activate in the affected area until the end of Xorannox’s next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -178,8 +180,9 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'The triggering creature is I<3 frightened (save ends).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The triggering creature is I<3 frightened (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -218,8 +221,9 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Xorannox reforms all destroyed eyestalks and raises them at full Stamina.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Xorannox reforms all destroyed eyestalks and raises them at full Stamina.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -230,8 +234,9 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in the burst',
-						effect: 'Xorannox directs each remaining eyestalk to use a signature action, targeting each creature in the area.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Xorannox directs each remaining eyestalk to use a signature action, targeting each creature in the area.')
+						]
 					})
 				})
 			]
@@ -259,14 +264,14 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(6) ],
 						target: 'One creature',
-						effect: 'A charmed creature moves up to their speed and makes a free strike against an enemy of Xorannox’s choice as a free triggered action, and then is no longer charmed.',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
 								tier1: 'I<2 charmed',
 								tier2: 'I<3 charmed',
 								tier3: 'I<4 charmed'
-							}))
+							})),
+							FactoryLogic.createAbilitySectionText('A charmed creature moves up to their speed and makes a free strike against an enemy of Xorannox’s choice as a free triggered action, and then is no longer charmed.')
 						]
 					})
 				}),
@@ -380,14 +385,14 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
-						effect: 'If this effect or the resulting Stamina loss from the bleeding condition reduces a creature\'s Stamina to 0, the target dies.',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
 								tier1: '11 corruption damage',
 								tier2: '17 corruption damage; M<3 bleeding (save ends)',
 								tier3: '20 corruption damage; M<4 bleeding (save ends)'
-							}))
+							})),
+							FactoryLogic.createAbilitySectionText('If this effect or the resulting Stamina loss from the bleeding condition reduces a creature\'s Stamina to 0, the target dies.')
 						]
 					})
 				}),
@@ -461,14 +466,14 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
 						target: 'All enemies in the line',
-						effect: 'Each target loses all Surges.',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
 								tier1: '6 lightning damage',
 								tier2: '10 lightning damage',
 								tier3: '13 lightning damage'
-							}))
+							})),
+							FactoryLogic.createAbilitySectionText('Each target loses all Surges.')
 						]
 					})
 				}),

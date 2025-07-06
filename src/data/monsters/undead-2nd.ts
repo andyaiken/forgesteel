@@ -672,8 +672,9 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						type: FactoryLogic.type.createTrigger('The Mummy Lord becomes winded for the first time.'),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'Two **mummies** and 4 **ghoul carvers** appear within distance.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Two **mummies** and 4 **ghoul carvers** appear within distance.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -684,8 +685,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						keywords: [],
 						target: '',
 						type: FactoryLogic.type.createNoAction(),
-						effect: 'At the end of their turn, the mummy lord can take 10 damage to end one save ends effect affecting them. This damage can\'t be reduced in any way.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('At the end of their turn, the mummy lord can take 10 damage to end one save ends effect affecting them. This damage can\'t be reduced in any way.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,

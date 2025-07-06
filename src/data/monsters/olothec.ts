@@ -63,14 +63,15 @@ export const olothec: MonsterGroup = {
 				distance: [ FactoryLogic.distance.createMelee(3) ],
 				target: 'One slimed, transformed or devolved creature',
 				cost: 5,
-				powerRoll: FactoryLogic.createPowerRoll({
-					bonus: 4,
-					tier1: '11 psychic damage; A<2 grabbed',
-					tier2: '17 psychic damage; A<3 grabbed',
-					tier3: '20 psychic damage; A<4 grabbed'
-				}),
-				effect: 'The olothec pulls a target grabbed as part of this ability adjacent to them. The olothec has a double edge on strikes against a creature grabbed this way, and a grabbed target can’t save against any other eﬀects until they are no longer grabbed.',
-				sections: []
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						bonus: 4,
+						tier1: '11 psychic damage; A<2 grabbed',
+						tier2: '17 psychic damage; A<3 grabbed',
+						tier3: '20 psychic damage; A<4 grabbed'
+					})),
+					FactoryLogic.createAbilitySectionText('The olothec pulls a target grabbed as part of this ability adjacent to them. The olothec has a double edge on strikes against a creature grabbed this way, and a grabbed target can’t save against any other eﬀects until they are no longer grabbed.')
+				]
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -114,14 +115,15 @@ export const olothec: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '11 damage; M<2 weakened or slimed',
-							tier2: '17 damage; M<3 weakened or slimed',
-							tier3: '20 damage; M<4 weakened or slimed'
-						}),
-						effect: 'A slimed target takes 4 psychic damage whenever they roll power until the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '11 damage; M<2 weakened or slimed',
+								tier2: '17 damage; M<3 weakened or slimed',
+								tier3: '20 damage; M<4 weakened or slimed'
+							})),
+							FactoryLogic.createAbilitySectionText('A slimed target takes 4 psychic damage whenever they roll power until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -132,14 +134,14 @@ export const olothec: MonsterGroup = {
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 7, value2: 2, within: 1 }) ],
 						target: 'All creatures and objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '6 acid damage; A<2 push (special)',
-							tier2: '10 acid damage; A<3 push (special)',
-							tier3: '13 acid damage; A<4 push (special), prone'
-						}),
-						effect: 'A creature pushed by this ability is pushed to the squares within the line that are furthest from the olothec.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '6 acid damage; A<2 push (special)',
+								tier2: '10 acid damage; A<3 push (special)',
+								tier3: '13 acid damage; A<4 push (special), prone'
+							})),
+							FactoryLogic.createAbilitySectionText('A creature pushed by this ability is pushed to the squares within the line that are furthest from the olothec.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -157,21 +159,22 @@ export const olothec: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
 						cost: 2,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '13 psychic damage; I<2 transformed (save ends)',
-							tier2: '20 psychic damage; I<3 transformed (save ends)',
-							tier3: '23 psychic damage; I<4 transformed (save ends)'
-						}),
-						effect: `
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '13 psychic damage; I<2 transformed (save ends)',
+								tier2: '20 psychic damage; I<3 transformed (save ends)',
+								tier3: '23 psychic damage; I<4 transformed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText(`
 Each time a creature is transformed, the Director chooses one of the following transformations. When a creature ends the transformed effect, all transformations end.
 
 **Head** The creature’s head becomes a ball of slime. They cannot communicate and they can’t establish line of effect beyond 3 squares.
 
 **Legs** The creature’s legs become pillars of ooze. They are slowed while on land and add the swim keyword to their speed.
 
-**Torso** The creature’s arms become gelatinous. They can’t benefit from edges or surges.`,
-						sections: []
+**Torso** The creature’s arms become gelatinous. They can’t benefit from edges or surges.`)
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -182,8 +185,9 @@ Each time a creature is transformed, the Director chooses one of the following t
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The olothec teleports to an unoccupied square within 10 or swaps places with a creature or object within 5.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The olothec teleports to an unoccupied square within 10 or swaps places with a creature or object within 5.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -194,8 +198,9 @@ Each time a creature is transformed, the Director chooses one of the following t
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
-						effect: 'The target takes 8 psychic damage and gains psychic weakness 3 until the end of the olothec’s next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target takes 8 psychic damage and gains psychic weakness 3 until the end of the olothec’s next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -237,8 +242,9 @@ Each time a creature is transformed, the Director chooses one of the following t
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All creatures',
-						effect: 'Each target takes 12 psychic damage, slides 5, and is M<3 weakened and slimed (save ends) (see devolving tentacles). The olothec has damage immunity 4 until the start of their next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target takes 12 psychic damage, slides 5, and is M<3 weakened and slimed (save ends) (see devolving tentacles). The olothec has damage immunity 4 until the start of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

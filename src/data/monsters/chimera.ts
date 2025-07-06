@@ -88,14 +88,15 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage',
-							tier2: '13 damage',
-							tier3: '16 damage'
-						}),
-						effect: 'This attack deals an additional 3 damage if the chimera has an edge on the attack.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 damage',
+								tier2: '13 damage',
+								tier3: '16 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('This attack deals an additional 3 damage if the chimera has an edge on the attack.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -107,13 +108,14 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies in the cube',
 						cost: 7,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 fire damage; A<1 3 fire damage',
-							tier2: '5 fire damage; A<2 5 fire damage',
-							tier3: '7 fire damage; A<3 7 fire damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 fire damage; A<1 3 fire damage',
+								tier2: '5 fire damage; A<2 5 fire damage',
+								tier3: '7 fire damage; A<3 7 fire damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -124,13 +126,14 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: 'vertical push 2',
-							tier2: 'vertical push 3',
-							tier3: 'vertical push 5'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: 'vertical push 2',
+								tier2: 'vertical push 3',
+								tier3: 'vertical push 5'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -142,13 +145,14 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
 						cost: 5,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '4 psychic damage',
-							tier2: '8 psychic damage; I<2 frightened (save ends)',
-							tier3: '10 psychic damage; I<3 frightened (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '4 psychic damage',
+								tier2: '8 psychic damage; I<2 frightened (save ends)',
+								tier3: '10 psychic damage; I<3 frightened (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -178,8 +182,9 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies in the burst',
-						effect: 'The chimera uses Bite and Lion’s Toss against each target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The chimera uses Bite and Lion’s Toss against each target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -190,8 +195,9 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The chimera uses Dragon’s Eruption and Roar without spending malice.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The chimera uses Dragon’s Eruption and Roar without spending malice.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -202,8 +208,9 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The chimera uses Roar. The chimera then shifts their speed and can make a free strike against each enemy who comes within 1 of them during the move. When the chimera ends this movement, they use Dragon’s Eruption.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The chimera uses Roar. The chimera then shifts their speed and can make a free strike against each enemy who comes within 1 of them during the move. When the chimera ends this movement, they use Dragon’s Eruption.')
+						]
 					})
 				})
 			]

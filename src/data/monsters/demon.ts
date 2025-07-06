@@ -157,13 +157,14 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage',
-							tier3: '3 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage',
+								tier3: '3 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -201,13 +202,14 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 poison damage',
-							tier2: '4 poison damage',
-							tier3: '5 poison damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 poison damage',
+								tier2: '4 poison damage',
+								tier3: '5 poison damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -269,8 +271,9 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self or one ally',
-						effect: 'The target immediately becomes hidden, regardless of whether they have cover or concealment.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target immediately becomes hidden, regardless of whether they have cover or concealment.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -332,8 +335,9 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Three creatures',
-						effect: 'The muceron pulls each target 5 squares.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The muceron pulls each target 5 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -375,13 +379,13 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; the remasch teleports 2 squares',
-							tier2: '6 damage; the remasch teleports 3 squares',
-							tier3: '8 damage; the remasch teleports 5 squares'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; the remasch teleports 2 squares',
+								tier2: '6 damage; the remasch teleports 3 squares',
+								tier3: '8 damage; the remasch teleports 5 squares'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -399,8 +403,9 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The resmach teleports 2 squares and uses Abyssal Strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The resmach teleports 2 squares and uses Abyssal Strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -573,13 +578,13 @@ The following demons have been identified across categories 1-3:
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '4 psychic damage; I<1 slowed (save ends)',
-							tier2: '7 psychic damage; I<2 slowed (save ends)',
-							tier3: '10 psychic damage; I<3 slowed (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '4 psychic damage; I<1 slowed (save ends)',
+								tier2: '7 psychic damage; I<2 slowed (save ends)',
+								tier3: '10 psychic damage; I<3 slowed (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionText('An ally within 10 squares of the chorogaunt can shift up to their speed.')
 						]
 					})

@@ -102,14 +102,14 @@ export const fossilCryptic: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						effect: 'Each enemy within 1 square of the target takes 2 damage.',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '8 damage; one target A<1 prone',
 								tier2: '12 damage; one target A<2 prone and can\'t stand (EoT)',
 								tier3: '15 damage; one target A<3 prone and can\'t stand (save ends)'
-							}))
+							})),
+							FactoryLogic.createAbilitySectionText('Each enemy within 1 square of the target takes 2 damage.')
 						]
 					})
 				}),
@@ -121,14 +121,14 @@ export const fossilCryptic: MonsterGroup = {
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 6, value2: 1, within: 1 }) ],
 						target: 'All enemies in the line',
-						effect: 'The cryptic reforms thier body and appears in an unoccupied space within the line.',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '4 damage; M<1 push 2',
 								tier2: '7 damage; M<2 prone',
 								tier3: '10 damage; M<3 prone'
-							}))
+							})),
+							FactoryLogic.createAbilitySectionText('The cryptic reforms thier body and appears in an unoccupied space within the line.')
 						]
 					})
 				}),
@@ -160,8 +160,8 @@ export const fossilCryptic: MonsterGroup = {
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object on the ground',
-						effect: 'Slide 3.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('Slide 3.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -179,8 +179,9 @@ export const fossilCryptic: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 1,
-						effect: 'The cryptic halves the damage, ignores any additional effects associated with it, and shifts up to 3 squares.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The cryptic halves the damage, ignores any additional effects associated with it, and shifts up to 3 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

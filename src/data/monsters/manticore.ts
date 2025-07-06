@@ -97,14 +97,15 @@ export const manticore: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '12 damage; A<2 bleeding (save ends)',
-							tier2: '17 damage; A<3 bleeding (save ends)',
-							tier3: '21 damage; A<4 bleeding (save ends)'
-						}),
-						effect: 'This ability has an edge against frightened targets.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 damage; A<2 bleeding (save ends)',
+								tier2: '17 damage; A<3 bleeding (save ends)',
+								tier3: '21 damage; A<4 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability has an edge against frightened targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -115,13 +116,13 @@ export const manticore: MonsterGroup = {
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '10 damage; M<2 3 poison damage',
-							tier2: '15 damage; M<3 7 poison damage, weakened (save ends)',
-							tier3: '19 damage; M<4 10 poison damage, weakened (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '10 damage; M<2 3 poison damage',
+								tier2: '15 damage; M<3 7 poison damage, weakened (save ends)',
+								tier3: '19 damage; M<4 10 poison damage, weakened (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -138,13 +139,14 @@ export const manticore: MonsterGroup = {
 						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: 'Slide 1; A<2 3 damage',
-							tier2: 'Slide 2; A<3 5 damage',
-							tier3: 'Slide 4; A<4 7 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: 'Slide 1; A<2 3 damage',
+								tier2: 'Slide 2; A<3 5 damage',
+								tier3: 'Slide 4; A<4 7 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -156,8 +158,9 @@ export const manticore: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering creature',
 						cost: 2,
-						effect: 'The manticore shifts up to 5 into the air, then uses their Tail Spike ability against the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The manticore shifts up to 5 into the air, then uses their Tail Spike ability against the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -168,13 +171,14 @@ export const manticore: MonsterGroup = {
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: 'Frightened (EoT) or I<2 (save ends)',
-							tier2: 'Frightened (EoT) or I<3 (save ends)',
-							tier3: 'Frightened (save ends); I<4 dazed (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: 'Frightened (EoT) or I<2 (save ends)',
+								tier2: 'Frightened (EoT) or I<3 (save ends)',
+								tier3: 'Frightened (save ends); I<4 dazed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -185,8 +189,9 @@ export const manticore: MonsterGroup = {
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The manticore shifts up to their speed, then uses their Tail Spike ability against each enemy within 10 squares.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The manticore shifts up to their speed, then uses their Tail Spike ability against each enemy within 10 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -197,8 +202,9 @@ export const manticore: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Special',
-						effect: 'The manticore sours their own poison with enmity. Until the end of the encounter, the manticore has a double edge on power rolls targeting weakened creatures. A creature weakened by the manticore’s Tail Spike ability has their speed halved and takes an additional 1d3 poison damage at the start of each of their turns until the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The manticore sours their own poison with enmity. Until the end of the encounter, the manticore has a double edge on power rolls targeting weakened creatures. A creature weakened by the manticore’s Tail Spike ability has their speed halved and takes an additional 1d3 poison damage at the start of each of their turns until the condition ends.')
+						]
 					})
 				})
 			]

@@ -137,8 +137,9 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The lurker flies up to their speed and hides. Each enemy that comes within 1 square of the lurker during this movement can choose to take 3 sonic damage or fall prone.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The lurker flies up to their speed and hides. Each enemy that comes within 1 square of the lurker during this movement can choose to take 3 sonic damage or fall prone.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -149,8 +150,9 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
-						effect: 'The lurker flies into a square adjacent to the target and makes a free strike against them.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The lurker flies into a square adjacent to the target and makes a free strike against them.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -192,14 +194,14 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						effect: 'The target is restrained (save ends) if they are already slowed.',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '9 damage',
 								tier2: '14 damage; M<2 slowed (save ends)',
 								tier3: '17 damage; M<3 slowed (save ends)'
-							}))
+							})),
+							FactoryLogic.createAbilitySectionText('The target is restrained (save ends) if they are already slowed.')
 						]
 					})
 				}),
@@ -254,8 +256,9 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
-						effect: 'The predator uses their Sedating Stinger ability against the target and then shifts 3.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The predator uses their Sedating Stinger ability against the target and then shifts 3.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

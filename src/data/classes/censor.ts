@@ -647,7 +647,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						FactoryLogic.feature.create({
 							id: 'censor-sub-3-1-2',
 							name: 'Judgment Order Benefit',
-							description: 'YWhen you use your Judgment ability to judge another creature, you vertically pull the target up to a number of squares equal to twice your Presence score.'
+							description: 'When you use your Judgment ability to judge another creature, you vertically pull the target up to a number of squares equal to twice your Presence score.'
 						})
 					]
 				},

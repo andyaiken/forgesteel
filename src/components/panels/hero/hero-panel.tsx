@@ -188,11 +188,7 @@ export const HeroPanel = (props: Props) => {
 								))
 							}
 						</div>
-					:
-					<div key={label} className='overview-tile'>
-						<HeaderText>{label}</HeaderText>
-						<div className='ds-text dimmed-text'>None</div>
-					</div>;
+					: null;
 			};
 
 			let display = 'column';

@@ -8,6 +8,7 @@ export interface Options {
 	showStandardAbilities: boolean;
 	dimUnavailableAbilities: boolean;
 	showSources: boolean;
+	compactView: boolean;
 	abilityWidth: PanelWidth;
 	// Library
 	showMonstersInGroups: boolean;

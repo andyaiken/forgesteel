@@ -36,6 +36,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { SourcebookUpdateLogic } from '../../../../logic/update/sourcebook-update-logic';
 import { SubClass } from '../../../../models/subclass';
 import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
 import { Utils } from '../../../../utils/utils';
@@ -700,7 +701,7 @@ const StartSection = (props: StartSectionProps) => {
 											.then(json => {
 												const sourcebook = (JSON.parse(json) as Sourcebook);
 												sourcebook.id = Utils.guid();
-												SourcebookLogic.updateSourcebook(sourcebook);
+												SourcebookUpdateLogic.updateSourcebook(sourcebook);
 												props.importSourcebook(sourcebook);
 											});
 										return false;

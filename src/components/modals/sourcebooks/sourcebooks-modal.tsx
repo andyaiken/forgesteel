@@ -4,8 +4,8 @@ import { FactoryLogic } from '../../../logic/factory-logic';
 import { Hero } from '../../../models/hero';
 import { Modal } from '../modal/modal';
 import { Sourcebook } from '../../../models/sourcebook';
-import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { SourcebookPanel } from '../../panels/elements/sourcebook-panel/sourcebook-panel';
+import { SourcebookUpdateLogic } from '../../../logic/update/sourcebook-update-logic';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -101,7 +101,7 @@ export const SourcebooksModal = (props: Props) => {
 										.then(json => {
 											const sourcebook = (JSON.parse(json) as Sourcebook);
 											sourcebook.id = Utils.guid();
-											SourcebookLogic.updateSourcebook(sourcebook);
+											SourcebookUpdateLogic.updateSourcebook(sourcebook);
 											importSourcebook(sourcebook);
 										});
 									return false;

@@ -1,5 +1,4 @@
 import { Ability } from '../models/ability';
-import { AbilityLogic } from './ability-logic';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Collections } from '../utils/collections';
@@ -7,15 +6,12 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
-import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
-import { LanguageType } from '../enums/language-type';
 import { MonsterGroup } from '../models/monster';
-import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { Perk } from '../models/perk';
 import { Project } from '../models/project';
 import { Skill } from '../models/skill';
@@ -320,167 +316,5 @@ export class SourcebookLogic {
 				const ids = mg.monsters.map(m => m.id);
 				return ids.includes(monsterID);
 			}) || null;
-	};
-
-	///////////////////////////////////////////////////////////////////////////
-
-	static updateSourcebook = (sourcebook: Sourcebook) => {
-		if (sourcebook.domains === undefined) {
-			sourcebook.domains = [];
-		}
-		if (sourcebook.items === undefined) {
-			sourcebook.items = [];
-		}
-		if (sourcebook.perks === undefined) {
-			sourcebook.perks = [];
-		}
-		if (sourcebook.titles === undefined) {
-			sourcebook.titles = [];
-		}
-		if (sourcebook.monsterGroups === undefined) {
-			sourcebook.monsterGroups = [];
-		}
-		if (sourcebook.projects === undefined) {
-			sourcebook.projects = [];
-		}
-		if (sourcebook.terrain === undefined) {
-			sourcebook.terrain = [];
-		}
-
-		sourcebook.classes.forEach(c => {
-			if (c.primaryCharacteristicsOptions === undefined) {
-				c.primaryCharacteristicsOptions = [];
-			}
-
-			c.featuresByLevel.forEach(lvl => {
-				lvl.features.forEach(FeatureLogic.updateFeature);
-				lvl.features
-					.filter(f => f.type === FeatureType.Ability)
-					.map(f => f.data.ability)
-					.forEach(AbilityLogic.updateAbility);
-			});
-
-			c.subclasses.forEach(sc => {
-				sc.featuresByLevel.forEach(lvl => {
-					lvl.features.forEach(FeatureLogic.updateFeature);
-					lvl.features
-						.filter(f => f.type === FeatureType.Ability)
-						.map(f => f.data.ability)
-						.forEach(AbilityLogic.updateAbility);
-				});
-			});
-
-			c.abilities.forEach(AbilityLogic.updateAbility);
-		});
-
-		sourcebook.monsterGroups.forEach(group => {
-			if (group.addOns === undefined) {
-				group.addOns = [];
-			}
-
-			group.monsters.forEach(monster => {
-				if (monster.role.organization === undefined) {
-					monster.role.organization = MonsterOrganizationType.Platoon;
-				}
-
-				if (monster.state === undefined) {
-					monster.state = {
-						staminaDamage: 0,
-						staminaTemp: 0,
-						recoveriesUsed: 0,
-						conditions: [],
-						reactionUsed: false,
-						hidden: false,
-						defeated: false,
-						captainID: undefined
-					};
-				}
-
-				monster.features.forEach(FeatureLogic.updateFeature);
-				monster.features
-					.filter(f => f.type === FeatureType.Ability)
-					.map(f => f.data.ability)
-					.forEach(AbilityLogic.updateAbility);
-			});
-		});
-
-		sourcebook.domains.forEach(domain => {
-			domain.featuresByLevel.forEach(lvl => {
-				lvl.features.forEach(FeatureLogic.updateFeature);
-				lvl.features
-					.filter(f => f.type === FeatureType.Ability)
-					.map(f => f.data.ability)
-					.forEach(AbilityLogic.updateAbility);
-			});
-		});
-
-		sourcebook.perks.forEach(FeatureLogic.updateFeature);
-		sourcebook.perks
-			.filter(f => f.type === FeatureType.Ability)
-			.map(f => f.data.ability)
-			.forEach(AbilityLogic.updateAbility);
-
-		sourcebook.titles.forEach(title => {
-			title.features.forEach(FeatureLogic.updateFeature);
-			title.features
-				.filter(f => f.type === FeatureType.Ability)
-				.map(f => f.data.ability)
-				.forEach(AbilityLogic.updateAbility);
-		});
-
-		sourcebook.items.forEach(item => {
-			item.featuresByLevel.forEach(lvl => {
-				lvl.features.forEach(FeatureLogic.updateFeature);
-				lvl.features
-					.filter(f => f.type === FeatureType.Ability)
-					.map(f => f.data.ability)
-					.forEach(AbilityLogic.updateAbility);
-			});
-			if (item.customizationsByLevel === undefined) {
-				item.customizationsByLevel = [
-					{
-						level: 1,
-						features: []
-					},
-					{
-						level: 5,
-						features: []
-					},
-					{
-						level: 9,
-						features: []
-					}
-				];
-			}
-		});
-
-		sourcebook.kits.forEach(kit => {
-			if (kit.type === 'Standard') {
-				kit.type = '';
-			}
-			kit.features.forEach(FeatureLogic.updateFeature);
-			kit.features
-				.filter(f => f.type === FeatureType.Ability)
-				.map(f => f.data.ability)
-				.forEach(AbilityLogic.updateAbility);
-		});
-
-		sourcebook.terrain.forEach(terrain => {
-			if (terrain.state === undefined) {
-				terrain.state = {
-					squares: 1,
-					staminaDamage: 0
-				};
-			}
-		});
-
-		sourcebook.languages.forEach(language => {
-			if (language.type === undefined) {
-				language.type = LanguageType.Cultural;
-			}
-			if (language.related === undefined) {
-				language.related = [];
-			}
-		});
 	};
 }

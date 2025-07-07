@@ -12,6 +12,7 @@ import { Culture } from '../../../../models/culture';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { Feature } from '../../../../models/feature';
 import { Follower } from '../../../../models/follower';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
@@ -26,6 +27,7 @@ import { RulesPage } from '../../../../enums/rules-page';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
 import { Title } from '../../../../models/title';
+import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -57,11 +59,13 @@ interface Props {
 	showMonster: (monster: Monster) => void;
 	showFollower: (follower: Follower) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
+	showFeature: (feature: Feature, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;
 }
 
 export const HeroViewPage = (props: Props) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
 	const [ content, setContent ] = useState<'hero' | 'standard'>('hero');
@@ -105,6 +109,7 @@ export const HeroViewPage = (props: Props) => {
 							onSelectMonster={props.showMonster}
 							onSelectFollower={props.showFollower}
 							onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
+							onSelectFeature={feature => props.showFeature(feature, hero)}
 							onSelectAbility={ability => props.showAbility(ability, hero)}
 							onShowState={page => props.showHeroState(hero, page)}
 							onshowReference={page => props.showReference(hero, page)}
@@ -190,7 +195,7 @@ export const HeroViewPage = (props: Props) => {
 							</Button>
 						</Popover>
 					</AppHeader>
-					<div className='hero-view-page-content'>
+					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>
 						{getContent()}
 					</div>
 					<AppFooter page='heroes' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} showSourcebooks={props.showSourcebooks} />

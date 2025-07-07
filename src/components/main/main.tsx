@@ -21,6 +21,8 @@ import { Encounter } from '../../models/encounter';
 import { EncounterToolsModal } from '../modals/encounter-tools/encounter-tools-modal';
 import { ErrorBoundary } from '../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { Feature } from '../../models/feature';
+import { FeatureModal } from '../modals/feature/feature-modal';
 import { Follower } from '../../models/follower';
 import { FollowerModal } from '../modals/follower/follower-modal';
 import { Format } from '../../utils/format';
@@ -29,9 +31,9 @@ import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
 import { HeroExportPage } from '../pages/heroes/hero-export/hero-export-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
-import { HeroLogic } from '../../logic/hero-logic';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../enums/hero-state-page';
+import { HeroUpdateLogic } from '../../logic/update/hero-update-logic';
 import { HeroViewPage } from '../pages/heroes/hero-view/hero-view-page';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
@@ -50,6 +52,7 @@ import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-page';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
 import { PlaybookLogic } from '../../logic/playbook-logic';
+import { PlaybookUpdateLogic } from '../../logic/update/playbook-update-logic';
 import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
 import { PlayerViewModal } from '../modals/player-view/player-view-modal';
 import { ReferenceModal } from '../modals/reference/reference-modal';
@@ -59,6 +62,7 @@ import { SessionDirectorPage } from '../pages/session/director/session-director-
 import { SessionPlayerPage } from '../pages/session/player/session-player-page';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../../logic/sourcebook-logic';
+import { SourcebookUpdateLogic } from '../../logic/update/sourcebook-update-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
 import { SubClass } from '../../models/subclass';
 import { TacticalMap } from '../../models/tactical-map';
@@ -250,7 +254,7 @@ export const Main = (props: Props) => {
 			hero.id = Utils.guid();
 		}
 		hero.folder = folder;
-		HeroLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]);
+		HeroUpdateLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]);
 
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroView(hero.id));
@@ -502,7 +506,7 @@ export const Main = (props: Props) => {
 				break;
 		}
 
-		SourcebookLogic.updateSourcebook(sourcebook);
+		SourcebookUpdateLogic.updateSourcebook(sourcebook);
 
 		setDrawer(null);
 		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryList(kind));
@@ -1023,7 +1027,7 @@ export const Main = (props: Props) => {
 			}
 		});
 
-		PlaybookLogic.updatePlaybook(copy);
+		PlaybookUpdateLogic.updatePlaybook(copy);
 
 		setDrawer(null);
 		persistPlaybook(copy).then(() => navigation.goToPlaybookList(list[list.length - 1].kind));
@@ -1182,6 +1186,18 @@ export const Main = (props: Props) => {
 			<RollModal
 				characteristics={[ characteristic ]}
 				hero={hero}
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
+	const onSelectFeature = (feature: Feature, hero: Hero) => {
+		setDrawer(
+			<FeatureModal
+				feature={feature}
+				hero={hero}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1355,6 +1371,7 @@ export const Main = (props: Props) => {
 										showMonster={onSelectMonster}
 										showFollower={onSelectFollower}
 										showCharacteristic={onSelectCharacteristic}
+										showFeature={onSelectFeature}
 										showAbility={onSelectAbility}
 										showHeroState={onShowHeroState}
 										showReference={onshowReference}

@@ -60,6 +60,12 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setCompactView = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.compactView = value;
+		props.setOptions(copy);
+	};
+
 	const setShowMonstersInGroups = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.showMonstersInGroups = value;
@@ -195,15 +201,18 @@ export const OptionsPanel = (props: Props) => {
 			case 'hero':
 				return (
 					<>
-						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
 						<Toggle label='Separate inventory features' value={props.options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 						<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
 						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 						<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
+						<div className='option-heading'>View</div>
+						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
+						<Toggle label='Compact' value={props.options.compactView} onChange={setCompactView} />
 						<div className='option-heading'>Abilities</div>
 						<Segmented
 							name='abilitywidth'
+							disabled={props.options.compactView}
 							options={[ PanelWidth.Narrow, PanelWidth.Medium, PanelWidth.Wide, PanelWidth.ExtraWide ]}
 							value={props.options.abilityWidth}
 							onChange={setAbilityWidth}

@@ -2,7 +2,6 @@ import { Feature, FeatureAbility, FeatureClassAbility } from '../models/feature'
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
-import { AbilityLogic } from './ability-logic';
 import { Ancestry } from '../models/ancestry';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
@@ -162,27 +161,28 @@ export class HeroLogic {
 				}
 			});
 
-		const abilities: { ability: Ability, source: string }[] = [];
-
-		Collections.distinct(choices.map(a => a.ability.cost), a => a)
+		const abilities = choices
+			.sort((a, b) => a.ability.name.localeCompare(b.ability.name))
 			.sort((a, b) => {
-				if (a === 'signature' && b === 'signature') {
+				if (a.ability.cost === 'signature' && b.ability.cost === 'signature') {
 					return 0;
 				}
-				if (a === 'signature') {
+				if (a.ability.cost === 'signature') {
 					return -1;
 				}
-				if (b === 'signature') {
+				if (b.ability.cost === 'signature') {
 					return 1;
 				}
-				return a - b;
+				return a.ability.cost - b.ability.cost;
 			})
-			.forEach(cost => abilities.push(...Collections.sort(choices.filter(a => a.ability.cost === cost), a => a.ability.name)));
+			.sort((a, b) => a.ability.type.usage.localeCompare(b.ability.type.usage))
+			;
 
 		if (includeStandard) {
-			abilities.push({ ability: AbilityData.advance, source: 'Standard' });
-			abilities.push({ ability: AbilityData.disengage, source: 'Standard' });
-			abilities.push({ ability: AbilityData.ride, source: 'Standard' });
+			abilities.push({ ability: AbilityData.charge, source: 'Standard' });
+			abilities.push({ ability: AbilityData.defend, source: 'Standard' });
+			abilities.push({ ability: AbilityData.heal, source: 'Standard' });
+			abilities.push({ ability: AbilityData.swap, source: 'Standard' });
 			abilities.push({ ability: AbilityData.aidAttack, source: 'Standard' });
 			abilities.push({ ability: AbilityData.catchBreath, source: 'Standard' });
 			abilities.push({ ability: AbilityData.drinkPotion, source: 'Standard' });
@@ -193,10 +193,9 @@ export class HeroLogic {
 			abilities.push({ ability: AbilityData.makeAssistTest, source: 'Standard' });
 			abilities.push({ ability: AbilityData.search, source: 'Standard' });
 			abilities.push({ ability: AbilityData.standUp, source: 'Standard' });
-			abilities.push({ ability: AbilityData.charge, source: 'Standard' });
-			abilities.push({ ability: AbilityData.defend, source: 'Standard' });
-			abilities.push({ ability: AbilityData.heal, source: 'Standard' });
-			abilities.push({ ability: AbilityData.swap, source: 'Standard' });
+			abilities.push({ ability: AbilityData.advance, source: 'Standard' });
+			abilities.push({ ability: AbilityData.disengage, source: 'Standard' });
+			abilities.push({ ability: AbilityData.ride, source: 'Standard' });
 		}
 
 		return abilities;
@@ -1069,165 +1068,5 @@ export class HeroLogic {
 		hero.career.incitingIncidents.selectedID = Collections.draw(hero.career.incitingIncidents.options.map(ii => ii.id));
 
 		return hero;
-	};
-
-	///////////////////////////////////////////////////////////////////////////
-
-	static updateHero = (hero: Hero, sourcebooks: Sourcebook[]) => {
-		if (hero.folder === undefined) {
-			hero.folder = '';
-		}
-
-		if (hero.settingIDs === undefined) {
-			hero.settingIDs = [ SourcebookData.core.id, SourcebookData.orden.id ];
-		}
-
-		if (hero.ancestry) {
-			hero.ancestry.features.forEach(FeatureLogic.updateFeature);
-		}
-
-		if (hero.career) {
-			hero.career.features.forEach(FeatureLogic.updateFeature);
-
-			if (hero.career.incitingIncidents === undefined) {
-				hero.career.incitingIncidents = {
-					options: [],
-					selectedID: null
-				};
-			}
-		}
-
-		if (hero.class) {
-			if (hero.class.primaryCharacteristicsOptions === undefined) {
-				hero.class.primaryCharacteristicsOptions = [];
-			}
-
-			hero.class.featuresByLevel
-				.flatMap(lvl => lvl.features)
-				.forEach(FeatureLogic.updateFeature);
-			hero.class.subclasses
-				.flatMap(sc => sc.featuresByLevel)
-				.flatMap(lvl => lvl.features)
-				.forEach(FeatureLogic.updateFeature);
-
-			hero.class.abilities.forEach(a => {
-				if (a.sections === undefined) {
-					a.sections = [];
-				}
-			});
-		}
-
-		if (hero.complication) {
-			hero.complication.features.forEach(FeatureLogic.updateFeature);
-		}
-
-		if (hero.features === undefined) {
-			hero.features = [];
-		}
-
-		hero.state.conditions.forEach(c => {
-			if (c.text === undefined) {
-				c.text = '';
-			}
-		});
-
-		if (hero.state.surges === undefined) {
-			hero.state.surges = 0;
-		}
-
-		if (hero.state.staminaTemp === undefined) {
-			hero.state.staminaTemp = 0;
-		}
-
-		if (hero.state.xp === undefined) {
-			hero.state.xp = 0;
-		}
-
-		if (hero.state.wealth === undefined) {
-			hero.state.wealth = 1;
-		}
-
-		if (hero.state.inventory === undefined) {
-			hero.state.inventory = [];
-		}
-
-		if (hero.state.projects === undefined) {
-			hero.state.projects = [];
-		}
-
-		if (hero.state.controlledSlots === undefined) {
-			hero.state.controlledSlots = [];
-		}
-
-		if (hero.state.notes === undefined) {
-			hero.state.notes = '';
-		}
-
-		if (hero.state.encounterState === undefined) {
-			hero.state.encounterState = 'ready';
-		}
-
-		if (hero.state.defeated === undefined) {
-			hero.state.defeated = false;
-		}
-
-		hero.state.inventory.forEach(item => {
-			if (item.customizationsByLevel === undefined) {
-				item.customizationsByLevel = [
-					{
-						level: 1,
-						features: []
-					},
-					{
-						level: 5,
-						features: []
-					},
-					{
-						level: 9,
-						features: []
-					}
-				];
-			}
-		});
-
-		if (hero.abilityCustomizations === undefined) {
-			hero.abilityCustomizations = [];
-		}
-
-		HeroLogic.getFormerAncestries(hero).flatMap(t => t.features).forEach(FeatureLogic.updateFeature);
-		HeroLogic.getDomains(hero).flatMap(d => d.featuresByLevel).flatMap(lvl => lvl.features).forEach(FeatureLogic.updateFeature);
-		HeroLogic.getTitles(hero).flatMap(t => t.features).forEach(FeatureLogic.updateFeature);
-
-		this.getFeatures(hero).map(f => f.feature).forEach(FeatureLogic.updateFeature);
-		this.getAbilities(hero, sourcebooks, false).map(a => a.ability).forEach(AbilityLogic.updateAbility);
-
-		const x = hero.state as unknown as { heroicResource: number | undefined };
-		if (x.heroicResource) {
-			this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).forEach(f => {
-				f.data.value = x.heroicResource || 0;
-			});
-			delete x.heroicResource;
-		}
-		// If this hero has no heroic resource, get it from the (possibly updated) class
-		if (this.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).length === 0) {
-			const currentClass = hero.class;
-			const updatedClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === currentClass?.id);
-			if (currentClass && updatedClass) {
-				const heroicResources = updatedClass.featuresByLevel
-					.filter(lvl => lvl.level === 1)
-					.flatMap(lvl => lvl.features)
-					.filter(f => f.type === FeatureType.HeroicResource);
-				const heroicResourceIDs = heroicResources.map(f => f.id);
-				const heroicResourceNames = heroicResources.map(f => f.name);
-				currentClass.featuresByLevel[0].features = currentClass.featuresByLevel[0].features.filter(f => !heroicResourceIDs.includes(f.id) && !heroicResourceNames.includes(f.name));
-				heroicResources.forEach(f => currentClass.featuresByLevel[0].features.push(f));
-			}
-		}
-
-		this.getKits(hero).forEach(k => {
-			if (k.type === 'Standard') {
-				k.type = '';
-			}
-		});
 	};
 }

@@ -106,13 +106,14 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage; slide 2',
-							tier3: '3 damage; slide 4'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage; slide 2',
+								tier3: '3 damage; slide 4'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -146,14 +147,15 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage',
-							tier3: '3 damage'
-						}),
-						effect: 'The target has a bane on their next strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage',
+								tier3: '3 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The target has a bane on their next strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -187,14 +189,15 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createMelee(8) ],
 						target: '1 creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage; shift 1 towards target or pull 1',
-							tier2: '4 damage; shift 2 towards target or pull 2',
-							tier3: '5 damage; shift 3 towards target or pull 3'
-						}),
-						effect: 'If the target ends up in a space adjacent to the tonguer, they are also grabbed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage; shift 1 towards target or pull 1',
+								tier2: '4 damage; shift 2 towards target or pull 2',
+								tier3: '5 damage; shift 3 towards target or pull 3'
+							})),
+							FactoryLogic.createAbilitySectionText('If the target ends up in a space adjacent to the tonguer, they are also grabbed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -227,13 +230,14 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; A<0 restrained (save ends)',
-							tier2: '7 damage; A<1 restrained (save ends)',
-							tier3: '9 damage; A<2 restrained (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; A<0 restrained (save ends)',
+								tier2: '7 damage; A<1 restrained (save ends)',
+								tier3: '9 damage; A<2 restrained (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -245,13 +249,14 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',
 						cost: 2,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 acid damage; M<0 target can’t establish line of effect beyond 4 squares (save ends)',
-							tier2: '7 acid damage; M<1 target can’t establish line of effect beyond 3 squares (save ends)',
-							tier3: '9 acid damage; M<2 target can’t establish line of effect beyond 2 squares (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 acid damage; M<0 target can’t establish line of effect beyond 4 squares (save ends)',
+								tier2: '7 acid damage; M<1 target can’t establish line of effect beyond 3 squares (save ends)',
+								tier3: '9 acid damage; M<2 target can’t establish line of effect beyond 2 squares (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -284,14 +289,15 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage',
-							tier3: '12 damage; A<2 bleeding (save ends)'
-						}),
-						effect: 'The potency of this ability increases by 1 if the target is grabbed by the scaletooth.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage',
+								tier3: '12 damage; A<2 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The potency of this ability increases by 1 if the target is grabbed by the scaletooth.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -303,14 +309,15 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
 						cost: 2,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; slide 1',
-							tier2: '8 damage; slide 2; M<1 grappled if within 2 of the scaletooth',
-							tier3: '10 damage; slide 3; M<2 grappled if within 2 of the scaletooth'
-						}),
-						effect: 'The scaletooth needs their tail to use this ability. The scaletooth can’t grapple more than one creature or object with this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; slide 1',
+								tier2: '8 damage; slide 2; M<1 grappled if within 2 of the scaletooth',
+								tier3: '10 damage; slide 3; M<2 grappled if within 2 of the scaletooth'
+							})),
+							FactoryLogic.createAbilitySectionText('The scaletooth needs their tail to use this ability. The scaletooth can’t grapple more than one creature or object with this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -343,14 +350,15 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createMelee(8) ],
 						target: '1 creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage',
-							tier2: '7 damage',
-							tier3: '9 damage; prone'
-						}),
-						effect: 'The skyterror can shift 4 after using this ability if they are flying.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '7 damage',
+								tier3: '9 damage; prone'
+							})),
+							FactoryLogic.createAbilitySectionText('The skyterror can shift 4 after using this ability if they are flying.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -361,14 +369,15 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage; M<0 weakened (save ends)',
-							tier2: '5 damage; M<1 weakened (save ends)',
-							tier3: '7 damage; M<2 weakened (save ends)'
-						}),
-						effect: 'A creature that ends their turn adjacent to a creature or object weakened by this ability is weakened (EoT).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage; M<0 weakened (save ends)',
+								tier2: '5 damage; M<1 weakened (save ends)',
+								tier3: '7 damage; M<2 weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A creature that ends their turn adjacent to a creature or object weakened by this ability is weakened (EoT).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -406,13 +415,13 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '7 damage; pull 1; A<1 bleeding (save ends)',
-							tier2: '10 damage; pull 1; A<2 bleeding (save ends)',
-							tier3: '13 damage; pull 2; A<3 bleeding (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '7 damage; pull 1; A<1 bleeding (save ends)',
+								tier2: '10 damage; pull 1; A<2 bleeding (save ends)',
+								tier3: '13 damage; pull 2; A<3 bleeding (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -430,14 +439,15 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 grabbed creature or object',
 						cost: 3,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage; M<1 dazed (save ends)',
-							tier2: '12 damage; M<2 dazed (save ends)',
-							tier3: '15 damage; M<3 dazed (save ends)'
-						}),
-						effect: 'The target is released from the grab and slides 5.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 damage; M<1 dazed (save ends)',
+								tier2: '12 damage; M<2 dazed (save ends)',
+								tier3: '15 damage; M<3 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The target is released from the grab and slides 5.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -448,8 +458,9 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The deathrex moves up to their speed. The deathrex can make a free strike on each creature that makes an opportunity attack against them during this movement.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The deathrex moves up to their speed. The deathrex can make a free strike on each creature that makes an opportunity attack against them during this movement.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -460,8 +471,9 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 adjacent creature or object',
-						effect: 'Slide 5.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Slide 5.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -472,8 +484,9 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Self and all allies in the burst',
-						effect: 'Each target moves up to their speed and makes a free strike. A target receives temporary Stamina equal to the amount of damage they dealt during this action.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed and makes a free strike. A target receives temporary Stamina equal to the amount of damage they dealt during this action.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -484,8 +497,9 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The deathrex shifts up to their speed, leaving behind a skin shed duplicate in the space that they started in. The duplicate has 10 Stamina, has no villain actions, shares the rest of the deathrex’s characteristics, and takes their turn at the same time as the deathrex.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The deathrex shifts up to their speed, leaving behind a skin shed duplicate in the space that they started in. The duplicate has 10 Stamina, has no villain actions, shares the rest of the deathrex’s characteristics, and takes their turn at the same time as the deathrex.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -496,8 +510,9 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Self and all allies in the burst',
-						effect: 'Each target moves up to their speed. Until the end of the encounter, when a creature enters or starts their turn adjacent to a target, the target can make a free strike against them..',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed. Until the end of the encounter, when a creature enters or starts their turn adjacent to a target, the target can make a free strike against them.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

@@ -142,13 +142,13 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two enemies or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '10 psychic damage; pull 2',
-							tier2: '15 psychic damage; pull 4',
-							tier3: '18 psychic damage; pull 6'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '10 psychic damage; pull 2',
+								tier2: '15 psychic damage; pull 4',
+								tier3: '18 psychic damage; pull 6'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -166,8 +166,9 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All dragonsealed enemies',
 						cost: 5,
-						effect: 'Each target takes 3 psychic damage and is I<3 compelled to immediately make a free strike against one of their allies within range as they hallucinate a threat.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target takes 3 psychic damage and is I<3 compelled to immediately make a free strike against one of their allies within range as they hallucinate a threat.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -178,8 +179,9 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						keywords: [],
 						distance: [],
 						target: '',
-						effect: 'Once per turn, the dragon shifts up to their speed and leaves behind a 4 cube area of magical darkness. The dragon ignores concealment granted by the darkness. An enemy that ends their turn in the aﬀected area is I<3 frightened of the dragon.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Once per turn, the dragon shifts up to their speed and leaves behind a 4 cube area of magical darkness. The dragon ignores concealment granted by the darkness. An enemy that ends their turn in the aﬀected area is I<3 frightened of the dragon.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -191,8 +193,9 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
-						effect: 'The dragon reduces the damage by 2 for each enemy in their aura.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The dragon reduces the damage by 2 for each enemy in their aura.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -203,8 +206,9 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						cost: 1,
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'The dragon moves two cubes of magical darkness up to 10.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The dragon moves two cubes of magical darkness up to 10.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -220,13 +224,14 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: 'Pull 2; I<3 frightened (save ends)',
-							tier2: 'Pull 4; I<4 frightened (save ends)',
-							tier3: 'Pull 6; I<5 frightened (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: 'Pull 2; I<3 frightened (save ends)',
+								tier2: 'Pull 4; I<4 frightened (save ends)',
+								tier3: 'Pull 6; I<5 frightened (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -237,14 +242,15 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All dragonsealed enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '6 psychic damage',
-							tier2: '11 psychic damage',
-							tier3: '14 psychic damage'
-						}),
-						effect: 'The targets are I<4 dazed as they are assaulted by their hallucinations.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '6 psychic damage',
+								tier2: '11 psychic damage',
+								tier3: '14 psychic damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The targets are I<4 dazed as they are assaulted by their hallucinations.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -255,8 +261,9 @@ When such an understanding is not reached, gloom dragons are feared for their co
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Special',
-						effect: 'The dragon disappears, then reappears anywhere on the encounter map, as do three hallucinatory versions of it at other points on the encounter map (the director determines which one is real). The dragon and each hallucinatory version of it immediately uses Breath of Brume. A creature who deals damage to a hallucination of the dragon causes it to immediately dissipate.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The dragon disappears, then reappears anywhere on the encounter map, as do three hallucinatory versions of it at other points on the encounter map (the director determines which one is real). The dragon and each hallucinatory version of it immediately uses Breath of Brume. A creature who deals damage to a hallucination of the dragon causes it to immediately dissipate.')
+						]
 					})
 				})
 			]

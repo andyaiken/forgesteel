@@ -92,14 +92,15 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; push 1',
-							tier2: '11 damage; push 2',
-							tier3: '14 damage; push 3'
-						}),
-						effect: 'Shift 3.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage; push 1',
+								tier2: '11 damage; push 2',
+								tier3: '14 damage; push 3'
+							})),
+							FactoryLogic.createAbilitySectionText('Shift 3.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -111,8 +112,9 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 3,
-						effect: 'The minotaur has damage immunity 2 and deals an additional 5 damage with their strikes until the end of their next turn. On their next turn, they have access to an additional maneuver.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The minotaur has damage immunity 2 and deals an additional 5 damage with their strikes until the end of their next turn. On their next turn, they have access to an additional maneuver.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -124,14 +126,15 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '1 creature or object',
 						cost: 5,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; I<0 dazed (save ends)',
-							tier2: '8 damage; I<1 dazed (save ends)',
-							tier3: '9 damage; I<2 dazed (save ends)'
-						}),
-						effect: 'The potency of this ability increases by 1 if it’s used while charging.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; I<0 dazed (save ends)',
+								tier2: '8 damage; I<1 dazed (save ends)',
+								tier3: '9 damage; I<2 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The potency of this ability increases by 1 if it’s used while charging.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -142,8 +145,9 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
-						effect: 'The minotaur charges the target using Flail and Blade or Goring Horns.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The minotaur charges the target using Flail and Blade or Goring Horns.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -176,14 +180,15 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '8 damage; pull 1',
-							tier2: '12 damage; pull 2',
-							tier3: '15 damage; pull 3'
-						}),
-						effect: 'A target is grabbed if they are pulled adjacent to the sunderer.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '8 damage; pull 1',
+								tier2: '12 damage; pull 2',
+								tier3: '15 damage; pull 3'
+							})),
+							FactoryLogic.createAbilitySectionText('A target is grabbed if they are pulled adjacent to the sunderer.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -195,14 +200,15 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
 						cost: 5,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'I<0 frightened (save ends)',
-							tier2: 'I<1 frightened (save ends)',
-							tier3: 'I<2 frightened (save ends)'
-						}),
-						effect: 'The minotaur has damage immunity 2 and deals an additional 5 damage with their strikes until the end of their next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: 'I<0 frightened (save ends)',
+								tier2: 'I<1 frightened (save ends)',
+								tier3: 'I<2 frightened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The minotaur has damage immunity 2 and deals an additional 5 damage with their strikes until the end of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -214,14 +220,15 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '1 grabbed creature',
 						cost: 3,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; push 1; M<0 bleeding (save ends)',
-							tier2: '8 damage; push 3; M<1 bleeding (save ends)',
-							tier3: '9 damage; push 5; M<2 bleeding (save ends)'
-						}),
-						effect: 'The target takes 1d6 damage at the start of each of their turns while bleeding from this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; push 1; M<0 bleeding (save ends)',
+								tier2: '8 damage; push 3; M<1 bleeding (save ends)',
+								tier3: '9 damage; push 5; M<2 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The target takes 1d6 damage at the start of each of their turns while bleeding from this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -232,8 +239,9 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Triggering creature',
-						effect: 'The sunderer charges the target using Spiked Maul.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The sunderer charges the target using Spiked Maul.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -270,13 +278,14 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						],
 						target: 'One creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '4 damage',
-							tier2: '7 damage',
-							tier3: '9 damage; I<4 taunted (EoT) or frightened of all minotaurs (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '4 damage',
+								tier2: '7 damage',
+								tier3: '9 damage; I<4 taunted (EoT) or frightened of all minotaurs (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -310,14 +319,15 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '3 damage',
-							tier2: '6 damage; slide 1',
-							tier3: '8 damage; slide 3'
-						}),
-						effect: 'A target that is force moved into an obstacle is M<3 bleeding (save ends).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '3 damage',
+								tier2: '6 damage; slide 1',
+								tier3: '8 damage; slide 3'
+							})),
+							FactoryLogic.createAbilitySectionText('A target that is force moved into an obstacle is M<3 bleeding (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -351,14 +361,15 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 5,
-							tier1: '4 damage',
-							tier2: '7 damage; prone',
-							tier3: '9 damage; prone and M<5 can’t stand (save ends)'
-						}),
-						effect: 'Each creature that the stampede moves through as a part of charging with this ability is M<4 knocked prone.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 5,
+								tier1: '4 damage',
+								tier2: '7 damage; prone',
+								tier3: '9 damage; prone and M<5 can’t stand (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Each creature that the stampede moves through as a part of charging with this ability is M<4 knocked prone.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -391,13 +402,14 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '5 damage',
-							tier2: '9 damage',
-							tier3: '12 damage; M (strong) prone'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '5 damage',
+								tier2: '9 damage',
+								tier3: '12 damage; M (strong) prone'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -408,8 +420,9 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The gorer charges the target using Gore.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The gorer charges the target using Gore.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -427,8 +440,9 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Attack target',
-						effect: 'The target is pushed 3. If the target’s Stability is 0, they are also knocked prone.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is pushed 3. If the target’s Stability is 0, they are also knocked prone.')
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -439,8 +453,9 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Gain 3 surges and the attacks against the gorer and their mentor suffer a bane until the beginning of the gorer’s next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Gain 3 surges and the attacks against the gorer and their mentor suffer a bane until the beginning of the gorer’s next turn.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -451,13 +466,14 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '11 damage; M (weak) bleeding (save ends)',
-							tier2: '16 damage; M (average) bleeding (save ends)',
-							tier3: '21 damage; M (strong) prone (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '11 damage; M (weak) bleeding (save ends)',
+								tier2: '16 damage; M (average) bleeding (save ends)',
+								tier3: '21 damage; M (strong) prone (save ends)'
+							}))
+						]
 					})
 				})
 			}

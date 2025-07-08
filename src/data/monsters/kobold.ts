@@ -103,14 +103,15 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage',
-							tier3: '3 damage'
-						}),
-						effect: 'The princeps lunges with their spear. One ally within 3 can shift 2.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage',
+								tier3: '3 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The princeps lunges with their spear. One ally within 3 can shift 2.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -145,14 +146,15 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '5 damage'
-						}),
-						effect: 'The sagittarius has an edge on this ability while adjacent to an ally.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '5 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The sagittarius has an edge on this ability while adjacent to an ally.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -187,14 +189,15 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage; shift 1',
-							tier3: '3 damage; shift 2'
-						}),
-						effect: 'The tiro slices the target with their dagger. The target can’t shift until the start of the tiro’s next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage; shift 1',
+								tier3: '3 damage; shift 2'
+							})),
+							FactoryLogic.createAbilitySectionText('The tiro slices the target with their dagger. The target can’t shift until the start of the tiro’s next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -232,14 +235,15 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage',
-							tier3: '3 damage'
-						}),
-						effect: 'All kobolds ignore opportunity attacks from the target until the start of the vele’s next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage',
+								tier3: '3 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('All kobolds ignore opportunity attacks from the target until the start of the vele’s next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -273,14 +277,15 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 lightning damage',
-							tier2: '6 lightning damage',
-							tier3: '7 lightning damage'
-						}),
-						effect: 'The adeptus has an edge on the ability if the target is adjacent to another enemy. All enemies adjacent to the target take 2 lighting damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 lightning damage',
+								tier2: '6 lightning damage',
+								tier3: '7 lightning damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The adeptus has an edge on the ability if the target is adjacent to another enemy. All enemies adjacent to the target take 2 lighting damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -292,14 +297,15 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Three creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '6 damage'
-						}),
-						effect: 'This attack ignores all banes and damage reduction.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage',
+								tier2: '5 damage',
+								tier3: '6 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('This attack ignores all banes and damage reduction.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -333,14 +339,15 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage; pull 1',
-							tier2: '4 damage; pull 2',
-							tier3: '5 damage; pull 3'
-						}),
-						effect: 'If the target’s forced movement triggers a trap, the trap has a double edge on its power roll.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage; pull 1',
+								tier2: '4 damage; pull 2',
+								tier3: '5 damage; pull 3'
+							})),
+							FactoryLogic.createAbilitySectionText('If the target’s forced movement triggers a trap, the trap has a double edge on its power roll.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -350,8 +357,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One trap or terrain object',
-						effect: 'The trap or terrain object instantly triggers.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The trap or terrain object instantly triggers.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -391,14 +398,14 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage',
-							tier2: '4 damage',
-							tier3: '5 damage'
-						}),
-						effect: 'Taunted (EoT).',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage',
+								tier2: '4 damage',
+								tier3: '5 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('Taunted (EoT).'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -415,13 +422,14 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage; push 1; M<0 prone',
-							tier2: '3 damage; push 2; M<1 prone',
-							tier3: '4 damage; push 3; M<2 prone'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage; push 1; M<0 prone',
+								tier2: '3 damage; push 2; M<1 prone',
+								tier3: '4 damage; push 3; M<2 prone'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -455,14 +463,14 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage',
-							tier2: '4 damage',
-							tier3: '5 damage'
-						}),
-						effect: 'An ally within 10 can shift their speed, so long as they end their movement adjacent to an ally.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage',
+								tier2: '4 damage',
+								tier3: '5 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('An ally within 10 can shift their speed, so long as they end their movement adjacent to an ally.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -481,8 +489,9 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target regains 5 stamina.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target regains 5 stamina.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -521,13 +530,13 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage',
-							tier2: '6 damage; M<1 restrained (save ends)',
-							tier3: '7 damage; M<2 restrained (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 damage',
+								tier2: '6 damage; M<1 restrained (save ends)',
+								tier3: '7 damage; M<2 restrained (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Then We Light the Net on Fire!',
 								value: 3,
@@ -577,13 +586,14 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 fire damage',
-							tier2: '10 fire damage',
-							tier3: '13 fire damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 fire damage',
+								tier2: '10 fire damage',
+								tier3: '13 fire damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -594,8 +604,9 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						cost: 5,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The drangolin shifts their speed and uses Fiery Claws against each creature who comes within 1 during the move. The drangolin makes one power roll against all targets.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The drangolin shifts their speed and uses Fiery Claws against each creature who comes within 1 during the move. The drangolin makes one power roll against all targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -607,14 +618,15 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2, qualifier: 'while burrowing' }) ],
 						target: 'All creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage; push 1; A<0 prone',
-							tier2: '8 damage; push 3; A<1 prone',
-							tier3: '11 damage; push 5; A<2 prone'
-						}),
-						effect: 'This attack deals an additional 2 fire damage against targets directly above the dragonlin.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage; push 1; A<0 prone',
+								tier2: '8 damage; push 3; A<1 prone',
+								tier3: '11 damage; push 5; A<2 prone'
+							})),
+							FactoryLogic.createAbilitySectionText('This attack deals an additional 2 fire damage against targets directly above the dragonlin.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -648,14 +660,14 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 acid damage; A<0 dazed (save ends)',
-							tier2: '10 acid damage; A<1 dazed (save ends)',
-							tier3: '14 acid damage; A<2 restrained (save ends)'
-						}),
-						effect: 'A size 2 or smaller creature restrained by this ability is pulled into one of the cube’s squares and moves with the cube. The creature takes 4 acid damage at the start of each of their turn while restrained. When restrained ends, the creature moves to the nearest unoccupied square adjacent to the cube.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 acid damage; A<0 dazed (save ends)',
+								tier2: '10 acid damage; A<1 dazed (save ends)',
+								tier3: '14 acid damage; A<2 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A size 2 or smaller creature restrained by this ability is pulled into one of the cube’s squares and moves with the cube. The creature takes 4 acid damage at the start of each of their turn while restrained. When restrained ends, the creature moves to the nearest unoccupied square adjacent to the cube.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -671,8 +683,9 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createTrigger('A creature moves or is force moved into the cube.', { free: true }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The cube uses Engulf with a double edge',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The cube uses Engulf with a double edge')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -709,14 +722,14 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '7 damage; M<1 weakened (save ends)',
-							tier2: '10 damage; M<2 weakened (save ends)',
-							tier3: '13 damage; M<3 weakened (save ends)'
-						}),
-						effect: 'Each ally adjacent to a target of this ability can make a free strike.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '7 damage; M<1 weakened (save ends)',
+								tier2: '10 damage; M<2 weakened (save ends)',
+								tier3: '13 damage; M<3 weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Each ally adjacent to a target of this ability can make a free strike.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -732,8 +745,8 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
-						effect: 'The target is marked until the start of the centurion’s next turn. The centurion and each of their allies have an edge on power rolls made against targets marked by the centurion.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target is marked until the start of the centurion’s next turn. The centurion and each of their allies have an edge on power rolls made against targets marked by the centurion.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -750,8 +763,9 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						type: FactoryLogic.type.createTrigger('A creature uses an ability aginst the centurion or an ally.'),
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
-						effect: 'Each target shifts 2 before the damage is resolved. All kobolds with Shield? Shield! has damage immunity 2 against the triggering ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target shifts 2 before the damage is resolved. All kobolds with Shield? Shield! has damage immunity 2 against the triggering ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -762,8 +776,9 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
 						target: 'All enemies in the line',
-						effect: 'The centurion uses Pilum against each target, dealing an additional 5 damage. Each weakened target takes 2 fire damage at the start of each of their turns until the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The centurion uses Pilum against each target, dealing an additional 5 damage. Each weakened target takes 2 fire damage at the start of each of their turns until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -774,8 +789,9 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'All enemies in the cube',
-						effect: 'The centurion uses Pilum against each target with a double edge. Each target is then pushed 3.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The centurion uses Pilum against each target with a double edge. Each target is then pushed 3.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -786,8 +802,9 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All enemies in the burst',
-						effect: 'Each target is P<2 taunted (save ends). For the rest of the encounter the centurion has damage immunity 2. All allies within 10 of the centurion can make a free strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target is P<2 taunted (save ends). For the rest of the encounter the centurion has damage immunity 2. All allies within 10 of the centurion can make a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -826,13 +843,14 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage; taunted (EoT)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '3 damage',
+								tier2: '5 damage',
+								tier3: '7 damage; taunted (EoT)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -853,8 +871,9 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'The shieldbearer’s mentor',
-						effect: 'When the shieldbearer’s mentor takes damage from an attack, the shieldbearer can block the attack (if the shieldbearer is adjacent to the mentor) or throw their shield into the mentor’s space (if they are up to 5 away from the mentor). The triggering attack is reduced by half and any potency effects it has are reduced by 1. If the kobold threw their shield, it bounces back to their hand.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('When the shieldbearer’s mentor takes damage from an attack, the shieldbearer can block the attack (if the shieldbearer is adjacent to the mentor) or throw their shield into the mentor’s space (if they are up to 5 away from the mentor). The triggering attack is reduced by half and any potency effects it has are reduced by 1. If the kobold threw their shield, it bounces back to their hand.')
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -865,11 +884,12 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The shieldbearer’s mentor',
-						effect: `
+						sections: [
+							FactoryLogic.createAbilitySectionText(`
 The shieldbearer straps their shield on their back and then climbs onto their mentor’s back. While clinging to their mentor, the shieldbearer enters the mentor’s space and loses their Shield, Boss? trait. They move along with the mentor and can’t use actions, moves, or maneuvers, except to end the effect as a maneuver. The effect also ends if the shieldbearer is force moved away or knocked prone. When the effect ends, the shieldbearer moves into an adjacent square if they’re still in the mentor’s space.
 
-While the shieldbearer is clinging to their mentor, both the shieldbearer and the mentor gain 10 Temporary Stamina and cover.`,
-						sections: []
+While the shieldbearer is clinging to their mentor, both the shieldbearer and the mentor gain 10 Temporary Stamina and cover.`)
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -880,14 +900,15 @@ While the shieldbearer is clinging to their mentor, both the shieldbearer and th
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '3 creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '6 damage; M (weak) prone',
-							tier2: '10 damage; M (average) prone',
-							tier3: '14 damage; M (strong) prone'
-						}),
-						effect: 'If this ability is used as part of the Charge action, gain 2 surges.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '6 damage; M (weak) prone',
+								tier2: '10 damage; M (average) prone',
+								tier3: '14 damage; M (strong) prone'
+							})),
+							FactoryLogic.createAbilitySectionText('If this ability is used as part of the Charge action, gain 2 surges.')
+						]
 					})
 				})
 			}

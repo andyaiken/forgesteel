@@ -100,14 +100,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: '2 creatures or objects on the ground',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; pull 2',
-							tier2: '10 damage; pull 3',
-							tier3: '13 damage; pull 4'
-						}),
-						effect: 'Each square that a target is pulled through becomes difficult terrain for enemies.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage; pull 2',
+								tier2: '10 damage; pull 3',
+								tier3: '13 damage; pull 4'
+							})),
+							FactoryLogic.createAbilitySectionText('Each square that a target is pulled through becomes difficult terrain for enemies.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -118,14 +119,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage; M<0 bleeding (save ends)',
-							tier2: '3 damage; M<1 bleeding (save ends)',
-							tier3: '4 damage; M<2 bleeding (save ends)'
-						}),
-						effect: 'The channeler chooses one of the following damage types for the damage: acid, cold, corruption, fire, or poison.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage; M<0 bleeding (save ends)',
+								tier2: '3 damage; M<1 bleeding (save ends)',
+								tier3: '4 damage; M<2 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The channeler chooses one of the following damage types for the damage: acid, cold, corruption, fire, or poison.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -137,14 +139,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature',
 						cost: 5,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 corruption damage; P<0 slowed (save ends)',
-							tier2: '8 corruption damage; P<1 shapechanged (save ends)',
-							tier3: '11 corruption damage; P<2 shapechanged (save ends)'
-						}),
-						effect: 'A shapechanged creature has their limbs violently stretched and their skin becomes paper thin. They are slowed and have fire weakness 10 while they have this effect.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 corruption damage; P<0 slowed (save ends)',
+								tier2: '8 corruption damage; P<1 shapechanged (save ends)',
+								tier3: '11 corruption damage; P<2 shapechanged (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A shapechanged creature has their limbs violently stretched and their skin becomes paper thin. They are slowed and have fire weakness 10 while they have this effect.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -155,8 +158,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the channeler',
-						effect: 'Vertical push 3. An ally target doesn’t take damage from being force moved.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Vertical push 3. An ally target doesn’t take damage from being force moved.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -167,8 +171,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the channeler.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is grabbed by the channeler.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -180,8 +185,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 ally',
 						cost: 1,
-						effect: 'The channeler collapses the target into their shadow and halves the damage. The target can’t be targeted by strikes until they reform from the shadows at the start of their next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The channeler collapses the target into their shadow and halves the damage. The target can’t be targeted by strikes until they reform from the shadows at the start of their next turn.')
+						]
 					})
 				})
 			]
@@ -209,14 +215,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '10 damage',
-							tier3: '13 damage; one target is grabbed'
-						}),
-						effect: '1 ally within 5 of the commander has an edge on their next attack until the start of the commander’s next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage',
+								tier2: '10 damage',
+								tier3: '13 damage; one target is grabbed'
+							})),
+							FactoryLogic.createAbilitySectionText('1 ally within 5 of the commander has an edge on their next attack until the start of the commander’s next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -227,8 +234,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: '1 ally',
-						effect: 'The target moves up to their speed and uses a signature action.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target moves up to their speed and uses a signature action.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -240,8 +248,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Self and all allies',
 						cost: 5,
-						effect: 'Each target shifts up to their speed. Each target can use the Throw maneuver if they are grabbing a creature or object.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed. Each target can use the Throw maneuver if they are grabbing a creature or object.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -252,8 +261,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the commander',
-						effect: 'Vertical push 4. An ally target doesn’t take damage from being force moved.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Vertical push 4. An ally target doesn’t take damage from being force moved.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -264,8 +274,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the commander.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is grabbed by the commander.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -298,13 +309,13 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '11 damage; one target is grabbed; one target is pushed 2',
-							tier3: '14 damage; one target is grabbed; one target is vertically pushed 3'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage',
+								tier2: '11 damage; one target is grabbed; one target is pushed 2',
+								tier3: '14 damage; one target is grabbed; one target is vertically pushed 3'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -321,14 +332,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage; M<1 prone',
-							tier2: '13 damage; M<2 prone',
-							tier3: '16 damage; M<3 prone'
-						}),
-						effect: 'The roughneck leaps 5 to an unoccupied space adjacent to the target before making the attack.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 damage; M<1 prone',
+								tier2: '13 damage; M<2 prone',
+								tier3: '16 damage; M<3 prone'
+							})),
+							FactoryLogic.createAbilitySectionText('The roughneck leaps 5 to an unoccupied space adjacent to the target before making the attack.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -340,8 +352,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the roughneck',
 						cost: 3,
-						effect: 'The roughneck moves up to their speed, dragging the target across the ground. The target takes 2 damage for each square they were dragged through before being released prone. Each square the target was dragged through becomes difficult terrain for enemies.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The roughneck moves up to their speed, dragging the target across the ground. The target takes 2 damage for each square they were dragged through before being released prone. Each square the target was dragged through becomes difficult terrain for enemies.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -352,8 +365,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the roughneck',
-						effect: 'Vertical push 5. An ally target doesn’t take damage from being force moved.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Vertical push 5. An ally target doesn’t take damage from being force moved.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -364,8 +378,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the roughneck.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is grabbed by the roughneck.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -376,8 +391,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The roughneck uses their Haymaker ability against a creature or object at the end of the movement.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The roughneck uses their Haymaker ability against a creature or object at the end of the movement.')
+						]
 					})
 				})
 			]
@@ -405,14 +421,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: '2 creatures or objects on the ground',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '8 damage; A<1 grabbed',
-							tier2: '13 damage; A<2 grabbed',
-							tier3: '16 damage; grabbed'
-						}),
-						effect: 'The target can’t use triggered actions until the start of the next round. This ability deals an additional 4 damage if the sneak started their turn hidden from the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '8 damage; A<1 grabbed',
+								tier2: '13 damage; A<2 grabbed',
+								tier3: '16 damage; grabbed'
+							})),
+							FactoryLogic.createAbilitySectionText('The target can’t use triggered actions until the start of the next round. This ability deals an additional 4 damage if the sneak started their turn hidden from the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -424,14 +441,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in the burst',
 						cost: 3,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage; I<0 sneak is concealed from the target (save ends)',
-							tier2: '3 damage; I<1 sneak is concealed from the target (save ends)',
-							tier3: '4 damage; I<2 sneak is concealed from the target (save ends)'
-						}),
-						effect: 'The sneak shifts up to their speed and hides after using this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage; I<0 sneak is concealed from the target (save ends)',
+								tier2: '3 damage; I<1 sneak is concealed from the target (save ends)',
+								tier3: '4 damage; I<2 sneak is concealed from the target (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The sneak shifts up to their speed and hides after using this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -442,14 +460,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; M<0 bleeding (save ends)',
-							tier2: '11 damage; M<1 bleeding (save ends)',
-							tier3: '14 damage; M<2 bleeding (save ends)'
-						}),
-						effect: 'The target can’t hide from the sneak or their allies while bleeding from this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage; M<0 bleeding (save ends)',
+								tier2: '11 damage; M<1 bleeding (save ends)',
+								tier3: '14 damage; M<2 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The target can’t hide from the sneak or their allies while bleeding from this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -460,8 +479,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the sneak',
-						effect: 'Vertical push 4. An ally target doesn’t take damage from being force moved.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Vertical push 4. An ally target doesn’t take damage from being force moved.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -472,8 +492,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the sneak.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is grabbed by the sneak.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -485,8 +506,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 enemy',
 						cost: 1,
-						effect: 'The sneak chooses an enemy within distance of the attack. The attack targets that enemy instead.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The sneak chooses an enemy within distance of the attack. The attack targets that enemy instead.')
+						]
 					})
 				})
 			]
@@ -515,14 +537,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '3 corruption damage',
-							tier2: '6 corruption damage; P<3 bleeding (save ends)',
-							tier3: '8 corruption damage; grabbed; P<4 bleeding (save ends)'
-						}),
-						effect: 'A target grabbed by the knightmare can be immediately vertically pushed 5.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '3 corruption damage',
+								tier2: '6 corruption damage; P<3 bleeding (save ends)',
+								tier3: '8 corruption damage; grabbed; P<4 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A target grabbed by the knightmare can be immediately vertically pushed 5.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -561,14 +584,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage; pull 2',
-							tier2: '6 damage; pull 3',
-							tier3: '7 damage; pull 4; grabbed'
-						}),
-						effect: 'The target can be pulled into the mob without inflicting damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 damage; pull 2',
+								tier2: '6 damage; pull 3',
+								tier3: '7 damage; pull 4; grabbed'
+							})),
+							FactoryLogic.createAbilitySectionText('The target can be pulled into the mob without inflicting damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -602,14 +626,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage',
-							tier2: '6 damage',
-							tier3: '7 damage; A<3 slowed (save ends)'
-						}),
-						effect: 'The target is grabbed if the snare started their turn hidden from them. A target grabbed by the snare can be immediately vertically pushed 4.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 damage',
+								tier2: '6 damage',
+								tier3: '7 damage; A<3 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The target is grabbed if the snare started their turn hidden from them. A target grabbed by the snare can be immediately vertically pushed 4.')
+						]
 					})
 				})
 			]
@@ -637,14 +662,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '5 damage',
-							tier2: '8 damage',
-							tier3: '11 damage'
-						}),
-						effect: 'Gain a surge if the commando started their turn concealed or hidden from the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '5 damage',
+								tier2: '8 damage',
+								tier3: '11 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('Gain a surge if the commando started their turn concealed or hidden from the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -655,8 +681,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object grabbed by the commando',
-						effect: 'Vertical push 5. An ally target doesn’t take damage from being force moved.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Vertical push 5. An ally target doesn’t take damage from being force moved.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -667,8 +694,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 size 1 creature or object',
-						effect: 'The target is grabbed by the commando.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is grabbed by the commando.')
+						]
 					})
 				})
 			],
@@ -681,14 +709,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '6 damage; M (weak) grabbed',
-							tier2: '9 damage; M (average) grabbed',
-							tier3: '13 damage; M (strong) grabbed'
-						}),
-						effect: 'While the target is grabbed by this ability, they can’t speak and every creature and object has concealment from them.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '6 damage; M (weak) grabbed',
+								tier2: '9 damage; M (average) grabbed',
+								tier3: '13 damage; M (strong) grabbed'
+							})),
+							FactoryLogic.createAbilitySectionText('While the target is grabbed by this ability, they can’t speak and every creature and object has concealment from them.')
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -699,14 +728,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: 'pulled 8',
-							tier2: 'pulled 10',
-							tier3: 'pulled 12'
-						}),
-						effect: 'The target takes 1 damage for each square they are pulled.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: 'pulled 8',
+								tier2: 'pulled 10',
+								tier3: 'pulled 12'
+							})),
+							FactoryLogic.createAbilitySectionText('The target takes 1 damage for each square they are pulled.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -717,14 +747,15 @@ When bugbears are compelled to take action, they take to the high ground and use
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature grabbed by the commando',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '12 damage',
-							tier2: '18 damage',
-							tier3: '24 damage'
-						}),
-						effect: 'The target takes 15 damage, the grab ends, and the target falls prone.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '12 damage',
+								tier2: '18 damage',
+								tier3: '24 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The target takes 15 damage, the grab ends, and the target falls prone.')
+						]
 					})
 				})
 			}

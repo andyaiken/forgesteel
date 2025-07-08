@@ -103,13 +103,13 @@ One must also be wary of the area around a shambling mound—their vines reach o
 						distance: [ FactoryLogic.distance.createMelee(6) ],
 						target: '2 creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '11 damage; A<3 grabbed',
-							tier2: '16 damage; A<4 grabbed',
-							tier3: '19 damage; grabbed'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '11 damage; A<3 grabbed',
+								tier2: '16 damage; A<4 grabbed',
+								tier3: '19 damage; grabbed'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -131,13 +131,14 @@ One must also be wary of the area around a shambling mound—their vines reach o
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 6 }) ],
 						target: 'Each enemy in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '4 damage; M<2 dazed (save ends)',
-							tier2: '6 damage; M<3 dazed (save ends)',
-							tier3: '7 damage; M<4 dazed (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '4 damage; M<2 dazed (save ends)',
+								tier2: '6 damage; M<3 dazed (save ends)',
+								tier3: '7 damage; M<4 dazed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -149,8 +150,8 @@ One must also be wary of the area around a shambling mound—their vines reach o
 						distance: [ FactoryLogic.distance.createMelee(6) ],
 						target: 'One creature or object',
 						cost: 2,
-						effect: 'The shambling mound reaches out with writhing vines and A<3 engulfs an enemy size 1L or smaller into their sack. The potency increases by 1 if the target is grabbed by the shambling mound. An engulfed creature is restrained, takes 3 poison damage at the start of each turn of combat, and can’t take damage from abilities used from outside the sack. When the shambling mound moves, the engulfed creature moves with them. If the mound dies or their engulfing sack is destroyed, each engulfed creature is freed and shunted to an unoccupied square within 2 squares.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The shambling mound reaches out with writhing vines and A<3 engulfs an enemy size 1L or smaller into their sack. The potency increases by 1 if the target is grabbed by the shambling mound. An engulfed creature is restrained, takes 3 poison damage at the start of each turn of combat, and can’t take damage from abilities used from outside the sack. When the shambling mound moves, the engulfed creature moves with them. If the mound dies or their engulfing sack is destroyed, each engulfed creature is freed and shunted to an unoccupied square within 2 squares.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -168,8 +169,9 @@ One must also be wary of the area around a shambling mound—their vines reach o
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Each creature trapped by Engulf',
-						effect: '5 poison damage. The shambling mound gains 5 temporary Stamina for each creature affected by this maneuver.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('5 poison damage. The shambling mound gains 5 temporary Stamina for each creature affected by this maneuver.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -181,13 +183,14 @@ One must also be wary of the area around a shambling mound—their vines reach o
 						distance: [ FactoryLogic.distance.createMelee(6) ],
 						target: 'One creature',
 						cost: 1,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '7 damage; M<2 restrained (EoT)',
-							tier2: '12 damage; M<3 restrained (EoT)',
-							tier3: '15 damage; M<4 restrained (EoT)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '7 damage; M<2 restrained (EoT)',
+								tier2: '12 damage; M<3 restrained (EoT)',
+								tier3: '15 damage; M<4 restrained (EoT)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -208,13 +211,14 @@ One must also be wary of the area around a shambling mound—their vines reach o
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 2, within: 1 }) ],
 						target: 'All creatures in the line',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '7 damage; pull 3',
-							tier2: '12 damage; pull 4; target gains poison weakness 3 until the encounter ends',
-							tier3: '15 damage; pull 6; target gains poison weakness 5 until the encounter ends'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '7 damage; pull 3',
+								tier2: '12 damage; pull 4; target gains poison weakness 3 until the encounter ends',
+								tier3: '15 damage; pull 6; target gains poison weakness 5 until the encounter ends'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -225,8 +229,9 @@ One must also be wary of the area around a shambling mound—their vines reach o
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(6) ],
 						target: 'All enemies',
-						effect: 'The shambling mound attempts to devour each enemy within distance with its Engulf action without spending malice.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The shambling mound attempts to devour each enemy within distance with its Engulf action without spending malice.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -237,8 +242,9 @@ One must also be wary of the area around a shambling mound—their vines reach o
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The shambling mound rips themself apart to lay waste, exposing the crux of magic holding them together. The distance of the shambling mound’s melee abilities increases to 10, they have a double edge on power rolls, and strikes have an edge against them.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The shambling mound rips themself apart to lay waste, exposing the crux of magic holding them together. The distance of the shambling mound’s melee abilities increases to 10, they have a double edge on power rolls, and strikes have an edge against them.')
+						]
 					})
 				})
 			]

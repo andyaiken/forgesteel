@@ -84,14 +84,15 @@ export const lightbender: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '9 damage',
-							tier2: '14 damage',
-							tier3: '18 damage'
-						}),
-						effect: 'The lightbender deals an additional 4 damage if they have an edge.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '9 damage',
+								tier2: '14 damage',
+								tier3: '18 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The lightbender deals an additional 4 damage if they have an edge.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -102,14 +103,15 @@ export const lightbender: MonsterGroup = {
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '8 damage',
-							tier2: '12 damage; M<1 bleeding (save ends)',
-							tier3: '15 damage; M<2 bleeding (save ends)'
-						}),
-						effect: 'A creature who is bleeding from this ability has a bane on tests to search for the lightbender until the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '8 damage',
+								tier2: '12 damage; M<1 bleeding (save ends)',
+								tier3: '15 damage; M<2 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A creature who is bleeding from this ability has a bane on tests to search for the lightbender until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -121,14 +123,15 @@ export const lightbender: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
 						cost: 5,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'I<0 dazed (save ends)',
-							tier2: 'I<1 dazed (save ends)',
-							tier3: 'I<2 dazed (save ends)'
-						}),
-						effect: 'Targets dazed by this ability have a speed of 0 while dazed. If a dazed target takes damage or if someone else spends an action to shake the creature out of their stupor, the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: 'I<0 dazed (save ends)',
+								tier2: 'I<1 dazed (save ends)',
+								tier3: 'I<2 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Targets dazed by this ability have a speed of 0 while dazed. If a dazed target takes damage or if someone else spends an action to shake the creature out of their stupor, the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -139,8 +142,9 @@ export const lightbender: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The lightbender halves the damage, doesn\'t suffer any effect associated with it, and teleports 5 squares. The lightbender immediately hides if they teleport into cover or concealment.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The lightbender halves the damage, doesn\'t suffer any effect associated with it, and teleports 5 squares. The lightbender immediately hides if they teleport into cover or concealment.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -173,14 +177,15 @@ export const lightbender: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '11 damage; A<1 prone',
-							tier3: '14 damage; A<2 prone'
-						}),
-						effect: 'The pouncer makes a free strike against each target they have knocked prone.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage',
+								tier2: '11 damage; A<1 prone',
+								tier3: '14 damage; A<2 prone'
+							})),
+							FactoryLogic.createAbilitySectionText('The pouncer makes a free strike against each target they have knocked prone.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -191,14 +196,15 @@ export const lightbender: MonsterGroup = {
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies and objects in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage',
-							tier2: '7 damage; A<1 dazzled (save ends)',
-							tier3: '10 damage; A<2 dazzled (save ends)'
-						}),
-						effect: 'A dazzled creature has a bane on strikes and can’t have line of effect to targets who aren’t adjacent to them.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 damage',
+								tier2: '7 damage; A<1 dazzled (save ends)',
+								tier3: '10 damage; A<2 dazzled (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A dazzled creature has a bane on strikes and can’t have line of effect to targets who aren’t adjacent to them.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -210,14 +216,15 @@ export const lightbender: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies in the cube',
 						cost: 5,
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'R<0 dazed (save ends)',
-							tier2: 'R<1 dazed (save ends)',
-							tier3: 'R<2 dazed (save ends)'
-						}),
-						effect: 'Targets dazed by this ability have a speed of 0 while dazed. If a dazed target takes damage or if someone else spends an action to shake the creature out of their stupor, the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: 'R<0 dazed (save ends)',
+								tier2: 'R<1 dazed (save ends)',
+								tier3: 'R<2 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Targets dazed by this ability have a speed of 0 while dazed. If a dazed target takes damage or if someone else spends an action to shake the creature out of their stupor, the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -228,8 +235,9 @@ export const lightbender: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The pouncer halves the damage, doesn’t suffer any effect associated with it, and teleports 5 squares. The pouncer makes a free strike if they teleport into a space adjacent to an enemy.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The pouncer halves the damage, doesn’t suffer any effect associated with it, and teleports 5 squares. The pouncer makes a free strike if they teleport into a space adjacent to an enemy.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

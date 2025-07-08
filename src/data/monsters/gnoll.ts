@@ -112,13 +112,14 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage',
-							tier2: '4 damage',
-							tier3: '6 damage; grabbed'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage',
+								tier2: '4 damage',
+								tier3: '6 damage; grabbed'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -152,13 +153,14 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage',
-							tier2: '4 damage; push 1',
-							tier3: '6 damage; push 3'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage',
+								tier2: '4 damage; push 1',
+								tier3: '6 damage; push 3'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -192,14 +194,15 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 acid damage',
-							tier2: '3 cold damage',
-							tier3: '5 lightning damage; target can\'t use magic abilities (EoT)'
-						}),
-						effect: 'The target has a bane on their next power roll.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 acid damage',
+								tier2: '3 cold damage',
+								tier3: '5 lightning damage; target can\'t use magic abilities (EoT)'
+							})),
+							FactoryLogic.createAbilitySectionText('The target has a bane on their next power roll.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -232,13 +235,14 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '3 damage',
-							tier3: '5 damage; wildling makes a free strike on a creature adjacent to the target'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage',
+								tier2: '3 damage',
+								tier3: '5 damage; wildling makes a free strike on a creature adjacent to the target'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -271,14 +275,15 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 corruption damage',
-							tier2: '6 corruption damage',
-							tier3: '8 corruption damage; M<2 slowed (save ends)'
-						}),
-						effect: 'This ability has an edge against creatures not at full Stamina.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 corruption damage',
+								tier2: '6 corruption damage',
+								tier3: '8 corruption damage; M<2 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability has an edge against creatures not at full Stamina.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -293,8 +298,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target has an edge on their next strike before the end of their next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target has an edge on their next strike before the end of their next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -332,14 +338,15 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 fire damage',
-							tier2: '5 fire damage',
-							tier3: '7 fire damage; I<2 burning (save ends)'
-						}),
-						effect: 'A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 fire damage',
+								tier2: '5 fire damage',
+								tier3: '7 fire damage; I<2 burning (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -351,8 +358,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Special',
 						cost: 3,
-						effect: '2 **abyssal hyenas** claw out of the ground into unoccupied squares.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('2 **abyssal hyenas** claw out of the ground into unoccupied squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -364,8 +372,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All allies',
-						effect: '1 abyssal hyena target turns into a **gnoll maurader**, keeping their Stamina. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('1 abyssal hyena target turns into a **gnoll maurader**, keeping their Stamina. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -398,14 +407,15 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; push 2',
-							tier2: '6 damage; push 2',
-							tier3: '8 damage; grabbed M<2 target has a bane on escaping the grab'
-						}),
-						effect: 'The bone splitter can\'t use three-tail flail on another target while the current target is grabbed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; push 2',
+								tier2: '6 damage; push 2',
+								tier3: '8 damage; grabbed M<2 target has a bane on escaping the grab'
+							})),
+							FactoryLogic.createAbilitySectionText('The bone splitter can\'t use three-tail flail on another target while the current target is grabbed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -420,8 +430,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target makes a free strike. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a free strike. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -454,14 +465,15 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 psychic damage; I<0 target makes a free strike against a creature of the cackler\'s choice',
-							tier2: '5 psychic damage; I<1 target makes a free strike against a creature of the cackler\'s choice',
-							tier3: '7 psychic damage; I<2 target makes a free strike against a creature of the cackler\'s choice'
-						}),
-						effect: 'An ally target by this ability makes a free strike instead of taking damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 psychic damage; I<0 target makes a free strike against a creature of the cackler\'s choice',
+								tier2: '5 psychic damage; I<1 target makes a free strike against a creature of the cackler\'s choice',
+								tier3: '7 psychic damage; I<2 target makes a free strike against a creature of the cackler\'s choice'
+							})),
+							FactoryLogic.createAbilitySectionText('An ally target by this ability makes a free strike instead of taking damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -517,13 +529,13 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage',
-							tier2: '5 damage',
-							tier3: '7 damage; A<2 bleeding (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 damage',
+								tier2: '5 damage',
+								tier3: '7 damage; A<2 bleeding (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -545,8 +557,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target shifts up to their speed. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -579,14 +592,15 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; push 1',
-							tier2: '6 damage; push 2',
-							tier3: '8 damage; push 3; prone'
-						}),
-						effect: 'This ability deals an additional 4 damage while charging.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; push 1',
+								tier2: '6 damage; push 2',
+								tier3: '8 damage; push 3; prone'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability deals an additional 4 damage while charging.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -597,8 +611,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(7) ],
 						target: 'Triggering enemy',
-						effect: 'The tusker demon charges the target using Gore.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The tusker demon charges the target using Gore.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -635,14 +650,15 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						cost: 'signature',
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
-						effect: 'An ally targeted by this ability makes a free strike instead of taking damage.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage; A<1 bleeding (save ends)',
-							tier2: '11 damage; A<2 bleeding (save ends)',
-							tier3: '14 damage; A<3 bleeding (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 damage; A<1 bleeding (save ends)',
+								tier2: '11 damage; A<2 bleeding (save ends)',
+								tier3: '14 damage; A<3 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('An ally targeted by this ability makes a free strike instead of taking damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -657,8 +673,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target deals an additional 3 damage with their strikes until the start of the carnage\'s next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target deals an additional 3 damage with their strikes until the start of the carnage\'s next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -679,8 +696,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'The carnage summons 5 **gnoll wildlings** and 5 **abyssal hyenas** into unoccupied spaces.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The carnage summons 5 **gnoll wildlings** and 5 **abyssal hyenas** into unoccupied spaces.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -694,8 +712,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
 						target: 'Self and all allies',
-						effect: 'Each target moves up to their speed and makes a free strike. A creature that takes damage from this villain action is also knocked prone.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed and makes a free strike. A creature that takes damage from this villain action is also knocked prone.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -745,13 +764,14 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '4 damage',
-							tier2: '7 damage',
-							tier3: '10 damage; M (strong) bleeding (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '4 damage',
+								tier2: '7 damage',
+								tier3: '10 damage; M (strong) bleeding (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -769,8 +789,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
-						effect: 'The gnasher moves up to their speed and makes a Signature Attack.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The gnasher moves up to their speed and makes a Signature Attack.')
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -781,13 +802,14 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '3 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '7 damage',
-							tier2: '11 damage',
-							tier3: '16 damage; M (strong) bleeding (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '7 damage',
+								tier2: '11 damage',
+								tier3: '16 damage; M (strong) bleeding (save ends)'
+							}))
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -798,8 +820,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self',
-						effect: 'The gnasher consumes part of the target\'s body. The gnasher can spend a Recovery. Each enemy within range is I (medium) frightened (save ends).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The gnasher consumes part of the target\'s body. The gnasher can spend a Recovery. Each enemy within range is I (medium) frightened (save ends).')
+						]
 					})
 				})
 			}

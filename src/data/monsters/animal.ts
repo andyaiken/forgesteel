@@ -40,14 +40,15 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage',
-							tier3: '12 damage'
-						}),
-						effect: 'The animal can shift 2 between striking the first and second target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage',
+								tier3: '12 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The animal can shift 2 between striking the first and second target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -58,8 +59,9 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The animal moves up to their speed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The animal moves up to their speed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -92,13 +94,14 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage; A<1 3 damage',
-							tier3: '12 damage; A<2 3 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage; A<1 3 damage',
+								tier3: '12 damage; A<2 3 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -109,8 +112,9 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
-						effect: 'Vertical slide 3. If the target is an ally, they can make a free strike and then fall without taking damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Vertical slide 3. If the target is an ally, they can make a free strike and then fall without taking damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -121,8 +125,9 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The animal shifts 2 before the ability activates.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The animal shifts 2 before the ability activates.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -155,13 +160,14 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '10 damage; push 1',
-							tier3: '13 damage; push 2'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage',
+								tier2: '10 damage; push 1',
+								tier3: '13 damage; push 2'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -172,8 +178,9 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The beast moves up to their speed. The beast can make a free strike on each creature that makes an opportunity attack against them during this movement.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The beast moves up to their speed. The beast can make a free strike on each creature that makes an opportunity attack against them during this movement.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -184,8 +191,9 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The beast moves up to their speed. If they end their turn adjacent to the triggering ally, they can pick the ally up and allow them to climb on top of the beast.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The beast moves up to their speed. If they end their turn adjacent to the triggering ally, they can pick the ally up and allow them to climb on top of the beast.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -223,14 +231,15 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage; pull 1',
-							tier3: '12 damage; pull 2'
-						}),
-						effect: 'The target can be pulled into the swarm without inflicting damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage; pull 1',
+								tier3: '12 damage; pull 2'
+							})),
+							FactoryLogic.createAbilitySectionText('The target can be pulled into the swarm without inflicting damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -241,8 +250,9 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 1 }) ],
 						target: 'Special',
-						effect: 'The swarm forces themselves in the way of their foes. The affected area is considered difficult terrain for enemies until the start of the swarm’s next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The swarm forces themselves in the way of their foes. The affected area is considered difficult terrain for enemies until the start of the swarm’s next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -280,13 +290,14 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '10 damage; M<1 prone',
-							tier3: '13 damage; M<2 prone'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage',
+								tier2: '10 damage; M<1 prone',
+								tier3: '13 damage; M<2 prone'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -297,8 +308,9 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The predator assesses their environment or lets loose a battle cry and gives themself an edge on their next strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The predator assesses their environment or lets loose a battle cry and gives themself an edge on their next strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -309,8 +321,9 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Triggering creature or object',
-						effect: 'The predator makes a free strike against the target. The predator deals an additional 3 damage if they were hidden from the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The predator makes a free strike against the target. The predator deals an additional 3 damage if they were hidden from the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -343,13 +356,14 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '11 damage; push 1; M<1 prone',
-							tier3: '14 damage; push 2; M<2 prone'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage',
+								tier2: '11 damage; push 1; M<1 prone',
+								tier3: '14 damage; push 2; M<2 prone'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -360,14 +374,15 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies and objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage',
-							tier2: '6 damage',
-							tier3: '8 damage; A<2 bleeding (save ends)'
-						}),
-						effect: 'The predator uses their weapons in a wanton flurry.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage',
+								tier2: '6 damage',
+								tier3: '8 damage; A<2 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The predator uses their weapons in a wanton flurry.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -378,8 +393,9 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Triggering creature or object',
-						effect: 'Push 5.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Push 5.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

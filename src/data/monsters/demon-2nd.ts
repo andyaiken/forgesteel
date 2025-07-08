@@ -319,13 +319,14 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 8, value2: 3, within: 1 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '2 damage; pull 1; A<1 bleeding (save ends)',
-							tier2: '3 damage; pull 2; A<2 bleeding (save ends)',
-							tier3: '4 damage; pull 3; A<3 bleeding (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '2 damage; pull 1; A<1 bleeding (save ends)',
+								tier2: '3 damage; pull 2; A<2 bleeding (save ends)',
+								tier3: '4 damage; pull 3; A<3 bleeding (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -395,8 +396,9 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The gunge vomits and shifts up to their speed, ignoring any additional effects from the strike. Each square they started in is covered in slime. The slime is difficult terrain for enemies, and an enemy is bleeding while occupying an affected square.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The gunge vomits and shifts up to their speed, ignoring any additional effects from the strike. Each square they started in is covered in slime. The slime is difficult terrain for enemies, and an enemy is bleeding while occupying an affected square.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -458,8 +460,9 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The nitkin can become a mundane object the same size or smaller and is hidden. They can change back as a free action.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The nitkin can become a mundane object the same size or smaller and is hidden. They can change back as a free action.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -521,14 +524,15 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '4 psychic damage; I<2 dazed (save ends)',
-							tier2: '6 psychic damage; I<3 dazed (save ends)',
-							tier3: '8 psychic damage; I<4 dazed (save ends)'
-						}),
-						effect: 'The potency increases by 1 if the target is grabbed by the tormenauk.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '4 psychic damage; I<2 dazed (save ends)',
+								tier2: '6 psychic damage; I<3 dazed (save ends)',
+								tier3: '8 psychic damage; I<4 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The potency increases by 1 if the target is grabbed by the tormenauk.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -570,13 +574,13 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '11 corruption damage; A<2 restrained (save ends)',
-							tier2: '16 corruption damage; A<3 restrained (save ends)',
-							tier3: '19 corruption damage; A<4 restrained (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '11 corruption damage; A<2 restrained (save ends)',
+								tier2: '16 corruption damage; A<3 restrained (save ends)',
+								tier3: '19 corruption damage; A<4 restrained (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -594,8 +598,8 @@ categories 4-6:
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Special',
-						effect: 'Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling**) burst forth from the egress and appear in unoccupied squares.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling**) burst forth from the egress and appear in unoccupied squares.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -613,8 +617,9 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Special',
-						effect: 'A **muceron** and 2 **ensnarers** appear anywhere in range.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('A **muceron** and 2 **ensnarers** appear anywhere in range.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -639,13 +644,14 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '7 corruption damage',
-							tier2: '12 corruption damage',
-							tier3: '15 corruption damage; a frenzied appears in an unoccupied square adjacent to the target.'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '7 corruption damage',
+								tier2: '12 corruption damage',
+								tier3: '15 corruption damage; a frenzied appears in an unoccupied square adjacent to the target.'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -656,8 +662,9 @@ categories 4-6:
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'Self',
-						effect: 'The egress folds into their own portal and teleports to an unoccupied space within distance. Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling*) appear in the space the egress leaves behind.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The egress folds into their own portal and teleports to an unoccupied space within distance. Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling*) appear in the space the egress leaves behind.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -668,14 +675,15 @@ categories 4-6:
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 3, within: 1 }) ],
 						target: 'All enemies and objects in the line',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '5 corruption damage; R<2 weakened (save ends)',
-							tier2: '10 corruption damage; R<3 weakened (save ends)',
-							tier3: '13 corruption damage; R<4 weakened (save ends)'
-						}),
-						effect: 'The egress recalls and instantly destroys any ally minions on the encounter map. A torrent of churned up minion bodies and blood erupts from the egress, dealing an additional 2 damage for each minion destroyed this way.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '5 corruption damage; R<2 weakened (save ends)',
+								tier2: '10 corruption damage; R<3 weakened (save ends)',
+								tier3: '13 corruption damage; R<4 weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The egress recalls and instantly destroys any ally minions on the encounter map. A torrent of churned up minion bodies and blood erupts from the egress, dealing an additional 2 damage for each minion destroyed this way.')
+						]
 					})
 				})
 			]

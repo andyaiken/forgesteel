@@ -111,13 +111,14 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '6 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '6 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -151,13 +152,14 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '2 damage',
-							tier2: '4 damage; A<2 slowed (save ends)',
-							tier3: '6 damage; A<3 slowed (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '2 damage',
+								tier2: '4 damage; A<2 slowed (save ends)',
+								tier3: '6 damage; A<3 slowed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -348,13 +350,14 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 corruption damage',
-							tier2: '7 corruption damage; R<2 taunted (EoT)',
-							tier3: '9 corruption damage; R<3 taunted (EoT)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 corruption damage',
+								tier2: '7 corruption damage; R<2 taunted (EoT)',
+								tier3: '9 corruption damage; R<3 taunted (EoT)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -364,8 +367,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createTrigger('An enemy within distance makes a strike against the target.'),
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '1 ally',
-						effect: 'The damage is halved. The dark knight takes the other half of the damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The damage is halved. The dark knight takes the other half of the damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -418,8 +422,8 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 3 }) ],
 						target: 'Special',
-						effect: 'The affected area is covered in darkness and is considered concealment until the start of the duskcaller’s next turn.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The affected area is covered in darkness and is considered concealment until the start of the duskcaller’s next turn.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -768,13 +772,13 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '11 damage; I<2 bleeding (save ends)',
-							tier2: '16 damage; I<3 bleeding (save ends)',
-							tier3: '19 damage; I<4 bleeding (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '11 damage; I<2 bleeding (save ends)',
+								tier2: '16 damage; I<3 bleeding (save ends)',
+								tier3: '19 damage; I<4 bleeding (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -792,14 +796,15 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Three creatures or objects casting a shadow',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: 'pull 5; I<2 slowed (save ends)',
-							tier2: 'pull 7; I<3 slowed (save ends)',
-							tier3: 'pull 10; I<4 slowed (save ends)'
-						}),
-						effect: 'The eclipse makes a free strike against each target pulled into an adjacent square.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: 'pull 5; I<2 slowed (save ends)',
+								tier2: 'pull 7; I<3 slowed (save ends)',
+								tier3: 'pull 10; I<4 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The eclipse makes a free strike against each target pulled into an adjacent square.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -809,8 +814,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createTrigger('An enemy uses an ability that emits light, such as fire.'),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'The enemy has a double bane on the ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The enemy has a double bane on the ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -831,8 +837,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'All allies',
-						effect: 'The eclipse calls forth one **brush stalker** that appears within distance. Each target then shifts up to their speed and makes a free strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The eclipse calls forth one **brush stalker** that appears within distance. Each target then shifts up to their speed and makes a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -843,8 +850,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
-						effect: 'The eclipse dispels their enemies’ hard-earned advantages, removing each target’s surges. Each ally ignores edges and additional effects of each target’s damaging abilities until the end of the round.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The eclipse dispels their enemies’ hard-earned advantages, removing each target’s surges. Each ally ignores edges and additional effects of each target’s damaging abilities until the end of the round.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -855,8 +863,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'All enemies in the cube',
-						effect: 'R<3 speed becomes zero (save ends). The affected area is shrouded in darkness and becomes concealment. When an enemy starts their turn in an affected square, they take 5 corruption damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('R<3 speed becomes zero (save ends). The affected area is shrouded in darkness and becomes concealment. When an enemy starts their turn in an affected square, they take 5 corruption damage.')
+						]
 					})
 				})
 			]
@@ -884,13 +893,14 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '7 damage',
-							tier2: '10 damage',
-							tier3: '13 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '7 damage',
+								tier2: '10 damage',
+								tier3: '13 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -902,13 +912,14 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '4 corruption damage; M<1 weakened (save ends)',
-							tier2: '7 corruption damage; M<2 weakened (save ends)',
-							tier3: '10 corruption damage; M<3 weakened (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '4 corruption damage; M<1 weakened (save ends)',
+								tier2: '7 corruption damage; M<2 weakened (save ends)',
+								tier3: '10 corruption damage; M<3 weakened (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

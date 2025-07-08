@@ -548,8 +548,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						distance: [],
 						target: '',
 						cost: 1,
-						effect: 'The garroter turns invisible. The effect ends when the garroter uses an ability, takes damage, or at the end of their turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The garroter turns invisible. The effect ends when the garroter uses an ability, takes damage, or at the end of their turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -585,13 +586,14 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 sonic damage',
-							tier2: '7 sonic damage',
-							tier3: '9 sonic damage; P<2 weakened (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 sonic damage',
+								tier2: '7 sonic damage',
+								tier3: '9 sonic damage; P<2 weakened (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -602,8 +604,8 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
-						effect: 'The target moves up to their speed and uses an action.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target moves up to their speed and uses an action.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -624,8 +626,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'Self and up to three allies',
-						effect: 'Each target regains 15 Stamina and ignores difficult terrain until the end of the encounter.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target regains 15 Stamina and ignores difficult terrain until the end of the encounter.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -658,14 +661,15 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '11 damage; prone',
-							tier3: '14 damage; prone; M<2 bleeding (save ends)'
-						}),
-						effect: 'The ability deals an additional 6 damage against already prone targets.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage',
+								tier2: '11 damage; prone',
+								tier3: '14 damage; prone; M<2 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The ability deals an additional 6 damage against already prone targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -676,8 +680,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						cost: 1,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The juggernaut moves up to their speed and makes a free strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The juggernaut moves up to their speed and makes a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -715,14 +720,15 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage; taunted (EoT)',
-							tier3: '12 damage; taunted (EoT)'
-						}),
-						effect: 'This ability has a double edge if the target dealt damage to the rampart this round.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage; taunted (EoT)',
+								tier3: '12 damage; taunted (EoT)'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability has a double edge if the target dealt damage to the rampart this round.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -732,8 +738,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: '1 ally',
-						effect: 'The rampart moves or shifts up to their speed to a square adjacent to the target and then swamps places with the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The rampart moves or shifts up to their speed to a square adjacent to the target and then swamps places with the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -743,8 +750,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createTrigger('A creature targets an adjacent ally with an ability'),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The rampart becomes the new target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The rampart becomes the new target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -777,14 +785,15 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three creatures touching the ground',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage; A<0 prone can\'t stand (save ends)',
-							tier2: '9 damage; A<1 prone can\'t stand (save ends)',
-							tier3: '12 damage; A<2 prone can\'t stand (save ends)'
-						}),
-						effect: 'The ground beneath each target rises 1 square.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage; A<0 prone can\'t stand (save ends)',
+								tier2: '9 damage; A<1 prone can\'t stand (save ends)',
+								tier3: '12 damage; A<2 prone can\'t stand (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The ground beneath each target rises 1 square.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -796,14 +805,15 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage; M<0 restrained (save ends)',
-							tier2: '7 damage; M<1 restrained (save ends)',
-							tier3: '10 damage; M<2 restrained (save ends)'
-						}),
-						effect: 'The affected area is considered difficult terrain.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 damage; M<0 restrained (save ends)',
+								tier2: '7 damage; M<1 restrained (save ends)',
+								tier3: '10 damage; M<2 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The affected area is considered difficult terrain.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -840,8 +850,8 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						cost: 'signature',
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
-						effect: 'The target moves up to their speed and uses an action.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target moves up to their speed and uses an action.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -863,13 +873,14 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '7 damage; push 1; M<1 dazed (save ends)',
-							tier2: '10 damage; push 3; M<2 dazed (save ends)',
-							tier3: '13 damage; push 5; M<3 dazed (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '7 damage; push 1; M<1 dazed (save ends)',
+								tier2: '10 damage; push 3; M<2 dazed (save ends)',
+								tier3: '13 damage; push 5; M<3 dazed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -879,8 +890,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three allies',
-						effect: 'Each target moves up to their speed and uses the Grab maneuver with an edge. The warleader moves up to their speed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed and uses the Grab maneuver with an edge. The warleader moves up to their speed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -890,8 +902,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createTrigger('The target gets a tier 1 result on a power roll.'),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
-						effect: 'The target has a double edge on next power roll.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target has a double edge on next power roll.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -912,14 +925,15 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies',
-						effect: 'Each target moves up to their speed. Each enemy within 1 of a target makes an **Intuition test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Intuition,
-							tier1: 'Frightened of the warleader (save ends)',
-							tier2: 'Frightened of the warleader (EoT)',
-							tier3: 'no effect'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed. Each enemy within 1 of a target makes an **Intuition test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Intuition,
+								tier1: 'Frightened of the warleader (save ends)',
+								tier2: 'Frightened of the warleader (EoT)',
+								tier3: 'no effect'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -930,8 +944,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'All allies',
-						effect: 'The warleader shifts up to their speed and 5 **orc blizters** appear in unoccupied spaces within distance.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The warleader shifts up to their speed and 5 **orc blizters** appear in unoccupied spaces within distance.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -942,8 +957,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The warleader shifts up to their speed and uses Mace Lariat. Then, the warleader shifts up to their speed and uses Mace Lariat. Finally, the warleader shifts up to their speed and uses Mace Lariat.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The warleader shifts up to their speed and uses Mace Lariat. Then, the warleader shifts up to their speed and uses Mace Lariat. Finally, the warleader shifts up to their speed and uses Mace Lariat.')
+						]
 					})
 				})
 			]
@@ -1010,13 +1026,14 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 2 }) ],
 						target: 'All enemies in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage; 1 sonic damage; R<0 dazed (save ends)',
-							tier2: '7 damage; 2 sonic damage; R<1 dazed (save ends)',
-							tier3: '9 damage; 3 sonic damage; R<2 dazed (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 damage; 1 sonic damage; R<0 dazed (save ends)',
+								tier2: '7 damage; 2 sonic damage; R<1 dazed (save ends)',
+								tier3: '9 damage; 3 sonic damage; R<2 dazed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1026,14 +1043,15 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Special',
-						effect: 'The scyza kicks up a sandstorm concealing themselves and each ally in the affected area until the end of the scyza\'s next turn. Each enemy in the burst makes an **Intuition test**.',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: Characteristic.Intuition,
-							tier1: '10 damage; prone; slowed (EoT)',
-							tier2: '7 damage; slowed (EoT)',
-							tier3: '4 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The scyza kicks up a sandstorm concealing themselves and each ally in the affected area until the end of the scyza\'s next turn. Each enemy in the burst makes an **Intuition test**.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Intuition,
+								tier1: '10 damage; prone; slowed (EoT)',
+								tier2: '7 damage; slowed (EoT)',
+								tier3: '4 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1043,8 +1061,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createTrigger('The scyza or an ally riding the scyza is targeted by an ability.'),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Any damage dealt by the triggering ability is halved. If the creature or object who used the ability is within 3 of the scyza, the scyza makes a free strike against them.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Any damage dealt by the triggering ability is halved. If the creature or object who used the ability is within 3 of the scyza, the scyza makes a free strike against them.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1085,13 +1104,14 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '3 damage',
+								tier2: '5 damage',
+								tier3: '7 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1108,8 +1128,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Until the start of the next turn, the charger and the charger\'s mentor gain their Recovery value in temporary Stamina, their Speed increases by 2, and they gain an edge on resistance rolls.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Until the start of the next turn, the charger and the charger\'s mentor gain their Recovery value in temporary Stamina, their Speed increases by 2, and they gain an edge on resistance rolls.')
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -1120,8 +1141,9 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The charger moves in a straight line up to their speed. During this move, they ignore enemy free strikes, and they can make a melee free strike against any creature they move adjacent to.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The charger moves in a straight line up to their speed. During this move, they ignore enemy free strikes, and they can make a melee free strike against any creature they move adjacent to.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -1132,14 +1154,15 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '12 damage',
-							tier2: '18 damage',
-							tier3: '24 damage'
-						}),
-						effect: 'The orc takes psychic damage equal to the number of enemies affected. This damage can’t be reduced in any way.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '12 damage',
+								tier2: '18 damage',
+								tier3: '24 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The orc takes psychic damage equal to the number of enemies affected. This damage can’t be reduced in any way.')
+						]
 					})
 				})
 			}

@@ -100,8 +100,9 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					FactoryLogic.distance.createRanged(8)
 				],
 				target: 'Self or one elemental',
-				effect: 'Until the end of the encounter, the target’s speed increases by 5 and their strikes deal an additional 5 damage. Whenever an elemental within line of eﬀect uses another convocation ability, the target also gains the eﬀects.',
-				sections: []
+				sections: [
+					FactoryLogic.createAbilitySectionText('Until the end of the encounter, the target’s speed increases by 5 and their strikes deal an additional 5 damage. Whenever an elemental within line of eﬀect uses another convocation ability, the target also gains the eﬀects.')
+				]
 			})
 		})
 	],
@@ -129,14 +130,15 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '8 fire damage',
-							tier2: '12 fire damage; A<1 burning (save ends)',
-							tier3: '15 fire damage; A<2 burning (save ends)'
-						}),
-						effect: 'A burning creature or object takes 1d6 fire damage at the start of each of their turns until the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '8 fire damage',
+								tier2: '12 fire damage; A<1 burning (save ends)',
+								tier3: '15 fire damage; A<2 burning (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A burning creature or object takes 1d6 fire damage at the start of each of their turns until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -147,8 +149,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
-						effect: 'The target receives fire immunity 5 until the start of the crux’s next turn if they don’t already have it.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target receives fire immunity 5 until the start of the crux’s next turn if they don’t already have it.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -166,8 +168,9 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The crux ignores any effects associated with the damage and flies up to their speed. If the crux doesn’t end this movement on solid ground, they fall prone.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The crux ignores any effects associated with the damage and flies up to their speed. If the crux doesn’t end this movement on solid ground, they fall prone.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -208,14 +211,15 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage',
-							tier2: '5 damage; 4 lightning damage; push 1',
-							tier3: '5 damage; 7 lightning damage; push 3'
-						}),
-						effect: 'The essence shifts 3 before or after using this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '5 damage; 4 lightning damage; push 1',
+								tier3: '5 damage; 7 lightning damage; push 3'
+							})),
+							FactoryLogic.createAbilitySectionText('The essence shifts 3 before or after using this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -226,8 +230,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
-						effect: 'The target receives lightning immunity 5 until the start of the essence’s next turn if they don’t already have it.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target receives lightning immunity 5 until the start of the essence’s next turn if they don’t already have it.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -248,8 +252,9 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object',
-						effect: 'The essence deals 5 lightning damage to the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The essence deals 5 lightning damage to the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -290,14 +295,15 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; slide 1',
-							tier2: '11 damage; slide 2',
-							tier3: '14 damage; slide 3'
-						}),
-						effect: 'P<2 the target\'s stability is reduced to 0 and they move 2 additional squares whenver they are force moved (save ends).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage; slide 1',
+								tier2: '11 damage; slide 2',
+								tier3: '14 damage; slide 3'
+							})),
+							FactoryLogic.createAbilitySectionText('P<2 the target\'s stability is reduced to 0 and they move 2 additional squares whenver they are force moved (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -308,8 +314,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
-						effect: ' The target receives cold immunity 5 until the start of the essence’s next turn if they don’t already have it.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target receives cold immunity 5 until the start of the essence’s next turn if they don’t already have it.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -327,8 +333,9 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						effect: 'The essence makes a free strike against the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The essence makes a free strike against the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -374,14 +381,15 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '8 damage',
-							tier2: '13 damage; R<1 prone and can\'t stand (save ends)',
-							tier3: '16 damage; prone; P<2 can\'t stand (save ends)'
-						}),
-						effect: 'This ability inflicts restrained (save ends) on targets that are already prone. When the restrained condition ends, any can’t stand effects also end.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '8 damage',
+								tier2: '13 damage; R<1 prone and can\'t stand (save ends)',
+								tier3: '16 damage; prone; P<2 can\'t stand (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability inflicts restrained (save ends) on targets that are already prone. When the restrained condition ends, any can’t stand effects also end.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -392,8 +400,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
-						effect: 'The target gains 15 temporary Stamina that lasts until the start of the field’s next turn.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target gains 15 temporary Stamina that lasts until the start of the field’s next turn.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -411,8 +419,9 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'One creature or object',
-						effect: 'The field deals 6 damage to the target and A<2 bleeding (save ends).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The field deals 6 damage to the target and A<2 bleeding (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -458,14 +467,15 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '8 damage',
-							tier2: '12 damage; M<1 restrained (save ends)',
-							tier3: '15 damage; M<2 restrained (save ends)'
-						}),
-						effect: 'The area beneath the target becomes difficult terrain.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '8 damage',
+								tier2: '12 damage; M<1 restrained (save ends)',
+								tier3: '15 damage; M<2 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The area beneath the target becomes difficult terrain.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -476,8 +486,8 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
-						effect: 'The target imposes a bane on melee strikes made against them until the start of the force’s next turn if they don’t already have it.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The target imposes a bane on melee strikes made against them until the start of the force’s next turn if they don’t already have it.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -495,8 +505,9 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: ' The force halves the damage, gains damage weakness 3, and increases their speed by 3. The damage weakness increases by 3 each time the force uses this ability in an encounter.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The force halves the damage, gains damage weakness 3, and increases their speed by 3. The damage weakness increases by 3 each time the force uses this ability in an encounter.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({

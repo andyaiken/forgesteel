@@ -131,14 +131,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage',
-							tier3: '3 damage; an ally adjacent to the target can make a free strike'
-						}),
-						effect: 'The target can’t use triggered actions until the start of the next round.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage',
+								tier3: '3 damage; an ally adjacent to the target can make a free strike'
+							})),
+							FactoryLogic.createAbilitySectionText('The target can’t use triggered actions until the start of the next round.')
+						]
 					})
 				})
 			]
@@ -167,14 +168,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '5 damage; grabbed or prone'
-						}),
-						effect: 'The catchpole deals an additional 2 damage to restrained targets.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '5 damage; grabbed or prone'
+							})),
+							FactoryLogic.createAbilitySectionText('The catchpole deals an additional 2 damage to restrained targets.')
+						]
 					})
 				})
 			]
@@ -203,14 +205,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage; push 1',
-							tier2: '2 damage; push 2',
-							tier3: '3 damage; push 4'
-						}),
-						effect: 'A target restrained by a dwarf can be pulled by this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage; push 1',
+								tier2: '2 damage; push 2',
+								tier3: '3 damage; push 4'
+							})),
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pulled by this ability.')
+						]
 					})
 				})
 			]
@@ -238,14 +241,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'All enemies in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 damage',
-							tier2: '6 damage; M<1 slowed (save ends)',
-							tier3: '8 damage; M<2 slowed (save ends)'
-						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage',
+								tier2: '6 damage; M<1 slowed (save ends)',
+								tier3: '8 damage; M<2 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -257,14 +261,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'All enemies in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 poison damage; I<0 dazed (save ends)',
-							tier2: '6 poison damage; I<1 dazed (save ends)',
-							tier3: '8 poison damage; I<2 dazed (save ends)'
-						}),
-						effect: 'A creature dazed by this ability has -1 to all characteristics while resisting potent effects until the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 poison damage; I<0 dazed (save ends)',
+								tier2: '6 poison damage; I<1 dazed (save ends)',
+								tier3: '8 poison damage; I<2 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A creature dazed by this ability has -1 to all characteristics while resisting potent effects until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -297,14 +302,14 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage; push 1',
-							tier2: '9 damage; push 3',
-							tier3: '12 damage; push 5'
-						}),
-						effect: 'If the target is adjacent to a wall or object after the power roll is resolved, they are restrained (EoT). A target restrained by a dwarf can be pushed by this ability.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage; push 1',
+								tier2: '9 damage; push 3',
+								tier3: '12 damage; push 5'
+							})),
+							FactoryLogic.createAbilitySectionText('If the target is adjacent to a wall or object after the power roll is resolved, they are restrained (EoT). A target restrained by a dwarf can be pushed by this ability.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -322,8 +327,9 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One restained, slowed, or prone target',
-						effect: 'The gunner makes a free strike against the target. The target loses any restrained, slowed or prone conditions and gains restrained (save ends).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The gunner makes a free strike against the target. The target loses any restrained, slowed or prone conditions and gains restrained (save ends).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -356,14 +362,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage',
-							tier2: '7 damage',
-							tier3: '9 damage; M<2 restrained (save ends)'
-						}),
-						effect: 'Pull 5. A target restrained by a dwarf, indlucing by this ability, can be pulled this way.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '7 damage',
+								tier3: '9 damage; M<2 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Pull 5. A target restrained by a dwarf, indlucing by this ability, can be pulled this way.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -375,8 +382,9 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three creatures',
-						effect: 'Pull 8. A slowed or restrained target is pulled an additional 2. A target restrained by a dwarf can be pulled in this way.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Pull 8. A slowed or restrained target is pulled an additional 2. A target restrained by a dwarf can be pulled in this way.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -409,14 +417,14 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; slide 1',
-							tier2: '10 damage; slide 1',
-							tier3: '13 damage; slide 1'
-						}),
-						effect: 'The shieldwall can shift 1 to remain adjacent to the target. A target restrained by a dwarf can be slid by this ability.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage; slide 1',
+								tier2: '10 damage; slide 1',
+								tier3: '13 damage; slide 1'
+							})),
+							FactoryLogic.createAbilitySectionText('The shieldwall can shift 1 to remain adjacent to the target. A target restrained by a dwarf can be slid by this ability.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -432,8 +440,9 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						type: FactoryLogic.type.createTrigger('A creature strikes an adjacent ally.'),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The shieldwall becomes the strike’s target and halves the damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The shieldwall becomes the strike’s target and halves the damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -466,14 +475,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
 						target: 'All creatures and objects in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; slide 1; M<0 slowed (save ends)',
-							tier2: '8 damage; slide 3; M<1 slowed (save ends)',
-							tier3: '11 damage; slide 5; M<2 restrained (save ends)'
-						}),
-						effect: 'A target restrained by a dwarf can be slid by this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; slide 1; M<0 slowed (save ends)',
+								tier2: '8 damage; slide 3; M<1 slowed (save ends)',
+								tier3: '11 damage; slide 5; M<2 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be slid by this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -485,14 +495,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage; R<0 slowed (save ends)',
-							tier2: '6 damage; R<1 slowed (save ends)',
-							tier3: '9 damage; R<2 slowed (save ends)'
-						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability. The affected area is considered difficult terrain for enemies.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 damage; R<0 slowed (save ends)',
+								tier2: '6 damage; R<1 slowed (save ends)',
+								tier3: '9 damage; R<2 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability. The affected area is considered difficult terrain for enemies.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -528,14 +539,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; push 2',
-							tier2: '7 damage; push 4',
-							tier3: '9 damage; push 6'
-						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; push 2',
+								tier2: '7 damage; push 4',
+								tier3: '9 damage; push 6'
+							})),
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -584,14 +596,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage; push 1',
-							tier2: '10 damage; push 3',
-							tier3: '13 damage; push 5; M<2 restrained (save ends)'
-						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage; push 1',
+								tier2: '10 damage; push 3',
+								tier3: '13 damage; push 5; M<2 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -603,14 +616,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						target: 'All enemies in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage; push 2; A<0 slowed (save ends)',
-							tier2: '8 damage; push 4; A<1 slowed (save ends)',
-							tier3: '11 damage; push 6; A<2 dazed (save ends)'
-						}),
-						effect: 'A target restrained by a dwarf can be pushed by this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage; push 2; A<0 slowed (save ends)',
+								tier2: '8 damage; push 4; A<1 slowed (save ends)',
+								tier3: '11 damage; push 6; A<2 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -646,14 +660,14 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage; slide 1',
-							tier2: '12 damage; slide 3',
-							tier3: '15 damage; slide 5'
-						}),
-						effect: 'A target restrained by a dwarf can be slid by this ability.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 damage; slide 1',
+								tier2: '12 damage; slide 3',
+								tier3: '15 damage; slide 5'
+							})),
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be slid by this ability.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -670,8 +684,8 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
-						effect: 'Vertical slide 5. A target restrained by a dwarf can be slid by this ability.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('Vertical slide 5. A target restrained by a dwarf can be slid by this ability.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -691,8 +705,9 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'Self or one ally',
-						effect: 'The target takes half damage from the attack. The attacker takes 4 damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target takes half damage from the attack. The attacker takes 4 damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -708,8 +723,9 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'All enemies in the cube',
-						effect: 'The marauder lord uses Levitating Axes against each target. The marauder lord makes one power roll against all targets.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The marauder lord uses Levitating Axes against each target. The marauder lord makes one power roll against all targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -720,8 +736,9 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target shift up to their speed. The marauder lord then uses Levitating Axes.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target shift up to their speed. The marauder lord then uses Levitating Axes.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -732,8 +749,9 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
-						effect: 'The marauder lord creates three 2-square metal objects in unoccupied squares within distance. When the marauder lord uses Magnetomancy, they can additionally target one of these objects.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The marauder lord creates three 2-square metal objects in unoccupied squares within distance. When the marauder lord uses Magnetomancy, they can additionally target one of these objects.')
+						]
 					})
 				})
 			]
@@ -761,14 +779,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '8 damage',
-							tier3: '12 damage; M<2 restrained (save ends)'
-						}),
-						effect: 'Restrained targets and targets restrained by this ability are pulled 3. A target restrained by a dwarf can be pulled by this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '8 damage',
+								tier3: '12 damage; M<2 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Restrained targets and targets restrained by this ability are pulled 3. A target restrained by a dwarf can be pulled by this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -780,13 +799,14 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '3 lightning damage; A<0 slowed (save ends)',
-							tier2: '6 lightning damage; A<1 slowed (save ends)',
-							tier3: '8 lightning damage; A<2 slowed (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 lightning damage; A<0 slowed (save ends)',
+								tier2: '6 lightning damage; A<1 slowed (save ends)',
+								tier3: '8 lightning damage; A<2 slowed (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -824,14 +844,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage'
-						}),
-						effect: 'The attack ignores cover and Temporary Stamina.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '3 damage',
+								tier2: '5 damage',
+								tier3: '7 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The attack ignores cover and Temporary Stamina.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -868,14 +889,15 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
 						target: 'All creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '6 damage; P (weak) frightened',
-							tier2: '9 damage; P (average) frightened',
-							tier3: '13 damage; P (strong) frightened'
-						}),
-						effect: 'Until the start of the mortar’s next turn, attacks against the mortar and allies within 1 suffer a bane.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '6 damage; P (weak) frightened',
+								tier2: '9 damage; P (average) frightened',
+								tier3: '13 damage; P (strong) frightened'
+							})),
+							FactoryLogic.createAbilitySectionText('Until the start of the mortar’s next turn, attacks against the mortar and allies within 1 suffer a bane.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -886,13 +908,14 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 15 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '8 damage; I (weak) dazed (save ends)',
-							tier2: '12 damage; I (average) dazed (save ends)',
-							tier3: '16 damage; I (strong) dazed (save ends), prone'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '8 damage; I (weak) dazed (save ends)',
+								tier2: '12 damage; I (average) dazed (save ends)',
+								tier3: '16 damage; I (strong) dazed (save ends), prone'
+							}))
+						]
 					})
 				})
 			}

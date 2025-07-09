@@ -750,21 +750,8 @@ export class FactoryLogic {
 		cost?: number | 'signature',
 		repeatable?: boolean,
 		minLevel?: number,
-		powerRoll?: PowerRoll,
-		effect?: string,
 		sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[]
 	}): Ability => {
-		const sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[] = [];
-		if (data.powerRoll) {
-			sections.push(FactoryLogic.createAbilitySectionRoll(data.powerRoll));
-		}
-		if (data.effect) {
-			sections.push(FactoryLogic.createAbilitySectionText(data.effect));
-		}
-		if (data.sections) {
-			sections.push(...data.sections);
-		}
-
 		return {
 			id: data.id,
 			name: data.name,
@@ -776,7 +763,7 @@ export class FactoryLogic {
 			cost: data.cost || 0,
 			repeatable: data.repeatable ?? false,
 			minLevel: data.minLevel || 1,
-			sections: sections,
+			sections: data.sections,
 
 			preEffect: '',
 			powerRoll: null,

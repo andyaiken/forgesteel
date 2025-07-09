@@ -117,13 +117,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage',
-							tier3: '3 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage',
+								tier3: '3 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -165,14 +166,15 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage',
-							tier3: '3 damage'
-						}),
-						effect: 'The runner can shift 2 before charging while using this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage',
+								tier3: '3 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The runner can shift 2 before charging while using this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -209,13 +211,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '5 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '5 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -249,13 +252,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage; push 1',
-							tier2: '4 damage; push 2',
-							tier3: '5 damage; push 3'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage; push 1',
+								tier2: '4 damage; push 2',
+								tier3: '5 damage; push 3'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -288,8 +292,8 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies in the cube',
-						effect: 'A creature slowed by this ability can’t search for hidden creatures until the condition ends.',
 						sections: [
+							FactoryLogic.createAbilitySectionText('A creature slowed by this ability can’t search for hidden creatures until the condition ends.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -310,8 +314,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'Self and three allies',
-						effect: 'Each target teleports to a square within 10 that has cover or concealment from all enemies.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target teleports to a square within 10 that has cover or concealment from all enemies.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -344,14 +349,15 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage',
-							tier2: '7 damage; I<1 restrained (save ends)',
-							tier3: '9 damage; I<2 restrained (save ends)'
-						}),
-						effect: 'A creature restrained by this ability can’t search for hidden creatures until the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '7 damage; I<1 restrained (save ends)',
+								tier3: '9 damage; I<2 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A creature restrained by this ability can’t search for hidden creatures until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -363,14 +369,15 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 damage; P<1 target has a double bane on strikes (save ends)',
-							tier3: '6 damage; P<2 bleeding (save ends), target has a double bane on strikes (save ends)'
-						}),
-						effect: 'The green seer causes lichen to form and encroach upon each target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage',
+								tier2: '4 damage; P<1 target has a double bane on strikes (save ends)',
+								tier3: '6 damage; P<2 bleeding (save ends), target has a double bane on strikes (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The green seer causes lichen to form and encroach upon each target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -380,8 +387,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						type: FactoryLogic.type.createTrigger('A creature uses a triggered action targeting the green seer or an ally within distance.', { free: true }),
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
-						effect: 'The green seer makes a free strike against the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The green seer makes a free strike against the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -414,14 +422,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage',
-							tier2: '7 damage',
-							tier3: '9 damage'
-						}),
-						effect: 'Taunted (EoT). The greenskeeper can shift 3 after making the attack.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '7 damage',
+								tier3: '9 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('Taunted (EoT). The greenskeeper can shift 3 after making the attack.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -438,8 +446,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						cost: 3,
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 3 }) ],
 						target: 'Special',
-						effect: 'The affected area is overgrown with heavy brush and bramble. It provides cover and concealment for the greenskeeper and all allies, and is considered difficult terrain for enemies. An enemy that starts their turn in an affected square takes 3 damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The affected area is overgrown with heavy brush and bramble. It provides cover and concealment for the greenskeeper and all allies, and is considered difficult terrain for enemies. An enemy that starts their turn in an affected square takes 3 damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -472,14 +481,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage',
-							tier2: '7 damage',
-							tier3: '9 damage; marked (save ends)'
-						}),
-						effect: 'Each ally has an edge on strikes and abilities against marked targets until the condition ends.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '7 damage',
+								tier3: '9 damage; marked (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Each ally has an edge on strikes and abilities against marked targets until the condition ends.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -497,8 +506,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All marked enemies in the burst',
-						effect: '3 damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('3 damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -534,14 +544,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage; push 1',
-							tier2: '9 damage; push 3',
-							tier3: '12 damage; push 5'
-						}),
-						effect: 'The tree chirugeon can make a ranged free strike before using this ability.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage; push 1',
+								tier2: '9 damage; push 3',
+								tier3: '12 damage; push 5'
+							})),
+							FactoryLogic.createAbilitySectionText('The tree chirugeon can make a ranged free strike before using this ability.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -561,8 +571,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'Self and three allies',
-						effect: 'Each target teleports to a square within 10 that has cover or concealment from all enemies.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target teleports to a square within 10 that has cover or concealment from all enemies.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -598,14 +609,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '11 damage',
-							tier3: '14 damage; M<2 bleeding (save ends)'
-						}),
-						effect: 'The tree guerilla can teleport 3 after using this ability.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage',
+								tier2: '11 damage',
+								tier3: '14 damage; M<2 bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The tree guerilla can teleport 3 after using this ability.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -624,8 +635,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.createSpecial('Squad')
 						],
 						target: 'Self and Squad',
-						effect: 'The targets take their turn immediately. Each target has an edge on their abilities until the end of their turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The targets take their turn immediately. Each target has an edge on their abilities until the end of their turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -658,14 +670,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 damage',
-							tier2: '11 damage',
-							tier3: '14 damage; A<2 restrained (save ends)'
-						}),
-						effect: 'The tree gweiadur can shift 3 after using this ability.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 damage',
+								tier2: '11 damage',
+								tier3: '14 damage; A<2 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The tree gweiadur can shift 3 after using this ability.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -683,14 +695,15 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies in the cube',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '4 damage; R<0 marked (save ends)',
-							tier2: '6 damage; R<1 slowed and marked (save ends)',
-							tier3: '9 damage; R<2 slowed and marked (save ends)'
-						}),
-						effect: 'Each ally has an edge on strikes and abilities against marked targets until the condition ends.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '4 damage; R<0 marked (save ends)',
+								tier2: '6 damage; R<1 slowed and marked (save ends)',
+								tier3: '9 damage; R<2 slowed and marked (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Each ally has an edge on strikes and abilities against marked targets until the condition ends.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -723,14 +736,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage; M<1 restrained (save ends)',
-							tier2: '12 damage; M<2 restrained (save ends)',
-							tier3: '15 damage; M<3 restrained (save ends)'
-						}),
-						effect: 'The warleader strikes each target one at a time and can teleport 3 squares between each strike.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 damage; M<1 restrained (save ends)',
+								tier2: '12 damage; M<2 restrained (save ends)',
+								tier3: '15 damage; M<3 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The warleader strikes each target one at a time and can teleport 3 squares between each strike.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -748,8 +761,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies the burst',
-						effect: 'Each target can makerr a free strike and then shifts 3. A target immediately hides at the end of the warleader’s turn while in cover or concealment.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target can makerr a free strike and then shifts 3. A target immediately hides at the end of the warleader’s turn while in cover or concealment.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -759,8 +773,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						type: FactoryLogic.type.createTrigger('An ally ends their turn.'),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
-						effect: 'The target must take their turn now, if they have not already taken it. P<2 the target is bleeding and has a bane on their strikes until the end of their turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target must take their turn now, if they have not already taken it. P<2 the target is bleeding and has a bane on their strikes until the end of their turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -770,8 +785,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						type: FactoryLogic.type.createTrigger('An enemy targets the ordinator or an ally within distance with an ability.'),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering enemy',
-						effect: 'The ordinator uses Lightning Rod against the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The ordinator uses Lightning Rod against the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -792,8 +808,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
-						effect: 'The warleader uses Wodeblade against each target with an edge.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The warleader uses Wodeblade against each target with an edge.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -804,8 +821,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
-						effect: 'The warleader uses Wodeblade against a single creature or object. Each target then makes a free strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The warleader uses Wodeblade against a single creature or object. Each target then makes a free strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -819,8 +837,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
 						],
 						target: 'Self and all allies in the burst',
-						effect: 'Eeach target becomes invisible until the start of the next round. The warleader then uses Wodeblade.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target becomes invisible until the start of the next round. The warleader then uses Wodeblade.')
+						]
 					})
 				})
 			]
@@ -848,14 +867,15 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage',
-							tier2: '7 damage',
-							tier3: '9 damage'
-						}),
-						effect: 'The wodenelg’s rider can make a free strike at any point during the charge.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '7 damage',
+								tier3: '9 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The wodenelg’s rider can make a free strike at any point during the charge.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -871,8 +891,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						cost: 3,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The wodenelg and their rider become invisible until the start of their next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The wodenelg and their rider become invisible until the start of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -910,14 +931,15 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '4 damage',
-							tier2: '7 damage',
-							tier3: '10 damage'
-						}),
-						effect: 'The arrowswift can take a bane to increase the attack’s range by 5.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '4 damage',
+								tier2: '7 damage',
+								tier3: '10 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The arrowswift can take a bane to increase the attack’s range by 5.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -935,14 +957,15 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: '1 creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '7 damage',
-							tier2: '11 damage',
-							tier3: '16 damage'
-						}),
-						effect: 'If the arrowswift is hidden, gain 2 surges.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '7 damage',
+								tier2: '11 damage',
+								tier3: '16 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('If the arrowswift is hidden, gain 2 surges.')
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -953,8 +976,9 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Until the end of the encounter, ranged attacks made by the arrowswift have an edge and gain a surge. If the arrowswift’s mentor is within 1, they gain this benefit as well.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Until the end of the encounter, ranged attacks made by the arrowswift have an edge and gain a surge. If the arrowswift’s mentor is within 1, they gain this benefit as well.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -965,13 +989,14 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: '2 creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '12 damage',
-							tier2: '17 damage',
-							tier3: '23 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '12 damage',
+								tier2: '17 damage',
+								tier3: '23 damage'
+							}))
+						]
 					})
 				})
 			}

@@ -139,13 +139,14 @@ export const troll: MonsterGroup = {
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage',
-							tier2: '6 damage; slide 1',
-							tier3: '7 damage; slide 2; M<2 bleeding (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 damage',
+								tier2: '6 damage; slide 1',
+								tier3: '7 damage; slide 2; M<2 bleeding (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -178,13 +179,13 @@ export const troll: MonsterGroup = {
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage; M<1 bleeding (save ends)',
-							tier2: '14 damage; M<2 bleeding (save ends)',
-							tier3: '17 damage; M<3 bleeding (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 damage; M<1 bleeding (save ends)',
+								tier2: '14 damage; M<2 bleeding (save ends)',
+								tier3: '17 damage; M<3 bleeding (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -221,8 +222,9 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The butcher enhances their next Savoring Bite ability, changing the damage type and inflicted condition to one of the following combinations: corruption and dazed, acid and restrained, or lightning and frightened.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The butcher enhances their next Savoring Bite ability, changing the damage type and inflicted condition to one of the following combinations: corruption and dazed, acid and restrained, or lightning and frightened.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -233,8 +235,9 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Triggering creature',
-						effect: 'The butcher makes a free strike against the target. The butcher has an edge on power rolls and deals an additional 3 damage on strikes until the end of their next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The butcher makes a free strike against the target. The butcher has an edge on power rolls and deals an additional 3 damage on strikes until the end of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -279,13 +282,13 @@ export const troll: MonsterGroup = {
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '10 damage',
-							tier2: '15 damage',
-							tier3: '18 damage'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '10 damage',
+								tier2: '15 damage',
+								tier3: '18 damage'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -303,8 +306,9 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The glutton shifts up to their speed in a straight line, ignoring difficult terrain. A creature can choose to fall prone or take 10 damage the first time the glutton passes through their space during the movement. If the glutton moves into a creature or object larger than them and the glutton doesn’t knock the creature prone or destroy the object, the glutton’s movement stops early and they become dazed until the end of their next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The glutton shifts up to their speed in a straight line, ignoring difficult terrain. A creature can choose to fall prone or take 10 damage the first time the glutton passes through their space during the movement. If the glutton moves into a creature or object larger than them and the glutton doesn’t knock the creature prone or destroy the object, the glutton’s movement stops early and they become dazed until the end of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -315,8 +319,9 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The glutton has a double edge on strikes and strikes have an edge against them, until the start of their next turn.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The glutton has a double edge on strikes and strikes have an edge against them, until the start of their next turn.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -327,8 +332,9 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Self',
-						effect: 'The glutton uses their Voracious Mastication ability against an adjacent creature.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The glutton uses their Voracious Mastication ability against an adjacent creature.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -392,13 +398,14 @@ export const troll: MonsterGroup = {
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: 'P (weak) frightened (save ends)',
-							tier2: 'P (average) frightened (save ends)',
-							tier3: 'P (strong) frightened (save ends)'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: 'P (weak) frightened (save ends)',
+								tier2: 'P (average) frightened (save ends)',
+								tier3: 'P (strong) frightened (save ends)'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -423,8 +430,9 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '3 creatures',
-						effect: 'While winded, the mercenary uses Big Bite against each target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('While winded, the mercenary uses Big Bite against each target.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -435,8 +443,9 @@ export const troll: MonsterGroup = {
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The mercenary moves their speed. If this movement takes them out of range or area of the ability that damaged them, the ability doesn\'t affect them.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The mercenary moves their speed. If this movement takes them out of range or area of the ability that damaged them, the ability doesn\'t affect them.')
+						]
 					})
 				})
 			}

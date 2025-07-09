@@ -60,12 +60,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 				target: 'Each enemy in the cube',
-				powerRoll: FactoryLogic.createPowerRoll({
-					tier1: '4 corruption damage; A<0 slowed (save ends)',
-					tier2: '6 corruption damage; A<1 slowed (save ends)',
-					tier3: '9 corruption damage; A<2 restrained (save ends)'
-				}),
-				sections: []
+				sections: [
+					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						tier1: '4 corruption damage; A<0 slowed (save ends)',
+						tier2: '6 corruption damage; A<1 slowed (save ends)',
+						tier3: '9 corruption damage; A<2 restrained (save ends)'
+					}))
+				]
 			})
 		}),
 		FactoryLogic.feature.createMalice({
@@ -124,14 +125,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 lightning damage',
-							tier2: '3 lightning damage',
-							tier3: '5 lightning damage'
-						}),
-						effect: 'If the apprentice mage doesn’t use a maneuver or a move action this turn, the target is slowed (EoT).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 lightning damage',
+								tier2: '3 lightning damage',
+								tier3: '5 lightning damage'
+							})),
+							FactoryLogic.createAbilitySectionText('If the apprentice mage doesn’t use a maneuver or a move action this turn, the target is slowed (EoT).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -179,14 +181,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createMelee(2)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '5 damage'
-						}),
-						effect: 'If the guard is flanked, they can make a free strike against an additional target adjacent to them.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '5 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('If the guard is flanked, they can make a free strike against an additional target adjacent to them.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -234,13 +237,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 damage',
-							tier2: '4 damage',
-							tier3: '5 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 damage',
+								tier2: '4 damage',
+								tier3: '5 damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -289,14 +293,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 damage',
-							tier2: '2 damage',
-							tier3: '3 damage'
-						}),
-						effect: 'If this ability is used while charging, the raider can make a ranged free strike before using the ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage',
+								tier2: '2 damage',
+								tier3: '3 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('If this ability is used while charging, the raider can make a ranged free strike before using the ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -344,14 +349,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '1 corruption damage',
-							tier2: '2 corruption damage',
-							tier3: '3 corruption damage'
-						}),
-						effect: 'A creature within 5 squares of the death acolyte regains 1 Stamina.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 corruption damage',
+								tier2: '2 corruption damage',
+								tier3: '3 corruption damage'
+							})),
+							FactoryLogic.createAbilitySectionText('A creature within 5 squares of the death acolyte regains 1 Stamina.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -400,14 +406,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '2 corruption damage',
-							tier2: '4 corruption damage',
-							tier3: '5 corruption damage'
-						}),
-						effect: 'This ability deals an additional 3 damage if the rogue was disguised or hidden before using it.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '2 corruption damage',
+								tier2: '4 corruption damage',
+								tier3: '5 corruption damage'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability deals an additional 3 damage if the rogue was disguised or hidden before using it.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -454,14 +461,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createMelee(1)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage',
-							tier3: '12 damage; M<2 grabbed, target has a bane on escaping the grab'
-						}),
-						effect: 'The brawler deals an additional 2 damage if the target is already grabbed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage',
+								tier3: '12 damage; M<2 grabbed, target has a bane on escaping the grab'
+							})),
+							FactoryLogic.createAbilitySectionText('The brawler deals an additional 2 damage if the target is already grabbed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -473,8 +481,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature grabbed by the brawler',
-						effect: 'Push 5.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Push 5.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -527,14 +536,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createRanged(5)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage',
-							tier3: '12 damage; M<2 the target has a double bane on their next power roll'
-						}),
-						effect: 'Taunted (EoT).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage',
+								tier3: '12 damage; M<2 the target has a double bane on their next power roll'
+							})),
+							FactoryLogic.createAbilitySectionText('Taunted (EoT).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -592,13 +602,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage',
-							tier3: '12 damage; I<2 weakened (save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage',
+								tier3: '12 damage; I<2 weakened (save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -616,8 +626,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'One or more dead minions (each target must have died during this encounter)',
-						effect: 'Each target revives with their full Stamina. They immediately die at the end of the encounter or if the death cultist is killed. A target can be revived multiple times by this ability.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target revives with their full Stamina. They immediately die at the end of the encounter or if the death cultist is killed. A target can be revived multiple times by this ability.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -664,14 +675,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						],
 						target: 'One creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage',
-							tier3: '12 damage'
-						}),
-						effect: 'This ability deals an additional 2 damage if the scoundrel has an edge on the power roll.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage',
+								tier3: '12 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability deals an additional 2 damage if the scoundrel has an edge on the power roll.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -683,8 +695,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						distance: [],
 						target: '',
 						cost: 5,
-						effect: 'The scoundrel uses Rapier & Dagger targeting three creatures or objects. They can shift 2 before or after each strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The scoundrel uses Rapier & Dagger targeting three creatures or objects. They can shift 2 before or after each strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -731,13 +744,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createRanged(15)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '7 lightning damage',
-							tier2: '10 lightning damage',
-							tier3: '13 lightning damage'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '7 lightning damage',
+								tier2: '10 lightning damage',
+								tier3: '13 lightning damage'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
@@ -755,14 +768,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 1 }) ],
 						target: 'All enemies and objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: 'Slide 2; M<0 slowed (save ends)',
-							tier2: 'Slide 4; M<1 slowed (save ends)',
-							tier3: 'Slide 6; M<2 slowed (save ends)'
-						}),
-						effect: 'The gust of wind disperses gas or vapor and extinguishes any flames, including persistent effects.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: 'Slide 2; M<0 slowed (save ends)',
+								tier2: 'Slide 4; M<1 slowed (save ends)',
+								tier3: 'Slide 6; M<2 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The gust of wind disperses gas or vapor and extinguishes any flames, including persistent effects.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -815,14 +829,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createRanged(15)
 						],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '6 damage',
-							tier2: '9 damage',
-							tier3: '12 damage'
-						}),
-						effect: 'The trickshot ignores cover and concealment.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '6 damage',
+								tier2: '9 damage',
+								tier3: '12 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The trickshot ignores cover and concealment.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -875,14 +889,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 })
 						],
 						target: 'All enemies in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage; M<1 slowed (save ends)',
-							tier2: '6 damage; M<2 slowed (save ends)',
-							tier3: '8 damage; M<3 slowed (save ends)'
-						}),
-						effect: 'An ally within 10 of the blackguard can make a free strike.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 damage; M<1 slowed (save ends)',
+								tier2: '6 damage; M<2 slowed (save ends)',
+								tier3: '8 damage; M<3 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('An ally within 10 of the blackguard can make a free strike.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -899,8 +913,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
-						effect: 'The target is marked until the start of the blackguard’s next turn. The blackguard and each of their allies gain an edge on abilities used against targets marked by the blackguard.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is marked until the start of the blackguard’s next turn. The blackguard and each of their allies gain an edge on abilities used against targets marked by the blackguard.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -923,8 +938,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createMelee(1)
 						],
 						target: 'Self or one ally',
-						effect: 'The damage is halved.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The damage is halved.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -935,8 +951,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The blackguard shifts up to their speed. During or after this movement, they can use their Zweihander Swing twice.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The blackguard shifts up to their speed. During or after this movement, they can use their Zweihander Swing twice.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -947,8 +964,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
-						effect: 'Slide 5.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Slide 5.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -959,8 +977,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'Each enemy in the cube',
-						effect: 'The blackguard uses their Zweihander Swing against each enemy in the area. Each ally within 5 of the area can make a free strike against any enemy in the area.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The blackguard uses their Zweihander Swing against each enemy in the area. Each ally within 5 of the area can make a free strike against any enemy in the area.')
+						]
 					})
 				})
 			]
@@ -1002,14 +1021,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createMelee(3)
 						],
 						target: 'Two enemies or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '8 damage; pull 1',
-							tier2: '12 damage; pull 2',
-							tier3: '15 damage; pull 3'
-						}),
-						effect: 'A target who is adjacent to the bandit chief after the ability resolves takes 5 corruption damage.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '8 damage; pull 1',
+								tier2: '12 damage; pull 2',
+								tier3: '15 damage; pull 3'
+							})),
+							FactoryLogic.createAbilitySectionText('A target who is adjacent to the bandit chief after the ability resolves takes 5 corruption damage.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -1026,13 +1045,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One enemy or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: 'Push 1; M<1 prone',
-							tier2: 'Push 2; M<2 prone',
-							tier3: 'Push 3; M<3 prone'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: 'Push 1; M<1 prone',
+								tier2: 'Push 2; M<2 prone',
+								tier3: 'Push 3; M<3 prone'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -1051,8 +1070,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.distance.createSelf()
 						],
 						target: 'Self',
-						effect: 'The bandit chief takes 4 corruption damage and increases the result of the power roll by one tier.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The bandit chief takes 4 corruption damage and increases the result of the power roll by one tier.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1073,8 +1093,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies in the hurst',
-						effect: 'Each target makes a ranged free strike',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target makes a ranged free strike')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1085,8 +1106,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies in the burst',
-						effect: 'Each target shifts up to their speed. Until the end of the encounter, the bandit chief and all allies have damage immunity 2 while adjacent to a target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed. Until the end of the encounter, the bandit chief and all allies have damage immunity 2 while adjacent to a target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1097,8 +1119,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'Shift 10. During or after this movement, the bandit chief can use their Whip & Magic Longsword against up to four targets. Each ally adjacent to a target can make a free strike against them.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Shift 10. During or after this movement, the bandit chief can use their Whip & Magic Longsword against up to four targets. Each ally adjacent to a target can make a free strike against them.')
+						]
 					})
 				})
 			]
@@ -1128,13 +1151,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						],
 						target: 'One creature or object',
 						cost: 'signature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 2,
-							tier1: '5 damage',
-							tier2: '7 damage',
-							tier3: '9 damage; grabbed'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '7 damage',
+								tier3: '9 damage; grabbed'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -1145,8 +1169,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [],
 						distance: [],
 						target: '',
-						effect: 'The hawk moves up to their speed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The hawk moves up to their speed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1179,14 +1204,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '3 damage',
-							tier2: '5 damage',
-							tier3: '7 damage'
-						}),
-						effect: 'The attack gains an edge if the warrior is adjacent to their mentor.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '3 damage',
+								tier2: '5 damage',
+								tier3: '7 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The attack gains an edge if the warrior is adjacent to their mentor.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -1204,8 +1230,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The warrior’s mentor',
-						effect: 'The warrior and the mentor switch places. The warrior becomes the attack’s new target and gains 2 shields against the attack.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The warrior and the mentor switch places. The warrior becomes the attack’s new target and gains 2 shields against the attack.')
+						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
@@ -1216,14 +1243,15 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '7 damage',
-							tier2: '11 damage',
-							tier3: '16 damage'
-						}),
-						effect: 'Until the start of the warrior’s next turn, the warrior and allies within 1 gain 1 shield.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '7 damage',
+								tier2: '11 damage',
+								tier3: '16 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('Until the start of the warrior’s next turn, the warrior and allies within 1 gain 1 shield.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -1234,13 +1262,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '12 damage',
-							tier2: '18 damage',
-							tier3: '24 damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '12 damage',
+								tier2: '18 damage',
+								tier3: '24 damage'
+							}))
+						]
 					})
 				})
 			}

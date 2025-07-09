@@ -104,14 +104,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 damage; push 1',
-							tier2: '6 damage; push 2',
-							tier3: '7 damage; push 3'
-						}),
-						effect: 'A target adjacent ot 2 or more clerks is taunted (EoT).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 damage; push 1',
+								tier2: '6 damage; push 2',
+								tier3: '7 damage; push 3'
+							})),
+							FactoryLogic.createAbilitySectionText('A target adjacent ot 2 or more clerks is taunted (EoT).')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -149,14 +150,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 fire damage',
-							tier2: '5 fire damage; R<2 target has a bane on their next strike',
-							tier3: '6 fire damage; R<3 target has a bane on their next strike'
-						}),
-						effect: 'A non-minion devil within 5 has an edge on their next strike.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 fire damage',
+								tier2: '5 fire damage; R<2 target has a bane on their next strike',
+								tier3: '6 fire damage; R<3 target has a bane on their next strike'
+							})),
+							FactoryLogic.createAbilitySectionText('A non-minion devil within 5 has an edge on their next strike.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -194,14 +196,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '3 corruption damage',
-							tier2: '5 corruption damage; slowed (EoT)',
-							tier3: '6 corruption damage; slowed (EoT)'
-						}),
-						effect: 'Shift 1.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 corruption damage',
+								tier2: '5 corruption damage; slowed (EoT)',
+								tier3: '6 corruption damage; slowed (EoT)'
+							})),
+							FactoryLogic.createAbilitySectionText('Shift 1.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -238,14 +241,14 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '10 fire damage',
-							tier2: '15 fire damage; A<2 burning (save ends)',
-							tier3: '18 fire damage; A<3 burning (save ends)'
-						}),
-						effect: 'A burning creature or object takes 1d6 fire damage at the start of each of their turns until the condition ends.',
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '10 fire damage',
+								tier2: '15 fire damage; A<2 burning (save ends)',
+								tier3: '18 fire damage; A<3 burning (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A burning creature or object takes 1d6 fire damage at the start of each of their turns until the condition ends.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -263,14 +266,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in the burst',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 damage; slide 1',
-							tier2: '10 damage; slide 3',
-							tier3: '12 damage; slide 5'
-						}),
-						effect: 'M<2 the target slides an additional 3 squares.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '6 damage; slide 1',
+								tier2: '10 damage; slide 3',
+								tier3: '12 damage; slide 5'
+							})),
+							FactoryLogic.createAbilitySectionText('M<2 the target slides an additional 3 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -281,8 +285,9 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
 						target: 'One burning creature',
-						effect: 'The target takes 6 fire damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target takes 6 fire damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -344,14 +349,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '9 damage',
-							tier2: '14 damage; A<2 slowed (save ends)',
-							tier3: '17 damage; A<3 slowed (save ends)'
-						}),
-						effect: 'If the targets are adjacent to each other, the ability deals an additional 3 damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '9 damage',
+								tier2: '14 damage; A<2 slowed (save ends)',
+								tier3: '17 damage; A<3 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('If the targets are adjacent to each other, the ability deals an additional 3 damage.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -362,14 +368,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '1 creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '6 damage; M<1 prone',
-							tier2: '11 damage; M<2 prone and can\'t stand (save ends)',
-							tier3: '14 damage; M<3 prone and can\'t stand  (save ends)'
-						}),
-						effect: 'If the legate charges while using this ability, they ignore difficult terrain and target each creature and object they move through with the power roll (but not its additional effects).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '6 damage; M<1 prone',
+								tier2: '11 damage; M<2 prone and can\'t stand (save ends)',
+								tier3: '14 damage; M<3 prone and can\'t stand  (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('If the legate charges while using this ability, they ignore difficult terrain and target each creature and object they move through with the power roll (but not its additional effects).')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -380,8 +387,9 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature',
-						effect: 'The target is taunted by the legate (save ends). The legate can only have one creature taunted at a time.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The target is taunted by the legate (save ends). The legate can only have one creature taunted at a time.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -443,14 +451,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '10 fire damage; I<1 frightened (save ends)',
-							tier2: '15 fire damage; I<2 frightened (save ends)',
-							tier3: '18 fire damage; I<3 frightened (save ends)'
-						}),
-						effect: 'The adjudicator can slide a target frightened by this ability 2 squares.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '10 fire damage; I<1 frightened (save ends)',
+								tier2: '15 fire damage; I<2 frightened (save ends)',
+								tier3: '18 fire damage; I<3 frightened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The adjudicator can slide a target frightened by this ability 2 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -480,8 +489,9 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally or one frightened creature',
-						effect: 'The adjudicator switches places with the target.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The adjudicator switches places with the target.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -543,14 +553,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '10 damage',
-							tier2: '15 damage',
-							tier3: '18 damage; R<3 dazed (save ends)'
-						}),
-						effect: 'The magistrate can shift up to 3 squares before or after using this ability, or between targets.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '10 damage',
+								tier2: '15 damage',
+								tier3: '18 damage; R<3 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The magistrate can shift up to 3 squares before or after using this ability, or between targets.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -561,14 +572,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 3,
-							tier1: '11 damage',
-							tier2: '17 damage',
-							tier3: '21 damage'
-						}),
-						effect: 'This ability has a double edge if the magistrate was hidden before using this ability and deals an additional 5 damage if the target is dazed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '11 damage',
+								tier2: '17 damage',
+								tier3: '21 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('This ability has a double edge if the magistrate was hidden before using this ability and deals an additional 5 damage if the target is dazed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -579,8 +591,9 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
-						effect: 'The magistrate becomes hidden, even if they are being observed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The magistrate becomes hidden, even if they are being observed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -642,13 +655,13 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
 						target: 'Three creatures or objects',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: '10 damage; R<2 the target can\'t hide (save ends)',
-							tier2: '15 damage; R<3 the target can\'t hide (save ends)',
-							tier3: '19 damage; R<4 the target can\'t hide(save ends)'
-						}),
 						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '10 damage; R<2 the target can\'t hide (save ends)',
+								tier2: '15 damage; R<3 the target can\'t hide (save ends)',
+								tier3: '19 damage; R<4 the target can\'t hide(save ends)'
+							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -665,14 +678,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
 						target: 'Two creatures',
-						powerRoll: FactoryLogic.createPowerRoll({
-							bonus: 4,
-							tier1: 'I<2 charmed (save ends)',
-							tier2: 'I<3 charmed (save ends)',
-							tier3: 'I<4 charmed (save ends)'
-						}),
-						effect: 'Until the condition ends, a charmed creature considers the archdevil an ally, and the archdevil can spend 1 malice on their turn to force move a charmed creature up to 3 squares.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: 'I<2 charmed (save ends)',
+								tier2: 'I<3 charmed (save ends)',
+								tier3: 'I<4 charmed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('Until the condition ends, a charmed creature considers the archdevil an ally, and the archdevil can spend 1 malice on their turn to force move a charmed creature up to 3 squares.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -739,8 +753,9 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
 						],
 						target: 'Self and all allies in the burst',
-						effect: 'Each target shifts up to their speed. The archdevil can force move each charmed creature up to half their speed.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed. The archdevil can force move each charmed creature up to half their speed.')
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -751,8 +766,9 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
 						target: '1 ally or charmed creature',
-						effect: 'The archdevil swaps places with the target. Then, each ally and charmed creature within 12 of the archdevil make a free strike against a target of the archdevil’s choice.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The archdevil swaps places with the target. Then, each ally and charmed creature within 12 of the archdevil make a free strike against a target of the archdevil’s choice.')
+						]
 					})
 				})
 			]
@@ -780,13 +796,14 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '6 fire or corruption damage',
-							tier2: '10 fire or corruption damage',
-							tier3: '13 fire or corruption damage'
-						}),
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '6 fire or corruption damage',
+								tier2: '10 fire or corruption damage',
+								tier3: '13 fire or corruption damage'
+							}))
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
@@ -797,8 +814,9 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering creature',
-						effect: 'If the creature takes the defector’s offer, the creature is reduced to 1 Stamina instead of 0. If they do so, on their next turn the defector controls the creature’s move action, and the creature must use a Signature Action against a creature of the defector’s choice or immediately die. The Director must spend 3 Malice to have the creature turn down this offer.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('If the creature takes the defector’s offer, the creature is reduced to 1 Stamina instead of 0. If they do so, on their next turn the defector controls the creature’s move action, and the creature must use a Signature Action against a creature of the defector’s choice or immediately die. The Director must spend 3 Malice to have the creature turn down this offer.')
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -816,14 +834,15 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies',
-						powerRoll: FactoryLogic.createPowerRoll({
-							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '6 corruption damage',
-							tier2: '10 corruption damage',
-							tier3: '14 corruption damage'
-						}),
-						effect: 'If the defector’s mentor is in the area, they burn with harmless flame until the end of the defector’s next turn. While this fire burns, the mentor has fire immunity 10 and any creature that hits the mentor takes 10 fire damage.',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '6 corruption damage',
+								tier2: '10 corruption damage',
+								tier3: '14 corruption damage'
+							})),
+							FactoryLogic.createAbilitySectionText('If the defector’s mentor is in the area, they burn with harmless flame until the end of the defector’s next turn. While this fire burns, the mentor has fire immunity 10 and any creature that hits the mentor takes 10 fire damage.')
+						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
@@ -834,8 +853,9 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: '-',
-						effect: 'The area burns with infernal fire until the end of the devil’s next turn. An enemy of the defector that ends their turn in the area takes 10 fire damage and is P (medium) frightened (save ends).',
-						sections: []
+						sections: [
+							FactoryLogic.createAbilitySectionText('The area burns with infernal fire until the end of the devil’s next turn. An enemy of the defector that ends their turn in the area takes 10 fire damage and is P (medium) frightened (save ends).')
+						]
 					})
 				})
 			}

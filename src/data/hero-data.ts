@@ -4,6 +4,7 @@ export class HeroData {
 	static dwarfFury = {
 		id: 'ojZeuF7Jjqw66Di1',
 		name: 'Keth',
+		picture: null,
 		folder: '',
 		settingIDs: [
 			'',
@@ -2210,6 +2211,7 @@ export class HeroData {
 	static highElfTactician = {
 		id: '7it9NqSWNlAo8JeB',
 		name: 'The Earth Cries The Skies Divide',
+		picture: null,
 		folder: '',
 		settingIDs: [
 			'',
@@ -4283,6 +4285,7 @@ export class HeroData {
 	static humanCensor = {
 		id: 'qrjxZPFJhWdJiZyk',
 		name: 'Jennet',
+		picture: null,
 		folder: '',
 		settingIDs: [
 			'',
@@ -6557,6 +6560,7 @@ export class HeroData {
 	static humanNull = {
 		id: '75cnGojH6jMwHJQq',
 		name: 'Ashley',
+		picture: null,
 		folder: '',
 		settingIDs: [
 			'',
@@ -9032,6 +9036,7 @@ export class HeroData {
 	static humanTalent = {
 		id: 'utdBEimMHFG2Em3P',
 		name: 'Garrick',
+		picture: null,
 		folder: '',
 		settingIDs: [
 			'',
@@ -11844,6 +11849,7 @@ export class HeroData {
 	static orcConduit = {
 		id: 'peDWE02tDZH9CK2P',
 		name: 'Khettovek',
+		picture: null,
 		folder: '',
 		settingIDs: [
 			'',
@@ -14093,6 +14099,7 @@ export class HeroData {
 	static polderElementalist = {
 		id: 'mr3vxPGN0NkoVsZe',
 		name: 'Bethell',
+		picture: null,
 		folder: '',
 		settingIDs: [
 			'',
@@ -17092,6 +17099,7 @@ export class HeroData {
 	static polderShadow = {
 		id: 'DKm8hWT6X5PNSpVz',
 		name: 'Bellamy',
+		picture: null,
 		folder: '',
 		settingIDs: [
 			'',
@@ -19513,6 +19521,7 @@ export class HeroData {
 	static wodeElfTroubadour = {
 		id: 'HVPFufs9Uv4PWrKi',
 		name: 'Lliarion',
+		picture: null,
 		folder: '',
 		settingIDs: [
 			'',

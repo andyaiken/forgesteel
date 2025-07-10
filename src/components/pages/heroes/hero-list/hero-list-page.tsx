@@ -75,7 +75,7 @@ export const HeroListPage = (props: Props) => {
 			<div className='hero-section-row'>
 				{
 					list.map(hero => (
-						<SelectablePanel key={hero.id} onSelect={() => navigation.goToHeroView(hero.id)}>
+						<SelectablePanel key={hero.id} watermark={hero.picture || undefined} onSelect={() => navigation.goToHeroView(hero.id)}>
 							<HeroPanel hero={hero} sourcebooks={props.sourcebooks} options={props.options} />
 						</SelectablePanel>
 					))

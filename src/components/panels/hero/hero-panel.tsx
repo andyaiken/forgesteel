@@ -1,4 +1,5 @@
 import { Col, Divider, Flex, Row, Segmented, Select, Space, Statistic, Tag } from 'antd';
+import { HeroToken, MonsterInfo } from '../../controls/token/token';
 import { Pill, ResourcePill } from '../../controls/pill/pill';
 import { Ability } from '../../../models/ability';
 import { AbilityData } from '../../../data/ability-data';
@@ -33,7 +34,6 @@ import { HeroStatePage } from '../../../enums/hero-state-page';
 import { Kit } from '../../../models/kit';
 import { Markdown } from '../../controls/markdown/markdown';
 import { Monster } from '../../../models/monster';
-import { MonsterInfo } from '../../controls/token/token';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { RulesPage } from '../../../enums/rules-page';
@@ -79,6 +79,7 @@ export const HeroPanel = (props: Props) => {
 				<HeaderText
 					style={{ marginTop: '0' }}
 					level={props.options.compactView ? 2 : 1}
+					ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={props.options.compactView ? 21 : 34} /> : null}
 					tags={props.hero.folder ? [ props.hero.folder ] : []}
 				>
 					{props.hero.name || 'Unnamed Hero'}
@@ -1088,11 +1089,17 @@ export const HeroPanel = (props: Props) => {
 		if (props.mode !== PanelMode.Full) {
 			return (
 				<div className='hero-panel compact'>
-					<HeaderText level={1} tags={props.hero.folder ? [ props.hero.folder ] : []}>{props.hero.name || 'Unnamed Hero'}</HeaderText>
+					<HeaderText
+						level={1}
+						ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={34} /> : null}
+						tags={props.hero.folder ? [ props.hero.folder ] : []}
+					>
+						{props.hero.name || 'Unnamed Hero'}
+					</HeaderText>
 					<Flex align='flex-start' justify='space-evenly'>
-						<Field orientation='vertical' label='Ancestry' value={props.hero.ancestry?.name || 'No ancestry'} />
-						<Field orientation='vertical' label='Career' value={props.hero.career?.name || 'No career'} />
-						<Field orientation='vertical' label='Class' value={props.hero.class ? `${props.hero.class.name} (${props.hero.class.level})` : 'No class'} />
+						{props.hero.ancestry ? <Field orientation='vertical' label='Ancestry' value={props.hero.ancestry.name} /> : null}
+						{props.hero.career ? <Field orientation='vertical' label='Career' value={props.hero.career.name} /> : null}
+						{props.hero.class ? <Field orientation='vertical' label='Class' value={`${props.hero.class.name} (${props.hero.class.level})`} /> : null}
 					</Flex>
 				</div>
 			);

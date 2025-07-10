@@ -11,6 +11,7 @@ import './token.scss';
 
 interface Props {
 	name: string;
+	picture?: string;
 	role: MonsterRoleType;
 	type?: string;
 	isDefeated?: boolean;
@@ -22,7 +23,7 @@ export const Token = (props: Props) => {
 	try {
 		const size = props.size ?? 22;
 
-		const initials = props.name
+		const monogram = props.name
 			.toLowerCase()
 			.split(' ')
 			.filter(token => ![ 'a', 'an', 'the', 'in', 'on', 'of' ].includes(token))
@@ -55,7 +56,12 @@ export const Token = (props: Props) => {
 					className={innerClassName}
 					style={{ fontSize: `${size * 0.3}px`, letterSpacing: `-${size * 0.01}px` }}
 				>
-					{initials}
+					{
+						props.picture ?
+							<img className='portrait' src={props.picture} title={props.name} />
+							:
+							monogram
+					}
 				</div>
 			</div>
 		);
@@ -75,6 +81,7 @@ export const HeroToken = (props: HeroTokenProps) => {
 	return (
 		<Token
 			name={props.hero.name || 'Hero'}
+			picture={props.hero.picture || undefined}
 			role={MonsterRoleType.NoRole}
 			type='hero'
 			isDefeated={props.hero.state.defeated}

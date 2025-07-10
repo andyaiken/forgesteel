@@ -49,6 +49,7 @@ export interface Hero {
 	id: string;
 	name: string;
 
+	picture: string | null;
 	folder: string;
 	settingIDs: string[];
 

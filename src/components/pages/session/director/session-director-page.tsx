@@ -2,6 +2,7 @@ import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
 import { DownOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
 import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
+import { Counter } from '../../../../models/counter';
 import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
@@ -85,6 +86,66 @@ export const SessionDirectorPage = (props: Props) => {
 	};
 
 	const getSelectedContent = () => {
+		const updateEncounter = (encounter: Encounter) => {
+			const copy = Utils.copy(session);
+
+			const index = copy.encounters.findIndex(n => n.id === encounter.id);
+			if (index !== -1) {
+				copy.encounters[index] = encounter;
+			}
+
+			setSession(copy);
+			props.updateSession(copy);
+		};
+
+		const updateMontage = (montage: Montage) => {
+			const copy = Utils.copy(session);
+
+			const index = copy.montages.findIndex(n => n.id === montage.id);
+			if (index !== -1) {
+				copy.montages[index] = montage;
+			}
+
+			setSession(copy);
+			props.updateSession(copy);
+		};
+
+		const updateNegotiation = (negotiation: Negotiation) => {
+			const copy = Utils.copy(session);
+
+			const index = copy.negotiations.findIndex(n => n.id === negotiation.id);
+			if (index !== -1) {
+				copy.negotiations[index] = negotiation;
+			}
+
+			setSession(copy);
+			props.updateSession(copy);
+		};
+
+		const updateMap = (map: TacticalMap) => {
+			const copy = Utils.copy(session);
+
+			const index = copy.tacticalMaps.findIndex(tm => tm.id === map.id);
+			if (index !== -1) {
+				copy.tacticalMaps[index] = map;
+			}
+
+			setSession(copy);
+			props.updateSession(copy);
+		};
+
+		const updateCounter = (counter: Counter) => {
+			const copy = Utils.copy(session);
+
+			const index = copy.counters.findIndex(c => c.id === counter.id);
+			if (index !== -1) {
+				copy.counters[index] = counter;
+			}
+
+			setSession(copy);
+			props.updateSession(copy);
+		};
+
 		if (selectedElementID) {
 			const encounter = session.encounters.find(e => e.id === selectedElementID);
 			if (encounter) {
@@ -95,17 +156,7 @@ export const SessionDirectorPage = (props: Props) => {
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
 							options={props.options}
-							onChange={encounter => {
-								const copy = Utils.copy(session);
-
-								const index = copy.encounters.findIndex(n => n.id === encounter.id);
-								if (index !== -1) {
-									copy.encounters[index] = encounter;
-								}
-
-								setSession(copy);
-								props.updateSession(copy);
-							}}
+							onChange={updateEncounter}
 						/>
 					</div>
 				);
@@ -117,17 +168,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<div className='session-page-content-container'>
 						<MontageRunPanel
 							montage={montage}
-							onChange={montage => {
-								const copy = Utils.copy(session);
-
-								const index = copy.montages.findIndex(n => n.id === montage.id);
-								if (index !== -1) {
-									copy.montages[index] = montage;
-								}
-
-								setSession(copy);
-								props.updateSession(copy);
-							}}
+							onChange={updateMontage}
 						/>
 					</div>
 				);
@@ -139,17 +180,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<div className='session-page-content-container'>
 						<NegotiationRunPanel
 							negotiation={negotiation}
-							onChange={negotiation => {
-								const copy = Utils.copy(session);
-
-								const index = copy.negotiations.findIndex(n => n.id === negotiation.id);
-								if (index !== -1) {
-									copy.negotiations[index] = negotiation;
-								}
-
-								setSession(copy);
-								props.updateSession(copy);
-							}}
+							onChange={updateNegotiation}
 						/>
 					</div>
 				);
@@ -167,29 +198,9 @@ export const SessionDirectorPage = (props: Props) => {
 							encounters={session.encounters}
 							sourcebooks={props.sourcebooks}
 							mode={PanelMode.Full}
-							updateMap={map => {
-								const copy = Utils.copy(session);
-
-								const index = copy.tacticalMaps.findIndex(tm => tm.id === map.id);
-								if (index !== -1) {
-									copy.tacticalMaps[index] = map;
-								}
-
-								setSession(copy);
-								props.updateSession(copy);
-							}}
+							updateMap={updateMap}
 							updateHero={props.updateHero}
-							updateEncounter={encounter => {
-								const copy = Utils.copy(session);
-
-								const index = copy.encounters.findIndex(enc => enc.id === encounter.id);
-								if (index !== -1) {
-									copy.encounters[index] = encounter;
-								}
-
-								setSession(copy);
-								props.updateSession(copy);
-							}}
+							updateEncounter={updateEncounter}
 						/>
 					</div>
 				);
@@ -201,17 +212,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<div className='session-page-content-container'>
 						<CounterRunPanel
 							counter={counter}
-							onChange={counter => {
-								const copy = Utils.copy(session);
-
-								const index = copy.counters.findIndex(c => c.id === counter.id);
-								if (index !== -1) {
-									copy.counters[index] = counter;
-								}
-
-								setSession(copy);
-								props.updateSession(copy);
-							}}
+							onChange={updateCounter}
 						/>
 					</div>
 				);

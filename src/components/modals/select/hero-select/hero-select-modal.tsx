@@ -70,6 +70,7 @@ export const HeroSelectModal = (props: Props) => {
 					return heroes.map(h => (
 						<SelectablePanel
 							key={h.id}
+							watermark={h.picture || undefined}
 							onSelect={() => {
 								props.onSelect([ h ]);
 							}}

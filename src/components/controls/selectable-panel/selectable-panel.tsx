@@ -5,6 +5,7 @@ import './selectable-panel.scss';
 
 interface Props {
 	children: ReactNode;
+	watermark?: string;
 	showShadow?: boolean;
 	disabled?: boolean;
 	selected?: boolean;
@@ -34,6 +35,7 @@ export const SelectablePanel = (props: Props) => {
 
 		return (
 			<div className={className} style={props.style} onClick={props.disabled ? undefined : props.onSelect}>
+				{props.watermark ? <img className='watermark' src={props.watermark} /> : null}
 				{props.children}
 				{props.action ? <Button className='action-button' onClick={e => { e.stopPropagation(); props.action!.onClick(); }}>{props.action.label}</Button> : null}
 			</div>

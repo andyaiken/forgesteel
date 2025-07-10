@@ -1,0 +1,12 @@
+.details-section {
+	display: block;
+
+	.portrait {
+		border: 3px solid rgba(5, 5, 5, 0.2);
+		border-radius: 50%;
+		width: 200px;
+		height: 200px;
+		object-fit: cover;
+		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+	}
+}

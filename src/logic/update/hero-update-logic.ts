@@ -9,6 +9,10 @@ import { SourcebookLogic } from '../sourcebook-logic';
 
 export class HeroUpdateLogic {
 	static updateHero = (hero: Hero, sourcebooks: Sourcebook[]) => {
+		if (hero.picture === undefined) {
+			hero.picture = null;
+		}
+
 		if (hero.folder === undefined) {
 			hero.folder = '';
 		}

@@ -133,7 +133,7 @@ export const HeroPanel = (props: Props) => {
 			const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 			const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
 
-			const useRows = isSmall || (props.options.singlePage && props.options.compactView);
+			const useRows = props.options.singlePage && props.options.compactView;
 
 			const getTrigger = (ability: Ability) => {
 				const showTarget = ability.type.trigger.toLowerCase().includes('the target');
@@ -372,7 +372,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const getStatsSection = () => {
-			const useRows = isSmall || props.options.compactView;
+			const useRows = props.options.compactView;
 
 			const sizeSmall = {
 				xs: 24,
@@ -629,7 +629,7 @@ export const HeroPanel = (props: Props) => {
 				incitingIncident = props.hero.career.incitingIncidents.options.find(o => o.id === props.hero.career?.incitingIncidents.selectedID) || null;
 			}
 
-			const useRows = isSmall || props.options.compactView;
+			const useRows = props.options.compactView;
 
 			return (
 				<div className={`choices-section ${useRows ? 'compact' : ''}`}>
@@ -854,7 +854,7 @@ export const HeroPanel = (props: Props) => {
 			const mainFeatures = features.filter(f => !props.options.separateInventoryFeatures || !itemNames.includes(f.source));
 			const inventoryFeatures = features.filter(f => props.options.separateInventoryFeatures && itemNames.includes(f.source));
 
-			const useRows = isSmall || props.options.compactView;
+			const useRows = props.options.compactView;
 
 			return (
 				<div className='features-section'>
@@ -940,7 +940,7 @@ export const HeroPanel = (props: Props) => {
 			const nonStandard = abilities.filter(a => a.source !== 'Standard');
 			const standard = abilities.filter(a => a.source === 'Standard');
 
-			const useRows = isSmall || props.options.compactView;
+			const useRows = props.options.compactView;
 
 			return (
 				<div className='abilities-section'>

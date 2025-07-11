@@ -1,6 +1,6 @@
 import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -23,6 +23,8 @@ import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { ItemType } from '../../../../enums/item-type';
+import { KitArmor } from '../../../../enums/kit-armor';
+import { KitWeapon } from '../../../../enums/kit-weapon';
 import { Monster } from '../../../../models/monster';
 import { MonsterEditPanel } from '../monster-edit/monster-edit-panel';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
@@ -259,6 +261,12 @@ export const FeatureEditPanel = (props: Props) => {
 					count: 1,
 					selected: []
 				} as FeaturePerkData;
+				break;
+			case FeatureType.Proficiency:
+				data = {
+					weapons: [],
+					armor: []
+				} as FeatureProficiencyData;
 				break;
 			case FeatureType.Size:
 				data = {
@@ -560,6 +568,18 @@ export const FeatureEditPanel = (props: Props) => {
 		const setDetails = (value: string) => {
 			const copy = Utils.copy(feature.data) as FeatureHeroicResourceData;
 			copy.details = value;
+			setData(copy);
+		};
+
+		const setProficiencyWeapons = (value: KitWeapon[]) => {
+			const copy = Utils.copy(feature.data) as FeatureProficiencyData;
+			copy.weapons = value;
+			setData(copy);
+		};
+
+		const setProficiencyArmor = (value: KitArmor[]) => {
+			const copy = Utils.copy(feature.data) as FeatureProficiencyData;
+			copy.armor = value;
 			setData(copy);
 		};
 
@@ -1649,6 +1669,53 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.Proficiency: {
+				const data = feature.data as FeatureProficiencyData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Weapons</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Weapons'
+							mode='multiple'
+							allowClear={true}
+							options={[ KitWeapon.Bow, KitWeapon.Ensnaring, KitWeapon.Heavy, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Polearm, KitWeapon.Unarmed, KitWeapon.Whip ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={data.weapons}
+							onChange={setProficiencyWeapons}
+						/>
+						<HeaderText>Armor</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Armor'
+							mode='multiple'
+							allowClear={true}
+							options={[ KitArmor.Heavy, KitArmor.Light, KitArmor.Medium, KitArmor.Shield ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={data.armor}
+							onChange={setProficiencyArmor}
+						/>
+					</Space>
+				);
+			}
 			case FeatureType.Size: {
 				const data = feature.data as FeatureSizeData;
 				return (
@@ -1881,6 +1948,7 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.LanguageChoice,
 			FeatureType.Multiple,
 			FeatureType.Perk,
+			FeatureType.Proficiency,
 			FeatureType.Size,
 			FeatureType.Skill,
 			FeatureType.SkillChoice,

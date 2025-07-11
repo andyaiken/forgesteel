@@ -13,6 +13,7 @@ export const timeRaider: MonsterGroup = {
 	id: 'monster-group-time-raider',
 	name: 'Time Raider',
 	description: 'The kuran’zoi (coor-AN-zoy), also called time raiders, are humanoids who make the Sea of Stars their home. Many kuran’zoi make their living as guides for travelers from other planes, while others survive on the Sea of Stars through piracy against interplanar vessels.',
+	picture: null,
 	information: [
 		{
 			id: 'time-raider-info-1',

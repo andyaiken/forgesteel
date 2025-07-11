@@ -11,6 +11,7 @@ export const lightbender: MonsterGroup = {
 	id: 'monster-group-lightbender',
 	name: 'lightbender',
 	description: 'Lightbenders prowl deserts, plains, forests—any sunbathed wilderness. Their adaptations make them skilled daylight predators. This monstrous creature’s fur bends and refracts light from the surrounding environment, producing mirages that distract and confuse their prey—hence their name.',
+	picture: null,
 	information: [
 		{
 			id: 'lightbender-info-1',

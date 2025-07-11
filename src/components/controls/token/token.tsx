@@ -119,6 +119,7 @@ export const MonsterToken = (props: MonsterTokenProps) => {
 	return (
 		<Token
 			name={MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+			picture={props.monster.picture || props.monsterGroup?.picture || undefined}
 			role={props.monster.role.type}
 			type='monster'
 			isDefeated={props.monster.state.defeated}

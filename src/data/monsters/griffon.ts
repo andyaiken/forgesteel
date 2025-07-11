@@ -11,6 +11,7 @@ export const griffon: MonsterGroup = {
 	id: 'monster-group-griffon',
 	name: 'Griffon',
 	description: 'With the head, front legs, and wings of a bird and the powerful body and haunches of a feline, the griffon hunts anything they desire—even other predators—though they prefer to eat birds, fish, and herd. Griffons sometimes misjudge their prey and attack humanoids passing through their mountain or forest territories. They also fiercely defend themselves against anyone who threatens or gets too close to their nests.',
+	picture: null,
 	information: [
 		{
 			id: 'griffon-info-1',

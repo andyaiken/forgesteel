@@ -13,6 +13,7 @@ export const shamblingMound: MonsterGroup = {
 The lush ground squelches under every footstep. Curtains of menacing vines block the way, and muffled groans echo distantly under the darkening canopy. By the time you realize the ground is moving, it’s too late— the shambling mound has devoured you.
 
 Found in overgrown swamps, stinking marshes, dense wodes, and dark, damp rainforests, the shambling mound is a wandering mass of vegetation that feeds on everything in their path.`,
+	picture: null,
 	information: [
 		{
 			id: 'shambling-mound-info-1',

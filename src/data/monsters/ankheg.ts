@@ -12,6 +12,7 @@ export const ankheg: MonsterGroup = {
 	description: `Pebbles dance as the ground quivers. A spray of rock and earth shatters the afternoon’s peace, and an ankheg blooms from the earth. Their mandibles drip sizzling acid as a talon impales their next meal: sometimes a fat sheep, other times a shepherd. 
 
 An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooked claws and serrated mandibles are fearsome weapons, but even more dangerous is the stream of caustic spittle they use to dissolve their prey.`,
+	picture: null,
 	information: [
 		{
 			id: 'ankheg-info-1',

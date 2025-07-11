@@ -13,6 +13,7 @@ export const human: MonsterGroup = {
 	id: 'monster-group-human',
 	name: 'Human',
 	description: 'Humans flourish in every habitable part of the world, from inviting coastal cities to unforgiving mountainous terrain. While most humans live quietly in peaceful communities, some are drawn to adventure by an unquenchable thirst for excitement or power.',
+	picture: null,
 	information: [
 		{
 			id: 'human-info-1',

@@ -686,19 +686,29 @@ export class HeroLogic {
 	};
 
 	static getArmorProficiencies = (hero: Hero) => {
-		return Collections.distinct(HeroLogic.getKits(hero).flatMap(k => k.armor), x => x);
+		return Collections.distinct([
+			...HeroLogic.getKits(hero).flatMap(k => k.armor),
+			...HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.Proficiency).flatMap(f => f.data.armor)
+		], x => x);
 	};
 
 	static getWeaponProficiencies = (hero: Hero) => {
-		return Collections.distinct(HeroLogic.getKits(hero).flatMap(k => k.weapon), x => x);
+		return Collections.distinct([
+			...HeroLogic.getKits(hero).flatMap(k => k.weapon),
+			...HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.Proficiency).flatMap(f => f.data.weapons)
+		], x => x);
 	};
 
 	static canUseItem = (hero: Hero, item: Item) => {
 		switch (item.type) {
-			case ItemType.LeveledArmor:
-				return HeroLogic.getArmorProficiencies(hero).some(a => item.keywords.includes(a));
-			case ItemType.LeveledWeapon:
-				return HeroLogic.getWeaponProficiencies(hero).some(w => item.keywords.includes(w));
+			case ItemType.LeveledArmor: {
+				const profs = HeroLogic.getArmorProficiencies(hero);
+				return profs.some(a => item.keywords.includes(a));
+			}
+			case ItemType.LeveledWeapon: {
+				const profs = HeroLogic.getWeaponProficiencies(hero);
+				return profs.some(w => item.keywords.includes(w));
+			}
 		}
 
 		return true;

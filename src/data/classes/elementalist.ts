@@ -6,6 +6,8 @@ import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { HeroClass } from '../../models/class';
+import { KitArmor } from '../../enums/kit-armor';
+import { KitWeapon } from '../../enums/kit-weapon';
 import { PerkList } from '../../enums/perk-list';
 import { SkillList } from '../../enums/skill-list';
 
@@ -131,6 +133,11 @@ Choose one of the following effects:
 										id: 'elementalist-1-7ab',
 										name: 'Enchantment of Battle',
 										description: 'You can wear light armor and wield light weapons effectively, even though you don’t have a kit. While you wield a light weapon, you gain a +1 damage bonus with weapon abilities, including free strikes. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this enchantment.'
+									}),
+									FactoryLogic.feature.createProficiency({
+										id: 'elementalist-1-7ac',
+										weapons: [ KitWeapon.Light ],
+										armor: [ KitArmor.Light ]
 									})
 								]
 							}),

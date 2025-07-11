@@ -12,6 +12,7 @@ export const olothec: MonsterGroup = {
 	id: 'monster-group-olothec',
 	name: 'Olothec',
 	description: 'Protean in form, beings of nearly pure intellect, the Old Ones think in alien geometric logic. Their name for themselves is unrecorded, but sages believe they are the oldest beings in the timescape and simply call them “The Old Ones.” Synlirii refer to them as olothec (OH-luh-thek)— “ancient enemies.” But some humanoid scholars have noted this term bears an uncanny similarity to another archaic synlirii word meaning “ancient ancestor.”',
+	picture: null,
 	information: [
 		{
 			id: 'olothec-info-1',

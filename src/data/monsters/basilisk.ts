@@ -12,6 +12,7 @@ export const basilisk: MonsterGroup = {
 	id: 'monster-group-basilisk',
 	name: 'Basilisk',
 	description: 'They’re great guard dogs. You just gotta raise ’em from eggs. No, no. Don’t look her in the eye. She turned the tax collector to stone the other day when he tried to pet her. She’s just a big softie, really.',
+	picture: null,
 	information: [
 		{
 			id: 'basilisk-info-1',

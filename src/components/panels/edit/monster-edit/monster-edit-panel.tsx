@@ -1,5 +1,5 @@
-import { Button, Divider, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs, Upload } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
@@ -61,6 +61,13 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setPicture = (value: string | null) => {
+			const copy = Utils.copy(monster);
+			copy.picture = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
 		const setRandomName = () => {
 			if (props.monsterGroup && props.monsterGroup.name) {
 				setName(`${props.monsterGroup.name} ${NameGenerator.generateName()}`);
@@ -82,6 +89,36 @@ export const MonsterEditPanel = (props: Props) => {
 				/>
 				<HeaderText>Description</HeaderText>
 				<MultiLine label='Description' value={monster.description} onChange={setDescription} />
+				<HeaderText>Portrait</HeaderText>
+				{
+					monster.picture ?
+						<Flex align='center' justify='center' gap={10}>
+							<img className='portrait-edit' src={monster.picture} title='Portrait' />
+							<DangerButton mode='clear' onConfirm={() => setPicture(null)} />
+						</Flex>
+						:
+						<Upload
+							style={{ width: '100%' }}
+							accept='.png,.webp,.gif,.jpg,.jpeg,.svg'
+							showUploadList={false}
+							beforeUpload={file => {
+								const reader = new FileReader();
+								reader.onload = progress => {
+									if (progress.target) {
+										const content = progress.target.result as string;
+										setPicture(content);
+									}
+								};
+								reader.readAsDataURL(file);
+								return false;
+							}}
+						>
+							<Button>
+								<DownloadOutlined />
+								Choose a picture
+							</Button>
+						</Upload>
+				}
 			</Space>
 		);
 	};

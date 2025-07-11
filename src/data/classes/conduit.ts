@@ -4,6 +4,8 @@ import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { HeroClass } from '../../models/class';
+import { KitArmor } from '../../enums/kit-armor';
+import { KitWeapon } from '../../enums/kit-weapon';
 import { PerkList } from '../../enums/perk-list';
 import { SkillList } from '../../enums/skill-list';
 
@@ -224,6 +226,11 @@ For each piety spent, you can choose one of the following enhancements:
 										id: 'conduit-1-8db',
 										field: FeatureField.Stamina,
 										valuePerEchelon: 3
+									}),
+									FactoryLogic.feature.createProficiency({
+										id: 'conduit-1-8dc',
+										weapons: [ KitWeapon.Light ],
+										armor: [ KitArmor.Light ]
 									})
 								]
 							}),

@@ -13,7 +13,7 @@ export const giant: MonsterGroup = {
 	name: 'Giant',
 	description: `
 Supremely well adapted to harsh environments, giants thrive in extreme conditions. Fire giants build floating cities in the hearts of volcanic calderas, while stone giant villages dot the tallest mountains. Most people often go their entire lives blissfully unaware of the local tribe of giants living atop the nearby mountain range. This is for the best, as few “smallfolk” structures can survive even a handful of sufficiently motivated giants.`,
-
+	picture: null,
 	information: [
 		{
 			id: 'giant-info-1',

@@ -56,11 +56,19 @@ export class SourcebookUpdateLogic {
 		});
 
 		sourcebook.monsterGroups.forEach(group => {
+			if (group.picture === undefined) {
+				group.picture = null;
+			}
+
 			if (group.addOns === undefined) {
 				group.addOns = [];
 			}
 
 			group.monsters.forEach(monster => {
+				if (monster.picture === undefined) {
+					monster.picture = null;
+				}
+
 				if (monster.role.organization === undefined) {
 					monster.role.organization = MonsterOrganizationType.Platoon;
 				}

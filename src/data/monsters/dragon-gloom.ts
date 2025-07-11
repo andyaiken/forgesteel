@@ -12,6 +12,7 @@ export const dragonGloom: MonsterGroup = {
 	id: 'monster-group-dragon-gloom',
 	name: 'Dragon, Gloom',
 	description: 'Where twilight spills long and cold over the lands and chilling fog hangs heavy and wet through long autumns and winters, there you will find gloom dragons. Wreathed in churning shadows and glittering dark scales, gloom dragons bring with them heavy fog and mist that manifest hallucinations, trapping their prey in nightmares.',
+	picture: null,
 	information: [
 		{
 			id: 'dragon-gloom-info-1',

@@ -9,6 +9,7 @@ export const chimera: MonsterGroup = {
 	id: 'monster-group-chimera',
 	name: 'Chimera',
 	description: 'Massive flexing claws. Lashing draconic tail. Nimble leathery wings. And not one, but three menacing heads: a snarling lion, a helix-horned ram, and a dragon with fire sparking in its throat. Many see the chimera as an aggressor, but few know its origins as a divine guardian.',
+	picture: null,
 	information: [
 		{
 			id: 'chimera-info-1',

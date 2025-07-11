@@ -16,6 +16,7 @@ export const hobgoblin: MonsterGroup = {
 Also known as demogoblins, hobgoblins descend from ancient goblins who made a pact with an infernal power in exchange for increased size and strength. Each hobgoblin has fang-like tusks, and one or more horns protrude from their head.
 
 Like other humanoids, hobgoblins have no special inclination toward conquest, battle, or cruelty, and they can be found in all walks of life. But when the wicked among them fall on desperate times, some use their talents for the violence and subjugation of others.`,
+	picture: null,
 	information: [
 		{
 			id: 'hobgoblin-info-1',

@@ -11,6 +11,7 @@ export const elfShadow: MonsterGroup = {
 	id: 'monster-group-elf-shadow',
 	name: 'Elf, Shadow',
 	description: 'Long ago, the shadow elves of the manifold Equinox committed the Great Sin and for their impunity were exiled to Orden. The descendants of those elves now skulk about the World Below, searching for a means to return to their home.',
+	picture: null,
 	information: [
 		{
 			id: 'elf-shadow-info-1',

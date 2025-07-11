@@ -13,6 +13,7 @@ export const lordSyuul: MonsterGroup = {
 	id: 'monster-group-lord-syuul',
 	name: 'Lord Syuul',
 	description: 'Chief Design Architect of his nation’s body banks, the synliroi Lord Syuul (see-YOU-ull) seeks more material for his experiments. His spies, informants, and allies are always on the lookout for subjects with unique hereditary traits the Interlace might extract.',
+	picture: null,
 	information: [
 		{
 			id: 'lord-syuul-info-1',

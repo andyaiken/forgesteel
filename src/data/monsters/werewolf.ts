@@ -13,6 +13,7 @@ export const werewolf: MonsterGroup = {
 When you see the blood in their eyes, the werewolf is already upon you.
 
 Werewolves are shapeshifters filled with a need to rend and tear. They used to be ordinary humans, elves, polders, and the like. But when their feral compulsion takes control, they change into abominable beastment and sometimes massive wolves.`,
+	picture: null,
 	information: [
 		{
 			id: 'werewolf-info-1',

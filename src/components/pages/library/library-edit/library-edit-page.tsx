@@ -149,7 +149,7 @@ export const LibraryEditPage = (props: Props) => {
 	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
-	const getNameAndDescriptionSection = () => {
+	const getNameAndDescriptionSection = (includePicture: boolean) => {
 		const setName = (value: string) => {
 			const elementCopy = Utils.copy(element) as Element;
 			elementCopy.name = value;
@@ -167,6 +167,53 @@ export const LibraryEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		let picture = null;
+		if (includePicture) {
+			const monsterGroup = element as MonsterGroup;
+
+			const setPicture = (value: string | null) => {
+				const elementCopy = Utils.copy(element) as MonsterGroup;
+				elementCopy.picture = value;
+				setElement(elementCopy);
+				setDirty(true);
+			};
+
+			picture = (
+				<>
+					<HeaderText>Portrait</HeaderText>
+					{
+						monsterGroup.picture ?
+							<Flex align='center' justify='center' gap={10}>
+								<img className='portrait-edit' src={monsterGroup.picture} title='Portrait' />
+								<DangerButton mode='clear' onConfirm={() => setPicture(null)} />
+							</Flex>
+							:
+							<Upload
+								style={{ width: '100%' }}
+								accept='.png,.webp,.gif,.jpg,.jpeg,.svg'
+								showUploadList={false}
+								beforeUpload={file => {
+									const reader = new FileReader();
+									reader.onload = progress => {
+										if (progress.target) {
+											const content = progress.target.result as string;
+											setPicture(content);
+										}
+									};
+									reader.readAsDataURL(file);
+									return false;
+								}}
+							>
+								<Button>
+									<DownloadOutlined />
+									Choose a picture
+								</Button>
+							</Upload>
+					}
+				</>
+			);
+		}
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
@@ -180,6 +227,7 @@ export const LibraryEditPage = (props: Props) => {
 				/>
 				<HeaderText>Description</HeaderText>
 				<MultiLine label='Description' value={element.description} onChange={setDescription} />
+				{picture}
 			</Space>
 		);
 	};
@@ -2642,7 +2690,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '1',
 								label: 'Ancestry',
-								children: getNameAndDescriptionSection()
+								children: getNameAndDescriptionSection(false)
 							},
 							{
 								key: '2',
@@ -2659,7 +2707,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '1',
 								label: 'Culture',
-								children: getNameAndDescriptionSection()
+								children: getNameAndDescriptionSection(false)
 							},
 							{
 								key: '2',
@@ -2676,7 +2724,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '1',
 								label: 'Career',
-								children: getNameAndDescriptionSection()
+								children: getNameAndDescriptionSection(false)
 							},
 							{
 								key: '2',
@@ -2699,7 +2747,7 @@ export const LibraryEditPage = (props: Props) => {
 								{
 									key: '1',
 									label: 'Class',
-									children: getNameAndDescriptionSection()
+									children: getNameAndDescriptionSection(false)
 								},
 								{
 									key: '2',
@@ -2734,7 +2782,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '1',
 								label: 'Complication',
-								children: getNameAndDescriptionSection()
+								children: getNameAndDescriptionSection(false)
 							},
 							{
 								key: '2',
@@ -2751,7 +2799,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '1',
 								label: 'Domain',
-								children: getNameAndDescriptionSection()
+								children: getNameAndDescriptionSection(false)
 							},
 							{
 								key: '2',
@@ -2773,7 +2821,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '1',
 								label: 'Kit',
-								children: getNameAndDescriptionSection()
+								children: getNameAndDescriptionSection(false)
 							},
 							{
 								key: '2',
@@ -2818,7 +2866,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '1',
 								label: 'Terrain',
-								children: getNameAndDescriptionSection()
+								children: getNameAndDescriptionSection(false)
 							},
 							{
 								key: '2',
@@ -2850,7 +2898,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '1',
 								label: 'Title',
-								children: getNameAndDescriptionSection()
+								children: getNameAndDescriptionSection(false)
 							},
 							{
 								key: '2',
@@ -2872,7 +2920,7 @@ export const LibraryEditPage = (props: Props) => {
 							{
 								key: '1',
 								label: 'Item',
-								children: getNameAndDescriptionSection()
+								children: getNameAndDescriptionSection(false)
 							},
 							{
 								key: '2',
@@ -2905,7 +2953,7 @@ export const LibraryEditPage = (props: Props) => {
 								{
 									key: '1',
 									label: 'Monster Group',
-									children: getNameAndDescriptionSection()
+									children: getNameAndDescriptionSection(true)
 								},
 								{
 									key: '2',

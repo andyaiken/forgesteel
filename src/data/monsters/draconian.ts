@@ -16,6 +16,7 @@ export const draconian: MonsterGroup = {
 Draconians—or wyrmwights as some call them—are a people created through a obscure ritual known as Dracogenesis. Most draconians have an elemental affinity connected to their scales, which they can change given enough time and training.
 
 The draconians presented in this section aren’t a band, but five individual draconian warriors whose reputations precede them. You likely won’t find them all working together, but instead serving in other forces as high-ranking commanders.`,
+	picture: null,
 	information: [
 		{
 			id: 'draconian-info-1',

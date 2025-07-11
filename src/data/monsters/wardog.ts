@@ -12,7 +12,7 @@ export const warDog: MonsterGroup = {
 	id: 'monster-group-wardog',
 	name: 'War Dog',
 	description: 'Ajax’s War Dogs—brutal patchwork soldiers—owe their new lives to the Iron Saint, and fight for him fanatically. War Dog minions are the freshest recruits, possessing minimal patchwork qualities and generally treated as disposable. Those who survive a battle are rewarded with gifts from the Body Banks. Those who don’t survive become material for those Body Banks.',
-
+	picture: null,
 	information: [
 		{
 			id: 'wardog-info-1',

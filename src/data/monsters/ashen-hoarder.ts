@@ -12,6 +12,7 @@ export const ashenHoarder: MonsterGroup = {
 	id: 'monster-group-ashen-hoarder',
 	name: 'Ashen Hoarder',
 	description: 'Grave robbing is dangerous business, but necromancers need bodies for their experiments. To procure supplies and stay out of danger, these mages build ashen hoarders— hulking constructs made of magically reinforced humanoid bones.',
+	picture: null,
 	information: [
 		{
 			id: 'ashen-hoarder-info-1',

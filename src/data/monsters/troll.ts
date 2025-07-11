@@ -13,6 +13,7 @@ export const troll: MonsterGroup = {
 	id: 'monster-group-troll',
 	name: 'Troll',
 	description: 'The embodiment of carnivorous hunger, trolls rampage through the wild, leaving destruction in their wake. Tall and gangly, their mottled green skin is covered by a mane of matted hair that runs around their neck and down their back. In many ways, they resemble massive humanoids, but their exaggerated features belie this comparison; their lower jaw hangs unhinged and distended, and their long arms end in claws which drag along the ground as they walk.',
+	picture: null,
 	information: [
 		{
 			id: 'troll-info-1',

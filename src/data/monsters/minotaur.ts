@@ -11,6 +11,7 @@ export const minotaur: MonsterGroup = {
 	id: 'monster-group-minotaur',
 	name: 'Minotaur',
 	description: 'The fearsome minotaur is a study in contrasts. Their imposing humanoid body is muscular with patches of thick hair. Their head is that of a massive horned bull, and their soft eyes convey a soulful intelligence mingled with smoldering intensity.',
+	picture: null,
 	information: [
 		{
 			id: 'minotaur-info-1',

@@ -10,6 +10,7 @@ export const manticore: MonsterGroup = {
 	id: 'monster-group-manticore',
 	name: 'Manticore',
 	description: 'A weary traveler hears a clarion call through the forest or friendly voices from a rocky shelter, and their heart leaps at the promise of refuge - only to find themself at the mercy of serrated teeth and poisoned spikes. In a manticore’s territory, people go missing without a trace. These fearsome creatures carve out their hunting grounds in forests near small villages, mountain passes where caravans travel, and other locations with plentiful wildlife. While manticores can subsist on a carnivorous diet of any nearby prey, their choicest meal is humanoid flesh.',
+	picture: null,
 	information: [
 		{
 			id: 'manticore-info-1',

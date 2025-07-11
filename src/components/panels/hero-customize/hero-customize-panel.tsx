@@ -1,5 +1,5 @@
 import { Button, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeaturePerk, FeatureTitleChoice } from '../../../models/feature';
+import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '../../../models/feature';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionType } from '../../../enums/condition-type';
@@ -19,6 +19,8 @@ import { FollowerType } from '../../../enums/follower-type';
 import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
+import { KitArmor } from '../../../enums/kit-armor';
+import { KitWeapon } from '../../../enums/kit-weapon';
 import { NameGenerator } from '../../../utils/name-generator';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
@@ -229,6 +231,18 @@ export const HeroCustomizePanel = (props: Props) => {
 			const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
 			copy.data.source.customID = value;
 			copy.data.selected = null;
+			props.setFeature(feature.id, copy);
+		};
+
+		const setProficiencyWeapons = (value: KitWeapon[]) => {
+			const copy = Utils.copy(feature) as FeatureProficiency;
+			copy.data.weapons = value;
+			props.setFeature(feature.id, copy);
+		};
+
+		const setProficiencyArmor = (value: KitArmor[]) => {
+			const copy = Utils.copy(feature) as FeatureProficiency;
+			copy.data.armor = value;
 			props.setFeature(feature.id, copy);
 		};
 
@@ -545,6 +559,51 @@ export const HeroCustomizePanel = (props: Props) => {
 						/>
 					</div>
 				);
+			case FeatureType.Proficiency:
+				return (
+					<div>
+						<HeaderText>Weapons</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Weapons'
+							mode='multiple'
+							allowClear={true}
+							options={[ KitWeapon.Bow, KitWeapon.Ensnaring, KitWeapon.Heavy, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Polearm, KitWeapon.Unarmed, KitWeapon.Whip ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={feature.data.weapons}
+							onChange={setProficiencyWeapons}
+						/>
+						<HeaderText>Armor</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Armor'
+							mode='multiple'
+							allowClear={true}
+							options={[ KitArmor.Heavy, KitArmor.Light, KitArmor.Medium, KitArmor.Shield ].map(option => ({ value: option }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={feature.data.armor}
+							onChange={setProficiencyArmor}
+						/>
+					</div>
+				);
 			case FeatureType.TitleChoice:
 				return (
 					<div>
@@ -711,6 +770,18 @@ export const HeroCustomizePanel = (props: Props) => {
 											type='text'
 											onClick={() => {
 												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createProficiency({
+													id: Utils.guid()
+												}));
+											}}
+										>
+											Proficiencies
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
 												props.addFeature(FactoryLogic.feature.createSkillChoice({
 													id: Utils.guid(),
 													listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
@@ -785,7 +856,7 @@ export const HeroCustomizePanel = (props: Props) => {
 								>
 									{getEditSection(f)}
 									{
-										[ FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier ].includes(f.type) ?
+										[ FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier, FeatureType.Proficiency ].includes(f.type) ?
 											null
 											:
 											<FeaturePanel

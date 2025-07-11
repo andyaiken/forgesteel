@@ -15,6 +15,7 @@ export const undead2nd: MonsterGroup = {
 	description: `
 *When the dead rise, all of hell rises with them.*
 *LADY DEMELZA, COURSER*`,
+	picture: null,
 	information: [
 		{
 			id: 'undead-2nd-info-1',

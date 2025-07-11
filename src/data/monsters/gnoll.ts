@@ -11,6 +11,7 @@ export const gnoll: MonsterGroup = {
 	id: 'monster-group-gnoll',
 	name: 'Gnoll',
 	description: 'Edacity. The hyena faced gnolls know only blood and hunger. These fiends carry with them the evil legacy of their late demon lord creator. Originally from the Abyssal Wasteland, gnolls quickly spread across the timescape, and they thrive in deserts, plains, and other sparsely populated places. Though a gnoll’s muzzle is just as likely to be bloodied by carrion as by prey, their hunting packs hunger for violence, and they eagerly hunt travelers and raid settlements. The pack’s eerie war cry, a wild cackle, presages a night of battle and terror.',
+	picture: null,
 	information: [
 		{
 			id: 'gnoll-info-1',

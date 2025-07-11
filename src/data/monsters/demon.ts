@@ -15,6 +15,7 @@ export const demon: MonsterGroup = {
 Demons spawn in the Abyssal Wasteland, where evil and chaos meet. These creatures of incarnate evil crave violence and suffering in the way most other creatures need food. A demon cares only for themself, and they torture and tear apart lesser demons for fun. 
 
 The bestial appearance of each demon is unique, composed of a chaotic arrangement of teeth, claws, and limbs meant for killing. Even demons of the same kind have unique features. One might bear an extra set of eyes or teeth, while another has a human arm growing from their forehead.`,
+	picture: null,
 	information: [
 		{
 			id: 'demon-info-1',

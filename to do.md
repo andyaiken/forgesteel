@@ -1,10 +1,10 @@
 # Development Plans
 
-Ability to add custom titles
-Ability to add custom followers (artisan or sage)
-
 ### Heroes
 
+* New feature type: proficiency
+  * Adds weapon / armor proficiency
+  * Factors into item selection
 * Automatic update of library resources when there is a newer version
   * Indicate an update in the hero sheet (subtly)
   * Attempt to reselect anything that needs to be selected

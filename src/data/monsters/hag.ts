@@ -9,6 +9,7 @@ export const hag: MonsterGroup = {
 	id: 'monster-group-hag',
 	name: 'Hag of the Green and Rot',
 	description: 'When fear of death or hunger for power grips a mortal spellcaster, often a druid or a witch, they might forge a pact with an evil archfey. The mortal becomes a hag—aged, clawed, and cruel—another ruthlessly powerful fey in their own right. In exchange, hags use their magic to bring about the misery that their archfey wills.',
+	picture: null,
 	information: [
 		{
 			id: 'hag-info-1',

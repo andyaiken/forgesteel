@@ -14,6 +14,7 @@ export const animal: MonsterGroup = {
 The natural denizens of every world. Beasties ferocious, atrocious, and precocious roam the land between and among civilizations. Whether they graze or hunt, stay solitary, in packs, or in swarms, fight danger or fly from it, their goal is to live on.
 
 Beware! Most animals are not monsters, but are often twisted by magic and malice to *become* monsters. A hero wouldn’t mercilessly kill a pack of hungry wolves — they slay rot magic dire wolves created by vampires. When drawing steel, know what lies ahead of the heroes and handle the situation justly.`,
+	picture: null,
 	information: [],
 	malice: [],
 	monsters: [

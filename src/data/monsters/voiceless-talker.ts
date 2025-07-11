@@ -13,6 +13,7 @@ export const voicelessTalker: MonsterGroup = {
 	id: 'monster-group-voiceless-talker',
 	name: 'Voiceless Talker',
 	description: 'Among the most powerful psions in the timescape, synlirii (singular: synliroi) are known as the “voiceless talkers” to the denizens of the World Below–and to surface dwellers unfortunate enough to encounter them. Descended from boneless aquatic cephalopods, they are alien in thought and motivation to the humanoid species they loathe. Synlirii consider the “barking ones” (their label for creatures who squeeze air through meat flaps to communicate) to be an abomination that must be corrected.',
+	picture: null,
 	information: [
 		{
 			id: 'voiceless-talker-info-1',

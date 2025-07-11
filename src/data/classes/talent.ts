@@ -4,6 +4,8 @@ import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { HeroClass } from '../../models/class';
+import { KitArmor } from '../../enums/kit-armor';
+import { KitWeapon } from '../../enums/kit-weapon';
 import { PerkList } from '../../enums/perk-list';
 import { SkillList } from '../../enums/skill-list';
 
@@ -121,6 +123,11 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 										id: 'talent-1-5ab',
 										field: FeatureField.Stamina,
 										valuePerEchelon: 3
+									}),
+									FactoryLogic.feature.createProficiency({
+										id: 'talent-1-5ac',
+										weapons: [ KitWeapon.Light ],
+										armor: [ KitArmor.Light ]
 									})
 								]
 							}),

@@ -16,6 +16,7 @@ In a long-lost language, the word oruk—“blood fire”—described the glowin
 Orc history spans the world and all its ages. They’ve settled into villages and cities, hot and cold climates, high in the mountains and deep underground. Most orcs live in diverse humanoid societies, though a few live secluded in the tropics.
 
 Though orcs are no more likely to stand in the adventurers’ way than any other folk, those who do fill the same roles as other humanoids: mercenaries, bounty hunters, garroters, guards, cultists, and corrupt kings.`,
+	picture: null,
 	information: [
 		{
 			id: 'orc-info-1',

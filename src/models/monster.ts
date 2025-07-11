@@ -23,6 +23,7 @@ export interface MonsterState {
 };
 
 export interface Monster extends Element {
+	picture: string | null;
 	level: number;
 	role: MonsterRole;
 	keywords: string[];
@@ -55,6 +56,7 @@ export interface Monster extends Element {
 };
 
 export interface MonsterGroup extends Element {
+	picture: string | null;
 	information: Element[];
 	malice: (FeatureMalice | FeatureAbility)[];
 	monsters: Monster[];

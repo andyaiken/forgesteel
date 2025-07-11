@@ -26,6 +26,7 @@ export enum FeatureType {
 	Multiple = 'Multiple Features',
 	Package = 'Package',
 	Perk = 'Perk',
+	Proficiency = 'Proficiency',
 	Size = 'Size',
 	Skill = 'Skill',
 	SkillChoice = 'Skill Choice',

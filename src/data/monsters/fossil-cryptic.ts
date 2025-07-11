@@ -10,6 +10,7 @@ export const fossilCryptic: MonsterGroup = {
 	id: 'monster-group-fossil-cryptic',
 	name: 'Fossil Cryptic',
 	description: 'The cave-diving humans who first found fossil cryptics initially thought those beings were fossilized, reanimated skeletons of creatures predating recorded history. When the explorers’ priest presented a holy symbol and attempted to turn the cryptics, he learned these fossilized bones aren’t mindless undead—and seconds later, he wound up crushed to death by a pillar of stone.',
+	picture: null,
 	information: [
 		{
 			id: 'fossil-cryptic-info-1',

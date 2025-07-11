@@ -13,6 +13,8 @@ import { Follower } from './follower';
 import { Item } from './item';
 import { ItemType } from '../enums/item-type';
 import { Kit } from './kit';
+import { KitArmor } from '../enums/kit-armor';
+import { KitWeapon } from '../enums/kit-weapon';
 import { Monster } from './monster';
 import { Perk } from './perk';
 import { PerkList } from '../enums/perk-list';
@@ -197,6 +199,12 @@ export interface FeaturePerkData extends _FeatureData {
 };
 export type FeaturePerk = FeatureOf<FeatureType.Perk, FeaturePerkData>;
 
+export interface FeatureProficiencyData extends _FeatureData {
+	weapons: KitWeapon[];
+	armor: KitArmor[];
+};
+export type FeatureProficiency = FeatureOf<FeatureType.Proficiency, FeatureProficiencyData>;
+
 export interface FeatureSizeData extends _FeatureData {
 	size: Size;
 };
@@ -276,6 +284,7 @@ export type Feature =
 	| FeatureMultiple
 	| FeaturePackage
 	| FeaturePerk
+	| FeatureProficiency
 	| FeatureSize
 	| FeatureSkill
 	| FeatureSkillChoice

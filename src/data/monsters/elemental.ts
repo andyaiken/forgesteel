@@ -17,6 +17,7 @@ export const elemental: MonsterGroup = {
 *ATÆSHIA, QUEEN OF ASH*
 
 When the gods formed the Mundane World, they took sparks of creation from the roiling plane of Quintessence and gave sentience to some of the universe’s most basic elements—air, fire, earth, and water. Some elementals contain just one of these components, but can come to embody multiple reagents as they age.`,
+	picture: null,
 	information: [
 		{
 			id: 'elemental-info-1',

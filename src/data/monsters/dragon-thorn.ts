@@ -12,6 +12,7 @@ export const dragonThorn: MonsterGroup = {
 	id: 'monster-group-dragon-thorn',
 	name: 'Dragon, Thorn',
 	description: 'Thorn dragons take root in the destitution of nature and are cultivated by the suffering of those who struggle against the green’s cruelty. Though a region’s people may have long overcome past famine, the desperation of those who came before has already nurtured their future scourge. These dragons appear born of the wood, living thickets bedecked in torturous thorns. With twisting briar horns and wings shaped by tangled roots, thorn dragons embody the richness of nature they so readily constrict the life from.',
+	picture: null,
 	information: [
 		{
 			id: 'dragon-thorn-info-1',

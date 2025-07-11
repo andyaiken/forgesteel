@@ -36,6 +36,7 @@ export const AppFooter = (props: Props) => {
 					{
 						folders.length > 1 ?
 							<Popover
+								trigger='click'
 								content={
 									<Space direction='vertical'>
 										{
@@ -56,6 +57,7 @@ export const AppFooter = (props: Props) => {
 							</Button>
 					}
 					<Popover
+						trigger='click'
 						content={
 							<div>
 								<Space direction='vertical' style={{ width: '350px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
@@ -82,6 +84,7 @@ export const AppFooter = (props: Props) => {
 						</Button>
 					</Popover>
 					<Popover
+						trigger='click'
 						content={
 							<Space direction='vertical'>
 								<Button type='text' block={true} onClick={() => navigation.goToPlaybookList('adventure')}>Adventures</Button>

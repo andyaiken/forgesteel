@@ -13,6 +13,7 @@ export const devil: MonsterGroup = {
 	id: 'monster-group-devil',
 	name: 'Devil',
 	description: 'In the lower plane of Hell, devils of the Seven Cities vie unceasingly against each other for power and control—a conflict fought foremostly through cunning and schemes. Devils are distinguished from other humanoids by skin in shades of azure and crimson and their hellmarks: horns, tails, hooves, wings, and other such infernal features.',
+	picture: null,
 	information: [
 		{
 			id: 'devil-info-1',

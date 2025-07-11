@@ -47,7 +47,7 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 					{
 						props.hero.picture ?
 							<Flex align='center' justify='center' gap={10}>
-								<img className='portrait' src={props.hero.picture} title='Portrait' />
+								<img className='portrait-edit' src={props.hero.picture} title='Portrait' />
 								<DangerButton mode='clear' onConfirm={() => props.setPicture(null)} />
 							</Flex>
 							:

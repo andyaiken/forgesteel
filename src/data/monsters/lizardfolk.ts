@@ -14,6 +14,7 @@ export const lizardfolk: MonsterGroup = {
 Lizardfolk prefer warm, tropical climates, but they’re willing to settle in any humid region—the more moisture in the air, the better. Even in colder climates, lizardfolk can be found in any sufficiently marshy environment. Bogs and wetlands are particularly common nesting grounds.
 
 Their scales protect both against weapons and the moisture in their native environments. Coloring and hue vary wildly with environment and diet.`,
+	picture: null,
 	information: [
 		{
 			id: 'lizardfolk-info-1',

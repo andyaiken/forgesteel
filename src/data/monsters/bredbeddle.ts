@@ -12,6 +12,7 @@ export const bredbeddle: MonsterGroup = {
 In their true forms, bredbeddles are ogre-sized, headless giants. Forever searching for their missing heads, they are drawn to populous lands, where they decapitate passers-by and magically adopt their victims’ forms.
 
 Although bredbeddles have no traditional sensory organs of their own, they are keenly aware of their surroundings. Some lurk along dark country lanes in their monstrous true forms. Others walk disguised among crowds, dropping their facades only long enough to waylay a stranger and lop off their head.`,
+	picture: null,
 	information: [
 		{
 			id: 'bredbeddle-info-1',

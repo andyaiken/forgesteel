@@ -12,6 +12,7 @@ export const demon2nd: MonsterGroup = {
 	id: 'monster-group-demon-2nd',
 	name: 'Demon — 2nd Echelon',
 	description: 'As demons consume more souls, and their mercurial forms shift into more powerful ones, they also begin to develop more distinct personalities, desires, and intelligence based on the souls consumed. It’s now that demons begin to develop a particular taste for types of souls which, should they survive long enough, will eventually define them.',
+	picture: null,
 	information: [
 		{
 			id: 'demon-2nd-info-1',

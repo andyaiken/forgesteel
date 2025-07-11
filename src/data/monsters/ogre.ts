@@ -11,6 +11,7 @@ export const ogre: MonsterGroup = {
 	id: 'monster-group-ogre',
 	name: 'Ogre',
 	description: 'Massive and bull-necked with bulging muscle and flesh, most ogres indulge their every impulse because few can stop them. Though small for giants, ogres still outweigh and tower over humanoids. Most live in the wild where they can create their own rules and ways of life.',
+	picture: null,
 	information: [
 		{
 			id: 'ogre-info-1',

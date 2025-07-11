@@ -429,6 +429,8 @@ export class FeatureLogic {
 				return 'This feature collates information.';
 			case FeatureType.Perk:
 				return 'This feature allows you to choose a perk.';
+			case FeatureType.Proficiency:
+				return 'This feature grants you proficiency with weapons or armor.';
 			case FeatureType.Size:
 				return 'This feature sets your size.';
 			case FeatureType.Skill:

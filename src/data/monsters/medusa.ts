@@ -12,6 +12,7 @@ export const medusa: MonsterGroup = {
 	id: 'monster-group-medusa',
 	name: 'Medusa',
 	description: 'Hunted as monsters with no thought given to their nature or origin, few creatures are as underestimated and misunderstood as medusas. Many people fear medusas for their monstrous appearance and ability to turn others to stone, but few realize the truth. Each of these monstrosities was once a humanoid, cursed and transformed for defying a god—but while some medusas embrace wickedness, others simply fight for their lives against ignorant hunters.',
+	picture: null,
 	information: [
 		{
 			id: 'medusa-info-1',

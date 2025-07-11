@@ -16,6 +16,7 @@ export const wyvern: MonsterGroup = {
 Few dragons can match the fury of a wyvern. Their aggression is driven by hunting and territorial instinct. Many adventurers meet their end in the wyvern’s maw—some because the wyvern saw them as competitors, and others because the wyvern was simply hungry.
 
 Wyvern scales match the colors of the mud, rock, and rust that dominate the mountains and badlands where they prefer to reside. Unlike typical dragons, wyverns don’t have front legs—instead, they walk like bats, propelled by their rear legs and balancing on the joints of their wings.`,
+	picture: null,
 	information: [
 		{
 			id: 'wyvern-info-1',

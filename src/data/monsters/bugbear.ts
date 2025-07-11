@@ -14,6 +14,7 @@ export const bugbear: MonsterGroup = {
 They are the *Bu’gath* in the Kheltic tongue, or the bearers of the great fear. The modern bugbears come from early goblins who first stepped into the wode centuries ago. Fae magic twisted their bodies until they grew imposingly tall and hairy while removing all sound from their footsteps.
 
 Many bugbears go on to become legendary hunters and mercenaries. Many more become reclusive and hide their whole lives in the shadows. A rare few dive into their magic potential and become living nightmares that haunt the wode.`,
+	picture: null,
 	information: [
 		{
 			id: 'bugbear-info-1',

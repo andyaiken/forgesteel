@@ -15,6 +15,7 @@ export const dragonCrucible: MonsterGroup = {
 Crucible dragons are born from metallic elementals touched by the toxic combination of fiery rage and ice-cold grief, born from failure in the pursuit of perfection. A dark forge of abandoned creativity melted down in fires of spite, jealousy, and hate.
 
 These metallic dragons are massive, heavy creatures requiring an immense release of heat to engage in flight. Their scales range from gleaming silver to blackened iron, depending on fastidiously they are about cleaning, and occasionally gilded with more precious metals. When threatened, they can encase themselves in shields they have embedded subcutaneously beneath their scales. Their long tails terminate with a massive, hammer-like tip that can freeze over and instantly cool hot metal.`,
+	picture: null,
 	information: [
 		{
 			id: 'dragon-crucible-info-1',

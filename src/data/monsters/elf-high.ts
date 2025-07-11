@@ -13,6 +13,7 @@ export const elfHigh: MonsterGroup = {
 	id: 'monster-group-elf-high',
 	name: 'Elf, High',
 	description: 'The children of the solar celestials. The high elves were created to tend to the sun elves as librarians and heralds. They sequester themselves away from the world amid sky elf ruins, remembering a better age before the arrival of war.',
+	picture: null,
 	information: [
 		{
 			id: 'elf-high-info-1',

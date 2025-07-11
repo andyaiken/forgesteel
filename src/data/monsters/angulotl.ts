@@ -17,6 +17,7 @@ export const angulotl: MonsterGroup = {
 *-PINNA, HEDGE MAGE*
 
 Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) are diminutive, brightly colored amphibious humanoids. Rather than defending their settlements and breeding grounds against hostile creatures, these poisonous frog folk prefer to establish their homes in places that are nigh-impossible for other humanoids to find, such as underwater caves and other enclosed spaces only accessible by water. They are happy to hide and watch a gaggle of noisy adventurers stumble past the entrance to an angulotl clutch without realizing it. Though angulotls prefer to avoid combat, when they’re threatened or pressed, they turn deadly.`,
+	picture: null,
 	information: [
 		{
 			id: 'angulotl-info-1',

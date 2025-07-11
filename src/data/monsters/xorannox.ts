@@ -10,6 +10,7 @@ export const xorannox: MonsterGroup = {
 	id: 'monster-group-xorannox',
 	name: 'Xorannox The Tyract',
 	description: 'Xorannox the Tyract is an Overmind. Formally known by their endonym, vaurath (plural vaurathi), overminds plot and scheme against their chief rivals, the synlirii and the olothec, for control of the World Below.',
+	picture: null,
 	information: [
 		{
 			id: 'xorannox-info-1',

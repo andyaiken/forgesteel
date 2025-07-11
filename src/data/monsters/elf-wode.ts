@@ -14,6 +14,7 @@ export const elfWode: MonsterGroup = {
 Children of the Sylvan Celestials, masters of the elf-haunted forests called wodes, these elves see all forests as their domain by birthright. They know and enjoy their reputation among humans as snatching children who wander too far into the woods. Humans should fear the trees.
 
 Their natural ability to mask their presence, called glamor, compliments their guerilla style of fighting, striking quickly from cover and then melding back into the underbrush. These traits also make those few who dwell in human cities naturally adept at urban warfare.`,
+	picture: null,
 	information: [
 		{
 			id: 'elf-wode-info-1',

@@ -4,6 +4,7 @@
 	.portrait {
 		border: 3px solid rgba(5, 5, 5, 0.2);
 		border-radius: 50%;
+		aspect-ratio: 1/1;
 		width: 200px;
 		height: 200px;
 		object-fit: cover;

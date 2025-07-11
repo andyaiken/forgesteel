@@ -12,6 +12,7 @@ $monster-mount: rgb(190, 220, 231);
 $monster-support: rgb(245, 213, 184);
 
 .token {
+	aspect-ratio: 1/1;
 	border-radius: 50%;
 	background-color: $monster-default;
 	border: 1px solid color.scale($monster-default, $lightness: -20%);
@@ -92,6 +93,7 @@ $monster-support: rgb(245, 213, 184);
 		}
 
 		.portrait {
+			aspect-ratio: 1/1;
 			width: 100%;
 			height: 100%;
 			object-fit: cover;

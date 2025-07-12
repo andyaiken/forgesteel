@@ -1009,6 +1009,16 @@ export class FactoryLogic {
 				qualifier: ''
 			};
 		},
+		createSummoner: (): AbilityDistance => {
+			return {
+				type: AbilityDistanceType.Summoner,
+				value: 0,
+				value2: 0,
+				within: 0,
+				special: '',
+				qualifier: ''
+			};
+		},
 		createSpecial: (special: string): AbilityDistance => {
 			return {
 				type: AbilityDistanceType.Special,

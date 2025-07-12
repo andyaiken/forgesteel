@@ -1,5 +1,6 @@
 import { Adventure } from '../../../../models/adventure';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { Flex } from 'antd';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { Plot } from '../../../../models/plot';
@@ -51,12 +52,6 @@ export const PlotPanel = (props: Props) => {
 	};
 
 	try {
-		if (props.plot.plots.length === 0) {
-			return (
-				<div className='ds-text dimmed-text centered-text' style={{ flex: '1 1 0' }}>Empty</div>
-			);
-		};
-
 		const rowHeight = 80;
 
 		const rows = getRows();
@@ -152,6 +147,23 @@ export const PlotPanel = (props: Props) => {
 			});
 		});
 
+		let empty = null;
+		if (props.plot.plots.length === 0) {
+			empty = (
+				<foreignObject
+					className='empty-message'
+					x='0%'
+					y='0%'
+					width='100%'
+					height='100%'
+				>
+					<Flex align='center' justify='center' style={{ height: '100%' }}>
+						Double-click to add a plot point.
+					</Flex>
+				</foreignObject>
+			);
+		}
+
 		return (
 			<ErrorBoundary>
 				<div className='plot-panel' onClick={() => selectPlotPoint(null)} onDoubleClick={props.onCreate}>
@@ -166,6 +178,7 @@ export const PlotPanel = (props: Props) => {
 						{links}
 						{linkLabels}
 						{plots}
+						{empty}
 					</svg>
 				</div>
 			</ErrorBoundary>

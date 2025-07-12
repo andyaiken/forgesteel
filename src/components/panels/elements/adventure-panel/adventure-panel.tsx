@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex, Input, Select, Space, Tabs } from 'antd';
+import { Button, Drawer, Flex, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, InfoCircleOutlined, PlayCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Plot, PlotContent } from '../../../../models/plot';
@@ -530,7 +530,12 @@ export const AdventurePanel = (props: Props) => {
 								adventure.introduction.map(section => (
 									<div key={section.id}>
 										<HeaderText>{section.name}</HeaderText>
-										{section.description ? <Markdown text={section.description} /> : <div className='ds-text dimmed-text'>None</div>}
+										{
+											section.description ?
+												<Markdown text={section.description} />
+												:
+												<div className='ds-text dimmed-text'>No details</div>
+										}
 									</div>
 								))
 							}
@@ -557,38 +562,22 @@ export const AdventurePanel = (props: Props) => {
 					{
 						props.mode === PanelMode.Full ?
 							<div className='plot-display-container'>
-								<div className='plot-workspace'>
-									<PlotPanel
-										plot={adventure.plot}
-										adventure={adventure}
-										selectedPlot={selectedPlot || undefined}
-										onSelect={props.allowSelection ? setSelectedPlot : undefined}
-										onCreate={props.onChange ? addPlotPoint : undefined}
-									/>
-								</div>
+								{
+									props.onChange || (adventure.plot.plots.length > 0) ?
+										<div className='plot-workspace'>
+											<PlotPanel
+												plot={adventure.plot}
+												adventure={adventure}
+												selectedPlot={selectedPlot || undefined}
+												onSelect={props.allowSelection ? setSelectedPlot : undefined}
+												onCreate={props.onChange ? addPlotPoint : undefined}
+											/>
+										</div>
+										: null
+								}
 								{
 									props.allowSelection ?
 										<div className='plot-sidebar'>
-											{
-												props.onChange ?
-													<Select
-														style={{ width: '100%' }}
-														options={[ null, ...adventure.plot.plots ].map(p => ({ value: p ? p.id : '', label: p ? p.name || 'Unnamed Plot Point' : 'Adventure' }))}
-														optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-														showSearch={true}
-														filterOption={(input, option) => {
-															const strings = option ?
-																[
-																	option.label
-																]
-																: [];
-															return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-														}}
-														value={selectedPlot ? selectedPlot.id : ''}
-														onChange={id => setSelectedPlot(adventure.plot.plots.find(p => p.id === id) || null)}
-													/>
-													: null
-											}
 											{getSidebar()}
 										</div>
 										: null

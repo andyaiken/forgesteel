@@ -285,6 +285,7 @@ export const HeroEditPage = (props: Props) => {
 				if (classCopy.primaryCharacteristicsOptions.length === 1) {
 					classCopy.primaryCharacteristics = classCopy.primaryCharacteristicsOptions[0];
 				}
+				classCopy.characteristics.forEach(ch => ch.value = 0);
 			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.class = classCopy;
@@ -313,6 +314,7 @@ export const HeroEditPage = (props: Props) => {
 			const heroCopy = Utils.copy(hero);
 			if (heroCopy.class) {
 				heroCopy.class.primaryCharacteristics = characteristics;
+				heroCopy.class.characteristics.forEach(ch => ch.value = 0);
 			}
 			setHero(heroCopy);
 			setDirty(true);

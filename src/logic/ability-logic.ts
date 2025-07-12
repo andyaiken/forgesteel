@@ -86,6 +86,10 @@ export class AbilityLogic {
 			}
 		}
 
+		if (distance.type === AbilityDistanceType.Summoner) {
+			return 'Summoner Range';
+		}
+
 		if (distance.type === AbilityDistanceType.Special) {
 			return distance.special || 'Special';
 		}

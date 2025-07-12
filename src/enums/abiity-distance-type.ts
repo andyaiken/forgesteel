@@ -7,5 +7,6 @@ export enum AbilityDistanceType {
 	Cube = 'Cube',
 	Line = 'Line',
 	Wall = 'Wall',
+	Summoner = 'Summoner Range',
 	Special = 'Special'
 }

@@ -1,5 +1,5 @@
 import { Ability, AbilitySectionField, AbilitySectionRoll, AbilitySectionText } from '../../../../models/ability';
-import { Alert, Button, Input, Popover, Segmented, Select, Space, Tabs } from 'antd';
+import { Alert, Button, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -94,6 +94,8 @@ export const AbilityEditPanel = (props: Props) => {
 				return 'Area';
 			case AbilityDistanceType.Line:
 				return 'Line';
+			case AbilityDistanceType.Summoner:
+				return 'Summoner Range';
 			case AbilityDistanceType.Special:
 				return 'Special';
 		}
@@ -117,6 +119,9 @@ export const AbilityEditPanel = (props: Props) => {
 				break;
 			case 'Line':
 				copy.distance[index] = FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 5, within: 1 });
+				break;
+			case 'Summoner':
+				copy.distance[index] = FactoryLogic.distance.createSummoner();
 				break;
 			case 'Special':
 				copy.distance[index] = FactoryLogic.distance.createSpecial('');
@@ -362,15 +367,6 @@ export const AbilityEditPanel = (props: Props) => {
 												placeholder='Select usage type'
 												options={[ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.NoAction, AbilityUsage.Other ].map(option => ({ value: option }))}
 												optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-												showSearch={true}
-												filterOption={(input, option) => {
-													const strings = option ?
-														[
-															option.value
-														]
-														: [];
-													return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-												}}
 												value={ability.type.usage}
 												onChange={setTypeUsage}
 											/>
@@ -443,11 +439,12 @@ export const AbilityEditPanel = (props: Props) => {
 													>
 														<Space direction='vertical' style={{ width: '100%' }}>
 															<HeaderText>Distance Type</HeaderText>
-															<Segmented
-																name='distancetypes'
-																block={true}
-																options={[ 'Self', 'Melee', 'Ranged', 'Area', 'Line', 'Special' ]}
-																value={getDistanceMainType(n)}
+															<Select
+																style={{ width: '100%' }}
+																placeholder='Distance'
+																options={[ 'Self', 'Melee', 'Ranged', 'Area', 'Line', 'Summoner', 'Special' ].map(option => ({ value: option }))}
+																optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+																value={distance.type}
 																onChange={value => setDistanceMainType(n, value)}
 															/>
 															{
@@ -463,27 +460,18 @@ export const AbilityEditPanel = (props: Props) => {
 																		placeholder='Area type'
 																		options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option }))}
 																		optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-																		showSearch={true}
-																		filterOption={(input, option) => {
-																			const strings = option ?
-																				[
-																					option.value
-																				]
-																				: [];
-																			return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-																		}}
 																		value={distance.type}
 																		onChange={value => setDistanceType(n, value)}
 																	/>
 																	: null
 															}
 															{
-																(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
+																(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Summoner Range') && (getDistanceMainType(n) !== 'Special') ?
 																	<HeaderText>Value</HeaderText>
 																	: null
 															}
 															{
-																(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Special') ?
+																(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Summoner Range') && (getDistanceMainType(n) !== 'Special') ?
 																	<NumberSpin min={1} value={distance.value} onChange={value => setDistanceValue(n, value)} />
 																	: null
 															}
@@ -630,15 +618,6 @@ export const AbilityEditPanel = (props: Props) => {
 																		mode='multiple'
 																		options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
 																		optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-																		showSearch={true}
-																		filterOption={(input, option) => {
-																			const strings = option ?
-																				[
-																					option.value
-																				]
-																				: [];
-																			return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-																		}}
 																		value={section.roll.characteristic}
 																		onChange={value => setRollSectionCharacteristics(n, value)}
 																	/>

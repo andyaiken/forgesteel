@@ -87,6 +87,10 @@ export class AbilityLogic {
 		}
 
 		if (distance.type === AbilityDistanceType.Summoner) {
+			if (hero) {
+				return `Summoner Range (${5 + HeroLogic.getCharacteristic(hero, Characteristic.Reason)})`;
+			}
+
 			return 'Summoner Range';
 		}
 

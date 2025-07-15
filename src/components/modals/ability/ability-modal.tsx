@@ -169,11 +169,11 @@ export const AbilityModal = (props: Props) => {
 								onChange={e => setName(e.target.value)}
 							/>
 							<HeaderText>Description</HeaderText>
-							<MultiLine label={props.ability.description} value={customization?.description || ''} onChange={setDescription} />
+							<MultiLine value={customization?.description || ''} onChange={setDescription} />
 						</Expander>
 						<Expander title='Notes'>
 							<HeaderText>Notes</HeaderText>
-							<MultiLine label='Notes' value={customization?.notes || ''} onChange={setNotes} />
+							<MultiLine value={customization?.notes || ''} onChange={setNotes} />
 						</Expander>
 					</div>
 				);

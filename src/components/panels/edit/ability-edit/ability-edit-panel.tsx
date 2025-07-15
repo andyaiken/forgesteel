@@ -351,7 +351,7 @@ export const AbilityEditPanel = (props: Props) => {
 											onChange={e => setName(e.target.value)}
 										/>
 										<HeaderText>Description</HeaderText>
-										<MultiLine label='Description' value={ability.description} onChange={setDescription} />
+										<MultiLine value={ability.description} onChange={setDescription} />
 									</div>
 								)
 							},
@@ -583,7 +583,7 @@ export const AbilityEditPanel = (props: Props) => {
 															section.type === 'text' ?
 																<Space direction='vertical' style={{ width: '100%' }}>
 																	<HeaderText>Text</HeaderText>
-																	<MultiLine label='Strained' value={section.text} onChange={value => setTextSectionText(n, value)} />
+																	<MultiLine value={section.text} onChange={value => setTextSectionText(n, value)} />
 																</Space>
 																: null
 														}
@@ -599,7 +599,7 @@ export const AbilityEditPanel = (props: Props) => {
 																		onChange={e => setFieldSectionName(n, e.target.value)}
 																	/>
 																	<HeaderText>Effect</HeaderText>
-																	<MultiLine label='Effect' value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
+																	<MultiLine value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
 																	<HeaderText>Cost</HeaderText>
 																	<NumberSpin min={0} value={section.value} onChange={value => setFieldSectionValue(n, value)} />
 																	<Toggle label='Repeatable' value={section.repeatable} onChange={value => setFieldSectionRepeatable(n, value)} />

@@ -1,29 +1,27 @@
-import { Button, Drawer, Flex, Input, Popover, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { Plot, PlotContent, PlotLink } from '../../../../models/plot';
+import { Button, Drawer, Flex, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { Plot, PlotContent, PlotContentImage, PlotContentReference, PlotContentRoll, PlotContentText, PlotLink } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
+import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
-import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../logic/factory-logic';
+import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Modal } from '../../../modals/modal/modal';
-import { Montage } from '../../../../models/montage';
 import { MontagePanel } from '../../elements/montage-panel/montage-panel';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
-import { Negotiation } from '../../../../models/negotiation';
 import { NegotiationPanel } from '../../elements/negotiation-panel/negotiation-panel';
 import { Options } from '../../../../models/options';
 import { Playbook } from '../../../../models/playbook';
 import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { TacticalMap } from '../../../../models/tactical-map';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapPanel } from '../../elements/tactical-map-panel/tactical-map-panel';
 import { Utils } from '../../../../utils/utils';
@@ -51,13 +49,65 @@ export const PlotEditPanel = (props: Props) => {
 	const upstreamIDs = PlaybookLogic.getUpstreamPlotPoints(parentPlot, plot.id).map(p => p.id);
 	const linkTargets = parentPlot.plots.filter(p => !plot.links.map(x => x.plotID).includes(p.id) && !upstreamIDs.includes(p.id));
 
-	const addContent = (type: 'encounter' | 'montage' | 'negotiation' | 'map', id: string) => {
-		const copy = Utils.copy(plot);
-		copy.content.push({
+	const addContentText = () => {
+		const content: PlotContentText = {
 			id: Utils.guid(),
+			contentType: 'text',
+			format: 'standard',
+			text: ''
+		};
+
+		const copy = Utils.copy(plot);
+		copy.content.push(content);
+		setPlot(copy);
+		setAddingContent(false);
+		props.onChange(copy);
+	};
+
+	const addContentImage = () => {
+		const content: PlotContentImage = {
+			id: Utils.guid(),
+			contentType: 'image',
+			data: '',
+			title: ''
+		};
+
+		const copy = Utils.copy(plot);
+		copy.content.push(content);
+		setPlot(copy);
+		setAddingContent(false);
+		props.onChange(copy);
+	};
+
+	const addContentRoll = () => {
+		const content: PlotContentRoll = {
+			id: Utils.guid(),
+			contentType: 'roll',
+			roll: FactoryLogic.createPowerRoll({
+				characteristic: Characteristic.Might,
+				tier1: '',
+				tier2: '',
+				tier3: ''
+			})
+		};
+
+		const copy = Utils.copy(plot);
+		copy.content.push(content);
+		setPlot(copy);
+		setAddingContent(false);
+		props.onChange(copy);
+	};
+
+	const addContentReference = (type: 'encounter' | 'montage' | 'negotiation' | 'map', id: string) => {
+		const content: PlotContentReference = {
+			id: Utils.guid(),
+			contentType: 'reference',
 			type: type,
 			contentID: id
-		});
+		};
+
+		const copy = Utils.copy(plot);
+		copy.content.push(content);
 		setPlot(copy);
 		setAddingContent(false);
 		props.onChange(copy);
@@ -100,7 +150,7 @@ export const PlotEditPanel = (props: Props) => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<MultiLine label='Description' value={plot.description} onChange={setDescription} />
+				<MultiLine value={plot.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -121,62 +171,274 @@ export const PlotEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setTextFormat = (contentID: string, value: 'standard' | 'read-aloud') => {
+			const copy = Utils.copy(plot);
+			copy.content
+				.filter(c => c.contentType === 'text')
+				.filter(c => c.id === contentID)
+				.forEach(c => c.format = value);
+			setPlot(copy);
+			props.onChange(copy);
+		};
+
+		const setText = (contentID: string, value: string) => {
+			const copy = Utils.copy(plot);
+			copy.content
+				.filter(c => c.contentType === 'text')
+				.filter(c => c.id === contentID)
+				.forEach(c => c.text = value);
+			setPlot(copy);
+			props.onChange(copy);
+		};
+
+		const setImageData = (contentID: string, value: string) => {
+			const copy = Utils.copy(plot);
+			copy.content
+				.filter(c => c.contentType === 'image')
+				.filter(c => c.id === contentID)
+				.forEach(c => c.data = value);
+			setPlot(copy);
+			props.onChange(copy);
+		};
+
+		const setImageTitle = (contentID: string, value: string) => {
+			const copy = Utils.copy(plot);
+			copy.content
+				.filter(c => c.contentType === 'image')
+				.filter(c => c.id === contentID)
+				.forEach(c => c.title = value);
+			setPlot(copy);
+			props.onChange(copy);
+		};
+
+		const setRollCharacteristics = (contentID: string, value: Characteristic[]) => {
+			const copy = Utils.copy(plot);
+			copy.content
+				.filter(c => c.contentType === 'roll')
+				.filter(c => c.id === contentID)
+				.forEach(c => c.roll.characteristic = value);
+			setPlot(copy);
+			props.onChange(copy);
+		};
+
+		const setRollTier1 = (contentID: string, value: string) => {
+			const copy = Utils.copy(plot);
+			copy.content
+				.filter(c => c.contentType === 'roll')
+				.filter(c => c.id === contentID)
+				.forEach(c => c.roll.tier1 = value);
+			setPlot(copy);
+			props.onChange(copy);
+		};
+
+		const setRollTier2 = (contentID: string, value: string) => {
+			const copy = Utils.copy(plot);
+			copy.content
+				.filter(c => c.contentType === 'roll')
+				.filter(c => c.id === contentID)
+				.forEach(c => c.roll.tier2 = value);
+			setPlot(copy);
+			props.onChange(copy);
+		};
+
+		const setRollTier3 = (contentID: string, value: string) => {
+			const copy = Utils.copy(plot);
+			copy.content
+				.filter(c => c.contentType === 'roll')
+				.filter(c => c.id === contentID)
+				.forEach(c => c.roll.tier3 = value);
+			setPlot(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
-						<Button type='text' icon={<PlusOutlined />} onClick={() => setAddingContent(true)} />
+						<Popover
+							trigger='click'
+							content={
+								<>
+									<Button block={true} type='text' onClick={() => addContentText()}>Text</Button>
+									<Button block={true} type='text' onClick={() => addContentImage()}>Image</Button>
+									<Button block={true} type='text' onClick={() => addContentRoll()}>Roll</Button>
+									<Button block={true} type='text' onClick={() => setAddingContent(true)}>Encounter, Montage, Negotiation, or Tactical Map</Button>
+								</>
+							}
+						>
+							<Button type='text' icon={<PlusOutlined />} />
+						</Popover>
 					}
 				>
 					Content
 				</HeaderText>
 				{
 					plot.content.map(c => {
-						let element: Element |undefined = undefined;
-						switch (c.type) {
-							case 'encounter':
-								element = props.playbook.encounters.find(e => e.id === c.contentID);
+						let name = 'Content';
+						let content = null;
+
+						switch (c.contentType) {
+							case 'text': {
+								name = 'Text';
+								content = (
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText>Text</HeaderText>
+										<Select
+											style={{ width: '100%' }}
+											options={[ 'standard', 'read-aloud' ].map(option => ({ value: option, label: Format.capitalize(option) }))}
+											optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+											value={c.format}
+											onChange={value => setTextFormat(c.id, value)}
+										/>
+										<MultiLine value={c.text} onChange={value => setText(c.id, value)} />
+									</Space>
+								);
 								break;
-							case 'montage':
-								element = props.playbook.montages.find(m => m.id === c.contentID);
+							}
+							case 'image': {
+								name = c.title || 'Image';
+								content = (
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText>Image</HeaderText>
+										{
+											c.data ?
+												<Flex align='center' justify='center' gap={10}>
+													<img src={c.data} title={c.title} />
+													<DangerButton mode='clear' onConfirm={() => setImageData(c.id, '')} />
+												</Flex>
+												:
+												<Upload
+													style={{ width: '100%' }}
+													accept='.png,.webp,.gif,.jpg,.jpeg,.svg'
+													showUploadList={false}
+													beforeUpload={file => {
+														const reader = new FileReader();
+														reader.onload = progress => {
+															if (progress.target) {
+																const content = progress.target.result as string;
+																setImageData(c.id, content);
+															}
+														};
+														reader.readAsDataURL(file);
+														return false;
+													}}
+												>
+													<Button>
+														<DownloadOutlined />
+														Choose a picture
+													</Button>
+												</Upload>
+										}
+										<HeaderText>Title</HeaderText>
+										<Input
+											status={c.title === '' ? 'warning' : ''}
+											placeholder='Title'
+											allowClear={true}
+											value={c.title}
+											onChange={e => setImageTitle(c.id, e.target.value)}
+										/>
+									</Space>
+								);
 								break;
-							case 'negotiation':
-								element = props.playbook.negotiations.find(n => n.id === c.contentID);
+							}
+							case 'roll': {
+								name = 'Roll';
+								content = (
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText>Roll</HeaderText>
+										<Select
+											style={{ width: '100%' }}
+											status={c.roll.characteristic.length === 0 ? 'warning' : ''}
+											placeholder='Characteristics'
+											mode='multiple'
+											options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+											value={c.roll.characteristic}
+											onChange={value => setRollCharacteristics(c.id, value)}
+										/>
+										<Input
+											status={c.roll.tier1 === '' ? 'warning' : ''}
+											placeholder='Tier 1'
+											allowClear={true}
+											value={c.roll.tier1}
+											onChange={e => setRollTier1(c.id, e.target.value)}
+										/>
+										<Input
+											status={c.roll.tier2 === '' ? 'warning' : ''}
+											placeholder='Tier 2'
+											allowClear={true}
+											value={c.roll.tier2}
+											onChange={e => setRollTier2(c.id, e.target.value)}
+										/>
+										<Input
+											status={c.roll.tier3 === '' ? 'warning' : ''}
+											placeholder='Tier 3'
+											allowClear={true}
+											value={c.roll.tier3}
+											onChange={e => setRollTier3(c.id, e.target.value)}
+										/>
+									</Space>
+								);
 								break;
-							case 'map':
-								element = props.playbook.tacticalMaps.find(tm => tm.id === c.contentID);
+							}
+							case 'reference': {
+								switch (c.type) {
+									case 'encounter': {
+										const element = props.playbook.encounters.find(e => e.id === c.contentID);
+										if (element) {
+											name = element.name;
+											content = (
+												<EncounterPanel encounter={element} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+											);
+										}
+										break;
+									}
+									case 'montage': {
+										const element = props.playbook.montages.find(m => m.id === c.contentID);
+										if (element) {
+											name = element.name;
+											content = (
+												<MontagePanel montage={element} />
+											);
+										}
+										break;
+									}
+									case 'negotiation': {
+										const element = props.playbook.negotiations.find(n => n.id === c.contentID);
+										if (element) {
+											name = element.name;
+											content = (
+												<NegotiationPanel negotiation={element} />
+											);
+										}
+										break;
+									}
+									case 'map': {
+										const element = props.playbook.tacticalMaps.find(tm => tm.id === c.contentID);
+										if (element) {
+											name = element.name;
+											content = (
+												<TacticalMapPanel map={element} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+											);
+										}
+										break;
+									}
+								}
 								break;
+							}
 						}
-						return element ?
+
+						return content ?
 							<Expander
 								key={c.id}
-								title={element.name}
+								title={name}
 								extra={[
 									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveContent(c, 'up'); }} />,
 									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveContent(c, 'down'); }} />,
 									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteContent(c); }} />
 								]}
 							>
-								{
-									c.type === 'encounter' ?
-										<EncounterPanel encounter={element as Encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
-										: null
-								}
-								{
-									c.type === 'montage' ?
-										<MontagePanel montage={element as Montage} />
-										: null
-								}
-								{
-									c.type === 'negotiation' ?
-										<NegotiationPanel negotiation={element as Negotiation} />
-										: null
-								}
-								{
-									c.type === 'map' ?
-										<TacticalMapPanel map={element as TacticalMap} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
-										: null
-								}
+								{content}
 							</Expander>
 							: null;
 					})
@@ -320,7 +582,7 @@ export const PlotEditPanel = (props: Props) => {
 												<Space direction='vertical' style={{ width: '100%' }}>
 													{
 														props.playbook.encounters.map(e =>
-															<SelectablePanel key={e.id} onSelect={() => addContent('encounter', e.id)}>
+															<SelectablePanel key={e.id} onSelect={() => addContentReference('encounter', e.id)}>
 																<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
 															</SelectablePanel>
 														)
@@ -336,7 +598,7 @@ export const PlotEditPanel = (props: Props) => {
 												<Space direction='vertical' style={{ width: '100%' }}>
 													{
 														props.playbook.montages.map(m =>
-															<SelectablePanel key={m.id} onSelect={() => addContent('montage', m.id)}>
+															<SelectablePanel key={m.id} onSelect={() => addContentReference('montage', m.id)}>
 																<MontagePanel montage={m} />
 															</SelectablePanel>
 														)
@@ -352,7 +614,7 @@ export const PlotEditPanel = (props: Props) => {
 												<Space direction='vertical' style={{ width: '100%' }}>
 													{
 														props.playbook.negotiations.map(n =>
-															<SelectablePanel key={n.id} onSelect={() => addContent('negotiation', n.id)}>
+															<SelectablePanel key={n.id} onSelect={() => addContentReference('negotiation', n.id)}>
 																<NegotiationPanel negotiation={n} />
 															</SelectablePanel>
 														)
@@ -368,7 +630,7 @@ export const PlotEditPanel = (props: Props) => {
 												<Space direction='vertical' style={{ width: '100%' }}>
 													{
 														props.playbook.tacticalMaps.map(tm =>
-															<SelectablePanel key={tm.id} onSelect={() => addContent('map', tm.id)}>
+															<SelectablePanel key={tm.id} onSelect={() => addContentReference('map', tm.id)}>
 																<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
 															</SelectablePanel>
 														)

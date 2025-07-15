@@ -135,7 +135,7 @@ export const PlaybookEditPage = (props: Props) => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<MultiLine label='Description' value={element.description} onChange={setDescription} />
+				<MultiLine value={element.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -545,15 +545,15 @@ export const PlaybookEditPage = (props: Props) => {
 								onChange={e => setObjectiveName(e.target.value)}
 							/>
 							<HeaderText>Description</HeaderText>
-							<MultiLine label='Description' value={encounter.objective.description} onChange={setObjectiveDescription} />
+							<MultiLine value={encounter.objective.description} onChange={setObjectiveDescription} />
 							<HeaderText>Difficulty Modifier</HeaderText>
-							<MultiLine label='Difficulty Modifier' value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
+							<MultiLine value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
 							<HeaderText>Success Condition</HeaderText>
-							<MultiLine label='Success Condition' value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
+							<MultiLine value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
 							<HeaderText>Failure Condition</HeaderText>
-							<MultiLine label='Failure Condition' value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
+							<MultiLine value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
 							<HeaderText>Victories</HeaderText>
-							<MultiLine label='Victories' value={encounter.objective.victories} onChange={setObjectiveVictories} />
+							<MultiLine value={encounter.objective.victories} onChange={setObjectiveVictories} />
 						</>
 						: null
 				}
@@ -649,7 +649,7 @@ export const PlaybookEditPage = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Setting the Scene</HeaderText>
-				<MultiLine label='Scene' value={montage.scene} onChange={setScene} />
+				<MultiLine value={montage.scene} onChange={setScene} />
 			</Space>
 		);
 	};
@@ -894,9 +894,9 @@ export const PlaybookEditPage = (props: Props) => {
 										children: (
 											<div>
 												<HeaderText>Name</HeaderText>
-												<MultiLine label='Name' value={s.name} onChange={value => setSectionName(sectionIndex, value)} />
+												<MultiLine value={s.name} onChange={value => setSectionName(sectionIndex, value)} />
 												<HeaderText>Description</HeaderText>
-												<MultiLine label='Description' value={s.description} onChange={value => setSectionDescription(sectionIndex, value)} />
+												<MultiLine value={s.description} onChange={value => setSectionDescription(sectionIndex, value)} />
 											</div>
 										)
 									},
@@ -932,7 +932,7 @@ export const PlaybookEditPage = (props: Props) => {
 																onChange={e => setChallengeName(sectionIndex, challengeIndex, e.target.value)}
 															/>
 															<HeaderText>Description</HeaderText>
-															<MultiLine label='Description' value={c.description} onChange={value => setChallengeDescription(sectionIndex, challengeIndex, value)} />
+															<MultiLine value={c.description} onChange={value => setChallengeDescription(sectionIndex, challengeIndex, value)} />
 															<HeaderText>Characteristics</HeaderText>
 															<Select
 																style={{ width: '100%' }}
@@ -994,7 +994,7 @@ export const PlaybookEditPage = (props: Props) => {
 												>
 													Twists
 												</HeaderText>
-												<MultiLine label='Twists' value={s.twistInfo} onChange={value => setSectionTwistInfo(sectionIndex, value)} />
+												<MultiLine value={s.twistInfo} onChange={value => setSectionTwistInfo(sectionIndex, value)} />
 												{
 													s.twists.map((t, twistIndex) => (
 														<Expander
@@ -1015,7 +1015,7 @@ export const PlaybookEditPage = (props: Props) => {
 																onChange={e => setTwistName(sectionIndex, twistIndex, e.target.value)}
 															/>
 															<HeaderText>Description</HeaderText>
-															<MultiLine label='Description' value={t.description} onChange={value => setTwistDescription(sectionIndex, twistIndex, value)} />
+															<MultiLine value={t.description} onChange={value => setTwistDescription(sectionIndex, twistIndex, value)} />
 															<HeaderText>Characteristics</HeaderText>
 															<Select
 																style={{ width: '100%' }}
@@ -1106,11 +1106,11 @@ export const PlaybookEditPage = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Total Success</HeaderText>
-				<MultiLine label='Total success' value={montage.outcomes.totalSuccess} onChange={setSuccess} />
+				<MultiLine value={montage.outcomes.totalSuccess} onChange={setSuccess} />
 				<HeaderText>Partial Success</HeaderText>
-				<MultiLine label='Partial success' value={montage.outcomes.partialSuccess} onChange={setPartial} />
+				<MultiLine value={montage.outcomes.partialSuccess} onChange={setPartial} />
 				<HeaderText>Total Failure</HeaderText>
-				<MultiLine label='Total failure' value={montage.outcomes.totalFailure} onChange={setFailure} />
+				<MultiLine value={montage.outcomes.totalFailure} onChange={setFailure} />
 			</Space>
 		);
 	};
@@ -1231,7 +1231,7 @@ export const PlaybookEditPage = (props: Props) => {
 									value={m.trait}
 									onChange={t => setMotivationTrait(n, t)}
 								/>
-								<MultiLine label='Description' value={m.description} onChange={value => setMotivationDescription(n, value)} />
+								<MultiLine placeholder='Description' value={m.description} onChange={value => setMotivationDescription(n, value)} />
 							</Space>
 						</Expander>
 					))
@@ -1328,7 +1328,7 @@ export const PlaybookEditPage = (props: Props) => {
 									value={p.trait}
 									onChange={t => setPitfallTrait(n, t)}
 								/>
-								<MultiLine label='Description' value={p.description} onChange={value => setPitfallDescription(n, value)} />
+								<MultiLine placeholder='Description' value={p.description} onChange={value => setPitfallDescription(n, value)} />
 							</Space>
 						</Expander>
 					))
@@ -1361,7 +1361,7 @@ export const PlaybookEditPage = (props: Props) => {
 							title={n}
 						>
 							<HeaderText>Outcome {n}</HeaderText>
-							<MultiLine label='Outcome' value={o} onChange={value => setOutcome(n, value)} />
+							<MultiLine value={o} onChange={value => setOutcome(n, value)} />
 						</Expander>
 					))
 				}

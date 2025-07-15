@@ -1380,7 +1380,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<Divider />
 						<Toggle label='Can be negative' value={data.canBeNegative} onChange={setCanBeNegative} />
 						<HeaderText>Details</HeaderText>
-						<MultiLine label='Details' value={data.details} onChange={setDetails} />
+						<MultiLine value={data.details} onChange={setDetails} />
 					</Space>
 				);
 			}
@@ -1529,11 +1529,7 @@ export const FeatureEditPanel = (props: Props) => {
 												(typeof section === 'string') ?
 													<div>
 														<HeaderText>Text</HeaderText>
-														<MultiLine
-															label='Text'
-															value={section}
-															onChange={value => setMaliceSectionText(data, n, value)}
-														/>
+														<MultiLine value={section} onChange={value => setMaliceSectionText(data, n, value)} />
 													</div>
 													:
 													<Space direction='vertical' style={{ width: '100%' }}>
@@ -1978,7 +1974,7 @@ export const FeatureEditPanel = (props: Props) => {
 											onChange={e => setName(e.target.value)}
 										/>
 										<HeaderText>Description</HeaderText>
-										<MultiLine label='Description' value={feature.description} onChange={setDescription} />
+										<MultiLine value={feature.description} onChange={setDescription} />
 									</div>
 								)
 							},

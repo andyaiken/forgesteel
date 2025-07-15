@@ -124,7 +124,14 @@ export const PlaybookViewPage = (props: Props) => {
 	}
 
 	const goBack = () => {
-		const adventure = props.playbook.adventures.find(a => PlaybookLogic.getAllPlotPoints(a.plot).flatMap(p => p.content).map(c => c.contentID).includes(element.id));
+		const adventure = props.playbook.adventures.find(a => {
+			return PlaybookLogic
+				.getAllPlotPoints(a.plot)
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID)
+				.includes(element.id);
+		});
 		if (adventure) {
 			navigation.goToPlaybookView('adventure', adventure.id);
 		} else {

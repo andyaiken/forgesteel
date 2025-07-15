@@ -1,7 +1,7 @@
 import { Button, Drawer, Flex, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, InfoCircleOutlined, PlayCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
-import { Plot, PlotContent } from '../../../../models/plot';
+import { Plot, PlotContent, PlotContentReference } from '../../../../models/plot';
 import { Adventure } from '../../../../models/adventure';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -28,6 +28,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { PlaybookLogic } from '../../../../logic/playbook-logic';
 import { PlotEditPanel } from '../../edit/plot-edit/plot-edit-panel';
 import { PlotPanel } from '../plot-panel/plot-panel';
+import { PowerRollPanel } from '../../power-roll/power-roll-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
@@ -98,10 +99,31 @@ export const AdventurePanel = (props: Props) => {
 	};
 
 	const getContent = (content: PlotContent) => {
-		if (!content.contentID) {
-			return null;
+		switch (content.contentType) {
+			case 'text':
+				return (
+					<div className={`content-text ${content.format}`}>
+						<Markdown text={content.text} />
+					</div>
+				);
+			case 'image':
+				return (
+					<div className='content-image'>
+						<img className='picture' src={content.data} title={content.title} />
+					</div>
+				);
+			case 'roll':
+				return (
+					<div className='content-roll'>
+						<PowerRollPanel powerRoll={content.roll} />
+					</div>
+				);
+			case 'reference':
+				return getContentReference(content);
 		}
+	};
 
+	const getContentReference = (content: PlotContentReference) => {
 		switch (content.type) {
 			case 'encounter': {
 				const encounter = props.playbook.encounters.find(e => e.id === content.contentID);
@@ -169,10 +191,19 @@ export const AdventurePanel = (props: Props) => {
 	};
 
 	const getActions = (content: PlotContent) => {
-		if (!content.contentID) {
-			return null;
+		switch (content.contentType) {
+			case 'text':
+				return null;
+			case 'image':
+				return null;
+			case 'roll':
+				return null;
+			case 'reference':
+				return getActionsReference(content);
 		}
+	};
 
+	const getActionsReference = (content: PlotContentReference) => {
 		switch (content.type) {
 			case 'encounter': {
 				const encounter = props.playbook.encounters.find(e => e.id === content.contentID);
@@ -341,7 +372,7 @@ export const AdventurePanel = (props: Props) => {
 									onChange={e => setName(e.target.value)}
 								/>
 								<HeaderText>Description</HeaderText>
-								<MultiLine label='Description' value={adventure.description} onChange={setDescription} />
+								<MultiLine value={adventure.description} onChange={setDescription} />
 							</Space>
 						)
 					},
@@ -380,7 +411,7 @@ export const AdventurePanel = (props: Props) => {
 													value={section.name}
 													onChange={e => setSectionName(n, e.target.value)}
 												/>
-												<MultiLine label='Description' value={section.description} onChange={value => setSectionDescription(n, value)} />
+												<MultiLine placeholder='Description' value={section.description} onChange={value => setSectionDescription(n, value)} />
 											</Space>
 										</Expander>
 									))
@@ -488,17 +519,14 @@ export const AdventurePanel = (props: Props) => {
 										:
 										<div className='ds-text dimmed-text'>No details</div>
 								}
-								{selectedPlot.content.length > 0 ? <HeaderText level={1}>Content</HeaderText> : null}
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										selectedPlot.content.map(c => (
-											<div key={c.id} className='plot-content-row'>
-												{getContent(c)}
-												{getActions(c)}
-											</div>
-										))
-									}
-								</Space>
+								{
+									selectedPlot.content.map(c => (
+										<div key={c.id} className='plot-content-row'>
+											{getContent(c)}
+											{getActions(c)}
+										</div>
+									))
+								}
 								{selectedPlot.links.length > 0 ? <HeaderText level={1}>Links</HeaderText> : null}
 								<Space direction='vertical' style={{ width: '100%' }}>
 									{

@@ -1,8 +1,12 @@
-import { Input, Space } from 'antd';
+import { Alert, Input, Space } from 'antd';
 import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
+import { Expander } from '../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Modal } from '../../modal/modal';
 import { Monster } from '../../../../models/monster';
+import { MonsterFilter } from '../../../../models/filter';
+import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { Options } from '../../../../models/options';
@@ -15,6 +19,7 @@ import './monster-select-modal.scss';
 
 interface Props {
 	monsters: Monster[];
+	subset?: 'mount' | 'retainer';
 	options: Options;
 	selectOriginal?: boolean;
 	onClose: () => void;
@@ -23,9 +28,11 @@ interface Props {
 
 export const MonsterSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	const [ filter, setFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 
 	try {
 		const monsters = props.monsters
+			.filter(m => MonsterLogic.matches(m, filter))
 			.filter(m => Utils.textMatches([
 				m.name,
 				m.description,
@@ -49,6 +56,22 @@ export const MonsterSelectModal = (props: Props) => {
 				content={
 					<div className='monster-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
+							{
+								props.subset ?
+									<Alert
+										showIcon={true}
+										message={`Showing only ${props.subset}s.`}
+									/>
+									: null
+							}
+							<Expander title='Filter'>
+								<MonsterFilterPanel
+									monsterFilter={filter}
+									monsters={props.monsters}
+									includeNameFilter={false}
+									onChange={setFilter}
+								/>
+							</Expander>
 							{
 								sortedMonsters.map(m => (
 									<SelectablePanel

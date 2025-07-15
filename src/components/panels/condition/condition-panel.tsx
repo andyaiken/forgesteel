@@ -46,7 +46,7 @@ export const ConditionPanel = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
 						{
 							condition.type === ConditionType.Custom ?
-								<MultiLine label='Custom Condition Text' value={condition.text} onChange={setConditionText} />
+								<MultiLine placeholder='Custom Condition Text' value={condition.text} onChange={setConditionText} />
 								: null
 						}
 						{

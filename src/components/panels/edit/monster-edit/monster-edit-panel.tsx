@@ -88,7 +88,7 @@ export const MonsterEditPanel = (props: Props) => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<MultiLine label='Description' value={monster.description} onChange={setDescription} />
+				<MultiLine value={monster.description} onChange={setDescription} />
 				<HeaderText>Portrait</HeaderText>
 				{
 					monster.picture ?
@@ -690,7 +690,7 @@ export const MonsterEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>With Captain</HeaderText>
-				<MultiLine label='With Captain' value={monster.withCaptain} onChange={setWithCaptain} />
+				<MultiLine value={monster.withCaptain} onChange={setWithCaptain} />
 				{
 					props.similarMonsters.length > 0 ?
 						<Expander title='Similar Monsters'>

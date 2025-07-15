@@ -172,7 +172,7 @@ export const SourcebookPanel = (props: Props) => {
 					/>
 					<Expander title='Description'>
 						<HeaderText>Description</HeaderText>
-						<MultiLine label='Description' value={sourcebook.description} onChange={setDescription} />
+						<MultiLine value={sourcebook.description} onChange={setDescription} />
 					</Expander>
 					<Expander title='Languages'>
 						<HeaderText>Languages</HeaderText>
@@ -197,7 +197,7 @@ export const SourcebookPanel = (props: Props) => {
 												value={lang.name}
 												onChange={e => setLanguageName(n, e.target.value)}
 											/>
-											<MultiLine label='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
+											<MultiLine placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
 											<Segmented
 												block={true}
 												options={[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]}
@@ -262,7 +262,7 @@ export const SourcebookPanel = (props: Props) => {
 												value={skill.name}
 												onChange={e => setSkillName(n, e.target.value)}
 											/>
-											<MultiLine label='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
+											<MultiLine placeholder='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
 											<Select
 												style={{ width: '100%' }}
 												placeholder='Skill List'

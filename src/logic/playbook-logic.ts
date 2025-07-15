@@ -30,6 +30,7 @@ export class PlaybookLogic {
 		return PlaybookLogic
 			.getAllPlotPoints(plot)
 			.flatMap(p => p.content)
+			.filter(c => c.contentType === 'reference')
 			.map(c => c.contentID)
 			.filter(id => id !== null);
 	};
@@ -96,6 +97,7 @@ export class PlaybookLogic {
 	static getAdventurePackage = (adventure: Adventure, playbook: Playbook) => {
 		const contentIDs = PlaybookLogic.getAllPlotPoints(adventure.plot)
 			.flatMap(p => p.content)
+			.filter(c => c.contentType === 'reference')
 			.map(c => c.contentID)
 			.filter(id => id !== null);
 

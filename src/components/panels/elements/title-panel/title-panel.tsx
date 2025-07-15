@@ -79,7 +79,7 @@ export const TitlePanel = (props: Props) => {
 										onChange={e => setName(e.target.value)}
 									/>
 									<HeaderText>Description</HeaderText>
-									<MultiLine label='Description' value={selectedFeature.description} onChange={setDescription} />
+									<MultiLine value={selectedFeature.description} onChange={setDescription} />
 								</div>
 								:
 								<div className='features'>

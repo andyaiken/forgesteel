@@ -84,7 +84,7 @@ export const ProjectEditPanel = (props: Props) => {
 									onChange={e => setName(e.target.value)}
 								/>
 								<HeaderText>Description</HeaderText>
-								<MultiLine label='Description' value={project.description} onChange={setDescription} />
+								<MultiLine value={project.description} onChange={setDescription} />
 							</>
 							: null
 					}
@@ -124,7 +124,7 @@ export const ProjectEditPanel = (props: Props) => {
 					<HeaderText>Goal</HeaderText>
 					<NumberSpin min={0} max={500} steps={[ 5 ]} value={project.goal} onChange={setGoal} />
 					<HeaderText>Effect</HeaderText>
-					<MultiLine label='Effect' value={project.effect} onChange={setEffect} />
+					<MultiLine value={project.effect} onChange={setEffect} />
 				</div>
 			</ErrorBoundary>
 		);

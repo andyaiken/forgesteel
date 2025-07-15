@@ -72,6 +72,7 @@ export const PlaybookListPage = (props: Props) => {
 		const adventureContentIDs = props.playbook.adventures
 			.flatMap(a => PlaybookLogic.getAllPlotPoints(a.plot))
 			.flatMap(p => p.content)
+			.filter(c => c.contentType === 'reference')
 			.map(c => c.contentID);
 
 		return props.playbook.encounters
@@ -86,6 +87,7 @@ export const PlaybookListPage = (props: Props) => {
 		const adventureContentIDs = props.playbook.adventures
 			.flatMap(a => PlaybookLogic.getAllPlotPoints(a.plot))
 			.flatMap(p => p.content)
+			.filter(c => c.contentType === 'reference')
 			.map(c => c.contentID);
 
 		return props.playbook.montages
@@ -100,6 +102,7 @@ export const PlaybookListPage = (props: Props) => {
 		const adventureContentIDs = props.playbook.adventures
 			.flatMap(a => PlaybookLogic.getAllPlotPoints(a.plot))
 			.flatMap(p => p.content)
+			.filter(c => c.contentType === 'reference')
 			.map(c => c.contentID);
 
 		return props.playbook.negotiations
@@ -114,6 +117,7 @@ export const PlaybookListPage = (props: Props) => {
 		const adventureContentIDs = props.playbook.adventures
 			.flatMap(a => PlaybookLogic.getAllPlotPoints(a.plot))
 			.flatMap(p => p.content)
+			.filter(c => c.contentType === 'reference')
 			.map(c => c.contentID);
 
 		return props.playbook.tacticalMaps

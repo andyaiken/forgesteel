@@ -5,8 +5,8 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import './multi-line.scss';
 
 interface Props {
-	label: string;
 	value: string;
+	placeholder?: string;
 	style?: CSSProperties;
 	showMarkdownPrompt?: boolean;
 	onChange: (value: string) => void;
@@ -18,7 +18,7 @@ export const MultiLine = (props: Props) => {
 			<div className='multi-line' style={props.style}>
 				<Input.TextArea
 					className='multi-line-input'
-					placeholder={props.label}
+					placeholder={props.placeholder}
 					value={props.value}
 					onChange={e => props.onChange(e.target.value)}
 				/>

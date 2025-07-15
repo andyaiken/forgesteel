@@ -43,7 +43,7 @@ export const ElementEditPanel = (props: Props) => {
 						onChange={e => setName(e.target.value)}
 					/>
 					<HeaderText>Description</HeaderText>
-					<MultiLine label='Description' value={element.description} onChange={setDescription} />
+					<MultiLine value={element.description} onChange={setDescription} />
 				</div>
 			</ErrorBoundary>
 		);

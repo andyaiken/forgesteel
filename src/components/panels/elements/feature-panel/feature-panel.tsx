@@ -562,6 +562,7 @@ export const FeaturePanel = (props: Props) => {
 									return true;
 								})
 						}
+						subset={((data.type === 'mount') || (data.type === 'retainer')) ? data.type : undefined}
 						options={props.options}
 						onSelect={monster => {
 							setMonsterSelectorOpen(false);

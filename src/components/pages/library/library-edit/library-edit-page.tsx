@@ -226,7 +226,7 @@ export const LibraryEditPage = (props: Props) => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<MultiLine label='Description' value={element.description} onChange={setDescription} />
+				<MultiLine value={element.description} onChange={setDescription} />
 				{picture}
 			</Space>
 		);
@@ -1011,7 +1011,7 @@ export const LibraryEditPage = (props: Props) => {
 									onChange={e => setName(subclass, e.target.value)}
 								/>
 								<HeaderText>Description</HeaderText>
-								<MultiLine label='Description' value={subclass.description} onChange={value => setDescription(subclass, value)} />
+								<MultiLine value={subclass.description} onChange={value => setDescription(subclass, value)} />
 							</div>
 						)
 					},
@@ -1038,7 +1038,7 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Piety</HeaderText>
-				<MultiLine label='Piety' value={domain.piety} onChange={setPiety} />
+				<MultiLine value={domain.piety} onChange={setPiety} />
 			</Space>
 		);
 	};
@@ -1399,7 +1399,7 @@ export const LibraryEditPage = (props: Props) => {
 					onChange={setKeywords}
 				/>
 				<HeaderText>Effect</HeaderText>
-				<MultiLine label='Effect' value={item.effect} onChange={setEffect} />
+				<MultiLine value={item.effect} onChange={setEffect} />
 			</Space>
 		);
 	};
@@ -2074,7 +2074,7 @@ export const LibraryEditPage = (props: Props) => {
 									onChange={e => setUpgradeLabel(upgradeIndex, e.target.value)}
 								/>
 								<HeaderText>Text</HeaderText>
-								<MultiLine label='Text' value={upgrade.text} onChange={value => setUpgradeText(upgradeIndex, value)} />
+								<MultiLine value={upgrade.text} onChange={value => setUpgradeText(upgradeIndex, value)} />
 								<HeaderText>Cost</HeaderText>
 								<NumberSpin min={1} value={upgrade.cost} onChange={value => setUpgradeCost(upgradeIndex, value)} />
 								<HeaderText

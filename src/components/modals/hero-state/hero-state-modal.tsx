@@ -680,7 +680,6 @@ export const HeroStateModal = (props: Props) => {
 				<HeaderText>Notes</HeaderText>
 				<MultiLine
 					style={{ flex: '1 1 0' }}
-					label='Notes'
 					value={hero.state.notes}
 					showMarkdownPrompt={false}
 					onChange={setNotes}

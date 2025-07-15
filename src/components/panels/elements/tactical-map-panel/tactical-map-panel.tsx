@@ -1056,7 +1056,7 @@ export const TacticalMapPanel = (props: Props) => {
 					<Popover
 						content={
 							<MultiLine
-								label='Notes'
+								placeholder='Notes'
 								value={(item  as MapTile | MapWall | MapZone | MapMini).notes}
 								onChange={setNotes}
 							/>

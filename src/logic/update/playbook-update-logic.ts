@@ -3,12 +3,21 @@ import { EncounterObjectiveData } from '../../data/encounter-objective-data';
 import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { Playbook } from '../../models/playbook';
+import { PlotContentReference } from '../../models/plot';
 
 export class PlaybookUpdateLogic {
 	static updatePlaybook = (playbook: Playbook) => {
 		if (playbook.adventures === undefined) {
 			playbook.adventures = [];
 		}
+
+		playbook.adventures.forEach(a => {
+			a.plot.plots.flatMap(p => p.content).forEach(c => {
+				if (c.contentType === undefined) {
+					(c as PlotContentReference).contentType = 'reference';
+				}
+			});
+		});
 
 		playbook.encounters.forEach(e => {
 			e.groups.forEach(g => {

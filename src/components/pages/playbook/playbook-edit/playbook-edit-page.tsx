@@ -7,7 +7,7 @@ import { MonsterInfo, TerrainInfo } from '../../../controls/token/token';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
 import { Adventure } from '../../../../models/adventure';
-import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
+import { AdventureEditPanel } from '../../../panels/edit/adventure-edit/adventure-edit-panel';
 import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Characteristic } from '../../../../enums/characteristic';
@@ -1389,15 +1389,13 @@ export const PlaybookEditPage = (props: Props) => {
 	const getAdventureBuilder = () => {
 		return (
 			<div className='adventure-container'>
-				<AdventurePanel
+				<AdventureEditPanel
 					adventure={element as Adventure}
-					mode={PanelMode.Full}
 					playbook={props.playbook}
 					sourcebooks={props.sourcebooks}
 					heroes={props.heroes}
 					options={props.options}
-					allowSelection={true}
-					onChange={(adventure: Adventure) => {
+					onChange={adventure => {
 						setElement(adventure);
 						setDirty(true);
 					}}

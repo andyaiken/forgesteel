@@ -1,0 +1,96 @@
+.plot-graph-panel {
+	max-height: 100%;
+	overflow-y: auto;
+	padding: 20px 0;
+	background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
+	border: 1px solid rgba(5, 5, 5, 0.06);
+	border-radius: 10px;
+
+	.plot-container {
+		width: 100%;
+		overflow: visible;
+
+		.plot-box-container {
+			border-radius: 5px;
+			box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+
+			.plot-box {
+				width: 100%;
+				height: 100%;
+				border: 1px solid rgba(5, 5, 5, 0.06);
+				border-radius: 5px;
+				background: linear-gradient(rgb(230, 230, 230), rgb(220, 220, 220));
+				padding: 10px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				&.selectable {
+					cursor: pointer;
+
+					&:hover {
+						border-color: rgb(22, 119, 255);
+					}
+				}
+
+				&.selected {
+					background: rgb(230, 244, 255);
+					border-color: rgb(22, 119, 255);
+				}
+
+				.plot-name {
+					font-weight: 600;
+					text-transform: uppercase;
+					letter-spacing: 1px;
+				}
+
+				.subplot-indicator {
+					position: absolute;
+					top: 5px;
+					bottom: 5px;
+					right: 5px;
+					width: 8px;
+					border-radius: 3px;
+					background-color: rgb(180, 180, 180);
+				}
+			}
+		}
+
+		.plot-link {
+			stroke: rgb(200, 200, 200);
+			stroke-width: 3px;
+		}
+
+		.link-label-container {
+			.link-label {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: 600;
+			}
+		}
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.plot-graph-panel {
+		background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
+		border-color: rgba(250, 250, 250, 0.6);
+
+		.plot-container {
+			.plot-box-container {
+				.plot-box {
+					color: rgb(0, 0, 0);
+				}
+			}
+
+			.link-label-container {
+				.link-label {
+					color: rgba(255, 255, 255, 0.88);
+				}
+			}
+		}
+	}
+}

@@ -4,7 +4,7 @@ import { PowerRoll } from './power-roll';
 export interface PlotContentText {
 	id: string;
 	contentType: 'text';
-	format: 'standard' | 'read-aloud';
+	format: 'standard' | 'read-aloud' | 'director';
 	text: string;
 }
 

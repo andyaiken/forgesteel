@@ -1,0 +1,54 @@
+.sash-panel {
+	position: absolute;
+	width: 80px;
+	height: 20px;
+	top: 10px;
+	right: -20px;
+	transform: rotate(45deg);
+	background-color: rgba(0, 0, 0, 0.5);
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	color: rgba(255, 255, 255, 0.88);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 8px;
+	font-weight: 600;
+	text-transform: uppercase;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+
+	&.action {
+		background-color: rgba(128, 0, 128, 0.5);
+		border-color: rgba(128, 0, 128, 0.5);
+		color: rgba(255, 255, 255, 0.88);
+	}
+
+	&.maneuver {
+		background-color: rgba(0, 128, 0, 0.5);
+		border-color: rgba(0, 128, 0, 0.5);
+		color: rgba(255, 255, 255, 0.88);
+	}
+
+	&.trigger {
+		background-color: rgba(255, 0, 0, 0.5);
+		border-color: rgba(255, 0, 0, 0.5);
+		color: rgba(255, 255, 255, 0.88);
+	}
+
+	&.move {
+		background-color: rgba(0, 0, 255, 0.5);
+		border-color: rgba(0, 0, 255, 0.5);
+		color: rgba(255, 255, 255, 0.88);
+	}
+
+	&.villain {
+		background-color: rgba(255, 165, 0, 0.5);
+		border-color: rgba(255, 165, 0, 0.5);
+		color: rgba(0, 0, 0, 0.88);
+	}
+
+	&.routine {
+		background-color: rgba(255, 255, 0, 0.5);
+		border-color: rgba(255, 255, 0, 0.5);
+		color: rgba(0, 0, 0, 0.88);
+	}
+}

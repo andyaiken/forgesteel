@@ -16,12 +16,9 @@
   * Rivals
 * Monster Builder:
   * Auto-create monsters
-  * Allow monsters to have images for their tokens
 
 ### Playbook
 
-* Adventure Builder:
-  * Allow subplots
 * Encounter Builder:
   * Encounters should pull in monsters, rather than storing monster / group IDs
   * Set number of squares for per-square terrain

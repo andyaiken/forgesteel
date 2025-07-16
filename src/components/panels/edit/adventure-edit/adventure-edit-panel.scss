@@ -1,0 +1,15 @@
+.adventure-edit-panel {
+	height: 100%;
+	overflow: hidden;
+	display: flex;
+	gap: 20px;
+
+	.plot-workspace {
+		flex: 1 1 0;
+	}
+
+	.plot-editor {
+		flex: 1 1 0;
+		overflow-y: auto;
+	}
+}

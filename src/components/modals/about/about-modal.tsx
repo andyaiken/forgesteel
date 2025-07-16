@@ -48,7 +48,7 @@ export const AboutModal = (props: Props) => {
 							If you really feel the need to show your appreciation, I'd be grateful if you would take whatever you feel the app is worth and donate it to a local mental health charity.
 						</p>
 						<p>
-							Alternatively, you can <a href='https://coff.ee/andyaiken' target='_blank'>buy me a coffee</a>.
+							If after all that you <i>still</i> have too much spare cash, you can always <a href='https://coff.ee/andyaiken' target='_blank'>buy me a coffee</a>.
 						</p>
 						<Divider />
 						<Field label='Version' value={pkg.version} />

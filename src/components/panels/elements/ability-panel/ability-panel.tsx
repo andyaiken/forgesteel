@@ -5,7 +5,7 @@ import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { AbilityData } from '../../../../data/ability-data';
-import { AbilityInfoPanel } from '../../ability-info-panel/ability-info-panel';
+import { AbilityInfoPanel } from '../../ability-info/ability-info-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../../logic/ability-logic';
 import { AbilityUsage } from '../../../../enums/ability-usage';
@@ -110,13 +110,13 @@ export const AbilityPanel = (props: Props) => {
 			return false;
 		}
 
-		if (props.ability.sections.some(s => s.type === 'roll')) {
+		if ((props.ability.sections || []).some(s => s.type === 'roll')) {
 			return true;
 		}
 
 		const texts = [
-			...props.ability.sections.filter(s => s.type === 'text').map(s => s.text),
-			...props.ability.sections.filter(s => s.type === 'field').map(s => s.effect)
+			...(props.ability.sections || []).filter(s => s.type === 'text').map(s => s.text),
+			...(props.ability.sections || []).filter(s => s.type === 'field').map(s => s.effect)
 		];
 
 		return texts.some(text => AbilityLogic.getTextEffect(text, props.hero!) !== text);
@@ -136,7 +136,7 @@ export const AbilityPanel = (props: Props) => {
 
 		const warnings: { label: string, text: string }[] = [];
 
-		const hasRoll = props.ability.sections.some(s => s.type === 'roll');
+		const hasRoll = (props.ability.sections || []).some(s => s.type === 'roll');
 
 		if ((conditions.includes(ConditionType.Bleeding) || ((state === 'dying') && (props.ability.id !== AbilityData.catchBreath.id))) && ([ AbilityUsage.Action, AbilityUsage.Maneuver, AbilityUsage.Trigger ].includes(props.ability.type.usage) || props.ability.keywords.includes(AbilityKeyword.Strike))) {
 			warnings.push({
@@ -303,7 +303,7 @@ export const AbilityPanel = (props: Props) => {
 										: null
 								}
 								<AbilityInfoPanel ability={props.ability} hero={props.hero} />
-								{props.ability.sections.map(getSection)}
+								{(props.ability.sections || []).map(getSection)}
 								{
 									customization && customization.notes ?
 										<Field

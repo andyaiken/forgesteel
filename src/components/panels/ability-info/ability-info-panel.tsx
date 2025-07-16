@@ -2,9 +2,11 @@ import { Ability } from '../../../models/ability';
 import { AbilityKeyword } from '../../../enums/ability-keyword';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityUsage } from '../../../enums/ability-usage';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
 import { FormatLogic } from '../../../logic/format-logic';
 import { Hero } from '../../../models/hero';
+import { SashPanel } from '../sash/sash-panel';
 
 import './ability-info-panel.scss';
 
@@ -52,41 +54,39 @@ export const AbilityInfoPanel = (props: Props) => {
 		const monogram = getMonogram();
 
 		return (
-			<div className='ability-info-panel'>
-				<div className='ds-text compact-text bold-text'>{type}</div>
-				{
-					props.ability.type.trigger ?
-						<Field
-							compact={true}
-							label='Trigger'
-							value={props.ability.type.trigger}
-						/>
-						: null
-				}
-				{
-					distance ?
-						<Field
-							compact={true}
-							label={props.ability.target !== distance ? 'Distance' : 'Distance / Target'}
-							value={distance}
-						/>
-						: null
-				}
-				{
-					props.ability.target && (props.ability.target !== distance) ?
-						<Field
-							compact={true}
-							label='Target'
-							value={props.ability.target}
-						/>
-						: null
-				}
-				{
-					monogram ?
-						<div className={`sash ${monogram}`}>{monogram}</div>
-						: null
-				}
-			</div>
+			<ErrorBoundary>
+				<div className='ability-info-panel'>
+					<div className='ds-text compact-text bold-text'>{type}</div>
+					{
+						props.ability.type.trigger ?
+							<Field
+								compact={true}
+								label='Trigger'
+								value={props.ability.type.trigger}
+							/>
+							: null
+					}
+					{
+						distance ?
+							<Field
+								compact={true}
+								label={props.ability.target !== distance ? 'Distance' : 'Distance / Target'}
+								value={distance}
+							/>
+							: null
+					}
+					{
+						props.ability.target && (props.ability.target !== distance) ?
+							<Field
+								compact={true}
+								label='Target'
+								value={props.ability.target}
+							/>
+							: null
+					}
+					{monogram ? <SashPanel monogram={monogram} /> : null}
+				</div>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

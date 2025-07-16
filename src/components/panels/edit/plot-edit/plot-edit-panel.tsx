@@ -10,7 +10,6 @@ import { EncounterPanel } from '../../elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
-import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Modal } from '../../../modals/modal/modal';
@@ -18,8 +17,10 @@ import { MontagePanel } from '../../elements/montage-panel/montage-panel';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NegotiationPanel } from '../../elements/negotiation-panel/negotiation-panel';
 import { Options } from '../../../../models/options';
+import { PanelMode } from '../../../../enums/panel-mode';
 import { Playbook } from '../../../../models/playbook';
 import { PlaybookLogic } from '../../../../logic/playbook-logic';
+import { PlotPanel } from '../../elements/plot-panel/plot-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
@@ -43,7 +44,11 @@ interface Props {
 
 export const PlotEditPanel = (props: Props) => {
 	const [ plot, setPlot ] = useState<Plot>(props.plot);
-	const [ addingContent, setAddingContent ] = useState<boolean>(false);
+	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
+	const [ addingEncounter, setAddingEncounter ] = useState<boolean>(false);
+	const [ addingMontage, setAddingMontage ] = useState<boolean>(false);
+	const [ addingNegotiation, setAddingNegotiation ] = useState<boolean>(false);
+	const [ addingMap, setAddingMap ] = useState<boolean>(false);
 
 	const parentPlot = PlaybookLogic.getPlotPointParent(props.adventure.plot, plot.id) as Plot;
 	const upstreamIDs = PlaybookLogic.getUpstreamPlotPoints(parentPlot, plot.id).map(p => p.id);
@@ -60,7 +65,6 @@ export const PlotEditPanel = (props: Props) => {
 		const copy = Utils.copy(plot);
 		copy.content.push(content);
 		setPlot(copy);
-		setAddingContent(false);
 		props.onChange(copy);
 	};
 
@@ -75,7 +79,6 @@ export const PlotEditPanel = (props: Props) => {
 		const copy = Utils.copy(plot);
 		copy.content.push(content);
 		setPlot(copy);
-		setAddingContent(false);
 		props.onChange(copy);
 	};
 
@@ -94,7 +97,6 @@ export const PlotEditPanel = (props: Props) => {
 		const copy = Utils.copy(plot);
 		copy.content.push(content);
 		setPlot(copy);
-		setAddingContent(false);
 		props.onChange(copy);
 	};
 
@@ -109,8 +111,12 @@ export const PlotEditPanel = (props: Props) => {
 		const copy = Utils.copy(plot);
 		copy.content.push(content);
 		setPlot(copy);
-		setAddingContent(false);
 		props.onChange(copy);
+
+		setAddingEncounter(false);
+		setAddingMontage(false);
+		setAddingNegotiation(false);
+		setAddingMap(false);
 	};
 
 	const addLink = (target: Plot) => {
@@ -171,7 +177,7 @@ export const PlotEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setTextFormat = (contentID: string, value: 'standard' | 'read-aloud') => {
+		const setTextFormat = (contentID: string, value: 'standard' | 'read-aloud' | 'director') => {
 			const copy = Utils.copy(plot);
 			copy.content
 				.filter(c => c.contentType === 'text')
@@ -258,13 +264,18 @@ export const PlotEditPanel = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={
-								<>
-									<Button block={true} type='text' onClick={() => addContentText()}>Text</Button>
-									<Button block={true} type='text' onClick={() => addContentImage()}>Image</Button>
-									<Button block={true} type='text' onClick={() => addContentRoll()}>Roll</Button>
-									<Button block={true} type='text' onClick={() => setAddingContent(true)}>Encounter, Montage, Negotiation, or Tactical Map</Button>
-								</>
+								<Space direction='vertical'>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentText(); }}>Text</Button>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentImage(); }}>Picture</Button>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentRoll(); }}>Roll</Button>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingEncounter(true); }}>Encounter</Button>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingMontage(true); }}>Montage</Button>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingNegotiation(true); }}>Negotiation</Button>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingMap(true); }}>Tactical Map</Button>
+								</Space>
 							}
+							open={menuOpen}
+							onOpenChange={setMenuOpen}
 						>
 							<Button type='text' icon={<PlusOutlined />} />
 						</Popover>
@@ -279,13 +290,36 @@ export const PlotEditPanel = (props: Props) => {
 
 						switch (c.contentType) {
 							case 'text': {
-								name = 'Text';
+								switch (c.format) {
+									case 'standard':
+										name = 'Text';
+										break;
+									case 'read-aloud':
+										name = 'Read-aloud Text';
+										break;
+									case 'director':
+										name = 'Director Note';
+										break;
+								}
 								content = (
 									<Space direction='vertical' style={{ width: '100%' }}>
 										<HeaderText>Text</HeaderText>
 										<Select
 											style={{ width: '100%' }}
-											options={[ 'standard', 'read-aloud' ].map(option => ({ value: option, label: Format.capitalize(option) }))}
+											options={[
+												{
+													value: 'standard',
+													label: 'Standard'
+												},
+												{
+													value: 'read-aloud',
+													label: 'Read-aloud Text'
+												},
+												{
+													value: 'director',
+													label: 'Director Note'
+												}
+											]}
 											optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 											value={c.format}
 											onChange={value => setTextFormat(c.id, value)}
@@ -296,10 +330,10 @@ export const PlotEditPanel = (props: Props) => {
 								break;
 							}
 							case 'image': {
-								name = c.title || 'Image';
+								name = c.title || 'Picture';
 								content = (
 									<Space direction='vertical' style={{ width: '100%' }}>
-										<HeaderText>Image</HeaderText>
+										<HeaderText>Picture</HeaderText>
 										{
 											c.data ?
 												<Flex align='center' justify='center' gap={10}>
@@ -539,6 +573,22 @@ export const PlotEditPanel = (props: Props) => {
 		);
 	};
 
+	const getPreviewSection = () => {
+		return (
+			<PlotPanel
+				plot={plot}
+				adventure={props.adventure}
+				playbook={props.playbook}
+				sourcebooks={props.sourcebooks}
+				heroes={props.heroes}
+				options={props.options}
+				mode={PanelMode.Full}
+				onSelect={() => null}
+				onStart={() => null}
+			/>
+		);
+	};
+
 	try {
 		return (
 			<ErrorBoundary>
@@ -559,91 +609,95 @@ export const PlotEditPanel = (props: Props) => {
 								key: '3',
 								label: 'Links',
 								children: getLinksSection()
+							},
+							{
+								key: '4',
+								label: 'Preview',
+								children: getPreviewSection()
 							}
 						]}
 						tabBarExtraContent={
 							<Flex gap={5}>
 								<Button icon={<PlusOutlined />} onClick={() => props.onAddAfter(plot.id)}>Add Point After</Button>
-								<DangerButton onConfirm={() => props.onDelete(plot.id)} />
+								<DangerButton mode='icon' onConfirm={() => props.onDelete(plot.id)} />
 							</Flex>
 						}
 					/>
 				</div>
-				<Drawer open={addingContent} onClose={() => setAddingContent(false)} closeIcon={null} width='500px'>
+				<Drawer open={addingEncounter} onClose={() => setAddingEncounter(false)} closeIcon={null} width='500px'>
 					<Modal
 						content={
-							<div style={{ padding: '0 20px' }}>
-								<Tabs
-									items={[
-										{
-											key: '1',
-											label: 'Encounters',
-											children: (
-												<Space direction='vertical' style={{ width: '100%' }}>
-													{
-														props.playbook.encounters.map(e =>
-															<SelectablePanel key={e.id} onSelect={() => addContentReference('encounter', e.id)}>
-																<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
-															</SelectablePanel>
-														)
-													}
-													{props.playbook.encounters.length === 0 ? <Empty /> : null}
-												</Space>
-											)
-										},
-										{
-											key: '2',
-											label: 'Montages',
-											children: (
-												<Space direction='vertical' style={{ width: '100%' }}>
-													{
-														props.playbook.montages.map(m =>
-															<SelectablePanel key={m.id} onSelect={() => addContentReference('montage', m.id)}>
-																<MontagePanel montage={m} />
-															</SelectablePanel>
-														)
-													}
-													{props.playbook.montages.length === 0 ? <Empty /> : null}
-												</Space>
-											)
-										},
-										{
-											key: '3',
-											label: 'Negotiations',
-											children: (
-												<Space direction='vertical' style={{ width: '100%' }}>
-													{
-														props.playbook.negotiations.map(n =>
-															<SelectablePanel key={n.id} onSelect={() => addContentReference('negotiation', n.id)}>
-																<NegotiationPanel negotiation={n} />
-															</SelectablePanel>
-														)
-													}
-													{props.playbook.negotiations.length === 0 ? <Empty /> : null}
-												</Space>
-											)
-										},
-										{
-											key: '4',
-											label: 'Tactical Maps',
-											children: (
-												<Space direction='vertical' style={{ width: '100%' }}>
-													{
-														props.playbook.tacticalMaps.map(tm =>
-															<SelectablePanel key={tm.id} onSelect={() => addContentReference('map', tm.id)}>
-																<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
-															</SelectablePanel>
-														)
-													}
-													{props.playbook.tacticalMaps.length === 0 ? <Empty /> : null}
-												</Space>
-											)
-										}
-									]}
-								/>
+							<div style={{ padding: '20px' }}>
+								<Space direction='vertical' style={{ width: '100%' }}>
+									{
+										props.playbook.encounters.map(e =>
+											<SelectablePanel key={e.id} onSelect={() => addContentReference('encounter', e.id)}>
+												<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+											</SelectablePanel>
+										)
+									}
+									{props.playbook.encounters.length === 0 ? <Empty /> : null}
+								</Space>
 							</div>
 						}
-						onClose={() => setAddingContent(false)}
+						onClose={() => setAddingEncounter(false)}
+					/>
+				</Drawer>
+				<Drawer open={addingMontage} onClose={() => setAddingMontage(false)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							<div style={{ padding: '20px' }}>
+								<Space direction='vertical' style={{ width: '100%' }}>
+									{
+										props.playbook.montages.map(m =>
+											<SelectablePanel key={m.id} onSelect={() => addContentReference('montage', m.id)}>
+												<MontagePanel montage={m} />
+											</SelectablePanel>
+										)
+									}
+									{props.playbook.montages.length === 0 ? <Empty /> : null}
+								</Space>
+							</div>
+						}
+						onClose={() => setAddingMontage(false)}
+					/>
+				</Drawer>
+				<Drawer open={addingNegotiation} onClose={() => setAddingNegotiation(false)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							<div style={{ padding: '20px' }}>
+								<Space direction='vertical' style={{ width: '100%' }}>
+									{
+										props.playbook.negotiations.map(n =>
+											<SelectablePanel key={n.id} onSelect={() => addContentReference('negotiation', n.id)}>
+												<NegotiationPanel negotiation={n} />
+											</SelectablePanel>
+										)
+									}
+									{props.playbook.negotiations.length === 0 ? <Empty /> : null}
+								</Space>
+							</div>
+						}
+						onClose={() => setAddingNegotiation(false)}
+					/>
+				</Drawer>
+				<Drawer open={addingMap} onClose={() => setAddingMap(false)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							<div style={{ padding: '20px' }}>
+								<Space direction='vertical' style={{ width: '100%' }}>
+									{
+										props.playbook.tacticalMaps.map(tm =>
+											<SelectablePanel key={tm.id} onSelect={() => addContentReference('map', tm.id)}>
+												<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+											</SelectablePanel>
+										)
+									}
+									{props.playbook.tacticalMaps.length === 0 ? <Empty /> : null}
+								</Space>
+							</div>
+						}
+						onClose={() => setAddingMap(false)}
 					/>
 				</Drawer>
 			</ErrorBoundary>

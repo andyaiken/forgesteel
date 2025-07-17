@@ -1,5 +1,5 @@
 import { Button, Flex } from 'antd';
-import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
+import { LoginOutlined, LogoutOutlined, PartitionOutlined } from '@ant-design/icons';
 import { Adventure } from '../../../models/adventure';
 import { Empty } from '../../controls/empty/empty';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
@@ -115,8 +115,8 @@ export const PlotGraphPanel = (props: Props) => {
 						onClick={e => { e.stopPropagation(); selectPlotPoint(plot); }}
 						onDoubleClick={e => e.stopPropagation()}
 					>
+						{plot.plots.length > 0 ? <PartitionOutlined className='subplot-indicator' rotate={90} style={{ fontSize: position.height / 2 }} /> : null}
 						<div className='plot-name'>{plot.name || 'Unnamed Plot Point'}</div>
-						{plot.plots.length > 0 ? <div className='subplot-indicator' title='You can navigate into this plot point.' /> : null}
 					</div>
 				</foreignObject>
 			);

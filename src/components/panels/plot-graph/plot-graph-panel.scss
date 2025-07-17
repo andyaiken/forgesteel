@@ -46,12 +46,8 @@
 
 				.subplot-indicator {
 					position: absolute;
-					top: 5px;
-					bottom: 5px;
-					right: 5px;
-					width: 8px;
-					border-radius: 3px;
-					background-color: rgb(180, 180, 180);
+					right: 10px;
+					opacity: 0.1;
 				}
 			}
 		}

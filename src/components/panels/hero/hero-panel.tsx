@@ -765,7 +765,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						props.hero.complication ?
 							useRows ?
-								<div className='selectable-row clickable' onClick={onSelectAncestry}>
+								<div className='selectable-row clickable' onClick={onSelectComplication}>
 									<div>Complication: <b>{props.hero.complication.name}</b></div>
 								</div>
 								:

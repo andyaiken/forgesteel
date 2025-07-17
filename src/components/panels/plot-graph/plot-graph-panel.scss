@@ -1,14 +1,22 @@
 .plot-graph-panel {
 	max-height: 100%;
 	overflow-y: auto;
-	padding: 20px 0;
 	background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
 	border: 1px solid rgba(5, 5, 5, 0.06);
 	border-radius: 10px;
 
+	.header-row {
+		padding: 10px 20px;
+		position: sticky;
+		top: 0;
+		background: rgb(255, 255, 255);
+		opacity: 0.8;
+	}
+
 	.plot-container {
 		width: 100%;
 		overflow: visible;
+		margin: 20px 0;
 
 		.plot-box-container {
 			border-radius: 5px;
@@ -39,6 +47,7 @@
 				}
 
 				.plot-name {
+					text-align: center;
 					font-weight: 600;
 					text-transform: uppercase;
 					letter-spacing: 1px;
@@ -74,6 +83,10 @@
 	.plot-graph-panel {
 		background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
 		border-color: rgba(250, 250, 250, 0.6);
+
+		.header-row {
+			background-color: rgb(25, 25, 25);
+		}
 
 		.plot-container {
 			.plot-box-container {

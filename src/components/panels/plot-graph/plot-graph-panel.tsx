@@ -169,10 +169,10 @@ export const PlotGraphPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='plot-graph-panel' onClick={() => selectPlotPoint(null)} onDoubleClick={props.onCreate}>
-					<div onClick={e => e.stopPropagation()}>
+					<div className='header-row' onClick={e => e.stopPropagation()}>
 						<HeaderText
 							level={1}
-							style={{ margin: '-10px 20px 20px 20px' }}
+							style={{ margin: '0' }}
 							extra={
 								<Flex gap={5}>
 									{canGoOut ? <Button type='text' icon={<LogoutOutlined rotate={210} />} onClick={() => openPlotPoint(parentPlot)} /> : null}

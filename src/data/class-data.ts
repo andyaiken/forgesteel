@@ -1,12 +1,12 @@
-import { censor } from './classes/censor';
-import { conduit } from './classes/conduit';
-import { elementalist } from './classes/elementalist';
-import { fury } from './classes/fury';
-import { nullClass } from './classes/null';
-import { shadow } from './classes/shadow';
-import { tactician } from './classes/tactician';
-import { talent } from './classes/talent';
-import { troubadour } from './classes/troubadour';
+import { censor } from './classes/censor/censor';
+import { conduit } from './classes/conduit/conduit';
+import { elementalist } from './classes/elementalist/elementalist';
+import { fury } from './classes/fury/fury';
+import { nullClass } from './classes/null/null';
+import { shadow } from './classes/shadow/shadow';
+import { tactician } from './classes/tactician/tactician';
+import { talent } from './classes/talent/talent';
+import { troubadour } from './classes/troubadour/troubadour';
 
 export class ClassData {
 	static censor = censor;

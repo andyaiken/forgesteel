@@ -30,16 +30,7 @@ export const AboutModal = (props: Props) => {
 						<p>
 							If you would like to contribute to this project, you can find the code <a href='https://github.com/andyaiken/forgesteel' target='_blank'>here</a>.
 						</p>
-						<Divider />
-						<div className='logo-container'>
-							<img src={pbds} />
-						</div>
-						<p>
-							<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
-						</p>
-						<p>
-							<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
-						</p>
+						<Field label='Version' value={pkg.version} />
 						<Divider />
 						<p>
 							<b>FORGE STEEL</b> is free.
@@ -51,7 +42,15 @@ export const AboutModal = (props: Props) => {
 							If after all that you <i>still</i> have too much spare cash, you can always <a href='https://coff.ee/andyaiken' target='_blank'>buy me a coffee</a>.
 						</p>
 						<Divider />
-						<Field label='Version' value={pkg.version} />
+						<div className='logo-container'>
+							<img src={pbds} />
+						</div>
+						<p>
+							<b>FORGE STEEL</b> is an independent product published under the DRAW STEEL Creator License and is not affiliated with MCDM Productions, LLC.
+						</p>
+						<p>
+							<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
+						</p>
 					</div>
 				}
 				onClose={props.onClose}

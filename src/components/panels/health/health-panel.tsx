@@ -928,8 +928,9 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 								trigger='click'
 								content={
 									<Space direction='vertical'>
-										<Button type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
-										<Button type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
+										<Button block={true} type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
+										<Button block={true} type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
+										<Button block={true} type='text' onClick={() => addSpecial('Surprised')}>Surprised</Button>
 									</Space>
 								}
 							>

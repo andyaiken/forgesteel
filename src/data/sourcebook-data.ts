@@ -1,13 +1,19 @@
-import { ArtifactData, ConsumableData, ImbuedData, LeveledArmorData, LeveledImplementData, LeveledOtherData, LeveledWeaponData, TrinketData } from './item-data';
 import { EnvironmentData, OrganizationData, UpbringingData } from './culture-data';
 import { AncestryData } from './ancestry-data';
+import { ArtifactData } from './items/artifact-data';
 import { CareerData } from './career-data';
 import { ClassData } from './class-data';
 import { ComplicationData } from './complication-data';
+import { ConsumableData } from './items/consumable-data';
 import { DomainData } from './domain-data';
 import { FactoryLogic } from '../logic/factory-logic';
+import { ImbuedItemData } from './items/imbued-item-data';
 import { KitData } from './kit-data';
 import { LanguageType } from '../enums/language-type';
+import { LeveledArmorData } from './items/leveled-armor-data';
+import { LeveledImplementData } from './items/leveled-implement-data';
+import { LeveledItemData } from './items/leveled-item-data';
+import { LeveledWeaponData } from './items/leveled-weapon-data';
 import { MonsterData } from './monster-data';
 import { PerkData } from './perk-data';
 import { ProjectData } from './project-data';
@@ -15,6 +21,7 @@ import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { TerrainData } from './terrain-data';
 import { TitleData } from './title-data';
+import { TrinketData } from './items/trinket-data';
 
 export class SourcebookData {
 	static core: Sourcebook = {
@@ -361,17 +368,17 @@ export class SourcebookData {
 			LeveledWeaponData.thirdEyeSeeker,
 			LeveledWeaponData.thunderheadBident,
 			LeveledWeaponData.wetwork,
-			LeveledOtherData.bloodboundBand,
-			LeveledOtherData.bloodyHandWraps,
-			LeveledOtherData.lightningTreads,
-			LeveledOtherData.revengersWrap,
-			LeveledOtherData.thiefOfJoy,
+			LeveledItemData.bloodboundBand,
+			LeveledItemData.bloodyHandWraps,
+			LeveledItemData.lightningTreads,
+			LeveledItemData.revengersWrap,
+			LeveledItemData.thiefOfJoy,
 			ArtifactData.bladeOfAThousandYears,
 			ArtifactData.encepter,
 			ArtifactData.mortalCoil,
-			ImbuedData.imbuedArmor,
-			ImbuedData.imbuedImplement,
-			ImbuedData.imbuedWeapon
+			ImbuedItemData.imbuedArmor,
+			ImbuedItemData.imbuedImplement,
+			ImbuedItemData.imbuedWeapon
 		],
 		monsterGroups: [
 			MonsterData.angulotl,

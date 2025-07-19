@@ -413,6 +413,8 @@ export class FeatureLogic {
 				return 'This feature grants you a follower.';
 			case FeatureType.HeroicResource:
 				return 'This feature grants you a heroic (or epic) resource.';
+			case FeatureType.HeroicResourceGain:
+				return 'This feature grants you a way to gain your heroic resource.';
 			case FeatureType.ItemChoice:
 				return 'This feature allows you to choose an item.';
 			case FeatureType.Kit:
@@ -423,6 +425,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a language.';
 			case FeatureType.Malice:
 				return 'This feature grants you a malice effect.';
+			case FeatureType.MovementMode:
+				return 'This feature grants you an additional movement mode.';
 			case FeatureType.Multiple:
 				return 'This feature grants you a collection of features.';
 			case FeatureType.Package:

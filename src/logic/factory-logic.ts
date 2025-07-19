@@ -1,6 +1,6 @@
 import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Hero, HeroState } from '../models/hero';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
@@ -1283,6 +1283,18 @@ export class FactoryLogic {
 				}
 			};
 		},
+		createHeroicResourceGain: (data: { id: string, name?: string, trigger: string, value: string }): FeatureHeroicResourceGain => {
+			return {
+				id: data.id,
+				name: data.name || 'Heroic Resource Gain',
+				description: '',
+				type: FeatureType.HeroicResourceGain,
+				data: {
+					trigger: data.trigger,
+					value: data.value
+				}
+			};
+		},
 		createItemChoice: (data: { id: string, name?: string, description?: string, types?: ItemType[], count?: number }): FeatureItemChoice => {
 			const count = data.count || 1;
 			const type = data.types && (data.types.length === 1) ? data.types[0] : 'Item';
@@ -1347,6 +1359,17 @@ export class FactoryLogic {
 					cost: data.cost,
 					repeatable: data.repeatable || false,
 					sections: data.sections
+				}
+			};
+		},
+		createMovementMode: (data: { id: string, name?: string, mode: string }): FeatureMovementMode => {
+			return {
+				id: data.id,
+				name: data.name || 'Movement Mode',
+				description: '',
+				type: FeatureType.MovementMode,
+				data: {
+					mode: data.mode
 				}
 			};
 		},

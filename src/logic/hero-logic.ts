@@ -498,6 +498,14 @@ export class HeroLogic {
 		return false;
 	};
 
+	static getMovementModes = (hero: Hero) => {
+		const modes = HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.MovementMode)
+			.map(f => f.data.mode);
+		return Collections.sort(Collections.distinct(modes, m => m), m => m);
+	};
+
 	static getStability = (hero: Hero) => {
 		let value = 0;
 

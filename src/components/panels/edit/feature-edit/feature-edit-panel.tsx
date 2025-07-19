@@ -1,6 +1,6 @@
 import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -212,6 +212,12 @@ export const FeatureEditPanel = (props: Props) => {
 					canBeNegative: false
 				};
 				break;
+			case FeatureType.HeroicResourceGain:
+				data = {
+					trigger: '',
+					value: 1
+				};
+				break;
 			case FeatureType.ItemChoice:
 				data = {
 					types: [],
@@ -237,6 +243,11 @@ export const FeatureEditPanel = (props: Props) => {
 					count: 1,
 					selected: []
 				} as FeatureLanguageChoiceData;
+				break;
+			case FeatureType.MovementMode:
+				data = {
+					mode: ''
+				} as FeatureMovementModeData;
 				break;
 			case FeatureType.Malice:
 				data = {
@@ -698,6 +709,24 @@ export const FeatureEditPanel = (props: Props) => {
 		const setResourceGainValue = (data: FeatureHeroicResourceData, index: number, value: string) => {
 			const copy = Utils.copy(data);
 			copy.gains[index].value = value;
+			setData(copy);
+		};
+
+		const setHeroicResourceGainTrigger = (data: FeatureHeroicResourceGainData, value: string) => {
+			const copy = Utils.copy(data);
+			copy.trigger = value;
+			setData(copy);
+		};
+
+		const setHeroicResourceGainValue = (data: FeatureHeroicResourceGainData, value: string) => {
+			const copy = Utils.copy(data);
+			copy.value = value;
+			setData(copy);
+		};
+
+		const setMovementMode = (data: FeatureMovementModeData, value: string) => {
+			const copy = Utils.copy(data);
+			copy.mode = value;
 			setData(copy);
 		};
 
@@ -1384,6 +1413,29 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.HeroicResourceGain: {
+				const data = feature.data as FeatureHeroicResourceGainData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Trigger</HeaderText>
+						<Input
+							status={data.value === '' ? 'warning' : ''}
+							placeholder='Trigger'
+							allowClear={true}
+							value={data.trigger}
+							onChange={e => setHeroicResourceGainTrigger(data, e.target.value)}
+						/>
+						<HeaderText>Value</HeaderText>
+						<Input
+							status={data.value === '' ? 'warning' : ''}
+							placeholder='Value'
+							allowClear={true}
+							value={data.value}
+							onChange={e => setHeroicResourceGainValue(data, e.target.value)}
+						/>
+					</Space>
+				);
+			}
 			case FeatureType.ItemChoice: {
 				const data = feature.data as FeatureItemChoiceData;
 				return (
@@ -1590,6 +1642,21 @@ export const FeatureEditPanel = (props: Props) => {
 								<Button block={true} onClick={() => addMaliceSectionPowerRoll(data)}>Add a Power Roll</Button>
 							</Flex>
 						</Space>
+					</Space>
+				);
+			}
+			case FeatureType.MovementMode: {
+				const data = feature.data as FeatureMovementModeData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Mode</HeaderText>
+						<Input
+							status={data.mode === '' ? 'warning' : ''}
+							placeholder='Mode'
+							allowClear={true}
+							value={data.mode}
+							onChange={e => setMovementMode(data, e.target.value)}
+						/>
 					</Space>
 				);
 			}
@@ -1938,10 +2005,12 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.DomainFeature,
 			FeatureType.Follower,
 			FeatureType.HeroicResource,
+			FeatureType.HeroicResourceGain,
 			FeatureType.ItemChoice,
 			FeatureType.Kit,
 			FeatureType.Language,
 			FeatureType.LanguageChoice,
+			FeatureType.MovementMode,
 			FeatureType.Multiple,
 			FeatureType.Perk,
 			FeatureType.Proficiency,

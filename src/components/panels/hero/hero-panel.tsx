@@ -397,6 +397,8 @@ export const HeroPanel = (props: Props) => {
 
 			const speed = HeroLogic.getSpeed(props.hero);
 			const speedSuffix = HeroLogic.getSpeedModified(props.hero) ? <ArrowDownOutlined /> : undefined;
+			const modes = HeroLogic.getMovementModes(props.hero);
+			const speedStr = modes.length === 0 ? 'Speed' : `Speed (${modes.join(', ').toLowerCase()})`;
 
 			const maxStamina = HeroLogic.getStamina(props.hero);
 			const stamina = props.hero.state.staminaDamage === 0 ? maxStamina : maxStamina - props.hero.state.staminaDamage;
@@ -458,7 +460,7 @@ export const HeroPanel = (props: Props) => {
 						</div>
 						<div className='selectable-row'>
 							<div>Size: <b>{FormatLogic.getSize(size)}</b></div>
-							<div>Speed: <b>{speed}</b></div>
+							<div>{speedStr}: <b>{speed}</b></div>
 							<div>Stability: <b>{HeroLogic.getStability(props.hero)}</b></div>
 							<div>Disengage: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
 						</div>
@@ -531,7 +533,7 @@ export const HeroPanel = (props: Props) => {
 									<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
 								</div>
 								<div className='stat'>
-									<Statistic title='Speed' value={speed} suffix={speedSuffix} />
+									<Statistic title={speedStr} value={speed} suffix={speedSuffix} />
 								</div>
 								<div className='stat'>
 									<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />

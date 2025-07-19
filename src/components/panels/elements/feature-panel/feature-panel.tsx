@@ -1,7 +1,7 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMultipleData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -1707,11 +1707,19 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getInformationHeroicResourceFeature = (data: FeatureHeroicResourceData) => {
+		const gains = [ ...data.gains ];
+		if (props.hero) {
+			HeroLogic.getFeatures(props.hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.HeroicResourceGain)
+				.forEach(f => gains.push(f.data));
+		}
+
 		return (
 			<>
 				<ul>
 					{
-						data.gains.map((g, n) => (
+						gains.map((g, n) => (
 							<li key={n}>
 								<Flex align='center' justify='space-between' gap={10}>
 									<div className='ds-text compact-text'>{g.trigger}</div>
@@ -1722,6 +1730,22 @@ export const FeaturePanel = (props: Props) => {
 					}
 				</ul>
 				<Markdown text={data.details} />
+			</>
+		);
+	};
+
+	const getInformationHeroicResourceGainFeature = (data: FeatureHeroicResourceGainData) => {
+		return (
+			<>
+				<div className='ds-text'></div>
+				<ul>
+					<li>
+						<Flex align='center' justify='space-between' gap={10}>
+							<div className='ds-text compact-text'>{data.trigger}</div>
+							<Pill>+{data.value}</Pill>
+						</Flex>
+					</li>
+				</ul>
 			</>
 		);
 	};
@@ -1812,6 +1836,14 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<div>
 				{sections}
+			</div>
+		);
+	};
+
+	const getInformationMovementMode = (data: FeatureMovementModeData) => {
+		return (
+			<div className='ds-text'>
+				You gain the <b>{data.mode}</b> movement mode.
 			</div>
 		);
 	};
@@ -2026,6 +2058,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationDomainFeature(props.feature.data);
 			case FeatureType.HeroicResource:
 				return getInformationHeroicResourceFeature(props.feature.data);
+			case FeatureType.HeroicResourceGain:
+				return getInformationHeroicResourceGainFeature(props.feature.data);
 			case FeatureType.ItemChoice:
 				return getInformationItemChoice(props.feature.data);
 			case FeatureType.Kit:
@@ -2036,6 +2070,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationLanguageChoice(props.feature.data);
 			case FeatureType.Malice:
 				return getInformationMalice(props.feature.data);
+			case FeatureType.MovementMode:
+				return getInformationMovementMode(props.feature.data);
 			case FeatureType.Multiple:
 				return getInformationMultiple(props.feature.data);
 			case FeatureType.Package:

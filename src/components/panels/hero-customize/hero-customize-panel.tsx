@@ -1,5 +1,5 @@
 import { Button, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '../../../models/feature';
+import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '../../../models/feature';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionType } from '../../../enums/condition-type';
@@ -210,6 +210,12 @@ export const HeroCustomizePanel = (props: Props) => {
 		const setFollowerLanguages = (value: string[]) => {
 			const copy = Utils.copy(feature) as FeatureFollower;
 			copy.data.follower.languages = value;
+			props.setFeature(feature.id, copy);
+		};
+
+		const setMovementMode = (value: string) => {
+			const copy = Utils.copy(feature) as FeatureMovementMode;
+			copy.data.mode = value;
 			props.setFeature(feature.id, copy);
 		};
 
@@ -534,6 +540,19 @@ export const HeroCustomizePanel = (props: Props) => {
 						</Expander>
 					</div>
 				);
+			case FeatureType.MovementMode:
+				return (
+					<div>
+						<HeaderText>Name</HeaderText>
+						<Input
+							status={feature.data.mode === '' ? 'warning' : ''}
+							placeholder='Mode'
+							allowClear={true}
+							value={feature.data.mode}
+							onChange={e => setMovementMode(e.target.value)}
+						/>
+					</div>
+				);
 			case FeatureType.Perk:
 				return (
 					<div>
@@ -751,6 +770,19 @@ export const HeroCustomizePanel = (props: Props) => {
 											}}
 										>
 											Languages
+										</Button>
+										<Button
+											block={true}
+											type='text'
+											onClick={() => {
+												setMenuOpen(false);
+												props.addFeature(FactoryLogic.feature.createMovementMode({
+													id: Utils.guid(),
+													mode: 'fly'
+												}));
+											}}
+										>
+											Movement Mode
 										</Button>
 										<Button
 											block={true}

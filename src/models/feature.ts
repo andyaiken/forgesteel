@@ -150,6 +150,12 @@ export interface FeatureHeroicResourceData extends _FeatureData {
 };
 export type FeatureHeroicResource = FeatureOf<FeatureType.HeroicResource, FeatureHeroicResourceData>;
 
+export interface FeatureHeroicResourceGainData extends _FeatureData {
+	trigger: string;
+	value: string;
+};
+export type FeatureHeroicResourceGain = FeatureOf<FeatureType.HeroicResourceGain, FeatureHeroicResourceGainData>;
+
 export interface FeatureItemChoiceData extends _FeatureData {
 	types: ItemType[];
 	count: number;
@@ -182,6 +188,11 @@ export interface FeatureMaliceData extends _FeatureData {
 	sections: (string | PowerRoll)[];
 };
 export type FeatureMalice = FeatureOf<FeatureType.Malice, FeatureMaliceData>;
+
+export interface FeatureMovementModeData extends _FeatureData {
+	mode: string;
+};
+export type FeatureMovementMode = FeatureOf<FeatureType.MovementMode, FeatureMovementModeData>;
 
 export interface FeatureMultipleData extends _FeatureData {
 	features: Feature[];
@@ -276,11 +287,13 @@ export type Feature =
 	| FeatureDomainFeature
 	| FeatureFollower
 	| FeatureHeroicResource
+	| FeatureHeroicResourceGain
 	| FeatureItemChoice
 	| FeatureKit
 	| FeatureLanguage
 	| FeatureLanguageChoice
 	| FeatureMalice
+	| FeatureMovementMode
 	| FeatureMultiple
 	| FeaturePackage
 	| FeaturePerk

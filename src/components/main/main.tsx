@@ -1207,6 +1207,7 @@ export const Main = (props: Props) => {
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				onClose={() => setDrawer(null)}
+				updateHero={persistHero}
 			/>
 		);
 	};

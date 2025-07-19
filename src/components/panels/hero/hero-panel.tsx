@@ -862,25 +862,26 @@ export const HeroPanel = (props: Props) => {
 				<div className='features-section'>
 					{
 						mainFeatures.length > 0 ?
-							<>
+							<Space direction='vertical' style={{ width: '100%' }}>
 								{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>Features</HeaderText> : null}
 								{
 									mainFeatures.map(f =>
 										useRows ?
 											getRow(f)
 											:
-											<FeaturePanel
-												key={f.feature.id}
-												feature={f.feature}
-												source={props.options.showSources ? f.source : undefined}
-												options={props.options}
-												hero={props.hero}
-												sourcebooks={props.sourcebooks}
-												mode={PanelMode.Full}
-											/>
+											<SelectablePanel key={f.feature.id} onSelect={() => showFeature(f.feature)}>
+												<FeaturePanel
+													feature={f.feature}
+													source={props.options.showSources ? f.source : undefined}
+													options={props.options}
+													hero={props.hero}
+													sourcebooks={props.sourcebooks}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
 									)
 								}
-							</>
+							</Space>
 							: null
 					}
 					{

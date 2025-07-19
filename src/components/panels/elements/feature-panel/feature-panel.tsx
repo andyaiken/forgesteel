@@ -1,3 +1,4 @@
+import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
@@ -25,7 +26,6 @@ import { FollowerPanel } from '../follower-panel/follower-panel';
 import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Item } from '../../../../models/item';
@@ -2155,6 +2155,11 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
+		let customization: AbilityCustomization | null = null;
+		if (props.hero) {
+			customization = props.hero.abilityCustomizations.find(ac => ac.abilityID === props.feature.id) || null;
+		}
+
 		return (
 			<ErrorBoundary>
 				<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined} style={props.style}>
@@ -2179,19 +2184,27 @@ export const FeaturePanel = (props: Props) => {
 								: null
 						}
 					>
-						{props.feature.name}
+						{customization?.name || props.feature.name || 'Unnamed Feature'}
 					</HeaderText>
 					<Markdown
 						text={
 							(props.feature.type === FeatureType.Text) && autoCalc && props.hero ?
-								AbilityLogic.getTextEffect(props.feature.description, props.hero)
+								AbilityLogic.getTextEffect(customization?.description || props.feature.description, props.hero)
 								:
-								props.feature.description
+								(customization?.description || props.feature.description)
 						}
 					/>
 					{
 						props.mode === PanelMode.Full
 							? (props.setData ? getSelection() : getInformation())
+							: null
+					}
+					{
+						customization && customization.notes ?
+							<Field
+								label='Notes'
+								value={<Markdown text={customization.notes} useSpan={true} />}
+							/>
 							: null
 					}
 				</div>

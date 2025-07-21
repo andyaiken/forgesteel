@@ -1,14 +1,14 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "10.50.0",
+	"version": "10.51.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
 	"scripts": {
 		"start": "vite --host",
 		"update": "npx npm-check-updates --interactive --format group",
-		"lint": "tsc -p tsconfig.node.json && tsc -p tsconfig.app.json && eslint .",
+		"lint": "tsc -p tsconfig.node.json && tsc -p tsconfig.app.json && eslint . && npm audit",
 		"predeploy": "npm run lint && vite build",
 		"deploy": "gh-pages -d dist"
 	},

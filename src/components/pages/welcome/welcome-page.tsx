@@ -5,6 +5,7 @@ import { AppHeader } from '../../panels/app-header/app-header';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
+import { useMediaQuery } from '../../../hooks/use-media-query';
 import { useNavigation } from '../../../hooks/use-navigation';
 import { useState } from 'react';
 
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export const WelcomePage = (props: Props) => {
+	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
 	const [ page, setPage ] = useState<'player' | 'director-prep' | 'director-run' | 'creator'>('player');
 
@@ -173,7 +175,7 @@ export const WelcomePage = (props: Props) => {
 	try {
 		return (
 			<ErrorBoundary>
-				<div className='welcome-page'>
+				<div className={isSmall ? 'welcome-page compact' : 'welcome-page full'}>
 					<AppHeader showDirectory={props.showDirectory} />
 					<div className='welcome-page-content'>
 						<div className='welcome-column'>

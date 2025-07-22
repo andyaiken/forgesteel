@@ -1,6 +1,8 @@
-import { Button, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '../../../models/feature';
+import { Button, Divider, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
+import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '../../../models/feature';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Ability } from '../../../models/ability';
+import { AbilityEditPanel } from '../edit/ability-edit/ability-edit-panel';
 import { Characteristic } from '../../../enums/characteristic';
 import { ConditionType } from '../../../enums/condition-type';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
@@ -46,6 +48,270 @@ interface Props {
 
 export const HeroCustomizePanel = (props: Props) => {
 	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
+
+	const getMenu = () => {
+		return (
+			<Popover
+				trigger='click'
+				content={
+					<>
+						<Divider>Abilities</Divider>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createClassAbilityChoice({
+										id: Utils.guid(),
+										cost: 'signature',
+										allowAnySource: true
+									}));
+								}}
+							>
+								Class Ability
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: Utils.guid(),
+											name: 'Unnamed Ability',
+											type: FactoryLogic.type.createAction(),
+											distance: [ FactoryLogic.distance.createSelf() ],
+											target: 'Self',
+											sections: []
+										})
+									}));
+								}}
+							>
+								Custom Ability
+							</Button>
+						</div>
+						<Divider>Bonuses</Divider>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createCharacteristicBonus({
+										id: Utils.guid(),
+										name: `${Characteristic.Might} + 1`,
+										characteristic: Characteristic.Might,
+										value: 1
+									}));
+								}}
+							>
+								Characteristic Bonus
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createConditionImmunity({
+										id: Utils.guid(),
+										conditions: []
+									}));
+								}}
+							>
+								Condition Immunity
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createDamageModifier({
+										id: Utils.guid(),
+										modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 }) ]
+									}));
+								}}
+							>
+								Damage Immunity / Weakness
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createBonus({
+										id: Utils.guid(),
+										name: `${FeatureField.Stamina} + 6`,
+										field: FeatureField.Stamina,
+										value: 6
+									}));
+								}}
+							>
+								Stat Bonus
+							</Button>
+						</div>
+						<Divider>Game Content</Divider>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createAncestryFeature({
+										id: Utils.guid(),
+										value: 1,
+										current: true,
+										former: true,
+										customID: ''
+									}));
+								}}
+							>
+								Ancestry Feature
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createKitChoice({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Kit
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createPerk({
+										id: Utils.guid(),
+										lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
+									}));
+								}}
+							>
+								Perk
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createTitleChoice({
+										id: Utils.guid(),
+										echelon: 1
+									}));
+								}}
+							>
+								Title
+							</Button>
+						</div>
+						<Divider>NPCs</Divider>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createCompanion({
+										id: Utils.guid(),
+										type: 'companion'
+									}));
+								}}
+							>
+								Companion
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createFollower({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Follower
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createSummon({
+										id: Utils.guid(),
+										options: []
+									}));
+								}}
+							>
+								Summon
+							</Button>
+						</div>
+						<Divider>Miscellaneous</Divider>
+						<div className='customize-option-section'>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createLanguageChoice({
+										id: Utils.guid(),
+										count: -1
+									}));
+								}}
+							>
+								Languages
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createMovementMode({
+										id: Utils.guid(),
+										mode: 'fly'
+									}));
+								}}
+							>
+								Movement Mode
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createProficiency({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Proficiencies
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									props.addFeature(FactoryLogic.feature.createSkillChoice({
+										id: Utils.guid(),
+										listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
+										count: -1
+									}));
+								}}
+							>
+								Skills
+							</Button>
+						</div>
+					</>
+				}
+				open={menuOpen}
+				onOpenChange={setMenuOpen}
+			>
+				<Button type='text' icon={<PlusOutlined />} />
+			</Popover>
+		);
+	};
 
 	const getEditSection = (feature: Feature) => {
 		const setValue = (value: number) => {
@@ -233,6 +499,13 @@ export const HeroCustomizePanel = (props: Props) => {
 			props.setFeature(feature.id, copy);
 		};
 
+		const setAbility = (value: Ability) => {
+			const copy = Utils.copy(feature) as FeatureAbility;
+			copy.data.ability = value;
+			copy.name = value.name || 'Unnamed Ability';
+			props.setFeature(feature.id, copy);
+		};
+
 		const setCustomAncestryID = (value: string) => {
 			const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
 			copy.data.source.customID = value;
@@ -253,6 +526,14 @@ export const HeroCustomizePanel = (props: Props) => {
 		};
 
 		switch (feature.type) {
+			case FeatureType.Ability:
+				return (
+					<div style={{ paddingTop: '20px' }}>
+						<Expander title='Ability Editor'>
+							<AbilityEditPanel ability={feature.data.ability} onChange={setAbility} />
+						</Expander>
+					</div>
+				);
 			case FeatureType.AncestryFeatureChoice:
 				return (
 					<div>
@@ -357,16 +638,7 @@ export const HeroCustomizePanel = (props: Props) => {
 							allowClear={!!feature.data.classID}
 							placeholder='Select class'
 							options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.description} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.label
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={feature.data.classID || ''}
 							onChange={setClassID}
 						/>
@@ -644,235 +916,7 @@ export const HeroCustomizePanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='hero-customize-panel'>
-					<HeaderText
-						extra={
-							<Popover
-								trigger='click'
-								content={
-									<Space direction='vertical'>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createAncestryFeature({
-													id: Utils.guid(),
-													value: 1,
-													current: true,
-													former: true,
-													customID: ''
-												}));
-											}}
-										>
-											Ancestry Feature
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createCharacteristicBonus({
-													id: Utils.guid(),
-													name: `${Characteristic.Might} + 1`,
-													characteristic: Characteristic.Might,
-													value: 1
-												}));
-											}}
-										>
-											Characteristic Bonus
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createClassAbilityChoice({
-													id: Utils.guid(),
-													cost: 'signature',
-													allowAnySource: true
-												}));
-											}}
-										>
-											Class Ability
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createCompanion({
-													id: Utils.guid(),
-													type: 'companion'
-												}));
-											}}
-										>
-											Companion
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createConditionImmunity({
-													id: Utils.guid(),
-													conditions: []
-												}));
-											}}
-										>
-											Condition Immunity
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createDamageModifier({
-													id: Utils.guid(),
-													modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 }) ]
-												}));
-											}}
-										>
-											Damage Immunity / Weakness
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createFollower({
-													id: Utils.guid()
-												}));
-											}}
-										>
-											Follower
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createKitChoice({
-													id: Utils.guid()
-												}));
-											}}
-										>
-											Kit
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createLanguageChoice({
-													id: Utils.guid(),
-													count: -1
-												}));
-											}}
-										>
-											Languages
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createMovementMode({
-													id: Utils.guid(),
-													mode: 'fly'
-												}));
-											}}
-										>
-											Movement Mode
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createPerk({
-													id: Utils.guid(),
-													lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
-												}));
-											}}
-										>
-											Perk
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createProficiency({
-													id: Utils.guid()
-												}));
-											}}
-										>
-											Proficiencies
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createSkillChoice({
-													id: Utils.guid(),
-													listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
-													count: -1
-												}));
-											}}
-										>
-											Skills
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createBonus({
-													id: Utils.guid(),
-													name: `${FeatureField.Stamina} + 6`,
-													field: FeatureField.Stamina,
-													value: 6
-												}));
-											}}
-										>
-											Stat Bonus
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createSummon({
-													id: Utils.guid(),
-													options: []
-												}));
-											}}
-										>
-											Summon
-										</Button>
-										<Button
-											block={true}
-											type='text'
-											onClick={() => {
-												setMenuOpen(false);
-												props.addFeature(FactoryLogic.feature.createTitleChoice({
-													id: Utils.guid(),
-													echelon: 1
-												}));
-											}}
-										>
-											Title
-										</Button>
-									</Space>
-								}
-								open={menuOpen}
-								onOpenChange={setMenuOpen}
-							>
-								<Button type='text' icon={<PlusOutlined />} />
-							</Popover>
-						}
-					>
+					<HeaderText extra={getMenu()}>
 						Customize
 					</HeaderText>
 					{
@@ -888,7 +932,7 @@ export const HeroCustomizePanel = (props: Props) => {
 								>
 									{getEditSection(f)}
 									{
-										[ FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier, FeatureType.Proficiency ].includes(f.type) ?
+										[ FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier, FeatureType.MovementMode, FeatureType.Proficiency ].includes(f.type) ?
 											null
 											:
 											<FeaturePanel

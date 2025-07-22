@@ -8,6 +8,13 @@
 	}
 }
 
+.customize-option-section {
+	width: 410px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 10px;
+}
+
 @media (prefers-color-scheme: dark) {
 	.hero-customize-panel {
 		.random-btn {

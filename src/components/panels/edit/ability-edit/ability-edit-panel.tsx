@@ -444,7 +444,7 @@ export const AbilityEditPanel = (props: Props) => {
 																placeholder='Distance'
 																options={[ 'Self', 'Melee', 'Ranged', 'Area', 'Line', 'Summoner', 'Special' ].map(option => ({ value: option }))}
 																optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-																value={distance.type}
+																value={getDistanceMainType(n)}
 																onChange={value => setDistanceMainType(n, value)}
 															/>
 															{

@@ -992,7 +992,7 @@ export const FeaturePanel = (props: Props) => {
 					))
 				}
 				{
-					data.selected.length < data.count ?
+					(data.selected.length < data.count) || (data.count === -1) ?
 						<Button className='status-warning' block={true} onClick={() => setLanguageSelectorOpen(true)}>
 							Choose a language
 						</Button>
@@ -1169,7 +1169,7 @@ export const FeaturePanel = (props: Props) => {
 					))
 				}
 				{
-					data.selected.length < data.count ?
+					(data.selected.length < data.count) || (data.count === -1) ?
 						<Button className='status-warning' block={true} onClick={() => setSkillSelectorOpen(true)}>
 							Choose a Skill
 						</Button>

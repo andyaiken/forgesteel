@@ -867,7 +867,7 @@ export const HeroPanel = (props: Props) => {
 				<div className='features-section'>
 					{
 						mainFeatures.length > 0 ?
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
 								{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>Features</HeaderText> : null}
 								{
 									mainFeatures.map(f =>
@@ -886,12 +886,12 @@ export const HeroPanel = (props: Props) => {
 											</SelectablePanel>
 									)
 								}
-							</Space>
+							</div>
 							: null
 					}
 					{
 						inventoryFeatures.length > 0 ?
-							<>
+							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
 								<HeaderText level={props.options.compactView ? 3 : 1}>Inventory</HeaderText>
 								{
 									inventoryFeatures.map(f =>
@@ -909,7 +909,7 @@ export const HeroPanel = (props: Props) => {
 											/>
 									)
 								}
-							</>
+							</div>
 							: null
 					}
 				</div>

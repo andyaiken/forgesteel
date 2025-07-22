@@ -150,6 +150,16 @@
 
 			.features-section {
 				padding: 5px;
+
+				.features-grid {
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+
+					&.compact {
+						display: block;
+					}
+				}
 			}
 
 			.abilities-section {

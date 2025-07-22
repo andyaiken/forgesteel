@@ -18,6 +18,7 @@ import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
+import { LanguageType } from '../enums/language-type';
 import { Modifier } from '../models/damage-modifier';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
@@ -25,6 +26,7 @@ import { NameGenerator } from '../utils/name-generator';
 import { Perk } from '../models/perk';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
+import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import { SourcebookLogic } from './sourcebook-logic';
@@ -280,6 +282,8 @@ export class HeroLogic {
 				const language = allLanguages.find(l => l.name === name);
 				if (language) {
 					languages.push(language);
+				} else {
+					languages.push({ name: name, description: '', type: LanguageType.Custom, related: [] });
 				}
 			});
 
@@ -309,6 +313,8 @@ export class HeroLogic {
 				const skill = SourcebookLogic.getSkill(name, sourcebooks);
 				if (skill) {
 					skills.push(skill);
+				} else {
+					skills.push({ name: name, description: '', list: SkillList.Custom });
 				}
 			});
 

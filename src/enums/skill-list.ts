@@ -3,5 +3,6 @@ export enum SkillList {
 	Exploration = 'Exploration',
 	Interpersonal = 'Interpersonal',
 	Intrigue = 'Intrigue',
-	Lore = 'Lore'
+	Lore = 'Lore',
+	Custom = 'Custom'
 }

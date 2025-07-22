@@ -695,7 +695,12 @@ export const HeroPanel = (props: Props) => {
 						props.hero.class ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={onSelectClass}>
-									<div>Class: <b>{props.hero.class.name}</b></div>
+									{
+										props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
+											<div>Class: <b>{props.hero.class.name} ({props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(' ')}, level {props.hero.class.level})</b></div>
+											:
+											<div>Class: <b>{props.hero.class.name} (level {props.hero.class.level})</b></div>
+									}
 								</div>
 								:
 								<div className='overview-tile clickable' onClick={onSelectClass}>

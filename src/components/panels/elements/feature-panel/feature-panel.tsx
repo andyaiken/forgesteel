@@ -33,7 +33,7 @@ import { ItemPanel } from '../item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../kit-panel/kit-panel';
 import { KitSelectModal } from '../../../modals/select/kit-select/kit-select-modal';
-import { LanguageType } from '../../../../enums/language-type';
+import { LanguageSelectModal } from '../../../modals/select/language-select/language-select-modal';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { Modal } from '../../../modals/modal/modal';
 import { Monster } from '../../../../models/monster';
@@ -50,7 +50,7 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
 import { PerkSelectModal } from '../../../modals/select/perk-select/perk-select-modal';
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
-import { SkillList } from '../../../../enums/skill-list';
+import { SkillSelectModal } from '../../../modals/select/skill-select/skill-select-modal';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Title } from '../../../../models/title';
@@ -78,8 +78,10 @@ export const FeaturePanel = (props: Props) => {
 	const [ abilitySelectorOpen, setAbilitySelectorOpen ] = useState<boolean>(false);
 	const [ choiceSelectorOpen, setChoiceSelectorOpen ] = useState<boolean>(false);
 	const [ kitSelectorOpen, setKitSelectorOpen ] = useState<boolean>(false);
+	const [ languageSelectorOpen, setLanguageSelectorOpen ] = useState<boolean>(false);
 	const [ monsterSelectorOpen, setMonsterSelectorOpen ] = useState<boolean>(false);
 	const [ perkSelectorOpen, setPerkSelectorOpen ] = useState<boolean>(false);
+	const [ skillSelectorOpen, setSkillSelectorOpen ] = useState<boolean>(false);
 	const [ titleSelectorOpen, setTitleSelectorOpen ] = useState<boolean>(false);
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
 	const [ selectedAncestry, setSelectedAncestry ] = useState<Ancestry | null>(null);
@@ -965,66 +967,53 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return (
-			<div>
+			<Space direction='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
-				<Select
-					style={{ width: '100%' }}
-					status={data.selected.length < data.count ? 'warning' : ''}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={(data.count === 1) || (data.count === -1) ? undefined : data.count}
-					allowClear={true}
-					placeholder={data.count === 1 ? 'Select a language' : 'Select languages'}
-					options={
-						[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]
-							.filter(type => sortedLanguages.some(l => l.type === type))
-							.map(type => ({
-								label: <HeaderText>{type} Languages</HeaderText>,
-								value: type,
-								desc: type,
-								options: sortedLanguages
-									.filter(l => l.type === type)
-									.map(l => ({
-										label: <Field disabled={currentLanguages.includes(l.name)} label={l.name} value={l.description} />,
-										value: l.name,
-										desc: l.description,
-										disabled: currentLanguages.includes(l.name)
-									}))
-							}))
-					}
-					labelRender={x => x.value}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
-					onChange={value => {
-						let ids: string[] = [];
-						if (data.count === 1) {
-							ids = value !== undefined ? [ value as string ] : [];
-						} else {
-							ids = value as string[];
-						}
-						const dataCopy = Utils.copy(data);
-						dataCopy.selected = ids;
-						if (props.setData) {
-							props.setData(props.feature.id, dataCopy);
-						}
-					}}
-				/>
 				{
-					data.selected
-						.filter(l => currentLanguages.includes(l))
-						.map((l, n) => (
-							<Empty key={n} text={`You have already chosen ${l}.`} />
-						))
+					data.selected.map((language, n) => (
+						<Flex key={n} className='selection-box' align='center' gap={10}>
+							<div className='ds-text' style={{ flex: '1 1 0' }}>{language}</div>
+							<Flex vertical={true}>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									title='Remove'
+									icon={<CloseOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = dataCopy.selected.filter(l => l !== language);
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</Flex>
+						</Flex>
+					))
 				}
-			</div>
+				{
+					data.selected.length < data.count ?
+						<Button className='status-warning' block={true} onClick={() => setLanguageSelectorOpen(true)}>
+							Choose a language
+						</Button>
+						: null
+				}
+				<Drawer open={languageSelectorOpen} onClose={() => setLanguageSelectorOpen(false)} closeIcon={null} width='500px'>
+					<LanguageSelectModal
+						languages={sortedLanguages.filter(l => !currentLanguages.includes(l.name))}
+						onSelect={l => {
+							setLanguageSelectorOpen(false);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected.push(l.name);
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setLanguageSelectorOpen(false)}
+					/>
+				</Drawer>
+			</Space>
 		);
 	};
 
@@ -1106,7 +1095,7 @@ export const FeaturePanel = (props: Props) => {
 								props.setData(props.feature.id, dataCopy);
 							}
 						}}
-						onClose={() => setAbilitySelectorOpen(false)}
+						onClose={() => setPerkSelectorOpen(false)}
 					/>
 				</Drawer>
 				<Drawer open={!!selectedPerk} onClose={() => setSelectedPerk(null)} closeIcon={null} width='500px'>
@@ -1155,66 +1144,53 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return (
-			<div>
+			<Space direction='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
-				<Select
-					style={{ width: '100%' }}
-					status={data.selected.length < data.count ? 'warning' : ''}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={(data.count === 1) || (data.count === -1) ? undefined : data.count}
-					allowClear={true}
-					placeholder={data.count === 1 ? 'Select a skill' : 'Select skills'}
-					options={
-						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-							.filter(list => sortedSkills.some(s => s.list === list))
-							.map(list => ({
-								label: <HeaderText>{list} Skills</HeaderText>,
-								value: list,
-								desc: list,
-								options: sortedSkills
-									.filter(s => s.list === list)
-									.map(s => ({
-										label: <Field disabled={currentSkills.includes(s.name)} label={s.name} value={s.description} />,
-										value: s.name,
-										desc: s.description,
-										disabled: currentSkills.includes(s.name)
-									}))
-							}))
-					}
-					labelRender={x => x.value}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0] : null) : data.selected}
-					onChange={value => {
-						let ids: string[] = [];
-						if (data.count === 1) {
-							ids = value !== undefined ? [ value as string ] : [];
-						} else {
-							ids = value as string[];
-						}
-						const dataCopy = Utils.copy(data);
-						dataCopy.selected = ids;
-						if (props.setData) {
-							props.setData(props.feature.id, dataCopy);
-						}
-					}}
-				/>
 				{
-					data.selected
-						.filter(s => currentSkills.includes(s))
-						.map((s, n) => (
-							<Empty key={n} text={`You have already chosen ${s}.`} />
-						))
+					data.selected.map((language, n) => (
+						<Flex key={n} className='selection-box' align='center' gap={10}>
+							<div className='ds-text' style={{ flex: '1 1 0' }}>{language}</div>
+							<Flex vertical={true}>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									title='Remove'
+									icon={<CloseOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = dataCopy.selected.filter(l => l !== language);
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</Flex>
+						</Flex>
+					))
 				}
-			</div>
+				{
+					data.selected.length < data.count ?
+						<Button className='status-warning' block={true} onClick={() => setSkillSelectorOpen(true)}>
+							Choose a Skill
+						</Button>
+						: null
+				}
+				<Drawer open={skillSelectorOpen} onClose={() => setSkillSelectorOpen(false)} closeIcon={null} width='500px'>
+					<SkillSelectModal
+						skills={sortedSkills.filter(s => !currentSkills.includes(s.name))}
+						onSelect={s => {
+							setSkillSelectorOpen(false);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected.push(s.name);
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setSkillSelectorOpen(false)}
+					/>
+				</Drawer>
+			</Space>
 		);
 	};
 

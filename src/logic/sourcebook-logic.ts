@@ -1,3 +1,4 @@
+import { Monster, MonsterGroup } from '../models/monster';
 import { Ability } from '../models/ability';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
@@ -11,7 +12,7 @@ import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
-import { MonsterGroup } from '../models/monster';
+import { Options } from '../models/options';
 import { Perk } from '../models/perk';
 import { Project } from '../models/project';
 import { Skill } from '../models/skill';
@@ -316,5 +317,16 @@ export class SourcebookLogic {
 				const ids = mg.monsters.map(m => m.id);
 				return ids.includes(monsterID);
 			}) || null;
+	};
+
+	static getSimilarMonsters = (sourcebooks: Sourcebook[], monster: Monster, options: Options) => {
+		return sourcebooks
+			.flatMap(sb => sb.monsterGroups)
+			.flatMap(mg => mg.monsters)
+			.filter(m => m.id !== monster.id)
+			.filter(m => !options.similarLevel || (m.level === monster.level))
+			.filter(m => !options.similarRole || (m.role.type === monster.role.type))
+			.filter(m => !options.similarOrganization || (m.role.organization === monster.role.organization))
+			.filter(m => !options.similarSize || ((m.size.value === monster.size.value) && (m.size.mod === monster.size.mod)));
 	};
 }

@@ -206,10 +206,10 @@ export const OptionsPanel = (props: Props) => {
 						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 						<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
-						<div className='option-heading'>View</div>
+						<Divider>View</Divider>
 						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
 						<Toggle label='Compact' value={props.options.compactView} onChange={setCompactView} />
-						<div className='option-heading'>Abilities</div>
+						<Divider>Abilities</Divider>
 						<Segmented
 							name='abilitywidth'
 							disabled={props.options.compactView}

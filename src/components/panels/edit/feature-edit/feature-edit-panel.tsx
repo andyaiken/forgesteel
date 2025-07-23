@@ -498,6 +498,12 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setLanguageSelected = (value: string[]) => {
+			const copy = Utils.copy(feature.data) as FeatureLanguageChoiceData;
+			copy.selected = value;
+			setData(copy);
+		};
+
 		const setSkillOptions = (value: string[]) => {
 			const copy = Utils.copy(feature.data) as FeatureSkillChoiceData;
 			copy.options = value;
@@ -507,6 +513,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setSkillListOptions = (value: SkillList[]) => {
 			const copy = Utils.copy(feature.data) as FeatureSkillChoiceData;
 			copy.listOptions = value;
+			setData(copy);
+		};
+
+		const setSkillSelected = (value: string[]) => {
+			const copy = Utils.copy(feature.data) as FeatureSkillChoiceData;
+			copy.selected = value;
 			setData(copy);
 		};
 
@@ -1528,6 +1540,11 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 			case FeatureType.LanguageChoice: {
 				const data = feature.data as FeatureLanguageChoiceData;
+
+				const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
+				const distinctLanguages = Collections.distinct(languages, l => l.name);
+				const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
+
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Options</HeaderText>
@@ -1553,6 +1570,26 @@ export const FeatureEditPanel = (props: Props) => {
 						/>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
+						<HeaderText>Default Selection</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Selection'
+							allowClear={true}
+							mode='multiple'
+							options={sortedLanguages.map(option => ({ value: option.name }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={data.selected}
+							onChange={setLanguageSelected}
+						/>
 					</Space>
 				);
 			}
@@ -1833,6 +1870,12 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 			case FeatureType.SkillChoice: {
 				const data = feature.data as FeatureSkillChoiceData;
+
+				const skills = SourcebookLogic.getSkills(props.sourcebooks as Sourcebook[])
+					.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
+				const distinctSkills = Collections.distinct(skills, s => s.name);
+				const sortedSkills = Collections.sort(distinctSkills, s => s.name);
+
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Options</HeaderText>
@@ -1877,6 +1920,26 @@ export const FeatureEditPanel = (props: Props) => {
 						/>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
+						<HeaderText>Default Selection</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Selection'
+							allowClear={true}
+							mode='multiple'
+							options={sortedSkills.map(option => ({ value: option.name }))}
+							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+							showSearch={true}
+							filterOption={(input, option) => {
+								const strings = option ?
+									[
+										option.value
+									]
+									: [];
+								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+							}}
+							value={data.selected}
+							onChange={setSkillSelected}
+						/>
 					</Space>
 				);
 			}

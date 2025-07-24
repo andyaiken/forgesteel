@@ -3,6 +3,7 @@ import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
+import { HeaderText } from '../../../controls/header-text/header-text';
 import { Modal } from '../../modal/modal';
 import { Monster } from '../../../../models/monster';
 import { MonsterFilter } from '../../../../models/filter';
@@ -65,6 +66,7 @@ export const MonsterSelectModal = (props: Props) => {
 									: null
 							}
 							<Expander title='Filter'>
+								<HeaderText>Filter</HeaderText>
 								<MonsterFilterPanel
 									monsterFilter={filter}
 									monsters={props.monsters}

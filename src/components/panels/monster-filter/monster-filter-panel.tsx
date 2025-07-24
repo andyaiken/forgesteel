@@ -139,7 +139,7 @@ export const MonsterFilterPanel = (props: Props) => {
 					/>
 					<Flex gap={10}>
 						<div style={{ flex: '1 1 0' }}>
-							<Toggle label='Filter on size' value={props.monsterFilter.size.length > 0} onChange={value => setFilterSize(value ? [ 1, 2 ] : [])} />
+							<Toggle label='By size' value={props.monsterFilter.size.length > 0} onChange={value => setFilterSize(value ? [ 1, 2 ] : [])} />
 							{
 								props.monsterFilter.size.length > 0 ?
 									<>
@@ -156,7 +156,7 @@ export const MonsterFilterPanel = (props: Props) => {
 							}
 						</div>
 						<div style={{ flex: '1 1 0' }}>
-							<Toggle label='Filter on level' value={props.monsterFilter.level.length > 0} onChange={value => setFilterLevel(value ? [ 1, 2 ] : [])} />
+							<Toggle label='By level' value={props.monsterFilter.level.length > 0} onChange={value => setFilterLevel(value ? [ 1, 2 ] : [])} />
 							{
 								props.monsterFilter.level.length > 0 ?
 									<>
@@ -173,7 +173,7 @@ export const MonsterFilterPanel = (props: Props) => {
 							}
 						</div>
 						<div style={{ flex: '1 1 0' }}>
-							<Toggle label='Filter on EV' value={props.monsterFilter.ev.length > 0} onChange={value => setFilterEV(value ? [ 1, 10 ] : [])} />
+							<Toggle label='By EV' value={props.monsterFilter.ev.length > 0} onChange={value => setFilterEV(value ? [ 1, 10 ] : [])} />
 							{
 								props.monsterFilter.ev.length > 0 ?
 									<>

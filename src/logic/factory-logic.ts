@@ -553,9 +553,9 @@ export class FactoryLogic {
 			keywords: [],
 			roles: [],
 			organizations: [],
-			level: [ 1, 2 ],
-			size: [ 1, 2 ],
-			ev: [ 1, 10 ]
+			level: [],
+			size: [],
+			ev: []
 		};
 	};
 
@@ -564,8 +564,8 @@ export class FactoryLogic {
 			name: '',
 			roles: [],
 			terrainRoles: [],
-			level: [ 1, 2 ],
-			ev: [ 1, 10 ]
+			level: [],
+			ev: []
 		};
 	};
 

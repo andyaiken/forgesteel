@@ -1,13 +1,17 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, DownOutlined, InfoCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, DownOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, TerrainSlot } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
+import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
+import { MonsterInfo, TerrainInfo } from '../../../controls/token/token';
+import { ReactNode, useState } from 'react';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { DropdownButton } from '../../../controls/dropdown-button/dropdown-button';
 import { Element } from '../../../../models/element';
 import { ElementEditPanel } from '../element-edit/element-edit-panel';
 import { Empty } from '../../../controls/empty/empty';
+import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectiveData } from '../../../../data/encounter-objective-data';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
@@ -15,6 +19,8 @@ import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
+import { MonsterFilterPanel } from '../../monster-filter/monster-filter-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../../elements/monster-panel/monster-panel';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
@@ -26,15 +32,17 @@ import { Pill } from '../../../controls/pill/pill';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Terrain } from '../../../../models/terrain';
+import { TerrainFilterPanel } from '../../terrain-filter/terrain-filter-panel';
+import { TerrainLogic } from '../../../../logic/terrain-logic';
 import { TerrainPanel } from '../../elements/terrain-panel/terrain-panel';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
-import { useState } from 'react';
 
 import './encounter-edit-panel.scss';
 
 interface Props {
 	encounter: Encounter;
+	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	options: Options;
 	onChange: (encounter: Encounter) => void;
@@ -44,6 +52,9 @@ interface Props {
 
 export const EncounterEditPanel = (props: Props) => {
 	const [ encounter, setEncounter ] = useState<Encounter>(props.encounter);
+	const [ filterVisible, setFilterVisible ] = useState<boolean>(false);
+	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
+	const [ terrainFilter, setTerrainFilter ] = useState<TerrainFilter>(FactoryLogic.createTerrainFilter());
 
 	try {
 		const getNameAndDescriptionSection = () => {
@@ -78,7 +89,7 @@ export const EncounterEditPanel = (props: Props) => {
 			);
 		};
 
-		const getEncounterMonstersSection = () => {
+		const getMonstersSection = () => {
 			const deleteGroup = (group: EncounterGroup) => {
 				const copy = Utils.copy(encounter);
 				copy.groups = copy.groups.filter(g => g.id !== group.id);
@@ -277,7 +288,7 @@ export const EncounterEditPanel = (props: Props) => {
 			);
 		};
 
-		const getEncounterTerrainSection = () => {
+		const getTerrainSection = () => {
 			const setTerrainCount = (id: string, value: number) => {
 				const copy = Utils.copy(encounter);
 				const slot = copy.terrain.find(t => t.id === id);
@@ -371,7 +382,7 @@ export const EncounterEditPanel = (props: Props) => {
 			);
 		};
 
-		const getEncounterObjectiveSection = () => {
+		const getObjectiveSection = () => {
 			const setObjective = (value: EncounterObjective | null) => {
 				const copy = Utils.copy(encounter);
 				copy.objective = Utils.copy(value);
@@ -493,7 +504,7 @@ export const EncounterEditPanel = (props: Props) => {
 			);
 		};
 
-		const getEncounterNotesSection = () => {
+		const getNotesSection = () => {
 			const addNote = () => {
 				const copy = Utils.copy(encounter);
 				copy.notes.push({
@@ -566,38 +577,249 @@ export const EncounterEditPanel = (props: Props) => {
 			);
 		};
 
+		const getMonsterListSection = () => {
+			const setMonsterFilterName = (name: string) => {
+				const copy = Utils.copy(monsterFilter);
+				copy.name = name;
+				setMonsterFilter(copy);
+			};
+
+			const addMonster = (monster: Monster, encounterGroupID: string | null) => {
+				const copy = Utils.copy(encounter);
+
+				if (encounterGroupID) {
+					const group = copy.groups.find(g => g.id === encounterGroupID);
+					if (group) {
+						const slot = group.slots.find(s => s.monsterID === monster.id);
+						if (slot) {
+							slot.count += 1;
+						} else {
+							group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
+						}
+					};
+				} else {
+					const group = FactoryLogic.createEncounterGroup();
+					group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
+					copy.groups.push(group);
+				}
+
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const monsters = Collections.sort(props.sourcebooks.flatMap(s => s.monsterGroups.flatMap(mg => mg.monsters).filter(m => MonsterLogic.matches(m, monsterFilter))), m => m.name);
+
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<Input
+						placeholder='Search'
+						allowClear={true}
+						value={monsterFilter.name}
+						onChange={e => setMonsterFilterName(e.target.value)}
+					/>
+					{
+						filterVisible ?
+							<MonsterFilterPanel
+								monsterFilter={monsterFilter}
+								monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+								includeNameFilter={false}
+								onChange={setMonsterFilter}
+							/>
+							: null
+					}
+					{
+						monsters.map(m => {
+							const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
+
+							let addBtn: ReactNode;
+							if (encounter.groups.length === 0) {
+								addBtn = (
+									<Button icon={<PlusOutlined />} onClick={() => addMonster(m, null)}>Add</Button>
+								);
+							} else {
+								const groups = encounter.groups.map((group, n) => ({
+									key: group.id,
+									label: <div className='ds-text centered-text'>Group {n + 1}</div>
+								}));
+								groups.push({
+									key: '',
+									label: <div className='ds-text centered-text'>New Group</div>
+								});
+								addBtn = (
+									<DropdownButton
+										label='Add'
+										items={groups}
+										onClick={groupID => addMonster(m, groupID !== '' ? groupID : null)}
+									/>
+								);
+							}
+
+							return (
+								<div key={m.id} className='monster-row'>
+									<MonsterInfo monster={m} />
+									<Flex gap={10}>
+										<Button onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
+										{addBtn}
+									</Flex>
+								</div>
+							);
+						})
+					}
+					{
+						monsters.length === 0 ?
+							<Empty />
+							: null
+					}
+				</Space>
+			);
+		};
+
+		const getTerrainListSection = () => {
+			const setTerrainFilterName = (name: string) => {
+				const copy = Utils.copy(terrainFilter);
+				copy.name = name;
+				setTerrainFilter(copy);
+			};
+
+			const addTerrain = (terrain: Terrain) => {
+				const copy = Utils.copy(encounter);
+
+				const data = copy.terrain.find(t => t.terrainID === terrain.id);
+				if (data) {
+					data.count += 1;
+				} else {
+					copy.terrain.push({
+						id: Utils.guid(),
+						terrainID: terrain.id,
+						upgradeIDs: [],
+						count: 1,
+						terrain: []
+					});
+				}
+
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const allTerrains = SourcebookLogic.getTerrains(props.sourcebooks);
+			const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
+
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<Input
+						placeholder='Search'
+						allowClear={true}
+						value={terrainFilter.name}
+						onChange={e => setTerrainFilterName(e.target.value)}
+					/>
+					{
+						filterVisible ?
+							<TerrainFilterPanel
+								terrainFilter={terrainFilter}
+								terrain={allTerrains}
+								includeNameFilter={false}
+								onChange={setTerrainFilter}
+							/>
+							: null
+					}
+					{
+						terrains.map(t => {
+							return (
+								<div key={t.id} className='terrain-row'>
+									<TerrainInfo terrain={t} />
+									<Flex gap={10}>
+										<Button onClick={() => props.showTerrain(t, [])}>Details</Button>
+										<Button icon={<PlusOutlined />} onClick={() => addTerrain(t)}>Add</Button>
+									</Flex>
+								</div>
+							);
+						})
+					}
+					{
+						terrains.length === 0 ?
+							<Empty />
+							: null
+					}
+				</Space>
+			);
+		};
+
+		const getDifficultySection = () => {
+			const strength = EncounterLogic.getStrength(encounter, props.sourcebooks);
+			const difficulty = EncounterLogic.getDifficulty(strength, props.options, props.heroes);
+
+			return (
+				<Expander title='Difficulty' tags={[ difficulty ]}>
+					<EncounterDifficultyPanel
+						encounter={encounter}
+						sourcebooks={props.sourcebooks}
+						heroes={props.heroes}
+						options={props.options}
+					/>
+				</Expander>
+			);
+		};
+
 		return (
 			<ErrorBoundary>
 				<div className='encounter-edit-panel'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Encounter',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Monsters',
-								children: getEncounterMonstersSection()
-							},
-							{
-								key: '3',
-								label: 'Terrain',
-								children: getEncounterTerrainSection()
-							},
-							{
-								key: '4',
-								label: 'Objective',
-								children: getEncounterObjectiveSection()
-							},
-							{
-								key: '5',
-								label: 'Notes',
-								children: getEncounterNotesSection()
+					<div className='encounter-workspace-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Encounter',
+									children: getNameAndDescriptionSection()
+								},
+								{
+									key: '2',
+									label: 'Monsters',
+									children: getMonstersSection()
+								},
+								{
+									key: '3',
+									label: 'Terrain',
+									children: getTerrainSection()
+								},
+								{
+									key: '4',
+									label: 'Objective',
+									children: getObjectiveSection()
+								},
+								{
+									key: '5',
+									label: 'Notes',
+									children: getNotesSection()
+								}
+							]}
+						/>
+					</div>
+					<div className='encounter-list-column'>
+						{getDifficultySection()}
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Monsters',
+									children: getMonsterListSection()
+								},
+								{
+									key: '2',
+									label: 'Terrain',
+									children: getTerrainListSection()
+								}
+							]}
+							tabBarExtraContent={
+								<Button
+									className='filter-button'
+									type='text'
+									icon={filterVisible ? <FilterFilled /> : <FilterOutlined />}
+									onClick={() => setFilterVisible(!filterVisible)}
+								/>
 							}
-						]}
-					/>
+						/>
+
+					</div>
 				</div>
 			</ErrorBoundary>
 		);

@@ -89,7 +89,7 @@ export const TerrainFilterPanel = (props: Props) => {
 						style={{ width: '100%' }}
 						mode='multiple'
 						allowClear={true}
-						placeholder='Terrain roles'
+						placeholder='Terrain types'
 						options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(r => ({ label: r, value: r }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						showSearch={true}
@@ -106,7 +106,7 @@ export const TerrainFilterPanel = (props: Props) => {
 					/>
 					<Flex gap={10}>
 						<div style={{ flex: '1 1 0' }}>
-							<Toggle label='Filter on level' value={props.terrainFilter.level.length > 0} onChange={value => setFilterLevel(value ? [ 1, 2 ] : [])} />
+							<Toggle label='By level' value={props.terrainFilter.level.length > 0} onChange={value => setFilterLevel(value ? [ 1, 2 ] : [])} />
 							{
 								props.terrainFilter.level.length > 0 ?
 									<>
@@ -123,7 +123,7 @@ export const TerrainFilterPanel = (props: Props) => {
 							}
 						</div>
 						<div style={{ flex: '1 1 0' }}>
-							<Toggle label='Filter on EV' value={props.terrainFilter.ev.length > 0} onChange={value => setFilterEV(value ? [ 1, 10 ] : [])} />
+							<Toggle label='By EV' value={props.terrainFilter.ev.length > 0} onChange={value => setFilterEV(value ? [ 1, 10 ] : [])} />
 							{
 								props.terrainFilter.ev.length > 0 ?
 									<>

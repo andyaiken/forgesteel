@@ -634,6 +634,7 @@ export const LibraryListPage = (props: Props) => {
 			const tools = (
 				<>
 					<Expander title='Filter'>
+						<HeaderText>Filter</HeaderText>
 						<MonsterFilterPanel
 							monsterFilter={monsterFilter}
 							monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}

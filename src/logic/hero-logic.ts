@@ -465,35 +465,50 @@ export class HeroLogic {
 	};
 
 	static getSpeed = (hero: Hero) => {
-		let value = 5;
+		const getValue = (hero: Hero) => {
+			let value = 5;
 
-		const features = HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Speed);
-		if (features.length > 0) {
-			const datas = features.map(f => f.data);
-			value = Collections.max(datas.map(d => d.speed), v => v) || 0;
-		}
+			const features = HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.Speed);
+			if (features.length > 0) {
+				const datas = features.map(f => f.data);
+				value = Collections.max(datas.map(d => d.speed), v => v) || 0;
+			}
 
-		// Add maximum from kits
-		const kits = HeroLogic.getKits(hero);
-		value += Collections.max(kits.map(kit => kit.speed), value => value) || 0;
+			// Add maximum from kits
+			const kits = HeroLogic.getKits(hero);
+			value += Collections.max(kits.map(kit => kit.speed), value => value) || 0;
 
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Bonus)
-			.map(f => f.data)
-			.filter(data => data.field === FeatureField.Speed)
-			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+			HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.Bonus)
+				.map(f => f.data)
+				.filter(data => data.field === FeatureField.Speed)
+				.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
-		if (hero.state.conditions.some(c => [ ConditionType.Grabbed, ConditionType.Restrained ].includes(c.type))) {
-			value = 0;
-		}
-		if (hero.state.conditions.some(c => [ ConditionType.Slowed ].includes(c.type))) {
-			value = Math.min(value, 2);
-		}
+			if (hero.state.conditions.some(c => [ ConditionType.Grabbed, ConditionType.Restrained ].includes(c.type))) {
+				value = 0;
+			}
+			if (hero.state.conditions.some(c => [ ConditionType.Slowed ].includes(c.type))) {
+				value = Math.min(value, 2);
+			}
 
-		return value;
+			return value;
+		};
+
+		const getModes = (hero: Hero) => {
+			const modes = HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.MovementMode)
+				.map(f => f.data.mode);
+			return Collections.sort(Collections.distinct(modes, m => m), m => m);
+		};
+
+		return {
+			value: getValue(hero),
+			modes: getModes(hero)
+		};
 	};
 
 	static getSpeedModified = (hero: Hero) => {
@@ -502,14 +517,6 @@ export class HeroLogic {
 		}
 
 		return false;
-	};
-
-	static getMovementModes = (hero: Hero) => {
-		const modes = HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.MovementMode)
-			.map(f => f.data.mode);
-		return Collections.sort(Collections.distinct(modes, m => m), m => m);
 	};
 
 	static getStability = (hero: Hero) => {

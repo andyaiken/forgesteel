@@ -221,7 +221,10 @@ export class MonsterLogic {
 			value = Math.min(value, 2);
 		}
 
-		return value;
+		return {
+			value: value,
+			modes: monster.speed.modes
+		};
 	};
 
 	static getSpeedModified = (monster: Monster) => {

@@ -38,9 +38,9 @@ export const MonsterPanel = (props: Props) => {
 	try {
 		const signatureBonus = MonsterLogic.getSignatureDamageBonus(props.monster);
 
-		let speed = `${MonsterLogic.getSpeed(props.monster)}${MonsterLogic.getSpeedModified(props.monster) ? '*' : ''}`;
-		if (props.monster.speed.modes) {
-			speed = `${speed} (${props.monster.speed.modes})`;
+		let speedStr = FormatLogic.getSpeed(MonsterLogic.getSpeed(props.monster));
+		if (MonsterLogic.getSpeedModified(props.monster)) {
+			speedStr += '*';
 		}
 
 		const conditions = MonsterLogic.getConditionImmunities(props.monster);
@@ -70,7 +70,7 @@ export const MonsterPanel = (props: Props) => {
 						props.mode === PanelMode.Full ?
 							<>
 								<div className='stats'>
-									<Field orientation='vertical' label='Speed' value={speed} />
+									<Field orientation='vertical' label='Speed' value={speedStr} />
 									<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
 									<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
 									<Field orientation='vertical' label='Stability' value={props.monster.stability} />

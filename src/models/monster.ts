@@ -5,6 +5,7 @@ import { Element } from './element';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Size } from './size';
+import { Speed } from './speed';
 
 export interface MonsterRole {
 	type: MonsterRoleType;
@@ -29,10 +30,7 @@ export interface Monster extends Element {
 	keywords: string[];
 	encounterValue: number;
 	size: Size;
-	speed: {
-		value: number;
-		modes: string;
-	};
+	speed: Speed;
 	stamina: number;
 	stability: number;
 	freeStrikeDamage: number;

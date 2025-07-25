@@ -302,7 +302,7 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setMovementMode = (value: string) => {
+		const setMovementModes = (value: string[]) => {
 			const copy = Utils.copy(monster);
 			copy.speed.modes = value;
 			setMonster(copy);
@@ -380,10 +380,10 @@ export const MonsterEditPanel = (props: Props) => {
 				<HeaderText>Speed</HeaderText>
 				<NumberSpin min={0} value={monster.speed.value} onChange={setSpeed} />
 				<Input
-					placeholder='Movement mode'
+					placeholder='Movement modes'
 					allowClear={true}
 					value={monster.speed.modes}
-					onChange={e => setMovementMode(e.target.value)}
+					onChange={e => setMovementModes([ e.target.value ])}
 				/>
 				{
 					props.similarMonsters.length > 0 ?

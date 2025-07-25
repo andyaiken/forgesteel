@@ -3,6 +3,7 @@ import { Plot, PlotLink } from '../models/plot';
 import { AbilityType } from '../models/ability';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Size } from '../models/size';
+import { Speed } from '../models/speed';
 
 export class FormatLogic {
 	static getAbilityType = (type: AbilityType) => {
@@ -22,6 +23,14 @@ export class FormatLogic {
 		}
 
 		return `1${size.mod}`;
+	};
+
+	static getSpeed = (speed: Speed) => {
+		if (speed.modes.length === 0) {
+			return speed.value.toString();
+		}
+
+		return `${speed.value} (${speed.modes.join(', ')})`;
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {

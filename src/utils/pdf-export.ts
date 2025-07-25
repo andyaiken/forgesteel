@@ -60,7 +60,7 @@ export class PDFExport {
 			Wealth: hero.state.wealth,
 			Renown: hero.state.renown,
 			XP: hero.state.xp,
-			Speed: HeroLogic.getSpeed(hero),
+			Speed: FormatLogic.getSpeed(HeroLogic.getSpeed(hero)),
 			Stability: HeroLogic.getStability(hero),
 			Size: FormatLogic.getSize(HeroLogic.getSize(hero)),
 			Disengage: HeroLogic.getDisengage(hero),

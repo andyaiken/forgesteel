@@ -48,6 +48,7 @@ import { RetainerData } from '../data/retainer-data';
 import { Size } from '../models/size';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
+import { Speed } from '../models/speed';
 import { SubClass } from '../models/subclass';
 import { TerrainCategory } from '../enums/terrain-category';
 import { TerrainRoleType } from '../enums/terrain-role-type';
@@ -475,7 +476,7 @@ export class FactoryLogic {
 		keywords: string[],
 		encounterValue: number,
 		size: Size,
-		speed: { value: number, modes: string },
+		speed: Speed,
 		stamina: number,
 		stability: number,
 		freeStrikeDamage: number,
@@ -527,10 +528,10 @@ export class FactoryLogic {
 		};
 	};
 
-	static createSpeed = (value: number, modes?: string) => {
+	static createSpeed = (value: number, modes?: string): Speed => {
 		return {
 			value: value,
-			modes: modes || ''
+			modes: modes ? modes.split(',').map(m => m.trim()) : []
 		};
 	};
 

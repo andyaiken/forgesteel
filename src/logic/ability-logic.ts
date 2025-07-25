@@ -303,7 +303,7 @@ export class AbilityLogic {
 			const speedRegex = /up to[^,.;:]your speed/gi;
 			[ ...text.matchAll(speedRegex) ].map(r => r[0]).forEach(str => {
 				const constant = FormatLogic.getConstant(str);
-				const value = HeroLogic.getSpeed(hero);
+				const value = HeroLogic.getSpeed(hero).value;
 				const multiplier = FormatLogic.getMultiplier(str);
 				text = text.replace(str, `up to ${constant + (Math.floor(value * multiplier))} squares`);
 			});

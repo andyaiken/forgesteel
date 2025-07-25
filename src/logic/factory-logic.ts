@@ -39,6 +39,8 @@ import { MonsterLogic } from './monster-logic';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Negotiation } from '../models/negotiation';
+import { Options } from '../models/options';
+import { PanelWidth } from '../enums/panel-width';
 import { Perk } from '../models/perk';
 import { PerkList } from '../enums/perk-list';
 import { Playbook } from '../models/playbook';
@@ -1644,6 +1646,34 @@ export class FactoryLogic {
 				y: 0,
 				z: 0
 			}
+		};
+	}
+
+	public static createOptions(): Options {
+		return {
+			singlePage: false,
+			separateInventoryFeatures: false,
+			showSkillsInGroups: true,
+			showStandardAbilities: true,
+			dimUnavailableAbilities: true,
+			showSources: true,
+			abilityWidth: PanelWidth.Medium,
+			compactView: false,
+			showMonstersInGroups: true,
+			showSimilarMonsters: false,
+			similarLevel: true,
+			similarRole: true,
+			similarOrganization: true,
+			similarSize: true,
+			minionCount: 8,
+			party: '',
+			heroParty: '',
+			heroCount: 4,
+			heroLevel: 1,
+			heroVictories: 0,
+			showDefeatedCombatants: false,
+			gridSize: 50,
+			playerGridSize: 50
 		};
 	}
 }

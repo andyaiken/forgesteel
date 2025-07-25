@@ -12,6 +12,10 @@ export class PlaybookUpdateLogic {
 		}
 
 		playbook.adventures.forEach(a => {
+			if (a.plot.plots === undefined) {
+				a.plot.plots = [];
+			}
+
 			a.plot.plots.flatMap(p => p.content).forEach(c => {
 				if (c.contentType === undefined) {
 					(c as PlotContentReference).contentType = 'reference';

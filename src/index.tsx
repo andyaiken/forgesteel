@@ -6,7 +6,6 @@ import { HeroUpdateLogic } from './logic/update/hero-update-logic.ts';
 import { Main } from './components/main/main.tsx';
 import { Options } from './models/options.ts';
 import { OptionsUpdateLogic } from './logic/update/options-update-logic.ts';
-import { PanelWidth } from './enums/panel-width.ts';
 import { Playbook } from './models/playbook.ts';
 import { PlaybookUpdateLogic } from './logic/update/playbook-update-logic.ts';
 import { Sourcebook } from './models/sourcebook.ts';
@@ -99,31 +98,7 @@ Promise.all(promises).then(results => {
 
 	let options = results[5] as Options | null;
 	if (!options) {
-		options = {
-			singlePage: false,
-			separateInventoryFeatures: false,
-			showSkillsInGroups: true,
-			showStandardAbilities: true,
-			dimUnavailableAbilities: true,
-			showSources: true,
-			abilityWidth: PanelWidth.Medium,
-			compactView: false,
-			showMonstersInGroups: true,
-			showSimilarMonsters: false,
-			similarLevel: true,
-			similarRole: true,
-			similarOrganization: true,
-			similarSize: true,
-			minionCount: 8,
-			party: '',
-			heroParty: '',
-			heroCount: 4,
-			heroLevel: 1,
-			heroVictories: 0,
-			showDefeatedCombatants: false,
-			gridSize: 50,
-			playerGridSize: 50
-		};
+		options = FactoryLogic.createOptions();
 	}
 
 	OptionsUpdateLogic.updateOptions(options);

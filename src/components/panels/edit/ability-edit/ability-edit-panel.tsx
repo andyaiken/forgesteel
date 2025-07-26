@@ -339,7 +339,7 @@ export const AbilityEditPanel = (props: Props) => {
 			case 'roll':
 				return 'Roll';
 			case 'package':
-				return 'Package';
+				return `Package: ${section.tag || '(no tag set)'}`;
 		}
 	};
 
@@ -673,7 +673,13 @@ export const AbilityEditPanel = (props: Props) => {
 															section.type === 'package' ?
 																<Space direction='vertical' style={{ width: '100%' }}>
 																	<HeaderText>Tag</HeaderText>
-																	<MultiLine value={section.tag} onChange={value => setPackageSectionTag(n, value)} />
+																	<Input
+																		status={section.tag === '' ? 'warning' : ''}
+																		placeholder='Tag'
+																		allowClear={true}
+																		value={section.tag}
+																		onChange={e => setPackageSectionTag(n, e.target.value)}
+																	/>
 																</Space>
 																: null
 														}

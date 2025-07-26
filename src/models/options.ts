@@ -12,6 +12,7 @@ export interface Options {
 	abilityWidth: PanelWidth;
 	// Library
 	showMonstersInGroups: boolean;
+	showContentInTable: boolean;
 	// Monster Builder
 	showSimilarMonsters: boolean;
 	similarLevel: boolean;

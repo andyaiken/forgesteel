@@ -228,71 +228,84 @@ export const HeroStateModal = (props: Props) => {
 					HeroLogic.getFeatures(hero)
 						.map(f => f.feature)
 						.filter(f => f.type === FeatureType.HeroicResource)
-						.map(f => (
-							<>
-								<HeaderText>Heroic Resource: {f.name}</HeaderText>
-								<NumberSpin
-									value={f.data.value}
-									min={f.data.canBeNegative ? undefined : 0}
-									onChange={value => setHeroicResource(f.id, value)}
-								/>
-								{
-									f.data.gains.length > 0 ?
-										<Space direction='vertical' style={{ width: '100%' }}>
-											{
-												f.data.gains.map((g, n) => {
-													let btn = (
-														<div style={{ padding: '0 8px' }}>+{g.value}</div>
-													);
-													const digits = /^\s*[+-]?\s*\d+\s*$/;
-													if (digits.test(g.value)) {
-														const v = parseInt(g.value);
-														btn = (
-															<Button onClick={() => gainResource(f.id, v)}>+{v}</Button>
+						.map(f => {
+							const gains = [
+								...f.data.gains,
+								...HeroLogic.getFeatures(hero)
+									.map(f => f.feature)
+									.filter(f => f.type === FeatureType.HeroicResourceGain)
+									.map(f => f.data),
+								...HeroLogic.getDomains(hero)
+									.flatMap(d => d.resourceGains)
+									.filter(g => g.resource === f.name)
+									.map(g => g)
+							];
+							return (
+								<>
+									<HeaderText>Heroic Resource: {f.name}</HeaderText>
+									<NumberSpin
+										value={f.data.value}
+										min={f.data.canBeNegative ? undefined : 0}
+										onChange={value => setHeroicResource(f.id, value)}
+									/>
+									{
+										gains.length > 0 ?
+											<Space direction='vertical' style={{ width: '100%' }}>
+												{
+													gains.map((g, n) => {
+														let btn = (
+															<div style={{ padding: '0 8px' }}>+{g.value}</div>
 														);
-													}
+														const digits = /^\s*[+-]?\s*\d+\s*$/;
+														if (digits.test(g.value)) {
+															const v = parseInt(g.value);
+															btn = (
+																<Button onClick={() => gainResource(f.id, v)}>+{v}</Button>
+															);
+														}
 
-													return (
-														<Flex key={n} align='center' justify='space-between' gap={10}>
-															<div className='ds-text compact-text'>{g.trigger}</div>
-															{btn}
-														</Flex>
-													);
-												})
-											}
-											<Flex align='center' justify='space-evenly' gap={10}>
-												<Button
-													key='start-encounter'
-													style={{ flex: '1 1 0' }}
-													className='tall-button'
-													onClick={() => startEncounter(f.id)}
-												>
-													<div>
-														<div>Start Encounter</div>
-														<div className='subtext'>
-															Victories to {f.name || 'Heroic Resource'}
+														return (
+															<Flex key={n} align='center' justify='space-between' gap={10}>
+																<div className='ds-text compact-text'>{g.trigger}</div>
+																{btn}
+															</Flex>
+														);
+													})
+												}
+												<Flex align='center' justify='space-evenly' gap={10}>
+													<Button
+														key='start-encounter'
+														style={{ flex: '1 1 0' }}
+														className='tall-button'
+														onClick={() => startEncounter(f.id)}
+													>
+														<div>
+															<div>Start Encounter</div>
+															<div className='subtext'>
+																Victories to {f.name || 'Heroic Resource'}
+															</div>
 														</div>
-													</div>
-												</Button>
-												<Button
-													key='end-encounter'
-													style={{ flex: '1 1 0' }}
-													className='tall-button'
-													onClick={() => endEncounter(f.id)}
-												>
-													<div>
-														<div>End Encounter</div>
-														<div className='subtext'>
-															+1 Victory
+													</Button>
+													<Button
+														key='end-encounter'
+														style={{ flex: '1 1 0' }}
+														className='tall-button'
+														onClick={() => endEncounter(f.id)}
+													>
+														<div>
+															<div>End Encounter</div>
+															<div className='subtext'>
+																+1 Victory
+															</div>
 														</div>
-													</div>
-												</Button>
-											</Flex>
-										</Space>
-										: null
-								}
-							</>
-						))
+													</Button>
+												</Flex>
+											</Space>
+											: null
+									}
+								</>
+							);
+						})
 				}
 				<HeaderText>Hero Tokens</HeaderText>
 				<NumberSpin

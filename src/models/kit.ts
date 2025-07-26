@@ -17,11 +17,11 @@ export interface Kit extends Element {
 	stamina: number;
 	speed: number;
 	stability: number;
+	disengage: number;
 	meleeDamage: KitDamageBonus | null;
 	rangedDamage: KitDamageBonus | null;
 	meleeDistance: number;
 	rangedDistance: number;
-	disengage: number;
 
 	features: Feature[];
 };

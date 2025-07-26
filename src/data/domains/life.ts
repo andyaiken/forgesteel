@@ -53,7 +53,13 @@ export const life: Domain = {
 			features: []
 		}
 	],
+	resourceGains: [
+		{
+			resource: 'Piety',
+			trigger: 'The first time in an encounter that a creature within 10 squares of you regains Stamina',
+			value: '2'
+		}
+	],
 	piety: `
-* Piety: You gain 2 piety the first time in an encounter that a creature within 10 squares of you regains Stamina.
 * Prayer Effect: Choose yourself or one ally within 10 squares of you. The targets can spend a Recovery, can end any effects on them that are ended by a saving throw or that end at the end of their turn, or can stand up if they are prone. Alternatively, you and one ally within 10 squares of you gain temporary Stamina equal to 5 × your Intuition score.`
 };

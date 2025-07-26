@@ -38,6 +38,13 @@ export class FeatureUpdateLogic {
 					}
 				});
 				break;
+			case FeatureType.Domain:
+				feature.data.selected.forEach(d => {
+					if (d.resourceGains === undefined) {
+						d.resourceGains = [];
+					}
+				});
+				break;
 			case FeatureType.HeroicResource:
 				if (feature.data.type === undefined) {
 					feature.data.type = 'heroic';

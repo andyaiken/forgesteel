@@ -157,21 +157,35 @@ export class PDFExport {
 		{
 			if (heroicResources.length > 0) {
 				const heroicResourceFeature = heroicResources[0];
-				if (heroicResourceFeature) {
-					texts['HeroicResourcesPerTurn'] = heroicResourceFeature.data.gains[0].value;
-					ignoredFeatures[heroicResourceFeature.id] = true;
-					let resourceGainText = 'Your resource is ' + heroicResourceFeature.name.toLowerCase() + '.\n\n';
-					heroicResourceFeature.data.gains.forEach(g => {
-						resourceGainText += g.trigger + ': +' + g.value + '\n';
+				texts['HeroicResourcesPerTurn'] = heroicResourceFeature.data.gains[0].value;
+				ignoredFeatures[heroicResourceFeature.id] = true;
+				let resourceGainText = 'Your resource is ' + heroicResourceFeature.name.toLowerCase() + '.\n\n';
+				[
+					...heroicResourceFeature.data.gains,
+					...HeroLogic.getFeatures(hero)
+						.map(f => f.feature)
+						.filter(f => f.type === FeatureType.HeroicResourceGain)
+						.map(f => f.data),
+					...HeroLogic.getDomains(hero)
+						.flatMap(d => d.resourceGains)
+						.filter(g => g.resource === heroicResourceFeature.name)
+						.map(g => g)
+				].forEach(g => {
+					resourceGainText += g.trigger + ': +' + g.value + '\n';
+				});
+				HeroLogic.getFeatures(hero)
+					.map(f => f.feature)
+					.filter(f => f.type === FeatureType.HeroicResourceGain)
+					.forEach(f => {
+						resourceGainText += f.data.trigger + ': +' + f.data.value + '\n';
 					});
-					if (heroicResourceFeature.data.details) {
-						resourceGainText += '\n\n' + heroicResourceFeature.data.details;
-					}
-					if (hero.class && (hero.class.id === ClassData.conduit.id) && domains) {
-						resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
-					}
-					texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
+				if (heroicResourceFeature.data.details) {
+					resourceGainText += '\n\n' + heroicResourceFeature.data.details;
 				}
+				if (hero.class && (hero.class.id === ClassData.conduit.id) && domains) {
+					resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
+				}
+				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
 			} else {
 				const resource = heroicResources.length > 0 ? heroicResources[0].name.toLowerCase() : 'XXX';
 				const startup = new RegExp(String.raw`\s*At the start of each of your turns during combat, you gain (.+?) ${resource}\.\s*`);

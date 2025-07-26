@@ -55,7 +55,13 @@ Additionally, whenever one target spends a Recovery, the other target can use a 
 			features: []
 		}
 	],
+	resourceGains: [
+		{
+			resource: 'Piety',
+			trigger: 'The first time in an encounter that you or an ally within 10 squares of you gains temporary Stamina or uses a triggered action to reduce incoming damage or give an enemy a bane on a power roll',
+			value: '2'
+		}
+	],
 	piety: `
-* Piety: You gain 2 piety the first time in an encounter that you or an ally within 10 squares of you gains temporary Stamina or uses a triggered action to reduce incoming damage or give an enemy a bane on a power roll.
 * Prayer Effect: One ally within 10 squares of you gains temporary Stamina equal to three times your Intuition score.`
 };

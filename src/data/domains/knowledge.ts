@@ -60,7 +60,13 @@ export const knowledge: Domain = {
 			features: []
 		}
 	],
+	resourceGains: [
+		{
+			resource: 'Piety',
+			trigger: 'The first time in an encounter that the Director uses an ability or feature that costs Malice',
+			value: '2'
+		}
+	],
 	piety: `
-* Piety: You gain 2 piety the first time in an encounter that the Director uses an ability or feature that costs Malice.
 * Prayer Effect: Choose up to three allies, including yourself, within 10 squares of you. Each target gains a surge.`
 };

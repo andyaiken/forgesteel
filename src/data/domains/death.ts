@@ -61,7 +61,13 @@ export const death: Domain = {
 			features: []
 		}
 	],
+	resourceGains: [
+		{
+			resource: 'Piety',
+			trigger: 'The first time in an encounter that a creature within 10 squares of you who isn’t a minion dies or a solo creature becomes winded',
+			value: '2'
+		}
+	],
 	piety: `
-* Piety: You gain 2 piety the first time in an encounter that a creature within 10 squares of you who isn’t a minion dies or a solo creature becomes winded.
 * Prayer Effect: You inflict a deadly curse upon two enemies of your choice within 10 squares of you. Each target takes corruption damage equal to twice your Intuition score.`
 };

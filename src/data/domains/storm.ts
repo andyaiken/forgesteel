@@ -69,7 +69,13 @@ Choose one of the following types of weather, each of which grants a benefit to 
 			features: []
 		}
 	],
+	resourceGains: [
+		{
+			resource: 'Piety',
+			trigger: 'The first time in an encounter that an enemy within 10 squares of you is force moved',
+			value: '2'
+		}
+	],
 	piety: `
-* Piety: You gain 2 piety the first time in an encounter that an enemy within 10 squares of you is force moved.
 * Prayer Effect: Each enemy in a 3-cube area within 10 squares of you takes lightning damage equal to twice your Intuition score.`
 };

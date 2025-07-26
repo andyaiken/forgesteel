@@ -16,8 +16,8 @@ export interface TerrainSection {
 };
 
 export interface Terrain extends Element {
-	category: TerrainCategory;
 	level: number;
+	category: TerrainCategory;
 	role: TerrainRole;
 	encounterValue: number;
 	area: string;

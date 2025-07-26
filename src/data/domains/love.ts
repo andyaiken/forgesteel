@@ -54,7 +54,13 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 			features: []
 		}
 	],
+	resourceGains: [
+		{
+			resource: 'Piety',
+			trigger: 'The first time in an encounter that you or an ally within 10 squares of you uses the Aid Another maneuver or an ability that targets an ally',
+			value: '2'
+		}
+	],
 	piety: `
-* Piety: You gain 2 piety the first time in an encounter that you or an ally within 10 squares of you uses the Aid Another maneuver or an ability that targets an ally.
 * Prayer Effect: Each ally within 10 squares of you gains temporary Stamina equal to 2 × your Intuition score.`
 };

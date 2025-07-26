@@ -6,5 +6,10 @@ export interface Domain extends Element {
 		level: number;
 		features: Feature[];
 	}[];
+	resourceGains: {
+		resource: string;
+		trigger: string;
+		value: string;
+	}[];
 	piety: string;
 }

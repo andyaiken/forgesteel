@@ -1,5 +1,6 @@
-import { Badge, Button, Divider, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { BookOutlined, DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from '@ant-design/icons';
+import { Badge, Button, Divider, Input, Popover, Segmented, Select, Space, Table, Tabs, Upload } from 'antd';
+import { BarsOutlined, BookOutlined, DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, TableOutlined } from '@ant-design/icons';
+import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
@@ -9,6 +10,7 @@ import { AppFooter } from '../../../panels/app-footer/app-footer';
 import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
 import { CareerPanel } from '../../../panels/elements/career-panel/career-panel';
+import { Characteristic } from '../../../../enums/characteristic';
 import { ClassPanel } from '../../../panels/elements/class-panel/class-panel';
 import { Collections } from '../../../../utils/collections';
 import { Complication } from '../../../../models/complication';
@@ -28,12 +30,16 @@ import { HeroClass } from '../../../../models/class';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
+import { KitArmor } from '../../../../enums/kit-armor';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
+import { KitWeapon } from '../../../../enums/kit-weapon';
 import { MonsterFilter } from '../../../../models/filter';
 import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
+import { MonsterRoleType } from '../../../../enums/monster-role-type';
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { Perk } from '../../../../models/perk';
@@ -41,7 +47,9 @@ import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Terrain } from '../../../../models/terrain';
+import { TerrainCategory } from '../../../../enums/terrain-category';
 import { TerrainPanel } from '../../../panels/elements/terrain-panel/terrain-panel';
+import { TerrainRoleType } from '../../../../enums/terrain-role-type';
 import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
@@ -50,6 +58,7 @@ import { useParams } from 'react-router';
 import { useState } from 'react';
 
 import './library-list-page.scss';
+
 
 interface Props {
 	heroes: Hero[];
@@ -292,8 +301,52 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(a => ({
+								key: a.id,
+								name: a.name,
+								sourcebook: SourcebookLogic.getAncestrySourcebook(props.sourcebooks, a)!.name,
+								features: a.features.map(f => f.name).join(', ')
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(a => ({ text: a.name, value: a.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Features',
+									dataIndex: 'features',
+									filters: Collections.distinct(list.flatMap(a => a.features).map(f => f.name), f => f).sort().map(f => ({ text: f, value: f })),
+									onFilter: (value, record) => record.features.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.features.localeCompare(b.features)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(a => {
 							const item = (
@@ -330,8 +383,52 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(c => ({
+								key: c.id,
+								name: c.name,
+								sourcebook: SourcebookLogic.getCareerSourcebook(props.sourcebooks, c)!.name,
+								features: c.features.map(f => f.name).join(', ')
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(c => ({ text: c.name, value: c.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Features',
+									dataIndex: 'features',
+									filters: Collections.distinct(list.flatMap(c => c.features).map(f => f.name), f => f).sort().map(f => ({ text: f, value: f })),
+									onFilter: (value, record) => record.features.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.features.localeCompare(b.features)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(c => {
 							const item = (
@@ -368,8 +465,61 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(c => ({
+								key: c.id,
+								name: c.name,
+								sourcebook: SourcebookLogic.getClassSourcebook(props.sourcebooks, c)!.name,
+								characteristics: c.primaryCharacteristicsOptions.map(o => o.join(', ')).join(' or '),
+								subclasses: c.subclasses.map(sc => sc.name).join(', ')
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(c => ({ text: c.name, value: c.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Characteristics',
+									dataIndex: 'characteristics',
+									filters: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(c => ({ text: c, value: c })),
+									onFilter: (value, record) => record.characteristics.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.characteristics.localeCompare(b.characteristics)
+								},
+								{
+									key: '4',
+									title: 'Subclasses',
+									dataIndex: 'subclasses',
+									filters: list.flatMap(c => c.subclasses).sort().map(sc => ({ text: sc.name, value: sc.name })),
+									onFilter: (value, record) => record.subclasses.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.subclasses.localeCompare(b.subclasses)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(c => {
 
@@ -407,8 +557,52 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(c => ({
+								key: c.id,
+								name: c.name,
+								sourcebook: SourcebookLogic.getComplicationSourcebook(props.sourcebooks, c)!.name,
+								features: c.features.map(f => f.name).join(', ')
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(c => ({ text: c.name, value: c.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Features',
+									dataIndex: 'features',
+									filters: Collections.distinct(list.flatMap(c => c.features).map(f => f.name), f => f).sort().map(f => ({ text: f, value: f })),
+									onFilter: (value, record) => record.features.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.features.localeCompare(b.features)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(c => {
 							const item = (
@@ -445,8 +639,79 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(c => ({
+								key: c.id,
+								name: c.name,
+								sourcebook: SourcebookLogic.getCultureSourcebook(props.sourcebooks, c)!.name,
+								languages: c.languages.join(', '),
+								environment: c.environment ? c.environment.name : '',
+								organization: c.organization ? c.organization.name : '',
+								upbringing: c.upbringing ? c.upbringing.name : ''
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(c => ({ text: c.name, value: c.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Languages',
+									dataIndex: 'languages',
+									filters: SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ text: l.name, value: l.name })),
+									onFilter: (value, record) => record.languages.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.languages.localeCompare(b.languages)
+								},
+								{
+									key: '4',
+									title: 'Environment',
+									dataIndex: 'environment',
+									filters: EnvironmentData.getEnvironments().map(e => ({ text: e.name, value: e.name })),
+									onFilter: (value, record) => record.environment.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.environment.localeCompare(b.environment)
+								},
+								{
+									key: '5',
+									title: 'Organization',
+									dataIndex: 'organization',
+									filters: OrganizationData.getOrganizations().map(o => ({ text: o.name, value: o.name })),
+									onFilter: (value, record) => record.organization.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.organization.localeCompare(b.organization)
+								},
+								{
+									key: '6',
+									title: 'Upbringing',
+									dataIndex: 'upbringing',
+									filters: UpbringingData.getUpbringings().map(u => ({ text: u.name, value: u.name })),
+									onFilter: (value, record) => record.upbringing.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.upbringing.localeCompare(b.upbringing)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(c => {
 							const item = (
@@ -483,8 +748,43 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(d => ({
+								key: d.id,
+								name: d.name,
+								sourcebook: SourcebookLogic.getDomainSourcebook(props.sourcebooks, d)!.name
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(d => ({ text: d.name, value: d.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(d => {
 							const item = (
@@ -521,8 +821,61 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(i => ({
+								key: i.id,
+								name: i.name,
+								sourcebook: SourcebookLogic.getItemSourcebook(props.sourcebooks, i)!.name,
+								type: i.type,
+								keywords: i.keywords.join(', ')
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(i => ({ text: i.name, value: i.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '2',
+									title: 'Type',
+									dataIndex: 'type',
+									filters: Collections.distinct(list.map(i => i.type), t => t).sort().map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.type.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.type.localeCompare(b.type)
+								},
+								{
+									key: '2',
+									title: 'Keywords',
+									dataIndex: 'keywords',
+									filters: Collections.distinct(list.flatMap(i => i.keywords), k => k).sort().map(k => ({ text: k, value: k })),
+									onFilter: (value, record) => record.keywords.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.keywords.localeCompare(b.keywords)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(i => {
 							const item = (
@@ -559,8 +912,106 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(k => ({
+								key: k.id,
+								name: k.name,
+								sourcebook: SourcebookLogic.getKitSourcebook(props.sourcebooks, k)!.name,
+								type: k.type,
+								armor: k.armor.join(', '),
+								weapon: k.weapon.join(', '),
+								stamina: k.stamina,
+								speed: k.speed,
+								stability: k.stability,
+								disengage: k.disengage
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(k => ({ text: k.name, value: k.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Type',
+									dataIndex: 'type',
+									filters: Collections.distinct(list.map(k => k.type), t => t).sort().map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.type.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.type.localeCompare(b.type)
+								},
+								{
+									key: '4',
+									title: 'Armor',
+									dataIndex: 'armor',
+									filters: [ KitArmor.Heavy, KitArmor.Light, KitArmor.Medium, KitArmor.Shield ].map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.armor.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.armor.localeCompare(b.armor)
+								},
+								{
+									key: '5',
+									title: 'Weapon',
+									dataIndex: 'weapon',
+									filters: [ KitWeapon.Bow, KitWeapon.Ensnaring, KitWeapon.Heavy, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Polearm, KitWeapon.Unarmed, KitWeapon.Whip ].map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.weapon.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.weapon.localeCompare(b.weapon)
+								},
+								{
+									key: '6',
+									title: 'Stamina',
+									dataIndex: 'stamina',
+									filters: Collections.distinct(list.map(k => k.stamina), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.stamina === value,
+									sorter: (a, b) => a.stamina - b.stamina
+								},
+								{
+									key: '7',
+									title: 'Speed',
+									dataIndex: 'speed',
+									filters: Collections.distinct(list.map(k => k.speed), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.speed === value,
+									sorter: (a, b) => a.speed - b.speed
+								},
+								{
+									key: '8',
+									title: 'Stability',
+									dataIndex: 'stability',
+									filters: Collections.distinct(list.map(k => k.stability), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.stability === value,
+									sorter: (a, b) => a.stability - b.stability
+								},
+								{
+									key: '9',
+									title: 'Disengage',
+									dataIndex: 'disengage',
+									filters: Collections.distinct(list.map(k => k.disengage), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.disengage === value,
+									sorter: (a, b) => a.disengage - b.disengage
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(k => {
 							const item = (
@@ -597,9 +1048,62 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(mg => ({
+								key: mg.id,
+								name: mg.name,
+								sourcebook: SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, mg)!.name,
+								monsters: mg.monsters.length,
+								malice: mg.malice.map(m => m.name).join(', ')
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(mg => ({ text: mg.name, value: mg.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Monsters',
+									dataIndex: 'monsters',
+									filters: Collections.distinct(list.map(k => k.monsters.length), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.monsters === value,
+									sorter: (a, b) => a.monsters - b.monsters
+								},
+								{
+									key: '4',
+									title: 'Malice',
+									dataIndex: 'malice',
+									filters: Collections.distinct(list.flatMap(mg => mg.malice).map(m => m.name), m => m).sort().map(m => ({ text: m, value: m })),
+									onFilter: (value, record) => record.malice.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.malice.localeCompare(b.malice)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
-					<div className='library-section-row'>
+					<div className='library-section-grid'>
 						{
 							list.map(mg => {
 								const item = (
@@ -663,11 +1167,92 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(m => ({
+								key: m.id,
+								name: m.name,
+								sourcebook: SourcebookLogic.getMonsterSourcebook(props.sourcebooks, m)!.name,
+								level: m.level,
+								role: m.role.type,
+								organization: m.role.organization,
+								keywords: m.keywords.join(', '),
+								encounterValue: m.encounterValue,
+								features: m.features.map(f => f.name).join(', ')
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(m => ({ text: m.name, value: m.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Role',
+									dataIndex: 'role',
+									filters: [ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ text: r, value: r })),
+									onFilter: (value, record) => record.role.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.role.localeCompare(b.role)
+								},
+								{
+									key: '4',
+									title: 'Organization',
+									dataIndex: 'organization',
+									filters: [ MonsterOrganizationType.Band, MonsterOrganizationType.Leader, MonsterOrganizationType.Minion, MonsterOrganizationType.Platoon, MonsterOrganizationType.Retainer, MonsterOrganizationType.Solo, MonsterOrganizationType.Troop ].map(r => ({ text: r, value: r })),
+									onFilter: (value, record) => record.organization.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.organization.localeCompare(b.organization)
+								},
+								{
+									key: '5',
+									title: 'Keywords',
+									dataIndex: 'keywords',
+									filters: Collections.distinct(list.flatMap(m => m.keywords), kw => kw).sort().map(kw => ({ text: kw, value: kw })),
+									onFilter: (value, record) => record.keywords.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.keywords.localeCompare(b.keywords)
+								},
+								{
+									key: '6',
+									title: 'EV',
+									dataIndex: 'encounterValue',
+									filters: Collections.distinct(list.map(k => k.encounterValue), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.encounterValue === value,
+									sorter: (a, b) => a.encounterValue - b.encounterValue
+								},
+								{
+									key: '7',
+									title: 'Features',
+									dataIndex: 'features',
+									filters: Collections.distinct(list.flatMap(m => m.features).map(f => f.name), f => f).sort().map(f => ({ text: f, value: f })),
+									onFilter: (value, record) => record.features.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.features.localeCompare(b.features)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{tools}
 					<Divider />
-					<div className='library-section-row'>
+					<div className='library-section-grid'>
 						{
 							list.map(m => {
 								const mg = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
@@ -707,8 +1292,61 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(p => ({
+								key: p.id,
+								name: p.name,
+								sourcebook: SourcebookLogic.getPerkSourcebook(props.sourcebooks, p)!.name,
+								list: p.list,
+								type: p.type
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(p => ({ text: p.name, value: p.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'List',
+									dataIndex: 'list',
+									filters: Collections.distinct(list.map(p => p.list), l => l).sort().map(l => ({ text: l, value: l })),
+									onFilter: (value, record) => record.list.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.list.localeCompare(b.list)
+								},
+								{
+									key: '4',
+									title: 'Type',
+									dataIndex: 'type',
+									filters: Collections.distinct(list.map(p => p.type), t => t).sort().map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.type.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.type.localeCompare(b.type)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(p => {
 							const item = (
@@ -745,8 +1383,88 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(t => ({
+								key: t.id,
+								name: t.name,
+								sourcebook: SourcebookLogic.getTerrainSourcebook(props.sourcebooks, t)!.name,
+								level: t.level,
+								category: t.category,
+								type: t.role.type,
+								terrainType: t.role.terrainType,
+								encounterValue: t.encounterValue
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(t => ({ text: t.name, value: t.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Level',
+									dataIndex: 'level',
+									filters: Collections.distinct(list.map(k => k.level), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.level === value,
+									sorter: (a, b) => a.level - b.level
+								},
+								{
+									key: '4',
+									title: 'Category',
+									dataIndex: 'category',
+									filters: [ TerrainCategory.ArcaneObject, TerrainCategory.Environmental, TerrainCategory.Fieldwork, TerrainCategory.Mechanism, TerrainCategory.PowerFixture, TerrainCategory.SiegeEngine ].map(r => ({ text: r, value: r })),
+									onFilter: (value, record) => record.category.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.category.localeCompare(b.category)
+								},
+								{
+									key: '5',
+									title: 'Type',
+									dataIndex: 'type',
+									filters: [ MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(r => ({ text: r, value: r })),
+									onFilter: (value, record) => record.type.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.type.localeCompare(b.type)
+								},
+								{
+									key: '6',
+									title: 'Terrain Type',
+									dataIndex: 'terrainType',
+									filters: [ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(r => ({ text: r, value: r })),
+									onFilter: (value, record) => record.terrainType.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.terrainType.localeCompare(b.terrainType)
+								},
+								{
+									key: '7',
+									title: 'EV',
+									dataIndex: 'encounterValue',
+									filters: Collections.distinct(list.map(k => k.encounterValue), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.encounterValue === value,
+									sorter: (a, b) => a.encounterValue - b.encounterValue
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(t => {
 							const item = (
@@ -783,8 +1501,68 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(t => ({
+								key: t.id,
+								name: t.name,
+								sourcebook: SourcebookLogic.getTitleSourcebook(props.sourcebooks, t)!.name,
+								echelon: t.echelon,
+								prerequisites: t.prerequisites,
+								features: t.features.map(f => f.name).join(', ')
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(t => ({ text: t.name, value: t.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '3',
+									title: 'Echelon',
+									dataIndex: 'echelon',
+									filters: Collections.distinct(list.map(t => t.echelon), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.echelon === value,
+									sorter: (a, b) => a.echelon - b.echelon
+								},
+								{
+									key: '4',
+									title: 'Prerequisites',
+									dataIndex: 'prerequisites',
+									sorter: (a, b) => a.prerequisites.localeCompare(b.prerequisites)
+								},
+								{
+									key: '5',
+									title: 'Features',
+									dataIndex: 'features',
+									filters: Collections.distinct(list.flatMap(t => t.features).map(f => f.name), f => f).sort().map(f => ({ text: f, value: f })),
+									onFilter: (value, record) => record.features.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.features.localeCompare(b.features)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
 			return (
-				<div className='library-section-row'>
+				<div className='library-section-grid'>
 					{
 						list.map(t => {
 							const item = (
@@ -908,7 +1686,7 @@ export const LibraryListPage = (props: Props) => {
 						</Button>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode='library' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode='library' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 						>
 							<Button icon={<SettingOutlined />}>
 								Options
@@ -1042,6 +1820,21 @@ export const LibraryListPage = (props: Props) => {
 								}
 							]}
 							onChange={k => navigation.goToLibraryList(k as SourcebookElementKind)}
+							tabBarExtraContent={
+								<Segmented
+									name='view'
+									options={[
+										{ value: false, label: <TableOutlined /> },
+										{ value: true, label: <BarsOutlined /> }
+									]}
+									value={props.options.showContentInTable}
+									onChange={value => {
+										const copy = Utils.copy(props.options);
+										copy.showContentInTable = value;
+										props.setOptions(copy);
+									}}
+								/>
+							}
 						/>
 					</div>
 					<AppFooter page='library' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />

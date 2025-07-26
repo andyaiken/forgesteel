@@ -27,6 +27,10 @@ export class OptionsUpdateLogic {
 			options.showMonstersInGroups = true;
 		}
 
+		if (options.showContentInTable === undefined) {
+			options.showContentInTable = false;
+		}
+
 		if (options.showSimilarMonsters === undefined) {
 			options.showSimilarMonsters = true;
 		}

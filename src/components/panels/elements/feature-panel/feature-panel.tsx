@@ -1689,6 +1689,10 @@ export const FeaturePanel = (props: Props) => {
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.HeroicResourceGain)
 				.forEach(f => gains.push(f.data));
+			HeroLogic.getDomains(props.hero)
+				.flatMap(d => d.resourceGains)
+				.filter(g => g.resource === props.feature.name)
+				.forEach(g => gains.push(g));
 		}
 
 		return (

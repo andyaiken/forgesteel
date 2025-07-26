@@ -402,7 +402,7 @@ export class SourcebookData {
 			MonsterData.elfShadow,
 			MonsterData.elfWode,
 			MonsterData.fossilCryptic,
-			// MonsterData.giant,
+			MonsterData.giant,
 			MonsterData.gnoll,
 			MonsterData.goblin,
 			MonsterData.griffon,

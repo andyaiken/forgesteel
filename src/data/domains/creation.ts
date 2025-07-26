@@ -61,7 +61,13 @@ export const creation: Domain = {
 			features: []
 		}
 	],
+	resourceGains: [
+		{
+			resource: 'Piety',
+			trigger: 'The first time in an encounter that a creature within 10 squares of you uses an ability with the Area keyword',
+			value: '2'
+		}
+	],
 	piety: `
-* Piety: You gain 2 piety the first time in an encounter that a creature within 10 squares of you uses an ability with the Area keyword.
 * Prayer Effect: You summon the forces of creation and create a wall of stone whose size is 5 + your Intuition score within 10 squares of you. The wall lasts until the end of the encounter.`
 };

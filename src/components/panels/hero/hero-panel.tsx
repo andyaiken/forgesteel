@@ -251,7 +251,17 @@ export const HeroPanel = (props: Props) => {
 													{f.name}
 												</HeaderText>
 												{
-													f.data.gains.map((g, n) => (
+													[
+														...f.data.gains,
+														...HeroLogic.getFeatures(props.hero)
+															.map(f => f.feature)
+															.filter(f => f.type === FeatureType.HeroicResourceGain)
+															.map(f => f.data),
+														...HeroLogic.getDomains(props.hero)
+															.flatMap(d => d.resourceGains)
+															.filter(g => g.resource === f.name)
+															.map(g => g)
+													].map((g, n) => (
 														<Flex key={n} align='center' justify='space-between' gap={10}>
 															<div className='ds-text compact-text'>{g.trigger}</div>
 															<Pill>+{g.value}</Pill>

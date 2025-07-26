@@ -52,7 +52,13 @@ export const war: Domain = {
 			features: []
 		}
 	],
+	resourceGains: [
+		{
+			resource: 'Piety',
+			trigger: 'The first time in an encounter that you or a creature within 10 squares of deals damage in an amount equal to or greater than 10 + your level',
+			value: '2'
+		}
+	],
 	piety: `
-* Piety: You gain 2 piety the first time in an encounter that you or a creature within 10 squares of deals damage in an amount equal to or greater than 10 + your level.
 * Prayer Effect: Three allies of your choice within 10 squares of you, including yourself, gain two surges.`
 };

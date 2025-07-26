@@ -62,7 +62,13 @@ export const sun: Domain = {
 			features: []
 		}
 	],
+	resourceGains: [
+		{
+			resource: 'Piety',
+			trigger: 'The first time in an encounter that an enemy within 10 squares of you takes fire or holy damage',
+			value: '2'
+		}
+	],
 	piety: `
-* Piety: You gain 2 piety the first time in an encounter that an enemy within 10 squares of you takes fire or holy damage.
 * Prayer Effect: One enemy of your choice within 10 squares of you takes fire damage equal to three times your Intuition score.`
 };

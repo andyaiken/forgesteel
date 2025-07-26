@@ -66,7 +66,8 @@ When you roll to gain piety at the start of your turn, you can pray to gain the 
 
 * If the roll is a 1, you gain 1 additional piety but anger the gods! You take psychic damage equal to 1d6 + your level, which can’t be reduced in any way.
 * If the roll is a 2, you gain 1 additional piety.
-* If the roll is a 3, you gain 2 additional piety and can activate a domain effect of your choice.`
+* If the roll is a 3, you gain 2 additional piety and can activate a domain effect of your choice.`,
+					tag: 'conduit-prayer'
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'conduit-1-4',

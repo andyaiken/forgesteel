@@ -6,7 +6,6 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
-import { ClassData } from '../data/class-data';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
@@ -182,9 +181,6 @@ export class PDFExport {
 				if (heroicResourceFeature.data.details) {
 					resourceGainText += '\n\n' + heroicResourceFeature.data.details;
 				}
-				if (hero.class && (hero.class.id === ClassData.conduit.id) && domains) {
-					resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
-				}
 				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
 			} else {
 				const resource = heroicResources.length > 0 ? heroicResources[0].name.toLowerCase() : 'XXX';
@@ -196,10 +192,7 @@ export class PDFExport {
 						texts['HeroicResourcesPerTurn'] = startupAmount[1];
 					}
 					ignoredFeatures[heroicResourceFeature.id] = true;
-					let resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
-					if (hero.class && (hero.class.id === ClassData.conduit.id) && domains) {
-						resourceGainText = resourceGainText + '\n' + domains.map(d => d.piety).join('');
-					}
+					const resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
 					texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
 				}
 			}

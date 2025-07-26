@@ -16,10 +16,11 @@ export const oracle: SubClass = {
 					listOptions: [ SkillList.Lore ],
 					selected: [ 'Magic' ]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createPackageContent({
 					id: 'censor-sub-2-1-2',
 					name: 'Judgment Order Benefit',
-					description: 'When you use your Judgment ability to judge another creature, you deal holy damage equal to twice your Presence score to the target.'
+					description: 'When you use your Judgment ability to judge another creature, you deal holy damage equal to twice your Presence score to the target.',
+					tag: 'censor-judgment'
 				})
 			]
 		},

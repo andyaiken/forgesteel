@@ -84,7 +84,8 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 
 * When an adjacent judged target shifts, you can make a melee free strike against them. The target doesn't shift and their speed becomes 0 until the end of this turn.
 * When a judged target makes a power roll, you can add a bane to the roll.
-* When a judged target within distance uses an ability with a potency against another creature, you reduce the potency of the ability by 1 for that creature (to a minimum of 0).`)
+* When a judged target within distance uses an ability with a potency against another creature, you reduce the potency of the ability by 1 for that creature (to a minimum of 0).`),
+							FactoryLogic.createAbilitySectionPackage('censor-judgment')
 						]
 					})
 				}),

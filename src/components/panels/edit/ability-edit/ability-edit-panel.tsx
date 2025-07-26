@@ -1,4 +1,4 @@
-import { Ability, AbilitySectionField, AbilitySectionRoll, AbilitySectionText } from '../../../../models/ability';
+import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../../../../models/ability';
 import { Alert, Button, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -209,7 +209,7 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const addSection = (type: 'text' | 'field' | 'roll') => {
+	const addSection = (type: 'text' | 'field' | 'roll' | 'package') => {
 		const copy = Utils.copy(ability);
 		switch (type) {
 			case 'text':
@@ -230,6 +230,9 @@ export const AbilityEditPanel = (props: Props) => {
 						tier3: ''
 					})
 				));
+				break;
+			case 'package':
+				copy.sections.push(FactoryLogic.createAbilitySectionPackage(''));
 				break;
 		}
 		setAbility(copy);
@@ -320,7 +323,14 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const getSectionTitle = (section: AbilitySectionText | AbilitySectionField | AbilitySectionRoll) => {
+	const setPackageSectionTag = (index: number, value: string) => {
+		const copy = Utils.copy(ability);
+		(copy.sections[index] as AbilitySectionPackage).tag = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const getSectionTitle = (section: AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage) => {
 		switch (section.type) {
 			case 'text':
 				return 'Text';
@@ -328,6 +338,8 @@ export const AbilityEditPanel = (props: Props) => {
 				return section.name || 'Field';
 			case 'roll':
 				return 'Roll';
+			case 'package':
+				return 'Package';
 		}
 	};
 
@@ -558,6 +570,7 @@ export const AbilityEditPanel = (props: Props) => {
 															<Button type='text' onClick={() => addSection('text')}>Add Text</Button>
 															<Button type='text' onClick={() => addSection('field')}>Add a Field</Button>
 															<Button type='text' onClick={() => addSection('roll')}>Add a Roll</Button>
+															<Button type='text' onClick={() => addSection('package')}>Add a Package</Button>
 														</div>
 													}
 												>
@@ -653,6 +666,14 @@ export const AbilityEditPanel = (props: Props) => {
 																		value={section.roll.tier3}
 																		onChange={e => setRollSectionTier3(n, e.target.value)}
 																	/>
+																</Space>
+																: null
+														}
+														{
+															section.type === 'package' ?
+																<Space direction='vertical' style={{ width: '100%' }}>
+																	<HeaderText>Tag</HeaderText>
+																	<MultiLine value={section.tag} onChange={value => setPackageSectionTag(n, value)} />
 																</Space>
 																: null
 														}

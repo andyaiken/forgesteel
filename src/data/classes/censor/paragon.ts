@@ -18,10 +18,11 @@ export const paragon: SubClass = {
 					listOptions: [ SkillList.Interpersonal ],
 					selected: [ 'Lead' ]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createPackageContent({
 					id: 'censor-sub-3-1-2',
 					name: 'Judgment Order Benefit',
-					description: 'When you use your Judgment ability to judge another creature, you vertically pull the target up to a number of squares equal to twice your Presence score.'
+					description: 'When you use your Judgment ability to judge another creature, you vertically pull the target up to a number of squares equal to twice your Presence score.',
+					tag: 'censor-judgment'
 				})
 			]
 		},

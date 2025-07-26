@@ -18,10 +18,11 @@ export const exorcist: SubClass = {
 					listOptions: [ SkillList.Interpersonal ],
 					selected: [ 'Read Person' ]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createPackageContent({
 					id: 'censor-sub-1-1-2',
 					name: 'Judgment Order Benefit',
-					description: 'When you use your Judgment ability to judge another creature, you can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.'
+					description: 'When you use your Judgment ability to judge another creature, you can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.',
+					tag: 'censor-judgment'
 				})
 			]
 		},

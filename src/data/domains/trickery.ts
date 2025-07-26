@@ -60,6 +60,12 @@ export const trickery: Domain = {
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: Choose a creature within 10 squares of you. You can slide that creature up to a number of squares equal to 5 + your conduit level.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'trickery-default-1',
+			name: 'Trickery Prayer Effect',
+			description: 'Choose a creature within 10 squares of you. You can slide that creature up to a number of squares equal to 5 + your conduit level.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

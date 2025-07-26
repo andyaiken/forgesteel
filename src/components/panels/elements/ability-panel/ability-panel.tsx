@@ -1,4 +1,4 @@
-import { Ability, AbilitySectionField, AbilitySectionRoll, AbilitySectionText } from '../../../../models/ability';
+import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../../../../models/ability';
 import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Alert, Button, Space, Tag } from 'antd';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
@@ -214,7 +214,7 @@ export const AbilityPanel = (props: Props) => {
 		return warnings;
 	};
 
-	const getSection = (section: AbilitySectionText | AbilitySectionField | AbilitySectionRoll, index: number) => {
+	const getSection = (section: AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage, index: number) => {
 		switch (section.type) {
 			case 'text':
 				return (
@@ -243,6 +243,28 @@ export const AbilityPanel = (props: Props) => {
 						odds={props.odds}
 					/>
 				);
+			case 'package':
+				if (props.hero) {
+					return (
+						<div key={index}>
+							{
+								HeroLogic.getFeatures(props.hero)
+									.map(f => f.feature)
+									.filter(f => f.type === FeatureType.PackageContent)
+									.filter(f => f.data.tag === section.tag)
+									.map(f => (
+										<Field
+											key={f.id}
+											label={f.name}
+											value={<Markdown text={parseText(f.description)} useSpan={true} />}
+										/>
+									))
+							}
+						</div>
+					);
+				} else {
+					return null;
+				}
 		}
 	};
 

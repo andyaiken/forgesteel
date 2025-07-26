@@ -68,6 +68,12 @@ export const creation: Domain = {
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: You summon the forces of creation and create a wall of stone whose size is 5 + your Intuition score within 10 squares of you. The wall lasts until the end of the encounter.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'creation-default-1',
+			name: 'Creation Prayer Effect',
+			description: 'You summon the forces of creation and create a wall of stone whose size is 5 + your Intuition score within 10 squares of you. The wall lasts until the end of the encounter.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

@@ -76,6 +76,12 @@ Choose one of the following types of weather, each of which grants a benefit to 
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: Each enemy in a 3-cube area within 10 squares of you takes lightning damage equal to twice your Intuition score.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'storm-default-1',
+			name: 'Storm Prayer Effect',
+			description: 'Each enemy in a 3-cube area within 10 squares of you takes lightning damage equal to twice your Intuition score.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

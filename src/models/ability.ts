@@ -38,6 +38,11 @@ export interface AbilitySectionRoll {
 	roll: PowerRoll;
 }
 
+export interface AbilitySectionPackage {
+	type: 'package';
+	tag: string;
+}
+
 export interface Ability extends Element {
 	type: AbilityType;
 	keywords: string[];
@@ -46,7 +51,7 @@ export interface Ability extends Element {
 	cost: number | 'signature';
 	repeatable: boolean;
 	minLevel: number;
-	sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[];
+	sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[];
 
 	/**
 	 * @deprecated This field has been subsumed into the sections field.

@@ -2,7 +2,7 @@ import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { Ability } from '../../../../models/ability';
 import { AbilityLogic } from '../../../../logic/ability-logic';
@@ -1842,22 +1842,26 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getInformationPackage = () => {
+	const getInformationPackage = (data: FeaturePackageData) => {
 		if (!props.hero) {
 			return null;
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<>
 				{
-					HeroLogic.getDomains(props.hero).map(domain => (
-						<div key={domain.id}>
-							<div className='ds-text bold-text'>{domain.name}</div>
-							<Markdown text={domain.piety} />
-						</div>
-					))
+					HeroLogic.getFeatures(props.hero)
+						.map(f => f.feature)
+						.filter(f => f.type === FeatureType.PackageContent)
+						.filter(f => f.data.tag === data.tag)
+						.map(f => (
+							<div key={f.id}>
+								<div className='ds-text bold-text'>{f.name}</div>
+								<Markdown text={f.description} />
+							</div>
+						))
 				}
-			</Space>
+			</>
 		);
 	};
 
@@ -2055,7 +2059,7 @@ export const FeaturePanel = (props: Props) => {
 			case FeatureType.Multiple:
 				return getInformationMultiple(props.feature.data);
 			case FeatureType.Package:
-				return getInformationPackage();
+				return getInformationPackage(props.feature.data);
 			case FeatureType.Perk:
 				return getInformationPerk(props.feature.data);
 			case FeatureType.Proficiency:

@@ -11,5 +11,5 @@ export interface Domain extends Element {
 		trigger: string;
 		value: string;
 	}[];
-	piety: string;
+	defaultFeatures: Feature[];
 }

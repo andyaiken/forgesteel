@@ -68,6 +68,12 @@ export const death: Domain = {
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: You inflict a deadly curse upon two enemies of your choice within 10 squares of you. Each target takes corruption damage equal to twice your Intuition score.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'death-default-1',
+			name: 'Death Prayer Effect',
+			description: 'You inflict a deadly curse upon two enemies of your choice within 10 squares of you. Each target takes corruption damage equal to twice your Intuition score.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

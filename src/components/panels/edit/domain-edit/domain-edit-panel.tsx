@@ -163,18 +163,174 @@ export const DomainEditPanel = (props: Props) => {
 			);
 		};
 
-		const getPietyEditSection = () => {
-			const setPiety = (value: string) => {
+		const getResourceGainsEditSection = () => {
+			const addResourceGain = () => {
 				const copy = Utils.copy(domain);
-				copy.piety = value;
+				copy.resourceGains.push({
+					resource: 'Piety',
+					trigger: '',
+					value: '2'
+				});
+				setDomain(copy);
+				props.onChange(copy);
+			};
+
+			const setResource = (index: number, value: string) => {
+				const copy = Utils.copy(domain);
+				copy.resourceGains[index].resource = value;
+				setDomain(copy);
+				props.onChange(copy);
+			};
+
+			const setTrigger = (index: number, value: string) => {
+				const copy = Utils.copy(domain);
+				copy.resourceGains[index].trigger = value;
+				setDomain(copy);
+				props.onChange(copy);
+			};
+
+			const setValue = (index: number, value: string) => {
+				const copy = Utils.copy(domain);
+				copy.resourceGains[index].value = value;
+				setDomain(copy);
+				props.onChange(copy);
+			};
+
+			const deleteResourceGain = (index: number) => {
+				const copy = Utils.copy(domain);
+				copy.resourceGains.splice(index, 1);
 				setDomain(copy);
 				props.onChange(copy);
 			};
 
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
-					<HeaderText>Piety</HeaderText>
-					<MultiLine value={domain.piety} onChange={setPiety} />
+					<HeaderText
+						extra={
+							<Button type='text' icon={<PlusOutlined />} onClick={() => addResourceGain()} />
+						}
+					>
+						Resource Gains
+					</HeaderText>
+					{
+						domain.resourceGains.map((rg, n) => (
+							<Expander
+								key={n}
+								title={rg.resource || 'Resource'}
+								extra={[
+									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteResourceGain(n); }} />
+								]}
+							>
+								<HeaderText>Name</HeaderText>
+								<Input
+									status={rg.resource === '' ? 'warning' : ''}
+									placeholder='Resource'
+									allowClear={true}
+									value={rg.resource}
+									onChange={e => setResource(n, e.target.value)}
+								/>
+								<HeaderText>Trigger</HeaderText>
+								<Input
+									status={rg.trigger === '' ? 'warning' : ''}
+									placeholder='Trigger'
+									allowClear={true}
+									value={rg.trigger}
+									onChange={e => setTrigger(n, e.target.value)}
+								/>
+								<HeaderText>Value</HeaderText>
+								<Input
+									status={rg.value === '' ? 'warning' : ''}
+									placeholder='Value'
+									allowClear={true}
+									value={rg.value}
+									onChange={e => setValue(n, e.target.value)}
+								/>
+							</Expander>
+						))
+					}
+					{
+						domain.resourceGains.length === 0 ?
+							<Empty />
+							: null
+					}
+				</Space>
+			);
+		};
+
+		const getDefaultFeaturesEditSection = () => {
+			const addFeature = () => {
+				const copy = Utils.copy(domain);
+				copy.defaultFeatures.push(FactoryLogic.feature.create({
+					id: Utils.guid(),
+					name: '',
+					description: ''
+				}));
+				setDomain(copy);
+				props.onChange(copy);
+			};
+
+			const changeFeature = (feature: Feature) => {
+				const copy = Utils.copy(domain);
+				const index = copy.defaultFeatures.findIndex(f => f.id === feature.id);
+				if (index !== -1) {
+					copy.defaultFeatures[index] = feature;
+				}
+				setDomain(copy);
+				props.onChange(copy);
+			};
+
+			const moveFeature = (feature: Feature, direction: 'up' | 'down') => {
+				const copy = Utils.copy(domain);
+				const index = copy.defaultFeatures.findIndex(f => f.id === feature.id);
+				copy.defaultFeatures = Collections.move(copy.defaultFeatures, index, direction);
+				setDomain(copy);
+				props.onChange(copy);
+			};
+
+			const deleteFeature = (feature: Feature) => {
+				const copy = Utils.copy(domain);
+				copy.defaultFeatures = copy.defaultFeatures.filter(f => f.id !== feature.id);
+				setDomain(copy);
+				props.onChange(copy);
+			};
+
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<HeaderText
+						extra={
+							<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature()} />
+						}
+					>
+						Default Features
+					</HeaderText>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							domain.defaultFeatures.map(f => (
+								<Expander
+									key={f.id}
+									title={f.name || 'Unnamed Feature'}
+									tags={[ FeatureLogic.getFeatureTag(f) ]}
+									extra={[
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(f, 'down'); }} />,
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(f); }} />
+									]}
+								>
+									<FeatureEditPanel
+										feature={f}
+										sourcebooks={props.sourcebooks}
+										options={props.options}
+										onChange={feature => changeFeature(feature)}
+									/>
+								</Expander>
+							))
+						}
+						{
+							domain.defaultFeatures.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
 				</Space>
 			);
 		};
@@ -196,8 +352,13 @@ export const DomainEditPanel = (props: Props) => {
 							},
 							{
 								key: '3',
-								label: 'Piety',
-								children: getPietyEditSection()
+								label: 'Resource Gains',
+								children: getResourceGainsEditSection()
+							},
+							{
+								key: '4',
+								label: 'Default Features',
+								children: getDefaultFeaturesEditSection()
 							}
 						]}
 					/>

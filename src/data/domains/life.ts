@@ -60,6 +60,12 @@ export const life: Domain = {
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: Choose yourself or one ally within 10 squares of you. The targets can spend a Recovery, can end any effects on them that are ended by a saving throw or that end at the end of their turn, or can stand up if they are prone. Alternatively, you and one ally within 10 squares of you gain temporary Stamina equal to 5 × your Intuition score.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'life-default-1',
+			name: 'Life Prayer Effect',
+			description: 'Choose yourself or one ally within 10 squares of you. The targets can spend a Recovery, can end any effects on them that are ended by a saving throw or that end at the end of their turn, or can stand up if they are prone. Alternatively, you and one ally within 10 squares of you gain temporary Stamina equal to 5 × your Intuition score.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

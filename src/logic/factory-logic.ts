@@ -1,6 +1,6 @@
-import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
+import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Hero, HeroState } from '../models/hero';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
@@ -266,7 +266,7 @@ export class FactoryLogic {
 			description: '',
 			featuresByLevel: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(n => ({ level: n, features: [], optionalFeatures: [] })),
 			resourceGains: [],
-			piety: ''
+			defaultFeatures: []
 		};
 	};
 
@@ -757,7 +757,7 @@ export class FactoryLogic {
 		cost?: number | 'signature',
 		repeatable?: boolean,
 		minLevel?: number,
-		sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll)[]
+		sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[]
 	}): Ability => {
 		return {
 			id: data.id,
@@ -809,6 +809,13 @@ export class FactoryLogic {
 		return {
 			type: 'roll',
 			roll: roll
+		};
+	};
+
+	static createAbilitySectionPackage = (tag: string): AbilitySectionPackage => {
+		return {
+			type: 'package',
+			tag: tag
 		};
 	};
 
@@ -1388,13 +1395,26 @@ export class FactoryLogic {
 				}
 			};
 		},
-		createPackage: (data: { id: string, name?: string, description?: string }): FeaturePackage => {
+		createPackage: (data: { id: string, name: string, description: string, tag: string }): FeaturePackage => {
 			return {
 				id: data.id,
-				name: data.name || 'Domain Package',
-				description: data.description || '',
+				name: data.name,
+				description: data.description,
 				type: FeatureType.Package,
-				data: {}
+				data: {
+					tag: data.tag
+				}
+			};
+		},
+		createPackageContent: (data: { id: string, name: string, description: string, tag: string }): FeaturePackageContent => {
+			return {
+				id: data.id,
+				name: data.name,
+				description: data.description,
+				type: FeatureType.PackageContent,
+				data: {
+					tag: data.tag
+				}
 			};
 		},
 		createPerk: (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number }): FeaturePerk => {

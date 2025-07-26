@@ -27,6 +27,7 @@ export enum FeatureType {
 	MovementMode = 'Movement Mode',
 	Multiple = 'Multiple Features',
 	Package = 'Package',
+	PackageContent = 'Package Content',
 	Perk = 'Perk',
 	Proficiency = 'Proficiency',
 	Size = 'Size',

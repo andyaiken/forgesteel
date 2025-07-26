@@ -43,6 +43,9 @@ export class FeatureUpdateLogic {
 					if (d.resourceGains === undefined) {
 						d.resourceGains = [];
 					}
+					if (d.defaultFeatures === undefined) {
+						d.defaultFeatures = [];
+					}
 				});
 				break;
 			case FeatureType.HeroicResource:
@@ -78,6 +81,11 @@ export class FeatureUpdateLogic {
 				break;
 			case FeatureType.Multiple:
 				feature.data.features.forEach(FeatureUpdateLogic.updateFeature);
+				break;
+			case FeatureType.Package:
+				if (feature.data.tag === 'undefined') {
+					feature.data.tag = 'conduit-prayer';
+				}
 				break;
 		}
 	};

@@ -63,6 +63,12 @@ Choose one of the following effects, which lasts until the end of the encounter 
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: You call on the forces of fate to create a reliable future. Choose a creature within your line of effect. That creature automatically gets a tier 1 or tier 3 result (your choice) on their next power roll made before the end of the encounter.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'fate-default-1',
+			name: 'Fate Prayer Effect',
+			description: 'You call on the forces of fate to create a reliable future. Choose a creature within your line of effect. That creature automatically gets a tier 1 or tier 3 result (your choice) on their next power roll made before the end of the encounter.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

@@ -67,6 +67,12 @@ export const knowledge: Domain = {
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: Choose up to three allies, including yourself, within 10 squares of you. Each target gains a surge.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'knowledge-default-1',
+			name: 'Knowledge Prayer Effect',
+			description: 'Choose up to three allies, including yourself, within 10 squares of you. Each target gains a surge.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

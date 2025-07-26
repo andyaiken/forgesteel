@@ -61,6 +61,12 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: Each ally within 10 squares of you gains temporary Stamina equal to 2 × your Intuition score.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'love-default-1',
+			name: 'Love Prayer Effect',
+			description: 'Each ally within 10 squares of you gains temporary Stamina equal to 2 × your Intuition score.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

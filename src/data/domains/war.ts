@@ -59,6 +59,12 @@ export const war: Domain = {
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: Three allies of your choice within 10 squares of you, including yourself, gain two surges.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'war-default-1',
+			name: 'War Prayer Effect',
+			description: 'Three allies of your choice within 10 squares of you, including yourself, gain two surges.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

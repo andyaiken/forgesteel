@@ -199,9 +199,15 @@ export interface FeatureMultipleData extends _FeatureData {
 };
 export type FeatureMultiple = FeatureOf<FeatureType.Multiple, FeatureMultipleData>;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FeaturePackageData extends _FeatureData { };
+export interface FeaturePackageData extends _FeatureData {
+	tag: string;
+};
 export type FeaturePackage = FeatureOf<FeatureType.Package, FeaturePackageData>;
+
+export interface FeaturePackageContentData extends _FeatureData {
+	tag: string;
+};
+export type FeaturePackageContent = FeatureOf<FeatureType.PackageContent, FeaturePackageContentData>;
 
 export interface FeaturePerkData extends _FeatureData {
 	lists: PerkList[];
@@ -296,6 +302,7 @@ export type Feature =
 	| FeatureMovementMode
 	| FeatureMultiple
 	| FeaturePackage
+	| FeaturePackageContent
 	| FeaturePerk
 	| FeatureProficiency
 	| FeatureSize

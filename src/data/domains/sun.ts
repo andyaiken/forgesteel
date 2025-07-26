@@ -69,6 +69,12 @@ export const sun: Domain = {
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: One enemy of your choice within 10 squares of you takes fire damage equal to three times your Intuition score.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'sun-default-1',
+			name: 'Sun Prayer Effect',
+			description: 'One enemy of your choice within 10 squares of you takes fire damage equal to three times your Intuition score.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

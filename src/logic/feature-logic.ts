@@ -284,6 +284,11 @@ export class FeatureLogic {
 				case FeatureType.Choice:
 					feature.data.selected.forEach(f => addFeature(f, source));
 					break;
+				case FeatureType.Domain:
+					feature.data.selected.forEach(d => {
+						d.defaultFeatures.forEach(f => addFeature(f, d.name));
+					});
+					break;
 				case FeatureType.DomainFeature:
 					feature.data.selected.forEach(f => addFeature(f, source));
 					break;
@@ -430,7 +435,9 @@ export class FeatureLogic {
 			case FeatureType.Multiple:
 				return 'This feature grants you a collection of features.';
 			case FeatureType.Package:
-				return 'This feature collates information.';
+				return 'This feature collates content from other features.';
+			case FeatureType.PackageContent:
+				return 'This feature provides content for a Package feature.';
 			case FeatureType.Perk:
 				return 'This feature allows you to choose a perk.';
 			case FeatureType.Proficiency:

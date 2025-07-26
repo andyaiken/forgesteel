@@ -1,6 +1,6 @@
 import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -209,13 +209,14 @@ export const FeatureEditPanel = (props: Props) => {
 					type: 'heroic',
 					gains: [],
 					details: '',
-					canBeNegative: false
+					canBeNegative: false,
+					value: 0
 				};
 				break;
 			case FeatureType.HeroicResourceGain:
 				data = {
 					trigger: '',
-					value: 1
+					value: '1'
 				};
 				break;
 			case FeatureType.ItemChoice:
@@ -263,7 +264,12 @@ export const FeatureEditPanel = (props: Props) => {
 				break;
 			case FeatureType.Package:
 				data = {
-					//
+					tag: ''
+				} as FeaturePackageData;
+				break;
+			case FeatureType.PackageContent:
+				data = {
+					tag: ''
 				} as FeaturePackageData;
 				break;
 			case FeatureType.Perk:
@@ -565,7 +571,7 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setTag = (value: string) => {
-			const copy = Utils.copy(feature.data) as FeatureTaggedFeatureData | FeatureTaggedFeatureChoiceData;
+			const copy = Utils.copy(feature.data) as FeaturePackageData | FeaturePackageContentData | FeatureTaggedFeatureData | FeatureTaggedFeatureChoiceData;
 			copy.tag = value;
 			setData(copy);
 		};
@@ -603,6 +609,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setProficiencyArmor = (value: KitArmor[]) => {
 			const copy = Utils.copy(feature.data) as FeatureProficiencyData;
 			copy.armor = value;
+			setData(copy);
+		};
+
+		const setMovementMode = (value: string) => {
+			const copy = Utils.copy(feature.data) as FeatureMovementModeData;
+			copy.mode = value;
 			setData(copy);
 		};
 
@@ -733,12 +745,6 @@ export const FeatureEditPanel = (props: Props) => {
 		const setHeroicResourceGainValue = (data: FeatureHeroicResourceGainData, value: string) => {
 			const copy = Utils.copy(data);
 			copy.value = value;
-			setData(copy);
-		};
-
-		const setMovementMode = (data: FeatureMovementModeData, value: string) => {
-			const copy = Utils.copy(data);
-			copy.mode = value;
 			setData(copy);
 		};
 
@@ -1692,7 +1698,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Mode'
 							allowClear={true}
 							value={data.mode}
-							onChange={e => setMovementMode(data, e.target.value)}
+							onChange={e => setMovementMode(e.target.value)}
 						/>
 					</Space>
 				);
@@ -1736,8 +1742,21 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
-			case FeatureType.Package: {
-				return null;
+			case FeatureType.Package:
+			case FeatureType.PackageContent: {
+				const data = feature.data as FeaturePackageData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Tag</HeaderText>
+						<Input
+							status={data.tag === '' ? 'warning' : ''}
+							placeholder='Tag'
+							allowClear={true}
+							value={data.tag}
+							onChange={e => setTag(e.target.value)}
+						/>
+					</Space>
+				);
 			}
 			case FeatureType.Perk: {
 				const data = feature.data as FeaturePerkData;
@@ -2075,6 +2094,8 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.LanguageChoice,
 			FeatureType.MovementMode,
 			FeatureType.Multiple,
+			FeatureType.Package,
+			FeatureType.PackageContent,
 			FeatureType.Perk,
 			FeatureType.Proficiency,
 			FeatureType.Size,

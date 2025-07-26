@@ -62,6 +62,12 @@ Additionally, whenever one target spends a Recovery, the other target can use a 
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: One ally within 10 squares of you gains temporary Stamina equal to three times your Intuition score.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'protection-default-1',
+			name: 'Protection Prayer Effect',
+			description: 'One ally within 10 squares of you gains temporary Stamina equal to three times your Intuition score.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

@@ -77,6 +77,12 @@ export const nature: Domain = {
 			value: '2'
 		}
 	],
-	piety: `
-* Prayer Effect: Vines whip up from the floor or ground within 10 squares of you, wrapping around a number of creatures of your choice equal to your Intuition score. You can slide each creature up to a number of squares equal to your Intuition score. The vines then fade away.`
+	defaultFeatures: [
+		FactoryLogic.feature.createPackageContent({
+			id: 'nature-default-1',
+			name: 'Nature Prayer Effect',
+			description: 'Vines whip up from the floor or ground within 10 squares of you, wrapping around a number of creatures of your choice equal to your Intuition score. You can slide each creature up to a number of squares equal to your Intuition score. The vines then fade away.',
+			tag: 'conduit-prayer'
+		})
+	]
 };

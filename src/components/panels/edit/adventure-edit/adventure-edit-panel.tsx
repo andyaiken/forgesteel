@@ -343,7 +343,7 @@ export const AdventureEditPanel = (props: Props) => {
 			return getPlotEditor(selectedPlot);
 		}
 
-		if (currentPlot !== adventure.plot) {
+		if (currentPlot.id !== adventure.plot.id) {
 			return getPlotEditor(currentPlot);
 		}
 

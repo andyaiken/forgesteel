@@ -1,5 +1,6 @@
 import { AbilityUpdateLogic } from './ability-update-logic';
 import { EncounterObjectiveData } from '../../data/encounter-objective-data';
+import { FactoryLogic } from '../factory-logic';
 import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { Playbook } from '../../models/playbook';
@@ -12,6 +13,10 @@ export class PlaybookUpdateLogic {
 		}
 
 		playbook.adventures.forEach(a => {
+			if (a.plot === undefined) {
+				a.plot = FactoryLogic.createAdventurePlot('');
+			}
+
 			if (a.plot.plots === undefined) {
 				a.plot.plots = [];
 			}

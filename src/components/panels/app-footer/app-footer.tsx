@@ -1,5 +1,5 @@
 import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
-import { Button, Divider, Popover, Space } from 'antd';
+import { Button, Divider, Flex, Popover, Space } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../models/hero';
@@ -31,8 +31,9 @@ export const AppFooter = (props: Props) => {
 			}
 
 			return (
-				<div className='action-buttons-panel'>
-					<Button icon={<img className='logo-icon' src={shield} />} onClick={() => navigation.goToWelcome()} />
+				<Flex className='navigation-buttons-panel' align='center'>
+					<Button type='text' className={props.page === 'welcome' ? 'selected' : ''} icon={<img className='logo-icon' src={shield} />} onClick={() => navigation.goToWelcome()} />
+					<Divider type='vertical' />
 					{
 						folders.length > 1 ?
 							<Popover
@@ -47,15 +48,16 @@ export const AppFooter = (props: Props) => {
 									</Space>
 								}
 							>
-								<Button icon={<TeamOutlined />}>
+								<Button type='text' className={props.page === 'heroes' ? 'selected' : ''} icon={<TeamOutlined />}>
 									Heroes
 								</Button>
 							</Popover>
 							:
-							<Button icon={<TeamOutlined />} onClick={() => navigation.goToHeroList(folders[0])}>
+							<Button type='text' className={props.page === 'heroes' ? 'selected' : ''} icon={<TeamOutlined />} onClick={() => navigation.goToHeroList(folders[0])}>
 								Heroes
 							</Button>
 					}
+					<Divider type='vertical' />
 					<Popover
 						trigger='click'
 						content={
@@ -79,10 +81,11 @@ export const AppFooter = (props: Props) => {
 							</div>
 						}
 					>
-						<Button icon={<BookOutlined />}>
+						<Button type='text' className={props.page === 'library' ? 'selected' : ''} icon={<BookOutlined />}>
 							Library
 						</Button>
 					</Popover>
+					<Divider type='vertical' />
 					<Popover
 						trigger='click'
 						content={
@@ -95,26 +98,22 @@ export const AppFooter = (props: Props) => {
 							</Space>
 						}
 					>
-						<Button icon={<ReadOutlined />}>
+						<Button type='text' className={props.page === 'playbook' ? 'selected' : ''} icon={<ReadOutlined />}>
 							Playbook
 						</Button>
 					</Popover>
-					<Button icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>
+					<Divider type='vertical' />
+					<Button type='text' className={props.page === 'session' ? 'selected' : ''} icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>
 						Session
 					</Button>
-				</div>
+				</Flex>
 			);
 		};
 
 		return (
 			<ErrorBoundary>
 				<div className='app-footer'>
-					{
-						isSmall || (props.page === 'player-view') ?
-							<div />
-							:
-							getNavigation()
-					}
+					{isSmall || (props.page === 'player-view') ? <div /> : getNavigation()}
 					<div className='action-buttons-panel'>
 						<Button onClick={props.showReference}>Reference</Button>
 						<Button onClick={props.showRoll}>Roll</Button>

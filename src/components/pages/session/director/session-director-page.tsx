@@ -513,7 +513,7 @@ export const SessionDirectorPage = (props: Props) => {
 							</Button>
 						</Popover>
 					</AppHeader>
-					<div className='session-page-content'>
+					<div className='session-director-page-content'>
 						{getSelector()}
 						{getSelectedContent()}
 					</div>

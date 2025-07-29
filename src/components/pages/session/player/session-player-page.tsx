@@ -111,7 +111,7 @@ export const SessionPlayerPage = (props: Props) => {
 							</Button>
 						</Popover>
 					</AppHeader>
-					<div className='session-page-content'>
+					<div className='session-player-page-content'>
 						{getContent()}
 					</div>
 					<AppFooter page='player-view' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />

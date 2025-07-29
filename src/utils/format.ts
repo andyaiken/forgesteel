@@ -11,4 +11,17 @@ export class Format {
 		const vowels = [ 'a', 'e', 'i', 'o', 'u' ];
 		return vowels.some(v => text.toLowerCase().startsWith(v));
 	};
+
+	static getMonogram = (text: string) => {
+		const stopList = [ 'a', 'an', 'the', 'in', 'on', 'of' ];
+		return text
+			.replace(/[^a-zA-Z0-9 ]/g, '')
+			.toLowerCase()
+			.split(' ')
+			.filter(token => !stopList.includes(token))
+			.map(token => token[0])
+			.join('')
+			.substring(0, 3)
+			.toUpperCase();
+	};
 }

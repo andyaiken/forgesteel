@@ -4,13 +4,21 @@
 	flex-direction: column;
 
 	.hero-view-page-content {
-		background-color: rgba(0, 0, 0, 0.1);
+		background-color: rgb(230, 230, 230);
 		flex: 1 1 0;
 		overflow: hidden;
 		padding: 10px;
 
 		&.compact {
 			padding: 10px 0;
+		}
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.hero-view-page {
+		.hero-view-page-content {
+			background-color: rgb(55, 55, 55);
 		}
 	}
 }

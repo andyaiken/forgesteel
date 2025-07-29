@@ -4,7 +4,7 @@
 	flex-direction: column;
 
 	.library-edit-page-content {
-		background-color: rgba(0, 0, 0, 0.1);
+		background-color: rgb(230, 230, 230);
 		flex: 1 1 0;
 		display: flex;
 		gap: 10px;
@@ -44,6 +44,8 @@
 @media (prefers-color-scheme: dark) {
 	.library-edit-page {
 		.library-edit-page-content {
+			background-color: rgb(55, 55, 55);
+
 			.edit-column {
 				.random-btn {
 					color: rgba(255, 255, 255, 0.88);

@@ -1,5 +1,6 @@
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { CSSProperties } from 'react';
+import { Format } from '../../../utils/format';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { MonsterLogic } from '../../../logic/monster-logic';
@@ -22,15 +23,6 @@ interface Props {
 export const Token = (props: Props) => {
 	try {
 		const size = props.size ?? 22;
-
-		const monogram = props.name
-			.toLowerCase()
-			.split(' ')
-			.filter(token => ![ 'a', 'an', 'the', 'in', 'on', 'of' ].includes(token))
-			.map(token => token[0])
-			.join('')
-			.substring(0, 3)
-			.toUpperCase();
 
 		let className = `token ${props.role.toLowerCase()}`;
 		if (props.onClick) {
@@ -60,7 +52,7 @@ export const Token = (props: Props) => {
 						props.picture ?
 							<img className='portrait' src={props.picture} title={props.name} />
 							:
-							monogram
+							Format.getMonogram(props.name)
 					}
 				</div>
 			</div>

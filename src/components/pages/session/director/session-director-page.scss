@@ -3,8 +3,8 @@
 	display: flex;
 	flex-direction: column;
 
-	.session-page-content {
-		background-color: rgba(0, 0, 0, 0.1);
+	.session-director-page-content {
+		background-color: rgb(230, 230, 230);
 		flex: 1 1 0;
 		display: flex;
 		flex-direction: column;
@@ -30,7 +30,9 @@
 
 @media (prefers-color-scheme: dark) {
 	.session-director-page {
-		.session-page-content {
+		.session-director-page-content {
+			background-color: rgb(55, 55, 55);
+
 			.session-page-content-selector {
 				background-color: rgb(0, 0, 0);
 			}

@@ -12,19 +12,37 @@
 		margin-bottom: -4px;
 	}
 
+	.navigation-buttons-panel {
+		border-radius: 6px;
+		background-color: white;
+
+		.ant-btn-text {
+			&.selected {
+				background-color: rgba(0, 0, 0, 0.04);
+				font-weight: 600;
+			}
+		}
+
+		.ant-divider-vertical {
+			margin-inline: 1px;
+		}
+	}
+
 	.action-buttons-panel {
 		display: flex;
 		align-items: center;
 		gap: 5px;
-
-		.ant-btn-text {
-			color: white;
-		}
 	}
 }
 
 @media (prefers-color-scheme: dark) {
 	.app-footer {
 		background-color: rgb(0, 0, 0);
+
+		.navigation-buttons-panel {
+			.ant-btn-text {
+				color: rgba(0, 0, 0, 0.88);
+			}
+		}
 	}
 }

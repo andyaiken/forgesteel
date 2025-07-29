@@ -4,7 +4,7 @@
 	flex-direction: column;
 
 	.library-list-page-content {
-		background-color: rgba(0, 0, 0, 0.1);
+		background-color: rgb(230, 230, 230);
 		flex: 1 1 0;
 		display: flex;
 		flex-direction: column;
@@ -26,6 +26,14 @@
 			display: grid;
 			grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 			gap: 10px;
+		}
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.library-list-page {
+		.library-list-page-content {
+			background-color: rgb(55, 55, 55);
 		}
 	}
 }

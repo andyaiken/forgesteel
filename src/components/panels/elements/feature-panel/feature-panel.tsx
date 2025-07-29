@@ -269,13 +269,22 @@ export const FeaturePanel = (props: Props) => {
 			.filter(f => !selectedIDs.includes(f.feature.id));
 		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
 
-		if (sortedOptions.length + selectedIDs.length === 0) {
-			return (
-				<Empty text='There are no options to choose for this feature.' />
-			);
-		}
 
 		const showCosts = data.options.some(opt => opt.value > 1);
+
+		const getAddButton = () => {
+			if (sortedOptions.length === 0) {
+				return (
+					<Empty text='There are no options to choose for this feature.' />
+				);
+			}
+
+			return (
+				<Button className='status-warning' block={true} onClick={() => setChoiceSelectorOpen(true)}>
+					Choose an option
+				</Button>
+			);
+		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -320,13 +329,7 @@ export const FeaturePanel = (props: Props) => {
 						</Flex>
 					))
 				}
-				{
-					pointsLeft > 0 ?
-						<Button className='status-warning' block={true} onClick={() => setChoiceSelectorOpen(true)}>
-							Choose an option
-						</Button>
-						: null
-				}
+				{pointsLeft > 0 ? getAddButton() : null}
 				<Drawer open={choiceSelectorOpen} onClose={() => setChoiceSelectorOpen(false)} closeIcon={null} width='500px'>
 					<FeatureSelectModal
 						features={sortedOptions}
@@ -355,7 +358,16 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getSelectionClassAbility = (data: FeatureClassAbilityData) => {
-		if (!props.hero) {
+		if (!props.hero || !props.sourcebooks) {
+			return null;
+		}
+
+		let heroClass: HeroClass | null = props.hero.class;
+		if (data.classID) {
+			// You get an ability from a different class
+			heroClass = SourcebookLogic.getClasses(props.sourcebooks).find(c => c.id === data.classID) || null;
+		}
+		if (!heroClass) {
 			return null;
 		}
 
@@ -364,29 +376,26 @@ export const FeaturePanel = (props: Props) => {
 			.filter(f => f.id !== props.feature.id)
 			.filter(f => f.type === FeatureType.ClassAbility)
 			.flatMap(f => f.data.selectedIDs);
-
-		let heroClass: HeroClass | null = props.hero.class;
-		if (data.classID) {
-			// You get an ability from a different class
-			heroClass = SourcebookLogic.getClasses(props.sourcebooks || []).find(c => c.id === data.classID) || null;
-		}
-
-		const abilities: Ability[] = [];
-		if (heroClass) {
-			(data.allowAnySource ? SourcebookLogic.getAllClassAbilities(heroClass) : heroClass.abilities)
-				.filter(a => a.cost === data.cost)
-				.filter(a => a.minLevel <= data.minLevel)
-				.forEach(a => abilities.push(a));
-		}
-
+		const abilities = (data.allowAnySource ? SourcebookLogic.getAllClassAbilities(heroClass) : heroClass.abilities)
+			.filter(a => a.cost === data.cost)
+			.filter(a => a.minLevel <= data.minLevel)
+			.filter(a => !currentAbilityIDs.includes(a.id));
 		const distinctAbilities = Collections.distinct(abilities, a => a.name);
 		const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);
 
-		if (sortedAbilities.length === 0) {
+		const getAddButton = () => {
+			if (sortedAbilities.length === 0) {
+				return (
+					<Empty text='There are no options to choose for this feature.' />
+				);
+			}
+
 			return (
-				<Empty text='There are no options to choose for this feature.' />
+				<Button className='status-warning' block={true} onClick={() => setAbilitySelectorOpen(true)}>
+					Choose an ability
+				</Button>
 			);
-		}
+		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -429,16 +438,10 @@ export const FeaturePanel = (props: Props) => {
 						);
 					})
 				}
-				{
-					data.selectedIDs.length < data.count ?
-						<Button className='status-warning' block={true} onClick={() => setAbilitySelectorOpen(true)}>
-							Choose an ability
-						</Button>
-						: null
-				}
+				{data.selectedIDs.length < data.count ? getAddButton() : null}
 				<Drawer open={abilitySelectorOpen} onClose={() => setAbilitySelectorOpen(false)} closeIcon={null} width='500px'>
 					<AbilitySelectModal
-						abilities={sortedAbilities.filter(a => !currentAbilityIDs.includes(a.id))}
+						abilities={sortedAbilities}
 						hero={props.hero}
 						onSelect={ability => {
 							setAbilitySelectorOpen(false);
@@ -499,11 +502,6 @@ export const FeaturePanel = (props: Props) => {
 						: null
 				}
 				{
-					!data.selected ?
-						<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
-						: null
-				}
-				{
 					data.selected ?
 						<Flex className='selection-box' align='center' gap={10}>
 							<MonsterInfo
@@ -531,7 +529,8 @@ export const FeaturePanel = (props: Props) => {
 								/>
 							</div>
 						</Flex>
-						: null
+						:
+						<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
 				}
 				{
 					data.selected ?
@@ -591,11 +590,11 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getSelectionDomain = (data: FeatureDomainData) => {
-		if (!props.hero) {
+		if (!props.hero || !props.sourcebooks) {
 			return null;
 		}
 
-		const domains = SourcebookLogic.getDomains(props.sourcebooks as Sourcebook[]);
+		const domains = SourcebookLogic.getDomains(props.sourcebooks);
 		const sortedDomains = Collections.sort(domains, d => d.name);
 
 		if (sortedDomains.length === 0) {
@@ -847,45 +846,27 @@ export const FeaturePanel = (props: Props) => {
 
 		const kitTypes = data.types.length > 0 ? data.types : [ '' ];
 		const kits = SourcebookLogic.getKits(props.sourcebooks as Sourcebook[])
-			.filter(k => kitTypes.includes(k.type));
-
+			.filter(k => kitTypes.includes(k.type))
+			.filter(k => !currentKitIDs.includes(k.id));
 		const sortedKits = Collections.sort(kits, k => k.name);
 
-		if (sortedKits.length === 0) {
+		const getAddButton = () => {
+			if (sortedKits.length === 0) {
+				return (
+					<Empty text='There are no options to choose for this feature.' />
+				);
+			}
+
 			return (
-				<Empty text='There are no options to choose for this feature.' />
+				<Button className='status-warning' block={true} onClick={() => setKitSelectorOpen(true)}>
+					Choose a kit
+				</Button>
 			);
-		}
+		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
-				{
-					data.selected.length < data.count ?
-						<Button className='status-warning' block={true} onClick={() => setKitSelectorOpen(true)}>
-							Choose a kit
-						</Button>
-						: null
-				}
-				<Drawer open={kitSelectorOpen} onClose={() => setKitSelectorOpen(false)} closeIcon={null} width='500px'>
-					<KitSelectModal
-						kits={sortedKits.filter(k => !currentKitIDs.includes(k.id))}
-						hero={props.hero}
-						options={props.options}
-						onSelect={kit => {
-							setKitSelectorOpen(false);
-
-							const kitCopy = Utils.copy(kit);
-
-							const dataCopy = Utils.copy(data);
-							dataCopy.selected.push(kitCopy);
-							if (props.setData) {
-								props.setData(props.feature.id, dataCopy);
-							}
-						}}
-						onClose={() => setKitSelectorOpen(false)}
-					/>
-				</Drawer>
 				{
 					data.selected.map(kit => (
 						<Flex key={kit.id} className='selection-box' align='center' gap={10}>
@@ -919,6 +900,26 @@ export const FeaturePanel = (props: Props) => {
 						</Flex>
 					))
 				}
+				{data.selected.length < data.count ? getAddButton() : null}
+				<Drawer open={kitSelectorOpen} onClose={() => setKitSelectorOpen(false)} closeIcon={null} width='500px'>
+					<KitSelectModal
+						kits={sortedKits}
+						hero={props.hero}
+						options={props.options}
+						onSelect={kit => {
+							setKitSelectorOpen(false);
+
+							const kitCopy = Utils.copy(kit);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected.push(kitCopy);
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setKitSelectorOpen(false)}
+					/>
+				</Drawer>
 				<Drawer open={!!selectedKit} onClose={() => setSelectedKit(null)} closeIcon={null} width='500px'>
 					<Modal
 						content={selectedKit ? <KitPanel kit={selectedKit} options={props.options} mode={PanelMode.Full} /> : null}
@@ -930,41 +931,25 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getSelectionLanguageChoice = (data: FeatureLanguageChoiceData) => {
-		const currentLanguages: string[] = [];
-		if (props.hero) {
-			HeroLogic.getFeatures(props.hero)
-				.map(f => f.feature)
-				.filter(f => f.id !== props.feature.id)
-				.forEach(f => {
-					const addCurrent = (language: string) => {
-						if (!data.selected.includes(language)) {
-							currentLanguages.push(language);
-						}
-					};
-
-					switch (f.type) {
-						case FeatureType.Language:
-							addCurrent(f.data.language);
-							break;
-						case FeatureType.LanguageChoice:
-							f.data.selected.forEach(addCurrent);
-							break;
-					}
-				});
-			if (props.hero.culture) {
-				currentLanguages.push(...props.hero.culture.languages);
-			}
-		}
-
-		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
+		const currentLanguages = (props.hero && props.sourcebooks) ? HeroLogic.getLanguages(props.hero, props.sourcebooks).map(l => l.name) : [];
+		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[])
+			.filter(l => !currentLanguages.includes(l.name));
 		const distinctLanguages = Collections.distinct(languages, l => l.name);
 		const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
 
-		if (sortedLanguages.length === 0) {
+		const getAddButton = () => {
+			if (sortedLanguages.length === 0) {
+				return (
+					<Empty text='There are no options to choose for this feature.' />
+				);
+			}
+
 			return (
-				<Empty text='There are no options to choose for this feature.' />
+				<Button className='status-warning' block={true} onClick={() => setLanguageSelectorOpen(true)}>
+					Choose a language
+				</Button>
 			);
-		}
+		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -991,16 +976,10 @@ export const FeaturePanel = (props: Props) => {
 						</Flex>
 					))
 				}
-				{
-					(data.selected.length < data.count) || (data.count === -1) ?
-						<Button className='status-warning' block={true} onClick={() => setLanguageSelectorOpen(true)}>
-							Choose a language
-						</Button>
-						: null
-				}
+				{(data.selected.length < data.count) || (data.count === -1) ? getAddButton() : null}
 				<Drawer open={languageSelectorOpen} onClose={() => setLanguageSelectorOpen(false)} closeIcon={null} width='500px'>
 					<LanguageSelectModal
-						languages={sortedLanguages.filter(l => !currentLanguages.includes(l.name))}
+						languages={sortedLanguages}
 						onSelect={l => {
 							setLanguageSelectorOpen(false);
 
@@ -1024,7 +1003,6 @@ export const FeaturePanel = (props: Props) => {
 
 		const currentPerkIDs = HeroLogic.getFeatures(props.hero)
 			.map(f => f.feature)
-			.filter(f => f.id !== props.feature.id)
 			.filter(f => f.type === FeatureType.Perk)
 			.flatMap(f => f.data.selected)
 			.map(p => p.id);
@@ -1032,11 +1010,19 @@ export const FeaturePanel = (props: Props) => {
 		const perks = SourcebookLogic.getPerks(props.sourcebooks as Sourcebook[]).filter(p => data.lists.includes(p.list));
 		const sortedPerks = Collections.sort(perks, p => p.name);
 
-		if (sortedPerks.length === 0) {
+		const getAddButton = () => {
+			if (sortedPerks.length === 0) {
+				return (
+					<Empty text='There are no options to choose for this feature.' />
+				);
+			}
+
 			return (
-				<Empty text='There are no options to choose for this feature.' />
+				<Button className='status-warning' block={true} onClick={() => setPerkSelectorOpen(true)}>
+					Choose a perk
+				</Button>
 			);
-		}
+		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -1074,13 +1060,7 @@ export const FeaturePanel = (props: Props) => {
 						</Flex>
 					))
 				}
-				{
-					data.selected.length < data.count ?
-						<Button className='status-warning' block={true} onClick={() => setPerkSelectorOpen(true)}>
-							Choose a perk
-						</Button>
-						: null
-				}
+				{data.selected.length < data.count ? getAddButton() : null}
 				<Drawer open={perkSelectorOpen} onClose={() => setPerkSelectorOpen(false)} closeIcon={null} width='500px'>
 					<PerkSelectModal
 						perks={sortedPerks.filter(p => !currentPerkIDs.includes(p.id))}
@@ -1109,39 +1089,26 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getSelectionSkillChoice = (data: FeatureSkillChoiceData) => {
-		const currentSkills: string[] = [];
-		if (props.hero) {
-			HeroLogic.getFeatures(props.hero)
-				.map(f => f.feature)
-				.filter(f => f.id !== props.feature.id)
-				.forEach(f => {
-					const addCurrent = (skill: string) => {
-						if (!data.selected.includes(skill)) {
-							currentSkills.push(skill);
-						}
-					};
-
-					switch (f.type) {
-						case FeatureType.Skill:
-							addCurrent(f.data.skill);
-							break;
-						case FeatureType.SkillChoice:
-							f.data.selected.forEach(addCurrent);
-							break;
-					}
-				});
-		}
-
+		const currentSkills = (props.hero && props.sourcebooks) ? HeroLogic.getSkills(props.hero, props.sourcebooks).map(s => s.name) : [];
 		const skills = SourcebookLogic.getSkills(props.sourcebooks as Sourcebook[])
-			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)));
+			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)))
+			.filter(skill => !currentSkills.includes(skill.name));
 		const distinctSkills = Collections.distinct(skills, s => s.name);
 		const sortedSkills = Collections.sort(distinctSkills, s => s.name);
 
-		if (sortedSkills.length === 0) {
+		const getAddButton = () => {
+			if (sortedSkills.length === 0) {
+				return (
+					<Empty text='There are no options to choose for this feature.' />
+				);
+			}
+
 			return (
-				<Empty text='There are no options to choose for this feature.' />
+				<Button className='status-warning' block={true} onClick={() => setSkillSelectorOpen(true)}>
+					Choose a Skill
+				</Button>
 			);
-		}
+		};;
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -1168,16 +1135,10 @@ export const FeaturePanel = (props: Props) => {
 						</Flex>
 					))
 				}
-				{
-					(data.selected.length < data.count) || (data.count === -1) ?
-						<Button className='status-warning' block={true} onClick={() => setSkillSelectorOpen(true)}>
-							Choose a Skill
-						</Button>
-						: null
-				}
+				{(data.selected.length < data.count) || (data.count === -1) ? getAddButton() : null}
 				<Drawer open={skillSelectorOpen} onClose={() => setSkillSelectorOpen(false)} closeIcon={null} width='500px'>
 					<SkillSelectModal
-						skills={sortedSkills.filter(s => !currentSkills.includes(s.name))}
+						skills={sortedSkills}
 						onSelect={s => {
 							setSkillSelectorOpen(false);
 
@@ -1350,20 +1311,23 @@ export const FeaturePanel = (props: Props) => {
 			return null;
 		}
 
-		const currentTitleIDs = HeroLogic.getFeatures(props.hero)
-			.map(f => f.feature)
-			.filter(f => f.id !== props.feature.id)
-			.filter(f => f.type === FeatureType.TitleChoice)
-			.flatMap(f => f.data.selected)
-			.map(p => p.id);
-
-		const titles = SourcebookLogic.getTitles(props.sourcebooks as Sourcebook[]).filter(t => t.echelon === data.echelon);
-		const availableTitles = titles.filter(t => !currentTitleIDs.includes(t.id));
-		const sortedTitles = Collections.sort(availableTitles, t => t.name);
+		const currentTitleIDs = HeroLogic.getTitles(props.hero).map(t => t.id);
+		const titles = SourcebookLogic.getTitles(props.sourcebooks as Sourcebook[])
+			.filter(t => t.echelon === data.echelon)
+			.filter(t => !currentTitleIDs.includes(t.id));
+		const sortedTitles = Collections.sort(titles, t => t.name);
 
 		const customTitle = FactoryLogic.createTitle();
 		customTitle.name = 'Custom Title';
 		customTitle.features.push(FactoryLogic.feature.create({ id: Utils.guid(), name: 'Custom Benefit', description: 'Details' }));
+
+		const getAddButton = () => {
+			return (
+				<Button className='status-warning' block={true} onClick={() => setTitleSelectorOpen(true)}>
+					Choose a title
+				</Button>
+			);
+		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
@@ -1412,13 +1376,7 @@ export const FeaturePanel = (props: Props) => {
 						);
 					})
 				}
-				{
-					data.selected.length < data.count ?
-						<Button className='status-warning' block={true} onClick={() => setTitleSelectorOpen(true)}>
-							Choose a title
-						</Button>
-						: null
-				}
+				{data.selected.length < data.count ? getAddButton() : null}
 				<Drawer open={titleSelectorOpen} onClose={() => setTitleSelectorOpen(false)} closeIcon={null} width='500px'>
 					<TitleSelectModal
 						titles={[ customTitle, ...sortedTitles ]}

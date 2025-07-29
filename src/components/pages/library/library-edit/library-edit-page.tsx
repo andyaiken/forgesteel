@@ -221,17 +221,9 @@ export const LibraryEditPage = (props: Props) => {
 						<div className='edit-header-section'>
 							<Select
 								style={{ width: '100%' }}
-								options={[ null, ...heroClass.subclasses ].map(sc => ({ label: sc ? sc.name || 'Unnamed Subclass' : 'Class', value: sc ? sc.id : '' }))}
+								allowClear={!!subElementID}
+								options={[ null, ...heroClass.subclasses ].map(sc => ({ label: sc ? `Subclass: ${sc.name || 'Unnamed Subclass'}` : 'Class', value: sc ? sc.id : '' }))}
 								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								showSearch={true}
-								filterOption={(input, option) => {
-									const strings = option ?
-										[
-											option.label
-										]
-										: [];
-									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-								}}
 								value={subElementID || ''}
 								onChange={id => navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, id)}
 							/>
@@ -247,17 +239,9 @@ export const LibraryEditPage = (props: Props) => {
 						<div className='edit-header-section'>
 							<Select
 								style={{ width: '100%' }}
-								options={[ null, ...monsterGroup.monsters ].map(m => ({ label: m ? MonsterLogic.getMonsterName(m, monsterGroup) : 'Monster Group', value: m ? m.id : '' }))}
+								allowClear={!!subElementID}
+								options={[ null, ...monsterGroup.monsters ].map(m => ({ label: m ? `Monster: ${MonsterLogic.getMonsterName(m, monsterGroup)}` : 'Monster Group', value: m ? m.id : '' }))}
 								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-								showSearch={true}
-								filterOption={(input, option) => {
-									const strings = option ?
-										[
-											option.label
-										]
-										: [];
-									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-								}}
 								value={subElementID || ''}
 								onChange={id => navigation.goToLibraryEdit(kind!, sourcebookID!, elementID!, id)}
 							/>

@@ -619,7 +619,7 @@ export const EncounterRunPanel = (props: Props) => {
 				{
 					encounter.description ?
 						<>
-							<HeaderText>Encounter Description</HeaderText>
+							<HeaderText level={1}>Encounter Description</HeaderText>
 							<Markdown text={encounter.description} />
 						</>
 						: null
@@ -627,7 +627,7 @@ export const EncounterRunPanel = (props: Props) => {
 				{
 					encounter.notes.map(note => (
 						<div key={note.id}>
-							<HeaderText>{note.name}</HeaderText>
+							<HeaderText level={1}>{note.name}</HeaderText>
 							<Markdown text={note.description} />
 						</div>
 					))

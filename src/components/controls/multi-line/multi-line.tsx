@@ -8,6 +8,7 @@ interface Props {
 	value: string;
 	placeholder?: string;
 	style?: CSSProperties;
+	inputStyle?: CSSProperties;
 	showMarkdownPrompt?: boolean;
 	onChange: (value: string) => void;
 }
@@ -26,6 +27,7 @@ export const MultiLine = (props: Props) => {
 					(props.showMarkdownPrompt ?? true) ?
 						<Alert
 							className='multi-line-alert'
+							style={props.inputStyle}
 							type='info'
 							showIcon={true}
 							message='You can use markdown here.'

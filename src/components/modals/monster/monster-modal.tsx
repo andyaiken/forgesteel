@@ -1,5 +1,5 @@
-import { Button, Flex, Popover, Segmented } from 'antd';
-import { DownOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Divider, Flex, Input, Popover, Segmented } from 'antd';
+import { DownOutlined, EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { Monster, MonsterGroup } from '../../../models/monster';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Modal } from '../modal/modal';
@@ -26,6 +26,7 @@ interface Props {
 export const MonsterModal = (props: Props) => {
 	const [ monster, setMonster ] = useState<Monster>(Utils.copy(props.monster));
 	const [ page, setPage ] = useState<string>(props.updateMonster ? 'Encounter' : 'Stat Block');
+	const [ editingName, setEditingName ] = useState<boolean>(false);
 
 	const updateMonster = (monster: Monster) => {
 		setMonster(monster);
@@ -39,9 +40,39 @@ export const MonsterModal = (props: Props) => {
 			case 'Encounter':
 				return (
 					<div style={{ padding: '0 20px' }}>
-						<HeaderText level={1} ribbon={<MonsterToken monster={monster} monsterGroup={props.monsterGroup} size={28} />}>
-							{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+						<HeaderText
+							level={1}
+							ribbon={<MonsterToken monster={monster} monsterGroup={props.monsterGroup} size={28} />}
+							extra={
+								props.updateMonster ?
+									<Button
+										type='text'
+										title='Edit the name'
+										icon={editingName ? <EditFilled style={{ color: 'rgb(64, 150, 255)' }} /> : <EditOutlined />}
+										onClick={() => setEditingName(!editingName)}
+									/>
+									: undefined
+							}
+						>
+							{MonsterLogic.getMonsterName(monster, props.monsterGroup)}
 						</HeaderText>
+						{
+							editingName && props.updateMonster ?
+								<div>
+									<Input
+										placeholder='Name'
+										allowClear={true}
+										value={monster.name}
+										onChange={e => {
+											const copy = Utils.copy(monster);
+											copy.name = e.target.value;
+											updateMonster(copy);
+										}}
+									/>
+									<Divider />
+								</div>
+								: null
+						}
 						<MonsterHealthPanel
 							monster={monster}
 							onChange={updateMonster}

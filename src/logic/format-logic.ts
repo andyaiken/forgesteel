@@ -30,6 +30,10 @@ export class FormatLogic {
 			return speed.value.toString();
 		}
 
+		if (typeof speed.modes === 'string') {
+			return `${speed.value} (${speed.modes})`;
+		}
+
 		return `${speed.value} (${speed.modes.join(', ')})`;
 	};
 

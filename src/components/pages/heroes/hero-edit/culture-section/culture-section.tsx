@@ -5,9 +5,9 @@ import { Culture } from '../../../../../models/culture';
 import { CulturePanel } from '../../../../panels/elements/culture-panel/culture-panel';
 import { Element } from '../../../../../models/element';
 import { EmptyMessage } from '../empty-message/empty-message';
+import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '../../../../../models/feature';
 import { FeatureLogic } from '../../../../../logic/feature-logic';
-import { FeaturePanel } from '../../../../panels/elements/feature-panel/feature-panel';
 import { Field } from '../../../../controls/field/field';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
@@ -62,7 +62,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 

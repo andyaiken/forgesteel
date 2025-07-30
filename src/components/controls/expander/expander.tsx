@@ -7,6 +7,7 @@ interface Props {
 	title: ReactNode;
 	tags?: string[];
 	children: ReactNode;
+	expandedByDefault?: boolean;
 	extra?: ReactNode[];
 }
 
@@ -23,6 +24,7 @@ export const Expander = (props: Props) => {
 						extra: props.extra ? <>{props.extra}</> : null
 					}
 				]}
+				defaultActiveKey={props.expandedByDefault ? '1' : undefined}
 				expandIconPosition='end'
 			/>
 		);

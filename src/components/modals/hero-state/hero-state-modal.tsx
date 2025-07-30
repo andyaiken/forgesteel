@@ -40,7 +40,7 @@ interface Props {
 	showEncounterControls: boolean;
 	onClose: () => void;
 	onChange: (hero: Hero) => void;
-	onLevelUp?: () => void;
+	onLevelUp?: (hero: Hero) => void;
 }
 
 export const HeroStateModal = (props: Props) => {
@@ -81,6 +81,19 @@ export const HeroStateModal = (props: Props) => {
 			copy.state.xp = value;
 			setHero(copy);
 			props.onChange(copy);
+		};
+
+		const levelUp = () => {
+			if (props.onLevelUp) {
+				const copy = Utils.copy(hero);
+				if (copy.class) {
+					while (HeroLogic.canLevelUp(copy)) {
+						copy.class.level += 1;
+					}
+				}
+				setHero(copy);
+				props.onLevelUp(copy);
+			}
 		};
 
 		const setHeroTokens = (value: number) => {
@@ -220,7 +233,7 @@ export const HeroStateModal = (props: Props) => {
 							type='info'
 							showIcon={true}
 							message='You have enough XP to level up.'
-							action={props.onLevelUp ? <Button type='text' title='Level Up' icon={<ArrowUpOutlined />} onClick={props.onLevelUp} /> : null}
+							action={props.onLevelUp ? <Button type='text' title='Level Up' icon={<ArrowUpOutlined />} onClick={levelUp} /> : null}
 						/>
 						: null
 				}

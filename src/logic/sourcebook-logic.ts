@@ -293,6 +293,13 @@ export class SourcebookLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	static getLanguage = (languageName: string, sourcebooks: Sourcebook[]) => {
+		const languages = SourcebookLogic.getLanguages(sourcebooks);
+
+		const lang = languages.find(l => l.name === languageName);
+		return lang || null;
+	};
+
 	static getSkill = (skillName: string, sourcebooks: Sourcebook[]) => {
 		const skills = SourcebookLogic.getSkills(sourcebooks);
 

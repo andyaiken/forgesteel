@@ -2,9 +2,9 @@ import { Ancestry } from '../../../../../models/ancestry';
 import { AncestryPanel } from '../../../../panels/elements/ancestry-panel/ancestry-panel';
 import { Element } from '../../../../../models/element';
 import { EmptyMessage } from '../empty-message/empty-message';
+import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '../../../../../models/feature';
 import { FeatureLogic } from '../../../../../logic/feature-logic';
-import { FeaturePanel } from '../../../../panels/elements/feature-panel/feature-panel';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
 import { Options } from '../../../../../models/options';
@@ -53,7 +53,7 @@ export const AncestrySection = (props: Props) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 		}

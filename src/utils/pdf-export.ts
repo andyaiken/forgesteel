@@ -517,7 +517,7 @@ export class PDFExport {
 			}
 		}
 
-		const data = await pdfDoc.save();;
+		const data = await pdfDoc.save();
 		const url = window.URL.createObjectURL(new Blob([ data ], { type: 'application/pdf' }));
 
 		const downloader = document.createElement('a');

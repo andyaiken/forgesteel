@@ -1,27 +1,3 @@
 .feature-panel {
-	//overflow: hidden;
-
-	.selection-box {
-		border: 1px solid rgba(5, 5, 5, 0.06);
-		border-radius: 5px;
-		padding: 5px 5px 5px 10px;
-		background-color: rgba(255, 255, 255);
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	.feature-panel {
-		.selection-box {
-			border-color: rgba(250, 250, 250, 0.6);
-			background-color: rgba(0, 0, 0);
-
-			button {
-				color: rgba(255, 255, 255, 0.88);
-
-				&:hover {
-					color: rgba(255, 255, 255, 0.88) !important;
-				}
-			}
-		}
-	}
+	display: block;
 }

@@ -2,6 +2,7 @@ import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
+import { Collections } from '../utils/collections';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { FactoryLogic } from './factory-logic';
@@ -48,13 +49,13 @@ export class FeatureLogic {
 	};
 
 	static getFeaturesFromClass = (heroClass: HeroClass, hero: Hero) => {
-		const features: { feature: Feature, source: string }[] = [];
+		const features: { feature: Feature, source: string, level: number }[] = [];
 
 		const classLevel = heroClass.level;
 
 		heroClass.featuresByLevel.forEach(lvl => {
 			if (lvl.level <= classLevel) {
-				features.push(...lvl.features.map(f => ({ feature: f, source: heroClass.name })));
+				features.push(...lvl.features.map(f => ({ feature: f, source: heroClass.name, level: lvl.level })));
 			}
 		});
 
@@ -63,7 +64,7 @@ export class FeatureLogic {
 			.forEach(sc => {
 				sc.featuresByLevel.forEach(lvl => {
 					if (lvl.level <= classLevel) {
-						features.push(...lvl.features.map(f => ({ feature: f, source: sc.name })));
+						features.push(...lvl.features.map(f => ({ feature: f, source: sc.name, level: lvl.level })));
 					}
 				});
 			});
@@ -269,51 +270,51 @@ export class FeatureLogic {
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
 
-	static simplifyFeatures = (features: { feature: Feature, source: string }[], hero: Hero) => {
-		const list: { feature: Feature, source: string }[] = [];
+	static simplifyFeatures = (features: { feature: Feature, source: string, level?: number }[], hero: Hero) => {
+		const list: { feature: Feature, source: string, level?: number }[] = [];
 
-		const addFeature = (feature: Feature, source: string) => {
-			list.push({ feature: feature, source: source });
+		const addFeature = (feature: Feature, source: string, level?: number) => {
+			list.push({ feature: feature, source: source, level: level });
 
 			switch (feature.type) {
 				case FeatureType.AncestryFeatureChoice:
 					if (feature.data.selected) {
-						addFeature(feature.data.selected, source);
+						addFeature(feature.data.selected, source, level);
 					}
 					break;
 				case FeatureType.Choice:
-					feature.data.selected.forEach(f => addFeature(f, source));
+					feature.data.selected.forEach(f => addFeature(f, source, level));
 					break;
 				case FeatureType.Domain:
 					feature.data.selected.forEach(d => {
-						d.defaultFeatures.forEach(f => addFeature(f, d.name));
+						d.defaultFeatures.forEach(f => addFeature(f, d.name, level));
 					});
 					break;
 				case FeatureType.DomainFeature:
-					feature.data.selected.forEach(f => addFeature(f, source));
+					feature.data.selected.forEach(f => addFeature(f, source, level));
 					break;
 				case FeatureType.ItemChoice:
-					feature.data.selected.forEach(item => FeatureLogic.getFeaturesFromItem(item, hero).forEach(f => addFeature(f.feature, f.source)));
+					feature.data.selected.forEach(item => FeatureLogic.getFeaturesFromItem(item, hero).forEach(f => addFeature(f.feature, f.source, level)));
 					break;
 				case FeatureType.Kit:
-					feature.data.selected.forEach(kit => kit.features.forEach(f => addFeature(f, kit.name)));
+					feature.data.selected.forEach(kit => kit.features.forEach(f => addFeature(f, kit.name, level)));
 					break;
 				case FeatureType.Multiple:
-					feature.data.features.forEach(f => addFeature(f, source));
+					feature.data.features.forEach(f => addFeature(f, source, level));
 					break;
 				case FeatureType.Perk:
-					feature.data.selected.forEach(f => addFeature(f, source));
+					feature.data.selected.forEach(f => addFeature(f, source, level));
 					break;
 				case FeatureType.TaggedFeatureChoice:
-					feature.data.selected.forEach(f => addFeature(f, source));
+					feature.data.selected.forEach(f => addFeature(f, source, level));
 					break;
 				case FeatureType.TitleChoice:
-					feature.data.selected.forEach(title => title.features.filter(f => f.id === title.selectedFeatureID).forEach(f => addFeature(f, source)));
+					feature.data.selected.forEach(title => title.features.filter(f => f.id === title.selectedFeatureID).forEach(f => addFeature(f, source, level)));
 					break;
 			}
 		};
 
-		features.forEach(f => addFeature(f.feature, f.source));
+		features.forEach(f => addFeature(f.feature, f.source, f.level));
 
 		return list;
 	};
@@ -341,6 +342,55 @@ export class FeatureLogic {
 		};
 
 		return false;
+	};
+
+	static isChosen = (feature: Feature, formerAncestries: Ancestry[]) => {
+		switch (feature.type) {
+			case FeatureType.AncestryChoice:
+				return !!feature.data.selected;
+			case FeatureType.AncestryFeatureChoice:
+				return !!feature.data.selected;
+			case FeatureType.Choice: {
+				let availableOptions = [ ...feature.data.options ];
+				if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
+					availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
+					const additionalOptions = formerAncestries
+						.flatMap(a => a.features)
+						.filter(f => f.type === FeatureType.Choice)
+						.flatMap(f => f.data.options)
+						.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
+					availableOptions.push(...additionalOptions);
+				}
+				const selected = feature.data.selected
+					.map(f => availableOptions.find(opt => opt.feature.id === f.id))
+					.filter(opt => !!opt);
+				return Collections.sum(selected, i => i.value) >= feature.data.count;
+			}
+			case FeatureType.ClassAbility:
+				return feature.data.selectedIDs.length >= feature.data.count;
+			case FeatureType.Companion:
+				return feature.data.selected !== null;
+			case FeatureType.Domain:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.DomainFeature:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.ItemChoice:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.Kit:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.LanguageChoice:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.Perk:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.SkillChoice:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.TaggedFeatureChoice:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.TitleChoice:
+				return feature.data.selected.length >= feature.data.count;
+		};
+
+		return true;
 	};
 
 	///////////////////////////////////////////////////////////////////////////

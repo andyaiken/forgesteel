@@ -12,8 +12,8 @@ import { Empty } from '../../controls/empty/empty';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Expander } from '../../controls/expander/expander';
 import { FactoryLogic } from '../../../logic/factory-logic';
+import { FeatureConfigPanel } from '../feature-config-panel/feature-config-panel';
 import { FeatureField } from '../../../enums/feature-field';
-import { FeaturePanel } from '../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { FollowerLogic } from '../../../logic/follower-logic';
@@ -26,7 +26,6 @@ import { KitWeapon } from '../../../enums/kit-weapon';
 import { NameGenerator } from '../../../utils/name-generator';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
-import { PanelMode } from '../../../enums/panel-mode';
 import { PerkList } from '../../../enums/perk-list';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
@@ -935,12 +934,11 @@ export const HeroCustomizePanel = (props: Props) => {
 										[ FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier, FeatureType.MovementMode, FeatureType.Proficiency ].includes(f.type) ?
 											null
 											:
-											<FeaturePanel
+											<FeatureConfigPanel
 												feature={f}
 												options={props.options}
 												hero={props.hero}
 												sourcebooks={props.sourcebooks}
-												mode={PanelMode.Full}
 												setData={props.setFeatureData}
 											/>
 									}

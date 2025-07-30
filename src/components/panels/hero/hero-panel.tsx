@@ -1,3 +1,4 @@
+import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Col, Divider, Flex, Row, Segmented, Select, Space, Statistic, Tag } from 'antd';
 import { HeroToken, MonsterInfo } from '../../controls/token/token';
 import { Pill, ResourcePill } from '../../controls/pill/pill';
@@ -7,7 +8,6 @@ import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityPanel } from '../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../enums/ability-usage';
 import { Ancestry } from '../../../models/ancestry';
-import { ArrowDownOutlined } from '@ant-design/icons';
 import { Career } from '../../../models/career';
 import { Characteristic } from '../../../enums/characteristic';
 import { Complication } from '../../../models/complication';
@@ -402,6 +402,8 @@ export const HeroPanel = (props: Props) => {
 				xxl: 14
 			};
 
+			const xpSuffix = HeroLogic.canLevelUp(props.hero) ? <ArrowUpOutlined /> : undefined;
+
 			const size = HeroLogic.getSize(props.hero);
 			const sizeSuffix = size.mod || undefined;
 
@@ -523,7 +525,7 @@ export const HeroPanel = (props: Props) => {
 									<Statistic title='Victories' value={props.hero.state.victories} />
 								</div>
 								<div className='stat'>
-									<Statistic title='XP' value={props.hero.state.xp} />
+									<Statistic title='XP' value={props.hero.state.xp} suffix={xpSuffix} />
 								</div>
 								<div className='stat'>
 									<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />

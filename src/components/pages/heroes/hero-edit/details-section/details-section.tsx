@@ -2,13 +2,12 @@ import { Alert, AutoComplete, Button, Flex, Input, Upload } from 'antd';
 import { DownloadOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Collections } from '../../../../../utils/collections';
 import { DangerButton } from '../../../../controls/danger-button/danger-button';
+import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '../../../../../models/feature';
-import { FeaturePanel } from '../../../../panels/elements/feature-panel/feature-panel';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
 import { NameGenerator } from '../../../../../utils/name-generator';
 import { Options } from '../../../../../models/options';
-import { PanelMode } from '../../../../../enums/panel-mode';
 import { Sourcebook } from '../../../../../models/sourcebook';
 
 import './details-section.scss';
@@ -90,13 +89,12 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 					/>
 					{
 						props.hero.features.filter(f => f.id === 'default-language').map(f => (
-							<FeaturePanel
+							<FeatureConfigPanel
 								key={f.id}
 								feature={f}
 								options={props.options}
 								hero={props.hero}
 								sourcebooks={props.sourcebooks}
-								mode={PanelMode.Full}
 								setData={props.setFeatureData}
 							/>
 						))

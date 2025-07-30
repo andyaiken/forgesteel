@@ -839,30 +839,7 @@ export class HeroLogic {
 	};
 
 	static getMinXP = (level: number) => {
-		switch (level) {
-			case 1:
-				return 0;
-			case 2:
-				return 16;
-			case 3:
-				return 32;
-			case 4:
-				return 48;
-			case 5:
-				return 64;
-			case 6:
-				return 80;
-			case 7:
-				return 96;
-			case 8:
-				return 112;
-			case 9:
-				return 128;
-			case 10:
-				return 144;
-		}
-
-		return 0;
+		return Math.max(0, (level - 1) * 16);
 	};
 
 	static canLevelUp = (hero: Hero) => {

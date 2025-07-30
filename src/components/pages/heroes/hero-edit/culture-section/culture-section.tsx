@@ -1,17 +1,17 @@
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../../data/culture-data';
+import { FeatureData, FeatureLanguageChoiceData } from '../../../../../models/feature';
 import { Select, Space } from 'antd';
 import { Collections } from '../../../../../utils/collections';
 import { Culture } from '../../../../../models/culture';
 import { CulturePanel } from '../../../../panels/elements/culture-panel/culture-panel';
 import { Element } from '../../../../../models/element';
 import { EmptyMessage } from '../empty-message/empty-message';
+import { FactoryLogic } from '../../../../../logic/factory-logic';
 import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
-import { FeatureData } from '../../../../../models/feature';
 import { FeatureLogic } from '../../../../../logic/feature-logic';
 import { Field } from '../../../../controls/field/field';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
-import { LanguageType } from '../../../../../enums/language-type';
 import { Options } from '../../../../../models/options';
 import { PanelMode } from '../../../../../enums/panel-mode';
 import { ReactNode } from 'react';
@@ -119,42 +119,21 @@ export const CultureSection = (props: CultureSectionProps) => {
 
 			choices.unshift(
 				<SelectablePanel key='language'>
-					<HeaderText>Language</HeaderText>
-					<div className='ds-text'>Choose your language.</div>
-					<Select
-						style={{ width: '100%' }}
-						status={props.hero.culture.languages.length === 0 ? 'warning' : ''}
-						allowClear={true}
-						placeholder='Select'
-						options={
-							[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]
-								.filter(type => sortedLanguages.some(l => l.type === type))
-								.map(type => ({
-									label: <HeaderText>{type} Languages</HeaderText>,
-									value: type,
-									desc: type,
-									options: sortedLanguages
-										.filter(l => l.type === type)
-										.map(l => ({
-											label: <Field label={l.name} value={l.description} />,
-											value: l.name,
-											desc: l.description
-										}))
-								}))
-						}
-						labelRender={x => x.value}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.value,
-									option.desc
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					<FeatureConfigPanel
+						feature={FactoryLogic.feature.createLanguageChoice({
+							id: 'culture-language',
+							name: 'Language',
+							description: 'Choose your language.',
+							options: sortedLanguages.map(l => l.name),
+							selected: props.hero.culture.languages
+						})}
+						options={props.options}
+						hero={props.hero}
+						sourcebooks={props.sourcebooks}
+						setData={(_id, data) => {
+							const d = data as FeatureLanguageChoiceData;
+							props.selectLanguages(d.selected);
 						}}
-						value={props.hero.culture.languages.length > 0 ? props.hero.culture.languages[0] : null}
-						onChange={value => props.selectLanguages(value ? [ value ] : [])}
 					/>
 				</SelectablePanel>
 			);

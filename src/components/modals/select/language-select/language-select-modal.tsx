@@ -1,5 +1,4 @@
 import { Button, Divider, Input, Space } from 'antd';
-import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Language } from '../../../../models/language';
@@ -53,7 +52,7 @@ export const LanguageSelectModal = (props: Props) => {
 										key={n}
 										onSelect={() => props.onSelect(l)}
 									>
-										<HeaderText>{l.name}</HeaderText>
+										<HeaderText tags={[ l.type ]}>{l.name}</HeaderText>
 										<Markdown text={l.description} />
 									</SelectablePanel>
 								))
@@ -71,11 +70,6 @@ export const LanguageSelectModal = (props: Props) => {
 									<Button block={true} disabled={!customLanguage} onClick={() => props.onSelect({ name: customLanguage, description: '', type: LanguageType.Cultural, related: [] })}>Select</Button>
 								</Space>
 							</Expander>
-							{
-								languages.length === 0 ?
-									<Empty />
-									: null
-							}
 						</Space>
 					</div>
 				}

@@ -1,10 +1,11 @@
 import { Button, Drawer, Flex, Radio, Select, Space } from 'antd';
-import { CheckCircleFilled, InfoCircleOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Characteristic } from '../../../../../enums/characteristic';
 import { ClassPanel } from '../../../../panels/elements/class-panel/class-panel';
 import { Collections } from '../../../../../utils/collections';
 import { Element } from '../../../../../models/element';
+import { Empty } from '../../../../controls/empty/empty';
 import { EmptyMessage } from '../empty-message/empty-message';
 import { Expander } from '../../../../controls/expander/expander';
 import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
@@ -23,6 +24,7 @@ import { SelectablePanel } from '../../../../controls/selectable-panel/selectabl
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../../models/subclass';
+import { SubClassSelectModal } from '../../../../modals/select/subclass-select/subclass-select-modal';
 import { SubclassPanel } from '../../../../panels/elements/subclass-panel/subclass-panel';
 import { useMediaQuery } from '../../../../../hooks/use-media-query';
 
@@ -46,13 +48,13 @@ interface Props {
 	setLevel: (level: number) => void;
 	selectPrimaryCharacteristics: (characteristics: Characteristic[]) => void;
 	selectCharacteristics: (array: { characteristic: Characteristic, value: number }[]) => void;
-	selectSubclasses: (subclassIDs: string[]) => void;
+	addSubclass: (subclassID: string) => void;
+	removeSubclass: (subclassID: string) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
 export const ClassSection = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
-
 	const [ array, setArray ] = useState<number[] | null>(() => {
 		let currentArray = null;
 
@@ -69,6 +71,7 @@ export const ClassSection = (props: Props) => {
 		return currentArray;
 	});
 	const [ selectedSubClass, setSelectedSubClass ] = useState<SubClass | null>(null);
+	const [ subclassSelectorOpen, setSubclassSelectorOpen ] = useState<boolean>(false);
 
 	try {
 		const classes = SourcebookLogic.getClasses(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
@@ -190,25 +193,25 @@ export const ClassSection = (props: Props) => {
 				);
 			}
 
-			if (props.hero.class.subclasses.length > 0) {
+			if ((props.hero.class.subclassCount > 0) && (props.hero.class.subclasses.length > 0)) {
+				const getAddButton = () => {
+					if (props.hero.class!.subclasses.filter(sc => !sc.selected).length === 0) {
+						return (
+							<Empty text='There are no options to choose for this feature.' />
+						);
+					}
+
+					return (
+						<Button className='status-warning' block={true} onClick={() => setSubclassSelectorOpen(true)}>
+							Choose a {props.hero.class!.subclassName || 'subclass'}
+						</Button>
+					);
+				};
+
 				level0.choices.push(
 					<SelectablePanel key='subclass'>
 						<HeaderText>{props.hero.class.subclassName}</HeaderText>
 						<div className='ds-text'>Choose {props.hero.class.subclassCount === 1 ? `a ${props.hero.class.subclassName || 'subclass'}` : `${props.hero.class.subclassCount} ${props.hero.class.subclassName || 'subclasse'}s`}.</div>
-						<Select
-							style={{ width: '100%' }}
-							status={props.hero.class.subclasses.filter(sc => sc.selected).length < props.hero.class.subclassCount ? 'warning' : ''}
-							mode={props.hero.class.subclassCount === 1 ? undefined : 'multiple'}
-							maxCount={props.hero.class.subclassCount === 1 ? undefined : props.hero.class.subclassCount}
-							allowClear={true}
-							placeholder='Select'
-							options={props.hero.class.subclasses.map(s => ({ value: s.id, label: s.name, desc: s.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-							showSearch={true}
-							filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
-							value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.id)}
-							onChange={props.selectSubclasses}
-						/>
 						{
 							props.hero.class.subclasses
 								.filter(sc => sc.selected)
@@ -219,16 +222,37 @@ export const ClassSection = (props: Props) => {
 											label={sc.name}
 											value={sc.description}
 										/>
-										<Button
-											style={{ flex: '0 0 auto' }}
-											type='text'
-											title='Select'
-											icon={<InfoCircleOutlined />}
-											onClick={() => setSelectedSubClass(sc)}
-										/>
+										<Flex vertical={true}>
+											<Button
+												style={{ flex: '0 0 auto' }}
+												type='text'
+												title='Select'
+												icon={<InfoCircleOutlined />}
+												onClick={() => setSelectedSubClass(sc)}
+											/>
+											<Button
+												style={{ flex: '0 0 auto' }}
+												type='text'
+												title='Remove'
+												icon={<CloseOutlined />}
+												onClick={() => props.removeSubclass(sc.id)}
+											/>
+										</Flex>
 									</Flex>
 								))
 						}
+						{props.hero.class.subclasses.filter(sc => sc.selected).length < props.hero.class.subclassCount ? getAddButton() : null}
+						<Drawer open={subclassSelectorOpen} onClose={() => setSubclassSelectorOpen(false)} closeIcon={null} width='500px'>
+							<SubClassSelectModal
+								subClasses={props.hero.class.subclasses.filter(sc => !sc.selected)}
+								options={props.options}
+								onSelect={sc => {
+									setSubclassSelectorOpen(false);
+									props.addSubclass(sc.id);
+								}}
+								onClose={() => setSubclassSelectorOpen(false)}
+							/>
+						</Drawer>
 					</SelectablePanel>
 				);
 			}

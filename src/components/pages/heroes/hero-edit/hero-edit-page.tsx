@@ -283,10 +283,19 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setSubclasses = (subclassIDs: string[]) => {
+		const addSubclass = (subclassID: string) => {
 			const heroCopy = Utils.copy(hero);
 			if (heroCopy.class) {
-				heroCopy.class.subclasses.forEach(sc => sc.selected = (subclassIDs || []).includes(sc.id));
+				heroCopy.class.subclasses.filter(sc => sc.id === subclassID).forEach(sc => sc.selected = true);
+			}
+			setHero(heroCopy);
+			setDirty(true);
+		};
+
+		const removeSubclass = (subclassID: string) => {
+			const heroCopy = Utils.copy(hero);
+			if (heroCopy.class) {
+				heroCopy.class.subclasses.filter(sc => sc.id === subclassID).forEach(sc => sc.selected = false);
 			}
 			setHero(heroCopy);
 			setDirty(true);
@@ -523,7 +532,8 @@ export const HeroEditPage = (props: Props) => {
 							setLevel={setLevel}
 							selectPrimaryCharacteristics={setPrimaryCharacteristics}
 							selectCharacteristics={setCharacteristics}
-							selectSubclasses={setSubclasses}
+							addSubclass={addSubclass}
+							removeSubclass={removeSubclass}
 							setFeatureData={setFeatureData}
 						/>
 					);

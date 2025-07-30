@@ -1,5 +1,4 @@
 import { Button, Divider, Input, Space } from 'antd';
-import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
@@ -71,11 +70,6 @@ export const SkillSelectModal = (props: Props) => {
 									<Button block={true} disabled={!customSkill} onClick={() => props.onSelect({ name: customSkill, description: '', list: SkillList.Custom })}>Select</Button>
 								</Space>
 							</Expander>
-							{
-								skills.length === 0 ?
-									<Empty />
-									: null
-							}
 						</Space>
 					</div>
 				}

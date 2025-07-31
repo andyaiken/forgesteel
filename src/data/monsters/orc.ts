@@ -969,7 +969,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 			id: 'orc-15',
 			name: 'Scyza',
 			level: 3,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Troop, MonsterRoleType.Mount),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Mount),
 			keywords: [ 'Animal', 'Orc' ],
 			encounterValue: 20,
 			size: FactoryLogic.createSize(4),

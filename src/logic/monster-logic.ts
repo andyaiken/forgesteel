@@ -360,11 +360,11 @@ export class MonsterLogic {
 		switch (organization) {
 			case MonsterOrganizationType.Minion:
 				return 'Minions are weaker enemies who are made to die fast and threaten heroes en masse.';
-			case MonsterOrganizationType.Band:
+			case MonsterOrganizationType.Horde:
 				return 'Monster bands are hardier and work in smaller groups than minions, but it still takes multiple of these creatures to effectively threaten a single hero of the same level.';
 			case MonsterOrganizationType.Platoon:
 				return 'Monster platoons are highly organized and usually self- sufficient armies.';
-			case MonsterOrganizationType.Troop:
+			case MonsterOrganizationType.Elite:
 				return 'Troops are the functional opposite of minions. A creature under the troop organization is hardy and can usually stand up to two heroes of the same level on their own.';
 			case MonsterOrganizationType.Leader:
 				return 'A leader is a powerful who buffs their allies and grants them extra actions.';

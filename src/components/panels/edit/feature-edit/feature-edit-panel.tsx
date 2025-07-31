@@ -846,7 +846,7 @@ export const FeatureEditPanel = (props: Props) => {
 				name: '',
 				description: '',
 				level: 1,
-				role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Ambusher),
+				role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
 				keywords: [],
 				encounterValue: 0,
 				size: FactoryLogic.createSize(1),

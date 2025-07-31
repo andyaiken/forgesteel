@@ -9,12 +9,12 @@ import { FactoryLogic } from '../../logic/factory-logic';
 export const dragonKnight: Ancestry = {
 	id: 'ancestry-dragon-knight',
 	name: 'Dragon Knight',
-	description: 'The Ritual of Dracogenesis that grants the power to create a generation of dragon knights - also known as draconians or wyrmwights - is obscure and supremely difficult for even an experienced sorcerer to master.',
+	description: 'The ritual of Dracogenesis that grants the power to create a generation of dragon knights—also known as draconians or wyrmwights—is obscure and supremely difficult for even an experienced sorcerer to master. Small populations of draconians in Khemhara, Higara, and Khoursir attest to this. Descendants of original generations created millennia ago by powerful wizards, they have never been numerous. A typical clutch yields only a single egg. After only a few generations, these draconians begin to show new adaptations like feathers or frilled ridges.',
 	features: [
 		FactoryLogic.feature.createChoice({
 			id: 'dragon-knight-feature-1',
 			name: 'Wyrmplate',
-			description: 'Your hardened scales grant you immunity equal to yor level to one of the following damage types: acid, cold, corruption, fire, lightning, or poison. You can change your damage immunity type when you finish a respite.',
+			description: 'Your hardened scales grant you damage immunity equal to your level to one of the following damage types: acid, cold, corruption, fire, lightning, or poison. You can change your damage immunity type when you finish a respite.',
 			options: [
 				{
 					feature: FactoryLogic.feature.createDamageModifier({

@@ -113,7 +113,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-1-feature-1',
 						name: 'Longbow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
@@ -159,7 +159,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-2-feature-1',
 						name: 'Spear',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -204,7 +204,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-3-feature-1',
 						name: 'Daggers',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -248,7 +248,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-4-feature-1',
 						name: 'Heavy Longbow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
@@ -288,7 +288,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-5-feature-1',
 						name: 'Entangling Vines',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
@@ -345,7 +345,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-6-feature-1',
 						name: 'The Forest’s Embrace',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -418,7 +418,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-7-feature-1',
 						name: 'Growing Longsword',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -477,7 +477,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-8-feature-1',
 						name: 'Tracer Longbow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -502,7 +502,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-8-feature-2',
 						name: 'Death Blossom',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
@@ -537,7 +537,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-9-feature-1',
 						name: 'Wild Ax',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -602,7 +602,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-10-feature-1',
 						name: 'Splinter Dagger',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -666,7 +666,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-11-feature-1',
 						name: 'Snare Bow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
@@ -732,7 +732,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-12-feature-1',
 						name: 'Wodeblade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -863,7 +863,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-13-feature-1',
 						name: 'Gore',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -927,7 +927,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-14-feature-1',
 						name: 'Longshot',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
@@ -954,7 +954,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-14-retainer-4',
 						name: 'Snipe',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: '1 creature',
@@ -986,7 +986,7 @@ The wode elves only send their warleader if the situation is dire. If you fight 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-14-retainer-10',
 						name: 'Double Shot',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: '2 creatures or objects',

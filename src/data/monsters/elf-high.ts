@@ -81,7 +81,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			ability: FactoryLogic.createAbility({
 				id: 'elf-high-malice-2',
 				name: 'Gift From an Accursed Tome',
-				type: FactoryLogic.type.createAction({ qualifiers: [ 'Non-minion' ] }),
+				type: FactoryLogic.type.createMain({ qualifiers: [ 'Non-minion' ] }),
 				cost: 5,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 1, within: 1 }) ],
@@ -126,7 +126,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-1-feature-1',
 						name: 'Dweomer Plume',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -167,7 +167,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-2-feature-1',
 						name: 'Bright Bolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
@@ -209,7 +209,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-3-feature-1',
 						name: 'Heavy Arrow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
@@ -251,7 +251,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-4-feature-1',
 						name: 'Heckle',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -287,7 +287,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-5-feature-1',
 						name: 'Wall of Roses',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
@@ -301,7 +301,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-5-feature-2',
 						name: 'Whip Frenzy',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in burst',
@@ -340,7 +340,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-6-feature-1',
 						name: 'Razor\'s Edge',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -395,7 +395,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-7-feature-1',
 						name: 'Heartpiercer',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
@@ -452,7 +452,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-8-feature-1',
 						name: 'Awash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
@@ -471,7 +471,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-8-feature-2',
 						name: 'Aetherweb',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'Two enemies or objects',
@@ -511,7 +511,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-9-feature-1',
 						name: 'Instill Regret',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
@@ -573,7 +573,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-10-feature-1',
 						name: 'Twystrd',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 5 }) ],
@@ -642,7 +642,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-11-feature-1',
 						name: 'Sweeping Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -701,7 +701,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-12-feature-1',
 						name: 'Lightning Rod',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
@@ -836,7 +836,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-13-feature-1',
 						name: 'Elemental Charge',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -855,7 +855,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-13-feature-2',
 						name: 'Stomp',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies in burst',
@@ -909,7 +909,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-14-feature-1',
 						name: 'Summer\'s Bolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -936,7 +936,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-14-retainer-4',
 						name: 'Winter\'s Breath',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						target: 'All enemies',
@@ -955,7 +955,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-14-retainer-7',
 						name: 'Magic Arrows',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All allies',
@@ -968,7 +968,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-14-retainer-10',
 						name: 'Autumn\'s Decay',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						target: 'All enemies',

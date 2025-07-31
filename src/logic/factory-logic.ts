@@ -905,9 +905,9 @@ export class FactoryLogic {
 	};
 
 	static type = {
-		createAction: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
+		createMain: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
 			return {
-				usage: AbilityUsage.Action,
+				usage: AbilityUsage.MainAction,
 				free: options?.free ?? false,
 				trigger: '',
 				time: '',
@@ -1502,7 +1502,7 @@ export class FactoryLogic {
 				id: data.id,
 				name: 'Solo Monster',
 				description: `
-* **Solo Turns** ${capitalizedName} takes up to two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively. ${Format.capitalize(heSheThey)} can use two actions on each of ${hisHerTheir} turns. While dazed, ${data.name} can take one action and one maneuver per turn.
+* **Solo Turns** ${capitalizedName} takes up to two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively. ${Format.capitalize(heSheThey)} can use two main actions on each of ${hisHerTheir} turns. While dazed, ${data.name} can take one action and one maneuver per turn.
 * **End Effect** At the end of ${hisHerTheir} turn, ${data.name} can take ${data.endEfect || 5} damage to end one *save ends* effect affecting ${himHerThem}. This damage can’t be reduced in any way.`,
 				type: FeatureType.Text,
 				data: null

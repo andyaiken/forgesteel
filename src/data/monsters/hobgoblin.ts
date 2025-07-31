@@ -118,7 +118,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-1-2',
 						name: 'Flyby Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object per minion',
@@ -171,7 +171,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-2-2',
 						name: 'Searing Grasp',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object per minion',
@@ -223,7 +223,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-3-2',
 						name: 'Grim Thrust',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(2),
@@ -274,7 +274,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-4-2',
 						name: 'Sword Lunge',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object per minion',
@@ -325,7 +325,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-5-2',
 						name: 'Soul Burn',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '2 creatures or objects',
@@ -388,7 +388,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-6-2',
 						name: 'Blightblade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
@@ -459,7 +459,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-7-2',
 						name: 'Tower Shield Smash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '1 creature or object',
@@ -483,7 +483,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-7-3',
 						name: 'Thunder Rush',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 2, within: 1 }) ],
 						target: 'All enemies or objects',
@@ -535,7 +535,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-8-2',
 						name: 'Flaming Kick',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
@@ -600,7 +600,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-9-2',
 						name: 'Fire Crossbow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',
@@ -620,7 +620,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-9-3',
 						name: 'Fire Ball Volley',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 						target: 'All enemies and objects',
@@ -671,7 +671,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-10-2',
 						name: 'Eye Flash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',
@@ -690,7 +690,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-10-3',
 						name: 'Glare of the Old Judgements',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',
@@ -737,7 +737,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-11-2',
 						name: 'Choking Bolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(4) ],
 						target: '1 creature or object',
@@ -809,7 +809,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-12-2',
 						name: 'Fire Flail',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
@@ -870,7 +870,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-13-2',
 						name: 'Hellfire',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies in the cube',
@@ -890,7 +890,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-13-3',
 						name: 'Enchantments of War',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '2 allies',
@@ -964,7 +964,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-14-2',
 						name: 'Steely Skewer',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: '2 creatures or objects',
@@ -984,7 +984,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-14-3',
 						name: 'Tail Stinger',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(5) ],
 						target: '1 creature or object',
@@ -1064,7 +1064,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-15-2',
 						name: 'Soul Sword',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '2 creatures or objects',
@@ -1199,7 +1199,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-16-2',
 						name: 'Fire Curse',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',
@@ -1219,7 +1219,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-16-3',
 						name: 'Fuel for the Fire',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',
@@ -1239,7 +1239,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-16-retainer-7',
 						name: 'Unholy Attraction',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies',
@@ -1258,7 +1258,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 					ability: FactoryLogic.createAbility({
 						id: 'hobgoblin-16-retainer-10',
 						name: 'Fire Spiral',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies',

@@ -116,7 +116,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-1-feature-1',
 						name: 'Earth Bump',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -158,7 +158,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-2-feature-1',
 						name: 'Lugged Spear',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -200,7 +200,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-3-feature-1',
 						name: 'Explosive Mote',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -240,7 +240,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-4-feature-1',
 						name: 'Call to Victory',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
@@ -284,7 +284,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-5-feature-1',
 						name: 'Boot and Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -325,7 +325,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-6-feature-1',
 						name: 'Shield Bash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -376,7 +376,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-7-feature-1',
 						name: 'Hook and Chain',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
@@ -396,7 +396,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-7-feature-2',
 						name: 'Heavy Crossbolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object',
@@ -446,7 +446,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-8-feature-2',
 						name: 'Elemental Discharge',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -465,7 +465,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-8-feature-3',
 						name: 'Power Burst',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 2, within: 1 }) ],
 						target: 'All enemies in the line',
@@ -505,7 +505,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-9-feature-1',
 						name: 'Dagger Feint',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -525,7 +525,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-9-feature-2',
 						name: 'Strangle',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
@@ -579,7 +579,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-10-feature-1',
 						name: 'Power Chord',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
@@ -601,7 +601,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-10-feature-2',
 						name: 'Cadenza',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
@@ -657,7 +657,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-11-feature-1',
 						name: 'Haymaker Greataxe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -716,7 +716,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-12-feature-1',
 						name: 'My Spear, My Foe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -781,7 +781,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-13-feature-1',
 						name: 'Earth Pillar',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -801,7 +801,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-13-feature-2',
 						name: 'Sinkhole',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
@@ -847,7 +847,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-14-feature-1',
 						name: 'Go.',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
@@ -870,7 +870,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-14-feature-2',
 						name: 'Mace Lariat',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'All enemies',
@@ -983,7 +983,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-15-feature-1',
 						name: 'Clawed Kick',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -1003,7 +1003,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-15-feature-2',
 						name: 'Whiptail',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'One creature or object',
@@ -1022,7 +1022,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-15-feature-3',
 						name: 'Crestfall',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 2 }) ],
@@ -1097,7 +1097,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-16-feature-1',
 						name: 'Notched Axe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -1138,7 +1138,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-16-retainer-7',
 						name: 'Mow \'Em Down',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
@@ -1151,7 +1151,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 					ability: FactoryLogic.createAbility({
 						id: 'orc-16-retainer-10',
 						name: 'Vein Burst',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies',

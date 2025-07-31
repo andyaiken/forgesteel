@@ -56,7 +56,7 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 			ability: FactoryLogic.createAbility({
 				id: 'medusa-malice-1',
 				name: 'Weakening Glare',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: 'One creature',
@@ -75,7 +75,7 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 			ability: FactoryLogic.createAbility({
 				id: 'medusa-malice-2',
 				name: 'Ssstop and Lisssten',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: 'Three creatures',
@@ -136,7 +136,7 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 					ability: FactoryLogic.createAbility({
 						id: 'medusa-feature-3',
 						name: 'Snake Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: '2 creatures or objects',
@@ -155,7 +155,7 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 					ability: FactoryLogic.createAbility({
 						id: 'medusa-feature-4',
 						name: 'Damning Gaze',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '2 creatures or objects',
@@ -178,7 +178,7 @@ They can fire beams from their eyes, allowing them to attack at range as necessa
 					ability: FactoryLogic.createAbility({
 						id: 'medusa-feature-5',
 						name: 'Petrify',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the burst',

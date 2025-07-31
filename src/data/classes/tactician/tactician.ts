@@ -101,7 +101,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 						id: 'tactician-1-6',
 						name: 'Strike Now!',
 						description: 'Your foe left an opening. You point this out to an ally!',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 ally',
@@ -183,7 +183,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			id: 'tactician-ability-2',
 			name: 'Concussive Strike',
 			description: 'Your precise strike leaves your foe struggling to respond.',
-			type: FactoryLogic.type.createAction(),
+			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				FactoryLogic.distance.createMelee(),
@@ -206,7 +206,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			id: 'tactician-ability-3',
 			name: 'Inspiring Strike',
 			description: 'Your attack gives an ally hope.',
-			type: FactoryLogic.type.createAction(),
+			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				FactoryLogic.distance.createMelee(),
@@ -242,7 +242,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			id: 'tactician-ability-5',
 			name: 'Hammer And Anvil',
 			description: '“Let’s not argue about who’s the hammer and who’s the anvil!',
-			type: FactoryLogic.type.createAction(),
+			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				FactoryLogic.distance.createMelee(),
@@ -266,7 +266,7 @@ In addition, you can spend 1 focus to take one of the following free triggered a
 			id: 'tactician-ability-6',
 			name: 'The Mind Game',
 			description: 'Your attack demoralizes your foe. Your allies begin to think you can win.',
-			type: FactoryLogic.type.createAction(),
+			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				FactoryLogic.distance.createMelee(),

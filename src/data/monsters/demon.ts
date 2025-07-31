@@ -107,7 +107,7 @@ The following demons have been identified across categories 1-3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-1-feature-1',
 						name: 'Barbed Tongues',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
@@ -153,7 +153,7 @@ The following demons have been identified across categories 1-3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2-feature-1',
 						name: 'Rip and Tear',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -198,7 +198,7 @@ The following demons have been identified across categories 1-3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-3-feature-1',
 						name: 'Spit',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -247,7 +247,7 @@ The following demons have been identified across categories 1-3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-4-feature-1',
 						name: 'Warp Perception',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -311,7 +311,7 @@ The following demons have been identified across categories 1-3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-5-feature-1',
 						name: 'Barbed Tongues',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -375,7 +375,7 @@ The following demons have been identified across categories 1-3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-6-feature-1',
 						name: 'Abyssal Strike',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -443,7 +443,7 @@ The following demons have been identified across categories 1-3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-7-feature-1',
 						name: 'Bloodletting Claw',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -511,7 +511,7 @@ The following demons have been identified across categories 1-3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-8-feature-1',
 						name: 'Floor to Flesh',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
@@ -574,7 +574,7 @@ The following demons have been identified across categories 1-3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-9-feature-1',
 						name: 'Agonizing Harmony',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],

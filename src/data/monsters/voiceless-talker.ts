@@ -121,7 +121,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-1-feature-1',
 						name: 'Phase Chant',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
@@ -162,7 +162,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-2-feature-1',
 						name: 'Eager Claws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -215,7 +215,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-3-feature-1',
 						name: 'Four-Way Grasp',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -239,7 +239,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-3-feature-2',
 						name: 'Cerebral Suplex',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'All grabbed enemies',
@@ -316,7 +316,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-4-feature-1',
 						name: 'Killer Claws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -336,7 +336,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						id: 'voiceless-talker-4-feature-2',
 						name: 'Concealing Strike',
 						cost: 2,
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Two creatures',
@@ -415,7 +415,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-5-feature-1',
 						name: 'Psionic Rifle Burst',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -440,7 +440,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-5-feature-2',
 						name: 'Mind Jolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 10, within: 10 }) ],
 						target: 'All enemies',
@@ -515,7 +515,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-6-feature-1',
 						name: 'Tentacle',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -535,7 +535,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						id: 'voiceless-talker-6-feature-2',
 						name: 'Psionic Boom',
 						cost: 3,
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
@@ -614,7 +614,7 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-7-feature-1',
 						name: 'Psionic Intrusion',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [

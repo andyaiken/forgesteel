@@ -107,7 +107,7 @@ export const virtuoso: SubClass = {
 									id: 'troubadour-sub-3-2-1a',
 									name: 'Encore',
 									description: 'Again! Again!',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike ],
 									distance: [ FactoryLogic.distance.createSpecial('Special') ],
 									target: 'Special',

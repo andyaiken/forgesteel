@@ -430,7 +430,7 @@ export const polderShadow = {
 													name: 'Fade',
 													description: 'A stab, and a few quick, careful steps back.',
 													type: {
-														usage: 'Action',
+														usage: 'Main Action',
 														free: false,
 														trigger: '',
 														time: '',
@@ -620,7 +620,7 @@ export const polderShadow = {
 				name: 'Gasping in Pain',
 				description: 'Your precise strikes let your allies take advantage of a target’s agony.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -667,7 +667,7 @@ export const polderShadow = {
 				name: 'I Work Better Alone',
 				description: 'It’s better, just you and me. Isn’t it?',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -723,7 +723,7 @@ export const polderShadow = {
 				name: 'Teamwork Has Its Place',
 				description: 'You attack an enemy, distracting them long enough for an ally to stab them.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -779,7 +779,7 @@ export const polderShadow = {
 				name: 'You Were Watching The Wrong One',
 				description: 'They can’t watch both of you at once.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -826,7 +826,7 @@ export const polderShadow = {
 				name: 'Disorienting Strike',
 				description: 'Your attack leaves them reeling, allowing you to follow up.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -873,7 +873,7 @@ export const polderShadow = {
 				name: 'Eviscerate',
 				description: 'You leave your foe bleeding out after a devastating attack.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -929,7 +929,7 @@ export const polderShadow = {
 				name: 'Get In Get Out',
 				description: 'Move unexpectedly, strike fast, and be gone!',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -976,7 +976,7 @@ export const polderShadow = {
 				name: 'Two Throats At Once',
 				description: 'A bargain.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1032,7 +1032,7 @@ export const polderShadow = {
 				name: 'Coup de Grâce',
 				description: 'Your blade might be the last thing they see.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1088,7 +1088,7 @@ export const polderShadow = {
 				name: 'One Hundred Throats',
 				description: 'As you move across the battlefield, every foe within reach feels your wrath.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1135,7 +1135,7 @@ export const polderShadow = {
 				name: 'Set-Up',
 				description: 'Your friends will thank you.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1182,7 +1182,7 @@ export const polderShadow = {
 				name: 'Shadowstrike',
 				description: 'They have no idea what the college taught you.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1256,7 +1256,7 @@ export const polderShadow = {
 				name: 'Misdirecting Strike',
 				description: 'Why are you looking at ME?!',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1312,7 +1312,7 @@ export const polderShadow = {
 				name: 'Pinning Shot',
 				description: 'One missile - placed well and placed hard.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1359,7 +1359,7 @@ export const polderShadow = {
 				name: 'Staggering Blow',
 				description: 'There’s no recovering from this.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1564,7 +1564,7 @@ export const polderShadow = {
 														name: 'In a Puff of Ash',
 														description: 'You enchant a strike with your teleportation magic.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -1847,7 +1847,7 @@ export const polderShadow = {
 														name: 'Sticky Bomb',
 														description: 'Explosives are best when they’re attached to an enemy.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -1903,7 +1903,7 @@ export const polderShadow = {
 														name: 'Stink Bomb',
 														description: 'Yellow, disgusting gas explodes from a bomb you toss.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',

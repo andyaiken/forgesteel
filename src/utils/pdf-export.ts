@@ -423,7 +423,7 @@ export class PDFExport {
 						texts[prefix + 'Tag' + i] = a.type.free ? 'FT' : 'T';
 					} else if (a.type.usage === AbilityUsage.Maneuver) {
 						texts[prefix + 'Tag' + i] = a.type.free ? 'FM' : 'M';
-					} else if (a.type.usage === AbilityUsage.Action) {
+					} else if (a.type.usage === AbilityUsage.MainAction) {
 						texts[prefix + 'Tag' + i] = a.type.free ? 'FA' : 'A';
 					} else if (a.type.usage === AbilityUsage.FreeStrike) {
 						texts[prefix + 'Tag' + i] = 'FS';
@@ -433,7 +433,7 @@ export class PDFExport {
 			const abilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 			abilities.push(AbilityData.freeStrikeMelee);
 			abilities.push(AbilityData.freeStrikeRanged);
-			texts['RegularActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Action).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
+			texts['RegularActions'] = abilities.filter(a => a.type.usage === AbilityUsage.MainAction).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
 			texts['Maneuvers'] = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
 			texts['TriggeredActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Trigger).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
 

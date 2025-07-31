@@ -194,7 +194,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-ambusher-4',
 							name: 'Go for the Jugular',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature',
@@ -213,7 +213,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-ambusher-7',
 							name: 'Hamstring Slice',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [
 								FactoryLogic.distance.createMelee(),
@@ -235,7 +235,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-ambusher-10',
 							name: '',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [
 								FactoryLogic.distance.createMelee(),
@@ -273,7 +273,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-artillery-7',
 							name: 'Line ‘Em Up',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
 							target: 'All enemies',
@@ -291,7 +291,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-artillery-10',
 							name: 'Ricochet Shot',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: '1 creature or object',
@@ -326,7 +326,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-brute-7',
 							name: 'Overhand Swat',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature',
@@ -345,7 +345,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-brute-10',
 							name: 'Dizzying Sweep',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 							target: 'All creatures',
@@ -367,7 +367,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-controller-4',
 							name: 'Fire Blast',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Area ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 							target: 'All creatures',
@@ -386,7 +386,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-controller-7',
 							name: 'Oil Slick',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 							target: 'All enemies',
@@ -405,7 +405,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-controller-10',
 							name: 'Shattering Shards',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'One M or smaller object',
@@ -440,7 +440,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-defender-7',
 							name: 'It’s Me You Want!',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '2 creatures',
@@ -458,7 +458,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-defender-10',
 							name: 'Last Stand',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature',
@@ -480,7 +480,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-harrier-4',
 							name: 'Knock Back',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature',
@@ -498,7 +498,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-harrier-7',
 							name: 'Meet You There',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature',
@@ -517,7 +517,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-harrier-10',
 							name: 'Nab and Stab',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 							target: 'All creatures',
@@ -539,7 +539,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-hexer-4',
 							name: 'Backfire Curse',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 enemy',
@@ -558,7 +558,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-hexer-7',
 							name: 'Take Root',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature',
@@ -577,7 +577,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-hexer-10',
 							name: 'Mazed',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: '1 creature',
@@ -599,7 +599,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-mount-4',
 							name: 'Cavalry Charge',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 creature',
@@ -631,7 +631,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-mount-10',
 							name: 'Rearing Trample',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 							target: 'All enemies',
@@ -666,7 +666,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-support-7',
 							name: 'Focus Fire',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: '1 creature',
@@ -685,7 +685,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-support-10',
 							name: 'Back from the Dead',
-							type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee ],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: '1 ally',

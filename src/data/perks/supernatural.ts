@@ -15,9 +15,9 @@ export class SupernaturalPerkData {
 				id: 'perk-arcane-trick-1',
 				name: 'Arcane Trick',
 				description: 'You cast an entertaining spell that creates a minor but impressive magical effect.',
-				type: FactoryLogic.type.createAction(),
-				keywords: [AbilityKeyword.Magic],
-				distance: [FactoryLogic.distance.createSelf()],
+				type: FactoryLogic.type.createMain(),
+				keywords: [ AbilityKeyword.Magic ],
+				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText(`
@@ -48,7 +48,7 @@ Choose one of the following effects:
 				description: 'You intuit a creature\'s keywords.',
 				type: FactoryLogic.type.createManeuver(),
 				keywords: [],
-				distance: [FactoryLogic.distance.createSelf()],
+				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('Choose a creature within 10 squares. If that creature is your level or lower, you learn the keywords in their stat block (Demon, Humanoid, Undead, and so forth)')
@@ -88,8 +88,8 @@ The spirit uses the familiar stat block.
 				name: 'Invisible Force',
 				description: 'You manipulate a tiny object with your mind.',
 				type: FactoryLogic.type.createManeuver(),
-				keywords: [AbilityKeyword.Psionic, AbilityKeyword.Ranged],
-				distance: [FactoryLogic.distance.createRanged(10)],
+				keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
+				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: '1 size 1T unattended object',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You can grab or manipulate the target object with your mind, moving the object up to a number of squares equal to your Reason, Intuition, or Presence score (your choice). You can use this ability to turn doorknobs, pull levers, and so forth. You can manipulate any small movable piece of a larger object as long as the piece is unattended and size 1T. You can’t use this ability to break a smaller piece off a larger object.')
@@ -110,8 +110,8 @@ The spirit uses the familiar stat block.
 				name: 'Psychic Whisper',
 				description: 'You send a one-way telepathic message to a friend.',
 				type: FactoryLogic.type.createManeuver(),
-				keywords: [AbilityKeyword.Psionic, AbilityKeyword.Ranged],
-				distance: [FactoryLogic.distance.createRanged(10)],
+				keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
+				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: '1 ally who understands at least one language',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You send a telepathic message to them that takes 10 seconds or less to speak. The target knows who the message is from and can decide to ignore it and subsequent messages.')

@@ -99,7 +99,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-1-feature-1',
 						name: 'Hasta',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -142,7 +142,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-2-feature-1',
 						name: 'Composite Bow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -185,7 +185,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-3-feature-1',
 						name: 'Pugio',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -228,7 +228,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-1-feature-1',
 						name: 'Hasta',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -273,7 +273,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-5-feature-1',
 						name: 'Shocking Bolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
@@ -335,7 +335,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-6-feature-1',
 						name: 'Chain Hook',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
@@ -394,7 +394,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-7-feature-1',
 						name: 'Gladius',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -459,7 +459,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-8-feature-1',
 						name: 'Signum',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -526,7 +526,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-9-feature-1',
 						name: 'Dolobra & Net',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -582,7 +582,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-shieldscale-drangolin-feature-1',
 						name: 'Fiery Claws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -601,7 +601,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-shieldscale-drangolin-feature-2',
 						name: 'Drangolin Plume',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 5,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
@@ -614,7 +614,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-shieldscale-drangolin-feature-3',
 						name: 'Erupt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2, qualifier: 'while burrowing' }) ],
@@ -656,7 +656,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-trained-gelatinous-cube-feature-1',
 						name: 'Engulf',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -715,7 +715,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-10-feature-1',
 						name: 'Pilum',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -839,7 +839,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-11-feature-1',
 						name: 'Gladius',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -881,7 +881,7 @@ Kobold legionaries may join worthy adventurers as retainers, lending their defen
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-11-retainer-7',
 						name: 'Living Backpack',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The shieldbearer’s mentor',
@@ -897,7 +897,7 @@ While the shieldbearer is clinging to their mentor, both the shieldbearer and th
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-11-retainer-10',
 						name: 'Let\'s Go Sledding',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '3 creatures',

@@ -95,7 +95,7 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 					ability: FactoryLogic.createAbility({
 						id: 'bredbeddle-feature-4',
 						name: 'Executioner\'s Swing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in the burst',
@@ -119,7 +119,7 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 					ability: FactoryLogic.createAbility({
 						id: 'bredbeddle-feature-5',
 						name: 'Lop',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature',

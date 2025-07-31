@@ -26,7 +26,7 @@ export const stickAndRobe: Kit = {
 				id: 'kit-stick-and-robe-signature',
 				name: 'Where I Want You',
 				description: 'When your stick speaks, your enemy moves.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature',

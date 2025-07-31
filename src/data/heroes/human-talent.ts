@@ -433,7 +433,7 @@ export const humanTalent = {
 								name: 'Mind Spike',
 								description: 'A telepathic bolt instantly zaps a creature’s brain.',
 								type: {
-									usage: 'Action',
+									usage: 'Main Action',
 									free: false,
 									trigger: '',
 									time: '',
@@ -910,7 +910,7 @@ export const humanTalent = {
 				name: 'Entropic Bolt',
 				description: 'You advance an enemy’s age for a moment.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -958,7 +958,7 @@ export const humanTalent = {
 				name: 'Incinerate',
 				description: 'The air erupts into a column of smokeless flame.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1006,7 +1006,7 @@ export const humanTalent = {
 				name: 'Hoarfrost',
 				description: 'A row of the terrain freezes over ahead of you, turning hard and slick.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1054,7 +1054,7 @@ export const humanTalent = {
 				name: 'Kinetic Grip',
 				description: 'You lift and hurl your foe away from you.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1101,7 +1101,7 @@ export const humanTalent = {
 				name: 'Kinetic Pulse',
 				description: 'The force of your mind hurls enemies backward.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1148,7 +1148,7 @@ export const humanTalent = {
 				name: 'Materialize',
 				description: 'You picture an object in your mind and give it form in the world, directly above your opponent’s head.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1196,7 +1196,7 @@ export const humanTalent = {
 				name: 'Optic Blast',
 				description: 'Your eyes emit rays of powerful enervating force.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1244,7 +1244,7 @@ export const humanTalent = {
 				name: 'Spirit Sword',
 				description: 'You form a blade of mind energy and stab your target, invigorating yourself.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1292,7 +1292,7 @@ export const humanTalent = {
 				name: 'Awe',
 				description: 'You project psionic energy out to a creature and take on a new visage in their mind.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1340,7 +1340,7 @@ export const humanTalent = {
 				name: 'Nothing Exceeds My Grasp',
 				description: 'Be careful not to choke on your aspirations.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1388,7 +1388,7 @@ export const humanTalent = {
 				name: 'Precognition',
 				description: 'You give a target a glimpse into the future so that they’re ready for what comes next.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1427,7 +1427,7 @@ export const humanTalent = {
 				name: 'Smolder',
 				description: 'Smoke flows from your enemy like tears as their skin begins to blacken and flake.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1631,7 +1631,7 @@ export const humanTalent = {
 				name: 'Fling Through Time',
 				description: 'You hurl the target through the annals of time, forcing them to witness every moment of their existence all at once.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1679,7 +1679,7 @@ export const humanTalent = {
 				name: 'Force Orb',
 				description: 'Three spheres of solid psionic energy float around you.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1727,7 +1727,7 @@ export const humanTalent = {
 				name: 'Reflector Field',
 				description: 'A protective field reverses the momentum of incoming attacks.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1766,7 +1766,7 @@ export const humanTalent = {
 				name: 'Soul Burn',
 				description: 'You blast their soul out of their body, leaving it to helplessly float back to a weakened husk.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -2246,7 +2246,7 @@ export const humanTalent = {
 														name: 'Gravitic Burst',
 														description: 'Everyone get away from me!',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -2304,7 +2304,7 @@ export const humanTalent = {
 														name: 'Levity and Gravity',
 														description: 'You raise the target into the air, then smother them against the ground.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -2503,7 +2503,7 @@ export const humanTalent = {
 														name: 'Overwhelm',
 														description: 'You overload their senses, turning all their subconscious thoughts into conscious ones.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -2562,7 +2562,7 @@ export const humanTalent = {
 														name: 'Synaptic Override',
 														description: 'You gain control over an enemy’s nervous system. How pleasant for them.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',

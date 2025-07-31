@@ -23,7 +23,7 @@ export const fire: SubClass = {
 						id: 'elementalist-sub-2-1-2',
 						name: 'Return to Formlessness',
 						description: 'With the merest touch, you cause an object to turn into slag or ash.',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 mundane object',

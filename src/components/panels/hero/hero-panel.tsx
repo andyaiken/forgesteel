@@ -1016,7 +1016,7 @@ export const HeroPanel = (props: Props) => {
 
 		const getTabs = () => {
 			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
-			const actions = abilities.filter(a => a.ability.type.usage === AbilityUsage.Action);
+			const mains = abilities.filter(a => a.ability.type.usage === AbilityUsage.MainAction);
 			const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
 			const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);
 			const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
@@ -1030,17 +1030,17 @@ export const HeroPanel = (props: Props) => {
 					tabs.push('Abilities');
 				}
 			} else {
-				if (actions.length > 0) {
-					tabs.push('Actions');
+				if (mains.length > 0) {
+					tabs.push('Mains');
 				}
 				if (maneuvers.length > 0) {
 					tabs.push('Maneuvers');
 				}
-				if (triggers.length > 0) {
-					tabs.push('Triggers');
-				}
 				if (moves.length > 0) {
 					tabs.push('Moves');
+				}
+				if (triggers.length > 0) {
+					tabs.push('Triggers');
 				}
 				if (others.length > 0) {
 					tabs.push('Others');
@@ -1053,7 +1053,7 @@ export const HeroPanel = (props: Props) => {
 
 		const getContent = (tab: string) => {
 			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
-			const actions = abilities.filter(a => a.ability.type.usage === AbilityUsage.Action);
+			const mains = abilities.filter(a => a.ability.type.usage === AbilityUsage.MainAction);
 			const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
 			const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);
 			const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
@@ -1074,10 +1074,10 @@ export const HeroPanel = (props: Props) => {
 				case 'Abilities':
 					return (
 						<>
-							{getAbilitiesSection('Actions', actions)}
+							{getAbilitiesSection('Main Actions', mains)}
 							{getAbilitiesSection('Maneuvers', maneuvers)}
-							{getAbilitiesSection('Triggered Actions', triggers)}
 							{getAbilitiesSection('Move Actions', moves)}
+							{getAbilitiesSection('Triggered Actions', triggers)}
 							{getAbilitiesSection('Other Abilities', others)}
 							{getAbilitiesSection('Free Strikes', [
 								{ ability: AbilityData.freeStrikeMelee, source: 'Standard' },
@@ -1085,14 +1085,14 @@ export const HeroPanel = (props: Props) => {
 							])}
 						</>
 					);
-				case 'Actions':
-					return getAbilitiesSection('Actions', actions);
+				case 'Mains':
+					return getAbilitiesSection('Main Actions', mains);
 				case 'Maneuvers':
 					return getAbilitiesSection('Maneuvers', maneuvers);
-				case 'Triggers':
-					return getAbilitiesSection('Triggered Actions', triggers);
 				case 'Moves':
 					return getAbilitiesSection('Move Actions', moves);
+				case 'Triggers':
+					return getAbilitiesSection('Triggered Actions', triggers);
 				case 'Others':
 					return getAbilitiesSection('Other Abilities', others);
 				case 'Free Strikes':

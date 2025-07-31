@@ -87,7 +87,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-1-feature-2',
 						name: 'Bone Carvers',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -138,7 +138,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-2-feature-2',
 						name: 'Taste',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -194,7 +194,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-3-feature-2',
 						name: 'Hollowbone Sling',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -243,7 +243,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-4-feature-2',
 						name: 'Multiarm Strike',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -270,7 +270,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-4-feature-3',
 						name: 'Horrid Wail',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',
@@ -324,7 +324,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-5-feature-2',
 						name: 'Rotten Smash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
@@ -392,7 +392,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-6-feature-2',
 						name: 'Accursed Bindings',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
@@ -414,7 +414,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-6-feature-3',
 						name: 'Eldritch Curse',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -473,7 +473,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-7-feature-2',
 						name: 'Exsanguinating Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -541,7 +541,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-8-feature-2',
 						name: 'Chilling Gravetouch',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -619,7 +619,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-9-feature-2',
 						name: 'Accursed Slam',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -641,7 +641,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-9-feature-3',
 						name: 'Binding Curse',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						cost: 1,

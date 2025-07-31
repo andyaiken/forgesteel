@@ -108,7 +108,7 @@ When such an understanding is not reached, gloom dragons are feared for their co
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-gloom-feature-4',
 						name: 'Breath of Brume',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 						target: 'All enemies',
@@ -139,7 +139,7 @@ When such an understanding is not reached, gloom dragons are feared for their co
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-gloom-feature-5',
 						name: 'Phantom Tail Swing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two enemies or objects',

@@ -48,7 +48,7 @@ export const exorcist: SubClass = {
 									id: 'censor-sub-1-2-3a',
 									name: 'It Is Justice You Fear',
 									description: 'I am but a vessel. Your own deeds weigh upon you.',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: '1 creature',

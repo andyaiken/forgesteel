@@ -111,7 +111,7 @@ export const olothec: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'olothec-feature-3',
 						name: 'Devolving Tentacle',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: '2 creatures or objects',
@@ -131,7 +131,7 @@ export const olothec: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'olothec-feature-4',
 						name: 'Slime Spew',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 7, value2: 2, within: 1 }) ],
 						target: 'All creatures and objects',
@@ -155,7 +155,7 @@ export const olothec: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'olothec-feature-5',
 						name: 'Oozing Transformation',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',

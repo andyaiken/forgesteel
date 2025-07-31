@@ -25,7 +25,7 @@ export const boren: Kit = {
 				id: 'kit-boren-signature',
 				name: 'Bear Claws',
 				description: 'Attacks with your sharp and deadly claws send your foes staggering back.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature or object',

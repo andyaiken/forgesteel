@@ -55,7 +55,7 @@ export const wodeElf: Ancestry = {
 							id: 'wode-elf-feature-2-5',
 							name: 'The Wode Defends',
 							description: 'Thorny vines erupt into existence and attempt to bind your foe.',
-							type: FactoryLogic.type.createAction(),
+							type: FactoryLogic.type.createMain(),
 							keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 							distance: [ FactoryLogic.distance.createRanged(10) ],
 							target: 'One creature',

@@ -337,7 +337,7 @@ export const polderElementalist = {
 								name: 'Hurl Element',
 								description: 'You hurl a ball of elemental energy at an unsuspecting foe.',
 								type: {
-									usage: 'Action',
+									usage: 'Main Action',
 									free: false,
 									trigger: '',
 									time: '',
@@ -913,7 +913,7 @@ export const polderElementalist = {
 				name: 'Afflict a Bountiful Decay',
 				description: 'Your curse causes a foe’s flesh to rot off as spores that aid your allies.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -962,7 +962,7 @@ export const polderElementalist = {
 				name: 'Bifurcated Conflagration',
 				description: 'Two jets of flame lance out at your command.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1010,7 +1010,7 @@ export const polderElementalist = {
 				name: 'Grasp of Beyond',
 				description: 'You absorb the life energy of another creature and use it to teleport.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1058,7 +1058,7 @@ export const polderElementalist = {
 				name: 'The Green Within, The Green Without',
 				description: 'Whipping vines erupt from a foe’s body to grasp at another close by.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1106,7 +1106,7 @@ export const polderElementalist = {
 				name: 'A Meteoric Introduction',
 				description: 'You give your enemy a gentle tap like an asteroid impact.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1154,7 +1154,7 @@ export const polderElementalist = {
 				name: 'Ray of Agonizing Self Reflection',
 				description: 'You inflict pain and doubt in equal measure.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1202,7 +1202,7 @@ export const polderElementalist = {
 				name: 'Unquiet Ground',
 				description: 'A sudden storm of detritus assaults your foes and leaves them struggling to move.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1250,7 +1250,7 @@ export const polderElementalist = {
 				name: 'Viscous Fire',
 				description: 'A jet of heavy fire erupts with elemental fury where it strikes.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1298,7 +1298,7 @@ export const polderElementalist = {
 				name: 'Behold the Mystery',
 				description: 'You open a rift into the void to harry your foes.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1351,7 +1351,7 @@ export const polderElementalist = {
 				name: 'The Flesh, a Crucible',
 				description: 'Fire engulfs a target of your choice and burns at your command.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1404,7 +1404,7 @@ export const polderElementalist = {
 				name: 'Invigorating Growth',
 				description: 'Mushrooms erupt from a foe, sapping their vitality to spread strengthening spores.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1452,7 +1452,7 @@ export const polderElementalist = {
 				name: 'Ripples in the Earth',
 				description: 'Like a stone dropped into a pond, waves in the earth radiate from you.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1499,7 +1499,7 @@ export const polderElementalist = {
 				name: 'Conflagration',
 				description: 'A storm of fire descends upon your enemies.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1648,7 +1648,7 @@ export const polderElementalist = {
 				name: 'Test of Rain',
 				description: 'You call down a rain that burns your enemies and restores your allies.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1742,7 +1742,7 @@ export const polderElementalist = {
 				name: 'Subvert the Green Within',
 				description: 'Burrow into their brains and take control!',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1791,7 +1791,7 @@ export const polderElementalist = {
 				name: 'Translated Through Flame',
 				description: 'Your ally disappears, then reappears in a burst of fire!',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1839,7 +1839,7 @@ export const polderElementalist = {
 				name: 'Volcano\'s Embrace',
 				description: 'Wrap them up in fire and melting stone.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1888,7 +1888,7 @@ export const polderElementalist = {
 				name: 'Erase',
 				description: 'With a flick of the wrist, you phase creatures out of existence.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1936,7 +1936,7 @@ export const polderElementalist = {
 				name: 'Maw of Earth',
 				description: 'You open up the ground, unleashing a shower of stone and debris.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1984,7 +1984,7 @@ export const polderElementalist = {
 				name: 'Swarm of Spirits',
 				description: 'Guardian animal spirits surround you to harry your foes and bolster your allies.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -2104,7 +2104,7 @@ export const polderElementalist = {
 										name: 'Motivate Earth',
 										description: 'The earth rises, falls, or opens up at your command.',
 										type: {
-											usage: 'Action',
+											usage: 'Main Action',
 											free: false,
 											trigger: '',
 											time: '',
@@ -2229,7 +2229,7 @@ export const polderElementalist = {
 										name: 'The Earth Accepts Me',
 										description: 'You can slip into the stone.',
 										type: {
-											usage: 'Action',
+											usage: 'Main Action',
 											free: false,
 											trigger: '',
 											time: '',
@@ -2306,7 +2306,7 @@ export const polderElementalist = {
 										name: 'Return to Formlessness',
 										description: 'With the merest touch, you cause an object to turn into slag or ash.',
 										type: {
-											usage: 'Action',
+											usage: 'Main Action',
 											free: false,
 											trigger: '',
 											time: '',
@@ -2529,7 +2529,7 @@ export const polderElementalist = {
 										name: 'Remember Growth and Sun and Rain',
 										description: 'You stir any wood’s memory and learn what it has seen.',
 										type: {
-											usage: 'Action',
+											usage: 'Main Action',
 											free: false,
 											trigger: '',
 											time: '',
@@ -2885,7 +2885,7 @@ export const polderElementalist = {
 									name: 'Arcane Trick',
 									description: 'You cast an entertaining spell that creates a minor but impressive magical effect.',
 									type: {
-										usage: 'Action',
+										usage: 'Main Action',
 										free: false,
 										trigger: '',
 										time: '',

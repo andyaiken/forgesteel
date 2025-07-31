@@ -26,7 +26,7 @@ export const dualWielder: Kit = {
 				id: 'kit-dual-wielder-signature',
 				name: 'Double Strike',
 				description: 'Why strike once when you could do it twice?',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '2 creatures or objects',

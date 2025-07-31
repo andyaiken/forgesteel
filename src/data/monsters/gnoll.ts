@@ -108,7 +108,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-1-feature-1',
 						name: 'Snapjaw',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
@@ -149,7 +149,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-2-feature-1',
 						name: 'Chain Shotput',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
@@ -190,7 +190,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-3-feature-1',
 						name: 'Wizard Ripper',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -231,7 +231,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-4-feature-1',
 						name: 'Flail',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -271,7 +271,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-5-feature-1',
 						name: 'Dark Longbow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -334,7 +334,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-6-feature-1',
 						name: 'Flame Wad',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
@@ -403,7 +403,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-7-feature-1',
 						name: 'Three-Tail Flail',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -461,7 +461,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-8-feature-1',
 						name: 'Moment of Brutality',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
@@ -525,7 +525,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-9-feature-1',
 						name: 'Fury Flail',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -588,7 +588,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-10-feature-1',
 						name: 'Gore',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -647,7 +647,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-11-feature-1',
 						name: 'Shrapnel Whip',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
@@ -760,7 +760,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-12-feature-1',
 						name: 'Gnash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -799,7 +799,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-12-retainer-4',
 						name: 'Flurry of Fangs',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '3 creatures or objects',
@@ -817,7 +817,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-12-retainer-5',
 						name: 'Horrific Feast',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self',

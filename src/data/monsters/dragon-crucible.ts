@@ -116,7 +116,7 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-crucible-feature-4',
 						name: 'Slag Spew',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 2, within: 1 }) ],
 						target: 'All creatures and objects',
@@ -139,7 +139,7 @@ The most notorious of these attacks was made by Nuvithiabalca the Hammer of the 
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-crucible-feature-5',
 						name: 'Forge Hammer Tail Slam',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two creatures or objects',

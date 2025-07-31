@@ -85,7 +85,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 					ability: FactoryLogic.createAbility({
 						id: 'ankheg-1-feature-2',
 						name: 'Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
@@ -105,7 +105,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 					ability: FactoryLogic.createAbility({
 						id: 'ankheg-1-feature-3',
 						name: 'Claws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
@@ -129,7 +129,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 					ability: FactoryLogic.createAbility({
 						id: 'ankheg-1-feature-4',
 						name: 'Spitfire',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 5 }) ],
 						target: 'One creature or object',
@@ -148,7 +148,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 					ability:FactoryLogic.createAbility({
 						id: 'ankheg-1-feature-5',
 						name: 'Earth Eruption',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
 						target: 'Each enemy in the burst',

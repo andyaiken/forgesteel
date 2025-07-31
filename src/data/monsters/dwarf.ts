@@ -124,7 +124,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-1-feature-1',
 						name: 'Whistling Axes',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -164,7 +164,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-2-feature-1',
 						name: 'Maul',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -201,7 +201,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-3-feature-1',
 						name: 'Snaring Javelin',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
@@ -237,7 +237,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-4-feature-1',
 						name: 'Concussive Grenade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
@@ -257,7 +257,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-4-feature-2',
 						name: 'Sleep Grenade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
@@ -298,7 +298,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-5-feature-1',
 						name: 'Portable Ballista',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -358,7 +358,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-6-feature-1',
 						name: 'Snaring Crossbow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -413,7 +413,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-7-feature-1',
 						name: 'Wide Axe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -471,7 +471,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-8-feature-1',
 						name: 'Tile Slide',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
@@ -532,7 +532,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-9-feature-1',
 						name: 'Concussive Bolts',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -592,7 +592,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-10-feature-1',
 						name: 'Concussive Maul',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -653,7 +653,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-11-feature-1',
 						name: 'Levitating Axes',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -775,7 +775,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-12-feature-1',
 						name: 'Grasping Claws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -840,7 +840,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-13-feature-1',
 						name: 'Armor-Piercing Shell',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
@@ -867,7 +867,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-13-retainer-4',
 						name: 'Signal Shell',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSpecial('See below') ],
 						target: 'All enemies',
@@ -886,7 +886,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-13-retainer-7',
 						name: 'Screaming Shell',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
 						target: 'All creatures',
@@ -905,7 +905,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-13-retainer-10',
 						name: 'Pacifier Shell',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 15 }) ],
 						target: 'All enemies',

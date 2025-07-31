@@ -25,7 +25,7 @@ export const pugilist: Kit = {
 				id: 'kit-pugilist-signature',
 				name: 'Let’s Dance',
 				description: 'Keeping your enemies stumbling around the battlefield is second nature to you.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature',

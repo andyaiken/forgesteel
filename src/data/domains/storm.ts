@@ -45,7 +45,7 @@ Choose one of the following types of weather, each of which grants a benefit to 
 						id: 'domain-storm-2',
 						name: 'Saint’s Tempest',
 						description: 'A raging storm appears, striking your foes with lightning and throwing them around with wind.',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'Each enemy in the area',

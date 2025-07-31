@@ -303,7 +303,7 @@ export const orcConduit = {
 															name: 'Wellspring of Grace',
 															description: 'A holy light is emitted from your body, healing your allies.',
 															type: {
-																usage: 'Action',
+																usage: 'Main Action',
 																free: false,
 																trigger: '',
 																time: '',
@@ -402,7 +402,7 @@ export const orcConduit = {
 															name: 'Morning Light',
 															description: 'Light shines at your command, burning your foes and blessing your allies.',
 															type: {
-																usage: 'Action',
+																usage: 'Main Action',
 																free: false,
 																trigger: '',
 																time: '',
@@ -573,7 +573,7 @@ export const orcConduit = {
 								name: 'Ray of Wrath',
 								description: 'You unleash a blast of holy light upon your foe.',
 								type: {
-									usage: 'Action',
+									usage: 'Main Action',
 									free: false,
 									trigger: '',
 									time: '',
@@ -1168,7 +1168,7 @@ export const orcConduit = {
 				name: 'Blessed Light',
 				description: 'Burning radiance falls upon your foe, transferring some of their energy to a nearby ally.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1215,7 +1215,7 @@ export const orcConduit = {
 				name: 'Drain',
 				description: 'You drain the energy from your target and revitalize yourself or an ally.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1262,7 +1262,7 @@ export const orcConduit = {
 				name: 'Holy Lash',
 				description: 'A tendril of divine energy shoots forth to draw in your foe.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1309,7 +1309,7 @@ export const orcConduit = {
 				name: 'Lightfall',
 				description: 'A rain of holy light scours your enemies and repositions your allies.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1355,7 +1355,7 @@ export const orcConduit = {
 				name: 'Sacrificial Offer',
 				description: 'Divine magic tears at your foe and defends a nearby friend.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1402,7 +1402,7 @@ export const orcConduit = {
 				name: 'Staggering Curse',
 				description: 'A blast of judgment disorients your foe.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1449,7 +1449,7 @@ export const orcConduit = {
 				name: 'Warrior\'s Prayer',
 				description: 'Your quickly uttered prayer lends aggressive divine energy to a friend engaged in melee.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1496,7 +1496,7 @@ export const orcConduit = {
 				name: 'Wither',
 				description: 'A bolt of holy energy saps the life from a foe.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1543,7 +1543,7 @@ export const orcConduit = {
 				name: 'Call the Thunder Down',
 				description: 'You ask your saint for thunder and your prayer is answered.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1590,7 +1590,7 @@ export const orcConduit = {
 				name: 'Font of Wrath',
 				description: 'A brilliant column of holy light appears on the battlefield, striking out at nearby enemies.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1628,7 +1628,7 @@ export const orcConduit = {
 				name: 'Judgment\'s Hammer',
 				description: 'Your divine fury is a hammer that crashes down upon the unrighteous.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1675,7 +1675,7 @@ export const orcConduit = {
 				name: 'Violence Will Not Aid Thee',
 				description: 'After some holy lightning, your enemy will think twice about their next attack.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1722,7 +1722,7 @@ export const orcConduit = {
 				name: 'Corruption\'s Curse',
 				description: 'Cursed by you, your enemy takes more damage from your allies.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1769,7 +1769,7 @@ export const orcConduit = {
 				name: 'Curse of Terror',
 				description: 'Fear of divine judgment overwhelms your foe.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1862,7 +1862,7 @@ export const orcConduit = {
 				name: 'Sermon of Grace',
 				description: 'You inspire your allies with tales of your saint’s great deeds.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1900,7 +1900,7 @@ export const orcConduit = {
 				name: 'Fear of the Gods',
 				description: 'Your divine magic makes a creature appear as what your enemies fear most.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1985,7 +1985,7 @@ export const orcConduit = {
 				name: 'Soul Siphon',
 				description: 'A beam of energy connects a foe to a friend, draining life from one to heal the other.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -2032,7 +2032,7 @@ export const orcConduit = {
 				name: 'Words of Wrath and Grace',
 				description: 'Your saint grants your enemies a vision of whatever they most fear.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',

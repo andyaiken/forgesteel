@@ -596,7 +596,7 @@ export const humanCensor = {
 													name: 'Shield Bash',
 													description: 'In your hands, a shield isn’t just for protection.',
 													type: {
-														usage: 'Action',
+														usage: 'Main Action',
 														free: false,
 														trigger: '',
 														time: '',
@@ -839,7 +839,7 @@ export const humanCensor = {
 				name: 'Back, Blasphemer!',
 				description: 'You channel power through your weapon to repel foes.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -886,7 +886,7 @@ export const humanCensor = {
 				name: 'Every Step ... Death!',
 				description: 'You show your foe a glimpse of their fate after death.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -933,7 +933,7 @@ export const humanCensor = {
 				name: 'Halt, Miscreant!',
 				description: '“Your race is run!”',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -980,7 +980,7 @@ export const humanCensor = {
 				name: 'Your Allies Cannot Save You!',
 				description: '“See how they abandon you!”',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1027,7 +1027,7 @@ export const humanCensor = {
 				name: 'Behold, a Shield of Faith!',
 				description: '“Allow me to intercede.”',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1074,7 +1074,7 @@ export const humanCensor = {
 				name: 'Driving Assault',
 				description: 'As you force your enemy back with your weapon, you use your faith to stay close.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1121,7 +1121,7 @@ export const humanCensor = {
 				name: 'The Gods Punish and Defend',
 				description: 'You channel holy energy to smite a foe and heal an ally.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1168,7 +1168,7 @@ export const humanCensor = {
 				name: 'Repent!',
 				description: 'You conjure memories of their sins.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1215,7 +1215,7 @@ export const humanCensor = {
 				name: 'Arrest',
 				description: '“I got you, you son of a bitch.”',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1263,7 +1263,7 @@ export const humanCensor = {
 				name: 'Behold the Face of Evil!',
 				description: 'You show your enemies a vision of the true nature of one of their companions.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1320,7 +1320,7 @@ export const humanCensor = {
 				name: 'Censored',
 				description: 'Judged and sentenced.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1367,7 +1367,7 @@ export const humanCensor = {
 				name: 'Purifying Fire',
 				description: 'The gods judge, fire cleanses.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1642,7 +1642,7 @@ export const humanCensor = {
 														name: 'It Is Justice You Fear',
 														description: 'I am but a vessel. Your own deeds weigh upon you.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -1869,7 +1869,7 @@ export const humanCensor = {
 														name: 'With My Blessing',
 														description: 'A word in prayer, and the gods show the way.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -2038,7 +2038,7 @@ export const humanCensor = {
 														name: 'Sentenced',
 														description: 'I am the law!',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',

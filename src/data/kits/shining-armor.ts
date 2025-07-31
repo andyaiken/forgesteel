@@ -26,7 +26,7 @@ export const shiningArmor: Kit = {
 				id: 'kit-shining-armor-signature',
 				name: 'Protective Attack',
 				description: 'The strength of your assault makes it impossible for your foe to ignore you.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature',

@@ -26,7 +26,7 @@ export const mountain: Kit = {
 				id: 'kit-mountain-signature',
 				name: 'Pain For Pain',
 				description: 'An enemy who tagged you will pay for that.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature',

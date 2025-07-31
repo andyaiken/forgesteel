@@ -59,7 +59,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 									id: 'null-sub-2-2-2a',
 									name: 'Entropic Field',
 									description: 'You drastically increase the local entropy.',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 									target: 'Each enemy in the area',

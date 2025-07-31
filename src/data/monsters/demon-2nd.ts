@@ -79,7 +79,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-1-feature-1',
 						name: 'Spinning Bone Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
@@ -125,7 +125,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-2-feature-1',
 						name: 'Soul Prism',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -175,7 +175,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-3-feature-1',
 						name: 'Despair Bolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
@@ -220,7 +220,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-4-feature-1',
 						name: 'Wilting Visions',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
@@ -245,7 +245,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-4-feature-2',
 						name: 'Demonwarp Tears',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 5,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 5, qualifier: 'beneath Bale Eye' }) ],
@@ -295,7 +295,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-5-feature-1',
 						name: 'Tooth! Tusk! Claw!',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
@@ -369,7 +369,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-6-feature-1',
 						name: 'Bilious Expulsion',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [
@@ -436,7 +436,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-7-feature-1',
 						name: 'Violent Transformation',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
@@ -500,7 +500,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-8-feature-1',
 						name: 'Many Maws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -520,7 +520,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-8-feature-2',
 						name: 'Agony Wail',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 5,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
@@ -570,7 +570,7 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-9-feature-1',
 						name: 'Ensnarer Cannon',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],

@@ -45,7 +45,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			ability: FactoryLogic.createAbility({
 				id: 'radenwight-malice-1',
 				name: 'Trouser Cut',
-				type: FactoryLogic.type.createAction({ qualifiers: [ 'Non-minion' ] }),
+				type: FactoryLogic.type.createMain({ qualifiers: [ 'Non-minion' ] }),
 				cost: 3,
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
@@ -104,7 +104,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-1-feature-1',
 						name: 'Dagger Dance',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -157,7 +157,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-2-feature-1',
 						name: 'Buckler Bash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -206,7 +206,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-3-feature-1',
 						name: 'Rapier Flunge',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -255,7 +255,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-4-feature-1',
 						name: 'Eyes-On-Me Shot',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -304,7 +304,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-5-feature-1',
 						name: 'Lockjaw',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -324,7 +324,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-5-feature-2',
 						name: 'Flurry of Bites',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies in the burst',
@@ -377,7 +377,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-6-feature-1',
 						name: 'Piercing Trill',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
@@ -453,7 +453,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-7-feature-2',
 						name: 'En Garde!',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -521,7 +521,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-1',
 						name: 'Cacophony',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
@@ -638,7 +638,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-9-feature-1',
 						name: 'Dagger\'s Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(),
@@ -688,7 +688,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-9-retainer-7',
 						name: 'Bug Bag',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 3 }) ],
 						target: 'All creatures',

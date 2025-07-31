@@ -119,7 +119,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-1-feature-2',
 						name: 'Fingernails',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -168,7 +168,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2-feature-2',
 						name: 'Bone Bow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -217,7 +217,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-3-feature-2',
 						name: 'Rotting Fist',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -265,7 +265,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-4-feature-2',
 						name: 'Life Drain',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -312,7 +312,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-5-feature-2',
 						name: 'Razor Claws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -377,7 +377,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-6-feature-2',
 						name: 'Bone Shards',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -446,7 +446,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-7-feature-2',
 						name: 'Decaying Touch',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -511,7 +511,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-8-feature-2',
 						name: 'Chilling Grasp',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -531,7 +531,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-8-feature-3',
 						name: 'Freezing Dark',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						cost: 3,
@@ -593,7 +593,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-9-feature-2',
 						name: 'Lifestealer Longsword',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -655,7 +655,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-10-feature-2',
 						name: 'Clobber and Clutch',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -722,7 +722,7 @@ Spectral undead who naturally formed from the souls of malicious, hate-filled hu
 					ability: FactoryLogic.createAbility({
 						id: 'undead-11-feature-2',
 						name: 'Heat Death',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],

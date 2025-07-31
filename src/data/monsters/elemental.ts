@@ -126,7 +126,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					ability: FactoryLogic.createAbility({
 						id: 'elemental-1-feature-1',
 						name: 'Spitfire',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
@@ -207,7 +207,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					ability: FactoryLogic.createAbility({
 						id: 'elemental-2-feature-1',
 						name: 'Bluster',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
@@ -291,7 +291,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					ability: FactoryLogic.createAbility({
 						id: 'elemental-3-feature-1',
 						name: 'Water Wing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -377,7 +377,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					ability: FactoryLogic.createAbility({
 						id: 'elemental-4-feature-1',
 						name: 'Hampering Roots',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
@@ -463,7 +463,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					ability: FactoryLogic.createAbility({
 						id: 'elemental-5-feature-1',
 						name: 'Slam Into Dirt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],

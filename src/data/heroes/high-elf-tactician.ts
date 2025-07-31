@@ -321,7 +321,7 @@ export const highElfTactician = {
 													name: 'Two Shot',
 													description: 'When you fire two arrows back to back, both hit their mark.',
 													type: {
-														usage: 'Action',
+														usage: 'Main Action',
 														free: false,
 														trigger: '',
 														time: '',
@@ -404,7 +404,7 @@ export const highElfTactician = {
 													name: 'Protective Attack',
 													description: 'The strength of your assault makes it impossible for your foe to ignore you.',
 													type: {
-														usage: 'Action',
+														usage: 'Main Action',
 														free: false,
 														trigger: '',
 														time: '',
@@ -510,7 +510,7 @@ export const highElfTactician = {
 								name: 'Strike Now!',
 								description: 'Your foe left an opening. You point this out to an ally!',
 								type: {
-									usage: 'Action',
+									usage: 'Main Action',
 									free: false,
 									trigger: '',
 									time: '',
@@ -713,7 +713,7 @@ export const highElfTactician = {
 				name: 'Concussive Strike',
 				description: 'Your precise strike leaves your foe struggling to respond.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -769,7 +769,7 @@ export const highElfTactician = {
 				name: 'Inspiring Strike',
 				description: 'Your attack gives an ally hope.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -862,7 +862,7 @@ export const highElfTactician = {
 				name: 'Hammer And Anvil',
 				description: '“Let’s not argue about who’s the hammer and who’s the anvil!',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -918,7 +918,7 @@ export const highElfTactician = {
 				name: 'The Mind Game',
 				description: 'Your attack demoralizes your foe. Your allies begin to think you can win.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1346,7 +1346,7 @@ export const highElfTactician = {
 														name: 'Try Me Instead',
 														description: '“Try picking on someone MY size.”',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -1554,7 +1554,7 @@ export const highElfTactician = {
 														name: 'I\'ve Got Your Back',
 														description: 'Your enemy will think twice about attacking your friend.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',

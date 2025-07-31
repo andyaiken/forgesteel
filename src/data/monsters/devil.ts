@@ -100,7 +100,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-1-feature-1',
 						name: 'Quill Pushing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -146,7 +146,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-2-feature-1',
 						name: 'Importunity',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
@@ -192,7 +192,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-3-feature-1',
 						name: 'Litigation',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -237,7 +237,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-4-feature-1',
 						name: 'Fire and Brimstone',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
@@ -263,7 +263,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-4-feature-2',
 						name: 'Dismissal with Prejudice',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in the burst',
@@ -345,7 +345,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-5-feature-1',
 						name: 'Infernal Pike',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -365,7 +365,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-5-feature-2',
 						name: 'Writ of Execution',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '1 creature or object',
@@ -447,7 +447,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-6-feature-1',
 						name: 'Infernal Injunction',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -467,7 +467,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-6-feature-2',
 						name: 'Adjudicator\'s Interdiction',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
@@ -549,7 +549,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-7-feature-1',
 						name: 'Edge of the Law',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -569,7 +569,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-7-feature-2',
 						name: 'Verdict',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
@@ -651,7 +651,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-8-feature-1',
 						name: 'Infernal Decree',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
@@ -792,7 +792,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-9-feature-1',
 						name: 'Corrupting Flame',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -831,7 +831,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-9-retainer-7',
 						name: 'Flames of Revenge',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies',
@@ -850,7 +850,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 					ability: FactoryLogic.createAbility({
 						id: 'devil-9-retainer-10',
 						name: 'Hell On Earch',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: '-',

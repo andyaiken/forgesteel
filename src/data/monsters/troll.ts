@@ -93,7 +93,7 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-1-feature-1',
 						name: 'Arm and a Leg',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -135,7 +135,7 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-2-feature-1',
 						name: 'Jaws and Claws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -175,7 +175,7 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-3-feature-1',
 						name: 'Savoring Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -199,7 +199,7 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-3-feature-2',
 						name: 'Rotten Scraps',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'Each enemy in the cube',
@@ -278,7 +278,7 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-4-feature-1',
 						name: 'Voracious Mastication',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -303,7 +303,7 @@ export const troll: MonsterGroup = {
 						id: 'troll-4-feature-2',
 						name: 'Crash Through',
 						cost: 3,
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
@@ -375,7 +375,7 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-5-feature-1',
 						name: 'Big Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -427,7 +427,7 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-15-retainer-7',
 						name: 'Hangry Frenzy',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '3 creatures',

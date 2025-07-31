@@ -374,7 +374,7 @@ export const dwarfFury = {
 				name: 'Brutal Slam',
 				description: 'The heavy impact of your weapon attacks drives your foes ever backward.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -421,7 +421,7 @@ export const dwarfFury = {
 				name: 'Hit And Run',
 				description: 'Keeping in constant motion helps you slip out of reach after a brutal assault.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -468,7 +468,7 @@ export const dwarfFury = {
 				name: 'Impaled!',
 				description: 'You plunge your weapon into your enemy like a boar upon a spit.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -515,7 +515,7 @@ export const dwarfFury = {
 				name: 'To the Death!',
 				description: 'Your reckless assault leaves you tactically vulnerable.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -562,7 +562,7 @@ export const dwarfFury = {
 				name: 'Back!',
 				description: 'Surrounded? The fools!',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -609,7 +609,7 @@ export const dwarfFury = {
 				name: 'Out of the Way!',
 				description: 'Your enemies will get out of your way - whether they want to or not.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -656,7 +656,7 @@ export const dwarfFury = {
 				name: 'Tide of Death',
 				description: 'Teach them the folly of lining up for you.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -703,7 +703,7 @@ export const dwarfFury = {
 				name: 'Your Entrails Are Your Extrails!',
 				description: 'Hard for them to fight when they’re busy holding in their giblets.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -750,7 +750,7 @@ export const dwarfFury = {
 				name: 'Blood for Blood!',
 				description: 'A mighty strike leaves your foe reeling.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -832,7 +832,7 @@ export const dwarfFury = {
 				name: 'Thunder Roar',
 				description: 'A howl erupts from you that hurls your enemies back.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -879,7 +879,7 @@ export const dwarfFury = {
 				name: 'To the Uttermost End',
 				description: 'You spend your life force to ensure their death.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1044,7 +1044,7 @@ export const dwarfFury = {
 				name: 'You Are Already Dead',
 				description: 'Slash. Walk away.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1148,7 +1148,7 @@ export const dwarfFury = {
 															name: 'Devastating Rush',
 															description: 'The faster you move, the harder you hit.',
 															type: {
-																usage: 'Action',
+																usage: 'Main Action',
 																free: false,
 																trigger: '',
 																time: '',
@@ -1573,7 +1573,7 @@ export const dwarfFury = {
 														name: 'Phalanx Breaker',
 														description: 'Organizing your forces like feckless creatures of Law. Pitiful.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -1631,7 +1631,7 @@ export const dwarfFury = {
 														name: 'RRRAAAGHH!',
 														description: 'Death! Deeaaath!!',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -1876,7 +1876,7 @@ export const dwarfFury = {
 														name: 'Apex Predator',
 														description: 'I will hunt you down.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -1935,7 +1935,7 @@ export const dwarfFury = {
 														name: 'Visceral Roar',
 														description: 'The sound of the storm within you terrifies your opponents.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',

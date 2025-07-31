@@ -847,7 +847,7 @@ export const humanNull = {
 				name: 'Dance of Blows',
 				description: 'You strike everywhere at once, tricking an enemy into moving out of position.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -895,7 +895,7 @@ export const humanNull = {
 				name: 'Faster than the Eye',
 				description: 'You strike so quickly that your hands become a blur.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -943,7 +943,7 @@ export const humanNull = {
 				name: 'Inertial Step',
 				description: 'You flit about the battlefield with an opportunistic strike.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -991,7 +991,7 @@ export const humanNull = {
 				name: 'Joint Lock',
 				description: 'You contort your enemy’s body into a stance they struggle to escape from.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1039,7 +1039,7 @@ export const humanNull = {
 				name: 'Kinetic Strike',
 				description: 'Your opponent staggers. They cannot ignore you.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1087,7 +1087,7 @@ export const humanNull = {
 				name: 'Magnetic Strike',
 				description: 'The force of your blow extends past the limits of your body, pulling your enemy closer.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1135,7 +1135,7 @@ export const humanNull = {
 				name: 'Phase Inversion Strike',
 				description: 'You step momentarily out of phase as you pull an enemy through you.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1183,7 +1183,7 @@ export const humanNull = {
 				name: 'Pressure Points',
 				description: 'You strike at key nerve clusters to leave your foe staggered.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1231,7 +1231,7 @@ export const humanNull = {
 				name: 'Chronal Spike',
 				description: 'You foresee the best moment to strike, then exploit it.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1317,7 +1317,7 @@ export const humanNull = {
 				name: 'Relentless Nemesis',
 				description: 'You strike, and for the next few moments, your enemy can’t escape you.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1365,7 +1365,7 @@ export const humanNull = {
 				name: 'Stunning Blow',
 				description: 'You focus your psionic technique into a debilitating concussive punch.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1413,7 +1413,7 @@ export const humanNull = {
 				name: 'Arcane Disruptor',
 				description: 'Your blow reorders a foe’s body, causing pain if they attempt to channel sorcery.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1509,7 +1509,7 @@ export const humanNull = {
 				name: 'Phase Strike',
 				description: 'For a moment, your foe slips out of phase with this manifold.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1557,7 +1557,7 @@ export const humanNull = {
 				name: 'A Squad Unto Myself',
 				description: 'You move so quickly, it seems as though an army assaulted your foes.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1858,7 +1858,7 @@ export const humanNull = {
 														name: 'Force Redirected',
 														description: 'The force of your strike manifests in a surprising location.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -2000,7 +2000,7 @@ export const humanNull = {
 														name: 'Entropic Field',
 														description: 'You drastically increase the local entropy.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -2170,7 +2170,7 @@ export const humanNull = {
 														name: 'Gravitic Strike',
 														description: 'Your fist projects gravitic force that pulls a distant enemy closer.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',

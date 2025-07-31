@@ -25,7 +25,7 @@ export const panther: Kit = {
 				id: 'kit-panther-signature',
 				name: 'Devastating Rush',
 				description: 'The faster you move, the harder you hit.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature or object',

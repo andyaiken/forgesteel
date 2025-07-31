@@ -57,7 +57,7 @@ On a success with a consequence, you produce 1 dose of salve but cannot extract 
 			ability: FactoryLogic.createAbility({
 				id: 'baslisk-malice-2',
 				name: 'Upchuck',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 				target: 'All enemies in the cube',
@@ -102,7 +102,7 @@ On a success with a consequence, you produce 1 dose of salve but cannot extract 
 					ability: FactoryLogic.createAbility({
 						id: 'basilisk-1-feature-1',
 						name: 'Noxious Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
@@ -148,7 +148,7 @@ A target that ends two consecutive turns restrained by this ability is petrified
 					ability: FactoryLogic.createAbility({
 						id: 'basilisk-1-feature-3',
 						name: 'Poison Fumes',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						target: 'All creatures in the cube',
@@ -207,7 +207,7 @@ A target that ends two consecutive turns restrained by this ability is petrified
 					ability: FactoryLogic.createAbility({
 						id: 'basilisk-2-feature-1',
 						name: 'Prehensile Tongue',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'One creature or object',
@@ -258,7 +258,7 @@ A target that ends two consecutive turns restrained by this ability is petrified
 					ability: FactoryLogic.createAbility({
 						id: 'basilisk-2-feature-3',
 						name: 'Wink',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 						distance: [
 							FactoryLogic.distance.createMelee(),

@@ -77,7 +77,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 			ability: FactoryLogic.createAbility({
 				id: 'giant-malice-1',
 				name: 'Hurl Landscape',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				cost: 3,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
@@ -140,7 +140,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-1-feature-2',
 						name: 'Blazing Leap',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [
@@ -184,7 +184,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-2-feature-1',
 						name: 'Buried in Sand',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [
@@ -238,7 +238,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-3-feature-2',
 						name: 'Slushfall',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
@@ -287,7 +287,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-4-feature-2',
 						name: 'Swing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -330,7 +330,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-5-feature-1',
 						name: 'Rune Signed Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -352,7 +352,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-5-feature-2',
 						name: 'Forked Knife',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [
@@ -435,7 +435,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-6-feature-2',
 						name: 'Flamelash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [
@@ -456,7 +456,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-6-feature-3',
 						name: 'Living Blaze',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
@@ -541,7 +541,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-7-feature-2',
 						name: 'Flaming Punch',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -563,7 +563,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-7-feature-3',
 						name: 'Caldera',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 5,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createSpecial('Special') ],
@@ -658,7 +658,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-8-feature-2',
 						name: 'Ice Javelins',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 						distance: [
@@ -680,7 +680,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-8-feature-3',
 						name: 'Flower of Frost',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [
@@ -757,7 +757,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-9-feature-2',
 						name: 'Cold Axe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -779,7 +779,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-9-feature-3',
 						name: 'Blizzard Surge',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 5,
 						keywords: [],
 						distance: [
@@ -850,7 +850,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-10-feature-1',
 						name: 'Jagged Stoneclub',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -872,7 +872,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-10-feature-2',
 						name: 'Crag Burst',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Area ],
 						distance: [
@@ -955,7 +955,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-11-feature-2',
 						name: 'Clobberin’ Club',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -977,7 +977,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-11-feature-3',
 						name: 'Stomp',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -1069,7 +1069,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-12-feature-1',
 						name: 'Marble From A Great Sling',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [
@@ -1091,7 +1091,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-12-feature-2',
 						name: 'Far Flung',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [
@@ -1174,7 +1174,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-13-feature-2',
 						name: 'Roiling Fist',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [
@@ -1196,7 +1196,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 					ability: FactoryLogic.createAbility({
 						id: 'giant-13-feature-3',
 						name: 'Burning Kick',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(4)

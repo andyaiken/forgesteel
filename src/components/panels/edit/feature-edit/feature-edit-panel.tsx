@@ -79,7 +79,7 @@ export const FeatureEditPanel = (props: Props) => {
 						id: Utils.guid(),
 						name: '',
 						description: '',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '',

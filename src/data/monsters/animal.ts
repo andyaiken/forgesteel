@@ -36,7 +36,7 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 					ability: FactoryLogic.createAbility({
 						id: 'animal-1-1',
 						name: 'Natural Weapon',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
@@ -90,7 +90,7 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 					ability: FactoryLogic.createAbility({
 						id: 'animal-2-1',
 						name: 'Natural Weapon',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
@@ -156,7 +156,7 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 					ability: FactoryLogic.createAbility({
 						id: 'animal-3-1',
 						name: 'Natural Weapon',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
@@ -227,7 +227,7 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 					ability: FactoryLogic.createAbility({
 						id: 'animal-4-1',
 						name: 'Flurry',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
@@ -286,7 +286,7 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 					ability: FactoryLogic.createAbility({
 						id: 'animal-5-1',
 						name: 'Natural Weapon',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
@@ -352,7 +352,7 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 					ability: FactoryLogic.createAbility({
 						id: 'animal-6-1',
 						name: 'Natural Weapon',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
@@ -371,7 +371,7 @@ Beware! Most animals are not monsters, but are often twisted by magic and malice
 					ability: FactoryLogic.createAbility({
 						id: 'animal-6-2',
 						name: 'Wild Swing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies and objects',

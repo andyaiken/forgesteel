@@ -105,7 +105,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-thorn-feature-4',
 						name: 'Virulent Breath',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
 						target: 'All enemies',
@@ -126,7 +126,7 @@ Despite this, some villages manage to avoid being driven from their homes or sta
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-thorn-feature-5',
 						name: 'Spinous Tail Swing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two enemies or objects',

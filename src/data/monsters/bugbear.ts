@@ -96,7 +96,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-1-feature-1',
 						name: 'Shadow Drag',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: '2 creatures or objects on the ground',
@@ -116,7 +116,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-1-feature-2',
 						name: 'Blistering Element',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
@@ -135,7 +135,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-1-feature-3',
 						name: 'Twist Shape',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature',
@@ -211,7 +211,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-2-feature-1',
 						name: 'Inspiring Swordplay',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '2 creatures or objects',
@@ -231,7 +231,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-2-feature-2',
 						name: 'You Next!',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: '1 ally',
@@ -244,7 +244,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-2-feature-3',
 						name: 'Fall Back!',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Self and all allies',
@@ -305,7 +305,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-3-feature-1',
 						name: 'Haymaker',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '2 creatures or objects',
@@ -329,7 +329,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-3-feature-2',
 						name: 'Leaping Fury',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
@@ -417,7 +417,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-4-feature-1',
 						name: 'Shadow Drag',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: '2 creatures or objects on the ground',
@@ -437,7 +437,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-4-feature-2',
 						name: 'Shadow Cloak',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in the burst',
@@ -457,7 +457,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-4-feature-3',
 						name: 'Carving Dagger',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: '2 creatures or objects',
@@ -533,7 +533,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-5-feature-1',
 						name: 'Corrosive Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
@@ -580,7 +580,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-6-feature-1',
 						name: 'Mug and Tear',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
@@ -622,7 +622,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-7-feature-1',
 						name: 'Cut Em Low!',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
@@ -658,7 +658,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-8-feature-1',
 						name: 'Bear Hug',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
@@ -706,7 +706,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-8-retainer-4',
 						name: 'Face Grab',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature',
@@ -725,7 +725,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-8-retainer-7',
 						name: 'Shadow Drag',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature or object',
@@ -744,7 +744,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 					ability: FactoryLogic.createAbility({
 						id: 'bugbear-8-retainer-10',
 						name: 'Neck Snap',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature grabbed by the commando',

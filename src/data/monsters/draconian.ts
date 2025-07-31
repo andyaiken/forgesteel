@@ -67,7 +67,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 			ability: FactoryLogic.createAbility({
 				id: 'draconian-malice-2',
 				name: 'Breath Weapon',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				cost: 5,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 2, within: 1 }) ],
@@ -87,7 +87,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 			ability: FactoryLogic.createAbility({
 				id: 'draconian-malice-3',
 				name: 'Scaleshatter Burst',
-				type: FactoryLogic.type.createAction({ free: true }),
+				type: FactoryLogic.type.createMain({ free: true }),
 				cost: 7,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
@@ -123,7 +123,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-1-feature-1',
 						name: 'Spittlesplash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -142,7 +142,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-1-feature-2',
 						name: 'Experimental Treasure',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures or objects',
@@ -230,7 +230,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-2-feature-1',
 						name: 'Skewer',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -250,7 +250,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-2-feature-2',
 						name: 'Acidic Stun',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 3, value2: 1, within: 1 }) ],
@@ -331,7 +331,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-3-feature-1',
 						name: 'Breathsnipe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
@@ -350,7 +350,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-3-feature-2',
 						name: 'Ice Lob',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
 						target: 'All enemies and objects in the cube',
@@ -419,7 +419,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-4-feature-1',
 						name: 'Breaking Palm',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -443,7 +443,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-4-feature-2',
 						name: 'Expunging Exhalation',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in the burst',
@@ -514,7 +514,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-5-feature-1',
 						name: 'Baneful Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -534,7 +534,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 						id: 'draconian-5-feature-2',
 						name: 'Spinning Spit',
 						cost: 2,
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies in the burst',
@@ -617,7 +617,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-6-feature-1',
 						name: 'Punishing Flail',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -641,7 +641,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-6-feature-2',
 						name: 'I\'ll Cut A Path',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 1, within: 1 }) ],
 						target: 'All enemies in the line',
@@ -757,7 +757,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-7-feature-1',
 						name: 'Malice Mace',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -776,7 +776,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-7-retainer-2',
 						name: 'I\'m Not a Steed, You\'re Equipment',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The Nameless\'s mentor',
@@ -800,7 +800,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-7-retainer-7',
 						name: 'Looming Wings',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies',
@@ -819,7 +819,7 @@ The draconians presented in this section aren’t a band, but five individual dr
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-7-retainer-10',
 						name: 'Spew Death',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in the burst',

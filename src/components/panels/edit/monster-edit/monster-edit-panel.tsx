@@ -167,7 +167,7 @@ export const MonsterEditPanel = (props: Props) => {
 					ability: FactoryLogic.createAbility({
 						id: Utils.guid(),
 						name: 'Level 4',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						distance: [],
 						target: '',
 						sections: []
@@ -178,7 +178,7 @@ export const MonsterEditPanel = (props: Props) => {
 					ability: FactoryLogic.createAbility({
 						id: Utils.guid(),
 						name: 'Level 7',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						distance: [],
 						target: '',
 						sections: []
@@ -189,7 +189,7 @@ export const MonsterEditPanel = (props: Props) => {
 					ability: FactoryLogic.createAbility({
 						id: Utils.guid(),
 						name: 'Level 10',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						distance: [],
 						target: '',
 						sections: []

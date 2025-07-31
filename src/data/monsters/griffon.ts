@@ -89,7 +89,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 					ability: FactoryLogic.createAbility({
 						id: 'griffon-1-feature-1',
 						name: 'Claw Swipes',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
@@ -192,7 +192,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 					ability: FactoryLogic.createAbility({
 						id: 'griffon-2-feature-1',
 						name: 'Violent Thrashing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
@@ -213,7 +213,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 					ability: FactoryLogic.createAbility({
 						id: 'griffon-2-feature-2',
 						name: 'Bound Ahead',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf('while grounded') ],
 						target: 'Self',

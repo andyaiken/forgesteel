@@ -1,5 +1,5 @@
 export enum AbilityUsage {
-	Action = 'Action',
+	MainAction = 'Main Action',
 	Maneuver = 'Maneuver',
 	Move = 'Move Action',
 	NoAction = 'No Action',

@@ -119,7 +119,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-1-feature-3',
 						name: 'Lightning Strike',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 						distance: [
@@ -175,7 +175,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-2-feature-3',
 						name: 'Halberd',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -231,7 +231,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-3-feature-3',
 						name: 'Crossbow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -286,7 +286,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-4-feature-3',
 						name: 'Handaxe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -343,7 +343,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-5-feature-3',
 						name: 'Necrotic Bolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
@@ -399,7 +399,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-6-feature-3',
 						name: 'Concealed Dagger',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -455,7 +455,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-7-feature-3',
 						name: 'Haymaker',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -529,7 +529,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-8-feature-3',
 						name: 'Morningstar & Javelin',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -595,7 +595,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-9-feature-3',
 						name: 'Death Scythe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -669,7 +669,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-10-feature-3',
 						name: 'Rapier & Dagger',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(1)
@@ -691,7 +691,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-10-feature-4',
 						name: 'Dagger Storm',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [],
 						target: '',
@@ -738,7 +738,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-11-feature-3',
 						name: 'Lightning Bolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic,  AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
@@ -822,7 +822,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-12-feature-3',
 						name: 'Trick Crossbow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -883,7 +883,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-13-feature-3',
 						name: 'Zweihander Swing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [
@@ -1015,7 +1015,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-14-feature-3',
 						name: 'Whip & Magic Longsword',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -1145,7 +1145,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-15-feature-1',
 						name: 'Talons',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(1)
@@ -1200,7 +1200,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-16-feature-1',
 						name: 'Chop',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
@@ -1240,7 +1240,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-16-retainer-7',
 						name: 'Defensive Fighting',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creatures',
@@ -1259,7 +1259,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-16-retainer-10',
 						name: 'Whirlwind of Steel',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies',

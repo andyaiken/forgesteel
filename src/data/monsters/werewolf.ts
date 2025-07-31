@@ -98,7 +98,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 					ability: FactoryLogic.createAbility({
 						id: 'werewolf-feature-4',
 						name: 'Accursed Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -123,7 +123,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 					ability: FactoryLogic.createAbility({
 						id: 'werewolf-feature-5',
 						name: 'Claws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
@@ -141,7 +141,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 					ability: FactoryLogic.createAbility({
 						id: 'werewolf-feature-6',
 						name: 'Berserker Slash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 5,
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',

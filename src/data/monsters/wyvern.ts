@@ -90,7 +90,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 					ability: FactoryLogic.createAbility({
 						id: 'wyvern-1-feature-1',
 						name: 'Agonizing Stinger',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
@@ -114,7 +114,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 					ability: FactoryLogic.createAbility({
 						id: 'wyvern-1-feature-2',
 						name: 'Acidic Anguish',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -190,7 +190,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 					ability: FactoryLogic.createAbility({
 						id: 'wyvern-2-feature-1',
 						name: 'Sedating Stinger',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two creatures or objects',
@@ -210,7 +210,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 					ability: FactoryLogic.createAbility({
 						id: 'wyvern-2-feature-2',
 						name: 'Tail Sweep',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 3, value2: 6, within: 1 }) ],
 						target: 'All enemies and objects in the line',

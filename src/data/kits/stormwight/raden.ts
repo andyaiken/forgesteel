@@ -25,7 +25,7 @@ export const raden: Kit = {
 				id: 'kit-raden-signature',
 				name: 'Driving Pounce',
 				description: 'Your enemies try in vain to fall back from your pouncing attack.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '2 creatures or objects',

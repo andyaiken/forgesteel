@@ -158,7 +158,7 @@ export const dragonKnight: Ancestry = {
 						id: 'dragon-knight-feature-2-8',
 						name: 'Remember your Oath',
 						description: `
-As a maneuver, you can recite the following oath. If you do, you succeed on saving throws when you roll a 4 or higher until the start of your next turn:
+As a maneuver, you can recite the following oath. Until the start of your next turn, whenever you make a saving throw, you succeed on a 4 or higher.
 
 > Even should the sun stop in the sky
 > Even should the night last a thousand years
@@ -182,7 +182,7 @@ As a maneuver, you can recite the following oath. If you do, you succeed on savi
 							type: FactoryLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-							target: 'All enemies',
+							target: 'Each enemy in the area',
 							cost: 'signature',
 							sections: [
 								FactoryLogic.createAbilitySectionRoll(
@@ -203,11 +203,11 @@ As a maneuver, you can recite the following oath. If you do, you succeed on savi
 						ability: FactoryLogic.createAbility({
 							id: 'dragon-knight-feature-2-10',
 							name: 'Dragon Breath',
-							description: 'You expel energy to damage your foes.',
+							description: 'A furious exhalation of energy washes over your foes.',
 							type: FactoryLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
-							target: 'All enemies',
+							target: 'Each enemy in the area',
 							cost: 'signature',
 							sections: [
 								FactoryLogic.createAbilitySectionRoll(

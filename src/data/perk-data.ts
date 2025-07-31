@@ -9,7 +9,6 @@ export class PerkData {
 	static areaOfExpertise = CraftingPerkData.areaOfExpertise;
 	static expertArtisan = CraftingPerkData.expertArtisan;
 	static handy = CraftingPerkData.handy;
-	static homesteader = CraftingPerkData.homesteader;
 	static improvisationCreation = CraftingPerkData.improvisationCreation;
 	static inspiredArtisan = CraftingPerkData.inspiredArtisan;
 	static travellingArtisan = CraftingPerkData.travellingArtisan;

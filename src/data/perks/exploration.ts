@@ -43,7 +43,7 @@ export class ExplorationPerkData {
 				description: 'You hurl your ally through the air.',
 				type: FactoryLogic.type.createManeuver(),
 				keywords: [],
-				distance: [ FactoryLogic.distance.createSelf() ],
+				distance: [FactoryLogic.distance.createSelf()],
 				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You grab a willing adjacent ally or object of your size or smaller, then vertical push that target up to a number of squares equal to twice your Might score. If a creature you push falls as a result of this movement, the effective distance of the fall is reduced by a number of squares equal to twice your Might score. When you use this perk, you can’t use it again until you earn 1 or more Victories.')
@@ -65,7 +65,7 @@ export class ExplorationPerkData {
 				description: 'You catch a falling ally at the last possible moment.',
 				type: FactoryLogic.type.createTrigger('A willing ally lands on you or adjacent to you when they fall.', { free: true }),
 				keywords: [],
-				distance: [ FactoryLogic.distance.createSelf() ],
+				distance: [FactoryLogic.distance.createSelf()],
 				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You catch your ally. Neither of you takes damage from the fall.')
@@ -78,7 +78,7 @@ export class ExplorationPerkData {
 	static monsterWhisperer: Perk = {
 		id: 'perk-monster-whisperer',
 		name: 'Monster Whisperer',
-		description: 'You can use the Handle Animals skill to interact with non-sapient monsters who are not animals.',
+		description: 'You can use the Handle Animals skill to interact with nonsapient creatures who are not animals.',
 		type: FeatureType.Text,
 		data: null,
 		list: PerkList.Exploration
@@ -87,16 +87,16 @@ export class ExplorationPerkData {
 	static putYourBackIntoIt: Perk = {
 		id: 'perk-put-your-back-into-it',
 		name: 'Put Your Back Into It',
-		description: 'Once per montage test, you can turn an ally’s tier 1 test result into a tier 2 result. Additionally, if you make a test to assist a test and a get a tier 1 result, you don’t add a bane to the assisted test.',
+		description: 'During montage tests, whenever you make a test to assist a test and obtain a tier 1 outcome, the assisted test doesn’t take a bane. Additionally, once per montage test, you can turn an ally’s tier 1 test outcome into a tier 2 outcome.',
 		type: FeatureType.Text,
 		data: null,
 		list: PerkList.Exploration
 	};
 
-	static survivalist: Perk = {
-		id: 'perk-survivalist',
-		name: 'Survivalist',
-		description: 'While in the wilderness, you can spend 1 hour searching a 1-mile-radius area of land and find a safe location suitable for a respite (if one exists).',
+	static teamLeader: Perk = {
+		id: 'perk-team-leader',
+		name: 'Team Leader',
+		description: 'At the start of a group test or montage test, you can spend a hero token. If you do, all participants make tests as if they also had any skill you have from the exploration group.',
 		type: FeatureType.Text,
 		data: null,
 		list: PerkList.Exploration
@@ -111,19 +111,10 @@ export class ExplorationPerkData {
 		list: PerkList.Exploration
 	};
 
-	static teamLeader: Perk = {
-		id: 'perk-team-leader',
-		name: 'Team Leader',
-		description: 'At the start of a group test or montage test, you can spend a hero token. If you do, all participants make tests as if they also had your exploration skills.',
-		type: FeatureType.Text,
-		data: null,
-		list: PerkList.Exploration
-	};
-
 	static woodWise: Perk = {
 		id: 'perk-wood-wise',
 		name: 'Wood Wise',
-		description: 'When you make a test with an exploration skill and at least one of the d10s rolled is a 1, you can reroll one d10. You can only use this perk once per test.',
+		description: 'When you make a test using a skill from the exploration skill group and at least one of the d10s rolled is a 1, you can reroll one d10. You can use this perk only once per test.',
 		type: FeatureType.Text,
 		data: null,
 		list: PerkList.Exploration

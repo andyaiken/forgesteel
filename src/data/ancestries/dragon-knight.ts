@@ -9,12 +9,12 @@ import { FactoryLogic } from '../../logic/factory-logic';
 export const dragonKnight: Ancestry = {
 	id: 'ancestry-dragon-knight',
 	name: 'Dragon Knight',
-	description: 'The Ritual of Dracogenesis that grants the power to create a generation of dragon knights - also known as draconians or wyrmwights - is obscure and supremely difficult for even an experienced sorcerer to master.',
+	description: 'The ritual of Dracogenesis that grants the power to create a generation of dragon knights—also known as draconians or wyrmwights—is obscure and supremely difficult for even an experienced sorcerer to master. Small populations of draconians in Khemhara, Higara, and Khoursir attest to this. Descendants of original generations created millennia ago by powerful wizards, they have never been numerous. A typical clutch yields only a single egg. After only a few generations, these draconians begin to show new adaptations like feathers or frilled ridges.',
 	features: [
 		FactoryLogic.feature.createChoice({
 			id: 'dragon-knight-feature-1',
-			name: 'Wyrmplate',
-			description: 'Your hardened scales grant you immunity equal to yor level to one of the following damage types: acid, cold, corruption, fire, lightning, or poison. You can change your damage immunity type when you finish a respite.',
+			name: 'Signature Trait: Wyrmplate',
+			description: 'Your hardened scales grant you damage immunity equal to your level to one of the following damage types: acid, cold, corruption, fire, lightning, or poison. You can change your damage immunity type when you finish a respite.',
 			options: [
 				{
 					feature: FactoryLogic.feature.createDamageModifier({
@@ -158,7 +158,7 @@ export const dragonKnight: Ancestry = {
 						id: 'dragon-knight-feature-2-8',
 						name: 'Remember your Oath',
 						description: `
-As a maneuver, you can recite the following oath. If you do, you succeed on saving throws when you roll a 4 or higher until the start of your next turn:
+As a maneuver, you can recite the following oath. Until the start of your next turn, whenever you make a saving throw, you succeed on a 4 or higher.
 
 > Even should the sun stop in the sky
 > Even should the night last a thousand years
@@ -182,7 +182,7 @@ As a maneuver, you can recite the following oath. If you do, you succeed on savi
 							type: FactoryLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-							target: 'All enemies',
+							target: 'Each enemy in the area',
 							cost: 'signature',
 							sections: [
 								FactoryLogic.createAbilitySectionRoll(
@@ -203,11 +203,11 @@ As a maneuver, you can recite the following oath. If you do, you succeed on savi
 						ability: FactoryLogic.createAbility({
 							id: 'dragon-knight-feature-2-10',
 							name: 'Dragon Breath',
-							description: 'You expel energy to damage your foes.',
+							description: 'A furious exhalation of energy washes over your foes.',
 							type: FactoryLogic.type.createAction(),
 							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
-							target: 'All enemies',
+							target: 'Each enemy in the area',
 							cost: 'signature',
 							sections: [
 								FactoryLogic.createAbilitySectionRoll(

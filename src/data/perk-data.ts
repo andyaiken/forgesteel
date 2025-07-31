@@ -20,21 +20,17 @@ export class PerkData {
 	static iveGotYou = ExplorationPerkData.iveGotYou;
 	static monsterWhisperer = ExplorationPerkData.monsterWhisperer;
 	static putYourBackIntoIt = ExplorationPerkData.putYourBackIntoIt;
-	static survivalist = ExplorationPerkData.survivalist;
 	static teamwork = ExplorationPerkData.teamwork;
 	static teamLeader = ExplorationPerkData.teamLeader;
 	static woodWise = ExplorationPerkData.woodWise;
 
 	static charmingLiar = InterpersonalPerkData.charmingLiar;
-	static cunningPlan = InterpersonalPerkData.cunningPlan;
 	static dazzler = InterpersonalPerkData.dazzler;
 	static engrossingMonologue = InterpersonalPerkData.engrossingMonologue;
-	static fastNegotiator = InterpersonalPerkData.fastNegotiator;
 	static harmonizer = InterpersonalPerkData.harmonizer;
 	static lieDetector = InterpersonalPerkData.lieDetector;
 	static openBook = InterpersonalPerkData.openBook;
 	static pardonMyFriend = InterpersonalPerkData.pardonMyFriend;
-	static persistent = InterpersonalPerkData.persistent;
 	static powerPlayer = InterpersonalPerkData.powerPlayer;
 	static soTellMe = InterpersonalPerkData.soTellMe;
 	static spotTheTell = InterpersonalPerkData.spotTheTell;

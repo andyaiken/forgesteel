@@ -34,7 +34,7 @@ export class IntriguePerkData {
 				description: 'You prevent a trap from activating.',
 				type: FactoryLogic.type.createTrigger('A mundane trap activates within 3 squares of you.'),
 				keywords: [],
-				distance: [ FactoryLogic.distance.createSelf() ],
+				distance: [FactoryLogic.distance.createSelf()],
 				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You can move up to 3 squares toward the trap. If this movement brings you adjacent to any of the trap’s mechanisms, you can jam the trap, preventing it from activating. As long as you stay adjacent to the mechanism, the trap can’t go off unless an attempt to disarm it fails.')

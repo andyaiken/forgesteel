@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const mountain: Kit = {
 	id: 'kit-mountain',
 	name: 'Mountain',
-	description: 'The Mountain kit does exactly what it says on the tin. You don heavy armor and a heavy weapon to stand strong against your foes, quickly demolishing them when it’s your turn to attack.',
+	description: 'The Mountain kit does exactly what it says on the tin. You don heavy armor and raise a heavy weapon to stand strong against your foes, quickly demolishing them when it\'s your turn to strike.',
 	type: '',
 	armor: [ KitArmor.Heavy ],
 	weapon: [ KitWeapon.Heavy ],

@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const rapidFire: Kit = {
 	id: 'kit-rapid-fire',
 	name: 'Rapid Fire',
-	description: 'The Rapid-Fire kit is for archers who want to deal maximum damage by shooting as many arrows as possible into nearby enemies. With this kit, your fighting technique focuses on peppering foes at medium range.',
+	description: 'The Rapid-Fire kit is for archers who want to deal maximum damage by shooting as many arrows as possible into nearby enemies. With this kit, your fighting technique focuses on peppering foes before they can get close enough to counterattack.',
 	type: '',
 	armor: [ KitArmor.Light ],
 	weapon: [ KitWeapon.Bow ],

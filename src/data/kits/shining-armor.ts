@@ -40,7 +40,7 @@ export const shiningArmor: Kit = {
 							tier3: '9 + M or A damage'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('The target is taunted (EoT).')
+					FactoryLogic.createAbilitySectionText('The target is taunted until the end of their next turn.')
 				]
 			})
 		})

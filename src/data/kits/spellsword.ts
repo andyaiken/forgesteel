@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const spellsword: Kit = {
 	id: 'kit-spellsword',
 	name: 'Spellsword',
-	description: 'The Spellsword kit combines melee attacks and a little bit of magic for warriors who don’t want to have to choose between the incantation and the blade.',
+	description: 'The Spellsword kit combines melee strikes and a little bit of magic, letting you create a warrior who doesn\'t have to choose between the incantation and the blade.',
 	type: '',
 	armor: [ KitArmor.Light, KitArmor.Shield ],
 	weapon: [ KitWeapon.Medium ],
@@ -40,7 +40,7 @@ export const spellsword: Kit = {
 							tier3: '9 + M, R, I or P lightning damage'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('A creature or object within 2 squares of your target takes lightning damage equal to the characteristic you used for this ability’s power roll.')
+					FactoryLogic.createAbilitySectionText('A creature or object of your choice within 2 squares of the target takes lightning damage equal to the characteristic score used for this ability\'s power roll.')
 				]
 			})
 		})

@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const ranger: Kit = {
 	id: 'kit-ranger',
 	name: 'Ranger',
-	description: 'The Ranger kit outfits you with light armor and several weapons, letting you easily switch between using a melee weapon and a bow. This kit provides a good balance of bonuses to Stamina, speed, damage, and range to create a hero who is a jack-of-all-trades.',
+	description: 'The Ranger kit outfits you with light armor and weapons for every challenge, letting you easily switch between melee and ranged combat. This kit provides a good balance of bonuses to defense and offense to create a hero who is a jack-of-all-trades.',
 	type: '',
 	armor: [ KitArmor.Medium ],
 	weapon: [ KitWeapon.Medium, KitWeapon.Bow ],

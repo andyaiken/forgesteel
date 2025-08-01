@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const dualWielder: Kit = {
 	id: 'kit-dual-wielder',
 	name: 'Dual Wielder',
-	description: 'The Dual Wielder kit is for folks who want to excel at using two weapons at the same time. The fighting style maximizes the power of each instrument in your hands, making you a whirling deliverer of death.',
+	description: 'The Dual Wielder kit is for folks who want to excel at using two weapons at the same time. Your fighting style maximizes the power of each weapon you have in hand, making you a whirling dealer of death.',
 	type: '',
 	armor: [ KitArmor.Medium ],
 	weapon: [ KitWeapon.Light, KitWeapon.Medium ],
@@ -40,7 +40,7 @@ export const dualWielder: Kit = {
 							tier3: '6 damage'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('If you use this ability on your turn, you can target one creature or object with it then use your maneuver and move action for that turn before targeting a second creature or object. You still use the same power roll for both targets.')
+					FactoryLogic.createAbilitySectionText('If you use this ability on your turn, you can use it against one target, then use your maneuver and your move action for that turn before using the ability against a second target. You still use the same power roll for both targets.')
 				]
 			})
 		})

@@ -39,7 +39,7 @@ export const panther: Kit = {
 							tier3: '9 + M or A damage'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('You can move up to 3 squares straight toward the target before this attack. You deal extra damage equal to the distance moved this way.')
+					FactoryLogic.createAbilitySectionText('You can move up to 3 squares straight toward the target before this strike, which deals extra damage equal to the number of squares you move this way.')
 				]
 			})
 		})

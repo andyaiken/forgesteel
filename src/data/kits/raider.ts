@@ -10,7 +10,7 @@ export const raider: Kit = {
 	name: 'Raider',
 	description: 'The Raider kit keeps you protected while granting you full mobility, providing a boost to speed and distance that lets you run around the battlefield like a Viking warrior.',
 	type: '',
-	armor: [ KitArmor.Medium, KitArmor.Shield ],
+	armor: [ KitArmor.Light, KitArmor.Shield ],
 	weapon: [ KitWeapon.Light ],
 	stamina: 6,
 	speed: 1,
@@ -43,7 +43,7 @@ export const raider: Kit = {
 							tier3: '7 + M or A damage'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('The target has a bane on their next power roll made before the end of their next turn.')
+					FactoryLogic.createAbilitySectionText('The target takes a bane on their next power roll made before the end of their next turn')
 				]
 			})
 		})

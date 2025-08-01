@@ -7,7 +7,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const arcaneArcher: Kit = {
 	id: 'kit-arcane-archer',
 	name: 'Arcane Archer',
-	description: 'The Arcane Archer kit allows you to combine magic and ranged weapon attacks. Your lack of armor keeps you mobile, and your magic makes your arrows explode to devastate your foes.',
+	description: 'The Arcane Archer kit allows you to combine magic and ranged weapon strikes. Your lack of armor keeps you mobile, and your magic makes your arrows explode to devastate your foes.',
 	type: '',
 	armor: [],
 	weapon: [ KitWeapon.Bow ],
@@ -39,7 +39,7 @@ export const arcaneArcher: Kit = {
 							tier3: '8 + A, R, I, or P fire damage'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('A creature or object within 2 squares of your target takes fire damage equal to the characteristic score you added to this ability’s power roll.')
+					FactoryLogic.createAbilitySectionText('One creature or object of your choice within 2 squares of the target takes fire damage equal to the characteristic score used for this ability\'s power roll.')
 				]
 			})
 		})

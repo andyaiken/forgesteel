@@ -1,39 +1,42 @@
 export class ConditionData {
-	static bleeding = 'While bleeding, whenever you make a test using Might or Agility, make a strike, or use an action, maneuver, or a triggered action, you lose 1d6 Stamina after the test, action, maneuver, or triggered action is resolved. This Stamina loss can’t be prevented in any way.';
+	static bleeding = `
+While a creature is bleeding, whenever they use a main action, use a triggered action, or make a test or ability roll using Might or Agility, they lose Stamina equal to 1d6 + their level after the main action, triggered action, or power roll is resolved. This Stamina loss can’t be prevented in any way.
+
+You take damage from this condition when you use a main action off your turn. For example, a signature ability used as a free triggered action with the assistance of the tactician’s Strike Now ability triggers the damage from the bleeding condition.`;
 
 	static dazed = `
-While you are dazed, you can do only one thing on your turn: use a maneuver, use an action, or take a move action.
-
-You also can’t use triggered actions, free triggered actions, or free maneuvers.`;
+A creature who is dazed can do only one thing on their turn: use a main action, use a maneuver, or use a move action. A dazed creature also can’t use triggered actions, free triggered actions, or free maneuvers.`;
 
 	static frightened = `
-If you are frightened, ability power rolls you make against the source of your fear take a bane. If that source is a creature, their ability power rolls against you gain an edge. You can’t willingly move closer to the source of your fear if you know the location of that source.
-
-If you gain the frightened condition from one source while already frightened by a different source, the new condition replaces the old one.`;
+When a creature is frightened, any ability roll they make against the source of their fear takes a bane. If that source is a creature, their ability rolls made against the frightened creature gain an edge. A frightened creature can’t willingly move closer to the source of their fear if they know the location of that source. If a creature gains the frightened condition from one source while already frightened by a different source, the new condition replaces the old one.`;
 
 	static grabbed = `
-While you are grabbed, your speed is 0, you can’t be force moved, you can’t use the Knockback maneuver, and you take a bane on abilities that don’t target the creature grabbing you. If the creature grabbing you moves, they bring you with them. If the creature’s size is equal to or less than yours, their speed is halved while they have you grabbed.
+A creature who is grabbed has speed 0, can’t be force moved except by a creature, object, or effect that has them grabbed, can’t use the Knockback maneuver, and takes a bane on abilities that don’t target the creature, object, or effect that has them grabbed. If a creature is grabbed by another creature and that creature moves, they bring the grabbed creature with them. If a creature’s size is equal to or less than the size of a creature they have grabbed, their speed is halved while they have that creature grabbed.
 
-The creature grabbing you can use a maneuver to move you into an unoccupied space adjacent to them.
+A creature who has another creature grabbed can use a maneuver to move the grabbed creature into an unoccupied space adjacent to them.
 
-The creature grabbing you can end the grab at any time (no action required). You can also attempt to escape being grabbed using the Escape Grab maneuver. If you teleport or if the creature grabbing you is force moved to a space that isn’t adjacent to you, you are no longer grabbed.`;
+A creature can release a creature they have grabbed at any time to end that condition (no action required). A grabbed creature can attempt to escape being grabbed using the Escape Grab maneuver. If a grabbed creature teleports, or if either the grabbed creature or the creature grabbing them is force moved so that both creatures are no longer adjacent to each other, that creature is no longer grabbed.
+
+A creature can grab only creatures of their size or smaller. If a creature’s Might score is 2 or higher, they can grab any creature larger than them with a size equal to or less than their Might score.
+
+Unless otherwise indicated, a creature can grab only one creature at a time.`;
 
 	static prone = `
-While you are prone, you are flat on the ground, strikes you make take a bane, and melee abilities made against you gain an edge. You must crawl to move along the ground, which costs you 1 additional square of movement for every square you crawl. You can’t climb, jump, swim, or fly while prone. If you are climbing, flying, or jumping while you are knocked prone, you fall.
+While a creature is prone, they are flat on the ground, any strike they make takes a bane, and melee abilities used against them gain an edge. A prone creature must crawl to move along the ground, which costs 1 additional square of movement for every square crawled. A creature can’t climb, jump, swim, or fly while prone. If they are climbing, flying, or jumping when knocked prone, they fall.
 
-While prone, you can stand up as a maneuver, unless the ability or effect that imposed the condition says otherwise. You can use a maneuver to make an adjacent prone creature stand up.`;
+Unless the ability or effect that imposed the prone condition says otherwise, a prone creature can stand up using the Stand Up maneuver. A creature adjacent to a willing prone creature can likewise use the Stand Up maneuver to make that creature stand up.`;
 
 	static restrained = `
-While you are restrained, your speed is 0, you can’t use the Stand Up maneuver, and you can’t be force moved. Your ability power rolls take a bane, abilities against you gain an edge, and you have a bane on Might and Agility tests.
+A creature who is restrained has speed 0, can’t use the Stand Up maneuver, and can’t be force moved. A restrained creature takes a bane on ability rolls and on Might and Agility tests, and abilities used against them gain an edge.
 
-If you teleport while restrained, the condition ends.`;
+If a creature teleports while restrained, that condition ends.`;
 
-	static slowed = 'While you are slowed, your speed is 2 unless it is already lower, and you can’t shift.';
+	static slowed = `
+A creature who is slowed has speed 2 unless their speed is already lower, and they can’t shift.`;
 
 	static taunted = `
-If you are taunted, you have a double bane on ability power rolls that don’t target the creature who taunted you while you have line of effect to that creature.
+A creature who is taunted has a double bane on ability rolls for any ability that doesn’t target the creature who taunted them, as long as they have line of effect to that creature. If a creature gains the taunted condition from one source while already taunted by a different source, the new condition replaces the old one.`;
 
-If you gain the taunted condition from one creature while already taunted by a different creature, the new condition replaces the old one.`;
-
-	static weakened = 'While you are weakened, all your power rolls take a bane.';
+	static weakened = `
+A creature who is weakened takes a bane on power rolls.`;
 }

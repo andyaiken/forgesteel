@@ -48,7 +48,7 @@ Choose one of the following effects:
 				description: 'You intuit a creature\'s keywords.',
 				type: FactoryLogic.type.createManeuver(),
 				keywords: [],
-				distance: [FactoryLogic.distance.createSelf()],
+				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('Choose a creature within 10 squares. If that creature is your level or lower, you learn the keywords in their stat block (Demon, Humanoid, Undead, and so forth)')

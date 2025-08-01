@@ -43,7 +43,7 @@ export class ExplorationPerkData {
 				description: 'You hurl your ally through the air.',
 				type: FactoryLogic.type.createManeuver(),
 				keywords: [],
-				distance: [FactoryLogic.distance.createSelf()],
+				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You grab a willing adjacent ally or object of your size or smaller, then vertical push that target up to a number of squares equal to twice your Might score. If a creature you push falls as a result of this movement, the effective distance of the fall is reduced by a number of squares equal to twice your Might score. When you use this perk, you can’t use it again until you earn 1 or more Victories.')
@@ -65,7 +65,7 @@ export class ExplorationPerkData {
 				description: 'You catch a falling ally at the last possible moment.',
 				type: FactoryLogic.type.createTrigger('A willing ally lands on you or adjacent to you when they fall.', { free: true }),
 				keywords: [],
-				distance: [FactoryLogic.distance.createSelf()],
+				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You catch your ally. Neither of you takes damage from the fall.')

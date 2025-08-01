@@ -607,7 +607,7 @@ export class SourcebookData {
 				name: 'Khoursirian',
 				description: 'Spoken in Koursir; a distant offshoot of Khamish.',
 				type: LanguageType.Regional,
-				related: ['Khamish']
+				related: [ 'Khamish' ]
 			},
 			{
 				name: 'Oaxuatl',
@@ -662,7 +662,7 @@ export class SourcebookData {
 				name: 'Filliaric',
 				description: 'Spoken by Angulotls; an offshoot of Cyllinric.',
 				type: LanguageType.Cultural,
-				related: ['Cyllinric']
+				related: [ 'Cyllinric' ]
 			},
 			{
 				name: 'The First Language',
@@ -692,19 +692,19 @@ export class SourcebookData {
 				name: 'Kalliak',
 				description: 'Spoken by orcs; an offshoot of Zaliac.',
 				type: LanguageType.Cultural,
-				related: ['Zaliac']
+				related: [ 'Zaliac' ]
 			},
 			{
 				name: 'Kethaic',
 				description: 'Spoken by kobolds; a patois of Vastariax and Caelian.',
 				type: LanguageType.Cultural,
-				related: ['Caelian', 'Vastariax']
+				related: [ 'Caelian', 'Vastariax' ]
 			},
 			{
 				name: 'Khelt',
 				description: 'Spoken by bugbears and the fey; an offshoot of Kheltivari.',
 				type: LanguageType.Cultural,
-				related: ['Kheltivari']
+				related: [ 'Kheltivari' ]
 			},
 			{
 				name: 'Low Kuric',
@@ -722,7 +722,7 @@ export class SourcebookData {
 				name: 'Proto-Ctholl',
 				description: 'Spoken by demons; an incomplete offshoot of Tholl.',
 				type: LanguageType.Cultural,
-				related: ['Tholl']
+				related: [ 'Tholl' ]
 			},
 			{
 				name: 'Szetch',
@@ -758,7 +758,7 @@ export class SourcebookData {
 				name: 'Vhoric',
 				description: 'Spoken by hakaan; offshoot of the stone giant dialect of High Kuric.',
 				type: LanguageType.Cultural,
-				related: ['High Kuric']
+				related: [ 'High Kuric' ]
 			},
 			{
 				name: 'Voll',
@@ -789,55 +789,55 @@ export class SourcebookData {
 				name: 'Ananjali',
 				description: 'Was spoken by hobgoblins.',
 				type: LanguageType.Dead,
-				related: ['Anjali']
+				related: [ 'Anjali' ]
 			},
 			{
 				name: 'High Rhyvian',
 				description: 'Was spoken by sun elves.',
 				type: LanguageType.Dead,
-				related: ['Hyrallic', 'Yllyric']
+				related: [ 'Hyrallic', 'Yllyric' ]
 			},
 			{
 				name: 'Khamish',
 				description: 'Was spoken by beast lords.',
 				type: LanguageType.Dead,
-				related: ['Khoursirian']
+				related: [ 'Khoursirian' ]
 			},
 			{
 				name: 'Kheltivari',
 				description: 'Was spoken by the fae.',
 				type: LanguageType.Dead,
-				related: ['Khelt', 'Yllyric']
+				related: [ 'Khelt', 'Yllyric' ]
 			},
 			{
 				name: 'Low Rhyvian',
 				description: 'Was spoken by sky elves.',
 				type: LanguageType.Dead,
-				related: ['Hyrallic']
+				related: [ 'Hyrallic' ]
 			},
 			{
 				name: 'Old Variac',
 				description: 'Was spoken by olothecs and voiceless talkers.',
 				type: LanguageType.Dead,
-				related: ['Variac']
+				related: [ 'Variac' ]
 			},
 			{
 				name: 'Phorialtic',
 				description: 'Was spoken by elementals.',
 				type: LanguageType.Dead,
-				related: ['High Kuric', 'Low Kuric']
+				related: [ 'High Kuric', 'Low Kuric' ]
 			},
 			{
 				name: 'Rallarian',
 				description: 'Was spoken by steel dwarves.',
 				type: LanguageType.Dead,
-				related: ['Zaliac']
+				related: [ 'Zaliac' ]
 			},
 			{
 				name: 'Ullorvic',
 				description: 'Was spoken by star elves.',
 				type: LanguageType.Dead,
-				related: ['Hyrallic', 'Yllyric']
+				related: [ 'Hyrallic', 'Yllyric' ]
 			}
 		],
 		projects: [],

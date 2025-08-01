@@ -1,5 +1,7 @@
 # Development Plans
 
+You can go prone as a free maneuver
+
 ### Heroes
 
 * Automatic update of library resources when there is a newer version
@@ -36,6 +38,7 @@
   * Ability to set 'used reaction' flag on heroes / monsters / minions
   * Monsters:
     * Ability to duplicate / delete monsters in a slot
+    * Solo monsters have double turns
   * Terrain:
     * Show number of squares on terrain encounter row
     * Show 'should be N squares' for terrain

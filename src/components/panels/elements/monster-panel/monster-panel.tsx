@@ -4,6 +4,7 @@ import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { AbilityModal } from '../../../modals/ability/ability-modal';
 import { AbilityPanel } from '../ability-panel/ability-panel';
+import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Characteristic } from '../../../../enums/characteristic';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
@@ -97,6 +98,14 @@ export const MonsterPanel = (props: Props) => {
 											{
 												props.monster.role.organization === MonsterOrganizationType.Minion ?
 													<Field label='Minion' value='On their turn, each minion can take only a move action and a main action, a move action and a maneuver, or two move actions.' />
+													: null
+											}
+											{
+												abilities.some(a => a.type.usage === AbilityUsage.VillainAction) ?
+													<Field
+														label='Villain Actions'
+														value='This creature can use a villain action at the end of any other creature’s turn during combat. Each villain action can be used only once per encounter, and no more than one villain action can be used per round.'
+													/>
 													: null
 											}
 											{

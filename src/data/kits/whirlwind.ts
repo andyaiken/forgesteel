@@ -25,7 +25,7 @@ export const whirlwind: Kit = {
 				id: 'kit-whirlwind-signature',
 				name: 'Extension Of My Arm',
 				description: 'When you draw your whip back after an attack, your enemy is drawn ever closer.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee(2) ],
 				target: '1 creature',

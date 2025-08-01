@@ -26,7 +26,7 @@ export const warriorPriest: Kit = {
 				id: 'kit-warrior-priest-signature',
 				name: 'Weakening Brand',
 				description: 'The impact of your weapon brands your target for destruction.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature or object',

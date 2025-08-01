@@ -26,7 +26,7 @@ export const swordAndBoard: Kit = {
 				id: 'kit-sword-and-board-signature',
 				name: 'Shield Bash',
 				description: 'In your hands, a shield isn\'t just for protection.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature',

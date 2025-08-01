@@ -47,7 +47,7 @@ As a shadow, you possess abilities that deal significant damage, enable you to m
 							value: '1d3'
 						},
 						{
-							trigger: 'The first time each round that you deal damage with at least one surge',
+							trigger: 'The first time each combat round that you deal damage incorporating 1 or more surges',
 							value: '1'
 						}
 					],
@@ -207,26 +207,24 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
 					count: 1
 				}),
-				// Is this the right way?
-				
-				FactoryLogic.feature.createHeroicResource({
-					id: 'shadow-resource-4',
-					name: 'Insight',
-					gains: [
-						{
-							trigger: 'Start of your turn',
-							value: '1d3'
-						},
-						{
-							trigger: 'The first time each round that you deal damage with at least one surge',
-							value: '2'
-						}
-					],
-					details: `
-When you use a heroic ability that has a power roll, that ability costs 1 less insight if you have an edge or double edge on it.
-
-If the ability has multiple targets, the cost is reduced even if the ability has an edge or double edge against only one target.`
+				FactoryLogic.feature.create({
+					id: 'shadow-4-6',
+					name: 'Surge of Insight',
+					description: 'The first time each combat round that you deal damage incorporating 1 or more surges, you gain 2 insight instead of 1.'
 				})
+				
+				
+				
+				/*/ Is this the right way?
+				
+				FactoryLogic.feature.createHeroicResourceGain({
+					id: 'shadow-4-6',
+					name: 'Surge of Insight',
+					trigger: 'The first time each combat round that you deal damage incorporating 1 or more surges',
+					value: '2'
+				})
+*/
+				
 			]
 		},
 		{

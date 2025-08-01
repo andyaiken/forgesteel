@@ -15,7 +15,7 @@ export const memonek: Ancestry = {
 		FactoryLogic.feature.create({
 			id: 'memonek-feature-2',
 			name: 'Lightweight',
-			description: 'Your body is light for a creature of your height. Your size is considered 1S when being force moved by another creature.'
+			description: 'Your body is light for a creature of your height. Whenever another creature attempts to force move you, you treat your size as one size smaller than it is.'
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'memonek-feature-3',
@@ -25,7 +25,7 @@ export const memonek: Ancestry = {
 					feature: FactoryLogic.feature.create({
 						id: 'memonek-feature-3-1',
 						name: 'I Am Law',
-						description: 'Your lawful nature and quick reflexes give no quarter to enemies trying to get around you. Enemy creatures can’t pass through your space unless you allow them to do so.'
+						description: 'Your lawful nature and quick reflexes mean you give no quarter to creatures trying to get past you. Enemies can’t move through your space unless you allow them to do so.'
 					}),
 					value: 1
 				},
@@ -33,7 +33,7 @@ export const memonek: Ancestry = {
 					feature: FactoryLogic.feature.create({
 						id: 'memonek-feature-3-2',
 						name: 'Systematic Mind',
-						description: 'You have an edge on tests to parse schematics, maps, and other systematic documentation that aren’t inherently chaotic. In addition, you interact with any language you don’t know as if you know a related language, whether or not you actually do.'
+						description: 'You gain an edge on tests made to parse schematics, maps, and other systematic documents that aren’t inherently chaotic. In addition, you treat any language you don’t know as if you know a related language.'
 					}),
 					value: 1
 				},
@@ -41,7 +41,7 @@ export const memonek: Ancestry = {
 					feature: FactoryLogic.feature.create({
 						id: 'memonek-feature-3-3',
 						name: 'Unphased',
-						description: 'Your ordered mind can’t be caught off guard. You can’t be surprised.'
+						description: 'Your ordered mind can’t be caught off guard. You can’t be made surprised.'
 					}),
 					value: 1
 				},
@@ -49,7 +49,7 @@ export const memonek: Ancestry = {
 					feature: FactoryLogic.feature.create({
 						id: 'memonek-feature-3-4',
 						name: 'Useful Emotion',
-						description: 'Velloparatha might hinder, but it also fuels your strikes. You know how to turn your pain into something your enemies feel. When combat starts, you gain one surge.'
+						description: 'Velloparatha - the worldsickness - might hinder, but you know how to turn your pain into something your enemies feel. At the start of any combat, you gain 1 surge.'
 					}),
 					value: 1
 				},
@@ -58,13 +58,13 @@ export const memonek: Ancestry = {
 						ability: FactoryLogic.createAbility({
 							id: 'memonek-feature-3-5',
 							name: 'Keeper of Order',
-							description: 'Your connection to Axiom, the plane of uttermost law, allows you manage chaos around you.',
+							description: 'Your connection to Axiom, the plane of Uttermost Law, allows you to manage chaos around you.',
 							type: FactoryLogic.type.createTrigger('You, or a creature adjacent to you, makes a power roll', { free: true }),
 							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You can remove an edge or a bane on the roll. You can only use this benefit once per round.')
+								FactoryLogic.createAbilitySectionText('You can remove an edge or a bane on the roll, turn a double edge into an edge, or turn a double bane into a bane. You can only use this benefit once per round.')
 							]
 						})
 					}),
@@ -83,7 +83,7 @@ export const memonek: Ancestry = {
 					feature: FactoryLogic.feature.createConditionImmunity({
 						id: 'memonek-feature-3-7',
 						name: 'Nonstop',
-						description: 'Your connection to Axiom allows you to regulate your movements, even when other creatures would be forced to pause.',
+						description: 'Your connection to Axiom allows you to regulate your movement.',
 						conditions: [ ConditionType.Slowed ]
 					}),
 					value: 2

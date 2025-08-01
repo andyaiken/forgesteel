@@ -25,7 +25,7 @@ export const sniper: Kit = {
 				id: 'kit-sniper-signature',
 				name: 'Patient Shot',
 				description: 'Breathe … aim … wait … then strike!',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createRanged(5) ],
 				target: '1 creature',

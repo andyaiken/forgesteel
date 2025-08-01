@@ -66,7 +66,7 @@ export const paragon: SubClass = {
 									id: 'censor-sub-3-2-3b',
 									name: 'Sentenced',
 									description: 'I am the law!',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
 									target: '1 creature',

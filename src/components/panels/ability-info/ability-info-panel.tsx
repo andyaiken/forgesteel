@@ -21,8 +21,8 @@ export const AbilityInfoPanel = (props: Props) => {
 			let monogram = '';
 
 			switch (props.ability.type.usage) {
-				case AbilityUsage.Action:
-					monogram = 'action';
+				case AbilityUsage.MainAction:
+					monogram = 'main';
 					break;
 				case AbilityUsage.Maneuver:
 					monogram = 'maneuver';

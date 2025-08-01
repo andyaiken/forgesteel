@@ -26,7 +26,7 @@ export const rapidFire: Kit = {
 				id: 'kit-rapid-fire-signature',
 				name: 'Two Shot',
 				description: 'When you fire two arrows back to back, both hit their mark.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createRanged(5) ],
 				target: '2 creatures or objects',

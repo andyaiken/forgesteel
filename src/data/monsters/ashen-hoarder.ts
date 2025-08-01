@@ -92,7 +92,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 					ability: FactoryLogic.createAbility({
 						id: 'ashen-hoarder-feature-3',
 						name: 'Claw and Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
@@ -112,7 +112,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 					ability: FactoryLogic.createAbility({
 						id: 'ashen-hoarder-feature-4',
 						name: 'Corpse Bomb',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 20 }) ],
 						target: 'All enemies in the cube',
@@ -140,7 +140,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 					ability: FactoryLogic.createAbility({
 						id: 'ashen-hoarder-feature-5',
 						name: 'Impale',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 1, within: 1 }) ],
 						target: 'All creatures in the line',

@@ -14,7 +14,7 @@ export const StandardAbilitiesPanel = (props: Props) => {
 	try {
 		return (
 			<div className='standard-abilities-panel'>
-				<div className='standard-abilities-page' id='actions'>
+				<div className='standard-abilities-page' id='mains'>
 					<div className='standard-abilities-row'>
 						<AbilityPanel ability={AbilityData.charge} hero={props.hero} mode={PanelMode.Full} />
 						<AbilityPanel ability={AbilityData.defend} hero={props.hero} mode={PanelMode.Full} />

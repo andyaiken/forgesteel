@@ -26,7 +26,7 @@ export const cloakAndDagger: Kit = {
 				id: 'kit-cloak-and-dagger-signature',
 				name: 'Fade',
 				description: 'A stab, and a few quick, careful steps back.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [
 					FactoryLogic.distance.createMelee(),

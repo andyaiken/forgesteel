@@ -234,8 +234,8 @@ export const ReferenceModal = (props: Props) => {
 				<Tabs
 					items={[
 						{
-							key: 'actions',
-							label: 'Actions',
+							key: 'mains',
+							label: 'Main Actions',
 							children:
 								<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 									{
@@ -245,7 +245,7 @@ export const ReferenceModal = (props: Props) => {
 											AbilityData.heal,
 											AbilityData.swap
 										]
-											.filter(a => a.type.usage === AbilityUsage.Action)
+											.filter(a => a.type.usage === AbilityUsage.MainAction)
 											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
 									}
 								</Space>

@@ -102,7 +102,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-1-feature-1',
 						name: 'Snap and Toss',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object per minion',
@@ -143,7 +143,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-2-feature-1',
 						name: 'Shield Smash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object per minion',
@@ -185,7 +185,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-3-feature-1',
 						name: 'Tonguelash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(8) ],
 						target: '1 creature or object per minion',
@@ -226,7 +226,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-4-feature-1',
 						name: 'Bola Knock',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature or object',
@@ -245,7 +245,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-4-feature-2',
 						name: 'Bloodshot',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',
@@ -285,7 +285,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-5-feature-1',
 						name: 'Razor Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
@@ -305,7 +305,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-5-feature-2',
 						name: 'Tail Whip',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
@@ -346,7 +346,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-6-feature-1',
 						name: 'Glaive Rush',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(8) ],
 						target: '1 creature or object',
@@ -366,7 +366,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-6-feature-2',
 						name: 'Poison Blowdart',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature or object',
@@ -411,7 +411,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-7-feature-1',
 						name: 'Ripper Spear',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: '2 creatures or objects',
@@ -435,7 +435,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-7-feature-2',
 						name: 'Death Roll',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 grabbed creature or object',

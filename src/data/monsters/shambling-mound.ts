@@ -99,7 +99,7 @@ One must also be wary of the area around a shambling mound—their vines reach o
 					ability: FactoryLogic.createAbility({
 						id: 'shambling-mound-feature-3',
 						name: 'Vine Lash',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(6) ],
 						target: '2 creatures or objects',
@@ -128,7 +128,7 @@ One must also be wary of the area around a shambling mound—their vines reach o
 					ability: FactoryLogic.createAbility({
 						id: 'shambling-mound-feature-4',
 						name: 'Seismic Slam',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 6 }) ],
 						target: 'Each enemy in the burst',
@@ -146,7 +146,7 @@ One must also be wary of the area around a shambling mound—their vines reach o
 					ability: FactoryLogic.createAbility({
 						id: 'shambling-mound-feature-5',
 						name: 'Engulf',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee(6) ],
 						target: 'One creature or object',

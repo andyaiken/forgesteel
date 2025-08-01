@@ -36,7 +36,7 @@ export const knowledge: Domain = {
 						id: 'domain-knowledge-2',
 						name: 'The Gods Command, You Obey',
 						description: 'You speak with the voice of your saint, commanding your enemies.',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: '1 creature',

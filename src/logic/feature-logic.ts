@@ -414,7 +414,7 @@ export class FeatureLogic {
 					return MonsterFeatureCategory.Signature;
 				}
 				switch (feature.data.ability.type.usage) {
-					case AbilityUsage.Action:
+					case AbilityUsage.MainAction:
 						return MonsterFeatureCategory.Action;
 					case AbilityUsage.Maneuver:
 						return MonsterFeatureCategory.Maneuver;

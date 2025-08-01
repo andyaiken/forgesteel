@@ -66,7 +66,7 @@ export const lightbender: MonsterGroup = {
 			id: 'lightbender-1',
 			name: 'Lightbender',
 			level: 3,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Troop, MonsterRoleType.Ambusher),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Ambusher),
 			keywords: [ 'Beast', 'Lightbender' ],
 			encounterValue: 20,
 			speed: FactoryLogic.createSpeed(10),
@@ -80,7 +80,7 @@ export const lightbender: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'lightbender-1-feature-1',
 						name: 'Flash Swipe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
@@ -100,7 +100,7 @@ export const lightbender: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'lightbender-1-feature-2',
 						name: 'Piercing Tails',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
@@ -159,7 +159,7 @@ export const lightbender: MonsterGroup = {
 			id: 'lightbender-2',
 			name: 'Lightbender Pouncer',
 			level: 3,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Troop, MonsterRoleType.Harrier),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Harrier),
 			keywords: [ 'Beast', 'Lightbender' ],
 			encounterValue: 20,
 			speed: FactoryLogic.createSpeed(10),
@@ -173,7 +173,7 @@ export const lightbender: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'lightbender-2-feature-1',
 						name: 'Pounce',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
@@ -193,7 +193,7 @@ export const lightbender: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'lightbender-2-feature-2',
 						name: 'Sparkling Tail Whip',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies and objects in the burst',

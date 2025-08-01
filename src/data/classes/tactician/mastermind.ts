@@ -89,7 +89,7 @@ You can only make this test once for each encounter and negotiation.`
 									id: 'tactician-sub-2-2-2a',
 									name: 'I\'ve Got Your Back',
 									description: 'Your enemy will think twice about attacking your friend.',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createRanged(5) ],
 									target: '1 creature',

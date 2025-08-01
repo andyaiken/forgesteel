@@ -26,7 +26,7 @@ export const spellsword: Kit = {
 				id: 'kit-spellsword-signature',
 				name: 'Leaping Lightning',
 				description: 'Lightning jumps from your weapon as you strike to harm a nearby foe.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature or object',

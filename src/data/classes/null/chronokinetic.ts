@@ -68,7 +68,7 @@ As your discipline grows, your psionic mastery of your body intensifies.
 									id: 'null-sub-1-2-2b',
 									name: 'Force Redirected',
 									description: 'The force of your strike manifests in a surprising location.',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee(3) ],
 									target: '1 creature',

@@ -26,7 +26,7 @@ export const retiarius: Kit = {
 				id: 'kit-retiarius-signature',
 				name: 'Net And Stab',
 				description: 'The well-thrown net that follows your main attack leaves your foes right where you want them.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature',

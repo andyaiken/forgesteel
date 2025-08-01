@@ -117,7 +117,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-1-feature-2',
 						name: 'Daggers',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [
@@ -162,7 +162,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-2-feature-1',
 						name: 'Banded Dagger',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -210,7 +210,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-3-feature-1',
 						name: 'Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -255,7 +255,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-4-feature-1',
 						name: 'Bolt Launcher',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -284,7 +284,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 			id: 'wardog-5',
 			name: 'War Dog Amalgamite',
 			level: 2,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Brute),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Brute),
 			keywords: [ 'Human', 'Humanoid' ],
 			encounterValue: 4,
 			size: FactoryLogic.createSize(2),
@@ -298,7 +298,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-5-feature-1',
 						name: 'Several Arms',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -345,7 +345,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 			id: 'wardog-6',
 			name: 'War Dog Eviscerite',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Harrier),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Harrier),
 			keywords: [ 'War Dog', 'Humanoid' ],
 			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
@@ -359,7 +359,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-6-feature-1',
 						name: 'Chainsaw Whip',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -401,7 +401,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 			id: 'wardog-7',
 			name: 'War Dog Crucibite',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Artillery),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Artillery),
 			keywords: [ 'War Dog', 'Humanoid' ],
 			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
@@ -421,7 +421,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-7-feature-2',
 						name: 'Flamebelcher',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [
@@ -468,7 +468,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 			id: 'wardog-8',
 			name: 'War Dog Neuronite',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Defender),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Defender),
 			keywords: [ 'War Dog', 'Humanoid' ],
 			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
@@ -488,7 +488,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-8-feature-2',
 						name: 'Synlirii Grafts',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [
@@ -543,7 +543,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 			id: 'wardog-9',
 			name: 'War Dog Pestilite',
 			level: 3,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Controller),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Controller),
 			keywords: [ 'War Dog', 'Humanoid' ],
 			encounterValue: 5,
 			size: FactoryLogic.createSize(1, 'M'),
@@ -563,7 +563,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-9-feature-2',
 						name: 'Plaguecaster',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [
@@ -605,7 +605,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 			id: 'wardog-10',
 			name: 'War Dog Portalite',
 			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Ambusher),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
 			keywords: [ 'War Dog', 'Humanoid' ],
 			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
@@ -619,7 +619,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-10-feature-1',
 						name: 'Corrupted Ash Daggers',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -681,7 +681,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 			id: 'wardog-11',
 			name: 'War Dog Phosphorite',
 			level: 2,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Hexer),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Hexer),
 			keywords: [ 'War Dog', 'Humanoid' ],
 			encounterValue: 4,
 			size: FactoryLogic.createSize(1, 'M'),
@@ -701,7 +701,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-11-feature-2',
 						name: 'Caustic Detonator',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [
@@ -744,7 +744,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 			id: 'wardog-12',
 			name: 'War Dog Subcommander',
 			level: 2,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Band, MonsterRoleType.Support),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Support),
 			keywords: [ 'War Dog', 'Humanoid' ],
 			encounterValue: 4,
 			size: FactoryLogic.createSize(1, 'M'),
@@ -758,7 +758,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-12-feature-1',
 						name: 'Command Saber',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -819,7 +819,7 @@ Most war dogs speak Caelian and one Vaslorian human language.
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-13-feature-1',
 						name: 'Conditioning Spear',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [

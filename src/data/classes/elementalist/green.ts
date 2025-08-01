@@ -78,7 +78,7 @@ You can revert back to your true form as a maneuver. You can’t enter an animal
 						id: 'elementalist-sub-3-3-1',
 						name: 'Remember Growth and Sun and Rain',
 						description: 'You stir any wood’s memory and learn what it has seen.',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One mundane wooden object',

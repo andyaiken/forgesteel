@@ -82,7 +82,7 @@ export const wodeElfTroubadour = {
 										name: 'The Wode Defends',
 										description: 'Thorny vines erupt into existence and attempt to bind your foe.',
 										type: {
-											usage: 'Action',
+											usage: 'Main Action',
 											free: false,
 											trigger: '',
 											time: '',
@@ -474,7 +474,7 @@ export const wodeElfTroubadour = {
 													name: 'Fancy Footwork',
 													description: 'All combat is a dance - and you’ll be the one leading.',
 													type: {
-														usage: 'Action',
+														usage: 'Main Action',
 														free: false,
 														trigger: '',
 														time: '',
@@ -597,7 +597,7 @@ export const wodeElfTroubadour = {
 												name: 'Allow Me To Introduce Tonight\'s Players',
 												description: '',
 												type: {
-													usage: 'Action',
+													usage: 'Main Action',
 													free: false,
 													trigger: '',
 													time: '',
@@ -700,7 +700,7 @@ export const wodeElfTroubadour = {
 				name: 'Artful Flourish',
 				description: 'And they said practicing fencing was a waste!',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -754,7 +754,7 @@ export const wodeElfTroubadour = {
 				name: 'Cutting Sarcasm',
 				description: 'There you are, radiating your usual charisma.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -802,7 +802,7 @@ export const wodeElfTroubadour = {
 				name: 'Instigator',
 				description: 'I didn’t do it! What?',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -849,7 +849,7 @@ export const wodeElfTroubadour = {
 				name: 'Witty Banter',
 				description: 'A lyrical (and physical) jab insults an enemy and inspires an ally.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -912,7 +912,7 @@ export const wodeElfTroubadour = {
 				name: 'Harsh Critic',
 				description: 'Just one bad review will ruin their day.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -968,7 +968,7 @@ export const wodeElfTroubadour = {
 				name: 'Hypnotic Overtones',
 				description: 'You produce an entrancing note that twists the senses in a spectacular fashion.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1021,7 +1021,7 @@ export const wodeElfTroubadour = {
 				name: 'Quick Rewrite',
 				description: 'You write something unforeseen into the scene that hinders your enemy.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1116,7 +1116,7 @@ export const wodeElfTroubadour = {
 				name: 'Dramatic Reversal',
 				description: 'Give the audience a surprise.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1199,7 +1199,7 @@ export const wodeElfTroubadour = {
 				name: 'Flip the Script',
 				description: 'You try a different take on events, justifying the new locations everyone ended up in.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1237,7 +1237,7 @@ export const wodeElfTroubadour = {
 				name: 'Method Acting',
 				description: 'They’re so hurt by your performance, you sort of start to believe it yourself.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1331,7 +1331,7 @@ export const wodeElfTroubadour = {
 				name: 'Infernal Gavotte',
 				description: 'A spicy performance lights a fire under your allies’ feet.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1378,7 +1378,7 @@ export const wodeElfTroubadour = {
 				name: 'Virtuoso\'s Solo',
 				description: 'Your performance travels and doesn’t stop moving until your audience is completely rocked.',
 				type: {
-					usage: 'Action',
+					usage: 'Main Action',
 					free: false,
 					trigger: '',
 					time: '',
@@ -1658,7 +1658,7 @@ export const wodeElfTroubadour = {
 														name: 'Classic Chandelier Stunt',
 														description: 'Audiences love this bit.',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -1708,7 +1708,7 @@ export const wodeElfTroubadour = {
 														name: 'En Garde!',
 														description: 'Wait it’s … Guard! Turn! Perry! Dodge! Spin! Thrust! Hah!',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -1974,7 +1974,7 @@ export const wodeElfTroubadour = {
 														name: 'Guest Star',
 														description: 'We offered them a percentage of the gross. So they’re working for free!',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -2023,7 +2023,7 @@ export const wodeElfTroubadour = {
 														name: 'Twist at the End',
 														description: 'You didn’t see that coming, did you?!',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',
@@ -2337,7 +2337,7 @@ export const wodeElfTroubadour = {
 														name: 'Encore',
 														description: 'Again! Again!',
 														type: {
-															usage: 'Action',
+															usage: 'Main Action',
 															free: false,
 															trigger: '',
 															time: '',

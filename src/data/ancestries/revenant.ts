@@ -92,7 +92,7 @@ You can have an active number of sigils equal to your level. You can remove a si
 									id: 'revenant-feature-4-5-2',
 									name: 'Detonate Sigil',
 									description: 'A magical sigil you placed on a creature explodes with energy.',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: '1 creature with your sigil',

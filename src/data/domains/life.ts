@@ -36,7 +36,7 @@ export const life: Domain = {
 						id: 'domain-life-2',
 						name: 'Wellspring of Grace',
 						description: 'A holy light is emitted from your body, healing your allies.',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
 						target: 'Each ally in the area',

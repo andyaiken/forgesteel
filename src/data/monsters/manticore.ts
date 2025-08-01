@@ -93,7 +93,7 @@ export const manticore: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'manticore-feature-3',
 						name: 'Carniverous Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature or object',
@@ -113,7 +113,7 @@ export const manticore: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'manticore-feature-4',
 						name: 'Tail Spike',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures or objects',

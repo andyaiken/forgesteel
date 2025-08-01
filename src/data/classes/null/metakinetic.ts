@@ -53,7 +53,7 @@ Additionally, you have forced movement damage immunity equal to your level and r
 									id: 'null-sub-3-2-2a',
 									name: 'Gravitic Strike',
 									description: 'Your fist projects gravitic force that pulls a distant enemy closer.',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee(3) ],
 									target: '1 creature',

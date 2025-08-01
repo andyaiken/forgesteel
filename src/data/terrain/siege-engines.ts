@@ -41,7 +41,7 @@ export const arrowLauncher: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'arrow-storm',
 						name: 'Arrow Storm',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 20 }) ],
 						target: 'All creatures or objects',
@@ -67,7 +67,7 @@ export const arrowLauncher: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'reload',
 						name: 'Reload',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -85,7 +85,7 @@ export const arrowLauncher: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'spot',
 						name: 'Spot',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -103,7 +103,7 @@ export const arrowLauncher: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'move',
 						name: 'Move',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -136,7 +136,7 @@ export const arrowLauncher: Terrain = {
 							ability: FactoryLogic.createAbility({
 								id: 'screamers',
 								name: 'Screamers',
-								type: FactoryLogic.type.createAction(),
+								type: FactoryLogic.type.createMain(),
 								keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Area ],
 								distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 20 }) ],
 								target: 'All creatures and objects',
@@ -199,7 +199,7 @@ export const boilingOilCauldron: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'boiling-oil',
 						name: 'Boiling Oil',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						target: 'All creatures and objects',
@@ -225,7 +225,7 @@ export const boilingOilCauldron: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'reload',
 						name: 'Reload',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -279,7 +279,7 @@ export const catapult: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'arcing-shot',
 						name: 'Arcing Shot',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 20 }) ],
 						target: 'All creatures and objects',
@@ -304,7 +304,7 @@ export const catapult: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'reload',
 						name: 'Reload',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -322,7 +322,7 @@ export const catapult: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'spot',
 						name: 'Spot',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -340,7 +340,7 @@ export const catapult: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'move',
 						name: 'Move',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -409,7 +409,7 @@ export const explodingMillWheel: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'roll-the-wheel',
 						name: 'Roll the Wheel',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -427,7 +427,7 @@ export const explodingMillWheel: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'crushing-wheel',
 						name: 'Crushing Wheel',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'All creature and objects',
@@ -523,7 +523,7 @@ export const fieldBallista: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'release-bolt',
 						name: 'Release Bolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: '1 creature or object',
@@ -549,7 +549,7 @@ export const fieldBallista: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'reload',
 						name: 'Reload',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -567,7 +567,7 @@ export const fieldBallista: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'spot',
 						name: 'Spot',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -585,7 +585,7 @@ export const fieldBallista: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'move',
 						name: 'Move',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -618,7 +618,7 @@ export const fieldBallista: Terrain = {
 							ability: FactoryLogic.createAbility({
 								id: 'chain-bolt',
 								name: 'Chain Bolt',
-								type: FactoryLogic.type.createAction(),
+								type: FactoryLogic.type.createMain(),
 								keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(20) ],
 								target: '1 creature or object',
@@ -639,7 +639,7 @@ export const fieldBallista: Terrain = {
 							ability: FactoryLogic.createAbility({
 								id: 'crank-chain',
 								name: 'Crank Chain',
-								type: FactoryLogic.type.createAction(),
+								type: FactoryLogic.type.createMain(),
 								keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(20) ],
 								target: '1 creature slowed by the field ballista',
@@ -702,7 +702,7 @@ export const ironDragon: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'gout-of-flame',
 						name: 'Gout of Flame',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 8, value2: 2, within: 1 }) ],
 						target: 'All creatures and objects',
@@ -728,7 +728,7 @@ export const ironDragon: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'reload',
 						name: 'Reload',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -746,7 +746,7 @@ export const ironDragon: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'spot',
 						name: 'Spot',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',
@@ -764,7 +764,7 @@ export const ironDragon: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'move',
 						name: 'Move',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'This object',

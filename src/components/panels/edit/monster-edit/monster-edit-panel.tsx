@@ -167,7 +167,7 @@ export const MonsterEditPanel = (props: Props) => {
 					ability: FactoryLogic.createAbility({
 						id: Utils.guid(),
 						name: 'Level 4',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						distance: [],
 						target: '',
 						sections: []
@@ -178,7 +178,7 @@ export const MonsterEditPanel = (props: Props) => {
 					ability: FactoryLogic.createAbility({
 						id: Utils.guid(),
 						name: 'Level 7',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						distance: [],
 						target: '',
 						sections: []
@@ -189,7 +189,7 @@ export const MonsterEditPanel = (props: Props) => {
 					ability: FactoryLogic.createAbility({
 						id: Utils.guid(),
 						name: 'Level 10',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						distance: [],
 						target: '',
 						sections: []
@@ -256,7 +256,7 @@ export const MonsterEditPanel = (props: Props) => {
 				<Select
 					style={{ width: '100%' }}
 					placeholder='Select organization'
-					options={[ MonsterOrganizationType.NoOrganization, MonsterOrganizationType.Minion, MonsterOrganizationType.Band, MonsterOrganizationType.Platoon, MonsterOrganizationType.Troop, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
+					options={[ MonsterOrganizationType.NoOrganization, MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
 					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
 					showSearch={true}
 					filterOption={(input, option) => {

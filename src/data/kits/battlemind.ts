@@ -26,7 +26,7 @@ export const battlemind: Kit = {
 				id: 'kit-battlemind-signature',
 				name: 'Unmooring',
 				description: 'Your weapon unleashes psionic energy that reduces your target’s weight.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature',

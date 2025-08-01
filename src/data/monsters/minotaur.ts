@@ -74,7 +74,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 			id: 'minotaur-1',
 			name: 'Minotaur',
 			level: 3,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Troop, MonsterRoleType.Harrier),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Harrier),
 			keywords: [ 'Accursed', 'Humanoid', 'Minotaur' ],
 			encounterValue: 20,
 			size: FactoryLogic.createSize(2),
@@ -88,7 +88,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 					ability: FactoryLogic.createAbility({
 						id: 'minotaur-1-feature-1',
 						name: 'Flail and Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
@@ -108,7 +108,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 					ability: FactoryLogic.createAbility({
 						id: 'minotaur-1-feature-2',
 						name: 'Primal Bay',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
@@ -162,7 +162,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 			id: 'minotaur-2',
 			name: 'Minotaur Sunderer',
 			level: 3,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Troop, MonsterRoleType.Brute),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Brute),
 			keywords: [ 'Accursed', 'Humanoid', 'Minotaur' ],
 			encounterValue: 20,
 			size: FactoryLogic.createSize(2),
@@ -176,7 +176,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 					ability: FactoryLogic.createAbility({
 						id: 'minotaur-2-feature-1',
 						name: 'Spiked Maul',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
@@ -196,7 +196,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 					ability: FactoryLogic.createAbility({
 						id: 'minotaur-2-feature-2',
 						name: 'Fearsome Bay',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All enemies in the burst',
@@ -271,7 +271,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 					ability: FactoryLogic.createAbility({
 						id: 'minotaur-3-feature-1',
 						name: 'Javelin and Bellow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(2),
@@ -315,7 +315,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 					ability: FactoryLogic.createAbility({
 						id: 'minotaur-4-feature-1',
 						name: 'Horn Vault',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
@@ -357,7 +357,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 					ability: FactoryLogic.createAbility({
 						id: 'minotaur-5-feature-1',
 						name: 'Bull Rush',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
@@ -398,7 +398,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 					ability: FactoryLogic.createAbility({
 						id: 'minotaur-6-feature-1',
 						name: 'Gore',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
@@ -463,7 +463,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 					ability: FactoryLogic.createAbility({
 						id: 'minotaur-6-retainer-10',
 						name: 'Horn Rake',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies',

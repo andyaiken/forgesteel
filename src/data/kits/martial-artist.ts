@@ -25,7 +25,7 @@ export const martialArtist: Kit = {
 				id: 'kit-martial-artist-signature',
 				name: 'Battle Grace',
 				description: 'You feint to move your enemies into perfect position.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature',

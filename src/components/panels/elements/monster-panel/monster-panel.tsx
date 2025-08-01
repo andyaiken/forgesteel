@@ -96,7 +96,7 @@ export const MonsterPanel = (props: Props) => {
 										<div className='features'>
 											{
 												props.monster.role.organization === MonsterOrganizationType.Minion ?
-													<Field label='Minion' value='On their turn, each minion can take only a move action and an action, a move action and a maneuver, or two move actions.' />
+													<Field label='Minion' value='On their turn, each minion can take only a move action and a main action, a move action and a maneuver, or two move actions.' />
 													: null
 											}
 											{

@@ -26,7 +26,7 @@ export const guisarmier: Kit = {
 				id: 'kit-guisarmier-signature',
 				name: 'Forward Thrust, Backward Smash',
 				description: 'In your hands, the haft is as good as the head.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '2 creatures or objects',

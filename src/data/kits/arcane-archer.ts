@@ -25,7 +25,7 @@ export const arcaneArcher: Kit = {
 				id: 'kit-arcane-archer-signature',
 				name: 'Exploding Arrow',
 				description: 'Your ammunition explodes with magical energy.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createRanged(5) ],
 				target: '1 creature or object',

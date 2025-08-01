@@ -112,7 +112,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 					ability: FactoryLogic.createAbility({
 						id: 'xorannox-1-feature-3',
 						name: 'Toothful Thrashing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -131,7 +131,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 					ability: FactoryLogic.createAbility({
 						id: 'xorannox-1-feature-4',
 						name: 'Grav Spike',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies in the burst',
@@ -260,7 +260,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 					ability: FactoryLogic.createAbility({
 						id: 'xorannox-2-feature-1',
 						name: 'Compulsion Beam',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(6) ],
@@ -301,7 +301,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 					ability: FactoryLogic.createAbility({
 						id: 'xorannox-3-feature-1',
 						name: 'Explosion',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
@@ -341,7 +341,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 					ability: FactoryLogic.createAbility({
 						id: 'xorannox-4-feature-1',
 						name: 'Telekinetic Beam',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(6) ],
@@ -381,7 +381,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 					ability: FactoryLogic.createAbility({
 						id: 'xorannox-5-feature-1',
 						name: 'Necro Beam',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -422,7 +422,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 					ability: FactoryLogic.createAbility({
 						id: 'xorannox-6-feature-1',
 						name: 'Toxic Vapors',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
@@ -462,7 +462,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 					ability: FactoryLogic.createAbility({
 						id: 'xorannox-7-feature-1',
 						name: 'Suffusing Strike',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],

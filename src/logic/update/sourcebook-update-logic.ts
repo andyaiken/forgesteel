@@ -2,7 +2,7 @@ import { AbilityUpdateLogic } from './ability-update-logic';
 import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { LanguageType } from '../../enums/language-type';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { MonsterUpdateLogic } from './monster-update-logic';
 import { Sourcebook } from '../../models/sourcebook';
 
 export class SourcebookUpdateLogic {
@@ -64,34 +64,7 @@ export class SourcebookUpdateLogic {
 				group.addOns = [];
 			}
 
-			group.monsters.forEach(monster => {
-				if (monster.picture === undefined) {
-					monster.picture = null;
-				}
-
-				if (monster.role.organization === undefined) {
-					monster.role.organization = MonsterOrganizationType.Platoon;
-				}
-
-				if (monster.state === undefined) {
-					monster.state = {
-						staminaDamage: 0,
-						staminaTemp: 0,
-						recoveriesUsed: 0,
-						conditions: [],
-						reactionUsed: false,
-						hidden: false,
-						defeated: false,
-						captainID: undefined
-					};
-				}
-
-				monster.features.forEach(FeatureUpdateLogic.updateFeature);
-				monster.features
-					.filter(f => f.type === FeatureType.Ability)
-					.map(f => f.data.ability)
-					.forEach(AbilityUpdateLogic.updateAbility);
-			});
+			group.monsters.forEach(MonsterUpdateLogic.updateMonster);
 		});
 
 		sourcebook.domains.forEach(domain => {

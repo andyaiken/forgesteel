@@ -98,7 +98,7 @@ export const fossilCryptic: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'fossil-cryptic-feature-4',
 						name: 'Sand Slam',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
@@ -118,7 +118,7 @@ export const fossilCryptic: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'fossil-cryptic-feature-5',
 						name: 'Stone Bone Storm',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 6, value2: 1, within: 1 }) ],
 						target: 'All enemies in the line',
@@ -137,7 +137,7 @@ export const fossilCryptic: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'fossil-cryptic-feature-6',
 						name: 'Shatterstone',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
 						target: 'Each enemy in the burst',

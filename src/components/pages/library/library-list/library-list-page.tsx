@@ -1213,7 +1213,7 @@ export const LibraryListPage = (props: Props) => {
 									key: '4',
 									title: 'Organization',
 									dataIndex: 'organization',
-									filters: [ MonsterOrganizationType.Band, MonsterOrganizationType.Leader, MonsterOrganizationType.Minion, MonsterOrganizationType.Platoon, MonsterOrganizationType.Retainer, MonsterOrganizationType.Solo, MonsterOrganizationType.Troop ].map(r => ({ text: r, value: r })),
+									filters: [ MonsterOrganizationType.Horde, MonsterOrganizationType.Leader, MonsterOrganizationType.Minion, MonsterOrganizationType.Platoon, MonsterOrganizationType.Retainer, MonsterOrganizationType.Solo, MonsterOrganizationType.Elite ].map(r => ({ text: r, value: r })),
 									onFilter: (value, record) => record.organization.toLowerCase().includes((value as string).toLowerCase()),
 									sorter: (a, b) => a.organization.localeCompare(b.organization)
 								},

@@ -53,7 +53,7 @@ Adding insult to injury, those who deal with hags almost always discover the pro
 			ability: FactoryLogic.createAbility({
 				id: 'hag-malice-2',
 				name: 'Hag Wyrd',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				cost: 5,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
@@ -77,7 +77,7 @@ Adding insult to injury, those who deal with hags almost always discover the pro
 The hag’s hut springs to life. It enters the encounter map within 10 of the hag if it isn’t already there and takes its turn. The hut is Size-4, has 75 Stamina and damage immunity 3, a speed of 8, and a set of powerful animal legs. This feature can’t be used if the hut is reduced to 0 Stamina. The house can only take the following action.
 
 **KICK**`,
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				cost: 7,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 2 }) ],
@@ -121,7 +121,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 					ability: FactoryLogic.createAbility({
 						id: 'hag-feature-3',
 						name: 'Corrosive Claws',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
@@ -140,7 +140,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 					ability: FactoryLogic.createAbility({
 						id: 'hag-feature-4',
 						name: 'Soul Steal',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 1 }) ],
 						target: 'All enemies in the cube',

@@ -35,7 +35,7 @@ export const fate: Domain = {
 						id: 'domain-fate-2',
 						name: 'Blessing of Fate and Destiny',
 						description: 'Your enemies suffer their fate; your allies embrace their destiny!',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three creatures, including self',

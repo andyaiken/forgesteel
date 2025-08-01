@@ -37,7 +37,7 @@ export const sun: Domain = {
 						id: 'domain-sun-2',
 						name: 'Morning Light',
 						description: 'Light shines at your command, burning your foes and blessing your allies.',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',

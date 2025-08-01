@@ -115,7 +115,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-1-feature-1',
 						name: 'Brutal Flail',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
@@ -162,7 +162,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-2-feature-1',
 						name: 'Fifth Fist',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -208,7 +208,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-3-feature-1',
 						name: 'Serrated Saber',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -284,7 +284,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-4-feature-1',
 						name: 'Sunderbuss',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
@@ -348,7 +348,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-5-feature-1',
 						name: 'Blaster Volley',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -412,7 +412,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-6-feature-1',
 						name: 'Golden Sickles',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -472,7 +472,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-7-feature-1',
 						name: 'Repelling Psihander',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -494,7 +494,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-7-feature-2',
 						name: 'Mindpunk',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
@@ -540,7 +540,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-8-feature-1',
 						name: 'Golden Scythe',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -562,7 +562,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-8-feature-2',
 						name: 'Kinetic Crush',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -609,7 +609,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-9-feature-1',
 						name: 'Psionic Slam',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -629,7 +629,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-9-feature-2',
 						name: 'Split Space',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 5,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
@@ -681,7 +681,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-10-feature-1',
 						name: 'Gatling Blaster',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -813,7 +813,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-11-feature-1',
 						name: 'Laser Lancet',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
@@ -846,7 +846,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-11-feature-4',
 						name: 'Stim Charge',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature',
@@ -859,7 +859,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-11-feature-5',
 						name: 'Mind Whelm',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature',
@@ -879,7 +879,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-11-feature-6',
 						name: 'Psychic Short Circuit',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'All enemies',

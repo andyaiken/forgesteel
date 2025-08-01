@@ -84,7 +84,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 					ability: FactoryLogic.createAbility({
 						id: 'chimera-feature-3',
 						name: 'Bite',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: '2 creatures or objects',
@@ -104,7 +104,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 					ability: FactoryLogic.createAbility({
 						id: 'chimera-feature-4',
 						name: 'Dragon\'s Eruption',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'All enemies in the cube',
@@ -141,7 +141,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 					ability: FactoryLogic.createAbility({
 						id: 'chimera-feature-6',
 						name: 'Roar',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All enemies in the burst',

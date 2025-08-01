@@ -1,8 +1,6 @@
-import { AbilityUpdateLogic } from './ability-update-logic';
 import { EncounterObjectiveData } from '../../data/encounter-objective-data';
 import { FactoryLogic } from '../factory-logic';
-import { FeatureType } from '../../enums/feature-type';
-import { FeatureUpdateLogic } from './feature-update-logic';
+import { MonsterUpdateLogic } from './monster-update-logic';
 import { Playbook } from '../../models/playbook';
 import { PlotContentReference } from '../../models/plot';
 
@@ -58,14 +56,7 @@ export class PlaybookUpdateLogic {
 						};
 					}
 
-					s.monsters
-						.flatMap(m => m.features)
-						.forEach(FeatureUpdateLogic.updateFeature);
-					s.monsters
-						.flatMap(m => m.features)
-						.filter(f => f.type === FeatureType.Ability)
-						.map(f => f.data.ability)
-						.forEach(AbilityUpdateLogic.updateAbility);
+					s.monsters.forEach(MonsterUpdateLogic.updateMonster);
 				});
 
 				if (e.heroes === undefined) {

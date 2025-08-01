@@ -79,7 +79,7 @@ export const HeroCustomizePanel = (props: Props) => {
 										ability: FactoryLogic.createAbility({
 											id: Utils.guid(),
 											name: 'Unnamed Ability',
-											type: FactoryLogic.type.createAction(),
+											type: FactoryLogic.type.createMain(),
 											distance: [ FactoryLogic.distance.createSelf() ],
 											target: 'Self',
 											sections: []

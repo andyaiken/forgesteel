@@ -64,7 +64,7 @@ export const oracle: SubClass = {
 									id: 'censor-sub-2-2-3b',
 									name: 'With My Blessing',
 									description: 'A word in prayer, and the gods show the way.',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: 'Self or one ally',

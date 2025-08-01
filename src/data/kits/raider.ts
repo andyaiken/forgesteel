@@ -26,7 +26,7 @@ export const raider: Kit = {
 				id: 'kit-raider-signature',
 				name: 'Shock and Awe',
 				description: 'You execute a brutal strike that leaves your foe reeling.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [
 					FactoryLogic.distance.createMelee(),

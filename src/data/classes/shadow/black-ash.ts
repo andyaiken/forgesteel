@@ -71,7 +71,7 @@ export const blackAsh: SubClass = {
 									id: 'shadow-sub-1-2-1a',
 									name: 'In a Puff of Ash',
 									description: 'You enchant a strike with your teleportation magic.',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [
 										FactoryLogic.distance.createMelee(),

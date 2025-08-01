@@ -107,7 +107,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-1-feature-1',
 						name: 'Stick and Poke',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -148,7 +148,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-2-feature-1',
 						name: 'Gloom Strike',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -189,7 +189,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-3-feature-1',
 						name: 'Vault',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -233,7 +233,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-4-feature-1',
 						name: 'Neon Arrow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(7) ],
@@ -276,7 +276,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-5-feature-1',
 						name: 'Neon Assault',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
@@ -303,7 +303,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-5-feature-2',
 						name: 'Splitbow',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 4, within: 10 }) ],
@@ -346,7 +346,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-6-feature-1',
 						name: 'Suffusing Strike',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
@@ -398,7 +398,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-7-feature-1',
 						name: 'Night Knife',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -458,7 +458,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-8-feature-1',
 						name: 'Neon Mark',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
@@ -480,7 +480,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-8-feature-2',
 						name: 'Mourning \'Til Dusk',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
@@ -523,7 +523,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-9-feature-1',
 						name: 'Crescent Sweep',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -579,7 +579,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-10-feature-1',
 						name: 'Knife in the Dark',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -634,7 +634,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-11-feature-1',
 						name: 'Blotting Bolt',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
@@ -703,7 +703,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-12-feature-1',
 						name: 'Dusk Cleave',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -725,7 +725,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-12-feature-2',
 						name: 'Bladestorm',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
@@ -768,7 +768,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-13-feature-1',
 						name: 'Manifold Blade',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -889,7 +889,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-14-feature-1',
 						name: 'Gore',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
@@ -908,7 +908,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-14-feature-2',
 						name: 'Reclamation',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
@@ -953,7 +953,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-15-feature-1',
 						name: 'Shadow Dagger',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
@@ -998,7 +998,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-15-retainer-7',
 						name: 'Slow-Poison Needle',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 creature',
@@ -1019,7 +1019,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-15-retainer-10',
 						name: 'Shadow-Poison Dagger',
-						type: FactoryLogic.type.createAction({ qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '1 creature',

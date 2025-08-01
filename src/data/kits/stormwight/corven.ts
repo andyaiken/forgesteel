@@ -26,7 +26,7 @@ export const corven: Kit = {
 				id: 'kit-corven-signature',
 				name: 'Wing Buffet',
 				description: 'Foes who try to close around you do so at their peril.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 				target: 'Each enemy in the area',

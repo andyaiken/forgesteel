@@ -84,7 +84,7 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 			id: 'ogre-1',
 			name: 'Ogre Goon',
 			level: 2,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Troop, MonsterRoleType.Brute),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Brute),
 			keywords: [ 'Giant', 'Ogre' ],
 			encounterValue: 16,
 			speed: FactoryLogic.createSpeed(5),
@@ -98,7 +98,7 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 					ability: FactoryLogic.createAbility({
 						id: 'ogre-1-feature-1',
 						name: 'Club Swing',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
@@ -191,7 +191,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 			id: 'ogre-2',
 			name: 'Ogre Juggernaut',
 			level: 2,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Troop, MonsterRoleType.Harrier),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Harrier),
 			keywords: [ 'Giant', 'Ogre' ],
 			encounterValue: 16,
 			speed: FactoryLogic.createSpeed(6),
@@ -205,7 +205,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					ability: FactoryLogic.createAbility({
 						id: 'ogre-2-feature-1',
 						name: 'Pitchfork Catapult',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
@@ -231,7 +231,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					ability: FactoryLogic.createAbility({
 						id: 'ogre-2-feature-2',
 						name: 'Earth Breaking Jump',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'All creatures in the burst',
@@ -309,7 +309,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					ability: FactoryLogic.createAbility({
 						id: 'ogre-3-feature-1',
 						name: 'Wild Slam',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'All enemies and objects in the burst',
@@ -353,7 +353,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					ability: FactoryLogic.createAbility({
 						id: 'ogre-4-feature-1',
 						name: 'Crush Underfoot',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
@@ -402,7 +402,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					ability: FactoryLogic.createAbility({
 						id: 'ogre-5-feature-1',
 						name: 'Throw Fit',
-						type: FactoryLogic.type.createAction(),
+						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One creature or object per minion',

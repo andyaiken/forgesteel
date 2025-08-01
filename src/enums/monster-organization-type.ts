@@ -1,8 +1,8 @@
 export enum MonsterOrganizationType {
 	Minion = 'Minion',
-	Band = 'Band',
+	Horde = 'Horde',
 	Platoon = 'Platoon',
-	Troop = 'Troop',
+	Elite = 'Elite',
 	Leader = 'Leader',
 	Solo = 'Solo',
 	Retainer = 'Retainer',

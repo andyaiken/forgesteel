@@ -80,7 +80,7 @@ Each target is marked by you. You immediately force each targeted creature to ma
 									id: 'tactician-sub-1-2-2b',
 									name: 'Try Me Instead',
 									description: '“Try picking on someone MY size.”',
-									type: FactoryLogic.type.createAction(),
+									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
 									target: '1 creature',

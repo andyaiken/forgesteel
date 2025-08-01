@@ -25,7 +25,7 @@ export const vuken: Kit = {
 				id: 'kit-vuken-signature',
 				name: 'Probing Attack',
 				description: 'A savage assault forces your foes back.',
-				type: FactoryLogic.type.createAction(),
+				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature or object',

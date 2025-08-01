@@ -21,14 +21,13 @@ export const StandardAbilitiesPanel = (props: Props) => {
 						<AbilityPanel ability={AbilityData.freeStrike} hero={props.hero} mode={PanelMode.Full} />
 						<AbilityPanel ability={AbilityData.heal} hero={props.hero} mode={PanelMode.Full} />
 						<AbilityPanel ability={AbilityData.swap} hero={props.hero} mode={PanelMode.Full} />
-						<div className='blank-panel' />
 					</div>
 					<Divider />
 					<div className='standard-abilities-row'>
 						<AbilityPanel ability={AbilityData.advance} hero={props.hero} mode={PanelMode.Full} />
 						<AbilityPanel ability={AbilityData.disengage} hero={props.hero} mode={PanelMode.Full} />
 						<AbilityPanel ability={AbilityData.ride} hero={props.hero} mode={PanelMode.Full} />
-						<div className='blank-panel' />
+						<AbilityPanel ability={AbilityData.goProne} hero={props.hero} mode={PanelMode.Full} />
 						<AbilityPanel ability={AbilityData.opportunityAttack} hero={props.hero} mode={PanelMode.Full} />
 					</div>
 				</div>
@@ -40,7 +39,6 @@ export const StandardAbilitiesPanel = (props: Props) => {
 						<AbilityPanel ability={AbilityData.hide} hero={props.hero} mode={PanelMode.Full} />
 						<AbilityPanel ability={AbilityData.standUp} hero={props.hero} mode={PanelMode.Full} />
 						<AbilityPanel ability={AbilityData.escapeGrab} hero={props.hero} mode={PanelMode.Full} />
-						<AbilityPanel ability={AbilityData.goProne} hero={props.hero} mode={PanelMode.Full} />
 					</div>
 					<div className='standard-abilities-row'>
 						<AbilityPanel ability={AbilityData.grab} hero={props.hero} mode={PanelMode.Full} />

@@ -124,12 +124,13 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 	static escapeGrab = FactoryLogic.createAbility({
 		id: 'escape-grab',
 		name: 'Escape Grab',
-		description: 'A creature who is grabbed by another creature, an object, or an effect can attempt to escape by using the following ability.',
+		description: '',
 		type: FactoryLogic.type.createManeuver(),
 		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
+			FactoryLogic.createAbilitySectionText('A creature who is grabbed by another creature, an object, or an effect can attempt to escape by using this ability.'),
 			FactoryLogic.createAbilitySectionRoll(
 				FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might, Characteristic.Agility ],
@@ -158,12 +159,13 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 	static grab = FactoryLogic.createAbility({
 		id: 'grab',
 		name: 'Grab',
-		description: 'A creature seeking to keep a foe close and locked down can attempt to grab a creature using the following ability.',
+		description: '',
 		type: FactoryLogic.type.createManeuver(),
 		keywords: [ AbilityKeyword.Melee ],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: '1 creature',
 		sections: [
+			FactoryLogic.createAbilitySectionText('A creature seeking to keep a foe close and locked down can attempt to grab a creature using this ability.'),
 			FactoryLogic.createAbilitySectionRoll(
 				FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might ],
@@ -193,12 +195,13 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 	static knockback = FactoryLogic.createAbility({
 		id: 'knockback',
 		name: 'Knockback',
-		description: 'A creature wanting to push an adjacent creature away from them can attempt to shove that creature using the following ability.',
+		description: '',
 		type: FactoryLogic.type.createManeuver(),
 		keywords: [ AbilityKeyword.Melee ],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: '1 creature',
 		sections: [
+			FactoryLogic.createAbilitySectionText('A creature wanting to push an adjacent creature away from them can attempt to shove that creature using this ability.'),
 			FactoryLogic.createAbilitySectionRoll(
 				FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might ],

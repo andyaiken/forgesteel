@@ -7,7 +7,7 @@ import { SubClass } from '../../../models/subclass';
 export const insurgent: SubClass = {
 	id: 'tactician-sub-1',
 	name: 'Insurgent',
-	description: 'Doing your duty, playing fair, and dying honorably in battle is your opponent’s job. By contrast, you’ll do whatever it takes to keep your allies alive.',
+	description: 'Doing your duty, playing fair, and dying honorably in battle is your opponent’s job. You’ll do whatever it takes to keep your allies alive.',
 	featuresByLevel: [
 		{
 			level: 1,
@@ -19,7 +19,10 @@ export const insurgent: SubClass = {
 				FactoryLogic.feature.create({
 					id: 'tactician-sub-1-1-2',
 					name: 'Covert Operations',
-					description: 'While in your presence or working according to your plans, each of your allies gains an edge on tests with any skill from the intrigue skill group. Additionally, you can use the Lead skill to assist on any test made with a skill from the intrigue group. At the Director’s discretion, you and your allies can use skills from the intrigue skill group to attempt research or reconnaissance during a negotiation instead of outside of negotiation.'
+					description: `
+While in your presence or working according to your plans, each of your allies gains an edge on tests using any skill from the intrigue skill group. Additionally, you can use the Lead skill to assist another creature with any test made using a skill from the intrigue group.
+
+At the Director’s discretion, you and your allies can use skills from the intrigue skill group to attempt research or reconnaissance during a negotiation instead of outside of a negotiation.`
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -29,13 +32,13 @@ export const insurgent: SubClass = {
 						type: FactoryLogic.type.createTrigger('The target deals damage to another creature.'),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'Any creature',
+						target: '1 ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target gains two surges, which they can use on the triggering damage.'),
+							FactoryLogic.createAbilitySectionText('The target gains 2 surges, which they can use on the triggering damage.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'If any effect of the damage has a potency effect, you increase the potency by 1.'
+								effect: 'If the damage has any potency effect associated with it, the potency is increased by 1.'
 							})
 						]
 					})
@@ -48,7 +51,7 @@ export const insurgent: SubClass = {
 				FactoryLogic.feature.create({
 					id: 'tactician-sub-1-2-1',
 					name: 'Infiltration Tactics',
-					description: 'You have trained your squad to work together and benefit from staying silent and waiting for the opportune time to strike. When you or any of your allies within 10 squares of you becomes hidden, they gain a surge.'
+					description: 'You have trained your squad to work together, stay silent, and wait for the opportune time to strike. Whenever you or any ally within 10 squares of you becomes hidden, that creature gains 1 surge.'
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'tactician-sub-1-2-2',
@@ -65,10 +68,11 @@ export const insurgent: SubClass = {
 									target: '2 creatures',
 									cost: 5,
 									sections: [
-										FactoryLogic.createAbilitySectionText(`
-Each target is marked by you. You immediately force each targeted creature to make a free strike against a creature of your choice within 5 squares of the targeted creature.
-
-**Mark Benefit**: For the rest of the encounter whenever you or an ally attacks a marked target, you can spend 2 focus to make the marked target free strike a creature of your choice within 5 squares of the marked target.`)
+										FactoryLogic.createAbilitySectionText('Each target is marked by you, and must immediately make a free strike against a creature of your choice within 5 squares of them.'),
+										FactoryLogic.createAbilitySectionField({
+											name: 'Mark Benefit',
+											effect: 'Until the end of the encounter, whenever you or any ally makes a strike against a creature marked by you, you can spend 2 focus to force that target to make a free strike against a creature of your choice within 5 squares of them.'
+										})
 									]
 								})
 							}),
@@ -79,14 +83,14 @@ Each target is marked by you. You immediately force each targeted creature to ma
 								ability: FactoryLogic.createAbility({
 									id: 'tactician-sub-1-2-2b',
 									name: 'Try Me Instead',
-									description: '“Try picking on someone MY size.”',
+									description: '“Try picking on someone my size.”',
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-									distance: [ FactoryLogic.distance.createMelee() ],
+									distance: [ FactoryLogic.distance.createSelf() ],
 									target: '1 creature',
 									cost: 5,
 									sections: [
-										FactoryLogic.createAbilitySectionText('You shift your speed directly toward an ally adjacent to the target, then swap locations with the ally as long as you can each fit into the other’s space. The ally can spend a Recovery, and you make a power roll against the target.'),
+										FactoryLogic.createAbilitySectionText('You shift up to your speed directly toward an ally, ending adjacent to them, then swapping locations with that ally as long as you can fit into each other’s spaces. The ally can spend a Recovery, and you can make the following weapon strike with a distance of melee 1 against a creature.'),
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Reason ],
@@ -106,6 +110,161 @@ Each target is marked by you. You immediately force each targeted creature to ma
 		},
 		{
 			level: 3,
+			features: []
+		},
+		{
+			level: 4,
+			features: []
+		},
+		{
+			level: 5,
+			features: [
+				FactoryLogic.feature.create({
+					id: 'tactician-sub-1-5-1',
+					name: 'Distracted',
+					description: 'You have mastered the ability to distract your foes, allowing you and your allies to take advantage of their gaps in attention. Whenever you or any ally attempts to hide, any creature marked by you doesn’t count as an observer. Additionally, you and your allies can use other allies as cover for the purpose of hiding.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'tactician-sub-1-5-2',
+					name: 'Leave No Trace',
+					description: 'You and any ally within 10 squares of you can move at full speed while sneaking. Additionally, enemies within 10 squares of you take a bane on tests made to search for you or your allies while any of you are hidden.'
+				})
+			]
+		},
+		{
+			level: 6,
+			features: [
+				FactoryLogic.feature.createChoice({
+					id: 'tactician-sub-1-6-1',
+					options: [
+						{
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'tactician-sub-1-6-1a',
+									name: 'Coordinated Execution',
+									description: 'You direct your ally to make a killing blow.',
+									type: FactoryLogic.type.createTrigger('The target uses an ability to deal rolled damage to a creature while hidden.', { free: true }),
+									keywords: [ AbilityKeyword.Ranged ],
+									distance: [ FactoryLogic.distance.createRanged(10) ],
+									target: 'One ally',
+									cost: 9,
+									sections: [
+										FactoryLogic.createAbilitySectionText('If the target of the triggering ability is not a leader or solo creature, they are reduced to 0 Stamina. If the target of the triggering ability is a minion, the entire squad is killed. If the target of the triggering ability is a leader or solo creature, the triggering ability’s power roll automatically obtains a tier 3 outcome.')
+									]
+								})
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'tactician-sub-1-6-1b',
+									name: 'Panic in Their Lines',
+									description: 'You confuse your foes, causing them to turn on each other.',
+									type: FactoryLogic.type.createMain(),
+									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+									distance: [
+										FactoryLogic.distance.createMelee(),
+										FactoryLogic.distance.createRanged(5)
+									],
+									target: 'Two creatures',
+									cost: 9,
+									sections: [
+										FactoryLogic.createAbilitySectionRoll(
+											FactoryLogic.createPowerRoll({
+												characteristic: Characteristic.Might,
+												tier1: '6 + M damage; slide 1',
+												tier2: '9 + M damage; slide 3',
+												tier3: '13 + M damage; slide 5'
+											})
+										),
+										FactoryLogic.createAbilitySectionText('If a target is force moved into another creature, they must make a free strike against that creature.')
+									]
+								})
+							}),
+							value: 1
+						}
+					]
+				})
+			]
+		},
+		{
+			level: 7,
+			features: [
+				FactoryLogic.feature.create({
+					id: 'tactician-sub-1-7-1',
+					name: 'Asymmetric Warfare',
+					description: 'You have advanced your skills in subterfuge, now directing full battlefield strategy and logistics. During a montage test or negotiation, you can obtain one automatic success on a test made using a skill from the intrigue skill group. Additionally, you can use skills from the intrigue skill group to conceal large groups of people, such as escaping civilians and groups of guerilla warriors.'
+				})
+			]
+		},
+		{
+			level: 8,
+			features: [
+				FactoryLogic.feature.createPackageContent({
+					id: 'tactician-sub-1-8-1',
+					name: 'Bait and Ambush',
+					description: 'When you or any ally makes a strike against a creature marked by you, you can spend 2 focus to let the character making the strike shift up to a number of squares equal to your Reason score and use the Hide maneuver as a free maneuver once during the shift. The creature can shift before or after the strike is resolved.',
+					tag: 'mark'
+				})
+			]
+		},
+		{
+			level: 9,
+			features: [
+				FactoryLogic.feature.createChoice({
+					id: 'tactician-sub-1-9-1',
+					options: [
+						{
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'tactician-sub-1-9-1a',
+									name: 'Squad! Hit and Run!',
+									description: 'I had to pry this secret from the shadow colleges.',
+									type: FactoryLogic.type.createMain(),
+									keywords: [ AbilityKeyword.Ranged ],
+									distance: [ FactoryLogic.distance.createRanged(10) ],
+									target: 'Self and two allies',
+									cost: 11,
+									sections: [
+										FactoryLogic.createAbilitySectionText('Each target gains 2 surges, and can use a free triggered action to use a signature ability that gains an edge. After resolving their ability, each target can shift up to 2 squares and become hidden even if they have no cover or concealment, or if they are observed.')
+									]
+								})
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createAbility({
+								ability: FactoryLogic.createAbility({
+									id: 'tactician-sub-1-9-1b',
+									name: 'Their Lack of Focus Is Their Undoing',
+									description: 'You trick your enemies into attacking each other and leave them confused by the aftermath.',
+									type: FactoryLogic.type.createMain(),
+									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+									distance: [ FactoryLogic.distance.createRanged(10) ],
+									target: 'Three enemies',
+									cost: 11,
+									sections: [
+										FactoryLogic.createAbilitySectionText('Each target uses a signature ability against one or more targets of your choosing, with each ability automatically obtaining a tier 3 outcome on the power roll. After resolving the targets’ abilities, you make a power roll against each original target.'),
+										FactoryLogic.createAbilitySectionRoll(
+											FactoryLogic.createPowerRoll({
+												characteristic: Characteristic.Might,
+												tier1: 'R < [weak], dazed (save ends)',
+												tier2: 'R < [average], dazed (save ends)',
+												tier3: 'R < [strong], dazed (save ends)'
+											})
+										)
+									]
+								})
+							}),
+							value: 1
+						}
+					]
+				})
+			]
+		},
+		{
+			level: 10,
 			features: []
 		}
 	],

@@ -248,11 +248,10 @@ You can choose only one free triggered action option at a time, even if multiple
 					id: 'censor-7-2',
 					level: 7
 				}),
-				FactoryLogic.feature.createHeroicResourceGain({
+				FactoryLogic.feature.create({
 					id: 'censor-7-3',
 					name: 'Focused Wrath',
-					trigger: 'Start of your turn',
-					value: '1'
+					description: 'When you gain wrath at the start of each of your turns during combat, you gain 3 wrath instead of 2.'
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-7-4',
@@ -331,11 +330,10 @@ Virtue remains until you spend it.
 
      				`
 				}),
-				FactoryLogic.feature.createHeroicResourceGain({
-					id: 'censor-10-6',
+				FactoryLogic.feature.create({
+					id: 'censor-10-5',
 					name: 'Wrath of the Gods',
-					trigger: 'Start of your turn',
-					value: '1'
+					description: 'When you gain wrath at the start of each of your turns during combat, you gain 4 wrath instead of 3.'
 				})
 			]
 		}

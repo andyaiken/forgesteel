@@ -7,7 +7,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const martialArtist: Kit = {
 	id: 'kit-martial-artist',
 	name: 'Martial Artist',
-	description: 'If you want to be fast in a fight, then Martial Artist is the kit for you. Unencumbered by weapons or armor, this fighting style rewards quick, focused unarmed strikes to opponents, and allows you to be the ultimate skirmisher.',
+	description: 'If you want to be fast in a fight, then Martial Artist is the kit for you. Unencumbered by weapons or armor, this fighting style rewards quick, focused unarmed strikes against opponents, and allows you to be the ultimate skirmisher.',
 	type: '',
 	armor: [],
 	weapon: [ KitWeapon.Unarmed ],
@@ -39,7 +39,7 @@ export const martialArtist: Kit = {
 							tier3: '9 + M or A damage; you swap places with the target'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('If you roll a 12 or better and can’t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 2 extra damage.')
+					FactoryLogic.createAbilitySectionText('If you obtain a tier 2 or tier 3 outcome and can\'t swap places with the target because one or both of you is too big to fit into the swapped space, you both remain in your original spaces and the target takes 1 extra damage.')
 				]
 			})
 		})

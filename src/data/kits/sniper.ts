@@ -39,7 +39,7 @@ export const sniper: Kit = {
 							tier3: '9 + M or A damage'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('If you don’t take a move action this turn, this strike deals extra damage equal to your Might or Agility score (your choice).')
+					FactoryLogic.createAbilitySectionText('If you don\'t take a move action this turn, this strike deals extra damage equal to your Might or Agility score (your choice).')
 				]
 			})
 		})

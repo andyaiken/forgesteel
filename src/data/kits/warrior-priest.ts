@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const warriorPriest: Kit = {
 	id: 'kit-warrior-priest',
 	name: 'Warrior Priest',
-	description: 'The Warrior Priest kit imbues the power of the gods into your weapon, making it a smiting instrument. You wade into the fray without fear, thanks to the power of the divine ... and the heavy armor you’re wearing.',
+	description: 'The Warrior Priest kit imbues the power of the gods into your weapon, making it a smiting instrument. You wade into the fray without fear, thanks to the power of the divine … and the heavy armor you wear.',
 	type: '',
 	armor: [ KitArmor.Heavy ],
 	weapon: [ KitWeapon.Light ],
@@ -25,8 +25,8 @@ export const warriorPriest: Kit = {
 			ability: FactoryLogic.createAbility({
 				id: 'kit-warrior-priest-signature',
 				name: 'Weakening Brand',
-				description: '',
-				type: FactoryLogic.type.createMain(),
+				description: 'The impact of your weapon brands your target for destruction.',
+				type: FactoryLogic.type.createAction(),
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature or object',
@@ -40,7 +40,7 @@ export const warriorPriest: Kit = {
 							tier3: '7 + M, R, I, or P holy damage'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('The target has damage weakness equal to the characteristic score you used on this ability’s power roll (EoT).')
+					FactoryLogic.createAbilitySectionText('Until the end of the target\'s next turn, they have damage weakness equal to the characteristic score used for this ability\'s power roll.')
 				]
 			})
 		})

@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const swashbuckler: Kit = {
 	id: 'kit-swashbuckler',
 	name: 'Swashbuckler',
-	description: 'If you want to be mobile and deal a lot of damage with melee attacks, then you should reach for the Swashbuckler kit. This is a great kit for heroes who want to be master duelists.',
+	description: 'If you want to be mobile and deal a lot of damage with melee strikes, then you should reach for the Swashbuckler kit. This is a great kit for heroes who want to be master duelists.',
 	type: '',
 	armor: [ KitArmor.Light ],
 	weapon: [ KitWeapon.Medium ],
@@ -25,8 +25,8 @@ export const swashbuckler: Kit = {
 			ability: FactoryLogic.createAbility({
 				id: 'kit-swashbuckler-signature',
 				name: 'Fancy Footwork',
-				description: 'All combat is a dance - and you’ll be the one leading.',
-				type: FactoryLogic.type.createMain(),
+				description: 'All combat is a dance - and you\'ll be the one leading.',
+				type: FactoryLogic.type.createAction(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
 				target: '1 creature',
@@ -40,7 +40,7 @@ export const swashbuckler: Kit = {
 							tier3: '8 + M or A damage; push 2'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('You can shift into any square your target leaves after you force move them with this ability.')
+					FactoryLogic.createAbilitySectionText('You can shift into any square the target leaves after you push them')
 				]
 			})
 		})

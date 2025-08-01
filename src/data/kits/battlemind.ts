@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const battlemind: Kit = {
 	id: 'kit-battlemind',
 	name: 'Battlemind',
-	description: 'Who says lightly armored heroes can’t also be hard to move? You just need to employ some psionics! You use the Battlemind kit harnesses the power of your mind to make yourself harder to move and your foes easier to push around.',
+	description: 'Who says lightly armored heroes can\'t also be hard to move? You just need to employ some psionics! The Battlemind kit harnesses the power of your mind to make you harder to move—and to make your foes easier to push around.',
 	type: '',
 	armor: [ KitArmor.Light ],
 	weapon: [ KitWeapon.Medium ],
@@ -35,11 +35,12 @@ export const battlemind: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-							tier1: '3 + M, R, I, or P damage; stability reduced by 2 (EoT)',
-							tier2: '6 + M, R, I, or P damage; stability reduced by 3 (EoT)',
-							tier3: '9 + M, R, I, or P damage; stability reduced by 4 (EoT)'
+							tier1: '3 + M, R, I, or P damage',
+							tier2: '6 + M, R, I, or P damage',
+							tier3: '9 + M, R, I, or P damage'
 						})
-					)
+					),
+					FactoryLogic.createAbilitySectionText('Until the end of the target\'s next turn, any forced movement that affects the target has its distance increased by 2.')
 				]
 			})
 		})

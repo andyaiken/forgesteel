@@ -242,6 +242,7 @@ export const ReferenceModal = (props: Props) => {
 										[
 											AbilityData.charge,
 											AbilityData.defend,
+											AbilityData.freeStrike,
 											AbilityData.heal,
 											AbilityData.swap
 										]
@@ -259,14 +260,15 @@ export const ReferenceModal = (props: Props) => {
 										[
 											AbilityData.aidAttack,
 											AbilityData.catchBreath,
-											AbilityData.drinkPotion,
 											AbilityData.escapeGrab,
+											AbilityData.goProne,
 											AbilityData.grab,
 											AbilityData.hide,
 											AbilityData.knockback,
 											AbilityData.makeAssistTest,
 											AbilityData.search,
-											AbilityData.standUp
+											AbilityData.standUp,
+											AbilityData.useConsumable
 										]
 											.filter(a => a.type.usage === AbilityUsage.Maneuver)
 											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
@@ -285,6 +287,20 @@ export const ReferenceModal = (props: Props) => {
 											AbilityData.ride
 										]
 											.filter(a => a.type.usage === AbilityUsage.Move)
+											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
+									}
+								</Space>
+						},
+						{
+							key: 'triggers',
+							label: 'Triggers',
+							children:
+								<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
+									{
+										[
+											AbilityData.opportunityAttack
+										]
+											.filter(a => a.type.usage === AbilityUsage.Trigger)
 											.map(a => <SelectablePanel key={a.id}><AbilityPanel ability={a} hero={props.hero || undefined} mode={PanelMode.Full} /></SelectablePanel>)
 									}
 								</Space>

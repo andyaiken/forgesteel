@@ -181,23 +181,29 @@ export class HeroLogic {
 			;
 
 		if (includeStandard) {
-			abilities.push({ ability: AbilityData.charge, source: 'Standard' });
-			abilities.push({ ability: AbilityData.defend, source: 'Standard' });
-			abilities.push({ ability: AbilityData.heal, source: 'Standard' });
-			abilities.push({ ability: AbilityData.swap, source: 'Standard' });
+			abilities.push({ ability: AbilityData.advance, source: 'Standard' });
+			abilities.push({ ability: AbilityData.disengage, source: 'Standard' });
+			abilities.push({ ability: AbilityData.ride, source: 'Standard' });
+
 			abilities.push({ ability: AbilityData.aidAttack, source: 'Standard' });
 			abilities.push({ ability: AbilityData.catchBreath, source: 'Standard' });
-			abilities.push({ ability: AbilityData.drinkPotion, source: 'Standard' });
 			abilities.push({ ability: AbilityData.escapeGrab, source: 'Standard' });
+			abilities.push({ ability: AbilityData.goProne, source: 'Standard' });
 			abilities.push({ ability: AbilityData.grab, source: 'Standard' });
 			abilities.push({ ability: AbilityData.hide, source: 'Standard' });
 			abilities.push({ ability: AbilityData.knockback, source: 'Standard' });
 			abilities.push({ ability: AbilityData.makeAssistTest, source: 'Standard' });
 			abilities.push({ ability: AbilityData.search, source: 'Standard' });
 			abilities.push({ ability: AbilityData.standUp, source: 'Standard' });
-			abilities.push({ ability: AbilityData.advance, source: 'Standard' });
-			abilities.push({ ability: AbilityData.disengage, source: 'Standard' });
-			abilities.push({ ability: AbilityData.ride, source: 'Standard' });
+			abilities.push({ ability: AbilityData.useConsumable, source: 'Standard' });
+
+			abilities.push({ ability: AbilityData.charge, source: 'Standard' });
+			abilities.push({ ability: AbilityData.defend, source: 'Standard' });
+			abilities.push({ ability: AbilityData.freeStrike, source: 'Standard' });
+			abilities.push({ ability: AbilityData.heal, source: 'Standard' });
+			abilities.push({ ability: AbilityData.swap, source: 'Standard' });
+
+			abilities.push({ ability: AbilityData.opportunityAttack, source: 'Standard' });
 		}
 
 		return abilities;

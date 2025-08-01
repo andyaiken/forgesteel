@@ -52,7 +52,7 @@ export class OptionsUpdateLogic {
 		}
 
 		if (options.minionCount === undefined) {
-			options.minionCount = 8;
+			options.minionCount = 4;
 		}
 
 		if (options.party === undefined) {

@@ -1687,7 +1687,7 @@ export class FactoryLogic {
 			similarRole: true,
 			similarOrganization: true,
 			similarSize: true,
-			minionCount: 8,
+			minionCount: 4,
 			party: '',
 			heroParty: '',
 			heroCount: 4,

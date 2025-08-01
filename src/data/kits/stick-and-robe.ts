@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const stickAndRobe: Kit = {
 	id: 'kit-stick-and-robe',
 	name: 'Stick And Robe',
-	description: 'Armed with a simple reach weapon, often a quarterstaff, heroes using the Stick and Robe kit are highly mobile thanks to their light armor. This allows them to make maximum use of their weapon’s length.',
+	description: 'Armed with a simple reach weapon, often a quarterstaff, a character using the Stick and Robe kit is highly mobile thanks to their light armor. This allows your hero to make maximum use of their weapon\'s length.',
 	type: '',
 	armor: [ KitArmor.Light ],
 	weapon: [ KitWeapon.Polearm ],

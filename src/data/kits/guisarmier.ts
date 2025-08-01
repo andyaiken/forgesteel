@@ -8,7 +8,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const guisarmier: Kit = {
 	id: 'kit-guisarmier',
 	name: 'Guisarmier',
-	description: 'The Guisarmier kit is for those who want to use a polearm for extended reach and still gain the extra protection of armor. This is the kit that allows you to become the ultimate halberd, longspear, or glaive fighter.',
+	description: 'The Guisarmier kit is for those who want to use a polearm for extended reach while remaining protected by sturdy armor. This is the kit that allows you to become the ultimate halberd, longspear, or glaive fighter.',
 	type: '',
 	armor: [ KitArmor.Medium ],
 	weapon: [ KitWeapon.Polearm ],

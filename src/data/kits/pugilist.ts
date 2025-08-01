@@ -7,7 +7,7 @@ import { KitWeapon } from '../../enums/kit-weapon';
 export const pugilist: Kit = {
 	id: 'kit-pugilist',
 	name: 'Pugilist',
-	description: 'Meant for brawlers and boxers, the Pugilist kit gives you access to a melee fighting style that gives you a boost to Stamina and damage while allowing you to float like a butterfly. If you want to be a tough, strong hero who doles out punishment with your fists, then this kit is for you.',
+	description: 'Meant for brawlers and boxers, the Pugilist kit gives you access to a melee fighting style that grants a boost to Stamina and damage while allowing you to float like a butterfly. If you want to be a tough, strong hero who doles out punishment with your fists, then this kit is for you.',
 	type: '',
 	armor: [],
 	weapon: [ KitWeapon.Unarmed ],
@@ -23,7 +23,7 @@ export const pugilist: Kit = {
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'kit-pugilist-signature',
-				name: 'Let’s Dance',
+				name: 'Let\'s Dance',
 				description: 'Keeping your enemies stumbling around the battlefield is second nature to you.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -39,7 +39,7 @@ export const pugilist: Kit = {
 							tier3: '7 + M or A damage; slide 2'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('You can shift into any square your target leaves after you slide them.')
+					FactoryLogic.createAbilitySectionText('You can shift into any square the target leaves after you slide them.')
 				]
 			})
 		})

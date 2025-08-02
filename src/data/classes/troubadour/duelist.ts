@@ -26,7 +26,7 @@ export const duelist: SubClass = {
 						type: FactoryLogic.type.createNoAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Performance ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 5 }) ],
-						target: '',
+						target: 'Self and each ally in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('While this performance is active, each target who starts their turn in the area can automatically obtain a tier 3 outcome on one test made to jump, tumble, or climb as part of their movement before the end of their turn.')
 						]

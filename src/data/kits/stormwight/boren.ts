@@ -7,7 +7,7 @@ import { KitWeapon } from '../../../enums/kit-weapon';
 export const boren: Kit = {
 	id: 'kit-boren',
 	name: 'Boren',
-	description: 'With this stormwight kit, you channel your primordial rage into the form of a bear, becoming large, durable, and imposing. Boren are tied to the craggy, rocky north, and this aspect is associated with the blizzard’s bitter cold.',
+	description: 'With this stormwight kit, you channel your primordial ferocity into the form of a bear, becoming large, durable, and imposing. Boren are tied to the craggy, rocky north, and this aspect is associated with the blizzard’s bitter cold.',
 	type: 'Stormwight',
 	armor: [],
 	weapon: [ KitWeapon.Unarmed ],
@@ -24,7 +24,7 @@ export const boren: Kit = {
 			ability: FactoryLogic.createAbility({
 				id: 'kit-boren-signature',
 				name: 'Bear Claws',
-				description: 'Attacks with your sharp and deadly claws send your foes staggering back.',
+				description: 'Attacks with your sharp and deadly claws grab the weak.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
@@ -45,20 +45,17 @@ export const boren: Kit = {
 		FactoryLogic.feature.create({
 			id: 'kit-boren-feature-1',
 			name: 'Aspect Benefits',
-			description: 'Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever you pull a creature adjacent to you and that creature has M < [average], you can use a free triggered action to grab that creature.'
+			description: 'Whenever you use forced movement to push a creature, you can pull that creature instead. Whenever you pull a creature adjacent to you and that creature has M < [average], you can use a free triggered action to make that creature grabbed by you.'
 		}),
 		FactoryLogic.feature.create({
 			id: 'kit-boren-feature-2a',
 			name: 'Animal Form: Bear',
-			description: 'When you are in your bear form, your size becomes 2, and you gain a +2 bonus to speed and a +1 bonus to distance with melee weapon abilities.'
+			description: 'While you are in your bear form, your size is 2 and you gain a +1 bonus to distance with melee weapon abilities.'
 		}),
 		FactoryLogic.feature.create({
 			id: 'kit-boren-feature-2b',
 			name: 'Hybrid Form: Bear',
-			description: `
-When you are in your hybrid form, your size becomes 2, and you gain a +2 bonus to speed and a +1 bonus to distance with melee weapon abilities.
-
-Once you reach 4th level, the first time you take hybrid form in an encounter you gain 10 Temporary Stamina.`
+			description: 'While you are in your hybrid form, your size is 2 and you gain a +1 bonus to distance with melee weapon abilities. At 4th level, the first time you take hybrid form in an encounter, you gain 10 temporary Stamina.'
 		}),
 		FactoryLogic.feature.create({
 			id: 'kit-boren-feature-3',
@@ -67,11 +64,14 @@ Once you reach 4th level, the first time you take hybrid form in an encounter yo
 		}),
 		FactoryLogic.feature.create({
 			id: 'kit-boren-feature-4',
-			name: 'Growing Rage',
+			name: 'Growing Ferocity',
 			description: `
-* **Rage 2**: You can grab up to 2 creatures and gain a surge whenever you attack a creature you have grabbed.
-* **Rage 4**: Gain one surge the first time on a turn that you grab a creature.
-* **Rage 6**: You have an edge on power rolls for the Knockback and Grab maneuvers, and creatures have a bane on power rolls made to escape being grabbed by you.`
+* **Ferocity 2**: You can have up to two creatures grabbed at time. Additionally, whenever you make a strike against a creature you have grabbed, you gain 1 surge.
+* **Ferocity 4**: The first time you grab a creature on a turn, you gain 1 surge.
+* **Ferocity 6**: You gain an edge on the Grab and Knockback maneuvers.
+* **Ferocity 8 (4th level)**: The first time you grab a creature on a turn, you gain 2 surges instead of 1.
+* **Ferocity 10 (7th level)**: You have a double edge on the Grab and Knockback maneuvers.
+* **Ferocity 12 (10th level)**: Whnever you use a heroic ability, you gain 10 temporary Stamina. Additionally, whenever you have a creature grabbed, any ability roll made against that creature gains a bonus to its potency equal to your Might score.`
 		})
 	]
 };

@@ -14,9 +14,9 @@ export const censor: HeroClass = {
 	id: 'class-censor',
 	name: 'Censor',
 	description: `
-Demons and devils fear you. Criminals run from the sight of your shadow in the alley. Agents of chaos, blasphemers, and heretics tremble at the sound of your voice. You carry the power of the gods, armed with Wraths and sent out into the world first to seek, then censor those whose actions - or even existence - are anathema to your church.
+Demons and deathless fear you. Criminals run from the sight of your shadow. Agents of chaos, blasphemers, and heretics tremble at the sound of your voice. You carry the power of the gods, armed with wrath and sent out into the world first to seek, then censor those whose actions—or even existence—are anathema to your church.
 
-You’re at your best against the strongest foes. Your judgments terrify heretics, stop enemies in their tracks, even hurl them across the battlefield.`,
+As a censor, you’re at your best against the strongest foes. Your judgment terrifies heretics, stops enemies in their tracks, and even hurls them across the battlefield.`,
 	subclassName: 'Order',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -31,7 +31,7 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 					id: 'censor-stamina',
 					field: FeatureField.Stamina,
 					value: 21,
-					valuePerLevel: 12
+					valuePerLevel: 9
 				}),
 				FactoryLogic.feature.createBonus({
 					id: 'censor-recoveries',
@@ -72,19 +72,22 @@ You’re at your best against the strongest foes. Your judgments terrify heretic
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 enemy',
+						target: 'One enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText(`The target is judged by you until the end of the encounter, you die, you use this ability again, or you willingly end this effect (no action required). If another censor judges the target, then your judgment on the target ends.
+							FactoryLogic.createAbilitySectionText(`The target is judged by you until the end of the encounter, you use this ability again, you willingly end this effect (no action required), or another censor judges the target.
 
-If a judged creature uses an action and you have line of effect to them, you can use a free triggered action to deal holy damage equal to twice your Presence score to them.
+Whenever a creature judged by you uses a main action and is within your line of effect, you can use a free triggered action to deal holy damage equal to twice your Presence score to them.
 
-When the judged creature is reduced to 0 Stamina, you can use a free triggered action to use this ability against a new target within distance.
+When a creature judged by you is reduced to 0 Stamina, you can use a free triggered action to use this ability against a new target.
 
-In addition, you can spend 1 wrath to take one of the following free triggered actions. You can’t use more than one instance of a benefit per trigger:
+Additionally, you can spend 1 wrath to take one of the following free triggered actions:
 
-* When an adjacent judged target shifts, you can make a melee free strike against them. The target doesn't shift and their speed becomes 0 until the end of this turn.
-* When a judged target makes a power roll, you can add a bane to the roll.
-* When a judged target within distance uses an ability with a potency against another creature, you reduce the potency of the ability by 1 for that creature (to a minimum of 0).`),
+* When an adjacent creature judged by you starts to shift, you make a melee free strike against them and their speed becomes 0 until the end of the current turn, preventing them from shifting.
+* When a creature judged by you within 10 squares makes a power roll, you cause them to take a bane on the roll.
+* When a creature judged by you within 10 squares uses an ability with a potency that targets only one creature, the potency is reduced by 1 for that creature.
+* If you damage a creature judged by you with a melee ability, the creature is taunted by you until the end of their next turn.
+
+You can choose only one free triggered action option at a time, even if multiple options are triggered by the same effect.`),
 							FactoryLogic.createAbilitySectionPackage('censor-judgment')
 						]
 					})
@@ -96,7 +99,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 					ability: FactoryLogic.createAbility({
 						id: 'censor-1-6',
 						name: 'My Life for Yours',
-						description: 'The first principle of the oath: defend the righteous.',
+						description: 'You channel some of your vitality into more resilience for you or an ally.',
 						type: FactoryLogic.type.createTrigger('The target starts their turn or takes damage.'),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -143,12 +146,194 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			features: [
 				FactoryLogic.feature.create({
 					id: 'censor-3-1',
-					name: 'Look on My Work and Despair',
-					description: 'Your judgment has grown in divine power, manifesting your deity’s ire against blasphemers, causing them to fear your actions, especially when their allies are smited. Whenever you judge a creature you can spend 1 wrath to channel your divine power to make them afraid. If the target has P < [average], they are frightened of you (save ends). Whenever a creature judged by you to is reduced to 0 Stamina and you judge a new target as a free triggered action, if that new target has P < [strong], they are frightened of you (save ends). If the target is already frightened of you, they take damage equal to twice your Presence score instead.'
+					name: 'Look On My Work and Despair',
+					description: 'Your judgment has grown in divine power, instilling fear in those you condemn. Whenever you use your Judgment ability, you can spend 1 wrath, and if the target has P < Average , they are frightened of you (save ends). Additionally, whenever a creature judged by you is reduced to 0 Stamina and you use Judgment as a free triggered action, if the new target has P < Strong , they are frightened of you (save ends). If the target is already frightened of you, they instead take holy damage equal to twice your Presence score.'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'censor-3-2',
 					cost: 7
+				})
+			]
+		},
+		{
+			level: 4,
+			features: [
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'censor-4-1a',
+					characteristic: Characteristic.Might,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'censor-4-1b',
+					characteristic: Characteristic.Presence,
+					value: 1
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'censor-4-2',
+					lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'censor-4-3',
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Lore, SkillList.Intrigue ]
+				}),
+				FactoryLogic.feature.create({
+					id: 'censor-4-4',
+					name: 'Wrath Beyond Wrath',
+					description: 'The first time each combat round that you deal damage to a creature judged by you, you gain 2 wrath instead of 1.'
+				}),
+				FactoryLogic.feature.createDomainFeature({
+					id: 'censor-4-5',
+					level: 4
+				})
+			]
+		},
+		{
+			level: 5,
+			features: [
+				FactoryLogic.feature.createClassAbilityChoice({
+					id: 'censor-5-1',
+					cost: 9
+				})
+			]
+		},
+		{
+			level: 6,
+			features: [
+				FactoryLogic.feature.create({
+					id: 'censor-6-1',
+					name: 'Implement of Wrath',
+					description: `Each time you finish a respite, you can choose one hero’s weapon, including your own, to channel supernatural power as an implement of your god’s wrath. The weapon becomes magic and gains the following benefits until your next respite:
+
+* Strikes with the weapon deal extra holy damage equal to the wielder’s highest characteristic score.
+* Any creature struck by the weapon who has holy weakness and has P < Strong is frightened and weakened (save ends).
+* Any minion targeted by a strike using the weapon dies. That minion’s Stamina maximum is removed from the minion Stamina pool before any damage is applied to the rest of the squad.
+* The weapon’s wielder can’t be made frightened.
+     				`
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'censor-6-2',
+					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
+				})
+			]
+		},
+		{
+			level: 7,
+			features: [
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'censor-7-1a',
+					characteristic: Characteristic.Might,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'censor-7-1b',
+					characteristic: Characteristic.Agility,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'censor-7-1c',
+					characteristic: Characteristic.Reason,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'censor-7-1d',
+					characteristic: Characteristic.Intuition,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'censor-7-1e',
+					characteristic: Characteristic.Presence,
+					value: 1
+				}),
+				FactoryLogic.feature.createDomainFeature({
+					id: 'censor-7-2',
+					level: 7
+				}),
+				FactoryLogic.feature.create({
+					id: 'censor-7-3',
+					name: 'Focused Wrath',
+					description: 'When you gain wrath at the start of each of your turns during combat, you gain 3 wrath instead of 2.'
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'censor-7-4',
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Lore, SkillList.Intrigue ]
+				})
+			]
+		},
+		{
+			level: 8,
+			features: [
+				FactoryLogic.feature.createPerk({
+					id: 'censor-8-1',
+					lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
+				}),
+				FactoryLogic.feature.createClassAbilityChoice({
+					id: 'censor-8-2',
+					cost: 11
+				})
+			]
+		},
+		{
+			level: 9,
+			features: [
+				FactoryLogic.feature.create({
+					id: 'censor-9-1',
+					name: 'Improved Implement of Wrath',
+					description: `The weapon you target with your Implement of Wrath feature gains the following additional benefits:
+
+* The weapon’s wielder and each ally adjacent to them gain a +2 bonus to saving throws.
+* At the end of each of the weapon wielder’s turns, each ally adjacent to the wielder makes a saving throw against each effect on them that is ended by a saving throw.
+* The weapon’s wielder has corruption immunity 10.
+     				`
+				})
+			]
+		},
+		{
+			level: 10,
+			features: [
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'censor-10-1a',
+					characteristic: Characteristic.Might,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'censor-10-1b',
+					characteristic: Characteristic.Presence,
+					value: 1
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'censor-10-2',
+					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'censor-10-3',
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Lore, SkillList.Intrigue ]
+				}),
+				FactoryLogic.feature.create({
+					id: 'censor-10-4',
+					name: 'Templar',
+					description: `You are the ultimate representation of your god’s justice in the timescape. Whenever you use your Judgment ability, you can use a free triggered action to use a conduit domain effect associated with your chosen domain, or a domain you access with virtue. If the effect calls for the use of your Intuition score, you use your Presence score instead. If the effect uses your conduit level, use your censor level instead.
+
+Additionally, whenever you take a respite, you can open a portal to rest in the presence of your deity and bring along any allies. When you do, you can ask your deity three questions, which the Director must answer honestly if your deity knows the answers (though they might answer cryptically or incompletely). When you finish your respite, you and your allies can appear at any location in the timescape where someone worships your deity.
+
+While you rest in their presence, your god might also give you priority targets to enact justice upon. You and your allies each have a double edge on power rolls made against such targets. If you attempt to open a portal to your deity again before you have defeated your priority targets, you suffer your god’s wrath, as determined by the Director.	 
+  
+  				`
+				}),
+				FactoryLogic.feature.create({
+					id: 'censor-10-5',
+					name: 'Virtue',
+					description: `You have an epic resource called virtue. Each time you finish a respite, you gain virtue equal to the XP you gain. You can spend virtue on your abilities as if it were wrath.
+
+Additionally, you can spend 3 virtue to access one of your deity’s domains that you usually don’t have access to. When you do, you can use that domain’s features until you finish another respite.
+
+Virtue remains until you spend it.
+
+     				`
+				}),
+				FactoryLogic.feature.create({
+					id: 'censor-10-5',
+					name: 'Wrath of the Gods',
+					description: 'When you gain wrath at the start of each of your turns during combat, you gain 4 wrath instead of 3.'
 				})
 			]
 		}
@@ -160,7 +345,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			description: 'You channel power through your weapon to repel foes.',
 			type: FactoryLogic.type.createMain(),
 			cost: 'signature',
-			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
 			target: 'Each enemy in the area',
 			sections: [
@@ -181,7 +366,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -198,11 +383,11 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 		FactoryLogic.createAbility({
 			id: 'censor-ability-3',
 			name: 'Halt, Miscreant!',
-			description: '“Your race is run!”',
+			description: 'You infuse your weapon with holy magic that makes it difficult for your foe to get away.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -218,11 +403,11 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 		FactoryLogic.createAbility({
 			id: 'censor-ability-4',
 			name: 'Your Allies Cannot Save You!',
-			description: '“See how they abandon you!”',
+			description: 'Your magic strike turns your foe’s guilt into a burst of holy power',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -239,11 +424,11 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 		FactoryLogic.createAbility({
 			id: 'censor-ability-5',
 			name: 'Behold, a Shield of Faith!',
-			description: '“Allow me to intercede.”',
+			description: 'A mighty blow turns your foe’s vitality into a holy light that envelops you and an ally, discouraging enemies who might attack you.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -254,7 +439,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						tier3: '9 + M holy damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('Until the start of your next turn, enemies have a bane on ability power rolls made against you and each ally adjacent to you.')
+				FactoryLogic.createAbilitySectionText('Until the start of your next turn, enemies have a bane on ability rolls made against you and each ally adjacent to you.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -264,7 +449,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -275,7 +460,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						tier3: '9 + M damage; push 5'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('You can shift up to your speed and must end that shift within distance of the target.')
+				FactoryLogic.createAbilitySectionText('You can shift up to your speed in a straight line toward the target after pushing them.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -283,9 +468,9 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			name: 'The Gods Punish and Defend',
 			description: 'You channel holy energy to smite a foe and heal an ally.',
 			type: FactoryLogic.type.createMain(),
-			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -296,17 +481,17 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						tier3: '11 + M holy damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('You can spend a Recovery to allow yourself or one ally within 10 squares of you to regain Stamina equal to your Recovery value.')
+				FactoryLogic.createAbilitySectionText('You can spend a Recovery to allow yourself or one ally within 10 squares to regain Stamina equal to your recovery value.')
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-8',
 			name: 'Repent!',
-			description: 'You conjure memories of their sins.',
+			description: 'You conjure memories of their sins to harry your foes.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -326,7 +511,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -337,20 +522,20 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						tier3: '13 + M holy damage; grabbed'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('If the target makes a strike against a creature while grabbed by you, you can then spend 3 wrath to deal holy damage to them equal to your Presence score and change the target of the strike to another target within the strike’s distance.')
+				FactoryLogic.createAbilitySectionText('If the target makes a strike against a creature while grabbed this way, you can spend 3 wrath to deal holy damage to them equal to your Presence score, then change the target of the strike to another target within the strike’s distance.')
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-10',
-			name: 'Behold the Face of Evil!',
-			description: 'You show your enemies a vision of the true nature of one of their companions.',
+			name: 'Behold the Face of Justice!',
+			description: 'You attack a foe and your enemies behold a vision of the true nature of your resolve.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -371,7 +556,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -382,7 +567,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 						tier3: '5 + M holy damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('If a target who is not a leader or a solo creature is winded after the damage is resolved, they die.')
+				FactoryLogic.createAbilitySectionText('When a target who is not a leader or solo creature is made winded by this ability, they are reduced to 0 Stamina.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -395,7 +580,7 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -412,53 +597,226 @@ In addition, you can spend 1 wrath to take one of the following free triggered a
 		FactoryLogic.createAbility({
 			id: 'censor-ability-13',
 			name: 'Edict of Disruptive Isolation',
-			description: 'Gather not together in secret to conspire.',
+			description: 'The evil within your foes detonates with holy fire that burns only the guilty.',
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, at the end of each of your turns, each target takes holy damage equal to your Presence score. Any target adjacent to one or more enemies takes an extra 2d6 holy damage if they are judged by you or adjacent to one of your enemies.')
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, each target takes holy damage equal to your Presence score at the end of each of your turns. A target takes an extra 2d6 holy damage if they are judged by you or if they are adjacent to any enemy.')
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-14',
 			name: 'Edict of Perfect Order',
-			description: 'Use not the fell arts!',
+			description: 'Within the area of your divine presence, your enemies will regret using their fell abilities.',
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever a target uses an ability that requires Malice, they take holy damage equal to three times your Presence score. A target judged by you takes an additional 2d6 holy damage.')
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, whenever a target uses an ability that costs Malice, they take holy damage equal to three times your Presence score. A target judged by you takes an extra 2d6 holy damage.')
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-15',
 			name: 'Edict of Purifying Pacifism',
-			description: 'Shed not the blood of innocents!',
+			description: 'You shed a righteous energy that punishes enemies who would harm you or your allies.',
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever a target makes a strike, they take holy damage equal to twice your Presence score. A target judged by you takes an extra 2d6 holy damage.')
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, whenever a target makes a strike, they take holy damage equal to twice your Presence score. A target judged by you takes an extra 2d6 holy damage.')
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'censor-ability-16',
 			name: 'Edict of Stillness',
-			description: 'Flee not from just punishment.',
+			description: 'The holy aura you project makes it painful for evil-doers to leave your reach.',
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Until the end of the encounter or you are dying, whenever a target is force moved or moves willingly out of the aura, they take holy damage equal to twice your Presence score. A target judged by you who moves willingly takes an extra 2d6 holy damage.')
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, whenever a target moves or is force moved out of the area, they take holy damage equal to twice your Presence score. A target judged by you who moves willingly takes an extra 2d6 holy damage.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'censor-ability-17',
+			name: 'Gods Grant Thee Strength',
+			description: 'You channel divine force for movement that cannot be stopped.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'Self or one ally',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionText('The target ends any condition or effect on them that is ended by a saving throw or that ends at the end of their turn, or a prone target can stand up. The target then gains 2 surges, can shift up to their speed while ignoring difficult terrain, and can use a strike signature ability as a free triggered action.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'censor-ability-18',
+			name: 'Orison of Victory',
+			description: 'You channel your god’s will to overcome hardship and inflict pain.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Area ],
+			distance: [
+				FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 })
+			],
+			target: 'Self and each ally in the area',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: 'Each target gains 1 surge.',
+						tier2: 'Each target gains 2 surges.',
+						tier3: 'Each target gains 3 surges.'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('A target can end one effect on them that is ended by a saving throw or that ends at the end of their turn, or a prone target can stand up.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'censor-ability-19',
+			name: 'Righteous Judgment',
+			description: 'You amplify the power of your judgment.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee()
+			],
+			target: 'One creature',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '10 + M damage',
+						tier2: '14 + M damage',
+						tier3: '20 + M damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter, whenever any ally deals damage to a target judged by you, that ally gains 1 surge.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'censor-ability-20',
+			name: 'Shield of the Righteous',
+			description: 'You strike a foe and create a fleet of divine shields that protect your allies.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee()
+			],
+			target: 'One creature',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '10 + M damage; you and each ally adjacent to you gain 10 temporary Stamina',
+						tier2: '14 + M damage; you and each ally adjacent to you gain 15 temporary Stamina',
+						tier3: '20 + M damage; you and each ally adjacent to you gain 20 temporary Stamina'
+					})
+				)
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'censor-ability-21',
+			name: 'Excommunication',
+			description: 'You curse your foe to become a bane to their allies.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee()
+			],
+			target: 'One creature',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '9 + M damage; I < [weak], weakened (save ends)',
+						tier2: '13 + M damage; I < [average], weakened (save ends)',
+						tier3: '18 + M damage; I < [strong], weakened (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('At the end of each of your turns, a target weakened this way deals holy damage equal to twice your Presence score to each enemy within 2 squares of them. Additionally, a target weakened this way can’t be targeted by their allies’ abilities.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'censor-ability-22',
+			name: 'Hand of the Gods',
+			description: 'You use your foe as a tool against your enemies.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createRanged(10)
+			],
+			target: 'One creature',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '10 + M damage',
+						tier2: '15 + M damage',
+						tier3: '21 + M damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter, while the target is judged by you, you can choose to make them the source of any of your abilities. Additionally, the target counts as an ally for the purpose of flanking.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'censor-ability-23',
+			name: 'Pillar of Holy Fire',
+			description: 'Your enemy’s guilt fuels a holy flame that burns your foes.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee()
+			],
+			target: 'One creature',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Might ],
+						tier1: '9 + M damage; I < [weak], dazed (save ends)',
+						tier2: '13 + M damage; I < [average], dazed (save ends)',
+						tier3: '18 + M damage; I < [strong], dazed (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('At the end of each of your turns, a target dazed this way deals holy damage equal to twice your Presence score to each enemy within 2 squares of them.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'censor-ability-24',
+			name: 'Your Allies Turn on You!',
+			description: 'You turn your enemies’ ire to the target.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createRanged(10)
+			],
+			target: 'One creature',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '5 + P damage; I < [weak], slowed (save ends)',
+						tier2: '9 + P damage; I < [average], slowed (save ends)',
+						tier3: '12 + P damage; I < [strong], slowed (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('While the target is slowed this way, each ally who starts their turn within 5 squares of them must use a free maneuver to make a free strike against the target. Additionally, while the target is slowed this way, each ally within 5 squares of them who can make a triggered free strike against a different creature must make the free strike against the target instead.')
 			]
 		})
 	],

@@ -72,7 +72,7 @@ The Encepter is said to have first manifested in a young world doomed to apocaly
 					FactoryLogic.feature.create({
 						id: 'item-encepter-1',
 						name: 'Shining Presence',
-						description: 'The one who wields the Encepter is always cast in a brilliant glow. Any power roll made by the wielder that uses Presence automatically achieves a tier 3 result, though the wielder can still roll in an attempt to score a critical hit.'
+						description: 'The one who wields the Encepter is always cast in a brilliant glow. Any power roll made by the wielder that uses Presence automatically achieves a tier 3 outcome, though the wielder can still roll in an attempt to score a critical success or critical hit.'
 					}),
 					FactoryLogic.feature.create({
 						id: 'item-encepter-2',
@@ -87,12 +87,12 @@ The Encepter is said to have first manifested in a young world doomed to apocaly
 					FactoryLogic.feature.create({
 						id: 'item-encepter-4',
 						name: 'Obliteration',
-						description: 'As an action, the wielder raises the Encepter to the sky. Each target lassoed by the Encepter erupts into a prismatic burst of light, taking 10 psychic damage for each square horizontally encircled by the lasso. The lasso is then immediately released.'
+						description: 'As a main action, the wielder raises the Encepter to the sky. Each target lassoed by the Encepter erupts in a prismatic burst of light, taking 10 psychic damage for each square horizontally encircled by the lasso. The lasso is then immediately released.'
 					}),
 					FactoryLogic.feature.create({
 						id: 'item-encepter-5',
 						name: 'At World\'s End',
-						description: 'If the Encepter was not taken from its cyclonic resting place with the purpose of vanquishing a terrible peril, then a terrible peril emerges to threaten the world within three days of the scepter being taken.'
+						description: 'If the Encepter was not taken from its cyclonic resting place with the purpose of vanquishing a terrible peril, then a terrible peril emerges to threaten the world within 3 days of the scepter being taken.'
 					})
 				]
 			}

@@ -269,6 +269,10 @@ Additionally, you can now bring an adjacent willing creature along with you when
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	selected: false
 };

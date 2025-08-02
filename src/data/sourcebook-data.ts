@@ -125,7 +125,7 @@ export class SourcebookData {
 			ComplicationData.forbiddenRomance,
 			ComplicationData.frostheart,
 			ComplicationData.gettingTooOldForThis,
-			ComplicationData.gnollBit,
+			ComplicationData.gnollMauled,
 			ComplicationData.greening,
 			ComplicationData.grifter,
 			ComplicationData.grounded,

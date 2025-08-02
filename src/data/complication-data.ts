@@ -8,6 +8,7 @@ import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { ItemType } from '../enums/item-type';
 import { SkillList } from '../enums/skill-list';
+import { LanguageType } from '../enums/language-type';
 
 export class ComplicationData {
 	static advancedStudies: Complication = {
@@ -445,7 +446,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 	static disgraced: Complication = {
 		id: 'comp-disgraced',
 		name: 'Disgraced',
-		description: 'You’re a disgraced member of a powerful family or guild. You’ve been turned out of the ancestral home, and your relatives won’t give you the time of day, much less a helping hand, until you clear your name or clean up your act.',
+		description: 'You’re a disgraced member of a powerful family or guild, having been turned out by your relatives or peers. Those you were once close to won’t give you the time of day anymore, much less lend a helping hand, until you clear your name or clean up your act.',
 		features: [
 			FactoryLogic.feature.createBonus({
 				id: 'comp-disgraced-bonus',
@@ -459,7 +460,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 			FactoryLogic.feature.create({
 				id: 'comp-disgraced-d',
 				name: 'Disgraced Drawback',
-				description: 'Anyone who has heard of you and is influenced by your Renown treats you as infamous. When you are part of a negotiation that ends with an NPC who has an influence of 2 or lower, that NPC makes a plan to hurt you personally and carries it out.'
+				description: 'Anyone who has heard of you and is influenced by your Renown treats you as infamous. Whenever you are part of a negotiation with an NPC who has an interest of 2 or lower, that NPC makes a plan to hurt you personally after the negotiation ends—and carries that plan out.'
 			})
 		]
 	};
@@ -467,17 +468,17 @@ Each time you complete this project, your knowledge of your chosen field expands
 	static dragonDreams: Complication = {
 		id: 'comp-dragonDreams',
 		name: 'Dragon Dreams',
-		description: 'You sometimes have strange dreams of infernos of flame … gleaming piles of treasure … spreading your wings and taking flight. You haven’t told anyone about the dreams, except for your one strange relative who seems to know more than they’re letting on.',
+		description: 'You sometimes have strange dreams of a raging inferno … a gleaming pile of treasure … spreading your wings and taking flight. You haven’t told anyone about the dreams, except for your one strange relative who seems to know more than they’re letting on.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-dragonDreams-b',
 				name: 'Dragon Dreams Benefit',
-				description: 'Choose two ancestry points worth of dragon knight traits. Whenever you have at least 5 Victories, you gain those traits.'
+				description: 'Choose two ancestry points worth of purchased dragon knight traits. You can use these traits whenever you have 5 or more Victories.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-dragonDreams-d',
 				name: 'Dragon Dreams Drawback',
-				description: 'When you are reduced to 0 Stamina, you explode with heat and fire. You and each creature within 5 squares of you takes fire damage equal to twice your level. You can’t reduce this damage for yourself in any way.'
+				description: 'Whenever you are reduced to 0 Stamina, you explode with heat and fire. You and each creature within 5 squares of you takes fire damage equal to twice your level. You can’t reduce this damage for yourself in any way.'
 			})
 		]
 	};
@@ -485,7 +486,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 	static elementalInside: Complication = {
 		id: 'comp-elemental-inside',
 		name: 'Elemental Inside',
-		description: 'When an evil mage threatened someone you loved, you blocked your foe’s summoning of an elemental creature by absorbing their magic with your body. You are now infused with the power of that elemental - and they’re not happy about it.',
+		description: 'When an evil mage threatened someone you loved, you blocked that foe’s summoning of an elemental creature by absorbing their magic with your body. You are now infused with the power of that elemental - who isn’t at all happy about it.',
 		features: [
 			FactoryLogic.feature.createBonus({
 				id: 'comp-elemental-inside-b',
@@ -496,7 +497,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 			FactoryLogic.feature.create({
 				id: 'comp-elemental-inside-d',
 				name: 'Elemental Inside Drawback',
-				description: 'When you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the closest creature they notice without regard for your desires or your body’s safety. The Director or you can control the hero, but whoever does must do their best to kill any creature they notice until you are no longer dying.'
+				description: 'While you are dying, your possessing elemental takes control of your body. The elemental yearns for destruction, causing you to attack the closest creature you notice without regard for your desires or your body’s safety. If you don’t do your best to fulfill the elemental’s rage, the Director can take temporary control of your hero.'
 			})
 		]
 	};
@@ -504,17 +505,17 @@ Each time you complete this project, your knowledge of your chosen field expands
 	static evanesceria: Complication = {
 		id: 'comp-evanesceria',
 		name: 'Evanesceria',
-		description: 'You have contracted a rare magical disease called evanesceria. There are times when you’re not quite yourself - or anyone else either. You simply … vanish. You return later with no memory of your absence.',
+		description: 'You have contracted a rare magical disease called evanesceria. From time to time, you’re not quite yourself—or anyone else either. You simply … vanish, then return later with no memory of your absence.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-evanesceria-b',
 				name: 'Evanesceria Benefit',
-				description: 'You can sometimes absent yourself from unpleasant situations. At the start of a combat round you can attempt to absent yourself by rolling a d10. On a result of 6 or higher, you disappear from reality, reappearing in the space you left, or the closest unoccupied space of your choice if it’s occupied, when you take your turn. After you absent yourself, you can’t attempt to absent again until you gain a Victory.'
+				description: 'At the start of any combat round, you can attempt to absent yourself from reality by rolling a d10. On a 6 or higher, you disappear, then reappear in the space you left or the nearest unoccupied space of your choice when you take your turn. You can’t attempt to absent yourself again until you earn 1 or more Victories'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-evanesceria-d',
 				name: 'Evanesceria Drawback',
-				description: 'When you start a respite activity, roll 2d10. If you roll a 1 on either die, you absent for the rest of the respite then reappear. You gain the benefits of taking a respite but don’t perform the respite activity.'
+				description: 'Whenever you start a respite activity, roll 2d10. If you roll a 1 on either die, you inadvertently absent yourself from reality, reappearing at the end of the respite. You gain the benefits of taking a respite but don’t perform the respite activity.'
 			})
 		]
 	};
@@ -522,15 +523,17 @@ Each time you complete this project, your knowledge of your chosen field expands
 	static exile: Complication = {
 		id: 'comp-exile',
 		name: 'Exile',
-		description: 'Whether you’re a convicted criminal, a noble stripped of their title, or just someone who made one too many enemies, you’ve been cast forth from your homeland, never to return - at least, until you’re strong enough to set things right.',
+		description: 'Whether you’re a convicted criminal, a noble stripped of their title, or a peron who made one too many enemies, you’ve been cast forth from your homeland, never to return. At least not until you’re strong enough to set things right.',
 		features: [
 			FactoryLogic.feature.createLanguageChoice({
-				id: 'comp-exile-lang'
+				id: 'comp-exile-lang',
+				description: 'You know one extant language of your choice.',
+				options: [ LanguageType.Common ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-exile-d',
 				name: 'Exile Drawback',
-				description: 'If you are caught returning to your homeland, you’ll be put to death.'
+				description: 'If any NPC from your homeland recognizes you, whether in your homeland or elsewhere, they attempt to harm you at the Director’s discretion.'
 			})
 		]
 	};
@@ -538,7 +541,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 	static fallenImmortal: Complication = {
 		id: 'comp-fallenImmortal',
 		name: 'Fallen Immortal',
-		description: 'You used to be an immortal creature, dispensing justice and doing the bidding of the gods. Now, as a punishment or perhaps as a reward, you have put aside your wings and become a mortal. Your remaining years will be short, but living aside your fellow mortals gives your life new meaning.',
+		description: 'You used to be an immortal creature, dispensing justice and doing the bidding of the gods. Now, as a punishment or reward, you have been ordered to set yor true nature aside and become a mortal. Your remaining years will be short, but living aside your fellow mortals gives your life new meaning.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-fallenImmortal-skill',
@@ -548,12 +551,12 @@ Each time you complete this project, your knowledge of your chosen field expands
 			FactoryLogic.feature.create({
 				id: 'comp-fallenImmortal-b',
 				name: 'Fallen Immortal Benefit',
-				description: 'When you deal untyped damage, you can deal holy damage instead.'
+				description: 'Whenever you use an ability that deals untyped damage, that ability can deal holy damage instead.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-fallenImmortal-d',
 				name: 'Fallen Immortal Drawback',
-				description: 'You will never fully gain a mortal’s comfort with untruth. When you make a test to deceive another creature, you do so with a bane.'
+				description: 'You will never fully gain a mortal’s comfort with untruth. Any test you make to deceive another creature takes a bane.'
 			})
 		]
 	};
@@ -567,14 +570,12 @@ Each time you complete this project, your knowledge of your chosen field expands
 				id: 'comp-famousRelative-b',
 				name: 'Famous Relative Benefit',
 				description: `
-You have a piece of magic jewelry, such as a signet ring. As a maneuver, you can use the item to summon your relative to your aid. Your relative does their best to help you out of the current perilous situation, and disappears after 1 hour or after the perilous situation is resolved. Once you summon your relative, you can’t do so again until you gain a level.
-
-Your relative has the same statistics as you do except for Renown, doesn’t gain the benefit of any of your treasures, and makes all power rolls with an edge. Your relative starts with a Renown of 10.`
+You have a piece of magic jewelry, such as a signet ring. As a maneuver, you can use the item to summon your relative to your aid. Your relative starts with a Renown of 10 but otherwise has the same statistics you do. They make power rolls with an edge but don’t gain the benefits of any of your treasures. Your relative does their best to help you out of the current perilous situation, disappearing when the situation is resolved or after 1 hour. Once you summon your relative, you can’t do so again until you gain a level.`
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-famousRelative-d',
 				name: 'Famous Relative Drawback',
-				description: 'After you summon your relative, the next time you gain Renown your relative gains the Renown instead and you gain no Victories from any combat encounters or other Victory-earning challenges for which they were present.'
+				description: 'You earn no Victories from combat encounters or other challenges for which your relative was present. Additionally, each time you summon your relative, the next time you gain Renown, your relative gains that Renown instead.'
 			})
 		]
 	};
@@ -582,12 +583,12 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 	static feytouched: Complication = {
 		id: 'comp-feytouched',
 		name: 'Feytouched',
-		description: 'Your birth was attended by faeries. A friendly fairy blessed you, granting you strength so that you could defend yourself. An unfriendly fairy also blessed you, granting you a life full of peril so that you could prove your strength.',
+		description: 'Your birth was attended by faeries. A friendly fairy blessed you, granting you strength so that you could defend yourself. In response, an unfriendly fairy granted you a life full of peril so that you might prove your strength.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-feytouched-b',
 				name: 'Feytouched',
-				description: 'At the start of a combat encounter, you can gain 1 additional heroic resource. If you do so, the Director gains 3 Malice.'
+				description: 'At the start of a combat encounter, you can gain 1 additional Heroic Resource. If you do so, the Director gains 3 Malice.'
 			})
 		]
 	};
@@ -595,17 +596,17 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 	static fieryIdeal: Complication = {
 		id: 'comp-fieryIdeal',
 		name: 'Fiery Ideal',
-		description: 'A spirit beyond your comprehension chose you to be the guardian of a place, a cause, or another ideal. A flame burns in your soul, one that can burn your enemies - or yourself, if you fall short of your ideal.',
+		description: 'A spirit beyond your comprehension instilled in you a special purpose, choosing you to be the guardian of a place, a cause, or a philosophy. The flame that now burns in your soul can sear your enemies — or you if you fall short of expectations',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-fieryIdeal-b',
 				name: 'Fiery Ideal Benefit',
-				description: 'While you are fighting on behalf of your ideal, when you score a tier 3 success with a damage-dealing ability, you deal additional fire damage equal to your highest characteristic score.'
+				description: 'While you are fighting on behalf of your special purpose, whenever you obtain a tier 3 outcome with a damage-dealing ability, you deal extra fire damage equal to your highest characteristic score.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-fieryIdeal-d',
 				name: 'Fiery Ideal Drawback',
-				description: 'When you act against your ideal or fail to live up to the high standards associated with your ideal, you take 5 + your level fire damage. This damage can’t be decreased in any way.'
+				description: 'Whenever the Director determines that you act against your purpose or fail to live up to the high standards associated with it, you take fire damage equal to 5 + your level. This damage can’t be reduced in any way.'
 			})
 		]
 	};
@@ -628,17 +629,17 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 	static followingInTheFootsteps: Complication = {
 		id: 'comp-followingInTheFootsteps',
 		name: 'Following in the Footsteps',
-		description: 'Your personal idol was a mighty hero, and you have modeled yourself on their example. You’ve studied their legends, and someday you hope to learn their most famous battle technique.',
+		description: 'Your personal idol was a mighty hero, and you have modeled yourself after them. YFrom studying the many heroic tales told of them, you hope to someday learn their most famous battle technique.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-followingInTheFootsteps-b',
 				name: 'Following in the Footsteps Benefit',
-				description: 'Choose a heroic ability for your class that requires a higher level than your current one. When you learn this ability, it costs 2 heroic resources less than usual (minimum 1).'
+				description: 'Choose a heroic ability for your class of a higher level than you currently are. When you take this ability in future, its Heroic Resource cost is permanently reduced by 2 (to a minimum of 1)'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-followingInTheFootsteps-d',
 				name: 'Following in the Footsteps Drawback',
-				description: 'In your quest for advanced techniques, you have neglected basics. Choose a heroic ability that you already know. It costs 1 heroic resource more than usual.'
+				description: 'In your quest for advanced techniques, you have neglected the basics. Choose a heroic ability you already know. That ability’s Heroic Resource cost is permanently increased by 1.'
 			})
 		]
 	};
@@ -646,17 +647,17 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 	static forbiddenRomance: Complication = {
 		id: 'comp-forbiddenRomance',
 		name: 'Forbidden Romance',
-		description: 'You are in love with someone, but tragic circumstances keep you apart - perhaps your lover is from a feuding family, betrothed to another, or has some other animosity toward you.',
+		description: 'You are in love with someone powerful, but tragic circumstances mean you cannot be with them. Whether your lover is from a feuding family, betrothed to another, or has been driven from your side, you are fated to always be apart.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-forbiddenRomance-b',
 				name: 'Forbidden Romance Benefit',
-				description: 'You can secretly call on your betrothed for favors. They may be powerful, but they’re constrained - they can’t openly reveal their connection with you.'
+				description: 'You can secretly call on your betrothed for favors. Though they support you from afar, they might be constrained in how much aid they provide - and they can’t openly reveal their connection with you.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-forbiddenRomance-d',
 				name: 'Forbidden Romance Drawback',
-				description: 'When in trouble, your lover may call on you for help - and if your relationship is discovered, your lover’s family become dangerous enemies.'
+				description: 'When your lover is in trouble, they might call on you for help. But if your relationship is discovered, the circumstances that keep you apart will be made worse.'
 			})
 		]
 	};
@@ -664,12 +665,12 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 	static frostheart: Complication = {
 		id: 'comp-frostheart',
 		name: 'Frostheart',
-		description: 'At the edge of the world, you were lost in a winter storm and presumed dead - but returned with frosty skin and pale eyes.',
+		description: 'At the edge of the world, you were lost in a winter storm and presumed dead. But an unknown fate or power kept you alive, bringing you back with frosty skin and pale eyes.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-frostheart-b',
 				name: 'Frostheart Benefit',
-				description: 'When you would deal untyped damage with a strike, you can instead deal cold damage.'
+				description: 'Whwhenever you make a strike that deals untyped damage, that strike can deal cold damage instead.'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-frostheart-mods',
@@ -689,7 +690,7 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 			FactoryLogic.feature.create({
 				id: 'comp-gettingTooOldForThis-b',
 				name: 'Getting Too Old For This Benefit',
-				description: 'On your turn, choose a heroic ability that you would be able to learn if you were one level higher. Provided you meet the ability’s other prerequisites and you can spend the required heroic resources, you can use this ability. Once you use this benefit, you can’t do so again until you have gained 2 Victories.'
+				description: 'On your turn, you can choose a heroic ability that you would be able to learn if you were one level higher. Provided you meet the ability’s other prerequisites and can spend the required Heroic Resources, you can use this ability. Once you use this benefit, you can’t do so again until you have gained 2 Victories.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-gettingTooOldForThis-d',
@@ -699,23 +700,23 @@ Your relative has the same statistics as you do except for Renown, doesn’t gai
 		]
 	};
 
-	static gnollBit: Complication = {
-		id: 'comp-gnollBit',
-		name: 'Gnoll-Bit',
+	static gnollMauled: Complication = {
+		id: 'comp-gnollMauled',
+		name: 'Gnoll-Mauled',
 		description: `
-As a child you survived a gnoll attack - but they left you with a toothy scar and the occasional fit of bloodlust.
+As a child, you survived a gnoll attack. But that attack left you with a toothy scar and the occasional fit of bloodlust.
 
-You can’t take this complication if you can’t be dazed.`,
+You can’t take this complication if you can’t be made dazed.`,
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-gnollBit-b',
-				name: 'Gnoll-Bit Benefit',
-				description: 'Whenever an ally within 5 squares of you is reduced to 0 Stamina, as a triggered action you can move up to your speed and make a free strike.'
+				name: 'Gnoll-Mauled Benefit',
+				description: 'Whenever an ally within 5 squares of you is reduced to 0 Stamina, you can use a triggered action to move up to your speed and make a free strike.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-gnollBit-d',
-				name: 'Gnoll-Bit Drawback',
-				description: 'If you start your turn next to at least one creature while dazed, you must use your action to make a melee free strike against an adjacent creature.'
+				name: 'Gnoll-Mauled Drawback',
+				description: 'While you are dazed, if you start your turn adjacent to one or more creatures, you must use your action to make a melee free strike against an adjacent creature.'
 			})
 		]
 	};
@@ -723,7 +724,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static greening: Complication = {
 		id: 'comp-greening',
 		name: 'Greening',
-		description: 'A great tree in the middle of a forest called upon you to clear its roots of the ichor moss draining its life force. As you removed the moss, you felt as if you were being filled with green elemental energy. Sadly, the great tree withered before you could finish the job, leaving behind a golden sapling which you now carry with you.',
+		description: 'You once felt the call of a great tree in the middle of a forest, whose life force was being drained by a parasitic supernatural moss clinging to its roots. As you removed the moss, you felt as if you were being filled with green elemental energy. Sadly, the great tree withered before you could finish the job, but left behind a golden sapling you now carry with you, seeking the perfect place to plant it.',
 		features: [
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-greening-mods',
@@ -738,7 +739,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static grifter: Complication = {
 		id: 'comp-grifter',
 		name: 'Grifter',
-		description: 'You used to be a con artist. Those days are pretty much behind you. Being a hero is an even better racket. After all, if you’re saving the world, who can be mad at you for stealing a couple of coins along the way?',
+		description: 'You used to be a con artist, but those days are pretty much behind you. Being a hero is an even better racket. After all, if you’re saving the world, who can be mad at you for stealing a couple of coins along the way?',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-grifter-b',
@@ -747,7 +748,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-grifter-d',
 				name: 'Grifter Drawback',
-				description: 'When you meet an NPC for the first time, the Director can award the party a Hero Token. If they do so, the NPC was a victim of one of your previous cons and remembers you.'
+				description: 'Whenever you meet an NPC for the first time, the Director can decide that NPC was a victim of one of your previous cons and remembers you. If they do so, the party gains a hero token.'
 			})
 		]
 	};
@@ -755,17 +756,17 @@ You can’t take this complication if you can’t be dazed.`,
 	static grounded: Complication = {
 		id: 'comp-grounded',
 		name: 'Grounded',
-		description: 'As a child, when your settlement was in danger, you called out to the earth for aid. The earth answered with a shower of protecting earthen walls, and since then, you’ve felt its presence as a friend and protector.',
+		description: 'Once when you were a child, your settlement was in danger and you called out to the earth for aid. That call was answered by a summoning of protective dirt-and-stone walls, and ever since then, you’ve felt the earth’s presence as a friend and protector.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-grounded-b',
 				name: 'Grounded Benefit',
-				description: 'You gain the 1st-level Elementalist Specialization feature Manipulate Earth. If you also gain Manipulate Earth in another way, you can use the ability as a ranged ability with a distance of ranged 5.'
+				description: 'You gain the 1st-level Elementalist Specialization feature Manipulate Earth. If you also gain this feature in any other way, the Motivate Earth ability becomes a ranged ability for you with a distance of ranged 5.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-grounded-d',
 				name: 'Grounded Drawback',
-				description: 'You attract lightning. When any creature within 2 squares of you takes lightning damage, you take 5 lightning damage, which ignores any lightning immunity you have.'
+				description: 'You attract lightning. When any creature within 2 squares of you takes lightning damage, you take 5 lightning damage that can’t be reduced in any way.'
 			})
 		]
 	};
@@ -778,12 +779,12 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-guiltyConscience-b',
 				name: 'Guilty Conscience Benefit',
-				description: 'You’re determined to stay alive so you can set things right. When you are reduced to the negative of your winded value, you can spend a Recovery as a free triggered action.'
+				description: 'You’re determined to stay alive so you can set things right. When your Stamina reaches the negative of your winded value, you can use a free triggered action to spend a Recovery.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-guiltyConscience-d',
 				name: 'Guilty Conscience Drawback',
-				description: 'Many people blame you for the evils you caused. They may be unfriendly or hostile to you - and you can see their point of view. You have a bane on tests made to interact with or strike those who accuse you of the sin you have committed.'
+				description: 'Many people blame you for the evils you caused. They may be unfriendly or hostile to you - and you can understand their point of view. You take a bane on any test made to interact with those who know what you did, and on strikes made against such creaturess.'
 			})
 		]
 	};
@@ -791,35 +792,17 @@ You can’t take this complication if you can’t be dazed.`,
 	static hawkRider: Complication = {
 		id: 'comp-hawkRider',
 		name: 'Hawk Rider',
-		description: 'You travel with a giant hawk that you stole from the Hawklords. Perhaps you were once a Hawklord yourself, or perhaps you escaped their captivity. Traveling with a giant hawk comes with its share of inconveniences and dangers, but they’re a small price to pay for the sky.',
+		description: 'You travel with a giant hawk that you stole from the Hawklords. Perhaps you might once have been a Hawklord yourself, or perhaps you escaped their captivity.  Having a giant hawk companion comes with its share of inconveniences and dangers, but those are a small price to pay for the freedom of the open sky.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-hawkRider-b',
 				name: 'Hawk Rider Benefit',
-				description: 'While outside, you can spend a minute to summon your giant hawk, which acts as your mount. You can dismiss the hawk as a free action. The hawk won’t go inside, and it won’t accept anyone but you as a rider. If the hawk takes damage or dies, you can restore it to full Stamina as a respite activity.'
+				description: 'As long as you are not in a building or other structure, you can spend 1 uninterrupted minute to summon your giant hawk, which acts as your mount. You can dismiss the hawk at any time (no action required). The hawk won’t go inside buildings, dungeons, or other structures, and it won’t accept anyone but you as a rider. If the hawk takes damage or dies, you can restore them to full Stamina as a respite activity.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-hawkRider-d',
 				name: 'Hawk Rider Drawback',
-				description: 'People who know of your crime are afraid to interact with you, since they worry the Hawklords will come after them by association. You have a bane on tests made to influence anyone who knows of the Hawklords and who has seen you with your giant hawk. Such people might report you to the Hawklords, who can come looking for you.'
-			})
-		]
-	};
-
-	static hearsVoices: Complication = {
-		id: 'comp-hearsVoices',
-		name: 'Hears Voices',
-		description: 'You occasionally hear a voice in your head, offering orders or advice. You don’t know who the voice is or why, but when you’ve followed the advice, it’s usually proved to be sound.',
-		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-hearsVoices-b',
-				name: 'Hears Voices Benefit',
-				description: 'The Director tells you when you hear the voice. The voice seems to be aware of your surroundings, and its advice is usually vague but helpful. Someday its motivations might be different from your own, but for now it seems keen on making sure that you survive.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'comp-hearsVoices-d',
-				name: 'Hears Voices Drawback',
-				description: 'Eventually, the voice may reveal that it wants something from you - something you may or may not want to provide. If the voice is displeased with you, it can prevent you from resting during a respite, causing you to regain 2 fewer Recoveries than normal.'
+				description: 'People aware of the origin of your mount are afraid to interact with you, since they worry the Hawklords will come after them by association. You have a bane on tests made to influence anyone who knows of the Hawklords and who has observed you with your giant hawk. Such people might report you to the Hawklords, who can come looking for you at the Director’s discretion.'
 			})
 		]
 	};
@@ -827,17 +810,17 @@ You can’t take this complication if you can’t be dazed.`,
 	static hostBody: Complication = {
 		id: 'comp-hostBody',
 		name: 'Host Body',
-		description: '“Do not be alarmed! We are not the humanoid we appear to be. We are an intelligent fungal collective, using this body as a host. No, we are doing nothing unsavory! This body was dead when we found it; we merely gave it another chance at life. We are friendly. Please put down those torches!”',
+		description: '“Do not be alarmed! We are not the humanoid we appear to be. We are an intelligent fungal collective, using this body as a host. No, we are doing nothing unsavory! This body was dead when we found it, and we merely gave it another chance at life. We are friendly. Please put down those torches!”',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-hostBody-b',
 				name: 'Host Body Benefit',
-				description: 'You are a fungus that inhabits a humanoid body. Your host body follows all the normal rules for a character and is considered to be alive. At any time while your host body is alive, or for 24 hours after it dies, as an action you can move to a dead humanoid within 10 squares of the body and use it as your new host body, provided the body belongs a playable ancestry. When you do so, your original host body dies. Your new host body gains all your statistics except for those related to your former host body’s ancestry such as size and ancestry traits, which you instead gain from your new host body. When you inhabit a new host body, you start with 1 Stamina and can immediately spend a Recovery.'
+				description: 'You are a fungus that inhabits a humanoid body. Your host body follows all the usual rules for a character and is considered to be alive. At any time while your host body is alive, or for 24 hours after it dies, you can use a main action to move to a dead humanoid within 10 squares of the body and use it as your new host body, provided the body belongs a playable ancestry. When you do so, your original host body dies if it was alive. Your new host body gains all your statistics except f size, ancestry traits, and other statistics related to your former host body’s ancestry, which you instead gain from your new host body. When you inhabit a new host body, you start with 1 Stamina and can immediately spend a Recovery.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-hostBody-d',
 				name: 'Host Body Drawback',
-				description: 'You have a bane on tests made to read humanoid creatures’ emotions and body language.'
+				description: 'You have a bane on tests made to read a humanoid creature’s emotions or body language.'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-hostBody-mods',
@@ -851,7 +834,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static hunted: Complication = {
 		id: 'comp-hunted',
 		name: 'Hunted',
-		description: 'You’re one step ahead of a pursuer - perhaps a bounty hunter determined to bring you to justice, a revenant, or an assassin intent on your death. Someday, you’ll be strong enough to face your pursuer head to head, but for now you’re living your life on the run.',
+		description: 'You’re one step ahead of a pursuer - perhaps a bounty hunter determined to bring you to justice, a revenant, or an assassin intent on your death. Someday, you’ll be strong enough to face your pursuer head to head. Bbut for now, you live your life on the run.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-hunted-skill',
@@ -860,12 +843,12 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-hunted-b',
 				name: 'Hunted Benefit',
-				description: 'When other creatures are pursuing you, you can take the lay low respite activity. When you use it, anyone pursuing you loses track of your party’s location and must start their search again.'
+				description: 'When one or more creatures are pursuing you, you can lay low as a respite activity. When you do so, anyone pursuing you loses track of your party’s location and must start their search again.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-hunted-d',
 				name: 'Hunted Drawback',
-				description: 'Each time you gain Renown, your pursuer learns your location. Unless you lay low or move to a new location, within a 1d10 days you’ll be visited by the pursuer’s minions, or, if you linger, the pursuer.'
+				description: 'Each time you gain Renown, your pursuer learns your location.  Unless you lay low or move to a new location, you’ll be visited by agents of the pursuer within 1d10 days. If you linger after that, your pursuer finds you.'
 			})
 		]
 	};
@@ -873,7 +856,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static hunter: Complication = {
 		id: 'comp-hunter',
 		name: 'Hunter',
-		description: 'You’re hunting someone or something - perhaps a wanted criminal or someone who wronged you, or perhaps a dangerous monster or beast. You won’t rest until you meet your quarry face to face!',
+		description: 'You’re hunting someone or something - perhaps a wanted criminal or someone who wronged you, or perhaps a dangerous monster or beast. You won’t rest until you face off against your quarry!',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: '',
@@ -895,17 +878,17 @@ You can’t take this complication if you can’t be dazed.`,
 	static indebted: Complication = {
 		id: 'comp-indebted',
 		name: 'Indebted',
-		description: 'A deal went south, or you got involved with the wrong people, and now you owe a debt or a ransom - the kind that would bankrupt a minor noble. In order to pay it off, you’ll need to take some dangerous risks.',
+		description: 'A deal you made went south, or you got involved with the wrong people. Now you owe a debt or a ransom that would bankrupt a minor noble. To pay it off, you’ll need to take some dangerous risks.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-indebted-b',
 				name: 'Indebted Benefit',
-				description: 'You’re good with money - you’ve had to be. Whenever you would gain Wealth, you gain 1 more than what you’d normally earn.'
+				description: 'You’re good with money - because you’ve had to be. Whenever you earn Wealth, you gain 1 more than usual.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-indebted-d',
 				name: 'Indebted Drawback',
-				description: 'Your starting Wealth is -5. While your Wealth is less than 1, you can purchase items as if you had 1 Wealth, but you’re frequently visited by threatening creditors, and shopkeepers tend to lock their doors when they see you coming.'
+				description: 'Your starting Wealth is -5. While your Wealth is lower than 1, you can purchase items as if you had 1 Wealth, but you’re frequently visited by threatening creditors, and shopkeepers often lock their doors when they see you coming.'
 			})
 		]
 	};
@@ -913,12 +896,12 @@ You can’t take this complication if you can’t be dazed.`,
 	static infernalContract: Complication = {
 		id: 'comp-infernalContract',
 		name: 'Infernal Contract',
-		description: 'You made a deal (perhaps unknowingly) with an archdevil that has tied you to that fiend’s service. When you first learned of this deal, you were taken to the Seven Cities of Hell, where some of the timescape’s best minds taught you the ways of battle or magic. The archdevil allows you to use these gifts as you will … until they require a favor from you.',
+		description: 'You made a deal (perhaps unknowingly) with an archdevil that has tied you to that fiend’s service. When you first learned of this deal, you were taken to the Seven Cities of Hell, where some of the timescape’s best minds taught you the ways of battle. The archdevil allows you to use these gifts as you will … until they require a favor from you.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-infernalContract-b',
 				name: 'Infernal Contract Benefit',
-				description: 'Whenever you are present for a battle in which all the creatures on one side are not surprised, your side goes first on a result of 4 or greater on the d10 roll.'
+				description: 'Whenever you are present for a battle in which both sides have creatures who aren’t surprised, your side determines who goes first if the d10 roll is a 4 or higher.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-infernalContract-d',
@@ -931,7 +914,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static infernalContractButLikeBad: Complication = {
 		id: 'comp-infernalContractButLikeBad',
 		name: 'Infernal Contract … But, Like, Bad',
-		description: 'You made a deal with a devil - not a very good deal, but it wasn’t a very good devil. Now it’s too late for regrets. Your soul is forfeit unless you find a loophole or convince the devil to void the deal.',
+		description: 'You made a deal with a devil. Not a very good deal, because it wasn’t a very good devil. It’s too late for regrets, thought, because your soul is forfeit unless you find a loophole or convince the devil to void the deal.',
 		features: [
 			FactoryLogic.feature.createChoice({
 				id: 'comp-infernalContractButLikeBad-b',
@@ -965,7 +948,7 @@ You can’t take this complication if you can’t be dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-infernalContractButLikeBad-d',
 				name: 'Infernal Contract … But, Like, Bad Drawback',
-				description: 'Your body bears a fiendish mark. Anyone who understands religion can tell that your soul belongs to Hell, giving you a bane on tests made to interact with them (unless they’re into that). Additionally, when you die, your soul goes to Hell and you can’t be restored to life.'
+				description: 'Your body bears a fiendish mark. Anyone who understands religion notes the mark can tell that your soul belongs to Hell, imposing a bane on tests made to interact with those creatures (unless they’re into that). Additionally, when you die, your soul goes to Hell and you can’t be restored to life.'
 			})
 		]
 	};
@@ -973,7 +956,7 @@ You can’t take this complication if you can’t be dazed.`,
 	static ivoryTower: Complication = {
 		id: 'comp-ivoryTower',
 		name: 'Ivory Tower',
-		description: 'You studied in an academy or other educational institution. Your training was thorough and your reading list was wide-ranging, but when you left school you discovered that there were serious gaps in your education. Maybe some of those books were a little out of date.',
+		description: 'You studied in an academy or other educational institution. Your training was thorough and your reading list was wide-ranging.  But when you left school, you discovered that there were serious gaps in your education. Maybe some of those books were a little out of date.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-ivoryTower-skills',
@@ -981,12 +964,14 @@ You can’t take this complication if you can’t be dazed.`,
 				count: 3
 			}),
 			FactoryLogic.feature.createLanguageChoice({
-				id: 'comp-ivoryTower-lang'
+				id: 'comp-ivoryTower-lang',
+				options: [ LanguageType.Dead ],
+				description: 'You know one dead language of your choice.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-ivoryTower-d',
 				name: 'Ivory Tower Drawback',
-				description: 'The Director chooses one of the skills you learned from this complication. You lose that skill and can’t ever learn it. When you make a test to which this skill would apply, instead of gaining a +2 bonus you suffer a bane.'
+				description: 'The Director chooses one of the skills you learned from this complication. You lose that skill and can’t ever learn it again. Additionall, you take a bane on any test to which that skill would apply.'
 			})
 		]
 	};
@@ -1848,6 +1833,24 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 				id: 'comp-vampireSire-d',
 				name: 'Vampire Sire Drawback',
 				description: 'While you have temporary Stamina from this complication, your vampire sire can sense your location, you grow visible fangs, and you have a bane on Presence tests made to interact with humanoids who aren’t undead.'
+			})
+		]
+	};
+
+	static hearsVoices: Complication = {
+		id: 'comp-hearsVoices',
+		name: 'Voice in your Head',
+		description: 'You occasionally hear a voice in your head, offering orders or advice. You don’t know who the voice is or why, but when you’ve followed the advice, it’s usually proved to be sound.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'comp-hearsVoices-b',
+				name: 'Hears Voices Benefit',
+				description: 'The Director tells you when you hear the voice. The voice seems to be aware of your surroundings, and its advice is usually vague but helpful. Someday its motivations might be different from your own, but for now it seems keen on making sure that you survive.'
+			}),
+			FactoryLogic.feature.create({
+				id: 'comp-hearsVoices-d',
+				name: 'Hears Voices Drawback',
+				description: 'Eventually, the voice may reveal that it wants something from you - something you may or may not want to provide. If the voice is displeased with you, it can prevent you from resting during a respite, causing you to regain 2 fewer Recoveries than normal.'
 			})
 		]
 	};

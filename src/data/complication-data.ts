@@ -13,30 +13,28 @@ export class ComplicationData {
 	static advancedStudies: Complication = {
 		id: 'comp-advanced-studies',
 		name: 'Advanced Studies',
-		description: 'You somehow obtained the notebook of a brilliant but eccentric member of your class. It should help you unlock powerful new abilities - if you can ever figure out what it means.',
+		description: 'You somehow obtained the notebook of a brilliant but eccentric member of your class. The knowledge held within those notes should help you unlock powerful new abilities — if you can ever figure out what the notes mean.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-advanced-studies-b',
-				name: 'Advanced Studies',
-				description: 'As a respite activity, you can study the notebook. Make a test using your highest characteristic. On an 11 or lower, you summon a hostile demon of your level or lower who attacks you at the end of the respite. The demon gets to act first in the combat, no matter any other creature’s traits or abilities. On a 16 or less, you learn nothing and your time is wasted. On a 17+, you learn a bonus heroic ability from your class that you qualify for. You only know the ability until you finish a respite.'
-			})
-		]
-	};
-
-	static animalForm: Complication = {
-		id: 'comp-animal-form',
-		name: 'Animal Form',
-		description: 'Due to a magical accident, your being has fused with a small, harmless animal. You turn into this animal when it’s convenient - and sometimes when it’s inconvenient as well.',
-		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-animal-form-b',
-				name: 'Animal Form Benefit',
-				description: 'At the start of your turn, while you are conscious you can take the form of a specific 1T animal. Apart from your size, you keep your other statistics. Based on the animal you can turn into, your movement gains either the Burrow, Climb, Fly, or Swim keyword. Instead of gaining one of these keywords, your speed can increase by 2. Unless you use this benefit again, you regain your true form at the start of your next turn. While in animal form, you can’t talk or use actions, and the only maneuvers you can take are Escape Grab, Hide, and Stand Up.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'comp-animal-form-d',
-				name: 'Animal Form Drawback',
-				description: 'At the start of your turn while you are winded, the Director can spend 1 Malice to force you to take your animal form. Once the Director has done so, they can’t do so again until you have finished a respite.'
+			FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'comp-advanced-studies-1',
+						name: 'Advanced Study Benefit and Drawback',
+						description: 'As a respite activity, you can study the notebook.',
+						type: FactoryLogic.type.createNoAction(),
+						keywords: [ ],
+						distance: [ ],
+						target: 'None',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence, Characteristic.Agility, Characteristic.Might ],
+									tier1: 'You summon a hostile demon of your level or lower who attacks you at the end of the respite. The demon gets to act first in the combat, no matter any other creature’s traits or abilities.',
+									tier2: 'You learn nothing and your time is wasted.',
+									tier3: 'You learn one bonus heroic ability from your class that you qualify for. You only know the ability until you finish your next respite.'
+								})
+							)
+						]
+					})
 			})
 		]
 	};
@@ -44,7 +42,7 @@ export class ComplicationData {
 	static amnesia: Complication = {
 		id: 'comp-amnesia',
 		name: 'Amnesia',
-		description: 'You have no memory of your past before the … incident. Hopefully you’ll regain your memory soon and find out what the incident was. In the meantime, you need friends, so you’re not alone when your past catches up to you.',
+		description: 'You have no memory of your past before the … incident. Hopefully you’ll regain your memory soon and find out what the incident was. In the meantime, you need friends so you’re not alone when your past catches up to you.',
 		features: [
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-amnesia-b',
@@ -60,20 +58,39 @@ export class ComplicationData {
 		]
 	};
 
+	static animalForm: Complication = {
+		id: 'comp-animal-form',
+		name: 'Animal Form',
+		description: 'Due to a magical accident, your being has fused with a small, harmless animal. You turn into this animal when it’s convenient - and sometimes when it’s inconvenient as well.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'comp-animal-form-b',
+				name: 'Animal Form Benefit',
+				description: `As a manuever, you take the form of a specific 1T animal. You retain all your other statistics aside from your size, but you can’t talk or use actions, and the only maneuvers you can use are Escape Grab, Hide, and Stand Up. Based on the animal you can turn into, you might be able to burrow or fly, or to automatically climb or swim at full speed while moving. If your animal form doesn’t provide such additional movement, you have a +2 bonus to speed. Unless you use this benefit again, you return to your true form at the start of your next turn.`
+			}),
+			FactoryLogic.feature.create({
+				id: 'comp-animal-form-d',
+				name: 'Animal Form Drawback',
+				description: 'At the start of your turn while you are winded, the Director can spend 1 Malice to force you to take your animal form. Once the Director has done so, they can’t do so again until you have finished a respite.'
+			})
+		]
+	};
+
+
 	static antihero: Complication = {
 		id: 'comp-antihero',
 		name: 'Antihero',
-		description: 'You used to be a villain. You’re (mostly) reformed now, but in desperate moments, you sometimes draw on the rage and hatred that fueled your old life. In these moments, even your friends aren’t sure whose side you’re on. They don’t need to worry, though. Once you leave evil behind, you can’t go back. You’ve made too many enemies on the other side.',
+		description: 'You used to be a villain. You’re (mostly) reformed now, but in desperate moments, you sometimes draw on the rage and hatred that fueled your old life. In those moments, even your friends aren’t sure whose side you’re on. They don’t need to worry, though. Once you leave evil behind, you can’t go back. You’ve made too many enemies on the other side.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-antihero-b',
 				name: 'Antihero Benefit',
-				description: 'You have three Antihero Tokens. Whenever you use an ability or effect that costs a heroic resource, you can spend an Antihero Token to in place of one heroic resource. While you have fewer than three antihero tokens and you would earn a hero token for the group through your deeds, you instead regain one antihero token.'
+				description: 'You have 3 antihero tokens. Whenever you use an ability or effect that costs your Heroic Resource, you can spend 1 antihero token to in place of 1 Heroic Resource. While you have fewer than 3 antihero tokens and you would earn a hero token for your party through your deeds, you instead regain 1 antihero token.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-antihero-d',
 				name: 'Antihero Drawback',
-				description: 'While you have fewer than three antihero tokens, you exude a villainous aspect. You and each ally within 5 squares of you takes a bane on all tests made to interact with other creatures.'
+				description: 'While you have fewer than 3 antihero tokens, you exude a villainous aspect. You and each ally within 5 squares of you takes a bane on all tests made to interact with other creatures.'
 			})
 		]
 	};
@@ -81,7 +98,7 @@ export class ComplicationData {
 	static artifactBonded: Complication = {
 		id: 'comp-artifactBonded',
 		name: 'Artifact Bonded',
-		description: 'A powerful artifact has bonded to you. You might be destined to wield the artifact or to destroy it. You’re not powerful enough to use it at the moment, although you may one day be. For now, the item has no effect beyond getting you in trouble.',
+		description: 'A powerful artifact has bonded to you. You might be destined to wield the artifact or to destroy it. You’re not powerful enough to use it at the moment, although you might be some day. For now, though, the artifact has no effect beyond getting you in trouble.',
 		features: [
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-artifactBonded-b1',
@@ -90,12 +107,12 @@ export class ComplicationData {
 			FactoryLogic.feature.create({
 				id: 'comp-artifactBonded-b2',
 				name: 'Artifact Bonded Benefit',
-				description: 'The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person and then disappears at the end of your next turn.'
+				description: 'The first time in an encounter that you are reduced to 0 Stamina against your will, the artifact appears on your person. It disappears at the end of your next turn, when you benefit from one of its properties, or when you have more than 0 Stamina, whichever comes first.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-artifactBonded-d',
 				name: 'Artifact Bonded Drawback',
-				description: 'When the artifact disappears from your grasp, you lose a Recovery. If you have no Recoveries remaining, you take 1d10 damage instead, which can’t be reduced in any way.'
+				description: 'Each time the artifact appears, you lose a Recovery. If you have no Recoveries remaining, you take 1d10 damage instead, which can’t be reduced in any way.'
 			})
 		]
 	};
@@ -108,7 +125,7 @@ export class ComplicationData {
 			FactoryLogic.feature.create({
 				id: 'comp-bereaved-b',
 				name: 'Bereaved Benefit',
-				description: 'When you don’t know what to do, you can appeal to your loved one’s spirit for help. You spend a hero token to let the Director determine your next combat or out-of- combat action. The Director chooses the best course of action they can think of for you, even if it relies on information you don’t have. If the Director can’t think of a particularly good course of action for you to take, you don’t expend the hero token.'
+				description: 'Whenever you don’t know what to do, you can appeal to your loved one’s spirit for help. You spend a hero token to let the Director determine the next thing you do, whether in or out of combat. The Director chooses the best course of action they can think of for you, even if it relies on information you don’t have. If the Director can’t think of a particularly good course of action for you to take, you don’t spend the hero token.'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-bereaved-d',
@@ -122,36 +139,18 @@ export class ComplicationData {
 	static betrothed: Complication = {
 		id: 'comp-betrothed',
 		name: 'Betrothed',
-		description: 'Your parents made a deal, and as part of that deal, you’re supposed to marry someone - or something - you didn’t choose. But no one is going to tell you what to do! They’ll be sorry when you run away and become a mighty adventurer.',
+		description: 'Your parents made a deal, and as part of that deal, you’re supposed to marry someone - or something - you didn’t choose. But no one is going to tell you what to do! They’ll all be sorry to find that you’ve run away to become a mighty adventurer.',
 		features: [
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-betrothed-b',
 				name: 'Betrothed Benefit',
-				description: 'You escaped with a dowry present: a 1st echelon trinket of your choice.',
+				description: 'You escaped with a dowry present — a 1st echelon trinket of your choice.',
 				types: [ ItemType.Trinket ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-betrothed-d',
 				name: 'Betrothed Drawback',
-				description: 'People who learn of you running out on your commitment think less of you and spread nasty rumors about you. Your Renown can’t ever be more than your level – 1.'
-			})
-		]
-	};
-
-	static carefulCurse: Complication = {
-		id: 'comp-carefulCurse',
-		name: 'Careful Curse',
-		description: 'When you were young, you did something reckless and unthinking that endangered a hag or cost them something dear. The hag cursed you, causing you to take your time and be always cautious and thorough, even to your own detriment. If you can’t shake this curse, it could be your downfall or the very thing that saves you.',
-		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-carefulCurse-b',
-				name: 'Careful Curse Benefit',
-				description: 'Until you’ve taken your turn in a round, strikes against you take a bane.'
-			}),
-			FactoryLogic.feature.createBonus({
-				id: 'comp-carefulCurse-d',
-				field: FeatureField.Speed,
-				value: -1
+				description: 'All those who learn of you running out on your commitment think less of you and spread nasty rumors about you. Your Renown can’t ever be more than your level – 1.'
 			})
 		]
 	};
@@ -159,17 +158,17 @@ export class ComplicationData {
 	static chaosTouched: Complication = {
 		id: 'comp-chaosTouched',
 		name: 'Chaos Touched',
-		description: 'You came into contact with a mote of pure chaos energy or were subjected to a spell or object that fused chaos into your very being. Now you can sprout and retract limbs in a way that can horrify unprepared onlookers.',
+		description: 'You came into contact with a mote of pure chaos energy, or were subjected to a supernatural effect or object that fused chaos into your very being. Now you can sprout and retract limbs in a way that horifies unprepared onlookers.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-chaosTouched-b',
 				name: 'Chaos Touched Benefit',
-				description: 'You gain an edge on power rolls that are part of the Grab, Escape a Grab, or Knockback maneuver. Additionally, you can hold an extra item even when your hands are full.'
+				description: 'You gain an edge on the Escape Grab, Grab, and Knockback maneuvers. Additionally, you can hold an additional item even when your hands are full.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-chaosTouched-d',
 				name: 'Chaos Touched Drawback',
-				description: 'While dying, you grow and retract uncoordinated limbs, making all power rolls with a bane.'
+				description: 'While dying, you grow and retract uncoordinated limbs, imposing a bane on your power rolls.'
 			})
 		]
 	};
@@ -177,17 +176,17 @@ export class ComplicationData {
 	static chosenOne: Complication = {
 		id: 'comp-chosenOne',
 		name: 'Chosen One',
-		description: 'Maybe the stars marked you out at your birth, or maybe your name appears in an ancient prophecy. In any case, a sinister cult has decided that you’re very important to their plan - though you don’t particularly like the fate they have in mind for you.',
+		description: 'Perhaps the stars marked you out at birth, or maybe your name appears in an ancient prophecy. In any case, a sinister cult has decided that you’re important to their plans — though you don’t particularly like the fate those plans have in store for you.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-chosenOne-b',
 				name: 'Chosen One Benefit',
-				description: 'You have three Destiny Points. You can spend a Destiny Point in place of a heroic resource of your class. Each time you gain a Victory, you regain one Destiny Point.'
+				description: 'You have 3 destiny points. Whenever you spend your Heroic Resource for your class, you can spend 1 or more destiny points instead. Each time you earn a Victory, you regain 1 destiny point.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-chosenOne-d',
 				name: 'Chosen One Drawback',
-				description: 'When you spend a Destiny Point, you take 1d10 psychic damage and the cult that seeks you becomes aware of your location.'
+				description: 'Whenever you spend 1 or more destiny points, you take 1d10 psychic damage that can’t be reduced in any way, and the cult that seeks you becomes aware of your location.'
 			})
 		]
 	};
@@ -195,7 +194,7 @@ export class ComplicationData {
 	static consumingInterest: Complication = {
 		id: 'comp-consumingInterest',
 		name: 'Consuming Interest',
-		description: 'Ever since you were a kid, you’ve been obsessed with a certain topic. During your travels, you spend your free time gleaning all the information you can on it. You might not be the world’s leading expert quite yet, but people should certainly trust your opinion on the topic.',
+		description: 'Ever since you were a kid, you’ve been obsessed with a certain topic. During your travels, you spend your free time gleaning all the information you can on that obsession. You might not be the world’s leading expert quite yet, but people should certainly trust your opinion on the topic.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-consumingInterest-skill',
@@ -205,20 +204,20 @@ export class ComplicationData {
 				id: 'comp-consumingInterest-b',
 				name: 'Consuming Interest Benefit',
 				description: `
-You can use the following project up to three times for your chosen skill. Each time you use the project, you must use a different project source.
+You can use the following project up to three times for your chosen skill. Each time you use the project, you must use a different project source, and the project goal increases.
 
 **Study Lore**
 **Item Prerequisite**: None
 **Project Source**: A significant source of information on the topic, such as a major library or a world-renowned sage
 **Project Roll Characteristic**: Reason
-**Project Goal**: 120 the first time, 150 the second time, 180 the third time
+**Project Goal**: 120, 150, 180
 
-Your knowledge of your chosen field increases. When you finish this project, the bonus to tests provided by your skill increases from +2 to +3, +3 to +4, or +4 to +5.`
+Each time you complete this project, your knowledge of your chosen field expands, and the bonus to tests provided by your chosen skill increases by 1.`
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-consumingInterest-d',
 				name: 'Consuming Interest Drawback',
-				description: 'You can’t imagine ever being wrong on the subject. When you make a test to recall lore using your chosen skill, the Director makes the test in secret. Instead of informing you whether you’re right or wrong, they provide you with correct information if you succeeded or false information if you failed.'
+				description: 'You can’t imagine ever being wrong on the topic of your obsession. Whenever you make a test to recall lore using your chosen skill, the Director makes the test in secret. Instead of informing you whether you’re right or wrong, they provide you with correct information if you succeeded and false information if you failed.'
 			})
 		]
 	};
@@ -226,26 +225,31 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static corruptedMentor: Complication = {
 		id: 'comp-corruptedMentor',
 		name: 'Corrupted Mentor',
-		description: 'Your mentor taught you everything, and you trusted them implicitly - until they went rogue, betraying you or your organization. Their current whereabouts and activities are unknown, although there are disturbing rumors - and you, as their former pupil, are under suspicion as well.',
+		description: 'Your mentor taught you everything and you trusted them completely - until they went rogue, betraying you or the organization you both belonged to. Their current whereabouts and activities are unknown, though disturbing rumors are heard from time to time. Even worse, as their former pupil, you’re now under suspicion as well',
 		features: [
+			FactoryLogic.feature.create({
+				id: 'comp-corruptedMentor-b-text',
+				name: 'Corrupted Mentor Benefit',
+				description: 'You know the Corrupt Spirit maneuver, taught to you by your mentor. (In retrospect, that probably should have aroused your suspicion.)'
+			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'comp-corruptedMentor-b',
+					id: 'comp-corruptedMentor-b-ability',
 					name: 'Corrupted Spirit',
-					description: 'Your mentor taught you the Corrupt Spirit maneuver, which, in retrospect, should have aroused your suspicion.',
+					description: 'You unlock the sinister secrets of pain',
 					type: FactoryLogic.type.createManeuver(),
 					keywords: [ AbilityKeyword.Magic ],
 					distance: [ FactoryLogic.distance.createSelf() ],
 					target: 'Self',
 					sections: [
-						FactoryLogic.createAbilitySectionText('Until the end of your turn, when you use a heroic ability against a single target, you can weaken the target’s life force, dealing extra corruption damage equal to your highest characteristic score.')
+						FactoryLogic.createAbilitySectionText('Until the end of your turn, whenever you use a damage-dealing heroic ability against a single target, you can weaken that target’s life force. The ability deals extra corruption damage equal to your highest characteristic score.')
 					]
 				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-corruptedMentor-d',
 				name: 'Corrupted Mentor Drawback',
-				description: 'You have holy weakness 1. Each time you use Corrupt Spirit, your holy weakness increases by 1, to a maximum of your Recovery value. This weakness is reset to 1 after you take holy damage.'
+				description: 'You have holy weakness 1. Each time you use Corrupt Spirit, your holy weakness increases by 1, to a maximum equal to your recovery value. Whenever you take holy damage, this weakness resets to 1.'
 			})
 		]
 	};
@@ -253,17 +257,17 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static coward: Complication = {
 		id: 'comp-coward',
 		name: 'Coward',
-		description: 'Some call you a coward, just because you shriek and run when you encounter danger. Sure, you might not have the natural bravado of less-imaginative people, and sure, you’re always imagining the many horrible ways you could die, but you’re used to fear. When you run in terror, you run towards the enemy.',
+		description: 'Some call you a coward, just because you shriek and run when you encounter danger. Sure, you might not have the natural bravado of less-imaginative people, and sure, you’re always imagining the many horrible ways you could die, but you’re used to fear. When you run in terror, you run toward the enemy.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-coward-b',
 				name: 'Coward Benefit',
-				description: 'You can move toward the source of your fear while you are frightened.'
+				description: 'While your are frightened, you can move toward the source of your fear.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-coward-d',
 				name: 'Coward Drawback',
-				description: 'When you make a saving throw to end the frightened condition, you roll 2d10 and take the lowest result.'
+				description: 'Whenever you make a saving throw to end the frightened condition, you roll 2d10 and take the lower roll.'
 			})
 		]
 	};
@@ -271,7 +275,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static crashLanded: Complication = {
 		id: 'comp-crashLanded',
 		name: 'Crash Landed',
-		description: 'You used to flit around the stars in your own ship, but after an ugly run-in with a pirate (or a pirate hunter), you’re marooned on this backwater world. You’re prepared to carve out a life here - at least until you can hitch a ride.',
+		description: 'You used to flit around the stars in your own ship. But an ugly run-in with a pirate (or a pirate hunter) has left you marooned on this backwater world. You’re prepared to carve out a life here — at least until you can hitch a ride somewhere else',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-crashLanded-skill',
@@ -281,12 +285,12 @@ Your knowledge of your chosen field increases. When you finish this project, the
 			FactoryLogic.feature.create({
 				id: 'comp-crashLanded-b',
 				name: 'Crash Landed Benefit',
-				description: 'You have a power pack that you can activate or deactivate as a maneuver. When you activate the power pack, choose an energy type from cold, fire, lightning, or sonic. The damage you deal with abilities becomes that damage type until you deactivate the power pack.'
+				description: 'You have a power pack that you can activate or deactivate as a maneuver. When you activate the power pack, choose an energy type from cold, fire, lightning, or sonic.  Until you deactivate the power pack, your damage-dealing abilities deal that damage type'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-crashLanded-d',
 				name: 'Crash Landed Drawback',
-				description: 'You have a bane on tests made to know about anything related to the world where you crash landed.'
+				description: 'You take a bane on tests made to know about anything related to the world where you crash landed.'
 			})
 		]
 	};
@@ -294,12 +298,12 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static cultVictim: Complication = {
 		id: 'comp-cult-victim',
 		name: 'Cult Victim',
-		description: 'Cultists captured you while raiding your home, then began an unholy ritual to turn your body into an undead spirit. The ritual failed, but your body became infused with corrupted magic, turning you partially incorporeal.',
+		description: 'Cultists captured you while raiding your home, then began an unholy ritual to turn your body into an undead spirit. Though the ritual failed, your body became infused with corrupted magic, turning you partially incorporeal.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-cult-victim-b',
 				name: 'Cult Victim Benefit',
-				description: 'Once per turn, you can move through a solid mundane object no more than 1 square thick. If you end your turn inside the object, you take 5 damage and are shunted out into the space where you entered the object.'
+				description: 'Once per turn, you can move through solid matter 1 square thick or less. If you end your turn inside solid matter, you are forced out into the space from which you entered it and you take 5 damage that can’t be reduced in any way.'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-cult-victim-d',
@@ -310,20 +314,38 @@ Your knowledge of your chosen field increases. When you finish this project, the
 		]
 	};
 
+	static curseOfCaution: Complication = {
+		id: 'comp-carefulCurse',
+		name: 'Curse of Caution',
+		description: 'When you were young, you did something reckless and unthinking that endangered a hag or cost them something dear. The hag cursed you to always take your time, forcing you to be cautious and thorough — even to your detriment. The curse has saved you from trouble a few times, but not being able to get away from trouble might be your downfall if you can’t shake it.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'comp-carefulCurse-b',
+				name: 'Careful Curse Benefit',
+				description: 'Until you’ve taken your turn in a combat round, any strike made against you takes a bane.'
+			}),
+			FactoryLogic.feature.createBonus({
+				id: 'comp-carefulCurse-d',
+				field: FeatureField.Speed,
+				value: -1
+			})
+		]
+	};
+
 	static curseOfImmortality: Complication = {
 		id: 'comp-curseOfImmortality',
 		name: 'Curse of Immortality',
-		description: 'As long as you can remember, you’ve never gotten older - you’ve just adventured through one age after another. Still, your memory of past events, even those you were involved with, is a little hazy - apparently your memory is not as long-lived as you are.',
+		description: 'For as long as you can remember, you’ve never gotten older. You’ve simply adventured through one age after another. Still, your memory of past events — even those you were involved with — is a little hazy. Apparently, your memory isn’t as long-lived as you are.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-curseOfImmortality-b',
 				name: 'Curse of Immortality Benefit',
-				description: 'You don’t age. Also, when your Stamina equals the negative of your winded value, you enter a state of suspended animation indistinguishable from death. If your body is not destroyed while in this state, after 12 hours you regain consciousness and regain Stamina equal to your recovery value.'
+				description: 'You don’t age. Additionally, whenever you would die, you instead enter a state of suspended animation indistinguishable from death. If your body isn’t destroyed by dying or while you remain in this state, you come back to life after 12 hours and regain Stamina equal to your recovery value.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-curseOfImmortality-d',
 				name: 'Curse of Immortality Drawback',
-				description: 'You have a bane on tests made to recall lore.'
+				description: 'You take a bane on any test made to recall lore.'
 			})
 		]
 	};
@@ -331,12 +353,12 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static curseOfMisfortune: Complication = {
 		id: 'comp-curseOfMisfortune',
 		name: 'Curse of Misfortune',
-		description: 'You should have never pissed off that mage! Maybe they deserved your ire, or maybe you were just a bully, but whatever the case, the wizard cursed you before skipping town. Now, in moments of pressure that require great skill, you have a tendency to choke, falling and flailing in such a dramatic fashion that you take everyone with you.',
+		description: 'You should have never pissed off that mage! Maybe they deserved your ire, or maybe you were just a bully. But whatever the case, they cursed you before skipping town. Now, in moments of pressure that require great skill, you have a tendency to choke, falling and flailing in such a dramatic fashion that you take everyone with you.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-curseOfMisfortune-b',
-				name: 'Curse of Misfortune',
-				description: 'When you make a test in combat and get a consequence, you and every ally within 1 falls prone, causing you to barely miss any further consequence.'
+				name: 'Curse of Misfortune Benefit and Drawback',
+				description: 'Whenever you make a test in combat and incur a consequence, you ignore that consequence. Instead, you and each ally adjacent to you fall prone.'
 			})
 		]
 	};
@@ -344,12 +366,60 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static curseOfPoverty: Complication = {
 		id: 'comp-curseOfPoverty',
 		name: 'Curse of Poverty',
-		description: 'A soothsayer once told you you’d never be rich, but you’d survive the impossible - but you’re determined to prove ‘em wrong. You’ll get rich or die trying!',
+		description: 'A soothsayer once predicted you would have a long life, even as they told you you’d never be rich. But you’re determined to prove them wrong. You’ll get rich or die trying!',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-curseOfPoverty-b',
-				name: 'Curse of Poverty',
-				description: 'When you take a respite while your personal Wealth is greater than 1, some improbable event occurs that causes most of your money to vanish. Your Wealth is reduced to 1. For each Wealth that you lose, your number of Recoveries increases by 1 until you take a respite with fewer Recoveries than your maximum.'
+				name: 'Curse of Poverty Benefit and Drawback',
+				description: 'Whenever you take a respite while your Wealth is higher than 1, some improbable event occurs that causes most of your money to vanish—including money you’ve hidden, loaned to others, or given away. Your Wealth is reduced to 1. For each point of Wealth you lose this way, your number of Recoveries increases by 1. Your Recoveries reset to their usual value the first time you take a respite with fewer Recoveries than your maximum'
+			})
+		]
+	};
+	
+	static curseOfPunishment: Complication = {
+		id: 'comp-punishment-curse',
+		name: 'Curse of Punishment',
+		description: 'Through ignorance, fear, spite, or selfishness, you refused to help someone in need. To teach you a lesson, a deity offered you what seemed to be a blessing — extra power to help you heal yourself in times of need, but harsh consequences should your need become excessive. You took the deal, and now benefit from the blessing but also suffer from a curse. ',
+		features: [
+			FactoryLogic.feature.createBonus({
+				id: 'comp-punishment-curse-b',
+				name: 'Punishment Curse Benefit',
+				field: FeatureField.Recoveries,
+				value: 1
+			}),
+			FactoryLogic.feature.create({
+				id: 'comp-punishment-curse-d',
+				name: 'Punishment Curse Drawback',
+				description: 'When you are out of Recoveries, you are dying, no matter what your current Stamina is.'
+			})
+		]
+	};
+
+	static curseOfStone: Complication = {
+		id: 'comp-stoneCursed',
+		name: 'Curse of Stone',
+		description: 'As a child, you met a creature that turns people to stone, such as a medusa. You escaped half-petrified, avoiding the fate of others who stand as statues now.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'comp-stoneCursed-b',
+				name: 'Stone Cursed Benefit',
+				description: 'You can use a free maneuver to cause your body, gear, and any items you hold to take on the appearance of stone, making you appear to be a mundane statue while you remain unmoving.'
+			}),
+			FactoryLogic.feature.createBonus({
+				id: 'comp-stoneCursed-mod1',
+				field: FeatureField.Stability,
+				value: 1
+			}),
+			FactoryLogic.feature.create({
+				id: 'comp-stoneCursed-d',
+				name: 'Stone Cursed Drawback',
+				description: 'While you are winded you are dazed.'
+			}),
+			FactoryLogic.feature.createDamageModifier({
+				id: 'comp-stoneCursed-mod2',
+				modifiers: [
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Sonic , modifierType: DamageModifierType.Weakness, value: 5 })
+				]
 			})
 		]
 	};
@@ -357,7 +427,7 @@ Your knowledge of your chosen field increases. When you finish this project, the
 	static cursedWeapon: Complication = {
 		id: 'comp-cursedWeapon',
 		name: 'Cursed Weapon',
-		description: 'When you were young, you were given, or you found, a magic weapon. Since then, it’s stayed by your side, possibly even inspiring you to lead the life of a hero - but the weapon is cursed.',
+		description: 'When you were young, you found or were given a magic weapon. Since then, you’ve carried it always at your side, letting it inspire you to lead the life of a hero — even though the weapon is cursed.',
 		features: [
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-cursedWeapon-b',
@@ -1331,25 +1401,6 @@ You can’t take this complication if you can’t be dazed.`,
 		]
 	};
 
-	static punishmentCurse: Complication = {
-		id: 'comp-punishment-curse',
-		name: 'Punishment Curse',
-		description: 'Through ignorance, fear, spite, or selfishness, you refused to help someone in need. To teach you a lesson, a deity offered you what seemed to be a blessing - extra power to help you heal yourself in times of need, but harsh consequences should your need become excessive. You took the deal, and now benefit from the blessing but also suffer from a curse.',
-		features: [
-			FactoryLogic.feature.createBonus({
-				id: 'comp-punishment-curse-b',
-				name: 'Punishment Curse Benefit',
-				field: FeatureField.Recoveries,
-				value: 1
-			}),
-			FactoryLogic.feature.create({
-				id: 'comp-punishment-curse-d',
-				name: 'Punishment Curse Drawback',
-				description: 'When you are out of Recoveries, you are dying, no matter what your current Stamina is.'
-			})
-		]
-	};
-
 	static raisedByBeasts: Complication = {
 		id: 'comp-raisedByBeasts',
 		name: 'Raised by Beasts',
@@ -1715,36 +1766,7 @@ Note: Stormwight furies can’t take this complication.`,
 				description: 'When you take damage, your face is blank, with no eyes, nose, mouth, or ears. Your face doesn’t return until you spend 5 uninterrupted minutes rearranging it.'
 			})
 		]
-	};
-
-	static stoneCursed: Complication = {
-		id: 'comp-stoneCursed',
-		name: 'Stone Cursed',
-		description: 'As a child, you met a creature that turns people to stone, such as a medusa. You escaped half-petrified, but others, not so lucky, are statues now, waiting for a cure.',
-		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-stoneCursed-b',
-				name: 'Stone Cursed Benefit',
-				description: 'While unmoving you appear to be an ordinary statue.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'comp-stoneCursed-d',
-				name: 'Stone Cursed Drawback',
-				description: 'While you are winded you are dazed.'
-			}),
-			FactoryLogic.feature.createBonus({
-				id: 'comp-stoneCursed-mod1',
-				field: FeatureField.Stability,
-				value: 1
-			}),
-			FactoryLogic.feature.createDamageModifier({
-				id: 'comp-stoneCursed-mod2',
-				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Sonic , modifierType: DamageModifierType.Weakness, value: 5 })
-				]
-			})
-		]
-	};
+	};	
 
 	static strangeInheritance: Complication = {
 		id: 'comp-strangeInheritance',

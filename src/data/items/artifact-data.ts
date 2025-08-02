@@ -12,9 +12,9 @@ export class ArtifactData {
 		type: ItemType.Artifact,
 		keywords: [ AbilityKeyword.Magic, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Heavy ],
 		effect: `
-Whether drawn from a stone, gifted by a lake spirit, forged by a god, or used to kill one, there is a sword that exists outside of time and space. It is always where it needs to be precisely when it needs to be there--then is gone in a flash when the need for it has waned. The sword is depicted in art, song, and story across many living cultures--and even more frequently among those long buried, often after proving the deciding factor in a battle. It's been wielded by numerous heroes of legend, and even more who have slipped into the forgotten shadows of history.
+Whether drawn from a stone, gifted by a lake spirit, forged by a god, or used to kill one, there is a sword that exists outside of time and space. It is always where it needs to be precisely when it needs to be there--then is gone in a flash when the need for it has waned. The sword is depicted in art, song, and story across many living cultures—and even more frequently among cultures long buried, often after proving the deciding factor in a battle. It's been wielded by numerous heroes of legend, and even more who have slipped into the forgotten shadows of history.
 
-Though its size and make are often debated, the sword is consistently described as a hilt with no crossguard, made from pure starlight. When wielded, a brilliant metal blade springs forth from that hilt, suiting the holder's taste in weapons. Those who touch the blade are filled with the vigor and power of the heroes who have held it before.`,
+Though its size and make are often debated, the sword is consistently described as having a crossguard made from pure starlight. When wielded, a brilliant metal blade springs forth from that hilt, suiting the holder's taste in weapons. Those who touch the blade are filled with the vigor and power of the heroes who have held it before.`,
 		featuresByLevel: [
 			{
 				level: 1,
@@ -22,7 +22,7 @@ Though its size and make are often debated, the sword is consistently described 
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-a-thousand-years-1',
 						name: 'Suited for Victory',
-						description: 'This sword takes on the size, shape, and make that the wielder wills into it. It can be a light, medium, or heavy weapon, and you can change its weapon type and appearance as a free maneuver. Any damagedealing weapon ability using the Blade of a Thousand Years always deals holy damage. Any creature vulnerable to holy damage who takes damage from this weapon is also weakened and frightened until the end of their turn.'
+						description: 'This sword takes on the size, shape, and make that the wielder wills into it. It can be a light, medium, or heavy weapon, and you can change its weapon type and appearance as a free maneuver. Any weapon ability that deals rolled damage using the Blade of a Thousand Years always deals holy damage. Any creature with weakness to holy damage who takes damage from this weapon is also frightened and weakened until the end of their next turn.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-blade-of-a-thousand-years-1a',
@@ -38,7 +38,7 @@ Though its size and make are often debated, the sword is consistently described 
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-a-thousand-years-3',
 						name: 'Turn the Tide',
-						description: 'Each enemy minion within 1 mile of the sword is dazed. Any enemy leader or solo in that area takes a bane on ability power rolls.'
+						description: 'Each enemy minion within 1 mile of the sword is dazed. Any enemy leader or solo creature in that area takes a bane on ability rolls.'
 					}),
 					FactoryLogic.feature.create({
 						id: 'item-blade-of-a-thousand-years-4',

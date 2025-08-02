@@ -12,6 +12,7 @@ import { Career } from '../../models/career';
 import { Characteristic } from '../../enums/characteristic';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
+import { Counter } from '../../models/counter';
 import { Culture } from '../../models/culture';
 import { DirectoryModal } from '../modals/directory/directory-modal';
 import { Domain } from '../../models/domain';
@@ -109,22 +110,6 @@ export const Main = (props: Props) => {
 
 	//#region Persistence
 
-	const persistHeroes = (heroes: Hero[]) => {
-		return localforage
-			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
-			.then(
-				setHeroes,
-				err => {
-					console.error(err);
-					notify.error({
-						message: 'Error saving heroes',
-						description: err,
-						placement: 'top'
-					});
-				}
-			);
-	};
-
 	const persistHero = (hero: Hero) => {
 		if (heroes.some(h => h.id === hero.id)) {
 			const copy = Utils.copy(heroes);
@@ -139,6 +124,22 @@ export const Main = (props: Props) => {
 
 			return persistHeroes(copy);
 		}
+	};
+
+	const persistHeroes = (heroes: Hero[]) => {
+		return localforage
+			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
+			.then(
+				setHeroes,
+				err => {
+					console.error(err);
+					notify.error({
+						message: 'Error saving heroes',
+						description: err,
+						placement: 'top'
+					});
+				}
+			);
 	};
 
 	const persistPlaybook = (playbook: Playbook) => {
@@ -1112,6 +1113,134 @@ export const Main = (props: Props) => {
 
 	//#endregion
 
+	//#region Session
+
+	const startEncounter = async (encounter: Encounter) => {
+		const copy = PlaybookLogic.startEncounter(encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], heroes, options);
+
+		const sessionCopy = Utils.copy(session);
+		sessionCopy.encounters.push(copy);
+
+		await persistSession(sessionCopy);
+		return copy.id;
+	};
+
+	const startMontage = async (montage: Montage) => {
+		const copy = PlaybookLogic.startMontage(montage);
+
+		const sessionCopy = Utils.copy(session);
+		sessionCopy.montages.push(copy);
+
+		await persistSession(sessionCopy);
+		return copy.id;
+	};
+
+	const startNegotiation = async (negotiation: Negotiation) => {
+		const copy = PlaybookLogic.startNegotiation(negotiation);
+
+		const sessionCopy = Utils.copy(session);
+		sessionCopy.negotiations.push(copy);
+
+		await persistSession(sessionCopy);
+		return copy.id;
+	};
+
+	const startMap = async (map: TacticalMap) => {
+		const copy = PlaybookLogic.startMap(map);
+
+		const sessionCopy = Utils.copy(session);
+		sessionCopy.tacticalMaps.push(copy);
+
+		await persistSession(sessionCopy);
+		return copy.id;
+	};
+
+	const startCounter = async (counter: Counter) => {
+		const copy = PlaybookLogic.startCounter(counter);
+
+		const sessionCopy = Utils.copy(session);
+		sessionCopy.counters.push(copy);
+
+		await persistSession(sessionCopy);
+		return copy.id;
+	};
+
+	const updateEncounter = (encounter: Encounter) => {
+		const copy = Utils.copy(session);
+
+		const index = copy.encounters.findIndex(n => n.id === encounter.id);
+		if (index !== -1) {
+			copy.encounters[index] = encounter;
+		}
+
+		persistSession(copy);
+	};
+
+	const updateMontage = (montage: Montage) => {
+		const copy = Utils.copy(session);
+
+		const index = copy.montages.findIndex(n => n.id === montage.id);
+		if (index !== -1) {
+			copy.montages[index] = montage;
+		}
+
+		persistSession(copy);
+	};
+
+	const updateNegotiation = (negotiation: Negotiation) => {
+		const copy = Utils.copy(session);
+
+		const index = copy.negotiations.findIndex(n => n.id === negotiation.id);
+		if (index !== -1) {
+			copy.negotiations[index] = negotiation;
+		}
+
+		persistSession(copy);
+	};
+
+	const updateMap = (map: TacticalMap) => {
+		const copy = Utils.copy(session);
+
+		const index = copy.tacticalMaps.findIndex(tm => tm.id === map.id);
+		if (index !== -1) {
+			copy.tacticalMaps[index] = map;
+		}
+
+		persistSession(copy);
+	};
+
+	const updateCounter = (counter: Counter) => {
+		const copy = Utils.copy(session);
+
+		const index = copy.counters.findIndex(c => c.id === counter.id);
+		if (index !== -1) {
+			copy.counters[index] = counter;
+		}
+
+		persistSession(copy);
+	};
+
+	const finishSessionElement = (id: string) => {
+		const copy = Utils.copy(session);
+
+		copy.encounters = copy.encounters.filter(e => e.id !== id);
+		copy.montages = copy.montages.filter(m => m.id !== id);
+		copy.negotiations = copy.negotiations.filter(n => n.id !== id);
+		copy.tacticalMaps = copy.tacticalMaps.filter(tm => tm.id !== id);
+		copy.counters = copy.counters.filter(c => c.id !== id);
+
+		if (copy.playerViewID === id) {
+			copy.playerViewID = null;
+		}
+
+		persistSession(copy);
+
+		const options = PlaybookLogic.getContentOptions(copy);
+		return options.length > 0 ? options[0].id : null;
+	};
+
+	//#endregion
+
 	//#region Modals
 
 	const showDirectoryPane = () => {
@@ -1567,8 +1696,18 @@ export const Main = (props: Props) => {
 										showReference={showReference}
 										showSourcebooks={showSourcebooks}
 										showPlayerView={showPlayerView}
+										startEncounter={startEncounter}
+										startMontage={startMontage}
+										startNegotiation={startNegotiation}
+										startMap={startMap}
+										startCounter={startCounter}
 										updateHero={persistHero}
-										updateSession={persistSession}
+										updateEncounter={updateEncounter}
+										updateMontage={updateMontage}
+										updateNegotiation={updateNegotiation}
+										updateMap={updateMap}
+										updateCounter={updateCounter}
+										finishSessionElement={finishSessionElement}
 										setOptions={persistOptions}
 									/>
 								}

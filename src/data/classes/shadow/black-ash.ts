@@ -154,9 +154,7 @@ Additionally, you can now bring an adjacent willing creature along with you when
 									description: 'Your attack produces a cloud of black ash that launches an enemy into the air.',
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-									distance: [
-										FactoryLogic.distance.createMelee()										
-									],
+									distance: [ FactoryLogic.distance.createMelee() ],
 									target: '1 creature',
 									cost: 9,
 									sections: [
@@ -223,9 +221,7 @@ Additionally, you can now bring an adjacent willing creature along with you when
 									description: 'You tumble through the battle, stabbing foes and teleporting allies.',
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
-									distance: [
-										FactoryLogic.distance.createSelf()										
-									],
+									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
 									cost: 11,
 									sections: [
@@ -235,7 +231,7 @@ Additionally, you can now bring an adjacent willing creature along with you when
 											tier1: 'An enemy takes 6 damage; an ally can teleport up to 3 squares.',
 											tier2: 'An enemy takes 10 damage; an ally can teleport up to 5 squares.',
 											tier3: 'An enemy takes 14 damage; an ally can teleport up to 7 squares.'
-										}))								
+										}))
 									]
 								})
 							}),
@@ -258,7 +254,7 @@ Additionally, you can now bring an adjacent willing creature along with you when
 											tier1: '13 + A corruption damage; push 3',
 											tier2: '18 + A corruption damage; push 5',
 											tier3: '25 + A corruption damage; push 7'
-										})),										
+										})),
 										FactoryLogic.createAbilitySectionText('On a critical hit, the target is grabbed by the demon and pulled through the portal before it closes, never to be seen again.')
 									]
 								})

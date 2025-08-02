@@ -184,7 +184,7 @@ A creature who drinks the potion can spend up to 2 Recoveries, and has acid immu
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Ranged ],
 									distance: [
-										FactoryLogic.distance.createRanged(10)										
+										FactoryLogic.distance.createRanged(10)
 									],
 									target: '3 creatures',
 									cost: 9,
@@ -199,14 +199,14 @@ A creature who drinks the potion receives benefits based on your power roll.`),
 											tier2: 'The creature can fly until the end of the encounter.',
 											tier3: 'The creature turns invisible until the end of their next turn.'
 										}))
-										
+
 
 									]
 								})
 							}),
 							value: 1
-						},
-						
+						}
+
 					]
 				})
 			]
@@ -263,7 +263,7 @@ For each combat round that has passed since this ability was last used in the cu
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Ranged ],
 									distance: [
-										FactoryLogic.distance.createRanged(10)										
+										FactoryLogic.distance.createRanged(10)
 									],
 									target: '1 creature or object',
 									cost: 11,
@@ -274,7 +274,7 @@ For each combat round that has passed since this ability was last used in the cu
 											tier1: '7 damage',
 											tier2: '10 damage',
 											tier3: '15 damage'
-										}))								
+										}))
 									]
 								})
 							}),
@@ -288,7 +288,7 @@ For each combat round that has passed since this ability was last used in the cu
 									description: 'You attach your most potent explosive to your foe. Under less pressing circumstances, you’re sure you could launch them into orbit.',
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-									distance: [ 
+									distance: [
 										FactoryLogic.distance.createMelee(),
 										FactoryLogic.distance.createRanged(10)
 									 ],
@@ -300,7 +300,7 @@ For each combat round that has passed since this ability was last used in the cu
 											tier1: '4 + A fire damage; vertical push 8',
 											tier2: '7 + A fire damage; vertical push 10',
 											tier3: '11 + A fire damage; vertical push 15'
-										})),										
+										})),
 										FactoryLogic.createAbilitySectionText('The ground beneath a 3-cube area around the target’s starting position is difficult terrain.')
 									]
 								})

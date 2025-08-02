@@ -171,7 +171,7 @@ If the creature is the same size as you, you can disguise yourself as them using
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [
-										FactoryLogic.distance.createMelee()										
+										FactoryLogic.distance.createMelee()
 									],
 									target: '2 enemies',
 									cost: 9,
@@ -189,7 +189,7 @@ If the creature is the same size as you, you can disguise yourself as them using
 							}),
 							value: 1
 						}
-						
+
 					]
 				})
 			]
@@ -249,7 +249,7 @@ If the creature is the same size as you, you can disguise yourself as them using
 											tier1: '15 + A damage',
 											tier2: '21 + A damage',
 											tier3: '28 + A damage'
-										})),										
+										})),
 										FactoryLogic.createAbilitySectionText('If you are disguised as a creature the target knew using your I’m No Threat ability, this ability deals extra damage equal to three times your Agility score.')
 									]
 								})

@@ -191,7 +191,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 						name: 'Night Watch',
 						description: 'A steely dagger from out of the blue knocks another weapon off course.',
 						type: FactoryLogic.type.createTrigger('The target takes damage from another creature’s ability while you are hidden.'),
-						keywords: [AbilityKeyword.Ranged, AbilityKeyword.Weapon],
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: '1 ally',
 						sections: [
@@ -211,13 +211,13 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					id: 'shadow-4-6',
 					name: 'Surge of Insight',
 					description: 'The first time each combat round that you deal damage incorporating 1 or more surges, you gain 2 insight instead of 1.'
-				})								
+				})
 			]
 		},
 		{
 			level: 5,
 			features: [
-					FactoryLogic.feature.createClassAbilityChoice({
+				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'shadow-5-1',
 					cost: 9
 				})
@@ -226,7 +226,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 		{
 			level: 6,
 			features: [
-					FactoryLogic.feature.createPerk({
+				FactoryLogic.feature.createPerk({
 					id: 'shadow-6-1'
 				}),
 				FactoryLogic.feature.createAbility({
@@ -324,8 +324,8 @@ At the start of each of your turns, you can forgo gaining insight to create 1d6 
 
 Outside of combat, you can have one clone active for every 2 Victories you have. If a clone is destroyed, you must wait 1 hour before creating another one.
 					`
-					
-					
+
+
 				})
 			]
 		},
@@ -750,7 +750,7 @@ Subterfuge remains until you spend it.`
 			name: 'Blackout',
 			description: 'You cause a plume of shadow to erupt from your eyes and create a cloud of darkness.',
 			type: FactoryLogic.type.createManeuver(),
-			keywords: [AbilityKeyword.Area, AbilityKeyword.Magic],
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 			target: 'Self',
 			cost: 9,

@@ -354,7 +354,7 @@ export const wodeElfTroubadour = {
 								keywords: [
 									'Area',
 									'Magic',
-									'Routine'
+									'Performance'
 								],
 								distance: [
 									{
@@ -401,7 +401,7 @@ export const wodeElfTroubadour = {
 								keywords: [
 									'Area',
 									'Magic',
-									'Routine'
+									'Performance'
 								],
 								distance: [
 									{
@@ -1514,7 +1514,7 @@ export const wodeElfTroubadour = {
 										keywords: [
 											'Area',
 											'Magic',
-											'Routine'
+											'Performance'
 										],
 										distance: [
 											{
@@ -1820,7 +1820,7 @@ export const wodeElfTroubadour = {
 										keywords: [
 											'Area',
 											'Magic',
-											'Routine'
+											'Performance'
 										],
 										distance: [
 											{
@@ -2180,7 +2180,7 @@ export const wodeElfTroubadour = {
 										keywords: [
 											'Magic',
 											'Ranged',
-											'Routine',
+											'Performance',
 											'Strike'
 										],
 										distance: [
@@ -2236,7 +2236,7 @@ export const wodeElfTroubadour = {
 										keywords: [
 											'Area',
 											'Magic',
-											'Routine'
+											'Performance'
 										],
 										distance: [
 											{
@@ -2462,7 +2462,7 @@ export const wodeElfTroubadour = {
 										keywords: [
 											'Area',
 											'Magic',
-											'Routine'
+											'Performance'
 										],
 										distance: [
 											{
@@ -2509,7 +2509,7 @@ export const wodeElfTroubadour = {
 										keywords: [
 											'Area',
 											'Magic',
-											'Routine'
+											'Performance'
 										],
 										distance: [
 											{

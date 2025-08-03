@@ -227,7 +227,8 @@ export const HeroCustomizePanel = (props: Props) => {
 								onClick={() => {
 									setMenuOpen(false);
 									props.addFeature(FactoryLogic.feature.createFollower({
-										id: Utils.guid()
+										id: Utils.guid(),
+										follower: FactoryLogic.createFollower()
 									}));
 								}}
 							>

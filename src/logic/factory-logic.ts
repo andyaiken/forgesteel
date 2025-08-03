@@ -1,6 +1,5 @@
 import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Hero, HeroState } from '../models/hero';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
@@ -9,27 +8,24 @@ import { MonsterFilter, TerrainFilter } from '../models/filter';
 import { Montage, MontageChallenge, MontageSection } from '../models/montage';
 import { Project, ProjectProgress } from '../models/project';
 import { Terrain, TerrainRole } from '../models/terrain';
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
-import { AbilityUsage } from '../enums/ability-usage';
 import { Adventure } from '../models/adventure';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
 import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
-import { ConditionType } from '../enums/condition-type';
 import { Culture } from '../models/culture';
-import { DamageModifier } from '../models/damage-modifier';
-import { DamageModifierType } from '../enums/damage-modifier-type';
-import { DamageType } from '../enums/damage-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
+import { FactoryAbilityTypeLogic } from './factory-ability-type-logic';
+import { FactoryDamageModifierLogic } from './factory-damage-modifier-logic';
+import { FactoryDistanceLogic } from './factory-distance-logic';
+import { FactoryFeatureLogic } from './factory-feature-logic';
+import { Feature } from '../models/feature';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Follower } from '../models/follower';
 import { FollowerType } from '../enums/follower-type';
-import { Format } from '../utils/format';
-import { FormatLogic } from './format-logic';
 import { HeroClass } from '../models/class';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
@@ -48,7 +44,6 @@ import { Plot } from '../models/plot';
 import { PowerRoll } from '../models/power-roll';
 import { RetainerData } from '../data/retainer-data';
 import { Size } from '../models/size';
-import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { Speed } from '../models/speed';
 import { SubClass } from '../models/subclass';
@@ -835,754 +830,16 @@ export class FactoryLogic {
 		};
 	};
 
-	static damageModifier = {
-		create: (data: { damageType: DamageType, modifierType: DamageModifierType, value: number }): DamageModifier => {
-			return {
-				damageType: data.damageType,
-				type: data.modifierType,
-				value: data.value,
-				valueCharacteristics: [],
-				valueCharacteristicMultiplier: 1,
-				valuePerLevel: 0,
-				valuePerEchelon: 0
-			};
-		},
-		createPerLevel: (data: { damageType: DamageType, modifierType: DamageModifierType, value: number }): DamageModifier => {
-			return {
-				damageType: data.damageType,
-				type: data.modifierType,
-				value: data.value,
-				valueCharacteristics: [],
-				valueCharacteristicMultiplier: 1,
-				valuePerLevel: data.value,
-				valuePerEchelon: 0
-			};
-		},
-		createValuePlusPerLevel: (data: { damageType: DamageType, modifierType: DamageModifierType, value: number, perLevel: number }): DamageModifier => {
-			return {
-				damageType: data.damageType,
-				type: data.modifierType,
-				value: data.value + data.perLevel,
-				valueCharacteristics: [],
-				valueCharacteristicMultiplier: 1,
-				valuePerLevel: data.perLevel,
-				valuePerEchelon: 0
-			};
-		},
-		createFirstLevelHigherLevel: (data: { damageType: DamageType, modifierType: DamageModifierType, first: number, higher: number }): DamageModifier => {
-			return {
-				damageType: data.damageType,
-				type: data.modifierType,
-				value: data.first,
-				valueCharacteristics: [],
-				valueCharacteristicMultiplier: 1,
-				valuePerLevel: data.higher,
-				valuePerEchelon: 0
-			};
-		},
-		createPerEchelon: (data: { damageType: DamageType, modifierType: DamageModifierType, value: number }): DamageModifier => {
-			return {
-				damageType: data.damageType,
-				type: data.modifierType,
-				value: 0,
-				valueCharacteristics: [],
-				valueCharacteristicMultiplier: 1,
-				valuePerLevel: 0,
-				valuePerEchelon: data.value
-			};
-		},
-		createCharacteristic: (data: { damageType: DamageType, modifierType: DamageModifierType, characteristics: Characteristic[], multiplier?: number }): DamageModifier => {
-			return {
-				damageType: data.damageType,
-				type: data.modifierType,
-				value: 0,
-				valueCharacteristics: data.characteristics,
-				valueCharacteristicMultiplier: data.multiplier || 1,
-				valuePerLevel: 0,
-				valuePerEchelon: 0
-			};
-		}
-	};
-
-	static type = {
-		createMain: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
-			return {
-				usage: AbilityUsage.MainAction,
-				free: options?.free ?? false,
-				trigger: '',
-				time: '',
-				qualifiers: options?.qualifiers || []
-			};
-		},
-		createManeuver: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
-			return {
-				usage: AbilityUsage.Maneuver,
-				free: options?.free ?? false,
-				trigger: '',
-				time: '',
-				qualifiers: options?.qualifiers || []
-			};
-		},
-		createMove: (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
-			return {
-				usage: AbilityUsage.Move,
-				free: options?.free ?? false,
-				trigger: '',
-				time: '',
-				qualifiers: options?.qualifiers || []
-			};
-		},
-		createTrigger: (trigger: string, options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
-			return {
-				usage: AbilityUsage.Trigger,
-				free: options?.free ?? false,
-				trigger: trigger,
-				time: '',
-				qualifiers: options?.qualifiers || []
-			};
-		},
-		createTime: (time: string): AbilityType => {
-			return {
-				usage: AbilityUsage.Other,
-				free: false,
-				trigger: '',
-				time: time,
-				qualifiers: []
-			};
-		},
-		createVillainAction: (): AbilityType => {
-			return {
-				usage: AbilityUsage.VillainAction,
-				free: false,
-				trigger: '',
-				time: '',
-				qualifiers: []
-			};
-		},
-		createNoAction: (): AbilityType => {
-			return {
-				usage: AbilityUsage.NoAction,
-				free: false,
-				trigger: '',
-				time: '',
-				qualifiers: []
-			};
-		},
-		createFreeStrike: (): AbilityType => {
-			return {
-				usage: AbilityUsage.FreeStrike,
-				free: false,
-				trigger: '',
-				time: '',
-				qualifiers: []
-			};
-		}
-	};
-
-	static distance = {
-		create: (data: { type: AbilityDistanceType, value: number, value2?: number, within?: number, qualifier?: string, special?: string }): AbilityDistance => {
-			return {
-				type: data.type,
-				value: data.value,
-				value2: data.value2 || 0,
-				within: data.within || 0,
-				special: data.special || '',
-				qualifier: data.qualifier ?? ''
-			};
-		},
-		createSelf: (qualifier=''): AbilityDistance => {
-			return {
-				type: AbilityDistanceType.Self,
-				value: 0,
-				value2: 0,
-				within: 0,
-				special: '',
-				qualifier: qualifier
-			};
-		},
-		createMelee: (value = 1): AbilityDistance => {
-			return {
-				type: AbilityDistanceType.Melee,
-				value: value,
-				value2: 0,
-				within: 0,
-				special: '',
-				qualifier: ''
-			};
-		},
-		createRanged: (value: number): AbilityDistance => {
-			return {
-				type: AbilityDistanceType.Ranged,
-				value: value,
-				value2: 0,
-				within: 0,
-				special: '',
-				qualifier: ''
-			};
-		},
-		createSummoner: (): AbilityDistance => {
-			return {
-				type: AbilityDistanceType.Summoner,
-				value: 0,
-				value2: 0,
-				within: 0,
-				special: '',
-				qualifier: ''
-			};
-		},
-		createSpecial: (special: string): AbilityDistance => {
-			return {
-				type: AbilityDistanceType.Special,
-				value: 0,
-				value2: 0,
-				within: 0,
-				special: special,
-				qualifier: ''
-			};
-		}
-	};
-
-	static feature = {
-		create: (data: { id: string, name: string, description: string }): FeatureText => {
-			return {
-				id: data.id,
-				name: data.name,
-				description: data.description,
-				type: FeatureType.Text,
-				data: null
-			};
-		},
-		createAbility: (data: FeatureAbilityData): FeatureAbility => {
-			return {
-				id: data.ability.id,
-				name: data.ability.name,
-				description: data.ability.description,
-				type: FeatureType.Ability,
-				data: {
-					ability: data.ability
-				}
-			};
-		},
-		createAbilityCost: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], modifier: number }): FeatureAbilityCost => {
-			return {
-				id: data.id,
-				name: data.name || 'Ability cost modifier',
-				description: data.description || '',
-				type: FeatureType.AbilityCost,
-				data: {
-					keywords: data.keywords,
-					modifier: data.modifier
-				}
-			};
-		},
-		createAbilityDamage: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], value?: number, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number, damageType?: DamageType }): FeatureAbilityDamage => {
-			return {
-				id: data.id,
-				name: data.name || 'Ability damage modifier',
-				description: data.description || '',
-				type: FeatureType.AbilityDamage,
-				data: {
-					keywords: data.keywords,
-					value: data.value || 0,
-					valueCharacteristics: data.valueCharacteristics || [],
-					valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 0,
-					valuePerLevel: data.valuePerLevel || 0,
-					valuePerEchelon: data.valuePerEchelon || 0,
-					damageType: data.damageType || DamageType.Damage
-				}
-			};
-		},
-		createAbilityDistance: (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], value?: number, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureAbilityDistance => {
-			return {
-				id: data.id,
-				name: data.name || 'Ability distance modifier',
-				description: data.description || '',
-				type: FeatureType.AbilityDistance,
-				data: {
-					keywords: data.keywords,
-					value: data.value || 0,
-					valueCharacteristics: data.valueCharacteristics || [],
-					valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 0,
-					valuePerLevel: data.valuePerLevel || 0,
-					valuePerEchelon: data.valuePerEchelon || 0
-				}
-			};
-		},
-		createAddOn: (data: { id: string, name: string, description: string, category: FeatureAddOnType, cost?: number }): FeatureAddOn => {
-			return {
-				id: data.id,
-				name: data.name,
-				description: data.description,
-				type: FeatureType.AddOn,
-				data: {
-					category: data.category,
-					cost: data.cost || 1
-				}
-			};
-		},
-		createAncestry: (data: { id: string, name?: string, description?: string }): FeatureAncestryChoice => {
-			return {
-				id: data.id,
-				name: data.name || 'Ancestry',
-				description: data.description || '',
-				type: FeatureType.AncestryChoice,
-				data: {
-					selected: null
-				}
-			};
-		},
-		createAncestryFeature: (data: { id: string, name?: string, description?: string, current: boolean, former: boolean, customID: string, value: number }): FeatureAncestryFeatureChoice => {
-			return {
-				id: data.id,
-				name: data.name || 'Ancestry Feature',
-				description: data.description || '',
-				type: FeatureType.AncestryFeatureChoice,
-				data: {
-					source: {
-						current: data.current,
-						former: data.former,
-						customID: data.customID
-					},
-					value: data.value,
-					selected: null
-				}
-			};
-		},
-		createBonus: (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureBonus => {
-			return {
-				id: data.id,
-				name: data.name || data.field.toString(),
-				description: data.description || '',
-				type: FeatureType.Bonus,
-				data: {
-					field: data.field,
-					value: data.value || 0,
-					valueCharacteristics: data.valueCharacteristics || [],
-					valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 1,
-					valuePerLevel: data.valuePerLevel || 0,
-					valuePerEchelon: data.valuePerEchelon || 0
-				}
-			};
-		},
-		createCharacteristicBonus: (data: { id: string, name?: string, description?: string, characteristic: Characteristic, value: number }): FeatureCharacteristicBonus => {
-			return {
-				id: data.id,
-				name: data.name || data.characteristic.toString(),
-				description: data.description || '',
-				type: FeatureType.CharacteristicBonus,
-				data: {
-					characteristic: data.characteristic,
-					value: data.value
-				}
-			};
-		},
-		createChoice: (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }): FeatureChoice => {
-			const count = data.count || 1;
-			return {
-				id: data.id,
-				name: data.name || 'Choice',
-				description: data.description || '',
-				type: FeatureType.Choice,
-				data: {
-					options: data.options,
-					count: count,
-					selected: []
-				}
-			};
-		},
-		createClassAbilityChoice: (data: { id: string, name?: string, description?: string, cost: number | 'signature', allowAnySource?: boolean, minLevel?: number, count?: number }): FeatureClassAbility => {
-			const count = data.count || 1;
-			return {
-				id: data.id,
-				name: data.name || 'Ability',
-				description: data.description || '',
-				type: FeatureType.ClassAbility,
-				data: {
-					classID: undefined,
-					cost: data.cost,
-					allowAnySource: data.allowAnySource ?? false,
-					minLevel: data.minLevel || 1,
-					count: count,
-					selectedIDs: []
-				}
-			};
-		},
-		createCompanion: (data: {id: string, name?: string, description?: string, type: 'companion' | 'mount' | 'retainer' }): FeatureCompanion => {
-			return {
-				id: data.id,
-				name: data.name || Format.capitalize(data.type),
-				description: data.description || '',
-				type: FeatureType.Companion,
-				data: {
-					type: data.type,
-					selected: null
-				}
-			};
-		},
-		createConditionImmunity: (data: { id: string, name?: string, description?: string, conditions: ConditionType[] }): FeatureConditionImmunity => {
-			return {
-				id: data.id,
-				name: data.name || 'Condition Immunity',
-				description: data.description || data.conditions.join(', '),
-				type: FeatureType.ConditionImmunity,
-				data: {
-					conditions: data.conditions
-				}
-			};
-		},
-		createDamageModifier: (data: { id: string, name?: string, description?: string, modifiers: DamageModifier[] }): FeatureDamageModifier => {
-			return {
-				id: data.id,
-				name: data.name || 'Damage Modifier',
-				description: data.description || data.modifiers.map(FormatLogic.getDamageModifier).join(', '),
-				type: FeatureType.DamageModifier,
-				data: {
-					modifiers: data.modifiers
-				}
-			};
-		},
-		createDomainChoice: (data: { id: string, name?: string, description?: string, count?: number }): FeatureDomain => {
-			const count = data.count || 1;
-			return {
-				id: data.id,
-				name: data.name || 'Domain',
-				description: data.description || '',
-				type: FeatureType.Domain,
-				data: {
-					count: count,
-					selected: []
-				}
-			};
-		},
-		createDomainFeature: (data: { id: string, name?: string, description?: string, level: number, count?: number }): FeatureDomainFeature => {
-			const count = data.count || 1;
-			return {
-				id: data.id,
-				name: data.name || 'Domain Feature Choice',
-				description: data.description || '',
-				type: FeatureType.DomainFeature,
-				data: {
-					level: data.level,
-					count: count,
-					selected: []
-				}
-			};
-		},
-		createFollower: (data: { id: string, name?: string, description?: string }): FeatureFollower => {
-			return {
-				id: data.id,
-				name: data.name || 'Follower',
-				description: data.description || '',
-				type: FeatureType.Follower,
-				data: {
-					follower: FactoryLogic.createFollower()
-				}
-			};
-		},
-		createHeroicResource: (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: { trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
-			return {
-				id: data.id,
-				name: data.name,
-				description: data.description || '',
-				type: FeatureType.HeroicResource,
-				data: {
-					type: data.type || 'heroic',
-					gains: data.gains,
-					details: data.details || '',
-					canBeNegative: data.canBeNegative ?? false,
-					value: 0
-				}
-			};
-		},
-		createHeroicResourceGain: (data: { id: string, name?: string, trigger: string, value: string }): FeatureHeroicResourceGain => {
-			return {
-				id: data.id,
-				name: data.name || 'Heroic Resource Gain',
-				description: '',
-				type: FeatureType.HeroicResourceGain,
-				data: {
-					trigger: data.trigger,
-					value: data.value
-				}
-			};
-		},
-		createItemChoice: (data: { id: string, name?: string, description?: string, types?: ItemType[], count?: number }): FeatureItemChoice => {
-			const count = data.count || 1;
-			const type = data.types && (data.types.length === 1) ? data.types[0] : 'Item';
-			return {
-				id: data.id,
-				name: data.name || type,
-				description: data.description || '',
-				type: FeatureType.ItemChoice,
-				data: {
-					types: data.types || [ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket ],
-					count: count,
-					selected: []
-				}
-			};
-		},
-		createKitChoice: (data: { id: string, name?: string, description?: string, types?: string[], count?: number }): FeatureKit => {
-			const count = data.count || 1;
-			return {
-				id: data.id,
-				name: data.name || 'Kit',
-				description: data.description || '',
-				type: FeatureType.Kit,
-				data: {
-					types: data.types || [ '' ],
-					count: count,
-					selected: []
-				}
-			};
-		},
-		createLanguage: (data: { id: string, name?: string, description?: string, language: string }): FeatureLanguage => {
-			return {
-				id: data.id,
-				name: data.name || data.language,
-				description: data.description || '',
-				type: FeatureType.Language,
-				data: {
-					language: data.language
-				}
-			};
-		},
-		createLanguageChoice: (data: { id: string, name?: string, description?: string, options?: string[], count?: number, selected?: string[] }): FeatureLanguageChoice => {
-			const count = data.count || 1;
-			return {
-				id: data.id,
-				name: data.name || (count === 1 ? 'Language' : 'Languages'),
-				description: data.description || '',
-				type: FeatureType.LanguageChoice,
-				data: {
-					options: data.options || [],
-					count: count,
-					selected: data.selected || []
-				}
-			};
-		},
-		createMalice: (data: { id: string, name: string, cost: number, repeatable?: boolean, sections: (string | PowerRoll)[] }): FeatureMalice => {
-			return {
-				id: data.id,
-				name: data.name,
-				description: '',
-				type: FeatureType.Malice,
-				data: {
-					cost: data.cost,
-					repeatable: data.repeatable || false,
-					sections: data.sections
-				}
-			};
-		},
-		createMovementMode: (data: { id: string, name?: string, mode: string }): FeatureMovementMode => {
-			return {
-				id: data.id,
-				name: data.name || 'Movement Mode',
-				description: '',
-				type: FeatureType.MovementMode,
-				data: {
-					mode: data.mode
-				}
-			};
-		},
-		createMultiple: (data: { id: string, name?: string, description?: string, features: Feature[] }): FeatureMultiple => {
-			return {
-				id: data.id,
-				name: data.name || data.features.map(f => f.name || 'Unnamed Feature').join(', '),
-				description: data.description || data.features.map(f => f.name || 'Unnamed Feature').join(', '),
-				type: FeatureType.Multiple,
-				data: {
-					features: data.features
-				}
-			};
-		},
-		createPackage: (data: { id: string, name: string, description: string, tag: string }): FeaturePackage => {
-			return {
-				id: data.id,
-				name: data.name,
-				description: data.description,
-				type: FeatureType.Package,
-				data: {
-					tag: data.tag
-				}
-			};
-		},
-		createPackageContent: (data: { id: string, name: string, description: string, tag: string }): FeaturePackageContent => {
-			return {
-				id: data.id,
-				name: data.name,
-				description: data.description,
-				type: FeatureType.PackageContent,
-				data: {
-					tag: data.tag
-				}
-			};
-		},
-		createPerk: (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number }): FeaturePerk => {
-			const count = data.count || 1;
-			const lists = data.lists || [];
-
-			const prefix = (lists.length > 0) && (lists.length < 6) ? `${lists.join(' / ')} ` : '';
-
-			return {
-				id: data.id,
-				name: data.name || (count > 1 ? `${prefix}Perks` : `${prefix}Perk`),
-				description: data.description || '',
-				type: FeatureType.Perk,
-				data: {
-					lists: data.lists || [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ],
-					count: count,
-					selected: []
-				}
-			};
-		},
-		createProficiency: (data: { id: string, name?: string, description?: string, weapons?: KitWeapon[], armor?: KitArmor[] }): FeatureProficiency => {
-			return {
-				id: data.id,
-				name: data.name || 'Proficiency',
-				description: data.description || '',
-				type: FeatureType.Proficiency,
-				data: {
-					weapons: data.weapons || [],
-					armor: data.armor || []
-				}
-			};
-		},
-		createSize: (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: 'T' | 'S' | 'M' | 'L' }): FeatureSize => {
-			return {
-				id: data.id,
-				name: data.name || 'Size',
-				description: data.description || '',
-				type: FeatureType.Size,
-				data: {
-					size: {
-						value: data.sizeValue,
-						mod: data.sizeMod
-					}
-				}
-			};
-		},
-		createSkill: (data: { id: string, name?: string, description?: string, skill: string }): FeatureSkill => {
-			return {
-				id: data.id,
-				name: data.name || data.skill,
-				description: data.description || '',
-				type: FeatureType.Skill,
-				data: {
-					skill: data.skill
-				}
-			};
-		},
-		createSkillChoice: (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
-			const count = data.count || 1;
-			const options = data.options || [];
-			const listOptions = data.listOptions || [];
-
-			const prefix = (listOptions.length < 5) ? ((options.length === 0) && (listOptions.length > 0) ? `${listOptions.join(' / ')} ` : '') : '';
-
-			return {
-				id: data.id,
-				name: data.name || (count === 1 ? `${prefix}Skill` : `${prefix}Skills`),
-				description: data.description || '',
-				type: FeatureType.SkillChoice,
-				data: {
-					options: data.options || [],
-					listOptions: data.listOptions || [],
-					count: count,
-					selected: data.selected || []
-				}
-			};
-		},
-		createSoloMonster: (data: { id: string, name: string, gender?: 'm' | 'f' | 'n' , endEfect?: number }): FeatureText => {
-			const capitalizedName = data.name.split(' ').map((n, i) => i === 0 ? Format.capitalize(n) : n).join(' ');
-			const genderWithDefault = data.gender ?? 'n';
-			const heSheThey = ({ m: 'he', f: 'she', n: 'they' } as const)[ genderWithDefault ];
-			const hisHerTheir = ({ m: 'his', f: 'her', n: 'their' } as const)[ genderWithDefault ];
-			const himHerThem = ({ m: 'him', f: 'her', n: 'them' } as const)[ genderWithDefault ];
-			return {
-				id: data.id,
-				name: 'Solo Monster',
-				description: `
-* **Solo Turns** ${capitalizedName} takes up to two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively. ${Format.capitalize(heSheThey)} can use two main actions on each of ${hisHerTheir} turns. While dazed, ${data.name} can take one action and one maneuver per turn.
-* **End Effect** At the end of ${hisHerTheir} turn, ${data.name} can take ${data.endEfect || 5} damage to end one *save ends* effect affecting ${himHerThem}. This damage can’t be reduced in any way.`,
-				type: FeatureType.Text,
-				data: null
-			};
-		},
-		createSpeed: (data: { id: string, name?: string, description?: string, speed: number }): FeatureSpeed => {
-			return {
-				id: data.id,
-				name: data.name || 'Speed',
-				description: data.description || '',
-				type: FeatureType.Speed,
-				data: {
-					speed: data.speed
-				}
-			};
-		},
-		createSummon: (data: { id: string, name?: string, description?: string, options: Monster[], count?: number }): FeatureSummon => {
-			return {
-				id: data.id,
-				name: data.name || 'Summon',
-				description: data.description || '',
-				type: FeatureType.Summon,
-				data: {
-					options: data.options,
-					count: data.count || 1,
-					selected: []
-				}
-			};
-		},
-		createTaggedFeature: (data: { tag: string, feature: Feature }): FeatureTaggedFeature => {
-			return {
-				id: data.feature.id,
-				name: data.feature.name,
-				description: data.feature.description,
-				type: FeatureType.TaggedFeature,
-				data: {
-					tag: data.tag,
-					feature: data.feature
-				}
-			};
-		},
-		createTaggedFeatureChoice: (data: { id: string, name?: string, description?: string, tag: string, count?: number }): FeatureTaggedFeatureChoice => {
-			return {
-				id: data.id,
-				name: data.name || 'Tagged Feature',
-				description: data.description || '',
-				type: FeatureType.TaggedFeatureChoice,
-				data: {
-					tag: data.tag,
-					count: data.count || 1,
-					selected: []
-				}
-			};
-		},
-		createTitleChoice: (data: { id: string, name?: string, description?: string, echelon?: number, count?: number }): FeatureTitleChoice => {
-			const count = data.count || 1;
-			return {
-				id: data.id,
-				name: data.name || 'Title',
-				description: data.description || (count > 1 ? `Choose ${count} titles.` : 'Choose a title.'),
-				type: FeatureType.TitleChoice,
-				data: {
-					echelon: data.echelon || 1,
-					count: count,
-					selected: []
-				}
-			};
-		}
-	};
-
-	public static createTacticalMap(): TacticalMap {
+	static createTacticalMap = (): TacticalMap => {
 		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
 			items: []
 		};
-	}
+	};
 
-	public static createMapTile(): MapTile {
+	static createMapTile = (): MapTile => {
 		return {
 			id: Utils.guid(),
 			type: 'tile',
@@ -1603,9 +860,9 @@ export class FactoryLogic {
 				color: 'C8C8C8FF'
 			}
 		};
-	}
+	};
 
-	public static createMapWall(): MapWall {
+	static createMapWall = (): MapWall => {
 		return {
 			id: Utils.guid(),
 			type: 'wall',
@@ -1619,7 +876,7 @@ export class FactoryLogic {
 		};
 	};
 
-	public static createMapZone(): MapZone {
+	static createMapZone = (): MapZone => {
 		return {
 			id: Utils.guid(),
 			type: 'zone',
@@ -1637,9 +894,9 @@ export class FactoryLogic {
 			corners: 'rounded',
 			color: '5599ff80'
 		};
-	}
+	};
 
-	public static createMapMini(): MapMini {
+	static createMapMini = (): MapMini => {
 		return {
 			id: Utils.guid(),
 			type: 'mini',
@@ -1656,9 +913,9 @@ export class FactoryLogic {
 			},
 			content: null
 		};
-	}
+	};
 
-	public static createMapFog(): MapFog {
+	static createMapFog = (): MapFog => {
 		return {
 			id: Utils.guid(),
 			type: 'fog',
@@ -1668,9 +925,9 @@ export class FactoryLogic {
 				z: 0
 			}
 		};
-	}
+	};
 
-	public static createOptions(): Options {
+	static createOptions = (): Options => {
 		return {
 			singlePage: false,
 			separateInventoryFeatures: false,
@@ -1697,5 +954,10 @@ export class FactoryLogic {
 			gridSize: 50,
 			playerGridSize: 50
 		};
-	}
+	};
+
+	static damageModifier = new FactoryDamageModifierLogic();
+	static distance = new FactoryDistanceLogic();
+	static feature = new FactoryFeatureLogic();
+	static type = new FactoryAbilityTypeLogic();
 }

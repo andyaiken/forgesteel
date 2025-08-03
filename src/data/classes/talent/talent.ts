@@ -97,9 +97,9 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 						]
 					})
 				}),
-				FactoryLogic.feature.createLanguage({
+				FactoryLogic.feature.createLanguageChoice({
 					id: 'talent-1-3',
-					language: 'Mindspeech'
+					selected: [ 'Mindspeech' ]
 				}),
 				FactoryLogic.feature.create({
 					id: 'talent-1-4',

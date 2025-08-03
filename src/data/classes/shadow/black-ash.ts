@@ -78,7 +78,7 @@ export const blackAsh: SubClass = {
 										FactoryLogic.distance.createMelee(),
 										FactoryLogic.distance.createRanged(5)
 									],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -155,7 +155,7 @@ Additionally, you can now bring an adjacent willing creature along with you when
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -246,7 +246,7 @@ Additionally, you can now bring an adjacent willing creature along with you when
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee(3) ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

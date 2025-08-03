@@ -330,7 +330,7 @@ Outside of combat, you can have one clone active for every 2 Victories you have.
 			]
 		},
 		{
-			level: 9,
+			level: 10,
 			features: [
 				FactoryLogic.feature.createCharacteristicBonus({
 					id: 'shadow-10-1a',

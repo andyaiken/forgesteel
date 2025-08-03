@@ -173,7 +173,7 @@ If the creature is the same size as you, you can disguise yourself as them using
 									distance: [
 										FactoryLogic.distance.createMelee()
 									],
-									target: '2 enemies',
+									target: 'Two enemies',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -223,7 +223,7 @@ If the creature is the same size as you, you can disguise yourself as them using
 									type: FactoryLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionText('Until the end of the encounter, you gain the target’s damage immunities and speed (if they are better than yours), and can use any types of movement they can use. You can also use the target’s signature ability, using their bonus for the power roll.')
@@ -241,7 +241,7 @@ If the creature is the same size as you, you can disguise yourself as them using
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature or object',
+									target: 'One creature or object',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

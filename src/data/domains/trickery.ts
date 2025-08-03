@@ -138,6 +138,10 @@ export const trickery: Domain = {
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

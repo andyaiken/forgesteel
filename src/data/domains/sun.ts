@@ -65,10 +65,10 @@ export const sun: Domain = {
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-sun-4',
-							name: 'Light of Revelation',
-							description: 'As a maneuver, you make your body shine brightly, illuminating your space and each square within 5 squares. This light shines through any darkness. Hidden creatures in the area are automatically revealed, and creatures in the light, including you, can’t hide. While this feature is active, you gain an edge on tests made to notice hidden objects and entrances and to detect supernatural illusions.'
-						})
+					id: 'domain-sun-4',
+					name: 'Light of Revelation',
+					description: 'As a maneuver, you make your body shine brightly, illuminating your space and each square within 5 squares. This light shines through any darkness. Hidden creatures in the area are automatically revealed, and creatures in the light, including you, can’t hide. While this feature is active, you gain an edge on tests made to notice hidden objects and entrances and to detect supernatural illusions.'
+				})
 			]
 		},
 		{
@@ -99,10 +99,10 @@ export const sun: Domain = {
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-sun-7',
-							name: 'Light of the Burning Sun',
-							description: 'Sun infuses your body. Whenever you use an ability to deal rolled damage to another creature, that ability deals an extra 5 fire damage, or an extra 15 fire damage if the creature is undead. Additionally, you have fire immunity equal to your level, which is added to any other fire immunity you have.'
-						})
+					id: 'domain-sun-7',
+					name: 'Light of the Burning Sun',
+					description: 'Sun infuses your body. Whenever you use an ability to deal rolled damage to another creature, that ability deals an extra 5 fire damage, or an extra 15 fire damage if the creature is undead. Additionally, you have fire immunity equal to your level, which is added to any other fire immunity you have.'
+				})
 			]
 		},
 		{
@@ -130,11 +130,16 @@ export const sun: Domain = {
 									tier2: '14 fire damage',
 									tier3: '19 fire damage'
 								})
-							)						]
+							)
+						]
 					})
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

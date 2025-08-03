@@ -1,6 +1,6 @@
+import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { Domain } from '../../models/domain';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { SkillList } from '../../enums/skill-list';
@@ -64,10 +64,10 @@ export const knowledge: Domain = {
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-knowledge-4',
-							name: 'Saint’s Epiphany',
-							description: 'At the start of a respite, you can inspire yourself or another creature taking the same respite with divine knowledge. If the target makes a project roll during this respite, they can add 1d10 plus your Intuition score to the roll.'
-						})
+					id: 'domain-knowledge-4',
+					name: 'Saint’s Epiphany',
+					description: 'At the start of a respite, you can inspire yourself or another creature taking the same respite with divine knowledge. If the target makes a project roll during this respite, they can add 1d10 plus your Intuition score to the roll.'
+				})
 			]
 		},
 		{
@@ -96,7 +96,7 @@ export const knowledge: Domain = {
 									tier3: '9 sonic damage; push 7'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('You can choose to have this ability deal damage to and push objects, and to deal damage to buildings.'),
+							FactoryLogic.createAbilitySectionText('You can choose to have this ability deal damage to and push objects, and to deal damage to buildings.')
 						]
 					})
 				})
@@ -106,10 +106,10 @@ export const knowledge: Domain = {
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-knowledge-7',
-							name: 'Gods’ Library',
-							description: 'You can gain access to information you need through prayer, so that you no longer require research materials for crafting and research projects. Additionally, you add your level to project rolls you make for crafting and research projects. You also have any skills in the lore skill group you don’t already have, and you gain a number of skills from any other skill groups equal to the number of skills you had in the lore skill group before you gained this feature.'
-						})
+					id: 'domain-knowledge-7',
+					name: 'Gods’ Library',
+					description: 'You can gain access to information you need through prayer, so that you no longer require research materials for crafting and research projects. Additionally, you add your level to project rolls you make for crafting and research projects. You also have any skills in the lore skill group you don’t already have, and you gain a number of skills from any other skill groups equal to the number of skills you had in the lore skill group before you gained this feature.'
+				})
 			]
 		},
 		{
@@ -138,12 +138,16 @@ export const knowledge: Domain = {
 									tier3: '21 + I corruption damage; A < [strong], weakened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('While weakened this way, the target has damage weakness 10.'),
+							FactoryLogic.createAbilitySectionText('While weakened this way, the target has damage weakness 10.')
 						]
 					})
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

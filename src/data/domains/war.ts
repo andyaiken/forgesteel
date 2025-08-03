@@ -1,9 +1,10 @@
+import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
+import { Characteristic } from '../../enums/characteristic';
 import { Domain } from '../../models/domain';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { SkillList } from '../../enums/skill-list';
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { Characteristic } from '../../enums/characteristic';
+
 
 export const war: Domain = {
 	id: 'domain-war',
@@ -57,10 +58,10 @@ export const war: Domain = {
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-war-4',
-							name: 'Improved Sanctified Weapon',
-							description: 'The weapon improved by your Sanctified Weapon feature grants a +3 bonus to rolled damage instead of +1.'
-						})
+					id: 'domain-war-4',
+					name: 'Improved Sanctified Weapon',
+					description: 'The weapon improved by your Sanctified Weapon feature grants a +3 bonus to rolled damage instead of +1.'
+				})
 			]
 		},
 		{
@@ -98,10 +99,10 @@ export const war: Domain = {
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-war-7',
-							name: 'Your Triumphs Are Remembered',
-							description: 'The gods allow you and your companions to bask in the glory of past successes. Whenever you finish a respite, you and any other heroes who rested with you regain 1 Victory after your Victories are converted to XP. This Victory isn’t converted into XP at the end of a subsequent respite.'
-						})
+					id: 'domain-war-7',
+					name: 'Your Triumphs Are Remembered',
+					description: 'The gods allow you and your companions to bask in the glory of past successes. Whenever you finish a respite, you and any other heroes who rested with you regain 1 Victory after your Victories are converted to XP. This Victory isn’t converted into XP at the end of a subsequent respite.'
+				})
 			]
 		},
 		{
@@ -128,6 +129,10 @@ export const war: Domain = {
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

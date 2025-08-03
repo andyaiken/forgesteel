@@ -74,10 +74,10 @@ If you are in the same area as a creature using this or a similar feature who ha
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-storm-4',
-							name: 'Windwalk',
-							description: 'While you have 5 or more Victories, you can fly. If you can already fly, you have a +2 bonus to speed while flying instead.'
-						})
+					id: 'domain-storm-4',
+					name: 'Windwalk',
+					description: 'While you have 5 or more Victories, you can fly. If you can already fly, you have a +2 bonus to speed while flying instead.'
+				})
 			]
 		},
 		{
@@ -106,7 +106,7 @@ If you are in the same area as a creature using this or a similar feature who ha
 									tier3: '13 lightning damage; push 3'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The targets are force moved one at a time, starting with the target nearest to you, and can be pushed into other targets in the same line.'),
+							FactoryLogic.createAbilitySectionText('The targets are force moved one at a time, starting with the target nearest to you, and can be pushed into other targets in the same line.')
 						]
 					})
 				})
@@ -116,10 +116,10 @@ If you are in the same area as a creature using this or a similar feature who ha
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-storm-7',
-							name: 'Thunderstruck',
-							description: 'Lightning and thunder infuse your body. Whenever you use an ability to deal lightning or sonic damage to another creature, you gain 1 surge. Additionally, if you use an ability that force moves a creature, the forced movement distance gains a bonus equal to your Intuition score.'
-						})
+					id: 'domain-storm-7',
+					name: 'Thunderstruck',
+					description: 'Lightning and thunder infuse your body. Whenever you use an ability to deal lightning or sonic damage to another creature, you gain 1 surge. Additionally, if you use an ability that force moves a creature, the forced movement distance gains a bonus equal to your Intuition score.'
+				})
 			]
 		},
 		{
@@ -154,6 +154,10 @@ If you are in the same area as a creature using this or a similar feature who ha
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

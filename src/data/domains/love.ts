@@ -58,10 +58,10 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-love-4',
-							name: 'Invocation of the Heart',
-							description: 'As a main action, you forge a bond of love and friendship with a willing creature you touch. While this bond is active, you can telepathically speak with the creature over any distance, including across different worlds. Additionally, while this bond is active, you can attempt to assist the creature with any test they make regardless of their proximity to you. You can maintain only one bond at a time, and you can end a bond at any time (no action required).'
-						})
+					id: 'domain-love-4',
+					name: 'Invocation of the Heart',
+					description: 'As a main action, you forge a bond of love and friendship with a willing creature you touch. While this bond is active, you can telepathically speak with the creature over any distance, including across different worlds. Additionally, while this bond is active, you can attempt to assist the creature with any test they make regardless of their proximity to you. You can maintain only one bond at a time, and you can end a bond at any time (no action required).'
+				})
 			]
 		},
 		{
@@ -92,10 +92,10 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-love-7-1',
-							name: 'Covenant of the Heart',
-							description: 'You can maintain bonds with up to three willing creatures using your Invocation of the Heart feature.'
-						}),
+					id: 'domain-love-7-1',
+					name: 'Covenant of the Heart',
+					description: 'You can maintain bonds with up to three willing creatures using your Invocation of the Heart feature.'
+				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'domain-love-7-2',
@@ -106,7 +106,7 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self and each ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target is teleported to unoccupied spaces within 5 squares of a willing creature who you are bonded to with your Invocation of the Heart feature. You don’t need line of effect to the bonded creature but you must be on the same world.'),
+							FactoryLogic.createAbilitySectionText('Each target is teleported to unoccupied spaces within 5 squares of a willing creature who you are bonded to with your Invocation of the Heart feature. You don’t need line of effect to the bonded creature but you must be on the same world.')
 						]
 					})
 				})
@@ -136,6 +136,10 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

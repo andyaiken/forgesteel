@@ -73,10 +73,10 @@ export const nature: Domain = {
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-nature-4',
-							name: 'Wode Road',
-							description: 'As a main action, you touch a living tree and make it part of a divine transportation network. You can maintain a number of trees in your network equal to your Intuition score. Whenever you touch any tree in your network, you can use a main action to teleport yourself and any willing creatures within 10 squares of you to a tree in your network on the same world. If a tree in your network dies, it is no longer part of the network. You can remove a tree from your network no matter your distance from it, including across different worlds (no action required).'
-						})
+					id: 'domain-nature-4',
+					name: 'Wode Road',
+					description: 'As a main action, you touch a living tree and make it part of a divine transportation network. You can maintain a number of trees in your network equal to your Intuition score. Whenever you touch any tree in your network, you can use a main action to teleport yourself and any willing creatures within 10 squares of you to a tree in your network on the same world. If a tree in your network dies, it is no longer part of the network. You can remove a tree from your network no matter your distance from it, including across different worlds (no action required).'
+				})
 			]
 		},
 		{
@@ -114,9 +114,9 @@ export const nature: Domain = {
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-nature-7',
-							name: 'Nature’s Bounty',
-							description: `
+					id: 'domain-nature-7',
+					name: 'Nature’s Bounty',
+					description: `
 When you finish a respite, you can prepare a magic meal using local flora for any companions who rested with you. Choose two of the following benefits for creatures who consume the meal:
 
 * Each creature gains immunity to acid, cold, corruption, fire, lightning, poison, or sonic damage equal to your level. You can choose this benefit twice, choosing a different damage immunity each time.
@@ -126,7 +126,7 @@ When you finish a respite, you can prepare a magic meal using local flora for an
 * Each creature gains an edge on tests made to influence other creatures.
 
 Each benefit lasts until the creature who gains it finishes another respite.`
-						})
+				})
 			]
 		},
 		{
@@ -162,6 +162,10 @@ Each benefit lasts until the creature who gains it finishes another respite.`
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

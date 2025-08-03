@@ -1,5 +1,5 @@
-import { AbilityKeyword } from '../../enums/ability-keyword';
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
+import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Domain } from '../../models/domain';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { SkillList } from '../../enums/skill-list';
@@ -65,10 +65,10 @@ export const death: Domain = {
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-death-4',
-							name: 'Seance',
-							description: 'You can commune with a network of spirits. As a respite activity, you speak the name of a creature who died and isn’t undead. If the creature’s spirit is free and willing to speak with you, they appear and you can have a conversation with them. During this time, the creature responds to you as they would have in life. If the creature isn’t free or willing to appear, you can speak another name or choose another respite activity.'
-						})
+					id: 'domain-death-4',
+					name: 'Seance',
+					description: 'You can commune with a network of spirits. As a respite activity, you speak the name of a creature who died and isn’t undead. If the creature’s spirit is free and willing to speak with you, they appear and you can have a conversation with them. During this time, the creature responds to you as they would have in life. If the creature isn’t free or willing to appear, you can speak another name or choose another respite activity.'
+				})
 			]
 		},
 		{
@@ -89,7 +89,7 @@ export const death: Domain = {
 						target: 'Each creature in the area',
 						cost: 9,
 						sections: [
-						FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, at the end of each of your turns, you can slide each creature in the area up to a number of squares equal to your Intuition score. This forced movement ignores stability for your allies.')
+							FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, at the end of each of your turns, you can slide each creature in the area up to a number of squares equal to your Intuition score. This forced movement ignores stability for your allies.')
 						]
 					})
 				})
@@ -99,13 +99,13 @@ export const death: Domain = {
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-death-7',
-							name: 'Word of Death Deferred',
-							description: `
+					id: 'domain-death-7',
+					name: 'Word of Death Deferred',
+					description: `
 You can stop death from taking your allies. When an ally within distance of your Healing Grace ability dies and you are not dying, you can use a free triggered action to instead have that ally fall unconscious until they regain Stamina.
 
 Additionally, your abilities deal an extra 5 damage to winded creatures.`
-						})
+				})
 			]
 		},
 		{
@@ -126,12 +126,16 @@ Additionally, your abilities deal an extra 5 damage to winded creatures.`
 						target: 'One creature',
 						cost: 11,
 						sections: [
-						FactoryLogic.createAbilitySectionText('Before the target dies, you can look at their stat block and force them to use one ability that is a main action or a maneuver. If the ability costs a Heroic Resource or Malice, the creature can use it without any cost. For the purpose of using this ability, your allies and enemies are the target’s allies and enemies, and you decide who the ability targets.')
+							FactoryLogic.createAbilitySectionText('Before the target dies, you can look at their stat block and force them to use one ability that is a main action or a maneuver. If the ability costs a Heroic Resource or Malice, the creature can use it without any cost. For the purpose of using this ability, your allies and enemies are the target’s allies and enemies, and you decide who the ability targets.')
 						]
 					})
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

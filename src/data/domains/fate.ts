@@ -60,10 +60,10 @@ You can target yourself instead of one creature with this ability. Choose one of
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-fate-4',
-							name: 'Oracular Warning',
-							description: 'Each time you finish a respite, you can share the vague dreams of the future granted to you by the gods with allies who finished the respite with you. These premonitions help you and your allies stay alive, granting each of you temporary Stamina equal to 10 + your level that lasts until you finish a respite.'
-						})
+					id: 'domain-fate-4',
+					name: 'Oracular Warning',
+					description: 'Each time you finish a respite, you can share the vague dreams of the future granted to you by the gods with allies who finished the respite with you. These premonitions help you and your allies stay alive, granting each of you temporary Stamina equal to 10 + your level that lasts until you finish a respite.'
+				})
 			]
 		},
 		{
@@ -92,7 +92,7 @@ You can target yourself instead of one creature with this ability. Choose one of
 									tier3: '19 + I corruption damage; R < [strong], weakened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('If this damage kills the target, you and each ally within distance can spend a Recovery.'),
+							FactoryLogic.createAbilitySectionText('If this damage kills the target, you and each ally within distance can spend a Recovery.')
 						]
 					})
 				})
@@ -102,10 +102,10 @@ You can target yourself instead of one creature with this ability. Choose one of
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-fate-7',
-							name: 'Word of Fate Denied',
-							description: 'When an ally within 10 squares takes damage that would leave them dying, you can use a free triggered action to make yourself or another willing creature within 10 squares of you the target of the triggering damage instead. The creature you choose takes the damage and suffers any effects associated with it, and that damage can’t be reduced in any way.'
-						})
+					id: 'domain-fate-7',
+					name: 'Word of Fate Denied',
+					description: 'When an ally within 10 squares takes damage that would leave them dying, you can use a free triggered action to make yourself or another willing creature within 10 squares of you the target of the triggering damage instead. The creature you choose takes the damage and suffers any effects associated with it, and that damage can’t be reduced in any way.'
+				})
 			]
 		},
 		{
@@ -132,6 +132,10 @@ You can target yourself instead of one creature with this ability. Choose one of
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

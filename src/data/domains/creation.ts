@@ -65,10 +65,10 @@ export const creation: Domain = {
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-creation-4',
-							name: 'Improved Hands of the Maker',
-							description: 'When you use your Hands of the Maker ability, you can create a mundane object that is size 2 or smaller.'
-						})
+					id: 'domain-creation-4',
+					name: 'Improved Hands of the Maker',
+					description: 'When you use your Hands of the Maker ability, you can create a mundane object that is size 2 or smaller.'
+				})
 			]
 		},
 		{
@@ -98,7 +98,7 @@ export const creation: Domain = {
 									tier3: '8 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('Once on each subsequent turn, you can use a free maneuver to move the machine a number of squares up to your Intuition score then repeat the power roll.'),
+							FactoryLogic.createAbilitySectionText('Once on each subsequent turn, you can use a free maneuver to move the machine a number of squares up to your Intuition score then repeat the power roll.')
 
 						]
 					})
@@ -109,10 +109,10 @@ export const creation: Domain = {
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-creation-7',
-							name: 'Divine Quartermaster',
-							description: 'Each time you finish a respite, you can choose a treasure with a project goal equal to 50 times your level or less. You gain a divine version of this treasure that lasts until you finish another respite or it is consumed.'
-						})
+					id: 'domain-creation-7',
+					name: 'Divine Quartermaster',
+					description: 'Each time you finish a respite, you can choose a treasure with a project goal equal to 50 times your level or less. You gain a divine version of this treasure that lasts until you finish another respite or it is consumed.'
+				})
 			]
 		},
 		{
@@ -159,6 +159,10 @@ On subsequent turns, you can use a main action to command the dragon to breathe 
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

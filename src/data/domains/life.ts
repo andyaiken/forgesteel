@@ -57,10 +57,10 @@ export const life: Domain = {
 			level: 4,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-life-4',
-							name: 'Blessing of Life',
-							description: 'Your divine presence causes those you deem worthy to recover quickly from a fight. Whenever an ally within distance of your Healing Grace ability regains Stamina, they regain additional Stamina equal to your Intuition score.'
-						})
+					id: 'domain-life-4',
+					name: 'Blessing of Life',
+					description: 'Your divine presence causes those you deem worthy to recover quickly from a fight. Whenever an ally within distance of your Healing Grace ability regains Stamina, they regain additional Stamina equal to your Intuition score.'
+				})
 			]
 		},
 		{
@@ -91,10 +91,10 @@ export const life: Domain = {
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({
-							id: 'domain-life-7',
-							name: 'Font of Grace',
-							description: 'Each time you use your Healing Grace ability, you gain 1 piety that can be spent only on that ability during the same turn. If you don’t use this piety, it is lost. Additionally, you can use your Minor Miracle feature to return a creature to life even if you don’t have their remains.'
-						})
+					id: 'domain-life-7',
+					name: 'Font of Grace',
+					description: 'Each time you use your Healing Grace ability, you gain 1 piety that can be spent only on that ability during the same turn. If you don’t use this piety, it is lost. Additionally, you can use your Minor Miracle feature to return a creature to life even if you don’t have their remains.'
+				})
 			]
 		},
 		{
@@ -121,6 +121,10 @@ export const life: Domain = {
 				})
 			]
 		},
+		{
+			level: 10,
+			features: []
+		}
 	],
 	resourceGains: [
 		{

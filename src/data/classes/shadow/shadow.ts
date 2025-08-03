@@ -119,7 +119,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('20 squares') ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('As long as you remain within distance of the target, maintain line of effect to them, and strike no other creature first, you gain a surge and an edge on the next strike you make against the assessed creature.')
 						]
@@ -198,7 +198,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 						type: FactoryLogic.type.createTrigger('The target takes damage from another creature’s ability while you are hidden.'),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: '1 ally',
+						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target takes half the damage. You remain hidden.')
 						]
@@ -434,7 +434,7 @@ Subterfuge remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -458,7 +458,7 @@ Subterfuge remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -482,7 +482,7 @@ Subterfuge remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -503,7 +503,7 @@ Subterfuge remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -524,7 +524,7 @@ Subterfuge remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -548,7 +548,7 @@ Subterfuge remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -566,7 +566,7 @@ Subterfuge remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -590,7 +590,7 @@ Subterfuge remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '2 creatures or objects',
+			target: 'Two creatures or objects',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -611,7 +611,7 @@ Subterfuge remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -650,7 +650,7 @@ Subterfuge remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createRanged(5) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -697,7 +697,7 @@ Subterfuge remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -718,7 +718,7 @@ Subterfuge remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createRanged(5) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -739,7 +739,7 @@ Subterfuge remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -770,7 +770,7 @@ Subterfuge remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionText('You and the target are removed from the encounter map until the start of your next turn. You reappear in the spaces you left or the nearest unoccupied spaces. Make a power roll upon your return.'),
@@ -812,7 +812,7 @@ Subterfuge remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -834,7 +834,7 @@ Subterfuge remains until you spend it.`
 			distance: [
 				FactoryLogic.distance.createMelee()
 			],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

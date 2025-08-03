@@ -185,9 +185,14 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					name: 'Keep It Down',
 					description: 'While conversing with any creature you share a language with, you can decide whether anyone else can perceive what you’re conveying, even while yelling.'
 				}),
+				FactoryLogic.feature.create({
+					id: 'shadow-4-3a',
+					name: 'Night Watch',
+					description: 'Your sense for stealth shows those around you how to evade notice. While you are hidden, enemies take a bane on tests made to search for you or other hidden creatures within 10 squares of you.'
+				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'shadow-4-3',
+						id: 'shadow-4-3b',
 						name: 'Night Watch',
 						description: 'A steely dagger from out of the blue knocks another weapon off course.',
 						type: FactoryLogic.type.createTrigger('The target takes damage from another creature’s ability while you are hidden.'),

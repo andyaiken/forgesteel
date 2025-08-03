@@ -484,7 +484,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -505,7 +505,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -523,7 +523,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -541,7 +541,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee(2) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -559,7 +559,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -580,7 +580,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -598,7 +598,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -632,7 +632,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -653,7 +653,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -671,7 +671,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -692,12 +692,12 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Agility ],
+						characteristic: [ Characteristic.Intuition ],
 						tier1: 'Push 3',
 						tier2: 'Push 5',
 						tier3: 'Push 7'
@@ -713,7 +713,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -807,7 +807,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createTrigger('The target moves or uses a main action', { free: true }),
 			keywords: [ AbilityKeyword.Melee,  AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -828,7 +828,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee,  AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -875,7 +875,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -896,7 +896,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -937,7 +937,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createTrigger('The target takes damage from another creature’s ability while in the area of your Null Field ability', { free: true }),
 			keywords: [ AbilityKeyword.Psionic ],
 			distance: [ FactoryLogic.distance.createSpecial('Self; see below') ],
-			target: 'Self or 1 creature',
+			target: 'Self or One creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionText('The target takes half the damage, and if the triggering creature has I < [average], they are dazed (save ends). While the triggering creature is dazed this way, they take psychic damage equal to your Intuition score whenever they use a main action.')

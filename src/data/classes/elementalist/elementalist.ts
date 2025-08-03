@@ -36,7 +36,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					id: 'elementalist-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
-					valuePerLevel: 9
+					valuePerLevel: 6
 				}),
 				FactoryLogic.feature.createBonus({
 					id: 'elementalist-recoveries',
@@ -75,7 +75,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a ranged free strike' ] }),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Reason ],
@@ -91,14 +91,13 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					id: 'elementalist-1-5',
 					name: 'Persistent Magic',
 					description: `
-Some of your heroic abilities have a persistent effect entry. Whenever you use a persistent ability, you decide whether you want to maintain it, and start doing so immediately after you first use the ability. If you maintain a persistent ability in combat, you reduce the amount of essence you earn at the start of your turn by an amount equal to the ability’s persistent value, which enables the ability’s persistent effect. All your active persistent abilities end at the end of the encounter.
+Some of your heroic abilities have a persistent effect entry. For example, the Instantaneous Excavation ability has an effect noted as “Persistent 1.” Whenever you use a persistent ability, you decide whether you want to maintain it, and start doing so immediately after you first use the ability. If you maintain a persistent ability in combat, you reduce the amount of essence you earn at the start of your turn by an amount equal to the ability’s persistent value, which enables the ability’s persistent effect. All your active persistent abilities end at the end of the encounter.
 
-You can’t maintain any abilities that would make you earn a negative amount of essence at the start of your turn or have a negative amount of essence outside of combat. You can stop maintaining an ability at any time (no action required).
+You can’t maintain any abilities that would make you earn a negative amount of essence at the start of your turn. You can stop maintaining an ability at any time (no action required).
 
 If you maintain the same ability on several targets and the effect includes a power roll, you make that roll once and apply the same effect to all targets. A creature can’t be affected by multiple instances of a persistent ability.
 
-If you take damage equal to or greater than 5 × your Reason score in one turn, you stop maintaining any persistent abilities. For instance, if you have a Reason score of 2 and are maintaining Instantaneous Excavation, taking 10 or more damage in one turn causes you to stop maintaining the ability.`
-				}),
+If you take damage equal to or greater than 5 times your Reason score in one turn, you stop maintaining any persistent abilities. For instance, if you have a Reason score of 2 and are maintaining Instantaneous Excavation, taking 10 or more damage in one turn causes you to stop maintaining the ability.` }),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elementalist-1-6',
@@ -113,8 +112,9 @@ If you take damage equal to or greater than 5 × your Reason score in one turn, 
 Choose one of the following effects:
 
 * You use the Knockback maneuver, but its distance becomes the range of your Hurl Element ability, and you use Reason instead of Might for the power roll.
-* You choose a creature within the distance of your Hurl Element ability and deal damage equal to your Reason score to them. The damage type can be acid, cold, corruption, fire, lightning, poison, or sonic.
-* You teleport up to a number of squares equal to your Reason score.`)
+* You choose a creature within the distance of your Hurl Element ability and one of the following damage types: acid, cold, corruption, fire, lightning, poison, or sonic. That creature takes damage of the chosen type equal to your Reason score.
+* You teleport up to a number of squares equal to your Reason score. If you choose this option, you can spend essence to teleport 1 additional square for each essence spent.
+							`)
 						]
 					})
 				}),
@@ -126,7 +126,7 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.createMultiple({
 								id: 'elementalist-1-7a',
 								name: 'Enchantment of Battle',
-								description: 'You tap into the elemental mysteries to gain the mind and training of a warrior.',
+								description: 'You can wear light armor and wield light weapons effectively, even though you don’t have a kit.',
 								features: [
 									FactoryLogic.feature.createBonus({
 										id: 'elementalist-1-7aa',
@@ -151,7 +151,7 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.createMultiple({
 								id: 'elementalist-1-7b',
 								name: 'Enchantment of Celerity',
-								description: 'You infuse your body with the speed of elemental air.',
+								description: 'You gain a bonus to speed and to the distance you can shift when you take the Disengage move action.',
 								features: [
 									FactoryLogic.feature.createBonus({
 										id: 'elementalist-1-7ba',
@@ -171,7 +171,7 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.createAbilityDamage({
 								id: 'elementalist-1-7c',
 								name: 'Enchantment of Destruction',
-								description: 'You harness the destructive power of flame inside your mind, allowing you to focus your magic on destroying your enemies.',
+								description: 'You gain a bonus to rolled damage with magic abilities.',
 								keywords: [ AbilityKeyword.Magic ],
 								value: 1
 							}),
@@ -181,7 +181,7 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.createAbilityDistance({
 								id: 'elementalist-1-7d',
 								name: 'Enchantment of Distance',
-								description: 'You reach into the mysteries of the void and mix that element with all of your abilities.',
+								description: 'You have a bonus to the distance of your ranged magic abilities.',
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 								value: 2
 							}),
@@ -191,7 +191,7 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.createMultiple({
 								id: 'elementalist-1-7e',
 								name: 'Enchantment of Permanence',
-								description: 'You place the magic of earth into your flesh and bones, making your body tougher and harder to move.',
+								description: 'You gain a bonus to Stamina.',
 								features: [
 									FactoryLogic.feature.createBonus({
 										id: '',
@@ -217,7 +217,7 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.create({
 								id: 'elementalist-1-8a',
 								name: 'Ward of Delightful Consequences',
-								description: 'A protective field of void magic absorbs violence aimed at you, then lets you hurl it back at your enemies. The first time each round that you take damage, you gain a surge.'
+								description: 'A protective field of void magic absorbs violence aimed at you, then lets you hurl it back at your enemies. The first time each round that you take damage, you gain 1 surge.'
 							}),
 							value: 1
 						},
@@ -251,6 +251,16 @@ Choose one of the following effects:
 										damageType: DamageType.Lightning,
 										modifierType: DamageModifierType.Immunity,
 										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: DamageType.Poison,
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.damageModifier.createCharacteristic({
+										damageType: DamageType.Sonic,
+										modifierType: DamageModifierType.Immunity,
+										characteristics: [ Characteristic.Reason ]
 									})
 								]
 							}),
@@ -277,7 +287,7 @@ Choose one of the following effects:
 								ability: FactoryLogic.createAbility({
 									id: 'elementalist-1-8d',
 									name: 'Ward of Surprising Reactivity',
-									description: 'You use the magic of fire to create an invisible ward of explosive fire energy.',
+									description: 'You use the magic of fire to create a ward of explosive energy.',
 									type: FactoryLogic.type.createTrigger('An adjacent creature deals damage to you.', { free: true }),
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
@@ -327,7 +337,204 @@ Choose one of the following effects:
 					cost: 7
 				})
 			]
+		},
+		{
+			level: 4,
+			features: [
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'elementalist-4-1a',
+					characteristic: Characteristic.Reason,
+					value: 1
+				}),
+				FactoryLogic.feature.createChoice({
+					id: 'elementalist-4-1b',
+					options: [
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'elementalist-4-1ba',
+								characteristic: Characteristic.Might,
+								value: 1
+							}),
+							value:1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'elementalist-4-1bb',
+								characteristic: Characteristic.Agility,
+								value: 1
+							}),
+							value:1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'elementalist-4-1bc',
+								characteristic: Characteristic.Reason,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'elementalist-4-1bd',
+								characteristic: Characteristic.Intuition,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'elementalist-4-1be',
+								characteristic: Characteristic.Presence,
+								value: 1
+							}),
+							value: 1
+						}
+					]
+				}),
+				FactoryLogic.feature.create({
+					id: 'elementalist-4-2',
+					name: 'Font of Essence',
+					description: 'The first time each combat round that you or a creature within 10 squares takes damage that isn’t untyped or holy damage, you gain 2 essence instead of 1.'
+				})
+			]
+		},
+		{
+			level: 5,
+			features: [
+				FactoryLogic.feature.createClassAbilityChoice({
+					id: 'elementalist-5-1',
+					cost: 9
+				})
+			]
+		},
+		{
+			level: 6,
+			features: [
+				FactoryLogic.feature.createPerk({
+					id: 'elementalist-6-1',
+					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
+				}),
+				FactoryLogic.feature.create({
+					id: 'elementalist-6-2',
+					name: 'Wyrding',
+					description: `You can spend 10 uninterrupted minutes to create a freeform magic spell for a variety of situations. Choose one of the following magical effects:
+
+* You create a mundane object of a size equal to your Reason score or smaller.
+* You construct a place of shelter suitable for twenty creatures that lasts for 24 hours and can’t be detected by enemies.
+* You restore all Stamina to a mundane object of a size equal to your Reason score or smaller.
+* Choose a cube with a size up to your Reason score within 5 squares. You can fill that area with difficult terrain or natural phenomena such as fire, water, or plant life, or can clear the area of those things.
+* You can preserve a corpse or up to 5 pounds of food for a week, or can cause a corpse or that amount of food to instantly rot.
+* You create a seal on a surface that can’t be seen or felt by anyone but you. When a creature comes adjacent to the surface, you can see and hear through the seal for as long as the creature remains adjacent to it. When you create the seal, you can decide to limit the number of creatures who activate it by choosing a creature keyword (such as Undead) or a specific name (such as Ajax the Invincible) or organization (such as the Black Iron Pact). If you do, the seal alerts you only when creatures with the keyword, name, or organizational affiliation you provide pass by it. If you create a second seal, the first one disappears. You can dispel a seal at any time (no action required).`
+				}),
+				FactoryLogic.feature.createClassAbilityChoice({
+					id: 'elementalist-6-3',
+					cost: 9
+				})
+			]
+		},
+		{
+			level: 7,
+			features: [
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'elementalist-7-1a',
+					characteristic: Characteristic.Might,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'elementalist-7-1b',
+					characteristic: Characteristic.Agility,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'elementalist-7-1c',
+					characteristic: Characteristic.Reason,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'elementalist-7-1d',
+					characteristic: Characteristic.Intuition,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'elementalist-7-1e',
+					characteristic: Characteristic.Presence,
+					value: 1
+				}),
+				FactoryLogic.feature.create({
+					id: 'elementalist-7-2',
+					name: 'Surging Essence',
+					description: 'When you gain essence at the start of each of your turns during combat, you gain 3 essence instead of 2.'
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'elementalist-7-3',
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+				})
+			]
+		},
+		{
+			level: 8,
+			features: [
+				FactoryLogic.feature.createPerk({
+					id: 'elementalist-8-1',
+					lists: [ PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
+				})
+			]
+		},
+		{
+			level: 9,
+			features: [
+				FactoryLogic.feature.create({
+					id: 'elementalist-9-1',
+					name: 'Grand Wyrding',
+					description: `You have mastered the magic of shaping a wyrd, and can use your Wyrding feature as a main action.
+     
+Additionally, when you have 5 or more Victories, choose one of the following damage types: acid, cold, corruption, fire, lightning, poison, or sonic. You have immunity all to that type.`
+				}),
+				FactoryLogic.feature.createClassAbilityChoice({
+					id: 'elementalist-9-2',
+					cost: 11
+				})
+			]
+		},
+		{
+			level: 10,
+			features: [
+				FactoryLogic.feature.createHeroicResource({
+					id: 'elementalist-10-1',
+					name: 'Breath',
+					type: 'epic',
+					gains: [
+						{
+							trigger: 'Finish a respite',
+							value: 'XP gained'
+						}
+					],
+					description: `
+You can spend any number of breath to gain essence (no action required). When you do, 1 breath becomes 3 essence.
+
+Breath remains until you convert it to essence.`
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'elementalist-10-2',
+					characteristic: Characteristic.Reason,
+					value: 1
+				}),
+				FactoryLogic.feature.create({
+					id: 'elementalist-10-3',
+					name: 'Essential Being',
+					description: 'When you gain essence at the start of each of your turns during combat, you gain 4 essence instead of 3.'
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'elementalist-10-4',
+					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'elementalist-10-5',
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+				})
+			]
 		}
+
 	],
 	abilities: [
 		FactoryLogic.createAbility({
@@ -337,7 +544,7 @@ Choose one of the following effects:
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Rot, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -348,17 +555,17 @@ Choose one of the following effects:
 						tier3: '6 + R corruption damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('You or one ally within distance can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.')
+				FactoryLogic.createAbilitySectionText('Choose yourself or one ally within distance. That character can end one effect on them that is ended by a saving throw or that ends at the end of their turn.')
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-2',
-			name: 'Bifurcated Conflagration',
+			name: 'Bifurcated Incineration',
 			description: 'Two jets of flame lance out at your command.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '2 creatures or objects',
+			target: 'Two creatures or objects',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -378,7 +585,7 @@ Choose one of the following effects:
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Void ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -416,11 +623,11 @@ Choose one of the following effects:
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-5',
 			name: 'A Meteoric Introduction',
-			description: 'You give your enemy a gentle tap like an asteroid impact.',
+			description: 'You give your enemy a gentle tap - like an asteroid impact.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -440,7 +647,7 @@ Choose one of the following effects:
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -477,11 +684,11 @@ Choose one of the following effects:
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-8',
 			name: 'Viscous Fire',
-			description: 'A jet of heavy fire erupts with elemental fury where it strikes.',
+			description: 'A jet of heavy fire erupts where you strike.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -522,11 +729,11 @@ Choose one of the following effects:
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-10',
 			name: 'The Flesh, a Crucible',
-			description: 'Fire engulfs a target of your choice and burns at your command.',
+			description: 'Fire engulfs your target and continues to churn.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -560,7 +767,7 @@ Choose one of the following effects:
 					tier2: '7 + R poison damage',
 					tier3: '11 + R poison damage'
 				})),
-				FactoryLogic.createAbilitySectionText('Mushrooms cover the target’s body, and can be removed by the target or by an adjacent creature as an action. While the mushrooms are on the target, you and each of your allies adjacent to the target gains a surge whenever the target takes damage.')
+				FactoryLogic.createAbilitySectionText('Mushrooms cover the target’s body. While the mushrooms are on the target, you and any ally adjacent to the target gain 1 surge whenever the target takes damage. The mushrooms can be removed by the target or an adjacent creature as a main action.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -579,7 +786,7 @@ Choose one of the following effects:
 					tier2: '5 damage',
 					tier3: '8 damage; M < [strong], prone'
 				})),
-				FactoryLogic.createAbilitySectionText('You must be touching the ground to use this ability. Choose a square of ground in the area that is unoccupied or occupied by your or an ally. A pillar of earth that is 1 square wide and long and is up to as many squares tall as your Reason score rises out of the ground. The pillar can’t collide with any creatures or objects nor can it force any creatures being raised by it to collide with other creatures or objects.')
+				FactoryLogic.createAbilitySectionText('You must be touching the ground to use this ability. Additionally, you can choose a square of ground in the area that is unoccupied or is occupied by you or any ally. A pillar of earth rises out of the ground in that square, with a height in squares up to your Reason score. The pillar can’t collide with any creatures or objects, nor can it force creatures raised by it to collide with other creatures or objects.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -615,7 +822,7 @@ Choose one of the following effects:
 			target: 'Special',
 			cost: 5,
 			sections: [
-				FactoryLogic.createAbilitySectionText('You open up two holes with 1-square openings that are 4 squares deep, and which can be placed on any mundane surface within distance. You can place these holes next to each other to create fewer holes with wider openings. When the holes open, make a separate power roll for each creature on the ground above a hole and small enough to fall in. (You can’t get a critical hit with this power because it uses a maneuver.)'),
+				FactoryLogic.createAbilitySectionText('You open up two holes with 1-square openings that are 4 squares deep, which can be placed on any mundane surface within distance. You can place these holes next to each other to create fewer holes with wider openings. When the holes open, make a separate power roll for each creature on the ground above a hole and small enough to fall in. (You can’t score a critical hit with this ability because it uses a maneuver.)'),
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Reason ],
@@ -627,7 +834,7 @@ Choose one of the following effects:
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
-					effect: 'At the start of your turn, you open another hole, rolling power against any creature that could fall into the hole when it opens.'
+					effect: 'At the start of your turn, you open another hole, making a power roll against each creature who could fall into the hole when it opens without spending essence.'
 				})
 			]
 		}),
@@ -641,7 +848,7 @@ Choose one of the following effects:
 			target: 'Self or one ally',
 			cost: 5,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Until the start of your next turn, the target can move through solid matter, ignores difficult terrain, and their movement can’t provoke opportunity attacks. If the target ends their turn inside solid matter, they are shunted out into the space where they entered it and this effect ends.'),
+				FactoryLogic.createAbilitySectionText('Until the start of your next turn, the target can move through solid matter, they ignore difficult terrain, and their movement can’t provoke opportunity attacks. If the target ends their turn inside solid matter, they are forced out into the space where they entered it and this effect ends.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
@@ -665,7 +872,7 @@ Choose one of the following effects:
 					tier2: '6 acid damage',
 					tier3: '10 acid damage'
 				})),
-				FactoryLogic.createAbilitySectionText('You and each ally within the area can end one effect that is ended by a saving throw or that ends at the end of that creature’s turn.')
+				FactoryLogic.createAbilitySectionText('You can end one effect on yourself that is ended by a saving throw or that ends at the end of your turn. Each ally in the area also gains this benefit.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -682,28 +889,28 @@ Choose one of the following effects:
 				FactoryLogic.createAbilitySectionText(`
 Until the start of your next turn, the area gains the following effects:
 
-* You and each ally in the area can spend any number of Recoveries at the start of your turn once as a free maneuver.
+* Once as a free maneuver at the start of your turn, you allow yourself and each ally in the area to spend any number of Recoveries.
 * The area is difficult terrain for enemies.
-* Any enemy who enters the area for the first time in a round or starts their turn there takes damage equal to your Reason score.`),
+* Each enemy who enters the area for the first time in a combat round or starts their turn there takes damage equal to your Reason score.`),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
-					effect: 'The area remains until the start of your next turn. You can move the area up to 5 squares as a maneuver. This ability ends if you lose line of effect to its area.'
+					effect: 'The area remains until the start of your next turn. As a maneuver, you can move the area up to 5 squares. This ability ends if the area is ever not within your line of effect.'
 				})
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'elementalist-ability-18',
 			name: 'Subvert the Green Within',
-			description: 'Burrow into their brains and take control!',
+			description: 'Fungal spores sprout inside your enemy’s brain, allowing you to control their actions.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Void ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			minLevel: 2,
 			sections: [
-				FactoryLogic.createAbilitySectionText('The target uses their signature ability against a target of your choice. You then make a power roll against the target of this ability.'),
+				FactoryLogic.createAbilitySectionText('The target uses their signature ability against a creature of your choice. This signature ability can target the creature even if it usually wouldn’t. You then make a power roll against the target of this ability.'),
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Reason ],
@@ -725,7 +932,7 @@ Until the start of your next turn, the area gains the following effects:
 			cost: 5,
 			minLevel: 2,
 			sections: [
-				FactoryLogic.createAbilitySectionText('The target is teleported to another space within distance. Make a power roll that targets each enemy adjacent to the target’s new space.'),
+				FactoryLogic.createAbilitySectionText('The target is teleported to another space within distance. Make a power roll that affects each enemy adjacent to the target’s new space.'),
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Reason ],
@@ -743,7 +950,7 @@ Until the start of your next turn, the area gains the following effects:
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			minLevel: 2,
 			sections: [
@@ -774,7 +981,7 @@ Until the start of your next turn, the area gains the following effects:
 						tier3: 'Three creatures'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('Each target begins to fade from existence (save ends). While fading from existence, a target initially takes a bane on power rolls. At the end of their first turn, they have a double bane on power rolls. At the end of their second turn, they fade from existence for 1 hour, reappearing in their original space or the nearest available space.')
+				FactoryLogic.createAbilitySectionText('Each target begins to fade from existence (save ends). On their first turn while fading from existence, a target takes a bane on power rolls. At the end of their first turn, they have a double bane on power rolls. At the end of their second turn, they fade from existence for 1 hour, after which they reappear in their original space or the nearest unoccupied space.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -784,7 +991,7 @@ Until the start of your next turn, the area gains the following effects:
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Earth, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-			target: '1 creature or object',
+			target: 'Each enemy in the area',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -793,7 +1000,7 @@ Until the start of your next turn, the area gains the following effects:
 					tier2: '9 damage',
 					tier3: '12 damage'
 				})),
-				FactoryLogic.createAbilitySectionText('The ground in or directly beneath the area drops, lowering 3 squares.')
+				FactoryLogic.createAbilitySectionText('The ground in or directly beneath the area drops 3 squares.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -812,11 +1019,11 @@ Until the start of your next turn, the area gains the following effects:
 					tier2: '6 damage',
 					tier3: '9 damage'
 				})),
-				FactoryLogic.createAbilitySectionText('Until the end of your next turn, each ally in your aura has their characteristic scores increased by 1 for the purpose of resisting potencies and has a +1 bonus on saving throws.'),
+				FactoryLogic.createAbilitySectionText('Until the end of your next turn, each ally in the area has each of their characteristic scores treated as 1 higher for the purpose of resisting potencies, and has a +1 bonus to saving throws.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
-					effect: 'You make the power roll again to target each enemy in the aura, and the effect lasts until the start of your next turn.'
+					effect: 'You make the power roll again to target each enemy in the area without spending essence, and the effect lasts until the start of your next turn.'
 				})
 			]
 		}),
@@ -830,14 +1037,331 @@ Until the start of your next turn, the area gains the following effects:
 			target: 'Special',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('The wall lasts until the start of your next turn, and can be placed in occupied squares. Creatures can enter and pass through the wall. When an enemy enters or starts their turn in a square of the wall, they take fire damage equal to your Reason score.'),
+				FactoryLogic.createAbilitySectionText('The wall lasts until the start of your next turn, and can be placed in occupied squares. Creatures can enter and pass through the wall. Each enemy who enters the area for the first time in a combat round or starts their turn there takes fire damage equal to your Reason score for each square of the area they start their turn in or enter.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Persist',
 					value: 1,
-					effect: 'The effect lasts until the start of your next turn, and you can add a number of squares to the wall equal to your Reason score.'
+					effect: 'The wall lasts until the start of your next turn, and you can add a number of squares to the wall equal to your Reason score.'
 				})
 			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-25',
+			name: 'Combustion Deferred',
+			description: 'Your flames dance from kindling to kindling to kindling.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature or object',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '8 + M fire damage',
+					tier2: '13 + M fire damage',
+					tier3: '17 + M fire damage'
+				})),
+				FactoryLogic.createAbilitySectionText('When the target ends their next turn, or if they drop to 0 Stamina before then, each enemy adjacent to them takes fire damage equal to twice your Reason score. Each affected enemy then gains this same effect.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-26',
+			name: 'Storm of Sands',
+			description: 'Dirt and debris swirl into a dark, pulsing hurricane.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Earth, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
+			target: 'Each enemy in the area',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '2 damage',
+					tier2: '5 damage',
+					tier3: '7 damage'
+				})),
+				FactoryLogic.createAbilitySectionText('The area lasts until the start of your next turn. It is difficult terrain for enemies, and you and your allies have concealment while in the area.'),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
+					value: 1,
+					effect: 'The area remains until the start of your next turn, and you can move it up to 5 squares (no action required). As a maneuver, you can make the power roll again without spending essence.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-27',
+			name: 'Subverted Perception of Space',
+			description: 'You rip an enemy’s world in twain.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Void, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature or object',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '9 + R corruption damage',
+					tier2: '10 + R corruption damage; the target has line of effect only to creatures and objects within 4 squares of them until the start of your next turn',
+					tier3: '15 + R corruption damage; the target has line of effect only to adjacent creatures and objects until the start of your next turn'
+				})),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
+					value: 1,
+					effect: 'The target’s limited line of effect lasts until the start of your next turn.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-28',
+			name: 'Web of All That\'s Come Before',
+			description: 'Threads you’ve been weaving through your adventures create a vibrant, pearlescent web.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Green, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
+			target: 'Each enemy in the area',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '2 corruption damage; A < [weak], restrained (save ends)',
+					tier2: '3 corruption damage; A < [average], restrained (save ends)',
+					tier3: '5 corruption damage; A < [strong], restrained (save ends)'
+				})),
+				FactoryLogic.createAbilitySectionText('The area is difficult terrain until the start of your next turn. Each enemy who ends their turn in the area is restrained (save ends).'),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
+					value: 1,
+					effect: 'The area remains until the start of your next turn.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-29',
+			name: 'Luminous Champion Aloft',
+			description: 'They shine vibrantly, a beautiful diamond in the night sky.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Void ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
+			target: 'Self or one ally',
+			cost: 9,
+			minLevel: 6,
+			sections: [
+				FactoryLogic.createAbilitySectionText('The target has a +3 bonus to speed, they can fly, and their abilities ignore concealment. Additionally, whenever the target gains their Heroic Resource, they gain 1 additional Heroic Resource. This effect lasts until the start of your next turn.'),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
+					value: 1,
+					effect: 'The effect lasts until the start of your next turn.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-30',
+			name: 'Magma Titan',
+			description: 'Their body swells with lava, mud, and might, towering over their enemies.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Earth ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'Self or one ally',
+			cost: 9,
+			minLevel: 6,
+			sections: [
+				FactoryLogic.createAbilitySectionText(`Until the start of your next turn, the target has the following benefits:
+
+* Their size and stability increase by 2, with any size 1 target becoming size 3. Each creature who is within the target’s new space slides to the nearest unoccupied space, ignoring stability. If the target doesn’t have space to grow, they grow as much as they can and become restrained until the effect ends.
+* They have fire immunity 10.
+* Their strikes deal extra fire damage equal to twice your Reason score.
+* When the target force moves a creature or object, the forced movement distance gains a +2 bonus.
+* They can use their highest characteristic instead of Might for Might power rolls.`),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
+					value: 2,
+					effect: 'The effect lasts until the start of your next turn. Additionally, at the start of your turn, the target can spend 2 Recoveries.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-31',
+			name: 'Meteor',
+			description: 'You teleport the target into the air and let the ground and the elemental force of fire do the rest.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Void, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature or object',
+			cost: 9,
+			minLevel: 6,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: 'You teleport the target up to 4 squares.',
+					tier2: 'You teleport the target up to 6 squares.',
+					tier3: 'You teleport the target up to 8 squares.'
+				})),
+				FactoryLogic.createAbilitySectionText('If the target is teleported to a space where they would fall, they immediately do so, treating the fall as if their Agility score were 0. The target takes fire damage from the fall, and each enemy within 3 squares of where they land takes the same amount of fire damage. The ground within 3 squares of where the target lands is difficult terrain.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-32',
+			name: 'The Wode Remembers and Returns',
+			description: 'You create a terrarium that spans from canopy above to underbrush below.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Earth, AbilityKeyword.Void ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
+			target: 'Special',
+			cost: 9,
+			minLevel: 6,
+			sections: [
+				FactoryLogic.createAbilitySectionText('The area becomes dark and verdant, with trees and plant life appearing in unoccupied spaces within it until the start of your next turn. The area is difficult terrain for enemies, and any ally who ends their turn in the area has cover.'),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
+					value: 2,
+					effect: 'The area remains until the start of your next turn. Additionally, at the start of your turn, each ally in the area can spend a Recovery.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-33',
+			name: 'Heart of the Wode',
+			description: 'You call forth one of the Great Tree’s many splinters to provide for your every need.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'Special',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionText(`A size 5 tree appears in an unoccupied space within distance. The tree has 100 Stamina and can’t be force moved. You and any ally can touch the tree to use the Catch Breath maneuver as a free maneuver. Additionally, when you start your turn with line of effect to the tree, you can end one effect on yourself that is ended by a saving throw or that ends at the end of your turn, or you can stand up if you are prone. Each ally within distance also gains this benefit.
+
+Each enemy who ends their turn within 3 squares of the tree is restrained until the end of their next turn. A creature restrained this way can use a main action to end the effect early.`)
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-34',
+			name: 'Muse of Fire',
+			description: 'The fire burns hot enough to sear the face of any god watching.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Earth, AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Void, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
+			target: 'Each enemy in the area',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '7 fire damage; the Director loses 2 Malice',
+					tier2: '10 fire damage; the Director loses 3 Malice',
+					tier3: '15 fire damage; the Director loses 4 Malice'
+				})),
+				FactoryLogic.createAbilitySectionText('The Director’s Malice can become negative as a result of this ability.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-35',
+			name: 'Return to Oblivion',
+			description: 'You create a tear in reality that could consume everything.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Void, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'Special',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionText('You create a size 1L vortex that lasts until the end of the encounter. At the start of each combat round while the vortex is unoccupied, the vortex vertical pulls 3 each enemy within 5 squares of it. Each enemy who enters the vortex or starts their turn there is knocked prone. At the end of the round, if a winded enemy who is not a leader or solo creature is in the vortex, they are instantly destroyed.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-36',
+			name: 'World Torn Asunder',
+			description: 'You stomp your foot and quake the whole world over.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Earth ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value:5 }) ],
+			target: 'Each enemy in the area',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: 'M < [weak]; prone',
+					tier2: 'M < [average]; prone',
+					tier3: 'M < [strong]; prone'
+				})),
+				FactoryLogic.createAbilitySectionText('You create a fissure in the ground adjacent to you that is a 10 × 2 line and 6 squares deep. Each creature in the area who is prone and size 2 or smaller falls in. Other creatures can enter the fissure or can shift to the nearest unoccupied space of their choice outside it.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-37',
+			name: 'Earth Rejects You',
+			description: 'Everyone and everything gets blown away in an eruption of rocks and debris.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Earth, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value:5, within: 10 }) ],
+			target: 'Each enemy and object in the area',
+			cost: 11,
+			minLevel: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '6 damage',
+					tier2: '9 damage',
+					tier3: '13 damage'
+				})),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
+					value: 2,
+					effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-38',
+			name: 'The Green Defends Its Servants',
+			description: 'A luminous green shield shows its true beauty the more it cracks.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'Self or one ally',
+			cost: 11,
+			minLevel: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionText('You create a fissure in the ground adjacent to you that is a 10 × 2 line and 6 squares deep. Each creature in the area who is prone and size 2 or smaller falls in. Other creatures can enter the fissure or can shift to the nearest unoccupied space of their choice outside it.'),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Persist',
+					value: 2,
+					effect: 'At the start of your turn, you can use a maneuver to use this ability again without spending essence.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-39',
+			name: 'Prism',
+			description: 'You split your essence, allowing you to cast multiple effects at once.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Void ],
+			distance: [ FactoryLogic.distance.createSelf() ],
+			target: 'Self',
+			cost: 11,
+			minLevel: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionText('You use up to three heroic abilities whose essence costs total 11 or less, spending no additional essence beyond the cost of this ability. You can shift up to 2 squares between your use of each ability.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'elementalist-ability-40',
+			name: 'Unquenchable Fire',
+			description: 'You let fly a fiery missile braided with pure primal energy.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Fire, AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One enemy or object',
+			cost: 11,
+			minLevel: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Reason ],
+					tier1: '13 + R fire damage; I < [weak] , dazed (save ends)',
+					tier2: '18 + R fire damage; I < [average] , dazed (save ends)',
+					tier3: '25 + R fire damage; I < [strong] , dazed (save ends)'
+				})),
+				FactoryLogic.createAbilitySectionText('You use up to three heroic abilities whose essence costs total 11 or less, spending no additional essence beyond the cost of this ability. You can shift up to 2 squares between your use of each ability.')
+			]
 		})
+
 	],
 	subclasses: [
 		earth,

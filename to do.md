@@ -1,7 +1,5 @@
 # Development Plans
 
-You can go prone as a free maneuver
-
 ### Heroes
 
 * Automatic update of library resources when there is a newer version

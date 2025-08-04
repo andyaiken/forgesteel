@@ -1845,7 +1845,7 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 	static hearsVoices: Complication = {
 		id: 'comp-hearsVoices',
 		name: 'Voice in your Head',
-		description: 'You occasionally hear a voice in your head, offering orders or advice. You don’t know who the voice is or why, but when you’ve followed the advice, it’s usually proved to be sound.',
+		description: 'You occasionally hear a voice in your head, giving you orders or offering advice. You don’t know who the voice is or why it comes to you, but when you’ve followed the advice, it’s usually proved to be sound',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-hearsVoices-b',
@@ -1855,7 +1855,7 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 			FactoryLogic.feature.create({
 				id: 'comp-hearsVoices-d',
 				name: 'Hears Voices Drawback',
-				description: 'Eventually, the voice may reveal that it wants something from you - something you may or may not want to provide. If the voice is displeased with you, it can prevent you from resting during a respite, causing you to regain 2 fewer Recoveries than normal.'
+				description: 'Eventually, the voice may reveal that it wants something from you that you may not want to provide. If the voice is displeased with you, it can interrupt your rest during a respite, causing you to regain 2 fewer Recoveries than normal.'
 			})
 		]
 	};
@@ -1863,7 +1863,7 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 	static vowOfDuty: Complication = {
 		id: 'comp-vowOfDuty',
 		name: 'Vow of Duty',
-		description: 'You have sworn an oath to an organization. It is your rock, and as long as your faith in it remains unshaken, you are immovable.',
+		description: 'You have sworn an oath to an organization. The organization is your rock, and as long as your faith in it remains unshaken, you are immovable.',
 		features: [
 			FactoryLogic.feature.createBonus({
 				id: 'comp-vowOfDuty-b',
@@ -1873,7 +1873,7 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 			FactoryLogic.feature.create({
 				id: 'comp-vowOfDuty-d',
 				name: 'Vow of Duty Drawback',
-				description: 'If you are forced to disobey your organization’s orders, your stability is reduced to 0 until your doubts are resolved or you find a new organization.'
+				description: 'If you are forced to disobey your organization’s orders, your stability becomes 0 until your doubts are resolved or you find a new organization to pledge yourself to.'
 			})
 		]
 	};
@@ -1886,12 +1886,12 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 			FactoryLogic.feature.create({
 				id: 'comp-vowOfHonesty-b',
 				name: 'Vow of Honesty Benefit',
-				description: 'As long as you don’t lie, you gain the benefit of the Censor’s A Sense for Truth Order feature. If you also gain the A Sense for Truth feature in another way, you also gain a double edge on tests made to persuade a creature of a specific fact.'
+				description: 'If a creature is of a lower level than you, you automatically know when they are lying, though you don’t necessarily know the actual truth behind their lie. Additionally, you have a double edge on any test made to persuade a creature of some specific fact.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-vowOfHonesty-d',
 				name: 'Vow of Honesty Drawback',
-				description: 'When you lie, your honor is stained, and you gain a bane on any test you make that uses a skill from the interpersonal skill group and lose this complication’s benefit. You can lose the bane and regain this complication’s benefit only by doing penance, such as gaining the forgiveness of the creature you lied to.'
+				description: 'When you lie, your honor is stained and you lose this complication’s benefit. Additionally, you take a bane on any test that uses a skill from the interpersonal skill group. You can lose the bane and regain this complication’s benefit only by doing penance, such as gaining the forgiveness of the creature you lied to.'
 			})
 		]
 	};
@@ -1899,19 +1899,28 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 	static wakingDreams: Complication = {
 		id: 'comp-waking-dreams',
 		name: 'Waking Dreams',
-		description: 'You broke a magic amulet that immersed your mind in weird magic. This magic has given you the power of premonition, but you struggle to control this new gift.',
+		description: 'You broke a magic amulet that immersed your mind in weird magic. This magic has given you the power of premonition. However, you struggle to control this new gift.  Whenever you take a respite, make a Reason test.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'comp-waking-dreams-bd',
-				name: 'Waking Dreams',
-				description: `
-Whenever you take a respite, make a Reason power roll.
-
-| Roll    | Effect                                                                                                                                                           |
-|:--------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 11 -    | You receive a painful vision that is fractal and inscrutable. When the respite ends, you immediately lose 1 Recovery.                                            |
-| 12 - 16 | You experience a vision of an event currently happening in your world. The vision lasts for just a few seconds, but the information you glean is helpful to you. |
-| 17 +    | You receive a full minute or more of the scene.                                                                                                                  |`
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'comp-waking-dreams-ability',
+					name: 'Waking Dreams',
+					description: '',
+					type: FactoryLogic.type.createNoAction(),
+					keywords: [ ],
+					distance: [ ],
+					target: 'Self',
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Reason ],
+								tier1: 'You receive a painful vision that is fractal and inscrutable. When you finish the respite, you lose 1 Recovery.',
+								tier2: 'You experience a vision of an event currently happening in your world. The vision lasts for only a few seconds, but the information you glean is helpful to you.',
+								tier3: 'The vision from lasts 1 minute or more.'
+							})
+						)
+					]
+				})
 			})
 		]
 	};
@@ -1924,7 +1933,7 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.create({
 				id: 'comp-warDogCollar-b',
 				name: 'War Dog Collar Benefit',
-				description: 'While you wear your loyalty collar, other war dogs can’t use Posthumous Promotion on you.'
+				description: 'Even if you are a war dog yourself, other war dogs can’t use their Posthumous Promotion ability on you while you wear your collar.'
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1932,9 +1941,9 @@ Whenever you take a respite, make a Reason power roll.
 					name: 'Posthumous Retirement',
 					description: 'You make your modified collar explode.',
 					type: FactoryLogic.type.createManeuver(),
-					keywords: [ AbilityKeyword.Magic ],
+					keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-					target: 'All enemies',
+					target: 'Each enemy in the area',
 					sections: [
 						FactoryLogic.createAbilitySectionText('Your loyalty collar detonates, dealing fire damage equal to 5 plus your level to each target. Once you have used this ability, you can’t use it again until you spend 1 minute out of combat resetting the collar')
 					]
@@ -1943,7 +1952,7 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.create({
 				id: 'comp-warDogCollar-d',
 				name: 'War Dog Collar Drawback',
-				description: 'When you use your Posthumous Retirement ability, the Director can spend 3 Malice to make your collar malfunction and deal damage to you.'
+				description: 'Each time you use your Posthumous Retirement ability, the Director can spend 3 Malice to make your collar malfunction and deal its damage to you in addition to the usual targets.'
 			})
 		]
 	};
@@ -1951,12 +1960,12 @@ Whenever you take a respite, make a Reason power roll.
 	static warOfAssassins: Complication = {
 		id: 'comp-war-of-assassins',
 		name: 'War Of Assassins',
-		description: 'Being in the wrong place at the wrong time saw you caught in the middle of a conflict between two warring thieves’ guilds. Whether by choice or by accident, you wound up helping one faction at the expense of the other.',
+		description: 'Being in the wrong place at the wrong time saw you caught in the middle of a conflict between two warring assassins’ guilds. Whether by choice or by accident, you wound up helping one faction at the expense of the other.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-war-of-assassins-b',
 				name: 'War Of Assassins Benefit',
-				description: 'Having gained the favor of the faction who you helped, you can call on its members three times for favors. If a favor is reasonable and within the faction’s power to grant, they’ll do it, no questions asked.'
+				description: 'Having gained the favor of the faction who you helped, you can call on its members three times for favors. If a favor is reasonable and within the faction’s power to grant, its members do it, no questions asked.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-war-of-assassins-d',
@@ -1979,7 +1988,7 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.create({
 				id: 'comp-ward-d',
 				name: 'Ward Drawback',
-				description: 'Your royal ward can be a burden. When you start a respite, roll a d10. On a roll of 1, your ward contacts you and requires your help during the respite, requiring you to spend your time helping them instead of taking a respite activity.'
+				description: 'Your royal ward can be a burden. When you take a respite, roll a d10. On a 1, your ward contacts you and requires your help during the respite, requiring you to spend your time helping them instead of undertaking a respite activity.'
 			})
 		]
 	};
@@ -1987,12 +1996,12 @@ Whenever you take a respite, make a Reason power roll.
 	static waterborn: Complication = {
 		id: 'comp-waterborn',
 		name: 'Waterborn',
-		description: 'You nearly lost your life at sea, but then you heard the voice. Someone … something in the sea called out to you - telling you to swim. Suddenly the ocean wasn’t your doom. It was your parent, birthing you into something new. You emerge with a small piece of the ocean’s power. For what purpose - you can’t be sure.',
+		description: 'You nearly lost your life at sea, but then you heard the voice. Someone - or something - in the water called out to you, telling you to swim. The ocean was suddenly no longer your doom but your parent, granting you a fragment of its power. But for what purpose, you can’t be sure',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-waterborn-b',
 				name: 'Waterborn Benefit',
-				description: 'Your movement gains the Swim tag, and you can breathe underwater.'
+				description: 'You can automatically swim at full speed while moving, and you can breathe underwater.'
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -2019,7 +2028,7 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.create({
 				id: 'comp-waterborn-d',
 				name: 'Waterborn Drawback',
-				description: 'The sea, or one of its representatives, can assign you a quest. If you don’t do the sea’s bidding, it may temporarily deny you this complication’s benefits - including water breathing - at an inconvenient time.'
+				description: 'The ocean or a creature it sends to seek you can assign you a quest. If you don’t do the ocean’s bidding, it might temporarily deny you this complication’s benefits — including being able to breathe underwater — at an inconvenient time.'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-waterborn-mod',
@@ -2033,7 +2042,7 @@ Whenever you take a respite, make a Reason power roll.
 	static wodewalker: Complication = {
 		id: 'comp-wodewalker',
 		name: 'Wodewalker',
-		description: 'You were dying in the wode - starving and wounded, you collapsed. When you woke, you found a group of green elementalists had saved your life by infusing the regenerative bark of a tree to your body.',
+		description: 'You were dying in the wode, collapsing while starving and wounded. When you woke, you discovered that a group of green elementalists had saved your life by infusing the regenerative bark of a tree to your body.',
 		features: [
 			FactoryLogic.feature.createBonus({
 				id: 'comp-wodewalker-b',
@@ -2052,17 +2061,17 @@ Whenever you take a respite, make a Reason power roll.
 	static wrathfulSpirit: Complication = {
 		id: 'comp-wrathfulSpirit',
 		name: 'Wrathful Spirit',
-		description: 'You’re quick to anger, and some even say you’re possessed by a literal spirit of wrath. You never let an insult go without slinging one right back. In combat, things are similar: no matter the tactical circumstances, when someone injures you, you feel compelled to answer blood with blood.',
+		description: 'You’re quick to anger, never letting an insult go without slinging one right back. In combat, you fight as if possessed by a literal spirit of wrath. No matter the tactical circumstances, when someone injures you, you feel compelled to answer blood with blood.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-wrathfulSpirit-b',
 				name: 'Wrathful Spirit Benefit',
-				description: 'While you are taunted by a creature, you gain an edge on attacks against that creature. If you have the Rage heroic resource, you can spend 1 rage to make it a double edge.'
+				description: 'While you are taunted by a creature, you gain an edge on strikes against that creature. Aditionally, you can spend 1 Heroic Resource to have a double edge instead.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-wrathfulSpirit-d',
 				name: 'Wrathful Spirit Drawback',
-				description: 'In conversation or negotiation, when a creature insults you, you must either spend a Recovery or reply with an insult. Furthermore, in combat, whenever a creature hits you with an strike while you are not taunted, you are taunted (EoT) by that creature.'
+				description: 'In combat, whenever a creature makes a strike against you and you are not taunted, you are taunted by that creature until the end of your next turn. Additionally, whether in casual conversation or if you are involved in a negotiation, whenever a creature insults you, you must either spend a Recovery or be compelled to reply with an insult.'
 			})
 		]
 	};
@@ -2080,7 +2089,7 @@ Whenever you take a respite, make a Reason power roll.
 			FactoryLogic.feature.create({
 				id: 'comp-wronglyImprisoned-d',
 				name: 'Wrongly Imprisoned Drawback',
-				description: 'Your health suffered in prison. While you are winded, you develop a hacking cough, which makes it impossible for you to hide or sneak.'
+				description: 'Your health suffered in prison. Whenever you are winded, you are stricken with a hacking cough that makes it impossible for you to hide or sneak.'
 			})
 		]
 	};

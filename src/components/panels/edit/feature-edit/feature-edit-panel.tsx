@@ -1,6 +1,6 @@
-import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -18,6 +18,7 @@ import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
+import { FeatureTypeSelectModal } from '../../../modals/select/feature-type-select/feature-type-select-modal';
 import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
@@ -54,6 +55,7 @@ interface Props {
 
 export const FeatureEditPanel = (props: Props) => {
 	const [ feature, setFeature ] = useState<Feature | Perk>(props.feature);
+	const [ typeSelectorVisible, setTypeSelectorVisible ] = useState<boolean>(false);
 
 	const setName = (value: string) => {
 		const copy = Utils.copy(feature);
@@ -70,283 +72,9 @@ export const FeatureEditPanel = (props: Props) => {
 	};
 
 	const setType = (value: FeatureType) => {
-		let data: FeatureData | null = null;
-
-		switch (value) {
-			case FeatureType.Ability:
-				data = {
-					ability: FactoryLogic.createAbility({
-						id: Utils.guid(),
-						name: '',
-						description: '',
-						type: FactoryLogic.type.createMain(),
-						keywords: [],
-						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '',
-						sections: []
-					})
-				} as FeatureAbilityData;
-				break;
-			case FeatureType.AbilityCost:
-				data = {
-					keywords: [],
-					modifier: -1
-				} as FeatureAbilityCostData;
-				break;
-			case FeatureType.AbilityDamage:
-				data = {
-					keywords: [],
-					value: 0,
-					valueCharacteristics: [],
-					valueCharacteristicMultiplier: 1,
-					valuePerLevel: 0,
-					valuePerEchelon: 0,
-					damageType: DamageType.Damage
-				};
-				break;
-			case FeatureType.AbilityDistance:
-				data = {
-					keywords: [],
-					value: 0,
-					valueCharacteristics: [],
-					valueCharacteristicMultiplier: 1,
-					valuePerLevel: 0,
-					valuePerEchelon: 0
-				};
-				break;
-			case FeatureType.AddOn:
-				data = {
-					category: FeatureAddOnType.Defensive,
-					cost: 1
-				} as FeatureAddOnData;
-				break;
-			case FeatureType.AncestryChoice:
-				data = {
-					selected: null
-				} as FeatureAncestryChoiceData;
-				break;
-			case FeatureType.AncestryFeatureChoice:
-				data = {
-					source: {
-						current: true,
-						former: true,
-						customID: ''
-					},
-					value: 1,
-					selected: null
-				} as FeatureAncestryFeatureChoiceData;
-				break;
-			case FeatureType.Bonus:
-				data = {
-					field: FeatureField.Recoveries,
-					value: 0,
-					valueCharacteristics: [],
-					valueCharacteristicMultiplier: 1,
-					valuePerLevel: 0,
-					valuePerEchelon: 0
-				} as FeatureBonusData;
-				break;
-			case FeatureType.CharacteristicBonus:
-				data = {
-					characteristic: Characteristic.Might,
-					value: 1
-				} as FeatureCharacteristicBonusData;
-				break;
-			case FeatureType.Choice:
-				data = {
-					options: [],
-					count: 1,
-					selected: []
-				} as FeatureChoiceData;
-				break;
-			case FeatureType.ClassAbility:
-				data = {
-					classID: undefined,
-					cost: 1,
-					count: 1,
-					allowAnySource: false,
-					minLevel: 1,
-					selectedIDs: []
-				} as FeatureClassAbilityData;
-				break;
-			case FeatureType.ConditionImmunity:
-				data = {
-					conditions: []
-				} as FeatureConditionImmunityData;
-				break;
-			case FeatureType.DamageModifier:
-				data = {
-					modifiers: []
-				} as FeatureDamageModifierData;
-				break;
-			case FeatureType.Domain:
-				data = {
-					count: 1,
-					selected: []
-				} as FeatureDomainData;
-				break;
-			case FeatureType.DomainFeature:
-				data = {
-					level: 1,
-					count: 1,
-					selected: []
-				} as FeatureDomainFeatureData;
-				break;
-			case FeatureType.Companion: {
-				data = {
-					type: 'companion',
-					selected: null
-				};
-				break;
-			}
-			case FeatureType.Follower:
-				data = {
-					follower: FactoryLogic.createFollower()
-				};
-				break;
-			case FeatureType.HeroicResource:
-				data = {
-					type: 'heroic',
-					gains: [],
-					details: '',
-					canBeNegative: false,
-					value: 0
-				};
-				break;
-			case FeatureType.HeroicResourceGain:
-				data = {
-					trigger: '',
-					value: '1'
-				};
-				break;
-			case FeatureType.ItemChoice:
-				data = {
-					types: [],
-					count: 1,
-					selected: []
-				} as FeatureItemChoiceData;
-				break;
-			case FeatureType.Kit:
-				data = {
-					types: [],
-					count: 1,
-					selected: []
-				} as FeatureKitData;
-				break;
-			case FeatureType.Language:
-				data = {
-					language: ''
-				} as FeatureLanguageData;
-				break;
-			case FeatureType.LanguageChoice:
-				data = {
-					options: [],
-					count: 1,
-					selected: []
-				} as FeatureLanguageChoiceData;
-				break;
-			case FeatureType.MovementMode:
-				data = {
-					mode: ''
-				} as FeatureMovementModeData;
-				break;
-			case FeatureType.Malice:
-				data = {
-					cost: 3,
-					repeatable: false,
-					sections: [ '' ]
-				} as FeatureMaliceData;
-				break;
-			case FeatureType.Multiple:
-				data = {
-					features: []
-				} as FeatureMultipleData;
-				break;
-			case FeatureType.Package:
-				data = {
-					tag: ''
-				} as FeaturePackageData;
-				break;
-			case FeatureType.PackageContent:
-				data = {
-					tag: ''
-				} as FeaturePackageData;
-				break;
-			case FeatureType.Perk:
-				data = {
-					lists: [],
-					count: 1,
-					selected: []
-				} as FeaturePerkData;
-				break;
-			case FeatureType.Proficiency:
-				data = {
-					weapons: [],
-					armor: []
-				} as FeatureProficiencyData;
-				break;
-			case FeatureType.Size:
-				data = {
-					size: {
-						value: 1,
-						mod: 'M'
-					}
-				} as FeatureSizeData;
-				break;
-			case FeatureType.Skill:
-				data = {
-					skill: ''
-				} as FeatureSkillData;
-				break;
-			case FeatureType.SkillChoice:
-				data = {
-					options: [],
-					listOptions: [],
-					count: 1,
-					selected: []
-				} as FeatureSkillChoiceData;
-				break;
-			case FeatureType.Speed:
-				data = {
-					speed: 5
-				} as FeatureSpeedData;
-				break;
-			case FeatureType.Summon:
-				data = {
-					options: [],
-					count: 1,
-					selected: []
-				} as FeatureSummonData;
-				break;
-			case FeatureType.TaggedFeature:
-				data = {
-					tag: '',
-					feature: FactoryLogic.feature.create({
-						id: Utils.guid(),
-						name: '',
-						description: ''
-					})
-				};
-				break;
-			case FeatureType.TaggedFeatureChoice:
-				data = {
-					tag: '',
-					count: 1,
-					selected: []
-				};
-				break;
-			case FeatureType.TitleChoice:
-				data = {
-					echelon: 1,
-					count: 1,
-					selected: []
-				} as FeatureTitleChoiceData;
-				break;
-		}
-
 		const copy = Utils.copy(feature);
 		copy.type = value;
-		copy.data = data;
+		copy.data = FeatureLogic.getFeatureData(value);
 		setFeature(copy);
 		props.onChange(copy);
 	};
@@ -2137,26 +1865,13 @@ export const FeatureEditPanel = (props: Props) => {
 								children: (
 									<div>
 										{
-											(props.allowedTypes || []).length !== 1 ?
+											(props.allowedTypes || featureTypes).length !== 1 ?
 												<>
 													<HeaderText>Feature Type</HeaderText>
-													<Select
-														style={{ width: '100%' }}
-														placeholder='Select type'
-														options={(props.allowedTypes || featureTypes).map(o => ({ value: o }))}
-														optionRender={option => <Field label={option.data.value} value={FeatureLogic.getFeatureTypeDescription(option.data.value)} />}
-														showSearch={true}
-														filterOption={(input, option) => {
-															const strings = option ?
-																[
-																	option.value
-																]
-																: [];
-															return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-														}}
-														value={feature.type}
-														onChange={setType}
-													/>
+													<Flex align='center' justify='space-between'>
+														<Field label={feature.type} value={FeatureLogic.getFeatureTypeDescription(feature.type)} />
+														<Button type='text' icon={<EditOutlined />} onClick={() => setTypeSelectorVisible(true)} />
+													</Flex>
 												</>
 												: null
 										}
@@ -2191,6 +1906,13 @@ export const FeatureEditPanel = (props: Props) => {
 						]}
 					/>
 				</div>
+				<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} width='500px'>
+					<FeatureTypeSelectModal
+						types={props.allowedTypes || featureTypes}
+						onSelect={setType}
+						onClose={() => setTypeSelectorVisible(false)}
+					/>
+				</Drawer>
 			</ErrorBoundary>
 		);
 	} catch (ex) {

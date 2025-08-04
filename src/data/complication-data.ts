@@ -1160,7 +1160,7 @@ You can’t take this complication if you can’t be made dazed.`,
 								tier3: 'As tier 2, but you can ask 3 questions.'
 							})
 						),
-						FactoryLogic.createAbilitySectionText('Effect: If any sapient creatures have died nearby within the last 24 hours, you have a double bane on the power roll for this ability if any of those creatures were hostile to you, or a double edge if any of them were friendly to you. When you use this ability, you can’t do so again until you earn 1 or more Victories.')
+						FactoryLogic.createAbilitySectionText('If any sapient creatures have died nearby within the last 24 hours, you have a double bane on the power roll for this ability if any of those creatures were hostile to you, or a double edge if any of them were friendly to you. When you use this ability, you can’t do so again until you earn 1 or more Victories.')
 					]
 				})
 			})
@@ -1170,7 +1170,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static medusaBlood: Complication = {
 		id: 'comp-medusaBlood',
 		name: 'Medusa Blood',
-		description: 'Your mother and father never saw eye to eye - you know that because your father’s still alive. Your mother was a medusa. It made your childhood difficult, and now it’s making your adulthood complicated as well.',
+		description: 'Your mother and father never saw eye to eye. You know this because your father is still alive and your mother is a medusa. This made your childhood difficult, and now it’s making your adulthood complicated as well.',
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1190,7 +1190,7 @@ You can’t take this complication if you can’t be made dazed.`,
 								tier3: '6 damage; M < [strong] slowed (save ends)'
 							})
 						),
-						FactoryLogic.createAbilitySectionText('This ability has no effect on a creature that can’t see you or purposely avoids looking at your eyes. If a creature is reduced to 0 Stamina by this ability, they turn to inanimate stone.')
+						FactoryLogic.createAbilitySectionText('This ability has no effect on a creature who can’t see you or who purposely avoids looking at your eyes. A creature reduced to 0 Stamina by this ability is turned to inanimate stone.')
 					]
 				})
 			}),
@@ -1205,12 +1205,12 @@ You can’t take this complication if you can’t be made dazed.`,
 	static misunderstood: Complication = {
 		id: 'comp-misunderstood',
 		name: 'Misunderstood',
-		description: 'Your appearance marks you as part of a group that’s universally feared. You might be a gentle soul, but you’re not often given a first chance, much less a second. It’s no wonder that you usually wear a hood.',
+		description: 'Your appearance marks you as part of a group that is universally feared. You might be a gentle soul, but you’re not often given a chance to prove it. It’s no wonder that you usually wear a hood.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-misunderstood-b',
 				name: 'Misunderstood',
-				description: 'When you reveal your appearance to creatures that don’t know you personally, you gain an edge on tests where the Brag or Intimidate skill could be applied and a bane on tests where the Flirt, Lead, or Persuade skills could be applied.'
+				description: 'When you reveal your appearance to creatures who don’t know you personally, you gain an edge on tests where the Brag or Intimidate skill could be applied, but you take a bane on tests where the Flirt, Lead, or Persuade skills could be applied.'
 			})
 		]
 	};
@@ -1218,20 +1218,20 @@ You can’t take this complication if you can’t be made dazed.`,
 	static mundane: Complication = {
 		id: 'comp-mundane',
 		name: 'Mundane',
-		description: 'You’re hopelessly nonmagical. When you try to use magical abilities, or when they’re used on you, they never work right. Even magical devices seem to fizzle in your presence.',
+		description: 'You’re hopelessly nonmagical. When you try to use magical abilities, or even when they’re used on you, they never work right. Even magical devices seem to fizzle in your presence.',
 		features: [
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-mundane-b',
 				modifiers: [
-					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 1 }),
+					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 1}),
 					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Holy , modifierType: DamageModifierType.Immunity, value: 1 }),
 					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Psychic , modifierType: DamageModifierType.Immunity, value: 1 })
-				]
+				],
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-mundane-d',
 				name: 'Mundane Drawback',
-				description: 'While you are carry more than three magic treasures, you have a bane on all power rolls.'
+				description: 'While you are carry more than three magic treasures, you take a bane on power rolls.'
 			})
 		]
 	};
@@ -1239,7 +1239,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static outlaw: Complication = {
 		id: 'comp-outlaw',
 		name: 'Outlaw',
-		description: 'You might be a common bandit or an idealistic freedom fighter, but in either case, the local authorities don’t approve of your actions. You’ve managed to stay one step ahead of the law, but until your name is cleared you’ve got to keep a low profile.',
+		description: 'You might be a common bandit or an idealistic freedom fighter, but in either case, the authorities don’t approve of your actions. You’ve managed to stay one step ahead of the law so far, but until your name is cleared, you’ve got to keep a low profile.',
 		features: [
 			FactoryLogic.feature.createBonus({
 				id: 'comp-outlaw-b',
@@ -1257,17 +1257,17 @@ You can’t take this complication if you can’t be made dazed.`,
 	static pirate: Complication = {
 		id: 'comp-pirate',
 		name: 'Pirate',
-		description: 'You have a piratical past (and maybe a piratical present and future as well). While you’re not well known ashore, other pirates have a way of recognizing their own.',
+		description: 'You have a piratical past (and maybe a piratical present and future as well). Though you’re not well-known ashore, other pirates have a way of recognizing their own.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-pirate-b',
 				name: 'Pirate Benefit',
-				description: 'When interacting with pirates or pirate hunters, you treat your Renown as 2 higher than usual. Additionally, you hold a piece of a pirate map. Somewhere in the world, a handful of other pirates hold the other pieces of the map. With all the pieces, you’d know the location of a fabulous pirate treasure.'
+				description: 'When interacting with pirates or pirate hunters, you treat your Renown as 2 higher than usual. Additionally, you hold a piece of a pirate map, with a handful of other pirates in different locations holding the other pieces. With all the pieces, you’d know the location of a fabulous pirate treasure.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-pirate-d',
 				name: 'Pirate Drawback',
-				description: 'The pirate treasure is said to be cursed or haunted. Furthermore, you’re not the only ones looking for it. The pirates holding the other pieces of the map would very much like to get their hands on your piece!'
+				description: 'The pirates holding the other pieces of the map would very much like to get their hands on your piece, and have no qualms about killing you to get it. Furthermore, the pirate treasure is said to be cursed or haunted.'
 			})
 		]
 	};
@@ -1275,17 +1275,17 @@ You can’t take this complication if you can’t be made dazed.`,
 	static preacher: Complication = {
 		id: 'comp-preacher',
 		name: 'Preacher',
-		description: 'When you were young, you almost died in an accident or attack and had a vision of god or saint that showed you the way to save yourself and others you loved. That drove you into the church and gave you a strong belief in a particular religion or cause, and you just can’t wait to tell other people all about it.',
+		description: 'When you were young, you almost died in an accident or attack, but a vision of a god or saint showed you the way to save yourself and others you loved. That event drove you into the church and gave you a strong belief in a particular religion or cause — and you can’t wait to tell other people all about it.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-preacher-b',
 				name: 'Preacher Benefit',
-				description: 'As a respite activity, you can try to convert members of a community to your cause. Make a Presence test. The Director determines the difficulty based on the community’s receptiveness to your ideas. On a success, you convert one NPC into a follower, in addition to followers you acquire through Renown or other means. The Director determines the type of follower. Once you have converted an NPC into a follower in this way, you can’t try again until you gain a level.'
+				description: 'As a respite activity, you can attempt to convert members of a community to your cause. Make a Presence test with a difficulty determined by the Director based on the community’s receptiveness to your ideas. On a success, you convert one NPC into a follower, which you gain in addition to any followers you acquire through Renown or other means. The Director determines the type of follower. Once you have converted an NPC into a follower in this way, you can’t try again until you gain a level.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-preacher-d',
 				name: 'Preacher Drawback',
-				description: 'If you fail in your conversion attempt, one of the followers you have (either through this feature or your Renown) leaves you, their faith in you shaken. If you have no followers, your Renown instead decreases by 1. If you need to reduce your Renown and it is already 0, you instead experience a fitful respite and don’t gain any of the benefits of it.'
+				description: 'If you fail in your conversion attempt, one of your existing followers of the Director’s choice (whether gained through this feature or your Renown or other means) leaves you, their faith in you shaken. If you have no followers, your Renown is decreased by 1. If you need to reduce your Renown and it’s already 0, you gain no benefits from the respite during which you make the conversion attempt.'
 			})
 		]
 	};
@@ -1314,17 +1314,17 @@ You can’t take this complication if you can’t be made dazed.`,
 	static prisonerOfTheSynlirii: Complication = {
 		id: 'comp-prisonerOfTheSynlirii',
 		name: 'Prisoner of the Synlirii',
-		description: 'You were captured by the psionic beings known as voiceless talkers. You escaped them, but you can’t escape that feeling in the back of your mind - the feeling of being watched.',
+		description: 'You were captured by the psionic beings known as voiceless talkers. You escaped them, but you can’t escape a feeling that’s lingered since then in the back of your mind - the feeling of being watched.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-prisonerOfTheSynlirii-b',
 				name: 'Prisoner of the Synlirii Benefit',
-				description: 'You can telepathically communicate with creatures within 10 of you if they share a language with you and you know of each other. The receiver of your telepathic communications can choose to respond telepathically.'
+				description: 'You can telepathically communicate with creatures within 10 squares of you if they share a language with you and you know of each other. TA creature you communicate with this way can respond telepathically if they choose.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-prisonerOfTheSynlirii-d',
 				name: 'Prisoner of the Synlirii Drawback',
-				description: 'Voiceless talkers within 1 mile know your location and can overhear and understand your telepathic conversations.'
+				description: 'Any voiceless talkers within 1 mile know your location, and can overhear and understand your telepathic conversations.'
 			})
 		]
 	};
@@ -1332,7 +1332,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static promisingApprentice: Complication = {
 		id: 'comp-promisingApprentice',
 		name: 'Promising Apprentice',
-		description: 'You were apprenticed to a trade. Your mentor said you had a special gift, and you could have become a master of your craft - but before your training was complete, your mentor was killed.',
+		description: 'You were apprenticed to learn a crafting trade. Your mentor said you had a special gift and might well become a master of your craft someday. But before your training was complete, your mentor was killed.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-promisingApprentice-skill',
@@ -1341,12 +1341,12 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-promisingApprentice-b',
 				name: 'Promising Apprentice Benefit',
-				description: 'Choose one of your skills from the crafting skill group. When you use this skill you gain an edge.'
+				description: 'Choose one of your skills from the crafting skill group. You gain an edge on any test that uses that skill.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-promisingApprentice-d',
 				name: 'Promising Apprentice Drawback',
-				description: 'Whoever killed your mentor cursed you. Whenever you make a test that you don’t apply one of your skills to, you have a bane on the test.'
+				description: 'Whoever killed your mentor cursed you. You take a bane on any test that doesn’t use one of your skills.'
 			})
 		]
 	};
@@ -1354,7 +1354,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static psychicEruption: Complication = {
 		id: 'comp-psychicEruption',
 		name: 'Psychic Eruption',
-		description: 'In times of stress, you get headaches. Psionic energy builds up in your mind until you feel like your head is going to explode. If you’re not careful, it actually does explode, radiating psychic waves that harm friends and enemies alike.',
+		description: 'In times of stress, you get headaches. Psionic energy builds up in your mind until you feel as though your head might explode. And if you’re not careful, it actually does explode, radiating psychic waves that harm friends and enemies alike.',
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1364,25 +1364,24 @@ You can’t take this complication if you can’t be made dazed.`,
 					type: FactoryLogic.type.createMain(),
 					keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 					distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-					target: 'All creatures',
+					target: 'Each creature in the area',
 					sections: [
-						FactoryLogic.createAbilitySectionText('Note: this ability costs all your heroic resources to use.'),
+						FactoryLogic.createAbilitySectionText('Using this ability costs all your Heroic Resources.'),
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '1 psychic damage for each heroic resources you spend, to a maximum of your level',
-								tier2: '1 psychic damage for each heroic resource you spend, to a maximum of your level + your highest characteristic',
+								tier1: '1 psychic damage for each heroic resources you spend, to a maximum equal your level',
+								tier2: '1 psychic damage for each heroic resource you spend, to a maximum equal to your level + your highest characteristic',
 								tier3: '1 psychic damage for each heroic resource you spend'
 							})
-						),
-						FactoryLogic.createAbilitySectionText('If you are a talent and you are strained, the ability deals an additional 5 psychic damage to you and all creatures in the area.')
+						)
 					]
 				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-psychicEruption-d',
 				name: 'Psychic Eruption Drawback',
-				description: 'When you gain the bleeding, frightened, or weakened condition, you must use Psychic Blast as a free triggered action.'
+				description: 'Whenever you become bleeding, frightened, or weakened condition, you must use Psychic Blast as a free triggered action.'
 			})
 		]
 	};
@@ -1390,7 +1389,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static raisedByBeasts: Complication = {
 		id: 'comp-raisedByBeasts',
 		name: 'Raised by Beasts',
-		description: 'You were orphaned or lost in the wild, and a friendly animal pack (perhaps apes, bears, or wolves) took you in. Returning to so-called civilization was a shock, but you’re determined to learn all you can about your own kind.',
+		description: 'You were orphaned or lost in the wild, and a friendly animal pack (perhaps apes, bears, or wolves) took you in. Returning to so-called civilization was a shock, but you’re now determined to learn all you can about your own kind.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-raisedByBeasts-skill',
@@ -1400,7 +1399,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-raisedByBeasts-b',
 				name: 'Raised by Beasts Benefit',
-				description: 'Choose an animal type, such as wolf. You can communicate with this animal as if you shared a language, and animals of this type are not initially hostile to you unless they’re supernaturally compelled to be. You gain an edge when you use Handle Animals to interact with this animal.'
+				description: 'Choose an animal type related to the animals who helped you, such as wolf. You gain an edge on tests that use the Handle Animals skill when interacting with animals of this type. You can also communicate with animals of this type as if you shared a language, and animals of this type aren’t initially hostile to you unless they’re supernaturally compelled to be.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-raisedByBeasts-d',
@@ -1418,12 +1417,12 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-refugee-b',
 				name: 'Refugee Benefit',
-				description: 'When your family fled your homeland, they left their greatest treasure behind. Work with the Director to determine its nature. It might be a trinket or leveled item, several points of Wealth, a treasure’s project source, or the like. This treasure is now in the hands of the invaders, until you win it back and use it against them.'
+				description: 'When your family fled your homeland, they left their most values asset behind. Work with the Director to determine whether this asset is a trinket or leveled treasure, several points of Wealth, the project source to create a treasure, or the like. This asset is in the hands of the invaders but can be won back as the Director determines.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-refugee-d',
 				name: 'Refugee Drawback',
-				description: 'The faction that invaded your homeland is hostile to you.'
+				description: 'The faction that invaded your homeland wants you captured or dead. Any of their agents or sympathizers attempt to harm you if they recognize you, as the Director determines.'
 			})
 		]
 	};
@@ -1436,12 +1435,12 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-rival-b',
 				name: 'Rival Benefit',
-				description: 'Choose one of your skills. This skill grants +3 bonus to tests instead of +2.'
+				description: 'Choose one of your skills. That skill grants a +3 bonus to tests instead of +2.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-rival-d',
 				name: 'Rival Drawback',
-				description: 'You occasionally cross paths with your rival, who has similar statistics to yours (but gains a +4 instead of a +3 in the skill you chose).'
+				description: 'Your rival has similar statistics to yours, but always had one skill they excelled at, as determined by the Director. Intimidated by their prowess, you take a bane on tests using that skill.'
 			})
 		]
 	};
@@ -1449,7 +1448,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static rogueTalent: Complication = {
 		id: 'comp-rogueTalent',
 		name: 'Rogue Talent',
-		description: 'You are the only survivor of a cataclysmic psionic event - an experiment gone wrong, a voiceless talker attack, or some naturally occurring phenomenon of a far off part of the timescape. It left you with a psionic talent, but also made you vulnerable to telepathic attacks.',
+		description: 'You are the only survivor of a cataclysmic psionic event - an experiment gone wrong, a voiceless talker attack, or some naturally occurring phenomenon of a far-off part of the timescape. It left you with a psionic talent, but also made you vulnerable to telepathic attacks.',
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1459,15 +1458,15 @@ You can’t take this complication if you can’t be made dazed.`,
 					type: FactoryLogic.type.createManeuver(),
 					keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
-					target: '1 creature or object',
+					target: 'One creature or object',
 					sections: [
 						FactoryLogic.createAbilitySectionText('Note: you can use this ability as a ranged free strike.'),
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: 'push or pull 1',
-								tier2: 'push or pull 2',
-								tier3: 'push or pull 3'
+								tier1: 'Push or pull 1',
+								tier2: 'Push or pull 2',
+								tier3: 'Push or pull 3'
 							})
 						)
 					]
@@ -1494,7 +1493,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-runaway-d',
 				name: 'Runaway Drawback',
-				description: 'Your extended family is looking for you to take you home - and you’ve never been able to stand up to them. That’s why you ran away in the first place!'
+				description: 'Members of your extended family is looking for you, intending to drag you home - and you’ve never been able to stand up to them.'
 			})
 		]
 	};
@@ -1502,17 +1501,17 @@ You can’t take this complication if you can’t be made dazed.`,
 	static searchingForACure: Complication = {
 		id: 'comp-searchingForACure',
 		name: 'Searching for a Cure',
-		description: 'Your homeland has been corrupted by some terrible monster, and you’re the only one who escaped the plague. The rest of your family still exists, but in changed forms - perhaps as vampires or zombies. People tell you the situation is hopeless, but you’re determined to find a cure.',
+		description: 'Your homeland has been corrupted by some terrible curse or plague, and you’re the only one who escaped it. The members of your family still exist, but in changed forms - perhaps as vampire spawn, zombies, or living statues. People tell you the situation is hopeless, but you’re determined to find a cure that can undo your loved ones’ suffering.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-searchingForACure-b',
 				name: 'Searching for a Cure Benefit',
-				description: 'Choose a type of monster, such as medusa or vampire. You gain a +1 bonus on saving throws and to characteristic scores for the purpose of resisting potencies against this monster’s abilities.'
+				description: 'Choose a type of monster connected to your homeland’s plight, such as a vampire, ghost, or medusa. You have a +1 bonus to saving throws related to that monster’s abilities, and you treat your characteristic scores as 1 higher than usual for the purpose of resisting potencies related to those abilities'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-searchingForACure-d',
 				name: 'Searching for a Cure Drawback',
-				description: 'You have started to turn into one of these creatures yourself. If you don’t find a cure soon … you’ll fall victim to the disease or curse. Work with your Director to determine the timeline of your disease taking effect. It should be something that could happen during the campaign!'
+				description: 'You have started to succumb to the curse or plague, and will suffer the fate of your family if you don’t find a cure soon. Work with the Director to determine the timeline of your transformation, which should be something that could happen during the campaign!'
 			})
 		]
 	};
@@ -1520,7 +1519,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static secretIdentity: Complication = {
 		id: 'comp-secretIdentity',
 		name: 'Secret Identity',
-		description: 'You’re secretly very important - but it’s not safe for your true identity to be known. Perhaps you’re the witness to a crime or a royal on the run from a usurper. Until the appropriate villains are punished, you’ll maintain the guise of an ordinary adventurer.',
+		description: 'You’re secretly very important - but it’s not safe for your true identity to be known. Perhaps you’re the witness to a crime or a royal family on the run from a usurper. Until you are no longer at risk of being hunted, you’ll maintain the guise of an ordinary adventurer.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-secretIdentity-skill',
@@ -1529,12 +1528,12 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-secretIdentity-b',
 				name: 'Secret Identity Benefit',
-				description: 'You can resume your true identity, either temporarily or permanently. While in your true identity, your Renown and Wealth are treated as 2 higher, along with any other benefits you may gain from your identity.'
+				description: 'You can resume your true identity temporarily. While in your true identity, your Renown and Wealth are treated as 2 higher than usual, and you might gain other benefits in consultation with the Director.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-secretIdentity-d',
 				name: 'Secret Identity Drawback',
-				description: 'You have powerful and clever enemies. Until they’re defeated, if you resume your true identity, there is a cumulative 20% chance that they find you and confront you each day. This chance resets if you resume your secret identity for a full day. Even if you try to keep your identity hidden, their suspicions may be raised by a careless slip.'
+				description: 'Each time you resume your true identity while you are still hunted, you have a 20 percent cumulative chance each day that your enemies will find you. This chance resets if you resume your secret identity for 1 day.'
 			})
 		]
 	};
@@ -1547,13 +1546,13 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-secretTwin-b',
 				name: 'Secret Twin Benefit',
-				description: 'You claimed something that belonged to your twin as your own - a signature treasure that is now all yours. You gain a 1st echelon trinket of your choice. This treasure has their name or sigil written, sewn, or emblazoned on it somewhere.',
+				description: 'You have a 1st-echelon trinket of your choice. This was a signature treasure of your twin, and has their name or sigil written, sewn, or emblazoned on it somewhere.',
 				types: [ ItemType.Trinket ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-secretTwin-d',
 				name: 'Secret Twin Drawback',
-				description: 'Your twin disappeared for a reason - someone wanted them dead. Whenever you finish a respite, roll a d10. On a result of 1 or 2, the Director can decide that your past catches up with you at any point in the future in the form of an assassin or someone who knows your real identity and threatens to reveal it as part of a blackmail scheme.'
+				description: 'Your twin disappeared because someone wanted them dead. Whenever you finish a respite, roll a d10. On a 1 or 2, the Director can decide that your past catches up with you in the near future in some way—an assassin seeking your twin, someone who knows your real identity and threatens to reveal it, and so forth.'
 			})
 		]
 	};
@@ -1561,12 +1560,12 @@ You can’t take this complication if you can’t be made dazed.`,
 	static selfTaught: Complication = {
 		id: 'comp-selfTaught',
 		name: 'Self Taught',
-		description: 'While your peers were learning their trades in fancy schools, you were practicing your abilities on the mean streets with nothing but your own instinct as a guide. What you lost in polish and tactical acumen you make up for in raw power.',
+		description: 'While your peers were learning their trades in fancy schools, you whoned your capabilities on the mean streets with nothing but your own instinct as a guide. What you lost in polish and tactical acumen, you now make up for in raw power.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-selfTaught-b',
 				name: 'Self Taught',
-				description: 'At the start of your turn during combat, you can forgo gaining heroic resources until the start of your next turn. If you do, until the start of your next turn your strikes deal additional damage equal to your highest characteristic score.'
+				description: 'At the start of each of your turns during combat, you can forgo gaining your Heroic Resource until the start of your next turn. If you do, your strikes gain a damage bonus equal to your highest characteristic score until the start of your next turn.'
 			})
 		]
 	};
@@ -1574,12 +1573,12 @@ You can’t take this complication if you can’t be made dazed.`,
 	static sewerFolk: Complication = {
 		id: 'comp-sewerFolk',
 		name: 'Sewer Folk',
-		description: 'Impoverished or on the run, you spent formative years living in the sewers of a major city. There you learned lessons that have stood you well, although the miasma of the sewers did permanent damage to your health.',
+		description: 'Impoverished or on the run, you spent formative years living in the sewers of a major city. There, you learned lessons that have served you well, although the miasma of the sewers did permanent damage to your health.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-sewerFolk-b',
 				name: 'Sewer Folk Benefit',
-				description: 'Your movement gains either the Climb or Swim keyword (your choice). Additionally, while in a city you and your companions can move from place to place without being detected, and you never get lost while underground.'
+				description: 'You can automatically climb or swim (your choice) at full speed while moving, and you never get lost while underground. Additionally, while in a city with sewers, you and your companions can move from place to place without being detected, as the Director determines.'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-sewerFolk-d',
@@ -1598,7 +1597,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-shadowBorn-b',
 				name: 'Shadow Born Benefit',
-				description: 'When you start your turn in concealment, you gain a surge.'
+				description: 'Whenever you start your turn with concealment, you gain 1 surge.'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-shadowBorn-d',
@@ -1612,12 +1611,12 @@ You can’t take this complication if you can’t be made dazed.`,
 	static sharedSpirit: Complication = {
 		id: 'comp-sharedSpirit',
 		name: 'Shared Spirit',
-		description: 'A supernatural spirit shares your body; each of you controls your body by turn. You and the spirit share the same short-term goals and work equally well with your companions, although you may have different personalities, mannerisms, and long-term goals.',
+		description: 'A supernatural spirit shares your body, with each of you controlling your body by turn. You and the spirit share the same short-term goals and work equally well with your companions, though you might have different personalities, mannerisms, and long-term goals.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-sharedSpirit-b',
 				name: 'Shared Spirit',
-				description: 'At the start of each day, roll 1d6. On a 1-4, you control your body. On a 5-6, the spirit does. Alternatively, if you and the spirit are on good terms, you can choose each day who is in control. Choose three of your skills that you possess only while you are in control, and choose three new skills that you can use only while your spirit is in control.'
+				description: 'At the start of each day, roll 1d6. On a 1-4, you control your body. On a 5-6, the spirit does. Alternatively, if you and the spirit are on good terms, you can choose each day who is in control. CYou can use those skills only while you are in control of your body. Then choose three new skills, which you have and can use only while your spirit is in control.'
 			})
 		]
 	};
@@ -1625,7 +1624,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static shatteredLegacy: Complication = {
 		id: 'comp-shatteredLegacy',
 		name: 'Shattered Legacy',
-		description: 'You’re the heir to a powerful magical treasure that has been in your family for generations. The only problem: it’s broken. Some ancestor of yours broke it while saving the world, or maybe they tripped and smashed it on a rock. It’s your job to fix it.',
+		description: 'You’re the heir to a powerful supernatural treasure that has been in your family for generations. One problem, though: the treasure is broken. Some ancestor of yours sundered it while saving the world. Or maybe they tripped and smashed it on a rock. Either way, it’s your job to fix it.',
 		features: [
 			FactoryLogic.feature.createLanguageChoice({
 				id: 'comp-shatteredLegacy-lang'
@@ -1633,13 +1632,13 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createItemChoice({
 				id: 'comp-shatteredLegacy-b',
 				name: 'Shattered Legacy Benefit',
-				description: 'You gain a leveled item of your choice.',
+				description: 'You gain one leveled treasure of your choice.',
 				types: [ ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Leveled ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-shatteredLegacy-d',
 				name: 'Shattered Legacy Drawback',
-				description: 'The leveled item you gain from this complication is broken and completely inoperative. Repairing the item requires using the Craft Treasure project, and the goal is half what it would normally be to create such an item. You have the project source you need to fix the item, but not the item prerequisite.'
+				description: 'The chosen leveled treasure is broken and completely inoperative. Repairing the treasure requires that you complete the Craft Treasure project for it. The project goal is half of what it would cost to create such an item, and you already have the project source you need. You must seek out any item prerequisite.'
 			})
 		]
 	};
@@ -1658,7 +1657,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-shipwrecked-d',
 				name: 'Shipwrecked Drawback',
-				description: 'You have forgotten one language you know.'
+				description: 'You have forgotten one language you know of your choice.'
 			})
 		]
 	};
@@ -1666,17 +1665,17 @@ You can’t take this complication if you can’t be made dazed.`,
 	static siblingsShield: Complication = {
 		id: 'comp-siblingsShield',
 		name: 'Sibling\'s Shield',
-		description: 'You were tasked with delivering a ceremonial shield to your older sibling, a celebrated warrior, for their years of service. When you arrived at their homestead, you found them dead on their doorstep with their sword lodged in their back. If you were going to find out who did this to them and why, you needed to step into their shoes. It will take a while to match up to your sibling’s legacy, though.',
+		description: 'You were tasked with delivering a ceremonial shield to your older sibling, a celebrated warrior, for their years of service. When you arrived at their homestead, you found them dead on their doorstep with their own sword lodged in their back. To find out who did this to them — and why — you decided to step into their shoes. It will take a while to match up to your sibling’s legacy, though.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-siblingsShield-b',
 				name: 'Sibling\'s Shield Benefit',
-				description: 'You cannot be flanked as long as you wear your sibling’s shield on your back.'
+				description: 'While you wear your sibling’s shield on your back, you can’t be flanked.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-siblingsShield-d',
 				name: 'Sibling\'s Shield Drawback',
-				description: 'Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test without applying a skill. On a 17 or lower or lower, you gain 1 fewer Recoveries than your normally would when the respite ends.'
+				description: 'Visions of your dead sibling haunt you at night. Whenever you take a respite, make an Intuition test that can’t make use of any skill. On a tier 1 or tier 2 outcome, you gain 1 fewer Recoveries than usual when you finish the respite.'
 			})
 		]
 	};
@@ -1684,7 +1683,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static silentSentinel: Complication = {
 		id: 'comp-silentSentinel',
 		name: 'Silent Sentinel',
-		description: 'You were trained by a group of spies who psionically infused silence into your every step and enhanced your ability to hear distant whispers. It wasn’t until you got caught by an elementalist who blasted you with thunder that you learned the enhanced hearing had some nasty side effects.',
+		description: 'You were trained by a group of spies, who psionically infused silence into your every step and enhanced your ability to hear distant whispers. But your enhanced hearing has some nasty side effects.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-silentSentinel-skill1',
@@ -1699,12 +1698,12 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-silentSentinel-b',
 				name: 'Silent Sentinel Benefit',
-				description: 'You can silently communicate with any creature, provided you share a language and can see each other.'
+				description: 'You can telepathically communicate with any creature provided they share a language with you and you can observe each other. A creature you communicate with this way can respond telepathically if they choose.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-silentSentinel-d',
 				name: 'Silent Sentinel Drawback',
-				description: 'When you take sonic damage, you are dazed until the end of your next turn.'
+				description: 'Whenever you take sonic damage, you are dazed until the end of your next turn.'
 			}),
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-silentSentinel-mod',
@@ -1719,19 +1718,24 @@ You can’t take this complication if you can’t be made dazed.`,
 		id: 'comp-slightCaseOfLycanthropy',
 		name: 'Slight Case of Lycanthropy',
 		description: `
-Maybe you were bitten as a child, or maybe it’s a family curse. Either way, you have a malady that is best not discussed in public, lest the torches and pitchforks make their appearance.
+Maybe you were bitten as a child, or maybe it’s a family curse. Either way, you have a malady that is best not discussed in public, lest the torches and pitchforks make an appearance.
 
 Note: Stormwight furies can’t take this complication.`,
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-slightCaseOfLycanthropy-b',
 				name: 'Slight Case of Lycanthropy Benefit',
-				description: 'When you wind or kill a non-minion creature, you gain a surge.'
+				description: 'Whenever you make a non-minion creature winded or kill a non-minion creature, you gain 1 surge.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-slightCaseOfLycanthropy-d',
 				name: 'Slight Case of Lycanthropy Drawback',
-				description: 'If you have five or more surges at the start of your turn, or you have at least one surge at the start of your turn while in moonlight, you lose all your surges and become a woflish hybrid until the end of your turn. While in the form, you either make a melee free strike at the nearest creature or shift up to your speed towards the nearest creature and make a melee free strike against them if you can. If allies and enemies are equally close, you attack an ally.'
+				description: 'At the start of each of your turns, if you have five or more surges — or one or more surges while in moonlight — you lose all your surges and become a wolfish hybrid until the end of your turn. While in that form, you have your usual statistics, but you must make a melee free strike against the nearest creature if you can. You can shift up to your speed toward that creature if necessary. If allies and enemies are equally near, you target an ally.'
+			}),
+			FactoryLogic.feature.create({
+				id: 'comp-slightCaseOfLycanthropy-s',
+				name: 'Special',
+				description: 'You can’t take this complication if you are a fury with the stormwight primordial aspect.'
 			})
 		]
 	};
@@ -1739,17 +1743,17 @@ Note: Stormwight furies can’t take this complication.`,
 	static stolenFace: Complication = {
 		id: 'comp-stolenFace',
 		name: 'Stolen Face',
-		description: 'An evil fairy cursed you, leaving you with a blank expanse instead of a face. Although you’re able to imitate other peoples’ features, you’d like to have your own back.',
+		description: 'An evil fairy cursed you, leaving you with a blank visage instead of a face. Although you’re able to imitate other peoples’ features, you’d like to have your own back.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-stolenFace-b',
 				name: 'Stolen Face Benefit',
-				description: 'You can spend 5 uninterrupted minutes to rearrange your face into that of another creature of your ancestry who you’ve seen before. You gain a double edge on tests made to impersonate this creature or to disguise your identity. You are unable to change your hair or other non-facial features.'
+				description: 'You can spend 5 uninterrupted minutes to rearrange your face to resemble the face of another creature of your ancestry who you’ve observed before. You have a double edge on tests made to impersonate that creature or to disguise your identity. You are unable to change your hair or other non-facial features.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-stolenFace-d',
 				name: 'Stolen Face Drawback',
-				description: 'When you take damage, your face is blank, with no eyes, nose, mouth, or ears. Your face doesn’t return until you spend 5 uninterrupted minutes rearranging it.'
+				description: 'Whenever you take damage, your face becomes blank, with no eyes, nose, mouth, or ears. This doesn’t affect your senses or your ability to speak. Your face doesn’t return until you use the benefit of this complication to restore it.'
 			})
 		]
 	};	
@@ -1757,12 +1761,12 @@ Note: Stormwight furies can’t take this complication.`,
 	static strangeInheritance: Complication = {
 		id: 'comp-strangeInheritance',
 		name: 'Strange Inheritance',
-		description: 'Your siblings each inherited money or land, but you got a strange, seemingly useless trinket, along with the advice that maybe you weren’t cut out for an ordinary, peaceful life.',
+		description: 'Your siblings each inherited money or land, but you received a strange, seemingly useless trinket — along with the advice that maybe you weren’t cut out for an ordinary, peaceful life.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-strangeInheritance-b',
 				name: 'Strange Inheritance Benefit',
-				description: 'You gain a somewhat inoperative 2nd echelon trinket of the Director’s choice. It only works while the total of your level plus your Victories is 5 or higher. You don’t learn what the item’s powers are until the first time it becomes operative.'
+				description: 'You gain a somewhat inoperative 2nd echelon trinket of the Director’s choice. This trinket functions only while the total of your level plus your Victories is 5 or higher. You don’t learn what the trinket’s powers are until the first time it becomes operative.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-strangeInheritance-d',
@@ -1775,7 +1779,7 @@ Note: Stormwight furies can’t take this complication.`,
 	static strippedOfRank: Complication = {
 		id: 'comp-strippedOfRank',
 		name: 'Stripped of Rank',
-		description: 'You were trained as an officer, but you no longer serve. Did you flee a battle? Were you dishonorably discharged? Did you defect from an evil army?',
+		description: 'You were trained as an officer, but you no longer serve. Whether you fled from a battle, were dishonorably discharged, or defected from an evil army, you make your own way in the world now — though your military training will never truly leave you.',
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1785,19 +1789,19 @@ Note: Stormwight furies can’t take this complication.`,
 					type: FactoryLogic.type.createMain(),
 					keywords: [ AbilityKeyword.Ranged ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
-					target: '1 ally',
+					target: 'One ally',
 					sections: [
 						FactoryLogic.createAbilitySectionText(`
-The target can use its triggered action to take an action, a move action, or a maneuver.
+The target can use a triggered action to take a main action, a move action, or a maneuver.
 
-Note: If you have the Strike Now tactician ability, the target can use a free triggered action instead of a triggered action to use this ability.`)
+Note: If you have the Strike Now tactician ability, the target can use a free triggered action instead of a triggered action to gain the benefit of this ability.`)
 					]
 				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-strippedOfRank-d',
 				name: 'Stripped of Rank Drawback',
-				description: 'You need 4 Renown, instead of 3, to attract a follower and can gain additional followers for every 4 Renown, instead of 3, you gain after that.'
+				description: 'Rather than attracting followers at 3, 6, 9, and 12 Renown, you can attract followers only when your Renown reaches 4, 8, 12, and 16.'
 			})
 		]
 	};
@@ -1805,17 +1809,17 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 	static thrillSeeker: Complication = {
 		id: 'comp-thrillSeeker',
 		name: 'Thrill Seeker',
-		description: 'You live for danger. In battle and peril, you can transcend your usual limits - and once you’ve tasted that excitement, you want more.',
+		description: 'You live for danger. Whether in battle or mundane peril, you can transcend your usual limits—and once you’ve tasted that excitement, you want more.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-thrillSeeker-b',
 				name: 'Thrill Seeker Benefit',
-				description: 'When the party reaches two, four, and six victories, you gain a hero token.'
+				description: 'Each time your party reaches 2, 4, and 6 Victories, you earn the party a hero token.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-thrillSeeker-d',
 				name: 'Thrill Seeker Drawback',
-				description: 'At the start of the session, the party doesn’t gain a hero token for your character.'
+				description: 'At the start of a new game session, the party doesn’t earn a hero token for your character.'
 			})
 		]
 	};
@@ -1823,17 +1827,17 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 	static vampireSire: Complication = {
 		id: 'comp-vampireSire',
 		name: 'Vampire Sire',
-		description: 'A vampire has bitten you. You’re not undead - not yet anyway - but you have a connection with your vampire sire, and you feel urges you fight to control.',
+		description: 'A vampire has bitten you. You’re not undead - or not yet, anyway - but your connection with your vampire progenitor fills you with urges you fight to control.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-vampireSire-b',
 				name: 'Vampire Sire Benefit',
-				description: 'When you make a melee free strike against an adjacent creature, you can make it a bite. If you do so, you gain temporary Stamina equal to the damage you dealt. This temporary Stamina lasts until the end of your next respite if it doesn’t disappear due to damage.'
+				description: 'Whenever you make a melee free strike against an adjacent creature, you can do so by biting the creature. If you obtain a tier 3 outcome on the free strike, you gain temporary Stamina equal to the damage dealt. If not lost beforehand, this temporary Stamina lasts until the end of your next respite.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-vampireSire-d',
 				name: 'Vampire Sire Drawback',
-				description: 'While you have temporary Stamina from this complication, your vampire sire can sense your location, you grow visible fangs, and you have a bane on Presence tests made to interact with humanoids who aren’t undead.'
+				description: 'While you have temporary Stamina from this complication, you grow visible fangs, you take a bane on Presence tests made to interact with humanoids, and your vampire progenitor can sense your location.'
 			})
 		]
 	};

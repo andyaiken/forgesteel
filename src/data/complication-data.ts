@@ -979,12 +979,12 @@ You can’t take this complication if you can’t be made dazed.`,
 	static lifebonded: Complication = {
 		id: 'comp-lifebonded',
 		name: 'Lifebonded',
-		description: 'In a sinister ritual, your soul has been bound to another’s. When they die, you die - making you the perfect bodyguard. Who is your life bonded to: a companion? A superior officer? An enemy?',
+		description: 'In a sinister ritual, your soul has been bound to that of another creature. This might be a companion, a creature you are beholden to, or an enemy. When they die, you die — making you the perfect bodyguard.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lifebonded-b',
 				name: 'Lifebonded Benefit',
-				description: 'Choose another creature that doesn’t have the Lifebonded complication. When you die, your body disappears until that creature completes a respite or gains one Victory. You then appear next to the creature, fully healed.'
+				description: 'Choose another creature who doesn’t have the Lifebonded complication. When you die, your body disappears until that creature finishes a respite or earns 2 or more Victories. You then appear next to the creature, fully healed.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-lifebonded-d',
@@ -997,17 +997,17 @@ You can’t take this complication if you can’t be made dazed.`,
 	static lightningSoul: Complication = {
 		id: 'comp-lightningSoul',
 		name: 'Lightning Soul',
-		description: 'You were caught in a storm and stuck by lightning - but you survived. Something saved you. Maybe it was a gods-given miracle, a latent psionic gift, or the magic of a helpful elementalist, but you absorbed the lightning into your body. It’s always there, simmering under the surface.',
+		description: 'You were caught in a storm and stuck by lightning - but ysomthing saved you from death. Perhaps it was a gods-given miracle, a latent psionic gift, or the magic of a helpful elementalist, but you absorbed the lightning into your body. It’s always there now, simmering under the surface.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lightningSoul-b',
 				name: 'Lightning Soul Benefit',
-				description: 'When you regain Stamina in combat, you gain a surge. Whenever you spend a surge, you can make the extra damage it deals lightning damage.'
+				description: 'When you regain Stamina in combat, you gain 1 surge. Whenever you spend a surge to deal extra damage, you can make that extra damage into lightning damage.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-lightningSoul-d',
 				name: 'Lightning Soul Drawback',
-				description: 'When you are wet, you have damage weakness 5.'
+				description: 'Whenever you are wet, you have damage weakness 5.'
 			})
 		]
 	};
@@ -1015,17 +1015,17 @@ You can’t take this complication if you can’t be made dazed.`,
 	static loner: Complication = {
 		id: 'comp-loner',
 		name: 'Loner',
-		description: 'You’ve always been a lone wolf. With no one else to lean on, you’ve picked up a million survival tricks. Which made it all the more surprising when you joined your current adventuring group, and found the family you never had.',
+		description: 'You’ve always been a lone wolf. With no one else to lean on, you’ve picked up a million survival tricks. Which made it all the more surprising when you joined your current adventuring group and found the family you’d never known you needed.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-loner-b',
 				name: 'Loner Benefit',
-				description: 'When you complete a respite, choose a skill you don’t possess. You gain the benefits of that skill until you next complete a respite.'
+				description: 'When you finish a respite, choose a skill you don’t have. You have that skill until the end of your next respite.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-loner-d',
 				name: 'Loner Drawback',
-				description: 'Now that you finally have people who care about you, you won’t let anyone take them away! When a creature reduces one of your allies to 0 Stamina, you are taunted by the creature until your ally’s Stamina is higher than 0, the end of the encounter, or another creature makes you taunted.'
+				description: 'Now that you finally have people who care about you, you won’t let anyone take them away! Whenever a creature reduces one of your allies to 0 Stamina, you are taunted by the creature until your ally’s Stamina is higher than 0, another creature makes you taunted, or the end of the encounter.'
 			})
 		]
 	};
@@ -1033,17 +1033,17 @@ You can’t take this complication if you can’t be made dazed.`,
 	static lostInTime: Complication = {
 		id: 'comp-lostInTime',
 		name: 'Lost in Time',
-		description: 'In a long-ago age, a cataclysm overtook your city. You weren’t killed, but through some arcane accident you were suspended in time - until now. Alone, you must navigate the modern world with a head full of outdated memories - and a few ancient secrets.',
+		description: 'In a long-ago age, a cataclysm overtook your city. You weren’t killed, but some arcane accident caused you to be suspended in time until now. Alone, you must navigate the world around you with a head full of outdated memories - and a few ancient secrets — and a few ancient secrets.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lostInTime-b',
 				name: 'Lost in Time Benefit',
-				description: 'Choose a damage type from acid, cold, corruption, fire, holy, lightning, poison, psychic, or sonic. When you use a signature ability, you can use your chosen damage type instead of the ability’s normal damage.'
+				description: 'Choose a damage type from acid, cold, corruption, fire, holy, lightning, poison, psychic, or sonic. Whenever you use a signature ability, you can have it deal your chosen damage type instead of it’s normal damage.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-lostInTime-d',
 				name: 'Lost in Time Drawback',
-				description: 'You automatically fail any test made to recall information from after you were suspended in time.'
+				description: 'You automatically fail any test made to recall information from the period during which you were suspended in time.'
 			})
 		]
 	};
@@ -1051,7 +1051,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static lostYourHead: Complication = {
 		id: 'comp-lostYourHead',
 		name: 'Lost Your Head',
-		description: 'A bredbeddle stole your head! Normally, being beheaded by one of these giants is fatal, but due to your latent psionic ability you’re able to survive despite your decapitation.',
+		description: 'A bredbeddle stole your head! Usually, being beheaded by one of those magical giants is fatal, but your latent psionic ability allows you to survive despite your decapitation.',
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1063,14 +1063,14 @@ You can’t take this complication if you can’t be made dazed.`,
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: 'One willing creature',
 					sections: [
-						FactoryLogic.createAbilitySectionText('You can see, hear, and smell as if you were in the creature’s space. Additionally, you can borrow their mouth to speak when you wish to do so. You speak in a different voice than theirs. This effect ends when you use Share Head on a different target, when the creature moves more than 10 away from you, or when the creature is no longer willing to share their head with you.')
+						FactoryLogic.createAbilitySectionText('You can see, hear, and smell as if you were in the target’s space. Additionally, you can borrow their mouth to speak when you wish to do so, speaking in your own voice. This effect ends when you use Share Head on a different target, when the target moves more than 10 squares away from you, or when the creature is no longer willing to share their head with you.')
 					]
 				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-lostYourHead-d',
 				name: 'Lost Your Head Drawback',
-				description: 'Having no head, you can’t see, hear, smell, or taste except by using the Share Head ability. Additionally, you can’t wear gear that requires a head, such as helmets or hats.'
+				description: 'Having no head, you can’t see, hear, smell, taste, or verbalize except by using the Share Head ability. Additionally, you can’t wear gear that requires a head, such as a helmet or hat.'
 			})
 		]
 	};
@@ -1078,17 +1078,17 @@ You can’t take this complication if you can’t be made dazed.`,
 	static lucky: Complication = {
 		id: 'comp-lucky',
 		name: 'Lucky',
-		description: 'You’ve always had a lucky streak: when you leave things in the hands of fate, you tend to succeed more than you fail. But luck is fickle - when you don’t trust it, it deserts you.',
+		description: 'You’ve always had a lucky streak. When you leave things in the hands of fate, you succeed more than you fail. But luck is fickle - when you don’t trust it, it deserts you.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lucky-b',
 				name: 'Lucky Benefit',
-				description: 'When you spend a hero token to turn a failure into a success or to avoid a consequence, roll a d10. On a result of 6 or more, you don’t expend the hero token.'
+				description: 'When you spend a hero token to succeed on a saving throw or reroll a test, roll a d10. On a 6 or higher, you gain the benefit but don’t spend the hero token.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-lucky-d',
 				name: 'Lucky Drawback',
-				description: 'When you get a tier 1 result on a test and don’t expend a hero token to turn it into a success, you gain a bane on the next test you make.'
+				description: 'Whenever you obtain a tier 1 result on a test and don’t spend a hero token to reroll, you take a bane on the next test you make.'
 			})
 		]
 	};
@@ -1096,7 +1096,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static masterChef: Complication = {
 		id: 'comp-masterChef',
 		name: 'Master Chef',
-		description: 'Before you were a hero, you were a chef - and when you retire, you have big plans for your next restaurant or inn. In the meantime, you’re on the lookout for rare ingredients that only a traveler can find. After all, it’s food that makes the world go round.',
+		description: 'Before you were a hero, you were a chef - and when you retire, you have big plans for your next restaurant or inn. In the meantime, you’re on the lookout for rare ingredients that only a wandering adventurer can find. After all, it’s food that makes the world go round.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-masterChef-skill',
@@ -1106,12 +1106,12 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-masterChef-b',
 				name: 'Master Chef Benefit',
-				description: 'When you complete a respite or wake up after a night’s sleep, you can spend 1 uninterrupted hour prepare an excellent meal for up to 10 creatures, provided you have ingredients and cooking tools. Each creature that eats the meal gains 1 bonus Recovery, which expires at the end of the day if not used.'
+				description: 'When you finish a respite or wake up after a night’s sleep, you can spend 1 uninterrupted hour to prepare an excellent meal for up to 10 creatures, provided you have ingredients and cooking tools. Once over the next 24 hours, each creature who eats the meal can gain the benefit of spending a Recovery without spending a Recovery.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-masterChef-d',
 				name: 'Master Chef Drawback',
-				description: 'The first time each day that you are forced to eat ordinary or substandard food, you lose 2 Recoveries.'
+				description: 'The first time each day that you are forced to eat food you didn’t prepare, you lose 2 Recoveries.'
 			})
 		]
 	};
@@ -1119,7 +1119,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static meddlingButler: Complication = {
 		id: 'comp-meddlingButler',
 		name: 'Meddling Butler',
-		description: 'You’re not sure what you did to deserve it, but for some reason your family saddled you with an old and trusted - but irritating - family servant. They’re supremely competent, of course, but they sometimes seem to forget who’s in charge.',
+		description: 'You’re not sure what you did to deserve it, but for some reason your family saddled you with an old, trusted, and extremely irritating family servant. They’re supremely competent, of course, but they sometimes seem to forget who’s in charge.',
 		features: [
 			FactoryLogic.feature.createCompanion({
 				id: 'comp-meddlingButler-b',
@@ -1136,11 +1136,16 @@ You can’t take this complication if you can’t be made dazed.`,
 	static medium: Complication = {
 		id: 'comp-medium',
 		name: 'Medium',
-		description: 'You can see ghosts and spirits that others just don’t sense. They’re constantly whispering unsettling secrets in your ear - when they’re not trying to kill you.',
+		description: 'You can perceive ghosts and spirits that others sense. These supernatural entities constantly whisper unsettling secrets in your mind - when they’re not trying to kill you.',
 		features: [
+			FactoryLogic.feature.create({
+				id: 'comp-medium-b',
+				name: 'Medium Benefit and Drawback',
+				description: 'Incorporeal undead within 10 squares of you can communicate telepathically with you.  Additionally, you have the Contact Spirits ability.'
+			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-					id: 'comp-medium-b',
+					id: 'comp-medium-b-ability',
 					name: 'Contact Spirits',
 					type: FactoryLogic.type.createMain(),
 					keywords: [ AbilityKeyword.Magic ],
@@ -1151,17 +1156,13 @@ You can’t take this complication if you can’t be made dazed.`,
 							FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Intuition, Characteristic.Presence ],
 								tier1: 'You take corruption damage equal to 5 + your level.',
-								tier2: 'A spirit speaks to you. You learn how it died, and you can ask it one question, which it can answer truthfully or untruthfully. It knows anything it knew in life, and it is aware of the events that took place in this location since its death. You can’t use this ability again until you have earned 1 Victory.',
-								tier3: 'As 12-16, but you can ask 3 questions.'
+								tier2: 'The spirit of anyone you know of who has died speaks to you, provided they are on the same world as you. You learn how they died and can ask them one question, which they can answer truthfully or untruthfully. The spirit knows everything they knew in life, and is aware of events that took place in their immediate surroundings since their death',
+								tier3: 'As tier 2, but you can ask 3 questions.'
 							})
-						)
+						),
+						FactoryLogic.createAbilitySectionText('Effect: If any sapient creatures have died nearby within the last 24 hours, you have a double bane on the power roll for this ability if any of those creatures were hostile to you, or a double edge if any of them were friendly to you. When you use this ability, you can’t do so again until you earn 1 or more Victories.')
 					]
 				})
-			}),
-			FactoryLogic.feature.create({
-				id: 'comp-medium-d',
-				name: 'Medium Drawback',
-				description: 'If any sapient creatures have died nearby within 24 hours, you gain a double bane on the power roll if any of the creatures were hostile to you, or a double edge if they were friendly to you. You can’t use this ability again until have earned at least 1 Victory.'
 			})
 		]
 	};

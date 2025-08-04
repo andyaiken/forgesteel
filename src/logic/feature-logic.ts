@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTitleChoiceData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
@@ -357,7 +357,7 @@ export class FeatureLogic {
 					valuePerLevel: 0,
 					valuePerEchelon: 0,
 					damageType: DamageType.Damage
-				};
+				} as FeatureAbilityDamageData;
 				break;
 			case FeatureType.AbilityDistance:
 				data = {
@@ -367,7 +367,7 @@ export class FeatureLogic {
 					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
 					valuePerEchelon: 0
-				};
+				} as FeatureAbilityDistanceData;
 				break;
 			case FeatureType.AddOn:
 				data = {
@@ -451,13 +451,13 @@ export class FeatureLogic {
 				data = {
 					type: 'companion',
 					selected: null
-				};
+				} as FeatureCompanionData;
 				break;
 			}
 			case FeatureType.Follower:
 				data = {
 					follower: FactoryLogic.createFollower()
-				};
+				} as FeatureFollowerData;
 				break;
 			case FeatureType.HeroicResource:
 				data = {
@@ -466,13 +466,13 @@ export class FeatureLogic {
 					details: '',
 					canBeNegative: false,
 					value: 0
-				};
+				} as FeatureHeroicResourceData;
 				break;
 			case FeatureType.HeroicResourceGain:
 				data = {
 					trigger: '',
 					value: '1'
-				};
+				} as FeatureHeroicResourceGainData;
 				break;
 			case FeatureType.ItemChoice:
 				data = {
@@ -525,7 +525,7 @@ export class FeatureLogic {
 			case FeatureType.PackageContent:
 				data = {
 					tag: ''
-				} as FeaturePackageData;
+				} as FeaturePackageContentData;
 				break;
 			case FeatureType.Perk:
 				data = {
@@ -581,14 +581,14 @@ export class FeatureLogic {
 						name: '',
 						description: ''
 					})
-				};
+				} as FeatureTaggedFeatureData;
 				break;
 			case FeatureType.TaggedFeatureChoice:
 				data = {
 					tag: '',
 					count: 1,
 					selected: []
-				};
+				} as FeatureTaggedFeatureChoiceData;
 				break;
 			case FeatureType.TitleChoice:
 				data = {

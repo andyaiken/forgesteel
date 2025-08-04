@@ -94,11 +94,9 @@ export const CreatePanel = (props: Props) => {
 
 		return (
 			<div className='create-panel'>
-				<Flex align='center' justify='center' gap={10}>
-					<Button type='primary' icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
-					<div className='ds-text'>or</div>
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
 					<Upload
-						style={{ width: '100%' }}
 						accept={`.drawsteel-${props.currentTab.toLowerCase()},.ds-${props.currentTab.toLowerCase()}`}
 						showUploadList={false}
 						beforeUpload={file => {
@@ -116,9 +114,9 @@ export const CreatePanel = (props: Props) => {
 							return false;
 						}}
 					>
-						<Button icon={<DownloadOutlined />}>Import</Button>
+						<Button block={true} icon={<DownloadOutlined />}>Import</Button>
 					</Upload>
-				</Flex>
+				</Space>
 				{
 					props.currentTab === 'encounter' ?
 						<div>

@@ -1626,7 +1626,7 @@ export const LibraryListPage = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={(
-								<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<div style={{ display: 'flex', flexDirection: 'column', minWidth: '150px' }}>
 									{
 										sourcebookOptions.length > 1 ?
 											<div>
@@ -1652,9 +1652,8 @@ export const LibraryListPage = (props: Props) => {
 											: null
 									}
 									{sourcebookOptions.length > 1 ? <Divider /> : null}
-									<Space>
+									<Space direction='vertical' style={{ width: '100%' }}>
 										<Button type='primary' block={true} icon={<PlusOutlined />} onClick={createElement}>Create</Button>
-										<div className='ds-text'>or</div>
 										<Upload
 											style={{ width: '100%' }}
 											accept={`.drawsteel-${currentTab.toLowerCase()},.ds-${currentTab.toLowerCase()}`}

@@ -42,6 +42,7 @@
     * Show 'should be N squares' for terrain
     * Ability to add new terrain objects
 * Tactical map
+  * Show altitude on minis
   * Minis should not be allowed to walk through walls
   * Add terrain minis / overlays
   * Show distance between selected mini and hovered square

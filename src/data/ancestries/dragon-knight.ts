@@ -13,7 +13,7 @@ export const dragonKnight: Ancestry = {
 	features: [
 		FactoryLogic.feature.createChoice({
 			id: 'dragon-knight-feature-1',
-			name: 'Signature Trait: Wyrmplate',
+			name: 'Wyrmplate',
 			description: 'Your hardened scales grant you damage immunity equal to your level to one of the following damage types: acid, cold, corruption, fire, lightning, or poison. You can change your damage immunity type when you finish a respite.',
 			options: [
 				{

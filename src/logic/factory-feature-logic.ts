@@ -211,7 +211,7 @@ export class FactoryFeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || 'Condition Immunity',
-			description: data.description || data.conditions.join(', '),
+			description: data.description || '',
 			type: FeatureType.ConditionImmunity,
 			data: {
 				conditions: data.conditions

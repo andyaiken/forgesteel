@@ -77,7 +77,7 @@ export const causticAlchemy: SubClass = {
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionText('You attach a small bomb to a creature. If you are hidden from the creature, they don’t notice the bomb and you remain hidden. The creature otherwise notices the bomb and can disarm and remove it as a main action. If they don’t, at the end of your next turn, the bomb detonates. When the bomb detonates, you make a power roll targeting each enemy within 2 squares of it.'),
@@ -163,7 +163,7 @@ Additionally, your Defensive Roll ability now allows you to shift up to 5 square
 									type: FactoryLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
-									target: '3 creatures',
+									target: 'Three creatures',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionText(`
@@ -186,7 +186,7 @@ A creature who drinks the potion can spend up to 2 Recoveries, and has acid immu
 									distance: [
 										FactoryLogic.distance.createRanged(10)
 									],
-									target: '3 creatures',
+									target: 'Three creatures',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionText(`
@@ -265,7 +265,7 @@ For each combat round that has passed since this ability was last used in the cu
 									distance: [
 										FactoryLogic.distance.createRanged(10)
 									],
-									target: '1 creature or object',
+									target: 'One creature or object',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionText('Each enemy within 3 squares of the target who is not currently targeted by this ability also becomes targeted by this ability. This effect continues until there are no more available targets. The ability deals acid, fire, or poison damage (your choice).'),
@@ -292,7 +292,7 @@ For each combat round that has passed since this ability was last used in the cu
 										FactoryLogic.distance.createMelee(),
 										FactoryLogic.distance.createRanged(10)
 									 ],
-									target: '1 creature or object',
+									target: 'One creature or object',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

@@ -1,7 +1,5 @@
 # Development Plans
 
-You can go prone as a free maneuver
-
 ### Heroes
 
 * Automatic update of library resources when there is a newer version
@@ -44,6 +42,7 @@ You can go prone as a free maneuver
     * Show 'should be N squares' for terrain
     * Ability to add new terrain objects
 * Tactical map
+  * Show altitude on minis
   * Minis should not be allowed to walk through walls
   * Add terrain minis / overlays
   * Show distance between selected mini and hovered square

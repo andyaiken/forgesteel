@@ -13,9 +13,9 @@ export const conduit: HeroClass = {
 	id: 'class-conduit',
 	name: 'Conduit',
 	description: `
-The power of the gods flows through you! As a vessel for divine magic, you don’t just keep your allies in the fight. You make those allies more effective, even as you rain divine energy down upon your foes. While the deity or saint you serve might have other faithful and clergy, you are special among worshippers, receiving your abilities from the highest source.
+The power of the gods flows through you! As a vessel for divine power, you don’t just keep your allies in the fight. You make those allies more effective, even as you rain divine energy down upon your foes. Though the deity or saint you serve might have other faithful and clergy, you are special among worshippers, receiving your abilities from the highest source.
 
-As a conduit, you heal and buff your allies, and debuff your foes while smiting them with divine magic. The spark of divinity within you shines, aweing your enemies and granting you increased empathy.`,
+As a conduit, you heal and buff your allies, and debuff your foes while smiting them with divine magic. The spark of divinity within you shines, filling your enemies with awe and making you more worldly and aware.`,
 	subclassName: '',
 	subclassCount: 0,
 	primaryCharacteristicsOptions: [
@@ -30,7 +30,7 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					id: 'conduit-stamina',
 					field: FeatureField.Stamina,
 					value: 18,
-					valuePerLevel: 9
+					valuePerLevel: 6
 				}),
 				FactoryLogic.feature.createBonus({
 					id: 'conduit-recoveries',
@@ -60,9 +60,7 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					id: 'conduit-1-3b',
 					name: 'Prayer',
 					description: `
-You can gain more piety by praying to the gods - but beware! Doing so can easily draw their ire, as the gods hate to be annoyed.
-
-When you roll to gain piety at the start of your turn, you can pray to gain the following additional effects (no action required):
+You can gain more piety by praying to the gods—but beware! Doing so can easily draw their ire, as the gods hate to be annoyed. Before you roll to gain piety at the start of your turn, you can pray (no action required). If you do, your roll gains the following additional effects:
 
 * If the roll is a 1, you gain 1 additional piety but anger the gods! You take psychic damage equal to 1d6 + your level, which can’t be reduced in any way.
 * If the roll is a 2, you gain 1 additional piety.
@@ -71,6 +69,7 @@ When you roll to gain piety at the start of your turn, you can pray to gain the 
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'conduit-1-4',
+					name: '1st-Level Domain Feature',
 					level: 1
 				}),
 				FactoryLogic.feature.createAbility({
@@ -81,7 +80,7 @@ When you roll to gain piety at the start of your turn, you can pray to gain the 
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'Self or 1 ally',
+						target: 'Self or one ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target can spend a Recovery.'),
 							FactoryLogic.createAbilitySectionField({
@@ -106,7 +105,7 @@ For each piety spent, you can choose one of the following enhancements:
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a ranged free strike' ] }),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Intuition ],
@@ -128,16 +127,16 @@ For each piety spent, you can choose one of the following enhancements:
 									id: 'conduit-1-7a',
 									name: 'Word of Guidance',
 									description: 'You invigorate an attacking ally with divine energy.',
-									type: FactoryLogic.type.createTrigger('The target makes an ability power roll for an ability that deals damage.'),
+									type: FactoryLogic.type.createTrigger('The target makes an ability roll for a damage-dealing ability.'),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
-									target: '1 ally',
+									target: 'One ally',
 									sections: [
 										FactoryLogic.createAbilitySectionText('The power roll gains an edge.'),
 										FactoryLogic.createAbilitySectionField({
 											name: 'Spend',
 											value: 1,
-											effect: 'The power roll gains a double edge.'
+											effect: 'The power roll has a double edge.'
 										})
 									]
 								})
@@ -150,16 +149,16 @@ For each piety spent, you can choose one of the following enhancements:
 									id: 'conduit-1-7b',
 									name: 'Word of Judgment',
 									description: 'Your holy word saps an attacking enemy’s strength.',
-									type: FactoryLogic.type.createTrigger('The target takes damage from an ability that requires a power roll.'),
+									type: FactoryLogic.type.createTrigger('The target would take damage from an ability that uses a power roll.'),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
-									target: '1 ally',
+									target: 'One ally',
 									sections: [
-										FactoryLogic.createAbilitySectionText('The power roll gains a bane against the target.'),
+										FactoryLogic.createAbilitySectionText('The power roll takes a bane against the target.'),
 										FactoryLogic.createAbilitySectionField({
 											name: 'Spend',
 											value: 1,
-											effect: 'The power roll gains a double bane against the target.'
+											effect: 'The power roll has a double bane against the target.'
 										})
 									]
 								})
@@ -186,7 +185,7 @@ For each piety spent, you can choose one of the following enhancements:
 							feature: FactoryLogic.feature.createAbilityDistance({
 								id: 'conduit-1-8b',
 								name: 'Prayer of Distance',
-								description: 'Your god blesses you with the ability to stretch your divine magic further.',
+								description: 'Your god blesses you with the ability to stretch your divine magic farther.',
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 								value: 2
 							}),
@@ -195,26 +194,6 @@ For each piety spent, you can choose one of the following enhancements:
 						{
 							feature: FactoryLogic.feature.createMultiple({
 								id: 'conduit-1-8c',
-								name: 'Prayer of Speed',
-								description: 'Your god blesses your flesh and infuses it with divine quickness.',
-								features: [
-									FactoryLogic.feature.createBonus({
-										id: 'conduit-1-8ca',
-										field: FeatureField.Speed,
-										value: 1
-									}),
-									FactoryLogic.feature.createBonus({
-										id: 'conduit-1-8cb',
-										field: FeatureField.Disengage,
-										value: 1
-									})
-								]
-							}),
-							value: 1
-						},
-						{
-							feature: FactoryLogic.feature.createMultiple({
-								id: 'conduit-1-8d',
 								name: 'Prayer of Soldier\'s Skill',
 								description: 'Your god gives your mind the training of a soldier. You can wear light armor and wield light weapons effectively, even though you don’t have a kit. You can use light armor treasures and light weapon treasures. If you have a kit, you can’t take this blessing.',
 								features: [
@@ -232,6 +211,26 @@ For each piety spent, you can choose one of the following enhancements:
 										id: 'conduit-1-8dc',
 										weapons: [ KitWeapon.Light ],
 										armor: [ KitArmor.Light ]
+									})
+								]
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createMultiple({
+								id: 'conduit-1-8d',
+								name: 'Prayer of Speed',
+								description: 'Your god blesses your flesh and infuses it with divine quickness.',
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'conduit-1-8ca',
+										field: FeatureField.Speed,
+										value: 1
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'conduit-1-8cb',
+										field: FeatureField.Disengage,
+										value: 1
 									})
 								]
 							}),
@@ -283,7 +282,7 @@ For each piety spent, you can choose one of the following enhancements:
 							feature: FactoryLogic.feature.create({
 								id: 'conduit-1-9c',
 								name: 'Sanctuary Ward',
-								description: 'In response to a foe’s aggression, the gods protect you. After another creature damages you, that creature can’t target you with a strike until you harm them or one of their allies, or until the end of their next turn.'
+								description: 'In response to a foe’s aggression, your god protects you. Whenever another creature damages you, that creature can’t target you with a strike until you harm them or one of their allies, or until the end of their next turn.'
 							}),
 							value: 1
 						},
@@ -318,7 +317,7 @@ For each piety spent, you can choose one of the following enhancements:
 				FactoryLogic.feature.create({
 					id: 'conduit-2-1',
 					name: 'The Lists of Heaven',
-					description: 'Your patron is aware of your growing influence, making it easier to get their attention and power when you heal your allies. Whenever you allow another creature to spend a Recovery, you can also spend a Recovery.'
+					description: 'Your deity is aware of your growing influence, making it easier to draw their attention and power when you heal your allies. Whenever you allow another creature to spend a Recovery, you can also spend a Recovery.'
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'conduit-2-2',
@@ -326,10 +325,13 @@ For each piety spent, you can choose one of the following enhancements:
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'conduit-2-3',
+					name: '2nd-Level Domain Feature',
+					description: 'You gain the 1st-level domain feature and ability to choose a skill for the domain you selected at 1st level but whose domain feature you didn’t take at that level.',
 					level: 1
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'conduit-2-4',
+					name: '2nd-Level Domain Ability',
 					level: 2
 				})
 			]
@@ -341,13 +343,293 @@ For each piety spent, you can choose one of the following enhancements:
 					id: 'conduit-3-1',
 					name: 'Minor Miracle',
 					description: `
-As a respite activity, you perform a religious ritual and beseech the gods to restore a dead creature to life. You must have at least half the creature’s remains, and they must have died within the last 24 hours from an effect that isn’t age related. The creature’s soul must be willing to return to life for the ritual to work. If they are not willing, you instinctively understand that as you start the respite activity and can cease it immediately.
+As a respite activity, you can perform a religious ritual and beseech the gods to restore a dead creature to life. You must have at least half the creature’s remains, and they must have died within the last 24 hours from an effect that isn’t age related. The creature’s soul must be willing to return to life for the ritual to work. If they are not willing, you instinctively understand that as you start the respite activity and can cease it immediately.
 
 A creature with a willing soul returns to life at the end of the respite with full Stamina and half their Recoveries. You regain only half your Recoveries at the end of the respite.`
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'conduit-3-2',
 					cost: 7
+				})
+			]
+		},
+		{
+			level: 4,
+			features: [
+				FactoryLogic.feature.create({
+					id: 'conduit-4-1',
+					name: 'Blessed Domain',
+					description: 'Whenever you gain piety from a domain feature, you gain 1 additional piety.'
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'conduit-4-1a',
+					name: 'Characteristic Increase: Intuition',
+					description: 'Your Intuition score increases to 3.',
+					characteristic:Characteristic.Intuition,
+					value: 1
+				}),
+				FactoryLogic.feature.createChoice({
+					id: 'conduit-4-1b',
+					name: 'Characteristic Increase: Additional',
+					description: 'Additionally, you can increase one of your characteristic scores by 1, to a maximum of 3.',
+					options: [
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'conduit-4-1b-1',
+								characteristic: Characteristic.Agility,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'conduit-4-1b-2',
+								characteristic: Characteristic.Might,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'conduit-4-1b-3',
+								characteristic: Characteristic.Reason,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'conduit-4-1b-4',
+								characteristic: Characteristic.Presence,
+								value: 1
+							}),
+							value: 1
+						}
+					]
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'conduit-4-2'
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'conduit-4-3',
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
+					count: 1
+				}),
+				FactoryLogic.feature.createDomainFeature({
+					id: 'conduit-4-4',
+					name: '4th-Level Domain Feature',
+					level: 4
+				})
+			]
+		},
+		{
+			level: 5,
+			features: [
+				FactoryLogic.feature.createDomainFeature({
+					id: 'conduit-5-1',
+					name: '5th-Level Domain Feature',
+					description: 'You gain the 4th-level domain feature for the domain whose feature you didn’t select at that level.',
+					level: 4
+				}),
+				FactoryLogic.feature.createClassAbilityChoice({
+					id: 'conduit-5-2',
+					cost: 9
+				})
+			]
+		},
+		{
+			level: 6,
+			features: [
+				FactoryLogic.feature.create({
+					id: 'conduit-6-1',
+					name: 'Burgeoning Saint',
+					description: `
+You are infused with the power your deity reserves for their most worthy instruments. You have the following benefits:
+
+* You gain an edge on Presence tests made to interact with other creatures.
+* Whenever you deal damage to an enemy, you can spend a Recovery.
+* You have corruption immunity 10 or holy immunity 10 (your choice).
+* Your clothing and equipment changes in a way that reflects your status as your deity’s chosen champion, such as ordinary robes turning into gold vestments or a simple dagger becoming a wicked blade with intricate etching.`
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'conduit-6-2',
+					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
+				}),
+				FactoryLogic.feature.createDomainFeature({
+					id: 'conduit-6-3',
+					name: '6th-Level Domain Ability',
+					level: 6
+				})
+			]
+		},
+		{
+			level: 7,
+			features: [
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'conduit-7-1a',
+					characteristic: Characteristic.Might,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'conduit-7-1b',
+					characteristic: Characteristic.Agility,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'conduit-7-1c',
+					characteristic: Characteristic.Reason,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'conduit-7-1d',
+					characteristic: Characteristic.Intuition,
+					value: 1
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'conduit-7-1e',
+					characteristic: Characteristic.Presence,
+					value: 1
+				}),
+				FactoryLogic.feature.create({
+					id: 'conduit-7-2',
+					name: 'Faithful’s Reward',
+					description: 'When you roll for piety at the start of your turn in combat, you gain 1d3 + 1 piety.'
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'conduit-7-3',
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+				}),
+				FactoryLogic.feature.createDomainFeature({
+					id: 'conduit-7-4',
+					name: '7th-Level Domain Feature',
+					level: 7
+				})
+			]
+		},
+		{
+			level: 8,
+			features: [
+				FactoryLogic.feature.createPerk({
+					id: 'conduit-8-1'
+				}),
+				FactoryLogic.feature.createDomainFeature({
+					id: 'conduit-8-2',
+					name: '8th-Level Domain Feature',
+					description: 'You gain the 7th-level domain feature for the domain whose feature you didn’t select at that level.',
+					level: 7
+				}),
+				FactoryLogic.feature.createClassAbilityChoice({
+					id: 'conduit-8-3',
+					cost: 11
+				})
+			]
+		},
+		{
+			level: 9,
+			features: [
+				FactoryLogic.feature.create({
+					id: 'conduit-9-1',
+					name: 'Faith’s Sword',
+					description: 'Each time you finish a respite, you can choose a willing hero ally who finished the respite with you. That ally gains the benefits of your Burgeoning Saint feature until you finish another respite. Additionally, you can spend piety as a free maneuver to give the hero 1 of their Heroic Resource for every 2 piety spent.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'conduit-9-2',
+					name: 'Ordained',
+					description: 'Your god elevates the power flowing through you. Your characteristic scores are treated as 1 higher for the purpose of resisting potencies. Additionally, while you have 5 or more Victories, you speak with the voice of your deity. You have a double edge on Presence tests made to influence other creatures.'
+				}),
+				FactoryLogic.feature.createDomainFeature({
+					id: 'conduit-9-3',
+					name: '9th-Level Domain Ability',
+					level: 9
+				})
+			]
+		},
+		{
+			level: 10,
+			features: [
+				FactoryLogic.feature.create({
+					id: 'conduit-10-1',
+					name: 'Avatar',
+					description: `
+You are now an avatar of your god! When you use your Prayer feature, you can be affected by up to three prayers at once, and you can change all those prayers and your ward as a respite activity. You can also use a maneuver to activate one of your domain effects without needing to pray.
+
+Additionally, whenever you take a respite, you can open a portal to rest in the presence of your deity and bring along any allies. When you do, you can ask your deity three questions, which the Director must answer honestly if your deity knows the answers (though they might answer cryptically or incompletely). When you finish your respite, you and your allies can appear at any location in the timescape where someone worships your deity.`
+				}),
+				FactoryLogic.feature.createCharacteristicBonus({
+					id: 'conduit-10-2a',
+					name: 'Characteristic Increase: Intuition',
+					description: 'Your Intuition score increases to 5.',
+					characteristic:Characteristic.Intuition,
+					value: 1
+				}),
+				FactoryLogic.feature.createChoice({
+					id: 'conduit-10-2b',
+					name: 'Characteristic Increase: Additional',
+					description: 'Additionally, you can increase one of your characteristic scores by 1, to a maximum of 5.',
+					options: [
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'shadow-10-1b-1',
+								characteristic: Characteristic.Might,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'shadow-10-1b-2',
+								characteristic: Characteristic.Agility,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'shadow-10-1b-3',
+								characteristic: Characteristic.Reason,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'shadow-10-1b-4',
+								characteristic: Characteristic.Presence,
+								value: 1
+							}),
+							value: 1
+						}
+					]
+				}),
+				FactoryLogic.feature.createHeroicResource({
+					id: 'conduit-10-3',
+					name: 'Divine Power',
+					type: 'epic',
+					gains: [
+						{
+							trigger: 'Finish a respite',
+							value: 'XP gained'
+						}
+					],
+					description: `
+You can spend divine power on your abilities as if it were piety.
+
+Additionally, you can spend divine power as if it were piety to use any conduit abilities you don’t have, as the gods answer your prayers with temporary and unique gifts. If you use a conduit ability you don’t have that usually costs no piety, you must spend 1 divine power to use it.
+
+Divine power remains until you spend it.`
+				}),
+				FactoryLogic.feature.create({
+					id: 'conduit-10-4',
+					name: 'Most Pious',
+					description: 'When you roll for piety at the start of your turn in combat and you pray, you gain 1 additional piety.'
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'conduit-10-5',
+					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'conduit-10-6',
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 				})
 			]
 		}
@@ -360,7 +642,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -371,7 +653,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 						tier3: '8 + I holy damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('An ally of your choice within distance gains a number of surges equal to the tier rolled.')
+				FactoryLogic.createAbilitySectionText('One ally within distance gains a number of surges equal to the tier outcome of your power roll.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -381,7 +663,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -402,7 +684,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -441,7 +723,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -452,7 +734,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 						tier3: '6 + I corruption damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('You or one ally within distance can impose a bane on one power roll made against them before the end of their next turn.')
+				FactoryLogic.createAbilitySectionText('Choose yourself or one ally within distance. That character can impose a bane on one power roll made against them before the end of their next turn.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -462,7 +744,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -480,7 +762,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -501,7 +783,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -530,7 +812,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 						tier3: '5 sonic damage; push 3'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('You can push each willing ally in the area. This forced movement ignores any ally’s stability.')
+				FactoryLogic.createAbilitySectionText('You can push each willing ally in the area the same distance, ignoring stability.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -543,7 +825,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			target: 'Special',
 			cost: 3,
 			sections: [
-				FactoryLogic.createAbilitySectionText('You summon a spirit of size 2 who can’t be harmed, and who appears in an unoccupied space within distance. The spirit lasts until the end of your next turn. You and your allies can move through the spirit’s space, but enemies can’t. An enemy who moves within 2 squares of the spirit for the first time in a round or starts their turn there takes holy damage equal to your Intuition score.')
+				FactoryLogic.createAbilitySectionText('You summon a spirit of size 2 who can’t be harmed, and who appears in an unoccupied space within distance. The spirit lasts until the end of your next turn. You and your allies can move through the spirit’s space, but enemies can’t. Any enemy who moves within 2 squares of the spirit for the first time in a combat round or starts their turn there takes holy damage equal to your Intuition score.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -553,7 +835,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -571,7 +853,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -582,7 +864,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 						tier3: '9 + I lightning damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('The first time on a turn that the target deals damage to another creature, the target of this ability takes another 1d10 lightning damage (save ends).')
+				FactoryLogic.createAbilitySectionText('The first time on a turn that the target deals damage to another creature, the target of this ability takes 1d10 lightning damage (save ends).')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -592,7 +874,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -610,7 +892,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -628,9 +910,10 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: 'Self and up to three allies',
+			target: 'Four allies',
 			cost: 5,
 			sections: [
+				FactoryLogic.createAbilitySectionText('You can target yourself instead of one ally with this ability.'),
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Intuition ],
 					tier1: 'The target gains 5 temporary Stamina',
@@ -649,7 +932,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			target: 'Each ally in the area',
 			cost: 5,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Each target can spend a Recovery. When you use this ability, each target can use a free triggered action to end one effect that is ended by a saving throw or that ends at the end of their turn, or to stand up if prone.')
+				FactoryLogic.createAbilitySectionText('Each target can spend a Recovery. Additionally, each target can use a free triggered action to end one effect on them that is ended by a saving throw or that ends at the end of their turn, or to stand up if prone.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -668,7 +951,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 					tier2: '9 psychic damage; I < [average], frightened (save ends)',
 					tier3: '13 psychic damage; I < [strong], frightened (save ends)'
 				})),
-				FactoryLogic.createAbilitySectionText('The targets are frightened of you or a creature you choose within 10 squares.')
+				FactoryLogic.createAbilitySectionText('Each target is frightened of you or a creature you choose within distance.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -678,10 +961,10 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 ally',
+			target: 'One ally',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('The target gains 20 Temporary Stamina and three surges.')
+				FactoryLogic.createAbilitySectionText('The target gains 20 temporary Stamina and 3 surges.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -691,7 +974,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 enemy',
+			target: 'One enemy',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -700,13 +983,13 @@ A creature with a willing soul returns to life at the end of the respite with fu
 					tier2: '10 + I corruption damage',
 					tier3: '15 + I corruption damage'
 				})),
-				FactoryLogic.createAbilitySectionText('One ally within distance can spend any number of Recoveries (no action required).')
+				FactoryLogic.createAbilitySectionText('One ally within distance can spend any number of Recoveries.')
 			]
 		}),
 		FactoryLogic.createAbility({
 			id: 'conduit-ability-20',
 			name: 'Words of Wrath and Grace',
-			description: 'Your saint grants your enemies a vision of whatever they most fear.',
+			description: 'Your saint grants your enemies a vision of pain and fills your allies with healing energy.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
@@ -722,6 +1005,131 @@ A creature with a willing soul returns to life at the end of the respite with fu
 					})
 				),
 				FactoryLogic.createAbilitySectionText('Each ally in the area can spend a Recovery.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'conduit-ability-21',
+			name: 'Beacon of Grace',
+			description: 'You ignite a foe with holy radiance, rewarding allies who attack them.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Intuition ],
+						tier1: '8 + I holy damage',
+						tier2: '13 + I holy damage',
+						tier3: '17 + I holy damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter, whenever you or any ally damages the target using an ability, that creature can spend a Recovery. If the target is reduced to 0 Stamina before the end of the encounter, you can use a free triggered action to move this effect to another creature within distance.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'conduit-ability-22',
+			name: 'Penance',
+			description: '“If you won’t kneel, the gods will make you.”',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
+			target: 'Each enemy in the area',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+					characteristic: [ Characteristic.Intuition ],
+					tier1: '4 corruption damage; I < [weak], prone and can’t stand (save ends)',
+					tier2: '7 corruption damage; I < [average], prone and can’t stand (save ends)',
+					tier3: '11 corruption damage; I < [strong], prone and can’t stand (save ends)'
+				}))
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'conduit-ability-23',
+			name: 'Sanctuary',
+			description: 'You send yourself or an ally to a divine manifold to instantaneously regain health.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'Self or one ally',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionText('The target is removed from the encounter map until the start of their next turn and can spend any number of Recoveries. At the start of their turn, the target reappears in the space they left or the nearest unoccupied space of their choice.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'conduit-ability-24',
+			name: 'Vessel of Retribution',
+			description: 'You infuse yourself or an ally with the retributive energy of the gods, waiting to be unleashed.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'Self or one ally',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionText('The first time the target is dying or winded before the end of the encounter, each enemy within 5 squares of them takes 15 holy damage.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'conduit-ability-25',
+			name: 'Arise!',
+			description: 'Your deity rewards you or an ally on the verge of defeat with a miracle burst of strength and resolve.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'Self or one ally',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionText('The target can spend any number of Recoveries, can end any effects on them that are ended by a saving throw or that end at the end of their turn, and can stand up if they are prone. Additionally, at the start of each of their turns until the end of the encounter or until they are dying, the target gains 3 surges.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'conduit-ability-26',
+			name: 'Blessing of Steel',
+			description: 'A protective aura defends your allies from harm.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 5 }) ],
+			target: 'Self and each ally in the area',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter, any ability roll made against a target takes a bane and each target has damage immunity 5.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'conduit-ability-27',
+			name: 'Blessing of the Blade',
+			description: '“The power of the gods is within you, friends. Allow me to unleash it.”',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 5 }) ],
+			target: 'Self and each ally in the area',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionText('At the end of each of your turns until the end of the encounter or until you are dying, each target gains 3 surges.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'conduit-ability-28',
+			name: 'Drag the Unworthy',
+			description: 'You conjure an angel who moves a foe and heals your allies.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature or object',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Intuition ],
+						tier1: '9 + I holy damage, slide 3',
+						tier2: '13 + I holy damage, slide 4',
+						tier3: '17 + I holy damage, slide 6'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Each ally the target comes adjacent to during the forced movement can spend a Recovery.')
 			]
 		})
 	],

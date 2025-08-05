@@ -5,13 +5,13 @@ import { Characteristic } from '../../../../../enums/characteristic';
 import { ClassPanel } from '../../../../panels/elements/class-panel/class-panel';
 import { Collections } from '../../../../../utils/collections';
 import { Element } from '../../../../../models/element';
-import { Empty } from '../../../../controls/empty/empty';
 import { EmptyMessage } from '../empty-message/empty-message';
 import { Expander } from '../../../../controls/expander/expander';
 import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '../../../../../models/feature';
 import { FeatureLogic } from '../../../../../logic/feature-logic';
 import { Field } from '../../../../controls/field/field';
+import { Format } from '../../../../../utils/format';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
 import { HeroClass } from '../../../../../models/class';
@@ -48,7 +48,7 @@ interface Props {
 	setLevel: (level: number) => void;
 	selectPrimaryCharacteristics: (characteristics: Characteristic[]) => void;
 	selectCharacteristics: (array: { characteristic: Characteristic, value: number }[]) => void;
-	addSubclass: (subclassID: string) => void;
+	addSubclass: (subclass: SubClass) => void;
 	removeSubclass: (subclassID: string) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
@@ -73,6 +73,175 @@ export const ClassSection = (props: Props) => {
 	const [ selectedSubClass, setSelectedSubClass ] = useState<SubClass | null>(null);
 	const [ subclassSelectorOpen, setSubclassSelectorOpen ] = useState<boolean>(false);
 
+	const getClassOptions = (heroClass: HeroClass) => {
+		const options = {
+			level: 0,
+			choices: [] as ReactNode[],
+			completed: !HeroLogic.canLevelUp(props.hero)
+				&& (heroClass.primaryCharacteristics.length > 0)
+				&& heroClass.characteristics.some(ch => ch.value !== 0)
+				&& (heroClass.subclasses.filter(sc => sc.selected).length >= heroClass.subclassCount)
+		};
+
+		options.choices.push(
+			<SelectablePanel key='class-level'>
+				<HeaderText>Level</HeaderText>
+				<NumberSpin
+					value={heroClass.level}
+					min={1}
+					max={heroClass.featuresByLevel.length}
+					onChange={value => props.setLevel(value)}
+				/>
+				<Field label='XP' value={props.hero.state.xp} />
+				{
+					HeroLogic.canLevelUp(props.hero) ?
+						<Button
+							className='status-warning'
+							onClick={() => props.setLevel(heroClass.level + 1)}
+						>
+							Advance to level {heroClass.level + 1}
+						</Button>
+						: null
+				}
+			</SelectablePanel>
+		);
+
+		if (heroClass.primaryCharacteristicsOptions.length > 1) {
+			options.choices.push(
+				<SelectablePanel key='primary-characteristics'>
+					<HeaderText>Primary Characteristics</HeaderText>
+					<Select
+						style={{ width: '100%' }}
+						status={array === null ? 'warning' : ''}
+						placeholder='Select your primary characteristics'
+						options={heroClass.primaryCharacteristicsOptions.map(a => ({ value: a.join(', '), array: a }))}
+						optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+						value={heroClass.primaryCharacteristics && (heroClass.primaryCharacteristics.length > 0) ? heroClass.primaryCharacteristics.join(', ') : null}
+						onChange={(_text, option) => {
+							const data = option as { value: string, array: Characteristic[] };
+							props.selectPrimaryCharacteristics(data.array);
+						}}
+					/>
+				</SelectablePanel>
+			);
+		}
+
+		if (heroClass.primaryCharacteristics.length > 0) {
+			const arrays = HeroLogic.getCharacteristicArrays(heroClass.primaryCharacteristics.length);
+			options.choices.push(
+				<SelectablePanel key='characteristics'>
+					<HeaderText>Characteristics</HeaderText>
+					<Select
+						style={{ width: '100%' }}
+						status={array === null ? 'warning' : ''}
+						placeholder='Select characteristic array'
+						options={arrays.map(a => ({ value: a.join(', '), array: a }))}
+						optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+						value={array ? array.join(', ') : null}
+						onChange={(_text, option) => {
+							const data = option as { value: string, array: number[] };
+							setArray(data.array);
+							props.selectPrimaryCharacteristics(props.hero.class!.primaryCharacteristics);
+						}}
+					/>
+					{
+						array ?
+							<div>
+								<div className='characteristic-row' style={{ margin: '5px 15px', fontWeight: 600 }}>
+									<div className='characteristic-item characteristic-heading'>M</div>
+									<div className='characteristic-item characteristic-heading'>A</div>
+									<div className='characteristic-item characteristic-heading'>R</div>
+									<div className='characteristic-item characteristic-heading'>I</div>
+									<div className='characteristic-item characteristic-heading'>P</div>
+								</div>
+								<Radio.Group
+									style={{ width: '100%' }}
+									value={JSON.stringify(heroClass.characteristics)}
+									onChange={e => {
+										const array = JSON.parse(e.target.value) as { characteristic: Characteristic, value: number }[];
+										props.selectCharacteristics(array);
+									}}
+								>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											HeroLogic.calculateCharacteristicArrays(array, heroClass.primaryCharacteristics).map((array, n1) => (
+												<Radio.Button key={n1} value={JSON.stringify(array)} style={{ width: '100%' }}>
+													<div className='characteristic-row'>
+														{array.map((ch, n2) => <div key={n2} className='characteristic-item'>{ch.value}</div>)}
+													</div>
+												</Radio.Button>
+											))
+										}
+									</Space>
+								</Radio.Group>
+							</div>
+							: null
+					}
+				</SelectablePanel>
+			);
+		}
+
+		if (heroClass.subclassCount > 0) {
+			options.choices.push(
+				<SelectablePanel key='subclass'>
+					<HeaderText>{heroClass.subclassName}</HeaderText>
+					<div className='ds-text'>Choose {heroClass.subclassCount === 1 ? `${Format.startsWithVowel(heroClass.subclassName || 'subclass') ? 'an' : 'a'} ${heroClass.subclassName || 'subclass'}` : `${heroClass.subclassCount} ${heroClass.subclassName || 'subclasse'}s`}.</div>
+					{
+						heroClass.subclasses
+							.filter(sc => sc.selected)
+							.map(sc => (
+								<Flex key={sc.id} align='center'>
+									<Field
+										style={{ flex: '1 1 0' }}
+										label={sc.name}
+										value={sc.description}
+									/>
+									<Flex vertical={true}>
+										<Button
+											style={{ flex: '0 0 auto' }}
+											type='text'
+											title='Select'
+											icon={<InfoCircleOutlined />}
+											onClick={() => setSelectedSubClass(sc)}
+										/>
+										<Button
+											style={{ flex: '0 0 auto' }}
+											type='text'
+											title='Remove'
+											icon={<CloseOutlined />}
+											onClick={() => props.removeSubclass(sc.id)}
+										/>
+									</Flex>
+								</Flex>
+							))
+					}
+					{
+						heroClass.subclasses.filter(sc => sc.selected).length < heroClass.subclassCount ?
+							<Button className='status-warning' block={true} onClick={() => setSubclassSelectorOpen(true)}>
+								Choose {Format.startsWithVowel(heroClass.subclassName || 'subclass') ? 'an' : 'a'} {heroClass.subclassName || 'subclass'}
+							</Button>
+							: null
+					}
+					<Drawer open={subclassSelectorOpen} onClose={() => setSubclassSelectorOpen(false)} closeIcon={null} width='500px'>
+						<SubClassSelectModal
+							subClasses={heroClass.subclasses.filter(sc => !sc.selected)}
+							classID={heroClass.id}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							onSelect={sc => {
+								setSubclassSelectorOpen(false);
+								props.addSubclass(sc);
+							}}
+							onClose={() => setSubclassSelectorOpen(false)}
+						/>
+					</Drawer>
+				</SelectablePanel>
+			);
+		}
+
+		return options;
+	};
+
 	try {
 		const classes = SourcebookLogic.getClasses(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = classes.map(c => (
@@ -84,182 +253,7 @@ export const ClassSection = (props: Props) => {
 		const choicesByLevel: { level: number, choices: ReactNode[], completed: boolean }[] = [];
 
 		if (props.hero.class) {
-			//#region Level 0 (level, characteristics, subclass)
-
-			const level0 = {
-				level: 0,
-				choices: [] as ReactNode[],
-				completed: !HeroLogic.canLevelUp(props.hero)
-					&& (props.hero.class.primaryCharacteristics.length > 0)
-					&& props.hero.class.characteristics.some(ch => ch.value !== 0)
-					&& (props.hero.class.subclasses.filter(sc => sc.selected).length >= props.hero.class.subclassCount)
-			};
-
-			level0.choices.push(
-				<SelectablePanel key='class-level'>
-					<HeaderText>Level</HeaderText>
-					<NumberSpin
-						value={props.hero.class.level}
-						min={1}
-						max={props.hero.class.featuresByLevel.length}
-						onChange={value => props.setLevel(value)}
-					/>
-					<Field label='XP' value={props.hero.state.xp} />
-					{
-						HeroLogic.canLevelUp(props.hero) ?
-							<Button
-								className='status-warning'
-								onClick={() => props.setLevel(props.hero.class!.level + 1)}
-							>
-								Advance to level {props.hero.class.level + 1}
-							</Button>
-							: null
-					}
-				</SelectablePanel>
-			);
-
-			if (props.hero.class.primaryCharacteristicsOptions.length > 1) {
-				level0.choices.push(
-					<SelectablePanel key='primary-characteristics'>
-						<HeaderText>Primary Characteristics</HeaderText>
-						<Select
-							style={{ width: '100%' }}
-							status={array === null ? 'warning' : ''}
-							placeholder='Select your primary characteristics'
-							options={props.hero.class.primaryCharacteristicsOptions.map(a => ({ value: a.join(', '), array: a }))}
-							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							value={props.hero.class.primaryCharacteristics && (props.hero.class.primaryCharacteristics.length > 0) ? props.hero.class.primaryCharacteristics.join(', ') : null}
-							onChange={(_text, option) => {
-								const data = option as { value: string, array: Characteristic[] };
-								props.selectPrimaryCharacteristics(data.array);
-							}}
-						/>
-					</SelectablePanel>
-				);
-			}
-
-			if (props.hero.class.primaryCharacteristics.length > 0) {
-				const arrays = HeroLogic.getCharacteristicArrays(props.hero.class.primaryCharacteristics.length);
-				level0.choices.push(
-					<SelectablePanel key='characteristics'>
-						<HeaderText>Characteristics</HeaderText>
-						<Select
-							style={{ width: '100%' }}
-							status={array === null ? 'warning' : ''}
-							placeholder='Select characteristic array'
-							options={arrays.map(a => ({ value: a.join(', '), array: a }))}
-							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							value={array ? array.join(', ') : null}
-							onChange={(_text, option) => {
-								const data = option as { value: string, array: number[] };
-								setArray(data.array);
-								props.selectPrimaryCharacteristics(props.hero.class!.primaryCharacteristics);
-							}}
-						/>
-						{
-							array ?
-								<div>
-									<div className='characteristic-row' style={{ margin: '5px 15px', fontWeight: 600 }}>
-										<div className='characteristic-item characteristic-heading'>M</div>
-										<div className='characteristic-item characteristic-heading'>A</div>
-										<div className='characteristic-item characteristic-heading'>R</div>
-										<div className='characteristic-item characteristic-heading'>I</div>
-										<div className='characteristic-item characteristic-heading'>P</div>
-									</div>
-									<Radio.Group
-										style={{ width: '100%' }}
-										value={JSON.stringify(props.hero.class.characteristics)}
-										onChange={e => {
-											const array = JSON.parse(e.target.value) as { characteristic: Characteristic, value: number }[];
-											props.selectCharacteristics(array);
-										}}
-									>
-										<Space direction='vertical' style={{ width: '100%' }}>
-											{
-												HeroLogic.calculateCharacteristicArrays(array, props.hero.class.primaryCharacteristics).map((array, n1) => (
-													<Radio.Button key={n1} value={JSON.stringify(array)} style={{ width: '100%' }}>
-														<div className='characteristic-row'>
-															{array.map((ch, n2) => <div key={n2} className='characteristic-item'>{ch.value}</div>)}
-														</div>
-													</Radio.Button>
-												))
-											}
-										</Space>
-									</Radio.Group>
-								</div>
-								: null
-						}
-					</SelectablePanel>
-				);
-			}
-
-			if ((props.hero.class.subclassCount > 0) && (props.hero.class.subclasses.length > 0)) {
-				const getAddButton = () => {
-					if (props.hero.class!.subclasses.filter(sc => !sc.selected).length === 0) {
-						return (
-							<Empty text='There are no options to choose for this feature.' />
-						);
-					}
-
-					return (
-						<Button className='status-warning' block={true} onClick={() => setSubclassSelectorOpen(true)}>
-							Choose a {props.hero.class!.subclassName || 'subclass'}
-						</Button>
-					);
-				};
-
-				level0.choices.push(
-					<SelectablePanel key='subclass'>
-						<HeaderText>{props.hero.class.subclassName}</HeaderText>
-						<div className='ds-text'>Choose {props.hero.class.subclassCount === 1 ? `a ${props.hero.class.subclassName || 'subclass'}` : `${props.hero.class.subclassCount} ${props.hero.class.subclassName || 'subclasse'}s`}.</div>
-						{
-							props.hero.class.subclasses
-								.filter(sc => sc.selected)
-								.map(sc => (
-									<Flex key={sc.id} align='center'>
-										<Field
-											style={{ flex: '1 1 0' }}
-											label={sc.name}
-											value={sc.description}
-										/>
-										<Flex vertical={true}>
-											<Button
-												style={{ flex: '0 0 auto' }}
-												type='text'
-												title='Select'
-												icon={<InfoCircleOutlined />}
-												onClick={() => setSelectedSubClass(sc)}
-											/>
-											<Button
-												style={{ flex: '0 0 auto' }}
-												type='text'
-												title='Remove'
-												icon={<CloseOutlined />}
-												onClick={() => props.removeSubclass(sc.id)}
-											/>
-										</Flex>
-									</Flex>
-								))
-						}
-						{props.hero.class.subclasses.filter(sc => sc.selected).length < props.hero.class.subclassCount ? getAddButton() : null}
-						<Drawer open={subclassSelectorOpen} onClose={() => setSubclassSelectorOpen(false)} closeIcon={null} width='500px'>
-							<SubClassSelectModal
-								subClasses={props.hero.class.subclasses.filter(sc => !sc.selected)}
-								options={props.options}
-								onSelect={sc => {
-									setSubclassSelectorOpen(false);
-									props.addSubclass(sc.id);
-								}}
-								onClose={() => setSubclassSelectorOpen(false)}
-							/>
-						</Drawer>
-					</SelectablePanel>
-				);
-			}
-
-			choicesByLevel.push(level0);
-
-			//#endregion
+			choicesByLevel.push(getClassOptions(props.hero.class));
 
 			const features = FeatureLogic.getFeaturesFromClass(props.hero.class, props.hero);
 

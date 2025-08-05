@@ -117,6 +117,9 @@ export const LibraryEditPage = (props: Props) => {
 			case 'perk':
 				original = sourcebook.perks.find(e => e.id === elementID)!;
 				break;
+			case 'subclass':
+				original = sourcebook.subclasses.find(e => e.id === elementID)!;
+				break;
 			case 'terrain':
 				original = sourcebook.terrain.find(e => e.id === elementID)!;
 				break;
@@ -260,6 +263,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'ancestry':
 				return (
 					<AncestryEditPanel
+						key={element.id}
 						ancestry={element as Ancestry}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -272,6 +276,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'culture':
 				return (
 					<CultureEditPanel
+						key={element.id}
 						culture={element as Culture}
 						sourcebooks={props.sourcebooks}
 						onChange={c => {
@@ -283,6 +288,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'career':
 				return (
 					<CareerEditPanel
+						key={element.id}
 						career={element as Career}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -296,6 +302,7 @@ export const LibraryEditPage = (props: Props) => {
 				if (!subElementID) {
 					return (
 						<ClassEditPanel
+							key={element.id}
 							heroClass={element as HeroClass}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
@@ -312,6 +319,7 @@ export const LibraryEditPage = (props: Props) => {
 
 					return (
 						<SubClassEditPanel
+							key={subclass.id}
 							subClass={subclass}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
@@ -327,9 +335,23 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
+			case 'subclass':
+				return (
+					<SubClassEditPanel
+						key={element.id}
+						subClass={element as SubClass}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={c => {
+							setElement(c);
+							setDirty(true);
+						}}
+					/>
+				);
 			case 'complication':
 				return (
 					<ComplicationEditPanel
+						key={element.id}
 						complication={element as Complication}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -342,6 +364,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'domain':
 				return (
 					<DomainEditPanel
+						key={element.id}
 						domain={element as Domain}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -354,6 +377,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'kit':
 				return (
 					<KitEditPanel
+						key={element.id}
 						kit={element as Kit}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -366,6 +390,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'perk':
 				return (
 					<FeatureEditPanel
+						key={element.id}
 						feature={element as Perk}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -379,6 +404,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'terrain':
 				return (
 					<TerrainEditPanel
+						key={element.id}
 						terrain={element as Terrain}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -391,6 +417,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'title':
 				return (
 					<TitleEditPanel
+						key={element.id}
 						title={element as Title}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -403,6 +430,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'item':
 				return (
 					<ItemEditPanel
+						key={element.id}
 						item={element as Item}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -416,6 +444,7 @@ export const LibraryEditPage = (props: Props) => {
 				if (!subElementID) {
 					return (
 						<MonsterGroupEditPanel
+							key={element.id}
 							monsterGroup={element as MonsterGroup}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
@@ -432,6 +461,7 @@ export const LibraryEditPage = (props: Props) => {
 
 					return (
 						<MonsterEditPanel
+							key={monster.id}
 							monster={monster}
 							monsterGroup={monsterGroup}
 							sourcebooks={props.sourcebooks}
@@ -538,6 +568,12 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<SelectablePanel>
 						<PerkPanel perk={element as Perk} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'subclass':
+				return (
+					<SelectablePanel>
+						<SubclassPanel subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'terrain':

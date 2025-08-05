@@ -43,7 +43,7 @@ export const WelcomePage = (props: Props) => {
 						</div>
 						<ul>
 							<li>
-								All the official content is included (for levels 1 to 3), and you can also use any homebrew content your director has created.
+								All the official content is included, and you can also use any homebrew content your director has created.
 							</li>
 							<li>
 								You can use the app to track your hero's stamina, conditions, surges, and so on.

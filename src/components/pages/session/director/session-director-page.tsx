@@ -46,16 +46,25 @@ interface Props {
 	showReference: () => void;
 	showSourcebooks: () => void;
 	showPlayerView: () => void;
+	startEncounter: (encounter: Encounter) => Promise<string>;
+	startMontage: (montage: Montage) => Promise<string>;
+	startNegotiation: (negotiation: Negotiation) => Promise<string>;
+	startMap: (map: TacticalMap) => Promise<string>;
+	startCounter: (counter: Counter) => Promise<string>;
 	updateHero: (hero: Hero) => void;
-	updateSession: (session: Playbook) => void;
+	updateEncounter: (encounter: Encounter) => void;
+	updateMontage: (montage: Montage) => void;
+	updateNegotiation: (negotiation: Negotiation) => void;
+	updateMap: (map: TacticalMap) => void;
+	updateCounter: (counter: Counter) => void;
+	finishSessionElement: (id: string) => string | null;
 	setOptions: (options: Options) => void;
 }
 
 export const SessionDirectorPage = (props: Props) => {
 	const navigation = useNavigation();
-	const [ session, setSession ] = useState<Playbook>(Utils.copy(props.session));
 	const [ selectedElementID, setSelectedElementID ] = useState<string | null>(() => {
-		const options = PlaybookLogic.getContentOptions(session);
+		const options = PlaybookLogic.getContentOptions(props.session);
 		return options.length > 0 ? options[0].id : null;
 	});
 	const [ startElement, setStartElement ] = useState<string>('encounter');
@@ -63,7 +72,7 @@ export const SessionDirectorPage = (props: Props) => {
 	const [ newCounterValue, setNewCounterValue ] = useState<number>(0);
 
 	const getSelector = () => {
-		const options = PlaybookLogic.getContentOptions(session).map(o => {
+		const options = PlaybookLogic.getContentOptions(props.session).map(o => {
 			return {
 				value: o.id,
 				label: o.name
@@ -86,68 +95,8 @@ export const SessionDirectorPage = (props: Props) => {
 	};
 
 	const getSelectedContent = () => {
-		const updateEncounter = (encounter: Encounter) => {
-			const copy = Utils.copy(session);
-
-			const index = copy.encounters.findIndex(n => n.id === encounter.id);
-			if (index !== -1) {
-				copy.encounters[index] = encounter;
-			}
-
-			setSession(copy);
-			props.updateSession(copy);
-		};
-
-		const updateMontage = (montage: Montage) => {
-			const copy = Utils.copy(session);
-
-			const index = copy.montages.findIndex(n => n.id === montage.id);
-			if (index !== -1) {
-				copy.montages[index] = montage;
-			}
-
-			setSession(copy);
-			props.updateSession(copy);
-		};
-
-		const updateNegotiation = (negotiation: Negotiation) => {
-			const copy = Utils.copy(session);
-
-			const index = copy.negotiations.findIndex(n => n.id === negotiation.id);
-			if (index !== -1) {
-				copy.negotiations[index] = negotiation;
-			}
-
-			setSession(copy);
-			props.updateSession(copy);
-		};
-
-		const updateMap = (map: TacticalMap) => {
-			const copy = Utils.copy(session);
-
-			const index = copy.tacticalMaps.findIndex(tm => tm.id === map.id);
-			if (index !== -1) {
-				copy.tacticalMaps[index] = map;
-			}
-
-			setSession(copy);
-			props.updateSession(copy);
-		};
-
-		const updateCounter = (counter: Counter) => {
-			const copy = Utils.copy(session);
-
-			const index = copy.counters.findIndex(c => c.id === counter.id);
-			if (index !== -1) {
-				copy.counters[index] = counter;
-			}
-
-			setSession(copy);
-			props.updateSession(copy);
-		};
-
 		if (selectedElementID) {
-			const encounter = session.encounters.find(e => e.id === selectedElementID);
+			const encounter = props.session.encounters.find(e => e.id === selectedElementID);
 			if (encounter) {
 				return (
 					<div className='session-page-content-container'>
@@ -156,37 +105,37 @@ export const SessionDirectorPage = (props: Props) => {
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
 							options={props.options}
-							onChange={updateEncounter}
+							onChange={props.updateEncounter}
 						/>
 					</div>
 				);
 			}
 
-			const montage = session.montages.find(m => m.id === selectedElementID);
+			const montage = props.session.montages.find(m => m.id === selectedElementID);
 			if (montage) {
 				return (
 					<div className='session-page-content-container'>
 						<MontageRunPanel
 							montage={montage}
-							onChange={updateMontage}
+							onChange={props.updateMontage}
 						/>
 					</div>
 				);
 			}
 
-			const negotiation = session.negotiations.find(n => n.id === selectedElementID);
+			const negotiation = props.session.negotiations.find(n => n.id === selectedElementID);
 			if (negotiation) {
 				return (
 					<div className='session-page-content-container'>
 						<NegotiationRunPanel
 							negotiation={negotiation}
-							onChange={updateNegotiation}
+							onChange={props.updateNegotiation}
 						/>
 					</div>
 				);
 			}
 
-			const map = session.tacticalMaps.find(tm => tm.id === selectedElementID);
+			const map = props.session.tacticalMaps.find(tm => tm.id === selectedElementID);
 			if (map) {
 				return (
 					<div className='session-page-content-container'>
@@ -195,31 +144,31 @@ export const SessionDirectorPage = (props: Props) => {
 							display={TacticalMapDisplayType.DirectorEdit}
 							options={props.options}
 							heroes={props.heroes}
-							encounters={session.encounters}
+							encounters={props.session.encounters}
 							sourcebooks={props.sourcebooks}
 							mode={PanelMode.Full}
-							updateMap={updateMap}
+							updateMap={props.updateMap}
 							updateHero={props.updateHero}
-							updateEncounter={updateEncounter}
+							updateEncounter={props.updateEncounter}
 						/>
 					</div>
 				);
 			}
 
-			const counter = session.counters.find(c => c.id === selectedElementID);
+			const counter = props.session.counters.find(c => c.id === selectedElementID);
 			if (counter) {
 				return (
 					<div className='session-page-content-container'>
 						<CounterRunPanel
 							counter={counter}
-							onChange={updateCounter}
+							onChange={props.updateCounter}
 						/>
 					</div>
 				);
 			}
 		}
 
-		const options = PlaybookLogic.getContentOptions(session);
+		const options = PlaybookLogic.getContentOptions(props.session);
 		if (options.length === 0) {
 			return (
 				<Empty text='Nothing is currently in progress.' />
@@ -231,47 +180,19 @@ export const SessionDirectorPage = (props: Props) => {
 
 	const getStartContent = () => {
 		const startEncounter = (encounter: Encounter) => {
-			const copy = PlaybookLogic.startEncounter(encounter, props.sourcebooks, props.heroes, props.options);
-
-			const sessionCopy = Utils.copy(session);
-			sessionCopy.encounters.push(copy);
-
-			setSession(sessionCopy);
-			props.updateSession(sessionCopy);
-			setSelectedElementID(copy.id);
+			props.startEncounter(encounter).then(setSelectedElementID);
 		};
 
 		const startMontage = (montage: Montage) => {
-			const copy = PlaybookLogic.startMontage(montage);
-
-			const sessionCopy = Utils.copy(session);
-			sessionCopy.montages.push(copy);
-
-			setSession(sessionCopy);
-			props.updateSession(sessionCopy);
-			setSelectedElementID(copy.id);
+			props.startMontage(montage).then(setSelectedElementID);
 		};
 
 		const startNegotiation = (negotiation: Negotiation) => {
-			const copy = PlaybookLogic.startNegotiation(negotiation);
-
-			const sessionCopy = Utils.copy(session);
-			sessionCopy.negotiations.push(copy);
-
-			setSession(sessionCopy);
-			props.updateSession(sessionCopy);
-			setSelectedElementID(copy.id);
+			props.startNegotiation(negotiation).then(setSelectedElementID);
 		};
 
 		const startMap = (map: TacticalMap) => {
-			const copy = PlaybookLogic.startMap(map);
-
-			const sessionCopy = Utils.copy(session);
-			sessionCopy.tacticalMaps.push(copy);
-
-			setSession(sessionCopy);
-			props.updateSession(sessionCopy);
-			setSelectedElementID(copy.id);
+			props.startMap(map).then(setSelectedElementID);
 		};
 
 		const startCounter = () => {
@@ -284,14 +205,7 @@ export const SessionDirectorPage = (props: Props) => {
 			setNewCounterName('');
 			setNewCounterValue(0);
 
-			const copy = PlaybookLogic.startCounter(counter);
-
-			const sessionCopy = Utils.copy(session);
-			sessionCopy.counters.push(copy);
-
-			setSession(sessionCopy);
-			props.updateSession(sessionCopy);
-			setSelectedElementID(copy.id);
+			props.startCounter(counter).then(setSelectedElementID);
 		};
 
 		const exampleEncounters = [
@@ -449,23 +363,10 @@ export const SessionDirectorPage = (props: Props) => {
 	};
 
 	const finish = () => {
-		const copy = Utils.copy(session);
-
-		copy.encounters = copy.encounters.filter(e => e.id !== selectedElementID);
-		copy.montages = copy.montages.filter(m => m.id !== selectedElementID);
-		copy.negotiations = copy.negotiations.filter(n => n.id !== selectedElementID);
-		copy.tacticalMaps = copy.tacticalMaps.filter(tm => tm.id !== selectedElementID);
-		copy.counters = copy.counters.filter(c => c.id !== selectedElementID);
-
-		if (copy.playerViewID === selectedElementID) {
-			copy.playerViewID = null;
+		if (selectedElementID) {
+			const id = props.finishSessionElement(selectedElementID);
+			setSelectedElementID(id);
 		}
-
-		setSession(copy);
-		props.updateSession(copy);
-
-		const options = PlaybookLogic.getContentOptions(copy);
-		setSelectedElementID(options.length > 0 ? options[0].id : null);
 	};
 
 	try {

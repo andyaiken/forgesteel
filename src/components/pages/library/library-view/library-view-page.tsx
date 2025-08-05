@@ -116,6 +116,17 @@ export const LibraryViewPage = (props: Props) => {
 				);
 			}
 			break;
+		case 'subclass':
+			element = props.sourcebooks.flatMap(sb => sb.subclasses).find(x => x.id === elementID) as Element;
+			sourcebook = SourcebookLogic.getSubClassSourcebook(props.sourcebooks, element as SubClass) as Sourcebook;
+			panel = (
+				<SubclassPanel
+					subclass={element as SubClass}
+					options={props.options}
+					mode={PanelMode.Full}
+				/>
+			);
+			break;
 		case 'complication':
 			element = props.sourcebooks.flatMap(sb => sb.complications).find(x => x.id === elementID) as Element;
 			sourcebook = SourcebookLogic.getComplicationSourcebook(props.sourcebooks, element as Complication) as Sourcebook;

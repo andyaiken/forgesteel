@@ -28,6 +28,9 @@ export class SourcebookUpdateLogic {
 		if (sourcebook.terrain === undefined) {
 			sourcebook.terrain = [];
 		}
+		if (sourcebook.subclasses === undefined) {
+			sourcebook.subclasses = [];
+		}
 
 		sourcebook.classes.forEach(c => {
 			if (c.primaryCharacteristicsOptions === undefined) {

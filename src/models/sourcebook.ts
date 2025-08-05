@@ -12,6 +12,7 @@ import { MonsterGroup } from './monster';
 import { Perk } from './perk';
 import { Project } from './project';
 import { Skill } from './skill';
+import { SubClass } from './subclass';
 import { Terrain } from './terrain';
 import { Title } from './title';
 
@@ -29,6 +30,7 @@ export interface Sourcebook extends Element {
 	titles: Title[];
 	items: Item[];
 	monsterGroups: MonsterGroup[];
+	subclasses: SubClass[];
 	terrain: Terrain[];
 
 	skills: Skill[];
@@ -36,4 +38,4 @@ export interface Sourcebook extends Element {
 	projects: Project[];
 }
 
-export type SourcebookElementKind = 'ancestry' | 'culture' | 'career' | 'class' | 'complication' | 'kit' | 'domain' | 'perk' | 'title' | 'item' | 'monster-group' | 'terrain';
+export type SourcebookElementKind = 'ancestry' | 'culture' | 'career' | 'class' | 'subclass' | 'complication' | 'kit' | 'domain' | 'perk' | 'title' | 'item' | 'monster-group' | 'terrain';

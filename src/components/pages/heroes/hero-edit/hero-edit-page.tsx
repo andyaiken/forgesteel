@@ -27,6 +27,7 @@ import { Options } from '../../../../models/options';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { StartSection } from './start-section/start-section';
+import { SubClass } from '../../../../models/subclass';
 import { Utils } from '../../../../utils/utils';
 import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useNavigation } from '../../../../hooks/use-navigation';
@@ -283,10 +284,18 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const addSubclass = (subclassID: string) => {
+		const addSubclass = (subclass: SubClass) => {
 			const heroCopy = Utils.copy(hero);
 			if (heroCopy.class) {
-				heroCopy.class.subclasses.filter(sc => sc.id === subclassID).forEach(sc => sc.selected = true);
+				const selected = heroCopy.class.subclasses.find(sc => sc.id === subclass.id);
+				if (selected) {
+					selected.selected = true;
+				} else {
+					// This is a subclass from somewhere else
+					const copy = Utils.copy(subclass);
+					copy.selected = true;
+					heroCopy.class.subclasses.push(copy);
+				}
 			}
 			setHero(heroCopy);
 			setDirty(true);

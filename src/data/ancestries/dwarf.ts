@@ -65,7 +65,6 @@ You can have one rune active at a time, and can change or remove a rune with 10 
 						name: 'Spark Off Your Skin',
 						description: 'Your stone skin affords you potent protection.',
 						field: FeatureField.Stamina,
-						value: 6,
 						valuePerEchelon: 6
 					}),
 					value: 2

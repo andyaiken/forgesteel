@@ -10,7 +10,7 @@ export const wodeElf: Ancestry = {
 	features: [
 		FactoryLogic.feature.create({
 			id: 'wode-elf-feature-1',
-			name: 'Signature Trait: Wode Elf Glamor',
+			name: 'Wode Elf Glamor',
 			description: 'You can magically alter your appearance to better blend in with your surroundings. You gain an edge on tests made to hide and sneak, and tests made to search for you while you are hidden take a bane.'
 		}),
 		FactoryLogic.feature.createChoice({

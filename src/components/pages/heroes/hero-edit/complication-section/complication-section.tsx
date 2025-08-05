@@ -9,7 +9,7 @@ import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
 import { Options } from '../../../../../models/options';
 import { PanelMode } from '../../../../../enums/panel-mode';
-import { ReactNode } from 'react';
+import { ReactNode, useLayoutEffect, useRef } from 'react';
 import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
@@ -38,10 +38,27 @@ interface Props {
 export const ComplicationSection = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 
+	const listElementRef = useRef<HTMLDivElement>(null);
+	const scrollPositionRef = useRef(0);
+
+	useLayoutEffect(() => {
+		if (!props.hero.complication && listElementRef.current) {
+			listElementRef.current.scrollTop = scrollPositionRef.current;
+		}
+	}, [ props.hero.complication ]);
+
 	try {
 		const complications = SourcebookLogic.getComplications(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
 		const options = complications.map(c => (
-			<SelectablePanel key={c.id} onSelect={() => props.selectComplication(c)}>
+			<SelectablePanel
+				key={c.id}
+				onSelect={() => {
+					if (listElementRef.current) {
+						scrollPositionRef.current = listElementRef.current.scrollTop;
+					}
+					props.selectComplication(c);
+				}}
+			>
 				<ComplicationPanel complication={c} options={props.options} />
 			</SelectablePanel>
 		));
@@ -53,7 +70,13 @@ export const ComplicationSection = (props: Props) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeatureConfigPanel
+							feature={f}
+							options={props.options}
+							hero={props.hero}
+							sourcebooks={props.sourcebooks}
+							setData={props.setFeatureData}
+						/>
 					</SelectablePanel>
 				));
 		}
@@ -76,7 +99,7 @@ export const ComplicationSection = (props: Props) => {
 				}
 				{
 					!props.hero.complication && (options.length > 0) ?
-						<div className='hero-edit-content-column grid' id='complication-list'>
+						<div className='hero-edit-content-column grid' id='complication-list' ref={listElementRef}>
 							{options}
 						</div>
 						: null

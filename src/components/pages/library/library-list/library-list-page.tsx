@@ -46,6 +46,8 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { SubClass } from '../../../../models/subclass';
+import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
 import { Terrain } from '../../../../models/terrain';
 import { TerrainCategory } from '../../../../enums/terrain-category';
 import { TerrainPanel } from '../../../panels/elements/terrain-panel/terrain-panel';
@@ -58,7 +60,6 @@ import { useParams } from 'react-router';
 import { useState } from 'react';
 
 import './library-list-page.scss';
-
 
 interface Props {
 	heroes: Hero[];
@@ -138,6 +139,21 @@ export const LibraryListPage = (props: Props) => {
 					...item.abilities.flatMap(a => a.name),
 					...item.subclasses.map(sc => sc.name),
 					...item.subclasses.flatMap(sc => sc.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)))
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
+	const getSubClasses = () => {
+		try {
+			return SourcebookLogic
+				.getSubClasses(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
 				], searchTerm));
 		} catch (ex) {
 			console.error(ex);
@@ -533,6 +549,79 @@ export const LibraryListPage = (props: Props) => {
 							if (sourcebook && sourcebook.id) {
 								return (
 									<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getSubClassesSection = (list: SubClass[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(sc => ({
+								key: sc.id,
+								name: sc.name,
+								sourcebook: SourcebookLogic.getSubClassSourcebook(props.sourcebooks, sc)!.name
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(c => ({ text: c.name, value: c.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
+			return (
+				<div className='library-section-grid'>
+					{
+						list.map(sc => {
+							const item = (
+								<SelectablePanel key={sc.id} onSelect={() => navigation.goToLibraryView('subclass', sc.id)}>
+									<SubclassPanel subclass={sc} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getSubClassSourcebook(props.sourcebooks, sc);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={sc.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
 										{item}
 									</Badge.Ribbon>
 								);
@@ -1607,6 +1696,7 @@ export const LibraryListPage = (props: Props) => {
 		const monsterGroups = getMonsterGroups();
 		const monsters = Collections.sort(getMonsters(), m => m.name);
 		const perks = getPerks();
+		const subclasses = getSubClasses();
 		const terrains = getTerrainObjects();
 		const titles = getTitles();
 
@@ -1796,6 +1886,16 @@ export const LibraryListPage = (props: Props) => {
 										</div>
 									),
 									children: getPerksSection(perks)
+								},
+								{
+									key: 'subclass',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Subclasses</div>
+											<div className='section-count'>{subclasses.length}</div>
+										</div>
+									),
+									children: getSubClassesSection(subclasses)
 								},
 								{
 									key: 'terrain',

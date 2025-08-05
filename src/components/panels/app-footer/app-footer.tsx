@@ -73,6 +73,7 @@ export const AppFooter = (props: Props) => {
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('kit')}>Kits</Button>
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('monster-group')}>Monsters</Button>
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('perk')}>Perks</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('subclass')}>Subclasses</Button>
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('terrain')}>Terrain</Button>
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('title')}>Titles</Button>
 								</Space>

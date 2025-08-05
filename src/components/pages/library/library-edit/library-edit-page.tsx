@@ -117,6 +117,9 @@ export const LibraryEditPage = (props: Props) => {
 			case 'perk':
 				original = sourcebook.perks.find(e => e.id === elementID)!;
 				break;
+			case 'subclass':
+				original = sourcebook.subclasses.find(e => e.id === elementID)!;
+				break;
 			case 'terrain':
 				original = sourcebook.terrain.find(e => e.id === elementID)!;
 				break;
@@ -332,6 +335,19 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
+			case 'subclass':
+				return (
+					<SubClassEditPanel
+						key={element.id}
+						subClass={element as SubClass}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={c => {
+							setElement(c);
+							setDirty(true);
+						}}
+					/>
+				);
 			case 'complication':
 				return (
 					<ComplicationEditPanel
@@ -552,6 +568,12 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<SelectablePanel>
 						<PerkPanel perk={element as Perk} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'subclass':
+				return (
+					<SelectablePanel>
+						<SubclassPanel subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'terrain':

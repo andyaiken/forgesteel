@@ -89,6 +89,7 @@ export class SourcebookData {
 			ClassData.talent,
 			ClassData.troubadour
 		],
+		subclasses: [],
 		complications: [
 			ComplicationData.advancedStudies,
 			ComplicationData.amnesia,
@@ -560,8 +561,6 @@ export class SourcebookData {
 			TerrainData.psionicShard,
 			TerrainData.holyIdol,
 			TerrainData.treeOfMight
-
-
 		]
 	};
 
@@ -590,6 +589,7 @@ export class SourcebookData {
 		],
 		careers: [],
 		classes: [],
+		subclasses: [],
 		complications: [],
 		domains: [],
 		kits: [],

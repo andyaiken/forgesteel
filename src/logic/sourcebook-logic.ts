@@ -19,6 +19,7 @@ import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
+import { SubClass } from '../models/subclass';
 import { Terrain } from '../models/terrain';
 import { Title } from '../models/title';
 
@@ -36,6 +37,7 @@ export class SourcebookLogic {
 		count += sourcebook.perks.length;
 		count += sourcebook.items.length;
 		count += sourcebook.monsterGroups.length;
+		count += sourcebook.subclasses.length;
 		count += sourcebook.terrain.length;
 
 		return count;
@@ -55,6 +57,10 @@ export class SourcebookLogic {
 
 	static getClassSourcebook = (sourcebooks: Sourcebook[], heroClass: HeroClass) => {
 		return sourcebooks.find(s => s.classes.find(c => c.id === heroClass.id));
+	};
+
+	static getSubClassSourcebook = (sourcebooks: Sourcebook[], subclass: SubClass) => {
+		return sourcebooks.find(s => s.subclasses.find(sc => sc.id === subclass.id));
 	};
 
 	static getComplicationSourcebook = (sourcebooks: Sourcebook[], complication: Complication) => {
@@ -141,6 +147,16 @@ export class SourcebookLogic {
 
 		sourcebooks.forEach(sourcebook => {
 			list.push(...sourcebook.classes);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getSubClasses = (sourcebooks: Sourcebook[]) => {
+		const list: SubClass[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.subclasses);
 		});
 
 		return Collections.sort(list, item => item.name);

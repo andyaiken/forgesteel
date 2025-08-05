@@ -306,6 +306,9 @@ export const Main = (props: Props) => {
 			case 'class':
 				createClass(original as HeroClass | null, sourcebook);
 				break;
+			case 'subclass':
+				createSubClass(original as SubClass | null, sourcebook);
+				break;
 			case 'complication':
 				createComplication(original as Complication | null, sourcebook);
 				break;
@@ -351,6 +354,9 @@ export const Main = (props: Props) => {
 					break;
 				case 'class':
 					sourcebook.classes = sourcebook.classes.filter(x => x.id !== element.id);
+					break;
+				case 'subclass':
+					sourcebook.subclasses = sourcebook.subclasses.filter(x => x.id !== element.id);
 					break;
 				case 'complication':
 					sourcebook.complications = sourcebook.complications.filter(x => x.id !== element.id);
@@ -399,6 +405,9 @@ export const Main = (props: Props) => {
 				case 'class':
 					sourcebook.classes = sourcebook.classes.map(x => x.id === element.id ? element : x) as HeroClass[];
 					break;
+				case 'subclass':
+					sourcebook.subclasses = sourcebook.subclasses.map(x => x.id === element.id ? element : x) as SubClass[];
+					break;
 				case 'complication':
 					sourcebook.complications = sourcebook.complications.map(x => x.id === element.id ? element : x) as Complication[];
 					break;
@@ -439,6 +448,7 @@ export const Main = (props: Props) => {
 			...sourcebooks.flatMap(sb => sb.ancestries),
 			...sourcebooks.flatMap(sb => sb.careers),
 			...sourcebooks.flatMap(sb => sb.classes),
+			...sourcebooks.flatMap(sb => sb.subclasses),
 			...sourcebooks.flatMap(sb => sb.complications),
 			...sourcebooks.flatMap(sb => sb.cultures),
 			...sourcebooks.flatMap(sb => sb.domains),
@@ -480,6 +490,10 @@ export const Main = (props: Props) => {
 			case 'class':
 				sourcebook.classes.push(element as HeroClass);
 				sourcebook.classes = Collections.sort<Element>(sourcebook.classes, item => item.name) as HeroClass[];
+				break;
+			case 'subclass':
+				sourcebook.subclasses.push(element as SubClass);
+				sourcebook.subclasses = Collections.sort<Element>(sourcebook.subclasses, item => item.name) as SubClass[];
 				break;
 			case 'complication':
 				sourcebook.complications.push(element as Complication);
@@ -677,6 +691,36 @@ export const Main = (props: Props) => {
 
 		sourcebook.classes.push(heroClass);
 		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('class', sourcebook.id, heroClass.id));
+	};
+
+	const createSubClass = (original: SubClass | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
+		} else {
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+		}
+
+		let sc: SubClass;
+		if (original) {
+			sc = Utils.copy(original);
+			sc.id = Utils.guid();
+
+			// Make sure this has 10 levels
+			while (sc.featuresByLevel.length < 10) {
+				sc.featuresByLevel.push({
+					level: sc.featuresByLevel.length + 1,
+					features: []
+				});
+			}
+		} else {
+			sc = FactoryLogic.createSubclass();
+		}
+
+		sourcebook.subclasses.push(sc);
+		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('subclass', sourcebook.id, sc.id));
 	};
 
 	const createComplication = (original: Complication | null, sourcebook: Sourcebook | null) => {

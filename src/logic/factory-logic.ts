@@ -118,6 +118,7 @@ export class FactoryLogic {
 			cultures: [],
 			careers: [],
 			classes: [],
+			subclasses: [],
 			domains: [],
 			kits: [],
 			complications: [],

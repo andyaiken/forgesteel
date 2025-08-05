@@ -7,8 +7,8 @@ import { DamageType } from '../enums/damage-type';
 import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { ItemType } from '../enums/item-type';
-import { SkillList } from '../enums/skill-list';
 import { LanguageType } from '../enums/language-type';
+import { SkillList } from '../enums/skill-list';
 
 export class ComplicationData {
 	static advancedStudies: Complication = {
@@ -17,25 +17,25 @@ export class ComplicationData {
 		description: 'You somehow obtained the notebook of a brilliant but eccentric member of your class. The knowledge held within those notes should help you unlock powerful new abilities — if you can ever figure out what the notes mean.',
 		features: [
 			FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'comp-advanced-studies-1',
-						name: 'Advanced Study Benefit and Drawback',
-						description: 'As a respite activity, you can study the notebook.',
-						type: FactoryLogic.type.createNoAction(),
-						keywords: [ ],
-						distance: [ ],
-						target: 'None',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(
-								FactoryLogic.createPowerRoll({
-									characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence, Characteristic.Agility, Characteristic.Might ],
-									tier1: 'You summon a hostile demon of your level or lower who attacks you at the end of the respite. The demon gets to act first in the combat, no matter any other creature’s traits or abilities.',
-									tier2: 'You learn nothing and your time is wasted.',
-									tier3: 'You learn one bonus heroic ability from your class that you qualify for. You only know the ability until you finish your next respite.'
-								})
-							)
-						]
-					})
+				ability: FactoryLogic.createAbility({
+					id: 'comp-advanced-studies-1',
+					name: 'Advanced Study Benefit and Drawback',
+					description: 'As a respite activity, you can study the notebook.',
+					type: FactoryLogic.type.createNoAction(),
+					keywords: [ ],
+					distance: [ ],
+					target: 'None',
+					sections: [
+						FactoryLogic.createAbilitySectionRoll(
+							FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence, Characteristic.Agility, Characteristic.Might ],
+								tier1: 'You summon a hostile demon of your level or lower who attacks you at the end of the respite. The demon gets to act first in the combat, no matter any other creature’s traits or abilities.',
+								tier2: 'You learn nothing and your time is wasted.',
+								tier3: 'You learn one bonus heroic ability from your class that you qualify for. You only know the ability until you finish your next respite.'
+							})
+						)
+					]
+				})
 			})
 		]
 	};
@@ -67,7 +67,7 @@ export class ComplicationData {
 			FactoryLogic.feature.create({
 				id: 'comp-animal-form-b',
 				name: 'Animal Form Benefit',
-				description: `As a manuever, you take the form of a specific 1T animal. You retain all your other statistics aside from your size, but you can’t talk or use actions, and the only maneuvers you can use are Escape Grab, Hide, and Stand Up. Based on the animal you can turn into, you might be able to burrow or fly, or to automatically climb or swim at full speed while moving. If your animal form doesn’t provide such additional movement, you have a +2 bonus to speed. Unless you use this benefit again, you return to your true form at the start of your next turn.`
+				description: 'As a manuever, you take the form of a specific 1T animal. You retain all your other statistics aside from your size, but you can’t talk or use actions, and the only maneuvers you can use are Escape Grab, Hide, and Stand Up. Based on the animal you can turn into, you might be able to burrow or fly, or to automatically climb or swim at full speed while moving. If your animal form doesn’t provide such additional movement, you have a +2 bonus to speed. Unless you use this benefit again, you return to your true form at the start of your next turn.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-animal-form-d',
@@ -376,7 +376,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 			})
 		]
 	};
-	
+
 	static curseOfPunishment: Complication = {
 		id: 'comp-punishment-curse',
 		name: 'Curse of Punishment',
@@ -1223,10 +1223,10 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-mundane-b',
 				modifiers: [
-					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 1}),
+					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 1 }),
 					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Holy , modifierType: DamageModifierType.Immunity, value: 1 }),
 					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Psychic , modifierType: DamageModifierType.Immunity, value: 1 })
-				],
+				]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-mundane-d',
@@ -1756,7 +1756,7 @@ Note: Stormwight furies can’t take this complication.`,
 				description: 'Whenever you take damage, your face becomes blank, with no eyes, nose, mouth, or ears. This doesn’t affect your senses or your ability to speak. Your face doesn’t return until you use the benefit of this complication to restore it.'
 			})
 		]
-	};	
+	};
 
 	static strangeInheritance: Complication = {
 		id: 'comp-strangeInheritance',

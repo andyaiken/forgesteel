@@ -395,6 +395,14 @@ Choose one of the following effects:
 					id: 'elementalist-4-2',
 					name: 'Font of Essence',
 					description: 'The first time each combat round that you or a creature within 10 squares takes damage that isn’t untyped or holy damage, you gain 2 essence instead of 1.'
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'elementalist-4-3',
+					lists: [ PerkList.Interpersonal, PerkList.Crafting, PerkList.Lore, PerkList.Supernatural, PerkList.Intrigue, PerkList.Exploration ]
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'elementalist-4-4',
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Lore, SkillList.Intrigue ]
 				})
 			]
 		},
@@ -519,17 +527,54 @@ Breath remains until you convert it to essence.`
 					characteristic: Characteristic.Reason,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createChoice({
 					id: 'elementalist-10-3',
+					options: [
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'elementalist-10-3-1',
+								characteristic: Characteristic.Might,
+								value: 1
+							}),
+							value:1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'elementalist-10-3-2',
+								characteristic: Characteristic.Agility,
+								value: 1
+							}),
+							value:1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'elementalist-10-3-4',
+								characteristic: Characteristic.Intuition,
+								value: 1
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.createCharacteristicBonus({
+								id: 'elementalist-10-3-5',
+								characteristic: Characteristic.Presence,
+								value: 1
+							}),
+							value: 1
+						}
+					]
+				}),
+				FactoryLogic.feature.create({
+					id: 'elementalist-10-4',
 					name: 'Essential Being',
 					description: 'When you gain essence at the start of each of your turns during combat, you gain 4 essence instead of 3.'
 				}),
 				FactoryLogic.feature.createPerk({
-					id: 'elementalist-10-4',
+					id: 'elementalist-10-5',
 					lists: [ PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'elementalist-10-5',
+					id: 'elementalist-10-6',
 					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 				})
 			]

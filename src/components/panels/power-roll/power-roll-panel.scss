@@ -16,7 +16,7 @@
 
 		&.highlight-row {
 			font-weight: 600;
-			background-color: rgb(230, 244, 255);
+			background-color: rgba(64, 150, 255, 0.3);
 		}
 
 		&.power-roll-header {
@@ -65,11 +65,6 @@
 		color: rgba(255, 255, 255, 0.88);
 
 		.power-roll-row {
-			&.highlight-row,
-			&.highlight-row .effect p {
-				color: rgba(0, 0, 0, 0.88);
-			}
-
 			&.power-roll-header {
 				border-bottom-color: rgba(250, 250, 250, 0.6);
 

@@ -1,3 +1,4 @@
+import { ReactNode, useLayoutEffect, useRef } from 'react';
 import { Complication } from '../../../../../models/complication';
 import { ComplicationPanel } from '../../../../panels/elements/complication-panel/complication-panel';
 import { Element } from '../../../../../models/element';
@@ -9,7 +10,6 @@ import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
 import { Options } from '../../../../../models/options';
 import { PanelMode } from '../../../../../enums/panel-mode';
-import { ReactNode, useLayoutEffect, useRef } from 'react';
 import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';

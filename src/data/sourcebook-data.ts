@@ -521,7 +521,8 @@ export class SourcebookData {
 			ProjectData.honeCareerSkills,
 			ProjectData.learnFromMaster,
 			ProjectData.learnNewLanguage,
-			ProjectData.learnNewRecipe,
+			ProjectData.learnNewSkill,
+			ProjectData.perfectNewRecipe,
 			ProjectData.communityService,
 			ProjectData.fishing,
 			ProjectData.spendTimeWithLovedOnes

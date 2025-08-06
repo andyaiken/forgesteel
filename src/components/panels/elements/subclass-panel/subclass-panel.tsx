@@ -39,7 +39,9 @@ export const SubclassPanel = (props: Props) => {
 						props.subclass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
 							<Space key={lvl.level} direction='vertical'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
-								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+								<div className='features'>
+									{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+								</div>
 							</Space>
 						))
 					}

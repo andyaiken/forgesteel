@@ -283,6 +283,7 @@ export class SourcebookData {
 			PerkData.ritualist
 		],
 		titles: [
+			// Echelon 1
 			TitleData.ancientLoremaster,
 			TitleData.battleaxeDiplomat,
 			TitleData.brawler,
@@ -302,7 +303,48 @@ export class SourcebookData {
 			TitleData.shipCaptain,
 			TitleData.troupeTactics,
 			TitleData.wantedDeadOrAlive,
-			TitleData.zombieSlayer
+			TitleData.zombieSlayer,
+			// Echelon 2
+			TitleData.arenaFighter,
+			TitleData.awakened,
+			TitleData.battlefieldCommander,
+			TitleData.bloodMagic,
+			TitleData.corsair,
+			TitleData.factionOfficer,
+			TitleData.feyFriend,
+			TitleData.giantSlayer,
+			TitleData.godsworn,
+			TitleData.heistHero,
+			TitleData.knight,
+			TitleData.masterLibrarian,
+			TitleData.specialAgent,
+			TitleData.swornHunter,
+			TitleData.undeadSlain,
+			TitleData.unstoppable,
+			// Echelon 3
+			TitleData.armedAndDangerous,
+			TitleData.backFromTheGrave,
+			TitleData.demonSlayer,
+			TitleData.diabolist,
+			TitleData.dragonBlooded,
+			TitleData.fleetAdmiral,
+			TitleData.maestro,
+			TitleData.masterCrafter,
+			TitleData.noble,
+			TitleData.planarVoyager,
+			TitleData.scarred,
+			TitleData.siegeBreaker,
+			TitleData.teacher,
+			// Echelon 4
+			TitleData.championCompetitor,
+			TitleData.demigod,
+			TitleData.enlightened,
+			TitleData.forsaken,
+			TitleData.monarch,
+			TitleData.peaceBringer,
+			TitleData.theoreticalWarrior,
+			TitleData.tireless,
+			TitleData.unchained
 		],
 		items: [
 			ConsumableData.blackAshDart,

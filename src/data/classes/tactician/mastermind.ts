@@ -67,10 +67,19 @@ You can make this test only once for any encounter or negotiation.`
 		{
 			level: 2,
 			features: [
-				FactoryLogic.feature.create({
-					id: 'tactician-sub-2-2-1',
-					name: 'Goaded',
-					description: 'You have learned to leverage your marked foes’ psychology and goad them into acting before they’re tactically ready. Whenever a creature marked by you uses a strike that targets you or any ally within your line of effect, you can use a free triggered action to change the target of the strike to you or another ally within your line of effect.'
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'tactician-sub-2-2-1',
+						name: 'Goaded',
+						description: 'You have learned to leverage your marked foes’ psychology and goad them into acting before they’re tactically ready.',
+						type: FactoryLogic.type.createTrigger('A creature marked by you uses a strike that targets you or any ally within your line of effect.', { free: true }),
+						keywords: [],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						sections: [
+							FactoryLogic.createAbilitySectionText('You can change the target of the strike to you or another ally within your line of effect.')
+						]
+					})
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'tactician-sub-2-2-2',

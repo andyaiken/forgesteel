@@ -639,6 +639,7 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 		],
 		selectedFeatureID: ''
 	};
+
 	static battlefieldCommander: Title = {
 		id: 'title-battlefield-commander',
 		name: 'Battlefield Commander',

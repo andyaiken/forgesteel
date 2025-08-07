@@ -36,7 +36,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 		{
 			id: 'wyvern-info-4',
 			name: 'Communicating with Wyverns',
-			description: 'Wyverns are unable to speak. However, a clever hero carrying a feast of fresh meat might still be able to reason with one.'
+			description: 'Wyverns are unable to speak. However, a clever hero carrying a feast of fresh meat might be able to reason with one.'
 		}
 	],
 	malice: [

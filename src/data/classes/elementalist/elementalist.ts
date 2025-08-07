@@ -334,7 +334,8 @@ Choose one of the following effects:
 			features: [
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-3-1',
-					cost: 7
+					cost: 7,
+					minLevel: 3
 				})
 			]
 		},
@@ -411,7 +412,8 @@ Choose one of the following effects:
 			features: [
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-5-1',
-					cost: 9
+					cost: 9,
+					minLevel: 5
 				})
 			]
 		},
@@ -436,7 +438,8 @@ Choose one of the following effects:
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-6-3',
-					cost: 9
+					cost: 9,
+					minLevel: 6
 				})
 			]
 		},
@@ -485,6 +488,11 @@ Choose one of the following effects:
 				FactoryLogic.feature.createPerk({
 					id: 'elementalist-8-1',
 					lists: [ PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Crafting, PerkList.Lore, PerkList.Supernatural ]
+				}),
+				FactoryLogic.feature.createClassAbilityChoice({
+					id: 'elementalist-8-2',
+					cost: 11,
+					minLevel: 8
 				})
 			]
 		},
@@ -500,7 +508,8 @@ Additionally, when you have 5 or more Victories, choose one of the following dam
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'elementalist-9-2',
-					cost: 11
+					cost: 11,
+					minLevel: 9
 				})
 			]
 		},
@@ -1016,6 +1025,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Special',
 			cost: 7,
+			minLevel: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionText('The number of creatures you target with this ability is determined by your power roll.'),
 				FactoryLogic.createAbilitySectionRoll(
@@ -1038,6 +1048,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
+			minLevel: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason ],
@@ -1057,6 +1068,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
 			target: 'Each enemy in the area',
 			cost: 7,
+			minLevel: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason ],
@@ -1081,6 +1093,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 10, within: 10 }) ],
 			target: 'Special',
 			cost: 7,
+			minLevel: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionText('The wall lasts until the start of your next turn, and can be placed in occupied squares. Creatures can enter and pass through the wall. Each enemy who enters the area for the first time in a combat round or starts their turn there takes fire damage equal to your Reason score for each square of the area they start their turn in or enter.'),
 				FactoryLogic.createAbilitySectionField({
@@ -1099,6 +1112,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'One creature or object',
 			cost: 9,
+			minLevel: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason ],
@@ -1118,6 +1132,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 9,
+			minLevel: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason ],
@@ -1142,6 +1157,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'One creature or object',
 			cost: 9,
+			minLevel: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason ],
@@ -1165,6 +1181,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 9,
+			minLevel: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason ],
@@ -1272,6 +1289,7 @@ Until the start of your next turn, the area gains the following effects:
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Special',
 			cost: 11,
+			minLevel: 8,
 			sections: [
 				FactoryLogic.createAbilitySectionText(`A size 5 tree appears in an unoccupied space within distance. The tree has 100 Stamina and can’t be force moved. You and any ally can touch the tree to use the Catch Breath maneuver as a free maneuver. Additionally, when you start your turn with line of effect to the tree, you can end one effect on yourself that is ended by a saving throw or that ends at the end of your turn, or you can stand up if you are prone. Each ally within distance also gains this benefit.
 
@@ -1287,6 +1305,7 @@ Each enemy who ends their turn within 3 squares of the tree is restrained until 
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 			target: 'Each enemy in the area',
 			cost: 11,
+			minLevel: 8,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason ],
@@ -1306,6 +1325,7 @@ Each enemy who ends their turn within 3 squares of the tree is restrained until 
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Special',
 			cost: 11,
+			minLevel: 8,
 			sections: [
 				FactoryLogic.createAbilitySectionText('You create a size 1L vortex that lasts until the end of the encounter. At the start of each combat round while the vortex is unoccupied, the vortex vertical pulls 3 each enemy within 5 squares of it. Each enemy who enters the vortex or starts their turn there is knocked prone. At the end of the round, if a winded enemy who is not a leader or solo creature is in the vortex, they are instantly destroyed.')
 			]
@@ -1319,6 +1339,7 @@ Each enemy who ends their turn within 3 squares of the tree is restrained until 
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value:5 }) ],
 			target: 'Each enemy in the area',
 			cost: 11,
+			minLevel: 8,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason ],

@@ -125,13 +125,16 @@ export const AbilityPanel = (props: Props) => {
 	const getWarnings = () => {
 		let conditions: ConditionType[] = [];
 		let state = 'healthy';
+		let level = 1;
 		if (props.hero) {
 			conditions = props.hero.state.conditions.map(c => c.type);
 			state = HeroLogic.getCombatState(props.hero);
+			level = props.hero.class?.level ?? 1;
 		}
 		if (props.monster) {
 			conditions = props.monster.state.conditions.map(c => c.type);
 			state = MonsterLogic.getCombatState(props.monster);
+			level = props.monster.level ?? 1;
 		}
 
 		const warnings: { label: string, text: string }[] = [];
@@ -139,9 +142,11 @@ export const AbilityPanel = (props: Props) => {
 		const hasRoll = (props.ability.sections || []).some(s => s.type === 'roll');
 
 		if ((conditions.includes(ConditionType.Bleeding) || ((state === 'dying') && (props.ability.id !== AbilityData.catchBreath.id))) && ([ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Trigger ].includes(props.ability.type.usage) || props.ability.keywords.includes(AbilityKeyword.Strike))) {
+			props.hero?.class?.level
+			props.monster?.level
 			warnings.push({
 				label: ConditionType.Bleeding,
-				text: 'After using this ability, you lose 1d6 Stamina.'
+				text: `After using this ability, you lose 1d6 + ${level} Stamina.`
 			});
 		}
 		if (conditions.includes(ConditionType.Dazed) && (props.ability.type.usage === AbilityUsage.Trigger)) {

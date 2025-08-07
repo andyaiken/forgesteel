@@ -126,7 +126,7 @@ export class PDFExport {
 			text = text
 				.replace(/(\|:-+)+\|\n/g, '')
 				.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
-				.replace(/11 -\t/g, '11 or less')
+				.replace(/≤ 11\t/g, '11 or less')
 				.replace(/17 \+/g, '17+\t')
 				.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
 				.replace(/\n\* /g, '\n   • ');
@@ -375,7 +375,7 @@ export class PDFExport {
 									undefined,
 									hero
 								);
-								powerRollText = powerRollText + '\n   • 17 +\t\t\t' + AbilityLogic.getTierEffect(
+								powerRollText = powerRollText + '\n   • 17 or more\t\t\t' + AbilityLogic.getTierEffect(
 									section.roll.tier3,
 									3,
 									a,

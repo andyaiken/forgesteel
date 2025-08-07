@@ -116,29 +116,26 @@ export class AbilityLogic {
 			bonus = HeroLogic.getDistanceBonus(hero, abilityCopy);
 		}
 
-		const result = (distance.within === 0) ?
-			[
-				distance.type === AbilityDistanceType.Line ?
-					`Line ${Math.max(distance.value, distance.value2) + bonus}x${Math.min(distance.value, distance.value2)}`
-					:
-					`${distance.type} ${distance.value + bonus}`,
-				distance.qualifier ?
-					`(${distance.qualifier})`
-					: undefined
-			].filter(x => x).join(' ')
-			:
-			[
-				distance.type === AbilityDistanceType.Line ?
-					`Line ${Math.max(distance.value, distance.value2)}x${Math.min(distance.value, distance.value2)}`
-					:
-					`${distance.type} ${distance.value}`,
-				`within ${distance.within + bonus}`,
-				distance.qualifier ?
-					`(${distance.qualifier})`
-					: undefined
-			].filter(x => x).join(' ');
-
-		return result;
+		const sections: string[] = [];
+		switch (distance.type) {
+			case AbilityDistanceType.Melee:
+			case AbilityDistanceType.Ranged:
+				sections.push(`${distance.type} ${distance.value + bonus}`);
+				break;
+			case AbilityDistanceType.Line:
+				sections.push(`Line ${Math.max(distance.value, distance.value2)}x${Math.min(distance.value, distance.value2)}`);
+				break;
+			default:
+				sections.push(`${distance.type} ${distance.value}`);
+				break;
+		}
+		if (distance.within > 0) {
+			sections.push(`within ${distance.within}`);
+		}
+		if (distance.qualifier) {
+			sections.push(`(${distance.qualifier})`);
+		}
+		return sections.filter(x => !!x).join(' ');
 	};
 
 	static usesPotency = (powerRoll: PowerRoll) => {

@@ -13,9 +13,9 @@ export const wyvern: MonsterGroup = {
 	id: 'monster-group-wyvern',
 	name: 'Wyvern',
 	description: `
-Few dragons can match the fury of a wyvern. Their aggression is driven by hunting and territorial instinct. Many adventurers meet their end in the wyvern’s maw—some because the wyvern saw them as competitors, and others because the wyvern was simply hungry.
+The sight of a wyvern perched high atop a rotting tree or lit upon the jagged peak of a shadowy mountain marks the boundary between the known lands and forest primeval. There are raw, ancient sorceries in the wilderness that imbue those lands with power and hate older than roads and carts. 
 
-Wyvern scales match the colors of the mud, rock, and rust that dominate the mountains and badlands where they prefer to reside. Unlike typical dragons, wyverns don’t have front legs—instead, they walk like bats, propelled by their rear legs and balancing on the joints of their wings.`,
+Though they superficially resemble dragons, wyverns are not dragons or dragon-kin. Distant relatives of the terror lizards of Ix, wyverns sport tough, leathery skin with hues running from brown to red to black depending on their native terrain. They are solitary creatures who track their prey by following the smell of fear they create.`,
 	picture: null,
 	information: [
 		{
@@ -61,12 +61,12 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 			name: 'Overflowing Rage',
 			cost: 7,
 			sections: [
-				'Each wyvern’s anger ﬁlls the area with a thick miasma of hated. Each enemy makes an **Intuition test**.',
+				'Each wyvern’s anger ﬁlls the encounter map with a thick miasma of hated. Each enemy in the encounter makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Intuition,
-					tier1: 'Taunted by the nearest creature or object (save ends); power rolls made against the target have a double edge while they are taunted',
-					tier2: 'Taunted by the nearest creature or object (save ends)',
-					tier3: 'no effect'
+					tier1: 'The target is taunted by the nearest creature or object (save ends). While the target is taunted this way, power rolls against them have a double edge.',
+					tier2: 'The target is taunded by the nearest creature or object (save ends).',
+					tier3: 'No effect.'
 				})
 			]
 		})

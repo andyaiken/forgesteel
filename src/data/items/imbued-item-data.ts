@@ -541,7 +541,7 @@ An implement imbued with an enhancement grants you special benefits while it is 
 								id: 'hallucinatory',
 								name: 'Hallucinatory',
 								type: FactoryLogic.type.createManeuver(),
-								distance: [ FactoryLogic.distance.create({type: AbilityDistanceType.Aura, value: 2}) ],
+								distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
 								target: 'Each enemy in the area',
 								sections: [
 									FactoryLogic.createAbilitySectionText('The area is difficult terrain for your enemies until the end of the encounter.')

@@ -430,14 +430,14 @@ export class LeveledArmorData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-paper-trappings-5b',
 							name: '',
-							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You are paper thin' ]}),
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You are paper thin' ] }),
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'One creature who is the same size or smaller than you',
 							sections: [
 								FactoryLogic.createAbilitySectionText('The target is grabbed by you.')
 							]
 						})
-					}),
+					})
 				]
 			},
 			{
@@ -457,14 +457,14 @@ export class LeveledArmorData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-paper-trappings-9b',
 							name: '',
-							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You are paper thin' ]}),
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You are paper thin' ] }),
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'One creature who is grabbed by you',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You constrict the target, dealing 10 damage to them. A creature damaged this way takes a bane when using the Escape Grab maneuver against you and when making strikes against you.')
 							]
 						})
-					}),
+					})
 				]
 			}
 		]

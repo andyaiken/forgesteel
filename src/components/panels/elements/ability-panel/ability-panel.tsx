@@ -142,8 +142,6 @@ export const AbilityPanel = (props: Props) => {
 		const hasRoll = (props.ability.sections || []).some(s => s.type === 'roll');
 
 		if ((conditions.includes(ConditionType.Bleeding) || ((state === 'dying') && (props.ability.id !== AbilityData.catchBreath.id))) && ([ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Trigger ].includes(props.ability.type.usage) || props.ability.keywords.includes(AbilityKeyword.Strike))) {
-			props.hero?.class?.level
-			props.monster?.level
 			warnings.push({
 				label: ConditionType.Bleeding,
 				text: `After using this ability, you lose 1d6 + ${level} Stamina.`

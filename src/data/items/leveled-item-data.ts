@@ -27,7 +27,7 @@ export class LeveledItemData {
 					FactoryLogic.feature.create({
 						id: 'item-bloodbound-band-1',
 						name: '',
-						description: 'During a respite, you can touch the ring to any number of other Bloodbound Bands worn by willing creatures to form a bond among all of you. Creatures related by blood can\'t form bonds in this way. Bonded creatures can each use the highest recovery value of any bonded creature in place of their own, and can spend each other\'s Recoveries as if they were their own. Whenever any other bonded creature takes damage, each bonded creature takes 1 damage that can\'t be reduced in any way. Your bond ends if you remove the ring, use it to bond with one or more other creatures, or die, but other rings continue to be bonded to each other.'
+						description: 'During g a respite, you can touch the ring to any number of other Bloodbound Bands worn by willing creatures to form a bond among all of you. Creatures related by blood can’t form bonds in this way. Bonded creatures can each use the highest recovery value of any bonded creature in place of their own, and can spend each other’s Recoveries as if they were their own. Whenever any other bonded creature takes damage, each bonded creature takes 1 damage that can’t be reduced in any way. Your bond ends if you remove the ring, use it to bond with one or more other creatures, or die, but other rings continue to be bonded to each other.'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-bloodbound-band-1a',
@@ -62,7 +62,7 @@ export class LeveledItemData {
 					FactoryLogic.feature.create({
 						id: 'item-bloodbound-band-9',
 						name: '',
-						description: 'If a creature bonded with you dies, you can choose to die in their place. Your sacrifice twists fate to remove the creature from danger, and they regain Stamina equal to their winded value. Your ring then teleports into their possession and ceases to be magical.'
+						description: 'If a creature bonded with you dies, you can choose to die in their place. Your sacrifice twists fate to remove the creature from danger, and they regain Stamina equal to their winded value. Your ring then teleports into their possession and ceases to be magic.'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-bloodbound-band-9a',
@@ -109,7 +109,7 @@ export class LeveledItemData {
 					FactoryLogic.feature.create({
 						id: 'item-bloody-hand-wraps-5',
 						name: '',
-						description: 'Once per turn, you can take 10 damage that can\'t be reduced in any way to make a melee free strike (no action required).'
+						description: 'Once per turn, you can take 10 damage that can\'t be reduced in any way to make a melee free strike (no action required). On your turn, you can use the wraps’ melee free strike option or Grab maneuver option, but only one.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-bloody-hand-wraps-5a',
@@ -125,7 +125,7 @@ export class LeveledItemData {
 					FactoryLogic.feature.create({
 						id: 'item-bloody-hand-wraps-9',
 						name: '',
-						description: 'Once per turn, you can take 15 damage that can\'t be reduced in any way to use a signature ability (no action required).'
+						description: 'Once per turn, you can take 15 damage that can\'t be reduced in any way to use a signature ability (no action required). On your turn, you can use the wraps’ signature ability option, melee free strike option, or Grab maneuver option, but only one.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-bloody-hand-wraps-9a',
@@ -141,7 +141,7 @@ export class LeveledItemData {
 	static lightningTreads: Item = FactoryLogic.createItem({
 		id: 'item-lightning-treads',
 		name: 'Lightning Treads',
-		description: 'Sparks strike from these boots whenever they touch the ground, increasing in number as the wearer gathers speed.',
+		description: 'Sparks strike from these boots whenever they touch the ground,increasing in number as the wearer gathers speed.',
 		type: ItemType.Leveled,
 		keywords: [ AbilityKeyword.Feet, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
@@ -200,6 +200,19 @@ export class LeveledItemData {
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
 						value: 1,
 						damageType: DamageType.Lightning
+					}),
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-lightning-treads-9b',
+							name: 'Item Ability',
+							description: 'Perform a flying lightning kick',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
+							target: 'One enemy',
+							sections: [
+								FactoryLogic.createAbilitySectionText('The target is pushed up to 5 squares, and you can move to any square adjacent to the target after the push.')
+							]
+						})
 					})
 				]
 			}
@@ -209,7 +222,7 @@ export class LeveledItemData {
 	static revengersWrap: Item = FactoryLogic.createItem({
 		id: 'item-revengers-wrap',
 		name: 'Revenger\'s Wrap',
-		description: 'When first handled, this tattered cloak fills the mind with thoughts of revenge',
+		description: 'When first handled, this tattered cloak fills the mind with thoughts of revenge.',
 		type: ItemType.Leveled,
 		keywords: [ AbilityKeyword.Neck, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
@@ -225,7 +238,7 @@ export class LeveledItemData {
 					FactoryLogic.feature.create({
 						id: 'item-revengers-wrap-1',
 						name: '',
-						description: 'While you wear this cloak, any creature who damages you is marked for revenge until the end of your next turn or until another creature damages you. Any strike you make against a creature marked for revenge deals extra damage equal to your highest characteristic score, and whenever you damage a creature marked for revenge, they are also bleeding until the end of their turn.'
+						description: 'While you wear this cloak, any creature who damages you is marked for revenge until the end of your next turn or until another creature damages you. Any strike you make against a creature marked for revenge deals extra damage equal to your highest characteristic score, and whenever you damage a creature marked for revenge, they are also bleeding until the end of their next turn.'
 					})
 				]
 			},
@@ -245,7 +258,7 @@ export class LeveledItemData {
 					FactoryLogic.feature.create({
 						id: 'item-revengers-wrap-9',
 						name: '',
-						description: 'When you have three or more creatures marked for revenge and you target one of them with an ability that targets only one creature, you target all the creatures marked for revenge regardless of their distance and line of effect from you.'
+						description: 'When you have three or more creatures marked for revenge and you target one of them with an ability that targets only one creature, you target all the creatures marked for revenge, regardless of their distance from you and even if you don’t have line of effect to them.'
 					})
 				]
 			}
@@ -255,7 +268,7 @@ export class LeveledItemData {
 	static thiefOfJoy: Item = FactoryLogic.createItem({
 		id: 'item-thief-of-joy',
 		name: 'Thief of Joy',
-		description: 'This burnished copper torc thrums with a sense of judgment.',
+		description: 'This burnished copper torque thrums with a sense of judgment.',
 		type: ItemType.Leveled,
 		keywords: [ AbilityKeyword.Neck, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
@@ -268,16 +281,33 @@ export class LeveledItemData {
 			{
 				level: 1,
 				features: [
-					FactoryLogic.feature.create({
-						id: 'item-thief-of-joy-1',
-						name: '',
-						description: `
-You can use a maneuver to choose a creature in your line of effect and learn their level. If their level is higher than yours, the torc grants you envy. If their level is equal to or lower than yours, the torc grants you disdain.
-
-You can have both envy and disdain, but not more than one instance of either. Whenever a creature within 10 squares of you deals damage to another creature, you can use a triggered action to expend your envy or disdain. If you expend envy, you deal damage equal to the triggering damage to a creature adjacent to you. If you expend disdain, you reduce the triggering damage by half. At the end of the encounter, you lose any envy or disdain granted by the torc.`
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-thief-of-joy-1',
+							name: 'Item Ability',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createSpecial('Line of effect') ],
+							target: 'One creature',
+							sections: [
+								FactoryLogic.createAbilitySectionText('You learn the target\'s level. If their level is higher than yours, the torque grants you envy. If their level is equal to or lower than yours, the torque grants you disdain. You can have both envy and disdain from different creatures, but not more than one instance of either.'),
+								FactoryLogic.createAbilitySectionPackage('item-thief-of-joy-tag')
+							]
+						})
+					}),
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-thief-of-joy-1a',
+							name: 'Item Ability',
+							type: FactoryLogic.type.createTrigger('The target deals damage to another creature'),
+							distance: [ FactoryLogic.distance.createRanged(10) ],
+							target: 'One creature',
+							sections: [
+								FactoryLogic.createAbilitySectionText('You expend your envy or disdain. If you expend envy, you deal damage equal to the triggering damage to a creature adjacent to you. If you expend disdain, you reduce the triggering damage by half. At the end of the encounter, you lose any envy or disdain granted by the torque.')
+							]
+						})
 					}),
 					FactoryLogic.feature.createBonus({
-						id: 'item-thief-of-joy-1a',
+						id: 'item-thief-of-joy-1b',
 						field: FeatureField.Stamina,
 						valueCharacteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 						valueCharacteristicMultiplier: 2
@@ -287,32 +317,33 @@ You can have both envy and disdain, but not more than one instance of either. Wh
 			{
 				level: 5,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-thief-of-joy-5',
-						name: '',
-						description: 'When you use the torc\'s maneuver and the target creature is the same level as you, you gain your choice of envy or disdain.'
+						name: '5th',
+						description: 'When the target creature is the same level as you, you gain your choice of envy or disdain.',
+						tag: 'item-thief-of-joy-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-thief-of-joy-5a',
 						field: FeatureField.Stamina,
 						valueCharacteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						valueCharacteristicMultiplier: 3
 					})
 				]
 			},
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
-						id: 'item-thief-of-joy-9',
-						name: '',
-						description: 'You can have multiple instances of envy and disdain, with no limit on either.'
+					FactoryLogic.feature.createPackageContent({
+						id: 'item-thief-of-joy-5',
+						name: '9th',
+						description: 'You can have multiple instances of envy and disdain, with no limit on either.',
+						tag: 'item-thief-of-joy-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-thief-of-joy-9a',
 						field: FeatureField.Stamina,
 						valueCharacteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						valueCharacteristicMultiplier: 5
+						valueCharacteristicMultiplier: 2
 					})
 				]
 			}

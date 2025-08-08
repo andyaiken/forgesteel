@@ -412,7 +412,6 @@ export class SourcebookData {
 			LeveledImplementData.chaldorb,
 			LeveledImplementData.etherFueledVessel,
 			LeveledImplementData.foesenseLenses,
-			LeveledImplementData.geometricManipulator,
 			LeveledImplementData.wordsBecomeWonders,
 			LeveledWeaponData.authoritysEnd,
 			LeveledWeaponData.bladeOfQuintessence,
@@ -441,6 +440,7 @@ export class SourcebookData {
 			ImbuedItemData.imbuedWeapon
 		],
 		monsterGroups: [
+			MonsterData.ajax,
 			MonsterData.angulotl,
 			MonsterData.animal,
 			MonsterData.ankheg,

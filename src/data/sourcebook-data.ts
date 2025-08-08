@@ -392,7 +392,6 @@ export class SourcebookData {
 			TrinketData.divineVine,
 			TrinketData.flameshadeGloves,
 			TrinketData.geckoGloves,
-			TrinketData.gyrotoque,
 			TrinketData.hellchargerHelm,
 			TrinketData.maskOfTheMany,
 			TrinketData.quantumSatchel,

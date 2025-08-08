@@ -1,4 +1,5 @@
 import { FactoryLogic } from '../logic/factory-logic';
+import { ajax } from './monsters/ajax';
 import { angulotl } from './monsters/angulotl';
 import { animal } from './monsters/animal';
 import { ankheg } from './monsters/ankheg';
@@ -50,6 +51,7 @@ import { wyvern } from './monsters/wyvern';
 import { xorannox } from './monsters/xorannox';
 
 export class MonsterData {
+	static ajax = ajax;
 	static angulotl = angulotl;
 	static animal = animal;
 	static ankheg = ankheg;

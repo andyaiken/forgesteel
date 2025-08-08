@@ -440,6 +440,7 @@ export class SourcebookData {
 			ImbuedItemData.imbuedWeapon
 		],
 		monsterGroups: [
+			MonsterData.ajax,
 			MonsterData.angulotl,
 			MonsterData.animal,
 			MonsterData.ankheg,

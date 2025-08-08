@@ -121,7 +121,8 @@ export class ImbuedItemData {
 								distance: [ FactoryLogic.distance.createSelf() ],
 								target: 'Self',
 								sections: [
-									FactoryLogic.createAbilitySectionText('The first time an adjacent creature deals damage to you before the end of your next turn, they take lightning damage equal to your highest characteristic score and you can push them 1 square.')
+									FactoryLogic.createAbilitySectionText('The first time an adjacent creature deals damage to you before the end of your next turn, they take lightning damage equal to your highest characteristic score and you can push them 1 square.'),
+									FactoryLogic.createAbilitySectionPackage('tempest-tag')
 								]
 							})
 						}),
@@ -245,10 +246,11 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						selected: false
 					},
 					{
-						feature: FactoryLogic.feature.create({
+						feature: FactoryLogic.feature.createPackageContent({
 							id: 'tempest-ii',
 							name: 'Tempest II',
-							description: ' When you use the armor’s Tempest I enhancement, the affected creature takes 8 lightning damage and you push them up to 3 squares.'
+							description: 'The target takes 8 lightning damage and you push them up to 3 squares.',
+							tag: 'tempest-tag'
 						}),
 						selected: false
 					}

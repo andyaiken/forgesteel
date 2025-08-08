@@ -84,7 +84,7 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-adaptive-second-skin-9b',
-							name: '',
+							name: 'Armor Ability',
 							type: FactoryLogic.type.createManeuver(),
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
 							target: 'Liquid or gas in the area',
@@ -259,13 +259,14 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-kings-roar-1',
-							name: '',
+							name: 'Armor Ability',
 							description: 'You make the shield’s lion face roar.',
 							type: FactoryLogic.type.createManeuver(),
 							distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
 							target: 'One creature or object',
 							sections: [
-								FactoryLogic.createAbilitySectionText('Push the target up to 3 squares.')
+								FactoryLogic.createAbilitySectionText('Push the target up to 3 squares.'),
+								FactoryLogic.createAbilitySectionPackage('item-kings-roar-tag')
 							]
 						})
 					}),
@@ -279,10 +280,11 @@ export class LeveledArmorData {
 			{
 				level: 5,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-kings-roar-5',
-						name: '',
-						description: 'When you cause the shield to roar, you target one creature or object within 3 squares and push that target up to 4 squares.'
+						name: '5th',
+						description: 'Instead, target one creature or object within 3 squares and push that target up to 4 squares.',
+						tag: 'item-kings-roar-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-kings-roar-5a',
@@ -294,10 +296,11 @@ export class LeveledArmorData {
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-kings-roar-9',
-						name: '',
-						description: 'When you cause the shield to roar, you target one creature or object within 6 squares, you push that target up to 5 squares, and the target is slowed until the end of their turn.'
+						name: '9th',
+						description: 'Instead, target one creature or object within 6 squares, you push that target up to 5 squares, and the target is slowed until the end of their turn.',
+						tag: 'item-kings-roar-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-kings-roar-9a',
@@ -328,13 +331,14 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-kuranzoi-prismscale-1',
-							name: '',
+							name: 'Armor Ability',
 							description: 'You capture a moment of time in the armor.',
 							type: FactoryLogic.type.createTrigger('The target deals damage to you'),
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: 'One creature',
 							sections: [
-								FactoryLogic.createAbilitySectionText('The target is slowed until the end of their next turn.')
+								FactoryLogic.createAbilitySectionText('The target is slowed until the end of their next turn.'),
+								FactoryLogic.createAbilitySectionPackage('item-kuranzoi-prismscale-tag')
 							]
 						})
 					}),
@@ -348,10 +352,11 @@ export class LeveledArmorData {
 			{
 				level: 5,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-kuranzoi-prismscale-5',
-						name: '',
-						description: 'When you capture a moment of time in the armor, the triggering creature also takes corruption damage equal to twice your highest characteristic score.'
+						name: '5th',
+						description: 'The target also takes corruption damage equal to twice your highest characteristic score.',
+						tag: 'item-kuranzoi-prismscale-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-kuranzoi-prismscale-5a',
@@ -363,10 +368,11 @@ export class LeveledArmorData {
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-kuranzoi-prismscale-9',
-						name: '',
-						description: 'Whenever you capture a moment of time in the armor, you can immediately release it to gain a +3 bonus to speed that lasts until the end of your next turn.'
+						name: '9th',
+						description: 'You can immediately release the captured moment to gain a +3 bonus to speed that lasts until the end of your next turn.',
+						tag: 'item-kuranzoi-prismscale-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-kuranzoi-prismscale-9a',
@@ -397,12 +403,13 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-paper-trappings-1',
-							name: '',
+							name: 'Armor Ability',
 							type: FactoryLogic.type.createMain(),
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You fold in on yourself until you and your gear are paper thin. This effect lasts for 1 minute, letting you easily slip through any opening that is 1 inch wide or more. When you return to your three-dimensional form, you are dazed for 1 minute. If you return to your true form while in a space that is too small for you, you are violently expelled into the nearest open space of your choice and take 3d6 damage.')
+								FactoryLogic.createAbilitySectionText('You fold in on yourself until you and your gear are paper thin. This effect lasts for 1 minute, letting you easily slip through any opening that is 1 inch wide or more. When you return to your three-dimensional form, you are dazed for 1 minute. If you return to your true form while in a space that is too small for you, you are violently expelled into the nearest open space of your choice and take 3d6 damage.'),
+								FactoryLogic.createAbilitySectionPackage('item-paper-trappings-tag')
 							]
 						})
 					}),
@@ -416,10 +423,11 @@ export class LeveledArmorData {
 			{
 				level: 5,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-paper-trappings-5',
-						name: '',
-						description: 'When you return to your true form, you are dazed only until the end of your next turn.'
+						name: '5th',
+						description: 'When you return to your true form, you are dazed only until the end of your next turn.',
+						tag: 'item-paper-trappings-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-paper-trappings-5a',
@@ -429,7 +437,7 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-paper-trappings-5b',
-							name: '',
+							name: 'Armor Ability',
 							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You are paper thin' ] }),
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'One creature who is the same size or smaller than you',
@@ -443,10 +451,11 @@ export class LeveledArmorData {
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-paper-trappings-9',
-						name: '',
-						description: 'You are no longer dazed when you return to your true form.'
+						name: '9th',
+						description: 'You are no longer dazed when you return to your true form.',
+						tag: 'item-paper-trappings-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-paper-trappings-9a',
@@ -456,7 +465,7 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-paper-trappings-9b',
-							name: '',
+							name: 'Armor Ability',
 							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You are paper thin' ] }),
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'One creature who is grabbed by you',
@@ -504,12 +513,13 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-shrouded-memory-5',
-							name: '',
+							name: 'Armor Ability',
 							type: FactoryLogic.type.createTrigger('You take damage'),
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: 'Self',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You teleport within range. You create an illusion of you dying in your previous space, which fades at the end of your next turn.')
+								FactoryLogic.createAbilitySectionText('You teleport within range. You create an illusion of you dying in your previous space, which fades at the end of your next turn.'),
+								FactoryLogic.createAbilitySectionPackage('item-shrouded-memory-tag')
 							]
 						})
 					}),
@@ -523,10 +533,11 @@ export class LeveledArmorData {
 			{
 				level: 9,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-shrouded-memory-9',
-						name: '',
-						description: 'Whenever you use the armor’s triggered action to teleport, you can teleport up to a number of squares equal to the damage taken (minimum 5 squares). Additionally, if a creature dealt you the triggering damage, you become invisible to that creature until the end of your next turn.'
+						name: '9th',
+						description: 'You can teleport up to a number of squares equal to the damage taken (minimum 5 squares). Additionally, if a creature dealt you the triggering damage, you become invisible to that creature until the end of your next turn.',
+						tag: 'item-shrouded-memory-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-shrouded-memory-9a',
@@ -557,12 +568,13 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-spiny-turtle-1',
-							name: '',
+							name: 'Armor Ability',
 							type: FactoryLogic.type.createMain(),
 							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 4, within: 1 }) ],
 							target: 'Special',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You expand the armor on your back to create a wall of metal behind you. The wall is an object that retracts if you move, or if it takes 15 damage. It the requires a main action to recalibrate before it can be deployed again.')
+								FactoryLogic.createAbilitySectionText('You expand the armor on your back to create a wall of metal behind you. The wall is an object that retracts if you move, or if it takes 15 damage. It the requires a main action to recalibrate before it can be deployed again.'),
+								FactoryLogic.createAbilitySectionPackage('item-spiny-turtle-tag')
 							]
 						})
 					}),
@@ -576,10 +588,11 @@ export class LeveledArmorData {
 			{
 				level: 5,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-spiny-turtle-5',
-						name: '',
-						description: 'The damage the wall can take before retracting increases to 25. Additionally, while the wall is expanded, spikes extrude from it, and any creature who deals damage to the wall while adjacent to it takes 3 damage.'
+						name: '5th',
+						description: 'The damage the wall can take before retracting increases to 25. Additionally, while the wall is expanded, spikes extrude from it, and any creature who deals damage to the wall while adjacent to it takes 3 damage.',
+						tag: 'item-spiny-turtle-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-spiny-turtle-5a',
@@ -635,12 +648,13 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-star-hunter-1b',
-							name: '',
+							name: 'Armor Ability',
 							type: FactoryLogic.type.createManeuver(),
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You turn invisible. Your invisibility ends if you take damage or use an ability, or at the end of your next turn.')
+								FactoryLogic.createAbilitySectionText('You turn invisible. Your invisibility ends if you take damage or use an ability, or at the end of your next turn.'),
+								FactoryLogic.createAbilitySectionPackage('item-star-hunter-tag')
 							]
 						})
 					})
@@ -652,7 +666,7 @@ export class LeveledArmorData {
 					FactoryLogic.feature.create({
 						id: 'item-star-hunter-5',
 						name: '',
-						description: 'You instinctively know the location of any concealed creature within 5 squares. Your invisibility no longer ends at the end of your next turn.'
+						description: 'You instinctively know the location of any concealed creature within 5 squares.'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-star-hunter-5a',
@@ -668,7 +682,13 @@ export class LeveledArmorData {
 								value: 5
 							})
 						]
-					})
+					}),
+					FactoryLogic.feature.createPackageContent({
+						id: 'item-star-hunter-5c',
+						name: '5th',
+						description: 'Your invisibility no longer ends at the end of your next turn.',
+						tag: 'item-star-hunter-tag'
+					}),
 				]
 			},
 			{
@@ -677,7 +697,7 @@ export class LeveledArmorData {
 					FactoryLogic.feature.create({
 						id: 'item-star-hunter-9',
 						name: '',
-						description: 'You instinctively know the location of any concealed creature within 10 squares. Your invisibility no longer ends when you use an ability.'
+						description: 'You instinctively know the location of any concealed creature within 10 squares.'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-star-hunter-9a',
@@ -693,7 +713,13 @@ export class LeveledArmorData {
 								value: 5
 							})
 						]
-					})
+					}),
+					FactoryLogic.feature.createPackageContent({
+						id: 'item-star-hunter-9c',
+						name: '9th',
+						description: 'Your invisibility no longer ends when you use an ability.',
+						tag: 'item-star-hunter-tag'
+					}),
 				]
 			}
 		]
@@ -718,12 +744,13 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-telekinetic-bulwark-1',
-							name: '',
+							name: 'Armor Ability',
 							type: FactoryLogic.type.createTrigger('Target uses an ability', { free:true }),
 							distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
 							target: 'One enemy',
 							sections: [
-								FactoryLogic.createAbilitySectionText('Use the Grab maneuver against that enemy. You can have any number of enemies grabbed in this way.')
+								FactoryLogic.createAbilitySectionText('Use the Grab maneuver against that enemy. You can have any number of enemies grabbed in this way.'),
+								FactoryLogic.createAbilitySectionPackage('item-telekinetic-bulwark-tag')
 							]
 						})
 					}),
@@ -737,10 +764,11 @@ export class LeveledArmorData {
 			{
 				level: 5,
 				features: [
-					FactoryLogic.feature.create({
+					FactoryLogic.feature.createPackageContent({
 						id: 'item-telekinetic-bulwark-5',
-						name: '',
-						description: 'You can use the shield’s free triggered action to grab any enemy within 10 squares who uses an ability. Additionally, any enemy who uses the Escape Grab maneuver while grabbed this way takes a bane on the test.'
+						name: '5th',
+						description: 'The range increases to 10 squares. Additionally, any enemy who uses the Escape Grab maneuver while grabbed this way takes a bane on the test.',
+						tag: 'item-telekinetic-bulwark-tag'
 					}),
 					FactoryLogic.feature.createBonus({
 						id: 'item-telekinetic-bulwark-5a',

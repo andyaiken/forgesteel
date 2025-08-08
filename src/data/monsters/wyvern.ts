@@ -13,9 +13,9 @@ export const wyvern: MonsterGroup = {
 	id: 'monster-group-wyvern',
 	name: 'Wyvern',
 	description: `
-Few dragons can match the fury of a wyvern. Their aggression is driven by hunting and territorial instinct. Many adventurers meet their end in the wyvern’s maw—some because the wyvern saw them as competitors, and others because the wyvern was simply hungry.
+The sight of a wyvern perched high atop a rotting tree or lit upon the jagged peak of a shadowy mountain marks the boundary between the known lands and forest primeval. There are raw, ancient sorceries in the wilderness that imbue those lands with power and hate older than roads and carts. 
 
-Wyvern scales match the colors of the mud, rock, and rust that dominate the mountains and badlands where they prefer to reside. Unlike typical dragons, wyverns don’t have front legs—instead, they walk like bats, propelled by their rear legs and balancing on the joints of their wings.`,
+Though they superficially resemble dragons, wyverns are not dragons or dragon-kin. Distant relatives of the terror lizards of Ix, wyverns sport tough, leathery skin with hues running from brown to red to black depending on their native terrain. They are solitary creatures who track their prey by following the smell of fear they create.`,
 	picture: null,
 	information: [
 		{
@@ -36,7 +36,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 		{
 			id: 'wyvern-info-4',
 			name: 'Communicating with Wyverns',
-			description: 'Wyverns are unable to speak. However, a clever hero carrying a feast of fresh meat might still be able to reason with one.'
+			description: 'Wyverns are unable to speak. However, a clever hero carrying a feast of fresh meat might be able to reason with one.'
 		}
 	],
 	malice: [
@@ -50,7 +50,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'wyvern-malice-2',
-			name: 'Bully',
+			name: 'Boiling Fury',
 			cost: 5,
 			sections: [
 				'Until the end of the round, each wyvern in the encounter has a double edge on strikes and they can use their signature action instead of a free strike whenever they would make an opportunity attack.'
@@ -58,15 +58,15 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'wyvern-malice-3',
-			name: 'Rampage',
+			name: 'Overflowing Rage',
 			cost: 7,
 			sections: [
-				'Each wyvern’s anger ﬁlls the area with a thick miasma of hated. Each enemy makes an **Intuition test**.',
+				'Each wyvern’s anger ﬁlls the encounter map with a thick miasma of hated. Each enemy in the encounter makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Intuition,
-					tier1: 'Taunted by the nearest creature or object (save ends); power rolls made against the target have a double edge while they are taunted',
-					tier2: 'Taunted by the nearest creature or object (save ends)',
-					tier3: 'no effect'
+					tier1: 'The target is taunted by the nearest creature or object (save ends). While the target is taunted this way, power rolls against them have a double edge.',
+					tier2: 'The target is taunded by the nearest creature or object (save ends).',
+					tier3: 'No effect.'
 				})
 			]
 		})
@@ -91,7 +91,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						id: 'wyvern-1-feature-1',
 						name: 'Agonizing Stinger',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
@@ -99,13 +99,13 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '9 damage',
-								tier2: '14 damage; M<2 bleeding (save ends)',
-								tier3: '17 damage; M<3 bleeding (save ends)'
+								tier2: '14 damage; M < 2 bleeding (save ends)',
+								tier3: '17 damage; M < 3 bleeding (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'The lurker deals an additional 6 acid damage to one target if they were hidden from them.'
+								effect: 'One target hidden from the lurker takes an extra 6 acid damage.'
 							})
 						]
 					})
@@ -116,17 +116,19 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						name: 'Acidic Anguish',
 						type: FactoryLogic.type.createMain(),
 						cost: 3,
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '10 acid damage; M<1 weakened (save ends)',
-								tier2: '16 acid damage; M<2 weakened (save ends)',
-								tier3: '20 acid damage; M<3 weakened (save ends)'
+								tier1: '10 acid damage; M < 1 weakened (save ends)',
+								tier2: '16 acid damage; M < 2 weakened (save ends)',
+								tier3: '20 acid damage; M < 3 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A target weakened from this ability takes 1d4 acid damage at the start of each of their turns until the condition ends.')
+							FactoryLogic.createAbilitySectionText(
+								'A target weakened this way takes 1d4 acid damage at the start of each of their turns.'
+							)
 						]
 					})
 				}),
@@ -139,7 +141,9 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The lurker flies up to their speed and hides. Each enemy that comes within 1 square of the lurker during this movement can choose to take 3 sonic damage or fall prone.')
+							FactoryLogic.createAbilitySectionText(
+								'The lurker flies up to their speed, then can attempt to hide. Each enemy the lurker moves adjacent to during this movement can choose to take 3 sonic damage or fall prone.'
+							)
 						]
 					})
 				}),
@@ -147,24 +151,26 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 					ability: FactoryLogic.createAbility({
 						id: 'wyvern-1-feature-4',
 						name: 'Retaliatory Dive',
-						type: FactoryLogic.type.createTrigger('A creature deals damage to the lurker with a ranged ability.'),
+						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the lurker with a ranged ability.'),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The lurker flies into a square adjacent to the target and makes a free strike against them.')
+							FactoryLogic.createAbilitySectionText(
+								'The lurker flies adjacent to the target and can make a free strike against them.'
+							)
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'wyvern-1-feature-5',
 					name: 'Ruthless Rage',
-					description: 'The lurker deals an additional 3 damage on strikes while within 10 squares of another wyvern.'
+					description: 'While within 10 squares of another wyvren, the lurker deals an additional 3 damage with strikes.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'wyvern-1-feature-6',
 					name: 'Tenacious Hunter',
-					description: 'Any creature suﬀering a condition inﬂicted by a wyvern can’t be hidden from the lurker.'
+					description: 'Any creature affected by a condition imposed by a wyvern can’t be hidden from the lurker.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wyvern-1-feature-7',
@@ -191,7 +197,7 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						id: 'wyvern-2-feature-1',
 						name: 'Sedating Stinger',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two creatures or objects',
 						cost: 'signature',
@@ -199,10 +205,10 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '9 damage',
-								tier2: '14 damage; M<2 slowed (save ends)',
-								tier3: '17 damage; M<3 slowed (save ends)'
+								tier2: '14 damage; M < 2 slowed (save ends)',
+								tier3: '17 damage; M < 3 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('The target is restrained (save ends) if they are already slowed.')
+							FactoryLogic.createAbilitySectionText('If a target slowed this way is already slowed, they are instead restrained (save ends).')
 						]
 					})
 				}),
@@ -211,20 +217,20 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						id: 'wyvern-2-feature-2',
 						name: 'Tail Sweep',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 3, value2: 6, within: 1 }) ],
-						target: 'All enemies and objects in the line',
+						target: 'Each enemy and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '6 damage; A<1 3 acid damage',
-								tier2: '11 damage; A<2 3 acid damage',
-								tier3: '14 damage; A<3 3 acid damage'
+								tier1: '6 damage; A < 1 3 acid damage',
+								tier2: '11 damage; A < 2 3 acid damage',
+								tier3: '14 damage; A < 3 3 acid damage'
 							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
-								effect: 'The predator uses this ability a second time. They can target a new line or the same one.'
+								effect: 'The predator uses this ability a second time, either recreating the same line or creating a new one.'
 							})
 						]
 					})
@@ -235,15 +241,15 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						name: 'Grasping Jaws',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '9 damage; A<1 grabbed',
-								tier2: '14 damage; A<2 grabbed',
-								tier3: '17 damage; A<3 grabbed (bane to escape)'
+								tier1: '9 damage; A < 1 grabbed',
+								tier2: '14 damage; A < 2 grabbed',
+								tier3: '17 damage; A < 3 grabbed and the target takes a bane on the Escape Grab maneuver'
 							}))
 						]
 					})
@@ -253,24 +259,24 @@ Wyvern scales match the colors of the mud, rock, and rust that dominate the moun
 						id: 'wyvern-2-feature-4',
 						name: 'Deterring Sting',
 						cost: 1,
-						type: FactoryLogic.type.createTrigger('A creature deals damage to the lurker with a melee ability.'),
-						keywords: [],
-						distance: [ FactoryLogic.distance.createSelf() ],
+						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the prdator with a melee ability.'),
+						keywords: [ AbilityKeyword.Melee ],
+						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The predator uses their Sedating Stinger ability against the target and then shifts 3.')
+							FactoryLogic.createAbilitySectionText('The predator uses Sedating Stinger against the target, then shifts up to 3 squares.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'wyvern-2-feature-5',
 					name: 'Stubborn Rage',
-					description: 'The predator is immune to being dazed or frightened while winded or while within 10 squares of another wyvern.'
+					description: 'While winded or within 10 squares of another wyvern, the predator can’t be made dazed or frightened.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'wyvern-2-feature-6',
 					name: 'Tenacious Hunter',
-					description: 'Any creature suﬀering a condition inﬂicted by a wyvern can’t be hidden from the lurker.'
+					description: 'Any creature affected by a condition imposed by a wyvern can’t be hidden from the predator.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wyvern-2-feature-7',

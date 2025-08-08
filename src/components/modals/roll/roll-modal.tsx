@@ -84,7 +84,7 @@ export const RollModal = (props: Props) => {
 									</thead>
 									<tbody>
 										<tr>
-											<td className='row-header'>11 -</td>
+											<td className='row-header'>≤ 11</td>
 											<td>Success with consequence</td>
 											<td>Failure</td>
 											<td>Failure with consequence</td>
@@ -96,7 +96,7 @@ export const RollModal = (props: Props) => {
 											<td>Failure</td>
 										</tr>
 										<tr>
-											<td className='row-header'>17 +</td>
+											<td className='row-header'>≥ 17</td>
 											<td>Success with reward</td>
 											<td>Success</td>
 											<td>Success</td>

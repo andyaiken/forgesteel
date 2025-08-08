@@ -412,7 +412,6 @@ export class SourcebookData {
 			LeveledImplementData.chaldorb,
 			LeveledImplementData.etherFueledVessel,
 			LeveledImplementData.foesenseLenses,
-			LeveledImplementData.geometricManipulator,
 			LeveledImplementData.wordsBecomeWonders,
 			LeveledWeaponData.authoritysEnd,
 			LeveledWeaponData.bladeOfQuintessence,

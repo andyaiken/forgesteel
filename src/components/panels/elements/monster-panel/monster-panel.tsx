@@ -46,7 +46,18 @@ export const MonsterPanel = (props: Props) => {
 
 		const conditions = MonsterLogic.getConditionImmunities(props.monster);
 		const immunities = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Immunity);
+
+		let immunityText = "-";
+		if (immunities.length > 0) {
+			immunityText = immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
+		}
+
 		const weaknesses = MonsterLogic.getDamageModifiers(props.monster, DamageModifierType.Weakness);
+
+		let weaknessText = "-";
+		if (weaknesses.length > 0){
+			weaknessText = weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
+		}
 
 		const features = MonsterLogic.getFeatures(props.monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
 		const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
@@ -71,8 +82,8 @@ export const MonsterPanel = (props: Props) => {
 						props.mode === PanelMode.Full ?
 							<>
 								<div className='stats'>
-									<Field orientation='vertical' label='Speed' value={speedStr} />
 									<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
+									<Field orientation='vertical' label='Speed' value={speedStr} />
 									<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
 									<Field orientation='vertical' label='Stability' value={props.monster.stability} />
 									<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
@@ -86,6 +97,15 @@ export const MonsterPanel = (props: Props) => {
 										/>
 										: null
 								}
+								<div className='stats'>
+									<Field orientation='vertical' label='Immunities' value={immunityText} />
+									<Field orientation='vertical' label='Weaknesses' value={weaknessText} />
+									{
+										props.monster.withCaptain ?
+											<Field orientation='vertical' label='With Captain' value={props.monster.withCaptain} />
+											: null
+									}
+								</div>
 								<div className='stats'>
 									{
 										[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
@@ -114,23 +134,8 @@ export const MonsterPanel = (props: Props) => {
 													: null
 											}
 											{
-												props.monster.withCaptain ?
-													<Field label='With Captain' value={props.monster.withCaptain} />
-													: null
-											}
-											{
 												conditions.length > 0 ?
 													<Field label='Cannot Be' value={conditions.join(', ')} />
-													: null
-											}
-											{
-												immunities.length > 0 ?
-													<Field label='Immunities' value={immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
-													: null
-											}
-											{
-												weaknesses.length > 0 ?
-													<Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
 													: null
 											}
 											{features.map(f => <Field key={f.id} label={f.name} value={<Markdown text={f.description} useSpan={true} />} />)}

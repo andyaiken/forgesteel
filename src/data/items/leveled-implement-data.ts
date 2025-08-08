@@ -46,7 +46,7 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-abjurers-bastion-5',
-							name: '',
+							name: 'Implement Ability',
 							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you deal rolled damage using a magic or psionic ability' ]}),
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: 'Self or one ally',
@@ -115,7 +115,7 @@ export class LeveledImplementData {
 				features: [
 					FactoryLogic.feature.create({
 						id: 'item-brittlebreaker-1',
-						name: '',
+						name: 'Implement Ability',
 						description: 'While you wield this implement, you gain an edge on magic or psionic abilities if you aren’t at full Stamina, or a double edge if you are winded.'
 					}),
 					FactoryLogic.feature.createDamageModifier({
@@ -458,7 +458,7 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-words-become-wonders-5',
-							name: '',
+							name: 'Implement Ability',
 							type: FactoryLogic.type.createTrigger('Target uses a magic or psionic ability'),
 							distance: [ FactoryLogic.distance.createSpecial('Line of effect') ],
 							target: 'Self or one creature',

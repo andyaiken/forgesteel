@@ -47,11 +47,12 @@ export class LeveledImplementData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-abjurers-bastion-5',
 							name: '',
-							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You deal rolled damage using a magic or psionic ability' ]}),
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you deal rolled damage using a magic or psionic ability' ]}),
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: 'Self or one ally',
 							sections: [
-								FactoryLogic.createAbilitySectionText('Create an immobile field of protection that is a 1 cube around the target. While in the area, the target has damage immunity 5. The field disappears at the start of your next turn.')
+								FactoryLogic.createAbilitySectionText('Create an immobile field of protection that is a 1 cube around the target. While in the area, the target has damage immunity 5. The field disappears at the start of your next turn.'),
+								FactoryLogic.createAbilitySectionPackage('item-abjurers-bastion-tag')
 							]
 						})
 					}),
@@ -73,7 +74,7 @@ export class LeveledImplementData {
 					FactoryLogic.feature.create({
 						id: 'item-abjurers-bastion-9',
 						name: '',
-						description: 'Whenever you deal rolled damage to a creature using a magic or psionic ability, you and each ally within 5 squares of you gains temporary Stamina equal to your highest characteristic score. Additionally, the size of your field of protection increases to a 3 cube, and it can be placed anywhere within 10 squares of you. You and each ally in the area gain its benefits.'
+						description: 'Whenever you deal rolled damage to a creature using a magic or psionic ability, you and each ally within 5 squares of you gains temporary Stamina equal to your highest characteristic score.'
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-abjurers-bastion-9a',
@@ -84,6 +85,12 @@ export class LeveledImplementData {
 						id: 'item-abjurers-bastion-9b',
 						keywords: [ AbilityKeyword.Psionic ],
 						value: 1
+					}),
+					FactoryLogic.feature.createPackageContent({
+						id: 'item-abjurers-bastion-9c',
+						name: '9th',
+						description: 'he size of your field of protection increases to a 3 cube, and it can be placed anywhere within 10 squares of you. You and each ally in the area gain its benefits.',
+						tag: 'item-abjurers-bastion-tag'
 					})
 				]
 			}
@@ -124,12 +131,14 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-brittlebreaker-1b',
 						keywords: [ AbilityKeyword.Magic ],
-						value: 2
+						value: 2,
+						damageType: DamageType.Psychic
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-brittlebreaker-1c',
 						keywords: [ AbilityKeyword.Psionic ],
-						value: 2
+						value: 2,
+						damageType: DamageType.Psychic
 					})
 				]
 			},
@@ -144,12 +153,14 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-brittlebreaker-5a',
 						keywords: [ AbilityKeyword.Magic ],
-						value: 1
+						value: 1,
+						damageType: DamageType.Psychic
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-brittlebreaker-5b',
 						keywords: [ AbilityKeyword.Psionic ],
-						value: 1
+						value: 1,
+						damageType: DamageType.Psychic
 					})
 				]
 			},
@@ -164,12 +175,14 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-brittlebreaker-9a',
 						keywords: [ AbilityKeyword.Magic ],
-						value: 1
+						value: 1,
+						damageType: DamageType.Psychic
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-brittlebreaker-9b',
 						keywords: [ AbilityKeyword.Psionic ],
-						value: 1
+						value: 1,
+						damageType: DamageType.Psychic
 					})
 				]
 			}

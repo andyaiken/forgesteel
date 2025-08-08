@@ -574,7 +574,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 			prerequisites: 'The severed hand of a giant',
 			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 450
 		}),
 		effect: 'You gain a +1 bonus to the distance you push any target with any weapon ability.',
 		featuresByLevel: [
@@ -602,7 +602,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 			prerequisites: 'An overmind egg, the skin of any shapeshifter',
 			source: ': Texts or lore in the First Language',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 450
 		}),
 		featuresByLevel: [
 			{
@@ -635,7 +635,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 			prerequisites: 'A spool of mindspider silk, an ingot of white gold',
 			source: 'Texts or lore in Higaran',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 450
 		}),
 		effect: 'While wearing the Mirage Band, you automatically perceive illusions for what they are, you can see invisible creatures, and supernatural effects can’t conceal creatures and objects from you.',
 		featuresByLevel: [
@@ -671,7 +671,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 			prerequisites: 'A wafer of gallium arsenide',
 			source: 'Texts or lore in Mindspeech',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 450
 		}),
 		effect: 'You must be a null to wear this ring. While you do so, the area of your Null Field ability increases by 1.',
 		featuresByLevel: [
@@ -713,8 +713,8 @@ The coin must be picked up before it can be used again. If any creature picks up
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One-third of a pound of diamond dust, one nugget of pure silver',
 			source: 'Texts or lore in Khelt',
-			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			characteristic: [ Characteristic.Agility, Characteristic.Intuition ],
+			goal: 450
 		}),
 		effect: 'When targeted by any other effect that causes you to teleport, you can teleport up to 3 additional squares.',
 		featuresByLevel: [

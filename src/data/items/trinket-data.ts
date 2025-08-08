@@ -661,7 +661,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		]
 	});
 
-	static nullifiedResonatorRing : Item = FactoryLogic.createItem({
+	static nullfieldResonatorRing : Item = FactoryLogic.createItem({
 		id:  'item-nullfield-resonator-ring',
 		name: 'Nullfield Resonator Ring',
 		description: 'This simple band of copper vibrates slightly when handled.',

@@ -326,7 +326,7 @@ export class LeveledItemData {
 					FactoryLogic.feature.createBonus({
 						id: 'item-thief-of-joy-5a',
 						field: FeatureField.Stamina,
-						valueCharacteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+						valueCharacteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
 					})
 				]
 			},

@@ -47,7 +47,7 @@ export class LeveledImplementData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-abjurers-bastion-5',
 							name: 'Implement Ability',
-							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you deal rolled damage using a magic or psionic ability' ]}),
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you deal rolled damage using a magic or psionic ability' ] }),
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: 'Self or one ally',
 							sections: [

@@ -32,7 +32,7 @@ Most animals are not monsters, but some are twisted by magic and malice to becom
 			description: `When building an animal by adding traits to a stat block, you can use a shorthand to describe the animal. For example, a dire wolf might be denoted as “Predator B: Swiftness, Pack, Hunter” to indicate that you’re using the Predator B stat block with the Swiftness, Pack, and Hunter traits.
 
 The Example Animals table breaks out a number of animals using this notation. Selected traits are listed in order by category—mobility, defensive, offensive, and supernatural.`
-		},
+		}
 	],
 	malice: [],
 	monsters: [
@@ -714,7 +714,7 @@ The animal gains the following ability.
 
 **Typically Used By:** Death snails.`,
 			category: FeatureAddOnType.Supernatural,
-			cost: 10,
+			cost: 10
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'elemental-1',
@@ -723,7 +723,7 @@ The animal gains the following ability.
 
 **Typically Used By:** Fire salamanders, ice bats.`,
 			category: FeatureAddOnType.Supernatural,
-			cost: 2,
+			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'gelatinous-1',
@@ -732,7 +732,7 @@ The animal gains the following ability.
 
 **Typically Used By:** Earthworms, thunderjellies.`,
 			category: FeatureAddOnType.Supernatural,
-			cost: 2,
+			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'hypnosis-1',
@@ -741,7 +741,7 @@ The animal gains the following ability.
 
 **Typically Used By:** Angler fish, snakes, tigers.`,
 			category: FeatureAddOnType.Supernatural,
-			cost: 2,
+			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'imposer-1',
@@ -750,7 +750,7 @@ The animal gains the following ability.
 
 **Typically Used By:** Dire animals, terror lizards.`,
 			category: FeatureAddOnType.Supernatural,
-			cost: 2,
+			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'pass-through-1',
@@ -759,7 +759,7 @@ The animal gains the following ability.
 
 **Typically Used By:** Barn owls, tiger wraiths.`,
 			category: FeatureAddOnType.Supernatural,
-			cost: 2,
+			cost: 2
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'translation-1',

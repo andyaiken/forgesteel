@@ -140,7 +140,7 @@ export const CareerSection = (props: Props) => {
 				</div>
 				<Drawer open={showIncitingIncidents} onClose={() => setShowIncitingIncidents(false)} closeIcon={null} width='500px'>
 					<FeatureSelectModal
-						features={props.hero.career!.incitingIncidents.options.map(f => ({ feature: FactoryLogic.feature.create({ id: f.id, name: f.name, description: f.description }), value: 1 }))}
+						features={props.hero.career ? props.hero.career.incitingIncidents.options.map(f => ({ feature: FactoryLogic.feature.create({ id: f.id, name: f.name, description: f.description }), value: 1 })) : []}
 						options={props.options}
 						onSelect={f => {
 							setShowIncitingIncidents(false);

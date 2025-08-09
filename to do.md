@@ -1,7 +1,5 @@
 # Development Plans
 
-Use item select modal when choosing an item from a feature
-
 ### Heroes
 
 * Automatic update of library resources when there is a newer version

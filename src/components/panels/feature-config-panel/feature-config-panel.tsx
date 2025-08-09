@@ -25,6 +25,7 @@ import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Item } from '../../../models/item';
 import { ItemPanel } from '../elements/item-panel/item-panel';
+import { ItemSelectModal } from '../../modals/select/item-select/item-select-modal';
 import { Kit } from '../../../models/kit';
 import { KitPanel } from '../elements/kit-panel/kit-panel';
 import { KitSelectModal } from '../../modals/select/kit-select/kit-select-modal';
@@ -66,6 +67,7 @@ export const FeatureConfigPanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
 	const [ abilitySelectorOpen, setAbilitySelectorOpen ] = useState<boolean>(false);
 	const [ choiceSelectorOpen, setChoiceSelectorOpen ] = useState<boolean>(false);
+	const [ itemSelectorOpen, setItemSelectorOpen ] = useState<boolean>(false);
 	const [ kitSelectorOpen, setKitSelectorOpen ] = useState<boolean>(false);
 	const [ languageSelectorOpen, setLanguageSelectorOpen ] = useState<boolean>(false);
 	const [ monsterSelectorOpen, setMonsterSelectorOpen ] = useState<boolean>(false);
@@ -743,60 +745,17 @@ export const FeatureConfigPanel = (props: Props) => {
 			return null;
 		}
 
-		const items = SourcebookLogic.getItems(props.sourcebooks as Sourcebook[])
-			.filter(i => data.types.includes(i.type));
-
-		const sortedItems = Collections.sort(items, i => i.name);
-
-		if (sortedItems.length === 0) {
+		const getAddButton = () => {
 			return (
-				<Empty text='There are no options to choose for this feature.' />
+				<Button className='status-warning' block={true} onClick={() => setItemSelectorOpen(true)}>
+					Choose an item
+				</Button>
 			);
-		}
+		};
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
-				<Select
-					style={{ width: '100%' }}
-					status={data.selected.length < data.count ? 'warning' : ''}
-					mode={data.count === 1 ? undefined : 'multiple'}
-					maxCount={data.count === 1 ? undefined : data.count}
-					allowClear={true}
-					placeholder={data.count === 1 ? 'Select an item' : 'Select items'}
-					options={sortedItems.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
-					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(i => i.id)}
-					onChange={value => {
-						let ids: string[] = [];
-						if (data.count === 1) {
-							ids = value !== undefined ? [ value as string ] : [];
-						} else {
-							ids = value as string[];
-						}
-						const dataCopy = Utils.copy(data);
-						dataCopy.selected = [];
-						ids.forEach(id => {
-							const item = items.find(i => i.id === id);
-							if (item) {
-								dataCopy.selected.push(item);
-							}
-						});
-						if (props.setData) {
-							props.setData(props.feature.id, dataCopy);
-						}
-					}}
-				/>
 				{
 					data.selected.map(item => (
 						<Flex key={item.id} className='selection-box' align='center' gap={10}>
@@ -805,16 +764,52 @@ export const FeatureConfigPanel = (props: Props) => {
 								label={item.name}
 								value={<Markdown text={item.description} useSpan={true} />}
 							/>
-							<Button
-								style={{ flex: '0 0 auto' }}
-								type='text'
-								title='Show details'
-								icon={<InfoCircleOutlined />}
-								onClick={() => setSelectedItem(item)}
-							/>
+							<Flex vertical={true}>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									title='Show details'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedItem(item)}
+								/>
+								<Button
+									style={{ flex: '0 0 auto' }}
+									type='text'
+									title='Remove'
+									icon={<CloseOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = dataCopy.selected.filter(i => i.id !== item.id);
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</Flex>
 						</Flex>
 					))
 				}
+				{data.selected.length < data.count ? getAddButton() : null}
+				<Drawer open={itemSelectorOpen} onClose={() => setItemSelectorOpen(false)} closeIcon={null} width='500px'>
+					<ItemSelectModal
+						types={data.types}
+						sourcebooks={props.sourcebooks}
+						hero={props.hero}
+						options={props.options}
+						onSelect={item => {
+							setItemSelectorOpen(false);
+
+							const itemCopy = Utils.copy(item);
+
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected.push(itemCopy);
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setItemSelectorOpen(false)}
+					/>
+				</Drawer>
 				<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} width='500px'>
 					<Modal
 						content={selectedItem ? <ItemPanel item={selectedItem} options={props.options} /> : null}

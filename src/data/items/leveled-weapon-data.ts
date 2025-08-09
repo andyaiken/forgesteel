@@ -30,7 +30,7 @@ export class LeveledWeaponData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-authoritys-end-1',
 							name: 'Weapon Ability',
-							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you damage a creature with the weapon' ]}),
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you damage a creature with the weapon' ] }),
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: 'Self or one creature',
 							sections: [
@@ -135,7 +135,7 @@ export class LeveledWeaponData {
 						name: '',
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Ranged ],
 						value: 3
-					}),
+					})
 				]
 			},
 			{
@@ -266,7 +266,7 @@ export class LeveledWeaponData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-displacer-1',
 							name: 'Weapon Ability',
-							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you deal rolled damage' ]}),
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you deal rolled damage' ] }),
 							distance: [ FactoryLogic.distance.createSpecial('') ],
 							target: 'Special',
 							sections: [
@@ -506,7 +506,7 @@ export class LeveledWeaponData {
 							distance: [ FactoryLogic.distance.createSpecial('') ],
 							target: 'Special',
 							sections: [
-								FactoryLogic.createAbilitySectionText('Expend any number of bright-glowing indentations, with the ability dealing extra psychic damage equal to the number of indentations. The expended indentations then return to a dim glow.'),
+								FactoryLogic.createAbilitySectionText('Expend any number of bright-glowing indentations, with the ability dealing extra psychic damage equal to the number of indentations. The expended indentations then return to a dim glow.')
 							]
 						})
 					})
@@ -662,7 +662,7 @@ export class LeveledWeaponData {
 							distance: [ FactoryLogic.distance.createSpecial('') ],
 							target: 'One creature grabbed by the net.',
 							sections: [
-								FactoryLogic.createAbilitySectionText('Make a free strike with another weapon against the target'),
+								FactoryLogic.createAbilitySectionText('Make a free strike with another weapon against the target')
 							]
 						})
 					})
@@ -960,7 +960,7 @@ export class LeveledWeaponData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-wetwork-1',
 							name: 'Weapon Ability',
-							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you reduce a creature to 0 stamina using this weapon' ]}),
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you reduce a creature to 0 stamina using this weapon' ] }),
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'One enemy',
 							sections: [

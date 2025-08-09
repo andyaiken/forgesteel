@@ -688,7 +688,7 @@ export class LeveledArmorData {
 						name: '5th',
 						description: 'Your invisibility no longer ends at the end of your next turn.',
 						tag: 'item-star-hunter-tag'
-					}),
+					})
 				]
 			},
 			{
@@ -719,7 +719,7 @@ export class LeveledArmorData {
 						name: '9th',
 						description: 'Your invisibility no longer ends when you use an ability.',
 						tag: 'item-star-hunter-tag'
-					}),
+					})
 				]
 			}
 		]

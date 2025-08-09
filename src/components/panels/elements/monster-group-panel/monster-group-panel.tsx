@@ -80,7 +80,7 @@ export const MonsterGroupPanel = (props: Props) => {
 							<>
 								<HeaderText level={1}>Customization</HeaderText>
 								<div className='add-ons'>
-									{props.monsterGroup.addOns.map(a => <FeaturePanel key={a.id} feature={a} options={props.options} mode={PanelMode.Full} />)}
+									{props.monsterGroup.addOns.map(a => <FeaturePanel key={a.id} feature={a} options={props.options} cost={a.data.cost} mode={PanelMode.Full} />)}
 								</div>
 							</>
 							: null

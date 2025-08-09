@@ -1,0 +1,151 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.modifiers {
+    grid-row-end: span 2;
+    max-height: 613px;
+    // overflow-y: auto;
+
+    display: grid;
+    grid-template-rows: repeat(4, max-content) 1fr;
+
+    h2, ul, .name {
+        margin: 0 10px;
+        padding: 8px 0;
+    }
+
+    .name {
+        padding: 10px 20px;
+
+        &.labeled-field:not(.just-for-precedence)>.labeled-field-content {
+            @include common.beveled(10px, 2px, common.$color-medium);
+            min-height: 3rem;
+        }
+    }
+
+    ul.modifier-types {
+        list-style-type: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        padding: 0;
+
+        li {
+            margin: 0 15px;
+        }
+        label {
+            font-size: 1.3rem;
+        }
+    }
+
+    .modifier-augmentations {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: 2px solid common.$color-light;
+        padding-bottom: 10px;
+
+        .proficiencies {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+
+            .labeled-field {
+                margin-left: 0;
+                margin-right: 0;
+
+                .labeled-field-content span {
+                    font-size: 1.1rem;
+                }
+            }
+        }
+    
+        .stats {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+
+    .effects {
+        display: grid;
+        grid-template-rows: min-content 1fr;
+
+        h4 {
+            margin: 0;
+        }
+    }
+
+    .damage-modifiers {
+        display: none;
+    }
+    .kit .damage-modifiers {
+        display: flex;
+        justify-content: space-around;
+        align-content: stretch;
+
+        border-bottom: 2px solid common.$color-light;
+        margin-bottom: 5px;
+        // margin-top: -10px;
+    }
+
+    .power-roll-damage-modifiers {
+        display: grid;
+        grid-template-rows: min-content 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        place-items: stretch;
+        padding: 10px 0;
+
+        h4 {
+            grid-column-end: span 3;
+            text-align: center;
+        }
+
+        .roll-tiers {
+            grid-column-end: span 3;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            place-items: stretch;
+            min-height: 50px;
+
+            .tier {
+                margin: 5px 0 0;
+                display: grid;
+                grid-template-rows: 1fr min-content;
+                place-items: center;
+
+                &:not(:last-child) {
+                    border-right: 2px solid common.$color-light;
+                }
+
+                div {
+                    @include common.font-slab();
+                    font-size: 1.4rem;
+                }
+
+                .range {
+                    width: 50px;
+                    height: 20px;
+                    opacity: 0.6;
+                }
+            }
+
+        }
+
+        .labeled-field{
+            margin: 5px 0 0;
+            &:not(:last-child) {
+                border-right: 2px solid common.$color-light;
+            }
+        }
+    }
+
+    .benefits {
+        padding: 0 5px;
+        display: grid;
+        grid-template-rows: min-content 1fr;
+
+        .features {
+            justify-self: stretch;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

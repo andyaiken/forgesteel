@@ -1,0 +1,305 @@
+@use 'sass:color';
+
+$color-extra-light: #eee;
+$color-light: #bbb;
+$color-medium: #666;
+$color-dark: #444;
+$color-text: #444;
+
+@mixin font-slab() {
+    font-family: 'Roboto Slab', Georgia, serif !important;
+    font-weight: 400;
+}
+@mixin font-serif() {
+    font-family: 'Merriweather', Georgia, serif !important;
+}
+@mixin font-potency() {
+    font-family: 'Draw Steel Potencies', Arial, Helvetica, sans-serif !important;
+}
+
+@mixin beveled($bevel-size, $border-size, $border-color) {
+    border: 0;
+    background-color: transparent;
+    $angle: 45deg;
+    $epsilon: calc(($border-size - ($border-size * cos($angle))));
+
+    $bevel-border-start: calc(50% - $epsilon);
+    $bevel-border-fade-start: calc($bevel-border-start - 0.1px);
+    $bevel-border-end: calc($bevel-border-start + $border-size);
+    $bevel-border-fade-end: calc($bevel-border-end + 0.1px);
+
+    $bevel-border-gradient: transparent $bevel-border-fade-start,
+        $border-color $bevel-border-start,
+        $border-color $bevel-border-end,
+        transparent $bevel-border-fade-end;
+
+    background-image: linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(225deg, $bevel-border-gradient),
+        linear-gradient(270deg, $border-color, $border-color),
+        linear-gradient(315deg, $bevel-border-gradient),
+        linear-gradient(0deg, $border-color, $border-color),
+        linear-gradient(45deg, $bevel-border-gradient),
+        linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(135deg, $bevel-border-gradient);
+    background-position: top center,
+        top right,
+        center right,
+        bottom right,
+        bottom center,
+        bottom left,
+        center left,
+        top left;
+    background-size: calc(100% - 2 * $bevel-size) $border-size,
+        $bevel-size $bevel-size,
+        $border-size calc(100% - 2 * $bevel-size),
+        $bevel-size $bevel-size,
+        calc(100% - 2 * $bevel-size) $border-size,
+        $bevel-size $bevel-size,
+        $border-size calc(100% - 2 * $bevel-size),
+        $bevel-size $bevel-size;
+    background-repeat: no-repeat;
+}
+
+@mixin beveled-bg($bevel-size, $border-size, $border-color, $background-color) {
+    border: 0;
+    background-color: transparent;
+    $angle: 45deg;
+    $epsilon: calc(($border-size - ($border-size * cos($angle))));
+    
+    $bevel-border-start: calc(50% - $epsilon);
+    $bevel-border-fade-start: calc($bevel-border-start - 0.1px);
+    $bevel-border-end: calc($bevel-border-start + $border-size);
+    $bevel-border-fade-end: calc($bevel-border-end + 0.1px);
+
+    $bevel-border-gradient: transparent $bevel-border-fade-start,
+        $border-color $bevel-border-start,
+        $border-color $bevel-border-end,
+        $background-color $bevel-border-fade-end;
+
+    background-image: linear-gradient(180deg, $border-color $border-size, $background-color $border-size),
+        linear-gradient(225deg, $bevel-border-gradient),
+        linear-gradient(270deg, $border-color $border-size, $background-color $border-size),
+        linear-gradient(315deg, $bevel-border-gradient),
+        linear-gradient(0deg, $border-color $border-size, $background-color $border-size),
+        linear-gradient(45deg, $bevel-border-gradient),
+        linear-gradient(90deg, $border-color $border-size, $background-color $border-size),
+        linear-gradient(135deg, $bevel-border-gradient);
+    background-position: top center,
+        top right,
+        center right,
+        bottom right,
+        bottom center,
+        bottom left,
+        center left,
+        top left;
+    background-size: calc(100% - 2 * $bevel-size) $bevel-size,
+        $bevel-size $bevel-size,
+        50% calc(100% - 2 * $bevel-size),
+        $bevel-size $bevel-size,
+        calc(100% - 2 * $bevel-size) $bevel-size,
+        $bevel-size $bevel-size,
+        50% calc(100% - 2 * $bevel-size),
+        $bevel-size $bevel-size;
+    background-repeat: no-repeat;
+}
+
+@mixin beveled-fancy-1($bevel-size, $border-size, $inline-gap, $inline-size, $border-color) {
+    $border-start: 0;
+    $border-end: $border-size;
+    $inline-start: calc($border-size + $inline-gap);
+    $inline-end: calc($inline-start + $inline-size);
+
+    $border-full-size: $inline-end;
+
+    $border-gradient: $border-color $border-start,
+        $border-color $border-end,
+        transparent $border-end,
+        transparent $inline-start,
+        $border-color $inline-start,
+        $border-color $inline-end;
+
+    $angle: 45deg;
+    $epsilon1: calc(($border-size - ($border-size * cos($angle))));
+    $epsilon2: calc($inline-gap * cos($angle));
+
+    $bevel-border-start: calc(50% - $epsilon1);
+    $bevel-border-fade-start: calc($bevel-border-start - 0.1px);
+    $bevel-border-end: calc($bevel-border-start + $border-size);
+    $bevel-border-fade-end: calc($bevel-border-end + 0.1px);
+    
+    $bevel-inline-start: calc($bevel-border-end + $epsilon2);
+    $bevel-inline-end: calc($bevel-inline-start + ($inline-size * cos($angle)));
+
+    $bevel-border-gradient: transparent $bevel-border-fade-start,
+        $border-color $bevel-border-start,
+        $border-color $bevel-border-end,
+        transparent $bevel-border-fade-end,
+        transparent $bevel-inline-start,
+        $border-color $bevel-inline-start,
+        $border-color $bevel-inline-end,
+        transparent calc($bevel-inline-end + 0.1px);
+
+    background-image: linear-gradient(180deg, $border-gradient),
+        linear-gradient(225deg, $bevel-border-gradient),
+        linear-gradient(270deg, $border-gradient),
+        linear-gradient(315deg, $bevel-border-gradient),
+        linear-gradient(0deg, $border-gradient),
+        linear-gradient(45deg, $bevel-border-gradient),
+        linear-gradient(90deg, $border-gradient),
+        linear-gradient(135deg, $bevel-border-gradient);
+    background-position: top center,
+        top right,
+        center right,
+        bottom right,
+        bottom center,
+        bottom left,
+        center left,
+        top left;
+    background-size: calc(100% - 2 * $bevel-size) $border-full-size,
+        $bevel-size $bevel-size,
+        $border-full-size calc(100% - 2 * $bevel-size),
+        $bevel-size $bevel-size,
+        calc(100% - 2 * $bevel-size) $border-full-size,
+        $bevel-size $bevel-size,
+        $border-full-size calc(100% - 2 * $bevel-size),
+        $bevel-size $bevel-size;
+    
+    background-repeat: no-repeat;
+}
+
+@mixin beveled-fancy-2($bevel-size, $border-size, $inline-gap, $inline-size, $border-color) {
+    $point-size: ceil(calc($bevel-size / 2));
+    $border-start: $point-size;
+    $border-end: calc($border-start + $border-size);
+    $inline-start: calc($border-end + $inline-gap);
+    $inline-end: calc($inline-start + $inline-size);
+
+    $border-full-size: $inline-end;
+    $border-full-size-tb: calc($inline-end + $point-size);
+
+    $border-gradient: transparent $border-start,
+            $border-color $border-start,
+            $border-color $border-end,
+            transparent $border-end,
+            transparent $inline-start,
+            $border-color $inline-start,
+            $border-color $inline-end;
+
+    $angle: 45deg;
+    $epsilon1: calc(($border-size - ($border-size * cos($angle))));
+    $epsilon2: calc($inline-gap * cos($angle));
+
+    $bevel-border-start: calc(50% - $epsilon1);
+    $bevel-border-fade-start: calc($bevel-border-start - 0.1px);
+    $bevel-border-end: calc($bevel-border-start + $border-size);
+    $bevel-border-fade-end: calc($bevel-border-end + 0.1px);
+
+    $bevel-inline-start: calc($bevel-border-end + $epsilon2);
+    $bevel-inline-end: calc($bevel-inline-start + ($inline-size * cos($angle)));
+
+    $bevel-border-gradient: #ffa $bevel-border-fade-start,
+        $border-color $bevel-border-start,
+        $border-color $bevel-border-end,
+        transparent $bevel-border-fade-end,
+        transparent $bevel-inline-start,
+        $border-color $bevel-inline-start,
+        $border-color $bevel-inline-end,
+        transparent calc($bevel-inline-end + 0.1px);
+
+    $pb: calc($point-size + $border-size);
+    $epsilon3: calc(($bevel-size / 2) * cos($angle));//sin?
+    $point-start: calc(50% - $epsilon3);
+    $point-gradient: #aff calc($point-start - 0.1px),
+        $border-color $point-start,
+        $border-color calc($point-start + $border-size),
+        #aff calc($point-start + $border-size + 0.1px);
+
+    background-image: linear-gradient(135deg, $point-gradient),
+        linear-gradient(180deg, $border-gradient),
+        linear-gradient(135deg, $bevel-border-gradient),
+    ;
+
+    background-position: center 0,
+        top center,
+        0 $point-size,
+    ;
+
+    background-size: $bevel-size $pb,
+        calc(100% - 2 * $bevel-size) $border-full-size,
+        $bevel-size $bevel-size,
+    ;
+
+    // background-image: linear-gradient(180deg, $border-gradient),
+    //     linear-gradient(225deg, $bevel-border-gradient),
+    //     linear-gradient(270deg, $border-gradient),
+    //     linear-gradient(315deg, $bevel-border-gradient),
+    //     linear-gradient(0deg, $border-gradient),
+    //     linear-gradient(45deg, $bevel-border-gradient),
+    //     linear-gradient(90deg, $border-gradient),
+    //     linear-gradient(135deg, $bevel-border-gradient);
+    // background-position: top center,
+    //     top right,
+    //     center right,
+    //     bottom right,
+    //     bottom center,
+    //     bottom left,
+    //     center left,
+    //     top left;
+    // background-size: calc(100% - 2 * $bevel-size) $border-full-size,
+    //     $bevel-size $bevel-size,
+    //     $border-full-size calc(100% - 2 * $bevel-size),
+    //     $bevel-size $bevel-size,
+    //     calc(100% - 2 * $bevel-size) $border-full-size,
+    //     $bevel-size $bevel-size,
+    //     $border-full-size calc(100% - 2 * $bevel-size),
+    //     $bevel-size $bevel-size;
+    background-repeat: no-repeat;
+}
+
+@mixin hexagon($border-size, $border-color) {
+    border: 0;
+    background-color: transparent;
+
+    $angle: 60deg;
+    $phi: calc(90deg - $angle);
+
+    $bevel-h: 50%;
+    $epsilon: calc(($border-size / tan($angle)) * sin($angle));
+
+    $bevel-border-start: calc(50% - ($epsilon/2));
+    $bevel-border-fade-start: calc($bevel-border-start - 0.2px);
+    $bevel-border-end: calc($bevel-border-start + $border-size);
+    $bevel-border-fade-end: calc($bevel-border-end + 0.2px);
+
+    $bevel-w: calc((($bevel-h / tan($angle)) * (sqrt(3) / 2)) + ($epsilon));
+
+    $bevel-border-gradient: transparent $bevel-border-fade-start,
+        $border-color $bevel-border-start,
+        $border-color $bevel-border-end,
+        transparent $bevel-border-fade-end;
+
+    background-image: linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg + $angle), $bevel-border-gradient),
+        linear-gradient(calc(360deg - $angle), $bevel-border-gradient),
+        linear-gradient(0deg, $border-color, $border-color),
+        linear-gradient($angle, $bevel-border-gradient),
+        linear-gradient(calc(180deg - $angle), $bevel-border-gradient);
+
+    background-position: top center,
+        top right,
+        bottom right,
+        bottom center,
+        bottom left,
+        top left;
+
+    background-size: calc(100% - 2 * $bevel-w) $border-size,
+        $bevel-w $bevel-h,
+        $bevel-w $bevel-h,
+        calc(100% - 2 * $bevel-w) $border-size,
+        $bevel-w $bevel-h,
+        $bevel-w $bevel-h;
+
+    background-repeat: no-repeat;
+
+    aspect-ratio: 1 / calc(sqrt(3) / 2);
+}

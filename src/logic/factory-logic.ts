@@ -52,6 +52,7 @@ import { TerrainCategory } from '../enums/terrain-category';
 import { TerrainRoleType } from '../enums/terrain-role-type';
 import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
+import { PdfTemplateEnum, SheetDisplayOptions } from '../models/pdf-export-models';
 
 export class FactoryLogic {
 	static createElement = (name?: string): Element => {
@@ -976,7 +977,16 @@ export class FactoryLogic {
 			heroVictories: 0,
 			showDefeatedCombatants: false,
 			gridSize: 50,
-			playerGridSize: 50
+			playerGridSize: 50,
+			pdfTemplate: PdfTemplateEnum.HTML,
+			keepPdfFillable: false,
+			includePlayState: false,
+		};
+	};
+
+	static createSheetDisplayOptions = (options: Options): SheetDisplayOptions => {
+		return {
+			includePlayState: options.includePlayState,
 		};
 	};
 

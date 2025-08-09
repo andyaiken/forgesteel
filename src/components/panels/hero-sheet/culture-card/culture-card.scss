@@ -1,0 +1,27 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.culture {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: min-content 1fr;
+    grid-gap: 15px;
+
+    h2 {
+        grid-column-end: span 4;
+    }
+
+    section {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    section h4 {
+        border-bottom: 2px solid common.$color-medium;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+    }
+
+    section.languages ul {
+        font-size: 1.2rem;
+    }
+}

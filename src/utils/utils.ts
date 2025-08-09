@@ -1,8 +1,9 @@
-import { Collections } from './collections';
-import { Converter } from 'showdown';
-import { Random } from './random';
+import * as htmlToImage from 'html-to-image';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { Converter } from 'showdown';
+import { Collections } from './collections';
+import { Random } from './random';
 
 export class Utils {
 	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
@@ -54,19 +55,19 @@ export class Utils {
 		}
 	};
 
-	static export = (elementIDs: string[], name: string, obj: unknown, ext: string, format: 'image' | 'pdf' | 'json') => {
+	static export = (elementIDs: string[], name: string, obj: unknown, ext: string, format: 'image' | 'pdf' | 'json', overrideBgColors: boolean = true) => {
 		switch (format) {
 			case 'json':
 				Utils.saveFile(obj, name, ext);
 				break;
 			case 'image':
 			case 'pdf':
-				Utils.takeScreenshot(elementIDs, name, format);
+				Utils.takeScreenshot(elementIDs, name, format, overrideBgColors);
 				break;
 		}
 	};
 
-	static takeScreenshot = (elementIDs: string[], name: string, format: 'image' | 'pdf') => {
+	static takeScreenshot = (elementIDs: string[], name: string, format: 'image' | 'pdf', overrideBgColors: boolean = true) => {
 		const elements = elementIDs
 			.map(id => document.getElementById(id))
 			.filter(element => !!element);
@@ -76,30 +77,51 @@ export class Utils {
 		}
 
 		const originalBackgroundColors: { [id: string]: string } = {};
-		elements.forEach(element => {
-			originalBackgroundColors[element.id] = element.style.backgroundColor;
-			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-				element.style.backgroundColor = 'rgb(55, 55, 55)';
-			}
-		});
+		if (overrideBgColors) {
+			elements.forEach(element => {
+				originalBackgroundColors[element.id] = element.style.backgroundColor;
+				if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					element.style.backgroundColor = 'rgb(55, 55, 55)';
+				}
+			});
+		}
 
 		switch (format) {
 			case 'image':
 				html2canvas(elements[0])
 					.then(canvas => {
 						Utils.saveImage(`${name}.png`, canvas);
-						elements[0].style.backgroundColor = originalBackgroundColors[elements[0].id];
+						if (overrideBgColors) {
+							elements[0].style.backgroundColor = originalBackgroundColors[elements[0].id];
+						}
 					});
 				break;
 			case 'pdf':
-				Promise.all(elements.map(element => html2canvas(element)))
+				Promise.all(elements.map(element => htmlToImage.toCanvas(element)))
 					.then(canvases => {
 						Utils.savePDF(`${name}.pdf`, canvases);
-						elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
+						if (overrideBgColors) {
+							elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
+						}
 					});
 				break;
 		}
 	};
+
+	static elementsToPdf(elementIDs: string[], filename: string) {
+		const elements = elementIDs
+			.map(id => document.getElementById(id))
+			.filter(element => !!element);
+
+		if (elements.length === 0) {
+			return;
+		}
+
+		Promise.all(elements.map(element => htmlToImage.toCanvas(element)))
+			.then(canvases => {
+				Utils.savePdfPages(`${filename}.pdf`, canvases);
+			});
+	}
 
 	static saveFile = (data: unknown, name: string, type: string) => {
 		const json = JSON.stringify(data, null, '\t');
@@ -132,4 +154,26 @@ export class Utils {
 
 		pdf.save(filename);
 	};
+
+	static savePdfPages = (filename: string, pageCanvases: HTMLCanvasElement[]) => {
+		const orientation = 'portrait';
+
+		//@ts-ignore
+		const pdf = new jsPDF({
+			orientation: orientation,
+			unit: (72 / 150), // undocumented feature, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
+			format: 'letter',
+			hotfixes: ["px_scaling"],
+		});
+		pageCanvases.forEach((canvas, n) => {
+			const page = (n === 0) ? pdf : pdf.addPage('letter', orientation);
+			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
+		});
+
+		pdf.save(filename);
+	};
+
+	static isNullOrEmpty = (str: string | undefined) => {
+		return (str === null || str === undefined || str.trim() === '');
+	}
 }

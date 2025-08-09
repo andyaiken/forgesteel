@@ -420,6 +420,14 @@ export class HeroLogic {
 		return value;
 	};
 
+	static getWindedThreshold = (hero: Hero) => {
+		return Math.floor(HeroLogic.getStamina(hero) / 2);
+	}
+
+	static getDeadThreshold = (hero: Hero) => {
+		return -HeroLogic.getWindedThreshold(hero);
+	}
+
 	static getRecoveryValue = (hero: Hero) => {
 		let value = Math.floor(HeroLogic.getStamina(hero) / 3);
 
@@ -667,6 +675,13 @@ export class HeroLogic {
 		return reducedKits;
 	};
 
+	static getBonusFromModifier = (hero: Hero, attrFn: (kit: Kit) => number): number => {
+		const kits = HeroLogic.getKits(hero);
+		let result = Collections.max(kits.map(attrFn), s => s) || 0;
+
+		return result;
+	};
+
 	static getFeatureDamageBonuses = (hero: Hero, ability: Ability) => {
 		const array: { feature: string, value: number, type: DamageType }[] = [];
 
@@ -858,6 +873,20 @@ export class HeroLogic {
 		});
 	};
 
+	static calculateSaveValue = (hero: Hero) => {
+		// Account for Ancestry Traits that reduce Saving Throw
+		const featureIdsSaveOn5: string[] = [
+			'devil-feature-2-5', // Impressive Horns
+			'high-elf-feature-2-4', // Otherworldly Grace
+			'wode-elf-feature-2-4', // Otherworldly Grace
+		];
+		const features = HeroLogic.getFeatures(hero);
+		if (features.find(f => featureIdsSaveOn5.includes(f.feature.id))) {
+			return 5;
+		}
+		return 6;
+	}
+
 	static getPotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {
 		const value = Math.max(
 			HeroLogic.getCharacteristic(hero, Characteristic.Might),
@@ -877,13 +906,19 @@ export class HeroLogic {
 		}
 	};
 
+	static calculateSurgeDamage = (hero: Hero) => {
+		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
+		return value;
+	};
+
 	static getCombatState = (hero: Hero) => {
 		const maxStamina = HeroLogic.getStamina(hero);
 		if (maxStamina > 0) {
-			const winded = Math.floor(maxStamina / 2);
+			const winded = HeroLogic.getWindedThreshold(hero);
+			const dead = HeroLogic.getDeadThreshold(hero);
 			const currentStamina = maxStamina - hero.state.staminaDamage;
 
-			if (currentStamina <= -winded) {
+			if (currentStamina <= dead) {
 				return 'dead';
 			}
 

@@ -1,0 +1,137 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.hero-header.card {
+    display: grid;
+    grid-template-rows: min-content min-content;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    grid-gap: 8px;
+    padding: 7px;
+
+    .header-image {
+        grid-column-end: span 2;
+        margin: 0;
+        margin-bottom: -5px;
+        padding: 0;
+        text-align: center;
+
+        img {
+            --top-offset: 5px;
+            width: 225px;
+            height: 50px;
+            opacity: 0.6;
+            object-position: center calc(50% + var(--top-offset));
+            object-fit: cover;
+        }
+
+        background-image: linear-gradient(180deg, common.$color-light, common.$color-light), 
+            linear-gradient(180deg, common.$color-light, common.$color-light);
+        background-size: 485px 2px, 
+            485px 2px;
+        background-position: left center, 
+            right center;
+        background-repeat: no-repeat;
+    }
+    
+    section.container {
+        padding: 4px;
+        margin-bottom: 5px;
+    }
+
+    .hero-overview {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1.3fr 1fr 1fr;
+        place-items: stretch;
+
+        .labeled-field {
+            margin: 0 5px;
+
+            label {
+                padding-top: 0;
+            }
+            .labeled-field-content span {
+                font-size: 1.3rem;
+            }
+        }
+
+        .name {
+            grid-column-end: span 2;
+            align-self: end;
+            .labeled-field-content span {
+                font-size: 1.9rem;
+            }
+        }
+    }
+
+    .hero-advancement {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr min-content;
+
+        .victories-level {
+            grid-column-end: span 3;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+
+            border-bottom: 2px solid common.$color-light;
+            margin: 5px;
+            padding: 7px 0;
+
+            .level {
+                label {
+                    font-size: 1.2rem;
+                    margin-bottom: 5px;
+                }
+
+                .labeled-field-content span {
+                    font-size: 3rem;
+                }
+            }
+
+            > div:first-child {
+                border-right: 2px solid common.$color-light;
+                margin-right:2px;
+            }
+            > div:last-child {
+                border-left: 2px solid common.$color-light;
+                margin: 0 0 0 2px;
+            }
+        }
+
+        .victories {
+            grid-column-end: span 5;
+
+            h3 {
+                text-align: left;
+                font-weight: 450;
+                font-size: 1.2rem;
+            }
+
+            h3, .victories-boxes {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+
+            ol {
+                @include common.beveled(7px, 2px, common.$color-medium);
+                list-style-type: none;
+                display: grid;
+                grid-template-columns: repeat(15, 1fr);
+                margin: 4px 0;
+                padding: 5px;
+
+                li {
+                    text-align: center;
+                    font-weight: 900;
+                    border-right: 2px solid common.$color-light;
+                    height: 22px;
+
+                    &:last-of-type {
+                        border-right: none;
+                    }
+                }
+            }
+        }
+    }
+}

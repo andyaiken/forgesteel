@@ -1,0 +1,9 @@
+.potencies {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1.6em 1fr;
+
+    h3 {
+        grid-column-end: span 3;
+    }
+}

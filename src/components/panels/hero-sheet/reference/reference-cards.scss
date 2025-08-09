@@ -1,0 +1,18 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.extra-reference.card {
+    h2 {
+        color: common.$color-dark;
+    }
+
+    *:not(h2) {
+        @include common.font-serif();
+        font-size: 1.1rem;
+        line-height: 1.3rem;
+        color: common.$color-medium;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+}

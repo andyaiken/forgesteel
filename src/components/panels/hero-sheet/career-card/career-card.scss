@@ -1,0 +1,21 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.career, .complication {
+    display: grid;
+    grid-template-rows: min-content min-content 1fr 1fr;
+
+    .name {
+        @include common.beveled(8px, 2px, common.$color-medium);
+        @include common.font-serif;
+        text-align: center;
+        font-size: 1.3rem;
+        line-height: 1.6rem;
+        padding: 7px 0;
+        margin: 10px 25px 20px;
+        min-height: 36px;
+    }
+
+    p {
+        font-size: 1.1rem;
+    }
+}

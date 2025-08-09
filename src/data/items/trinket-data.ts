@@ -5,6 +5,7 @@ import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
+import { FeatureField } from '../../enums/feature-field';
 
 export class TrinketData {
 	static colorCloakBlue: Item = FactoryLogic.createItem({
@@ -364,5 +365,202 @@ If the object is too thick or has no open space on the other side, your hand bec
 			goal: 150
 		}),
 		effect: 'These boots can temporarily unbind themselves from the chains of the earth, letting you move through the air as high as 3 squares above the ground from where you started. If you end your turn while you are still airborne, you fall.'
+	});
+
+	static bastionBelt: Item = FactoryLogic.createItem({
+		id: 'item-bastion-belt',
+		name: 'Bastion Belt',
+		description: 'This thick leather belt features a bone clasp and feels unusually heavy when handled.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Waist, AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'A giant’s tooth',
+			source: 'Texts or lore in High Kuric',
+			characteristic: [ Characteristic.Might, Characteristic.Intuition ],
+			goal: 300
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createBonus({
+						id: 'item-bastion-belt-1',
+						field: FeatureField.Stamina,
+						value: 3
+					}),
+					FactoryLogic.feature.createBonus({
+						id: 'item-bastion-belt-2',
+						field: FeatureField.Stability,
+						value: 1
+					})
+				]
+			}
+		]
+	});
+
+	static evilestEye : Item = FactoryLogic.createItem({
+		id: 'item-evilest-eye',
+		name: 'Evilest Eye',
+		description: 'A perfectly preserved eyeball hangs unnervingly from a gold chain.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Neck, AbilityKeyword.Psionic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'An eyeball from a pirate captain who drowned at sea',
+			source: 'Texts or lore in Caelian',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 300
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-evilest-eye-1',
+							name: 'Item Ability',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createRanged(10) ],
+							target: 'One enemy',
+							sections: [
+								FactoryLogic.createAbilitySectionText('You and each ally within 2 squares of the target each gain 1 surge.')
+							]
+						})
+					})
+				]
+			}
+		]
+	});
+
+	static insightfulCrown: Item = FactoryLogic.createItem({
+		id: 'item-insightful-crown',
+		name: 'Insightful Crown',
+		description: 'Shaped of polished crystal, this shimmering circlet shifts through myriad colors in the presence of strong emotions.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Head, AbilityKeyword.Psionic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: ' One measure of pure crystal, a jarred memory of true joy',
+			source: 'Texts or lore in Variac',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 300
+		}),
+		effect: 'While wearing the crown, you gain an edge on Intuition tests made to read the emotions and discern the honesty of other creatures. If you succeed on an Intuition test to read the emotions of another creature within 5 squares, you can ask the Director one question about something the creature knows, which the Director must answer honestly. At the Director’s discretion, you might not be able to tap into the creature’s deepest secrets this way.'
+	});
+
+	static keyOfInquiry: Item = FactoryLogic.createItem({
+		id: 'item-key-of-inquiry',
+		name: 'Key of Inquiry',
+		description: 'A foot-long platinum key is set with three opals',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Psionic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'The finger bone of a creature with telepathy, three black opals',
+			source: ' Texts or lore in Ullorvic',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 300
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-key-of-inquiry-1',
+							name: 'Item Ability',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createSpecial('Adjecent') ],
+							target: 'One willing, grabbed, or restrained creature',
+							sections: [
+								FactoryLogic.createAbilitySectionText('Twist the key 90 degrees clockwise. The target must answer the next three questions they are asked truthfully and fully. If twisted 90 degrees counterclockwise instead, the target forgets the last 30 minutes they experienced. A creature affected by the key can’t be affected again by any Key of Inquiry for 1 year. If the key is ever destroyed, all the memories it has erased are restored. Memories erased by the key can’t be restored in any other way.')
+							]
+						})
+					})
+				]
+			}
+		]
+	});
+
+	static mediatorsCharm : Item = FactoryLogic.createItem({
+		id: 'item-mediators-charm',
+		name: 'Mediator\'s Charm',
+		description: 'A fancy gold earring is set with a small ruby.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Head, AbilityKeyword.Psionic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'The gold nib of a fountain pen used to sign a major treaty or compact, a ruby once worn by a devil',
+			source: 'Texts or lore in Hyrallic',
+			characteristic: [ Characteristic.Reason, Characteristic.Presence ],
+			goal: 300
+		}),
+		effect: 'While you wear the Mediator’s Charm, the patience of any NPC you negotiate with increases by 1 (to a maximum of 5). Additionally, at the start of a negotiation, you learn one of an NPC’s motivations or pitfalls of the Director’s choice.'
+	});
+
+	static necklaceOfTheBayou: Item = FactoryLogic.createItem({
+		id: 'item-necklack-of-the-bayou',
+		name: 'Necklace of the Bayou',
+		description: 'A worn leather circlet bears a lizard-shaped pendant of rotting wood.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Neck, AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'A gallon of swamp water, the limbs of four different newts',
+			source: ' Texts or lore in Yllyric',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 300
+		}),
+		effect: 'While you wear this necklace, you can breathe underwater, you can automatically swim at full speed while moving, and you ignore difficult terrain created by water or in marsh and similar terrain.'
+	});
+
+	static scannerstone : Item = FactoryLogic.createItem({
+		id: 'item-scannerstone',
+		name: 'Scannerstone',
+		description: 'This flat, palm-sized triangular stone is decorated with a starfield of tiny gems.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Psionic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: ': A piece of polished obsidian, seven flawless pea-sized diamonds',
+			source: ' Texts or lore in Variac',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 300
+		}),
+		effect: 'When held against a wall or other solid surface 1 square thick or less, the Scannerstone creates an image floating in the air beside it that shows a rough miniature approximation of the space on the other side of the surface. The image displays floors, walls, and other barriers but doesn’t show other objects. It shows representations of any moving creatures on the other side, but not creatures who are still.'
+	});
+
+	static stopNGoCoin : Item = FactoryLogic.createItem({
+		id: 'item-stop-n-go-coin',
+		name: 'Stop-’n-Go Coin',
+		description: 'This small, featureless coin is solid green on one side and solid red on the other.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'A coin minted during an earthquake',
+			source: ' Texts or lore in Caelian,',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 300
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-stop-n-go-coin-1',
+							name: 'Item Ability',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createSpecial('') ],
+							target: 'Special; see below',
+							sections: [
+								FactoryLogic.createAbilitySectionText(`
+You toss the coin in the air and let it fall to the ground in front of you. Roll a d3 to determine the coin’s effect, depending on which face shows when it lands:
+
+**1—Red**: The area within 2 squares of you is difficult terrain for enemies until the end of your next turn.
+**2—Green**: You and each ally who starts their turn within 2 squares of you gains a +1 bonus to speed until the end of your next turn.
+**3—Spinning Coin**: Both the red and green effects occur while the coin continuously spins.
+
+The coin must be picked up before it can be used again. If any creature picks up the coin, its effects immediately end.`)
+							]
+						})
+					})
+				]
+			}
+		]
 	});
 }

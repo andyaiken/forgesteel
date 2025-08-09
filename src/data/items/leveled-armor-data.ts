@@ -745,7 +745,7 @@ export class LeveledArmorData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-telekinetic-bulwark-1',
 							name: 'Armor Ability',
-							type: FactoryLogic.type.createTrigger('Target uses an ability', { free:true }),
+							type: FactoryLogic.type.createTrigger('Target uses an ability', { free: true }),
 							distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
 							target: 'One enemy',
 							sections: [

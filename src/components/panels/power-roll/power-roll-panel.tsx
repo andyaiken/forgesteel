@@ -69,7 +69,7 @@ export const PowerRollPanel = (props: Props) => {
 		if (props.hero && props.ability) {
 			const sections = [];
 
-			//#region Kits
+			// #region Kits
 
 			let isMelee = props.ability.keywords.includes(AbilityKeyword.Melee) && props.ability.keywords.includes(AbilityKeyword.Weapon);
 			let isRanged = props.ability.keywords.includes(AbilityKeyword.Ranged) && props.ability.keywords.includes(AbilityKeyword.Weapon);
@@ -107,9 +107,9 @@ export const PowerRollPanel = (props: Props) => {
 				});
 			}
 
-			//#endregion
+			// #endregion
 
-			//#region Damage bonuses
+			// #region Damage bonuses
 
 			if (!props.autoCalc) {
 				HeroLogic
@@ -120,9 +120,9 @@ export const PowerRollPanel = (props: Props) => {
 					});
 			}
 
-			//#endregion
+			// #endregion
 
-			//#region Potency
+			// #region Potency
 
 			if (!props.autoCalc) {
 				const usesPotency = AbilityLogic.usesPotency(props.powerRoll);
@@ -132,7 +132,7 @@ export const PowerRollPanel = (props: Props) => {
 				}
 			}
 
-			//#endregion
+			// #endregion
 
 			if (sections.length > 0) {
 				return (

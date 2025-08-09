@@ -153,7 +153,7 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 			]
 		},
 		{
-			level:  6,
+			level: 6,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-1-6-1',
@@ -235,7 +235,7 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 			]
 		},
 		{
-			level:  9,
+			level: 9,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-1-9-1',

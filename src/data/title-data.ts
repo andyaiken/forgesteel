@@ -882,9 +882,10 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				ability: FactoryLogic.createAbility({
 					id: 'title-heist-hero-3',
 					name: 'Timely Distraction',
-					description: `Coming through with hot soup!
-     					
-	  				I better watch out for that banana peel!`,
+					description: `
+Coming through with hot soup!
+
+I better watch out for that banana peel!`,
 					type: FactoryLogic.type.createTrigger('An ally makes a test to lie to, pick the pocket of, hide from, or sneak by the target and doesn’t like the outcome.'),
 					keywords: [ AbilityKeyword.Ranged ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -984,8 +985,9 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 			FactoryLogic.feature.create({
 				id: 'title-special-agent-1',
 				name: 'Boffin',
-				description: `You gain a small magic spy device called a boffin. Once per encounter, you can activate a boffin property as a maneuver
-    
+				description: `
+You gain a small magic spy device called a boffin. Once per encounter, you can activate a boffin property as a maneuver
+
 * Make a test that uses the Disguise skill. You gain an edge on the test.
 * One mundane lock you touch is unlocked.
 * Choose a square within 10 squares, even if you don’t have line of effect to it. You can observe the area around that square as if you were in it.
@@ -1234,13 +1236,14 @@ When you are reduced to 0 Stamina by damage that isn’t fire or holy damage and
 			FactoryLogic.feature.create({
 				id: 'title-fleet-admiral-4',
 				name: 'Weather Wizard',
-				description: `Once per day, you can spend 10 uninterrupted minutes to magically alter mundane weather in a 5-mile radius around you. The weather moves with you and persists for 6 hours or until you dismiss it as a free maneuver. Choose from one of the following weather types:
-    
+				description: `
+Once per day, you can spend 10 uninterrupted minutes to magically alter mundane weather in a 5-mile radius around you. The weather moves with you and persists for 6 hours or until you dismiss it as a free maneuver. Choose from one of the following weather types:
+
 * Calm: Wind-powered vessels and technology cease working.
 * Fog: Visibility is reduced to 6 squares.
 * High Winds: The speed of wind-powered vessels is doubled.
 * Light Winds: No effects due to weather.
-*Storm: The crew of an unsheltered wind-powered vessel must make a medium group Reason test. On a failure, the vessel needs repairs and moves at half speed until those repairs are made.`
+ *Storm: The crew of an unsheltered wind-powered vessel must make a medium group Reason test. On a failure, the vessel needs repairs and moves at half speed until those repairs are made.`
 			})
 		],
 		selectedFeatureID: ''

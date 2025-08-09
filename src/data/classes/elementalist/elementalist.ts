@@ -356,7 +356,7 @@ Choose one of the following effects:
 								characteristic: Characteristic.Might,
 								value: 1
 							}),
-							value:1
+							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({
@@ -364,7 +364,7 @@ Choose one of the following effects:
 								characteristic: Characteristic.Agility,
 								value: 1
 							}),
-							value:1
+							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({
@@ -502,8 +502,9 @@ Choose one of the following effects:
 				FactoryLogic.feature.create({
 					id: 'elementalist-9-1',
 					name: 'Grand Wyrding',
-					description: `You have mastered the magic of shaping a wyrd, and can use your Wyrding feature as a main action.
-     
+					description: `
+You have mastered the magic of shaping a wyrd, and can use your Wyrding feature as a main action.
+
 Additionally, when you have 5 or more Victories, choose one of the following damage types: acid, cold, corruption, fire, lightning, poison, or sonic. You have immunity all to that type.`
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -545,7 +546,7 @@ Breath remains until you convert it to essence.`
 								characteristic: Characteristic.Might,
 								value: 1
 							}),
-							value:1
+							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({
@@ -553,7 +554,7 @@ Breath remains until you convert it to essence.`
 								characteristic: Characteristic.Agility,
 								value: 1
 							}),
-							value:1
+							value: 1
 						},
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({
@@ -1336,7 +1337,7 @@ Each enemy who ends their turn within 3 squares of the tree is restrained until 
 			description: 'You stomp your foot and quake the whole world over.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Earth ],
-			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value:5 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 			target: 'Each enemy in the area',
 			cost: 11,
 			minLevel: 8,
@@ -1356,7 +1357,7 @@ Each enemy who ends their turn within 3 squares of the tree is restrained until 
 			description: 'Everyone and everything gets blown away in an eruption of rocks and debris.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Earth, AbilityKeyword.Ranged ],
-			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value:5, within: 10 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 			target: 'Each enemy and object in the area',
 			cost: 11,
 			minLevel: 9,

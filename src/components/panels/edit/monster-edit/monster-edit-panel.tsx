@@ -217,7 +217,7 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setSizeMod = (value: ''| 'T' | 'S' | 'M' | 'L') => {
+		const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
 			const copy = Utils.copy(monster);
 			copy.size.mod = value;
 			setMonster(copy);

@@ -260,7 +260,6 @@ export const FeatureConfigPanel = (props: Props) => {
 			.filter(f => !selectedIDs.includes(f.feature.id));
 		const sortedOptions = Collections.sort(availableOptions, opt => opt.feature.name);
 
-
 		const showCosts = data.options.some(opt => opt.value > 1);
 
 		const getAddButton = () => {

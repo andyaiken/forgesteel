@@ -168,7 +168,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'ogre-1-feature-4',
 						name: 'Swat the Fly',
 						type: FactoryLogic.type.createTrigger('The target moves or shifts away from the goon.'),
@@ -271,7 +271,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'ogre-2-feature-4',
 						name: 'Hrraaaaaagh!',
 						type: FactoryLogic.type.createTrigger('The juggernaut takes damage.', { free: true }),

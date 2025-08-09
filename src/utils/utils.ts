@@ -75,7 +75,7 @@ export class Utils {
 			return;
 		}
 
-		const originalBackgroundColors: { [id: string]: string; } = {};
+		const originalBackgroundColors: { [id: string]: string } = {};
 		elements.forEach(element => {
 			originalBackgroundColors[element.id] = element.style.backgroundColor;
 			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -99,7 +99,6 @@ export class Utils {
 					});
 				break;
 		}
-
 	};
 
 	static saveFile = (data: unknown, name: string, type: string) => {

@@ -740,7 +740,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						name: 'Lightning Bolt',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Magic,  AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
 							FactoryLogic.distance.createRanged(15)
 						],

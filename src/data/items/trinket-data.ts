@@ -6,6 +6,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
+import { FeatureField } from '../../enums/feature-field';
 
 export class TrinketData {
 	static colorCloakBlue: Item = FactoryLogic.createItem({
@@ -556,6 +557,180 @@ You toss the coin in the air and let it fall to the ground in front of you. Roll
 **3—Spinning Coin**: Both the red and green effects occur while the coin continuously spins.
 
 The coin must be picked up before it can be used again. If any creature picks up the coin, its effects immediately end.`)
+							]
+						})
+					})
+				]
+			}
+		]
+	});
+
+	static bracersOfStrife : Item = FactoryLogic.createItem({
+		id: 'item-bracers-of-strife',
+		name: 'Bracers of Strife',
+		description: 'Each of these metallic blue bracers is oversized',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Arms, AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'The severed hand of a giant',
+			source: 'Texts or lore in Yllyric',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 450
+		}),
+		effect: 'You gain a +1 bonus to the distance you push any target with any weapon ability.',
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbilityDamage({
+						id: 'item-bracers-of-strife-1',
+						name: '',
+						keywords: [ AbilityKeyword.Weapon ],
+						value: 2
+					})
+				]
+			}
+		]
+	});
+
+	static maskOfOversight : Item = FactoryLogic.createItem({
+		id: 'item-mask-of-oversight',
+		name: 'Mask of Oversight',
+		description: 'This angular electrum mask is set with an excess of eye holes and a horrifying maw.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Head, AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'An overmind egg, the skin of any shapeshifter',
+			source: ': Texts or lore in the First Language',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 450
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-mask-of-oversight-1',
+							name: 'Item Ability',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							sections: [
+								FactoryLogic.createAbilitySectionText('You cause your eyes to erupt from their sockets and multiply until six eyes orbit your head. This grants you a 360-degree arc of vision and prevents you from being surprised. Additionally, you have a double edge on tests made to discover hidden creatures, items, or mechanisms, but you have a double bane on Presence tests that don’t use the Intimidate skill. As a maneuver, you can return your eyes to your head and make the additional eyes disappear.')
+							]
+						})
+					})
+				]
+			}
+		]
+	});
+
+	static mirageBand : Item = FactoryLogic.createItem({
+		id: 'item-mirage-band',
+		name: 'Mirage Band',
+		description: 'A sable blue circlet shimmers with finely woven threads of sparkling white.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Head, AbilityKeyword.Psionic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'A spool of mindspider silk, an ingot of white gold',
+			source: 'Texts or lore in Higaran',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 450
+		}),
+		effect: 'While wearing the Mirage Band, you automatically perceive illusions for what they are, you can see invisible creatures, and supernatural effects can’t conceal creatures and objects from you.',
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-mirage-band-1',
+							name: 'Hallucination Field',
+							description: 'A blanket of illusion twists around you and your allies, making you seem as if you belong wherever you are.',
+							keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createRanged(10) ],
+							target: 'Self and any ally',
+							sections: [
+								FactoryLogic.createAbilitySectionText('Each target is covered by an illusion causing them to appear exactly as any creature (humanoid, animal, undead, and so forth) an observer most expects to see. The illusion ends for all targets if any creature under its effect harms or physically interacts with any creature not affected by the illusion, if you use this ability again, or if you choose to end the effect (no action required). The illusion also ends for any affected ally who moves more than the distance of this ability away from you.')
+							]
+						})
+					})
+				]
+			}
+		]
+	});
+
+	static nullfieldResonatorRing : Item = FactoryLogic.createItem({
+		id:  'item-nullfield-resonator-ring',
+		name: 'Nullfield Resonator Ring',
+		description: 'This simple band of copper vibrates slightly when handled.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Ring, AbilityKeyword.Psionic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'A wafer of gallium arsenide',
+			source: 'Texts or lore in Mindspeech',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 450
+		}),
+		effect: 'You must be a null to wear this ring. While you do so, the area of your Null Field ability increases by 1.',
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-nullfield-resonator-ring-1',
+							name: 'Nullring Strike',
+							description: 'Your punch delivers a devastating burst of psionic energy.',
+							type: FactoryLogic.type.createMain(),
+							distance: [ FactoryLogic.distance.createMelee() ],
+							target: 'One creature or object',
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Might, Characteristic.Agility ],
+										tier1: '3 psychic damage',
+										tier2: '5 psychic damage; I < [average], slowed (save ends)',
+										tier3: '8 psychic damage; I < [strong], slowed (save ends)',
+									})
+								),
+								FactoryLogic.createAbilitySectionText('While slowed in this way, the target takes a bane on magic or psionic abilities.')
+							]
+						})
+					})
+				]
+			}
+		]
+	});
+
+	static shiftingRing : Item = FactoryLogic.createItem({
+		id: 'item-shifting-ring',
+		name: 'Shifting Ring',
+		description: 'This silvery metal ring seems to momentarily vanish when observed from certain angles.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Ring, AbilityKeyword.Psionic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'One-third of a pound of diamond dust, one nugget of pure silver',
+			source: 'Texts or lore in Khelt',
+			characteristic: [ Characteristic.Agility, Characteristic.Intuition ],
+			goal: 450
+		}),
+		effect: 'When targeted by any other effect that causes you to teleport, you can teleport up to 3 additional squares.',
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-shifting-ring-1',
+							name: 'Item Ability',
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Once per turn' ] }),
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							sections: [
+								FactoryLogic.createAbilitySectionText('Teleport up to 3 squares.')
 							]
 						})
 					})

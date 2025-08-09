@@ -738,4 +738,74 @@ The coin must be picked up before it can be used again. If any creature picks up
 			}
 		]
 	});
+
+	static gravekeepersLantern : Item = FactoryLogic.createItem({
+		id: 'item- gravekeepers-lantern',
+		name: 'Gravekeeper’s Lantern',
+		description: 'This ancient wooden tablet is inscribed with eldritch runes and stained with dark blood.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Magic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'The powdered jawbone of a powerful spellcaster, wood from a tree marking multiple graves',
+			source: 'Texts or lore in Hyrallic',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 600
+		}),
+		effect: `
+The Gravekeeper’s Lantern can temporarily trap a nonhostile spirit of the dead—either an incorporeal undead or the wandering spirit of a creature who died within the last 30 days—allowing you to interrogate them. Trapping a spirit requires you to be within 10 squares of them and succeed on a hard Intuition test as a main action. Once a spirit is trapped, you make a Presence test to coax them into answering your questions:
+
+| Roll    | Effect                                                                                     |
+|:--------|:-------------------------------------------------------------------------------------------|
+| ≤ 11    | You can ask two questions of the spirit, one of which they must answer fully and honestly. |
+| 12 - 16 | ou can ask three questions, two of which the spirit must answer fully and honestly.        |
+| ≥ 17    | You can ask five questions, all of which the spirit must answer fully and honestly.        |
+
+A trapped spirit remains in the lantern for 10 minutes. They remember being trapped by you, and might become hostile thereafter.`
+	});
+
+	static psiBlade : Item = FactoryLogic.createItem({
+		id: 'item-psi-blade',
+		name: 'Psi Blade',
+		description: 'This wide metal bracer is set with a glowing gemstone.',
+		type: ItemType.Trinket,
+		keywords: [ AbilityKeyword.Arms, AbilityKeyword.Psionic ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'Steel alloy, one fine-cut topaz',
+			source: 'Texts or lore in Mindspeech',
+			characteristic: [ Characteristic.Agility, Characteristic.Presence ],
+			goal: 600
+		}),
+		effect: '',
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-psi-blade-1',
+							name: 'Activate Blade',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							sections: [
+								FactoryLogic.createAbilitySectionText('You project a glowing blade of rippling psychic energy that extends parallel to your arm.')
+							]
+						})
+					}),
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-psi-blade-2',
+							name: 'Item Ability',
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'The blade is active', 'Once per turn' ] }),
+							distance: [ FactoryLogic.distance.createMelee() ],
+							target: 'One enemy',
+							sections: [
+								FactoryLogic.createAbilitySectionText('Make a melee weapon free strike that deals an extra 3 psychic damage.')
+							]
+						})
+					})
+				]
+			}
+		]
+	});
 }

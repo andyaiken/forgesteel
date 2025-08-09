@@ -409,6 +409,8 @@ export class SourcebookData {
 			TrinketData.mirageBand,
 			TrinketData.nullfieldResonatorRing,
 			TrinketData.shiftingRing,
+			TrinketData.gravekeepersLantern,
+			TrinketData.psiBlade,
 			LeveledArmorData.adaptiveSecondSkin,
 			LeveledArmorData.chainOfTheSeaAndSky,
 			LeveledArmorData.grandScarab,

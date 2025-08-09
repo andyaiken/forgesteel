@@ -108,7 +108,7 @@ export const TacticalMapPanel = (props: Props) => {
 		}
 	};
 
-	//#region Grid squares
+	// #region Grid squares
 
 	const gridSquareMouseDown = (pos: MapPosition) => {
 		setSelectionStartSquare(pos);
@@ -260,9 +260,9 @@ export const TacticalMapPanel = (props: Props) => {
 		return false;
 	};
 
-	//#endregion
+	// #endregion
 
-	//#region Vertices
+	// #region Vertices
 
 	const vertexMouseDown = (pos: MapPosition) => {
 		setWallStartVertex(pos);
@@ -335,7 +335,7 @@ export const TacticalMapPanel = (props: Props) => {
 		return false;
 	};
 
-	//#endregion
+	// #endregion
 
 	const getMiniContent = (mini: MapMini): Hero | Monster | null => {
 		if (mini.content) {
@@ -442,7 +442,7 @@ export const TacticalMapPanel = (props: Props) => {
 	};
 	*/
 
-	//#region Rendering
+	// #region Rendering
 
 	const getTopToolbar = () => {
 		if (props.display !== TacticalMapDisplayType.DirectorEdit) {
@@ -1049,7 +1049,7 @@ export const TacticalMapPanel = (props: Props) => {
 								</NumberSpin>
 								<Button onClick={showMiniInfo}>
 									<InfoCircleOutlined />
- 								</Button>
+								</Button>
 							</>
 							: null
 					}
@@ -1057,7 +1057,7 @@ export const TacticalMapPanel = (props: Props) => {
 						content={
 							<MultiLine
 								placeholder='Notes'
-								value={(item  as MapTile | MapWall | MapZone | MapMini).notes}
+								value={(item as MapTile | MapWall | MapZone | MapMini).notes}
 								onChange={setNotes}
 							/>
 						}
@@ -1430,7 +1430,7 @@ export const TacticalMapPanel = (props: Props) => {
 		return grid;
 	};
 
-	//#endregion
+	// #endregion
 
 	try {
 		let boundaries = TacticalMapLogic.getMapBoundaries(map);

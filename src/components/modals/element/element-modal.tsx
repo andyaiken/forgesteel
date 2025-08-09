@@ -24,8 +24,9 @@ import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Perk } from '../../../models/perk';
 import { PerkPanel } from '../../panels/elements/perk-panel/perk-panel';
-import { ReactNode } from 'react';
 import { SourcebookElementKind } from '../../../models/sourcebook';
+import { SubClass } from '../../../models/subclass';
+import { SubclassPanel } from '../../panels/elements/subclass-panel/subclass-panel';
 import { Terrain } from '../../../models/terrain';
 import { TerrainPanel } from '../../panels/elements/terrain-panel/terrain-panel';
 import { Title } from '../../../models/title';
@@ -42,120 +43,117 @@ interface Props {
 }
 
 export const ElementModal = (props: Props) => {
-	let panel: ReactNode | null = null;
-	switch (props.kind) {
-		case 'ancestry':
-			panel = (
-				<AncestryPanel
-					ancestry={props.element as Ancestry}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'career':
-			panel = (
-				<CareerPanel
-					career={props.element as Career}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'class':
-			panel = (
-				<ClassPanel
-					heroClass={props.element as HeroClass}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'complication':
-			panel = (
-				<ComplicationPanel
-					complication={props.element as Complication}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'culture':
-			panel = (
-				<CulturePanel
-					culture={props.element as Culture}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'domain':
-			panel = (
-				<DomainPanel
-					domain={props.element as Domain}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'item':
-			panel = (
-				<ItemPanel
-					item={props.element as Item}
-					options={props.options}
-					showCustomizations={true}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'kit':
-			panel = (
-				<KitPanel
-					kit={props.element as Kit}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'monster-group':
-			panel = (
-				<MonsterGroupPanel
-					monsterGroup={props.element as MonsterGroup}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'perk':
-			panel = (
-				<PerkPanel
-					perk={props.element as Perk}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'terrain':
-			panel = (
-				<TerrainPanel
-					terrain={props.element as Terrain}
-					showCustomizations={true}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-		case 'title':
-			panel = (
-				<TitlePanel
-					title={props.element as Title}
-					options={props.options}
-					mode={PanelMode.Full}
-				/>
-			);
-			break;
-	}
-
 	try {
+		const getPanel = () => {
+			switch (props.kind) {
+				case 'ancestry':
+					return (
+						<AncestryPanel
+							ancestry={props.element as Ancestry}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'career':
+					return (
+						<CareerPanel
+							career={props.element as Career}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'class':
+					return (
+						<ClassPanel
+							heroClass={props.element as HeroClass}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'complication':
+					return (
+						<ComplicationPanel
+							complication={props.element as Complication}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'culture':
+					return (
+						<CulturePanel
+							culture={props.element as Culture}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'domain':
+					return (
+						<DomainPanel
+							domain={props.element as Domain}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'item':
+					return (
+						<ItemPanel
+							item={props.element as Item}
+							options={props.options}
+							showCustomizations={true}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'kit':
+					return (
+						<KitPanel
+							kit={props.element as Kit}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'monster-group':
+					return (
+						<MonsterGroupPanel
+							monsterGroup={props.element as MonsterGroup}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'perk':
+					return (
+						<PerkPanel
+							perk={props.element as Perk}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'subclass':
+					return (
+						<SubclassPanel
+							subclass={props.element as SubClass}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'terrain':
+					return (
+						<TerrainPanel
+							terrain={props.element as Terrain}
+							showCustomizations={true}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'title':
+					return (
+						<TitlePanel
+							title={props.element as Title}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+			}
+		};
+
 		return (
 			<Modal
 				toolbar={
@@ -179,7 +177,7 @@ export const ElementModal = (props: Props) => {
 				}
 				content={
 					<div className='element-modal'>
-						{panel}
+						{getPanel()}
 					</div>
 				}
 				onClose={props.onClose}

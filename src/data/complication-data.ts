@@ -77,7 +77,6 @@ export class ComplicationData {
 		]
 	};
 
-
 	static antihero: Complication = {
 		id: 'comp-antihero',
 		name: 'Antihero',
@@ -309,7 +308,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-cult-victim-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -419,7 +418,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-stoneCursed-mod2',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Sonic , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Sonic, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -437,7 +436,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-cursedWeapon-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Damage , modifierType: DamageModifierType.Weakness, value: 2 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Damage, modifierType: DamageModifierType.Weakness, value: 2 })
 				]
 			})
 		]
@@ -619,8 +618,8 @@ You have a piece of magic jewelry, such as a signet ring. As a maneuver, you can
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-fire-and-chaos-b',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Immunity, value: 5 }),
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Cold , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 5 }),
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Cold, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -675,8 +674,8 @@ You have a piece of magic jewelry, such as a signet ring. As a maneuver, you can
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-frostheart-mods',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Cold , modifierType: DamageModifierType.Immunity, value: 5 }),
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 5 }),
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -729,8 +728,8 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-greening-mods',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 5 }),
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 5 }),
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -825,7 +824,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-hostBody-mods',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1223,9 +1222,9 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-mundane-b',
 				modifiers: [
-					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 1 }),
-					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Holy , modifierType: DamageModifierType.Immunity, value: 1 }),
-					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Psychic , modifierType: DamageModifierType.Immunity, value: 1 })
+					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
+					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Holy, modifierType: DamageModifierType.Immunity, value: 1 }),
+					FactoryLogic.damageModifier.createPerLevel({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 1 })
 				]
 			}),
 			FactoryLogic.feature.create({
@@ -1298,8 +1297,8 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-primordial-sickness-b',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Poison , modifierType: DamageModifierType.Immunity, value: 5 }),
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption , modifierType: DamageModifierType.Immunity, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 5 }),
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 5 })
 				]
 			}),
 			FactoryLogic.feature.createBonus({
@@ -1475,7 +1474,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-rogueTalent-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1583,7 +1582,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-sewerFolk-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Poison , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1602,7 +1601,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-shadowBorn-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Holy , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -1708,7 +1707,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-silentSentinel-mod',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Sonic , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Sonic, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -2033,7 +2032,7 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-waterborn-mod',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]
@@ -2052,7 +2051,7 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 			FactoryLogic.feature.createDamageModifier({
 				id: 'comp-wodewalker-d',
 				modifiers: [
-					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire , modifierType: DamageModifierType.Weakness, value: 5 })
+					FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
 				]
 			})
 		]

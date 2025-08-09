@@ -3,7 +3,7 @@ import { Characteristic } from '../enums/characteristic';
 import { FactoryLogic } from '../logic/factory-logic';
 
 export class AbilityData {
-	//#region Free Strikes
+	// #region Free Strikes
 
 	static freeStrikeMelee = FactoryLogic.createAbility({
 		id: 'free-melee',
@@ -45,9 +45,9 @@ export class AbilityData {
 		]
 	});
 
-	//#endregion
+	// #endregion
 
-	//#region Moves
+	// #region Moves
 
 	static advance = FactoryLogic.createAbility({
 		id: 'advance',
@@ -88,9 +88,9 @@ export class AbilityData {
 		]
 	});
 
-	//#endregion
+	// #endregion
 
-	//#region Maneuvers
+	// #region Maneuvers
 
 	static aidAttack = FactoryLogic.createAbility({
 		id: 'aid-attack',
@@ -275,9 +275,9 @@ Complex or time-consuming tests might require a main action if made in combat—
 		]
 	});
 
-	//#endregion
+	// #endregion
 
-	//#region Main Actions
+	// #region Main Actions
 
 	static charge = FactoryLogic.createAbility({
 		id: 'charge',
@@ -347,9 +347,9 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		]
 	});
 
-	//#endregion
+	// #endregion
 
-	//#region Triggers
+	// #region Triggers
 
 	static opportunityAttack = FactoryLogic.createAbility({
 		id: 'opportunity-attack',
@@ -367,5 +367,5 @@ If you have a bane or double bane on the power roll against the target, you can�
 		]
 	});
 
-	//#endregion
+	// #endregion
 }

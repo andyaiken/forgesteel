@@ -15,8 +15,9 @@ export const ajax: MonsterGroup = {
 		{
 			id: 'ajax-info-1',
 			name: 'By Might and Merit',
-			description: `Ajax the Invincible has earned his title. He graduated top of his class at Capital’s military academy, and then immediately launched into a campaign across his homeland of Phaedros. At his side was his advisor Mortum, a nefarious wizard who guided Ajax in the footsteps of the Caelian Empire’s conquests before them.
-            
+			description: `
+Ajax the Invincible has earned his title. He graduated top of his class at Capital’s military academy, and then immediately launched into a campaign across his homeland of Phaedros. At his side was his advisor Mortum, a nefarious wizard who guided Ajax in the footsteps of the Caelian Empire’s conquests before them.
+
 Together, Ajax and Mortum went on to subjugate and enlist hamlet after town after city after territory with little standing in their way. When they successfully returned the Chrysopolis—an ancient flying sky-elf city—to the sky, and their accomplishments literally rose above the country—no one could ignore their might any longer.`
 		},
 		{
@@ -203,7 +204,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 20 } ) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 20 }) ],
 						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('**Effect:** Ajax throws a glowing bead to a square within distance, which ignites at the start of Ajax’s next turn and creates an area around it that lasts until the start of Ajax’s following turn. Each enemy in the area when the bead ignites takes 20 fire damage, and if they have <code>A < 5</code>, they are dazed (save ends). Any enemy who starts their turn in the area takes 10 fire damage.')

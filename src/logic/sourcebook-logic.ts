@@ -183,11 +183,11 @@ export class SourcebookLogic {
 	};
 
 	static getKitTypes = (sourcebooks: Sourcebook[]) => {
-		const getTypesFromSourcebook = (sourcebook : Sourcebook) => {
+		const getTypesFromSourcebook = (sourcebook: Sourcebook) => {
 			return sourcebook.kits.map(kit => kit.type);
-		}
+		};
 
-		const list = [...new Set(sourcebooks.flatMap(sourcebook => getTypesFromSourcebook(sourcebook)))];
+		const list = [ ...new Set(sourcebooks.flatMap(sourcebook => getTypesFromSourcebook(sourcebook))) ];
 
 		return Collections.sort(list, item => item);
 	};

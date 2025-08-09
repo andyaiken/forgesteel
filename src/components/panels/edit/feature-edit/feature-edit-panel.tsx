@@ -1215,7 +1215,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Kit: {
 				const data = feature.data as FeatureKitData;
 				const types = SourcebookLogic.getKitTypes(props.sourcebooks);
-				const options = types.map(type => { return { value: type, label: !type ? 'Standard' : type } })
+				const options = types.map(type => ({ value: type, label: !type ? 'Standard' : type }));
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Types</HeaderText>

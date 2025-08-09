@@ -94,7 +94,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			name: 'Abyssal Hyena',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
-			keywords: [ 'Abyssal','Animal', 'Gnoll' ],
+			keywords: [ 'Abyssal', 'Animal', 'Gnoll' ],
 			encounterValue: 8,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(8),

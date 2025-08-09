@@ -194,7 +194,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createCompanion = (data: {id: string, name?: string, description?: string, type: 'companion' | 'mount' | 'retainer' }): FeatureCompanion => {
+	createCompanion = (data: { id: string, name?: string, description?: string, type: 'companion' | 'mount' | 'retainer' }): FeatureCompanion => {
 		return {
 			id: data.id,
 			name: data.name || Format.capitalize(data.type),
@@ -501,7 +501,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createSoloMonster = (data: { id: string, name: string, gender?: 'm' | 'f' | 'n' , endEfect?: number }): FeatureText => {
+	createSoloMonster = (data: { id: string, name: string, gender?: 'm' | 'f' | 'n', endEfect?: number }): FeatureText => {
 		const capitalizedName = data.name.split(' ').map((n, i) => i === 0 ? Format.capitalize(n) : n).join(' ');
 		const genderWithDefault = data.gender ?? 'n';
 		const heSheThey = ({ m: 'he', f: 'she', n: 'they' } as const)[ genderWithDefault ];

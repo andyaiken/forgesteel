@@ -75,7 +75,7 @@ interface Props {
 	showRoll: () => void;
 	showReference: () => void;
 	showSourcebooks: () => void;
- 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
+	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	setOptions: (options: Options) => void;
 }

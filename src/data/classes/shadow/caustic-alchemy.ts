@@ -199,8 +199,6 @@ A creature who drinks the potion receives benefits based on your power roll.`),
 											tier2: 'The creature can fly until the end of the encounter.',
 											tier3: 'The creature turns invisible until the end of their next turn.'
 										}))
-
-
 									]
 								})
 							}),
@@ -291,7 +289,7 @@ For each combat round that has passed since this ability was last used in the cu
 									distance: [
 										FactoryLogic.distance.createMelee(),
 										FactoryLogic.distance.createRanged(10)
-									 ],
+									],
 									target: 'One creature or object',
 									cost: 11,
 									sections: [

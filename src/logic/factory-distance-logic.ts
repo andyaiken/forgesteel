@@ -13,7 +13,7 @@ export class FactoryDistanceLogic {
 		};
 	};
 
-	createSelf = (qualifier=''): AbilityDistance => {
+	createSelf = (qualifier = ''): AbilityDistance => {
 		return {
 			type: AbilityDistanceType.Self,
 			value: 0,

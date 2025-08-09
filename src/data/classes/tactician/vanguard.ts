@@ -134,7 +134,7 @@ export const vanguard: SubClass = {
 		{
 			level: 6,
 			features: [
-				 FactoryLogic.feature.createChoice({
+				FactoryLogic.feature.createChoice({
 					id: 'tactician-sub-3-6-1',
 					options: [
 						{

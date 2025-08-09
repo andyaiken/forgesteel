@@ -27,7 +27,7 @@ const promises = [
 ];
 
 Promise.all(promises).then(results => {
-	//#region Homebrew sourcebooks
+	// #region Homebrew sourcebooks
 
 	let sourcebooks = results[1] as Sourcebook[] | null;
 	if (!sourcebooks) {
@@ -48,9 +48,9 @@ Promise.all(promises).then(results => {
 		});
 	});
 
-	//#endregion
+	// #endregion
 
-	//#region Heroes
+	// #region Heroes
 
 	let heroes = results[0] as Hero[] | null;
 	if (!heroes) {
@@ -61,18 +61,18 @@ Promise.all(promises).then(results => {
 		HeroUpdateLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...sourcebooks ]);
 	});
 
-	//#endregion
+	// #endregion
 
-	//#region Hidden sourcebook IDs
+	// #region Hidden sourcebook IDs
 
 	let hiddenSourcebookIDs = results[2] as string[] | null;
 	if (!hiddenSourcebookIDs) {
 		hiddenSourcebookIDs = [];
 	}
 
-	//#endregion
+	// #endregion
 
-	//#region Playbook
+	// #region Playbook
 
 	let playbook = results[3] as Playbook | null;
 	if (!playbook) {
@@ -81,9 +81,9 @@ Promise.all(promises).then(results => {
 
 	PlaybookUpdateLogic.updatePlaybook(playbook);
 
-	//#endregion
+	// #endregion
 
-	//#region Session
+	// #region Session
 
 	let session = results[4] as Playbook | null;
 	if (!session) {
@@ -92,9 +92,9 @@ Promise.all(promises).then(results => {
 
 	PlaybookUpdateLogic.updatePlaybook(session);
 
-	//#endregion
+	// #endregion
 
-	//#region Options
+	// #region Options
 
 	let options = results[5] as Options | null;
 	if (!options) {
@@ -103,7 +103,7 @@ Promise.all(promises).then(results => {
 
 	OptionsUpdateLogic.updateOptions(options);
 
-	//#endregion
+	// #endregion
 
 	createRoot(document.getElementById('root')!).render(
 		<StrictMode>

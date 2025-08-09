@@ -1,6 +1,7 @@
 import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
+import stylistic from '@stylistic/eslint-plugin'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
@@ -12,6 +13,7 @@ export default tseslint.config(
 	{
 		extends: [
 			js.configs.recommended,
+			stylistic.configs.recommended,
 			...tseslint.configs.recommended
 		],
 		files: [
@@ -35,32 +37,9 @@ export default tseslint.config(
 				'error',
 				'consistent'
 			],
-			'array-bracket-spacing': [
-				'error',
-				'always'
-			],
 			'array-element-newline': [
 				'error',
 				'consistent'
-			],
-			'arrow-parens': [
-				'error',
-				'as-needed'
-			],
-			'comma-dangle': [
-				'error',
-				'never'
-			],
-			'indent': [
-				'error',
-				'tab',
-				{
-					'SwitchCase': 1
-				}
-			],
-			'jsx-quotes': [
-				'error',
-				'prefer-single'
 			],
 			'no-trailing-spaces': [
 				'error'
@@ -73,9 +52,35 @@ export default tseslint.config(
 				'error',
 				'single'
 			],
-			'semi': [
+			'@stylistic/array-bracket-spacing': [
 				'error',
 				'always'
+			],
+			'@stylistic/arrow-parens': [
+				'error',
+				'as-needed'
+			],
+			'@stylistic/comma-dangle': [
+				'error',
+				'never'
+			],
+			'@stylistic/indent': [
+				'error',
+				'tab',
+				{
+					'SwitchCase': 1
+				}
+			],
+			'@stylistic/jsx-quotes': [
+				'error',
+				'prefer-single'
+			],
+			'@stylistic/semi': [
+				'error',
+				'always'
+			],
+			'@typescript-eslint/no-deprecated': [
+				'error'
 			],
 			// Warnings
 			'no-console': [
@@ -112,8 +117,36 @@ export default tseslint.config(
 					]
 				}
 			],
-			'@typescript-eslint/no-deprecated': [
-				'error'
+			// Off
+			'@stylistic/brace-style': [
+				'off'
+			],
+			'@stylistic/indent-binary-ops': [
+				'off'
+			],
+			'@stylistic/jsx-indent-props': [
+				'off'
+			],
+			'@stylistic/jsx-one-expression-per-line': [
+				'off'
+			],
+			'@stylistic/jsx-wrap-multilines': [
+				'off'
+			],
+			'@stylistic/computed-property-spacing': [
+				'off'
+			],
+			'@stylistic/member-delimiter-style': [
+				'off'
+			],
+			'@stylistic/max-statements-per-line': [
+				'off'
+			],
+			'@stylistic/no-tabs': [
+				'off'
+			],
+			'@stylistic/operator-linebreak': [
+				'off'
 			]
 		}
 	}

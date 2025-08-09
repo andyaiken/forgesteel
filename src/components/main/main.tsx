@@ -108,7 +108,7 @@ export const Main = (props: Props) => {
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
 
-	//#region Persistence
+	// #region Persistence
 
 	const persistHero = (hero: Hero) => {
 		if (heroes.some(h => h.id === hero.id)) {
@@ -227,9 +227,9 @@ export const Main = (props: Props) => {
 			);
 	};
 
-	//#endregion
+	// #endregion
 
-	//#region Heroes
+	// #region Heroes
 
 	const createHero = (folder: string) => {
 		const hero = FactoryLogic.createHero([
@@ -287,9 +287,9 @@ export const Main = (props: Props) => {
 		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', format);
 	};
 
-	//#endregion
+	// #endregion
 
-	//#region Library
+	// #region Library
 
 	const createLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, original: Element | null) => {
 		const sourcebook = homebrewSourcebooks.find(cs => cs.id === sourcebookID) || null;
@@ -914,9 +914,9 @@ export const Main = (props: Props) => {
 		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('terrain', sourcebook.id, terrain.id));
 	};
 
-	//#endregion
+	// #endregion
 
-	//#region Playbook
+	// #region Playbook
 
 	const createPlaybookElement = (kind: PlaybookElementKind, original: Element | null) => {
 		const copy = Utils.copy(playbook);
@@ -1155,9 +1155,9 @@ export const Main = (props: Props) => {
 		persistSession(sessionCopy).then(() => navigation.goToSession());
 	};
 
-	//#endregion
+	// #endregion
 
-	//#region Session
+	// #region Session
 
 	const startEncounter = async (encounter: Encounter) => {
 		const copy = PlaybookLogic.startEncounter(encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], heroes, options);
@@ -1283,9 +1283,9 @@ export const Main = (props: Props) => {
 		return options.length > 0 ? options[0].id : null;
 	};
 
-	//#endregion
+	// #endregion
 
-	//#region Modals
+	// #region Modals
 
 	const showDirectoryPane = () => {
 		setDirectory(
@@ -1472,7 +1472,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	//#endregion
+	// #endregion
 
 	try {
 		return (

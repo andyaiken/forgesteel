@@ -365,7 +365,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 					id: 'conduit-4-1a',
 					name: 'Characteristic Increase: Intuition',
 					description: 'Your Intuition score increases to 3.',
-					characteristic:Characteristic.Intuition,
+					characteristic: Characteristic.Intuition,
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({
@@ -559,7 +559,7 @@ Additionally, whenever you take a respite, you can open a portal to rest in the 
 					id: 'conduit-10-2a',
 					name: 'Characteristic Increase: Intuition',
 					description: 'Your Intuition score increases to 5.',
-					characteristic:Characteristic.Intuition,
+					characteristic: Characteristic.Intuition,
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({

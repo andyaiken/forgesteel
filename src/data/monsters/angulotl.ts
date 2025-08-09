@@ -12,32 +12,31 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const angulotl: MonsterGroup = {
 	id: 'monster-group-angulotl',
 	name: 'Angulotl',
-	description: `
-*If you see one, try surrendering! Because you’re already surrounded.*
-*-PINNA, HEDGE MAGE*
-
-Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) are diminutive, brightly colored amphibious humanoids. Rather than defending their settlements and breeding grounds against hostile creatures, these poisonous frog folk prefer to establish their homes in places that are nigh-impossible for other humanoids to find, such as underwater caves and other enclosed spaces only accessible by water. They are happy to hide and watch a gaggle of noisy adventurers stumble past the entrance to an angulotl clutch without realizing it. Though angulotls prefer to avoid combat, when they’re threatened or pressed, they turn deadly.`,
+	description: `Found in freshwater swamps, rivers, and rainforests, angulotls (angwa-LAH-tuls) are diminutive, brightly colored amphibious humanoids. Rather than defending their settlements and breeding grounds against hostile creatures, these poisonous frog folk prefer to establish their homes in places that are nigh-impossible for other humanoids to find, such as underwater caves and other enclosed spaces accessible only by water. Angulotls are happy to hide and watch a gaggle of noisy adventurers stumble past the entrance to their clutch without realizing it. But though they prefer to avoid combat, whenever they’re threatened or pressed, angulotls can turn deadly.
+	
+*They like humans! Adults tend to freak them out a little. I don’t think they realize tall humans are the same species as tiny humans!* 
+Pinna, Hedge Witch, Gravesford`,
 	picture: null,
 	information: [
 		{
 			id: 'angulotl-info-1',
 			name: 'Deadly Toxins',
-			description: 'Angulotls are poisonous creatures, which suits their preference to avoid aggression—they don’t need to be! The contact toxin secreted by their skin gives them an edge in close combat; they also distill this toxin into more potent forms for coating blades and tipping darts.'
+			description: 'Angulotls are poisonous creatures, which suits their preference to avoid aggression—because they don’t need it! The contact toxin secreted by their skin gives them an edge in close combat, and they also distill this toxin into more potent forms for coating blades and tipping darts.'
 		},
 		{
 			id: 'angulotl-info-2',
 			name: 'Indicator Species',
-			description: 'Angulotl physiology is delicately balanced, and it doesn’t take much to upset it. While toxins don’t kill them, they are still affected by pollutants in their waters. Ongoing contamination of their environment can corrupt angulotls, making them aggressive, confused, and angry. Most pollution-corrupted angulotls eventually attack any creature who crosses their path—even other angulotls! Runoff from magical experimentation seems to affect them the most … and sometimes gives them strange abilities.'
+			description: 'Angulotl physiology is delicately balanced, and it doesn’t take much to upset that balance. While toxins don’t kill them, they are still affected by pollutants in their waters. Ongoing contamination of their environment can corrupt angulotls, making them aggressive, confused, and angry. Most pollution-corrupted angulotls eventually attack any creature who crosses their path—even other angulotls! Runoff from magical experimentation seems to affect them the most—and sometimes grants them strange abilities.'
 		},
 		{
 			id: 'angulotl-info-3',
 			name: 'Moisture Dependent',
-			description: 'Angulotls breathe through their skin, but they need to stay damp or they suffocate. They often avoid travel in very dry areas, and they prefer not to stray far from a source of freshwater … unless it’s raining.'
+			description: 'Angulotls breathe through their skin, so they need to stay damp or they suffocate. They often avoid travel in dry areas, and they prefer not to stray far from sources of freshwater unless it’s raining'
 		},
 		{
 			id: 'angulotl-info-4',
 			name: 'Clawfish',
-			description: 'Known as q’ukutxal (kooOOKootshaal) to angulotls, the clawfish resembles a moray eel with eight reptilian legs. These small beasts can slither through grass and clamber up trees nearly as well as they glide through river currents. Angulotls train them not only to pull rafts, but to cleverly fight by choking or electrocuting foes.'
+			description: 'Known as q’ukutxal (koo-OOK-oot-shaal) to angulotls, the clawfish resembles a moray eel with eight reptilian legs. These small animals can slither through grass and clamber up trees nearly as well as they glide through river currents. Angulotls train them not only to pull rafts, but to cleverly fight by grabbing and electrocuting foes.'
 		},
 		{
 			id: 'angulotl-info-5',
@@ -47,7 +46,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 		{
 			id: 'angulotl-info-6',
 			name: 'Wet',
-			description: 'Angulotls make use of a unique condition called wet. While wet, angulotls don’t provoke opportunity attacks by moving. Meanwhile, wet non-angulotls that end their turn with 0 speed remaining slip and fall prone. Several angulotl abilities inflict wet, but a creature can also become wet by entering a body of water.'
+			description: 'Angulotls make use of a unique effect called “wet.” While wet, an angulotl doesn’t provoke opportunity attacks by moving. At the same time, any non-angulotl who is wet and ends their turn with none of their movement remaining slips and falls prone. Several angulotl abilities can impose this effect, but a creature in an encounter featuring angulotls can also become wet by entering water, as the Director determines.'
 		}
 	],
 	malice: [
@@ -56,7 +55,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 			name: 'Leapfrog',
 			cost: 3,
 			sections: [
-				'Until the end of the round, when an angulotl moves through an ally’s space, that ally can jump 3 squares as a free triggered action.'
+				'Until the end of the round, when an angulotl moves through an inactive angulotl’s space, the inactive angulotl can use a free triggered action to jump 3 squares.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -64,7 +63,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 			name: 'Resonating Croak',
 			cost: 5,
 			sections: [
-				'Each angulotl puﬀs out their throat and starts loudly droning. All non-angulotls adjacent to an angulotl must make an **Intuition test**.',
+				'Each angulotl in the encounter puffs out their throat and starts loudly droning Any non-angulotl adjacent to an angulotl makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Intuition,
 					tier1: '5 sonic damage; slowed (EoT)',
@@ -78,29 +77,172 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 			name: 'Rainfall',
 			cost: 7,
 			sections: [
-				'An angulotl calls clouds to cover the battlemap and rain until the end of the round. All creatures and objects that are exposed to the sky are wet for the rest of the encounter.'
+				'An angulotl calls clouds to cover the encounter map and unleash rain until the end of the round. Any creature or object that is exposed to the sky is wet until the end of the encounter.'
 			]
 		})
 	],
 	monsters: [
 		FactoryLogic.createMonster({
 			id: 'angulotl-1',
+			name: 'Angulotl Cleaver',
+			level: 1,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
+			keywords: [ 'Angulotl', 'Humanoid' ],
+			encounterValue: 3,
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(6, 'swim, climb'),
+			stamina: 4,
+			stability: 0,
+			freeStrikeDamage: 2,
+			withCaptain: '+1 damage bonus to strikes',
+			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'angulotl-1-feature-1',
+						name: 'Hop and Chop',
+						type: FactoryLogic.type.createMain(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature or object per minion',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '2 damage',
+									tier2: '4 damage',
+									tier3: '5 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('**Effect:** The cleaver jumps up to 4 squares before or after making this strike.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'angulotl-1-feature-2',
+					name: 'Toxiferous',
+					description: 'Whenever an adjacent enemy grabs the cleaver or uses a melee ability against them, that enemy takes 1 poison damage.'
+				}),
+				FactoryLogic.feature.createDamageModifier({
+					id: 'angulotl-1-feature-3',
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'angulotl-2',
+			name: 'Angulotl Pollywog',
+			level: 1,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
+			keywords: [ 'Angulotl', 'Humanoid' ],
+			encounterValue: 3,
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(6, 'swim, climb'),
+			stamina: 4,
+			stability: 0,
+			freeStrikeDamage: 1,
+			withCaptain: '+2 bonus to speed',
+			characteristics: MonsterLogic.createCharacteristics(0, 2, -2, -2, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'angulotl-2-feature-1',
+						name: 'Nip',
+						type: FactoryLogic.type.createMain(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature per minion',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '1 damage',
+									tier2: '2 poison damage; the pollywog can shift 1 square',
+									tier3: '3 poison damage; the pollywog can shift up to 3 squares'
+								})
+							)
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'angulotl-2-feature-2',
+					name: 'Quick Snack',
+					description: 'Any angulotl who can target the pollywog with a melee free strike can eat them as a maneuver. The angulotl regains 4 Stamina and is wet until the end of their next turn.'
+				}),
+				FactoryLogic.feature.createDamageModifier({
+					id: 'angulotl-2-feature-3',
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'angulotl-3',
+			name: 'Angulotl Dart',
+			level: 1,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
+			keywords: [ 'Angulotl', 'Humanoid' ],
+			encounterValue: 3,
+			size: FactoryLogic.createSize(1, 'S'),
+			speed: FactoryLogic.createSpeed(5, 'swim, climb'),
+			stamina: 3,
+			stability: 0,
+			freeStrikeDamage: 2,
+			withCaptain: '+4 bonus to ranged distance',
+			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'angulotl-3-feature-1',
+						name: 'Poison Dart',
+						type: FactoryLogic.type.createMain(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createRanged(8) ],
+						target: 'One creature per minion',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '2 damage',
+									tier2: '4 poison damage',
+									tier3: '5 poison damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('**Effect:** The dart gains an edge on this ability against any target who has less than full Stamina.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'angulotl-3-feature-2',
+					name: 'Toxiferous',
+					description: 'Whenever an adjacent enemy grabs the dart or uses a melee ability against them, that enemy takes 1 poison damage.'
+				}),
+				FactoryLogic.feature.createDamageModifier({
+					id: 'angulotl-3-feature-3',
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'angulotl-4',
 			name: 'Clawfish',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Angulotl', 'Animal' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'swim, climb'),
 			stamina: 5,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Edge on strikes',
+			withCaptain: 'Gain an edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(0, 2, -3, -2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'angulotl-1-feature-1',
+						id: 'angulotl-4-feature-1',
 						name: 'Hookclaw',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -116,164 +258,21 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 									tier3: '5 damage; grabbed'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('A grabbed target takes 2 lightning damage at the start of each of their turns.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'angulotl-1-feature-2',
-					name: 'Shocking',
-					description: 'The clawfish deals 2 lightning damage to each wet enemy within 2 at the start of each of the clawfish\'s turns.'
-				}),
-				FactoryLogic.feature.createDamageModifier({
-					id: 'angulotl-1-feature-3',
-					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }),
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 3 })
-					]
-				})
-			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'angulotl-2',
-			name: 'Angulotl Cleaver',
-			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
-			keywords: [ 'Angulotl', 'Humanoid' ],
-			encounterValue: 6,
-			size: FactoryLogic.createSize(1, 'S'),
-			speed: FactoryLogic.createSpeed(6, 'swim, climb'),
-			stamina: 4,
-			stability: 0,
-			freeStrikeDamage: 2,
-			withCaptain: 'Strike damage +1',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'angulotl-2-feature-1',
-						name: 'Hop & Chop',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'One creature or object per minion',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(
-								FactoryLogic.createPowerRoll({
-									bonus: 2,
-									tier1: '2 damage',
-									tier2: '4 damage',
-									tier3: '5 damage'
-								})
-							),
-							FactoryLogic.createAbilitySectionText('The cleaver jumps 4 squares before or after attacking.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'angulotl-2-feature-2',
-					name: 'Toxiferous',
-					description: 'When an adjacent enemy grabs or uses a melee ability against the cleaver, they take 2 poison damage.'
-				}),
-				FactoryLogic.feature.createDamageModifier({
-					id: 'angulotl-2-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
-				})
-			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'angulotl-3',
-			name: 'Angulotl Dart',
-			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
-			keywords: [ 'Angulotl', 'Humanoid' ],
-			encounterValue: 6,
-			size: FactoryLogic.createSize(1, 'S'),
-			speed: FactoryLogic.createSpeed(5, 'swim, climb'),
-			stamina: 3,
-			stability: 0,
-			freeStrikeDamage: 2,
-			withCaptain: 'Ranged distance +4',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, 0),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'angulotl-3-feature-1',
-						name: 'Poison Dart',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createRanged(8) ],
-						target: 'One creature or object per minion',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(
-								FactoryLogic.createPowerRoll({
-									bonus: 2,
-									tier1: '2 damage',
-									tier2: '4 poison damage',
-									tier3: '5 poison damage'
-								})
-							),
-							FactoryLogic.createAbilitySectionText('This ability has an edge on targets that don\'t have full Stamina.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'angulotl-3-feature-2',
-					name: 'Toxiferous',
-					description: 'When an adjacent enemy grabs or uses a melee ability against the dart, they take 2 poison damage.'
-				}),
-				FactoryLogic.feature.createDamageModifier({
-					id: 'angulotl-3-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
-				})
-			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'angulotl-4',
-			name: 'Angulotl Pollywog',
-			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
-			keywords: [ 'Angulotl', 'Humanoid' ],
-			encounterValue: 6,
-			size: FactoryLogic.createSize(1, 'S'),
-			speed: FactoryLogic.createSpeed(6, 'swim, climb'),
-			stamina: 4,
-			stability: 0,
-			freeStrikeDamage: 1,
-			withCaptain: 'Speed +2',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -2, -2, 0),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'angulotl-4-feature-1',
-						name: 'Nip',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'One creature or object per minion',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(
-								FactoryLogic.createPowerRoll({
-									bonus: 2,
-									tier1: '1 damage',
-									tier2: '2 poison damage; shift 1',
-									tier3: '3 poison damage; shift 3'
-								})
-							)
+							FactoryLogic.createAbilitySectionText('**Effect:** Any target grabbed this way takes 2 lightning damage at the start of each of their turns.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'angulotl-4-feature-2',
-					name: 'Quick Snack',
-					description: 'An angulotl that can reach the pollywog can eat them as a maneuver, regaining 4 Stamina and becoming wet (EoT) (see Wet).'
+					name: 'Shocking',
+					description: 'At the start of each of their turns, the clawfish deals 2 lightning damage to each wet enemy within 2 squares.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-4-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }),
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 3 })
+					]
 				})
 			]
 		}),
@@ -299,7 +298,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
-						target: 'One creature or object',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
@@ -308,34 +307,20 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 								tier3: '7 poison damage'
 							})),
 							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+								name: 'Malice:',
 								value: 2,
-								effect: 'M<2 weakened (save ends). The target takes 2 poison damage at the start of each of their turns while they are weakened by this ability.'
+								effect: 'A target who has <code>M < 2</code> is weakened (save ends). A target weakened this way takes 2 poison damage at the start of each of their turns.'
 							})
 						]
 					})
 				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'angulotl-5-feature-2',
-						name: 'Camoufroge',
-						type: FactoryLogic.type.createManeuver(),
-						cost: 1,
-						keywords: [],
-						distance: [ FactoryLogic.distance.createSelf() ],
-						target: 'Self (while hiding)',
-						sections: [
-							FactoryLogic.createAbilitySectionText('The needler isn’t revealed after using their next action.')
-						]
-					})
-				}),
 				FactoryLogic.feature.create({
-					id: 'angulotl-5-feature-3',
+					id: 'angulotl-5-feature-2',
 					name: 'Toxiferous',
-					description: 'When an adjacent enemy grabs or uses a melee ability against the needler, they take 3 poison damage.'
+					description: 'Whenever an adjacent enemy grabs the needler or uses a melee ability against them, that enemy takes 2 poison damage.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'angulotl-2-feature-3',
+					id: 'angulotl-5-feature-3',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 				})
 			]
@@ -348,7 +333,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 			keywords: [ 'Angulotl', 'Humanoid' ],
 			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'S'),
-			speed: FactoryLogic.createSpeed(7, 'swim, climb'),
+			speed: FactoryLogic.createSpeed(5, 'swim, climb'),
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 2,
@@ -357,7 +342,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'angulotl-6-feature-1',
-						name: 'Blowgun',
+						name: 'Tonguelash',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -372,7 +357,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 									tier3: '7 damage; pull 6'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The target is wet (save ends) (see Wet). Allies targeted by this ability take no damage and are pulled 6, ignoring stability.')
+							FactoryLogic.createAbilitySectionText('**Effect:** The target is wet (save ends). Any ally targeted by this ability ignores the damage, is wet until the end of the encounter, and is pulled up to 6 squares, ignoring stability.')
 						]
 					})
 				}),
@@ -380,24 +365,24 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 					ability: FactoryLogic.createAbility({
 						id: 'angulotl-6-feature-2',
 						name: 'Hop To It',
-						cost: 1,
+						cost: 2,
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The slink jumps 3 squares. If the slink lands in cover or concealment, they can immediately hide.')
+							FactoryLogic.createAbilitySectionText('**Effect:** The slink jumps up to 3 squares. If they have cover or concealment when they land, they can attempt to hide.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'angulotl-6-feature-3',
 					name: 'Toxiferous',
-					description: 'When an adjacent enemy grabs or uses a melee ability against the slink, they take 3 poison damage.'
+					description: 'Whenever an adjacent enemy grabs the slink or uses a melee ability against them, that enemy takes 2 poison damage.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'angulotl-6-feature-4',
 					name: 'Adhesive',
-					description: 'The slink excretes residue into their square at the end of each of their turns. A non-angulotl creature or object that enters or leaves the square must use a maneuver to withstand the adhesive or be restrained (EoT).'
+					description: 'The slink excretes a sticky residue into their square at the end of each of their turns. Any non-angulotl who enters or leaves the square is stuck, and must use a maneuver to break free or be restrained until the end of their turn. Objects are likewise affected, and a creature must use a maneuver to remove an object from the square.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-6-feature-5',
@@ -427,17 +412,17 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
-						target: 'One creature or object',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 2,
 									tier1: '3 holy damage',
-									tier2: '4 holy damage; R<1 illuminated (save ends)',
-									tier3: '5 holy damage; R<2 illuminated (save ends)'
+									tier2: '4 holy damage; R < 1 illuminated (save ends)',
+									tier3: '5 holy damage; R < 2 illuminated (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('Illuminated creatures and objects can’t Hide or turn invisible, and strikes made against them have an edge until the condition ends.')
+							FactoryLogic.createAbilitySectionText('**Effect:** An illuminated creature or object can’t hide or become invisible, and any strike made against an illuminated target gains an edge.')
 						]
 					})
 				}),
@@ -445,19 +430,19 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 					ability: FactoryLogic.createAbility({
 						id: 'angulotl-7-feature-2',
 						name: 'Noxious Bubble',
-						cost: 3,
+						cost: 2,
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10, qualifier: 'unoccupied space' }) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10, qualifier: 'unoccupied space' }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('A bubble of toxic gas fills the area that lasts until the end of the encounter. If a creature or object touches the bubble, it bursts and each enemy within 3 makes a **Might test**.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** A bubble of toxic gas fills the area, ready to pop. If any creature or object touches the bubble or if the bubble takes damage, it bursts. Each angulotl adjacent to the bubble is wet until the end of the encounter, and each enemy adjacent to the bubble makes a **Might test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: Characteristic.Might,
-									tier1: '5 poison damage; wet and weakened (save ends)',
-									tier2: '4 poison damage; wet (EoT)',
-									tier3: 'Wet (EoT)(see Wet)'
+									tier1: '3 poison damage; the target is wet and weakened (save ends)',
+									tier2: '2 poison damage; the target is wet (save ends)',
+									tier3: '1 poison damage; the target is wet (EoT)'
 								})
 							)
 						]
@@ -466,7 +451,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				FactoryLogic.feature.create({
 					id: 'angulotl-7-feature-3',
 					name: 'Toxiferous',
-					description: 'When an adjacent enemy grabs or uses a melee ability against the wave, they take 2 poison damage.'
+					description: 'Whenever an adjacent enemy grabs the wave or uses a melee ability against them, that enemy takes 2 poison damage.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-7-feature-4',
@@ -475,14 +460,14 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'angulotl-10',
+			id: 'angulotl-8',
 			name: 'Angulotl Daybringer',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Leader),
 			keywords: [ 'Angulotl', 'Humanoid' ],
 			encounterValue: 12,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5, 'swim, climb'),
+			speed: FactoryLogic.createSpeed(5, 'climb, swim'),
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 4,
@@ -501,16 +486,16 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 3,
-									tier1: '7 acid damage; A<1 dazed (save ends)',
-									tier2: '10 acid damage; A<2 dazed (save ends)',
-									tier3: '13 acid damage; A<3 dazed (save ends)'
+									tier1: '7 acid damage; A < 1 dazed (save ends)',
+									tier2: '10 acid damage; A < 2 dazed (save ends)',
+									tier3: '13 acid damage; A < 3 dazed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The next time the target strikes the daybringer, they immediately take 4 acid damage.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** The next time the target makes a strike against the daybringer, the target takes 4 acid damage after the strike is resolved.'),
 							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+								name: 'Malice:',
 								value: 1,
-								effect: 'The daybringer jumps 3 squares before or after using this ability.'
+								effect: 'The daybringer jumps up to 3 squares before or after using this ability.'
 							})
 						]
 					})
@@ -523,7 +508,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The daybringer expands their throat to resemble the sun until the start of their next turn. Each non-minion angulotl who starts their turn within 10 of the daybringer gains 5 temporary Stamina and has their Speed increased by 3 until the end of their turn.')
+							FactoryLogic.createAbilitySectionText('**Effect:** The daybringer expands their throat to make it resemble the sun until the start of their next turn. During that time, each angulotl who starts their turn within 10 squares of the daybringer regains 5 Stamina and gains a +3 bonus to speed until the end of their turn.')
 						]
 					})
 				}),
@@ -531,15 +516,15 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 					ability: FactoryLogic.createAbility({
 						id: 'angulotl-8-feature-3',
 						name: 'Tongue Slap',
-						type: FactoryLogic.type.createTrigger('The target targets the daybringer or an ally with a strike that isn\'t a critical hit.'),
+						type: FactoryLogic.type.createTrigger('The target makes a strike against the daybringer or an ally that isn’t a critical hit.'),
 						distance: [ FactoryLogic.distance.createMelee(5) ],
 						target: 'One creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The daybringer reduces the power roll result by 1 tier.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** The outcome of the strike’s power roll is reduced by one tier'),
 							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
+								name: 'Malice:',
 								value: 2,
-								effect: 'Pull 4.'
+								effect: 'The target is pulled up to 4 squares after the strike resolves.'
 							})
 						]
 					})
@@ -547,7 +532,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 				FactoryLogic.feature.create({
 					id: 'angulotl-8-feature-4',
 					name: 'Moisturizing End Effect',
-					description: 'The daybringer either takes 5 damage or removes the wet effect from an adjacent creature and ends one save ends effect affecting them at the end of their turn.'
+					description: 'At the end of each of the daybringer’s turns, they can either take 5 damage or end the wet effect on an adjacent creature in order to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -558,7 +543,7 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Ten **angulotl pollywogs** escape the daybringer\'s back and waddle into unoccupied squares within distance.')
+							FactoryLogic.createAbilitySectionText('**Effect:** Four **angulotl pollywogs** erupt from the daybringer’s back and waddle into unoccupied spaces within distance.')
 						]
 					})
 				}),
@@ -569,12 +554,11 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [],
 						distance: [
-							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 8 })
 						],
-						target: 'Self and all allies in the burst',
+						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target jumps 4 and makes a free strike.')
+							FactoryLogic.createAbilitySectionText('**Effect:** Each target can jump up to 4 squares. Each non-minion target can make a free strike at the end of the jump.')
 						]
 					})
 				}),
@@ -585,16 +569,16 @@ Found in freshwater swamps, rivers, and rainforests, angulotls (anggwaLAHtulls) 
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('') ],
-						target: 'All enemies in the burst',
+						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The encounter map dries up and becomes illuminated. Each wet enemy has the wet condition end and takes 6 acid damage. All angulotls have a double edge on their next attack.')
+							FactoryLogic.createAbilitySectionText('**Effect:** The encounter map dries up and each enemy and object on it is illuminated until the end of the encounter. An illuminated creature or object can’t hide or become invisible, and any strike made against an illuminated target gains an edge. Additionally, each enemy in the encounter who is wet has that effect end and takes 6 acid damage. Each angulotl in the encounter has a double edge on their next strike.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'angulotl-8-feature-8',
 					name: 'Toxiferous',
-					description: 'When an adjacent enemy grabs or uses a melee ability against the daybringer, they take 3 poison damage.'
+					description: 'Whenever an adjacent enemy grabs the daybringer or uses a melee ability against them, that enemy takes 3 poison damage.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'angulotl-8-feature-9',

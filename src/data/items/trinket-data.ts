@@ -3,6 +3,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { FeatureField } from '../../enums/feature-field';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
 import { FeatureField } from '../../enums/feature-field';
@@ -158,7 +159,7 @@ export class TrinketData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-deadweight-1',
 							name: 'Item Ability',
-							type: FactoryLogic.type.createManeuver({ free: true, qualifiers: [ 'When you fall 5 or more squares' ]}),
+							type: FactoryLogic.type.createManeuver({ free: true, qualifiers: [ 'When you fall 5 or more squares' ] }),
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'One enemy',
 							sections: [
@@ -377,7 +378,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 			prerequisites: 'A giant’s tooth',
 			source: 'Texts or lore in High Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Intuition ],
-			goal: 150
+			goal: 300
 		}),
 		featuresByLevel: [
 			{
@@ -408,7 +409,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 			prerequisites: 'An eyeball from a pirate captain who drowned at sea',
 			source: 'Texts or lore in Caelian',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 300
 		}),
 		featuresByLevel: [
 			{
@@ -441,7 +442,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 			prerequisites: ' One measure of pure crystal, a jarred memory of true joy',
 			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 300
 		}),
 		effect: 'While wearing the crown, you gain an edge on Intuition tests made to read the emotions and discern the honesty of other creatures. If you succeed on an Intuition test to read the emotions of another creature within 5 squares, you can ask the Director one question about something the creature knows, which the Director must answer honestly. At the Director’s discretion, you might not be able to tap into the creature’s deepest secrets this way.'
 	});
@@ -456,7 +457,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 			prerequisites: 'The finger bone of a creature with telepathy, three black opals',
 			source: ' Texts or lore in Ullorvic',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 300
 		}),
 		featuresByLevel: [
 			{
@@ -489,7 +490,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 			prerequisites: 'The gold nib of a fountain pen used to sign a major treaty or compact, a ruby once worn by a devil',
 			source: 'Texts or lore in Hyrallic',
 			characteristic: [ Characteristic.Reason, Characteristic.Presence ],
-			goal: 150
+			goal: 300
 		}),
 		effect: 'While you wear the Mediator’s Charm, the patience of any NPC you negotiate with increases by 1 (to a maximum of 5). Additionally, at the start of a negotiation, you learn one of an NPC’s motivations or pitfalls of the Director’s choice.'
 	});
@@ -504,7 +505,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 			prerequisites: 'A gallon of swamp water, the limbs of four different newts',
 			source: ' Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 300
 		}),
 		effect: 'While you wear this necklace, you can breathe underwater, you can automatically swim at full speed while moving, and you ignore difficult terrain created by water or in marsh and similar terrain.'
 	});
@@ -519,7 +520,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 			prerequisites: ': A piece of polished obsidian, seven flawless pea-sized diamonds',
 			source: ' Texts or lore in Variac',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 300
 		}),
 		effect: 'When held against a wall or other solid surface 1 square thick or less, the Scannerstone creates an image floating in the air beside it that shows a rough miniature approximation of the space on the other side of the surface. The image displays floors, walls, and other barriers but doesn’t show other objects. It shows representations of any moving creatures on the other side, but not creatures who are still.'
 	});
@@ -534,7 +535,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 			prerequisites: 'A coin minted during an earthquake',
 			source: ' Texts or lore in Caelian,',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 150
+			goal: 300
 		}),
 		featuresByLevel: [
 			{

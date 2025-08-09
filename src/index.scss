@@ -368,8 +368,14 @@ td {
 		}
 	}
 
-	.ant-btn.ant-btn-text {
-		color: rgba(255, 255, 255, 0.88);
+	.ant-btn {
+		&.ant-btn-text {
+			color: rgba(255, 255, 255, 0.88);
+		}
+
+		&.status-warning {
+			color: rgba(255, 255, 255, 0.88);
+		}
 	}
 
 	.ant-collapse {

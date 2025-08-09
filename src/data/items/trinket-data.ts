@@ -3,6 +3,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { FeatureField } from '../../enums/feature-field';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
 import { FeatureField } from '../../enums/feature-field';
@@ -158,7 +159,7 @@ export class TrinketData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-deadweight-1',
 							name: 'Item Ability',
-							type: FactoryLogic.type.createManeuver({ free: true, qualifiers: [ 'When you fall 5 or more squares' ]}),
+							type: FactoryLogic.type.createManeuver({ free: true, qualifiers: [ 'When you fall 5 or more squares' ] }),
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'One enemy',
 							sections: [

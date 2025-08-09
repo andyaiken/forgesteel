@@ -85,7 +85,6 @@ export const HeroListPage = (props: Props) => {
 	};
 
 	try {
-
 		const exampleHeroes = [
 			HeroData.dwarfFury,
 			HeroData.highElfTactician,
@@ -131,7 +130,7 @@ export const HeroListPage = (props: Props) => {
 												file
 													.text()
 													.then(json => {
-														const hero = (JSON.parse(json) as Hero);
+														const hero = JSON.parse(json) as Hero;
 														props.importHero(hero, currentTab);
 													});
 												return false;

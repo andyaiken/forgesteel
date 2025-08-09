@@ -207,8 +207,7 @@ You can choose only one free triggered action option at a time, even if multiple
 * Strikes with the weapon deal extra holy damage equal to the wielder’s highest characteristic score.
 * Any creature struck by the weapon who has holy weakness and has P < Strong is frightened and weakened (save ends).
 * Any minion targeted by a strike using the weapon dies. That minion’s Stamina maximum is removed from the minion Stamina pool before any damage is applied to the rest of the squad.
-* The weapon’s wielder can’t be made frightened.
-     				`
+* The weapon’s wielder can’t be made frightened.`
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'censor-6-2',
@@ -282,8 +281,7 @@ You can choose only one free triggered action option at a time, even if multiple
 
 * The weapon’s wielder and each ally adjacent to them gain a +2 bonus to saving throws.
 * At the end of each of the weapon wielder’s turns, each ally adjacent to the wielder makes a saving throw against each effect on them that is ended by a saving throw.
-* The weapon’s wielder has corruption immunity 10.
-     				`
+* The weapon’s wielder has corruption immunity 10.`
 				})
 			]
 		},
@@ -326,9 +324,7 @@ While you rest in their presence, your god might also give you priority targets 
 
 Additionally, you can spend 3 virtue to access one of your deity’s domains that you usually don’t have access to. When you do, you can use that domain’s features until you finish another respite.
 
-Virtue remains until you spend it.
-
-     				`
+Virtue remains until you spend it.`
 				}),
 				FactoryLogic.feature.create({
 					id: 'censor-10-6',

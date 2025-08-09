@@ -736,7 +736,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'Summon Elemental',
 						cost: 3,
 						repeatable: true,
-						type: FactoryLogic.type.createManeuver( { free: true } ),
+						type: FactoryLogic.type.createManeuver({ free: true }),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',

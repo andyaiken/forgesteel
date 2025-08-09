@@ -398,7 +398,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		]
 	});
 
-	static evilestEye : Item = FactoryLogic.createItem({
+	static evilestEye: Item = FactoryLogic.createItem({
 		id: 'item-evilest-eye',
 		name: 'Evilest Eye',
 		description: 'A perfectly preserved eyeball hangs unnervingly from a gold chain.',
@@ -479,7 +479,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		]
 	});
 
-	static mediatorsCharm : Item = FactoryLogic.createItem({
+	static mediatorsCharm: Item = FactoryLogic.createItem({
 		id: 'item-mediators-charm',
 		name: 'Mediator\'s Charm',
 		description: 'A fancy gold earring is set with a small ruby.',
@@ -509,7 +509,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		effect: 'While you wear this necklace, you can breathe underwater, you can automatically swim at full speed while moving, and you ignore difficult terrain created by water or in marsh and similar terrain.'
 	});
 
-	static scannerstone : Item = FactoryLogic.createItem({
+	static scannerstone: Item = FactoryLogic.createItem({
 		id: 'item-scannerstone',
 		name: 'Scannerstone',
 		description: 'This flat, palm-sized triangular stone is decorated with a starfield of tiny gems.',
@@ -524,7 +524,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		effect: 'When held against a wall or other solid surface 1 square thick or less, the Scannerstone creates an image floating in the air beside it that shows a rough miniature approximation of the space on the other side of the surface. The image displays floors, walls, and other barriers but doesn’t show other objects. It shows representations of any moving creatures on the other side, but not creatures who are still.'
 	});
 
-	static stopNGoCoin : Item = FactoryLogic.createItem({
+	static stopNGoCoin: Item = FactoryLogic.createItem({
 		id: 'item-stop-n-go-coin',
 		name: 'Stop-’n-Go Coin',
 		description: 'This small, featureless coin is solid green on one side and solid red on the other.',

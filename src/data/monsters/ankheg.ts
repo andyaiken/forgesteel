@@ -145,7 +145,7 @@ An ankheg is a chitinous, burrowing monstrosity larger than a horse. Their hooke
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'ankheg-1-feature-5',
 						name: 'Earth Eruption',
 						type: FactoryLogic.type.createMain(),

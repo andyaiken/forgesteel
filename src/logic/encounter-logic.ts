@@ -179,7 +179,7 @@ export class EncounterLogic {
 				list.push({
 					key: key,
 					monsterID: s.monsterID,
-					addOnIDs: [ ... s.customization.addOnIDs ]
+					addOnIDs: [ ...s.customization.addOnIDs ]
 				});
 			}
 		});

@@ -3,5 +3,5 @@ export enum Characteristic {
 	Agility = 'Agility',
 	Reason = 'Reason',
 	Intuition = 'Intuition',
-	Presence = 'Presence',
+	Presence = 'Presence'
 }

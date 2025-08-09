@@ -903,7 +903,8 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 																borderRadius: '5px',
 																background: (m.id === props.captain!.captainID ? 'rgb(64, 150, 255)' : undefined),
 																color: (m.id === props.captain!.captainID ? 'rgb(255, 255, 255)' : undefined)
-															}}>
+															}}
+														>
 															<MonsterInfo monster={m} />
 														</div>
 													)

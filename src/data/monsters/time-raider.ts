@@ -893,7 +893,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 								})
 							),
 							FactoryLogic.createAbilitySectionText('If the healer is dazed, frightened, or taunted, they can end that condition and inflict it on one enemy in the area. Additionally, if the healer’s mentor is in the area and is dazed, frightened, or taunted, the healer can end that condition and inflict it on one enemy in the area.')
-					   ]
+						]
 					})
 				})
 			}

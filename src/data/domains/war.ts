@@ -5,7 +5,6 @@ import { Domain } from '../../models/domain';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { SkillList } from '../../enums/skill-list';
 
-
 export const war: Domain = {
 	id: 'domain-war',
 	name: 'War',

@@ -207,7 +207,7 @@ export const DieRollPanel = (props: Props) => {
 									values={RollLogic.getOdds(props.modifiers, props.rollState)}
 									showPercentages={true}
 									getLabel={x => {
-										switch(x) {
+										switch (x) {
 											case 4:
 												return 'Crit';
 											default:

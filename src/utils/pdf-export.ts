@@ -54,7 +54,7 @@ export class PDFExport {
 			AncestryTop: hero.ancestry && hero.ancestry.name,
 			CareerTop: hero.career && hero.career.name,
 			ClassTop: hero.class && hero.class.name,
-			SubclassTop: hero.class && (hero.class.subclassName !== '') && (hero.class.subclasses.filter(s => s.selected).length > 0) && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name || null,
+			SubclassTop: (hero.class && (hero.class.subclassName !== '') && (hero.class.subclasses.filter(s => s.selected).length > 0) && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name) || null,
 			Level: hero.class && hero.class.level,
 			Wealth: hero.state.wealth,
 			Renown: hero.state.renown,
@@ -355,9 +355,7 @@ export class PDFExport {
 								let powerRollText = '';
 								powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...section.roll.characteristic
 									.map(
-										c =>
-											hero.class &&
-											hero.class.characteristics.find(d => d.characteristic === c)
+										c => hero.class && hero.class.characteristics.find(d => d.characteristic === c)
 									)
 									.map(c => (c && c.value) || 0)
 								);
@@ -433,9 +431,9 @@ export class PDFExport {
 			const abilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 			abilities.push(AbilityData.freeStrikeMelee);
 			abilities.push(AbilityData.freeStrikeRanged);
-			texts['RegularActions'] = abilities.filter(a => a.type.usage === AbilityUsage.MainAction).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
-			texts['Maneuvers'] = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
-			texts['TriggeredActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Trigger).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
+			texts['RegularActions'] = abilities.filter(a => a.type.usage === AbilityUsage.MainAction).map(a => ' • ' + a.name + ((typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')') || '')).join('\n');
+			texts['Maneuvers'] = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver).map(a => ' • ' + a.name + ((typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')') || '')).join('\n');
+			texts['TriggeredActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Trigger).map(a => ' • ' + a.name + ((typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')') || '')).join('\n');
 
 			ApplyGroup(
 				abilities.filter(a => !ignoredFeatures[a.id]),
@@ -458,7 +456,7 @@ export class PDFExport {
 			}
 		}
 
-		const DoesTextFitFieldRectangle = (t: string, rect: { x: number; y: number; width: number; height: number }, size: number, multiline: boolean) => {
+		const DoesTextFitFieldRectangle = (t: string, rect: { x: number, y: number, width: number, height: number }, size: number, multiline: boolean) => {
 			t = t.replace(/\t/g, '    ');
 			t = sanitize(t);
 			if (multiline) {
@@ -479,7 +477,6 @@ export class PDFExport {
 			} else {
 				return font.widthOfTextAtSize(t, size) < rect.width - 5 && font.heightAtSize(size) < rect.height;
 			}
-
 		};
 
 		form.getFields().forEach(field => {

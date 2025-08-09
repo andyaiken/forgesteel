@@ -498,12 +498,12 @@ export const AbilityEditPanel = (props: Props) => {
 																	: null
 															}
 															{
-																(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
+																(getDistanceMainType(n) === 'Area') || (getDistanceMainType(n) === 'Line') ?
 																	<HeaderText>Within</HeaderText>
 																	: null
 															}
 															{
-																(getDistanceMainType(n) === 'Area' ) || (getDistanceMainType(n) === 'Line') ?
+																(getDistanceMainType(n) === 'Area') || (getDistanceMainType(n) === 'Line') ?
 																	<NumberSpin min={1} value={distance.within} onChange={value => setDistanceWithin(n, value)} />
 																	: null
 															}

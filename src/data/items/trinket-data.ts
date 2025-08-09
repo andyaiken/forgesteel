@@ -6,7 +6,6 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
-import { FeatureField } from '../../enums/feature-field';
 
 export class TrinketData {
 	static colorCloakBlue: Item = FactoryLogic.createItem({
@@ -565,7 +564,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		]
 	});
 
-	static bracersOfStrife : Item = FactoryLogic.createItem({
+	static bracersOfStrife: Item = FactoryLogic.createItem({
 		id: 'item-bracers-of-strife',
 		name: 'Bracers of Strife',
 		description: 'Each of these metallic blue bracers is oversized',
@@ -593,7 +592,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		]
 	});
 
-	static maskOfOversight : Item = FactoryLogic.createItem({
+	static maskOfOversight: Item = FactoryLogic.createItem({
 		id: 'item-mask-of-oversight',
 		name: 'Mask of Oversight',
 		description: 'This angular electrum mask is set with an excess of eye holes and a horrifying maw.',
@@ -626,7 +625,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		]
 	});
 
-	static mirageBand : Item = FactoryLogic.createItem({
+	static mirageBand: Item = FactoryLogic.createItem({
 		id: 'item-mirage-band',
 		name: 'Mirage Band',
 		description: 'A sable blue circlet shimmers with finely woven threads of sparkling white.',
@@ -662,8 +661,8 @@ The coin must be picked up before it can be used again. If any creature picks up
 		]
 	});
 
-	static nullfieldResonatorRing : Item = FactoryLogic.createItem({
-		id:  'item-nullfield-resonator-ring',
+	static nullfieldResonatorRing: Item = FactoryLogic.createItem({
+		id: 'item-nullfield-resonator-ring',
 		name: 'Nullfield Resonator Ring',
 		description: 'This simple band of copper vibrates slightly when handled.',
 		type: ItemType.Trinket,
@@ -693,7 +692,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 										characteristic: [ Characteristic.Might, Characteristic.Agility ],
 										tier1: '3 psychic damage',
 										tier2: '5 psychic damage; I < [average], slowed (save ends)',
-										tier3: '8 psychic damage; I < [strong], slowed (save ends)',
+										tier3: '8 psychic damage; I < [strong], slowed (save ends)'
 									})
 								),
 								FactoryLogic.createAbilitySectionText('While slowed in this way, the target takes a bane on magic or psionic abilities.')
@@ -705,7 +704,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		]
 	});
 
-	static shiftingRing : Item = FactoryLogic.createItem({
+	static shiftingRing: Item = FactoryLogic.createItem({
 		id: 'item-shifting-ring',
 		name: 'Shifting Ring',
 		description: 'This silvery metal ring seems to momentarily vanish when observed from certain angles.',
@@ -739,7 +738,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		]
 	});
 
-	static gravekeepersLantern : Item = FactoryLogic.createItem({
+	static gravekeepersLantern: Item = FactoryLogic.createItem({
 		id: 'item- gravekeepers-lantern',
 		name: 'Gravekeeper’s Lantern',
 		description: 'This ancient wooden tablet is inscribed with eldritch runes and stained with dark blood.',
@@ -763,7 +762,7 @@ The Gravekeeper’s Lantern can temporarily trap a nonhostile spirit of the dead
 A trapped spirit remains in the lantern for 10 minutes. They remember being trapped by you, and might become hostile thereafter.`
 	});
 
-	static psiBlade : Item = FactoryLogic.createItem({
+	static psiBlade: Item = FactoryLogic.createItem({
 		id: 'item-psi-blade',
 		name: 'Psi Blade',
 		description: 'This wide metal bracer is set with a glowing gemstone.',

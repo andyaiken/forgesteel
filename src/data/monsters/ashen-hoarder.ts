@@ -207,7 +207,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 					ability: FactoryLogic.createAbility({
 						id: 'ashen-hoarder-feature-11',
 						name: 'Skeletal Eruption',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 8, value2: 3, within: 1 }) ],
 						target: 'All creatures in the line',
@@ -226,7 +226,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 					ability: FactoryLogic.createAbility({
 						id: 'ashen-hoarder-feature-12',
 						name: 'Mobile Mine Field',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 10, within: 20 }) ],
 						target: 'Special',
@@ -239,7 +239,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 					ability: FactoryLogic.createAbility({
 						id: 'ashen-hoarder-feature-13',
 						name: 'Ossuary Assault',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',

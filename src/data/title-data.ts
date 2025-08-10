@@ -4,6 +4,9 @@ import { Characteristic } from '../enums/characteristic';
 import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { Title } from '../models/title';
+import { FeatureLogic } from '../logic/feature-logic';
+import { DamageType } from '../enums/damage-type';
+import { DamageModifierType } from '../enums/damage-modifier-type';
 
 export class TitleData {
 	static ancientLoremaster: Title = {
@@ -65,10 +68,17 @@ export class TitleData {
 		echelon: 1,
 		prerequisites: 'You triumph in battle without killing any of your foes.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'title-brawler-1',
-				name: 'Duck!',
-				description: 'When an enemy strikes you while a second creature is flanking you, you can use a triggered action to redirect the strike against the second creature. Once you use this benefit, you can’t use it again until you earn 1 or more Victories.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-brawler-1',
+					name: 'Duck!',
+					type: FactoryLogic.type.createTrigger('An enemy strikes you while a second creature is flanking you'),
+					distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
+					target: 'One enemy',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You redirect the strike against the second creature. Once you use this benefit, you can’t use it again until you earn 1 or more Victories.')
+					]
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-brawler-2',
@@ -148,10 +158,17 @@ export class TitleData {
 				name: 'Rune of Alarm',
 				description: 'You can spend 10 uninterrupted minutes to inscribe a magic eye-shaped rune on a surface. The rune sheds light for 2 squares. The rune is dispelled 1 minute after it is activated or if you inscribe the rune elsewhere. The rune activates when an enemy comes within 2 squares of it. When the rune is activated, you wake up if you are nonmagically asleep, and you can perceive through the rune for 1 minute as if you were in its square.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-dwarf-legionnaire-3',
-				name: 'Stonemeld',
-				description: 'While adjacent to a stone wall, you can use a maneuver to gain concealment. This concealment lasts until you leave the square or use an ability.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-dwarf-legionnaire-3',
+					name: 'Stonemeld',
+					type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Adjacent to a stone wall' ] }),
+					distance: [ FactoryLogic.distance.createSelf() ],
+					target: 'Self',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You gain concealment. This concealment lasts until you leave the square or use an ability.')
+					]
+				})
 			})
 		],
 		selectedFeatureID: ''
@@ -265,15 +282,42 @@ You find an agent who can provide you with three pieces of information about the
 				name: 'Arcane Dampening',
 				description: 'When resisting potencies from magic abilities, your characteristic scores are considered to be 1 higher than usual.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-mage-hunter-2',
-				name: 'Oh No You Don’t!',
-				description: 'Whenever an adjacent creature uses an ability with the Magic keyword, you can make a free strike against them as a triggered action.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-mage-hunter-2',
+					name: 'Oh No You Don’t!',
+					type: FactoryLogic.type.createTrigger('Target uses an ability with the Magic keyword'),
+					distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
+					target: 'One creature',
+					sections: [
+						FactoryLogic.createAbilitySectionText('Make a free strike.')
+					]
+				})
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-mage-hunter-3',
 				name: 'Stink of Magic',
-				description: 'As a maneuver, you open your senses to the residue of magic. Until the end of your next turn, you are aware of whether each creature within 5 squares is a construct, an undead, or a creature from another world, and whether they have used a magic ability in the previous hour. Additionally, you can’t be surprised by constructs, undead, or creatures from another world.'
+				description: 'As a maneuver, you open your senses to the residue of magic. Until the end of your next turn, you are aware of whether each creature within 5 squares is a construct, an undead, or a creature from another world, and whether they have used a magic ability in the previous hour. Additionally, you can’t be surprised by constructs, undead, or creatures from another world.',
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'title-mage-hunter-3-1',
+							name: 'Stink of Magic',
+							description: 'You open your senses to the residue of magic',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
+							target: 'Each creature in the area',
+							sections: [
+								FactoryLogic.createAbilitySectionText('Until the end of your next turn, you are aware of whether each target is a construct, an undead, or a creature from another world, and whether they have used a magic ability in the previous hour.')
+							]
+						})
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-mage-hunter-3-2',
+						name: 'Stink of Magic',
+						description: 'You can’t be surprised by constructs, undead, or creatures from another world.'
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -291,10 +335,18 @@ You find an agent who can provide you with three pieces of information about the
 				name: 'Guess It’s the Hard Way',
 				description: 'When combat begins and you aren’t surprised, the first time you take damage before taking your turn, you halve that damage.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-marshal-2',
-				name: 'Heedless Pursuer',
-				description: 'Once on each of your turns, you can use a free maneuver to deal yourself 1d6 damage that can’t be reduced in any way. When you do, you ignore difficult terrain and you can increase the distance of any jump you make by 1 square, both until the end of your turn.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-marshal-2',
+					name: 'Heedless Pursuer',
+					description: 'You open your senses to the residue of magic',
+					type: FactoryLogic.type.createManeuver({ free: true }),
+					distance: [ FactoryLogic.distance.createSelf() ],
+					target: 'Self',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You deal yourself 1d6 damage that can’t be reduced in any way. When you do, you ignore difficult terrain and you can increase the distance of any jump you make by 1 square, both until the end of your turn.')
+					]
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-marshal-3',
@@ -479,10 +531,17 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 		echelon: 1,
 		prerequisites: 'The party has successfully performed as a troupe of actors, circus performers, or other entertainers.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'title-troupe-tactics-1',
-				name: 'Flying Circus',
-				description: 'When you are adjacent to a willing ally on their turn, you can use a triggered action to push them up to 2 squares if their size is the same as yours, or 4 squares if they are smaller. If this push causes the ally to fall, they can use a maneuver before they fall to reduce the height of the fall by 2.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-troupe-tactics-1',
+					name: 'Flying Circus',
+					type: FactoryLogic.type.createTrigger('During target\'s turn'),
+					distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
+					target: 'One ally',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You push the target up to 2 squares if their size is the same as yours, or 4 squares if they are smaller. If this push causes the ally to fall, they can use a maneuver before they fall to reduce the height of the fall by 2.')
+					]
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-troupe-tactics-2',
@@ -541,10 +600,27 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Blessed Weapons',
 				description: 'Whenever you use a damage-dealing weapon ability, that ability can deal holy damage instead of its usual damage type.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-zombie-slayer-2',
 				name: 'Divine Health',
-				description: 'You gain corruption immunity equal to your highest characteristic score. Additionally, you can’t be turned into an undead creature.'
+				description: 'You gain corruption immunity equal to your highest characteristic score. Additionally, you can’t be turned into an undead creature.',
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-zombie-slayer-2-1',
+						name: 'Divine Health',
+						description: 'You can’t be turned into an undead creature.'
+					}),
+					FactoryLogic.feature.createDamageModifier({
+						id: 'title-zombie-slayer-2-2',
+						modifiers: [
+							FactoryLogic.damageModifier.createCharacteristic({
+								damageType: DamageType.Corruption,
+								modifierType: DamageModifierType.Immunity,
+								characteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
+							})
+						]
+					})
+				]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({

@@ -11,26 +11,25 @@ import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 export const ashenHoarder: MonsterGroup = {
 	id: 'monster-group-ashen-hoarder',
 	name: 'Ashen Hoarder',
-	description: 'Grave robbing is dangerous business, but necromancers need bodies for their experiments. To procure supplies and stay out of danger, these mages build ashen hoarders— hulking constructs made of magically reinforced humanoid bones.',
+	description: 'Grave robbing is a dangerous business, but necromancers need bodies for their experiments. To procure supplies and stay out of danger, these mages build ashen hoarders—hulking constructs made of magically reinforced humanoid bones.',
 	picture: null,
 	information: [
 		{
 			id: 'ashen-hoarder-info-1',
 			name: 'Appendages and Spikes',
-			description: `
-Ashen hoarders sport four long legs made from compact columns of bone, allowing them to move quickly and avoid creatures who might try to hinder the construct’s grim work. Articulated arms with attached tools and weapons aid the hoarder in digging up corpses and fighting enemies.
-  
-When an ashen hoarder obtains a corpse, the construct impales it on one of the many sharp bones protruding from their back. These spikes secure the corpses and charge them with necrotic energy, ensuring the cargo is ready for experimentation when it arrives at the necromancer’s door.`
+			description: `Ashen hoarders sport four long legs made from compact columns of bone, allowing them to move quickly and avoid creatures who might try to hinder the construct’s grim work. Powerful clawed arms aid the hoarder in digging up corpses and fighting enemies.
+
+When an ashen hoarder obtains corpses, they impale them on the many sharp bones protruding from their back. These spikes secure the corpses and charge them with corruptive energy, ensuring the cargo is ready for experimentation when it arrives at the necromancer’s door.`
 		},
 		{
 			id: 'ashen-hoarder-info-2',
 			name: 'Weaponized Bodies',
-			description: 'These automatons are equipped to protect their cargo. If enemies corner an ashen hoarder, the construct can use the energy stored within their corpses to reanimate them as deadly mines, detonating the remains with explosive corruptive energy. Once the threat is dead, the ashen hoarder can retrieve the enemies’ remains and recollect the pieces of their original load. '
+			description: 'These automatons are equipped to protect their cargo. If enemies corner an ashen hoarder, the construct can use the energy stored within their corpses to reanimate them as deadly mines, detonating the remains with explosive corruptive energy. Once the threat is dead, the ashen hoarder can retrieve the enemies’ remains and recollect the pieces of their original load.'
 		},
 		{
 			id: 'ashen-hoarder-info-3',
 			name: 'Soul Shackle',
-			description: 'Ashen hoarders require a vast amount of necromantic energy to create but also to power continuously. Along with an entire ossuary worth of bones to construct its body, powering it requires a soul. The soul is partially bound into an object known as a Soul Shackle, usually a ring or an amulet, and is used to command the construct. It’s an agonizing process for the victim and freeing them is no easy task. Destroying the Soul Shackle is enough to send an ashen hoarder into an indiscriminate unshackled rage, as it can feel part of its soul shredded into oblivion. It will kill any living creature it can before collapsing in on itself. Freeing the soul trapped inside requires a long-term project and the assistance of a powerful holy figure.'
+			description: 'Creating and powering an ashen hoarder requires a vast amount of necromantic energy. Along with an entire ossuary worth of bones to construct its body, powering the construct requires a soul. That soul is divided between the hoarder and an object known as a Soul Shackle—usually a ring or an amulet—that is used to command the construct. Destroying the Soul Shackle can free the trapped soul, but doing so sends an ashen hoarder into an indiscriminate unshackled rage as they feel part of their stolen soul shredded into oblivion. The construct lashes out against any living creature they can before collapsing in on themself. Freeing the soul still trapped inside the ashen hoarder’s remains requires completing the Find a Cure downtime project in Draw Steel: Heroes and the assistance of a powerful holy figure.'
 		}
 	],
 	malice: [
@@ -39,7 +38,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 			name: 'Relentless Strikes',
 			cost: 3,
 			sections: [
-				'The ashen hoarder moves up to its speed and makes a free strike against two targets.'
+				'The ashen hoarder moves up to their speed and can make a free strike against two targets.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -47,15 +46,23 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 			name: 'Blade Wall',
 			cost: 5,
 			sections: [
-				'The ashen hoarder unearths a 10 wall of bones and blades into unoccupied squares within 5. Each segment of the wall has 5 Stamina. An enemy that enters a square adjacent to a wall segment or starts their turn in one takes 4 damage.'
+				'The ashen hoarder summons a 10 wall of bones and blades into unoccupied squares within 5 squares of them. Each square of the wall has 5 Stamina. An enemy who comes adjacent to the wall for the first time in a round or starts their turn there takes 3 damage.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'ashen-hoarder-malice-3',
+			name: 'Solo Action',
+			cost: 5,
+			sections: [
+				'The ashen hoarder takes an additional main action on their turn. They can use this feature even if they are dazed.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'ashen-hoarder-malice-4',
 			name: 'Bone Storm',
 			cost: 7,
 			sections: [
-				'The ashen hoarder launches several bone lances into the air, raining them down on enemies and impaling those unlucky enough to be on the receiving end. Each enemy within 20 of the ashen hoarder must make an **Agility test**.',
+				'The ashen hoarder launches bone lances into the air, raining them down on enemies and impaling those unlucky enough to be on the receiving end. Each enemy within 20 squares of the ashen hoarder makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Agility,
 					tier1: '14 damage; restrained and bleeding (save ends)',
@@ -72,7 +79,7 @@ When an ashen hoarder obtains a corpse, the construct impales it on one of the m
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Construct', 'Undead' ],
-			encounterValue: 60,
+			encounterValue: 72,
 			size: FactoryLogic.createSize(3),
 			speed: FactoryLogic.createSpeed(8, 'burrow'),
 			stamina: 350,

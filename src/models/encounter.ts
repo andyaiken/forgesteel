@@ -1,21 +1,12 @@
-import { Monster, MonsterState } from './monster';
 import { Element } from './element';
 import { Hero } from './hero';
 import { Terrain } from './terrain';
+import { EncounterSlot } from './encounter-slot';
 
 export interface EncounterSlotCustomization {
 	addOnIDs: string[];
 	itemIDs: string[];
 	convertToSolo: boolean;
-}
-
-export interface EncounterSlot {
-	id: string;
-	monsterID: string;
-	count: number;
-	customization: EncounterSlotCustomization;
-	monsters: Monster[];
-	state: MonsterState;
 }
 
 export interface EncounterGroup {

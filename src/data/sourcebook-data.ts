@@ -457,7 +457,7 @@ export class SourcebookData {
 			MonsterData.ajax,
 			MonsterData.angulotl,
 			MonsterData.animal,
-			MonsterData.ankheg,
+			MonsterData.arixx,
 			MonsterData.ashenHoarder,
 			MonsterData.basilisk,
 			MonsterData.bredbeddle,

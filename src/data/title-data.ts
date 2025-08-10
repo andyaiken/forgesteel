@@ -4,7 +4,6 @@ import { Characteristic } from '../enums/characteristic';
 import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { Title } from '../models/title';
-import { FeatureLogic } from '../logic/feature-logic';
 import { DamageType } from '../enums/damage-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 
@@ -658,10 +657,11 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Foes as Weapons',
 				description: 'Whenever you have a creature of your size or smaller grabbed, you can use them as a weapon when you make a melee weapon free strike. Both the target and the grabbed enemy take the strike’s damage.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-arena-fighter-3',
 				name: 'Instant Celebrity',
-				description: 'You earn 1 Renown.'
+				field: FeatureField.Renown,
+				value: 1
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -707,10 +707,17 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Rogue Talent',
 				description: 'Choose one triggered action that the talent class has access to at 1st level. You gain that ability regardless of whether your class and subclass allow you to take it. If this ability allows you to gain or spend clarity, you can’t do so unless you have the Clarity class feature.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-awakened-3',
-				name: 'Telepathy',
-				description: 'As a maneuver, you communicate telepathically with a creature within 10 squares who understands a language you know. The creature can respond telepathically as part of the same maneuver.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-awakened-3',
+					name: 'Telepathy',
+					type: FactoryLogic.type.createManeuver(),
+					distance: [ FactoryLogic.distance.createRanged(10) ],
+					target: 'One creature who understands a langauge you know',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You communicate telepathically with the target. The targer can respond telepathically as part of the same maneuver.')
+					]
+				})
 			})
 		],
 		selectedFeatureID: ''
@@ -738,14 +745,15 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 					]
 				})
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-battlefield-commander-2',
 				name: 'Renowned Warrior',
-				description: 'You earn 1 Renown.'
+				field: FeatureField.Renown,
+				value: 1
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-battlefield-commander-3',
-				name: 'Telepathy',
+				name: 'Student of War',
 				description: 'Choose a 1st-level doctrine feature from the tactician class. You gain that feature even if you don’t have the Tactical Doctrine feature.'
 			})
 		],
@@ -769,10 +777,16 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Bloody Murder',
 				description: 'When you deal rolled damage to a creature with a strike, you can take damage equal to your level to deal twice that much corruption damage to the creature. The damage you take from this title can’t be reduced in any way. You can use this benefit only once per ability. If the creature is reduced to 0 Stamina by this corruption damage, the creature explodes in a shower of blood and you regain the Stamina you lost. You can’t use this benefit on creatures without blood, such as constructs, elementals, or undead.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'title-blood-magic-3',
 				name: 'I Reject This Evil Power!',
-				description: 'You gain corruption immunity equal to your level.'
+				modifiers: [
+					FactoryLogic.damageModifier.createPerLevel({
+						damageType: DamageType.Corruption,
+						modifierType: DamageModifierType.Immunity,
+						value: 1
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -795,10 +809,11 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Black Flag',
 				description: 'You have a recognizable flag that strikes terror on the high seas. While your flag is flying from your ship, crewmembers of other ships who have line of effect to the flag take a bane on strikes made against your ship or its crew.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-corsair-3',
 				name: 'Fearsome Reputation',
-				description: 'You earn 1 Renown,'
+				field: FeatureField.Renown,
+				value: 1
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-corsair-4',
@@ -837,20 +852,53 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 		echelon: 2,
 		prerequisites: 'You eat and drink with an elf monarch or archfey.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-fey-friend-1',
 				name: 'Gift of Charm',
-				description: 'You know the Khelt language. You have a skill of your choice from the interpersonal skill group.'
+				features: [
+					FactoryLogic.feature.createLanguageChoice({
+						id: 'title-fey-friend-1-1',
+						name: 'Gift of Charm',
+						selected: [ 'Khelt' ]
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-fey-friend-1-2',
+						name: 'Gift of Charm',
+						description: 'You have a skill of your choice from the interpersonal skill group.'
+					})
+				]
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-fey-friend-2',
 				name: 'Gift of Foresight',
-				description: 'You know the Khelt language. When resisting potencies, your Intuition score is considered to be 1 higher than usual.'
+				features: [
+					FactoryLogic.feature.createLanguageChoice({
+						id: 'title-fey-friend-2-1',
+						name: 'Gift of Foresight',
+						selected: [ 'Khelt' ]
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-fey-friend-2-2',
+						name: 'Gift of Foresight',
+						description: 'When resisting potencies, your Intuition score is considered to be 1 higher than usual.'
+					})
+				]
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-fey-friend-3',
+			FactoryLogic.feature.createMultiple({
+				id: 'title-fey-friend-2',
 				name: 'Gift of Knowledge',
-				description: 'You know the Khelt language. You gain an edge on tests you make that use any skill from the lore skill group.'
+				features: [
+					FactoryLogic.feature.createLanguageChoice({
+						id: 'title-fey-friend-3-1',
+						name: 'Gift of Knowledge',
+						selected: [ 'Khelt' ]
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-fey-friend-3-2',
+						name: 'Gift of Knowledge',
+						description: 'You gain an edge on tests you make that use any skill from the lore skill group.'
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -912,10 +960,17 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Healing Gift',
 				description: 'You can use the 1st-level Conduit feature Healing Grace as if you had spent 1 piety. Once you use this benefit, you can’t use it again until you earn 1 or more Victories.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
 				id: 'title-godsworn-2',
 				name: 'Last-Ditch Prayer',
-				description: 'As a free maneuver, you recite a prayer for help, gaining a pool of 2d10 of the Heroic Resource granted by your class. This pool disappears at the end of your turn if you haven’t used it. Once you use this benefit, you can’t use it again until you perform another service for a god or saint, or until you gain a level.'
+					type: FactoryLogic.type.createManeuver({ free: true }),
+					distance: [ FactoryLogic.distance.createSelf() ],
+					target: 'Self',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You recite a prayer for help, gaining a pool of 2d10 of the Heroic Resource granted by your class. This pool disappears at the end of your turn if you haven’t used it. Once you use this benefit, you can’t use it again until you perform another service for a god or saint, or until you gain a level.')
+					]
+				})
 			}),
 			FactoryLogic.feature.createMultiple({
 				id: 'title-godsworn-3',
@@ -982,15 +1037,17 @@ I better watch out for that banana peel!`,
 		echelon: 2,
 		prerequisites: 'A noble or monarch grants you knighthood or a similar rank.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-knight-1',
 				name: 'Heraldic Fame',
-				description: 'You earn 1 Renown.'
+				field: FeatureField.Renown,
+				value: 1
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-knight-2',
 				name: 'Knightly Aegis',
-				description: 'Your Stamina maximum increases by 6.'
+				field: FeatureField.Stamina,
+				value: 6
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1090,10 +1147,17 @@ You gain a small magic spy device called a boffin. Once per encounter, you can a
 		echelon: 2,
 		prerequisites: 'You have the Marshal title, and you take down an entire criminal organization.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
 				id: 'title-sworn-hunter-1',
 				name: 'Hunter\'s Oath',
-				description: 'As a main action, you swear a hunter’s oath against a creature within 10 squares who you have line of effect to. This oath lasts until the target dies or until you swear a hunter’s oath against a different creature. As long as the hunter’s oath lasts, you magically know the direction to the target if they are within 50 miles of you, and your damage-dealing abilities gain a +5 damage bonus against the target.'
+					type: FactoryLogic.type.createMain(),
+					distance: [ FactoryLogic.distance.createRanged(10) ],
+					target: 'One creature',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You swear a hunter’s oath against the target. This oath lasts until the target dies or until you swear a hunter’s oath against a different creature. As long as the hunter’s oath lasts, you magically know the direction to the target if they are within 50 miles of you, and your damage-dealing abilities gain a +5 damage bonus against the target.')
+					]
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-sworn-hunter-2',

@@ -123,7 +123,11 @@ export class AbilityLogic {
 				sections.push(`${distance.type} ${distance.value + bonus}`);
 				break;
 			case AbilityDistanceType.Line:
-				sections.push(`Line ${Math.max(distance.value, distance.value2)}x${Math.min(distance.value, distance.value2)}`);
+				sections.push(`${Math.max(distance.value, distance.value2)} x ${Math.min(distance.value, distance.value2)} ${distance.type}`);
+				break;
+			case AbilityDistanceType.Burst:
+			case AbilityDistanceType.Cube:
+				sections.push(`${distance.value} ${distance.type}`);
 				break;
 			default:
 				sections.push(`${distance.type} ${distance.value}`);

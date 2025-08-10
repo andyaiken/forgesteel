@@ -1,11 +1,11 @@
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
+import { DamageModifierType } from '../enums/damage-modifier-type';
+import { DamageType } from '../enums/damage-type';
 import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { Title } from '../models/title';
-import { DamageType } from '../enums/damage-type';
-import { DamageModifierType } from '../enums/damage-modifier-type';
 
 export class TitleData {
 	static ancientLoremaster: Title = {
@@ -962,8 +962,8 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-				id: 'title-godsworn-2',
-				name: 'Last-Ditch Prayer',
+					id: 'title-godsworn-2',
+					name: 'Last-Ditch Prayer',
 					type: FactoryLogic.type.createManeuver({ free: true }),
 					distance: [ FactoryLogic.distance.createSelf() ],
 					target: 'Self',
@@ -1149,8 +1149,8 @@ You gain a small magic spy device called a boffin. Once per encounter, you can a
 		features: [
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
-				id: 'title-sworn-hunter-1',
-				name: 'Hunter\'s Oath',
+					id: 'title-sworn-hunter-1',
+					name: 'Hunter\'s Oath',
 					type: FactoryLogic.type.createMain(),
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: 'One creature',

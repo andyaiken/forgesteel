@@ -427,7 +427,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-defender-4',
 							name: 'Watch Out!',
-							type: FactoryLogic.type.createTrigger('The rtarget takes damage from a strike', { qualifiers: [ 'encounter' ] }),
+							type: FactoryLogic.type.createTrigger('The target takes damage from a strike', { qualifiers: [ 'encounter' ] }),
 							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'The retainer’s mentor',

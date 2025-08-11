@@ -234,14 +234,14 @@ export class RetainerData {
 					level10: FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-ambusher-10',
-							name: '',
+							name: 'Hold ’Em Down',
 							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [
 								FactoryLogic.distance.createMelee(),
 								FactoryLogic.distance.createRanged(5)
 							],
-							target: '1 creature',
+							target: 'One creature',
 							sections: [
 								FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],

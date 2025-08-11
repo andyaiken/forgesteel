@@ -6,8 +6,8 @@ export class MontageData {
 	static fightFire: Montage = {
 		id: 'montage-fight-fire',
 		name: 'Fight Fire',
-		description: 'Fire has broken out in the town! The heroes must prevent it from spreading while saving as many townsfolk as possible. Their efforts might be more complicated if the cause of the fire—such as a marauding dragon or an invading army—is still around causing trouble.',
-		scene: 'Fire blazes from several buildings, and the occupants need to be rescued. Elsewhere, some townsfolk flee while others throw water on the fire without any organization or plan. Without leadership and a way to stop the spread, the fire could easily consume everything. In a nearby stable, horses are panicking as their hay begins to smolder. Burning rubble blocks pathways everywhere.',
+		description: 'Fire has broken out in the town! The heroes must prevent the conflagration from spreading while saving as many townsfolk as possible. Their efforts might be more complicated if the cause of the fire — such as a marauding dragon or an invading army — is still around causing trouble.',
+		scene: 'Fire blazes in several buildings whose occupants need to be rescued. Elsewhere, some townsfolk flee while others throw water on the fire with no organization or plan. Without leadership and a way to stop its spread, the fire could easily consume everything. In a nearby stable, horses are panicking as their hay smolders. Burning rubble blocks pathways everywhere',
 		sections: [
 			{
 				id: 'montage-fight-fire-main',
@@ -17,14 +17,14 @@ export class MontageData {
 					FactoryLogic.createMontageChallenge({
 						id: 'bucket-chains',
 						name: 'Bucket Chains',
-						description: 'Organize the would-be firefighters into disciplined bucket brigades or fight the fire some other way.',
+						description: 'Organize the would-be firefighters into disciplined bucket brigades or fight the fire in some other way.',
 						characteristics: [ Characteristic.Presence, Characteristic.Reason ],
-						skills: 'Architecture, Intimidation, Lead'
+						skills: 'Architecture, Intimidate, Lead'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'clearing-a-firebreak',
 						name: 'Clearing a Firebreak',
-						description: 'Prevent the fire from spreading by clearing the ground of flammable materials, either by moving it or burning it away. A creature loses a Recovery if they get a consequence on this test.',
+						description: 'Prevent the fire from spreading by clearing the ground of flammable materials, either by moving it or burning it away. A creature loses a Recovery if they incur a consequence on this test.',
 						characteristics: [ Characteristic.Might, Characteristic.Reason ],
 						skills: 'Endurance, Lift',
 						abilities: 'Abilities that deal fire damage'
@@ -32,17 +32,10 @@ export class MontageData {
 					FactoryLogic.createMontageChallenge({
 						id: 'evacuating-buildings',
 						name: 'Evacuating Buildings',
-						description: 'Save people trapped in burning buildings. Heroes can attempt this task twice during the montage, since there are plenty of people to save. A creature that doesn’t have fire immunity loses a Recovery if they suffer a consequence on their test.',
+						description: 'Save people trapped in burning buildings. Heroes can attempt this task twice during the montage, since there are plenty of people to save. A creature that doesn’t have fire immunity loses a Recovery if they incur a consequence on their test.',
 						characteristics: [ Characteristic.Might, Characteristic.Presence ],
-						skills: 'Athletics, Climb, Persuade',
+						skills: 'Climb, Endurance, Persuade',
 						uses: 2
-					}),
-					FactoryLogic.createMontageChallenge({
-						id: 'free-the-horses',
-						name: 'Free the Horses',
-						description: 'Loose the stabled horses threatened by the fire.',
-						characteristics: [ Characteristic.Might, Characteristic.Presence ],
-						skills: 'Lift, Handle Animals, Ride'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'find-more-firefighters',
@@ -52,9 +45,16 @@ export class MontageData {
 						skills: 'Intimidate, Lead, Persuade'
 					}),
 					FactoryLogic.createMontageChallenge({
+						id: 'free-the-horses',
+						name: 'Free the Horses',
+						description: 'Loose the stabled horses threatened by the fire and lead them to safety.',
+						characteristics: [ Characteristic.Might, Characteristic.Presence ],
+						skills: 'Lift, Handle Animals, Ride'
+					}),
+					FactoryLogic.createMontageChallenge({
 						id: 'move-burning-rubble',
 						name: 'Move Burning Rubble',
-						description: 'Move burning beams blocking doors. A creature that doesn’t have fire immunity loses a Recovery if they suffer a consequence on this test.',
+						description: 'Shifting burning debris blocking doorways to allow people to escape the blaze. A creature that doesn’t have fire immunity loses a Recovery if they incur a consequence on this test.',
 						characteristics: [ Characteristic.Might ],
 						skills: 'Endurance, Lift'
 					}),
@@ -66,7 +66,7 @@ export class MontageData {
 						skills: 'Drive, Handle Animals, Ride'
 					})
 				],
-				twistInfo: 'At the end of the first round, an emergency crops up. One or more heroes, selected by the players, must deal with the situation before the second round begins. If the heroes successfully deal with the twist, they earn a success for the montage test. Otherwise they earn a failure.',
+				twistInfo: 'At the end of the first montage test round, an emergency crops up. One or more heroes, selected by the players, must deal with the situation before the second round begins. If the heroes successfully deal with the twist, they earn a success for the montage test. Otherwise they earn a failure.',
 				twists: [
 					FactoryLogic.createMontageChallenge({
 						id: 'building-collapse',

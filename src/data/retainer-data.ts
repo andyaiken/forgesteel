@@ -260,7 +260,7 @@ export class RetainerData {
 						ability: FactoryLogic.createAbility({
 							id: 'retainer-artillery-4',
 							name: 'Supporting Volley',
-							type: FactoryLogic.type.createTrigger('The retainer’s mentor makes astrike against a creature within distance.'),
+							type: FactoryLogic.type.createTrigger('The retainer’s mentor makes a strike against a creature within distance.'),
 							keywords: [AbilityKeyword.Ranged, AbilityKeyword.Weapon],
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: 'The triggering creature',

@@ -8,7 +8,6 @@ import { MonsterRoleType } from '../enums/monster-role-type';
 export class RetainerData {
 	static getRetainerAdvancementFeatures = (level: number, role: MonsterRoleType, level4?: Feature, level7?: Feature, level10?: Feature): { level: number, feature: Feature }[] => {
 		const std = RetainerData.getRetainerStandardAbilities(role);
-		debugger;
 		const options4 = [];
 		if (level4) {
 			options4.push(level4);

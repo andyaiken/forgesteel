@@ -42,6 +42,8 @@ export class PDFExport {
 			// This replaces characters the PDF doesn't support
 			return str
 				.toString()
+				.replaceAll(String.fromCodePoint(127925), '·')// musical note emoji?
+				.replaceAll('\u266a', '·')// musical note character
 				.replace(/−/g, '-')
 				.replace(/ź/g, 'z')
 				.replace(/ń/g, 'n')
@@ -128,6 +130,8 @@ export class PDFExport {
 				.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
 				.replace(/≤ 11\t/g, '11 or less')
 				.replace(/17 \+/g, '17+\t')
+				.replace(/≤\s*(\d+)\t?/g, '$1 or less')
+				.replace(/≥\s*(\d+)/g, '$1+\t')
 				.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
 				.replace(/\n\* /g, '\n   • ');
 			// substitutions are for cleaning up lists to look better in the form

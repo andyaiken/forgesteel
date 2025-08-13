@@ -466,7 +466,7 @@ Subterfuge remains until you spend it.`
 						tier3: '9 + A damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('If the target has no allies adjacent to them, you gain 1 surge before making the power roll.')
+				FactoryLogic.createAbilitySectionText('If the target has none of your allies adjacent to them, you gain 1 surge before making the power roll.')
 			]
 		}),
 		FactoryLogic.createAbility({

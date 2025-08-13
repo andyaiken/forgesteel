@@ -49,7 +49,7 @@ Each time a demon consumes a soul, there’s a chance they might evolve into a m
 		{
 			id: 'demon-info-6',
 			name: 'Demons—1st Echelon',
-			description:`
+			description: `
 A number of lesser demons have been identified across categories 1 to 3:
 
 • **Pitlings** resemble rodents or insects, but possess gleaming green eyes and terrible body odor, and disgorge a viscous, toxic phlegm.
@@ -93,14 +93,13 @@ A number of lesser demons have been identified across categories 1 to 3:
 			id: 'demon-malice-2',
 			name: 'Abyssal Rift',
 			cost: 7,
-			sections: ['Two size 2 rifts to the Abyssal Wasteland appear at locations of your choice. Any demon can use an abyssal rift as a portal to another abyssal rift in the encounter, moving into any space in one rift and appearing immediately in any unoccupied space in the other rift. A non-demon who enters a rift for the first time in a round or starts their turn there takes corruption damage equal to the level of the highest-level demon on the encounter map.An abyssal rift is an immovable object that has 25 Stamina, damage immunity 2, and holy weakness 5. The rift closes when there are no demons remaining on the encounter map. Additionally, a creature who has the Magic or Psionics skill can make a **Reason test** or **Intuition test** as a maneuver while adjacent to a rift to destabilize and close it.',
+			sections: [ 'Two size 2 rifts to the Abyssal Wasteland appear at locations of your choice. Any demon can use an abyssal rift as a portal to another abyssal rift in the encounter, moving into any space in one rift and appearing immediately in any unoccupied space in the other rift. A non-demon who enters a rift for the first time in a round or starts their turn there takes corruption damage equal to the level of the highest-level demon on the encounter map. An abyssal rift is an immovable object that has 25 Stamina, damage immunity 2, and holy weakness 5. The rift closes when there are no demons remaining on the encounter map. Additionally, a creature who has the Magic or Psionics skill can make a **Reason test** or **Intuition test** as a maneuver while adjacent to a rift to destabilize and close it.',
 				FactoryLogic.createPowerRoll({
-									characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-									tier1: 'The rift remains open and regains 5 Stamina.',
-									tier2: 'The rift remains open.',
-									tier3: 'The rift closes.'
-								})
-			]
+					characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+					tier1: 'The rift remains open and regains 5 Stamina.',
+					tier2: 'The rift remains open.',
+					tier3: 'The rift closes.'
+				}) ]
 		})
 	],
 	monsters: [

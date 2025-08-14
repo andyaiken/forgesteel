@@ -66,24 +66,24 @@ export class MontageData {
 						skills: 'Drive, Handle Animals, Ride'
 					})
 				],
-				twistInfo: 'At the end of the first montage test round, an emergency crops up. One or more heroes, selected by the players, must deal with the situation before the second round begins. If the heroes successfully deal with the twist, they earn a success for the montage test. Otherwise they earn a failure.',
+				twistInfo: 'At the end of the first montage test round, an emergency crops up. One or more heroes, selected by the players, must deal with the situation before the end of the round. If the heroes successfully deal with the twist, they earn a success for the montage test. Otherwise, they earn a failure.',
 				twists: [
 					FactoryLogic.createMontageChallenge({
 						id: 'building-collapse',
 						name: 'Building Collapse',
-						description: 'While a hero is in or near a blazing building, it begins to collapse. The hero must escape before it crumbles.',
+						description: 'While a hero is in or near a blazing building, it starts to collapse. The hero must escape before the building crumbles.',
 						characteristics: [ Characteristic.Agility, Characteristic.Intuition ],
 						skills: 'Climb, Jump, Gymnastics'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'cause-of-the-fire',
 						name: 'Cause of the Fire',
-						description: 'The entire party meets the hostile cause of the fire—the invading army, dragon, arsonist, etc. They must fight a standard or hard encounter against this threat.'
+						description: 'At the end of the first round of the montage test, the hostile cause of the fire appears — a squad of an invading army, a dragon, a team of arsonists, and so forth. The characters must engage in a standard or hard encounter with this threat'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'help',
 						name: 'Help!',
-						description: 'Someone is about to run into a burning building to save a relative trapped under a burning beam. This twist requires two tests, each of which nets a success or a failure for the montage test. One hero can try to prevent the townsperson from entering the burning building while another rescues the relative.',
+						description: 'Townsfolk are about to run into a burning building to save a trapped relative. This twist requires two tests, each of which nets a success or a failure for the montage test. One hero can try to prevent the townspeople from entering the burning building while another rescues the relative.',
 						characteristics: [ Characteristic.Might, Characteristic.Presence ],
 						skills: 'Lift, Persuade'
 					})
@@ -91,17 +91,17 @@ export class MontageData {
 			}
 		],
 		outcomes: {
-			totalSuccess: 'The fire is extinguished. Buildings are damaged but no lives were lost. The party achieves 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate.',
-			partialSuccess: 'The fire is quenched, although many buildings burned and a few lives were lost. The party achieves 1 Victory if the montage test was moderate or hard.',
-			totalFailure: 'When the fire finally burns out, the town lies in ruins. Townsfolk mourn their dead or grimly prepare to find a new home. The party achieves no Victories from the montage test.'
+			totalSuccess: 'The fire is extinguished. Buildings are damaged but no lives were lost. The party achieves 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate, in addition to any Victories earned from combat during the montage test.',
+			partialSuccess: 'The fire is quenched, although many buildings burned and a few lives were lost. Each character earns 1 Victory if the montage test was moderate or hard, in addition to any Victories earned from combat during the montage test.',
+			totalFailure: 'When the fire finally burns out, the town lies in ruins. Townsfolk mourn their dead or grimly prepare to find a new home. Characters earn no Victories from the montage test, but might earn Victories from combat undertaken during the montage test'
 		}
 	};
 
 	static infiltrateThePalace: Montage = {
 		id: 'montage-infiltrate-the-palace',
 		name: 'Infiltrate the Palace',
-		description: 'Whether the heroes are trying to reach a tyrant’s throne room, pull off a daring art heist, or rescue royalty from captivity, they’re somewhere they’re not supposed to be— and they’d prefer to keep their presence secret.',
-		scene: 'The target site is well-defended, with patrols that change every few hours. The few obvious entrances are locked and guarded. And once you’re inside, you don’t know your way to your goal. There are probably guard patrols inside as well. You’ll have to sneak or bluff your way past them.',
+		description: 'Whether the heroes are trying to reach a tyrant’s throne room, pull off a daring art heist, or rescue royalty from captivity, they’re somewhere they’re not supposed to be — and they’d prefer to keep their presence secret.',
+		scene: 'The palace is well defended, with exterior patrols always on the alert. The few obvious entrances are locked and guarded, and once the party is inside, no one knows the way to the goal. Guards patrol the interior of the site as well, forcing the characters to sneak or bluff their way past them.',
 		sections: [
 			{
 				id: 'montage-infiltrate-the-palace-preparation',

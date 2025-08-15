@@ -76,7 +76,7 @@ export const PlaybookEditPage = (props: Props) => {
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
 
-	//#region Edit
+	// #region Edit
 
 	const getEditHeaderSection = () => {
 		return null;
@@ -153,9 +153,9 @@ export const PlaybookEditPage = (props: Props) => {
 		}
 	};
 
-	//#endregion
+	// #endregion
 
-	//#region Preview
+	// #region Preview
 
 	const getPreviewHeaderSection = () => {
 		return null;
@@ -186,7 +186,7 @@ export const PlaybookEditPage = (props: Props) => {
 		return null;
 	};
 
-	//#endregion
+	// #endregion
 
 	const getSubheader = () => {
 		if (kind === 'tactical-map') {

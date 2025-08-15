@@ -208,7 +208,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '7 damage; M<3 bleeding (save ends)'
 								})
 							)
-					   ]
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -338,7 +338,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '17 damage; M<3 grabbed'
 								})
 							)
-					   ]
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

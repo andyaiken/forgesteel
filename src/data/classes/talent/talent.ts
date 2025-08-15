@@ -446,7 +446,7 @@ If you are strained while flying and are force moved, the forced movement distan
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-7-5',
-					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue,SkillList.Lore ]
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 				})
 			]
 		},
@@ -545,7 +545,7 @@ Additionally, you can choose to not take damage from having negative clarity. Yo
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-10-6',
-					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue,SkillList.Lore ]
+					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'talent-10-7',

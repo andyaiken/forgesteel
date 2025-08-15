@@ -10,6 +10,7 @@ import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
+import { Format } from './format';
 import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from '../logic/hero-logic';
@@ -40,12 +41,12 @@ export class PDFExport {
 
 		const sanitize = (str: string) => {
 			// This replaces characters the PDF doesn't support
-			return str
-				.toString()
+			str = str
 				.replace(/−/g, '-')
 				.replace(/ź/g, 'z')
 				.replace(/ń/g, 'n')
 				.replace(/č/g, 'c');
+			return Format.stripEmojis(str);
 		};
 
 		const heroicResources = HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
@@ -54,7 +55,7 @@ export class PDFExport {
 			AncestryTop: hero.ancestry && hero.ancestry.name,
 			CareerTop: hero.career && hero.career.name,
 			ClassTop: hero.class && hero.class.name,
-			SubclassTop: hero.class && (hero.class.subclassName !== '') && (hero.class.subclasses.filter(s => s.selected).length > 0) && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name || null,
+			SubclassTop: (hero.class && (hero.class.subclassName !== '') && (hero.class.subclasses.filter(s => s.selected).length > 0) && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name) || null,
 			Level: hero.class && hero.class.level,
 			Wealth: hero.state.wealth,
 			Renown: hero.state.renown,
@@ -128,8 +129,11 @@ export class PDFExport {
 				.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
 				.replace(/≤ 11\t/g, '11 or less')
 				.replace(/17 \+/g, '17+\t')
+				.replace(/≤\s*(\d+)\t?/g, '$1 or less')
+				.replace(/≥\s*(\d+)/g, '$1+\t')
 				.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
 				.replace(/\n\* /g, '\n   • ');
+			text = Format.stripEmojis(text);
 			// substitutions are for cleaning up lists to look better in the form
 			return text;
 		};
@@ -355,9 +359,7 @@ export class PDFExport {
 								let powerRollText = '';
 								powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...section.roll.characteristic
 									.map(
-										c =>
-											hero.class &&
-											hero.class.characteristics.find(d => d.characteristic === c)
+										c => hero.class && hero.class.characteristics.find(d => d.characteristic === c)
 									)
 									.map(c => (c && c.value) || 0)
 								);
@@ -433,9 +435,9 @@ export class PDFExport {
 			const abilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 			abilities.push(AbilityData.freeStrikeMelee);
 			abilities.push(AbilityData.freeStrikeRanged);
-			texts['RegularActions'] = abilities.filter(a => a.type.usage === AbilityUsage.MainAction).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
-			texts['Maneuvers'] = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
-			texts['TriggeredActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Trigger).map(a => ' • ' + a.name + (typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')' || '')).join('\n');
+			texts['RegularActions'] = abilities.filter(a => a.type.usage === AbilityUsage.MainAction).map(a => ' • ' + a.name + ((typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')') || '')).join('\n');
+			texts['Maneuvers'] = abilities.filter(a => a.type.usage === AbilityUsage.Maneuver).map(a => ' • ' + a.name + ((typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')') || '')).join('\n');
+			texts['TriggeredActions'] = abilities.filter(a => a.type.usage === AbilityUsage.Trigger).map(a => ' • ' + a.name + ((typeof (a.cost) === 'number' && a.cost > 0 && ' (' + a.cost + ')') || '')).join('\n');
 
 			ApplyGroup(
 				abilities.filter(a => !ignoredFeatures[a.id]),
@@ -458,7 +460,7 @@ export class PDFExport {
 			}
 		}
 
-		const DoesTextFitFieldRectangle = (t: string, rect: { x: number; y: number; width: number; height: number }, size: number, multiline: boolean) => {
+		const DoesTextFitFieldRectangle = (t: string, rect: { x: number, y: number, width: number, height: number }, size: number, multiline: boolean) => {
 			t = t.replace(/\t/g, '    ');
 			t = sanitize(t);
 			if (multiline) {
@@ -479,7 +481,6 @@ export class PDFExport {
 			} else {
 				return font.widthOfTextAtSize(t, size) < rect.width - 5 && font.heightAtSize(size) < rect.height;
 			}
-
 		};
 
 		form.getFields().forEach(field => {

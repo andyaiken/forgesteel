@@ -33,14 +33,16 @@ export class TacticalMapLogic {
 			}
 		});
 
-		const boundaries = points.length > 0 ? {
-			minX: Math.min(...points.map(pt => pt.x)),
-			minY: Math.min(...points.map(pt => pt.y)),
-			minZ: Math.min(...points.map(pt => pt.z)),
-			maxX: Math.max(...points.map(pt => pt.x)),
-			maxY: Math.max(...points.map(pt => pt.y)),
-			maxZ: Math.max(...points.map(pt => pt.z))
-		} : null;
+		const boundaries = points.length > 0 ?
+			{
+				minX: Math.min(...points.map(pt => pt.x)),
+				minY: Math.min(...points.map(pt => pt.y)),
+				minZ: Math.min(...points.map(pt => pt.z)),
+				maxX: Math.max(...points.map(pt => pt.x)),
+				maxY: Math.max(...points.map(pt => pt.y)),
+				maxZ: Math.max(...points.map(pt => pt.z))
+			}
+			: null;
 
 		return boundaries;
 	};
@@ -86,7 +88,7 @@ export class TacticalMapLogic {
 		if (dimensions) {
 			tokens.forEach(token => {
 				// Find all squares that we could add this token to
-				const candidateSquares: {x: number, y: number}[] = [];
+				const candidateSquares: { x: number, y: number }[] = [];
 				for (let x = dimensions.minX; x <= dimensions.maxX; ++x) {
 					for (let y = dimensions.minY; y <= dimensions.maxY; ++y) {
 						const canAddHere = this.canAddMonsterHere(map, x, y, token.size);

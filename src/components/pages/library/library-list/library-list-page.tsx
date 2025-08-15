@@ -71,7 +71,7 @@ interface Props {
 	showRoll: () => void;
 	showReference: () => void;
 	setOptions: (options: Options) => void;
- 	showSourcebooks: () => void;
+	showSourcebooks: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
@@ -538,7 +538,6 @@ export const LibraryListPage = (props: Props) => {
 				<div className='library-section-grid'>
 					{
 						list.map(c => {
-
 							const item = (
 								<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('class', c.id)}>
 									<ClassPanel heroClass={c} options={props.options} />
@@ -1752,7 +1751,7 @@ export const LibraryListPage = (props: Props) => {
 												file
 													.text()
 													.then(json => {
-														const e = (JSON.parse(json) as Element);
+														const e = JSON.parse(json) as Element;
 														props.importElement(currentTab, sourcebookID, e);
 													});
 												return false;

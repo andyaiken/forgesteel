@@ -138,7 +138,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					id: 'shadow-4-1a',
 					name: 'Characteristic Increase: Agility',
 					description: 'Your Agility score increases to 3',
-					characteristic:Characteristic.Agility,
+					characteristic: Characteristic.Agility,
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({
@@ -327,10 +327,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					description: `
 At the start of each of your turns, you can forgo gaining insight to create 1d6 clones of yourself in unoccupied adjacent spaces. A clone acts on your turn and uses your statistics, except they have 1 Stamina. They are affected by any conditions and effects on you, and last until the start of your next turn. A clone doesn’t have insight and can’t use the Careful Observation ability, the Umbral Form feature, or any triggered actions. On their turn, a clone has a move action, a maneuver, and a main action that they can use only to make a free strike. While making a free strike, a clone must choose targets that you or another clone aren’t also striking.
 
-Outside of combat, you can have one clone active for every 2 Victories you have. If a clone is destroyed, you must wait 1 hour before creating another one.
-					`
-
-
+Outside of combat, you can have one clone active for every 2 Victories you have. If a clone is destroyed, you must wait 1 hour before creating another one.`
 				})
 			]
 		},
@@ -341,7 +338,7 @@ Outside of combat, you can have one clone active for every 2 Victories you have.
 					id: 'shadow-10-1a',
 					name: 'Characteristic Increase: Agility',
 					description: 'Your Agility score increases to 5',
-					characteristic:Characteristic.Agility,
+					characteristic: Characteristic.Agility,
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({
@@ -469,7 +466,7 @@ Subterfuge remains until you spend it.`
 						tier3: '9 + A damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('If the target has no allies adjacent to them, you gain 1 surge before making the power roll.')
+				FactoryLogic.createAbilitySectionText('If the target has none of your allies adjacent to them, you gain 1 surge before making the power roll.')
 			]
 		}),
 		FactoryLogic.createAbility({

@@ -154,7 +154,7 @@ When you are in a negotiation with an animal or elemental, you treat your Renown
 			]
 		},
 		{
-			level:  6,
+			level: 6,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-3-6-1',
@@ -219,7 +219,7 @@ When you are in a negotiation with an animal or elemental, you treat your Renown
 			]
 		},
 		{
-			level:  9,
+			level: 9,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-3-9-1',

@@ -484,13 +484,15 @@ export class FactoryLogic {
 		withCaptain?: string,
 		retainer?: { level4?: Feature, level7?: Feature, level10?: Feature }
 	}): Monster => {
-		const retainer = data.retainer ? {
-			level: data.level,
-			level4: data.retainer.level4,
-			level7: data.retainer.level7,
-			level10: data.retainer.level10,
-			featuresByLevel: RetainerData.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
-		} : null;
+		const retainer = data.retainer ?
+			{
+				level: data.level,
+				level4: data.retainer.level4,
+				level7: data.retainer.level7,
+				level10: data.retainer.level10,
+				featuresByLevel: RetainerData.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
+			}
+			: null;
 		return {
 			id: data.id || Utils.guid(),
 			name: data.name || '',

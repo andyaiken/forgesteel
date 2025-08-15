@@ -76,7 +76,7 @@ export const TerrainPanel = (props: Props) => {
 					<TerrainLabel terrain={terrain} />
 					<Flex align='center' justify='space-between'>
 						<Tag>{terrain.category}</Tag>
-						<Field label='EV' value={terrain.area ? `${terrain.encounterValue} / ${terrain.area}` : ((terrain.encounterValue === 0) ? '-': terrain.encounterValue)} />
+						<Field label='EV' value={terrain.area ? `${terrain.encounterValue} / ${terrain.area}` : ((terrain.encounterValue === 0) ? '-' : terrain.encounterValue)} />
 					</Flex>
 					{
 						props.mode === PanelMode.Full ?
@@ -100,12 +100,12 @@ export const TerrainPanel = (props: Props) => {
 								<Field label='Size' value={terrain.size} />
 								<Field label='Stamina' value={props.updateTerrain ? TerrainLogic.getStaminaValue(terrain) : TerrainLogic.getStaminaDescription(terrain)} />
 								{
-									terrain.direction  ?
+									terrain.direction ?
 										<Field label='Direction' value={terrain.direction} />
 										: null
 								}
 								{
-									terrain.link  ?
+									terrain.link ?
 										<Field label='Link' value={terrain.link} />
 										: null
 								}
@@ -123,7 +123,7 @@ export const TerrainPanel = (props: Props) => {
 								{
 									props.upgradeIDs ?
 										terrain.upgrades
-											.filter(u => (props.upgradeIDs|| []).includes(u.id))
+											.filter(u => (props.upgradeIDs || []).includes(u.id))
 											.map(upgrade => (
 												<div key={upgrade.id}>
 													<Divider />

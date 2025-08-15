@@ -131,6 +131,9 @@ export const ClassSection = (props: Props) => {
 			options.choices.push(
 				<SelectablePanel key='characteristics'>
 					<HeaderText>Characteristics</HeaderText>
+					<div className='ds-text'>
+						You start with a 2 in <b>{heroClass.primaryCharacteristics.join(' and ')}</b>. Choose the values you'd like for your other characteristics.
+					</div>
 					<Select
 						style={{ width: '100%' }}
 						status={array === null ? 'warning' : ''}
@@ -141,7 +144,7 @@ export const ClassSection = (props: Props) => {
 						onChange={(_text, option) => {
 							const data = option as { value: string, array: number[] };
 							setArray(data.array);
-							props.selectPrimaryCharacteristics(props.hero.class!.primaryCharacteristics);
+							props.selectPrimaryCharacteristics(heroClass.primaryCharacteristics);
 						}}
 					/>
 					{

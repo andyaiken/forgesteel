@@ -11,7 +11,6 @@ import { chronokinetic } from './chronokinetic';
 import { cryokinetic } from './cryokinetic';
 import { metakinetic } from './metakinetic';
 
-
 export const nullClass: HeroClass = {
 	id: 'class-null',
 	name: 'Null',
@@ -805,7 +804,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			name: 'Anticipating Strike',
 			description: 'You suddenly strike an enemy, then grab them in a psionically enhanced grip.',
 			type: FactoryLogic.type.createTrigger('The target moves or uses a main action', { free: true }),
-			keywords: [ AbilityKeyword.Melee,  AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: 'One creature',
 			cost: 9,
@@ -826,7 +825,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			name: 'Iron Grip',
 			description: 'You grab the target with supernatural force.',
 			type: FactoryLogic.type.createMain(),
-			keywords: [ AbilityKeyword.Melee,  AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
 			target: 'One creature',
 			cost: 9,

@@ -277,7 +277,7 @@ export const EncounterRunPanel = (props: Props) => {
 			};
 
 			const addMonsterToSquad = (hero: Hero, slotID: string) => {
-				const monsters = [ ... HeroLogic.getCompanions(hero), ...HeroLogic.getSummons(hero) ];
+				const monsters = [ ...HeroLogic.getCompanions(hero), ...HeroLogic.getSummons(hero) ];
 
 				const copy = Utils.copy(encounter);
 				copy.heroes

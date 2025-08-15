@@ -81,7 +81,7 @@ export const MontageRunPanel = (props: Props) => {
 					</div>
 					{challenge.uses > 1 ? <Pill>x{challenge.uses}</Pill> : null}
 					<Field
-						style={{ flex: '1 1 0', opacity: (challenge.successes + challenge.failures)>= challenge.uses ? 0.3 : 1 }}
+						style={{ flex: '1 1 0', opacity: (challenge.successes + challenge.failures) >= challenge.uses ? 0.3 : 1 }}
 						label={challenge.name}
 						value={
 							<Markdown text={challenge.description} useSpan={true} />

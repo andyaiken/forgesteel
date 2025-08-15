@@ -353,7 +353,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 								file
 									.text()
 									.then(json => {
-										const monster = (JSON.parse(json) as Monster);
+										const monster = JSON.parse(json) as Monster;
 										copyMonster(monster);
 									});
 								return false;

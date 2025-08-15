@@ -878,7 +878,7 @@ export const FeatureEditPanel = (props: Props) => {
 									title={option.feature.name || 'Unnamed Feature'}
 									extra={[
 										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'up'); }} />,
-										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'down');}} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveChoice(data, n, 'down'); }} />,
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteChoice(data, n); }} />
 									]}
 								>
@@ -1099,7 +1099,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.HeroicResource: {
 				const data = feature.data as FeatureHeroicResourceData;
 				return (
-					<Space direction='vertical' style={{ width:'100%' }}>
+					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Type</HeaderText>
 						<Segmented
 							name='resourcetypes'
@@ -1122,7 +1122,7 @@ export const FeatureEditPanel = (props: Props) => {
 									title='Gain'
 									extra={[
 										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveResourceGain(data, n, 'up'); }} />,
-										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveResourceGain(data, n, 'down');}} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveResourceGain(data, n, 'down'); }} />,
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteResourceGain(data, n); }} />
 									]}
 								>
@@ -1214,6 +1214,8 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 			case FeatureType.Kit: {
 				const data = feature.data as FeatureKitData;
+				const types = SourcebookLogic.getKitTypes(props.sourcebooks);
+				const options = types.map(type => ({ value: type, label: !type ? 'Standard' : type }));
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Types</HeaderText>
@@ -1223,10 +1225,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Kit types'
 							mode='multiple'
 							allowClear={true}
-							options={[
-								{ value: '', label: 'Standard' },
-								{ value: 'Stormwight', label: 'Stormwight' }
-							]}
+							options={options}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							showSearch={true}
 							filterOption={(input, option) => {
@@ -1717,7 +1716,7 @@ export const FeatureEditPanel = (props: Props) => {
 									title={monster.name || 'Unnamed Monster'}
 									extra={[
 										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSummon(data, n, 'up'); }} />,
-										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSummon(data, n, 'down');}} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSummon(data, n, 'down'); }} />,
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSummon(data, n); }} />
 									]}
 								>

@@ -45,7 +45,7 @@ Fire giants rarely wear armor, as their bodies heat up to extreme temperatures w
 Born of soaring peaks in frigid mountains, frost giants master their environments to rule mountain ranges and build fortresses of unyielding ice. When frost giants march, a blizzard grows overhead, which they carry like a war banner. To frost giants, battle is a way of life, camaraderie, and glory.
 
 
-Where frost giants make their home, a unique form of ice sprouts into flowering crystalline structures. Frost giants harvest this ice, known as issenblau in their tongue, and fashion it into weapons as hard and sharp as steel, which can be used in any environment without melting.            `
+Where frost giants make their home, a unique form of ice sprouts into flowering crystalline structures. Frost giants harvest this ice, known as issenblau in their tongue, and fashion it into weapons as hard and sharp as steel, which can be used in any environment without melting.`
 		},
 
 		{

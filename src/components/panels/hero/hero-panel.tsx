@@ -53,20 +53,20 @@ interface Props {
 	options: Options;
 	mode?: PanelMode;
 	onSelectAncestry?: (ancestry: Ancestry) => void;
- 	onSelectCulture?: (culture: Culture) => void;
- 	onSelectCareer?: (career: Career) => void;
- 	onSelectClass?: (heroClass: HeroClass) => void;
- 	onSelectComplication?: (complication: Complication) => void;
- 	onSelectDomain?: (domain: Domain) => void;
- 	onSelectKit?: (kit: Kit) => void;
+	onSelectCulture?: (culture: Culture) => void;
+	onSelectCareer?: (career: Career) => void;
+	onSelectClass?: (heroClass: HeroClass) => void;
+	onSelectComplication?: (complication: Complication) => void;
+	onSelectDomain?: (domain: Domain) => void;
+	onSelectKit?: (kit: Kit) => void;
 	onSelectTitle?: (title: Title) => void;
- 	onSelectMonster?: (monster: Monster) => void;
- 	onSelectFollower?: (follower: Follower) => void;
- 	onSelectCharacteristic?: (characteristic: Characteristic) => void;
- 	onSelectFeature?: (feature: Feature) => void;
- 	onSelectAbility?: (ability: Ability) => void;
- 	onShowState?: (page: HeroStatePage) => void;
- 	onshowReference?: (page: RulesPage) => void;
+	onSelectMonster?: (monster: Monster) => void;
+	onSelectFollower?: (follower: Follower) => void;
+	onSelectCharacteristic?: (characteristic: Characteristic) => void;
+	onSelectFeature?: (feature: Feature) => void;
+	onSelectAbility?: (ability: Ability) => void;
+	onShowState?: (page: HeroStatePage) => void;
+	onshowReference?: (page: RulesPage) => void;
 }
 
 export const HeroPanel = (props: Props) => {
@@ -859,7 +859,7 @@ export const HeroPanel = (props: Props) => {
 				}
 			};
 
-			const getRow = (data: { feature: Feature, source: string}) => {
+			const getRow = (data: { feature: Feature, source: string }) => {
 				return (
 					<div key={data.feature.id} className='selectable-row clickable' onClick={() => showFeature(data.feature)}>
 						<div><b>{data.feature.name}</b></div>

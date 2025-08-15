@@ -168,7 +168,7 @@ As a main action, you can touch a magic source of elemental power and use it to 
 (Exploring Quintessence is possible from your island, but continued safety is not guaranteed.)`
 				}),
 				FactoryLogic.feature.createPerk({
-					id: 'fury-2-1',
+					id: 'fury-6-3',
 					lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Intrigue ]
 				})
 			]

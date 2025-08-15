@@ -141,7 +141,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 							),
 							FactoryLogic.createAbilitySectionText('**Effect:** Ajax shifts up to 2 squares between striking each target.'),
 							FactoryLogic.createAbilitySectionField({
-								name: '',
+								name: 'Malice',
 								value: 1,
 								repeatable: true,
 								effect: 'Ajax can strike one additional target for each Malice spent.'
@@ -168,7 +168,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 							),
 							FactoryLogic.createAbilitySectionText('**Effect:** A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
 							FactoryLogic.createAbilitySectionField({
-								name: '',
+								name: 'Malice',
 								value: 3,
 								effect: 'The potency increases by 1. Additionally, the ground beneath the area drops 3 squares and is difficult terrain. Each flying target who has <code>M < 5</code> is knocked prone.'
 							})
@@ -285,7 +285,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 					ability: FactoryLogic.createAbility({
 						id: 'ajax-1-feature-13',
 						name: 'Phoenix Wing King',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
@@ -306,7 +306,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 					ability: FactoryLogic.createAbility({
 						id: 'ajax-1-feature-14',
 						name: 'I’ve Learned Their Tricks ',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',
@@ -320,7 +320,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 					ability: FactoryLogic.createAbility({
 						id: 'ajax-1-feature-15',
 						name: 'Awe of the Iron Crown',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 7 }) ],
 						target: 'Each enemy in the area',
@@ -373,7 +373,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 							),
 							FactoryLogic.createAbilitySectionText('**Effect:** Ajax shifts up to 2 squares between striking each target.'),
 							FactoryLogic.createAbilitySectionField({
-								name: '',
+								name: 'Malice',
 								value: 1,
 								repeatable: true,
 								effect: 'Ajax can strike one additional target for each Malice spent.'
@@ -400,7 +400,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 							),
 							FactoryLogic.createAbilitySectionText('**Effect:** A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
 							FactoryLogic.createAbilitySectionField({
-								name: '',
+								name: 'Malice',
 								value: 3,
 								effect: 'The potency increases by 1. Additionally, the ground beneath the area drops 3 squares and is difficult terrain. Each flying target who has <code>M < 5</code> is knocked prone.'
 							})
@@ -494,7 +494,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 					ability: FactoryLogic.createAbility({
 						id: 'ajax-2-feature-11',
 						name: 'Phoenix Wing King',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
@@ -515,7 +515,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 					ability: FactoryLogic.createAbility({
 						id: 'ajax-2-feature-12',
 						name: 'I’ve Learned Their Tricks ',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',
@@ -529,7 +529,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 					ability: FactoryLogic.createAbility({
 						id: 'ajax-2-feature-13',
 						name: 'Awe of the Iron Crown',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 7 }) ],
 						target: 'Each enemy in the area',

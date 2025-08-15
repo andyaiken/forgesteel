@@ -52,13 +52,14 @@ export class FactoryAbilityTypeLogic {
 		};
 	};
 
-	createVillainAction = (): AbilityType => {
+	createVillainAction = (order?: number): AbilityType => {
 		return {
 			usage: AbilityUsage.VillainAction,
 			free: false,
 			trigger: '',
 			time: '',
-			qualifiers: []
+			qualifiers: [],
+			order: order
 		};
 	};
 

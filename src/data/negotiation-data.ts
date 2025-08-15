@@ -6,7 +6,7 @@ export class NegotiationData {
 		id: 'negotiation-bandit-chief',
 		name: 'Bandit Chief',
 		description: `
-The bandit chief is a bully and a braggart, and most negotiate using intimidation and bluster before softening.
+*The bandit chief is a bully and a braggart, and most negotiate using intimidation and bluster before softening.*
 
 The bandit chief archetype can be used for any other local big shot, such as the privileged child of a local lord, an arrogant tavern darts champion, or any bully.`,
 		impression: 1,
@@ -19,11 +19,11 @@ The bandit chief archetype can be used for any other local big shot, such as the
 			},
 			{
 				trait: NegotiationTrait.Greed,
-				description: 'Gold! I love the feel of shining, clinking coins running between my fingers. I never found something to spend it on that I like as much as the gold.'
+				description: 'Gold! I love the feel of shining, clinking coins running between my fingers. I never found something to spend it on that I like as much as just *having* gold.'
 			},
 			{
 				trait: NegotiationTrait.Power,
-				description: 'I want a stronger hideout, more toughs, and a bigger share of the loot. Get me that, and I’ll do your dirty work for you. You can keep your fancy titles and lands.'
+				description: 'I want a stronger hideout, more toughs, and a bigger share of the loot. Get me that, and I’ll do your dirty work for you.'
 			},
 			{
 				trait: NegotiationTrait.Revelry,
@@ -33,15 +33,15 @@ The bandit chief archetype can be used for any other local big shot, such as the
 		pitfalls: [
 			{
 				trait: NegotiationTrait.HigherAuthority,
-				description: 'By order of the baron? I give the orders around here!'
+				description: 'By order of the baron? You can keep your fancy titles and lands. I give the orders around here!'
 			},
 			{
 				trait: NegotiationTrait.Justice,
-				description: 'Only the weak whine for justice—the strong make their own rules.'
+				description: 'Only the weak whine for justice. The strong make their own rules.'
 			},
 			{
 				trait: NegotiationTrait.Legacy,
-				description: 'Listen, I don’t care what happens when I’m gone. I want my toughs shouting my name now, not in a hundred years.'
+				description: 'Listen, I don’t care what happens when I’m gone. I want my followers shouting my name now, not in a hundred years.'
 			},
 			{
 				trait: NegotiationTrait.Peace,
@@ -55,7 +55,7 @@ The bandit chief archetype can be used for any other local big shot, such as the
 		id: 'negotiation-knight',
 		name: 'Knight',
 		description: `
-While not an idealist, the knight is a loyal servant of their liege and a stickler for duty. The knight knows their place in a regimented society and believes everyone else should keep to their own.
+*Although not always an idealist, the knight is a loyal servant of their liege and a stickler for duty. A knight knows their place in a regimented society, and believes that everyone else should keep to their own place.*
 
 The knight archetype can be used for any other local authority, such as a village elder, town guard officer, or academic professor.`,
 		impression: 2,
@@ -72,7 +72,7 @@ The knight archetype can be used for any other local authority, such as a villag
 			},
 			{
 				trait: NegotiationTrait.Peace,
-				description: 'People like us, we fight so that the common folk don’t have to. If I must, I’ll draw the sword again, to keep the peace.'
+				description: 'People like us, we fight so that the common folk don’t have to. If I must, I’ll draw the sword again to keep the peace.'
 			},
 			{
 				trait: NegotiationTrait.Revelry,
@@ -82,11 +82,11 @@ The knight archetype can be used for any other local authority, such as a villag
 		pitfalls: [
 			{
 				trait: NegotiationTrait.Benevolence,
-				description: 'These people don’t need charity, they need order. Let them go to the town hall, and they’ll get a full belly in exchange for an honest day’s work.'
+				description: 'These people don’t need charity, they need order. Let them go to the town hall and they’ll get a full belly in exchange for an honest day’s work.'
 			},
 			{
 				trait: NegotiationTrait.Freedom,
-				description: 'None of us are free—from the lowliest servant on up. Even a monarch has a duty to their people.'
+				description: 'None of us are free, from the lowliest servant on up. Even a monarch has a duty to their people.'
 			},
 			{
 				trait: NegotiationTrait.Power,
@@ -104,7 +104,7 @@ The knight archetype can be used for any other local authority, such as a villag
 		id: 'negotiation-guildmaster',
 		name: 'Guildmaster',
 		description: `
-The guildmaster knows the value of a coin and that knowledge—inside information and trade secrets—is the most valuable currency. They bargain accordingly.
+*The guildmaster knows the value of a coin, but understands that knowledge—inside information and trade secrets alike—is the most valuable currency. They bargain accordingly.*
 
 The guildmaster archetype can be used for any other local information broker, such as a cult leader, hag, or spy.`,
 		impression: 3,
@@ -117,11 +117,11 @@ The guildmaster archetype can be used for any other local information broker, su
 			},
 			{
 				trait: NegotiationTrait.Discovery,
-				description: 'It would be highly illegal for you to show me those schematics you got from a rival guild. Likewise, it would be highly illegal for me to slide you this bag of gold.'
+				description: 'It would be highly unethical for you to show me those schematics you obtained from a rival guild. Likewise, it would be highly unethical for me to slide you this bag of gold.'
 			},
 			{
 				trait: NegotiationTrait.Power,
-				description: 'Who do you think will be in charge in the next age? The nobles? Pah! They still count their wealth in cows. No, whoever controls the information will rule the world—and I intend for it to be us.'
+				description: 'Who do you think will be in charge in the next age? The nobles? Pah! They still count their wealth in cows. Whoever controls the information will rule the world—and I intend for it to be us.'
 			},
 			{
 				trait: NegotiationTrait.Protection,
@@ -135,11 +135,11 @@ The guildmaster archetype can be used for any other local information broker, su
 			},
 			{
 				trait: NegotiationTrait.Justice,
-				description: 'We’re reshaping the world here. Of course, some people who can’t adapt are going to find themselves on the bottom, and they’re going to blame us for it—but I had thought you were smarter than that.'
+				description: 'We’re reshaping the world here. Of course, some people who can’t adapt are going to find themselves on the bottom. Buy why should anyone blame us for that.'
 			},
 			{
 				trait: NegotiationTrait.Peace,
-				description: 'Conflict isn’t bad in itself. It drives innovation. The key is not to be on the losing side.'
+				description: 'Conflict isn’t bad in and of itself. It drives innovation. The key is not to be on the losing side.'
 			},
 			{
 				trait: NegotiationTrait.Revelry,
@@ -153,7 +153,7 @@ The guildmaster archetype can be used for any other local information broker, su
 		id: 'negotiation-warlord',
 		name: 'Warlord',
 		description: `
-The warlord has raised their banner, and troops flock to their cause. Some say they never negotiate, but that’s not true—they’re happy to listen to terms of surrender.
+*The warlord has raised their banner and troops flock to their cause. Some say a warlord never negotiates, but that’s not true. They’re happy to listen to terms of surrender.*
 
 The warlord archetype can be used for any other local-level threat, such as a vampire, hobgoblin bloodlord, or rebellious noble.`,
 		impression: 4,
@@ -202,7 +202,7 @@ The warlord archetype can be used for any other local-level threat, such as a va
 		id: 'negotiation-burgomaster',
 		name: 'Burgomaster',
 		description: `
-The burgomaster’s power comes from their constituents, and for the most part they aim to serve them. They’re experienced negotiators, never giving up any more than they mean to.
+*The burgomaster’s power comes from their constituents, and for the most part, they aim to serve their people. Most burgomasters are experienced negotiators, never giving up any more than they mean to.*
 
 The burgomaster archetype can be used for any other local ruler, such as a baron, governor, or a watch captain in a metropolis.`,
 		impression: 5,
@@ -219,18 +219,14 @@ The burgomaster archetype can be used for any other local ruler, such as a baron
 			},
 			{
 				trait: NegotiationTrait.Justice,
-				description: 'The rule of law must be preserved. If you have evidence of crimes, they must be punished.'
+				description: 'The rule of law must be preserved. If you have evidence of crimes, those responsible must be punished.'
 			},
 			{
 				trait: NegotiationTrait.Protection,
-				description: 'The [weak], the helpless … they depend upon me and, to a lesser extent, civic-minded heroes like yourselves. Together we’ll make sure the people come to no harm.'
+				description: 'The weak, the helpless—they depend upon me. And, to a lesser extent, civic-minded heroes like yourselves. Together, we’ll make sure the people come to no harm.'
 			}
 		],
 		pitfalls: [
-			{
-				trait: NegotiationTrait.Vengeance,
-				description: 'In politics you have to have a short memory. Your enemy today may be your ally tomorrow. There’s no need to make things personal.'
-			},
 			{
 				trait: NegotiationTrait.Discovery,
 				description: 'Trust me. No good is going to come from poking that particular beehive.'
@@ -241,7 +237,11 @@ The burgomaster archetype can be used for any other local ruler, such as a baron
 			},
 			{
 				trait: NegotiationTrait.Revelry,
-				description: 'Put that bottle away. I’m a public figure, I can’t be seen carousing and gallivanting and who knows what else.'
+				description: 'Put that bottle away. I’m a public figure! I can’t be seen carousing and gallivanting and who knows what else.'
+			},
+			{
+				trait: NegotiationTrait.Vengeance,
+				description: 'In politics, you have to have a short memory. Your enemy today may be your ally tomorrow. There’s no need to make things personal.'
 			}
 		],
 		outcomes: [ '', '', '', '', '', '' ]
@@ -251,7 +251,7 @@ The burgomaster archetype can be used for any other local ruler, such as a baron
 		id: 'negotiation-virtuoso',
 		name: 'Virtuoso',
 		description: `
-The virtuoso is the preeminent musician in the land — perhaps a celebrated opera singer or composer. If you need a cause popularized or an enemy’s name tarnished, then you come to them.
+*The virtuoso is the preeminent musician in the land—perhaps a celebrated opera singer or composer. If you need a cause popularized or an enemy’s name tarnished, you come to them.*
 
 The virtuoso archetype can be used for any other local celebrity, such as a master crafter, inspired artist, famous gladiator, or world champion.`,
 		impression: 6,
@@ -290,7 +290,7 @@ The virtuoso archetype can be used for any other local celebrity, such as a mast
 			},
 			{
 				trait: NegotiationTrait.Vengeance,
-				description: 'Perhaps there are some who hate me … some who think I stand in their way, or some whose accomplishments I have eclipsed. But I hate no one and am jealous of no one.'
+				description: 'Perhaps there are some who hate me—those who think I stand in their way, or whose accomplishments I have eclipsed. But I hate no one and am jealous of no one.'
 			}
 		],
 		outcomes: [ '', '', '', '', '', '' ]
@@ -300,7 +300,7 @@ The virtuoso archetype can be used for any other local celebrity, such as a mast
 		id: 'negotiation-high-priest',
 		name: 'High Priest',
 		description: `
-The high priest may be a high-ranking member of their faith, but as they are quick to tell you, that doesn’t make them free to act as they wish. The commands of their deity must be paramount.
+*The high priest might be a high-ranking member of their faith, but as they are quick to tell you, that doesn’t make them free to act as they wish. The commands of their deity must be paramount.*
 
 The high priest archetype can be used for any other national authority, such as a count, judge, or general.`,
 		impression: 7,
@@ -313,11 +313,11 @@ The high priest archetype can be used for any other national authority, such as 
 			},
 			{
 				trait: NegotiationTrait.Discovery,
-				description: 'Oh indeed? Um ... I would be interested in looking at that document further. Surely no harm can come from being aware of the snares and dangers in the world.'
+				description: 'Why, yes ... I would be interested in looking at that document further. Surely no harm can come from being aware of the snares and dangers in the world.'
 			},
 			{
 				trait: NegotiationTrait.HigherAuthority,
-				description: 'Indeed, my appointed duty is to serve everyone—whether it be my deity, my liege, or the poorest person crying out in need.'
+				description: 'Indeed, my appointed duty is to serve all folk—whether it be my deity, my liege, or the poorest person crying out in need.'
 			},
 			{
 				trait: NegotiationTrait.Justice,
@@ -327,11 +327,11 @@ The high priest archetype can be used for any other national authority, such as 
 		pitfalls: [
 			{
 				trait: NegotiationTrait.Greed,
-				description: 'Don’t offer that to me. Donate it to the faith, if you have no need of it.'
+				description: 'Don’t offer that to me. Donate it to the faith if you have no need of it.'
 			},
 			{
 				trait: NegotiationTrait.Legacy,
-				description: 'Me? I am no one. My good deeds, if I have any, are to my deity’s credit, not my own.'
+				description: 'Me? I am no one. My good deeds I might have accomplished are to my deity’s credit, not my own.'
 			},
 			{
 				trait: NegotiationTrait.Power,
@@ -339,7 +339,7 @@ The high priest archetype can be used for any other national authority, such as 
 			},
 			{
 				trait: NegotiationTrait.Revelry,
-				description: 'For shame! Do you boast of doing evil—and expect me to join you in it?'
+				description: 'For shame! Do you boast of doing evil and expect me to join you in it?'
 			}
 		],
 		outcomes: [ '', '', '', '', '', '' ]
@@ -349,7 +349,7 @@ The high priest archetype can be used for any other national authority, such as 
 		id: 'negotiation-duke',
 		name: 'Duke',
 		description: `
-As the duke gestures you to join him at his card table, spies whisper into his ear. The duke never plays a game or enters a negotiation unless he thinks he can gain the high card.
+*As the duke gestures you to join them at their card table, spies whisper in their ear. The duke never plays a game or enters a negotiation unless they think they can gain the high card.*
 
 The duke archetype can be used for any other royal counselor, such as an archmage, spymaster, vizier, or even a beloved jester.`,
 		impression: 8,
@@ -362,7 +362,7 @@ The duke archetype can be used for any other royal counselor, such as an archmag
 			},
 			{
 				trait: NegotiationTrait.HigherAuthority,
-				description: 'I must do as my liege commands.'
+				description: 'I must do as my liege commands. So tell me how you seek to serve them as well.'
 			},
 			{
 				trait: NegotiationTrait.Peace,
@@ -370,13 +370,13 @@ The duke archetype can be used for any other royal counselor, such as an archmag
 			},
 			{
 				trait: NegotiationTrait.Vengeance,
-				description: 'There is one—I will not speak their name—who thinks I have forgotten what they did to me. Someday they will discover that I have a long memory. Perhaps you have no love for this person either.'
+				description: 'There is one—I will not speak their name—who thinks I have forgotten what they did to me. Someday they will discover that I have a long memory.'
 			}
 		],
 		pitfalls: [
 			{
 				trait: NegotiationTrait.Benevolence,
-				description: 'Do you think I do what I do because I love my fellow people? Half of them are nitwits, and the other half are villains. But without them, I’d be the Duke of Nothing, so I must preserve them.'
+				description: 'Do you think I act because I love my fellow people? Half of them are worthless, and the other half are villains. But without them, I’d be the Duke of Nothing, so I must preserve them.'
 			},
 			{
 				trait: NegotiationTrait.Greed,
@@ -384,11 +384,11 @@ The duke archetype can be used for any other royal counselor, such as an archmag
 			},
 			{
 				trait: NegotiationTrait.Justice,
-				description: 'Right and wrong? There is no right, except what strengthens the kingdom, and there is no wrong, except what hurts it.'
+				description: 'Right and wrong? There is no right, except what strengthens the kingdom, and there is no wrong except what hurts it.'
 			},
 			{
 				trait: NegotiationTrait.Protection,
-				description: 'I don’t care about saving lives. We’re all doomed to die. The question is, what will live on after us.'
+				description: 'I don’t care about saving lives. We’re all doomed to die. The question is, what will live on after us?'
 			}
 		],
 		outcomes: [ '', '', '', '', '', '' ]
@@ -398,9 +398,9 @@ The duke archetype can be used for any other royal counselor, such as an archmag
 		id: 'negotiation-dragon',
 		name: 'Dragon',
 		description: `
-The dragon’s tremendous might is only overshadowed by their boundless ambition and pride.
+*The dragon’s tremendous might is overshadowed only by their boundless ambition and pride.*
 
-The dragon archetype can be used for any other kingdom- level threat, such as a fire giant chief, a contender for a throne, or Lord Syuul.`,
+The dragon archetype can be used for any other kingdom-level threat, such as a fire giant chief, a contender for a throne, or the dread synliroi Lord Syuul.`,
 		impression: 9,
 		interest: 1,
 		patience: 1,
@@ -411,7 +411,7 @@ The dragon archetype can be used for any other kingdom- level threat, such as a 
 			},
 			{
 				trait: NegotiationTrait.Greed,
-				description: 'Bring me tribute now, and when I rule I will not forget you.'
+				description: 'Bring me tribute now, and when I rule, I will not forget you.'
 			},
 			{
 				trait: NegotiationTrait.Protection,
@@ -433,7 +433,7 @@ The dragon archetype can be used for any other kingdom- level threat, such as a 
 			},
 			{
 				trait: NegotiationTrait.Power,
-				description: 'How can you possibly offer me power?'
+				description: 'How can *you* possibly offer *me* power?'
 			},
 			{
 				trait: NegotiationTrait.Revelry,
@@ -447,7 +447,7 @@ The dragon archetype can be used for any other kingdom- level threat, such as a 
 		id: 'negotiation-monarch',
 		name: 'Monarch',
 		description: `
-Whether they’re good or evil, the monarch is accustomed to authority—and wants to keep it. They respond better to pleas than to demands.
+*Whether they’re good or evil, a monarch is accustomed to authority—and wants to keep it. They respond better to pleas than to demands.*
 
 The monarch archetype can be used for any other kingdom-level ruler, such as a tyrant, a theocracy’s archpriest, or a republic’s consul.`,
 		impression: 10,
@@ -482,7 +482,7 @@ The monarch archetype can be used for any other kingdom-level ruler, such as a t
 			},
 			{
 				trait: NegotiationTrait.HigherAuthority,
-				description: 'Do you dare give orders to me? Never forget, no matter who sent you, I rule here!'
+				description: 'You dare give orders to me? Never forget, no matter who sent you, I rule here!'
 			},
 			{
 				trait: NegotiationTrait.Vengeance,
@@ -496,16 +496,18 @@ The monarch archetype can be used for any other kingdom-level ruler, such as a t
 		id: 'negotiation-lich',
 		name: 'Lich',
 		description: `
-The lich spent centuries alone, studying and building their power … but now the time for studying is over. The lich is willing to negotiate with strong heroes: they can make loyal lieutenants, or strong undead servants if the talks don’t go well.
+*The lich spent centuries alone, studying and building their power … but now the time for studying is over.*
 
-The lich archetype can be used for any other world- shaking threat, such as a would-be emperor or Count Rhodar von Glauer.`,
+The lich is willing to negotiate with strong heroes who might make loyal lieutenants—or powerful undead servants if the talks don’t go well.
+
+The lich archetype can be used for any other world-shaking threat, such as a would-be emperor or the vampire lord Count Rhodar von Glauer.`,
 		impression: 11,
 		interest: 1,
 		patience: 1,
 		motivations: [
 			{
 				trait: NegotiationTrait.Discovery,
-				description: 'Give me that book at once! Your very touch pollutes it.'
+				description: 'Give me that book at once! Your very touch corrupts it.'
 			},
 			{
 				trait: NegotiationTrait.Power,
@@ -527,15 +529,15 @@ The lich archetype can be used for any other world- shaking threat, such as a wo
 			},
 			{
 				trait: NegotiationTrait.Legacy,
-				description: 'I don’t care what the common people think of me. The less they think of me the better, as long as they obey my commands.'
+				description: 'I don’t care what the common people think of me. The less they think of me, the better—as long as they obey my commands.'
 			},
 			{
 				trait: NegotiationTrait.Peace,
-				description: 'Yes, yes, peace will come … eventually.'
+				description: 'Yes, yes, peace will come … but not now.'
 			},
 			{
 				trait: NegotiationTrait.Protection,
-				description: 'If you’re so intent on saving lives, then bow down before me! No harm will come to my servants.'
+				description: 'If you’re so intent on saving lives, then save your own by bowing down before me! No harm will come to my servants.'
 			}
 		],
 		outcomes: [ '', '', '', '', '', '' ]
@@ -545,20 +547,20 @@ The lich archetype can be used for any other world- shaking threat, such as a wo
 		id: 'negotiation-deity',
 		name: 'Deity',
 		description: `
-The deity will listen to your prayers, and perhaps answer them as well—if the mood strikes them.
+*The deity will listen to your prayers—and might perhaps answer them as well, if the mood strikes them.*
 
-The deity archetype can be used for any other world-transcending power, such as Cthrion Uroniziir or Khorsekhef the Infinite.`,
+The deity archetype can be used for any other world-transcending power, such as the legendary time dragon Cthrion Uroniziir, or the dread pharaoh Khorsekef the Infinite.`,
 		impression: 12,
 		interest: 1,
 		patience: 1,
 		motivations: [
 			{
 				trait: NegotiationTrait.Benevolence,
-				description: 'Worry not … I have sent champions to save the world. Perhaps these champions … are closer than you think.'
+				description: 'Worry not, for I have sent champions to save the world. Perhaps these champions … are closer than you think.'
 			},
 			{
 				trait: NegotiationTrait.Legacy,
-				description: 'When that blessed day comes, all shall come before me to pray, and I shall offer my blessings to the world!'
+				description: 'When that blessed day arrives, all shall come before me to pray, and I shall offer my blessings to the world!'
 			},
 			{
 				trait: NegotiationTrait.Power,
@@ -566,7 +568,7 @@ The deity archetype can be used for any other world-transcending power, such as 
 			},
 			{
 				trait: NegotiationTrait.Protection,
-				description: 'Have faith, little one… none will be forgotten or left behind.'
+				description: 'Have faith, little one … none will be forgotten or left behind.'
 			}
 		],
 		pitfalls: [

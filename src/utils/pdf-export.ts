@@ -10,6 +10,7 @@ import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
+import { Format } from './format';
 import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from '../logic/hero-logic';
@@ -40,14 +41,12 @@ export class PDFExport {
 
 		const sanitize = (str: string) => {
 			// This replaces characters the PDF doesn't support
-			return str
-				.toString()
-				.replaceAll(String.fromCodePoint(127925), '·')// musical note emoji?
-				.replaceAll('\u266a', '·')// musical note character
+			str = str
 				.replace(/−/g, '-')
 				.replace(/ź/g, 'z')
 				.replace(/ń/g, 'n')
 				.replace(/č/g, 'c');
+			return Format.stripEmojis(str);
 		};
 
 		const heroicResources = HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
@@ -134,6 +133,7 @@ export class PDFExport {
 				.replace(/≥\s*(\d+)/g, '$1+\t')
 				.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
 				.replace(/\n\* /g, '\n   • ');
+			text = Format.stripEmojis(text);
 			// substitutions are for cleaning up lists to look better in the form
 			return text;
 		};

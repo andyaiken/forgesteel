@@ -54,11 +54,11 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				name: 'Iron Jaws',
 				type: FactoryLogic.type.createManeuver(),
 				cost: 3,
-				keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
+				keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 3 }) ],
 				target: 'Special',
 				sections: [
-					FactoryLogic.createAbilitySectionText('A gnoll acting this turn drops an iron jawed snare into the affected area. The first time an enemy steps into an affected square, they make an **Agility test**. If they were unaware of the snare, they make the roll with a bane.'),
+					FactoryLogic.createAbilitySectionText('A gnoll acting this turn drops an iron-jawed snare into the affected area. The first time an enemy steps into the area, they make an **Agility test**. If they were unaware of the snare, they make the roll with a bane.'),
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: Characteristic.Agility,
@@ -67,7 +67,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							tier3: 'no effect'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('While an enemy is bleeding from the snare, each gnoll has an edge on strikes against the creature.')
+					FactoryLogic.createAbilitySectionText('While an enemy is bleeding from the snare, each gnoll in the encounter gains an edge on strikes made against them.')
 				]
 			})
 		}),
@@ -76,7 +76,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			name: 'Bloodpool',
 			cost: 5,
 			sections: [
-				'1 minion gnoll suddenly explodes into a pool of blood, splattering across each square within 3. A gnoll that starts their turn in an aﬀected square deals an additional 5 damage on their next strike until the end of their turn. Once per round, an abyssal hyena that starts their turn in an aﬀected square turns into a **gnoll marauder**, keeping their Stamina.'
+				'One gnoll minion suddenly explodes into a pool of blood, splattering the area within 3 squares of them. Any gnoll who starts their turn in this area deals an extra 5 damage on their next strike before the end of their turn. Once per round, an abyssal hyena who starts their turn in the area turns into a **gnoll marauder**, keeping their current Stamina.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -84,7 +84,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			name: 'Echoes of Laughter',
 			cost: 7,
 			sections: [
-				'The battlemap is encased in a soundscape of laughter and howling. Each enemy has a bane on the ﬁrst power roll they make during a round. Whenever a gnoll is killed, this eﬀect is suppressed until the start of the next round.'
+				' Until the end of the encounter, the encounter map is encased in a soundscape of laughter and howling. Each enemy takes a bane on the first power roll they make each round. Whenever a gnoll is killed, this effect is suppressed until the start of the next round.'
 			]
 		})
 	],
@@ -95,7 +95,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Abyssal', 'Animal', 'Gnoll' ],
-			encounterValue: 8,
+			encounterValue: 4,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(8),
 			stamina: 7,
@@ -126,7 +126,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.create({
 					id: 'gnoll-1-feature-2',
 					name: 'Death Snap',
-					description: 'When the abyssal hyena is reduced to 0 Stamina, they make a free strike before dying.'
+					description: 'When the abyssal hyena is reduced to 0 Stamina, they make a melee free strike before dying.'
 				})
 			]
 		}),
@@ -136,7 +136,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Abyssal', 'Gnoll' ],
-			encounterValue: 8,
+			encounterValue: 4,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 4,
@@ -167,7 +167,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.create({
 					id: 'gnoll-2-feature-2',
 					name: 'Death Frenzy',
-					description: 'Whenever an ally within 5 is reduced to 0 Stamina, the chainflail moves up to their speed and makes a free strike.'
+					description: 'Whenever a non-minion ally within 5 squares of the chainflail is reduced to 0 Stamina, the chainflail can move up to their speed.'
 				})
 			]
 		}),
@@ -177,7 +177,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
 			keywords: [ 'Abyssal', 'Gnoll' ],
-			encounterValue: 8,
+			encounterValue: 4,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 4,
@@ -209,7 +209,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.create({
 					id: 'gnoll-3-feature-2',
 					name: 'Death Frenzy',
-					description: 'Whenever an ally within 5 is reduced to 0 Stamina, the mage mauler moves up to their speed and makes a free strike.'
+					description: 'Whenever a non-minion ally within 5 squares of the chainflail is reduced to 0 Stamina, the mage mauler can move up to their speed.'
 				})
 			]
 		}),
@@ -219,7 +219,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Abyssal', 'Gnoll' ],
-			encounterValue: 8,
+			encounterValue: 4,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
 			stamina: 5,
@@ -241,7 +241,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 								bonus: 2,
 								tier1: '2 damage',
 								tier2: '3 damage',
-								tier3: '5 damage; wildling makes a free strike on a creature adjacent to the target'
+								tier3: '5 damage; the wildling makes a free strike on a creature adjacent to the target'
 							}))
 						]
 					})
@@ -249,7 +249,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.create({
 					id: 'gnoll-4-feature-2',
 					name: 'Death Frenzy',
-					description: 'Whenever an ally within 7 is reduced to 0 Stamina, the wildling moves up to their speed and makes a free strike.'
+					description: 'Whenever a non-minion ally within 7 squares of the wildling is reduced to 0 Stamina, the wildling can move up to their speed.'
 				})
 			]
 		}),
@@ -290,7 +290,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-5-feature-2',
-						name: 'Cackletongue',
+						name: 'Archer's Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
 						keywords: [],
@@ -298,21 +298,21 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
-						target: 'Self and all allies',
+						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target has an edge on their next strike before the end of their next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+							FactoryLogic.createAbilitySectionText('Until the end of their next turn, each target gains an edge on their next strike. If any target hasn’t used their own Cackletongue maneuver on this turn, they can use it immediately at no cost.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'gnoll-5-feature-3',
 					name: 'Death Frenzy',
-					description: 'Whenever an ally within 5 is reduced to 0 Stamina, the abyssal archer moves up to their speed and makes a free strike.'
+					description: 'Whenever a non-minion ally within 5 squares of the abyssal archer is reduced to 0 Stamina, the abyssal archer can make a ranged free strike.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'gnoll-5-feature-4',
 					name: 'Bloodscent',
-					description: 'The abyssal archer can target creatures not at full Stamina with abilities, even if they don\'t have line of effect.'
+					description: 'The abyssal archer doesn’t need line of effect to use their abilities against any creature who isn’t at full Stamina, as long as a size 1 opening exists between the archer and the target.'
 				})
 			]
 		}),
@@ -346,7 +346,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 								tier2: '5 fire damage',
 								tier3: '7 fire damage; I<2 burning (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A burning target takes 1d6 fire damage at the start of each of their turns until the condition ends.')
+							FactoryLogic.createAbilitySectionText('A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round.')
 						]
 					})
 				}),
@@ -360,28 +360,28 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						target: 'Special',
 						cost: 3,
 						sections: [
-							FactoryLogic.createAbilitySectionText('2 **abyssal hyenas** claw out of the ground into unoccupied squares.')
+							FactoryLogic.createAbilitySectionText('Two **abyssal hyenas** claw up from the ground in unoccupied squares within distance.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-6-feature-3',
-						name: 'Cackletongue',
+						name: 'Summoner's Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-						target: 'All allies',
+						target: 'Each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('1 abyssal hyena target turns into a **gnoll maurader**, keeping their Stamina. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+							FactoryLogic.createAbilitySectionText('One abyssal hyena target turns into a **gnoll marauder**, keeping their current Stamina. If any target hasn’t used their own Cackletongue maneuver on this turn, they can use it immediately at no cost.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'gnoll-6-feature-4',
 					name: 'Death Frenzy',
-					description: 'Whenever an ally within 5 is reduced to 0 Stamina, the abyssal summoner moves up to their speed and makes a free strike.'
+					description: ' Whenever a non-minion ally within 5 squares of the abyssal summoner is reduced to 0 Stamina, the abyssal summoner moves up to their speed and can make a melee free strike.'
 				})
 			]
 		}),
@@ -413,33 +413,33 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 								bonus: 2,
 								tier1: '5 damage; push 2',
 								tier2: '6 damage; push 2',
-								tier3: '8 damage; grabbed M<2 target has a bane on escaping the grab'
+								tier3: '8 damage; grabbed; M<2 target has a bane on escaping the grab'
 							})),
-							FactoryLogic.createAbilitySectionText('The bone splitter can\'t use three-tail flail on another target while the current target is grabbed.')
+							FactoryLogic.createAbilitySectionText('While the bonesplitter has a target grabbed, they can’t use Three-Tail Flail against another target.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-7-feature-2',
-						name: 'Cackletongue',
+						name: 'Bonesplitter's Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
-						cost: 3,
+						cost: 4,
 						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
-						target: 'Self and all allies',
+						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target makes a free strike. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+							FactoryLogic.createAbilitySectionText('Up to three targets can make a free strike. If any target hasn’t used their own Cackletongue maneuver on this turn, they can use it immediately at no cost.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'gnoll-8-feature-3',
 					name: 'Death Frenzy',
-					description: 'Whenever an ally within 5 is reduced to 0 Stamina, the bonesplitter moves up to their speed and makes a free strike.'
+					description: ' Whenever a non-minion ally within 5 squares of the bonesplitter is reduced to 0 Stamina, the bonesplitter moves up to their speed and can make a melee free strike.'
 				})
 			]
 		}),
@@ -469,23 +469,23 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '4 psychic damage; I<0 target makes a free strike against a creature of the cackler\'s choice',
-								tier2: '5 psychic damage; I<1 target makes a free strike against a creature of the cackler\'s choice',
-								tier3: '7 psychic damage; I<2 target makes a free strike against a creature of the cackler\'s choice'
+								tier1: '4 psychic damage; I<0 the target makes a free strike against a creature of the cackler\'s choice',
+								tier2: '5 psychic damage; I<1 the target makes a free strike against a creature of the cackler\'s choice',
+								tier3: '7 psychic damage; I<2 the target makes a free strike against a creature of the cackler\'s choice'
 							})),
-							FactoryLogic.createAbilitySectionText('An ally target by this ability makes a free strike instead of taking damage.')
+							FactoryLogic.createAbilitySectionText('An ally targeted by this ability ignores the damage and can make a free strike.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-8-feature-2',
-						name: 'Cackletongue',
+						name: 'Cackler's Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-						target: 'All creatures',
+						target: 'Each creature in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each enemy target makes an **Intuition test**.'),
 							FactoryLogic.createAbilitySectionRoll(
@@ -503,7 +503,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.create({
 					id: 'gnoll-8-feature-3',
 					name: 'Death Frenzy',
-					description: 'Whenever an ally within 5 is reduced to 0 Stamina, the cackler moves up to their speed and makes a free strike.'
+					description: ' Whenever a non-minion ally within 5 squares of the cackler is reduced to 0 Stamina, the cackler moves up to their speed and can make a melee free strike.'
 				})
 			]
 		}),
@@ -519,7 +519,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stamina: 20,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, -1),
+			characteristics: MonsterLogic.createCharacteristics(1, 1, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -541,7 +541,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 								name: 'Spend',
 								value: 2,
 								repeatable: true,
-								effect: 'The marauder targets an additional creature or object for every 2 malice spent.'
+								effect: 'This ability targets one additional target for each 2 Malice spent.'
 							})
 						]
 					})
@@ -549,7 +549,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-9-feature-2',
-						name: 'Cackletongue',
+						name: 'Marauder's Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
 						keywords: [],
@@ -557,16 +557,16 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
 						],
-						target: 'Self and all allies',
+						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed. If any target hasn’t used their own Cackletongue maneuver on this turn, they can use it immediately at no cost.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'gnoll-9-feature-3',
 					name: 'Death Frenzy',
-					description: 'Whenever an ally within 7 is reduced to 0 Stamina, the marauder moves up to their speed and makes a free strike.'
+					description: ' Whenever a non-minion ally within 7 squares of the marauder is reduced to 0 Stamina, the marauder moves up to their speed and can make a melee free strike.'
 				})
 			]
 		}),
@@ -574,14 +574,14 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			id: 'gnoll-10',
 			name: 'Tusker Demon',
 			level: 2,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Brute),
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Brute),
 			keywords: [ 'Abyssal', 'Demon', 'Gnoll' ],
-			encounterValue: 4,
+			encounterValue: 16,
 			size: FactoryLogic.createSize(3),
 			speed: FactoryLogic.createSpeed(7),
-			stamina: 34,
+			stamina: 100,
 			stability: 3,
-			freeStrikeDamage: 3,
+			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(2, -1, -3, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -592,15 +592,15 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: 'One creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '5 damage; push 1',
-								tier2: '6 damage; push 2',
-								tier3: '8 damage; push 3; prone'
+								tier1: '7 damage; push 1',
+								tier2: '11 damage; push 2',
+								tier3: '14 damage; push 3; prone'
 							})),
-							FactoryLogic.createAbilitySectionText('This ability deals an additional 4 damage while charging.')
+							FactoryLogic.createAbilitySectionText('If this ability is used as part of the Charge main action, it deals an extra 4 damage.')
 						]
 					})
 				}),
@@ -613,19 +613,19 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						distance: [ FactoryLogic.distance.createRanged(7) ],
 						target: 'Triggering enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The tusker demon charges the target using Gore.')
+							FactoryLogic.createAbilitySectionText('The tusker demon uses the Charge main action and Gore against the target.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'gnoll-10-feature-3',
 					name: 'Trample',
-					description: 'The tusker demon can move through enemies and objects at normal speed. When the tusker enters a creature’s space for the ﬁrst time on their turn, the creature takes 5 damage. The tusker demon can end their turn in a prone size 1 creature’s space, preventing the creature from getting up.'
+					description: 'The tusker demon can move through enemies’ spaces at their usual speed. When the tusker enters a creature’s space for the first time on a turn, that creature takes 5 damage. The tusker demon can end their turn in a prone size 1 creature’s space, preventing the creature from standing up.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'gnoll-10-feature-4',
 					name: 'Lethe',
-					description: 'While winded, the tusker demon has an edge on strikes, and strikes have an edge against them.'
+					description: ' While the tusker demon is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				})
 			]
 		}),
@@ -650,7 +650,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -658,14 +658,14 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 								tier2: '11 damage; A<2 bleeding (save ends)',
 								tier3: '14 damage; A<3 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('An ally targeted by this ability makes a free strike instead of taking damage.')
+							FactoryLogic.createAbilitySectionText('An ally targeted by this ability ignores the damage and can make a free strike.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-11-feature-2',
-						name: 'Cackletongue',
+						name: 'Carnage's Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
 						keywords: [],
@@ -673,38 +673,43 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
 						],
-						target: 'Self and all allies',
+						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target deals an additional 3 damage with their strikes until the start of the carnage\'s next turn. Targets who haven’t used a cackletongue maneuver on this turn use it immediately at no cost.')
+							FactoryLogic.createAbilitySectionText('Each target deals an extra 3 damage with their next strike until the start of the carnage’s next turn. If any target hasn’t used their own Cackletongue maneuver on this turn, they can use it immediately at no cost.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'gnoll-11-feature-3',
 					name: 'Death Rampage',
-					description: 'Whenever an ally within 5 is reduced to 0 Stamina, the carnage moves up to their speed and either chooses to target 2 creatures with free strikes or one creature with their shrapnel whip.'
+					description: 'Whenever a non-minion ally within 5 squares of the carnage is reduced to 0 Stamina, the carnage can move up to their speed, then can either make a melee free strike against two creatures or use Shrapnel Whip against one creature.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'gnoll-11-feature-4',
+					name: 'End Effect',
+					description: 'At the end of each of their turns, the carnage can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'gnoll-11-feature-5',
 					name: 'Endless Hunger',
-					description: 'If the carnage is reduced to 0 Stamina while there are still gnolls on the battle map, one gnoll on the map is transformed into the carnage, keeping the gnoll’s Stamina.'
+					description: 'If the carnage is reduced to 0 Stamina while there are still gnolls on the encounter map, one gnoll on the map is transformed into a **gnoll carnage**, keeping their current Stamina.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'gnoll-11-feature-5',
+						id: 'gnoll-11-feature-6',
 						name: 'Call Up from The Abyss',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The carnage summons 5 **gnoll wildlings** and 5 **abyssal hyenas** into unoccupied spaces.')
+							FactoryLogic.createAbilitySectionText('The carnage summons four **abyssal hyenas** and 5 **abyssal hyenas** into unoccupied spaces within distance.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'gnoll-11-feature-6',
+						id: 'gnoll-11-feature-7',
 						name: 'Edacity',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
@@ -712,22 +717,22 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
 						],
-						target: 'Self and all allies',
+						target: 'Self and three allies',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target moves up to their speed and makes a free strike. A creature that takes damage from this villain action is also knocked prone.')
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed and can make a free strike. Any creature damaged by one of these free strikes who has M<2 is knocked prone.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'gnoll-11-feature-7',
+						id: 'gnoll-11-feature-8',
 						name: 'Deepest Wounds',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'Each winded enemy in the blast',
+						target: 'Each winded enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The carnage\'s eyes and all explosed blood within distance starts to glow bright red. Each target makes a **Presence test**.'),
+							FactoryLogic.createAbilitySectionText('The carnage\'s eyes and all explosed blood within distance glow bright red. Each target makes a **Presence test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: Characteristic.Presence,
@@ -736,7 +741,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 									tier3: 'No effect'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('Until the end of the encounter, each gnoll has a double edge on power rolls that target a winded enemy.')
+							FactoryLogic.createAbilitySectionText('Until the end of the encounter, all gnolls have a double edge on power rolls that target a winded enemy.')
 						]
 					})
 				})
@@ -748,10 +753,9 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Harrier),
 			keywords: [ 'Fiend', 'Gnoll' ],
-			encounterValue: 16,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
-			stamina: 40,
+			stamina: 30,
 			stability: 1,
 			freeStrikeDamage: 3,
 			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 1),
@@ -770,7 +774,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 								tier1: '4 damage',
 								tier2: '7 damage',
-								tier3: '10 damage; M (strong) bleeding (save ends)'
+								tier3: '10 damage; M < [strong] bleeding (save ends)'
 							}))
 						]
 					})
@@ -778,7 +782,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.create({
 					id: 'gnoll-12-feature-2',
 					name: 'Death Frenzy',
-					description: 'Whenever an ally within 7 is reduced to 0 Stamina, the gnasher moves up to their speed and makes a free strike.'
+					description: 'Whenever a non-minion ally within 7 squares of the gnasher is reduced to 0 Stamina, the gnasher moves up to their speed and can make a melee free strike.'
 				})
 			],
 			retainer: {
@@ -786,12 +790,12 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-12-retainer-3',
 						name: 'Frenzied Bite',
-						type: FactoryLogic.type.createTrigger('A target is reduced to 0 Stamina.', { qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createTrigger('An enemy within 5 squares is reduced to 0 Stamina.', { qualifiers: [ 'encounter' ] }),
 						keywords: [],
-						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: 'One enemy',
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The gnasher moves up to their speed and makes a Signature Attack.')
+							FactoryLogic.createAbilitySectionText('The gnasher moves up to their speed and can use their Signature Attack ability.')
 						]
 					})
 				}),
@@ -802,13 +806,13 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '3 creatures or objects',
+						target: 'Three creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 								tier1: '7 damage',
 								tier2: '11 damage',
-								tier3: '16 damage; M (strong) bleeding (save ends)'
+								tier3: '16 damage'
 							}))
 						]
 					})
@@ -819,10 +823,10 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						name: 'Horrific Feast',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
-						distance: [ FactoryLogic.distance.createRanged(5) ],
+						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The gnasher consumes part of the target\'s body. The gnasher can spend a Recovery. Each enemy within range is I (medium) frightened (save ends).')
+							FactoryLogic.createAbilitySectionText('If the gnasher reduces a creature to 0 Stamina, the gnasher consumes part of the target\'s body. The gnasher can spend a Recovery, and each enemy within 5 squares of the gnasher who has I < [average] is frightened (save ends).')
 						]
 					})
 				})

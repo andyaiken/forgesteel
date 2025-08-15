@@ -812,7 +812,7 @@ Virtue remains until you spend it.`
 						tier3: '12 + P damage; I < [strong], slowed (save ends)'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('While the target is slowed this way, each ally who starts their turn within 5 squares of them must use a free maneuver to make a free strike against the target. Additionally, while the target is slowed this way, each ally within 5 squares of them who can make a triggered free strike against a different creature must make the free strike against the target instead.')
+				FactoryLogic.createAbilitySectionText('While the target is slowed this way, each of their allies who starts their turn within 5 squares of them must use a free maneuver to make a free strike against the target. Additionally, while the target is slowed this way, each of their allies within 5 squares of them who can make a triggered free strike against a different creature must make the free strike against the target instead.')
 			]
 		})
 	],

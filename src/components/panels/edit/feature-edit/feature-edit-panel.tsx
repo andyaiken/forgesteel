@@ -1809,6 +1809,7 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.Choice,
 			FeatureType.ClassAbility,
 			FeatureType.Companion,
+			FeatureType.ConditionImmunity,
 			FeatureType.DamageModifier,
 			FeatureType.Domain,
 			FeatureType.DomainFeature,

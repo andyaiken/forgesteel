@@ -10,44 +10,41 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const demon2nd: MonsterGroup = {
 	id: 'monster-group-demon-2nd',
-	name: 'Demon — 2nd Echelon',
-	description: 'As demons consume more souls, and their mercurial forms shift into more powerful ones, they also begin to develop more distinct personalities, desires, and intelligence based on the souls consumed. It’s now that demons begin to develop a particular taste for types of souls which, should they survive long enough, will eventually define them.',
+	name: 'Demons — 2nd Echelon',
+	description: 'As demons consume more souls and their mercurial forms shift into more powerful ones, they begin to evolve more distinct personalities, desires, and intelligence—often based on the souls consumed. Across categories 4 to 6, demons develop a particular taste for certain types of souls, which eventually come to define them should they survive long enough.',
 	picture: null,
 	information: [
 		{
 			id: 'demon-2nd-info-1',
-			name: 'Higher Categories of Demons',
+			name: 'Demons — 2nd Echelon',
 			description: `
-The following demons have been identified across 
-categories 4-6:
+• **Grulqins** (GRUHL-kinz) consist of a bulbous head, two powerful arms, and a circular serrated blade of bone that runs down the middle of their head.
 
-• **Grulqin’s** consist of a bulbous head two powerful arms and circular bone saw blade that runs down the middle of its head.
+• **Orliq** (or-LEEK) are made of shifting bone plates surrounding a swirling core of corruptive energy.
 
-• **Orliq** are made of shifting bone plates surrounding a swirling core of corruptive energy.
+• **Wobalas** (WOH-buh-luss) prefer to kill from afar while protected by allies, firing psychic bolts from bows shaped of their own flesh and sinew.
 
-• The **wobalas** prefers to kill from afar while protected by allies, firing physic arrows from bows made from their very flesh and sinew.
+• **Bale eyes**, sometimes called “flesh moons,” are colossal floating orbs of roiling, dripping flesh. A weeping seam in that flesh opens to reveal a demonic eye whose gaze turns creatures’ mental and physical faculties upside down.
 
-• **Bale Eyes**, sometimes called a Flesh Moon, are colossal floating orbs of roiling, dripping flesh. A weeping seam opens to reveal a demonic eye whose gaze melts flesh from bone.
+• **Fangling** have bodies overgrown with teeth, fangs, and tusks from countless creatures. They are deadly in close quarters, to attackers and bystanders alike.
 
-• **Fangling** bodies are overgrown with teeth, fangs, and tusks from a thousand different creatures. Deadly to take on in close quarters, they’ve been known to get caught on one another.
+• **Fiktin** (FIK-ten) are cunning hunters who disguise themselves as mundane objects, leaving a foul-smelling oily red residue wherever they have been. Their true form is a humanoid shape made of red oil.
 
-• **Gunge** demons are horrifically distended with maws that could swallow a horse whole. It vomits up bilious slime that traps and dissolves any unlucky enough to get caught in it.
+• **Gunge** (GUHNJ) demons are horrifically distended, with maws that can swallow a horse whole. A gunge vomits up bilious slime that traps and dissolves any creature unlucky enough to get caught in it.
 
-• **Niktin** are cunning hunters that disguise themselves as mundane objects that leave an oily foul smelling red residue wherever they are left. Their natural form is a humanoid made of red oil.
+• **Tourmenauks** (tor-min-AUX) resemble a hulking ape with a dozen or more extra mouths distributed around their body. Though their brute force is formidable, this demon also inflicts raw psychic pain by wailing from their mouths in different voices—often the agonized voices of souls the tormenauk has devoured.
 
-• **Tourmenauk’s** resemble a hulking ape with a dozen or more extra mouths distributed around their body. Though their brute force is formidable enough, this demon also inflicts raw psychic pain by screaming from their mouths in different voices—often using the agonized voices of souls the tormenauk has devoured.
-
-• The **Lumbering Egress** is a walking mass of warped flesh around a giant whirling portal to the demonic realms. Lesser demons pour out at alarming rates making these creatures devastating siege engines.`
+• **Lumbering Egress** are mobile masses of warped flesh set around an enormous whirling portal to the demonic realms. Lesser demons pour out through these portals at alarming rates, letting these creatures act as devastating siege engines.`
 		}
 	],
 	malice: [
 		FactoryLogic.feature.createMalice({
 			id: 'demon-2nd-malice-1',
 			name: 'Prior Malice Features',
-			cost: 1,
+			cost: 3,
 			repeatable: true,
 			sections: [
-				'The demon activates a malice feature available to demons level 3 or lower.'
+				'The demon activates a Malice feature available to demons of level 3 or lower.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -55,24 +52,24 @@ categories 4-6:
 			name: 'Abyssal Jaunt',
 			cost: 3,
 			sections: [
-				'A demon acting on this turn folds space around them, temporarily slipping in and out of the abyss.  Until the start of the demon’s next turn, the demon ignores diﬃcult terrain, can move freely through solid matter, and doesn’t provoke opportunity attacks by moving. If the demon ends their turn inside solid matter, they are forced out into the space they originally entered.'
+				'One demon acting this turn folds space around them, temporarily slipping in and out of the Abyssal Wasteland. Until the start of the demon’s next turn, they ignore difficult terrain, can move through solid matter, and don’t provoke opportunity attacks by moving. If the demon ends their turn inside solid matter, they are shunted out into the space from which they entered it.'
 			]
 		})
 	],
 	monsters: [
 		FactoryLogic.createMonster({
 			id: 'demon-2nd-1',
-			name: 'Demon Grulqin',
+			name: 'Grulqin',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Abyssal', 'Demon' ],
-			encounterValue: 12,
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'L'),
 			speed: FactoryLogic.createSpeed(8),
 			stamina: 9,
 			stability: 1,
 			freeStrikeDamage: 3,
-			withCaptain: 'Strike damage +2',
+			withCaptain: '+2 damage bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -82,7 +79,7 @@ categories 4-6:
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(3) ],
+						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creature or object per minion',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -91,14 +88,14 @@ categories 4-6:
 								tier2: '5 damage',
 								tier3: '7 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The grulqin has an edge on this ability if they moved at least 3 squares in a line during their turn.')
+							FactoryLogic.createAbilitySectionText('The grulqin gains an edge on this ability if they previously moved 3 or more squares in a straight line on their turn.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-1-feature-2',
 					name: 'Soulsight',
-					description: 'Each creature within 2 of the grulqin can\'t be hidden from them.'
+					description: 'Any creature within 2 squares of the grulqin can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-1-feature-3',
@@ -108,17 +105,17 @@ categories 4-6:
 		}),
 		FactoryLogic.createMonster({
 			id: 'demon-2nd-2',
-			name: 'Demon Orliq',
+			name: 'Orliq',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Abyssal', 'Demon' ],
-			encounterValue: 12,
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'T'),
 			speed: FactoryLogic.createSpeed(6, 'fly'),
 			stamina: 8,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Speed +2',
+			withCaptain: '+2 bonus to speed',
 			characteristics: MonsterLogic.createCharacteristics(-1, 3, 1, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -143,12 +140,12 @@ categories 4-6:
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-2-feature-2',
 					name: 'Imposing Energy',
-					description: 'An enemy who starts their turn with two or more orliqs adjacent to them is slowed (EoT).'
+					description: 'Any enemy who starts their turn with two or more orliq adjacent to them is slowed (EoT).'
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-2-feature-3',
 					name: 'Soulsight',
-					description: 'Each creature within 2 of the orliq can\'t be hidden from them.'
+					description: 'Any creature within 2 squares of the orliq can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-2-feature-3',
@@ -158,17 +155,17 @@ categories 4-6:
 		}),
 		FactoryLogic.createMonster({
 			id: 'demon-2nd-3',
-			name: 'Demon Wobalas',
+			name: 'Wobalas',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Abyssal', 'Demon' ],
-			encounterValue: 12,
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(6),
 			stamina: 7,
 			stability: 0,
 			freeStrikeDamage: 3,
-			withCaptain: 'Strike damage +2',
+			withCaptain: '+2 damage bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(1, 3, 1, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -179,7 +176,7 @@ categories 4-6:
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
-						target: 'One creature or object per minion',
+						target: 'One creature per minion',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -187,14 +184,9 @@ categories 4-6:
 								tier2: '5 psychic damage',
 								tier3: '7 psychic damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The target has a bane on their next attack. If the target is winded, they have a double bane on their next attack instead.')
+							FactoryLogic.createAbilitySectionText('The target takes a bane on their next strike. If the target is winded, they have a double bane on their next strike instead.')
 						]
 					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'demon-2nd-3-feature-2',
-					name: 'Soulsight',
-					description: 'Each creature within 2 of the pitling can\'t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-3-feature-3',
@@ -204,7 +196,7 @@ categories 4-6:
 		}),
 		FactoryLogic.createMonster({
 			id: 'demon-2nd-4',
-			name: 'Demon Bale Eye',
+			name: 'Bale Eye',
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Hexer),
 			keywords: [ 'Abyssal', 'Demon' ],
@@ -224,7 +216,7 @@ categories 4-6:
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
-						target: 'One creature or object',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -247,29 +239,30 @@ categories 4-6:
 						name: 'Demonwarp Tears',
 						type: FactoryLogic.type.createMain(),
 						cost: 5,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 5, qualifier: 'beneath Bale Eye' }) ],
-						target: 'All enemies',
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 5 }) ],
+						target: 'Each enemy in the area',
 						sections: [
+							FactoryLogic.createAbilitySectionText('**Special:** The bale eye must create the cube beneath themself.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '3 psychic damage, A<1 warped (save ends)',
-								tier2: '5 psychic damage, A<2 warped (save ends)',
-								tier3: '6 psychic damage, A<3 warped (save ends)'
+								tier1: '3 psychic damage, A<1 the target is warped (save ends)',
+								tier2: '5 psychic damage, A<2 the target is warped (save ends)',
+								tier3: '6 psychic damage, A<3 the target is warped (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A warped creature has all of their characteristic scores reversed. A score of +1 becomes -1, -2 becomes +2, etc.')
+							FactoryLogic.createAbilitySectionText('While warped, a creature has a double bane on power rolls using any characteristic higher than 0, and has a double edge on power rolls using any characteristic lower than 0.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-4-feature-3',
 					name: 'Lethe',
-					description: 'While winded, the bale eye has an edge on strikes, and strikes have an edge against them.'
+					description: 'While the bale eye is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-4-feature-4',
-					name: 'Focused Soulsight',
-					description: 'Each creature within 5 of the bale eye can\'t be hidden from them.'
+					name: 'Soulsight',
+					description: 'Any creature within 5 squares of the bale eye can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-4-feature-5',
@@ -279,7 +272,7 @@ categories 4-6:
 		}),
 		FactoryLogic.createMonster({
 			id: 'demon-2nd-5',
-			name: 'Demon Fangling',
+			name: 'Fangling',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Harrier),
 			keywords: [ 'Abyssal', 'Demon' ],
@@ -317,15 +310,15 @@ categories 4-6:
 						name: 'Tumbling Gore',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 8, value2: 3, within: 1 }) ],
 						target: 'All enemies',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '2 damage; pull 1; A<1 bleeding (save ends)',
-								tier2: '3 damage; pull 2; A<2 bleeding (save ends)',
-								tier3: '4 damage; pull 3; A<3 bleeding (save ends)'
+								tier2: '3 damage; pull 1; A<2 bleeding (save ends)',
+								tier3: '4 damage; pull 1; A<3 bleeding (save ends)'
 							}))
 						]
 					})
@@ -333,17 +326,17 @@ categories 4-6:
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-5-feature-3',
 					name: 'Made of Teeth',
-					description: 'Whenever an enemy makes physical contact with the fangling or uses a melee ability against the fangling, they take 2 damage.'
+					description: 'Whenever an adjacent enemy grabs the fangling or uses a melee ability against the fangling, they take 2 damage.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-5-feature-4',
 					name: 'Lethe',
-					description: 'While winded, the fangling has an edge on strikes, and strikes have an edge against them.'
+					description: 'While the fangling is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-5-feature-5',
 					name: 'Soulsight',
-					description: 'Each creature within 2 of the fangling can\'t be hidden from them.'
+					description: 'Any creature within 2 squares of the fangling can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-5-feature-6',
@@ -353,74 +346,7 @@ categories 4-6:
 		}),
 		FactoryLogic.createMonster({
 			id: 'demon-2nd-6',
-			name: 'Demon Gunge',
-			level: 4,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Controller),
-			keywords: [ 'Abyssal', 'Demon' ],
-			encounterValue: 6,
-			size: FactoryLogic.createSize(3),
-			speed: FactoryLogic.createSpeed(6),
-			stamina: 35,
-			stability: 0,
-			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 1, 2, -1),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'demon-2nd-6-feature-1',
-						name: 'Bilious Expulsion',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-						distance: [
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }),
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 })
-						],
-						target: 'One creature or object in the area',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 3,
-								tier1: '5 acid damage; M<1 slowed (save ends)',
-								tier2: '7 acid damage; M<2 slowed (save ends)',
-								tier3: '9 acid damage; M<3 restrained (save ends)'
-							})),
-							FactoryLogic.createAbilitySectionText('The affected area pools with slime. The slime is difficult terrain for enemies, and an enemy is bleeding while occupying an affected square.')
-						]
-					})
-				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'demon-2nd-6-feature-2',
-						name: 'Spew Slide',
-						type: FactoryLogic.type.createTrigger('The gunge takes damage from a melee strike.', { free: true }),
-						cost: 1,
-						keywords: [ AbilityKeyword.Area ],
-						distance: [ FactoryLogic.distance.createSelf() ],
-						target: 'Self',
-						sections: [
-							FactoryLogic.createAbilitySectionText('The gunge vomits and shifts up to their speed, ignoring any additional effects from the strike. Each square they started in is covered in slime. The slime is difficult terrain for enemies, and an enemy is bleeding while occupying an affected square.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'demon-2nd-6-feature-3',
-					name: 'Lethe',
-					description: 'While winded, the gunge has an edge on strikes, and strikes have an edge against them.'
-				}),
-				FactoryLogic.feature.create({
-					id: 'demon-2nd-6-feature-4',
-					name: 'Soulsight',
-					description: 'Each creature within 2 of the gunge can\'t be hidden from them.'
-				}),
-				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-2nd-6-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
-				})
-			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'demon-2nd-7',
-			name: 'Demon Niktin',
+			name: 'Fiktin',
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
 			keywords: [ 'Abyssal', 'Demon' ],
@@ -434,13 +360,13 @@ categories 4-6:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-2nd-7-feature-1',
+						id: 'demon-2nd-6-feature-1',
 						name: 'Violent Transformation',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -448,13 +374,13 @@ categories 4-6:
 								tier2: '6 corruption damage',
 								tier3: '7 corruption damage; I<3 dazed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('The niktin violently changes shape. The niktin deals an additional 6 damage to each target they were hidden from with their Aggressive Mimicry ability.')
+							FactoryLogic.createAbilitySectionText('The fiktin violently changes shape, dealing an extra 6 damage to any target they were hidden from with their Aggressive Mimicry ability.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-2nd-7-feature-2',
+						id: 'demon-2nd-6-feature-2',
 						name: 'Aggressive Mimicry',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 1,
@@ -462,19 +388,86 @@ categories 4-6:
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The nitkin can become a mundane object the same size or smaller and is hidden. They can change back as a free action.')
+							FactoryLogic.createAbilitySectionText('The fiktin transforms into a mundane object of their size or smaller and is automatically hidden. They can revert to their true form as a free maneuver.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'demon-2nd-6-feature-3',
+					name: 'Lethe',
+					description: 'While the fiktin is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'demon-2nd-6-feature-4',
+					name: 'Soulsight',
+					description: 'Any creature within 2 squares of the fiktin can’t be hidden from them.'
+				}),
+				FactoryLogic.feature.createDamageModifier({
+					id: 'demon-2nd-6-feature-5',
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'demon-2nd-7',
+			name: 'Gunge',
+			level: 4,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Controller),
+			keywords: [ 'Abyssal', 'Demon' ],
+			encounterValue: 6,
+			size: FactoryLogic.createSize(3),
+			speed: FactoryLogic.createSpeed(6),
+			stamina: 25,
+			stability: 0,
+			freeStrikeDamage: 2,
+			characteristics: MonsterLogic.createCharacteristics(3, 2, 1, 2, -1),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'demon-2nd-7-feature-1',
+						name: 'Bilious Expulsion',
+						type: FactoryLogic.type.createMain(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+						distance: [
+							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }),
+							FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 })
+						],
+						target: 'One creature or object in the area',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '5 acid damage; M<1 slowed (save ends)',
+								tier2: '7 acid damage; M<2 slowed (save ends)',
+								tier3: '9 acid damage; M<3 restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The ground and any surfaces in the area pool with slime. The slime is difficult terrain for enemies, and any enemy is bleeding while in the area.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'demon-2nd-7-feature-2',
+						name: 'Spew Slide',
+						type: FactoryLogic.type.createTrigger('The gunge takes damage from a melee strike.', { free: true }),
+						cost: 1,
+						keywords: [ AbilityKeyword.Area ],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						sections: [
+							FactoryLogic.createAbilitySectionText('The gunge vomits with great force, letting them shift up to their speed and ignore any additional effects from the strike. The space the gunge occupied before the shift is covered in slime that is difficult terrain for enemies. Additionally, any enemy is bleeding while in the slime.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-7-feature-3',
 					name: 'Lethe',
-					description: 'While winded, the nitkin has an edge on strikes, and strikes have an edge against them.'
+					description: 'While the gunge is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-7-feature-4',
 					name: 'Soulsight',
-					description: 'Each creature within 2 of the nitkin can\'t be hidden from them.'
+					description: 'Any creature within 2 squares of the gunge can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-7-feature-5',
@@ -484,12 +477,12 @@ categories 4-6:
 		}),
 		FactoryLogic.createMonster({
 			id: 'demon-2nd-8',
-			name: 'Demon Tormenauk',
+			name: 'Tormenauk',
 			level: 6,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Brute),
 			keywords: [ 'Abyssal', 'Demon' ],
 			encounterValue: 8,
-			size: FactoryLogic.createSize(1, 'M'),
+			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(6),
 			stamina: 45,
 			stability: 2,
@@ -510,9 +503,9 @@ categories 4-6:
 								bonus: 3,
 								tier1: '7 damage',
 								tier2: '9 damage',
-								tier3: '11 damage; grabbed, the target has a bane on escaping the grab'
+								tier3: '11 damage; grabbed, and the target takes a bane on the Escape Grab maneuver'
 							})),
-							FactoryLogic.createAbilitySectionText('While the target is grabbed by this ability, they take 4 psychic damage at the start of each of the tormenauk\'s turns.')
+							FactoryLogic.createAbilitySectionText('Any target grabbed this way takes 4 psychic damage at the start of each of the tormenauk’s turns.')
 						]
 					})
 				}),
@@ -520,11 +513,11 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-8-feature-2',
 						name: 'Agony Wail',
-						type: FactoryLogic.type.createMain(),
+						type: FactoryLogic.type.createManeuver(),
 						cost: 5,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -539,12 +532,12 @@ categories 4-6:
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-8-feature-3',
 					name: 'Lethe',
-					description: 'While winded, the tormenauk has an edge on strikes, and strikes have an edge against them.'
+					description: 'While the tormenauk is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-8-feature-4',
 					name: 'Soulsight',
-					description: 'Each creature within 2 of the tormenauk can\'t be hidden from them.'
+					description: 'Any creature within 2 squares of the tormenauk can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-8-feature-5',
@@ -585,7 +578,7 @@ categories 4-6:
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
-								effect: 'An **ensnarer**(s) survives the launch, appearing adjacent to one of the targets. Two ensnarers appear on a tier-3 result.'
+								effect: 'Two **ensnarers** appear in unoccupied spaces adjacent to each target. On a tier 3 outcome, four ensnarers appear.'
 							})
 						]
 					})
@@ -595,16 +588,16 @@ categories 4-6:
 						id: 'demon-2nd-9-feature-2',
 						name: 'Demonic Egress',
 						type: FactoryLogic.type.createManeuver(),
-						cost: 3,
+						cost: 2,
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling**) burst forth from the egress and appear in unoccupied squares.'),
+							FactoryLogic.createAbilitySectionText('Four level 1 demon minions (most commonly **ensnarers**, **frenzieds**, and **pitlings**) burst forth from the egress and appear in unoccupied squares in the area.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
-								effect: 'A level 4 demon minion (**orflig**, **wobalas**, **grulqin**) also bursts forth and appears in an unoccupied square.'
+								effect: 'Four level 4 demon minions (most commonly **orliq**, **grulqins**, and **wobalas**) appear instead.'
 							})
 						]
 					})
@@ -613,25 +606,20 @@ categories 4-6:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-9-feature-3',
 						name: 'Abyssal Protectors',
-						cost: 1,
-						type: FactoryLogic.type.createTrigger('The last ally minion on the encounter map dies OR the Egress falls below 25 Stamina.'),
-						keywords: [ AbilityKeyword.Magic ],
+						cost: 2,
+						type: FactoryLogic.type.createTrigger('The last ally minion on the encounter map dies, or the egress is reduced below 25 Stamina.'),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('A **muceron** and 2 **ensnarers** appear anywhere in range.')
+							FactoryLogic.createAbilitySectionText('Eight **ensnarers** appear anywhere in the area.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'demon-2nd-9-feature-4',
 					name: 'End Effect',
-					description: 'At the end of their turn, the egress can take 10 damage to end one save ends eﬀect aﬀecting them. This damage can’t be reduced in any way.'
-				}),
-				FactoryLogic.feature.create({
-					id: 'demon-2nd-9-feature-6',
-					name: 'Soulsight',
-					description: 'Each creature within 2 of the egress can\'t be hidden from them.'
+					description: 'At the end of each of their turns, the egress can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'demon-2nd-9-feature-7',
@@ -642,15 +630,15 @@ categories 4-6:
 						id: 'demon-2nd-9-feature-8',
 						name: 'Frenzied Deluge',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'All enemies',
+						keywords: [ AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'Three enemies',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
 								tier1: '7 corruption damage',
 								tier2: '12 corruption damage',
-								tier3: '15 corruption damage; a frenzied appears in an unoccupied square adjacent to the target.'
+								tier3: '15 corruption damage; two **frenzieds** appears in an unoccupied spaces adjacent to each target.'
 							}))
 						]
 					})
@@ -660,11 +648,11 @@ categories 4-6:
 						id: 'demon-2nd-9-feature-9',
 						name: 'Fold Space',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [],
+						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The egress folds into their own portal and teleports to an unoccupied space within distance. Four level 1 demon minions (**ensnarer**, **frenzied**, **pitling*) appear in the space the egress leaves behind.')
+							FactoryLogic.createAbilitySectionText('The egress folds into their own portal and teleports to an unoccupied space within distance. Four level 4 demon minions (most commonly **orliq**, **grulqins**, and **wobalas**) appear in squares in the egress’s former space.')
 						]
 					})
 				}),
@@ -673,17 +661,17 @@ categories 4-6:
 						id: 'demon-2nd-9-feature-10',
 						name: 'Blood of the Abyss',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 3, within: 1 }) ],
-						target: 'All enemies and objects in the line',
+						target: 'Each enemy and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
-								tier1: '5 corruption damage; R<2 weakened (save ends)',
-								tier2: '10 corruption damage; R<3 weakened (save ends)',
-								tier3: '13 corruption damage; R<4 weakened (save ends)'
+								tier1: '6 corruption damage; R<2 weakened (save ends)',
+								tier2: '11 corruption damage; R<3 weakened (save ends)',
+								tier3: '14 corruption damage; R<4 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('The egress recalls and instantly destroys any ally minions on the encounter map. A torrent of churned up minion bodies and blood erupts from the egress, dealing an additional 2 damage for each minion destroyed this way.')
+							FactoryLogic.createAbilitySectionText('The egress recalls and instantly destroys any minion allies on the encounter map. A torrent of churned-up minion bodies, blood, and ichor erupts from the egress, dealing an extra 1 damage for each minion destroyed this way.')
 						]
 					})
 				})

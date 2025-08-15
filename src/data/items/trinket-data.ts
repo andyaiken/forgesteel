@@ -741,7 +741,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 	static gravekeepersLantern: Item = FactoryLogic.createItem({
 		id: 'item- gravekeepers-lantern',
 		name: 'Gravekeeper’s Lantern',
-		description: 'This ancient wooden tablet is inscribed with eldritch runes and stained with dark blood.',
+		description: 'This ancient wooden lantern is inscribed with eldritch runes and stained with dark blood.',
 		type: ItemType.Trinket,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({

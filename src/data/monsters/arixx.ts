@@ -202,7 +202,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 					ability: FactoryLogic.createAbility({
 						id: 'arixx-1-feature-9',
 						name: 'Acid Spew',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 2, value2: 10, within: 1 }) ],
 						target: 'Each creature and object in the area',
@@ -221,7 +221,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 					ability: FactoryLogic.createAbility({
 						id: 'arixx-1-feature-10',
 						name: 'Sinkhole',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 }) ],
 						target: 'Self',
 						sections: [
@@ -233,7 +233,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 					ability: FactoryLogic.createAbility({
 						id: 'arixx-1-feature-11',
 						name: 'Acid and Claws',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each creature in the area',

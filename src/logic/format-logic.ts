@@ -12,7 +12,7 @@ export class FormatLogic {
 		}
 		const qualifiers = (type.qualifiers ?? []).map(q => `(${q})`);
 
-		return [ type.free ? 'Free' : undefined, type.usage, ...qualifiers ]
+		return [ type.free ? 'Free' : undefined, type.usage, type.order, ...qualifiers ]
 			.filter(x => x)
 			.join(' ');
 	};

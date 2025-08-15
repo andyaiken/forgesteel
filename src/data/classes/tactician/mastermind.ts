@@ -77,7 +77,7 @@ You can make this test only once for any encounter or negotiation.`
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('You can change the target of the strike to you or another ally within your line of effect.')
+							FactoryLogic.createAbilitySectionText('You can change one target of the strike to you or another ally within your line of effect. The new target must be within distance of the ability and within line of effect of the creature using it.')
 						]
 					})
 				}),

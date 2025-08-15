@@ -1,6 +1,8 @@
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
+import { DamageModifierType } from '../enums/damage-modifier-type';
+import { DamageType } from '../enums/damage-type';
 import { FactoryLogic } from '../logic/factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { Title } from '../models/title';
@@ -65,10 +67,17 @@ export class TitleData {
 		echelon: 1,
 		prerequisites: 'You triumph in battle without killing any of your foes.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'title-brawler-1',
-				name: 'Duck!',
-				description: 'When an enemy strikes you while a second creature is flanking you, you can use a triggered action to redirect the strike against the second creature. Once you use this benefit, you can’t use it again until you earn 1 or more Victories.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-brawler-1',
+					name: 'Duck!',
+					type: FactoryLogic.type.createTrigger('An enemy strikes you while a second creature is flanking you'),
+					distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
+					target: 'One enemy',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You redirect the strike against the second creature. Once you use this benefit, you can’t use it again until you earn 1 or more Victories.')
+					]
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-brawler-2',
@@ -148,10 +157,17 @@ export class TitleData {
 				name: 'Rune of Alarm',
 				description: 'You can spend 10 uninterrupted minutes to inscribe a magic eye-shaped rune on a surface. The rune sheds light for 2 squares. The rune is dispelled 1 minute after it is activated or if you inscribe the rune elsewhere. The rune activates when an enemy comes within 2 squares of it. When the rune is activated, you wake up if you are nonmagically asleep, and you can perceive through the rune for 1 minute as if you were in its square.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-dwarf-legionnaire-3',
-				name: 'Stonemeld',
-				description: 'While adjacent to a stone wall, you can use a maneuver to gain concealment. This concealment lasts until you leave the square or use an ability.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-dwarf-legionnaire-3',
+					name: 'Stonemeld',
+					type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Adjacent to a stone wall' ] }),
+					distance: [ FactoryLogic.distance.createSelf() ],
+					target: 'Self',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You gain concealment. This concealment lasts until you leave the square or use an ability.')
+					]
+				})
 			})
 		],
 		selectedFeatureID: ''
@@ -265,15 +281,42 @@ You find an agent who can provide you with three pieces of information about the
 				name: 'Arcane Dampening',
 				description: 'When resisting potencies from magic abilities, your characteristic scores are considered to be 1 higher than usual.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-mage-hunter-2',
-				name: 'Oh No You Don’t!',
-				description: 'Whenever an adjacent creature uses an ability with the Magic keyword, you can make a free strike against them as a triggered action.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-mage-hunter-2',
+					name: 'Oh No You Don’t!',
+					type: FactoryLogic.type.createTrigger('Target uses an ability with the Magic keyword'),
+					distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
+					target: 'One creature',
+					sections: [
+						FactoryLogic.createAbilitySectionText('Make a free strike.')
+					]
+				})
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-mage-hunter-3',
 				name: 'Stink of Magic',
-				description: 'As a maneuver, you open your senses to the residue of magic. Until the end of your next turn, you are aware of whether each creature within 5 squares is a construct, an undead, or a creature from another world, and whether they have used a magic ability in the previous hour. Additionally, you can’t be surprised by constructs, undead, or creatures from another world.'
+				description: 'As a maneuver, you open your senses to the residue of magic. Until the end of your next turn, you are aware of whether each creature within 5 squares is a construct, an undead, or a creature from another world, and whether they have used a magic ability in the previous hour. Additionally, you can’t be surprised by constructs, undead, or creatures from another world.',
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'title-mage-hunter-3-1',
+							name: 'Stink of Magic',
+							description: 'You open your senses to the residue of magic',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
+							target: 'Each creature in the area',
+							sections: [
+								FactoryLogic.createAbilitySectionText('Until the end of your next turn, you are aware of whether each target is a construct, an undead, or a creature from another world, and whether they have used a magic ability in the previous hour.')
+							]
+						})
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-mage-hunter-3-2',
+						name: 'Stink of Magic',
+						description: 'You can’t be surprised by constructs, undead, or creatures from another world.'
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -291,10 +334,18 @@ You find an agent who can provide you with three pieces of information about the
 				name: 'Guess It’s the Hard Way',
 				description: 'When combat begins and you aren’t surprised, the first time you take damage before taking your turn, you halve that damage.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-marshal-2',
-				name: 'Heedless Pursuer',
-				description: 'Once on each of your turns, you can use a free maneuver to deal yourself 1d6 damage that can’t be reduced in any way. When you do, you ignore difficult terrain and you can increase the distance of any jump you make by 1 square, both until the end of your turn.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-marshal-2',
+					name: 'Heedless Pursuer',
+					description: 'You open your senses to the residue of magic',
+					type: FactoryLogic.type.createManeuver({ free: true }),
+					distance: [ FactoryLogic.distance.createSelf() ],
+					target: 'Self',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You deal yourself 1d6 damage that can’t be reduced in any way. When you do, you ignore difficult terrain and you can increase the distance of any jump you make by 1 square, both until the end of your turn.')
+					]
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-marshal-3',
@@ -479,10 +530,17 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 		echelon: 1,
 		prerequisites: 'The party has successfully performed as a troupe of actors, circus performers, or other entertainers.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'title-troupe-tactics-1',
-				name: 'Flying Circus',
-				description: 'When you are adjacent to a willing ally on their turn, you can use a triggered action to push them up to 2 squares if their size is the same as yours, or 4 squares if they are smaller. If this push causes the ally to fall, they can use a maneuver before they fall to reduce the height of the fall by 2.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-troupe-tactics-1',
+					name: 'Flying Circus',
+					type: FactoryLogic.type.createTrigger('During target\'s turn'),
+					distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
+					target: 'One ally',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You push the target up to 2 squares if their size is the same as yours, or 4 squares if they are smaller. If this push causes the ally to fall, they can use a maneuver before they fall to reduce the height of the fall by 2.')
+					]
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-troupe-tactics-2',
@@ -541,10 +599,27 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Blessed Weapons',
 				description: 'Whenever you use a damage-dealing weapon ability, that ability can deal holy damage instead of its usual damage type.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-zombie-slayer-2',
 				name: 'Divine Health',
-				description: 'You gain corruption immunity equal to your highest characteristic score. Additionally, you can’t be turned into an undead creature.'
+				description: 'You gain corruption immunity equal to your highest characteristic score. Additionally, you can’t be turned into an undead creature.',
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-zombie-slayer-2-1',
+						name: 'Divine Health',
+						description: 'You can’t be turned into an undead creature.'
+					}),
+					FactoryLogic.feature.createDamageModifier({
+						id: 'title-zombie-slayer-2-2',
+						modifiers: [
+							FactoryLogic.damageModifier.createCharacteristic({
+								damageType: DamageType.Corruption,
+								modifierType: DamageModifierType.Immunity,
+								characteristics: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
+							})
+						]
+					})
+				]
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -582,10 +657,11 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Foes as Weapons',
 				description: 'Whenever you have a creature of your size or smaller grabbed, you can use them as a weapon when you make a melee weapon free strike. Both the target and the grabbed enemy take the strike’s damage.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-arena-fighter-3',
 				name: 'Instant Celebrity',
-				description: 'You earn 1 Renown.'
+				field: FeatureField.Renown,
+				value: 1
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -631,10 +707,17 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Rogue Talent',
 				description: 'Choose one triggered action that the talent class has access to at 1st level. You gain that ability regardless of whether your class and subclass allow you to take it. If this ability allows you to gain or spend clarity, you can’t do so unless you have the Clarity class feature.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-awakened-3',
-				name: 'Telepathy',
-				description: 'As a maneuver, you communicate telepathically with a creature within 10 squares who understands a language you know. The creature can respond telepathically as part of the same maneuver.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-awakened-3',
+					name: 'Telepathy',
+					type: FactoryLogic.type.createManeuver(),
+					distance: [ FactoryLogic.distance.createRanged(10) ],
+					target: 'One creature who understands a langauge you know',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You communicate telepathically with the target. The targer can respond telepathically as part of the same maneuver.')
+					]
+				})
 			})
 		],
 		selectedFeatureID: ''
@@ -662,14 +745,15 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 					]
 				})
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-battlefield-commander-2',
 				name: 'Renowned Warrior',
-				description: 'You earn 1 Renown.'
+				field: FeatureField.Renown,
+				value: 1
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-battlefield-commander-3',
-				name: 'Telepathy',
+				name: 'Student of War',
 				description: 'Choose a 1st-level doctrine feature from the tactician class. You gain that feature even if you don’t have the Tactical Doctrine feature.'
 			})
 		],
@@ -693,10 +777,16 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Bloody Murder',
 				description: 'When you deal rolled damage to a creature with a strike, you can take damage equal to your level to deal twice that much corruption damage to the creature. The damage you take from this title can’t be reduced in any way. You can use this benefit only once per ability. If the creature is reduced to 0 Stamina by this corruption damage, the creature explodes in a shower of blood and you regain the Stamina you lost. You can’t use this benefit on creatures without blood, such as constructs, elementals, or undead.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createDamageModifier({
 				id: 'title-blood-magic-3',
 				name: 'I Reject This Evil Power!',
-				description: 'You gain corruption immunity equal to your level.'
+				modifiers: [
+					FactoryLogic.damageModifier.createPerLevel({
+						damageType: DamageType.Corruption,
+						modifierType: DamageModifierType.Immunity,
+						value: 1
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -719,10 +809,11 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Black Flag',
 				description: 'You have a recognizable flag that strikes terror on the high seas. While your flag is flying from your ship, crewmembers of other ships who have line of effect to the flag take a bane on strikes made against your ship or its crew.'
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-corsair-3',
 				name: 'Fearsome Reputation',
-				description: 'You earn 1 Renown,'
+				field: FeatureField.Renown,
+				value: 1
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-corsair-4',
@@ -761,20 +852,53 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 		echelon: 2,
 		prerequisites: 'You eat and drink with an elf monarch or archfey.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-fey-friend-1',
 				name: 'Gift of Charm',
-				description: 'You know the Khelt language. You have a skill of your choice from the interpersonal skill group.'
+				features: [
+					FactoryLogic.feature.createLanguageChoice({
+						id: 'title-fey-friend-1-1',
+						name: 'Gift of Charm',
+						selected: [ 'Khelt' ]
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-fey-friend-1-2',
+						name: 'Gift of Charm',
+						description: 'You have a skill of your choice from the interpersonal skill group.'
+					})
+				]
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-fey-friend-2',
 				name: 'Gift of Foresight',
-				description: 'You know the Khelt language. When resisting potencies, your Intuition score is considered to be 1 higher than usual.'
+				features: [
+					FactoryLogic.feature.createLanguageChoice({
+						id: 'title-fey-friend-2-1',
+						name: 'Gift of Foresight',
+						selected: [ 'Khelt' ]
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-fey-friend-2-2',
+						name: 'Gift of Foresight',
+						description: 'When resisting potencies, your Intuition score is considered to be 1 higher than usual.'
+					})
+				]
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-fey-friend-3',
+			FactoryLogic.feature.createMultiple({
+				id: 'title-fey-friend-2',
 				name: 'Gift of Knowledge',
-				description: 'You know the Khelt language. You gain an edge on tests you make that use any skill from the lore skill group.'
+				features: [
+					FactoryLogic.feature.createLanguageChoice({
+						id: 'title-fey-friend-3-1',
+						name: 'Gift of Knowledge',
+						selected: [ 'Khelt' ]
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-fey-friend-3-2',
+						name: 'Gift of Knowledge',
+						description: 'You gain an edge on tests you make that use any skill from the lore skill group.'
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -836,10 +960,17 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				name: 'Healing Gift',
 				description: 'You can use the 1st-level Conduit feature Healing Grace as if you had spent 1 piety. Once you use this benefit, you can’t use it again until you earn 1 or more Victories.'
 			}),
-			FactoryLogic.feature.create({
-				id: 'title-godsworn-2',
-				name: 'Last-Ditch Prayer',
-				description: 'As a free maneuver, you recite a prayer for help, gaining a pool of 2d10 of the Heroic Resource granted by your class. This pool disappears at the end of your turn if you haven’t used it. Once you use this benefit, you can’t use it again until you perform another service for a god or saint, or until you gain a level.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-godsworn-2',
+					name: 'Last-Ditch Prayer',
+					type: FactoryLogic.type.createManeuver({ free: true }),
+					distance: [ FactoryLogic.distance.createSelf() ],
+					target: 'Self',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You recite a prayer for help, gaining a pool of 2d10 of the Heroic Resource granted by your class. This pool disappears at the end of your turn if you haven’t used it. Once you use this benefit, you can’t use it again until you perform another service for a god or saint, or until you gain a level.')
+					]
+				})
 			}),
 			FactoryLogic.feature.createMultiple({
 				id: 'title-godsworn-3',
@@ -906,15 +1037,17 @@ I better watch out for that banana peel!`,
 		echelon: 2,
 		prerequisites: 'A noble or monarch grants you knighthood or a similar rank.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-knight-1',
 				name: 'Heraldic Fame',
-				description: 'You earn 1 Renown.'
+				field: FeatureField.Renown,
+				value: 1
 			}),
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createBonus({
 				id: 'title-knight-2',
 				name: 'Knightly Aegis',
-				description: 'Your Stamina maximum increases by 6.'
+				field: FeatureField.Stamina,
+				value: 6
 			}),
 			FactoryLogic.feature.createAbility({
 				ability: FactoryLogic.createAbility({
@@ -1014,10 +1147,17 @@ You gain a small magic spy device called a boffin. Once per encounter, you can a
 		echelon: 2,
 		prerequisites: 'You have the Marshal title, and you take down an entire criminal organization.',
 		features: [
-			FactoryLogic.feature.create({
-				id: 'title-sworn-hunter-1',
-				name: 'Hunter\'s Oath',
-				description: 'As a main action, you swear a hunter’s oath against a creature within 10 squares who you have line of effect to. This oath lasts until the target dies or until you swear a hunter’s oath against a different creature. As long as the hunter’s oath lasts, you magically know the direction to the target if they are within 50 miles of you, and your damage-dealing abilities gain a +5 damage bonus against the target.'
+			FactoryLogic.feature.createAbility({
+				ability: FactoryLogic.createAbility({
+					id: 'title-sworn-hunter-1',
+					name: 'Hunter\'s Oath',
+					type: FactoryLogic.type.createMain(),
+					distance: [ FactoryLogic.distance.createRanged(10) ],
+					target: 'One creature',
+					sections: [
+						FactoryLogic.createAbilitySectionText('You swear a hunter’s oath against the target. This oath lasts until the target dies or until you swear a hunter’s oath against a different creature. As long as the hunter’s oath lasts, you magically know the direction to the target if they are within 50 miles of you, and your damage-dealing abilities gain a +5 damage bonus against the target.')
+					]
+				})
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-sworn-hunter-2',

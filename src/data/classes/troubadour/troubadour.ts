@@ -161,7 +161,7 @@ additional effects:
 							feature: FactoryLogic.feature.createAbility({
 								ability: FactoryLogic.createAbility({
 									id: 'Ojd2syAahwIuMZ7E',
-									name: '',
+									name: 'Allow Me to Introduce Tonight’s Players',
 									description: '',
 									type: FactoryLogic.type.createMain(),
 									distance: [ FactoryLogic.distance.createSelf() ],
@@ -280,7 +280,8 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							}),
 							value: 1
 						}
-					]
+					],
+					count: 2
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'c8wilO6exppZ8lk0'
@@ -745,6 +746,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 			target: 'Each enemy in the area',
+			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({

@@ -9,54 +9,53 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const dwarf: MonsterGroup = {
 	id: 'monster-group-dwarf',
-	name: 'Dwarf',
+	name: 'Dwarves',
 	description: `
-Possessed of a strength that belies their size, dwarven flesh is infused with stone - a silico-organic hybrid making them physically denser than humans or elves. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves.
+Possessed of a strength that belies their size, dwarves have flesh infused with stone—a silico-organic hybrid that makes them physically denser than humans or elves. They enjoy a reputation in Orden as savvy engineers and technologists thanks to the lore they inherited from their elder siblings, the long-extinct steel dwarves.
 
-They are the children of the elder god Ord. A common phrase among the dwarves is “Ord made the world.” Their way of saying, “What will be, will be.” Dwarves take great pride in knowing that along with Aan, Eth, and Kul, their god created the mundane world, and many dwarves leave their homes to see the world and seek glory in Ord’s name.`,
+They are the children of the Elder God Ord. A common phrase among the dwarves is “Ord made the world.” Their way of saying, “What will be, will be.” Dwarves take great pride in knowing that along with Aan, Eth, and Kul, their god created the mundane world, and many dwarves leave their homes to see the world and seek glory in Ord’s name.`,
 	picture: null,
 	information: [
 		{
 			id: 'dwarf-info-1',
 			name: 'Tools of the Trade',
 			description: `
-Those raised within dwarven enclaves have a relationship with technology not found in many other places on Orden. The gifts of the Steel Dwarves are many in number, but the most prominent is that of pneumatic steam power.
+Those raised within dwarven enclaves have a relationship with technology not found in many other places on Orden. The gifts of the steel dwarves are many in number, but the most prominent is that of pneumatic steam power.
 
-Dwarves have incorporated steam into much of their warfare and weaponry, making them deadly opponents. But like all technology, it's a double headed hammer. As much as they use it for destruction, construction is where they truly shine. Creating the formidable and brutalist facades common dwarven architecture is made much easier with the use of tools created to utilize pneumatic power. Some of the larger and more metropolitan dwarven cities are rumored to power wealthier districts using steam from geothermal vents.`
+Dwarves have incorporated steam into much of their warfare and weaponry, making them deadly opponents. But like all technology, it’s a double-headed hammer. As much as they use steam for destruction, construction is where it truly shines. Creating the formidable and brutalist facades common to dwarven architecture is made much easier with the use of tools designed to utilize pneumatic power. Some of the larger and more metropolitan dwarven cities are rumored to power wealthier districts using steam from geothermal vents.`
 		},
 		{
 			id: 'dwarf-info-2',
 			name: 'Innovative Operation',
 			description: `
-The dwarves have yet to crack all the secrets of the valok, their ancestors’ greatest achievement, but they’ve made great strides in researching them. They’ve innovated ways to repurpose, recycle, and reverse engineer (to a limited degree) valok assemblage, giving rise to a new multifaceted occupation: the operator.
+The dwarves have yet to crack all the secrets of the valok, the autonomous machines that were their ancestors’ greatest achievement, but they’ve made great strides in researching them. They’ve innovated ways to repurpose, recycle, and reverse engineer (to a limited degree) valok assemblage, giving rise to a new multifaceted occupation: the operator.
 
-Operators now span the manifold and come from all walks of life, but the first among them were dwarves who built powered suits from excavated valok parts. These suits were initially used for utility and construction purposes but can be repurposed and refitted for warfare when the need arises.
+Operators now span the world and come from all walks of life, but the first among them were dwarves who built powered suits from excavated valok parts. These suits were initially used for construction and utility purposes, but can be repurposed and refitted for warfare when the need arises.
 
-Word of these wonderous dwarven creations quickly spread among the tunnels of the underground, and up into the overworld. This led to a brief arms race where smiths, artisans, and craftspeople from all over were commissioned by wealthy rulers and aristocrats to create mechanized suits to bolster their armies and personal guard.`
+Word of these wonderous dwarven creations quickly spread among the tunnels of the underground, and up into the overworld. This led to a brief arms race where artisans, craftspeople, and smiths from all over were commissioned by wealthy rulers and aristocrats to create mechanized suits to bolster their armies and personal guard.`
 		},
 		{
 			id: 'dwarf-info-3',
-			name: 'The Press Gangs of Kas Kalavar',
+			name: 'The Press-Gangs of Kas Kalavar',
 			description: `
-Before Ajax came to power, the dwarves of Kas Kalavar were renowned for their disciplined constabulary. The constables were kind, kept the order, and kept the city safe.
+Before Ajax came to power, the dwarves of Kal Kalavar were renowned for their disciplined constabulary. The constables were kind, kept order, and kept the city safe.
 
-But now, the dwarves of Kas Kalavar have submitted to Ajax’s rule and pay him tribute in prisoners. Ajax has need for bodies, either as forced labor or to be used to make war dogs and grant eternal life. Most dwarves do not like this deal, but the press gangs are committed to their work.
+But now, the dwarves of Kal Kalavar have submitted to Ajax’s rule and pay him tribute in prisoners. Ajax has need of bodies, to be used as either forced labor or as fodder for the Body Banks, whether to make war dogs or grant eternal life to those in Ajax’s favor. Most dwarves don’t like this deal, but the press-gangs are committed to their work.
 
-### Marauder Lord
-A press gang’s marauder lord has in their possession a salvaged valok communication array, which they wear like a mohawk on their head. The array gives them access to magnetomancy, allowing them to shape and levitate metal, including multiple axes in battle.`
+The marauder lords who lead the press-gangs make use of salvaged valok communication arrays that they wear like a mohawk on their heads. The array gives them access to magnetomancy, allowing them to shape and levitate metal, including wielding multiple axes in battle.`
 		},
 		{
 			id: 'dwarf-info-4',
 			name: 'Servitor War Walkers',
-			description: 'The war walker is a common sight both in dwarven armies and cities. They vary in appearance and make, ranging anywhere from cobbled together heaps of gears, belts, and plates to elegant and sleek marvels of dwarven engineering. In battle, they carry multiple dwarves and keep foes at a distance. In society, they’re used for public transit and accessibility needs within dwarven cities.'
+			description: 'The war walker is a common sight in both dwarven armies and dwarven cities. They vary widely in appearance and make, ranging from cobbled-together heaps of belts, gears, and plates to elegant and sleek marvels of dwarven engineering. In battle, war walkers carry multiple dwarves and keep foes at a distance. In society, they’re used for public transit and accessibility needs within dwarven cities.'
 		},
 		{
 			id: 'dwarf-info-5',
 			name: 'Stone Whisperers',
 			description: `
-Some dwarves are born with an innate talent to communicate with the stones. Young dwarves identified with this gift are taken to a secretive enclave where they are trained to manipulate the movement and shape of stones using only whispers. The stone whispering technique is a deadly and quiet force in battle; often the rumble of stone is the only precursor to a crushing defeat.
+Some dwarves are born with an innate talent to communicate with stone. Young dwarves identified with this gift are taken to a secretive enclave where they are trained to manipulate the movement and shape of stones using only whispers. The stone whispering technique is a deadly and quiet force in battle, and often the rumble of stone is the only precursor to an enemy’s crushing defeat.
 
-Legends speak of stone singers, dwarves who could move mountains with their song. However, those same legends tell a tale of two stone singers that harmonized their voices and nearly ended the world. This is why today’s stone whisperers stay quiet, afraid of their own potential.`
+Legends speak of stone singers, dwarves who could move mountains with their song. However, those same legends tell a tale of two stone singers who harmonized their voices and nearly ended the world. This is why today’s stone whisperers stay quiet, afraid of their own potential.`
 		},
 		{
 			id: 'dwarf-info-6',
@@ -71,7 +70,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			cost: 3,
 			repeatable: true,
 			sections: [
-				'A dwarf can destroy one adjacent object or square of wall for every 3 malice spent. Each enemy adjacent to the destroyed object or square takes the object’s Stamina in damage (3 wood / 6 stone / 9 metal).'
+				'A dwarf can destroy one adjacent object or square of wall for each 3 Malice spent. Each enemy adjacent to the destroyed object or square takes the object’s Stamina in damage (3 for wood, 6 for stone, or 9 for metal).'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -79,7 +78,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			name: 'Rappelling Barrage',
 			cost: 5,
 			sections: [
-				'All dwarves acting this turn gain the climb keyword to their movement. At any point during their movement, they can make a free strike.'
+				'Each dwarf acting this turn can automatically climb at full speed while moving. At any point during this movement, they can make a free strike.'
 			]
 		}),
 		FactoryLogic.feature.createAbility({
@@ -90,7 +89,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 				cost: 7,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 10, within: 10 }) ],
-				target: 'All enemies in the line',
+				target: 'Each enemy in the area',
 				sections: [
 					FactoryLogic.createAbilitySectionText('Each target makes an **Agility test**.'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -99,7 +98,9 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						tier2: '6 damage; slowed (EoT)',
 						tier3: 'No effect'
 					})),
-					FactoryLogic.createAbilitySectionText('The snaring line remains until the end of the encounter. An enemy that moves into an affected square for the first time on their turn must make the test.')
+					FactoryLogic.createAbilitySectionText('The snaring line remains until the end of the encounter. Any enemy who moves into the area for the first time in a round or starts their turn there must make the test.'),
+					FactoryLogic.createAbilitySectionText('**Special:** This ability can’t be used by a minion.')
+
 				]
 			})
 		})
@@ -107,17 +108,17 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 	monsters: [
 		FactoryLogic.createMonster({
 			id: 'dwarf-1',
-			name: 'Dwarf Runner',
+			name: 'Dwarf Axethrower',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
 			keywords: [ 'Dwarf', 'Humanoid' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 7,
 			stability: 2,
 			freeStrikeDamage: 1,
-			withCaptain: '2 temporary Stamina',
+			withCaptain: '+2 bonus to Stamina',
 			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -151,13 +152,13 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Dwarf', 'Humanoid' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 7,
 			stability: 2,
 			freeStrikeDamage: 2,
-			withCaptain: '2 temporary Stamina',
+			withCaptain: '+2 bonus to Stamina',
 			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -176,7 +177,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '4 damage',
 								tier3: '5 damage; grabbed or prone'
 							})),
-							FactoryLogic.createAbilitySectionText('The catchpole deals an additional 2 damage to restrained targets.')
+							FactoryLogic.createAbilitySectionText('If the target is restrained, they take an extra 2 damage.')
 						]
 					})
 				})
@@ -184,22 +185,62 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 		}),
 		FactoryLogic.createMonster({
 			id: 'dwarf-3',
+			name: 'Dwarf Driver',
+			level: 1,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
+			keywords: [ 'Dwarf', 'Humanoid' ],
+			encounterValue: 3,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(7),
+			stamina: 6,
+			stability: 1,
+			freeStrikeDamage: 1,
+			withCaptain: '+2 bonus to Stamina',
+			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'dwarf-3-feature-1',
+						name: 'Handaxes',
+						type: FactoryLogic.type.createMain(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [
+							FactoryLogic.distance.createMelee(),
+							FactoryLogic.distance.createRanged(5)
+						],
+						target: 'One creature or object per minion',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '1 damage; push 1',
+								tier2: '2 damage; push 2',
+								tier3: '3 damage; push 4'
+							})),
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
+						]
+					})
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'dwarf-4',
 			name: 'Dwarf Hunter',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Support),
 			keywords: [ 'Dwarf', 'Humanoid' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 6,
 			stability: 1,
 			freeStrikeDamage: 1,
-			withCaptain: '2 temporary Stamina',
+			withCaptain: '+2 bonus to Stamina',
 			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-3-feature-1',
+						id: 'dwarf-4-feature-1',
 						name: 'Snaring Javelin',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -209,74 +250,13 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '1 damage; push 1',
-								tier2: '2 damage; push 2',
-								tier3: '3 damage; push 4'
+								tier1: '1 damage; pull 1',
+								tier2: '2 damage; pull 2',
+								tier3: '3 damage; pull 4'
 							})),
-							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pulled by this ability.')
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
 						]
 					})
-				})
-			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'dwarf-4',
-			name: 'Dwarf Grenadier',
-			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Hexer),
-			keywords: [ 'Dwarf', 'Humanoid' ],
-			encounterValue: 8,
-			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5),
-			stamina: 39,
-			stability: 3,
-			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'dwarf-4-feature-1',
-						name: 'Concussive Grenade',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
-						target: 'All enemies in the cube',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '3 damage',
-								tier2: '6 damage; M<1 slowed (save ends)',
-								tier3: '8 damage; M<2 slowed (save ends)'
-							})),
-							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability.')
-						]
-					})
-				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'dwarf-4-feature-2',
-						name: 'Sleep Grenade',
-						type: FactoryLogic.type.createMain(),
-						cost: 3,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
-						target: 'All enemies in the cube',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '3 poison damage; I<0 dazed (save ends)',
-								tier2: '6 poison damage; I<1 dazed (save ends)',
-								tier3: '8 poison damage; I<2 dazed (save ends)'
-							})),
-							FactoryLogic.createAbilitySectionText('A creature dazed by this ability has -1 to all characteristics while resisting potent effects until the condition ends.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'dwarf-4-feature-3',
-					name: 'Indirect Fire',
-					description: 'The grenadier ignores dover and concealment and doesn’t need to establish line of effect for their abilities.'
 				})
 			]
 		}),
@@ -286,7 +266,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Artillery),
 			keywords: [ 'Dwarf', 'Humanoid' ],
-			encounterValue: 12,
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 26,
@@ -310,11 +290,11 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '9 damage; push 3',
 								tier3: '12 damage; push 5'
 							})),
-							FactoryLogic.createAbilitySectionText('If the target is adjacent to a wall or object after the power roll is resolved, they are restrained (EoT). A target restrained by a dwarf can be pushed by this ability.'),
+							FactoryLogic.createAbilitySectionText('If the target is adjacent to an object or a wall after the power roll is resolved, they are restrained until the end of their next turn. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
-								effect: 'If the target is pushed into another creature, both the target and the creature are restrained (EoT).'
+								effect: 'If the target is pushed into another creature, the target and the creature are each restrained until the end of their next turn.'
 							})
 						]
 					})
@@ -327,26 +307,87 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						cost: 5,
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'One restained, slowed, or prone target',
+						target: 'One prone, restrained, or slowed creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The gunner makes a free strike against the target. The target loses any restrained, slowed or prone conditions and gains restrained (save ends).')
+							FactoryLogic.createAbilitySectionText('The gunner makes a free strike against the target, and the prone, restrained, and slowed conditions on the target end. The target is then restrained (save ends).')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'dwarf-5-feature-3',
 					name: 'Split Shot',
-					description: 'Whenever the gunner deals damage to a creature or object, a creature or object within 1 of the recipient takes 3 damage.'
+					description: 'Whenever the gunner deals rolled damage to a target, one creature or object adjacent to the target takes 3 damage.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'dwarf-6',
+			name: 'Dwarf Launcher',
+			level: 2,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Hexer),
+			keywords: [ 'Dwarf', 'Humanoid' ],
+			encounterValue: 8,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(5),
+			stamina: 39,
+			stability: 3,
+			freeStrikeDamage: 4,
+			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'dwarf-6-feature-1',
+						name: 'Concussive Grenade',
+						type: FactoryLogic.type.createMain(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
+						target: 'Each enemy in the area',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 damage; push 1',
+								tier2: '6 damage; push 3; M<1 slowed (save ends)',
+								tier3: '8 damage; push 3; M<2 slowed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'dwarf-6-feature-2',
+						name: 'Sleep Grenade',
+						type: FactoryLogic.type.createMain(),
+						cost: 3,
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
+						target: 'Each enemy in the area',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '3 poison damage; I<0 dazed (save ends)',
+								tier2: '6 poison damage; I<1 dazed (save ends)',
+								tier3: '8 poison damage; I<2 dazed (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('A target dazed this way treats their characteristic scores as 1 lower for the purpose of resisting potencies.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'dwarf-6-feature-3',
+					name: 'Indirect Fire',
+					description: 'The launcher ignores concealment and cover, and doesn’t need line of effect to use their abilities as long as a size 1 opening exists between the dwarf and the target.'
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'dwarf-7',
 			name: 'Dwarf Reel Winch',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Support),
 			keywords: [ 'Dwarf', 'Humanoid' ],
-			encounterValue: 13,
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 36,
@@ -366,11 +407,11 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '5 damage',
-								tier2: '7 damage',
-								tier3: '9 damage; M<2 restrained (save ends)'
+								tier1: '5 damage; M<2 slowed (save ends)',
+								tier2: '7 damage; M<2 slowed (save ends)',
+								tier3: '9 damage; M<2 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('Pull 5. A target restrained by a dwarf, indlucing by this ability, can be pulled this way.')
+							FactoryLogic.createAbilitySectionText('The target is pulled up to 5 squares. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
 						]
 					})
 				}),
@@ -384,24 +425,24 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three creatures',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Pull 8. A slowed or restrained target is pulled an additional 2. A target restrained by a dwarf can be pulled in this way.')
+							FactoryLogic.createAbilitySectionText('The target is pulled up to 8 squares. A restrained or slowed target can be pulled an additional 2 squares. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'dwarf-6-feature-3',
 					name: 'We Have a Quota!',
-					description: 'If the engineer applies the slowed condition to a target who is already slowed or grabbed, the target becomes restrained (save ends) and the slowed or grabbed condition ends.'
+					description: 'If a target made slowed by the reel winch is already grabbed or slowed, the grabbed and slowed conditions end and the target is restrained (save ends).'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'dwarf-7',
+			id: 'dwarf-8',
 			name: 'Dwarf Shieldwall',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Defender),
 			keywords: [ 'Dwarf', 'Humanoid' ],
-			encounterValue: 21,
+			encounterValue: 10,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 72,
@@ -411,7 +452,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-7-feature-1',
+						id: 'dwarf-8-feature-1',
 						name: 'Wide Axe',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -425,43 +466,43 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '10 damage; slide 1',
 								tier3: '13 damage; slide 1'
 							})),
-							FactoryLogic.createAbilitySectionText('The shieldwall can shift 1 to remain adjacent to the target. A target restrained by a dwarf can be slid by this ability.'),
+							FactoryLogic.createAbilitySectionText('The shieldwall can shift 1 square to remain adjacent to the target. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'The shieldwall targets an additional creature or object.'
+								effect: 'This ablitiy targets one additional target.'
 							})
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-7-feature-2',
+						id: 'dwarf-8-feature-2',
 						name: 'Intercepting Shield',
-						type: FactoryLogic.type.createTrigger('A creature strikes an adjacent ally.'),
+						type: FactoryLogic.type.createTrigger('A creature makes a strike against an ally adjacent to the shieldwall.'),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The shieldwall becomes the strike’s target and halves the damage.')
+							FactoryLogic.createAbilitySectionText('The shieldwall becomes the target of the triggering strike and halves the damage.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-7-feature-3',
+					id: 'dwarf-8-feature-3',
 					name: 'Call to the Wall',
-					description: 'The shieldwall inflicts taunted (EoT) on a creature whenever they deal damage to the shieldwall or take damage from the shieldwall.'
+					description: 'Whenever a creature deals damage to or takes damage from the shieldwall, the shieldwall can make that creature taunted until the end of the creature’s next turn.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'dwarf-8',
-			name: 'Dwarf Stonewhisperer',
+			id: 'dwarf-9',
+			name: 'Dwarf Stone Whisperer',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Controller),
 			keywords: [ 'Dwarf', 'Humanoid' ],
 			encounterValue: 10,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5),
+			speed: FactoryLogic.createSpeed(5, 'burrow'),
 			stamina: 52,
 			stability: 2,
 			freeStrikeDamage: 5,
@@ -469,13 +510,13 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-8-feature-1',
+						id: 'dwarf-9-feature-1',
 						name: 'Tile Slide',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
-						target: 'All creatures and objects in the cube',
+						target: 'Each creature and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
@@ -483,39 +524,39 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '8 damage; slide 3; M<1 slowed (save ends)',
 								tier3: '11 damage; slide 5; M<2 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be slid by this ability.')
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-8-feature-2',
+						id: 'dwarf-9-feature-2',
 						name: 'Stone Wave',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '4 damage; R<0 slowed (save ends)',
-								tier2: '6 damage; R<1 slowed (save ends)',
-								tier3: '9 damage; R<2 slowed (save ends)'
+								tier1: '4 damage; push 2; R<1 slowed (save ends)',
+								tier2: '6 damage; push 3; R<2 slowed (save ends)',
+								tier3: '9 damage; push 3; R<3 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability. The affected area is considered difficult terrain for enemies.')
+							FactoryLogic.createAbilitySectionText('The area is difficult terrain for enemies. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-8-feature-3',
+					id: 'dwarf-9-feature-3',
 					name: 'Stonewalker',
-					description: 'The stonewhisperer can phase through 2 squares of stone as part of any movement they take. If they end their movement inside stone, they are shunted out into the square where they entered it.'
+					description: 'Whenever the stone whisperer willingly moves, they can phase through up to 2 squares of stone as part of that movement. If they end their movement inside stone, they are shunted out into the space from which they entered it.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'dwarf-9',
+			id: 'dwarf-10',
 			name: 'Dwarf Trapper',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Harrier),
@@ -530,7 +571,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-9-feature-1',
+						id: 'dwarf-10-feature-1',
 						name: 'Concussive Bolts',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -547,19 +588,19 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '7 damage; push 4',
 								tier3: '9 damage; push 6'
 							})),
-							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability.')
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-9-feature-2',
-						name: 'Steam Powered Snare',
+						id: 'dwarf-10-feature-2',
+						name: 'Steam-Powered Snare',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target makes a **Might test**.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -568,14 +609,14 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '5 damage; slowed (EoT)',
 								tier3: 'No effect'
 							})),
-							FactoryLogic.createAbilitySectionText('The snare remains until the end of the encounter. An enemy that moves into an affected square for the first time on their turn must make the test.')
+							FactoryLogic.createAbilitySectionText('The snare remains until the end of the encounter. Any enemy who moves into the area for the first time in a round or starts their turn there must make the test.')
 						]
 					})
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'dwarf-10',
+			id: 'dwarf-11',
 			name: 'Dwarf Warden',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Brute),
@@ -590,7 +631,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-10-feature-1',
+						id: 'dwarf-11-feature-1',
 						name: 'Concussive Maul',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -604,39 +645,39 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '10 damage; push 3',
 								tier3: '13 damage; push 5; M<2 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability.')
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-10-feature-2',
+						id: 'dwarf-11-feature-2',
 						name: 'Concussive Shockwave',
-						type: FactoryLogic.type.createManeuver(),
+						type: FactoryLogic.type.createMain(),
 						cost: 5,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
 								tier1: '5 damage; push 2; A<0 slowed (save ends)',
-								tier2: '8 damage; push 4; A<1 slowed (save ends)',
-								tier3: '11 damage; push 6; A<2 dazed (save ends)'
+								tier2: '8 damage; push 2; A<1 slowed (save ends)',
+								tier3: '11 damage; push 2; A<2 dazed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be pushed by this ability.')
+							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-10-feature-3',
+					id: 'dwarf-11-feature-3',
 					name: 'Escort the Prisoners',
-					description: 'Whenever the warden moves, they can carry an adjacent restrained enemy as if they were grabbed.'
+					description: 'Whenever the warden moves, they can carry an adjacent restrained enemy as if the enemy were grabbed by them.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'dwarf-11',
+			id: 'dwarf-12',
 			name: 'Dwarf Marauder Lord',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Leader),
@@ -651,11 +692,11 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-11-feature-1',
+						id: 'dwarf-12-feature-1',
 						name: 'Levitating Axes',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(10)
@@ -668,97 +709,96 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '12 damage; slide 3',
 								tier3: '15 damage; slide 5'
 							})),
-							FactoryLogic.createAbilitySectionText('A target restrained by a dwarf can be slid by this ability.'),
+							FactoryLogic.createAbilitySectionText('target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'A target that is force moved adjacent to an ally with this ability is restrained (EoT).'
+								effect: 'A target force moved adjacent to an ally of the marauder lord is restrained until the end of their next turn.'
 							})
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-11-feature-2',
+						id: 'dwarf-12-feature-2',
 						name: 'Magnetomancy',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Vertical slide 5. A target restrained by a dwarf can be slid by this ability.'),
+							FactoryLogic.createAbilitySectionText('The target vertical slides up to 5 squares. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
-								effect: 'This ability gains the Area keyword, its distance becomes 10 burst, and it now targets restrained creatures.'
+								effect: 'This ability takes the Area keyword and loses the Ranged keyword, its distance becomes a 10 burst, and it targets each restrained creature in the area.'
 							})
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-11-feature-3',
-						name: 'Your Weapon is Useless',
+						id: 'dwarf-12-feature-3',
+						name: 'Your Weapon Is Useless',
 						type: FactoryLogic.type.createTrigger('A creature makes a melee strike against the target.'),
-						keywords: [ AbilityKeyword.Psionic ],
+						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [
-							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'Self or one ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target takes half damage from the attack. The attacker takes 4 damage.')
+							FactoryLogic.createAbilitySectionText('The target halves any damage from the strike and the triggering creature takes 4 damage.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-11-feature-4',
+					id: 'dwarf-12-feature-4',
 					name: 'End Effect',
-					description: 'At the end of their turn, the marauder lord can take 5 damage to end one save ends effect affecting them. This damage can’t be reduced in any way.'
+					description: 'At the end of each of their turns, the marauder lord can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-11-feature-5',
+						id: 'dwarf-12-feature-5',
 						name: 'Ajax Will Pay Well for These Specimens',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The marauder lord uses Levitating Axes against each target. The marauder lord makes one power roll against all targets.')
+							FactoryLogic.createAbilitySectionText('The marauder lord uses Levitating Axes against each target, making one power roll against all targets.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-11-feature-6',
+						id: 'dwarf-12-feature-6',
 						name: 'Don’t Let Them Escape!',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'All allies in the burst',
+						target: 'Each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target shift up to their speed. The marauder lord then uses Levitating Axes.')
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed. The marauder lord then uses Levitating Axes.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-11-feature-7',
+						id: 'dwarf-12-feature-7',
 						name: 'Test Your Metal!',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Psionic ],
+						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The marauder lord creates three 2-square metal objects in unoccupied squares within distance. When the marauder lord uses Magnetomancy, they can additionally target one of these objects.')
+							FactoryLogic.createAbilitySectionText('The marauder lord creates three size 2 metal objects in unoccupied spaces within distance. Whenever the marauder lord uses Magnetomancy, they can additionally target one of these objects.')
 						]
 					})
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'dwarf-12',
+			id: 'dwarf-13',
 			name: 'Servitor War Worker',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Mount),
@@ -768,12 +808,12 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			speed: FactoryLogic.createSpeed(8, 'climb'),
 			stamina: 60,
 			stability: 2,
-			freeStrikeDamage: 3,
+			freeStrikeDamage: 4,
 			characteristics: MonsterLogic.createCharacteristics(2, 0, -2, 0, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-12-feature-1',
+						id: 'dwarf-13-feature-1',
 						name: 'Grasping Claws',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -787,19 +827,19 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '8 damage',
 								tier3: '12 damage; M<2 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('Restrained targets and targets restrained by this ability are pulled 3. A target restrained by a dwarf can be pulled by this ability.')
+							FactoryLogic.createAbilitySectionText('A target already restrained or restrained by this ability is pulled up to 3 squares. A target restrained by a dwarf can be force moved by this ability. This forced movement doesn’t end the restrained condition unless the Director determines otherwise.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-12-feature-2',
+						id: 'dwarf-13-feature-2',
 						name: 'Stunning Blast',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
@@ -811,40 +851,40 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-12-feature-3',
+					id: 'dwarf-13-feature-3',
 					name: 'Cupola',
-					description: 'Three of the war walker’s size 1 allies can occupy the same space while riding the war walker. Riders have cover against attacks that target them.'
+					description: 'While riding the war walker, three size 1 allies can occupy the same space. Creatures riding the war walker have cover.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-12-feature-4',
+					id: 'dwarf-13-feature-4',
 					name: 'Mobile Prison Harness',
-					description: 'Slowed or restrained creatures adjacent to the war walker become restrained (save ends) and have a bane on all power rolls. Adjacent restrained creatures are automatically moved with the war walker, ignoring stability.'
+					description: 'Any restrained or slowed creature who comes adjacent to the war walker is automatically restrained (save ends) and takes a bane on power rolls. A creature restrained this way moves with the war walker.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'dwarf-13',
+			id: 'dwarf-14',
 			name: 'Dwarf Mortar',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Hexer),
 			keywords: [ 'Dwarf', 'Humanoid' ],
-			encounterValue: 11,
+			encounterValue: 0,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 20,
+			stamina: 21,
 			stability: 3,
 			freeStrikeDamage: 3,
 			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-13-feature-1',
+						id: 'dwarf-14-feature-1',
 						name: 'Armor-Piercing Shell',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -852,27 +892,27 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 								tier2: '5 damage',
 								tier3: '7 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The attack ignores cover and Temporary Stamina.')
+							FactoryLogic.createAbilitySectionText('This ability ignores cover and bypasses temporary Stamina.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-13-feature-2',
+					id: 'dwarf-14-feature-2',
 					name: 'Voice Thrower',
-					description: 'The mortar can use a gadget to talk to their mentor over any distance.'
+					description: 'The mortar can use a magical rune inscribed on their skin to talk to their mentor over any distance as long as both are in the same world.'
 				})
 			],
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-13-retainer-4',
+						id: 'dwarf-14-retainer-4',
 						name: 'Signal Shell',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createSpecial('See below') ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The mortar fires a shell up to 2 squares vertically. The shell hovers in the air, shedding light in a 3 burst. Enemies illuminated by this light can’t Hide or turn invisible and can’t benefit from shields. At the start of the mortar’s next turn, the shell explodes, damaging enemies in the area.'),
+							FactoryLogic.createAbilitySectionText('The mortar fires a shell straight upward, which hovers 3 squares up in the air and sheds light below it in a 3 cube. Enemies illuminated by this light can’t hide or turn invisible and can’t benefit from concealment or cover. At the start of the mortar’s next turn, the shell explodes to deal damage to enemies in the area.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 								tier1: '5 fire damage',
@@ -884,37 +924,37 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-13-retainer-7',
+						id: 'dwarf-14-retainer-7',
 						name: 'Screaming Shell',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
-						target: 'All creatures',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '6 damage; P (weak) frightened',
-								tier2: '9 damage; P (average) frightened',
-								tier3: '13 damage; P (strong) frightened'
+								tier1: '6 damage; P < [weak] frightened',
+								tier2: '9 damage; P < [average] frightened',
+								tier3: '13 damage; P < [strong] frightened'
 							})),
-							FactoryLogic.createAbilitySectionText('Until the start of the mortar’s next turn, attacks against the mortar and allies within 1 suffer a bane.')
+							FactoryLogic.createAbilitySectionText('Until the start of the mortar’s next turn, strikes made against the mortar or any ally adjacent to them take a bane.')
 						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-13-retainer-10',
+						id: 'dwarf-14-retainer-10',
 						name: 'Pacifier Shell',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 15 }) ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '8 damage; I (weak) dazed (save ends)',
-								tier2: '12 damage; I (average) dazed (save ends)',
-								tier3: '16 damage; I (strong) dazed (save ends), prone'
+								tier1: '8 damage; I < [weak] dazed (save ends)',
+								tier2: '12 damage; I < [average] dazed (save ends)',
+								tier3: '16 damage; I < [strong] dazed (save ends) and prone'
 							}))
 						]
 					})

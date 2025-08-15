@@ -87,6 +87,7 @@ export const timeRaider: Ancestry = {
 					feature: FactoryLogic.feature.createChoice({
 						id: 'time-raider-feature-2-5',
 						name: 'Psionic Gift',
+						count: 1,
 						options: [
 							{
 								feature: FactoryLogic.feature.createAbility({
@@ -111,7 +112,7 @@ export const timeRaider: Ancestry = {
 										]
 									})
 								}),
-								value: 0
+								value: 1
 							},
 							{
 								feature: FactoryLogic.feature.createAbility({
@@ -136,7 +137,7 @@ export const timeRaider: Ancestry = {
 										]
 									})
 								}),
-								value: 0
+								value: 1
 							},
 							{
 								feature: FactoryLogic.feature.createAbility({
@@ -157,7 +158,7 @@ export const timeRaider: Ancestry = {
 										]
 									})
 								}),
-								value: 0
+								value: 1
 							}
 						]
 					}),

@@ -138,7 +138,7 @@ Additionally, as your discipline grows, you strengthen the psionic power suffusi
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-											characteristic: [ Characteristic.Reason ],
+											characteristic: [ Characteristic.Intuition ],
 											tier1: 'Vertical slide 6',
 											tier2: 'Vertical slide 8',
 											tier3: 'Vertical slide 10'

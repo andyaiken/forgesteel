@@ -119,7 +119,7 @@ Additionally, you can place this spell on a building or vehicle (or a similar st
 						target: 'Self',
 						cost: 11,
 						sections: [
-							FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, no target can approach within 5 squares of you by moving or by being force moved by any enemy. Targets can be force moved closer to you by you or your allies, or can move closer because of your movement.')
+							FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, no enemy can approach within 5 squares of you by moving or by being force moved by any enemy. Targets can be force moved closer to you by you or your allies, or can move closer because of your movement.')
 						]
 					})
 				})

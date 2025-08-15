@@ -24,7 +24,7 @@ export const basilisk: MonsterGroup = {
 			name: 'Dangerous Servitors',
 			description: `Crime lords and overminds seek basilisk eggs to hatch, raising and training basilisks as bodyguards and pets. Training is dangerous, and many handlers (and their unscrupulous colleagues) find themselves turned to stone when a basilisk escapes and runs amok.
 
-Some creatures keep basilisks not for their terrifying abilities, but for their immunity to petrification. Medusas commonly keep basilisks as pets, owing to their own limited options for companionship. Both parties benefit from this relationship, as the medusa feeds their own victims to the basilisk and their younglings.`},
+Some creatures keep basilisks not for their terrifying abilities, but for their immunity to petrification. Medusas commonly keep basilisks as pets, owing to their own limited options for companionship. Both parties benefit from this relationship, as the medusa feeds their own victims to the basilisk and their younglings.` },
 		{
 			id: 'basilisk-info-3',
 			name: 'Alchemical Properties',
@@ -39,7 +39,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 
 <code>12-16</code> The character creates one dose of salve and can create two more doses by completing the Find a Cure downtime project.
 
-<code>17+</code> The character creates three doses of salve.`}
+<code>17+</code> The character creates three doses of salve.` }
 	],
 	malice: [
 		FactoryLogic.feature.createMalice({

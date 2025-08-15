@@ -290,7 +290,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-5-feature-2',
-						name: 'Archer's Cackletongue',
+						name: 'Archer\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
 						keywords: [],
@@ -367,7 +367,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-6-feature-3',
-						name: 'Summoner's Cackletongue',
+						name: 'Summoner\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
 						keywords: [],
@@ -422,7 +422,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-7-feature-2',
-						name: 'Bonesplitter's Cackletongue',
+						name: 'Bonesplitter\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
 						keywords: [],
@@ -480,7 +480,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-8-feature-2',
-						name: 'Cackler's Cackletongue',
+						name: 'Cackler\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -549,7 +549,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-9-feature-2',
-						name: 'Marauder's Cackletongue',
+						name: 'Marauder\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
 						keywords: [],
@@ -665,7 +665,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-11-feature-2',
-						name: 'Carnage's Cackletongue',
+						name: 'Carnage\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
 						keywords: [],
@@ -753,6 +753,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Harrier),
 			keywords: [ 'Fiend', 'Gnoll' ],
+			encounterValue: 0,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
 			stamina: 30,

@@ -26,6 +26,7 @@ export interface MonsterState {
 export interface Monster extends Element {
 	picture: string | null;
 	level: number;
+	echelon: number;
 	role: MonsterRole;
 	keywords: string[];
 	encounterValue: number;
@@ -56,7 +57,13 @@ export interface Monster extends Element {
 export interface MonsterGroup extends Element {
 	picture: string | null;
 	information: Element[];
+	echelonInfo?: MonsterGroupEchelon[];
 	malice: (FeatureMalice | FeatureAbility)[];
 	monsters: Monster[];
 	addOns: FeatureAddOn[];
 };
+
+export interface MonsterGroupEchelon extends Element {
+	echelon: number;
+	subInfo?: Element[];
+}

@@ -51,6 +51,14 @@ export class HeroLogic {
 
 		if (hero.culture) {
 			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture, hero));
+			features.push({
+				feature: FactoryLogic.feature.create({
+					id: Utils.guid(),
+					name: hero.culture.name || 'Culture',
+					description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
+				}),
+				source: hero.culture.name || 'Culture'
+			});
 		}
 
 		if (hero.career) {
@@ -702,6 +710,31 @@ export class HeroLogic {
 			});
 
 		return value;
+	};
+
+	static getHeroicResources = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.map(f => ({
+				id: f.id,
+				name: f.name,
+				type: f.data.type,
+				gains: [
+					...f.data.gains,
+					...HeroLogic.getFeatures(hero)
+						.map(f => f.feature)
+						.filter(f => f.type === FeatureType.HeroicResourceGain)
+						.map(f => f.data),
+					...HeroLogic.getDomains(hero)
+						.flatMap(d => d.resourceGains)
+						.filter(g => g.resource === f.name)
+						.map(g => g)
+				],
+				details: f.data.details,
+				canBeNegative: f.data.canBeNegative,
+				value: f.data.value
+			}));
 	};
 
 	///////////////////////////////////////////////////////////////////////////

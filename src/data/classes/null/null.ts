@@ -261,10 +261,11 @@ This ability remains active even after an encounter ends. It ends only if you ar
 				FactoryLogic.feature.createPerk({
 					id: 'null-4-3'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'null-4-4',
 					name: 'Regenerative Field',
-					description: 'The first time each combat round that an enemy in the area of your Null Field ability uses a main action, you gain 2 discipline instead of 1.'
+					trigger: 'The first time each combat round that an enemy in the area of your Null Field ability uses a main action',
+					value: '2'
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-4-5',
@@ -343,10 +344,11 @@ Whenever you use an ability that is a main action or a maneuver with the Psionic
 **Shared Power** (5 Discipline) If the ability targets individual creatures or objects, you target one additional creature or object within distance.
 **Sharpened Power** (1 Discipline) If the ability has any power roll, that roll gains an edge.`
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'null-7-3',
 					name: 'Improved Body',
-					description: 'When you gain discipline at the start of each of your turns during combat, you gain 3 discipline instead of 2'
+					trigger: 'Start of your turn',
+					value: '3'
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-7-4',
@@ -395,10 +397,11 @@ Whenever you use an ability that is a main action or a maneuver with the Psionic
 					characteristic: Characteristic.Intuition,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'null-10-2',
 					name: 'Manifold Body',
-					description: 'When you gain discipline at the start of each of your turns during combat, you gain 4 discipline instead of 3.'
+					trigger: 'Start of your turn',
+					value: '4'
 				}),
 				FactoryLogic.feature.create({
 					id: 'null-10-3',

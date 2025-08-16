@@ -116,10 +116,11 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 					characteristic: Characteristic.Agility,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'fury-4-2',
 					name: 'Damaging Ferocity',
-					description: 'The first time you take damage each combat round, you gain 2 ferocity instead of 1.'
+					trigger: 'The first time each combat round that you take damage',
+					value: '2'
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'fury-4-3'
@@ -209,10 +210,11 @@ You exhibit ever-stronger signs of how the force of the Primordial Chaos flows w
 
 Additionally, if you are a berserker or reaver, you have immunity to acid, cold, corruption, fire, lightning, poison, and sonic damage equal to your Might score. If you are a stormwight, you have immunity to the damage type of your Primordial Storm feature equal to twice your Might score.`
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'fury-7-3',
 					name: 'Greater Ferocity',
-					description: 'When you gain ferocity at the start of each of your turns during combat, you gain 1d3 + 1 ferocity instead of 1d3.'
+					trigger: 'Start of your turn',
+					value: '1d3 + 1'
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-7-4'
@@ -267,10 +269,11 @@ Additionally, when you use Primordial Strike, you can spend up to 3 ferocity, ga
 				FactoryLogic.feature.createPerk({
 					id: 'fury-10-3'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'fury-10-4',
 					name: 'Primordial Ferocity',
-					description: 'The first time you take damage each combat round, you gain 3 ferocity instead of 2'
+					trigger: 'The first time each combat round that you take damage',
+					value: '3'
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'fury-10-5',

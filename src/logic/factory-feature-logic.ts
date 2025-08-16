@@ -288,10 +288,10 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createHeroicResourceGain = (data: { id: string, name?: string, trigger: string, value: string }): FeatureHeroicResourceGain => {
+	createHeroicResourceGain = (data: { id: string, name: string, trigger: string, value: string }): FeatureHeroicResourceGain => {
 		return {
 			id: data.id,
-			name: data.name || 'Heroic Resource Gain',
+			name: data.name,
 			description: '',
 			type: FeatureType.HeroicResourceGain,
 			data: {

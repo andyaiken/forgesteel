@@ -381,10 +381,11 @@ You can ask the Director for three rumors regarding the area you’re in or an a
 
 Additionally, you and creatures you are bonded with gain a +1 bonus to saving throws. Whenever you or a bonded creature succeeds on a saving throw, you and each creature you are bonded with gains temporary Stamina equal to your level.`
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'JRIAGwr5xwIXZdG5',
 					name: 'A Muse’s Muse',
-					description: 'At the start of each of your turns during combat, you gain 1d3 + 1 drama instead of 1d3. '
+					trigger: 'Start of your turn',
+					value: '1d3 + 1'
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'A7CsaTimMURrXg0M',

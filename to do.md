@@ -1,5 +1,10 @@
 # Development Plans
 
+Allow HRG features to override others
+Slide 2 + R does not autocalc
+Allow bespoke culture name to be changed
+Allow custom title name to be changed
+
 ### Heroes
 
 * Automatic update of library resources when there is a newer version

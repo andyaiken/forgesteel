@@ -66,92 +66,6 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			description: 'Most war dogs speak Caelian and one Vaslorian human language.'
 		}
 	],
-	echelonInfo: [
-		{
-			id: 'wardog-echelon-1-info',
-			echelon: 1,
-			name: 'War Dogs — 1st Echelon',
-			description: `The Body Banks are filled with the remains of enemies of the state, conquered peoples, war dogs who have experienced a second death, and even scraps of monsters and animals that might prove useful. Though the creation of new war dogs is by no means an exact process, the flesh sculptors of the Body Banks take great pride in crafting a highly destructive, single-mindedly fanatical army.
-
-The vast majority of war dogs are simple amalgams of humanoids fused, stitched, and welded together with stolen Upper World technology and forbidden alchemy. Their unnatural origin is on clear display: patchwork skin, mismatched limbs, and unsettling proportions marking them as artificial revenants.`
-		},
-		{
-			id: 'wardog-echelon-2-info',
-			echelon: 2,
-			name: 'War Dogs — 2nd Echelon',
-			description: `War dogs, like any soldiers, are outfitted to carry out warfare with weapons, armor, and no end of ghastly tools. But Ajax’s war dog forces are no ordinary army, and they bear extraordinary equipment.`,
-			subInfo: [
-				{
-					id: 'wardog-echelon-2-subinfo-1',
-					name: 'Shrikeguns',
-					description: 'The shrikegun is a new kind of weapon fit for a new kind of soldier. Each shrikegun is a rapid-firing bolt-thrower that replaces the draw of a crossbow with the compact energy of torsion springs. When loosed, a standard shrikegun throws a five-inch, iron-tipped wooden stake hard enough to reliably pierce steel plate at 50 yards. The stabilization grooves cut into the stakes create a shrill whistle when they are fired, leading to many less-disciplined armies breaking upon hearing the “shrike scream” of a loosed volley.'
-				},
-				{
-					id: 'wardog-echelon-2-subinfo-2',
-					name: 'Fuse-Iron',
-					description: 'Some war dogs use fuse-iron weapons that emit flames or cause explosions. While the exact properties of fuse-iron depend on its specific alloy and shape, the material is known for turning physical force into heat and light. Special arrangements of fuse-iron utilize crush cavities to create concussive detonations that are incredibly powerful, if not particularly reliable. Fuse-iron is expensive, accident-prone, and almost impossible to work with in large quantities, so that fuse-iron equipment is granted only to war dog specialists.'
-				},
-				{
-					id: 'wardog-echelon-2-subinfo-3',
-					name: 'Houndweapons',
-					description: 'Insubordinate war dogs are usually punished with a trip back to the Body Banks, but individuals who need to be made an example of are condemned to an even harsher fate: becoming a houndweapon. These living weapons are horrific blends of flesh, machine, and spirit created as powerful and terribly cruel tools of war. Only the highest-ranking and most capable war dogs can requisition houndweapons, given those living armaments’ power and the time and difficulty involved in making them.'
-				}
-			]
-		},
-		{
-			id: 'wardog-echelon-3-info',
-			echelon: 3,
-			name: 'War Dogs — 3rd Echelon',
-			description: 'As a war dog proves their loyalty and gains the favor of their superiors, they might be rewarded with special attention from the flesh sculptors of the Body Banks, smoothing out their construction and supplying them with higher-quality parts. War dogs who have risen through the ranks this way pride themselves on their nearly ordinary appearances.',
-			subInfo: [
-				{
-					id: 'wardog-echelon-3-subinfo-1',
-					name: 'Happy Accidents',
-					description: 'Making war dogs is more art than science, and happy little accidents can create war dogs with unusual characteristics. These war dogs are given great attention by the flesh sculptors, both to further improve the abilities of these deviants and to learn how to replicate their creation.'
-				},
-				{
-					id: 'wardog-echelon-3-subinfo-2',
-					name: 'Made to Order',
-					description: `War dogs are most often made by playing the odds, with each new resurrection assumed to create certain ratios of infantry, mages, specialists, and so on. However, by radically altering their creation processes and providing special materials, war dogs can be made who bear little resemblance to any humanoid, and who possess power beyond that of any typical conscript.
-
-These monstrous war dogs are developed to fulfill specific roles and combat niches, and are often fused with inorganic materials after their rebirth as living war machines. Monstrous war dogs are uniformly respected for having been chosen for greatness, and they consider their unnatural forms a badge of honor bestowed by Ajax.`
-				},
-			]
-		},
-		{
-			id: 'wardog-echelon-4-info',
-			echelon: 4,
-			name: 'War Dogs — 4th Echelon',
-			description: 'At the apex of the war dog command structure, a number of infamous figures are known for their brutal tactics, legendary battle prowess, and unbreakable loyalty to Ajax.',
-			subInfo: [
-				{
-					id: 'wardog-echelon-4-subinfo-1',
-					name: 'Castellan Hoplon',
-					description: 'Hoplon’s scars are not from the Body Banks, but from years of combat and hard-fought sieges. A master of the harrying retreat, the holdfast, and the last stand, Hoplon is there to lead the defense wherever the fighting is most intense and the lines threaten to buckle.'
-				},
-				{
-					id: 'wardog-echelon-4-subinfo-2',
-					name: 'Iron Champion Doru',
-					description: 'Upon the accidental creation of the Iron Champion, only the intervention of Ajax was able to stop Doru’s rampage. His raw strength and untempered aggression make him a valuable combatant, but it is his mysterious regeneration that makes him a true monster on the battlefield.'
-				},
-				{
-					id: 'wardog-echelon-4-subinfo-3',
-					name: 'Logostician Vesper',
-					description: 'A master of logistical support and a living portal network, Vesper is the emergent personality of several dozen potent psychic minds working in concert. From their position within an armored and highly mobile flesh chassis, Vesper manages supply lines and transport for the forces of the Iron Saint.'
-				},
-				{
-					id: 'wardog-echelon-4-subinfo-4',
-					name: 'Soulbinder Psyche',
-					description: 'Viewed by other war dogs as “The Goddess of the Banks,” Psyche possesses a spirit that can return from the Body Banks again and again without ever losing her core self. She is a master of the connection between soul and flesh, and a talented mage besides.'
-				},
-				{
-					id: 'wardog-echelon-4-subinfo-5',
-					name: 'Strategos Alkestis',
-					description: 'Leader of the Legion Alkestis and one of the most brilliant commanders ever to be born a war dog, Alkestis has made her legion one of the most feared of Ajax’s armies. The Silver Wolf is known for her battlefield tactics and a willingness to stoop to any depths to gain an edge on her enemies.'
-				},
-			]
-		}
-	],
 	malice: [
 		FactoryLogic.feature.createMalice({
 			id: 'wardog-malice-1',
@@ -194,7 +108,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-1',
 			name: 'War Dog Commando',
 			level: 1,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 6,
@@ -240,7 +153,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-2',
 			name: 'War Dog Conscript',
 			level: 1,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 6,
@@ -286,7 +198,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-3',
 			name: 'War Dog Sharpshooter',
 			level: 1,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 6,
@@ -329,7 +240,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-4',
 			name: 'War Dog Tetherite',
 			level: 1,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 6,
@@ -376,7 +286,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-5',
 			name: 'War Dog Amalgamite',
 			level: 2,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Brute),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 4,
@@ -436,7 +345,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-6',
 			name: 'War Dog Crucibite',
 			level: 1,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Artillery),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 3,
@@ -502,7 +410,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-7',
 			name: 'War Dog Eviscerite',
 			level: 1,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Harrier),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 3,
@@ -557,7 +464,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-8',
 			name: 'War Dog Neuronite',
 			level: 1,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Defender),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 3,
@@ -631,7 +537,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-9',
 			name: 'War Dog Pestilite',
 			level: 3,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Controller),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 5,
@@ -692,7 +597,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-10',
 			name: 'War Dog Phosphorite',
 			level: 2,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Hexer),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 4,
@@ -754,7 +658,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-11',
 			name: 'War Dog Teletalite',
 			level: 1,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 3,
@@ -831,7 +734,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-12',
 			name: 'War Dog Subcommander',
 			level: 2,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Support),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 4,
@@ -891,7 +793,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-13',
 			name: 'War Dog Ground Commander',
 			level: 3,
-			echelon: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Leader),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 20,
@@ -908,7 +809,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						name: 'Conditioning Spear',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Ranged,  AbilityKeyword.Strike ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
 							FactoryLogic.distance.createMelee(1),
 							FactoryLogic.distance.createRanged(5)
@@ -1011,7 +912,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-14',
 			name: 'War Dog Sparkslinger',
 			level: 4,
-			echelon: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 6,
@@ -1053,14 +953,13 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'wardog-14',
 			name: 'War Dog Sparkslinger',
 			level: 4,
-			echelon: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 6,
@@ -1102,14 +1001,13 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'wardog-14',
 			name: 'War Dog Sparkslinger',
 			level: 4,
-			echelon: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
 			encounterValue: 6,
@@ -1151,9 +1049,9 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
-				}),
+				})
 			]
-		}),
+		})
 	],
 	addOns: []
 };

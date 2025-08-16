@@ -20,17 +20,6 @@ interface Props {
 }
 
 export const MonsterGroupPanel = (props: Props) => {
-	let eschelonGroup0 = props.monsterGroup.monsters.filter(x => x.echelon <= 0);
-	let eschelonGroup1 = props.monsterGroup.monsters.filter(x => x.echelon === 1);
-	let eschelonGroup2 = props.monsterGroup.monsters.filter(x => x.echelon === 2);
-	let eschelonGroup3 = props.monsterGroup.monsters.filter(x => x.echelon === 3);
-	let eschelonGroup4 = props.monsterGroup.monsters.filter(x => x.echelon >= 4);
-
-	let eschelonInfo1 = props.monsterGroup.echelonInfo?.filter(x => x.echelon === 1) ?? [];
-	let eschelonInfo2 = props.monsterGroup.echelonInfo?.filter(x => x.echelon === 2) ?? [];
-	let eschelonInfo3 = props.monsterGroup.echelonInfo?.filter(x => x.echelon === 3) ?? [];
-	let eschelonInfo4 = props.monsterGroup.echelonInfo?.filter(x => x.echelon >= 4) ?? [];
-
 	try {
 		return (
 			<ErrorBoundary>
@@ -69,153 +58,21 @@ export const MonsterGroupPanel = (props: Props) => {
 							: null
 					}
 					{
-						(props.mode === PanelMode.Full && props.monsterGroup.malice.length > 0 && eschelonGroup0.length > 0) ?
+						((props.mode === PanelMode.Full) && (props.monsterGroup.malice.length > 0) && (props.monsterGroup.monsters.length > 0)) ?
 							<Divider />
 							: null
 					}
 					{
-						(props.mode === PanelMode.Full && eschelonGroup0.length > 0) ?
+						((props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0)) ?
 							<div className='monsters'>
 								{
-									eschelonGroup0.map(m =>
+									props.monsterGroup.monsters.map(m =>
 										<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
 											<MonsterPanel monster={m} monsterGroup={props.monsterGroup} options={props.options} />
 										</SelectablePanel>
 									)
 								}
 							</div>
-							: null
-					}
-					{
-						(props.mode === PanelMode.Full && eschelonGroup1.length > 0) ?
-							<>
-								{
-									(eschelonInfo1.length > 0) ?
-									<div>
-										{eschelonInfo1.map(i => (
-											<>
-												<HeaderText level={1}>{eschelonInfo1.map(i => i.name)}</HeaderText>
-												<Markdown text={i.description} />
-												{i.subInfo?.map(sub => (
-													<div key={sub.id}>
-														<HeaderText>{sub.name || 'Unnamed Information'}</HeaderText>
-														<Markdown text={sub.description} />
-													</div>
-												))}
-											</>
-										))}
-									</div>
-									: <HeaderText level={1}>1st Echelon</HeaderText>
-								}
-								<div className='monsters'>
-									{
-										eschelonGroup1.map(m =>
-											<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
-												<MonsterPanel monster={m} monsterGroup={props.monsterGroup} options={props.options} />
-											</SelectablePanel>
-										)
-									}
-								</div>
-							</>
-							: null
-					}
-					{
-						(props.mode === PanelMode.Full && eschelonGroup2.length > 0) ?
-							<>
-								{
-									(eschelonInfo2.length > 0) ?
-									<div>
-										{eschelonInfo2.map(i => (
-											<>
-												<HeaderText level={1}>{eschelonInfo2.map(i => i.name)}</HeaderText>
-												<Markdown text={i.description} />
-												{i.subInfo?.map(sub => (
-													<div key={sub.id}>
-														<HeaderText>{sub.name || 'Unnamed Information'}</HeaderText>
-														<Markdown text={sub.description} />
-													</div>
-												))}
-											</>
-										))}
-									</div>
-									: <HeaderText level={1}>2nd Echelon</HeaderText>
-								}
-								<div className='monsters'>
-									{
-										eschelonGroup2.map(m =>
-											<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
-												<MonsterPanel monster={m} monsterGroup={props.monsterGroup} options={props.options} />
-											</SelectablePanel>
-										)
-									}
-								</div>
-							</>
-							: null
-					}
-					{
-						(props.mode === PanelMode.Full && eschelonGroup3.length > 0) ?
-							<>
-								{
-									(eschelonInfo3.length > 0) ?
-									<div>
-										{eschelonInfo3.map(i => (
-											<>
-												<HeaderText level={1}>{eschelonInfo3.map(i => i.name)}</HeaderText>
-												<Markdown text={i.description} />
-												{i.subInfo?.map(sub => (
-													<div key={sub.id}>
-														<HeaderText>{sub.name || 'Unnamed Information'}</HeaderText>
-														<Markdown text={sub.description} />
-													</div>
-												))}
-											</>
-										))}
-									</div>
-									: <HeaderText level={1}>3rd Echelon</HeaderText>
-								}
-								<div className='monsters'>
-									{
-										eschelonGroup3.map(m =>
-											<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
-												<MonsterPanel monster={m} monsterGroup={props.monsterGroup} options={props.options} />
-											</SelectablePanel>
-										)
-									}
-								</div>
-							</>
-							: null
-					}
-					{
-						(props.mode === PanelMode.Full && eschelonGroup4.length > 0) ?
-							<>
-								{
-									(eschelonInfo4.length > 0) ?
-									<div>
-										<HeaderText level={1}>{eschelonInfo4.map(i => i.name)}</HeaderText>
-										{eschelonInfo4.map(i => (
-											<>
-												<Markdown text={i.description} />
-												{i.subInfo?.map(sub => (
-													<div key={sub.id}>
-														<HeaderText>{sub.name || 'Unnamed Information'}</HeaderText>
-														<Markdown text={sub.description} />
-													</div>
-												))}
-											</>
-										))}
-									</div>
-									: <HeaderText level={1}>4th Echelon</HeaderText>
-								}
-								<div className='monsters'>
-									{
-										eschelonGroup4.map(m =>
-											<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
-												<MonsterPanel monster={m} monsterGroup={props.monsterGroup} options={props.options} />
-											</SelectablePanel>
-										)
-									}
-								</div>
-							</>
 							: null
 					}
 					{

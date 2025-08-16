@@ -470,7 +470,7 @@ export class SourcebookData {
 			ImbuedArmorData.tempestI,
 			ImbuedArmorData.absorption,
 			ImbuedArmorData.damageImmunityII,
-			ImbuedArmorData.dragonSoul,
+			ImbuedArmorData.dragonSoulI,
 			ImbuedArmorData.levitating,
 			ImbuedArmorData.magicResistanceII,
 			ImbuedArmorData.phasingII,

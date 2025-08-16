@@ -180,7 +180,6 @@ export const LibraryViewPage = (props: Props) => {
 				<ItemPanel
 					item={element as Item}
 					options={props.options}
-					showCustomizations={true}
 					mode={PanelMode.Full}
 				/>
 			);

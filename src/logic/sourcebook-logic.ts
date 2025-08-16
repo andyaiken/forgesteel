@@ -285,6 +285,7 @@ export class SourcebookLogic {
 		sourcebooks.forEach(sourcebook => {
 			list.push(...sourcebook.projects);
 			list.push(...sourcebook.items.map(i => i.crafting).filter(p => !!p));
+			list.push(...sourcebook.imbuements.map(i => i.crafting).filter(p => !!p));
 		});
 
 		return Collections.sort(list, item => item.name);

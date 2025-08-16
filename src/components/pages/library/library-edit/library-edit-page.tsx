@@ -611,7 +611,7 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<>
 						<SelectablePanel>
-							<ItemPanel item={element as Item} options={props.options} showCustomizations={true} mode={PanelMode.Full} />
+							<ItemPanel item={element as Item} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
 							(element as Item).crafting ?

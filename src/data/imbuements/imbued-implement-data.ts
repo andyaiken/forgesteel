@@ -9,8 +9,8 @@ export class ImbuedImplementData {
 	static berserking: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The tusk of a feral boar',
+			source: 'Texts or lore in Kalliak',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -25,8 +25,8 @@ export class ImbuedImplementData {
 	static displacingI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Slime from an ooze',
+			source: 'Texts or lore in Khelt',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -41,8 +41,8 @@ export class ImbuedImplementData {
 	static elemental: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Ashes or other leavings from a natural disaster',
+			source: 'Texts or lore in The First Language',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -57,8 +57,8 @@ export class ImbuedImplementData {
 	static forcefulI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A lead slingstone that killed a giant',
+			source: 'Texts or lore in High Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -73,8 +73,8 @@ export class ImbuedImplementData {
 	static ratForm: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'One hundred rat pelts',
+			source: 'Texts or lore in Khamish',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -96,8 +96,8 @@ export class ImbuedImplementData {
 	static rejuvenatingI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A singing quartz crystal',
+			source: 'Texts or lore in The First Language',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -112,8 +112,8 @@ export class ImbuedImplementData {
 	static seeking: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'An inch-long needle carved from a diamond',
+			source: 'Texts or lore in Caelian',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -128,8 +128,8 @@ export class ImbuedImplementData {
 	static thoughtSending: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The brain of a psionic creature',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -144,8 +144,8 @@ export class ImbuedImplementData {
 	static wardingI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Three skulls from the same chimera',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -161,8 +161,8 @@ export class ImbuedImplementData {
 	static celerity: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A dire falcon’s beak',
+			source: 'Texts or lore in Khelt',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -177,8 +177,8 @@ export class ImbuedImplementData {
 	static celestine: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A still-warm piece of a meteorite',
+			source: 'Texts or lore in Ullorvic',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -200,8 +200,8 @@ export class ImbuedImplementData {
 	static displacingII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The wing of a pixie',
+			source: 'Texts or lore in Voll',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -216,8 +216,8 @@ export class ImbuedImplementData {
 	static eruptingI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Obsidian from an active volcano',
+			source: 'Texts or lore in Vastariax',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -232,8 +232,8 @@ export class ImbuedImplementData {
 	static forcefulII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A marble stone giant’s fingernail',
+			source: 'Texts or lore in High Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -248,8 +248,8 @@ export class ImbuedImplementData {
 	static hallucinatory: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A night hag’s hairpin',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -271,8 +271,8 @@ export class ImbuedImplementData {
 	static lingeringI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Slow-acting poison refined from rare fungi',
+			source: 'Texts or lore in Szetch',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -287,8 +287,8 @@ export class ImbuedImplementData {
 	static rejuvenatingII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A still-growing bonsai tree at least 30 years old',
+			source: 'Texts or lore in The First Language',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -303,8 +303,8 @@ export class ImbuedImplementData {
 	static wardingII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A metallic dragon’s horn',
+			source: 'Texts or lore in Zaliac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -330,8 +330,8 @@ export class ImbuedImplementData {
 	static anathema: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'An olothec tentacle',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -346,8 +346,8 @@ export class ImbuedImplementData {
 	static displacingIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The keystone from a gate used for crossing between worlds',
+			source: 'Texts or lore in Voll',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -362,8 +362,8 @@ export class ImbuedImplementData {
 	static eruptingII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A sealed geode containing explosive gas',
+			source: 'Texts or lore in Vastariax',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -378,8 +378,8 @@ export class ImbuedImplementData {
 	static forcefulIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A scale from the kraken',
+			source: 'Texts or lore in High Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -394,8 +394,8 @@ export class ImbuedImplementData {
 	static lingeringII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A venom gland from a mature dragon',
+			source: 'Texts or lore in Szetch',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -410,8 +410,8 @@ export class ImbuedImplementData {
 	static piercing: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Black iron harvested from a slain blood elemental',
+			source: 'Texts or lore in Anjali',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -426,8 +426,8 @@ export class ImbuedImplementData {
 	static psionicSiphon: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The frontal lobe of an overmind',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -442,8 +442,8 @@ export class ImbuedImplementData {
 	static rejuvenatingIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A live flower that blooms only once a decade',
+			source: 'Texts or lore in The First Language',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -458,8 +458,8 @@ export class ImbuedImplementData {
 	static wardingIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedImplement,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Heartwood from a two-century-old tree',
+			source: 'Texts or lore in Zaliac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),

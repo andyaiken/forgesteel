@@ -1,5 +1,6 @@
 import { Input, Select, Space, Tabs } from 'antd';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Feature } from '../../../../models/feature';
 import { FeatureEditPanel } from '../feature-edit/feature-edit-panel';
 import { HeaderText } from '../../../controls/header-text/header-text';
@@ -9,8 +10,11 @@ import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
+import { Project } from '../../../../models/project';
+import { ProjectEditPanel } from '../project-edit/project-edit';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { ThunderboltOutlined } from '@ant-design/icons';
+import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -100,6 +104,39 @@ export const ImbuementEditPanel = (props: Props) => {
 			);
 		};
 
+		const getCraftingEditSection = () => {
+			const setCraftable = (value: boolean) => {
+				const copy = Utils.copy(imbuement);
+				copy.crafting = value ?
+					FactoryLogic.createProject({ id: `${imbuement.id}-crafting`, name: `Imbue ${imbuement.name}`, description: imbuement.name })
+					: null;
+				setImbuement(copy);
+				props.onChange(copy);
+			};
+
+			const setCrafting = (value: Project) => {
+				const copy = Utils.copy(imbuement);
+				copy.crafting = Utils.copy(value);
+				setImbuement(copy);
+				props.onChange(copy);
+			};
+
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<Toggle label='Can be crafted' value={!!imbuement.crafting} onChange={setCraftable} />
+					{
+						imbuement.crafting ?
+							<ProjectEditPanel
+								project={imbuement.crafting}
+								includeNameAndDescription={false}
+								onChange={setCrafting}
+							/>
+							: null
+					}
+				</Space>
+			);
+		};
+
 		const getFeatureEditSection = () => {
 			const changeFeature = (feature: Feature) => {
 				const copy = Utils.copy(imbuement);
@@ -140,6 +177,11 @@ export const ImbuementEditPanel = (props: Props) => {
 							},
 							{
 								key: '3',
+								label: 'Crafting',
+								children: getCraftingEditSection()
+							},
+							{
+								key: '4',
 								label: 'Feature',
 								children: getFeatureEditSection()
 							}

@@ -109,7 +109,6 @@ export const ElementModal = (props: Props) => {
 						<ItemPanel
 							item={props.element as Item}
 							options={props.options}
-							showCustomizations={true}
 							mode={PanelMode.Full}
 						/>
 					);

@@ -9,8 +9,8 @@ export class ImbuedWeaponData {
 	static bloodBargain: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The blood of a devil',
+			source: 'Texts or lore in Anjali',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -32,8 +32,8 @@ export class ImbuedWeaponData {
 	static chillingI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A piece of ice from Quintessence that never melts',
+			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -48,8 +48,8 @@ export class ImbuedWeaponData {
 	static disruptingI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A vial of blood from a living saint',
+			source: 'Texts or lore in Anjali',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -64,8 +64,8 @@ export class ImbuedWeaponData {
 	static hurling: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A magnet made from rare metals',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -80,8 +80,8 @@ export class ImbuedWeaponData {
 	static merciful: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A sprig of dockwart, a rare plant with natural anesthetic properties',
+			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -96,8 +96,8 @@ export class ImbuedWeaponData {
 	static terrifyingI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The preserved, intact amygdala of a mindkiller',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -112,8 +112,8 @@ export class ImbuedWeaponData {
 	static thunderingI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The heart of a lion, bear, or other large predatory animal',
+			source: 'Texts or lore in Low Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -128,8 +128,8 @@ export class ImbuedWeaponData {
 	static vengeanceI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The crown of a usurper',
+			source: 'Texts or lore in Kalliak',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -144,8 +144,8 @@ export class ImbuedWeaponData {
 	static wingbane: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The pinfeather of a giant hawk',
+			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -160,8 +160,8 @@ export class ImbuedWeaponData {
 	static chargebreaker: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'An adamantine spearhead',
+			source: 'Texts or lore in Zaliac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -184,8 +184,8 @@ export class ImbuedWeaponData {
 	static chillingII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Frozen bones from the lair of a white dragon',
+			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -200,8 +200,8 @@ export class ImbuedWeaponData {
 	static devastating: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A slaughter demon’s horn',
+			source: 'Texts or lore in High Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -216,8 +216,8 @@ export class ImbuedWeaponData {
 	static disruptingII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A cutting from a century-old living tree in a graveyard',
+			source: 'Texts or lore in Anjali',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -232,8 +232,8 @@ export class ImbuedWeaponData {
 	static metamorphic: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Oil from an olothec’s liver',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -259,8 +259,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static silencing: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'An executioner’s hood worn during the execution of a mage',
+			source: 'Texts or lore in The First Language',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -275,8 +275,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static terrifyingII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Riverbed silt harvested from the Abyssal Wasteland',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -291,8 +291,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static thunderingII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'An iron rod charged by the death throes of an essence of storms',
+			source: 'Texts or lore in Low Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -307,8 +307,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static vengeanceII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The remains of a sworn foe of the creature imbuing the item',
+			source: 'Texts or lore in Kalliak',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -323,8 +323,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static chillingIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The weapon must be dipped in the Glacial Forge in the coldest depths of Hell',
+			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -339,8 +339,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static disruptingIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Wrappings from a mummy buried at least a century ago',
+			source: 'Texts or lore in Anjali',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -355,8 +355,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static draining: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The intact, still-thinking brain of a voiceless talker',
+			source: 'Texts or lore in Voll',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -371,8 +371,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static imprisioning: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A chain once used to restrain an angel',
+			source: 'Texts or lore in Anjali',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -387,8 +387,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static nova: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A piece of metal touched by a sun',
+			source: 'Texts or lore in Ullorvic',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -419,8 +419,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static terrifyingIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The central eye of an overmind',
+			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -435,8 +435,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static thunderingIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'An oracle of storms must willingly bless the weapon with lightning while it is being wielded, and its wielder must survive this trial',
+			source: 'Texts or lore in Low Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -451,8 +451,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static vengeanceIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The true name of a devil who hunts other devils',
+			source: 'Texts or lore in Kalliak',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -467,8 +467,8 @@ You can change this weapon’s shape and form, granting one of the following ben
 	static windcutting: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedWeapon,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A feather from a bird, once thought extinct, who dwells at the eye of an ever-whirling tornado',
+			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),

@@ -1,6 +1,8 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { DamageType } from '../../enums/damage-type';
+import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { Imbuement } from '../../models/imbuement';
@@ -10,8 +12,8 @@ export class ImbuedArmorData {
 	static aweCharming: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A lock of hair from a fey, taken in amicable bargain',
+			source: 'Texts or lore in Khelt',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -26,8 +28,8 @@ export class ImbuedArmorData {
 	static aweThreatening: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A lock of hair from a fey, taken in violence',
+			source: 'Texts or lore in Khelt',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -42,24 +44,135 @@ export class ImbuedArmorData {
 	static damageImmunityI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Elemental sand left behind when an elemental enters Orden from Quintessence',
+			source: 'Texts or lore in Zaliac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 1,
-		feature: FactoryLogic.feature.create({
+		feature: FactoryLogic.feature.createChoice({
 			id: 'imbuement-damage-immunity-i',
 			name: 'Damage Immunity I',
-			description: 'Select three damage types. You have immunity 5 to those damage types.'
+			description: 'Select three damage types. You have immunity 5 to those damage types.',
+			options: [
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-i-a',
+						name: 'Damage Immunity I (Acid)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Acid,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-i-b',
+						name: 'Damage Immunity I (Cold)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Cold,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-i-c',
+						name: 'Damage Immunity I (Corruption)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Corruption,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-i-d',
+						name: 'Damage Immunity I (Fire)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-i-e',
+						name: 'Damage Immunity I (Holy)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Holy,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-i-f',
+						name: 'Damage Immunity I (Lightning)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Lightning,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-i-g',
+						name: 'Damage Immunity I (Poison)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Poison,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-i-h',
+						name: 'Damage Immunity I (Psychic)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-i-i',
+						name: 'Damage Immunity I (Sonic)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Sonic,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				}
+			],
+			count: 3
 		})
 	});
 
 	static disguise: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The blood of a lycanthrope',
+			source: 'Texts or lore in Khelt',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -81,8 +194,8 @@ export class ImbuedArmorData {
 	static iridescent: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Fur from a lightbender',
+			source: 'Texts or lore in Hyrallic',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -104,8 +217,8 @@ export class ImbuedArmorData {
 	static magicResistanceI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A scale from a dragon',
+			source: 'Texts or lore in The First Language',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -120,8 +233,8 @@ export class ImbuedArmorData {
 	static nettlebloom: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A rose from the magical hedge of a hag',
+			source: 'Texts or lore in Khelt',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -136,8 +249,8 @@ export class ImbuedArmorData {
 	static phasingI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Ichor from a destroyed wraith',
+			source: 'Texts or lore in Szetch',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -152,8 +265,8 @@ export class ImbuedArmorData {
 	static psionicResistanceI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Rare crystals that resonate with psionic energy, often found at sites of psionic experimentation',
+			source: 'Texts or lore in Voll',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -168,8 +281,8 @@ export class ImbuedArmorData {
 	static swift: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The feather of a falcon slain as it was diving',
+			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -185,8 +298,8 @@ export class ImbuedArmorData {
 	static tempestI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A strip of starmetal struck by lightning',
+			source: 'Texts or lore in Ullorvic',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -210,8 +323,8 @@ export class ImbuedArmorData {
 	static absorption: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A mirror blessed by a priest of a god of magic',
+			source: 'Texts or lore in The First Language',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -236,32 +349,143 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static damageImmunityII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The essence of an elemental who is still alive',
+			source: 'Texts or lore in Zaliac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
-		feature: FactoryLogic.feature.create({
+		feature: FactoryLogic.feature.createChoice({
 			id: 'imbuement-damage-immunity-ii',
 			name: 'Damage Immunity II',
-			description: 'The damage immunity conveyed by the armor increases to 10.'
+			description: 'The damage immunity conveyed by the armor increases to 10. (Select the same damage types below)',
+			options: [
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-ii-a',
+						name: 'Damage Immunity II (Acid)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Acid,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-ii-b',
+						name: 'Damage Immunity II (Cold)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Cold,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-ii-c',
+						name: 'Damage Immunity II (Corruption)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Corruption,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-ii-d',
+						name: 'Damage Immunity II (Fire)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-ii-e',
+						name: 'Damage Immunity II (Holy)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Holy,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-ii-f',
+						name: 'Damage Immunity II (Lightning)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Lightning,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-ii-g',
+						name: 'Damage Immunity II (Poison)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Poison,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-ii-h',
+						name: 'Damage Immunity II (Psychic)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createDamageModifier({
+						id: 'imbuement-damage-immunity-ii-i',
+						name: 'Damage Immunity II (Sonic)',
+						modifiers: [ FactoryLogic.damageModifier.create({
+							damageType: DamageType.Sonic,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						}) ]
+					}),
+					value: 1
+				}
+			],
+			count: 3
 		})
 	});
 
-	static dragonSoul: Imbuement = FactoryLogic.createImbuement({
+	static dragonSoulI: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A scale from a dead dragon',
+			source: 'Texts or lore in Vastariax',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
 		level: 5,
 		feature: FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'imbuement-dragon-soul',
-				name: 'Dragon Soul',
+				id: 'imbuement-dragon-soul-i',
+				name: 'Dragon Soul I',
 				type: FactoryLogic.type.createTrigger('Another creature causes you to be winded or dying', { free: true }),
 				distance: [ FactoryLogic.distance.createSpecial('') ],
 				target: 'The triggering creature',
@@ -282,8 +506,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static levitating: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A palm-sized crystal grown in the subterranean lair of an overmind',
+			source: 'Texts or lore in Zaliac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -298,8 +522,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static magicResistanceII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A scale from a mature dragon',
+			source: 'Texts or lore in The First Language',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -314,8 +538,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static phasingII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The remnants of a slain ooze',
+			source: 'Texts or lore in Szetch',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -330,8 +554,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static psionicResistanceII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A fresh crystalline scale from a gemstone dragon',
+			source: 'Texts or lore in Voll',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -346,8 +570,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static reactive: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A complex, hand-engineered set of brass gears inscribed with runes in silver dust',
+			source: 'Texts or lore in Zaliac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -362,8 +586,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static secondWind: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The sweat of a troll',
+			source: 'Texts or lore in Kalliak',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -385,8 +609,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static shattering: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A pound of volcanic obsidian, formed naturally as a single piece',
+			source: 'Texts or lore in Zaliac',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -401,8 +625,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static tempestII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The armor must be laid out under a clear sky as a comet passes over',
+			source: 'Texts or lore in Ullorvic',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -418,8 +642,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static devilsBargain: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The wing of an archdevil',
+			source: 'Texts or lore in Anjali',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -434,8 +658,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static dragonSoulII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'An offering of gems, coins, and art stolen from a dragon’s hoard, sacrificed in ritual fire',
+			source: 'Texts or lore in Vastariax',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -466,8 +690,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static invulnerable: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Repurposed metal plates from a servok war engine',
+			source: 'Texts or lore in Rallarian',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -482,8 +706,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static leylineWalker: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A cutting from an ethereal tree that manifests in the mundane world only once a year',
+			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -505,8 +729,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static life: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The tear of a saint',
+			source: 'Texts or lore in High Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -521,8 +745,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static magicResistanceIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A scale from an ancient dragon',
+			source: 'Texts or lore in The First Language',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -537,8 +761,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static phasingIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'Perfectly clear glass from a house that disappeared into the Ethereal Plane',
+			source: 'Texts or lore in Szetch',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -553,8 +777,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static psionicResistanceIII: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'The skull of a voiceless talker at least a century old',
+			source: 'Texts or lore in Voll',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -569,8 +793,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static temporalFlux: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'An experimental temporal capacitor invented by the kuran’zoi',
+			source: 'Texts or lore in Voll',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),
@@ -611,8 +835,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 	static unbending: Imbuement = FactoryLogic.createImbuement({
 		type: ItemType.ImbuedArmor,
 		crafting: FactoryLogic.createProject({
-			prerequisites: '',
-			source: '',
+			prerequisites: 'A spearhead or other weapon broken off in the body of a stone giant, and ossified for a year or more',
+			source: 'Texts or lore in High Kuric',
 			characteristic: [ Characteristic.Might, Characteristic.Reason, Characteristic.Intuition ],
 			goal: 150
 		}),

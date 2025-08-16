@@ -28,7 +28,6 @@ interface Props {
 	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
-	showCustomizations?: boolean;
 	mode?: PanelMode;
 	onChange?: (item: Item) => void;
 }
@@ -124,7 +123,7 @@ export const ItemPanel = (props: Props) => {
 				{
 					options.map(f => (
 						<div key={f.feature.id}>
-							<FeatureConfigPanel feature={f.feature} options={props.options} hero={props.hero!} sourcebooks={props.sourcebooks!} setData={setFeatureData!} />
+							<FeaturePanel feature={f.feature} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 							<Button block={true} onClick={() => addImbuement(f)}>Select</Button>
 						</div>
 					))
@@ -138,8 +137,7 @@ export const ItemPanel = (props: Props) => {
 		);
 	};
 
-	const isImbueableType = item.type === ItemType.ImbuedArmor || item.type === ItemType.ImbuedImplement || item.type === ItemType.ImbuedWeapon;
-	const customizable = props.hero && props.sourcebooks && isImbueableType;
+	const imbueable = item.type === ItemType.ImbuedArmor || item.type === ItemType.ImbuedImplement || item.type === ItemType.ImbuedWeapon;
 
 	try {
 		return (
@@ -161,7 +159,7 @@ export const ItemPanel = (props: Props) => {
 							.map(f => f.feature)
 							.map(f => (
 								<div key={f.id} style={{ margin: '10px 0' }}>
-									<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} />
+									<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={setFeatureData} />
 									{
 										props.onChange ?
 											<Button block={true} onClick={() => removeImbuement(f.id)}>Unselect</Button>
@@ -187,31 +185,7 @@ export const ItemPanel = (props: Props) => {
 							: null
 					}
 					{
-						props.showCustomizations ?
-							props.item.imbuements
-								.reduce((leveledImbuements: { level: number, imbuements: Imbuement[] }[], imbuement) => {
-									const level = leveledImbuements.filter(level => level.level == imbuement.level);
-									let imbuements: Imbuement[];
-									if (level.length === 0) {
-										imbuements = [];
-										leveledImbuements.push({ level: imbuement.level, imbuements: imbuements });
-									}
-									else {
-										imbuements = level[0].imbuements;
-									}
-									imbuements.push(imbuement);
-									return leveledImbuements;
-								}, [])
-								.map(group => (
-									<div key={group.level}>
-										<HeaderText level={1}>Customization: Level {group.level}</HeaderText>
-										{group.imbuements.map(f => <FeaturePanel key={f.feature.id} feature={f.feature} options={props.options} mode={PanelMode.Full} />)}
-									</div>
-								))
-							: null
-					}
-					{
-						props.onChange && customizable ?
+						props.onChange && imbueable ?
 							<Expander title='Imbue'>
 								{getAvailableImbuements()}
 							</Expander>

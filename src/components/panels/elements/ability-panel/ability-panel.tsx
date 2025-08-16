@@ -75,9 +75,9 @@ export const AbilityPanel = (props: Props) => {
 	const heroicResource = useMemo(
 		() => {
 			if (props.hero) {
-				const resources = HeroLogic.getFeatures(props.hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
+				const resources = HeroLogic.getHeroicResources(props.hero);
 				if (resources.length > 0) {
-					return resources[0].data.value;
+					return resources[0].value;
 				}
 			}
 

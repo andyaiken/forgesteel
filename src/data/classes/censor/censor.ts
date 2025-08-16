@@ -176,10 +176,11 @@ You can choose only one free triggered action option at a time, even if multiple
 					id: 'censor-4-3',
 					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Lore, SkillList.Intrigue ]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'censor-4-4',
 					name: 'Wrath Beyond Wrath',
-					description: 'The first time each combat round that you deal damage to a creature judged by you, you gain 2 wrath instead of 1.'
+					trigger: 'The first time each round that you deal damage to a creature judged by you',
+					value: '2'
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'censor-4-5',
@@ -247,10 +248,11 @@ You can choose only one free triggered action option at a time, even if multiple
 					id: 'censor-7-2',
 					level: 7
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'censor-7-3',
 					name: 'Focused Wrath',
-					description: 'When you gain wrath at the start of each of your turns during combat, you gain 3 wrath instead of 2.'
+					trigger: 'Start of your turn',
+					value: '2'
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-7-4',
@@ -326,10 +328,11 @@ Additionally, you can spend 3 virtue to access one of your deity’s domains tha
 
 Virtue remains until you spend it.`
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'censor-10-6',
 					name: 'Wrath of the Gods',
-					description: 'When you gain wrath at the start of each of your turns during combat, you gain 4 wrath instead of 3.'
+					trigger: 'Start of your turn',
+					value: '4'
 				})
 			]
 		}

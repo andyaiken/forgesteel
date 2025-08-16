@@ -49,7 +49,7 @@ export class PDFExport {
 			return Format.stripEmojis(str);
 		};
 
-		const heroicResources = HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
+		const heroicResources = HeroLogic.getHeroicResources(hero);
 		const texts: { [key: string]: string | number | null } = {
 			CharacterName: hero.name,
 			AncestryTop: hero.ancestry && hero.ancestry.name,
@@ -69,7 +69,7 @@ export class PDFExport {
 			RecoveryValue: HeroLogic.getRecoveryValue(hero),
 			MaxRecoveries: HeroLogic.getRecoveries(hero),
 			Recoveries: HeroLogic.getRecoveries(hero) - hero.state.recoveriesUsed,
-			HeroicResource: heroicResources.length > 0 ? heroicResources[0].data.value : 0,
+			HeroicResource: heroicResources.length > 0 ? heroicResources[0].value : 0,
 			Surges: hero.state.surges,
 			Victories: hero.state.victories,
 			AncestryFull: hero.ancestry && hero.ancestry.description,
@@ -159,31 +159,15 @@ export class PDFExport {
 
 		{
 			if (heroicResources.length > 0) {
-				const heroicResourceFeature = heroicResources[0];
-				texts['HeroicResourcesPerTurn'] = heroicResourceFeature.data.gains[0].value;
-				ignoredFeatures[heroicResourceFeature.id] = true;
-				let resourceGainText = 'Your resource is ' + heroicResourceFeature.name.toLowerCase() + '.\n\n';
-				[
-					...heroicResourceFeature.data.gains,
-					...HeroLogic.getFeatures(hero)
-						.map(f => f.feature)
-						.filter(f => f.type === FeatureType.HeroicResourceGain)
-						.map(f => f.data),
-					...HeroLogic.getDomains(hero)
-						.flatMap(d => d.resourceGains)
-						.filter(g => g.resource === heroicResourceFeature.name)
-						.map(g => g)
-				].forEach(g => {
+				const hr = heroicResources[0];
+				texts['HeroicResourcesPerTurn'] = hr.gains[0].value;
+				ignoredFeatures[hr.id] = true;
+				let resourceGainText = 'Your resource is ' + hr.name.toLowerCase() + '.\n\n';
+				hr.gains.forEach(g => {
 					resourceGainText += g.trigger + ': +' + g.value + '\n';
 				});
-				HeroLogic.getFeatures(hero)
-					.map(f => f.feature)
-					.filter(f => f.type === FeatureType.HeroicResourceGain)
-					.forEach(f => {
-						resourceGainText += f.data.trigger + ': +' + f.data.value + '\n';
-					});
-				if (heroicResourceFeature.data.details) {
-					resourceGainText += '\n\n' + heroicResourceFeature.data.details;
+				if (hr.details) {
+					resourceGainText += '\n\n' + hr.details;
 				}
 				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
 			} else {

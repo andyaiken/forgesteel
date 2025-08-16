@@ -71,8 +71,8 @@ export const MonsterPanel = (props: Props) => {
 						props.mode === PanelMode.Full ?
 							<>
 								<div className='stats'>
-									<Field orientation='vertical' label='Speed' value={speedStr} />
 									<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
+									<Field orientation='vertical' label='Speed' value={speedStr} />
 									<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
 									<Field orientation='vertical' label='Stability' value={props.monster.stability} />
 									<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />

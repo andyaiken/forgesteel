@@ -650,9 +650,9 @@ Additionally, you can choose to not take damage from having negative clarity. Yo
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Reason ],
-						tier1: 'Slide 2 + Reason',
-						tier2: 'Slide 4 + Reason',
-						tier3: 'Slide 6 + Reason; prone'
+						tier1: 'Slide 2 + R',
+						tier2: 'Slide 4 + R',
+						tier3: 'Slide 6 + R; prone'
 					})
 				),
 				FactoryLogic.createAbilitySectionField({

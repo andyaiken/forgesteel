@@ -36,6 +36,7 @@ import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../enums/hero-state-page';
 import { HeroUpdateLogic } from '../../logic/update/hero-update-logic';
 import { HeroViewPage } from '../pages/heroes/hero-view/hero-view-page';
+import { Imbuement } from '../../models/imbuement';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
 import { Kit } from '../../models/kit';
@@ -330,6 +331,9 @@ export const Main = (props: Props) => {
 			case 'item':
 				createItem(original as Item | null, sourcebook);
 				break;
+			case 'imbuement':
+				createImbuement(original as Imbuement | null, sourcebook);
+				break;
 			case 'monster-group':
 				createMonsterGroup(original as MonsterGroup | null, sourcebook);
 				break;
@@ -378,6 +382,9 @@ export const Main = (props: Props) => {
 					break;
 				case 'item':
 					sourcebook.items = sourcebook.items.filter(x => x.id !== element.id);
+					break;
+				case 'imbuement':
+					sourcebook.imbuements = sourcebook.imbuements.filter(x => x.id !== element.id);
 					break;
 				case 'monster-group':
 					sourcebook.monsterGroups = sourcebook.monsterGroups.filter(x => x.id !== element.id);
@@ -429,6 +436,9 @@ export const Main = (props: Props) => {
 				case 'item':
 					sourcebook.items = sourcebook.items.map(x => x.id === element.id ? element : x) as Item[];
 					break;
+				case 'imbuement':
+					sourcebook.imbuements = sourcebook.imbuements.map(x => x.id === element.id ? element : x) as Imbuement[];
+					break;
 				case 'monster-group':
 					sourcebook.monsterGroups = sourcebook.monsterGroups.map(x => x.id === element.id ? element : x) as MonsterGroup[];
 					break;
@@ -452,6 +462,7 @@ export const Main = (props: Props) => {
 			...sourcebooks.flatMap(sb => sb.complications),
 			...sourcebooks.flatMap(sb => sb.cultures),
 			...sourcebooks.flatMap(sb => sb.domains),
+			...sourcebooks.flatMap(sb => sb.imbuements),
 			...sourcebooks.flatMap(sb => sb.items),
 			...sourcebooks.flatMap(sb => sb.kits),
 			...sourcebooks.flatMap(sb => sb.monsterGroups),
@@ -522,6 +533,10 @@ export const Main = (props: Props) => {
 			case 'item':
 				sourcebook.items.push(element as Item);
 				sourcebook.items = Collections.sort<Element>(sourcebook.items, item => item.name) as Item[];
+				break;
+			case 'imbuement':
+				sourcebook.imbuements.push(element as Imbuement);
+				sourcebook.imbuements = Collections.sort<Element>(sourcebook.imbuements, imbuement => imbuement.name) as Imbuement[];
 				break;
 			case 'monster-group':
 				sourcebook.monsterGroups.push(element as MonsterGroup);
@@ -867,6 +882,37 @@ export const Main = (props: Props) => {
 
 		sourcebook.items.push(item);
 		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('item', sourcebook.id, item.id));
+	};
+
+	const createImbuement = (original: Imbuement | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
+		} else {
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+		}
+
+		let imbuement: Imbuement;
+		if (original) {
+			imbuement = Utils.copy(original);
+			imbuement.id = Utils.guid();
+		} else {
+			imbuement = FactoryLogic.createImbuement({
+				type: ItemType.Consumable,
+				crafting: FactoryLogic.createProject({}),
+				level: 1,
+				feature: FactoryLogic.feature.create({
+					id: Utils.guid(),
+					name: '',
+					description: ''
+				})
+			});
+		}
+
+		sourcebook.imbuements.push(imbuement);
+		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('imbuement', sourcebook.id, imbuement.id));
 	};
 
 	const createMonsterGroup = (original: MonsterGroup | null, sourcebook: Sourcebook | null) => {

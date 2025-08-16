@@ -13,6 +13,8 @@ import { Domain } from '../../../models/domain';
 import { DomainPanel } from '../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../models/element';
 import { HeroClass } from '../../../models/class';
+import { Imbuement } from '../../../models/imbuement';
+import { ImbuementPanel } from '../../panels/elements/imbuement-panel/imbuement-panel';
 import { Item } from '../../../models/item';
 import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../models/kit';
@@ -90,6 +92,14 @@ export const ElementModal = (props: Props) => {
 					return (
 						<DomainPanel
 							domain={props.element as Domain}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
+				case 'imbuement':
+					return (
+						<ImbuementPanel
+							imbuement={props.element as Imbuement}
 							options={props.options}
 							mode={PanelMode.Full}
 						/>

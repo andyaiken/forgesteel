@@ -245,10 +245,10 @@ export class AbilityLogic {
 		// Potency: [weak | average | strong]
 		if (hero) {
 			text = text
-				.replace(/<\s*[[({]?weak[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'weak')}`)
-				.replace(/<\s*[[({]?average[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
-				.replace(/<\s*[[({]?avg[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
-				.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'strong')}`);
+				.replace(/<\s*[[({]?weak[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'weak')}`)
+				.replace(/<\s*[[({]?average[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'average')}`)
+				.replace(/<\s*[[({]?avg[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'average')}`)
+				.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'strong')}`);
 		}
 
 		// Equal to [N times] your [Characteristic(s)] score

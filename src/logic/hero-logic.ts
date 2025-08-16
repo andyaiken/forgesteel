@@ -805,8 +805,14 @@ export class HeroLogic {
 		});
 	};
 
-	static calculatePotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {
-		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
+	static getPotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {
+		const value = Math.max(
+			HeroLogic.getCharacteristic(hero, Characteristic.Might),
+			HeroLogic.getCharacteristic(hero, Characteristic.Agility),
+			HeroLogic.getCharacteristic(hero, Characteristic.Reason),
+			HeroLogic.getCharacteristic(hero, Characteristic.Intuition),
+			HeroLogic.getCharacteristic(hero, Characteristic.Presence)
+		);
 
 		switch (strength) {
 			case 'weak':

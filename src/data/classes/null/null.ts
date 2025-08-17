@@ -46,14 +46,17 @@ As a null, you resist the supernatural forces of the universe with composure and
 					name: 'Discipline',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '2'
 						},
 						{
+							tag: 'action',
 							trigger: 'The first time each combat round that an enemy in the area of your Null Field ability uses a main action',
 							value: '1'
 						},
 						{
+							tag: 'malice',
 							trigger: 'The first time each combat round that the Director uses an ability that costs Malice',
 							value: '1'
 						}
@@ -264,8 +267,10 @@ This ability remains active even after an encounter ends. It ends only if you ar
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'null-4-4',
 					name: 'Regenerative Field',
+					tag: 'action 2',
 					trigger: 'The first time each combat round that an enemy in the area of your Null Field ability uses a main action',
-					value: '2'
+					value: '2',
+					replacesTags: [ 'action' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-4-5',
@@ -347,8 +352,10 @@ Whenever you use an ability that is a main action or a maneuver with the Psionic
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'null-7-3',
 					name: 'Improved Body',
+					tag: 'start 2',
 					trigger: 'Start of your turn',
-					value: '3'
+					value: '3',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-7-4',
@@ -400,8 +407,10 @@ Whenever you use an ability that is a main action or a maneuver with the Psionic
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'null-10-2',
 					name: 'Manifold Body',
+					tag: 'start 3',
 					trigger: 'Start of your turn',
-					value: '4'
+					value: '4',
+					replacesTags: [ 'start', 'start 2' ]
 				}),
 				FactoryLogic.feature.create({
 					id: 'null-10-3',
@@ -419,6 +428,7 @@ Additionally, you and allies in the area of your Null Field ability ignore banes
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}

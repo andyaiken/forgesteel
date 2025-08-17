@@ -3,6 +3,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
+import { Format } from '../utils/format';
 import { FormatLogic } from './format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from './hero-logic';
@@ -232,8 +233,52 @@ export class AbilityLogic {
 					if (dice.length > 0) {
 						total = `${dice.join(' + ')} + ${total}`;
 					}
+
 					const damage = [ ...types, 'damage' ].join(' ');
+
 					return `${total} ${damage}`;
+				}
+
+				if (hero && (n === 0) && [ 'pull', 'push', 'slide' ].some(s => section.toLowerCase().includes(s))) {
+					let value = 0;
+					let sign = '+';
+					let vertical = false;
+					let type = '';
+					const dice: string[] = [];
+					const characteristics: Characteristic[] = [];
+
+					section.toLowerCase().split(' ').forEach(token => {
+						if ((token === 'pull') || (token === 'push') || (token === 'slide')) {
+							type = token;
+						} else if (token === 'vertical') {
+							vertical = true;
+						} else if (/\d+d\d+/.test(token)) {
+							dice.push(token);
+						} else if (!isNaN(parseInt(token))) {
+							value += parseInt(token);
+						} else if ((token === '+') || (token === '-')) {
+							sign = token;
+						} else if ((token === 'might') || (token === 'might,') || (token === 'm') || (token === 'm,')) {
+							characteristics.push(Characteristic.Might);
+						} else if ((token === 'agility') || (token === 'agility,') || (token === 'a') || (token === 'a,')) {
+							characteristics.push(Characteristic.Agility);
+						} else if ((token === 'reason') || (token === 'reason,') || (token === 'r') || (token === 'r,')) {
+							characteristics.push(Characteristic.Reason);
+						} else if ((token === 'intuition') || (token === 'intuition,') || (token === 'i') || (token === 'i,')) {
+							characteristics.push(Characteristic.Intuition);
+						} else if ((token === 'presence') || (token === 'presence,') || (token === 'p') || (token === 'p,')) {
+							characteristics.push(Characteristic.Presence);
+						}
+					});
+
+					const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
+					const maxCharValue = Collections.max(charValues, n => n) || 0;
+					let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
+					if (dice.length > 0) {
+						total = `${dice.join(' + ')} + ${total}`;
+					}
+
+					return Format.capitalize(vertical ? `vertical ${type} ${total}` : `${type} ${total}`);
 				}
 
 				return AbilityLogic.getTextEffect(section, hero);

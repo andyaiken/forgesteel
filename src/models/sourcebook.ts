@@ -5,6 +5,7 @@ import { Culture } from './culture';
 import { Domain } from './domain';
 import { Element } from './element';
 import { HeroClass } from './class';
+import { Imbuement } from './imbuement';
 import { Item } from './item';
 import { Kit } from './kit';
 import { Language } from './language';
@@ -29,6 +30,7 @@ export interface Sourcebook extends Element {
 	perks: Perk[];
 	titles: Title[];
 	items: Item[];
+	imbuements: Imbuement[];
 	monsterGroups: MonsterGroup[];
 	subclasses: SubClass[];
 	terrain: Terrain[];
@@ -38,4 +40,4 @@ export interface Sourcebook extends Element {
 	projects: Project[];
 }
 
-export type SourcebookElementKind = 'ancestry' | 'culture' | 'career' | 'class' | 'subclass' | 'complication' | 'kit' | 'domain' | 'perk' | 'title' | 'item' | 'monster-group' | 'terrain';
+export type SourcebookElementKind = 'ancestry' | 'culture' | 'career' | 'class' | 'subclass' | 'complication' | 'kit' | 'domain' | 'perk' | 'title' | 'item' | 'imbuement' | 'monster-group' | 'terrain';

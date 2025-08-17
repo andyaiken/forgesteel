@@ -434,6 +434,7 @@ export const FeatureEditPanel = (props: Props) => {
 		const addResourceGain = (data: FeatureHeroicResourceData) => {
 			const copy = Utils.copy(data);
 			copy.gains.push({
+				tag: '',
 				trigger: '',
 				value: '1'
 			});
@@ -452,6 +453,12 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setResourceGainTag = (data: FeatureHeroicResourceData, index: number, value: string) => {
+			const copy = Utils.copy(data);
+			copy.gains[index].tag = value;
+			setData(copy);
+		};
+
 		const setResourceGainTrigger = (data: FeatureHeroicResourceData, index: number, value: string) => {
 			const copy = Utils.copy(data);
 			copy.gains[index].trigger = value;
@@ -461,6 +468,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setResourceGainValue = (data: FeatureHeroicResourceData, index: number, value: string) => {
 			const copy = Utils.copy(data);
 			copy.gains[index].value = value;
+			setData(copy);
+		};
+
+		const setHeroicResourceGainTag = (data: FeatureHeroicResourceGainData, value: string) => {
+			const copy = Utils.copy(data);
+			copy.tag = value;
 			setData(copy);
 		};
 
@@ -1127,6 +1140,13 @@ export const FeatureEditPanel = (props: Props) => {
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText>Tag</HeaderText>
+										<Input
+											placeholder='Tag'
+											allowClear={true}
+											value={gain.tag}
+											onChange={e => setResourceGainTag(data, n, e.target.value)}
+										/>
 										<HeaderText>Trigger</HeaderText>
 										<Input
 											status={gain.value === '' ? 'warning' : ''}
@@ -1163,6 +1183,13 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureHeroicResourceGainData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Tag</HeaderText>
+						<Input
+							placeholder='Tag'
+							allowClear={true}
+							value={data.tag}
+							onChange={e => setHeroicResourceGainTag(data, e.target.value)}
+						/>
 						<HeaderText>Trigger</HeaderText>
 						<Input
 							status={data.value === '' ? 'warning' : ''}

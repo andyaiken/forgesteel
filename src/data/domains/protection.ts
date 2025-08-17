@@ -133,6 +133,7 @@ Additionally, you can place this spell on a building or vehicle (or a similar st
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that you or any ally within 10 squares gains temporary Stamina, or uses a triggered action to reduce incoming damage or impose a bane or double bane on an enemy’s power roll.',
 			value: '2'
 		}

@@ -14,7 +14,6 @@ import { Complication } from '../../../models/complication';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { ConditionType } from '../../../enums/condition-type';
 import { Culture } from '../../../models/culture';
-import { CultureData } from '../../../data/culture-data';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { Domain } from '../../../models/domain';
 import { Element } from '../../../models/element';
@@ -663,7 +662,7 @@ export const HeroPanel = (props: Props) => {
 								:
 								<div className='overview-tile clickable' onClick={onSelectCulture}>
 									<HeaderText>Culture</HeaderText>
-									{props.hero.culture.id !== CultureData.bespoke.id ? <Field label='Culture' value={props.hero.culture.name} /> : null}
+									{props.hero.culture ? <Field label='Culture' value={props.hero.culture.name} /> : null}
 									{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
 									{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
 									{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}

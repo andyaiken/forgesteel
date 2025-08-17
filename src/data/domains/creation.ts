@@ -167,6 +167,7 @@ On subsequent turns, you can use a main action to command the dragon to breathe 
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that a creature within 10 squares of you uses an area ability.',
 			value: '2'
 		}

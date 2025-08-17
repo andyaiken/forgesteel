@@ -170,6 +170,7 @@ Each benefit lasts until the creature who gains it finishes another respite.`
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that you or a creature within 10 squares takes acid, cold, fire, lightning, poison, or sonic damage',
 			value: '2'
 		}

@@ -48,10 +48,12 @@ As a talent, you are limited only by the strength of your mind. But the ability 
 					name: 'Clarity',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '1d3'
 						},
 						{
+							tag: 'move',
 							trigger: 'The first time each combat round that a creature is force moved',
 							value: '1'
 						}
@@ -328,8 +330,10 @@ Any abilities or features you use originate from your mind. Both your mind and y
 						FactoryLogic.feature.createHeroicResourceGain({
 							id: 'talent-4-3b',
 							name: 'Mind Recovery',
+							tag: 'move 2',
 							trigger: 'The first time each combat round that a creature is force moved',
-							value: '2'
+							value: '2',
+							replacesTags: [ 'move' ]
 						})
 					]
 				}),
@@ -451,8 +455,10 @@ If you are strained while flying and are force moved, the forced movement distan
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'talent-7-4',
 					name: 'Lucid Mind',
+					tag: 'start 2',
 					trigger: 'Start of your turn',
-					value: '1d3 + 1'
+					value: '1d3 + 1',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-7-5',
@@ -523,8 +529,10 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'talent-10-2',
 					name: 'Clear Mind',
+					tag: 'move 2',
 					trigger: 'The first time each combat round that a creature is force moved',
-					value: '2'
+					value: '2',
+					replacesTags: [ 'move' ]
 				}),
 				FactoryLogic.feature.createMultiple({
 					id: 'talent-10-3',
@@ -553,8 +561,10 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 						FactoryLogic.feature.createHeroicResourceGain({
 							id: 'talent-10-5a',
 							name: 'Psion',
+							tag: 'start 3',
 							trigger: 'Start of your turn',
-							value: '1d3 + 2'
+							value: '1d3 + 2',
+							replacesTags: [ 'start', 'start 2' ]
 						}),
 						FactoryLogic.feature.create({
 							id: 'talent-10-5b',
@@ -573,6 +583,7 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}

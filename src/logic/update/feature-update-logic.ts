@@ -1,13 +1,13 @@
+import { AbilityUpdateLogic } from './ability-update-logic';
 import { Feature } from '../../models/feature';
 import { FeatureType } from '../../enums/feature-type';
+import { ItemUpdateLogic } from './item-update-logic';
 
 export class FeatureUpdateLogic {
 	static updateFeature = (feature: Feature) => {
 		switch (feature.type) {
 			case FeatureType.Ability:
-				if (feature.data.ability.sections === undefined) {
-					feature.data.ability.sections = [];
-				}
+				AbilityUpdateLogic.updateAbility(feature.data.ability);
 				break;
 			case FeatureType.Bonus:
 				if (feature.data.valueCharacteristics === undefined) {
@@ -54,24 +54,7 @@ export class FeatureUpdateLogic {
 				}
 				break;
 			case FeatureType.ItemChoice:
-				feature.data.selected.forEach(item => {
-					if (item.customizationsByLevel === undefined) {
-						item.customizationsByLevel = [
-							{
-								level: 1,
-								features: []
-							},
-							{
-								level: 5,
-								features: []
-							},
-							{
-								level: 9,
-								features: []
-							}
-						];
-					}
-				});
+				feature.data.selected.forEach(ItemUpdateLogic.updateItem);
 				break;
 			case FeatureType.Kit:
 				if (feature.data.types.includes('Standard')) {

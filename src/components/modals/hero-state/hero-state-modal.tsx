@@ -509,6 +509,7 @@ export const HeroStateModal = (props: Props) => {
 								item={item}
 								options={props.options}
 								hero={hero}
+								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
 								onChange={changeItem}
 							/>

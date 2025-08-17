@@ -27,6 +27,7 @@ import { FeatureType } from '../enums/feature-type';
 import { Follower } from '../models/follower';
 import { FollowerType } from '../enums/follower-type';
 import { HeroClass } from '../models/class';
+import { Imbuement } from '../models/imbuement';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { KitArmor } from '../enums/kit-armor';
@@ -125,6 +126,7 @@ export class FactoryLogic {
 			perks: [],
 			titles: [],
 			items: [],
+			imbuements: [],
 			monsterGroups: [],
 			skills: [],
 			languages: [],
@@ -360,7 +362,7 @@ export class FactoryLogic {
 		crafting?: Project,
 		effect?: string,
 		featuresByLevel?: { level: number, features: Feature[] }[],
-		customizationsByLevel?: { level: number, features: { feature: Feature, selected: boolean }[] }[]
+		imbuements?: Imbuement[]
 	}): Item => {
 		return {
 			id: data.id,
@@ -384,21 +386,27 @@ export class FactoryLogic {
 					features: []
 				}
 			],
-			customizationsByLevel: data.customizationsByLevel || [
-				{
-					level: 1,
-					features: []
-				},
-				{
-					level: 5,
-					features: []
-				},
-				{
-					level: 9,
-					features: []
-				}
-			],
-			count: 1
+			imbuements: data.imbuements || [],
+			count: 1,
+
+			customizationsByLevel: []
+		};
+	};
+
+	static createImbuement = (data: {
+		type: ItemType,
+		crafting?: Project,
+		level: number,
+		feature: Feature
+	}): Imbuement => {
+		return {
+			id: data.feature.id,
+			name: data.feature.name,
+			description: data.feature.description,
+			type: data.type,
+			crafting: data.crafting || null,
+			level: data.level,
+			feature: data.feature
 		};
 	};
 

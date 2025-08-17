@@ -2,17 +2,22 @@ import { Alert, Button, Divider, Space, Tag } from 'antd';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
+import { FeatureConfigPanel } from '../../feature-config-panel/feature-config-panel';
+import { FeatureData } from '../../../../models/feature';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
+import { Imbuement } from '../../../../models/imbuement';
 import { Item } from '../../../../models/item';
 import { ItemType } from '../../../../enums/item-type';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
@@ -22,7 +27,7 @@ interface Props {
 	item: Item;
 	options: Options;
 	hero?: Hero;
-	showCustomizations?: boolean;
+	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 	onChange?: (item: Item) => void;
 }
@@ -30,15 +35,18 @@ interface Props {
 export const ItemPanel = (props: Props) => {
 	const [ item, setItem ] = useState<Item>(Utils.copy(props.item));
 
-	const toggleCustomization = (featureID: string) => {
+	const addImbuement = (imbuement: Imbuement) => {
 		const copy = Utils.copy(item);
-		copy.customizationsByLevel.forEach(lvl => {
-			lvl.features.forEach(f => {
-				if (f.feature.id === featureID) {
-					f.selected = !f.selected;
-				}
-			});
-		});
+		copy.imbuements.push(imbuement);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+		setItem(copy);
+	};
+
+	const removeImbuement = (featureID: string) => {
+		const copy = Utils.copy(item);
+		copy.imbuements = copy.imbuements.filter(imbuement => imbuement.feature.id !== featureID);
 		if (props.onChange) {
 			props.onChange(copy);
 		}
@@ -54,11 +62,25 @@ export const ItemPanel = (props: Props) => {
 		setItem(copy);
 	};
 
-	const getAvailableCustomizations = () => {
-		const selectedNames = item.customizationsByLevel.flatMap(lvl => lvl.features).filter(f => f.selected).map(f => f.feature.name.toLowerCase());
-		const selectedLvl1 = item.customizationsByLevel.filter(lvl => lvl.level === 1).flatMap(lvl => lvl.features).filter(f => f.selected);
-		const selectedLvl5 = item.customizationsByLevel.filter(lvl => lvl.level === 5).flatMap(lvl => lvl.features).filter(f => f.selected);
-		const selectedLvl9 = item.customizationsByLevel.filter(lvl => lvl.level === 9).flatMap(lvl => lvl.features).filter(f => f.selected);
+	const setFeatureData = (featureID: string, data: FeatureData) => {
+		const copy = Utils.copy(item);
+		const feature = copy.imbuements
+			.map(f => f.feature)
+			.find(f => f.id === featureID);
+		if (feature) {
+			feature.data = data;
+		}
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+		setItem(copy);
+	};
+
+	const getAvailableImbuements = () => {
+		const selectedNames = item.imbuements.map(imbuement => imbuement.feature.name.toLowerCase());
+		const selectedLvl1 = item.imbuements.filter(imbuement => imbuement.level === 1);
+		const selectedLvl5 = item.imbuements.filter(imbuement => imbuement.level === 5);
+		const selectedLvl9 = item.imbuements.filter(imbuement => imbuement.level === 9);
 
 		let level = 0;
 		if ((selectedLvl1.length === 0) && (selectedLvl5.length === 0) && (selectedLvl9.length === 0)) {
@@ -73,11 +95,13 @@ export const ItemPanel = (props: Props) => {
 			level = 9;
 		}
 
-		const options = item.customizationsByLevel
-			.filter(lvl => lvl.level === level)
-			.flatMap(lvl => lvl.features)
-			.filter(f => {
-				const featureName = f.feature.name.toLowerCase();
+		const options = SourcebookLogic.getImbuements(props.sourcebooks ?? [])
+			.filter(imbuement => {
+				if (imbuement.level !== level || imbuement.type !== item.type) {
+					return false;
+				}
+
+				const featureName = imbuement.feature.name.toLowerCase();
 
 				if (featureName.endsWith(' iii')) {
 					const index = featureName.lastIndexOf(' ');
@@ -99,30 +123,21 @@ export const ItemPanel = (props: Props) => {
 				{
 					options.map(f => (
 						<div key={f.feature.id}>
-							<FeaturePanel feature={f.feature} options={props.options} mode={PanelMode.Full} />
-							{
-								f.selected ?
-									<Alert
-										type='info'
-										showIcon={true}
-										message='This customization has been selected.'
-									/>
-									:
-									<Button block={true} onClick={() => toggleCustomization(f.feature.id)}>Select</Button>
-							}
+							<FeaturePanel feature={f.feature} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+							<Button block={true} onClick={() => addImbuement(f)}>Select</Button>
 						</div>
 					))
 				}
 				{
 					options.length === 0 ?
-						<Empty text='No customizations are available.' />
+						<Empty text='No imbuements are available.' />
 						: null
 				}
 			</Space>
 		);
 	};
 
-	const customizable = item.customizationsByLevel.flatMap(lvl => lvl.features).length > 0;
+	const imbueable = item.type === ItemType.ImbuedArmor || item.type === ItemType.ImbuedImplement || item.type === ItemType.ImbuedWeapon;
 
 	try {
 		return (
@@ -140,16 +155,14 @@ export const ItemPanel = (props: Props) => {
 					}
 					<Markdown text={item.description} />
 					{
-						item.customizationsByLevel
-							.flatMap(lvl => lvl.features)
-							.filter(f => f.selected)
+						item.imbuements
 							.map(f => f.feature)
 							.map(f => (
 								<div key={f.id} style={{ margin: '10px 0' }}>
-									<FeaturePanel feature={f} options={props.options} mode={PanelMode.Full} />
+									<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={setFeatureData} />
 									{
 										props.onChange ?
-											<Button block={true} onClick={() => toggleCustomization(f.id)}>Unselect</Button>
+											<Button block={true} onClick={() => removeImbuement(f.id)}>Unselect</Button>
 											: null
 									}
 								</div>
@@ -172,21 +185,9 @@ export const ItemPanel = (props: Props) => {
 							: null
 					}
 					{
-						props.showCustomizations ?
-							props.item.customizationsByLevel
-								.filter(lvl => lvl.features.length > 0)
-								.map(lvl => (
-									<div key={lvl.level}>
-										<HeaderText level={1}>Customization: Level {lvl.level}</HeaderText>
-										{lvl.features.map(f => <FeaturePanel key={f.feature.id} feature={f.feature} options={props.options} mode={PanelMode.Full} />)}
-									</div>
-								))
-							: null
-					}
-					{
-						props.onChange && customizable ?
-							<Expander title='Customization'>
-								{getAvailableCustomizations()}
+						props.onChange && imbueable ?
+							<Expander title='Imbue'>
+								{getAvailableImbuements()}
 							</Expander>
 							: null
 					}

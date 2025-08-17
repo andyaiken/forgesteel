@@ -58,8 +58,8 @@ import './feature-config-panel.scss';
 interface Props {
 	feature: Feature | Perk;
 	options: Options;
-	hero: Hero;
-	sourcebooks: Sourcebook[];
+	hero?: Hero;
+	sourcebooks?: Sourcebook[];
 	setData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -740,7 +740,7 @@ export const FeatureConfigPanel = (props: Props) => {
 	};
 
 	const getSelectionItemChoice = (data: FeatureItemChoiceData) => {
-		if (!props.hero) {
+		if (!props.hero || !props.sourcebooks) {
 			return null;
 		}
 
@@ -913,7 +913,11 @@ export const FeatureConfigPanel = (props: Props) => {
 	};
 
 	const getSelectionLanguageChoice = (data: FeatureLanguageChoiceData) => {
-		const currentLanguages = (props.hero && props.sourcebooks) ? HeroLogic.getLanguages(props.hero, props.sourcebooks).map(l => l.name) : [];
+		if (!props.hero || !props.sourcebooks) {
+			return null;
+		}
+
+		const currentLanguages = HeroLogic.getLanguages(props.hero, props.sourcebooks).map(l => l.name);
 		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[])
 			.filter(l => !currentLanguages.includes(l.name));
 		const distinctLanguages = Collections.distinct(languages, l => l.name);
@@ -933,7 +937,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map((language, n) => {
-						const lang = SourcebookLogic.getLanguage(language, props.sourcebooks);
+						const lang = SourcebookLogic.getLanguage(language, props.sourcebooks!);
 						return (
 							<Flex key={n} className='selection-box' align='center' gap={10}>
 								{
@@ -1074,7 +1078,10 @@ export const FeatureConfigPanel = (props: Props) => {
 	};
 
 	const getSelectionSkillChoice = (data: FeatureSkillChoiceData) => {
-		const currentSkills = (props.hero && props.sourcebooks) ? HeroLogic.getSkills(props.hero, props.sourcebooks).map(s => s.name) : [];
+		if (!props.hero || !props.sourcebooks) {
+			return null;
+		}
+		const currentSkills = HeroLogic.getSkills(props.hero, props.sourcebooks).map(s => s.name);
 		const skills = SourcebookLogic.getSkills(props.sourcebooks as Sourcebook[])
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)))
 			.filter(skill => !currentSkills.includes(skill.name));
@@ -1095,7 +1102,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map((skill, n) => {
-						const sk = SourcebookLogic.getSkill(skill, props.sourcebooks);
+						const sk = SourcebookLogic.getSkill(skill, props.sourcebooks!);
 						return (
 							<Flex key={n} className='selection-box' align='center' gap={10}>
 								{

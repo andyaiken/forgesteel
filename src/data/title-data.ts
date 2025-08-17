@@ -885,7 +885,7 @@ At a dramatic moment determined by the Director, you rejoin your party with an e
 				]
 			}),
 			FactoryLogic.feature.createMultiple({
-				id: 'title-fey-friend-2',
+				id: 'title-fey-friend-3',
 				name: 'Gift of Knowledge',
 				features: [
 					FactoryLogic.feature.createLanguageChoice({

@@ -1314,7 +1314,8 @@ export const FeatureConfigPanel = (props: Props) => {
 
 		const customTitle = FactoryLogic.createTitle();
 		customTitle.name = 'Custom Title';
-		customTitle.features.push(FactoryLogic.feature.create({ id: Utils.guid(), name: 'Custom Benefit', description: 'Details' }));
+		customTitle.echelon = data.echelon;
+		customTitle.features.push(FactoryLogic.feature.create({ id: Utils.guid(), name: 'Custom Title', description: 'Details' }));
 
 		const getAddButton = () => {
 			return (

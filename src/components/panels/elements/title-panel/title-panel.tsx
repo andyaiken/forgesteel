@@ -34,18 +34,23 @@ export const TitlePanel = (props: Props) => {
 		const selectedFeature = title.features.find(f => f.id === title.selectedFeatureID);
 		const editable = selectedFeature && (selectedFeature.type === FeatureType.Text);
 
-		const setName = (value: string) => {
+		const setFeatureName = (value: string) => {
 			const copy = Utils.copy(title);
 			copy.name = value;
+			copy.features
+				.filter(f => f.id === title.selectedFeatureID)
+				.forEach(f => f.name = value);
 			setTitle(copy);
 			if (props.onChange) {
 				props.onChange(copy);
 			}
 		};
 
-		const setDescription = (value: string) => {
+		const setFeatureDescription = (value: string) => {
 			const copy = Utils.copy(title);
-			copy.description = value;
+			copy.features
+				.filter(f => f.id === title.selectedFeatureID)
+				.forEach(f => f.description = value);
 			setTitle(copy);
 			if (props.onChange) {
 				props.onChange(copy);
@@ -54,18 +59,18 @@ export const TitlePanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? props.title.id : undefined}>
+				<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? title.id : undefined}>
 					<HeaderText
 						level={1}
-						tags={[ `Echelon ${props.title.echelon}` ]}
+						tags={[ `Echelon ${title.echelon}` ]}
 						extra={
 							editable ? <Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} /> : null
 						}
 					>
-						{props.title.name || 'Unnamed Title'}
+						{title.name || 'Unnamed Title'}
 					</HeaderText>
-					<Markdown text={props.title.description} />
-					{props.title.prerequisites ? <Field label='Prerequisites' value={props.title.prerequisites} /> : null}
+					<Markdown text={title.description} />
+					{title.prerequisites ? <Field label='Prerequisites' value={title.prerequisites} /> : null}
 					{
 						props.mode === PanelMode.Full ?
 							selectedFeature && editing ?
@@ -76,16 +81,16 @@ export const TitlePanel = (props: Props) => {
 										placeholder='Name'
 										allowClear={true}
 										value={selectedFeature.name}
-										onChange={e => setName(e.target.value)}
+										onChange={e => setFeatureName(e.target.value)}
 									/>
 									<HeaderText>Description</HeaderText>
-									<MultiLine value={selectedFeature.description} onChange={setDescription} />
+									<MultiLine value={selectedFeature.description} onChange={setFeatureDescription} />
 								</div>
 								:
 								<div className='features'>
 									{
-										props.title.features
-											.filter(f => props.title.selectedFeatureID ? (f.id === props.title.selectedFeatureID) : true)
+										title.features
+											.filter(f => title.selectedFeatureID ? (f.id === title.selectedFeatureID) : true)
 											.map(f => (
 												<FeaturePanel
 													key={f.id}

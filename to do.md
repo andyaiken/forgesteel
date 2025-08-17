@@ -1,7 +1,5 @@
 # Development Plans
 
-Bug: custom title names cannot be changed
-
 ### Heroes
 
 * Automatic update of library resources when there is a newer version

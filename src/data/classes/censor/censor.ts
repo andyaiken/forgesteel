@@ -43,14 +43,17 @@ As a censor, you’re at your best against the strongest foes. Your judgment ter
 					name: 'Wrath',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '2'
 						},
 						{
+							tag: 'take-damage',
 							trigger: 'The first time each round that a creature judged by you deals damage to you',
 							value: '1'
 						},
 						{
+							tag: 'deal-damage',
 							trigger: 'The first time each round that you deal damage to a creature judged by you',
 							value: '1'
 						}
@@ -179,8 +182,10 @@ You can choose only one free triggered action option at a time, even if multiple
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'censor-4-4',
 					name: 'Wrath Beyond Wrath',
+					tag: 'deal-damage 2',
 					trigger: 'The first time each round that you deal damage to a creature judged by you',
-					value: '2'
+					value: '2',
+					replacesTags: [ 'deal-damage' ]
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'censor-4-5',
@@ -251,8 +256,10 @@ You can choose only one free triggered action option at a time, even if multiple
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'censor-7-3',
 					name: 'Focused Wrath',
+					tag: 'start 2',
 					trigger: 'Start of your turn',
-					value: '2'
+					value: '2',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-7-4',
@@ -319,20 +326,29 @@ While you rest in their presence, your god might also give you priority targets 
   
   				`
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResource({
 					id: 'censor-10-5',
 					name: 'Virtue',
-					description: `You have an epic resource called virtue. Each time you finish a respite, you gain virtue equal to the XP you gain. You can spend virtue on your abilities as if it were wrath.
-
-Additionally, you can spend 3 virtue to access one of your deity’s domains that you usually don’t have access to. When you do, you can use that domain’s features until you finish another respite.
+					type: 'epic',
+					gains: [
+						{
+							tag: '',
+							trigger: 'Finish a respite',
+							value: 'XP gained'
+						}
+					],
+					description: `
+You can spend 3 virtue to access one of your deity’s domains that you usually don’t have access to. When you do, you can use that domain’s features until you finish another respite.
 
 Virtue remains until you spend it.`
 				}),
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'censor-10-6',
 					name: 'Wrath of the Gods',
+					tag: 'start 3',
 					trigger: 'Start of your turn',
-					value: '4'
+					value: '4',
+					replacesTags: [ 'start', 'start 2' ]
 				})
 			]
 		}

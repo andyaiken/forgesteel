@@ -52,6 +52,19 @@ export class FeatureUpdateLogic {
 				if (feature.data.type === undefined) {
 					feature.data.type = 'heroic';
 				}
+				feature.data.gains.forEach(g => {
+					if (g.tag === undefined) {
+						g.tag = '';
+					}
+				});
+				break;
+			case FeatureType.HeroicResourceGain:
+				if (feature.data.tag === undefined) {
+					feature.data.tag = '';
+				}
+				if (feature.data.replacesTags === undefined) {
+					feature.data.replacesTags = [];
+				}
 				break;
 			case FeatureType.ItemChoice:
 				feature.data.selected.forEach(ItemUpdateLogic.updateItem);

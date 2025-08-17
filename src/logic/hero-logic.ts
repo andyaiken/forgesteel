@@ -716,25 +716,45 @@ export class HeroLogic {
 		return HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.HeroicResource)
-			.map(f => ({
-				id: f.id,
-				name: f.name,
-				type: f.data.type,
-				gains: [
-					...f.data.gains,
-					...HeroLogic.getFeatures(hero)
-						.map(f => f.feature)
-						.filter(f => f.type === FeatureType.HeroicResourceGain)
-						.map(f => f.data),
-					...HeroLogic.getDomains(hero)
-						.flatMap(d => d.resourceGains)
-						.filter(g => g.resource === f.name)
-						.map(g => g)
-				],
-				details: f.data.details,
-				canBeNegative: f.data.canBeNegative,
-				value: f.data.value
-			}));
+			.map(f => {
+				let gains = [];
+				switch (f.data.type) {
+					case 'heroic': {
+						const gainsFromFeatures = HeroLogic.getFeatures(hero)
+							.map(f => f.feature)
+							.filter(f => f.type === FeatureType.HeroicResourceGain)
+							.map(f => f.data);
+
+						const gainsFromDomains = HeroLogic.getDomains(hero)
+							.flatMap(d => d.resourceGains)
+							.filter(g => g.resource === f.name)
+							.map(g => g);
+
+						const replacedTags = gainsFromFeatures.flatMap(g => g.replacesTags);
+
+						gains = [
+							...f.data.gains,
+							...gainsFromFeatures,
+							...gainsFromDomains
+						].filter(g => !replacedTags.includes(g.tag));
+						break;
+					}
+					case 'epic': {
+						gains = f.data.gains;
+						break;
+					}
+				}
+
+				return {
+					id: f.id,
+					name: f.name,
+					type: f.data.type,
+					gains: gains,
+					details: f.data.details,
+					canBeNegative: f.data.canBeNegative,
+					value: f.data.value
+				};
+			});
 	};
 
 	///////////////////////////////////////////////////////////////////////////

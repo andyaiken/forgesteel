@@ -8,6 +8,7 @@ export interface Domain extends Element {
 	}[];
 	resourceGains: {
 		resource: string;
+		tag: string;
 		trigger: string;
 		value: string;
 	}[];

@@ -43,14 +43,17 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 					name: 'Ferocity',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '1d3'
 						},
 						{
+							tag: 'take-damage',
 							trigger: 'The first time each combat round that you take damage',
 							value: '1'
 						},
 						{
+							tag: 'winded',
 							trigger: 'The first time you become winded or are dying in an encounter',
 							value: '1d3'
 						}
@@ -119,8 +122,10 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'fury-4-2',
 					name: 'Damaging Ferocity',
+					tag: 'take-damage 2',
 					trigger: 'The first time each combat round that you take damage',
-					value: '2'
+					value: '2',
+					replacesTags: [ 'take-damage' ]
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'fury-4-3'
@@ -213,8 +218,10 @@ Additionally, if you are a berserker or reaver, you have immunity to acid, cold,
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'fury-7-3',
 					name: 'Greater Ferocity',
+					tag: 'start 2',
 					trigger: 'Start of your turn',
-					value: '1d3 + 1'
+					value: '1d3 + 1',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-7-4'
@@ -272,8 +279,10 @@ Additionally, when you use Primordial Strike, you can spend up to 3 ferocity, ga
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'fury-10-4',
 					name: 'Primordial Ferocity',
+					tag: 'take-damage 3',
 					trigger: 'The first time each combat round that you take damage',
-					value: '3'
+					value: '3',
+					replacesTags: [ 'take-damage', 'take-damage 2' ]
 				}),
 				FactoryLogic.feature.createHeroicResource({
 					id: 'fury-10-5',
@@ -281,6 +290,7 @@ Additionally, when you use Primordial Strike, you can spend up to 3 ferocity, ga
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}

@@ -463,8 +463,10 @@ export class FeatureLogic {
 				break;
 			case FeatureType.HeroicResourceGain:
 				data = {
+					tag: '',
 					trigger: '',
-					value: '1'
+					value: '1',
+					replacesTags: []
 				} as FeatureHeroicResourceGainData;
 				break;
 			case FeatureType.ItemChoice:

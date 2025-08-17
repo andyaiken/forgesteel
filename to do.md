@@ -1,7 +1,6 @@
 # Development Plans
 
-Allow HRG features to override others
-Allow custom title name to be changed
+Bug: custom title names cannot be changed
 
 ### Heroes
 

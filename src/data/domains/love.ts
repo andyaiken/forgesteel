@@ -144,6 +144,7 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that you or any ally within 10 squares uses the Aid Attack maneuver or an ability that targets an ally',
 			value: '2'
 		}

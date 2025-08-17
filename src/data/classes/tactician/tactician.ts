@@ -43,14 +43,17 @@ As a tactician, you have abilities that heal your allies and grant them increase
 					name: 'Focus',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '2'
 						},
 						{
+							tag: 'deal-damage',
 							trigger: 'The first time each round that you or an ally damages a creature you have marked',
 							value: '1'
 						},
 						{
+							tag: 'ability',
 							trigger: 'The first time in a round that an ally within 10 squares of you uses a heroic ability',
 							value: '1'
 						}
@@ -168,8 +171,10 @@ You can’t gain more than one benefit from the same trigger.`),
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'tactician-4-2',
 					name: 'Focus on Their Weakness',
+					tag: 'deal-damage 2',
 					trigger: 'The first time each round that you or an ally damages a creature you have marked',
-					value: '2'
+					value: '2',
+					replacesTags: [ 'deal-damage' ]
 				}),
 				FactoryLogic.feature.create({
 					id: 'tactician-4-3',
@@ -239,8 +244,10 @@ You can’t gain more than one benefit from the same trigger.`),
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'tactician-7-2',
 					name: 'Heightened Focus',
+					tag: 'start 2',
 					trigger: 'Start of your turn',
-					value: '3'
+					value: '3',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.create({
 					id: 'tactician-7-3',
@@ -294,6 +301,7 @@ You can’t gain more than one benefit from the same trigger.`),
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}

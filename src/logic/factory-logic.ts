@@ -228,6 +228,7 @@ export class FactoryLogic {
 					name: 'Heroic Resource',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '2'
 						}

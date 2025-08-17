@@ -1,8 +1,8 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
-import { DamageType } from '../../enums/damage-type';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureField } from '../../enums/feature-field';
 import { Imbuement } from '../../models/imbuement';

@@ -3,6 +3,7 @@ import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { Hero } from '../../models/hero';
 import { HeroLogic } from '../hero-logic';
+import { ItemUpdateLogic } from './item-update-logic';
 import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookData } from '../../data/sourcebook-data';
 import { SourcebookLogic } from '../sourcebook-logic';
@@ -110,24 +111,7 @@ export class HeroUpdateLogic {
 			hero.state.defeated = false;
 		}
 
-		hero.state.inventory.forEach(item => {
-			if (item.customizationsByLevel === undefined) {
-				item.customizationsByLevel = [
-					{
-						level: 1,
-						features: []
-					},
-					{
-						level: 5,
-						features: []
-					},
-					{
-						level: 9,
-						features: []
-					}
-				];
-			}
-		});
+		hero.state.inventory.forEach(ItemUpdateLogic.updateItem);
 
 		if (hero.abilityCustomizations === undefined) {
 			hero.abilityCustomizations = [];

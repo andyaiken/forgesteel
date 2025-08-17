@@ -21,6 +21,8 @@ import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
+import { Imbuement } from '../../../../models/imbuement';
+import { ImbuementPanel } from '../../../panels/elements/imbuement-panel/imbuement-panel';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
@@ -160,6 +162,17 @@ export const LibraryViewPage = (props: Props) => {
 				/>
 			);
 			break;
+		case 'imbuement':
+			element = props.sourcebooks.flatMap(sb => sb.imbuements).find(x => x.id === elementID) as Element;
+			sourcebook = SourcebookLogic.getImbuementSourcebook(props.sourcebooks, element as Imbuement) as Sourcebook;
+			panel = (
+				<ImbuementPanel
+					imbuement={element as Imbuement}
+					options={props.options}
+					mode={PanelMode.Full}
+				/>
+			);
+			break;
 		case 'item':
 			element = props.sourcebooks.flatMap(sb => sb.items).find(x => x.id === elementID) as Element;
 			sourcebook = SourcebookLogic.getItemSourcebook(props.sourcebooks, element as Item) as Sourcebook;
@@ -167,7 +180,6 @@ export const LibraryViewPage = (props: Props) => {
 				<ItemPanel
 					item={element as Item}
 					options={props.options}
-					showCustomizations={true}
 					mode={PanelMode.Full}
 				/>
 			);

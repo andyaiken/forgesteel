@@ -69,6 +69,7 @@ export const AppFooter = (props: Props) => {
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('complication')}>Complications</Button>
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('culture')}>Cultures</Button>
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('domain')}>Domains</Button>
+									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('imbuement')}>Imbuements</Button>
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('item')}>Items</Button>
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('kit')}>Kits</Button>
 									<Button type='text' block={true} onClick={() => navigation.goToLibraryList('monster-group')}>Monsters</Button>

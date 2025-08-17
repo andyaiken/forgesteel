@@ -46,6 +46,7 @@ export const DirectoryModal = (props: Props) => {
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('complication'); props.onClose(); }}>Complications</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('culture'); props.onClose(); }}>Cultures</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('domain'); props.onClose(); }}>Domains</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('imbuement'); props.onClose(); }}>Imbuements</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('item'); props.onClose(); }}>Items</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('kit'); props.onClose(); }}>Kits</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('monster-group'); props.onClose(); }}>Monsters</div>

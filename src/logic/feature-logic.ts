@@ -121,152 +121,145 @@ export class FeatureLogic {
 				});
 			});
 
-		if (item.customizationsByLevel) {
-			item.customizationsByLevel
-				.forEach(lvl => {
-					lvl.features
-						.filter(f => f.selected)
-						.map(f => f.feature)
-						.forEach(f => {
-							if (f.type === FeatureType.Text) {
-								if (f.description) {
-									if (f.name) {
-										ft.description += '\n\n';
-										ft.description += `**${f.name}**`;
-									}
-									ft.description += '\n\n';
-									ft.description += f.description;
-								}
-							} else {
-								features.push({ feature: f, source: item.name });
-							}
-						});
-				});
+		item.imbuements.map(imbuement => imbuement.feature)
+			.forEach(feature => {
+				if (feature.type === FeatureType.Text) {
+					if (feature.description) {
+						if (feature.name) {
+							ft.description += '\n\n';
+							ft.description += `**${feature.name}**`;
+						}
+						ft.description += '\n\n';
+						ft.description += feature.description;
+					}
+				} else {
+					features.push({ feature: feature, source: item.name });
+				}
+			});
 
-			const hasLvl1 = item.customizationsByLevel.filter(lvl => lvl.level === 1).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
-			const hasLvl5 = item.customizationsByLevel.filter(lvl => lvl.level === 5).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
-			const hasLvl9 = item.customizationsByLevel.filter(lvl => lvl.level === 9).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
-			if (item.type === ItemType.ImbuedArmor) {
-				// Imbued armor grants +6 / +12 / +21 stamina based on highest enhancement tier
-				if (hasLvl1) {
-					features.push({
-						feature: FactoryLogic.feature.createBonus({
-							id: item.name + '-bonus-1',
-							field: FeatureField.Stamina,
-							value: 6
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl5) {
-					features.push({
-						feature: FactoryLogic.feature.createBonus({
-							id: item.name + '-bonus-5',
-							field: FeatureField.Stamina,
-							value: 6
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl9) {
-					features.push({
-						feature: FactoryLogic.feature.createBonus({
-							id: item.name + '-bonus-9',
-							field: FeatureField.Stamina,
-							value: 9
-						}),
-						source: item.name
-					});
-				}
+		const hasLvl1 = item.imbuements.filter(lvl => lvl.level === 1).length > 0;
+		const hasLvl5 = item.imbuements.filter(lvl => lvl.level === 5).length > 0;
+		const hasLvl9 = item.imbuements.filter(lvl => lvl.level === 9).length > 0;
+		if (item.type === ItemType.ImbuedArmor) {
+			// Imbued armor grants +6 / +12 / +21 stamina based on highest enhancement tier
+			if (hasLvl1) {
+				features.push({
+					feature: FactoryLogic.feature.createBonus({
+						id: item.name + '-bonus-1',
+						field: FeatureField.Stamina,
+						value: 6
+					}),
+					source: item.name
+				});
 			}
-			if (item.type === ItemType.ImbuedImplement) {
-				// Imbued implement grants +1 / +2 / +3 damage to magic / psionic abilities based on highest enhancement tier
-				if (hasLvl1) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-1a',
-							keywords: [ AbilityKeyword.Magic ],
-							value: 1
-						}),
-						source: item.name
-					});
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-1b',
-							keywords: [ AbilityKeyword.Psionic ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl5) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-5a',
-							keywords: [ AbilityKeyword.Magic ],
-							value: 1
-						}),
-						source: item.name
-					});
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-5b',
-							keywords: [ AbilityKeyword.Psionic ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl9) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-9a',
-							keywords: [ AbilityKeyword.Magic ],
-							value: 1
-						}),
-						source: item.name
-					});
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-9b',
-							keywords: [ AbilityKeyword.Psionic ],
-							value: 1
-						}), source: item.name
-					});
-				}
+			if (hasLvl5) {
+				features.push({
+					feature: FactoryLogic.feature.createBonus({
+						id: item.name + '-bonus-5',
+						field: FeatureField.Stamina,
+						value: 6
+					}),
+					source: item.name
+				});
 			}
-			if (item.type === ItemType.ImbuedWeapon) {
-				// Imbued weapon grants +1 / +2 / +3 damage to weapon abilities based on highest enhancement tier
-				if (hasLvl1) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-1',
-							keywords: [ AbilityKeyword.Weapon ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl5) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-5',
-							keywords: [ AbilityKeyword.Weapon ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl9) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-9',
-							keywords: [ AbilityKeyword.Weapon ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
+			if (hasLvl9) {
+				features.push({
+					feature: FactoryLogic.feature.createBonus({
+						id: item.name + '-bonus-9',
+						field: FeatureField.Stamina,
+						value: 9
+					}),
+					source: item.name
+				});
+			}
+		}
+		if (item.type === ItemType.ImbuedImplement) {
+			// Imbued implement grants +1 / +2 / +3 damage to magic / psionic abilities based on highest enhancement tier
+			if (hasLvl1) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-1a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 1
+					}),
+					source: item.name
+				});
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-1b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 1
+					}),
+					source: item.name
+				});
+			}
+			if (hasLvl5) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-5a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 1
+					}),
+					source: item.name
+				});
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-5b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 1
+					}),
+					source: item.name
+				});
+			}
+			if (hasLvl9) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-9a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 1
+					}),
+					source: item.name
+				});
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-9b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 1
+					}), source: item.name
+				});
+			}
+		}
+		if (item.type === ItemType.ImbuedWeapon) {
+			// Imbued weapon grants +1 / +2 / +3 damage to weapon abilities based on highest enhancement tier
+			if (hasLvl1) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-1',
+						keywords: [ AbilityKeyword.Weapon ],
+						value: 1
+					}),
+					source: item.name
+				});
+			}
+			if (hasLvl5) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-5',
+						keywords: [ AbilityKeyword.Weapon ],
+						value: 1
+					}),
+					source: item.name
+				});
+			}
+			if (hasLvl9) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-9',
+						keywords: [ AbilityKeyword.Weapon ],
+						value: 1
+					}),
+					source: item.name
+				});
 			}
 		}
 

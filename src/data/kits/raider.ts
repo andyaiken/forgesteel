@@ -24,7 +24,7 @@ export const raider: Kit = {
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'kit-raider-signature',
-				name: 'Raider‎’s Awe',
+				name: 'Raider’s Awe',
 				description: 'You execute a brutal strike that leaves your foe reeling.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],

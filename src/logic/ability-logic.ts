@@ -316,7 +316,7 @@ export class AbilityLogic {
 
 				const constant = FormatLogic.getConstant(match[0]);
 				const multiplier = FormatLogic.getMultiplier(match[0]);
-				
+
 				text = text.replace(match[0], `${match[1]} ${constant + (value * multiplier)}`);
 			});
 		}

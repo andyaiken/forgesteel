@@ -143,7 +143,7 @@ export type FeatureFollower = FeatureOf<FeatureType.Follower, FeatureFollowerDat
 
 export interface FeatureHeroicResourceData extends _FeatureData {
 	type: 'heroic' | 'epic';
-	gains: { trigger: string, value: string }[];
+	gains: { tag: string, trigger: string, value: string }[];
 	details: string;
 	canBeNegative: boolean;
 	value: number;
@@ -151,8 +151,10 @@ export interface FeatureHeroicResourceData extends _FeatureData {
 export type FeatureHeroicResource = FeatureOf<FeatureType.HeroicResource, FeatureHeroicResourceData>;
 
 export interface FeatureHeroicResourceGainData extends _FeatureData {
+	tag: string;
 	trigger: string;
 	value: string;
+	replacesTags: string[];
 };
 export type FeatureHeroicResourceGain = FeatureOf<FeatureType.HeroicResourceGain, FeatureHeroicResourceGainData>;
 

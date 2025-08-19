@@ -48,10 +48,12 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 					name: 'Essence',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '2'
 						},
 						{
+							tag: 'take-damage',
 							trigger: 'The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy',
 							value: '1'
 						}
@@ -392,10 +394,13 @@ Choose one of the following effects:
 						}
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'elementalist-4-2',
 					name: 'Font of Essence',
-					description: 'The first time each combat round that you or a creature within 10 squares takes damage that isn’t untyped or holy damage, you gain 2 essence instead of 1.'
+					tag: 'take-damage 2',
+					trigger: 'The first time in a round that you or a creature within 10 of you takes damage that isn’t untyped or holy',
+					value: '2',
+					replacesTags: [ 'take-damage' ]
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'elementalist-4-3',
@@ -471,10 +476,13 @@ Choose one of the following effects:
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'elementalist-7-2',
 					name: 'Surging Essence',
-					description: 'When you gain essence at the start of each of your turns during combat, you gain 3 essence instead of 2.'
+					tag: 'start 2',
+					trigger: 'Start of your turn',
+					value: '3',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'elementalist-7-3',
@@ -523,6 +531,7 @@ Additionally, when you have 5 or more Victories, choose one of the following dam
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}
@@ -574,10 +583,13 @@ Breath remains until you convert it to essence.`
 						}
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'elementalist-10-4',
 					name: 'Essential Being',
-					description: 'When you gain essence at the start of each of your turns during combat, you gain 4 essence instead of 3.'
+					tag: 'start 3',
+					trigger: 'Start of your turn',
+					value: '4',
+					replacesTags: [ 'start', 'start 2' ]
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'elementalist-10-5',
@@ -589,7 +601,6 @@ Breath remains until you convert it to essence.`
 				})
 			]
 		}
-
 	],
 	abilities: [
 		FactoryLogic.createAbility({

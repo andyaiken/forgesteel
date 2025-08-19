@@ -51,6 +51,14 @@ export class HeroLogic {
 
 		if (hero.culture) {
 			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture, hero));
+			features.push({
+				feature: FactoryLogic.feature.create({
+					id: Utils.guid(),
+					name: hero.culture.name || 'Culture',
+					description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
+				}),
+				source: hero.culture.name || 'Culture'
+			});
 		}
 
 		if (hero.career) {
@@ -704,6 +712,51 @@ export class HeroLogic {
 		return value;
 	};
 
+	static getHeroicResources = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.HeroicResource)
+			.map(f => {
+				let gains = [];
+				switch (f.data.type) {
+					case 'heroic': {
+						const gainsFromFeatures = HeroLogic.getFeatures(hero)
+							.map(f => f.feature)
+							.filter(f => f.type === FeatureType.HeroicResourceGain)
+							.map(f => f.data);
+
+						const gainsFromDomains = HeroLogic.getDomains(hero)
+							.flatMap(d => d.resourceGains)
+							.filter(g => g.resource === f.name)
+							.map(g => g);
+
+						const replacedTags = gainsFromFeatures.flatMap(g => g.replacesTags);
+
+						gains = [
+							...f.data.gains,
+							...gainsFromFeatures,
+							...gainsFromDomains
+						].filter(g => !replacedTags.includes(g.tag));
+						break;
+					}
+					case 'epic': {
+						gains = f.data.gains;
+						break;
+					}
+				}
+
+				return {
+					id: f.id,
+					name: f.name,
+					type: f.data.type,
+					gains: gains,
+					details: f.data.details,
+					canBeNegative: f.data.canBeNegative,
+					value: f.data.value
+				};
+			});
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getProficiencies = (hero: Hero) => {
@@ -805,8 +858,14 @@ export class HeroLogic {
 		});
 	};
 
-	static calculatePotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {
-		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
+	static getPotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {
+		const value = Math.max(
+			HeroLogic.getCharacteristic(hero, Characteristic.Might),
+			HeroLogic.getCharacteristic(hero, Characteristic.Agility),
+			HeroLogic.getCharacteristic(hero, Characteristic.Reason),
+			HeroLogic.getCharacteristic(hero, Characteristic.Intuition),
+			HeroLogic.getCharacteristic(hero, Characteristic.Presence)
+		);
 
 		switch (strength) {
 			case 'weak':

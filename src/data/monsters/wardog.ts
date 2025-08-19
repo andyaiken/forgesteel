@@ -809,7 +809,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						name: 'Conditioning Spear',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Ranged,  AbilityKeyword.Strike ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [
 							FactoryLogic.distance.createMelee(1),
 							FactoryLogic.distance.createRanged(5)
@@ -905,6 +905,54 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 							FactoryLogic.createAbilitySectionText('**Effect:** Each target ally shifts up to 2 squares and can use the Grab maneuver. Until the end of the encounter, each target enemy takes a bane on the Escape Grab maneuver.')
 						]
 					})
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'wardog-14',
+			name: 'War Dog Sparkslinger',
+			level: 4,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
+			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
+			encounterValue: 6,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(5),
+			stamina: 7,
+			stability: 0,
+			freeStrikeDamage: 3,
+			withCaptain: 'Lightning Spread increases by 1 square',
+			characteristics: MonsterLogic.createCharacteristics(0, 0, 3, 0, 2),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'wardog-14-feature-1',
+						name: 'Galvanic Arc',
+						type: FactoryLogic.type.createMain(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(7) ],
+						target: 'One creature or object per minion',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '3 lightning damage',
+								tier2: '5 lightning damage; the lightning spreads 1 square',
+								tier3: '7 lightning damage; the lightning spreads 2 squares'
+							})),
+							FactoryLogic.createAbilitySectionText('**Effect:** The lightning’s spread is the distance it arcs from a target to nearby enemies. Each enemy within that distance takes 2 lightning damage.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'wardog-14-feature-2',
+					name: 'Loyalty Collar',
+					description: 'When the sparkslinger is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
+				}),
+				FactoryLogic.feature.createDamageModifier({
+					id: 'wardog-14-feature-3',
+					modifiers: [
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 4 })
+					]
 				})
 			]
 		})

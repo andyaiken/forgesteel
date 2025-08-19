@@ -43,14 +43,17 @@ As a tactician, you have abilities that heal your allies and grant them increase
 					name: 'Focus',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '2'
 						},
 						{
+							tag: 'deal-damage',
 							trigger: 'The first time each round that you or an ally damages a creature you have marked',
 							value: '1'
 						},
 						{
+							tag: 'ability',
 							trigger: 'The first time in a round that an ally within 10 squares of you uses a heroic ability',
 							value: '1'
 						}
@@ -165,10 +168,13 @@ You can’t gain more than one benefit from the same trigger.`),
 					characteristic: Characteristic.Reason,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'tactician-4-2',
 					name: 'Focus on Their Weakness',
-					description: 'The first time each combat round that you or any ally damages a target marked by you, you gain 2 focus instead of 1.'
+					tag: 'deal-damage 2',
+					trigger: 'The first time each round that you or an ally damages a creature you have marked',
+					value: '2',
+					replacesTags: [ 'deal-damage' ]
 				}),
 				FactoryLogic.feature.create({
 					id: 'tactician-4-3',
@@ -235,10 +241,13 @@ You can’t gain more than one benefit from the same trigger.`),
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'tactician-7-2',
 					name: 'Heightened Focus',
-					description: 'When you gain focus at the start of each of your turns during combat, you gain 3 focus instead of 2.'
+					tag: 'start 2',
+					trigger: 'Start of your turn',
+					value: '3',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.create({
 					id: 'tactician-7-3',
@@ -292,6 +301,7 @@ You can’t gain more than one benefit from the same trigger.`),
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}

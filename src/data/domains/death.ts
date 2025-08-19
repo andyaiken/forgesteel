@@ -140,6 +140,7 @@ Additionally, your abilities deal an extra 5 damage to winded creatures.`
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that a creature within 10 squares who isn’t a minion is reduced to 0 Stamina, or the first time in an encounter that a solo creature within 10 squares becomes winded.',
 			value: '2'
 		}

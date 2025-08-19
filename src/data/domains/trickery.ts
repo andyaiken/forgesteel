@@ -146,6 +146,7 @@ export const trickery: Domain = {
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that you or a creature within 10 squares takes the Aid Attack or Hide maneuver',
 			value: '2'
 		}

@@ -23,7 +23,7 @@ export const virtuoso: SubClass = {
 						id: '8OR9gvPtJN7cIZhh',
 						name: 'Power Chord',
 						description: 'Your instrument rings true and your music blows everyone away.',
-						type: FactoryLogic.type.createMain(),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in the area',

@@ -152,6 +152,7 @@ export const knowledge: Domain = {
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that the Director spends Malice',
 			value: '2'
 		}

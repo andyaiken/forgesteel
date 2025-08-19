@@ -48,11 +48,13 @@ As a talent, you are limited only by the strength of your mind. But the ability 
 					name: 'Clarity',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '1d3'
 						},
 						{
-							trigger: 'Additionally, the first time each combat round that a creature is force moved',
+							tag: 'move',
+							trigger: 'The first time each combat round that a creature is force moved',
 							value: '1'
 						}
 					],
@@ -316,13 +318,24 @@ Any abilities or features you use originate from your mind. Both your mind and y
 						]
 					})
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'talent-4-3',
 					name: 'Mind Recovery',
-					description: `
-Whenever you spend a Recovery to regain Stamina while strained, you can forgo the Stamina and gain 3 clarity instead.
-
-Additionally, the first time each combat round that a creature is force moved, you gain 2 clarity instead of 1.`
+					features: [
+						FactoryLogic.feature.create({
+							id: 'talent-4-3a',
+							name: 'Mind Recovery',
+							description: 'Whenever you spend a Recovery to regain Stamina while strained, you can forgo the Stamina and gain 3 clarity instead.'
+						}),
+						FactoryLogic.feature.createHeroicResourceGain({
+							id: 'talent-4-3b',
+							name: 'Mind Recovery',
+							tag: 'move 2',
+							trigger: 'The first time each combat round that a creature is force moved',
+							value: '2',
+							replacesTags: [ 'move' ]
+						})
+					]
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'talent-4-4'
@@ -439,10 +452,13 @@ If you are strained while flying and are force moved, the forced movement distan
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'talent-7-4',
 					name: 'Lucid Mind',
-					description: 'At the start of each of your turns during combat, you gain 1d3 + 1 clarity instead of 1d3.'
+					tag: 'start 2',
+					trigger: 'Start of your turn',
+					value: '1d3 + 1',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-7-5',
@@ -510,10 +526,13 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'talent-10-2',
 					name: 'Clear Mind',
-					description: 'The first time each combat round that a creature is force moved, you gain 3 clarity instead of 2.'
+					tag: 'move 2',
+					trigger: 'The first time each combat round that a creature is force moved',
+					value: '2',
+					replacesTags: [ 'move' ]
 				}),
 				FactoryLogic.feature.createMultiple({
 					id: 'talent-10-3',
@@ -535,13 +554,24 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 					id: 'talent-10-4',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'talent-10-5',
 					name: 'Psion',
-					description: `
-At the start of each of your turns during combat, you gain 1d3 + 2 clarity instead of 1d3 + 1.
-
-Additionally, you can choose to not take damage from having negative clarity. You can also choose to take on any ability’s strained effect even if you’re not strained.`
+					features: [
+						FactoryLogic.feature.createHeroicResourceGain({
+							id: 'talent-10-5a',
+							name: 'Psion',
+							tag: 'start 3',
+							trigger: 'Start of your turn',
+							value: '1d3 + 2',
+							replacesTags: [ 'start', 'start 2' ]
+						}),
+						FactoryLogic.feature.create({
+							id: 'talent-10-5b',
+							name: 'Psion',
+							description: 'You can choose to not take damage from having negative clarity. You can also choose to take on any ability’s strained effect even if you’re not strained.'
+						})
+					]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-10-6',
@@ -553,6 +583,7 @@ Additionally, you can choose to not take damage from having negative clarity. Yo
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}
@@ -650,9 +681,9 @@ Additionally, you can choose to not take damage from having negative clarity. Yo
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Reason ],
-						tier1: 'Slide 2 + Reason',
-						tier2: 'Slide 4 + Reason',
-						tier3: 'Slide 6 + Reason; prone'
+						tier1: 'Slide 2 + R',
+						tier2: 'Slide 4 + R',
+						tier3: 'Slide 6 + R; prone'
 					})
 				),
 				FactoryLogic.createAbilitySectionField({

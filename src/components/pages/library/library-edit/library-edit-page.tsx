@@ -30,6 +30,9 @@ import { FeatureEditPanel } from '../../../panels/edit/feature-edit/feature-edit
 import { Format } from '../../../../utils/format';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
+import { Imbuement } from '../../../../models/imbuement';
+import { ImbuementEditPanel } from '../../../panels/edit/imbuement-edit/imbuement-edit-panel';
+import { ImbuementPanel } from '../../../panels/elements/imbuement-panel/imbuement-panel';
 import { Item } from '../../../../models/item';
 import { ItemEditPanel } from '../../../panels/edit/item-edit/item-edit-panel';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
@@ -107,6 +110,9 @@ export const LibraryEditPage = (props: Props) => {
 				break;
 			case 'item':
 				original = sourcebook.items.find(e => e.id === elementID)!;
+				break;
+			case 'imbuement':
+				original = sourcebook.imbuements.find(e => e.id === elementID)!;
 				break;
 			case 'kit':
 				original = sourcebook.kits.find(e => e.id === elementID)!;
@@ -440,6 +446,19 @@ export const LibraryEditPage = (props: Props) => {
 						}}
 					/>
 				);
+			case 'imbuement':
+				return (
+					<ImbuementEditPanel
+						key={element.id}
+						imbuement={element as Imbuement}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={i => {
+							setElement(i);
+							setDirty(true);
+						}}
+					/>
+				);
 			case 'monster-group':
 				if (!subElementID) {
 					return (
@@ -592,12 +611,27 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<>
 						<SelectablePanel>
-							<ItemPanel item={element as Item} options={props.options} showCustomizations={true} mode={PanelMode.Full} />
+							<ItemPanel item={element as Item} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
 							(element as Item).crafting ?
 								<SelectablePanel>
 									<ProjectPanel project={(element as Item).crafting!} mode={PanelMode.Full} />
+								</SelectablePanel>
+								: null
+						}
+					</>
+				);
+			case 'imbuement':
+				return (
+					<>
+						<SelectablePanel>
+							<ImbuementPanel imbuement={element as Imbuement} options={props.options} mode={PanelMode.Full} />
+						</SelectablePanel>
+						{
+							(element as Imbuement).crafting ?
+								<SelectablePanel>
+									<ProjectPanel project={(element as Imbuement).crafting!} mode={PanelMode.Full} />
 								</SelectablePanel>
 								: null
 						}

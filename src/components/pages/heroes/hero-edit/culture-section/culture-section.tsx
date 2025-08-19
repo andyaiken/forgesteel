@@ -1,8 +1,8 @@
-import { Button, Drawer, Flex, Space } from 'antd';
+import { Button, Divider, Drawer, Flex, Input, Space } from 'antd';
+import { CloseOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../../data/culture-data';
 import { FeatureData, FeatureLanguageChoiceData } from '../../../../../models/feature';
 import { ReactNode, useState } from 'react';
-import { CloseOutlined } from '@ant-design/icons';
 import { Collections } from '../../../../../utils/collections';
 import { Culture } from '../../../../../models/culture';
 import { CulturePanel } from '../../../../panels/elements/culture-panel/culture-panel';
@@ -17,11 +17,13 @@ import { Field } from '../../../../controls/field/field';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
 import { Markdown } from '../../../../controls/markdown/markdown';
+import { NameGenerator } from '../../../../../utils/name-generator';
 import { Options } from '../../../../../models/options';
 import { PanelMode } from '../../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
+import { Utils } from '../../../../../utils/utils';
 import { useMediaQuery } from '../../../../../hooks/use-media-query';
 
 import './culture-section.scss';
@@ -54,6 +56,13 @@ export const CultureSection = (props: CultureSectionProps) => {
 	const [ showOrganization, setShowOrganization ] = useState<boolean>(false);
 	const [ showUpbringing, setShowUpbringing ] = useState<boolean>(false);
 
+	const setName = (value: string) => {
+		const copy = Utils.copy(props.hero.culture)!;
+		copy.name = value;
+		props.hero.culture = copy;
+		props.selectCulture(copy);
+	};
+
 	try {
 		const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].filter(c => matchElement(c, props.searchTerm));
 		const options = cultures.map(c => (
@@ -77,6 +86,16 @@ export const CultureSection = (props: CultureSectionProps) => {
 				choices.unshift(
 					<SelectablePanel key='bespoke'>
 						<HeaderText>Bespoke Culture</HeaderText>
+						<div className='ds-text'>Choose a name for your culture.</div>
+						<Input
+							status={props.hero.culture.name === '' ? 'warning' : ''}
+							placeholder='Name'
+							allowClear={true}
+							addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+							value={props.hero.culture.name}
+							onChange={e => setName(e.target.value)}
+						/>
+						<Divider />
 						<div className='ds-text'>Choose your Environment, Organization, and Upbringing.</div>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							{

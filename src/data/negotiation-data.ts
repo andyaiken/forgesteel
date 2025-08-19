@@ -10,8 +10,8 @@ export class NegotiationData {
 
 The bandit chief archetype can be used for any other local big shot, such as the privileged child of a local lord, an arrogant tavern darts champion, or any bully.`,
 		impression: 1,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Freedom,
@@ -59,8 +59,8 @@ The bandit chief archetype can be used for any other local big shot, such as the
 
 The knight archetype can be used for any other local authority, such as a village elder, town guard officer, or academic professor.`,
 		impression: 2,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.HigherAuthority,
@@ -108,8 +108,8 @@ The knight archetype can be used for any other local authority, such as a villag
 
 The guildmaster archetype can be used for any other local information broker, such as a cult leader, hag, or spy.`,
 		impression: 3,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Benevolence,
@@ -157,8 +157,8 @@ The guildmaster archetype can be used for any other local information broker, su
 
 The warlord archetype can be used for any other local-level threat, such as a vampire, hobgoblin bloodlord, or rebellious noble.`,
 		impression: 4,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Freedom,
@@ -206,8 +206,8 @@ The warlord archetype can be used for any other local-level threat, such as a va
 
 The burgomaster archetype can be used for any other local ruler, such as a baron, governor, or a watch captain in a metropolis.`,
 		impression: 5,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Greed,
@@ -255,8 +255,8 @@ The burgomaster archetype can be used for any other local ruler, such as a baron
 
 The virtuoso archetype can be used for any other local celebrity, such as a master crafter, inspired artist, famous gladiator, or world champion.`,
 		impression: 6,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Freedom,
@@ -304,8 +304,8 @@ The virtuoso archetype can be used for any other local celebrity, such as a mast
 
 The high priest archetype can be used for any other national authority, such as a count, judge, or general.`,
 		impression: 7,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Benevolence,
@@ -353,8 +353,8 @@ The high priest archetype can be used for any other national authority, such as 
 
 The duke archetype can be used for any other royal counselor, such as an archmage, spymaster, vizier, or even a beloved jester.`,
 		impression: 8,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Discovery,
@@ -402,8 +402,8 @@ The duke archetype can be used for any other royal counselor, such as an archmag
 
 The dragon archetype can be used for any other kingdom-level threat, such as a fire giant chief, a contender for a throne, or the dread synliroi Lord Syuul.`,
 		impression: 9,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Freedom,
@@ -451,8 +451,8 @@ The dragon archetype can be used for any other kingdom-level threat, such as a f
 
 The monarch archetype can be used for any other kingdom-level ruler, such as a tyrant, a theocracy’s archpriest, or a republic’s consul.`,
 		impression: 10,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Benevolence,
@@ -502,8 +502,8 @@ The lich is willing to negotiate with strong heroes who might make loyal lieuten
 
 The lich archetype can be used for any other world-shaking threat, such as a would-be emperor or the vampire lord Count Rhodar von Glauer.`,
 		impression: 11,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Discovery,
@@ -551,8 +551,8 @@ The lich archetype can be used for any other world-shaking threat, such as a wou
 
 The deity archetype can be used for any other world-transcending power, such as the legendary time dragon Cthrion Uroniziir, or the dread pharaoh Khorsekef the Infinite.`,
 		impression: 12,
-		interest: 1,
-		patience: 1,
+		interest: 2,
+		patience: 3,
 		motivations: [
 			{
 				trait: NegotiationTrait.Benevolence,

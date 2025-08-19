@@ -58,12 +58,12 @@ export const MonsterGroupPanel = (props: Props) => {
 							: null
 					}
 					{
-						(props.mode === PanelMode.Full) && (props.monsterGroup.malice.length > 0) && (props.monsterGroup.monsters.length > 0) ?
+						((props.mode === PanelMode.Full) && (props.monsterGroup.malice.length > 0) && (props.monsterGroup.monsters.length > 0)) ?
 							<Divider />
 							: null
 					}
 					{
-						(props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0) ?
+						((props.mode === PanelMode.Full) && (props.monsterGroup.monsters.length > 0)) ?
 							<div className='monsters'>
 								{
 									props.monsterGroup.monsters.map(m =>

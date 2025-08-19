@@ -139,109 +139,6 @@ export const ItemEditPanel = (props: Props) => {
 			);
 		};
 
-		const getItemCustomizationEditSection = () => {
-			const addFeature = (level: number) => {
-				const copy = Utils.copy(item);
-				copy.customizationsByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						lvl.features.push({
-							feature: FactoryLogic.feature.create({
-								id: Utils.guid(),
-								name: '',
-								description: ''
-							}),
-							selected: false
-						});
-					});
-				setItem(copy);
-				props.onChange(copy);
-			};
-
-			const changeFeature = (level: number, feature: Feature) => {
-				const copy = Utils.copy(item);
-				copy.customizationsByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						const index = lvl.features.findIndex(f => f.feature.id === feature.id);
-						if (index !== -1) {
-							lvl.features[index].feature = feature;
-						}
-					});
-				setItem(copy);
-				props.onChange(copy);
-			};
-
-			const moveFeature = (level: number, feature: Feature, direction: 'up' | 'down') => {
-				const copy = Utils.copy(item);
-				copy.customizationsByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						const index = lvl.features.findIndex(f => f.feature.id === feature.id);
-						lvl.features = Collections.move(lvl.features, index, direction);
-					});
-				setItem(copy);
-				props.onChange(copy);
-			};
-
-			const deleteFeature = (level: number, feature: Feature) => {
-				const copy = Utils.copy(item);
-				copy.customizationsByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						lvl.features = lvl.features.filter(f => f.feature.id !== feature.id);
-					});
-				setItem(copy);
-				props.onChange(copy);
-			};
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{
-						item.customizationsByLevel.map(lvl => (
-							<div key={lvl.level}>
-								<HeaderText
-									extra={
-										<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
-									}
-								>
-									Level {lvl.level.toString()}
-								</HeaderText>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										lvl.features.map(f => (
-											<Expander
-												key={f.feature.id}
-												title={f.feature.name || 'Unnamed Feature'}
-												tags={[ FeatureLogic.getFeatureTag(f.feature) ]}
-												extra={[
-													<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f.feature, 'up'); }} />,
-													<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f.feature, 'down'); }} />,
-													<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(lvl.level, f.feature); }} />
-												]}
-											>
-												<FeatureEditPanel
-													feature={f.feature}
-													sourcebooks={props.sourcebooks}
-													options={props.options}
-													onChange={feature => changeFeature(lvl.level, feature)}
-												/>
-											</Expander>
-										))
-									}
-									{
-										lvl.features.length === 0 ?
-											<Empty />
-											: null
-									}
-								</Space>
-							</div>
-						))
-					}
-				</Space>
-			);
-		};
-
 		const getFeaturesByLevelEditSection = () => {
 			const addFeature = (level: number) => {
 				const copy = Utils.copy(item);
@@ -399,11 +296,6 @@ export const ItemEditPanel = (props: Props) => {
 								key: '4',
 								label: 'Levels',
 								children: getFeaturesByLevelEditSection()
-							},
-							{
-								key: '5',
-								label: 'Customization',
-								children: getItemCustomizationEditSection()
 							}
 						]}
 					/>

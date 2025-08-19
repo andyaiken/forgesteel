@@ -59,22 +59,27 @@ Jackson Bootblack`,
 					name: 'Drama',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '1d3'
 						},
 						{
+							tag: '',
 							trigger: 'The first time three or more heroes use an ability on the same turn',
 							value: '2'
 						},
 						{
+							tag: '',
 							trigger: 'The first time any hero is made winded during the encounter',
 							value: '2'
 						},
 						{
+							tag: '',
 							trigger: 'Whenever a creature within your line of effect rolls a natural 19 or 20',
 							value: '3'
 						},
 						{
+							tag: '',
 							trigger: 'When you or another hero dies',
 							value: '10'
 						}
@@ -231,6 +236,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: 'bPZ0jgAHVi08ZX2X',
 								name: 'Melodrama #1',
+								tag: '',
 								trigger: 'Whenever a creature rolls a natural 2 on a power roll.',
 								value: '2'
 							}),
@@ -240,6 +246,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: 'Jlp0a0yANrSIoeXp',
 								name: 'Melodrama #2',
+								tag: '',
 								trigger: 'The first time the Director deals damage to a hero using a Villain action or an ability that costs Malice.',
 								value: '2'
 							}),
@@ -249,6 +256,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: '05FGfz1LetwQOlGm',
 								name: 'Melodrama #3',
+								tag: '',
 								trigger: 'The first time a hero unwillingly falls 5 or more squares.',
 								value: '2'
 							}),
@@ -258,6 +266,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: 'bnEzQSbTNyay2M51',
 								name: 'Melodrama #4',
+								tag: '',
 								trigger: 'The first time a hero deals damage with 3 surges.',
 								value: '2'
 							}),
@@ -267,6 +276,7 @@ The Director can award the heroes 1 hero token to make you infamous among the gr
 							feature: FactoryLogic.feature.createHeroicResourceGain({
 								id: 'lbGOgNoNt9SsiBDB',
 								name: 'Melodrama #5',
+								tag: '',
 								trigger: 'Whenever a hero spends their last Recovery.',
 								value: '2'
 							}),
@@ -381,10 +391,13 @@ You can ask the Director for three rumors regarding the area you’re in or an a
 
 Additionally, you and creatures you are bonded with gain a +1 bonus to saving throws. Whenever you or a bonded creature succeeds on a saving throw, you and each creature you are bonded with gains temporary Stamina equal to your level.`
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'JRIAGwr5xwIXZdG5',
 					name: 'A Muse’s Muse',
-					description: 'At the start of each of your turns during combat, you gain 1d3 + 1 drama instead of 1d3. '
+					tag: 'start 2',
+					trigger: 'Start of your turn',
+					value: '1d3 + 1',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'A7CsaTimMURrXg0M',
@@ -424,6 +437,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 					name: 'Applause',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}

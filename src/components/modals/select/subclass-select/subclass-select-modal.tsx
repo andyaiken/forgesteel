@@ -1,4 +1,4 @@
-import { Divider, Input, Space } from 'antd';
+import { Alert, Divider, Input, Space } from 'antd';
 import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
@@ -103,6 +103,10 @@ export const SubClassSelectModal = (props: Props) => {
 										<Divider />
 										<Expander title='From other classes'>
 											<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+												<Alert
+													showIcon={true}
+													message='Selecting a subclass from a different class is typically against the rules.'
+												/>
 												{
 													otherSubclasses.map(sc => (
 														<SelectablePanel

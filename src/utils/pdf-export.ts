@@ -10,7 +10,6 @@ import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
-import { Format } from './format';
 import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from '../logic/hero-logic';
@@ -41,15 +40,16 @@ export class PDFExport {
 
 		const sanitize = (str: string) => {
 			// This replaces characters the PDF doesn't support
-			str = str
+			return str
+				.replaceAll(String.fromCodePoint(127925), '·')// musical note emoji?
+				.replaceAll('\u266a', '·')// musical note character
 				.replace(/−/g, '-')
 				.replace(/ź/g, 'z')
 				.replace(/ń/g, 'n')
 				.replace(/č/g, 'c');
-			return Format.stripEmojis(str);
 		};
 
-		const heroicResources = HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
+		const heroicResources = HeroLogic.getHeroicResources(hero);
 		const texts: { [key: string]: string | number | null } = {
 			CharacterName: hero.name,
 			AncestryTop: hero.ancestry && hero.ancestry.name,
@@ -69,7 +69,7 @@ export class PDFExport {
 			RecoveryValue: HeroLogic.getRecoveryValue(hero),
 			MaxRecoveries: HeroLogic.getRecoveries(hero),
 			Recoveries: HeroLogic.getRecoveries(hero) - hero.state.recoveriesUsed,
-			HeroicResource: heroicResources.length > 0 ? heroicResources[0].data.value : 0,
+			HeroicResource: heroicResources.length > 0 ? heroicResources[0].value : 0,
 			Surges: hero.state.surges,
 			Victories: hero.state.victories,
 			AncestryFull: hero.ancestry && hero.ancestry.description,
@@ -133,7 +133,6 @@ export class PDFExport {
 				.replace(/≥\s*(\d+)/g, '$1+\t')
 				.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
 				.replace(/\n\* /g, '\n   • ');
-			text = Format.stripEmojis(text);
 			// substitutions are for cleaning up lists to look better in the form
 			return text;
 		};
@@ -159,31 +158,15 @@ export class PDFExport {
 
 		{
 			if (heroicResources.length > 0) {
-				const heroicResourceFeature = heroicResources[0];
-				texts['HeroicResourcesPerTurn'] = heroicResourceFeature.data.gains[0].value;
-				ignoredFeatures[heroicResourceFeature.id] = true;
-				let resourceGainText = 'Your resource is ' + heroicResourceFeature.name.toLowerCase() + '.\n\n';
-				[
-					...heroicResourceFeature.data.gains,
-					...HeroLogic.getFeatures(hero)
-						.map(f => f.feature)
-						.filter(f => f.type === FeatureType.HeroicResourceGain)
-						.map(f => f.data),
-					...HeroLogic.getDomains(hero)
-						.flatMap(d => d.resourceGains)
-						.filter(g => g.resource === heroicResourceFeature.name)
-						.map(g => g)
-				].forEach(g => {
+				const hr = heroicResources[0];
+				texts['HeroicResourcesPerTurn'] = hr.gains[0].value;
+				ignoredFeatures[hr.id] = true;
+				let resourceGainText = 'Your resource is ' + hr.name.toLowerCase() + '.\n\n';
+				hr.gains.forEach(g => {
 					resourceGainText += g.trigger + ': +' + g.value + '\n';
 				});
-				HeroLogic.getFeatures(hero)
-					.map(f => f.feature)
-					.filter(f => f.type === FeatureType.HeroicResourceGain)
-					.forEach(f => {
-						resourceGainText += f.data.trigger + ': +' + f.data.value + '\n';
-					});
-				if (heroicResourceFeature.data.details) {
-					resourceGainText += '\n\n' + heroicResourceFeature.data.details;
+				if (hr.details) {
+					resourceGainText += '\n\n' + hr.details;
 				}
 				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
 			} else {

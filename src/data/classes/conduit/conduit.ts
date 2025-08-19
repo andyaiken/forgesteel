@@ -42,6 +42,7 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					name: 'Piety',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '1d3'
 						}
@@ -490,10 +491,12 @@ You are infused with the power your deity reserves for their most worthy instrum
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'conduit-7-2',
 					name: 'Faithful’s Reward',
-					description: 'When you roll for piety at the start of your turn in combat, you gain 1d3 + 1 piety.'
+					tag: 'start 2',
+					trigger: 'Start of your turn',
+					value: '1d3 + 1'
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'conduit-7-3',
@@ -607,6 +610,7 @@ Additionally, whenever you take a respite, you can open a portal to rest in the 
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}

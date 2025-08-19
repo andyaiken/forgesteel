@@ -760,7 +760,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-grounded-b',
 				name: 'Grounded Benefit',
-				description: 'You gain the 1st-level Elementalist Specialization feature Manipulate Earth. If you also gain this feature in any other way, the Motivate Earth ability becomes a ranged ability for you with a distance of ranged 5.'
+				description: 'You gain the 1st-level Elementalist Specialization feature Motivate Earth. If you also gain this feature in any other way, the Motivate Earth ability becomes a ranged ability for you with a distance of ranged 5.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-grounded-d',
@@ -996,7 +996,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static lightningSoul: Complication = {
 		id: 'comp-lightningSoul',
 		name: 'Lightning Soul',
-		description: 'You were caught in a storm and stuck by lightning - but ysomthing saved you from death. Perhaps it was a gods-given miracle, a latent psionic gift, or the magic of a helpful elementalist, but you absorbed the lightning into your body. It’s always there now, simmering under the surface.',
+		description: 'You were caught in a storm and stuck by lightning - but somthing saved you from death. Perhaps it was a gods-given miracle, a latent psionic gift, or the magic of a helpful elementalist, but you absorbed the lightning into your body. It’s always there now, simmering under the surface.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lightningSoul-b',
@@ -1179,7 +1179,7 @@ You can’t take this complication if you can’t be made dazed.`,
 					type: FactoryLogic.type.createMain(),
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
-					target: '1 creature',
+					target: 'One creature',
 					sections: [
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({
@@ -2010,7 +2010,7 @@ Note: If you have the Strike Now tactician ability, the target can use a free tr
 					type: FactoryLogic.type.createMain(),
 					keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
-					target: '1 creature or object',
+					target: 'One creature or object',
 					sections: [
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({

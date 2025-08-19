@@ -395,7 +395,7 @@ export const dwarfFury = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -442,7 +442,7 @@ export const dwarfFury = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -489,7 +489,7 @@ export const dwarfFury = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature of your size or smaller',
+				target: 'One creature of your size or smaller',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -536,7 +536,7 @@ export const dwarfFury = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -630,7 +630,7 @@ export const dwarfFury = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -724,7 +724,7 @@ export const dwarfFury = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -771,7 +771,7 @@ export const dwarfFury = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or obeject',
+				target: 'One creature or object',
 				cost: 5,
 				repeatable: false,
 				minLevel: 1,
@@ -900,7 +900,7 @@ export const dwarfFury = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 5,
 				repeatable: false,
 				minLevel: 1,
@@ -1065,7 +1065,7 @@ export const dwarfFury = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 7,
 				repeatable: false,
 				minLevel: 1,
@@ -1169,7 +1169,7 @@ export const dwarfFury = {
 																	qualifier: ''
 																}
 															],
-															target: '1 creature or object',
+															target: 'One creature or object',
 															cost: 'signature',
 															repeatable: false,
 															minLevel: 1,
@@ -1236,7 +1236,7 @@ export const dwarfFury = {
 												qualifier: ''
 											}
 										],
-										target: 'Self or 1 creature',
+										target: 'Self or one creature',
 										cost: 0,
 										repeatable: false,
 										minLevel: 1,
@@ -1652,7 +1652,7 @@ export const dwarfFury = {
 																qualifier: ''
 															}
 														],
-														target: '1 creature',
+														target: 'One creature',
 														cost: 5,
 														repeatable: false,
 														minLevel: 1,
@@ -1898,7 +1898,7 @@ export const dwarfFury = {
 																qualifier: ''
 															}
 														],
-														target: '1 creature',
+														target: 'One creature',
 														cost: 5,
 														repeatable: false,
 														minLevel: 1,

@@ -367,7 +367,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						name: 'Trick of the Eye',
 						type: FactoryLogic.type.createTrigger('An enemy within distance makes a strike against the target.'),
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '1 ally',
+						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The damage is halved. The dark knight takes the other half of the damage.')
 						]
@@ -1001,7 +1001,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -1022,7 +1022,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({

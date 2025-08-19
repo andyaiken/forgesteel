@@ -42,7 +42,7 @@ As your ferocity grows, you gain benefits as noted on the Berserker Growing Fero
 						type: FactoryLogic.type.createTrigger('The target would be force moved.'),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'Self or 1 creature',
+						target: 'Self or one creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You can select a new target of the same size or smaller within distance to be force moved instead. You become the source of the forced movement, determine the new target’s destination, and can push the target instead of using the original forced movement type. Additionally, the forced movement distance gains a bonus equal to your Might score.'),
 							FactoryLogic.createAbilitySectionField({
@@ -193,7 +193,7 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(
@@ -249,7 +249,7 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-									target: 'Each enemy in area',
+									target: 'Each enemy in the area',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(

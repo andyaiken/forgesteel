@@ -99,7 +99,7 @@ export const timeRaider: Ancestry = {
 										cost: 'signature',
 										keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 										distance: [ FactoryLogic.distance.createRanged(10) ],
-										target: '1 creature or object',
+										target: 'One creature or object',
 										sections: [
 											FactoryLogic.createAbilitySectionRoll(
 												FactoryLogic.createPowerRoll({
@@ -123,7 +123,7 @@ export const timeRaider: Ancestry = {
 										type: FactoryLogic.type.createMain(),
 										keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 										distance: [ FactoryLogic.distance.createRanged(10) ],
-										target: '1 creature or object',
+										target: 'One creature or object',
 										cost: 'signature',
 										sections: [
 											FactoryLogic.createAbilitySectionRoll(
@@ -151,7 +151,7 @@ export const timeRaider: Ancestry = {
 											FactoryLogic.distance.createSelf(),
 											FactoryLogic.distance.createMelee()
 										],
-										target: 'Self or 1 ally',
+										target: 'Self or one ally',
 										cost: 'signature',
 										sections: [
 											FactoryLogic.createAbilitySectionText('The target gains a bonus to speed equal to your Reason, Intuition, or Presence score (your choice) until the start of your next turn.')

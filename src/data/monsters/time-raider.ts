@@ -688,7 +688,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							FactoryLogic.distance.createMelee(2),
 							FactoryLogic.distance.createRanged(10)
 						],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({

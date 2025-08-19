@@ -229,7 +229,7 @@ A creature who drinks the potion receives benefits based on your power roll.`),
 						type: FactoryLogic.type.createManeuver({ free: true }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
-						target: 'Each enemy in area',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText(`
 Each target takes acid, fire, or poison damage (your choice) equal to your Agility score.

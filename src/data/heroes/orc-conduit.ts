@@ -540,7 +540,7 @@ export const orcConduit = {
 										qualifier: ''
 									}
 								],
-								target: 'Self or 1 ally',
+								target: 'Self or one ally',
 								cost: 0,
 								repeatable: false,
 								minLevel: 1,
@@ -596,7 +596,7 @@ export const orcConduit = {
 										qualifier: ''
 									}
 								],
-								target: '1 creature or object',
+								target: 'One creature or object',
 								cost: 0,
 								repeatable: false,
 								minLevel: 1,
@@ -658,7 +658,7 @@ export const orcConduit = {
 														qualifier: ''
 													}
 												],
-												target: '1 ally',
+												target: 'One ally',
 												cost: 0,
 												repeatable: false,
 												minLevel: 1,
@@ -714,7 +714,7 @@ export const orcConduit = {
 														qualifier: ''
 													}
 												],
-												target: '1 ally',
+												target: 'One ally',
 												cost: 0,
 												repeatable: false,
 												minLevel: 1,
@@ -772,7 +772,7 @@ export const orcConduit = {
 													qualifier: ''
 												}
 											],
-											target: '1 ally',
+											target: 'One ally',
 											cost: 0,
 											repeatable: false,
 											minLevel: 1,
@@ -1189,7 +1189,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1236,7 +1236,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1283,7 +1283,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1376,7 +1376,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1423,7 +1423,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1470,7 +1470,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1517,7 +1517,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1649,7 +1649,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -1696,7 +1696,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -1743,7 +1743,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 5,
 				repeatable: false,
 				minLevel: 1,
@@ -1790,7 +1790,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 5,
 				repeatable: false,
 				minLevel: 1,
@@ -1967,7 +1967,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 ally',
+				target: 'One ally',
 				cost: 7,
 				repeatable: false,
 				minLevel: 1,
@@ -2006,7 +2006,7 @@ export const orcConduit = {
 						qualifier: ''
 					}
 				],
-				target: '1 enemy',
+				target: 'One enemy',
 				cost: 7,
 				repeatable: false,
 				minLevel: 1,

@@ -316,7 +316,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -336,7 +336,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -357,7 +357,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature of your size or smaller',
+			target: 'One creature of your size or smaller',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -377,7 +377,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -418,7 +418,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -461,7 +461,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -482,7 +482,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature or obeject',
+			target: 'One creature or object',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -536,7 +536,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -600,7 +600,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionText('If the target is not a leader or solo creature, they are reduced to 0 Stamina at the end of their next turn. If the target is a leader or solo creature, you gain 3 surges and can make a melee free strike against them.')
@@ -613,7 +613,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -655,7 +655,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '2 creatures or objects',
+			target: 'Two creatures or objects',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -676,7 +676,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -710,7 +710,7 @@ Primordial power remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(

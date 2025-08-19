@@ -608,7 +608,7 @@ Pinna, Hedge Witch, Gravesford`,
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({

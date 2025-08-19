@@ -949,7 +949,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createTrigger('The target takes damage from another creature’s ability while in the area of your Null Field ability', { free: true }),
 			keywords: [ AbilityKeyword.Psionic ],
 			distance: [ FactoryLogic.distance.createSpecial('Self; see below') ],
-			target: 'Self or One creature',
+			target: 'Self or one creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionText('The target takes half the damage, and if the triggering creature has I < [average], they are dazed (save ends). While the triggering creature is dazed this way, they take psychic damage equal to your Intuition score whenever they use a main action.')

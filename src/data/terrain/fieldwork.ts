@@ -83,7 +83,7 @@ export const archersStakes: Terrain = {
 								type: FactoryLogic.type.createTrigger(''),
 								keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 								distance: [ FactoryLogic.distance.createMelee() ],
-								target: '1 creature or object',
+								target: 'One creature or object',
 								sections: [
 									FactoryLogic.createAbilitySectionRoll(
 										FactoryLogic.createPowerRoll({
@@ -155,7 +155,7 @@ export const bearTrap: Terrain = {
 						type: FactoryLogic.type.createTrigger(''),
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -423,7 +423,7 @@ export const snareTrap: Terrain = {
 						type: FactoryLogic.type.createTrigger(''),
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -518,7 +518,7 @@ export const spikeTrap: Terrain = {
 						type: FactoryLogic.type.createTrigger('', { free: true }),
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({

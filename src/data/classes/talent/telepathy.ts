@@ -20,7 +20,7 @@ export const telepathy: SubClass = {
 						type: FactoryLogic.type.createTrigger('The target deals damage to an ally.'),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target takes psychic damage equal to half the triggering damage.')
 						]
@@ -34,7 +34,7 @@ export const telepathy: SubClass = {
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The next ability roll an ally makes against the target before the start of your next turn gains an edge.'),
 							FactoryLogic.createAbilitySectionField({
@@ -94,7 +94,7 @@ export const telepathy: SubClass = {
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Telepathy ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
-									target: '1 enemy',
+									target: 'One enemy',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

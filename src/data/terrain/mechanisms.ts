@@ -54,7 +54,7 @@ export const columnOfBlades: Terrain = {
 						type: FactoryLogic.type.createTrigger(''),
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -118,7 +118,7 @@ export const columnOfBlades: Terrain = {
 								type: FactoryLogic.type.createTrigger(''),
 								keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 								distance: [ FactoryLogic.distance.createMelee() ],
-								target: '1 creature or object',
+								target: 'One creature or object',
 								sections: [
 									FactoryLogic.createAbilitySectionRoll(
 										FactoryLogic.createPowerRoll({
@@ -190,7 +190,7 @@ export const dartTrap: Terrain = {
 						type: FactoryLogic.type.createTrigger(''),
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({

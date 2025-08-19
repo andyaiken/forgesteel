@@ -91,7 +91,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -125,7 +125,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 5,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -179,7 +179,7 @@ Regardless, once combat begins, minotaurs relish charging at foes with their gre
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

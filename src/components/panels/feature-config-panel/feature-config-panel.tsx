@@ -519,7 +519,7 @@ export const FeatureConfigPanel = (props: Props) => {
 							</div>
 						</Flex>
 						:
-						<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
+						<Button block={true} className='status-warning' onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
 				}
 				{
 					data.selected ?
@@ -1155,7 +1155,7 @@ export const FeatureConfigPanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					!data.selected ?
-						<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
+						<Button block={true} className='status-warning' onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
 						: null
 				}
 				{

@@ -84,7 +84,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -191,7 +191,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(
@@ -247,7 +247,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(
@@ -273,7 +273,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(

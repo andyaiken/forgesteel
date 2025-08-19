@@ -28,7 +28,7 @@ export const raden: Kit = {
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
-				target: '1 creature or objects',
+				target: 'One creature or objects',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

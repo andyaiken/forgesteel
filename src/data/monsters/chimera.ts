@@ -87,7 +87,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -126,7 +126,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -163,7 +163,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						type: FactoryLogic.type.createTrigger('The target attacks the chimera and gets a tier 1 result.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The chimera shifts 5. If they end this movement adjacent to the target, roll power.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

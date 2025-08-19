@@ -672,7 +672,7 @@ Breath remains until you convert it to essence.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -824,7 +824,7 @@ Breath remains until you convert it to essence.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

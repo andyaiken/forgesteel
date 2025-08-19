@@ -721,7 +721,7 @@ export class FeatureLogic {
 			case FeatureType.AddOn:
 				return 'This feature grants you a monster customization.';
 			case FeatureType.AncestryChoice:
-				return 'This feature sets the hero\'s ancestry.';
+				return 'This feature sets the hero\'s former ancestry.';
 			case FeatureType.AncestryFeatureChoice:
 				return 'This feature allows you to select a feature from an ancestry.';
 			case FeatureType.Bonus:

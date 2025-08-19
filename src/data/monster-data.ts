@@ -45,7 +45,7 @@ import { troll } from './monsters/troll';
 import { undead } from './monsters/undead';
 import { undead2nd } from './monsters/undead-2nd';
 import { voicelessTalker } from './monsters/voiceless-talker';
-import { warDog } from './monsters/wardog';
+import { warDog1e } from './monsters/wardog';
 import { werewolf } from './monsters/werewolf';
 import { wyvern } from './monsters/wyvern';
 import { xorannox } from './monsters/xorannox';
@@ -97,7 +97,7 @@ export class MonsterData {
 	static undead = undead;
 	static undead2nd = undead2nd;
 	static voicelessTalker = voicelessTalker;
-	static warDog = warDog;
+	static warDog1e = warDog1e;
 	static werewolf = werewolf;
 	static wyvern = wyvern;
 	static xorannox = xorannox;

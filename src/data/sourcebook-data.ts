@@ -500,7 +500,7 @@ export class SourcebookData {
 			MonsterData.undead,
 			MonsterData.undead2nd,
 			MonsterData.voicelessTalker,
-			MonsterData.warDog,
+			MonsterData.warDog1e,
 			MonsterData.werewolf,
 			MonsterData.wyvern,
 			MonsterData.xorannox

@@ -8,9 +8,9 @@ import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
-export const warDog: MonsterGroup = {
+export const warDog1e: MonsterGroup = {
 	id: 'monster-group-wardog',
-	name: 'War Dog',
+	name: 'War Dog - 1st Echelon',
 	description: 'Ajax’s war dogs—brutal patchwork soldiers—owe their new lives to the Iron Saint and fight for him fanatically. War dog minions are the freshest recruits, possessing minimal patchwork qualities and generally treated as disposable. Those who survive a battle are rewarded with gifts from the Body Banks. Those who don’t survive become recycled back into the Body Banks to be reborn.',
 	picture: null,
 	information: [

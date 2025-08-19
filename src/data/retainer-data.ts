@@ -197,7 +197,7 @@ export class RetainerData {
 							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createMelee() ],
-							target: '1 creature',
+							target: 'One creature',
 							sections: [
 								FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -219,7 +219,7 @@ export class RetainerData {
 								FactoryLogic.distance.createMelee(),
 								FactoryLogic.distance.createRanged(5)
 							],
-							target: '1 creature',
+							target: 'One creature',
 							sections: [
 								FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -329,7 +329,7 @@ export class RetainerData {
 							type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 							keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 							distance: [ FactoryLogic.distance.createMelee() ],
-							target: '1 creature',
+							target: 'One creature',
 							sections: [
 								FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],

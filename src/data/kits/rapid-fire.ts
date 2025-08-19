@@ -29,7 +29,7 @@ export const rapidFire: Kit = {
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createRanged(5) ],
-				target: '2 creatures or objects',
+				target: 'Two creatures or objects',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

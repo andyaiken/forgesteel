@@ -23,6 +23,7 @@ import { FeatureLogic } from '../../../../logic/feature-logic';
 import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
+import { HeroUpdateLogic } from '../../../../logic/update/hero-update-logic';
 import { Options } from '../../../../models/options';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -358,6 +359,13 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
+		const updateHeroData = () => {
+			const heroCopy = Utils.copy(hero);
+			HeroUpdateLogic.updateHeroData(heroCopy, props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id)));
+			setHero(heroCopy);
+			setDirty(true);
+		};
+
 		const saveChanges = () => {
 			props.saveChanges(hero);
 			setDirty(false);
@@ -568,6 +576,7 @@ export const HeroEditPage = (props: Props) => {
 							setPicture={setPicture}
 							setFolder={setFolder}
 							setFeatureData={setFeatureData}
+							updateHeroData={updateHeroData}
 						/>
 					);
 			}

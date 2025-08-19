@@ -28,7 +28,7 @@ export const whirlwind: Kit = {
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee(2) ],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

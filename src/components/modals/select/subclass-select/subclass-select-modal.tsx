@@ -104,6 +104,7 @@ export const SubClassSelectModal = (props: Props) => {
 										<Expander title='From other classes'>
 											<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 												<Alert
+													type='warning'
 													showIcon={true}
 													message='Selecting a subclass from a different class is typically against the rules.'
 												/>

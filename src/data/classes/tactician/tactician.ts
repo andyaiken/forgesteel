@@ -84,7 +84,7 @@ As a tactician, you have abilities that heal your allies and grant them increase
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText(`
 The target is marked by you until the end of the encounter, until you are dying, or until you use this ability again. You can willingly end your mark on a creature (no action required), and if another tactician marks a creature, your mark on that creature ends. When a creature marked by you is reduced to 0 Stamina, you can use a free triggered action to mark a new target within distance.
@@ -111,7 +111,7 @@ You can’t gain more than one benefit from the same trigger.`),
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 ally',
+						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target can use a signature ability as a free triggered action.'),
 							FactoryLogic.createAbilitySectionField({
@@ -345,7 +345,7 @@ Command remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -368,7 +368,7 @@ Command remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -404,7 +404,7 @@ Command remains until you spend it.`
 				FactoryLogic.distance.createMelee(),
 				FactoryLogic.distance.createRanged(5)
 			],
-			target: '1 creature or object',
+			target: 'One creature or object',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -463,7 +463,7 @@ Command remains until you spend it.`
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '2 allies',
+			target: 'Two allies',
 			cost: 5,
 			sections: [
 				FactoryLogic.createAbilitySectionText('Each target who hasn’t acted yet this combat round can take their turn in any order immediately after yours.')
@@ -528,7 +528,7 @@ Command remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createMelee() ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionText('You and each ally adjacent to the target gain 10 temporary Stamina.')

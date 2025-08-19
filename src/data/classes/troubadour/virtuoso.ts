@@ -271,7 +271,7 @@ your Routines feature.`,
 									type: FactoryLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 									distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
-									target: ' Self and each ally in the area',
+									target: 'Self and each ally in the area',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionText('Each target gains 1 surge, then gains 1 surge at the start of each combat round until the end of the encounter.')

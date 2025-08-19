@@ -51,7 +51,7 @@ You can make this test only once for any encounter or negotiation.`
 						type: FactoryLogic.type.createTrigger('The target moves.'),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('At any time during the target’s movement, one ally can make a free strike against them.'),
 							FactoryLogic.createAbilitySectionField({
@@ -93,7 +93,7 @@ You can make this test only once for any encounter or negotiation.`
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createRanged(5) ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(
@@ -119,7 +119,7 @@ You can make this test only once for any encounter or negotiation.`
 									type: FactoryLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(5) ],
-									target: '2 creatures',
+									target: 'Two creatures',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionText('Each target is marked by you, and you gain two surges.'),

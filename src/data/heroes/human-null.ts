@@ -965,7 +965,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1013,7 +1013,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1061,7 +1061,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1109,7 +1109,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1157,7 +1157,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1205,7 +1205,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -1253,7 +1253,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -1339,7 +1339,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -1387,7 +1387,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -1435,7 +1435,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 5,
 				repeatable: false,
 				minLevel: 1,
@@ -1483,7 +1483,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 5,
 				repeatable: false,
 				minLevel: 1,
@@ -1531,7 +1531,7 @@ export const humanNull = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 5,
 				repeatable: false,
 				minLevel: 1,
@@ -1880,7 +1880,7 @@ export const humanNull = {
 																qualifier: ''
 															}
 														],
-														target: '1 creature',
+														target: 'One creature',
 														cost: 5,
 														repeatable: false,
 														minLevel: 1,
@@ -2192,7 +2192,7 @@ export const humanNull = {
 																qualifier: ''
 															}
 														],
-														target: '1 creature',
+														target: 'One creature',
 														cost: 5,
 														repeatable: false,
 														minLevel: 1,

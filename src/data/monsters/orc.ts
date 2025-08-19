@@ -738,7 +738,7 @@ The scyza’s trunk-like legs and claws cleave through the ground and kick up te
 						name: 'Castling',
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createSelf() ],
-						target: '1 ally',
+						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The rampart moves or shifts up to their speed to a square adjacent to the target and then swamps places with the target.')
 						]

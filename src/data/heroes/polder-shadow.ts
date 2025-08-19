@@ -460,7 +460,7 @@ export const polderShadow = {
 															qualifier: ''
 														}
 													],
-													target: '1 creature',
+													target: 'One creature',
 													cost: 'signature',
 													repeatable: false,
 													minLevel: 1,
@@ -584,7 +584,7 @@ export const polderShadow = {
 										qualifier: ''
 									}
 								],
-								target: '1 creature',
+								target: 'One creature',
 								cost: 0,
 								repeatable: false,
 								minLevel: 1,
@@ -641,7 +641,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -697,7 +697,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -753,7 +753,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -800,7 +800,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,
@@ -847,7 +847,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -903,7 +903,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -950,7 +950,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -1006,7 +1006,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '2 creatures or objects',
+				target: 'Two creatures or objects',
 				cost: 3,
 				repeatable: false,
 				minLevel: 1,
@@ -1062,7 +1062,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 5,
 				repeatable: false,
 				minLevel: 1,
@@ -1156,7 +1156,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 5,
 				repeatable: false,
 				minLevel: 1,
@@ -1286,7 +1286,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 7,
 				repeatable: false,
 				minLevel: 1,
@@ -1333,7 +1333,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 7,
 				repeatable: false,
 				minLevel: 1,
@@ -1389,7 +1389,7 @@ export const polderShadow = {
 						qualifier: ''
 					}
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 7,
 				repeatable: false,
 				minLevel: 1,
@@ -1595,7 +1595,7 @@ export const polderShadow = {
 																qualifier: ''
 															}
 														],
-														target: '1 creature',
+														target: 'One creature',
 														cost: 5,
 														repeatable: false,
 														minLevel: 1,
@@ -1866,7 +1866,7 @@ export const polderShadow = {
 																qualifier: ''
 															}
 														],
-														target: '1 creature',
+														target: 'One creature',
 														cost: 5,
 														repeatable: false,
 														minLevel: 1,

@@ -190,7 +190,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -244,7 +244,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createRanged(12)
 						],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -293,7 +293,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -336,7 +336,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -359,7 +359,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createMelee(3),
 							FactoryLogic.distance.createRanged(12)
 						],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -441,7 +441,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(6)
 						],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -462,7 +462,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createRanged(6)
 						],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -484,7 +484,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.createRanged(5)
 						],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target takes 1d6 fire damage and teleports in a plume of smoke, swapping places with the other target. The targets must be able to fit into the space they enter.')
 						]
@@ -547,7 +547,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -601,7 +601,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target makes a Might test. A target with a fire immunity automatically gets a tier 3 result.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -664,7 +664,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createRanged(15)
 						],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -763,7 +763,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -856,7 +856,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -912,7 +912,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionText('A 1 square wide pillar of stone juts 5 squares out of the ground beneath the target, raising them and then vertically pushing them 5. The forced movement is entirely straight up.')
 						]
@@ -961,7 +961,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -983,7 +983,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(1)
 						],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
@@ -1023,7 +1023,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target makes an Agility test.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -1097,7 +1097,7 @@ Stone giants are made of the same kinds of rocks that form their home—marble, 
 						distance: [
 							FactoryLogic.distance.createMelee(1)
 						],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,

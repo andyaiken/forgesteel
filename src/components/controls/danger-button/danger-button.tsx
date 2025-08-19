@@ -8,6 +8,7 @@ interface Props {
 	mode?: 'default' | 'block' | 'clear' | 'icon';
 	disabled?: boolean;
 	label?: string;
+	icon?: ReactNode;
 	message?: ReactNode;
 	onConfirm: (e: MouseEvent) => void;
 }
@@ -17,26 +18,27 @@ export const DangerButton = (props: Props) => {
 
 	try {
 		const disabled = props.disabled || false;
+		const icon = props.icon || <DeleteOutlined />;
 
 		const getContent = () => {
 			switch (props.mode) {
 				case 'block':
 					return (
-						<Button icon={<DeleteOutlined />} block={true} disabled={disabled} danger={true}>
+						<Button icon={icon} block={true} disabled={disabled} danger={true}>
 							{props.label || 'Delete'}
 						</Button>
 					);
 				case 'clear':
 					return (
-						<Button type='text' title={props.label || 'Delete'} icon={<DeleteOutlined />} disabled={disabled} danger={true} />
+						<Button type='text' title={props.label || 'Delete'} icon={icon} disabled={disabled} danger={true} />
 					);
 				case 'icon':
 					return (
-						<Button title={props.label || 'Delete'} icon={<DeleteOutlined />} disabled={disabled} danger={true} />
+						<Button title={props.label || 'Delete'} icon={icon} disabled={disabled} danger={true} />
 					);
 				default:
 					return (
-						<Button icon={<DeleteOutlined />} disabled={disabled} danger={true}>
+						<Button icon={icon} disabled={disabled} danger={true}>
 							{props.label || 'Delete'}
 						</Button>
 					);

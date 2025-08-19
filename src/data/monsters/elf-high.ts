@@ -421,7 +421,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'Kiss of Death',
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 ally',
+						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target’s speed increases by 5 and they cannot get results lower than tier 3 on their power rolls. The target immediately dies at the end of their next turn.')
 						]
@@ -538,7 +538,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: '2 allies',
+						target: 'Two allies',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target is teleported to an unoccupied square adjacent to the palinode. Then, the palinode and each target gain 5 temporary Stamina.')
 						]

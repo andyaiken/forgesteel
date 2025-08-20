@@ -178,8 +178,12 @@ export const HeroEditPage = (props: Props) => {
 
 		const setCulture = (culture: Culture | null) => {
 			const cultureCopy = Utils.copy(culture) as Culture | null;
+			if (cultureCopy) {
+				const sourcebooks  =props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
+				const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
+				cultureCopy.languages = cultureCopy.languages.filter(language => !knownLanguages.includes(language));
+			}
 			const heroCopy = Utils.copy(hero);
-			// TODO culture language
 			heroCopy.culture = cultureCopy;
 			setHero(heroCopy);
 			setDirty(true);

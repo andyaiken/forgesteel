@@ -3,11 +3,11 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
+import { FactoryLogic } from '../../logic/factory-logic';
+import { MonsterGroup } from '../../models/monster';
+import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterGroup } from '../../models/monster';
 
 export const warDog1st: MonsterGroup = {
 	id: 'monster-group-wardog-1st',
@@ -909,7 +909,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				})
 			]
-		}),
+		})
 	],
 	addOns: []
 };

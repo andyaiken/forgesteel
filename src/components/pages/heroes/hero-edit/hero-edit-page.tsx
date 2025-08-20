@@ -20,6 +20,7 @@ import { CultureSection } from './culture-section/culture-section';
 import { DetailsSection } from './details-section/details-section';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureLogic } from '../../../../logic/feature-logic';
+import { FeatureType } from '../../../../enums/feature-type';
 import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
@@ -35,7 +36,6 @@ import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
 import './hero-edit-page.scss';
-import { FeatureType } from '../../../../enums/feature-type';
 
 enum PageState {
 	Blank = '',
@@ -106,7 +106,7 @@ export const HeroEditPage = (props: Props) => {
 					}
 				case 'career':
 					if (hero.career) {
-						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) || !hero.career.incitingIncidents.selectedID ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
@@ -150,9 +150,9 @@ export const HeroEditPage = (props: Props) => {
 		};
 
 		const clearRedundantSelections = (hero: Hero, features: Feature[]) => {
-			const sourcebooks  =props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
+			const sourcebooks = props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
 			const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
-			const knownSkills = HeroLogic.getSkills(hero, sourcebooks).map(skill=> skill.name);
+			const knownSkills = HeroLogic.getSkills(hero, sourcebooks).map(skill => skill.name);
 			features.forEach(feature => {
 				switch (feature.type) {
 					case FeatureType.LanguageChoice:
@@ -163,7 +163,7 @@ export const HeroEditPage = (props: Props) => {
 						break;
 				};
 			});
-		}
+		};
 
 		const setAncestry = (ancestry: Ancestry | null) => {
 			const ancestryCopy = Utils.copy(ancestry) as Ancestry | null;
@@ -179,7 +179,7 @@ export const HeroEditPage = (props: Props) => {
 		const setCulture = (culture: Culture | null) => {
 			const cultureCopy = Utils.copy(culture) as Culture | null;
 			if (cultureCopy) {
-				const sourcebooks  =props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
+				const sourcebooks = props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
 				const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
 				cultureCopy.languages = cultureCopy.languages.filter(language => !knownLanguages.includes(language));
 			}

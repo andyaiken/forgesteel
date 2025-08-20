@@ -1,38 +1,38 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { FactoryLogic } from '../../logic/factory-logic';
+import { MonsterGroup } from '../../models/monster';
+import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterGroup } from '../../models/monster';
 
 export const warDog3rd: MonsterGroup = {
-    id: 'monster-group-wardog-3rd',
-    name: 'War Dog - 3rd Echelon',
-    description: 'As a war dog proves their loyalty and gains the favor of their superiors, they might be rewarded with special attention from the flesh sculptors of the Body Banks, smoothing out their construction and supplying them with higher-quality parts. War dogs who have risen through the ranks this way pride themselves on their nearly ordinary appearances.',
-    picture: null,
-    information: [
-        {
+	id: 'monster-group-wardog-3rd',
+	name: 'War Dog - 3rd Echelon',
+	description: 'As a war dog proves their loyalty and gains the favor of their superiors, they might be rewarded with special attention from the flesh sculptors of the Body Banks, smoothing out their construction and supplying them with higher-quality parts. War dogs who have risen through the ranks this way pride themselves on their nearly ordinary appearances.',
+	picture: null,
+	information: [
+		{
 			id: 'wardog-3rd-info-warning',
 			name: 'Content Warning: Brainwashing and Body Horror',
 			description: 'War dogs are explicitly evil soldiers built from the body parts of other humanoids. Check in with your players before running war dogs to make sure that they’re okay with battling brainwashed soldiers with an appearance akin to Frankenstein’s monster if he were built to be a shock trooper. If anyone is uncomfortable, modify the appearance and lore of the war dogs as you see fit.'
 		},
-        {
-            id: 'wardog-3rd-info-1',
-            name: 'Happy Accidents',
-            description: 'Making war dogs is more art than science, and happy little accidents can create war dogs with unusual characteristics. These war dogs are given great attention by the flesh sculptors, both to further improve the abilities of these deviants and to learn how to replicate their creation.'
-        },
-        {
-            id: 'wardog-3rd-info-2',
-            name: 'Made to Order',
-            description: `War dogs are most often made by playing the odds, with each new resurrection assumed to create certain ratios of infantry, mages, specialists, and so on. However, by radically altering their creation processes and providing special materials, war dogs can be made who bear little resemblance to any humanoid, and who possess power beyond that of any typical conscript.
+		{
+			id: 'wardog-3rd-info-1',
+			name: 'Happy Accidents',
+			description: 'Making war dogs is more art than science, and happy little accidents can create war dogs with unusual characteristics. These war dogs are given great attention by the flesh sculptors, both to further improve the abilities of these deviants and to learn how to replicate their creation.'
+		},
+		{
+			id: 'wardog-3rd-info-2',
+			name: 'Made to Order',
+			description: `War dogs are most often made by playing the odds, with each new resurrection assumed to create certain ratios of infantry, mages, specialists, and so on. However, by radically altering their creation processes and providing special materials, war dogs can be made who bear little resemblance to any humanoid, and who possess power beyond that of any typical conscript.
 
 These monstrous war dogs are developed to fulfill specific roles and combat niches, and are often fused with inorganic materials after their rebirth as living war machines. Monstrous war dogs are uniformly respected for having been chosen for greatness, and they consider their unnatural forms a badge of honor bestowed by Ajax.`
-        },
-    ],
-    malice: [
-        FactoryLogic.feature.createMalice({
+		}
+	],
+	malice: [
+		FactoryLogic.feature.createMalice({
 			id: 'wardog-3rd-malice-1',
 			name: 'Reconstitute',
 			cost: 3,
@@ -52,10 +52,10 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 				sections: [
 					FactoryLogic.createAbilitySectionText('**Effect:** Each target makes an **Agility test**. The same condition is imposed on each affected target'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-                        characteristic: [ Characteristic.Agility ],
+						characteristic: [ Characteristic.Agility ],
 						tier1: '5 fire damage; slowed or weakened (save ends)',
 						tier2: '5 fire damage; slowed or weakened (EoT)',
-						tier3: '5 fire damage',
+						tier3: '5 fire damage'
 					}))
 				]
 			})
@@ -68,7 +68,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 				'Each war dog minion in the encounter shifts up to their speed and can make a free strike. A minion who does so is then reduced to 0 Stamina.'
 			]
 		}),
-        FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'wardog-3rd-malice-4',
 				name: 'Loyalty Unto Death',
@@ -80,15 +80,15 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 				sections: [
 					FactoryLogic.createAbilitySectionText('**Effect:** Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target’s Loyalty Collar trait is resolved, each enemy adjacent to either target makes a **Presence test**.'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-                        characteristic: [ Characteristic.Presence ],
+						characteristic: [ Characteristic.Presence ],
 						tier1: 'Push 4; the enemy is frightened of the nearest non-minion war dog (save end)',
 						tier2: 'Push 2; the enemy is frightened of the nearest non-minion war dog (EoT)',
-						tier3: 'Push 2',
+						tier3: 'Push 2'
 					}))
 				]
 			})
 		}),
-        FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'wardog-3rd-malice-5',
 				name: 'Alchemical Cloud',
@@ -100,17 +100,17 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 				sections: [
 					FactoryLogic.createAbilitySectionText('A bank of choking chemicals sweeps across the area of the enácounter map. Each enemy in the encounter makes a **Might test**.'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-                        characteristic: [ Characteristic.Might ],
+						characteristic: [ Characteristic.Might ],
 						tier1: '8 poison damage; dazed (Eot)',
 						tier2: '7 poison damage; weakened (EoT)',
-						tier3: '4 poison damage',
+						tier3: '4 poison damage'
 					}))
 				]
 			})
-		}),
-    ],
-    monsters: [
-        FactoryLogic.createMonster({
+		})
+	],
+	monsters: [
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-1',
 			name: 'War Dog Draconite',
 			level: 7,
@@ -122,12 +122,12 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 13,
 			stability: 2,
 			freeStrikeDamage: 4,
-            withCaptain: '+3 damage bonus to strikes',
+			withCaptain: '+3 damage bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(4, 1, -2, -1, 2),
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-2',
 			name: 'War Dog Saboteur',
 			level: 7,
@@ -139,12 +139,12 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 12,
 			stability: 0,
 			freeStrikeDamage: 4,
-            withCaptain: '+5 bonus to ranged distance',
+			withCaptain: '+5 bonus to ranged distance',
 			characteristics: MonsterLogic.createCharacteristics(-1, 2, 4, 3, 1),
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-3',
 			name: 'War Dog Shriketroop',
 			level: 7,
@@ -156,12 +156,12 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 4,
-            withCaptain: 'Gain an edge on strikes',
+			withCaptain: 'Gain an edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(1, 4, 3, 1, 1),
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-4',
 			name: 'War Dog Aerocite',
 			level: 8,
@@ -177,7 +177,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-5',
 			name: 'War Dog Ballistite',
 			level: 8,
@@ -193,7 +193,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-6',
 			name: 'War Dog Blackcap',
 			level: 7,
@@ -209,7 +209,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-7',
 			name: 'War Dog Breaker',
 			level: 7,
@@ -220,12 +220,12 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 200,
 			stability: 4,
-			freeStrikeDamage:7,
+			freeStrikeDamage: 7,
 			characteristics: MonsterLogic.createCharacteristics(4, 2, 1, 1, 3),
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-8',
 			name: 'War Dog Firestarter',
 			level: 8,
@@ -241,7 +241,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-9',
 			name: 'War Dog Geomancer',
 			level: 8,
@@ -257,7 +257,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-10',
 			name: 'War Dog Iron Priest',
 			level: 8,
@@ -273,7 +273,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-11',
 			name: 'War Dog Prismite',
 			level: 8,
@@ -289,7 +289,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			features: [
 			]
 		}),
-        FactoryLogic.createMonster({
+		FactoryLogic.createMonster({
 			id: 'wardog-3rd-12',
 			name: 'War Dog Taxiarch',
 			level: 9,
@@ -304,7 +304,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			characteristics: MonsterLogic.createCharacteristics(1, 3, 5, 4, 3),
 			features: [
 			]
-		}),
-    ],
-    addOns: []
-}
+		})
+	],
+	addOns: []
+};

@@ -1,5 +1,6 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
+import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
@@ -8,29 +9,29 @@ import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
-export const warDog: MonsterGroup = {
-	id: 'monster-group-wardog',
-	name: 'War Dog',
+export const warDog1st: MonsterGroup = {
+	id: 'monster-group-wardog-1st',
+	name: 'War Dog - 1st Echelon',
 	description: 'Ajax’s war dogs—brutal patchwork soldiers—owe their new lives to the Iron Saint and fight for him fanatically. War dog minions are the freshest recruits, possessing minimal patchwork qualities and generally treated as disposable. Those who survive a battle are rewarded with gifts from the Body Banks. Those who don’t survive become recycled back into the Body Banks to be reborn.',
 	picture: null,
 	information: [
 		{
-			id: 'wardog-info-warning',
+			id: 'wardog-1st-info-warning',
 			name: 'Content Warning: Brainwashing and Body Horror',
 			description: 'War dogs are explicitly evil soldiers built from the body parts of other humanoids. Check in with your players before running war dogs to make sure that they’re okay with battling brainwashed soldiers with an appearance akin to Frankenstein’s monster if he were built to be a shock trooper. If anyone is uncomfortable, modify the appearance and lore of the war dogs as you see fit.'
 		},
 		{
-			id: 'wardog-info-1',
+			id: 'wardog-1st-info-1',
 			name: 'Withdrawn from the Body Banks',
 			description: 'Body Bank technology stolen from the upper worlds allows for the storage, manipulation, and reuse of biological body parts, and this technology has been put to terrible use by Ajax and his followers. For the rich and powerful elite, the Body Banks serve as a source of reliable medical materials and even enhancements. For everyone else, they are a looming threat and a warning of what might happen to the disloyal. Those body parts not claimed by the upper classes are stitched, welded, and fused together to become an endless supply of twisted warriors.'
 		},
 		{
-			id: 'wardog-info-2',
+			id: 'wardog-1st-info-2',
 			name: 'Soulless Soldiers',
 			description: 'War dogs aren’t technically soulless: they have minds, wills, and a vital spark that separates them from the Undead, but their souls are as patchwork as their bodies. Congealed unnaturally from the shattered remains of their constituent parts, their mosaic souls are irrevocably damaged and only partially functional. War dogs are thus metaphysically unstable, incapable of higher spiritual functions like empathy or love, and their personalities and beliefs are highly malleable. This makes them the ideal disposable soldier for the discerning tyrant.'
 		},
 		{
-			id: 'wardog-info-3',
+			id: 'wardog-1st-info-3',
 			name: 'Enlisted at Rebirth',
 			description: `
 From the moment they are reborn, every war dog is part of Ajax’s war machine. Fresh recruits undergo inspections and tests to ensure their viability and assess their capabilities, and those who are found lacking are immediately recycled. 
@@ -38,14 +39,14 @@ From the moment they are reborn, every war dog is part of Ajax’s war machine. 
 Those who meet the minimum requirements are sent to a brief but intense training camp, where they are drilled in basic combat, personal fitness, and unswerving loyalty. It is here that war dogs are first indoctrinated with Ajax’s ideals, and any who question those ideals are immediately recycled. Those who survive this training camp are fitted with loyalty collars—unremovable neck pieces fitted with explosive fuse-iron charges—and sent on to join a legion.`
 		},
 		{
-			id: 'wardog-info-4',
+			id: 'wardog-1st-info-4',
 			name: 'Chain of Command',
 			description: `Ajax leaves the management and tactical goals of individual legions to his hand-picked strategoi. Each strategos is an exceptionally talented war dog, often a veteran with dozens of upgrades and refinements, and is typically selected for their ability to think and plan. A strategos in turn appoints the most powerful and skilled war dogs in the legion to their inner council.
 
 Below the inner council are hundreds of officers and thousands of soldiers. A single deviation from an order, no matter how rational or well considered, can get a lowly soldier sent back to the Body Banks. As such, lower-ranking war dogs rarely alter tactics or show initiative. Without an officer to command them, war dogs can easily turn into an unwieldy and stagnant force capable only of following their most recent orders.`
 		},
 		{
-			id: 'wardog-info-5',
+			id: 'wardog-1st-info-5',
 			name: 'War Dog Tactics',
 			description: `War dogs have a heavy focus on minion frontlines backed by captains with powerful control or support abilities. Those captains’ tactics reflect the replaceability of their low-ranking troops, who they throw into the fray without caution. Once a squad of minions is reduced to a few stragglers, a captain will order them into position for maximum effect and manually detonate their loyalty collars.
 
@@ -61,14 +62,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 - **Oppressor Force, 52 EV**: Eight conscripts, eight sharpshooters, sixteen commandos, one pestilite, one neuronite, one ground commander`
 		},
 		{
-			id: 'wardog-info-6',
+			id: 'wardog-1st-info-6',
 			name: 'War Dog Languages',
 			description: 'Most war dogs speak Caelian and one Vaslorian human language.'
 		}
 	],
 	malice: [
 		FactoryLogic.feature.createMalice({
-			id: 'wardog-malice-1',
+			id: 'wardog-1st-malice-1',
 			name: 'Reconstitute',
 			cost: 3,
 			sections: [
@@ -77,7 +78,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 		}),
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'wardog-malice-2',
+				id: 'wardog-1st-malice-2',
 				name: 'Fire for Effect',
 				type: FactoryLogic.type.createManeuver(),
 				cost: 3,
@@ -87,6 +88,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				sections: [
 					FactoryLogic.createAbilitySectionText('**Effect:** Each target makes an **Agility test**. The same condition is imposed on each affected target'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Agility ],
 						tier1: '5 fire damage; slowed or weakened (save ends)',
 						tier2: '5 fire damage; slowed or weakened (EoT)',
 						tier3: '5 fire damage'
@@ -95,7 +97,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			})
 		}),
 		FactoryLogic.feature.createMalice({
-			id: 'wardog-malice-3',
+			id: 'wardog-1st-malice-3',
 			name: 'Fodder Run',
 			cost: 7,
 			sections: [
@@ -105,12 +107,12 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 	],
 	monsters: [
 		FactoryLogic.createMonster({
-			id: 'wardog-1',
+			id: 'wardog-1st-1',
 			name: 'War Dog Commando',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 4,
@@ -121,7 +123,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-1-feature-1',
+						id: 'wardog-1st-1-feature-1',
 						name: 'Daggers',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -143,19 +145,19 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-1-feature-2',
+					id: 'wardog-1st-1-feature-2',
 					name: 'Loyalty Collar',
 					description: 'When the commando is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-2',
+			id: 'wardog-1st-2',
 			name: 'War Dog Conscript',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
 			stamina: 4,
@@ -166,7 +168,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-2-feature-1',
+						id: 'wardog-1st-2-feature-1',
 						name: 'Blade',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -188,19 +190,19 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-2-feature-2',
+					id: 'wardog-1st-2-feature-2',
 					name: 'Loyalty Collar',
 					description: 'When the conscript is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-3',
+			id: 'wardog-1st-3',
 			name: 'War Dog Sharpshooter',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
 			stamina: 3,
@@ -211,7 +213,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-3-feature-1',
+						id: 'wardog-1st-3-feature-1',
 						name: 'Bolt Launcher',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -230,19 +232,19 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-3-feature-2',
+					id: 'wardog-1st-3-feature-2',
 					name: 'Loyalty Collar',
 					description: 'When the sharpshooter is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-4',
+			id: 'wardog-1st-4',
 			name: 'War Dog Tetherite',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 5,
@@ -253,7 +255,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-4-feature-1',
+						id: 'wardog-1st-4-feature-1',
 						name: 'Banded Dagger',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -271,19 +273,19 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-4-feature-2',
+					id: 'wardog-1st-4-feature-2',
 					name: 'Tethered',
 					description: 'A captain attached to a tetherite squad has their stability increased by the number of tetherites within 2 squares of them.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-4-feature-3',
+					id: 'wardog-1st-4-feature-3',
 					name: 'Loyalty Collar',
 					description: 'When the tetherite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d3 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-5',
+			id: 'wardog-1st-5',
 			name: 'War Dog Amalgamite',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Brute),
@@ -298,7 +300,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-5-feature-1',
+						id: 'wardog-1st-5-feature-1',
 						name: 'Several Arms',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -323,7 +325,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-5-feature-2',
+						id: 'wardog-1st-5-feature-2',
 						name: 'Posthumous Promotion',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -335,14 +337,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-5-feature-3',
+					id: 'wardog-1st-5-feature-3',
 					name: 'Loyalty Collar',
 					description: 'When the amalgamite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-6',
+			id: 'wardog-1st-6',
 			name: 'War Dog Crucibite',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Artillery),
@@ -356,14 +358,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'wardog-6-feature-1',
+					id: 'wardog-1st-6-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-6-feature-2',
+						id: 'wardog-1st-6-feature-2',
 						name: 'Flamebelcher',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -388,7 +390,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-6-feature-3',
+						id: 'wardog-1st-6-feature-3',
 						name: 'Posthumous Promotion',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -400,14 +402,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-6-feature-4',
+					id: 'wardog-1st-6-feature-4',
 					name: 'Loyalty Collar',
 					description: 'When the crucibite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-7',
+			id: 'wardog-1st-7',
 			name: 'War Dog Eviscerite',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Harrier),
@@ -422,7 +424,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-7-feature-1',
+						id: 'wardog-1st-7-feature-1',
 						name: 'Chainsaw Whip',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -442,7 +444,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-7-feature-2',
+						id: 'wardog-1st-7-feature-2',
 						name: 'Posthumous Promotion',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -454,14 +456,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-7-feature-3',
+					id: 'wardog-1st-7-feature-3',
 					name: 'Loyalty Collar',
 					description: 'When the eviscerite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-8',
+			id: 'wardog-1st-8',
 			name: 'War Dog Neuronite',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Defender),
@@ -475,14 +477,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'wardog-8-feature-1',
+					id: 'wardog-1st-8-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-8-feature-2',
+						id: 'wardog-1st-8-feature-2',
 						name: 'Synlirii Grafts',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -501,7 +503,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-8-feature-3',
+						id: 'wardog-1st-8-feature-3',
 						name: 'Posthumous Promotion',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -514,7 +516,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-8-feature-4',
+						id: 'wardog-1st-8-feature-4',
 						name: 'The Voice',
 						cost: 1,
 						type: FactoryLogic.type.createManeuver(),
@@ -527,14 +529,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-8-feature-5',
+					id: 'wardog-1st-8-feature-5',
 					name: 'Loyalty Collar',
 					description: 'When the neuronite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-9',
+			id: 'wardog-1st-9',
 			name: 'War Dog Pestilite',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Controller),
@@ -548,14 +550,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'wardog-9-feature-1',
+					id: 'wardog-1st-9-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 3 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-9-feature-2',
+						id: 'wardog-1st-9-feature-2',
 						name: 'Plaguecaster',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -575,7 +577,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-9-feature-3',
+						id: 'wardog-1st-9-feature-3',
 						name: 'Posthumous Promotion',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -587,14 +589,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-9-feature-4',
+					id: 'wardog-1st-9-feature-4',
 					name: 'Loyalty Collar',
 					description: 'When the pestilite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-10',
+			id: 'wardog-1st-10',
 			name: 'War Dog Phosphorite',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Hexer),
@@ -608,14 +610,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'wardog-10-feature-1',
+					id: 'wardog-1st-10-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 2 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-10-feature-2',
+						id: 'wardog-1st-10-feature-2',
 						name: 'Caustic Detonator',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -636,7 +638,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-10-feature-3',
+						id: 'wardog-1st-10-feature-3',
 						name: 'Posthumous Promotion',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -648,14 +650,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-10-feature-4',
+					id: 'wardog-1st-10-feature-4',
 					name: 'Loyalty Collar',
 					description: 'When the phosphorite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-11',
+			id: 'wardog-1st-11',
 			name: 'War Dog Teletalite',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
@@ -670,7 +672,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-11-feature-1',
+						id: 'wardog-1st-11-feature-1',
 						name: 'Corrupted Ash Daggers',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -698,7 +700,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-11-feature-2',
+						id: 'wardog-1st-11-feature-2',
 						name: 'Posthumous Promotion',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -711,7 +713,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-11-feature-3',
+						id: 'wardog-1st-11-feature-3',
 						name: 'Corrupted Ash Teleport',
 						cost: 1,
 						type: FactoryLogic.type.createManeuver(),
@@ -724,14 +726,14 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-11-feature-4',
+					id: 'wardog-1st-11-feature-4',
 					name: 'Loyalty Collar',
 					description: 'When the teletalite is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-12',
+			id: 'wardog-1st-12',
 			name: 'War Dog Subcommander',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Support),
@@ -746,7 +748,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-12-feature-1',
+						id: 'wardog-1st-12-feature-1',
 						name: 'Command Saber',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -766,7 +768,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-12-feature-2',
+						id: 'wardog-1st-12-feature-2',
 						name: 'Posthumous Promotion',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -778,19 +780,19 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-12-feature-3',
+					id: 'wardog-1st-12-feature-3',
 					name: 'The Iron Saint Does Not Recognize Retreat',
 					description: 'Each ally within 5 squares of the subcommander gains a +3 bonus to stability.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-12-feature-4',
+					id: 'wardog-1st-12-feature-4',
 					name: 'Loyalty Collar',
 					description: 'When the subcommander is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'wardog-13',
+			id: 'wardog-1st-13',
 			name: 'War Dog Ground Commander',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Leader),
@@ -805,7 +807,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-13-feature-1',
+						id: 'wardog-1st-13-feature-1',
 						name: 'Conditioning Spear',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -833,7 +835,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-13-feature-2',
+						id: 'wardog-1st-13-feature-2',
 						name: 'Highest Posthumous Promotion',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -846,7 +848,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-13-feature-3',
+						id: 'wardog-1st-13-feature-3',
 						name: 'Final Orders',
 						type: FactoryLogic.type.createTrigger('The target takes damage, is force moved, or is reduced to 0 Stamina.'),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -858,18 +860,18 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-13-feature-4',
+					id: 'wardog-1st-13-feature-4',
 					name: 'End Effect',
 					description: 'At the end of each of their turns, the ground commander can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'wardog-13-feature-5',
+					id: 'wardog-1st-13-feature-5',
 					name: 'Loyalty Collar',
 					description: 'When the ground commander is reduced to 0 Stamina, their loyalty collar explodes, dealing 2d6 damage to each adjacent enemy and object.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-13-feature-6',
+						id: 'wardog-1st-13-feature-6',
 						name: 'Combined Arms',
 						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area ],
@@ -882,7 +884,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-13-feature-7',
+						id: 'wardog-1st-13-feature-7',
 						name: 'Make an Example of Them',
 						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -895,7 +897,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'wardog-13-feature-8',
+						id: 'wardog-1st-13-feature-8',
 						name: 'Claim Them for the Body Banks',
 						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -905,54 +907,6 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 							FactoryLogic.createAbilitySectionText('**Effect:** Each target ally shifts up to 2 squares and can use the Grab maneuver. Until the end of the encounter, each target enemy takes a bane on the Escape Grab maneuver.')
 						]
 					})
-				})
-			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'wardog-14',
-			name: 'War Dog Sparkslinger',
-			level: 4,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
-			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],
-			encounterValue: 6,
-			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5),
-			stamina: 7,
-			stability: 0,
-			freeStrikeDamage: 3,
-			withCaptain: 'Lightning Spread increases by 1 square',
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 3, 0, 2),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'wardog-14-feature-1',
-						name: 'Galvanic Arc',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-						distance: [ FactoryLogic.distance.createRanged(7) ],
-						target: 'One creature or object per minion',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 3,
-								tier1: '3 lightning damage',
-								tier2: '5 lightning damage; the lightning spreads 1 square',
-								tier3: '7 lightning damage; the lightning spreads 2 squares'
-							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The lightning’s spread is the distance it arcs from a target to nearby enemies. Each enemy within that distance takes 2 lightning damage.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'wardog-14-feature-2',
-					name: 'Loyalty Collar',
-					description: 'When the sparkslinger is reduced to 0 Stamina, their loyalty collar explodes, dealing 1d6 damage to each adjacent enemy and object.'
-				}),
-				FactoryLogic.feature.createDamageModifier({
-					id: 'wardog-14-feature-3',
-					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Lightning, modifierType: DamageModifierType.Immunity, value: 4 })
-					]
 				})
 			]
 		})

@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '../../models/feature';
+import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '../../models/feature';
 import { AbilityUpdateLogic } from './ability-update-logic';
 import { Ancestry } from '../../models/ancestry';
 import { CultureData } from '../../data/culture-data';
@@ -196,6 +196,8 @@ export class HeroUpdateLogic {
 			const career = SourcebookLogic.getCareers(sourcebooks).find(c => c.id === id);
 			if (career) {
 				hero.career = career;
+
+				hero.career.incitingIncidents.selectedID = original.career.incitingIncidents.selectedID;
 			}
 		}
 
@@ -306,6 +308,11 @@ export class HeroUpdateLogic {
 				feature.data.selectedIDs = oFeature.data.selectedIDs.filter(id => abilityIDs.includes(id));
 				break;
 			}
+			case FeatureType.Companion: {
+				const oFeature = originalFeature as FeatureCompanion;
+				feature.data.selected = oFeature.data.selected;
+				break;
+			}
 			case FeatureType.Domain: {
 				const oFeature = originalFeature as FeatureDomain;
 
@@ -363,6 +370,11 @@ export class HeroUpdateLogic {
 					.filter(s => oFeature.data.options.includes(s.name) || oFeature.data.listOptions.includes(s.list))
 					.map(s => s.name);
 				feature.data.selected = oFeature.data.selected.filter(s => skillNames.includes(s));
+				break;
+			}
+			case FeatureType.Summon: {
+				const oFeature = originalFeature as FeatureSummon;
+				feature.data.selected = oFeature.data.selected;
 				break;
 			}
 			case FeatureType.TaggedFeatureChoice: {

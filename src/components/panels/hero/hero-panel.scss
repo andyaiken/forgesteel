@@ -258,17 +258,17 @@
 
 					&.clickable {
 						&:hover {
-							background-color: rgb(230, 244, 255) !important;
+							background-color: rgb(22, 119, 255) !important;
 
 							.ant-statistic {
 								.ant-statistic-title,
 								.ant-statistic-content {
-									color: rgba(0, 0, 0, 0.88);
+									color: rgba(255, 255, 255, 0.88) !important;
 								}
 							}
 
 							.stats-box-caption {
-								color: rgba(0, 0, 0, 0.88);
+								color: rgba(255, 255, 255, 0.88);
 							}
 						}
 					}
@@ -277,12 +277,12 @@
 						.stat {
 							&.clickable {
 								&:hover {
-									background-color: rgb(230, 244, 255);
+									background-color: rgb(22, 119, 255) !important;
 
 									.ant-statistic {
 										.ant-statistic-title,
 										.ant-statistic-content {
-											color: rgba(0, 0, 0, 0.88);
+											color: rgba(255, 255, 255, 0.88) !important;
 										}
 									}
 								}
@@ -295,14 +295,7 @@
 			.overview-tile {
 				&.clickable {
 					&:hover {
-						.header-text-panel.level-2 .header-text-content .header-text,
-						p,
-						.ds-text,
-						.field .field-label,
-						.field .field-value,
-						.combatant-button-content .combatant-button-details {
-							color: rgba(0, 0, 0, 0.88) !important;
-						}
+						background-color: rgb(22, 119, 255);
 					}
 				}
 			}
@@ -312,7 +305,7 @@
 
 				&.clickable {
 					&:hover {
-						color: rgba(0, 0, 0, 0.88) !important;
+						background-color: rgb(22, 119, 255);
 					}
 				}
 			}

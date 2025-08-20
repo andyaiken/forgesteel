@@ -76,22 +76,42 @@ As a tactician, you have abilities that heal your allies and grant them increase
 					description: 'You have drilled with a broad array of arms and armor, and have developed techniques to optimize their use. You can use and gain the benefits of two kits, including both their signature abilities. Whenever you would choose or change one kit, you can choose or change your second kit as well.',
 					count: 2
 				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'tactician-1-5',
-						name: 'Mark',
-						description: 'You draw your allies’ attention to a specific foe—with devastating effect.',
-						type: FactoryLogic.type.createManeuver(),
-						keywords: [ AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'One creature',
-						sections: [
-							FactoryLogic.createAbilitySectionText(`
+				FactoryLogic.feature.createMultiple({
+					id: 'tactician-1-5',
+					name: 'Mark',
+					features: [
+						FactoryLogic.feature.createAbility({
+							ability: FactoryLogic.createAbility({
+								id: 'tactician-1-5a',
+								name: 'Mark',
+								description: 'You draw your allies’ attention to a specific foe—with devastating effect.',
+								type: FactoryLogic.type.createManeuver(),
+								keywords: [ AbilityKeyword.Ranged ],
+								distance: [ FactoryLogic.distance.createRanged(10) ],
+								target: 'One creature',
+								sections: [
+									FactoryLogic.createAbilitySectionText(`
 The target is marked by you until the end of the encounter, until you are dying, or until you use this ability again. You can willingly end your mark on a creature (no action required), and if another tactician marks a creature, your mark on that creature ends. When a creature marked by you is reduced to 0 Stamina, you can use a free triggered action to mark a new target within distance.
 
-You can initially mark only one creature using this ability, though other tactician abilities allow you to mark additional creatures at the same time. The mastermind tactical doctrine’s Anticipation feature allows you to target additional creatures with this ability starting at 5th level.
+You can initially mark only one creature using this ability, though other tactician abilities allow you to mark additional creatures at the same time.
 
-While a creature marked by you is within your line of effect, you and allies within your line of effect gain an edge on power rolls made against that creature. Additionally, whenever you or any ally uses an ability to deal rolled damage to a creature marked by you, you can spend 1 focus to gain one of the following benefits as a free triggered action:
+While a creature marked by you is within your line of effect, you and allies within your line of effect gain an edge on power rolls made against that creature.`),
+									FactoryLogic.createAbilitySectionPackage('mark')
+								]
+							})
+						}),
+						FactoryLogic.feature.createAbility({
+							ability: FactoryLogic.createAbility({
+								id: 'tactician-1-5b',
+								name: 'Mark: Trigger',
+								type: FactoryLogic.type.createTrigger('You or any ally uses an ability to deal rolled damage to a creature marked by you', { free: true }),
+								keywords: [],
+								distance: [ FactoryLogic.distance.createSpecial('Special') ],
+								target: 'Special',
+								cost: 1,
+								sections: [
+									FactoryLogic.createAbilitySectionText(`
+You gain one of the following benefits:
 
 * The ability deals extra damage equal to twice your Reason score.
 * The creature dealing the damage can spend a Recovery.
@@ -99,9 +119,11 @@ While a creature marked by you is within your line of effect, you and allies wit
 * If you damage a creature marked by you with a melee ability, the creature is taunted by you until the end of their next turn.
 
 You can’t gain more than one benefit from the same trigger.`),
-							FactoryLogic.createAbilitySectionPackage('mark')
-						]
-					})
+									FactoryLogic.createAbilitySectionPackage('mark')
+								]
+							})
+						})
+					]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

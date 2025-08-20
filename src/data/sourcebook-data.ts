@@ -591,7 +591,10 @@ export class SourcebookData {
 			MonsterData.undead,
 			MonsterData.undead2nd,
 			MonsterData.voicelessTalker,
-			MonsterData.warDog,
+			MonsterData.warDog1st,
+			MonsterData.warDog2nd,
+			MonsterData.warDog3rd,
+			MonsterData.warDog4th,
 			MonsterData.werewolf,
 			MonsterData.wyvern,
 			MonsterData.xorannox

@@ -194,11 +194,20 @@ td {
 .ant-collapse {
 	>.ant-collapse-item {
 		>.ant-collapse-header {
+			background-color: rgb(255, 255, 255);
+			border-radius: 7px !important;
 			align-items: center;
 			user-select: none;
 
 			>.ant-collapse-extra {
 				display: flex;
+			}
+		}
+
+		&.ant-collapse-item-active {
+			>.ant-collapse-header {
+				border-bottom-left-radius: 0 !important;
+				border-bottom-right-radius: 0 !important;
 			}
 		}
 	}
@@ -208,16 +217,6 @@ td {
 			>.ant-collapse-header {
 				background-color: rgb(230, 244, 255);
 				border-color: rgb(64, 150, 255);
-				border-radius: 6px;
-			}
-
-			&.ant-collapse-item-active {
-				>.ant-collapse-header {
-					border-bottom-left-radius: 0;
-					border-bottom-right-radius: 0;
-					border-top-left-radius: 6px;
-					border-top-right-radius: 6px;
-				}
 			}
 		}
 	}
@@ -346,6 +345,12 @@ td {
 		background-color: rgb(55, 55, 55);
 	}
 
+	h1,
+	h2 {
+		border-bottom-color: rgba(250, 250, 250, 0.6);
+		color: rgba(255, 255, 255, 0.88);
+	}
+
 	p,
 	.ds-text,
 	ul {
@@ -379,12 +384,13 @@ td {
 	}
 
 	.ant-collapse {
-		.ant-collapse-item {
-			.ant-collapse-header {
+		>.ant-collapse-item {
+			>.ant-collapse-header {
+				background-color: rgb(80, 80, 80);
 				color: rgba(255, 255, 255, 0.88) !important;
 			}
 
-			.ant-collapse-content {
+			>.ant-collapse-content {
 				background-color: unset;
 			}
 		}
@@ -392,7 +398,7 @@ td {
 		&:hover {
 			>.ant-collapse-item {
 				>.ant-collapse-header {
-					color: rgba(0, 0, 0, 0.88) !important;
+					background-color: rgb(64, 150, 255);
 				}
 			}
 		}

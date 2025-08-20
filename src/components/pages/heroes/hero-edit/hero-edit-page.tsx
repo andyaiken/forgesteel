@@ -20,6 +20,7 @@ import { CultureSection } from './culture-section/culture-section';
 import { DetailsSection } from './details-section/details-section';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureLogic } from '../../../../logic/feature-logic';
+import { FeatureType } from '../../../../enums/feature-type';
 import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
@@ -105,7 +106,7 @@ export const HeroEditPage = (props: Props) => {
 					}
 				case 'career':
 					if (hero.career) {
-						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) || !hero.career.incitingIncidents.selectedID ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
@@ -148,8 +149,27 @@ export const HeroEditPage = (props: Props) => {
 			}
 		};
 
+		const clearRedundantSelections = (hero: Hero, features: Feature[]) => {
+			const sourcebooks = props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
+			const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
+			const knownSkills = HeroLogic.getSkills(hero, sourcebooks).map(skill => skill.name);
+			features.forEach(feature => {
+				switch (feature.type) {
+					case FeatureType.LanguageChoice:
+						feature.data.selected = feature.data.selected.filter(language => !knownLanguages.includes(language));
+						break;
+					case FeatureType.SkillChoice:
+						feature.data.selected = feature.data.selected.filter(skill => !knownSkills.includes(skill));
+						break;
+				};
+			});
+		};
+
 		const setAncestry = (ancestry: Ancestry | null) => {
 			const ancestryCopy = Utils.copy(ancestry) as Ancestry | null;
+			if (ancestryCopy) {
+				clearRedundantSelections(hero, ancestryCopy.features);
+			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.ancestry = ancestryCopy;
 			setHero(heroCopy);
@@ -158,6 +178,11 @@ export const HeroEditPage = (props: Props) => {
 
 		const setCulture = (culture: Culture | null) => {
 			const cultureCopy = Utils.copy(culture) as Culture | null;
+			if (cultureCopy) {
+				const sourcebooks = props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
+				const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
+				cultureCopy.languages = cultureCopy.languages.filter(language => !knownLanguages.includes(language));
+			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.culture = cultureCopy;
 			setHero(heroCopy);
@@ -220,6 +245,9 @@ export const HeroEditPage = (props: Props) => {
 
 		const setCareer = (career: Career | null) => {
 			const careerCopy = Utils.copy(career) as Career | null;
+			if (careerCopy) {
+				clearRedundantSelections(hero, careerCopy.features);
+			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.career = careerCopy;
 			setHero(heroCopy);
@@ -242,6 +270,7 @@ export const HeroEditPage = (props: Props) => {
 					classCopy.primaryCharacteristics = classCopy.primaryCharacteristicsOptions[0];
 				}
 				classCopy.characteristics.forEach(ch => ch.value = 0);
+				clearRedundantSelections(hero, classCopy.featuresByLevel.flatMap(byLevel => byLevel.features));
 			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.class = classCopy;
@@ -288,15 +317,14 @@ export const HeroEditPage = (props: Props) => {
 		const addSubclass = (subclass: SubClass) => {
 			const heroCopy = Utils.copy(hero);
 			if (heroCopy.class) {
-				const selected = heroCopy.class.subclasses.find(sc => sc.id === subclass.id);
-				if (selected) {
-					selected.selected = true;
-				} else {
+				let selected = heroCopy.class.subclasses.find(sc => sc.id === subclass.id);
+				if (!selected) {
 					// This is a subclass from somewhere else
-					const copy = Utils.copy(subclass);
-					copy.selected = true;
-					heroCopy.class.subclasses.push(copy);
+					selected = Utils.copy(subclass);
+					heroCopy.class.subclasses.push(selected);
 				}
+				selected.selected = true;
+				clearRedundantSelections(hero, selected.featuresByLevel.flatMap(byLevel => byLevel.features));
 			}
 			setHero(heroCopy);
 			setDirty(true);
@@ -313,6 +341,9 @@ export const HeroEditPage = (props: Props) => {
 
 		const setComplication = (complication: Complication | null) => {
 			const complicationCopy = Utils.copy(complication) as Complication | null;
+			if (complicationCopy) {
+				clearRedundantSelections(hero, complicationCopy.features);
+			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.complication = complicationCopy;
 			setHero(heroCopy);

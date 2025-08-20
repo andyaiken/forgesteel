@@ -227,7 +227,7 @@ Choose one of the following effects:
 							feature: FactoryLogic.feature.createDamageModifier({
 								id: 'elementalist-1-8b',
 								name: 'Ward of Excellent Protection',
-								description: 'The protective shield you weave around yourself is made of all the elements to channel their full protective power.',
+								description: 'You weave a shield of all the elements around yourself, channeling their full protective power. You have immunity to acid, cold, corruption, fire, lightning, poison, or sonic damage equal to your Reason score.',
 								modifiers: [
 									FactoryLogic.damageModifier.createCharacteristic({
 										damageType: DamageType.Acid,

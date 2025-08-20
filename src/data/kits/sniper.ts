@@ -28,7 +28,7 @@ export const sniper: Kit = {
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createRanged(5) ],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

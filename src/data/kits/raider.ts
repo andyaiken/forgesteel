@@ -32,7 +32,7 @@ export const raider: Kit = {
 					FactoryLogic.distance.createMelee(),
 					FactoryLogic.distance.createRanged(5)
 				],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

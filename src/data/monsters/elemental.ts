@@ -236,7 +236,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'The target emits a 3 aura vortex until the end of the encounter. The aura is considered difficult terrain for enemies. At the end of each of the target’s turns, the target can select 1 creature within the aura to push 5.'
+								effect: 'The target emits a 3 aura vortex until the end of the encounter. The aura is considered difficult terrain for enemies. At the end of each of the target’s turns, the target can select one creature within the aura to push 5.'
 							})
 						]
 					})

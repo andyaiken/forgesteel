@@ -198,7 +198,7 @@ export const telekinesis: SubClass = {
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telekinesis ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
-									target: 'One creature or obje',
+									target: 'One creature or object',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(

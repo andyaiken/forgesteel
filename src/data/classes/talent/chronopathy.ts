@@ -234,7 +234,7 @@ Make a power roll that targets each enemy in the area.`),
 						type: FactoryLogic.type.createTrigger('The target takes damage.'),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'Self, or one creature or object',
+						target: 'Self or one creature or object',
 						cost: 3,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target is teleported to an unoccupied space adjacent to you, taking no damage and suffering no additional effects if this movement would get them out of harm’s way.'),

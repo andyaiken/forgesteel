@@ -121,7 +121,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -174,7 +174,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -229,7 +229,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 							FactoryLogic.distance.createMelee(2),
 							FactoryLogic.distance.createRanged(5)
 						],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -277,7 +277,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -328,7 +328,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -391,7 +391,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -416,7 +416,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: '1 ally',
+						target: 'One ally',
 						cost: 0,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target moves up to their speed and makes a free strike.')
@@ -462,7 +462,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -538,7 +538,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -603,7 +603,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -674,7 +674,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -693,7 +693,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature',
+						target: 'One creature',
 						cost: 5,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -740,7 +740,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(4) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -812,7 +812,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -832,7 +832,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: '1 creature',
+						target: 'One creature',
 						cost: 0,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target is P<2 taunted (EoT). While taunted by this ability, a creature takes 1d6 fire damage whenever they use an ability or attack that doesn’t target the soldier.')
@@ -893,7 +893,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '2 allies',
+						target: 'Two allies',
 						cost: 0,
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target gains 10 temporary Stamina and has a double edge on their next power roll. The war mage can spend any amount of their Stamina to increase the temporary Stamina each target gains by an equivalent amount.')
@@ -967,7 +967,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -987,7 +987,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(5) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 3,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -1007,7 +1007,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 0,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The slaughter demon makes a free strike against the target and burrows up to their speed. The target is pulled the same number of squares the slaughter demon burrows into, including vertically.')
@@ -1067,7 +1067,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -1091,7 +1091,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 ally',
+						target: 'One ally',
 						cost: 0,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target moves up to their speed and uses a signature action.')
@@ -1202,7 +1202,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -1222,7 +1222,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 						type: FactoryLogic.type.createMain(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target gains fire weakness 10 until the end of the flameslinger’s next turn. If the target is the flameslinger’s mentor, they instead gain fire immunity 10.')
 						]

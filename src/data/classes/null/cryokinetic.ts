@@ -134,7 +134,7 @@ Additionally, as your discipline grows, you strengthen the psionic power suffusi
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Psionic ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
-									target: 'Three creature or objects',
+									target: 'Three creatures or objects',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

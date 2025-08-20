@@ -28,7 +28,7 @@ export const arcaneArcher: Kit = {
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createRanged(5) ],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

@@ -2,9 +2,6 @@
 
 ### Heroes
 
-* Automatic update of library resources when there is a newer version
-  * Indicate an update in the hero sheet (subtly)
-  * Attempt to reselect anything that needs to be selected
 * Hero Builder:
   * Revenants should have 3 ancestry points if small
 
@@ -16,6 +13,7 @@
   * Rivals
 * Monster Builder:
   * Auto-create monsters
+  * Allow users to adjust monster level
 
 ### Playbook
 

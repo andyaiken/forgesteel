@@ -368,7 +368,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -387,7 +387,7 @@ Some of these defectors cling to old habits, acquiring power in mortal spheres o
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target is taunted by the legate (save ends). The legate can only have one creature taunted at a time.')
 						]

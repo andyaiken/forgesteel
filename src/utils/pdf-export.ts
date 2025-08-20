@@ -6,6 +6,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
+import { Characteristic } from '../enums/characteristic';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
@@ -84,18 +85,16 @@ export class PDFExport {
 
 		const features = HeroLogic.getFeatures(hero).map(f => f.feature);
 
-		{
-			if (hero.class) {
-				// might/agility/reason/intuition/presence
-				for (const details of hero.class.characteristics) {
-					texts['SurgeDamage'] = Math.max(
-						Number(texts['SurgeDamage'] || 0),
-						details.value
-					);
-					texts[details.characteristic] = details.value;
-					autoResizingFields.push(details.characteristic);
-				}
-			}
+		if (hero.class) {
+			// might/agility/reason/intuition/presence
+			let surgeDamage = 0;
+			[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].forEach(ch => {
+				const value = HeroLogic.getCharacteristic(hero, ch);
+				surgeDamage = Math.max(surgeDamage, value);
+				texts[ch] = value;
+				autoResizingFields.push(ch);
+			});
+			texts['SurgeDamage'] = surgeDamage;
 		}
 
 		const domains = features.find(f => f.type === FeatureType.Domain)?.data?.selected as Domain[];

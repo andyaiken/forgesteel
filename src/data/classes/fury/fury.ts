@@ -270,7 +270,7 @@ Additionally, when you use Primordial Strike, you can spend up to 3 ferocity, ga
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
 					id: 'fury-10-2b',
-					characteristic: Characteristic.Reason,
+					characteristic: Characteristic.Agility,
 					value: 1
 				}),
 				FactoryLogic.feature.createPerk({

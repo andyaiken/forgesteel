@@ -298,8 +298,8 @@ export class AbilityLogic {
 
 		// Equal to [N times] your [Characteristic(s)] score
 		if (hero) {
-			const charRegex = /equal to[^,.;:]*your[^,.;:]*score/gi;
-			[ ...text.matchAll(charRegex) ].map(r => r[0]).forEach(str => {
+			const charRegex = /(equal to (?:or (?:greater|less) than)?)[^,.;:]* your ([^,.;:]*) score/gi;
+			[ ...text.matchAll(charRegex) ].forEach(match => {
 				const options: number[] = [];
 				[
 					Characteristic.Might,
@@ -308,15 +308,16 @@ export class AbilityLogic {
 					Characteristic.Intuition,
 					Characteristic.Presence
 				].forEach(ch => {
-					if (str.toLowerCase().includes('highest characteristic') || str.toLowerCase().includes(ch.toLowerCase())) {
+					if (match[2].toLowerCase() == 'highest characteristic' || match[2].toLowerCase() == ch.toLowerCase()) {
 						options.push(HeroLogic.getCharacteristic(hero, ch));
 					}
 				});
 				const value = Math.max(...options);
 
-				const constant = FormatLogic.getConstant(str);
-				const multiplier = FormatLogic.getMultiplier(str);
-				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+				const constant = FormatLogic.getConstant(match[0]);
+				const multiplier = FormatLogic.getMultiplier(match[0]);
+
+				text = text.replace(match[0], `${match[1]} ${constant + (value * multiplier)}`);
 			});
 		}
 

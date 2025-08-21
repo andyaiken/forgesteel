@@ -298,7 +298,7 @@ export class AbilityLogic {
 
 		// Equal to [N times] your [Characteristic(s)] score
 		if (hero) {
-			const charRegex = /(equal to (?:or (?:greater|less) than)?)[^,.;:]* your ([^,.;:]*) score/gi;
+			const charRegex = /(equal to(?: or (?:greater|less) than)?)[^,.;:]* your ([^,.;:]*) score/gi;
 			[ ...text.matchAll(charRegex) ].forEach(match => {
 				const options: number[] = [];
 				[

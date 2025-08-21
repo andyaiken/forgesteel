@@ -1053,7 +1053,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			description: 'You move fast enough to turn around and watch your foes feel the aftermath.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Psionic, AbilityKeyword.Telekinesis ],
-			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 1, within: 1 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 2, within: 1 }) ],
 			target: 'Each enemy in the area',
 			cost: 9,
 			sections: [

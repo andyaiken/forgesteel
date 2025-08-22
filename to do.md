@@ -13,11 +13,12 @@
   * Rivals
 * Monster Builder:
   * Auto-create monsters
-  * Allow users to adjust monster level
+  * Allow users to adjust monster level (monsters book pg 26)
 
 ### Playbook
 
 * Encounter Builder:
+  * When an encounter has monsters with items, this should be noted in the encounter info (monster info and running encounter notes)
   * Encounters should pull in monsters, rather than storing monster / group IDs
   * Set number of squares for per-square terrain
   * Use encounter templates

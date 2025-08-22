@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, DownOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, TerrainSlot } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
@@ -99,209 +99,117 @@ export const EncounterEditPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			const moveSlot = (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => {
-				const copy = Utils.copy(encounter);
-				const fromGroup = copy.groups.find(g => g.id === fromGroupID);
-				let toGroup = copy.groups.find(g => g.id === toGroupID);
-				if (!toGroup) {
-					toGroup = FactoryLogic.createEncounterGroup();
-					copy.groups.push(toGroup);
-				}
-				if (fromGroup && toGroup) {
-					const slot = fromGroup.slots.find(s => s.id === slotID);
-					if (slot) {
-						if (remove) {
-							fromGroup.slots = fromGroup.slots.filter(s => s.id !== slotID);
-						}
-						toGroup.slots.push(slot);
-					}
-				}
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const setSlotCount = (groupID: string, slotID: string, value: number) => {
-				const copy = Utils.copy(encounter);
-				const group = copy.groups.find(g => g.id === groupID);
-				if (group) {
-					const slot = group.slots.find(s => s.id === slotID);
-					if (slot) {
-						slot.count = value;
-
-						if (slot.count === 0) {
-							group.slots = group.slots.filter(s => s.id !== slotID);
-						}
-					}
-
-					if (group.slots.length === 0) {
-						copy.groups = copy.groups.filter(g => g.id !== groupID);
-					}
-				}
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const setSlotAddOnIDs = (groupID: string, slotID: string, value: string[]) => {
-				const copy = Utils.copy(encounter);
-				const group = copy.groups.find(g => g.id === groupID);
-				if (group) {
-					const slot = group.slots.find(s => s.id === slotID);
-					if (slot) {
-						slot.customization.addOnIDs = value;
-					}
-				}
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const setSlotConvertToSolo = (groupID: string, slotID: string, value: boolean) => {
-				const copy = Utils.copy(encounter);
-				const group = copy.groups.find(g => g.id === groupID);
-				if (group) {
-					const slot = group.slots.find(s => s.id === slotID);
-					if (slot) {
-						slot.customization.convertToSolo = value;
-					}
-				}
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const addItem = (groupID: string, slotID: string, value: string) => {
-				const copy = Utils.copy(encounter);
-				const group = copy.groups.find(g => g.id === groupID);
-				if (group) {
-					const slot = group.slots.find(s => s.id === slotID);
-					if (slot) {
-						slot.customization.itemIDs.push(value);
-					}
-				}
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const removeItem = (groupID: string, slotID: string, value: string) => {
-				const copy = Utils.copy(encounter);
-				const group = copy.groups.find(g => g.id === groupID);
-				if (group) {
-					const slot = group.slots.find(s => s.id === slotID);
-					if (slot) {
-						slot.customization.itemIDs = slot.customization.itemIDs.filter(id => id !== value);
-					}
-				}
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
 			const getSlot = (slot: EncounterSlot, group: EncounterGroup) => {
-				const originalMonster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
-				const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, props.sourcebooks);
-				const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
-				if (originalMonster && monster && monsterGroup) {
-					return (
-						<div key={slot.id} className='slot-row'>
-							<div className='content'>
-								<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />} />
-								<Expander title='Customize'>
-									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-										{
-											monsterGroup.addOns.length > 0 ?
-												<Select
-													style={{ width: '100%' }}
-													placeholder='Select'
-													mode='multiple'
-													options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-													optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
-													showSearch={true}
-													filterOption={(input, option) => {
-														const strings = option ?
-															[
-																option.label
-															]
-															: [];
-														return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-													}}
-													value={slot.customization.addOnIDs}
-													onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
-												/>
-												: null
-										}
-										{
-											(originalMonster.role.organization === MonsterOrganizationType.Elite) || (originalMonster.role.organization === MonsterOrganizationType.Leader) ?
-												<Toggle label='Turn this monster into a Solo' value={slot.customization.convertToSolo} onChange={value => setSlotConvertToSolo(group.id, slot.id, value)} />
-												: null
-										}
-										{
-											slot.customization.itemIDs.map(itemID => {
-												const item = SourcebookLogic.getItems(props.sourcebooks).find(i => i.id === itemID);
-												if (item) {
-													return (
-														<Flex align='center'>
-															<Field label={item.name} value={item.description} />
-															<DangerButton mode='icon' onConfirm={() => removeItem(group.id, slot.id, itemID)} />
-														</Flex>
-													);
-												}
+				const setSlotCount = (groupID: string, slotID: string, value: number) => {
+					const copy = Utils.copy(encounter);
+					const group = copy.groups.find(g => g.id === groupID);
+					if (group) {
+						const slot = group.slots.find(s => s.id === slotID);
+						if (slot) {
+							slot.count = value;
 
-												return null;
-											})
-										}
-										<Select
-											style={{ width: '100%' }}
-											placeholder='Add an item'
-											options={SourcebookLogic.getItems(props.sourcebooks).map(i => ({ value: i.id, label: <Field label={i.name} value={i.description} />, data: i }))}
-											showSearch={true}
-											filterOption={(input, option) => {
-												const strings = option ?
-													[
-														option.data.name,
-														option.data.description
-													]
-													: [];
-												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-											}}
-											onChange={id => addItem(group.id, slot.id, id)}
-										/>
-									</Space>
-								</Expander>
-							</div>
-							<div className='actions'>
-								<NumberSpin
-									value={slot.count}
-									format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)).toString()}
-									onChange={value => setSlotCount(group.id, slot.id, value)}
-								/>
-								<Divider />
-								<DropdownButton
-									label='Move To'
-									items={[
-										...encounter.groups
-											.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
-											.filter(g => g.id !== group.id)
-											.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
-										{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
-									]}
-									onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID, true)}
-								/>
-								<DropdownButton
-									label='Copy To'
-									items={[
-										...encounter.groups
-											.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
-											.filter(g => g.id !== group.id)
-											.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
-										{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
-									]}
-									onClick={toGroupID => moveSlot(slot.id, group.id, toGroupID, false)}
-								/>
-							</div>
-						</div>
-					);
-				}
+							if (slot.count === 0) {
+								group.slots = group.slots.filter(s => s.id !== slotID);
+							}
+						}
+
+						if (group.slots.length === 0) {
+							copy.groups = copy.groups.filter(g => g.id !== groupID);
+						}
+					}
+					setEncounter(copy);
+					props.onChange(copy);
+				};
+
+				const moveSlot = (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => {
+					const copy = Utils.copy(encounter);
+					const fromGroup = copy.groups.find(g => g.id === fromGroupID);
+					let toGroup = copy.groups.find(g => g.id === toGroupID);
+					if (!toGroup) {
+						toGroup = FactoryLogic.createEncounterGroup();
+						copy.groups.push(toGroup);
+					}
+					if (fromGroup && toGroup) {
+						const slot = fromGroup.slots.find(s => s.id === slotID);
+						if (slot) {
+							if (remove) {
+								fromGroup.slots = fromGroup.slots.filter(s => s.id !== slotID);
+							}
+							toGroup.slots.push(slot);
+						}
+					}
+					setEncounter(copy);
+					props.onChange(copy);
+				};
+
+				const setSlotAddOnIDs = (groupID: string, slotID: string, value: string[]) => {
+					const copy = Utils.copy(encounter);
+					const group = copy.groups.find(g => g.id === groupID);
+					if (group) {
+						const slot = group.slots.find(s => s.id === slotID);
+						if (slot) {
+							slot.customization.addOnIDs = value;
+						}
+					}
+					setEncounter(copy);
+					props.onChange(copy);
+				};
+
+				const setSlotConvertToSolo = (groupID: string, slotID: string, value: boolean) => {
+					const copy = Utils.copy(encounter);
+					const group = copy.groups.find(g => g.id === groupID);
+					if (group) {
+						const slot = group.slots.find(s => s.id === slotID);
+						if (slot) {
+							slot.customization.convertToSolo = value;
+						}
+					}
+					setEncounter(copy);
+					props.onChange(copy);
+				};
+
+				const addItem = (groupID: string, slotID: string, value: string) => {
+					const copy = Utils.copy(encounter);
+					const group = copy.groups.find(g => g.id === groupID);
+					if (group) {
+						const slot = group.slots.find(s => s.id === slotID);
+						if (slot) {
+							slot.customization.itemIDs.push(value);
+						}
+					}
+					setEncounter(copy);
+					props.onChange(copy);
+				};
+
+				const removeItem = (groupID: string, slotID: string, value: string) => {
+					const copy = Utils.copy(encounter);
+					const group = copy.groups.find(g => g.id === groupID);
+					if (group) {
+						const slot = group.slots.find(s => s.id === slotID);
+						if (slot) {
+							slot.customization.itemIDs = slot.customization.itemIDs.filter(id => id !== value);
+						}
+					}
+					setEncounter(copy);
+					props.onChange(copy);
+				};
+
 				return (
-					<div key={slot.id} className='slot-row'>
-						Unknown monster
-					</div>
+					<MonsterSlotPanel
+						key={slot.id}
+						slot={slot}
+						group={group}
+						encounter={encounter}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						showMonster={props.showMonster}
+						setSlotCount={setSlotCount}
+						moveSlot={moveSlot}
+						setSlotAddOnIDs={setSlotAddOnIDs}
+						setSlotConvertToSolo={setSlotConvertToSolo}
+						addItem={addItem}
+						removeItem={removeItem}
+					/>
 				);
 			};
 
@@ -368,76 +276,39 @@ export const EncounterEditPanel = (props: Props) => {
 		};
 
 		const getTerrainSection = () => {
-			const setTerrainCount = (id: string, value: number) => {
-				const copy = Utils.copy(encounter);
-				const slot = copy.terrain.find(t => t.id === id);
-				if (slot) {
-					slot.count = value;
-
-					if (slot.count === 0) {
-						copy.terrain = copy.terrain.filter(t => t.id !== id);
-					}
-				}
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const setTerrainUpgradeIDs = (id: string, value: string[]) => {
-				const copy = Utils.copy(encounter);
-				const slot = copy.terrain.find(t => t.id === id);
-				if (slot) {
-					slot.upgradeIDs = value;
-				}
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
 			const getTerrain = (slot: TerrainSlot) => {
-				const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === slot.terrainID);
-				if (terrain) {
-					return (
-						<div key={slot.id} className='terrain-row'>
-							<div className='content'>
-								<TerrainPanel terrain={terrain} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, slot.upgradeIDs)} />} />
-								{
-									terrain.upgrades.length > 0 ?
-										<Expander title='Customize'>
-											<HeaderText>Customize</HeaderText>
-											<Select
-												style={{ width: '100%' }}
-												placeholder='Select'
-												mode='multiple'
-												options={Collections.sort(terrain.upgrades, a => a.label).map(a => ({ value: a.id, label: a.label, cost: a.cost }))}
-												optionRender={option => <Flex align='center' gap={8}><div className='ds-text'>{option.data.label}</div><Pill>+{option.data.cost} EV</Pill></Flex>}
-												showSearch={true}
-												filterOption={(input, option) => {
-													const strings = option ?
-														[
-															option.label
-														]
-														: [];
-													return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-												}}
-												value={slot.upgradeIDs}
-												onChange={ids => setTerrainUpgradeIDs(slot.id, ids)}
-											/>
-										</Expander>
-										: null
-								}
-							</div>
-							<div className='actions'>
-								<NumberSpin
-									value={slot.count}
-									onChange={value => setTerrainCount(slot.id, value)}
-								/>
-							</div>
-						</div>
-					);
-				}
+				const setTerrainCount = (id: string, value: number) => {
+					const copy = Utils.copy(encounter);
+					const slot = copy.terrain.find(t => t.id === id);
+					if (slot) {
+						slot.count = value;
+
+						if (slot.count === 0) {
+							copy.terrain = copy.terrain.filter(t => t.id !== id);
+						}
+					}
+					setEncounter(copy);
+					props.onChange(copy);
+				};
+
+				const setTerrainUpgradeIDs = (id: string, value: string[]) => {
+					const copy = Utils.copy(encounter);
+					const slot = copy.terrain.find(t => t.id === id);
+					if (slot) {
+						slot.upgradeIDs = value;
+					}
+					setEncounter(copy);
+					props.onChange(copy);
+				};
+
 				return (
-					<div key={slot.terrainID} className='terrain-row'>
-						Unknown terrain
-					</div>
+					<TerrainSlotPanel
+						slot={slot}
+						sourcebooks={props.sourcebooks}
+						showTerrain={props.showTerrain}
+						setTerrainCount={setTerrainCount}
+						setTerrainUpgradeIDs={setTerrainUpgradeIDs}
+					/>
 				);
 			};
 
@@ -904,4 +775,209 @@ export const EncounterEditPanel = (props: Props) => {
 		console.error(ex);
 		return null;
 	}
+};
+
+interface MonsterSlotPanelProps {
+	slot: EncounterSlot;
+	group: EncounterGroup;
+	encounter: Encounter;
+	sourcebooks: Sourcebook[];
+	options: Options;
+	showMonster: (monster: Monster, group: MonsterGroup) => void;
+	setSlotCount: (groupID: string, slotID: string, value: number) => void;
+	moveSlot: (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => void;
+	setSlotAddOnIDs: (groupID: string, slotID: string, ids: string[]) => void;
+	setSlotConvertToSolo: (groupID: string, slotID: string, value: boolean) => void;
+	addItem: (groupID: string, slotID: string, itemID: string) => void;
+	removeItem: (groupID: string, slotID: string, itemID: string) => void;
+}
+
+const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
+	const [ showCustomize, setShowCustomize ] = useState<boolean>(false);
+
+	const originalMonster = SourcebookLogic.getMonster(props.sourcebooks, props.slot.monsterID);
+	const monster = EncounterLogic.getCustomizedMonster(props.slot.monsterID, props.slot.customization, props.sourcebooks);
+	const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, props.slot.monsterID);
+
+	if (originalMonster && monster && monsterGroup) {
+		const getCustomizePanel = () => {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<HeaderText>Customize</HeaderText>
+					{
+						monsterGroup.addOns.length > 0 ?
+							<Select
+								style={{ width: '100%' }}
+								placeholder='Select'
+								mode='multiple'
+								options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
+								optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
+								showSearch={true}
+								filterOption={(input, option) => {
+									const strings = option ?
+										[
+											option.label
+										]
+										: [];
+									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+								}}
+								value={props.slot.customization.addOnIDs}
+								onChange={ids => props.setSlotAddOnIDs(props.group.id, props.slot.id, ids)}
+							/>
+							: null
+					}
+					{
+						(originalMonster.role.organization === MonsterOrganizationType.Elite) || (originalMonster.role.organization === MonsterOrganizationType.Leader) ?
+							<Toggle label='Turn this monster into a Solo' value={props.slot.customization.convertToSolo} onChange={value => props.setSlotConvertToSolo(props.group.id, props.slot.id, value)} />
+							: null
+					}
+					{
+						props.slot.customization.itemIDs.map(itemID => {
+							const item = SourcebookLogic.getItems(props.sourcebooks).find(i => i.id === itemID);
+							if (item) {
+								return (
+									<Flex align='center'>
+										<Field label={item.name} value={item.description} />
+										<DangerButton mode='icon' onConfirm={() => props.removeItem(props.group.id, props.slot.id, itemID)} />
+									</Flex>
+								);
+							}
+
+							return null;
+						})
+					}
+					<Select
+						style={{ width: '100%' }}
+						placeholder='Add an item'
+						options={SourcebookLogic.getItems(props.sourcebooks).map(i => ({ value: i.id, label: <Field label={i.name} value={i.description} />, data: i }))}
+						showSearch={true}
+						filterOption={(input, option) => {
+							const strings = option ?
+								[
+									option.data.name,
+									option.data.description
+								]
+								: [];
+							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+						}}
+						onChange={id => props.addItem(props.group.id, props.slot.id, id)}
+					/>
+				</Space>
+			);
+		};
+
+		return (
+			<div className='slot-row'>
+				<div className='content'>
+					<MonsterPanel
+						monster={monster}
+						monsterGroup={monsterGroup}
+						options={props.options}
+						extra={
+							<Flex align='center'>
+								<Button type='text' title='Customize' icon={<EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />
+								<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />
+							</Flex>
+						}
+					/>
+					{showCustomize ? getCustomizePanel() : null}
+				</div>
+				<div className='actions'>
+					<NumberSpin
+						value={props.slot.count}
+						format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)).toString()}
+						onChange={value => props.setSlotCount(props.group.id, props.slot.id, value)}
+					/>
+					<Divider />
+					<DropdownButton
+						label='Move To'
+						items={[
+							...props.encounter.groups
+								.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+								.filter(g => g.id !== props.group.id)
+								.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+							{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+						]}
+						onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, true)}
+					/>
+					<DropdownButton
+						label='Copy To'
+						items={[
+							...props.encounter.groups
+								.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+								.filter(g => g.id !== props.group.id)
+								.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+							{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+						]}
+						onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, false)}
+					/>
+				</div>
+			</div>
+		);
+	}
+
+	return (
+		<div className='slot-row'>
+			Unknown monster
+		</div>
+	);
+};
+
+interface TerrainSlotPanelProps {
+	slot: TerrainSlot;
+	sourcebooks: Sourcebook[];
+	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
+	setTerrainCount: (id: string, value: number) => void;
+	setTerrainUpgradeIDs: (id: string, value: string[]) => void;
+}
+
+const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
+	const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === props.slot.terrainID);
+
+	if (terrain) {
+		return (
+			<div className='terrain-row'>
+				<div className='content'>
+					<TerrainPanel terrain={terrain} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />} />
+					{
+						terrain.upgrades.length > 0 ?
+							<Expander title='Customize'>
+								<HeaderText>Customize</HeaderText>
+								<Select
+									style={{ width: '100%' }}
+									placeholder='Select'
+									mode='multiple'
+									options={Collections.sort(terrain.upgrades, a => a.label).map(a => ({ value: a.id, label: a.label, cost: a.cost }))}
+									optionRender={option => <Flex align='center' gap={8}><div className='ds-text'>{option.data.label}</div><Pill>+{option.data.cost} EV</Pill></Flex>}
+									showSearch={true}
+									filterOption={(input, option) => {
+										const strings = option ?
+											[
+												option.label
+											]
+											: [];
+										return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+									}}
+									value={props.slot.upgradeIDs}
+									onChange={ids => props.setTerrainUpgradeIDs(props.slot.id, ids)}
+								/>
+							</Expander>
+							: null
+					}
+				</div>
+				<div className='actions'>
+					<NumberSpin
+						value={props.slot.count}
+						onChange={value => props.setTerrainCount(props.slot.id, value)}
+					/>
+				</div>
+			</div>
+		);
+	}
+
+	return (
+		<div className='terrain-row'>
+			Unknown terrain
+		</div>
+	);
 };

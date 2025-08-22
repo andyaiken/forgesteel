@@ -5,6 +5,7 @@ import { Terrain } from './terrain';
 
 export interface EncounterSlotCustomization {
 	addOnIDs: string[];
+	itemIDs: string[];
 	convertToSolo: boolean;
 }
 

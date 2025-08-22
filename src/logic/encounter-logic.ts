@@ -175,7 +175,7 @@ export class EncounterLogic {
 		}[] = [];
 
 		encounter.groups.flatMap(g => g.slots).forEach(s => {
-			const key = s.monsterID + s.customization.addOnIDs.join('');
+			const key = s.monsterID + s.customization.addOnIDs.join('') + (s.customization.convertToSolo ? 'SOLO' : '');
 			const item = list.find(i => i.key === key);
 			if (!item) {
 				list.push({
@@ -183,6 +183,7 @@ export class EncounterLogic {
 					monsterID: s.monsterID,
 					customization: {
 						addOnIDs: [ ...s.customization.addOnIDs ],
+						itemIDs: [ ...s.customization.itemIDs ],
 						convertToSolo: s.customization.convertToSolo
 					}
 				});
@@ -218,6 +219,26 @@ export class EncounterLogic {
 			if (points > 4) {
 				copy.encounterValue += (points - 4) * 2;
 			}
+
+			customization.itemIDs.forEach(id => {
+				const item = SourcebookLogic.getItems(sourcebooks).find(i => i.id === id);
+				if (item) {
+					if (item.effect) {
+						copy.features.push(FactoryLogic.feature.create({
+							id: item.id,
+							name: item.name,
+							description: item.effect
+						}));
+					}
+					item.featuresByLevel
+						.filter(lvl => lvl.level <= copy.level)
+						.flatMap(lvl => lvl.features)
+						.forEach(f => {
+							const featureCopy = Utils.copy(f);
+							copy.features.push(featureCopy);
+						});
+				}
+			});
 
 			if (customization.convertToSolo) {
 				copy.role.organization = MonsterOrganizationType.Solo;

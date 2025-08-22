@@ -18,6 +18,7 @@ import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
+import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { MonsterFilterPanel } from '../../monster-filter/monster-filter-panel';
@@ -166,6 +167,32 @@ export const EncounterEditPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
+			const addItem = (groupID: string, slotID: string, value: string) => {
+				const copy = Utils.copy(encounter);
+				const group = copy.groups.find(g => g.id === groupID);
+				if (group) {
+					const slot = group.slots.find(s => s.id === slotID);
+					if (slot) {
+						slot.customization.itemIDs.push(value);
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const removeItem = (groupID: string, slotID: string, value: string) => {
+				const copy = Utils.copy(encounter);
+				const group = copy.groups.find(g => g.id === groupID);
+				if (group) {
+					const slot = group.slots.find(s => s.id === slotID);
+					if (slot) {
+						slot.customization.itemIDs = slot.customization.itemIDs.filter(id => id !== value);
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
 			const getSlot = (slot: EncounterSlot, group: EncounterGroup) => {
 				const originalMonster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
 				const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, props.sourcebooks);
@@ -175,42 +202,68 @@ export const EncounterEditPanel = (props: Props) => {
 						<div key={slot.id} className='slot-row'>
 							<div className='content'>
 								<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />} />
-								{
-									(monsterGroup.addOns.length > 0) || (originalMonster.role.organization === MonsterOrganizationType.Elite) || (originalMonster.role.organization === MonsterOrganizationType.Leader) ?
-										<Expander title='Customize'>
-											<HeaderText>Customize</HeaderText>
-											<Space direction='vertical' style={{ width: '100%' }}>
-												{
-													monsterGroup.addOns.length > 0 ?
-														<Select
-															style={{ width: '100%' }}
-															placeholder='Select'
-															mode='multiple'
-															options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-															optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
-															showSearch={true}
-															filterOption={(input, option) => {
-																const strings = option ?
-																	[
-																		option.label
-																	]
-																	: [];
-																return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-															}}
-															value={slot.customization.addOnIDs}
-															onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
-														/>
-														: null
+								<Expander title='Customize'>
+									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+										{
+											monsterGroup.addOns.length > 0 ?
+												<Select
+													style={{ width: '100%' }}
+													placeholder='Select'
+													mode='multiple'
+													options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
+													optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
+													showSearch={true}
+													filterOption={(input, option) => {
+														const strings = option ?
+															[
+																option.label
+															]
+															: [];
+														return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+													}}
+													value={slot.customization.addOnIDs}
+													onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
+												/>
+												: null
+										}
+										{
+											(originalMonster.role.organization === MonsterOrganizationType.Elite) || (originalMonster.role.organization === MonsterOrganizationType.Leader) ?
+												<Toggle label='Turn this monster into a Solo' value={slot.customization.convertToSolo} onChange={value => setSlotConvertToSolo(group.id, slot.id, value)} />
+												: null
+										}
+										{
+											slot.customization.itemIDs.map(itemID => {
+												const item = SourcebookLogic.getItems(props.sourcebooks).find(i => i.id === itemID);
+												if (item) {
+													return (
+														<Flex align='center'>
+															<Field label={item.name} value={item.description} />
+															<DangerButton mode='icon' onConfirm={() => removeItem(group.id, slot.id, itemID)} />
+														</Flex>
+													);
 												}
-												{
-													(originalMonster.role.organization === MonsterOrganizationType.Elite) || (originalMonster.role.organization === MonsterOrganizationType.Leader) ?
-														<Toggle label='Turn this monster into a Solo' value={slot.customization.convertToSolo} onChange={value => setSlotConvertToSolo(group.id, slot.id, value)} />
-														: null
-												}
-											</Space>
-										</Expander>
-										: null
-								}
+
+												return null;
+											})
+										}
+										<Select
+											style={{ width: '100%' }}
+											placeholder='Add an item'
+											options={SourcebookLogic.getItems(props.sourcebooks).map(i => ({ value: i.id, label: <Field label={i.name} value={i.description} />, data: i }))}
+											showSearch={true}
+											filterOption={(input, option) => {
+												const strings = option ?
+													[
+														option.data.name,
+														option.data.description
+													]
+													: [];
+												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+											}}
+											onChange={id => addItem(group.id, slot.id, id)}
+										/>
+									</Space>
+								</Expander>
 							</div>
 							<div className='actions'>
 								<NumberSpin

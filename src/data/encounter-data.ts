@@ -18,6 +18,7 @@ export class EncounterData {
 						count: 2,
 						customization: {
 							addOnIDs: [],
+							itemIDs: [],
 							convertToSolo: false
 						},
 						monsters: [],
@@ -44,6 +45,7 @@ export class EncounterData {
 						count: 1,
 						customization: {
 							addOnIDs: [],
+							itemIDs: [],
 							convertToSolo: false
 						},
 						monsters: [],
@@ -70,6 +72,7 @@ export class EncounterData {
 						count: 1,
 						customization: {
 							addOnIDs: [],
+							itemIDs: [],
 							convertToSolo: false
 						},
 						monsters: [],
@@ -96,6 +99,7 @@ export class EncounterData {
 						count: 1,
 						customization: {
 							addOnIDs: [],
+							itemIDs: [],
 							convertToSolo: false
 						},
 						monsters: [],
@@ -152,6 +156,7 @@ export class EncounterData {
 						count: 1,
 						customization: {
 							addOnIDs: [],
+							itemIDs: [],
 							convertToSolo: false
 						},
 						monsters: [],

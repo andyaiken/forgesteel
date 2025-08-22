@@ -36,8 +36,13 @@ export class PlaybookUpdateLogic {
 					if (s.customization === undefined) {
 						s.customization = {
 							addOnIDs: [],
+							itemIDs: [],
 							convertToSolo: false
 						};
+					}
+
+					if (s.customization.itemIDs === undefined) {
+						s.customization.itemIDs = [];
 					}
 
 					if (s.customization.convertToSolo === undefined) {

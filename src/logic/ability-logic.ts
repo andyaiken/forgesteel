@@ -308,16 +308,18 @@ export class AbilityLogic {
 					Characteristic.Intuition,
 					Characteristic.Presence
 				].forEach(ch => {
-					if (match[2].toLowerCase() == 'highest characteristic' || match[2].toLowerCase() == ch.toLowerCase()) {
+					if (match[2].toLowerCase() == 'highest characteristic' || match[2].toLowerCase().includes(ch.toLowerCase())) {
 						options.push(HeroLogic.getCharacteristic(hero, ch));
 					}
 				});
-				const value = Math.max(...options);
+				if (options.length > 0) {
+					const value = Math.max(...options);
 
-				const constant = FormatLogic.getConstant(match[0]);
-				const multiplier = FormatLogic.getMultiplier(match[0]);
+					const constant = FormatLogic.getConstant(match[0]);
+					const multiplier = FormatLogic.getMultiplier(match[0]);
 
-				text = text.replace(match[0], `${match[1]} ${constant + (value * multiplier)}`);
+					text = text.replace(match[0], `${match[1]} ${constant + (value * multiplier)}`);
+				}
 			});
 		}
 

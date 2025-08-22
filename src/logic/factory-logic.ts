@@ -611,6 +611,7 @@ export class FactoryLogic {
 			count: 1,
 			customization: {
 				addOnIDs: [],
+				itemIDs: [],
 				convertToSolo: false
 			},
 			monsters: [],
@@ -637,6 +638,7 @@ export class FactoryLogic {
 			count: 1,
 			customization: {
 				addOnIDs: [],
+				itemIDs: [],
 				convertToSolo: false
 			},
 			monsters: [ m ],

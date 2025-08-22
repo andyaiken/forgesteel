@@ -173,7 +173,7 @@ export const OptionsPanel = (props: Props) => {
 			return (
 				<>
 					{initialDivider ? <Divider /> : null}
-					<div>
+					<div className='ds-text'>
 						Start encounters with these heroes:
 					</div>
 					<Select
@@ -248,7 +248,7 @@ export const OptionsPanel = (props: Props) => {
 						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
 						{getPartySection(true)}
 						<Divider />
-						<div>
+						<div className='ds-text'>
 							Calculate encounter difficulty based on these heroes:
 						</div>
 						<Select

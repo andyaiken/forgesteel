@@ -3,7 +3,7 @@ import { CaretDownOutlined, CaretUpOutlined, DownOutlined, FilterFilled, FilterO
 import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, TerrainSlot } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
-import { MonsterInfo, TerrainInfo } from '../../../controls/token/token';
+import { MonsterInfo, TerrainInfo } from '../../token/token';
 import { ReactNode, useState } from 'react';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';

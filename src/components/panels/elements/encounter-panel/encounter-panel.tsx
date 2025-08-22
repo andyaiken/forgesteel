@@ -1,4 +1,4 @@
-import { MonsterInfo, TerrainInfo } from '../../../controls/token/token';
+import { MonsterInfo, TerrainInfo } from '../../token/token';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';

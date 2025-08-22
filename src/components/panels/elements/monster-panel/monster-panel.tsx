@@ -17,7 +17,7 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
-import { MonsterToken } from '../../../controls/token/token';
+import { MonsterToken } from '../../token/token';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';

@@ -41,7 +41,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: (hero: Hero, page?: RulesPage) => void;
-	showSourcebooks: () => void;
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
 	exportHeroPDF: (hero: Hero, format: 'portrait' | 'landscape') => void;
@@ -198,7 +197,7 @@ export const HeroViewPage = (props: Props) => {
 					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>
 						{getContent()}
 					</div>
-					<AppFooter page='heroes' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
 				</div>
 			</ErrorBoundary>
 		);

@@ -1,6 +1,6 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Col, Divider, Flex, Row, Segmented, Select, Space, Statistic, Tag } from 'antd';
-import { HeroToken, MonsterInfo } from '../../controls/token/token';
+import { HeroToken, MonsterInfo } from '../token/token';
 import { Pill, ResourcePill } from '../../controls/pill/pill';
 import { Ability } from '../../../models/ability';
 import { AbilityData } from '../../../data/ability-data';

@@ -19,7 +19,6 @@ import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel'
 import { Element } from '../../../../models/element';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
-import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { Imbuement } from '../../../../models/imbuement';
 import { ImbuementPanel } from '../../../panels/elements/imbuement-panel/imbuement-panel';
@@ -49,7 +48,6 @@ import { useParams } from 'react-router';
 import './library-view-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
 	options: Options;
@@ -57,7 +55,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	showSourcebooks: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, isSubElement: boolean, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	copy: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -388,7 +385,7 @@ export const LibraryViewPage = (props: Props) => {
 					<div className='library-view-page-content'>
 						{panel}
 					</div>
-					<AppFooter page='library' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

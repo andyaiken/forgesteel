@@ -6,7 +6,7 @@ import { Modal } from '../modal/modal';
 import { MonsterHealthPanel } from '../../panels/health/health-panel';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
-import { MonsterToken } from '../../controls/token/token';
+import { MonsterToken } from '../../panels/token/token';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Utils } from '../../../utils/utils';

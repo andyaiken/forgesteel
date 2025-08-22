@@ -7,7 +7,7 @@ import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../../models/hero';
 import { HeroData } from '../../../../data/hero-data';
-import { HeroInfo } from '../../../controls/token/token';
+import { HeroInfo } from '../../../panels/token/token';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { Options } from '../../../../models/options';
@@ -28,7 +28,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	showSourcebooks: () => void;
 	addHero: (folder: string) => void;
 	importHero: (hero: Hero, folder: string) => void;
 	showParty: (folder: string) => void;
@@ -186,7 +185,7 @@ export const HeroListPage = (props: Props) => {
 							onChange={navigation.goToHeroList}
 						/>
 					</div>
-					<AppFooter page='heroes' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

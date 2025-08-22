@@ -53,7 +53,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	showSourcebooks: () => void;
 	saveChanges: (hero: Hero) => void;
 	importSourcebook: (sourcebook: Sourcebook) => void;
 }
@@ -638,7 +637,7 @@ export const HeroEditPage = (props: Props) => {
 						{getControls()}
 						{getContent()}
 					</div>
-					<AppFooter page='heroes' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

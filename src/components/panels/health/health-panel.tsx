@@ -17,7 +17,7 @@ import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Markdown } from '../../controls/markdown/markdown';
 import { Monster } from '../../../models/monster';
-import { MonsterInfo } from '../../controls/token/token';
+import { MonsterInfo } from '../token/token';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { NumberSpin } from '../../controls/number-spin/number-spin';

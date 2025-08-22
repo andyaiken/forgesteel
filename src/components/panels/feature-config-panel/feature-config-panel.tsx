@@ -33,7 +33,7 @@ import { LanguageSelectModal } from '../../modals/select/language-select/languag
 import { Markdown } from '../../controls/markdown/markdown';
 import { Modal } from '../../modals/modal/modal';
 import { Monster } from '../../../models/monster';
-import { MonsterInfo } from '../../controls/token/token';
+import { MonsterInfo } from '../token/token';
 import { MonsterModal } from '../../modals/monster/monster-modal';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';

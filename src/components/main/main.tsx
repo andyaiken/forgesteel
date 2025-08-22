@@ -30,7 +30,6 @@ import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
-import { HeroExportPage } from '../pages/heroes/hero-export/hero-export-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../enums/hero-state-page';
@@ -1540,12 +1539,10 @@ export const Main = (props: Props) => {
 							index={true}
 							element={
 								<WelcomePage
-									heroes={heroes}
 									showDirectory={showDirectoryPane}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
-									showSourcebooks={showSourcebooks}
 								/>
 							}
 						/>
@@ -1562,7 +1559,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										addHero={createHero}
 										importHero={importHero}
 										showParty={onShowParty}
@@ -1600,7 +1596,6 @@ export const Main = (props: Props) => {
 										showAbility={onSelectAbility}
 										showHeroState={onShowHeroState}
 										showReference={onshowReference}
-										showSourcebooks={showSourcebooks}
 									/>
 								}
 							/>
@@ -1619,7 +1614,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										saveChanges={saveHero}
 										importSourcebook={sourcebook => {
 											const copy = Utils.copy(homebrewSourcebooks);
@@ -1628,10 +1622,6 @@ export const Main = (props: Props) => {
 										}}
 									/>
 								}
-							/>
-							<Route
-								path='export/:heroID'
-								element={<HeroExportPage heroes={heroes} />}
 							/>
 						</Route>
 						<Route path='library'>
@@ -1662,7 +1652,6 @@ export const Main = (props: Props) => {
 								path='view/:kind/:elementID/:subElementID?'
 								element={
 									<LibraryViewPage
-										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
 										options={options}
@@ -1670,7 +1659,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										createElement={createLibraryElement}
 										export={exportLibraryElement}
 										copy={copyLibraryElement}
@@ -1690,7 +1678,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showMonster={onSelectMonster}
 										saveChanges={saveLibraryElement}
 										setOptions={persistOptions}
@@ -1715,7 +1702,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										createElement={createPlaybookElement}
 										importElement={importPlaybookElement}
 										importAdventurePackage={importAdventurePackage}
@@ -1735,7 +1721,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showEncounterTools={showEncounterTools}
 										export={exportPlaybookElement}
 										start={startPlaybookElement}
@@ -1757,7 +1742,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showMonster={onSelectMonster}
 										showTerrain={onSelectTerrain}
 										saveChanges={savePlaybookElement}
@@ -1784,7 +1768,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showPlayerView={showPlayerView}
 										startEncounter={startEncounter}
 										startMontage={startMontage}
@@ -1814,7 +1797,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										setOptions={persistOptions}
 									/>
 								}

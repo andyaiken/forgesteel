@@ -18,6 +18,14 @@ export const highElf: Ancestry = {
 			name: 'High Elf Features',
 			options: [
 				{
+					feature: FactoryLogic.feature.create({
+						id: 'high-elf-feature-2-0',
+						name: 'Glamor of Terror',
+						description: 'When a foe strikes, you reverse the magic of your glamor to instill fear into their heart. Whenever you take damage from a creature, you can use a triggered action to make that creature frightened of you until the end of their next turn.'
+					}),
+					value: 2
+				},
+				{
 					feature: FactoryLogic.feature.createBonus({
 						id: 'high-elf-feature-2-1',
 						name: 'Graceful Retreat',
@@ -37,19 +45,19 @@ export const highElf: Ancestry = {
 				},
 				{
 					feature: FactoryLogic.feature.create({
-						id: 'high-elf-feature-2-3',
-						name: 'Revisit Memory',
-						description: 'Accessing memories is as easy as living in the present for you. You gain an edge on tests made to recall lore.'
-					}),
-					value: 1
-				},
-				{
-					feature: FactoryLogic.feature.create({
 						id: 'high-elf-feature-2-4',
 						name: 'Otherwordly Grace',
 						description: 'Your elf body and mind can’t be contained for long. Whenever you make a saving throw, you succeed on a roll of 5 or higher.'
 					}),
 					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'high-elf-feature-2-3',
+						name: 'Revisit Memory',
+						description: 'Accessing memories is as easy as living in the present for you. You gain an edge on tests made to recall lore.'
+					}),
+					value: 1
 				},
 				{
 					feature: FactoryLogic.feature.createConditionImmunity({

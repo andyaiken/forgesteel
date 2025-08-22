@@ -2,9 +2,11 @@
 	display: flex;
 	flex-direction: row;
 	gap: 20px;
+	overflow: hidden;
 
 	.encounter-workspace-column {
 		flex: 1 1 0;
+		overflow-y: auto;
 
 		.group-row,
 		.terrain-container-row {
@@ -46,6 +48,7 @@
 
 	.encounter-list-column {
 		flex: 1 1 0;
+		overflow-y: auto;
 
 		.monster-row,
 		.terrain-row {

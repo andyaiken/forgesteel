@@ -1,8 +1,10 @@
-import { Encounter, EncounterGroup, EncounterSlot, TerrainSlot } from '../models/encounter';
+import { Encounter, EncounterGroup, EncounterSlot, EncounterSlotCustomization, TerrainSlot } from '../models/encounter';
 import { Collections } from '../utils/collections';
 import { EncounterDifficulty } from '../enums/encounter-difficulty';
+import { FactoryLogic } from './factory-logic';
 import { Hero } from '../models/hero';
 import { MonsterLogic } from './monster-logic';
+import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { Options } from '../models/options';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from './sourcebook-logic';
@@ -36,7 +38,7 @@ export class EncounterLogic {
 
 	static getGroupStrength = (group: EncounterGroup, sourcebooks: Sourcebook[]) => {
 		return Collections.sum(group.slots, slot => {
-			const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
+			const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
 
 			const group = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
 			const addOns = group ? group.addOns.filter(a => slot.customization.addOnIDs.includes(a.id)) : [];
@@ -169,7 +171,7 @@ export class EncounterLogic {
 		const list: {
 			key: string;
 			monsterID: string;
-			addOnIDs: string[];
+			customization: EncounterSlotCustomization;
 		}[] = [];
 
 		encounter.groups.flatMap(g => g.slots).forEach(s => {
@@ -179,7 +181,10 @@ export class EncounterLogic {
 				list.push({
 					key: key,
 					monsterID: s.monsterID,
-					addOnIDs: [ ...s.customization.addOnIDs ]
+					customization: {
+						addOnIDs: [ ...s.customization.addOnIDs ],
+						convertToSolo: s.customization.convertToSolo
+					}
 				});
 			}
 		});
@@ -194,7 +199,7 @@ export class EncounterLogic {
 		return Collections.distinct(groups, item => item.id);
 	};
 
-	static getCustomizedMonster = (monsterID: string, addOnIDs: string[], sourcebooks: Sourcebook[]) => {
+	static getCustomizedMonster = (monsterID: string, customization: EncounterSlotCustomization, sourcebooks: Sourcebook[]) => {
 		const monster = SourcebookLogic.getMonster(sourcebooks, monsterID);
 		const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, monsterID);
 
@@ -203,7 +208,7 @@ export class EncounterLogic {
 			copy.id = Utils.guid();
 
 			let points = 0;
-			addOnIDs.forEach(id => {
+			customization.addOnIDs.forEach(id => {
 				const addOn = monsterGroup.addOns.find(a => a.id === id);
 				if (addOn) {
 					copy.features.push(addOn);
@@ -212,6 +217,32 @@ export class EncounterLogic {
 			});
 			if (points > 4) {
 				copy.encounterValue += (points - 4) * 2;
+			}
+
+			if (customization.convertToSolo) {
+				copy.role.organization = MonsterOrganizationType.Solo;
+				copy.encounterValue *= 3;
+				copy.stamina *= 2.5;
+
+				copy.features.push(FactoryLogic.feature.create({
+					id: 'custom-solo-turn',
+					name: 'Solo Turns',
+					description: 'The creature can take two turns each round. They can’t take turns consecutively.'
+				}));
+
+				copy.features.push(FactoryLogic.feature.create({
+					id: 'custom-solo-action',
+					name: 'Solo Action',
+					description: '(5 Malice) The creature takes an additional main action on their turn. They can use this feature even if they are dazed.'
+				}));
+
+				if (!copy.features.some(f => f.name === 'End Effect')) {
+					copy.features.push(FactoryLogic.feature.create({
+						id: 'custom-end-effect',
+						name: 'End Effect',
+						description: 'At the end of each of their turns, the creature can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
+					}));
+				}
 			}
 
 			return copy;

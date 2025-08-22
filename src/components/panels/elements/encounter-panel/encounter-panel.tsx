@@ -58,7 +58,7 @@ export const EncounterPanel = (props: Props) => {
 							<Space direction='vertical'>
 								{
 									group.slots.map(slot => {
-										const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
+										const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, props.sourcebooks);
 										if (!monster) {
 											return null;
 										}
@@ -140,7 +140,7 @@ export const EncounterPanel = (props: Props) => {
 				<div className='encounter-stat-blocks'>
 					{
 						monsterData.map(data => {
-							const monster = EncounterLogic.getCustomizedMonster(data.monsterID, data.addOnIDs, props.sourcebooks);
+							const monster = EncounterLogic.getCustomizedMonster(data.monsterID, data.customization, props.sourcebooks);
 							const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, data.monsterID);
 							if (monster && monsterGroup) {
 								return (

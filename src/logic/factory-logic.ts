@@ -610,7 +610,8 @@ export class FactoryLogic {
 			monsterID: monsterID,
 			count: 1,
 			customization: {
-				addOnIDs: []
+				addOnIDs: [],
+				convertToSolo: false
 			},
 			monsters: [],
 			state: {
@@ -635,7 +636,8 @@ export class FactoryLogic {
 			monsterID: monster.id,
 			count: 1,
 			customization: {
-				addOnIDs: []
+				addOnIDs: [],
+				convertToSolo: false
 			},
 			monsters: [ m ],
 			state: {

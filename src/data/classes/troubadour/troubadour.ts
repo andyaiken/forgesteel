@@ -688,7 +688,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			id: 'y4twMNJioffMnTAp',
 			name: 'Fake Your Death',
 			description: 'O happy dagger, this is thy sheath!',
-			type: FactoryLogic.type.createMain(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',

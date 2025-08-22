@@ -22,6 +22,7 @@ import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { MonsterFilterPanel } from '../../monster-filter/monster-filter-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
+import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../elements/monster-panel/monster-panel';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
@@ -152,36 +153,61 @@ export const EncounterEditPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
+			const setSlotConvertToSolo = (groupID: string, slotID: string, value: boolean) => {
+				const copy = Utils.copy(encounter);
+				const group = copy.groups.find(g => g.id === groupID);
+				if (group) {
+					const slot = group.slots.find(s => s.id === slotID);
+					if (slot) {
+						slot.customization.convertToSolo = value;
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
 			const getSlot = (slot: EncounterSlot, group: EncounterGroup) => {
-				const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization.addOnIDs, props.sourcebooks);
+				const originalMonster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
+				const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, props.sourcebooks);
 				const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, slot.monsterID);
-				if (monster && monsterGroup) {
+				if (originalMonster && monster && monsterGroup) {
 					return (
 						<div key={slot.id} className='slot-row'>
 							<div className='content'>
 								<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />} />
 								{
-									monsterGroup.addOns.length > 0 ?
+									(monsterGroup.addOns.length > 0) || (originalMonster.role.organization === MonsterOrganizationType.Elite) || (originalMonster.role.organization === MonsterOrganizationType.Leader) ?
 										<Expander title='Customize'>
 											<HeaderText>Customize</HeaderText>
-											<Select
-												style={{ width: '100%' }}
-												placeholder='Select'
-												mode='multiple'
-												options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-												optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
-												showSearch={true}
-												filterOption={(input, option) => {
-													const strings = option ?
-														[
-															option.label
-														]
-														: [];
-													return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-												}}
-												value={slot.customization.addOnIDs}
-												onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
-											/>
+											<Space direction='vertical' style={{ width: '100%' }}>
+												{
+													monsterGroup.addOns.length > 0 ?
+														<Select
+															style={{ width: '100%' }}
+															placeholder='Select'
+															mode='multiple'
+															options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
+															optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
+															showSearch={true}
+															filterOption={(input, option) => {
+																const strings = option ?
+																	[
+																		option.label
+																	]
+																	: [];
+																return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+															}}
+															value={slot.customization.addOnIDs}
+															onChange={ids => setSlotAddOnIDs(group.id, slot.id, ids)}
+														/>
+														: null
+												}
+												{
+													(originalMonster.role.organization === MonsterOrganizationType.Elite) || (originalMonster.role.organization === MonsterOrganizationType.Leader) ?
+														<Toggle label='Turn this monster into a Solo' value={slot.customization.convertToSolo} onChange={value => setSlotConvertToSolo(group.id, slot.id, value)} />
+														: null
+												}
+											</Space>
 										</Expander>
 										: null
 								}
@@ -319,7 +345,7 @@ export const EncounterEditPanel = (props: Props) => {
 					return (
 						<div key={slot.id} className='terrain-row'>
 							<div className='content'>
-								<TerrainPanel terrain={terrain} />
+								<TerrainPanel terrain={terrain} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, slot.upgradeIDs)} />} />
 								{
 									terrain.upgrades.length > 0 ?
 										<Expander title='Customize'>
@@ -351,8 +377,6 @@ export const EncounterEditPanel = (props: Props) => {
 									value={slot.count}
 									onChange={value => setTerrainCount(slot.id, value)}
 								/>
-								<Divider />
-								<Button block={true} onClick={() => props.showTerrain(terrain, slot.upgradeIDs)}>Details</Button>
 							</div>
 						</div>
 					);

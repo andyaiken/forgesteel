@@ -117,19 +117,20 @@ export class PlaybookLogic {
 		copy.id = Utils.guid();
 		copy.round = 0;
 
-		const monsterInfo: { monster: Monster, name: string, count: number, added: number }[] = [];
+		const monsterInfo: { monsterID: string, monster: Monster, name: string, count: number, added: number }[] = [];
 		copy.groups
 			.flatMap(g => g.slots)
 			.forEach(slot => {
-				const monster = SourcebookLogic.getMonster(sourcebooks, slot.monsterID);
+				const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
 				const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, slot.monsterID);
 				if (monster && monsterGroup) {
 					const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, options);
-					const current = monsterInfo.find(info => info.monster.id === monster.id);
+					const current = monsterInfo.find(info => info.monsterID === slot.monsterID);
 					if (current) {
 						current.count += count;
 					} else {
 						monsterInfo.push({
+							monsterID: slot.monsterID,
 							monster: monster,
 							name: MonsterLogic.getMonsterName(monster, monsterGroup),
 							count: count,
@@ -142,7 +143,7 @@ export class PlaybookLogic {
 		copy.groups
 			.flatMap(g => g.slots)
 			.forEach(slot => {
-				const info = monsterInfo.find(info => info.monster.id === slot.monsterID);
+				const info = monsterInfo.find(info => info.monsterID === slot.monsterID);
 				if (info) {
 					const count = slot.count * MonsterLogic.getRoleMultiplier(info.monster.role.organization, options);
 					for (let n = 1; n <= count; ++n) {
@@ -157,11 +158,11 @@ export class PlaybookLogic {
 
 		copy.groups.forEach(g => {
 			const minions = g.slots.filter(s => {
-				const info = monsterInfo.find(info => info.monster.id === s.monsterID);
+				const info = monsterInfo.find(info => info.monsterID === s.monsterID);
 				return info && (info.monster.role.organization === MonsterOrganizationType.Minion);
 			});
 			const nonMinions = g.slots.filter(s => {
-				const info = monsterInfo.find(info => info.monster.id === s.monsterID);
+				const info = monsterInfo.find(info => info.monsterID === s.monsterID);
 				return info && (info.monster.role.organization !== MonsterOrganizationType.Minion);
 			});
 			if ((minions.length > 0) && (nonMinions.length > 0)) {

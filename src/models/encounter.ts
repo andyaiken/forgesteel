@@ -3,13 +3,16 @@ import { Element } from './element';
 import { Hero } from './hero';
 import { Terrain } from './terrain';
 
+export interface EncounterSlotCustomization {
+	addOnIDs: string[];
+	convertToSolo: boolean;
+}
+
 export interface EncounterSlot {
 	id: string;
 	monsterID: string;
 	count: number;
-	customization: {
-		addOnIDs: string[];
-	};
+	customization: EncounterSlotCustomization;
 	monsters: Monster[];
 	state: MonsterState;
 }

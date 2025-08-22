@@ -17,7 +17,8 @@ export class EncounterData {
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Assassin')!.id,
 						count: 2,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {
@@ -42,7 +43,8 @@ export class EncounterData {
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Sniper')!.id,
 						count: 1,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {
@@ -67,7 +69,8 @@ export class EncounterData {
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Spinecleaver')!.id,
 						count: 1,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {
@@ -92,7 +95,8 @@ export class EncounterData {
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Underboss')!.id,
 						count: 1,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {
@@ -147,7 +151,8 @@ export class EncounterData {
 						monsterID: MonsterData.dragonThorn.monsters[0].id,
 						count: 1,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {

@@ -1,3 +1,4 @@
+import { CSSProperties, ReactNode, useState } from 'react';
 import { Divider, Flex, Tag } from 'antd';
 import { Terrain, TerrainSection } from '../../../../models/terrain';
 import { AbilityPanel } from '../ability-panel/ability-panel';
@@ -13,7 +14,6 @@ import { Pill } from '../../../controls/pill/pill';
 import { TerrainLabel } from '../../monster-label/monster-label';
 import { TerrainLogic } from '../../../../logic/terrain-logic';
 import { Utils } from '../../../../utils/utils';
-import { useState } from 'react';
 
 import './terrain-panel.scss';
 
@@ -22,6 +22,8 @@ interface Props {
 	upgradeIDs?: string[];
 	showCustomizations?: boolean;
 	mode?: PanelMode;
+	style?: CSSProperties;
+	extra?: ReactNode;
 	updateTerrain?: (terrain: Terrain) => void;
 }
 
@@ -70,8 +72,13 @@ export const TerrainPanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'terrain-panel' : 'terrain-panel compact'} id={props.mode === PanelMode.Full ? terrain.id : undefined}>
-					<HeaderText level={1}>{terrain.name || 'Unnamed Ancestry'}</HeaderText>
+				<div className={props.mode === PanelMode.Full ? 'terrain-panel' : 'terrain-panel compact'} id={props.mode === PanelMode.Full ? terrain.id : undefined} style={props.style}>
+					<HeaderText
+						level={1}
+						extra={props.extra}
+					>
+						{terrain.name || 'Unnamed Ancestry'}
+					</HeaderText>
 					<Markdown text={terrain.description} />
 					<TerrainLabel terrain={terrain} />
 					<Flex align='center' justify='space-between'>

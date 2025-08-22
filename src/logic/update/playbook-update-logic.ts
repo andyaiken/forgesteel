@@ -35,8 +35,13 @@ export class PlaybookUpdateLogic {
 				g.slots.forEach(s => {
 					if (s.customization === undefined) {
 						s.customization = {
-							addOnIDs: []
+							addOnIDs: [],
+							convertToSolo: false
 						};
+					}
+
+					if (s.customization.convertToSolo === undefined) {
+						s.customization.convertToSolo = false;
 					}
 
 					if (s.monsters === undefined) {

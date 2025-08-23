@@ -114,6 +114,8 @@ export const HeroSheetPage = (props: Props) => {
 				character.otherRollAbilities,
 				character.otherAbilities);
 
+			allAbilities.sort(CharacterSheetFormatter.sortAbilitiesByLength);
+
 			const abilitiesSplit: AbilitySheet[][] = [];
 			let n = 0;
 			while (n < allAbilities.length) {

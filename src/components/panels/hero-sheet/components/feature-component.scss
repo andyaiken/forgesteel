@@ -101,3 +101,7 @@
 li .feature ul.feature-description {
     margin-left: 5px;
 }
+
+.feature-reference .feature .feature-description table td:first-child {
+    text-wrap: nowrap;
+}

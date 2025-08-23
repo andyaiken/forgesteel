@@ -1,0 +1,252 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.stats-resources {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+
+    .characteristics-measurements {
+        grid-column-end: span 3;
+        margin-left: -5px;
+    }
+
+    .characteristics-measurements, 
+    .recoveries, 
+    .heroic-resource, 
+    .surges {
+        display: grid;
+        grid-template-rows: min-content 1fr;
+        align-items: stretch;
+        justify-items: stretch;
+    }
+
+    .characteristics,
+    .recoveries,
+    .heroic-resource,
+    .surges {
+        .fancy label {
+            margin-top: 7px;
+        }
+        .label-above.fancy>.labeled-field-content {
+            aspect-ratio: 1 / 1;
+        }
+    }
+
+
+    .recoveries .label-above.fancy>.labeled-field-content {
+        background-image: none;
+        border: 4px solid common.$color-medium;
+        border-radius: 50%;
+    }
+
+    .heroic-resource .label-above.fancy>.labeled-field-content {
+        @include common.hexagon(4px, common.$color-medium);
+    }
+
+    .surges .label-above.fancy>.labeled-field-content {
+        background-image: none;
+        border: 4px solid common.$color-medium;
+    }
+
+    .characteristics {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+
+        .label-above.fancy {
+            >.labeled-field-content {
+                @include common.beveled-fancy-1(15px, 4px, 3px, 2px, common.$color-medium);
+                max-width: 76px;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    .measurements {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        justify-items: stretch;
+        align-items: stretch;
+        padding-top: 8px;
+
+        :first-child {
+            grid-column-start: 2;
+        }
+
+        .labeled-field-content {
+            padding: 4px 0;
+        }
+
+        label {
+            color: common.$color-text;
+        }
+    }
+
+    .stamina {
+        position: relative;
+        border-left: 2px solid common.$color-light;
+        border-right: 2px solid common.$color-light;
+        margin: 5px 0;
+
+        grid-column-end: span 2;
+
+        display: grid;
+        grid-template-rows: min-content min-content 1fr;
+
+        h4 {
+            margin: 0 3px;
+            padding: 0;
+            text-align:center;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .current-stamina {
+            float: left;
+            width: 7rem;
+            height: 7rem;
+            position: absolute;
+            display: flex;
+            flex-flow: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 8px;
+
+            @include common.beveled-bg(15px, 4px, common.$color-medium, #fff);
+            margin-left: 8px;
+
+            label {
+                margin-bottom: -8px;
+            }
+            .labeled-field-content span {
+                font-size: 3rem;
+            }
+        }
+
+        .currentState {
+            @include common.beveled(10px, 2px, common.$color-medium);
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            justify-items: stretch;
+
+            margin: 12px 15px 26px 15px;
+            padding: 5px;
+
+            .winded {
+                grid-column-start: 2;
+            }
+            .winded,
+            .dying {
+                .ref {
+                    @include common.font-slab();
+                    text-align: center;
+                    font-size: 1.1rem;
+
+                    .data {
+                        @include common.font-slab();
+                        display: inline-block;
+                        border-bottom: 1.5px solid common.$color-light;
+                        font-size: 1.3rem;
+                        line-height: 100%;
+                        padding: 0 3px;
+                        min-width: 30px;
+                    }
+                }
+            }
+        }
+
+        .reference {
+            margin-bottom: -5px;
+            .labeled-field {
+                width: 30%;
+            }
+        }
+    }
+
+    .recoveries,
+    .heroic-resource,
+    .surges {
+        padding-left: 10px;
+        padding-right: 10px;
+
+        .label-above .labeled-field-content {
+            margin: 0 20px;
+        }
+    }
+
+    .recoveries,
+    .heroic-resource {
+        border-right: 2px solid common.$color-light;
+    }
+
+    .heroic-resource {
+        .labeled-field.fancy {
+            label {
+                margin-top: -2px;
+                margin-bottom: 0;
+            }
+            .labeled-field-content {
+                height: 76px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+
+    .stamina .reference,
+    .recoveries .reference {
+        display: flex;
+        justify-content: center;
+        margin-top: -8px;
+    }
+    .stamina .reference,
+    .recoveries .reference,
+    .heroic-resource .labeled-field.no-box {
+
+        .labeled-field-content span {
+            font-size: 1.6rem;
+        }
+    }
+    .recoveries .reference {
+        .labeled-field {
+            width: 4em;
+        }
+    }
+
+    .surges {
+        margin-right: -15px;
+
+        .labeled-field-content {
+            max-width: 76px;
+            align-self: center;
+
+            span {
+                min-width: 76px;
+            }
+        }
+    }
+
+    .surges .reference {
+        font-size: 1rem;
+        line-height: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 15px;
+        color: common.$color-medium;
+
+        div, .data {
+            @include common.font-slab();
+        }
+        .data {
+            border-bottom: 1px solid common.$color-medium;
+            min-width: 24px;
+            display: inline-block;
+            text-align: center;
+            // line-height: 1.5rem;
+            font-size: 1.3rem;
+        }
+    }
+}

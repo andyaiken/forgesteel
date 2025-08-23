@@ -1,0 +1,154 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.ability.card:not(#priority) {
+    padding: 10px;
+    display:grid;
+    justify-self: stretch;
+
+    p strong {
+        @include common.font-slab;
+    }
+
+    section.bordered {
+        margin-bottom: 0;
+    }
+    h2 {
+        margin-top: -8px;
+
+        .cost {
+            @include common.font-slab;
+            display: block;
+            float: right;
+            border: 2px solid common.$color-medium;
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            margin-top: -10px;
+            text-align: center;
+            font-size: 1.4rem;
+            padding-top: 3px;
+
+            &::after {
+                content: "Cost";
+                display: inline-block;
+                position: relative;
+                font-size: 0.6rem;
+                line-height: 0.6rem;
+                height: 0.6rem;
+                font-weight: 450;
+                bottom: 9px;
+                left: 50%;
+                transform: translateX(-52%);
+                background: #fff;
+                padding: 1px 2px;
+                border-radius: 6px;
+            }
+        }
+    }
+
+    .stats {
+        display: grid;
+        place-content: stretch;
+        grid-template-columns: repeat(10, 1fr);
+
+        .labeled-field {
+            text-wrap: nowrap;
+            margin: 0;
+
+            label {
+                font-size: 1rem;
+                margin-top: 0;
+            }
+
+            .labeled-field-content {
+                height: 2rem;
+                span {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        .keywords {
+            grid-column-end: span 6;
+
+            .labeled-field-content {
+                overflow: hidden;
+                text-wrap: nowrap;
+            }
+        }
+
+        .action-type {
+            grid-column-end: span 4;
+        }
+
+        .distance,
+        .target {
+            grid-column-end: span 5;
+        }
+    }
+
+    .power-roll {
+        display: grid;
+        grid-template-rows: min-content 1fr;
+
+        font-size: 1.1rem;
+
+        .power, .symbol-text {
+            @include common.font-slab;
+        }
+        .power  {
+            font-weight: 600;
+            margin: 10px;
+            > span {
+                display: inline-block;
+                border-bottom: 1px solid common.$color-medium;
+                min-width: 50%;
+
+                .characteristic {
+                    transform: translateY(3px);
+                }
+            }
+        }
+
+        .roll-tiers {
+            display: grid;
+            grid-template-rows: min-content min-content min-content;
+            margin: 0 10px 10px;
+
+            .tier {
+                display: grid;
+                grid-template-columns: min-content 1fr;
+                margin: 5px 0;
+
+                .range {
+                    margin-top: 2px;
+                    width: 50px;
+                    height: 18px;
+                }
+
+                .effect {
+                    border-bottom: 2px solid common.$color-light;
+                    padding-bottom: 5px;
+                }
+            }
+
+        }
+    }
+
+    .trigger {
+        font-size: 1.1rem;
+        label {
+            font-weight: 450;
+        }
+    }
+    .effect {
+        h4 {
+            text-align: left;
+            font-weight: 450;
+            margin:0 10px 5px;
+        }
+    }
+    .ability-effect {
+        font-size: 1.1rem;
+    }
+}

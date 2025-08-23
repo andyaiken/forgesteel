@@ -1,5 +1,6 @@
 import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
-import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
+import { Encounter, EncounterGroup, EncounterObjective } from '../models/encounter';
+import { EncounterSlot } from '../models/encounter-slot';
 import { Hero, HeroState } from '../models/hero';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
@@ -32,7 +33,6 @@ import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { KitArmor } from '../enums/kit-armor';
 import { KitWeapon } from '../enums/kit-weapon';
-import { MonsterLogic } from './monster-logic';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { Negotiation } from '../models/negotiation';
@@ -52,6 +52,7 @@ import { TerrainCategory } from '../enums/terrain-category';
 import { TerrainRoleType } from '../enums/terrain-role-type';
 import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
+import { PdfTemplateEnum, SheetDisplayOptions } from '../models/pdf-export-models';
 
 export class FactoryLogic {
 	static createElement = (name?: string): Element => {
@@ -475,6 +476,14 @@ export class FactoryLogic {
 		};
 	};
 
+	static defaultMonsterChatacteristics = [
+		{ characteristic: Characteristic.Might, value: 0 },
+		{ characteristic: Characteristic.Agility, value: 0 },
+		{ characteristic: Characteristic.Reason, value: 0 },
+		{ characteristic: Characteristic.Intuition, value: 0 },
+		{ characteristic: Characteristic.Presence, value: 0 }
+	];
+
 	static createMonster = (data: {
 		id: string,
 		name: string,
@@ -516,7 +525,7 @@ export class FactoryLogic {
 			stamina: data.stamina || 5,
 			stability: data.stability || 0,
 			freeStrikeDamage: data.freeStrikeDamage || 2,
-			characteristics: data.characteristics || MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
+			characteristics: data.characteristics || FactoryLogic.defaultMonsterChatacteristics,
 			withCaptain: data.withCaptain || '',
 			features: data.features || [],
 			retainer: retainer,
@@ -968,7 +977,16 @@ export class FactoryLogic {
 			heroVictories: 0,
 			showDefeatedCombatants: false,
 			gridSize: 50,
-			playerGridSize: 50
+			playerGridSize: 50,
+			pdfTemplate: PdfTemplateEnum.HTML,
+			keepPdfFillable: false,
+			includePlayState: false,
+		};
+	};
+
+	static createSheetDisplayOptions = (options: Options): SheetDisplayOptions => {
+		return {
+			includePlayState: options.includePlayState,
 		};
 	};
 

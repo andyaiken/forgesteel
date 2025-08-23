@@ -1,0 +1,86 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.turn-reference.card * {
+    @include common.font-slab();
+}
+
+.turn-reference.card {
+    padding: 10px 15px;
+
+    font-size: 1.1rem;
+    line-height: 1.3rem;
+    strong {
+        font-weight: 500;
+    }
+
+    p {
+        color: common.$color-medium;
+        margin: 7px 0;
+    }
+
+    h3 {
+        border-bottom: 2px solid common.$color-light;
+        margin-bottom: 10px;
+        padding: 5px;
+    }
+
+    .heroic-resource-gain {
+        display: grid;
+        grid-template-columns: min-content 3fr;
+        grid-gap: 3px;
+        margin-bottom: 10px;
+        color: common.$color-medium;
+
+        .value {
+            text-align: center;
+        }
+
+        .trigger {
+            // border-bottom: 1px solid common.$color-light;
+            margin-bottom: 2px;
+            line-height: 1.4rem;
+        }
+
+        .header {
+            font-weight: 500;
+            margin-bottom: 4px;
+            border-bottom: 2px solid common.$color-medium;
+        }
+    }
+
+    .actions-maneuvers {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        * {
+            color: common.$color-medium;
+        }
+
+        h5 {
+            margin: 4px 10px 4px 4px;
+            border-bottom: 2px solid common.$color-light;
+            font-size: 1rem;
+            font-weight: 450;
+        }
+
+        ul {
+            margin: 4px 10px 4px 4px;
+            list-style-type: '— ';
+            list-style-position: outside;
+
+            li {
+                margin-top: 2px;
+            }
+        }
+
+        .main-actions,
+        .move-actions {
+            grid-column-start: 1;
+        }
+
+        .maneuvers {
+            grid-column-start: 2;
+            grid-row-start: 1;
+            grid-row-end: span 2;
+        }
+    }
+}

@@ -4,7 +4,7 @@ import { Career } from './career';
 import { Complication } from './complication';
 import { Condition } from './condition';
 import { Culture } from './culture';
-import { EncounterSlot } from './encounter';
+import { EncounterSlot } from './encounter-slot';
 import { Feature } from './feature';
 import { HeroClass } from './class';
 import { Item } from './item';

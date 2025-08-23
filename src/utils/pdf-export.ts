@@ -1,26 +1,53 @@
-import { ConditionEndType, ConditionType } from '../enums/condition-type';
 import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
-import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
-import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
+import { ConditionEndType, ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
+import { FeatureType } from '../enums/feature-type';
+import { AbilityLogic } from '../logic/ability-logic';
+import { FormatLogic } from '../logic/format-logic';
+import { HeroLogic } from '../logic/hero-logic';
+import { Ability } from '../models/ability';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
-import { FeatureType } from '../enums/feature-type';
-import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
-import { HeroLogic } from '../logic/hero-logic';
 import { Sourcebook } from '../models/sourcebook';
 
 import pdfLandscape from '../assets/character-sheet-landscape.pdf';
 import pdfPortrait from '../assets/character-sheet-portrait.pdf';
 
 export class PDFExport {
-	static startExport = async (hero: Hero, sourcebooks: Sourcebook[], format: 'portrait' | 'landscape') => {
+
+	static cleanupOutput = (text: string) => {
+		text = text
+			.replace(/(\|:-+)+\|\n/g, '')
+			.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
+			.replace(/11 -\t/g, '11 or less')
+			.replace(/17 \+/g, '17+\t')
+			.replace(/≤\s*(\d+)\t?/g, '$1 or less')
+			.replace(/≥\s*(\d+)/g, '$1+\t')
+			.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
+			.replace(/\n\* /g, '\n   • ');
+		// substitutions are for cleaning up lists to look better in the form
+		return text;
+	};
+
+	static sanitize = (str: string) => {
+		// This replaces characters the PDF doesn't support
+		return str
+			.toString()
+			.replaceAll(String.fromCodePoint(127925), '·')// musical note emoji?
+			.replaceAll('\u266a', '·')// musical note character
+			.replace(/−/g, '-')
+			.replace(/ź/g, 'z')
+			.replace(/ń/g, 'n')
+			.replace(/č/g, 'c');
+	};
+
+	static startExport = async (hero: Hero, sourcebooks: Sourcebook[], format: 'portrait' | 'landscape', flatten: boolean) => {
 		let file: string;
 		switch (format) {
 			case 'portrait':
@@ -38,17 +65,6 @@ export class PDFExport {
 		const fontSize = 9;
 
 		const autoResizingFields: string[] = [];
-
-		const sanitize = (str: string) => {
-			// This replaces characters the PDF doesn't support
-			return str
-				.replaceAll(String.fromCodePoint(127925), '·')// musical note emoji?
-				.replaceAll('\u266a', '·')// musical note character
-				.replace(/−/g, '-')
-				.replace(/ź/g, 'z')
-				.replace(/ń/g, 'n')
-				.replace(/č/g, 'c');
-		};
 
 		const heroicResources = HeroLogic.getHeroicResources(hero);
 		const texts: { [key: string]: string | number | null } = {
@@ -122,20 +138,6 @@ export class PDFExport {
 
 		const GetTitle = (text: string) => text + '\n' + ('¯'.repeat(Math.ceil(font.widthOfTextAtSize(text, fontSize) / font.widthOfTextAtSize('¯', fontSize))));
 
-		const CleanupOutput = (text: string) => {
-			text = text
-				.replace(/(\|:-+)+\|\n/g, '')
-				.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
-				.replace(/≤ 11\t/g, '11 or less')
-				.replace(/17 \+/g, '17+\t')
-				.replace(/≤\s*(\d+)\t?/g, '$1 or less')
-				.replace(/≥\s*(\d+)/g, '$1+\t')
-				.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
-				.replace(/\n\* /g, '\n   • ');
-			// substitutions are for cleaning up lists to look better in the form
-			return text;
-		};
-
 		const ConvertFeatures = (features: Feature[]) => {
 			features = features.filter(f => !ignoredFeatures[f.id]);
 			features.forEach(f => (ignoredFeatures[f.id] = true));
@@ -147,7 +149,7 @@ export class PDFExport {
 				let text = GetTitle(feature.name) + '\n' + feature.description.replace(/^\s+/, '');
 				// substitution is to convert any tables into text that presents
 				// better in the PDF form
-				text = CleanupOutput(text);
+				text = PDFExport.cleanupOutput(text);
 				if (feature.description !== '') {
 					all = all + text;
 				}
@@ -167,7 +169,7 @@ export class PDFExport {
 				if (hr.details) {
 					resourceGainText += '\n\n' + hr.details;
 				}
-				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
+				texts['HeroicResourceGains'] = PDFExport.cleanupOutput(resourceGainText);
 			} else {
 				const resource = heroicResources.length > 0 ? heroicResources[0].name.toLowerCase() : 'XXX';
 				const startup = new RegExp(String.raw`\s*At the start of each of your turns during combat, you gain (.+?) ${resource}\.\s*`);
@@ -179,7 +181,7 @@ export class PDFExport {
 					}
 					ignoredFeatures[heroicResourceFeature.id] = true;
 					const resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
-					texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
+					texts['HeroicResourceGains'] = PDFExport.cleanupOutput(resourceGainText);
 				}
 			}
 		}
@@ -323,18 +325,18 @@ export class PDFExport {
 
 					const details = [ ...a.type.qualifiers || [] ];
 					if (a.type.trigger !== '') {
-						details.push('Trigger:\n' + CleanupOutput(a.type.trigger));
+						details.push('Trigger:\n' + PDFExport.cleanupOutput(a.type.trigger));
 					}
 					a.sections.forEach(section => {
 						switch (section.type) {
 							case 'text':
-								details.push(CleanupOutput(section.text.replace(/^\s+/, '')));
+								details.push(PDFExport.cleanupOutput(section.text.replace(/^\s+/, '')));
 								break;
 							case 'field':
 								if (section.value !== 0) {
-									details.push(section.name + ' ' + section.value + (section.repeatable ? '+' : '') + ':\n' + CleanupOutput(section.effect));
+									details.push(section.name + ' ' + section.value + (section.repeatable ? '+' : '') + ':\n' + PDFExport.cleanupOutput(section.effect));
 								} else {
-									details.push(section.name + ':\n' + CleanupOutput(section.effect));
+									details.push(section.name + ':\n' + PDFExport.cleanupOutput(section.effect));
 								}
 								break;
 							case 'roll': {
@@ -438,13 +440,13 @@ export class PDFExport {
 		for (const [ key, value ] of Object.entries(texts)) {
 			const field = form.getField(key) as PDFTextField;
 			if (value !== null && value !== undefined) {
-				field.setText(sanitize(value.toString()));
+				field.setText(PDFExport.sanitize(value.toString()));
 			}
 		}
 
 		const DoesTextFitFieldRectangle = (t: string, rect: { x: number, y: number, width: number, height: number }, size: number, multiline: boolean) => {
 			t = t.replace(/\t/g, '    ');
-			t = sanitize(t);
+			t = PDFExport.sanitize(t);
 			if (multiline) {
 				// offset of 20 for multiline and 5 for single found by testing different values
 				const widthOffset = 20;
@@ -500,12 +502,16 @@ export class PDFExport {
 			}
 		}
 
+		if (flatten) {
+			form.flatten();
+		}
+
 		const data = await pdfDoc.save();
 		const part = [ data ] as BlobPart[];
 		const url = window.URL.createObjectURL(new Blob(part, { type: 'application/pdf' }));
 
 		const downloader = document.createElement('a');
-		downloader.download = `${CleanupOutput(hero.name || 'Unnamed Hero')}.pdf`;
+		downloader.download = `${PDFExport.cleanupOutput(hero.name || 'Unnamed Hero')}.pdf`;
 		downloader.href = url;
 		downloader.click();
 

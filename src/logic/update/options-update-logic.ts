@@ -1,5 +1,6 @@
-import { Options } from '../../models/options';
 import { PanelWidth } from '../../enums/panel-width';
+import { Options } from '../../models/options';
+import { PdfTemplateEnum } from '../../models/pdf-export-models';
 
 export class OptionsUpdateLogic {
 	static updateOptions = (options: Options) => {
@@ -85,6 +86,18 @@ export class OptionsUpdateLogic {
 
 		if (options.playerGridSize === undefined) {
 			options.playerGridSize = 50;
+		}
+
+		if (options.pdfTemplate === undefined) {
+			options.pdfTemplate = PdfTemplateEnum.HTML;
+		}
+
+		if (options.keepPdfFillable === undefined) {
+			options.keepPdfFillable = false;
+		}
+
+		if (options.includePlayState === undefined) {
+			options.includePlayState = false;
 		}
 	};
 }

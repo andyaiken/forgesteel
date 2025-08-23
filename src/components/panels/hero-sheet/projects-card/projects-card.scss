@@ -1,0 +1,78 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.projects.card {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+
+    h2 {
+        margin-bottom: 0;
+    }
+
+    div,
+    .points span {
+        @include common.font-slab();
+    }
+
+    .projects-table {
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+        align-items: stretch;
+        justify-items: stretch;
+        margin-bottom: 8px;
+
+        &>.header,
+        &>.project {
+            display: grid;
+            grid-template-columns: 3fr 2fr 1.5fr 1fr;
+        }
+
+        .header {
+            text-align: center;
+
+            div {
+                font-weight: 600;
+                align-self: center;
+
+                &:first-child {
+                    text-align: left;
+                }
+            }
+
+            border-bottom: 2px solid common.$color-light;
+        }
+
+        .project {
+            border-bottom: 2px solid common.$color-light;
+            padding: 5px;
+
+            div {
+                padding: 0 5px;
+                font-size: 1.2rem;
+                line-height: 2rem;
+            }
+
+            &:nth-child(even) {
+                background-color: common.$color-extra-light;
+            }
+
+            &>*:not(:last-child) {
+                border-right: 2px solid common.$color-light;
+            }
+
+            .roll-characteristic {
+                text-align: center;
+
+                .symbol-text {
+                    transform: translateY(5px);
+                }
+            }
+
+            .points {
+                display: grid;
+                grid-template-columns: 1fr min-content 1fr;
+                align-items: center;
+                justify-items: center;
+            }
+        }
+    }
+}

@@ -1,8 +1,9 @@
-import { Collections } from './collections';
-import { Converter } from 'showdown';
-import { Random } from './random';
+import * as htmlToImage from 'html-to-image';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { Converter } from 'showdown';
+import { Collections } from './collections';
+import { Random } from './random';
 
 export class Utils {
 	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
@@ -92,7 +93,7 @@ export class Utils {
 					});
 				break;
 			case 'pdf':
-				Promise.all(elements.map(element => html2canvas(element)))
+				Promise.all(elements.map(element => htmlToImage.toCanvas(element)))
 					.then(canvases => {
 						Utils.savePDF(`${name}.pdf`, canvases);
 						elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
@@ -100,6 +101,21 @@ export class Utils {
 				break;
 		}
 	};
+
+	static elementsToPdf(elementIDs: string[], filename: string) {
+		const elements = elementIDs
+			.map(id => document.getElementById(id))
+			.filter(element => !!element);
+
+		if (elements.length === 0) {
+			return;
+		}
+
+		Promise.all(elements.map(element => htmlToImage.toCanvas(element)))
+			.then(canvases => {
+				Utils.savePdfPages(`${filename}.pdf`, canvases);
+			});
+	}
 
 	static saveFile = (data: unknown, name: string, type: string) => {
 		const json = JSON.stringify(data, null, '\t');
@@ -132,4 +148,26 @@ export class Utils {
 
 		pdf.save(filename);
 	};
+
+	static savePdfPages = (filename: string, pageCanvases: HTMLCanvasElement[]) => {
+		const orientation = 'portrait';
+
+		//@ts-ignore
+		const pdf = new jsPDF({
+			orientation: orientation,
+			unit: (72 / 150), // undocumented feature to set ~150dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
+			format: 'letter',
+			hotfixes: ["px_scaling"],
+		});
+		pageCanvases.forEach((canvas, n) => {
+			const page = (n === 0) ? pdf : pdf.addPage('letter', orientation);
+			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
+		});
+
+		pdf.save(filename);
+	};
+
+	static isNullOrEmpty = (str: string | undefined) => {
+		return (str === null || str === undefined || str.trim() === '');
+	}
 }

@@ -1,10 +1,9 @@
-import { Segmented, Space } from 'antd';
+import { Segmented, Space, Tag } from 'antd';
+import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Options } from '../../../models/options';
 import { PdfTemplateEnum } from '../../../models/pdf-export-models';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Toggle } from '../../controls/toggle/toggle';
 
-import { HeaderText } from '../../controls/header-text/header-text';
 import './sheet-options-panel.scss';
 
 interface Props {
@@ -14,26 +13,24 @@ interface Props {
 }
 
 export const SheetOptionsPanel = (props: Props) => {
-
 	const setTemplate = (value: PdfTemplateEnum) => {
 		props.setOptions({
 			...props.options,
-			pdfTemplate: value,
+			pdfTemplate: value
 		});
 	};
 
 	const setKeepFillable = (value: boolean) => {
 		props.setOptions({
 			...props.options,
-			keepPdfFillable: value,
+			keepPdfFillable: value
 		});
 	};
 
 	const setIncludePlayState = (value: boolean) => {
-		console.log('panel setting include state to', value);
 		props.setOptions({
 			...props.options,
-			includePlayState: value,
+			includePlayState: value
 		});
 	};
 
@@ -42,37 +39,38 @@ export const SheetOptionsPanel = (props: Props) => {
 			case 'hero':
 				return (
 					<>
-						<HeaderText
-							level={2}>
-							PDF Options
-						</HeaderText>
-						<Space direction="vertical">
+						<Space direction='vertical'>
 							<Segmented
+								block={true}
 								options={[
-									{ value: PdfTemplateEnum.HTML, label: 'HTML' },
-									{ value: PdfTemplateEnum.Portrait, label: 'Portrait template' },
-									{ value: PdfTemplateEnum.Landscape, label: 'Landscape template' },
+									{ value: PdfTemplateEnum.Portrait, label: <div>Portrait</div> },
+									{ value: PdfTemplateEnum.Landscape, label: <div>Landscape</div> },
+									{ value: PdfTemplateEnum.HTML, label: <div><Tag color='blue'>NEW</Tag>Fancy</div> }
 								]}
 								value={props.options.pdfTemplate}
 								onChange={setTemplate}
 							/>
-							{[PdfTemplateEnum.Portrait, PdfTemplateEnum.Landscape].includes(props.options.pdfTemplate) ? (
-								<Toggle label='Keep PDF template fillable'
-									value={props.options.keepPdfFillable}
-									onChange={setKeepFillable} />
-							) : undefined}
+							{
+								[ PdfTemplateEnum.Portrait, PdfTemplateEnum.Landscape ].includes(props.options.pdfTemplate) ?
+									<Toggle
+										label='Keep PDF template fillable'
+										value={props.options.keepPdfFillable}
+										onChange={setKeepFillable}
+									/>
+									: undefined
+							}
+							{
+								props.options.pdfTemplate === PdfTemplateEnum.HTML ?
+									<>
+										<Toggle
+											label='Include current play state'
+											value={props.options.includePlayState}
+											onChange={setIncludePlayState}
+										/>
+									</>
+									: undefined
+							}
 						</Space>
-						{props.options.pdfTemplate === PdfTemplateEnum.HTML ?
-							<>
-								<HeaderText
-									level={2}>
-									Character Display Options
-								</HeaderText>
-								<Toggle label='Include current play state'
-									value={props.options.includePlayState}
-									onChange={setIncludePlayState} />
-							</>
-							: undefined}
 					</>
 				);
 		}

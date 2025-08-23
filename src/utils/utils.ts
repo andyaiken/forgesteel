@@ -1,9 +1,9 @@
 import * as htmlToImage from 'html-to-image';
+import { Collections } from './collections';
+import { Converter } from 'showdown';
+import { Random } from './random';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { Converter } from 'showdown';
-import { Collections } from './collections';
-import { Random } from './random';
 
 export class Utils {
 	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
@@ -152,12 +152,12 @@ export class Utils {
 	static savePdfPages = (filename: string, pageCanvases: HTMLCanvasElement[]) => {
 		const orientation = 'portrait';
 
-		//@ts-ignore
+		// @ts-expect-error Undocumented
 		const pdf = new jsPDF({
 			orientation: orientation,
 			unit: (72 / 150), // undocumented feature to set ~150dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
 			format: 'letter',
-			hotfixes: ["px_scaling"],
+			hotfixes: [ 'px_scaling' ]
 		});
 		pageCanvases.forEach((canvas, n) => {
 			const page = (n === 0) ? pdf : pdf.addPage('letter', orientation);
@@ -169,5 +169,5 @@ export class Utils {
 
 	static isNullOrEmpty = (str: string | undefined) => {
 		return (str === null || str === undefined || str.trim() === '');
-	}
+	};
 }

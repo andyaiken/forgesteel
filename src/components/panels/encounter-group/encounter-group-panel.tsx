@@ -1,10 +1,11 @@
 import { Alert, Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
 import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-design/icons';
-import { Encounter, EncounterGroup, EncounterSlot } from '../../../models/encounter';
+import { Encounter, EncounterGroup } from '../../../models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '../token/token';
 import { Collections } from '../../../utils/collections';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
+import { EncounterSlot } from '../../../models/encounter-slot';
 import { Format } from '../../../utils/format';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';

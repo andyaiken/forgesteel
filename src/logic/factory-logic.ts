@@ -1,12 +1,12 @@
 import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
 import { Encounter, EncounterGroup, EncounterObjective } from '../models/encounter';
-import { EncounterSlot } from '../models/encounter-slot';
 import { Hero, HeroState } from '../models/hero';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
 import { Monster, MonsterGroup, MonsterRole, MonsterState } from '../models/monster';
 import { MonsterFilter, TerrainFilter } from '../models/filter';
 import { Montage, MontageChallenge, MontageSection } from '../models/montage';
+import { PdfTemplateEnum, SheetDisplayOptions } from '../models/pdf-export-models';
 import { Project, ProjectProgress } from '../models/project';
 import { Terrain, TerrainRole } from '../models/terrain';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -18,6 +18,7 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
+import { EncounterSlot } from '../models/encounter-slot';
 import { FactoryAbilityTypeLogic } from './factory-ability-type-logic';
 import { FactoryDamageModifierLogic } from './factory-damage-modifier-logic';
 import { FactoryDistanceLogic } from './factory-distance-logic';
@@ -52,7 +53,6 @@ import { TerrainCategory } from '../enums/terrain-category';
 import { TerrainRoleType } from '../enums/terrain-role-type';
 import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
-import { PdfTemplateEnum, SheetDisplayOptions } from '../models/pdf-export-models';
 
 export class FactoryLogic {
 	static createElement = (name?: string): Element => {
@@ -980,13 +980,13 @@ export class FactoryLogic {
 			playerGridSize: 50,
 			pdfTemplate: PdfTemplateEnum.HTML,
 			keepPdfFillable: false,
-			includePlayState: false,
+			includePlayState: false
 		};
 	};
 
 	static createSheetDisplayOptions = (options: Options): SheetDisplayOptions => {
 		return {
-			includePlayState: options.includePlayState,
+			includePlayState: options.includePlayState
 		};
 	};
 

@@ -1,5 +1,5 @@
-import { PanelWidth } from '../../enums/panel-width';
 import { Options } from '../../models/options';
+import { PanelWidth } from '../../enums/panel-width';
 import { PdfTemplateEnum } from '../../models/pdf-export-models';
 
 export class OptionsUpdateLogic {

@@ -1,6 +1,6 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot, TerrainSlot } from '../../../../models/encounter';
+import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '../../../../models/encounter';
 import { Monster, MonsterGroup } from '../../../../models/monster';
 import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
 import { MonsterInfo, TerrainInfo } from '../../token/token';
@@ -14,6 +14,7 @@ import { Empty } from '../../../controls/empty/empty';
 import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectiveData } from '../../../../data/encounter-objective-data';
+import { EncounterSlot } from '../../../../models/encounter-slot';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';

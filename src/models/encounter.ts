@@ -1,13 +1,7 @@
 import { Element } from './element';
+import { EncounterSlot } from './encounter-slot';
 import { Hero } from './hero';
 import { Terrain } from './terrain';
-import { EncounterSlot } from './encounter-slot';
-
-export interface EncounterSlotCustomization {
-	addOnIDs: string[];
-	itemIDs: string[];
-	convertToSolo: boolean;
-}
 
 export interface EncounterGroup {
 	id: string;

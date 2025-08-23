@@ -1,38 +1,39 @@
-import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { Button, Divider, Popover, Segmented } from 'antd';
+import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
-import { useParams } from 'react-router';
-import { Characteristic } from '../../../../enums/characteristic';
-import { HeroStatePage } from '../../../../enums/hero-state-page';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { RulesPage } from '../../../../enums/rules-page';
-import { useMediaQuery } from '../../../../hooks/use-media-query';
-import { useNavigation } from '../../../../hooks/use-navigation';
 import { Ability } from '../../../../models/ability';
 import { Ancestry } from '../../../../models/ancestry';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
+import { AppHeader } from '../../../panels/app-header/app-header';
 import { Career } from '../../../../models/career';
-import { HeroClass } from '../../../../models/class';
+import { Characteristic } from '../../../../enums/characteristic';
 import { Complication } from '../../../../models/complication';
 import { Culture } from '../../../../models/culture';
+import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Feature } from '../../../../models/feature';
 import { Follower } from '../../../../models/follower';
 import { Hero } from '../../../../models/hero';
+import { HeroClass } from '../../../../models/class';
+import { HeroPanel } from '../../../panels/hero/hero-panel';
+import { HeroSheetPage } from '../hero-sheet/hero-sheet-page';
+import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
 import { Monster } from '../../../../models/monster';
 import { Options } from '../../../../models/options';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { Title } from '../../../../models/title';
-import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { AppFooter } from '../../../panels/app-footer/app-footer';
-import { AppHeader } from '../../../panels/app-header/app-header';
-import { HeroPanel } from '../../../panels/hero/hero-panel';
 import { OptionsPanel } from '../../../panels/options/options-panel';
-import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
-import { HeroSheetPage } from '../hero-sheet/hero-sheet-page';
-import './hero-view-page.scss';
+import { PanelMode } from '../../../../enums/panel-mode';
+import { RulesPage } from '../../../../enums/rules-page';
 import { SheetOptionsPanel } from '../../../panels/options/sheet-options-panel';
+import { Sourcebook } from '../../../../models/sourcebook';
+import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
+import { Title } from '../../../../models/title';
+import { useMediaQuery } from '../../../../hooks/use-media-query';
+import { useNavigation } from '../../../../hooks/use-navigation';
+import { useParams } from 'react-router';
+
+import './hero-view-page.scss';
 
 interface Props {
 	heroes: Hero[];
@@ -73,7 +74,7 @@ export const HeroViewPage = (props: Props) => {
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
 	);
-	const [exportPopoverOpen, setExportPopoverOpen] = useState(false);
+	const [ exportPopoverOpen, setExportPopoverOpen ] = useState(false);
 
 	try {
 		const exportHero = (key: string) => {
@@ -120,10 +121,11 @@ export const HeroViewPage = (props: Props) => {
 					);
 				case 'sheet':
 					return (
-						<HeroSheetPage 
+						<HeroSheetPage
 							hero={hero}
 							sourcebooks={props.sourcebooks}
-							options={props.options} />
+							options={props.options}
+						/>
 					);
 			}
 		};
@@ -147,12 +149,13 @@ export const HeroViewPage = (props: Props) => {
 							open={exportPopoverOpen}
 							onOpenChange={setExportPopoverOpen}
 							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<div style={{ width: '450px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 									<Segmented
+										block={true}
 										options={[
-											{ value: 'hero', label: 'Hero Sheet' },
-											{ value: 'standard', label: 'Standard Abilities' },
-											{ value: 'sheet', label: 'Character Sheet' }
+											{ value: 'hero', label: 'Hero Data' },
+											{ value: 'sheet', label: 'Hero Sheet' },
+											{ value: 'standard', label: 'Standard Abilities' }
 										]}
 										value={content}
 										onChange={setContent}
@@ -176,9 +179,11 @@ export const HeroViewPage = (props: Props) => {
 									{
 										content === 'sheet' ?
 											<>
-												<SheetOptionsPanel mode='hero'
+												<SheetOptionsPanel
+													mode='hero'
 													options={props.options}
-													setOptions={props.setOptions} />
+													setOptions={props.setOptions}
+												/>
 												<Button onClick={() => exportHero('pdf')}>Export As PDF</Button>
 											</>
 											: null

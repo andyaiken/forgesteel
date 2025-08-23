@@ -1,4 +1,5 @@
-import { Encounter, EncounterGroup, EncounterSlot, EncounterSlotCustomization, TerrainSlot } from '../models/encounter';
+import { Encounter, EncounterGroup, TerrainSlot } from '../models/encounter';
+import { EncounterSlot, EncounterSlotCustomization } from '../models/encounter-slot';
 import { Collections } from '../utils/collections';
 import { EncounterDifficulty } from '../enums/encounter-difficulty';
 import { FactoryLogic } from './factory-logic';

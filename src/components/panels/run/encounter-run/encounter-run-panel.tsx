@@ -1,6 +1,6 @@
 import { Alert, Button, Drawer, Flex, Progress, Space, Tabs } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
+import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { EncounterGroupHero, EncounterGroupMonster, EncounterGroupTerrain } from '../../encounter-group/encounter-group-panel';
 import { FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { AbilityPanel } from '../../elements/ability-panel/ability-panel';
@@ -8,6 +8,7 @@ import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Empty } from '../../../controls/empty/empty';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectivePanel } from '../../elements/encounter-objective/encounter-objective-panel';
+import { EncounterSlot } from '../../../../models/encounter-slot';
 import { EncounterTurnModal } from '../../../modals/encounter-turn/encounter-turn-modal';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../logic/factory-logic';

@@ -422,11 +422,11 @@ export class HeroLogic {
 
 	static getWindedThreshold = (hero: Hero) => {
 		return Math.floor(HeroLogic.getStamina(hero) / 2);
-	}
+	};
 
 	static getDeadThreshold = (hero: Hero) => {
 		return -HeroLogic.getWindedThreshold(hero);
-	}
+	};
 
 	static getRecoveryValue = (hero: Hero) => {
 		let value = Math.floor(HeroLogic.getStamina(hero) / 3);
@@ -677,7 +677,7 @@ export class HeroLogic {
 
 	static getBonusFromModifier = (hero: Hero, attrFn: (kit: Kit) => number): number => {
 		const kits = HeroLogic.getKits(hero);
-		let result = Collections.max(kits.map(attrFn), s => s) || 0;
+		const result = Collections.max(kits.map(attrFn), s => s) || 0;
 
 		return result;
 	};
@@ -878,14 +878,14 @@ export class HeroLogic {
 		const featureIdsSaveOn5: string[] = [
 			'devil-feature-2-5', // Impressive Horns
 			'high-elf-feature-2-4', // Otherworldly Grace
-			'wode-elf-feature-2-4', // Otherworldly Grace
+			'wode-elf-feature-2-4' // Otherworldly Grace
 		];
 		const features = HeroLogic.getFeatures(hero);
 		if (features.find(f => featureIdsSaveOn5.includes(f.feature.id))) {
 			return 5;
 		}
 		return 6;
-	}
+	};
 
 	static getPotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {
 		const value = Math.max(

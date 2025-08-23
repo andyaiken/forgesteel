@@ -1,26 +1,25 @@
+import { ConditionEndType, ConditionType } from '../enums/condition-type';
 import { PDFCheckBox, PDFDocument, PDFTextField, StandardFonts } from 'pdf-lib';
+import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
+import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Characteristic } from '../enums/characteristic';
-import { ConditionEndType, ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
-import { FeatureType } from '../enums/feature-type';
-import { AbilityLogic } from '../logic/ability-logic';
-import { FormatLogic } from '../logic/format-logic';
-import { HeroLogic } from '../logic/hero-logic';
-import { Ability } from '../models/ability';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
+import { FeatureType } from '../enums/feature-type';
+import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
+import { HeroLogic } from '../logic/hero-logic';
 import { Sourcebook } from '../models/sourcebook';
 
 import pdfLandscape from '../assets/character-sheet-landscape.pdf';
 import pdfPortrait from '../assets/character-sheet-portrait.pdf';
 
 export class PDFExport {
-
 	static cleanupOutput = (text: string) => {
 		text = text
 			.replace(/(\|:-+)+\|\n/g, '')

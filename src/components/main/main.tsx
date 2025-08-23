@@ -1,85 +1,86 @@
-import { notification } from 'antd';
-import localforage from 'localforage';
-import { ReactNode, useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router';
-import { SourcebookData } from '../../data/sourcebook-data';
-import { Characteristic } from '../../enums/characteristic';
-import { HeroStatePage } from '../../enums/hero-state-page';
-import { ItemType } from '../../enums/item-type';
-import { RulesPage } from '../../enums/rules-page';
-import { useMediaQuery } from '../../hooks/use-media-query';
-import { useNavigation } from '../../hooks/use-navigation';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { PlaybookLogic } from '../../logic/playbook-logic';
-import { SourcebookLogic } from '../../logic/sourcebook-logic';
-import { HeroUpdateLogic } from '../../logic/update/hero-update-logic';
-import { PlaybookUpdateLogic } from '../../logic/update/playbook-update-logic';
-import { SourcebookUpdateLogic } from '../../logic/update/sourcebook-update-logic';
-import { Ability } from '../../models/ability';
 import { Adventure, AdventurePackage } from '../../models/adventure';
+import { Monster, MonsterGroup } from '../../models/monster';
+import { Navigate, Route, Routes } from 'react-router';
+import { Playbook, PlaybookElementKind } from '../../models/playbook';
+import { ReactNode, useState } from 'react';
+import { Sourcebook, SourcebookElementKind } from '../../models/sourcebook';
+import { Ability } from '../../models/ability';
+import { AbilityModal } from '../modals/ability/ability-modal';
+import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
-import { HeroClass } from '../../models/class';
+import { CharacterSheetFormatter } from '../../utils/character-sheet-formatter';
+import { Characteristic } from '../../enums/characteristic';
+import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { Counter } from '../../models/counter';
 import { Culture } from '../../models/culture';
+import { DirectoryModal } from '../modals/directory/directory-modal';
 import { Domain } from '../../models/domain';
 import { Element } from '../../models/element';
-import { Encounter } from '../../models/encounter';
-import { Feature } from '../../models/feature';
-import { Follower } from '../../models/follower';
-import { Hero } from '../../models/hero';
-import { Imbuement } from '../../models/imbuement';
-import { Item } from '../../models/item';
-import { Kit } from '../../models/kit';
-import { Monster, MonsterGroup } from '../../models/monster';
-import { Montage } from '../../models/montage';
-import { Negotiation } from '../../models/negotiation';
-import { Options } from '../../models/options';
-import { PdfTemplateEnum } from '../../models/pdf-export-models';
-import { Perk } from '../../models/perk';
-import { Playbook, PlaybookElementKind } from '../../models/playbook';
-import { Sourcebook, SourcebookElementKind } from '../../models/sourcebook';
-import { SubClass } from '../../models/subclass';
-import { TacticalMap } from '../../models/tactical-map';
-import { Terrain } from '../../models/terrain';
-import { Title } from '../../models/title';
-import { CharacterSheetFormatter } from '../../utils/character-sheet-formatter';
-import { Collections } from '../../utils/collections';
-import { Format } from '../../utils/format';
-import { PDFExport } from '../../utils/pdf-export';
-import { Utils } from '../../utils/utils';
-import { ErrorBoundary } from '../controls/error-boundary/error-boundary';
-import { AbilityModal } from '../modals/ability/ability-modal';
-import { AboutModal } from '../modals/about/about-modal';
-import { DirectoryModal } from '../modals/directory/directory-modal';
 import { ElementModal } from '../modals/element/element-modal';
+import { Encounter } from '../../models/encounter';
 import { EncounterToolsModal } from '../modals/encounter-tools/encounter-tools-modal';
+import { ErrorBoundary } from '../controls/error-boundary/error-boundary';
+import { FactoryLogic } from '../../logic/factory-logic';
+import { Feature } from '../../models/feature';
 import { FeatureModal } from '../modals/feature/feature-modal';
+import { Follower } from '../../models/follower';
 import { FollowerModal } from '../modals/follower/follower-modal';
-import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
-import { MonsterModal } from '../modals/monster/monster-modal';
-import { PartyModal } from '../modals/party/party-modal';
-import { PlayerViewModal } from '../modals/player-view/player-view-modal';
-import { ReferenceModal } from '../modals/reference/reference-modal';
-import { RollModal } from '../modals/roll/roll-modal';
-import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
-import { TerrainModal } from '../modals/terrain/terrain-modal';
+import { Format } from '../../utils/format';
+import { Hero } from '../../models/hero';
+import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
+import { HeroSheetPreviewPage } from '../pages/heroes/hero-sheet/hero-sheet-preview-page';
+import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
+import { HeroStatePage } from '../../enums/hero-state-page';
+import { HeroUpdateLogic } from '../../logic/update/hero-update-logic';
 import { HeroViewPage } from '../pages/heroes/hero-view/hero-view-page';
+import { Imbuement } from '../../models/imbuement';
+import { Item } from '../../models/item';
+import { ItemType } from '../../enums/item-type';
+import { Kit } from '../../models/kit';
 import { LibraryEditPage } from '../pages/library/library-edit/library-edit-page';
 import { LibraryListPage } from '../pages/library/library-list/library-list-page';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
+import { MainLayout } from './main-layout';
+import { MonsterModal } from '../modals/monster/monster-modal';
+import { Montage } from '../../models/montage';
+import { Negotiation } from '../../models/negotiation';
+import { Options } from '../../models/options';
+import { PDFExport } from '../../utils/pdf-export';
+import { PartyModal } from '../modals/party/party-modal';
+import { PdfTemplateEnum } from '../../models/pdf-export-models';
+import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-page';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
+import { PlaybookLogic } from '../../logic/playbook-logic';
+import { PlaybookUpdateLogic } from '../../logic/update/playbook-update-logic';
 import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
+import { PlayerViewModal } from '../modals/player-view/player-view-modal';
+import { ReferenceModal } from '../modals/reference/reference-modal';
+import { RollModal } from '../modals/roll/roll-modal';
+import { RulesPage } from '../../enums/rules-page';
 import { SessionDirectorPage } from '../pages/session/director/session-director-page';
 import { SessionPlayerPage } from '../pages/session/player/session-player-page';
+import { SourcebookData } from '../../data/sourcebook-data';
+import { SourcebookLogic } from '../../logic/sourcebook-logic';
+import { SourcebookUpdateLogic } from '../../logic/update/sourcebook-update-logic';
+import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
+import { SubClass } from '../../models/subclass';
+import { TacticalMap } from '../../models/tactical-map';
+import { Terrain } from '../../models/terrain';
+import { TerrainModal } from '../modals/terrain/terrain-modal';
+import { Title } from '../../models/title';
+import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
-import { MainLayout } from './main-layout';
+import localforage from 'localforage';
+import { notification } from 'antd';
+import { useMediaQuery } from '../../hooks/use-media-query';
+import { useNavigation } from '../../hooks/use-navigation';
+
 import './main.scss';
-import { HeroSheetPreviewPage } from '../pages/heroes/hero-sheet/hero-sheet-preview-page';
 
 interface Props {
 	heroes: Hero[];
@@ -1639,12 +1640,14 @@ export const Main = (props: Props) => {
 							/>
 							<Route
 								path='sheet/:heroID'
-								element={<HeroSheetPreviewPage
-									heroes={heroes}
-									sourcebooks={[SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks]}
-									options={options}
-									setOptions={persistOptions}
-								/>}
+								element={
+									<HeroSheetPreviewPage
+										heroes={heroes}
+										sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+										options={options}
+										setOptions={persistOptions}
+									/>
+								}
 							/>
 						</Route>
 						<Route path='library'>

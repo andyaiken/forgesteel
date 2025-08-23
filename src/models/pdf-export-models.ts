@@ -1,9 +1,9 @@
 export enum PdfTemplateEnum {
-    HTML = 'HTML',
-    Portrait = 'Portrait',
-    Landscape = 'Landscape',
+	HTML = 'HTML',
+	Portrait = 'Portrait',
+	Landscape = 'Landscape'
 }
 
 export interface SheetDisplayOptions {
-    includePlayState: boolean;
+	includePlayState: boolean;
 }

@@ -6,6 +6,7 @@ import { Hero } from './hero';
 import { Item } from './item';
 import { Perk } from './perk';
 import { Title } from './title';
+import { Culture } from './culture';
 
 export interface CharacterSheet {
 	hero: Hero,
@@ -111,12 +112,8 @@ export interface CharacterSheet {
 	skills?: string[];
 
 	// Culture
-	cultureEnvironment?: string;
-	cultureEnvironmentFeatures?: Feature[];
-	cultureOrganization?: string;
-	cultureOrganizationFeatures?: Feature[];
-	cultureUpbringing?: string;
-	cultureUpbringingFeatures?: Feature[];
+	culture?: Culture;
+	cultureFeatures?: Feature[];
 
 	languages?: string[];
 

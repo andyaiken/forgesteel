@@ -1,23 +1,24 @@
-import { AbilitySheet, CharacterSheet } from '../models/character-sheet';
-import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
-import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
-import { CharacterSheetFormatter } from './character-sheet-formatter';
 import { Characteristic } from '../enums/characteristic';
-import { Collections } from './collections';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
-import { Feature } from '../models/feature';
-import { FeatureLogic } from '../logic/feature-logic';
 import { FeatureType } from '../enums/feature-type';
-import { Format } from './format';
+import { AbilityLogic } from '../logic/ability-logic';
+import { FactoryFeatureLogic } from '../logic/factory-feature-logic';
+import { FeatureLogic } from '../logic/feature-logic';
 import { FormatLogic } from '../logic/format-logic';
-import { Hero } from '../models/hero';
 import { HeroLogic } from '../logic/hero-logic';
-import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from '../logic/sourcebook-logic';
+import { Ability } from '../models/ability';
+import { AbilitySheet, CharacterSheet } from '../models/character-sheet';
+import { Feature } from '../models/feature';
+import { Hero } from '../models/hero';
+import { Sourcebook } from '../models/sourcebook';
+import { CharacterSheetFormatter } from './character-sheet-formatter';
+import { Collections } from './collections';
+import { Format } from './format';
 
 export class CharacterSheetBuilder {
 	static buildSheetForHero = (hero: Hero, sourcebooks: Sourcebook[]) => {
@@ -229,11 +230,13 @@ export class CharacterSheetBuilder {
 
 		if (hero.complication) {
 			sheet.complicationName = hero.complication.name;
-			const benefits = hero.complication.features.filter(f => f.name.includes('Benefit'));
+			const benefits = hero.complication.features.filter(f => !f.name.includes('Drawback'));
 			sheet.complicationBenefits = benefits;
+			coveredFeatureIds = coveredFeatureIds.concat(benefits.map(f => f.id));
 
 			const drawbacks = hero.complication.features.filter(f => f.name.includes('Drawback'));
 			sheet.complicationDrawbacks = drawbacks;
+			coveredFeatureIds = coveredFeatureIds.concat(drawbacks.map(f => f.id));
 		}
 
 		const skillsMap = new Map<string, string[]>();
@@ -252,18 +255,16 @@ export class CharacterSheetBuilder {
 
 		// Culture
 		if (hero.culture) {
-			if (hero.culture.environment) {
-				sheet.cultureEnvironment = hero.culture.environment.name;
-				sheet.cultureEnvironmentFeatures = [ hero.culture.environment ];
-			}
-			if (hero.culture.organization) {
-				sheet.cultureOrganization = hero.culture.organization.name;
-				sheet.cultureOrganizationFeatures = [ hero.culture.organization ];
-			}
-			if (hero.culture.upbringing) {
-				sheet.cultureUpbringing = hero.culture.upbringing.name;
-				sheet.cultureUpbringingFeatures = [ hero.culture.upbringing ];
-			}
+			let cultureFeatures: Feature[] = [];
+			cultureFeatures = cultureFeatures.concat(allFeatures.filter(f => f.source.includes('Culture')).map(f => f.feature))
+				.concat(hero.culture.languages.map(lang => FactoryFeatureLogic.createLanguage({
+					id: `culture-${hero.culture?.name}-language-${lang}`,
+					language: lang,
+				})));
+			sheet.culture = hero.culture;
+			sheet.cultureFeatures = cultureFeatures;
+
+			coveredFeatureIds = coveredFeatureIds.concat(cultureFeatures.map(f => f.id));
 		}
 
 		sheet.languages = HeroLogic.getLanguages(hero, sourcebooks).map(l => l.name);

@@ -342,11 +342,10 @@ export const MonsterGroupEditPanel = (props: Props) => {
 							: null
 					}
 					<Flex gap={10}>
-						<Button icon={<PlusOutlined />} onClick={addMonster}>
+						<Button block={true} icon={<PlusOutlined />} onClick={addMonster}>
 							Add a new monster
 						</Button>
 						<Upload
-							style={{ width: '100%' }}
 							accept='.drawsteel-monster,.ds-monster'
 							showUploadList={false}
 							beforeUpload={file => {

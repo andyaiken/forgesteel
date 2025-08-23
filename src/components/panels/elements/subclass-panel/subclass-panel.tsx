@@ -21,7 +21,7 @@ interface Props {
 
 export const SubclassPanel = (props: Props) => {
 	try {
-		if (props.mode === PanelMode.Compact) {
+		if (props.mode !== PanelMode.Full) {
 			return (
 				<div className='subclass-panel compact'>
 					<HeaderText>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>

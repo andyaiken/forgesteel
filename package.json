@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "10.126.0",
+	"version": "10.127.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -18,7 +18,7 @@
 		"@types/showdown": "^2.0.6",
 		"antd": "^5.27.1",
 		"gh-pages": "^6.3.0",
-		"html-to-image": "1.11.13",
+		"html-to-image": "1.11.11",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^3.0.1",
 		"localforage": "^1.10.0",

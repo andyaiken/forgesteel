@@ -12,9 +12,9 @@ import { Culture } from '../../../../models/culture';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Domain } from '../../../../models/domain';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { Expander } from '../../../controls/expander/expander';
 import { Feature } from '../../../../models/feature';
 import { Follower } from '../../../../models/follower';
-import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
@@ -71,7 +71,6 @@ export const HeroViewPage = (props: Props) => {
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
 	const [ view, setView ] = useState<'modern' | 'classic' | 'abilities'>('modern');
-	const [ exportMode, setExportMode ] = useState<'pdf' | 'data'>('pdf');
 	const [ pdfOrientation, setPdfOrientation ] = useState<'portrait' | 'landscape'>('portrait');
 	const [ pdfFormFillable, setPdfFormFillable ] = useState<boolean>(false);
 	const hero = useMemo(
@@ -152,6 +151,52 @@ export const HeroViewPage = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={(
+								<div style={{ width: '250px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Button onClick={exportPDF}>Export as PDF</Button>
+									<Button onClick={() => props.exportHero(hero, 'json')}>Export as Data</Button>
+									<Divider />
+									<Expander title='PDF Options'>
+										<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+											<Segmented
+												disabled={view !== 'modern'}
+												block={true}
+												options={[
+													{ value: 'portrait', label: 'Portrait' },
+													{ value: 'landscape', label: 'Landscape' }
+												]}
+												value={pdfOrientation}
+												onChange={setPdfOrientation}
+											/>
+											<Toggle
+												disabled={view !== 'modern'}
+												label='Form fillable'
+												value={pdfFormFillable}
+												onChange={setPdfFormFillable}
+											/>
+										</Space>
+									</Expander>
+								</div>
+							)}
+						>
+							<Button icon={<UploadOutlined />}>
+								Export
+								<DownOutlined />
+							</Button>
+						</Popover>
+						<DangerButton
+							mode='block'
+							onConfirm={() => props.deleteHero(hero)}
+						/>
+						<div className='divider' />
+						<Button
+							icon={<ToolOutlined />}
+							onClick={() => props.showHeroState ? props.showHeroState(hero, HeroStatePage.Hero) : null}
+						>
+							Manage
+						</Button>
+						<Popover
+							trigger='click'
+							content={(
 								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 									<Segmented
 										block={true}
@@ -172,70 +217,6 @@ export const HeroViewPage = (props: Props) => {
 								<DownOutlined />
 							</Button>
 						</Popover>
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ width: '250px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Segmented
-										block={true}
-										options={[
-											{ value: 'pdf', label: 'Export as PDF' },
-											{ value: 'data', label: 'Export as data' }
-										]}
-										value={exportMode}
-										onChange={setExportMode}
-									/>
-									{
-										exportMode === 'pdf' ?
-											<>
-												<HeaderText>PDF Options</HeaderText>
-												<Space direction='vertical'>
-													<Segmented
-														disabled={view !== 'modern'}
-														block={true}
-														options={[
-															{ value: 'portrait', label: 'Portrait' },
-															{ value: 'landscape', label: 'Landscape' }
-														]}
-														value={pdfOrientation}
-														onChange={setPdfOrientation}
-													/>
-													<Toggle
-														disabled={view !== 'modern'}
-														label='Form fillable'
-														value={pdfFormFillable}
-														onChange={setPdfFormFillable}
-													/>
-												</Space>
-												<Divider />
-												<Button onClick={exportPDF}>Export</Button>
-											</>
-											: null
-									}
-									{
-										exportMode === 'data' ?
-											<Button onClick={() => props.exportHero(hero, 'json')}>Export</Button>
-											: null
-									}
-								</div>
-							)}
-						>
-							<Button icon={<UploadOutlined />}>
-								Export
-								<DownOutlined />
-							</Button>
-						</Popover>
-						<DangerButton
-							mode='block'
-							onConfirm={() => props.deleteHero(hero)}
-						/>
-						<div className='divider' />
-						<Button
-							icon={<ToolOutlined />}
-							onClick={() => props.showHeroState ? props.showHeroState(hero, HeroStatePage.Hero) : null}
-						>
-							Manage
-						</Button>
 						<Popover
 							trigger='click'
 							content={<OptionsPanel mode='hero' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}

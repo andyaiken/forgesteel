@@ -79,6 +79,7 @@ import { SessionPlayerPage } from '../pages/session/player/session-player-page';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import { MainLayout } from './main-layout';
 import './main.scss';
+import { HeroSheetPreviewPage } from '../pages/heroes/hero-sheet/hero-sheet-preview-page';
 
 interface Props {
 	heroes: Hero[];
@@ -1635,6 +1636,15 @@ export const Main = (props: Props) => {
 										}}
 									/>
 								}
+							/>
+							<Route
+								path='sheet/:heroID'
+								element={<HeroSheetPreviewPage
+									heroes={heroes}
+									sourcebooks={[SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks]}
+									options={options}
+									setOptions={persistOptions}
+								/>}
 							/>
 						</Route>
 						<Route path='library'>

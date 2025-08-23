@@ -55,19 +55,19 @@ export class Utils {
 		}
 	};
 
-	static export = (elementIDs: string[], name: string, obj: unknown, ext: string, format: 'image' | 'pdf' | 'json', overrideBgColors: boolean = true) => {
+	static export = (elementIDs: string[], name: string, obj: unknown, ext: string, format: 'image' | 'pdf' | 'json') => {
 		switch (format) {
 			case 'json':
 				Utils.saveFile(obj, name, ext);
 				break;
 			case 'image':
 			case 'pdf':
-				Utils.takeScreenshot(elementIDs, name, format, overrideBgColors);
+				Utils.takeScreenshot(elementIDs, name, format);
 				break;
 		}
 	};
 
-	static takeScreenshot = (elementIDs: string[], name: string, format: 'image' | 'pdf', overrideBgColors: boolean = true) => {
+	static takeScreenshot = (elementIDs: string[], name: string, format: 'image' | 'pdf') => {
 		const elements = elementIDs
 			.map(id => document.getElementById(id))
 			.filter(element => !!element);
@@ -77,32 +77,26 @@ export class Utils {
 		}
 
 		const originalBackgroundColors: { [id: string]: string } = {};
-		if (overrideBgColors) {
-			elements.forEach(element => {
-				originalBackgroundColors[element.id] = element.style.backgroundColor;
-				if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-					element.style.backgroundColor = 'rgb(55, 55, 55)';
-				}
-			});
-		}
+		elements.forEach(element => {
+			originalBackgroundColors[element.id] = element.style.backgroundColor;
+			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				element.style.backgroundColor = 'rgb(55, 55, 55)';
+			}
+		});
 
 		switch (format) {
 			case 'image':
 				html2canvas(elements[0])
 					.then(canvas => {
 						Utils.saveImage(`${name}.png`, canvas);
-						if (overrideBgColors) {
-							elements[0].style.backgroundColor = originalBackgroundColors[elements[0].id];
-						}
+						elements[0].style.backgroundColor = originalBackgroundColors[elements[0].id];
 					});
 				break;
 			case 'pdf':
 				Promise.all(elements.map(element => htmlToImage.toCanvas(element)))
 					.then(canvases => {
 						Utils.savePDF(`${name}.pdf`, canvases);
-						if (overrideBgColors) {
-							elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
-						}
+						elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
 					});
 				break;
 		}
@@ -161,7 +155,7 @@ export class Utils {
 		//@ts-ignore
 		const pdf = new jsPDF({
 			orientation: orientation,
-			unit: (72 / 150), // undocumented feature, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
+			unit: (72 / 150), // undocumented feature to set ~150dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
 			format: 'letter',
 			hotfixes: ["px_scaling"],
 		});

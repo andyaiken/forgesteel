@@ -490,8 +490,8 @@ export class PDFExport {
 		{
 			autoResizingFields.forEach(f => {
 				const field = form.getField(f) as PDFTextField;
-					field.setFontSize(0);
-					field.defaultUpdateAppearances(font);
+				field.setFontSize(0);
+				field.defaultUpdateAppearances(font);
 			});
 		}
 

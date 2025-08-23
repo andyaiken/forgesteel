@@ -100,20 +100,4 @@ export class OptionsUpdateLogic {
 			options.includePlayState = false;
 		}
 	};
-
-	// static updatePdfExportOptions = (options: PdfExportOptions) => {
-	// 	if (options.template === undefined) {
-	// 		options.template = PdfTemplateEnum.HTML;
-	// 	}
-
-	// 	if (options.keepFillable === undefined) {
-	// 		options.keepFillable = false;
-	// 	}
-	// };
-
-	// static updateSheetDisplayOptions = (options: SheetDisplayOptions) => {
-	// 	if (options.includePlayState === undefined) {
-	// 		options.includePlayState = false;
-	// 	}
-	// };
 }

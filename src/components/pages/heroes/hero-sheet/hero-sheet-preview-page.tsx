@@ -1,4 +1,3 @@
-import * as htmlToImage from 'html-to-image';
 import { useMemo, useState } from 'react';
 import { Hero } from '../../../../models/hero';
 import { HeroSheetPage } from './hero-sheet-page';
@@ -45,8 +44,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					break;
 				case 'canvas':
 					element.className = '';
-					htmlToImage
-						.toCanvas(element)
+					Utils.elementToCanvas(element)
 						.then(function (canvas) {
 							canvasElem.replaceChildren(canvas);
 							canvasElem.className = '';

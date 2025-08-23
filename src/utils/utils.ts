@@ -93,7 +93,7 @@ export class Utils {
 					});
 				break;
 			case 'pdf':
-				Promise.all(elements.map(element => htmlToImage.toCanvas(element)))
+				Promise.all(elements.map(this.elementToCanvas))
 					.then(canvases => {
 						Utils.savePDF(`${name}.pdf`, canvases);
 						elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
@@ -102,7 +102,23 @@ export class Utils {
 		}
 	};
 
-	static elementsToPdf(elementIDs: string[], filename: string) {
+	static elementToCanvas = (element: HTMLElement): Promise<HTMLCanvasElement> => {
+		const width = element.clientWidth;
+		const height = element.clientHeight;
+		const dpr = window.devicePixelRatio;
+		// It looks like there is an issue with the library scaling properly with the devicePixelRatio in 
+		// some cases. I suspect canvas also suffers from this:
+		// https://github.com/bubkoo/html-to-image/issues/553
+
+		return htmlToImage.toCanvas(element, {
+			width: width,
+			height: height,
+			canvasWidth: width / dpr,
+			canvasHeight: height / dpr,
+		});
+	};
+
+	static elementsToPdf = (elementIDs: string[], filename: string) => {
 		const elements = elementIDs
 			.map(id => document.getElementById(id))
 			.filter(element => !!element);
@@ -111,7 +127,7 @@ export class Utils {
 			return;
 		}
 
-		Promise.all(elements.map(element => htmlToImage.toCanvas(element)))
+		Promise.all(elements.map(this.elementToCanvas))
 			.then(canvases => {
 				Utils.savePdfPages(`${filename}.pdf`, canvases);
 			});

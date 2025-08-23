@@ -2,13 +2,13 @@ import { ConditionEndType, ConditionType } from '../../../../enums/condition-typ
 import { CharacterSheet } from '../../../../models/character-sheet';
 import { Condition } from '../../../../models/condition';
 import { LabeledBooleanField } from '../components/labeled-field';
-import { SheetDisplayOptions } from '../../../../models/pdf-export-models';
+import { Options } from '../../../../models/options';
 
 import './conditions-card.scss';
 
 interface Props {
 	character: CharacterSheet;
-	displayOptions: SheetDisplayOptions;
+	options: Options;
 }
 
 export const ConditionsCard = (props: Props) => {
@@ -25,7 +25,7 @@ export const ConditionsCard = (props: Props) => {
 	];
 
 	const character = props.character;
-	const showState = props.displayOptions.includePlayState;
+	const showState = props.options.includePlayState;
 
 	const otherConditions: Condition[] = character.conditions?.filter(c => !conditionTypes.includes(c.type)) || [];
 	if (!otherConditions.length) {

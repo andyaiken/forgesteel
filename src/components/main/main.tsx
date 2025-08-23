@@ -51,7 +51,6 @@ import { Negotiation } from '../../models/negotiation';
 import { Options } from '../../models/options';
 import { PDFExport } from '../../utils/pdf-export';
 import { PartyModal } from '../modals/party/party-modal';
-import { PdfTemplateEnum } from '../../models/pdf-export-models';
 import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-page';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
@@ -282,8 +281,8 @@ export const Main = (props: Props) => {
 		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const exportHeroPdf = (hero: Hero, sourceBooks: Sourcebook[]) => {
-		if (options.pdfTemplate === PdfTemplateEnum.HTML) {
+	const exportHeroPdf = (hero: Hero, mode: 'portrait' | 'landscape' | 'html', formFillable: boolean) => {
+		if (mode === 'html') {
 			const pageIds: string[] = [];
 			let p = 1;
 			while (document.getElementById(CharacterSheetFormatter.getPageId(hero.id, p)) !== null) {
@@ -293,13 +292,12 @@ export const Main = (props: Props) => {
 
 			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero');
 		} else {
-			const format = options.pdfTemplate === PdfTemplateEnum.Portrait ? 'portrait' : 'landscape';
-			PDFExport.startExport(hero, sourceBooks, format, !options.keepPdfFillable);
+			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], mode, !formFillable);
 		}
 	};
 
-	const exportStandardAbilities = (format: 'image' | 'pdf') => {
-		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', format);
+	const exportStandardAbilities = () => {
+		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', 'pdf');
 	};
 
 	// #endregion

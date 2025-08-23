@@ -54,6 +54,12 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setIncludePlayState = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.includePlayState = value;
+		props.setOptions(copy);
+	};
+
 	const setAbilityWidth = (value: PanelWidth) => {
 		const copy = Utils.copy(props.options);
 		copy.abilityWidth = value;
@@ -206,6 +212,7 @@ export const OptionsPanel = (props: Props) => {
 						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 						<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
+						<Toggle label='Show play state in PDF' value={props.options.includePlayState} onChange={setIncludePlayState} />
 						<Divider>View</Divider>
 						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
 						<Toggle label='Compact' value={props.options.compactView} onChange={setCompactView} />

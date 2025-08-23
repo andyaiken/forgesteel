@@ -1,6 +1,6 @@
 import { CharacterSheet } from '../../../../models/character-sheet';
 import { LabeledTextField } from '../components/labeled-field';
-import { SheetDisplayOptions } from '../../../../models/pdf-export-models';
+import { Options } from '../../../../models/options';
 
 import './hero-header-card.scss';
 
@@ -8,12 +8,12 @@ import pbds from '../../../../assets/powered-by-draw-steel.png';
 
 interface Props {
 	character: CharacterSheet;
-	displayOptions: SheetDisplayOptions;
+	options: Options;
 }
 
 export const HeroHeaderCard = (props: Props) => {
 	const character = props.character;
-	const showState = props.displayOptions.includePlayState;
+	const showState = props.options.includePlayState;
 
 	const currentVictories = (showState && character.currentVictories) || 0;
 	return (

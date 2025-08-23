@@ -1,17 +1,17 @@
 import { LabeledBooleanField, LabeledTextField } from '../components/labeled-field';
 import { CharacterSheet } from '../../../../models/character-sheet';
-import { SheetDisplayOptions } from '../../../../models/pdf-export-models';
+import { Options } from '../../../../models/options';
 
 import './stats-resources-card.scss';
 
 interface Props {
 	character: CharacterSheet;
-	displayOptions: SheetDisplayOptions;
+	options: Options;
 }
 
 export const StatsResourcesCard = (props: Props) => {
 	const character = props.character;
-	const showState = props.displayOptions.includePlayState;
+	const showState = props.options.includePlayState;
 
 	return (
 		<div className='stats-resources card'>

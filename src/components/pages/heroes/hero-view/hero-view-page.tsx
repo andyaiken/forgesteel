@@ -1,4 +1,4 @@
-import { Button, Divider, Popover, Segmented } from 'antd';
+import { Button, Divider, Popover, Segmented, Space, Tag } from 'antd';
 import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '../../../../models/ability';
@@ -14,6 +14,7 @@ import { Domain } from '../../../../models/domain';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Feature } from '../../../../models/feature';
 import { Follower } from '../../../../models/follower';
+import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { HeroPanel } from '../../../panels/hero/hero-panel';
@@ -25,10 +26,10 @@ import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { RulesPage } from '../../../../enums/rules-page';
-import { SheetOptionsPanel } from '../../../panels/options/sheet-options-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
 import { Title } from '../../../../models/title';
+import { Toggle } from '../../../controls/toggle/toggle';
 import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -44,9 +45,9 @@ interface Props {
 	showRoll: () => void;
 	showReference: (hero: Hero, page?: RulesPage) => void;
 	setOptions: (options: Options) => void;
-	exportHero: (hero: Hero, format: 'image' | 'pdf' | 'json') => void;
-	exportPdf: (hero: Hero, sourcebooks: Sourcebook[]) => void;
-	exportStandardAbilities: (format: 'image' | 'pdf') => void;
+	exportHero: (hero: Hero, format: 'image' | 'json') => void;
+	exportPdf: (hero: Hero, mode: 'portrait' | 'landscape' | 'html', formFillable: boolean) => void;
+	exportStandardAbilities: () => void;
 	copyHero: (hero: Hero) => void;
 	deleteHero: (hero: Hero) => void;
 	showAncestry: (ancestry: Ancestry) => void;
@@ -69,29 +70,33 @@ export const HeroViewPage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
-	const [ content, setContent ] = useState<'hero' | 'standard' | 'sheet'>('hero');
+	const [ view, setView ] = useState<'modern' | 'classic' | 'abilities'>('modern');
+	const [ exportMode, setExportMode ] = useState<'pdf' | 'data'>('pdf');
+	const [ pdfOrientation, setPdfOrientation ] = useState<'portrait' | 'landscape'>('portrait');
+	const [ pdfFormFillable, setPdfFormFillable ] = useState<boolean>(false);
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
 	);
-	const [ exportPopoverOpen, setExportPopoverOpen ] = useState(false);
 
 	try {
-		const exportHero = (key: string) => {
-			switch (key) {
-				case 'pdf':
-					setExportPopoverOpen(false);
-					props.exportPdf(hero, props.sourcebooks);
+		const exportPDF = () => {
+			switch (view) {
+				case 'modern':
+					props.exportPdf(hero, pdfOrientation, pdfFormFillable);
 					break;
-				default:
-					props.exportHero(hero, key as 'image' | 'json');
+				case 'classic':
+					props.exportPdf(hero, 'html', pdfFormFillable);
+					break;
+				case 'abilities':
+					props.exportStandardAbilities();
 					break;
 			}
 		};
 
 		const getContent = () => {
-			switch (content) {
-				case 'hero':
+			switch (view) {
+				case 'modern':
 					return (
 						<HeroPanel
 							hero={hero}
@@ -115,17 +120,17 @@ export const HeroViewPage = (props: Props) => {
 							onshowReference={page => props.showReference(hero, page)}
 						/>
 					);
-				case 'standard':
-					return (
-						<StandardAbilitiesPanel hero={hero} />
-					);
-				case 'sheet':
+				case 'classic':
 					return (
 						<HeroSheetPage
 							hero={hero}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
 						/>
+					);
+				case 'abilities':
+					return (
+						<StandardAbilitiesPanel hero={hero} />
 					);
 			}
 		};
@@ -146,46 +151,70 @@ export const HeroViewPage = (props: Props) => {
 						</Button>
 						<Popover
 							trigger='click'
-							open={exportPopoverOpen}
-							onOpenChange={setExportPopoverOpen}
 							content={(
-								<div style={{ width: '450px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Segmented
+										block={true}
+										vertical={true}
+										options={[
+											{ value: 'modern', label: <div className='ds-text'>Modern Sheet</div> },
+											{ value: 'classic', label: <div className='ds-text'><Tag color='red'>BETA</Tag>Classic Sheet</div> },
+											{ value: 'abilities', label: <div className='ds-text'>Standard Abilities</div> }
+										]}
+										value={view}
+										onChange={setView}
+									/>
+								</div>
+							)}
+						>
+							<Button>
+								View
+								<DownOutlined />
+							</Button>
+						</Popover>
+						<Popover
+							trigger='click'
+							content={(
+								<div style={{ width: '250px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 									<Segmented
 										block={true}
 										options={[
-											{ value: 'hero', label: 'Hero Data' },
-											{ value: 'sheet', label: 'Hero Sheet' },
-											{ value: 'standard', label: 'Standard Abilities' }
+											{ value: 'pdf', label: 'Export as PDF' },
+											{ value: 'data', label: 'Export as data' }
 										]}
-										value={content}
-										onChange={setContent}
+										value={exportMode}
+										onChange={setExportMode}
 									/>
-									<Divider />
 									{
-										content === 'hero' ?
+										exportMode === 'pdf' ?
 											<>
-												<Button onClick={() => exportHero('json')}>Export As Data</Button>
+												<HeaderText>PDF Options</HeaderText>
+												<Space direction='vertical'>
+													<Segmented
+														disabled={view !== 'modern'}
+														block={true}
+														options={[
+															{ value: 'portrait', label: 'Portrait' },
+															{ value: 'landscape', label: 'Landscape' }
+														]}
+														value={pdfOrientation}
+														onChange={setPdfOrientation}
+													/>
+													<Toggle
+														disabled={view !== 'modern'}
+														label='Form fillable'
+														value={pdfFormFillable}
+														onChange={setPdfFormFillable}
+													/>
+												</Space>
+												<Divider />
+												<Button onClick={exportPDF}>Export</Button>
 											</>
 											: null
 									}
 									{
-										content === 'standard' ?
-											<>
-												<Button onClick={() => props.exportStandardAbilities('image')}>Export As Image</Button>
-												<Button onClick={() => props.exportStandardAbilities('pdf')}>Export As PDF</Button>
-											</>
-											: null
-									}
-									{
-										content === 'sheet' ?
-											<>
-												<SheetOptionsPanel
-													mode='hero'
-													options={props.options}
-													setOptions={props.setOptions}
-												/>
-												<Button onClick={() => exportHero('pdf')}>Export As PDF</Button>
-											</>
+										exportMode === 'data' ?
+											<Button onClick={() => props.exportHero(hero, 'json')}>Export</Button>
 											: null
 									}
 								</div>

@@ -11,7 +11,6 @@ import { ComplicationCard } from '../../../panels/hero-sheet/complication-card/c
 import { ConditionsCard } from '../../../panels/hero-sheet/conditions-card/conditions-card';
 import { CultureCard } from '../../../panels/hero-sheet/culture-card/culture-card';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FactoryLogic } from '../../../../logic/factory-logic';
 import { FeatureReferenceCard } from '../../../panels/hero-sheet/reference/feature-reference-card';
 import { Hero } from '../../../../models/hero';
 import { HeroHeaderCard } from '../../../panels/hero-sheet/hero-header-card/hero-header-card';
@@ -37,10 +36,6 @@ interface Props {
 
 export const HeroSheetPage = (props: Props) => {
 	const hero = useMemo(() => props.hero, [ props.hero ]);
-	const displayOptions = useMemo(
-		() => FactoryLogic.createSheetDisplayOptions(props.options),
-		[ props.options ]
-	);
 
 	const character = useMemo(
 		() => CharacterSheetBuilder.buildSheetForHero(hero, props.sourcebooks),
@@ -164,11 +159,11 @@ export const HeroSheetPage = (props: Props) => {
 						<div className='page page-1' id={addPageId(hero)}>
 							<HeroHeaderCard
 								character={character}
-								displayOptions={displayOptions}
+								options={props.options}
 							/>
 							<StatsResourcesCard
 								character={character}
-								displayOptions={displayOptions}
+								options={props.options}
 							/>
 							<div className='modifiers-statuses'>
 								<ModifiersCard
@@ -179,7 +174,7 @@ export const HeroSheetPage = (props: Props) => {
 								/>
 								<ConditionsCard
 									character={character}
-									displayOptions={displayOptions}
+									options={props.options}
 								/>
 								<TurnReferenceCard
 									character={character}

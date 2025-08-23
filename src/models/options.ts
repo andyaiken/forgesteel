@@ -1,5 +1,4 @@
 import { PanelWidth } from '../enums/panel-width';
-import { PdfTemplateEnum } from './pdf-export-models';
 
 export interface Options {
 	// Hero
@@ -9,6 +8,7 @@ export interface Options {
 	showStandardAbilities: boolean;
 	dimUnavailableAbilities: boolean;
 	showSources: boolean;
+	includePlayState: boolean;
 	compactView: boolean;
 	abilityWidth: PanelWidth;
 	// Library
@@ -32,9 +32,4 @@ export interface Options {
 	// Tactical Map
 	gridSize: number;
 	playerGridSize: number;
-	// PDF Export
-	pdfTemplate: PdfTemplateEnum;
-	keepPdfFillable: boolean;
-	// Character Sheet Display
-	includePlayState: boolean;
 }

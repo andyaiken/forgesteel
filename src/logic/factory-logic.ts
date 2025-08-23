@@ -6,7 +6,6 @@ import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../mode
 import { Monster, MonsterGroup, MonsterRole, MonsterState } from '../models/monster';
 import { MonsterFilter, TerrainFilter } from '../models/filter';
 import { Montage, MontageChallenge, MontageSection } from '../models/montage';
-import { PdfTemplateEnum, SheetDisplayOptions } from '../models/pdf-export-models';
 import { Project, ProjectProgress } from '../models/project';
 import { Terrain, TerrainRole } from '../models/terrain';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -960,6 +959,7 @@ export class FactoryLogic {
 			showStandardAbilities: true,
 			dimUnavailableAbilities: true,
 			showSources: true,
+			includePlayState: true,
 			abilityWidth: PanelWidth.Medium,
 			compactView: false,
 			showMonstersInGroups: true,
@@ -977,16 +977,7 @@ export class FactoryLogic {
 			heroVictories: 0,
 			showDefeatedCombatants: false,
 			gridSize: 50,
-			playerGridSize: 50,
-			pdfTemplate: PdfTemplateEnum.HTML,
-			keepPdfFillable: false,
-			includePlayState: false
-		};
-	};
-
-	static createSheetDisplayOptions = (options: Options): SheetDisplayOptions => {
-		return {
-			includePlayState: options.includePlayState
+			playerGridSize: 50
 		};
 	};
 

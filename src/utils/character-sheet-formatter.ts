@@ -1,4 +1,6 @@
 import { AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
+
+import { AbilitySheet } from '../models/character-sheet';
 import { Characteristic } from '../enums/characteristic';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
@@ -72,7 +74,8 @@ export class CharacterSheetFormatter {
 
 	static featureTypeOrder: FeatureType[] = [
 		FeatureType.Text,
-		FeatureType.Perk,
+		FeatureType.Package,
+		FeatureType.PackageContent,
 		FeatureType.Ability,
 		FeatureType.ClassAbility,
 		FeatureType.AbilityDistance,
@@ -115,6 +118,22 @@ export class CharacterSheetFormatter {
 		} else {
 			return a.localeCompare(b);
 		}
+	};
+
+	static sortAbilitiesByLength = (a: AbilitySheet, b: AbilitySheet): number => {
+		const aLength = this.calculateAbilitySize(a);
+		const bLength = this.calculateAbilitySize(b);
+
+		return aLength - bLength;
+	};
+
+	static calculateAbilitySize = (ability: AbilitySheet): number => {
+		let size = 0;
+		size += Math.ceil(ability.rollT1Effect?.length || 0 / 40);
+		size += Math.ceil(ability.rollT2Effect?.length || 0 / 40);
+		size += Math.ceil(ability.rollT3Effect?.length || 0 / 40);
+		size += Math.ceil(ability.effect?.length || 0 / 50);
+		return size;
 	};
 
 	static characteristicOrder: string[] = [

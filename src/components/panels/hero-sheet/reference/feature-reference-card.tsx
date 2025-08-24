@@ -16,9 +16,9 @@ export const FeatureReferenceCard = (props: Props) => {
 	}
 	return (
 		<div className={classes.join(' ')}>
-			<h2>Feature Reference</h2>
+			<h2>Other Features & Reference</h2>
 			<ul className='features-container'>
-				{character.referenceFeatures?.map(f =>
+				{character.featuresReferenceOther?.map(f =>
 					<li key={f.id}>
 						<FeatureComponent
 							feature={f}

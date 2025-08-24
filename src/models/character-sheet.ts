@@ -1,6 +1,7 @@
 import { Feature, FeatureHeroicResource } from './feature';
 import { Condition } from './condition';
 import { ConditionType } from '../enums/condition-type';
+import { Culture } from './culture';
 import { Element } from './element';
 import { Hero } from './hero';
 import { Item } from './item';
@@ -111,12 +112,8 @@ export interface CharacterSheet {
 	skills?: string[];
 
 	// Culture
-	cultureEnvironment?: string;
-	cultureEnvironmentFeatures?: Feature[];
-	cultureOrganization?: string;
-	cultureOrganizationFeatures?: Feature[];
-	cultureUpbringing?: string;
-	cultureUpbringingFeatures?: Feature[];
+	culture?: Culture;
+	cultureFeatures?: Feature[];
 
 	languages?: string[];
 
@@ -135,8 +132,8 @@ export interface CharacterSheet {
 	otherRollAbilities: AbilitySheet[];
 	otherAbilities: AbilitySheet[];
 
-	// Reference area
-	referenceFeatures?: Feature[];
+	// Other Features and Reference
+	featuresReferenceOther?: Feature[];
 }
 
 export interface ProjectSheet {

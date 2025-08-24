@@ -39,6 +39,16 @@ export class FeatureLogic {
 		if (culture.upbringing) {
 			features.push({ feature: culture.upbringing, source: culture.name });
 		}
+		if (culture) {
+			features.push({
+				feature: FactoryLogic.feature.create({
+					id: Utils.guid(),
+					name: `${culture.name} Culture`.trim(),
+					description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
+				}),
+				source: `${culture.name} Culture`.trim()
+			});
+		}
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};

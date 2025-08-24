@@ -2,8 +2,6 @@
 
 .modifiers {
     grid-row-end: span 2;
-    max-height: 613px;
-    // overflow-y: auto;
 
     display: grid;
     grid-template-rows: repeat(4, max-content) 1fr;
@@ -83,7 +81,6 @@
 
         border-bottom: 2px solid common.$color-light;
         margin-bottom: 5px;
-        // margin-top: -10px;
     }
 
     .power-roll-damage-modifiers {
@@ -96,6 +93,7 @@
         h4 {
             grid-column-end: span 3;
             text-align: center;
+            text-wrap: nowrap;
         }
 
         .roll-tiers {

@@ -1,4 +1,5 @@
 import { AbilitySheet, CharacterSheet } from '../models/character-sheet';
+
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -9,6 +10,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
+import { FactoryFeatureLogic } from '../logic/factory-feature-logic';
 import { Feature } from '../models/feature';
 import { FeatureLogic } from '../logic/feature-logic';
 import { FeatureType } from '../enums/feature-type';
@@ -32,7 +34,7 @@ export class CharacterSheetBuilder {
 			otherRollAbilities: [],
 			otherAbilities: [],
 
-			referenceFeatures: []
+			featuresReferenceOther: []
 		};
 
 		let coveredFeatureIds: string[] = [];
@@ -49,7 +51,7 @@ export class CharacterSheetBuilder {
 				.filter(f => f.type === FeatureType.Text)
 				.filter(CharacterSheetFormatter.isLongFeature);
 			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(ancestryTraits);
-			sheet.referenceFeatures = sheet.referenceFeatures?.concat(longFeatures);
+			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(longFeatures);
 
 			coveredFeatureIds = coveredFeatureIds.concat(ancestryFeatures.map(f => f.id));
 		}
@@ -155,7 +157,7 @@ export class CharacterSheetBuilder {
 			if (modifiers.find(f => f.name.match('Enchantment of')))
 				sheet.modifierTypes.push('Enchantment');
 
-			sheet.modifierName = modifiers.map(f => f.name).join(' | ');
+			sheet.modifierName = Collections.distinct(modifiers.map(f => f.name), n => n).join(' | ');
 
 			// Augmentation is either Multiple or AbilityDamage (or...?)
 			modifiers.forEach(modifier => {
@@ -200,17 +202,22 @@ export class CharacterSheetBuilder {
 		sheet.conditions = conditions;
 
 		if (hero.class) {
-			const classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
+			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
 				.filter(f => f.feature.type !== FeatureType.ClassAbility)
-				.map(f => f.feature)
-				.sort(CharacterSheetFormatter.sortFeatures);
+				.map(f => f.feature);
+
+			// Perks are covered elsewhere - just keep the choice here
+			const perkIds = classFeatures.filter(f => f.type === FeatureType.Perk)
+				.flatMap(f => f.data.selected.map(p => p.id));
+			classFeatures = classFeatures.filter(f => !perkIds.includes(f.id));
+			classFeatures.sort(CharacterSheetFormatter.sortFeatures);
 
 			const longFeatures = classFeatures
 				.filter(f => f.type === FeatureType.Text)
 				.filter(CharacterSheetFormatter.isLongFeature);
 			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(classFeatures);
-			sheet.referenceFeatures = sheet.referenceFeatures?.concat(longFeatures);
+			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(CharacterSheetFormatter.convertFeatures(longFeatures));
 
 			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.id));
 		}
@@ -229,11 +236,16 @@ export class CharacterSheetBuilder {
 
 		if (hero.complication) {
 			sheet.complicationName = hero.complication.name;
-			const benefits = hero.complication.features.filter(f => f.name.includes('Benefit'));
+			const complicationFeatures = hero.complication.features;
+
+			const drawbacks = complicationFeatures.filter(this.isFeatureDrawback);
+			sheet.complicationDrawbacks = drawbacks;
+
+			const benefits = complicationFeatures.filter(f => !this.isFeatureDrawback(f));
 			sheet.complicationBenefits = benefits;
 
-			const drawbacks = hero.complication.features.filter(f => f.name.includes('Drawback'));
-			sheet.complicationDrawbacks = drawbacks;
+			coveredFeatureIds = coveredFeatureIds.concat(benefits.map(f => f.id));
+			coveredFeatureIds = coveredFeatureIds.concat(drawbacks.map(f => f.id));
 		}
 
 		const skillsMap = new Map<string, string[]>();
@@ -252,18 +264,16 @@ export class CharacterSheetBuilder {
 
 		// Culture
 		if (hero.culture) {
-			if (hero.culture.environment) {
-				sheet.cultureEnvironment = hero.culture.environment.name;
-				sheet.cultureEnvironmentFeatures = [ hero.culture.environment ];
-			}
-			if (hero.culture.organization) {
-				sheet.cultureOrganization = hero.culture.organization.name;
-				sheet.cultureOrganizationFeatures = [ hero.culture.organization ];
-			}
-			if (hero.culture.upbringing) {
-				sheet.cultureUpbringing = hero.culture.upbringing.name;
-				sheet.cultureUpbringingFeatures = [ hero.culture.upbringing ];
-			}
+			let cultureFeatures: Feature[] = [];
+			cultureFeatures = cultureFeatures.concat(allFeatures.filter(f => f.source.includes('Culture')).map(f => f.feature))
+				.concat(hero.culture.languages.map(lang => FactoryFeatureLogic.createLanguage({
+					id: `culture-${hero.culture?.name}-language-${lang}`,
+					language: lang
+				})));
+			sheet.culture = hero.culture;
+			sheet.cultureFeatures = cultureFeatures;
+
+			coveredFeatureIds = coveredFeatureIds.concat(cultureFeatures.map(f => f.id));
 		}
 
 		sheet.languages = HeroLogic.getLanguages(hero, sourcebooks).map(l => l.name);
@@ -321,7 +331,8 @@ export class CharacterSheetBuilder {
 		const missedFeatures: { feature: Feature; source: string; }[] = [];
 		allFeatures.filter(f => !coveredFeatureIds.includes(f.feature.id)).forEach(f => missedFeatures.push(f));
 		if (missedFeatures.length) {
-			console.warn('Missed features!', missedFeatures);
+			console.warn('Missed features! - adding to "other"', missedFeatures);
+			sheet.featuresReferenceOther = (sheet.featuresReferenceOther || []).concat(missedFeatures.map(f => f.feature));
 		}
 		// Ability coverage check
 		const missedAbilities: Ability[] = [];
@@ -438,5 +449,10 @@ export class CharacterSheetBuilder {
             || f.name.includes('Animal Form')
             || f.name.includes('Hybrid Form')
             || f.name.includes('Growing Ferocity'));
+	};
+
+	static isFeatureDrawback = (f: Feature): boolean => {
+		return (f.name.includes('Drawback')
+			|| /-d-?/.test(f.id));
 	};
 }

@@ -11,38 +11,49 @@ export const CultureCard = (props: Props) => {
 	return (
 		<div className='culture card'>
 			<h2>Culture</h2>
+			<div className='name'>{character.culture?.name}</div>
 			<section className='bordered'>
 				<h3>Environment</h3>
-				<h4>{character.cultureEnvironment}</h4>
-				{character.cultureEnvironmentFeatures?.map(f =>
+				<h4>{character.culture?.environment?.name}</h4>
+				{character.culture?.environment ?
 					<FeatureComponent
-						feature={f}
+						feature={character.culture?.environment}
 						hero={character.hero}
-						key={f.id}
 					/>
-				)}
+					: undefined}
 			</section>
 			<section className='bordered'>
 				<h3>Organization</h3>
-				<h4>{character.cultureOrganization}</h4>
-				{character.cultureOrganizationFeatures?.map(f =>
+				<h4>{character.culture?.organization?.name}</h4>
+				{character.culture?.organization ?
 					<FeatureComponent
-						feature={f}
+						feature={character.culture?.organization}
 						hero={character.hero}
-						key={f.id}
 					/>
-				)}
+					: undefined}
 			</section>
 			<section className='bordered'>
 				<h3>Upbringing</h3>
-				<h4>{character.cultureUpbringing}</h4>
-				{character.cultureUpbringingFeatures?.map(f =>
+				<h4>{character.culture?.upbringing?.name}</h4>
+				{character.culture?.upbringing ?
 					<FeatureComponent
-						feature={f}
+						feature={character.culture?.upbringing}
 						hero={character.hero}
-						key={f.id}
 					/>
-				)}
+					: undefined}
+			</section>
+
+			<section className='bordered features'>
+				<h3>Features</h3>
+				<ul>
+					{character.cultureFeatures?.map(f => (
+						<FeatureComponent
+							feature={f}
+							hero={character.hero}
+							key={f.id}
+						/>
+					))}
+				</ul>
 			</section>
 			<section className='bordered languages'>
 				<h3>Languages</h3>

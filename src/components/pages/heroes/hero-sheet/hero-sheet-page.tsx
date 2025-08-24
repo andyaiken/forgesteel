@@ -76,7 +76,7 @@ export const HeroSheetPage = (props: Props) => {
 			}
 		];
 
-		if ((character.referenceFeatures?.length || 0) > 0) {
+		if ((character.featuresReferenceOther?.length || 0) > 0) {
 			requiredExtraCards.unshift({
 				element: <FeatureReferenceCard character={character} key='feature-reference' />,
 				width: 2

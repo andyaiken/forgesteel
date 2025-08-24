@@ -73,7 +73,6 @@ export class CharacterSheetFormatter {
 
 	static featureTypeOrder: FeatureType[] = [
 		FeatureType.Text,
-		FeatureType.Perk,
 		FeatureType.Ability,
 		FeatureType.ClassAbility,
 		FeatureType.AbilityDistance,

@@ -33,7 +33,7 @@ export class CharacterSheetBuilder {
 			otherRollAbilities: [],
 			otherAbilities: [],
 
-			referenceFeatures: []
+			featuresReferenceOther: []
 		};
 
 		let coveredFeatureIds: string[] = [];
@@ -50,7 +50,7 @@ export class CharacterSheetBuilder {
 				.filter(f => f.type === FeatureType.Text)
 				.filter(CharacterSheetFormatter.isLongFeature);
 			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(ancestryTraits);
-			sheet.referenceFeatures = sheet.referenceFeatures?.concat(longFeatures);
+			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(longFeatures);
 
 			coveredFeatureIds = coveredFeatureIds.concat(ancestryFeatures.map(f => f.id));
 		}
@@ -201,17 +201,24 @@ export class CharacterSheetBuilder {
 		sheet.conditions = conditions;
 
 		if (hero.class) {
-			const classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
+			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
 				.filter(f => f.feature.type !== FeatureType.ClassAbility)
-				.map(f => f.feature)
-				.sort(CharacterSheetFormatter.sortFeatures);
+				.map(f => f.feature);
+
+			// Perks are covered elsewhere - just keep the choice here
+			const perkIds = classFeatures.filter(f => f.type === FeatureType.Perk)
+				.flatMap(f => f.data.selected.map(p => p.id));
+			classFeatures = classFeatures.filter(f => !perkIds.includes(f.id));
+			classFeatures.sort(CharacterSheetFormatter.sortFeatures);
+
+			console.log('class features:', classFeatures);
 
 			const longFeatures = classFeatures
 				.filter(f => f.type === FeatureType.Text)
 				.filter(CharacterSheetFormatter.isLongFeature);
 			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(classFeatures);
-			sheet.referenceFeatures = sheet.referenceFeatures?.concat(longFeatures);
+			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(CharacterSheetFormatter.convertFeatures(longFeatures));
 
 			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.id));
 		}
@@ -322,7 +329,8 @@ export class CharacterSheetBuilder {
 		const missedFeatures: { feature: Feature; source: string; }[] = [];
 		allFeatures.filter(f => !coveredFeatureIds.includes(f.feature.id)).forEach(f => missedFeatures.push(f));
 		if (missedFeatures.length) {
-			console.warn('Missed features!', missedFeatures);
+			console.warn('Missed features! - adding to "other"', missedFeatures);
+			sheet.featuresReferenceOther = (sheet.featuresReferenceOther || []).concat(missedFeatures.map(f => f.feature));
 		}
 		// Ability coverage check
 		const missedAbilities: Ability[] = [];

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { CharacterSheetFormatter } from '../../../../utils/character-sheet-formatter';
 import { DamageModifier } from '../../../../models/damage-modifier';
@@ -35,7 +35,7 @@ const BasicFeatureComponent = (feature: Feature) => {
 	);
 };
 
-const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeaturePerk) => {
+const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeaturePerk | FeatureItemChoice) => {
 	let selectedOptions;
 	if (feature.data.selected.length > 0) {
 		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : s.name).map(s => {
@@ -89,7 +89,7 @@ const BonusFeatureComponent = (feature: FeatureBonus, hero: Hero) => {
 	);
 };
 
-const TextFeatureComponent = (feature: FeatureText) => {
+const TextFeatureComponent = (feature: FeatureText | FeaturePackage | FeaturePackageContent) => {
 	return (
 		<>
 			<div className='feature-title'>{feature.name}</div>
@@ -206,6 +206,7 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.LanguageChoice:
 		case FeatureType.Perk:
 		case FeatureType.Choice:
+		case FeatureType.ItemChoice:
 			content = ChoiceFeatureComponent(feature);
 			break;
 		case FeatureType.AncestryChoice:
@@ -218,6 +219,8 @@ export const FeatureComponent = (props: Props) => {
 			content = BonusFeatureComponent(feature, hero);
 			break;
 		case FeatureType.Text:
+		case FeatureType.Package:
+		case FeatureType.PackageContent:
 			content = TextFeatureComponent(feature);
 			break;
 		case FeatureType.Ability:

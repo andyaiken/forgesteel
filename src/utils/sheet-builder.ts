@@ -1,24 +1,25 @@
+import { AbilitySheet, CharacterSheet } from '../models/character-sheet';
+
+import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
+import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
+import { CharacterSheetFormatter } from './character-sheet-formatter';
 import { Characteristic } from '../enums/characteristic';
+import { Collections } from './collections';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
-import { FeatureType } from '../enums/feature-type';
-import { AbilityLogic } from '../logic/ability-logic';
 import { FactoryFeatureLogic } from '../logic/factory-feature-logic';
-import { FeatureLogic } from '../logic/feature-logic';
-import { FormatLogic } from '../logic/format-logic';
-import { HeroLogic } from '../logic/hero-logic';
-import { SourcebookLogic } from '../logic/sourcebook-logic';
-import { Ability } from '../models/ability';
-import { AbilitySheet, CharacterSheet } from '../models/character-sheet';
 import { Feature } from '../models/feature';
-import { Hero } from '../models/hero';
-import { Sourcebook } from '../models/sourcebook';
-import { CharacterSheetFormatter } from './character-sheet-formatter';
-import { Collections } from './collections';
+import { FeatureLogic } from '../logic/feature-logic';
+import { FeatureType } from '../enums/feature-type';
 import { Format } from './format';
+import { FormatLogic } from '../logic/format-logic';
+import { Hero } from '../models/hero';
+import { HeroLogic } from '../logic/hero-logic';
+import { Sourcebook } from '../models/sourcebook';
+import { SourcebookLogic } from '../logic/sourcebook-logic';
 
 export class CharacterSheetBuilder {
 	static buildSheetForHero = (hero: Hero, sourcebooks: Sourcebook[]) => {
@@ -156,7 +157,7 @@ export class CharacterSheetBuilder {
 			if (modifiers.find(f => f.name.match('Enchantment of')))
 				sheet.modifierTypes.push('Enchantment');
 
-			sheet.modifierName = modifiers.map(f => f.name).join(' | ');
+			sheet.modifierName = Collections.distinct(modifiers.map(f => f.name), n => n).join(' | ');
 
 			// Augmentation is either Multiple or AbilityDamage (or...?)
 			modifiers.forEach(modifier => {
@@ -212,8 +213,6 @@ export class CharacterSheetBuilder {
 			classFeatures = classFeatures.filter(f => !perkIds.includes(f.id));
 			classFeatures.sort(CharacterSheetFormatter.sortFeatures);
 
-			console.log('class features:', classFeatures);
-
 			const longFeatures = classFeatures
 				.filter(f => f.type === FeatureType.Text)
 				.filter(CharacterSheetFormatter.isLongFeature);
@@ -237,12 +236,15 @@ export class CharacterSheetBuilder {
 
 		if (hero.complication) {
 			sheet.complicationName = hero.complication.name;
-			const benefits = hero.complication.features.filter(f => !f.name.includes('Drawback'));
-			sheet.complicationBenefits = benefits;
-			coveredFeatureIds = coveredFeatureIds.concat(benefits.map(f => f.id));
+			const complicationFeatures = hero.complication.features;
 
-			const drawbacks = hero.complication.features.filter(f => f.name.includes('Drawback'));
+			const drawbacks = complicationFeatures.filter(this.isFeatureDrawback);
 			sheet.complicationDrawbacks = drawbacks;
+
+			const benefits = complicationFeatures.filter(f => !this.isFeatureDrawback(f));
+			sheet.complicationBenefits = benefits;
+
+			coveredFeatureIds = coveredFeatureIds.concat(benefits.map(f => f.id));
 			coveredFeatureIds = coveredFeatureIds.concat(drawbacks.map(f => f.id));
 		}
 
@@ -447,5 +449,10 @@ export class CharacterSheetBuilder {
             || f.name.includes('Animal Form')
             || f.name.includes('Hybrid Form')
             || f.name.includes('Growing Ferocity'));
+	};
+
+	static isFeatureDrawback = (f: Feature): boolean => {
+		return (f.name.includes('Drawback')
+			|| /-d-?/.test(f.id));
 	};
 }

@@ -1,8 +1,9 @@
-import { Characteristic } from '../enums/characteristic';
-import { FeatureType } from '../enums/feature-type';
 import { AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
+
 import { AbilitySheet } from '../models/character-sheet';
+import { Characteristic } from '../enums/characteristic';
 import { Feature } from '../models/feature';
+import { FeatureType } from '../enums/feature-type';
 import { Utils } from './utils';
 
 export class CharacterSheetFormatter {
@@ -73,6 +74,8 @@ export class CharacterSheetFormatter {
 
 	static featureTypeOrder: FeatureType[] = [
 		FeatureType.Text,
+		FeatureType.Package,
+		FeatureType.PackageContent,
 		FeatureType.Ability,
 		FeatureType.ClassAbility,
 		FeatureType.AbilityDistance,

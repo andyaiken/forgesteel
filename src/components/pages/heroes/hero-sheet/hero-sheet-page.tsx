@@ -24,7 +24,7 @@ import { SkillsCard } from '../../../panels/hero-sheet/skills-card/skills-card';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StatsResourcesCard } from '../../../panels/hero-sheet/stats-resources-card/stats-resources-card';
 import { TitlesCard } from '../../../panels/hero-sheet/titles-card/titles-card';
-import { TurnReferenceCard } from '../../../panels/hero-sheet/reference/turn-reference-card';
+import { PrimaryReferenceCard } from '../../../panels/hero-sheet/reference/turn-reference-card';
 
 import './hero-sheet-page.scss';
 
@@ -178,7 +178,7 @@ export const HeroSheetPage = (props: Props) => {
 									character={character}
 									options={props.options}
 								/>
-								<TurnReferenceCard
+								<PrimaryReferenceCard
 									character={character}
 								/>
 							</div>

@@ -15,32 +15,32 @@ export const CultureCard = (props: Props) => {
 			<section className='bordered'>
 				<h3>Environment</h3>
 				<h4>{character.culture?.environment?.name}</h4>
-				{character.culture?.environment ? (
+				{character.culture?.environment ?
 					<FeatureComponent
 						feature={character.culture?.environment}
 						hero={character.hero}
 					/>
-				) : undefined}
+					: undefined}
 			</section>
 			<section className='bordered'>
 				<h3>Organization</h3>
 				<h4>{character.culture?.organization?.name}</h4>
-				{character.culture?.organization ? (
+				{character.culture?.organization ?
 					<FeatureComponent
 						feature={character.culture?.organization}
 						hero={character.hero}
 					/>
-				) : undefined}
+					: undefined}
 			</section>
 			<section className='bordered'>
 				<h3>Upbringing</h3>
 				<h4>{character.culture?.upbringing?.name}</h4>
-				{character.culture?.upbringing ? (
+				{character.culture?.upbringing ?
 					<FeatureComponent
 						feature={character.culture?.upbringing}
 						hero={character.hero}
 					/>
-				) : undefined}
+					: undefined}
 			</section>
 
 			<section className='bordered features'>

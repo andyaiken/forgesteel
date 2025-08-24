@@ -259,7 +259,7 @@ export class CharacterSheetBuilder {
 			cultureFeatures = cultureFeatures.concat(allFeatures.filter(f => f.source.includes('Culture')).map(f => f.feature))
 				.concat(hero.culture.languages.map(lang => FactoryFeatureLogic.createLanguage({
 					id: `culture-${hero.culture?.name}-language-${lang}`,
-					language: lang,
+					language: lang
 				})));
 			sheet.culture = hero.culture;
 			sheet.cultureFeatures = cultureFeatures;

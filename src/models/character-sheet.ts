@@ -1,12 +1,12 @@
-import { Feature, FeatureHeroicResource } from './feature';
-import { Condition } from './condition';
 import { ConditionType } from '../enums/condition-type';
+import { Condition } from './condition';
+import { Culture } from './culture';
 import { Element } from './element';
+import { Feature, FeatureHeroicResource } from './feature';
 import { Hero } from './hero';
 import { Item } from './item';
 import { Perk } from './perk';
 import { Title } from './title';
-import { Culture } from './culture';
 
 export interface CharacterSheet {
 	hero: Hero,

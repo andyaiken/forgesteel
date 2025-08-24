@@ -3,7 +3,7 @@ import { Collections } from './collections';
 import { Converter } from 'showdown';
 import { Random } from './random';
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import jspdf from 'jspdf';
 
 export class Utils {
 	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
@@ -106,7 +106,7 @@ export class Utils {
 		const width = element.clientWidth;
 		const height = element.clientHeight;
 		const dpr = window.devicePixelRatio;
-		// It looks like there is an issue with the library scaling properly with the devicePixelRatio in 
+		// It looks like there is an issue with the library scaling properly with the devicePixelRatio in
 		// some cases. I suspect canvas also suffers from this:
 		// https://github.com/bubkoo/html-to-image/issues/553
 
@@ -114,7 +114,7 @@ export class Utils {
 			width: width,
 			height: height,
 			canvasWidth: width / dpr,
-			canvasHeight: height / dpr,
+			canvasHeight: height / dpr
 		});
 	};
 
@@ -131,7 +131,7 @@ export class Utils {
 			.then(canvases => {
 				Utils.savePdfPages(`${filename}.pdf`, canvases);
 			});
-	}
+	};
 
 	static saveFile = (data: unknown, name: string, type: string) => {
 		const json = JSON.stringify(data, null, '\t');
@@ -156,7 +156,7 @@ export class Utils {
 
 		const orientation = (height >= width) ? 'portrait' : 'landscape';
 
-		const pdf = new jsPDF(orientation, 'pt', [ width, height ]);
+		const pdf = new jspdf(orientation, 'pt', [ width, height ]);
 		canvases.forEach((canvas, n) => {
 			const page = (n === 0) ? pdf : pdf.addPage([ width, height ], orientation);
 			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
@@ -169,7 +169,7 @@ export class Utils {
 		const orientation = 'portrait';
 
 		// @ts-expect-error Undocumented
-		const pdf = new jsPDF({
+		const pdf = new jspdf({
 			orientation: orientation,
 			unit: (72 / 150), // undocumented feature to set ~150dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
 			format: 'letter',

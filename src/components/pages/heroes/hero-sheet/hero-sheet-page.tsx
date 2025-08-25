@@ -1,6 +1,7 @@
 import { AbilitySheet, CharacterSheet } from '../../../../models/character-sheet';
 import { EdgesBanesReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
 import { Fragment, JSX, useMemo } from 'react';
+
 import { AbilityCard } from '../../../panels/hero-sheet/ability-card/ability-card';
 import { AncestryTraitsCard } from '../../../panels/hero-sheet/ancestry-traits-card/ancestry-traits-card';
 import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
@@ -14,17 +15,18 @@ import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureReferenceCard } from '../../../panels/hero-sheet/reference/feature-reference-card';
 import { Hero } from '../../../../models/hero';
 import { HeroHeaderCard } from '../../../panels/hero-sheet/hero-header-card/hero-header-card';
+import { ImmunitiesWeaknessesCard } from '../../../panels/hero-sheet/immunities-weaknesses-card/immunities-weaknesses-card';
 import { InventoryCard } from '../../../panels/hero-sheet/inventory-card/inventory-card';
 import { ModifiersCard } from '../../../panels/hero-sheet/modifiers-card/modifiers-card';
 import { Options } from '../../../../models/options';
 import { PerksCard } from '../../../panels/hero-sheet/perks-card/perks-card';
 import { PotenciesCard } from '../../../panels/hero-sheet/potencies-card/potencies-card';
+import { PrimaryReferenceCard } from '../../../panels/hero-sheet/reference/turn-reference-card';
 import { ProjectsCard } from '../../../panels/hero-sheet/projects-card/projects-card';
 import { SkillsCard } from '../../../panels/hero-sheet/skills-card/skills-card';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StatsResourcesCard } from '../../../panels/hero-sheet/stats-resources-card/stats-resources-card';
 import { TitlesCard } from '../../../panels/hero-sheet/titles-card/titles-card';
-import { TurnReferenceCard } from '../../../panels/hero-sheet/reference/turn-reference-card';
 
 import './hero-sheet-page.scss';
 
@@ -41,6 +43,10 @@ export const HeroSheetPage = (props: Props) => {
 		() => CharacterSheetBuilder.buildSheetForHero(hero, props.sourcebooks),
 		[ hero, props.sourcebooks ]
 	);
+
+	const hasImmunitiesOrWeaknesses = () => {
+		return character.immunities?.length || character.weaknesses?.length;
+	};
 
 	try {
 		let pageNum = 0;
@@ -154,10 +160,6 @@ export const HeroSheetPage = (props: Props) => {
 			<ErrorBoundary>
 				<main id='hero-sheet-page'>
 					<div className='hero-sheet' id={hero.id}>
-						{/* <div className='page' id={addPageId(hero)}>
-                            <FontTester />
-                        </div>
-                        <hr className='dashed' /> */}
 						<div className='page page-1' id={addPageId(hero)}>
 							<HeroHeaderCard
 								character={character}
@@ -178,9 +180,16 @@ export const HeroSheetPage = (props: Props) => {
 									character={character}
 									options={props.options}
 								/>
-								<TurnReferenceCard
-									character={character}
-								/>
+								<div className='reference-damages'>
+									<PrimaryReferenceCard
+										character={character}
+									/>
+									{hasImmunitiesOrWeaknesses() ?
+										<ImmunitiesWeaknessesCard
+											character={character}
+										/>
+										: undefined}
+								</div>
 							</div>
 							<div className='class-ancestry-features'>
 								<ClassFeaturesCard

@@ -6,6 +6,10 @@ import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Utils } from './utils';
 
+import rollT1Icon from '../assets/icons/power-roll-t1.svg';
+import rollT2Icon from '../assets/icons/power-roll-t2.svg';
+import rollT3Icon from '../assets/icons/power-roll-t3.svg';
+
 export class CharacterSheetFormatter {
 	static getPageId = (heroId: string, pageNum: number) => {
 		return `hero-sheet-${heroId}-page-${pageNum}`;
@@ -51,17 +55,39 @@ export class CharacterSheetFormatter {
 		return text;
 	};
 
-	private static splitAt = 2;
-	static shortenText = (text: string) => {
+	static enhanceFeatures = (features: Feature[]): Feature[] => {
+		features.sort(this.sortFeatures);
+		const results: Feature[] = [];
+		for (const feature of features) {
+			results.push(this.enhanceFeature(feature));
+		}
+		return results;
+	};
+
+	static enhanceFeature = (feature: Feature): Feature => {
+		const result = Utils.copy(feature);
+		result.description = this.enhanceMarkdown(feature.description);
+		return result;
+	};
+
+	static enhanceMarkdown = (text: string) => {
+		text = text
+			.replace(/\|\s+≤\s*11\s+\|/g, `|![≤ 11](${rollT1Icon})|`)
+			.replace(/\|\s+12\s*-\s*16\s+\|/g, `|![12 - 16](${rollT2Icon})|`)
+			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17+](${rollT3Icon})|`);
+		return text;
+	};
+
+	static shortenText = (text: string, splitAt: number = 2) => {
 		const split = text.split('\n');
-		if (split.length > this.splitAt) {
-			text = split.slice(0, this.splitAt).join('\n') + '\n*…(continued in reference)…*';
+		if (split.length > splitAt) {
+			text = split.slice(0, splitAt).join('\n') + '\n*…(continued in reference)…*';
 		}
 		return this.cleanupText(text);
 	};
 
-	static isLongFeature = (f: Feature): boolean => {
-		return f.description.split('\n').length > this.splitAt;
+	static isLongFeature = (f: Feature, check: number = 2): boolean => {
+		return f.description.split('\n').length > check;
 	};
 
 	// There are some that might just be *too* long for the Class Features section,
@@ -129,11 +155,17 @@ export class CharacterSheetFormatter {
 
 	static calculateAbilitySize = (ability: AbilitySheet): number => {
 		let size = 0;
-		size += Math.ceil(ability.rollT1Effect?.length || 0 / 40);
-		size += Math.ceil(ability.rollT2Effect?.length || 0 / 40);
-		size += Math.ceil(ability.rollT3Effect?.length || 0 / 40);
-		size += Math.ceil(ability.effect?.length || 0 / 50);
+		size += this.countLines(ability.rollT1Effect, 40);
+		size += this.countLines(ability.rollT2Effect, 40);
+		size += this.countLines(ability.rollT3Effect, 40);
+		size += this.countLines(ability.effect, 50);
 		return size;
+	};
+
+	static countLines = (text: string | undefined, lineWidth: number) => {
+		return text?.split('\n').reduce((n, l) => {
+			return n + Math.ceil(l.length / lineWidth);
+		}, 0) || 0;
 	};
 
 	static characteristicOrder: string[] = [
@@ -167,7 +199,7 @@ export class CharacterSheetFormatter {
 		const lines: string[] = [];
 		for (const section of sections) {
 			let text = CharacterSheetFormatter.abilitySection(section);
-			text = CharacterSheetFormatter.cleanupText(text);
+			text = CharacterSheetFormatter.enhanceMarkdown(text);
 			lines.push(text);
 		}
 		return lines.join('\n');
@@ -181,9 +213,9 @@ export class CharacterSheetFormatter {
 				break;
 			case 'field':
 				if (section.value !== 0) {
-					text = `\n${section.name} ${section.value}${section.repeatable ? '+' : ''}:\n${section.effect}`;
+					text = `\n#### ${section.name} ${section.value}${section.repeatable ? '+' : ''}:\n${section.effect}`;
 				} else {
-					text = `\n${section.name}:\n${section.effect}`;
+					text = `\n#### ${section.name}:\n${section.effect}`;
 				}
 				break;
 		}

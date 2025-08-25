@@ -56,7 +56,7 @@ const AncestryChoiceFeatureComponent = (feature: FeatureAncestryChoice) => {
 	return (
 		<>
 			<div className='feature-line'>
-				<strong>{`• ${feature.type}: `}</strong>{feature.data.selected?.name}
+				<strong>{`• ${feature.name}: `}</strong>{feature.data.selected?.name}
 			</div>
 		</>
 	);
@@ -180,7 +180,7 @@ const DamageModifierComponent = (feature: FeatureDamageModifier, hero: Hero) => 
 const DomainFeatureComponent = (feature: FeatureDomain | FeatureDomainFeature) => {
 	return (
 		<>
-			<div className='feature-title'>• {feature.type}: {feature.name}</div>
+			<div className='feature-line'><strong>• {feature.type}:</strong> {feature.name}</div>
 		</>
 	);
 };

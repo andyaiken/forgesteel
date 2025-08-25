@@ -1,6 +1,8 @@
 import { CharacterSheet } from '../../../../models/character-sheet';
 import { FeatureComponent } from '../components/feature-component';
 
+import './feature-reference-card.scss';
+
 interface Props {
 	character: CharacterSheet;
 	classes?: string | string[];

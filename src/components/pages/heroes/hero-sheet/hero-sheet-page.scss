@@ -148,8 +148,11 @@
         grid-template-columns: 2fr 1fr;
     }
 
-    .turn-reference.card {
+    .reference-damages {
         grid-row-end: span 2;
+
+        display: grid;
+        grid-template-rows: 1fr min-content;
     }
 
     .page-2 {

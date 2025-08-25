@@ -1,9 +1,10 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifier } from '../models/damage-modifier';
 import { DamageType } from '../enums/damage-type';
+import { FeatureAddOnType } from '../enums/feature-addon-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Follower } from '../models/follower';

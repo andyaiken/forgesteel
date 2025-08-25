@@ -20,7 +20,7 @@ import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../models/kit';
 import { KitPanel } from '../../panels/elements/kit-panel/kit-panel';
 import { Modal } from '../modal/modal';
-import { MonsterGroup } from '../../../models/monster';
+import { MonsterGroup } from '../../../models/monster-group';
 import { MonsterGroupPanel } from '../../panels/elements/monster-group-panel/monster-group-panel';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';

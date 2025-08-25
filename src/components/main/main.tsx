@@ -1,5 +1,4 @@
 import { Adventure, AdventurePackage } from '../../models/adventure';
-import { Monster, MonsterGroup } from '../../models/monster';
 import { Navigate, Route, Routes } from 'react-router';
 import { Playbook, PlaybookElementKind } from '../../models/playbook';
 import { ReactNode, useState } from 'react';
@@ -45,6 +44,8 @@ import { LibraryEditPage } from '../pages/library/library-edit/library-edit-page
 import { LibraryListPage } from '../pages/library/library-list/library-list-page';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
+import { Monster } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Montage } from '../../models/montage';
 import { Negotiation } from '../../models/negotiation';

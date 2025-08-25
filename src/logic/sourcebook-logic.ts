@@ -1,4 +1,3 @@
-import { Monster, MonsterGroup } from '../models/monster';
 import { Ability } from '../models/ability';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
@@ -13,6 +12,8 @@ import { Imbuement } from '../models/imbuement';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
+import { Monster } from '../models/monster';
+import { MonsterGroup } from '../models/monster-group';
 import { Options } from '../models/options';
 import { Perk } from '../models/perk';
 import { Project } from '../models/project';

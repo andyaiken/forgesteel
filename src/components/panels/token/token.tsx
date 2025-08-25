@@ -1,8 +1,9 @@
-import { Monster, MonsterGroup } from '../../../models/monster';
 import { CSSProperties } from 'react';
 import { Format } from '../../../utils/format';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
+import { Monster } from '../../../models/monster';
+import { MonsterGroup } from '../../../models/monster-group';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { Terrain } from '../../../models/terrain';

@@ -1,6 +1,5 @@
 import { Button, Popover } from 'antd';
 import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
@@ -26,6 +25,8 @@ import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
+import { Monster } from '../../../../models/monster';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { Options } from '../../../../models/options';

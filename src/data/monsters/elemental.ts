@@ -4,7 +4,7 @@ import { ConditionType } from '../../enums/condition-type';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';

@@ -1,14 +1,16 @@
-import { Monster, MonsterGroup, MonsterState } from '../models/monster';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
+import { Monster } from '../models/monster';
 import { MonsterFeatureCategory } from '../enums/monster-feature-category';
 import { MonsterFilter } from '../models/filter';
+import { MonsterGroup } from '../models/monster-group';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
+import { MonsterState } from '../models/monster-state';
 import { Options } from '../models/options';
 import { Random } from '../utils/random';
 import { Utils } from '../utils/utils';

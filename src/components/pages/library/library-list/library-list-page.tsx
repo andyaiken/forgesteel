@@ -2,7 +2,6 @@ import { Badge, Button, Divider, Input, Popover, Segmented, Select, Space, Table
 import { BarsOutlined, BookOutlined, DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, TableOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
@@ -35,8 +34,10 @@ import { Kit } from '../../../../models/kit';
 import { KitArmor } from '../../../../enums/kit-armor';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { KitWeapon } from '../../../../enums/kit-weapon';
+import { Monster } from '../../../../models/monster';
 import { MonsterFilter } from '../../../../models/filter';
 import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';

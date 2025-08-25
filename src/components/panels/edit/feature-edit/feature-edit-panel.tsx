@@ -1,6 +1,6 @@
 import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -15,6 +15,7 @@ import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
+import { FeatureAddOnType } from '../../../../enums/feature-addon-type';
 import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';

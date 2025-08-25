@@ -1,27 +1,10 @@
-import { Feature, FeatureAbility, FeatureAddOn, FeatureMalice } from './feature';
 import { Characteristic } from '../enums/characteristic';
-import { Condition } from './condition';
 import { Element } from './element';
-import { MonsterOrganizationType } from '../enums/monster-organization-type';
-import { MonsterRoleType } from '../enums/monster-role-type';
+import { Feature } from './feature';
+import { MonsterRole } from './monster-roll';
+import { MonsterState } from './monster-state';
 import { Size } from './size';
 import { Speed } from './speed';
-
-export interface MonsterRole {
-	type: MonsterRoleType;
-	organization: MonsterOrganizationType;
-};
-
-export interface MonsterState {
-	staminaDamage: number;
-	staminaTemp: number;
-	recoveriesUsed: number;
-	conditions: Condition[];
-	reactionUsed: boolean;
-	hidden: boolean;
-	defeated: boolean;
-	captainID: string | undefined;
-};
 
 export interface Monster extends Element {
 	picture: string | null;
@@ -51,12 +34,4 @@ export interface Monster extends Element {
 		}[];
 	} | null;
 	state: MonsterState;
-};
-
-export interface MonsterGroup extends Element {
-	picture: string | null;
-	information: Element[];
-	malice: (FeatureMalice | FeatureAbility)[];
-	monsters: Monster[];
-	addOns: FeatureAddOn[];
 };

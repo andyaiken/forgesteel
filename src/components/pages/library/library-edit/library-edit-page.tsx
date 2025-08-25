@@ -1,6 +1,5 @@
 import { Button, Drawer, Popover, Select, Space, Tabs } from 'antd';
 import { CloseOutlined, DownOutlined, LeftOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryEditPanel } from '../../../panels/edit/ancestry-edit/ancestry-edit-panel';
@@ -39,7 +38,9 @@ import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitEditPanel } from '../../../panels/edit/kit-edit/kit-edit-panel';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
+import { Monster } from '../../../../models/monster';
 import { MonsterEditPanel } from '../../../panels/edit/monster-edit/monster-edit-panel';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterGroupEditPanel } from '../../../panels/edit/monster-group-edit/monster-group-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';

@@ -1,7 +1,6 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '../../../../models/encounter';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
 import { MonsterInfo, TerrainInfo } from '../../token/token';
 import { ReactNode, useState } from 'react';
@@ -22,7 +21,9 @@ import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { Monster } from '../../../../models/monster';
 import { MonsterFilterPanel } from '../../monster-filter/monster-filter-panel';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterPanel } from '../../elements/monster-panel/monster-panel';

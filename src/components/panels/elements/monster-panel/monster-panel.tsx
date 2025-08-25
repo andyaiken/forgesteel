@@ -1,6 +1,5 @@
 import { Alert, Drawer, Flex, Tag } from 'antd';
 import { CSSProperties, ReactNode, useState } from 'react';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { AbilityModal } from '../../../modals/ability/ability-modal';
 import { AbilityPanel } from '../ability-panel/ability-panel';
@@ -14,6 +13,8 @@ import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { Monster } from '../../../../models/monster';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';

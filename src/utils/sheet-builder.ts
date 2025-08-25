@@ -217,7 +217,8 @@ export class CharacterSheetBuilder {
 				.filter(f => f.type === FeatureType.Text)
 				.filter(CharacterSheetFormatter.isLongFeature);
 			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(classFeatures);
-			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(CharacterSheetFormatter.convertFeatures(longFeatures));
+			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(CharacterSheetFormatter.enhanceFeatures(longFeatures));
+			// sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(longFeatures.sort(CharacterSheetFormatter.sortFeatures));
 
 			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.id));
 		}
@@ -225,7 +226,7 @@ export class CharacterSheetBuilder {
 		if (hero.career) {
 			sheet.careerName = hero.career.name;
 			const careerFeatures = hero.career.features;
-			sheet.careerBenefits = careerFeatures;
+			sheet.careerBenefits = CharacterSheetFormatter.convertFeatures(careerFeatures);
 			coveredFeatureIds = coveredFeatureIds.concat(careerFeatures.map(f => f.id));
 
 			const incident = hero.career.incitingIncidents.options.find(

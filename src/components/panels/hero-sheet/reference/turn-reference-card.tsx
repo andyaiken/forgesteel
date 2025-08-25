@@ -77,7 +77,10 @@ export const PrimaryReferenceCard = (props: Props) => {
 	};
 
 	const getTurnReference = () => {
-		if ((character.heroicResourceFeature?.data.gains.length || 0) <= 3) {
+		const hasManyHeroicResourceGains = (character.heroicResourceFeature?.data.gains.length || 0) > 3;
+		const hasDamageImmunitiesWeaknesses = (character.immunities?.length || character.weaknesses?.length);
+		const showTurnOverview = !(hasManyHeroicResourceGains || hasDamageImmunitiesWeaknesses);
+		if (showTurnOverview) {
 			return (
 				<>
 					<h3>Your Turn</h3>

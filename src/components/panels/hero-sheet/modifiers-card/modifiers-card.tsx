@@ -8,59 +8,72 @@ import './modifiers-card.scss';
 import rollT1 from '../../../../assets/icons/power-roll-t1.svg';
 import rollT2 from '../../../../assets/icons/power-roll-t2.svg';
 import rollT3 from '../../../../assets/icons/power-roll-t3.svg';
+import { useMemo } from 'react';
 
 interface Props {
 	character: CharacterSheet;
 }
 
 export const ModifiersCard = (props: Props) => {
-	const character = props.character;
+	const character = useMemo(
+		() => props.character,
+		[ props.character ]
+	);
 
-	let shownModifiers = [ 'Kit', 'Prayer', 'Ward', 'Augmentation', 'Enchantment' ];
-	if (character.modifierTypes?.length) {
-		shownModifiers = shownModifiers.filter(t => character.modifierTypes?.includes(t));
-	}
-	const modifierClasses = shownModifiers.map(m => m.toLocaleLowerCase());
+	const shownModifiers = useMemo(
+		() => {
+			let mods = [ 'Kit', 'Prayer', 'Ward', 'Augmentation', 'Enchantment' ];
+			if (character.modifierTypes?.length) {
+				mods = mods.filter(t => character.modifierTypes?.includes(t));
+			}
+			return mods;
+		},
+		[ character.modifierTypes ]
+	);
 
-	const isKit = !character.modifierTypes?.length || character.modifierTypes?.includes('Kit');
-	const kitDamageModificationSection = (isKit ?
-		<>
-			<div className='power-roll-damage-modifiers'>
-				<h4>Ranged Weapon Damage</h4>
-				<div className='roll-tiers'>
-					<div className='tier t1'>
-						<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierRangedDamageT1)}</div>
-						<img src={rollT1} alt='≤ 11' className='range' />
+	const getKitDamageModificationSection = () => {
+		const isKit = !character.modifierTypes?.length || character.modifierTypes?.includes('Kit');
+		if (isKit) {
+			return (
+				<>
+					<div className='power-roll-damage-modifiers'>
+						<h4>Ranged Weapon Damage</h4>
+						<div className='roll-tiers'>
+							<div className='tier t1'>
+								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierRangedDamageT1)}</div>
+								<img src={rollT1} alt='≤ 11' className='range' />
+							</div>
+							<div className='tier t2'>
+								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierRangedDamageT2)}</div>
+								<img src={rollT2} alt='12 - 16' className='range' />
+							</div>
+							<div className='tier t3'>
+								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierRangedDamageT3)}</div>
+								<img src={rollT3} alt='17 +' className='range' />
+							</div>
+						</div>
 					</div>
-					<div className='tier t2'>
-						<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierRangedDamageT2)}</div>
-						<img src={rollT2} alt='12 - 16' className='range' />
+					<div className='power-roll-damage-modifiers'>
+						<h4>Melee Weapon Damage</h4>
+						<div className='roll-tiers'>
+							<div className='tier t1'>
+								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierMeleeDamageT1)}</div>
+								<img src={rollT1} alt='≤ 11' className='range' />
+							</div>
+							<div className='tier t2'>
+								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierMeleeDamageT2)}</div>
+								<img src={rollT2} alt='12 - 16' className='range' />
+							</div>
+							<div className='tier t3'>
+								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierMeleeDamageT3)}</div>
+								<img src={rollT3} alt='17 +' className='range' />
+							</div>
+						</div>
 					</div>
-					<div className='tier t3'>
-						<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierRangedDamageT3)}</div>
-						<img src={rollT3} alt='17 +' className='range' />
-					</div>
-				</div>
-			</div>
-			<div className='power-roll-damage-modifiers'>
-				<h4>Melee Weapon Damage</h4>
-				<div className='roll-tiers'>
-					<div className='tier t1'>
-						<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierMeleeDamageT1)}</div>
-						<img src={rollT1} alt='≤ 11' className='range' />
-					</div>
-					<div className='tier t2'>
-						<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierMeleeDamageT2)}</div>
-						<img src={rollT2} alt='12 - 16' className='range' />
-					</div>
-					<div className='tier t3'>
-						<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierMeleeDamageT3)}</div>
-						<img src={rollT3} alt='17 +' className='range' />
-					</div>
-				</div>
-			</div>
-		</>
-		: undefined);
+				</>
+			);
+		}
+	};
 
 	return (
 		<div className='modifiers card'>
@@ -81,7 +94,7 @@ export const ModifiersCard = (props: Props) => {
 				additionalClasses={[ 'name' ]}
 			/>
 
-			<div className={[ 'modifier-augmentations' ].concat(modifierClasses).join(' ')}>
+			<div className={[ 'modifier-augmentations' ].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
 				<div className='proficiencies'>
 					<LabeledTextField
 						label='Weapon/Implement'
@@ -121,13 +134,13 @@ export const ModifiersCard = (props: Props) => {
 				</div>
 			</div>
 
-			<div className={[ 'effects' ].concat(modifierClasses).join(' ')}>
+			<div className={[ 'effects' ].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
 				<div className='damage-modifiers'>
-					{kitDamageModificationSection}
+					{getKitDamageModificationSection()}
 				</div>
 
 				<div className='benefits'>
-					<h4>Benefits</h4>
+					<h3>Benefits</h3>
 					<div className='features'>
 						{character.modifierBenefits?.map(f =>
 							<FeatureComponent

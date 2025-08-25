@@ -56,7 +56,7 @@ const AncestryChoiceFeatureComponent = (feature: FeatureAncestryChoice) => {
 	return (
 		<>
 			<div className='feature-line'>
-				<strong>{`• ${feature.type}: `}</strong>{feature.data.selected?.name}
+				<strong>{`• ${feature.name}: `}</strong>{feature.data.selected?.name}
 			</div>
 		</>
 	);

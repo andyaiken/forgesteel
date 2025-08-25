@@ -49,7 +49,7 @@ export class CharacterSheetBuilder {
 			const ancestryTraits = ancestryFeatures.filter(f => f.type !== FeatureType.Choice);
 			const longFeatures = ancestryTraits
 				.filter(f => f.type === FeatureType.Text)
-				.filter(CharacterSheetFormatter.isLongFeature);
+				.filter(f => CharacterSheetFormatter.isLongFeature(f));
 			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(ancestryTraits);
 			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(longFeatures);
 
@@ -218,7 +218,6 @@ export class CharacterSheetBuilder {
 				.filter(CharacterSheetFormatter.isLongFeature);
 			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(classFeatures);
 			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(CharacterSheetFormatter.enhanceFeatures(longFeatures));
-			// sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(longFeatures.sort(CharacterSheetFormatter.sortFeatures));
 
 			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.id));
 		}

@@ -10,6 +10,7 @@ import { DropdownButton } from '../../../controls/dropdown-button/dropdown-butto
 import { Element } from '../../../../models/element';
 import { ElementEditPanel } from '../element-edit/element-edit-panel';
 import { Empty } from '../../../controls/empty/empty';
+import { EncounterDifficultyLogic } from '../../../../logic/encounter-difficulty-logic';
 import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectiveData } from '../../../../data/encounter-objective-data';
@@ -157,6 +158,19 @@ export const EncounterEditPanel = (props: Props) => {
 					props.onChange(copy);
 				};
 
+				const setSlotLevelAdjustment = (groupID: string, slotID: string, value: number) => {
+					const copy = Utils.copy(encounter);
+					const group = copy.groups.find(g => g.id === groupID);
+					if (group) {
+						const slot = group.slots.find(s => s.id === slotID);
+						if (slot) {
+							slot.customization.levelAdjustment = value;
+						}
+					}
+					setEncounter(copy);
+					props.onChange(copy);
+				};
+
 				const setSlotConvertToSolo = (groupID: string, slotID: string, value: boolean) => {
 					const copy = Utils.copy(encounter);
 					const group = copy.groups.find(g => g.id === groupID);
@@ -208,6 +222,7 @@ export const EncounterEditPanel = (props: Props) => {
 						setSlotCount={setSlotCount}
 						moveSlot={moveSlot}
 						setSlotAddOnIDs={setSlotAddOnIDs}
+						setSlotLevelAdjustment={setSlotLevelAdjustment}
 						setSlotConvertToSolo={setSlotConvertToSolo}
 						addItem={addItem}
 						removeItem={removeItem}
@@ -248,7 +263,7 @@ export const EncounterEditPanel = (props: Props) => {
 										: null
 								}
 								{
-									EncounterLogic.getGroupStrength(group, props.sourcebooks) < EncounterLogic.getHeroValue(props.options.heroLevel) ?
+									EncounterDifficultyLogic.getGroupStrength(group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) ?
 										<Alert
 											type='warning'
 											showIcon={true}
@@ -257,7 +272,7 @@ export const EncounterEditPanel = (props: Props) => {
 										: null
 								}
 								{
-									EncounterLogic.getGroupStrength(group, props.sourcebooks) > (EncounterLogic.getHeroValue(props.options.heroLevel) * 2) ?
+									EncounterDifficultyLogic.getGroupStrength(group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2) ?
 										<Alert
 											type='warning'
 											showIcon={true}
@@ -695,8 +710,8 @@ export const EncounterEditPanel = (props: Props) => {
 		};
 
 		const getDifficultySection = () => {
-			const strength = EncounterLogic.getStrength(encounter, props.sourcebooks);
-			const difficulty = EncounterLogic.getDifficulty(strength, props.options, props.heroes);
+			const strength = EncounterDifficultyLogic.getStrength(encounter, props.sourcebooks);
+			const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
 
 			return (
 				<Expander title='Difficulty' tags={[ difficulty ]}>
@@ -789,6 +804,7 @@ interface MonsterSlotPanelProps {
 	setSlotCount: (groupID: string, slotID: string, value: number) => void;
 	moveSlot: (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => void;
 	setSlotAddOnIDs: (groupID: string, slotID: string, ids: string[]) => void;
+	setSlotLevelAdjustment: (groupID: string, slotID: string, value: number) => void;
 	setSlotConvertToSolo: (groupID: string, slotID: string, value: boolean) => void;
 	addItem: (groupID: string, slotID: string, itemID: string) => void;
 	removeItem: (groupID: string, slotID: string, itemID: string) => void;
@@ -806,6 +822,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					<HeaderText>Customize</HeaderText>
+					<NumberSpin label='Adjust level' value={props.slot.customization.levelAdjustment} onChange={value => props.setSlotLevelAdjustment(props.group.id, props.slot.id, value)} />
 					{
 						monsterGroup.addOns.length > 0 ?
 							<Select

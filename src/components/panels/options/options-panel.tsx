@@ -78,12 +78,6 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const setShowSimilarMonsters = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.showSimilarMonsters = value;
-		props.setOptions(copy);
-	};
-
 	const setSimilarLevel = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.similarLevel = value;
@@ -235,18 +229,11 @@ export const OptionsPanel = (props: Props) => {
 			case 'monster':
 				return (
 					<>
-						<Toggle label='Show data from similar monsters in the monster builder' value={props.options.showSimilarMonsters} onChange={setShowSimilarMonsters} />
-						{
-							props.options.showSimilarMonsters ?
-								<div>
-									<div className='ds-text centered-text'>Determine similarity using:</div>
-									<Toggle label='Monster level' value={props.options.similarLevel} onChange={setSimilarLevel} />
-									<Toggle label='Monster role' value={props.options.similarRole} onChange={setSimilarRole} />
-									<Toggle label='Monster organization' value={props.options.similarOrganization} onChange={setSimilarOrganization} />
-									<Toggle label='Monster size' value={props.options.similarSize} onChange={setSimilarSize} />
-								</div>
-								: null
-						}
+						<div className='ds-text'>Show data from similar monsters using these fields:</div>
+						<Toggle label='Monster level' value={props.options.similarLevel} onChange={setSimilarLevel} />
+						<Toggle label='Monster role' value={props.options.similarRole} onChange={setSimilarRole} />
+						<Toggle label='Monster organization' value={props.options.similarOrganization} onChange={setSimilarOrganization} />
+						<Toggle label='Monster size' value={props.options.similarSize} onChange={setSimilarSize} />
 					</>
 				);
 			case 'encounter':

@@ -19,6 +19,7 @@ export class EncounterData {
 						customization: {
 							addOnIDs: [],
 							itemIDs: [],
+							levelAdjustment: 0,
 							convertToSolo: false
 						},
 						monsters: [],
@@ -46,6 +47,7 @@ export class EncounterData {
 						customization: {
 							addOnIDs: [],
 							itemIDs: [],
+							levelAdjustment: 0,
 							convertToSolo: false
 						},
 						monsters: [],
@@ -73,6 +75,7 @@ export class EncounterData {
 						customization: {
 							addOnIDs: [],
 							itemIDs: [],
+							levelAdjustment: 0,
 							convertToSolo: false
 						},
 						monsters: [],
@@ -100,6 +103,7 @@ export class EncounterData {
 						customization: {
 							addOnIDs: [],
 							itemIDs: [],
+							levelAdjustment: 0,
 							convertToSolo: false
 						},
 						monsters: [],
@@ -157,6 +161,7 @@ export class EncounterData {
 						customization: {
 							addOnIDs: [],
 							itemIDs: [],
+							levelAdjustment: 0,
 							convertToSolo: false
 						},
 						monsters: [],

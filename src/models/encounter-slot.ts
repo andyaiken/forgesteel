@@ -4,6 +4,7 @@ import { MonsterState } from './monster-state';
 export interface EncounterSlotCustomization {
 	addOnIDs: string[];
 	itemIDs: string[];
+	levelAdjustment: number;
 	convertToSolo: boolean;
 }
 

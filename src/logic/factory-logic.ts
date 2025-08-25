@@ -624,6 +624,7 @@ export class FactoryLogic {
 			customization: {
 				addOnIDs: [],
 				itemIDs: [],
+				levelAdjustment: 0,
 				convertToSolo: false
 			},
 			monsters: [],
@@ -651,6 +652,7 @@ export class FactoryLogic {
 			customization: {
 				addOnIDs: [],
 				itemIDs: [],
+				levelAdjustment: 0,
 				convertToSolo: false
 			},
 			monsters: [ m ],
@@ -968,7 +970,6 @@ export class FactoryLogic {
 			compactView: false,
 			showMonstersInGroups: true,
 			showContentInTable: false,
-			showSimilarMonsters: false,
 			similarLevel: true,
 			similarRole: true,
 			similarOrganization: true,

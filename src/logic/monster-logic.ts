@@ -414,6 +414,117 @@ export class MonsterLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	static getSuggestedStats = (monster: Monster) => {
+		let roleMod = 0;
+		let damageMod = 0;
+		let orgMod = 0;
+		let staminaMod = 0;
+		let characteristicMod = 0;
+
+		switch (monster.role.type) {
+			case MonsterRoleType.Ambusher:
+				roleMod = 20;
+				damageMod = 1;
+				break;
+			case MonsterRoleType.Artillery:
+				roleMod = 10;
+				damageMod = 1;
+				break;
+			case MonsterRoleType.Brute:
+				roleMod = 30;
+				damageMod = 1;
+				break;
+			case MonsterRoleType.Controller:
+				roleMod = 10;
+				break;
+			case MonsterRoleType.Defender:
+				roleMod = 30;
+				break;
+			case MonsterRoleType.Harrier:
+				roleMod = 20;
+				break;
+			case MonsterRoleType.Hexer:
+				roleMod = 10;
+				break;
+			case MonsterRoleType.Mount:
+				roleMod = 20;
+				break;
+			case MonsterRoleType.Support:
+				roleMod = 20;
+				break;
+		}
+
+		switch (monster.role.organization) {
+			case MonsterOrganizationType.Minion:
+				staminaMod = 0.125;
+				orgMod = 0.5;
+				break;
+			case MonsterOrganizationType.Horde:
+				staminaMod = 0.5;
+				orgMod = 0.5;
+				break;
+			case MonsterOrganizationType.Platoon:
+				staminaMod = 1;
+				orgMod = 1;
+				break;
+			case MonsterOrganizationType.Elite:
+				damageMod += 1; // Add 1, because this one stacks
+				staminaMod = 2;
+				orgMod = 2;
+				break;
+			case MonsterOrganizationType.Leader:
+				damageMod = 1;
+				roleMod += 30;
+				staminaMod = 2;
+				orgMod = 2;
+				characteristicMod = 1;
+				break;
+			case MonsterOrganizationType.Solo:
+				damageMod = 2;
+				roleMod += 30;
+				staminaMod = 5;
+				orgMod = 6;
+				characteristicMod = 1;
+				break;
+		}
+
+		const ev = ((2 * monster.level) + 4) * orgMod;
+		const stamina = ((10 * monster.level) + roleMod) * staminaMod;
+
+		const dmg1 = (4 + monster.level + damageMod) * 0.6;
+		const dmg2 = (4 + monster.level + damageMod) * 1.1;
+		const dmg3 = (4 + monster.level + damageMod) * 1.4;
+
+		return {
+			highestCharacteristic: 1 + MonsterLogic.getEchelon(monster) + characteristicMod,
+			ev: Math.ceil(ev),
+			stamina: Math.ceil(stamina),
+			freeStrikeDamage: Math.ceil(dmg1),
+			damage: {
+				tier1: Math.ceil(dmg1),
+				tier2: Math.ceil(dmg2),
+				tier3: Math.ceil(dmg3)
+			},
+			damagePlus1: {
+				tier1: Math.ceil(dmg1 * 0.8),
+				tier2: Math.ceil(dmg2 * 0.8),
+				tier3: Math.ceil(dmg3 * 0.8)
+			},
+			damagePlus2: {
+				tier1: Math.ceil(dmg1 * 0.5),
+				tier2: Math.ceil(dmg2 * 0.5),
+				tier3: Math.ceil(dmg3 * 0.5)
+			},
+			damageMinus1: {
+				tier1: Math.ceil(dmg1 * 1.2),
+				tier2: Math.ceil(dmg2 * 1.2),
+				tier3: Math.ceil(dmg3 * 1.2)
+			}
+		};
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
 	static genesplice = (target: Monster, source: Monster[]) => {
 		// We don't touch ID, name, or description
 

@@ -15,7 +15,6 @@ export interface Options {
 	showMonstersInGroups: boolean;
 	showContentInTable: boolean;
 	// Monster Builder
-	showSimilarMonsters: boolean;
 	similarLevel: boolean;
 	similarRole: boolean;
 	similarOrganization: boolean;

@@ -35,10 +35,6 @@ export class OptionsUpdateLogic {
 			options.showContentInTable = false;
 		}
 
-		if (options.showSimilarMonsters === undefined) {
-			options.showSimilarMonsters = true;
-		}
-
 		if (options.similarLevel === undefined) {
 			options.similarLevel = true;
 		}

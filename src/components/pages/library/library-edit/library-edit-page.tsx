@@ -26,7 +26,9 @@ import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FeatureEditPanel } from '../../../panels/edit/feature-edit/feature-edit-panel';
+import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
+import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { Imbuement } from '../../../../models/imbuement';
@@ -150,6 +152,25 @@ export const LibraryEditPage = (props: Props) => {
 			.forEach(m => monsters.push(m));
 
 		return Collections.sort(monsters, m => MonsterLogic.getMonsterName(m));
+	};
+
+	const getSuggestedStatsSection = (monster: Monster) => {
+		const stats = MonsterLogic.getSuggestedStats(monster);
+
+		return (
+			<div>
+				<HeaderText>Stats</HeaderText>
+				<Field label='Highest characteristic' value={stats.highestCharacteristic} />
+				<Field label='EV' value={stats.ev} />
+				<Field label='Stamina' value={stats.stamina} />
+				<Field label='Free strike damage' value={stats.freeStrikeDamage} />
+				<HeaderText>Ability Damage</HeaderText>
+				<Field label='Damage (typical)' value={`${stats.damage.tier1} / ${stats.damage.tier2} / ${stats.damage.tier3}`} />
+				<Field label='Damage (1 extra target)' value={`${stats.damagePlus1.tier1} / ${stats.damagePlus1.tier2} / ${stats.damagePlus1.tier3}`} />
+				<Field label='Damage (2 or more extra targets)' value={`${stats.damagePlus2.tier1} / ${stats.damagePlus2.tier2} / ${stats.damagePlus2.tier3}`} />
+				<Field label='Damage (Fewer targets)' value={`${stats.damageMinus1.tier1} / ${stats.damageMinus1.tier2} / ${stats.damageMinus1.tier3}`} />
+			</div>
+		);
 	};
 
 	const getSimilarMonstersSection = (monster: Monster) => {
@@ -485,7 +506,7 @@ export const LibraryEditPage = (props: Props) => {
 							monsterGroup={monsterGroup}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
-							similarMonsters={props.options.showSimilarMonsters ? getSimilarMonsters(monster) : []}
+							similarMonsters={getSimilarMonsters(monster)}
 							onChange={monster => {
 								const copy = Utils.copy(monsterGroup);
 								const index = copy.monsters.findIndex(m => m.id === monster.id);
@@ -648,34 +669,31 @@ export const LibraryEditPage = (props: Props) => {
 					const monsterGroup = element as MonsterGroup;
 					const monster = monsterGroup.monsters.find(m => m.id === subElementID) as Monster;
 
-					if (props.options.showSimilarMonsters) {
-						return (
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
-											</SelectablePanel>
-										)
-									},
-									{
-										key: '2',
-										label: 'Similar Monsters',
-										children: getSimilarMonstersSection(monster)
-									}
-								]}
-							/>
-						);
-					} else {
-						return (
-							<SelectablePanel>
-								<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
-							</SelectablePanel>
-						);
-					}
+					return (
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
+										</SelectablePanel>
+									)
+								},
+								{
+									key: '2',
+									label: 'Suggested Statistics',
+									children: getSuggestedStatsSection(monster)
+								},
+								{
+									key: '3',
+									label: 'Similar Monsters',
+									children: getSimilarMonstersSection(monster)
+								}
+							]}
+						/>
+					);
 				}
 		}
 

@@ -1,6 +1,7 @@
 import { MonsterInfo, TerrainInfo } from '../../token/token';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
+import { EncounterDifficultyLogic } from '../../../../logic/encounter-difficulty-logic';
 import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectivePanel } from '../encounter-objective/encounter-objective-panel';
@@ -217,8 +218,8 @@ export const EncounterPanel = (props: Props) => {
 	};
 
 	try {
-		const strength = EncounterLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterLogic.getDifficulty(strength, props.options, props.heroes);
+		const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
+		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
 
 		return (
 			<ErrorBoundary>

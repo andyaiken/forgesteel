@@ -12,64 +12,60 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const elemental: MonsterGroup = {
 	id: 'monster-group-elemental',
 	name: 'Elemental',
-	description: `
-*It is in changing that we find purpose.*
-*ATÆSHIA, QUEEN OF ASH*
-
-When the gods formed the Mundane World, they took sparks of creation from the roiling plane of Quintessence and gave sentience to some of the universe’s most basic elements—air, fire, earth, and water. Some elementals contain just one of these components, but can come to embody multiple reagents as they age.`,
+	description: 'When the gods formed the mundane world, they took sparks of creation from the roiling plane of Quintessence and gave sentience to some of the multiverse’s most basic elements—air, earth, fire, and water. Many elementals contain just one of these components, but can come to embody multiple reagents as they age.',
 	picture: null,
 	information: [
 		{
 			id: 'elemental-info-1',
 			name: 'Duality of Form',
 			description: `
-Elementals are mercurial creatures of transformation, creation, and destruction. Though the deities first created the Mundane World, elementals cultivated and shaped it. When a tree, stone, or other aspect of the world doesn’t suit an elemental, they break it down with fire, wind, or another element, then build it anew. 
+Elementals are mercurial creatures of creation, destruction, and transformation. Though the deities first created the mundane world, elementals cultivated and shaped it. When a tree, stone, or other aspect of the world doesn’t suit an elemental, they break it down with elemental fury then build it anew.
 
-Elementals themselves also change like the winds and the tides, and from age to age, they remake themselves to reflect what the world has become. They are protectors armored by stone, lizards ablaze with fire, and sometimes dragons clad in steel.`
+Elementals change like the winds and the tides, and from age to age, they remake themselves to reflect what the world has become. They are protectors armored by stone, lizards ablaze with fire, and sometimes dragons clad in steel.`
 		},
 		{
 			id: 'elemental-info-2',
 			name: 'Rebirth and Reformation',
-			description: 'When an elemental dies in the Mundane World, their spirit returns to Quintessence, where they must rest for decades to regain strength. Should the spirit return to the Mundane World, they take on a form that reflects a creature or other aspect of that plane.'
+			description: 'When an elemental dies in the mundane world, their spirit returns to Quintessence, where they must rest for decades to regain their strength. Should the spirit return to the mundane world, they take on a form that reflects a creature or other aspect of that plane.'
 		},
 		{
 			id: 'elemental-info-3',
 			name: 'Crux of Fire',
 			description: `
-The crux of fire, often called a *blazecaster*, takes the form of a fiery lizard. They often live in hot zones of planar convergence or areas of volcanic activity. These territorial elementals usually question interlopers from afar—and if they don’t like the answers, they rain down fire before their foes can draw near. 
+Cruxes of fire, often called blazecasters, take the form of fiery lizards. They commonly live in hot zones of planar convergence or areas of volcanic activity. These territorial elementals usually question interlopers from afar—and if they don’t like the answers, they rain down fire before their foes can draw near.
 
-While many elementals weave their innate gifts into oral storytelling, cruxes of fire are particularly adroit at animating their stories in silhouettes of flame.`
+Though many elementals weave their innate gifts into oral storytelling, cruxes of fire are particularly adroit at animating their stories in silhouettes of flame.`
 		},
 		{
 			id: 'elemental-info-4',
 			name: 'Essence of Storms',
 			description: `
-At a distance, most would mistake an essence of storms, or *galeweaver*, for a large bird of prey. This majestic creature is formed from streaks of colored cloud stuff woven into the silhouette of a large eagle or falcon. 
+At a distance, most would mistake an essence of storms, sometimes known as a galeweaver, for a large bird of prey. This majestic creature is formed from streaks of colored cloud stuff woven into the silhouette of a large eagle or falcon.
 
-Galeweavers act as scouts for their ishkrars, and they’re usually the first to see trouble. Also insatiably curious, the essences often swoop down to talk when they see travelers.`
+Galeweavers act as scouts for their handlers or for groups of elementals, and they’re usually the first to spot trouble. Insatiably curious, an essence of storms often swoops down to talk when they observe travelers.`
 		},
 		{
 			id: 'elemental-info-5',
 			name: 'Essence of Tides',
 			description: `
-An essence of tides looks like a shimmering blue manta ray that glides over land as easily as through water, earning them the common name of *tidedrifter*. Most common along coastlines, essences of tides enjoy harmless pranks, especially against regulars who sail or swim in their waters.  
+An essence of tides looks like a shimmering blue manta ray that glides over land as easily as through water, earning them the common name of tidedrifter. Most common along coastlines, essences of tides enjoy harmless pranks, especially against folk who regularly sail or swim in their waters.
 
-With the tidedrifter’s healthy sense of humor, it’s not hard to win their friendship—but their relaxed demeanor evaporates if friend or family faces threat. `
+Tidedrifters have a healthy sense of humor that makes it easy to win their friendship—but their relaxed demeanor evaporates if friends or family face threats.`
 		},
 		{
 			id: 'elemental-info-6',
 			name: 'Field of Growth',
-			description: 'When an elemental dies in the Mundane World, their spirit returns to Quintessence, where they must rest for decades to regain strength. Should the spirit return to the Mundane World, they take on a form that reflects a creature or other aspect of that plane.'
+			description: 'The field of growth takes the form of a massive centipede made of vegetation. Often called verdant primevals, these caretakers of the natural cycle of life (and death) fight those they see as upsetting that cycle. Fields of growth seek not only to destroy undead and those who create them, but to sabotage divine servitors who casually peddle resurrection magic.'
 		},
 		{
 			id: 'elemental-info-7',
 			name: 'Field of Earth',
-			description: 'A protective earth elemental, a force of earth resembles a nine-foot-tall great ape formed of dirt and rough stone. They act as guardians and historians to their ishkrar, working tirelessly to thwart ills from befalling the group. These elementals are sometimes called *earthen bulwarks*.'
+			description: 'A protective earth elemental, a force of earth resembles a nine-foot-tall great ape formed of dirt and rough stone. They act as guardians and historians when among other elementals, working tirelessly to thwart ills from befalling the group. These elementals are sometimes called earthen bulwarks.'
 		},
 		{
 			id: 'elemental-info-8',
 			name: 'Elemental Languages',
-			description: 'Elementals speak Low Kuric. Some can use Caelian when they need to.'
+			description: 'Most elementals speak Low Kuric. Some can use Caelian when they need to.'
 		}
 	],
 	malice: [
@@ -78,7 +74,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 			name: 'Elemental Swap',
 			cost: 3,
 			sections: [
-				'Two elementals on the encounter map teleport and swap places, gaining damage immunity 2 until the end of the round.'
+				'Two elementals on the encounter map teleport to swap places, and each has damage immunity 2 until the end of the round.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -86,7 +82,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 			name: 'Split',
 			cost: 5,
 			sections: [
-				'An elemental acting this turn cleaves themself into 2 separate elementals, splitting their current Stamina in half between them and becoming one size smaller. The elementals otherwise have the same statistics as the original. Both elementals then shift up to their speed.'
+				'An elemental acting this turn cleaves themself into two separate elementals. Each elemental has the same statistics as the original, except that each has half the original’s current Stamina and is one size smaller. Both elementals can then shift up to their speed.'
 			]
 		}),
 		FactoryLogic.feature.createAbility({
@@ -97,12 +93,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				cost: 7,
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [
-					FactoryLogic.distance.createSelf(),
 					FactoryLogic.distance.createRanged(8)
 				],
 				target: 'Self or one elemental',
 				sections: [
-					FactoryLogic.createAbilitySectionText('Until the end of the encounter, the target’s speed increases by 5 and their strikes deal an additional 5 damage. Whenever an elemental within line of eﬀect uses another convocation ability, the target also gains the eﬀects.')
+					FactoryLogic.createAbilitySectionText('Until the end of the encounter, the target has a +5 bonus to speed and a +5 damage bonus to strikes. Additionally, whenever an elemental within the target’s line of effect uses an ability with “Convocation” in the name, the target also gains the effects of that ability.')
 				]
 			})
 		})
@@ -120,7 +115,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 			stamina: 80,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, -1, -1, -1),
+			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -130,15 +125,15 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(12) ],
-						target: 'One creature or object',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
 								tier1: '8 fire damage',
-								tier2: '12 fire damage; A<1 burning (save ends)',
-								tier3: '15 fire damage; A<2 burning (save ends)'
+								tier2: '12 fire damage; A<1 the target is burning (save ends)',
+								tier3: '15 fire damage; A<2 the target is burning (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A burning creature or object takes 1d6 fire damage at the start of each of their turns until the condition ends.')
+							FactoryLogic.createAbilitySectionText('A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round.')
 						]
 					})
 				}),
@@ -151,11 +146,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target receives fire immunity 5 until the start of the crux’s next turn if they don’t already have it.'),
+							FactoryLogic.createAbilitySectionText('Until the start of the crux’s next turn, the target has fire immunity 5.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'The ground within 3 of the target is wreathed in fire until the end of the encounter. Whenever an enemy first enters the affected area on a turn or starts their turn within it, they take 3 fire damage.'
+								effect: 'Until the end of the encounter, the ground within 3 squares of the target is wreathed in fire. Any enemy who enters that area for the first time in a round or starts their turn there takes 3 fire damage.'
 							})
 						]
 					})
@@ -170,7 +165,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The crux ignores any effects associated with the damage and flies up to their speed. If the crux doesn’t end this movement on solid ground, they fall prone.')
+							FactoryLogic.createAbilitySectionText('The crux ignores any effects associated with the damage and can fly up to their speed. If the crux doesn’t end this movement on solid ground, they fall.')
 						]
 					})
 				}),
@@ -198,7 +193,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 			encounterValue: 20,
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(8, 'fly'),
-			stamina: 80,
+			stamina: 100,
 			stability: 0,
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(1, 2, -1, 0, 2),
@@ -209,9 +204,9 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						name: 'Bluster',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
@@ -219,7 +214,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 								tier2: '5 damage; 4 lightning damage; push 1',
 								tier3: '5 damage; 7 lightning damage; push 3'
 							})),
-							FactoryLogic.createAbilitySectionText('The essence shifts 3 before or after using this ability.')
+							FactoryLogic.createAbilitySectionText('The essence shifts up to 3 squares before or after using this ability.')
 						]
 					})
 				}),
@@ -232,11 +227,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target receives lightning immunity 5 until the start of the essence’s next turn if they don’t already have it.'),
+							FactoryLogic.createAbilitySectionText('Until the start of the essence’s next turn, the target has lightning immunity 5.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'The target emits a 3 aura vortex until the end of the encounter. The aura is considered difficult terrain for enemies. At the end of each of the target’s turns, the target can select one creature within the aura to push 5.'
+								effect: 'Until the end of the encounter, a vortex surrounds the target in a 3 aura. The area is difficult terrain for enemies. Additionally, at the end of each of the target’s turns, they can push one creature in the area up to 5 squares.'
 							})
 						]
 					})
@@ -245,16 +240,15 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					ability: FactoryLogic.createAbility({
 						id: 'elemental-2-feature-3',
 						name: 'Thunderclap',
-						type: FactoryLogic.type.createTrigger('The essence takes damage from the target.'),
+						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the essence.'),
 						cost: 1,
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [
-							FactoryLogic.distance.createMelee(),
 							FactoryLogic.distance.createRanged(5)
 						],
-						target: 'One creature or object',
+						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The essence deals 5 lightning damage to the target.')
+							FactoryLogic.createAbilitySectionText('The target takes 5 lightning damage.')
 						]
 					})
 				}),
@@ -303,7 +297,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 								tier2: '11 damage; slide 2',
 								tier3: '14 damage; slide 3'
 							})),
-							FactoryLogic.createAbilitySectionText('P<2 the target\'s stability is reduced to 0 and they move 2 additional squares whenver they are force moved (save ends).')
+							FactoryLogic.createAbilitySectionText('If a target has P<2, their stability is reduced to 0 and they move 2 additional squares whenever they are force moved (save ends).')
 						]
 					})
 				}),
@@ -316,11 +310,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target receives cold immunity 5 until the start of the essence’s next turn if they don’t already have it.'),
+							FactoryLogic.createAbilitySectionText('Until the start of the essence’s next turn, the target has cold immunity 5.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'The target emits a 1 aura pool of water until the end of the encounter. The area beneath the aura becomes a river that trails behind the target as they move and is considered difficult terrain. An enemy that ends their turn standing in the river is M<2 slowed (save ends).'
+								effect: 'Until the end of the encounter, the ground within 1 square of the target is a pool of water that is difficult terrain. This water extends out behind the target as they move, creating a stream that lasts until the end of the encounter. Any enemy who ends their turn in the stream and has M<2 is slowed (save ends).'
 							})
 						]
 					})
@@ -329,11 +323,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					ability: FactoryLogic.createAbility({
 						id: 'elemental-3-feature-3',
 						name: 'Sea Salted Wounds',
-						type: FactoryLogic.type.createTrigger('An ally deals damage ot the target.'),
+						type: FactoryLogic.type.createTrigger('An ally deals rolled damage to the target.'),
 						cost: 1,
-						keywords: [],
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'One creature',
+						target: 'One enemy',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The essence makes a free strike against the target.')
 						]
@@ -342,7 +336,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 				FactoryLogic.feature.create({
 					id: 'elemental-3-feature-4',
 					name: 'Water Glide',
-					description: 'When the essence starts their turn on a space containing water, they can add the ﬂying keyword to their movement until the end of their turn. While ﬂying, the essence doesn’t provoke opportunity attacks.'
+					description: 'Whenever the essence starts their turn in a space containing water, they can fly until the end of their turn. While flying, the essence doesn’t provoke opportunity attacks.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'elemental-3-feature-5',
@@ -387,9 +381,9 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 								bonus: 2,
 								tier1: '8 damage',
 								tier2: '13 damage; R<1 prone and can\'t stand (save ends)',
-								tier3: '16 damage; prone; P<2 can\'t stand (save ends)'
+								tier3: '16 damage; R<2 prone and can\'t stand (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('This ability inflicts restrained (save ends) on targets that are already prone. When the restrained condition ends, any can’t stand effects also end.')
+							FactoryLogic.createAbilitySectionText('If a target made prone this way is already prone, they are instead restrained (save ends). If the target was also unable to stand, that effect ends when they are no longer restrained this way.')
 						]
 					})
 				}),
@@ -406,7 +400,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'The ground within 1 of the target is overgrown with thicket and vines until the end of the encounter. Whenever an enemy attacks the target while within line of effect of the affected area, they are pulled 5 towards the affected area. Whenever an enemy enters the affected area on a turn or starts their turn within it, they are knocked prone.'
+								effect: 'Until the end of the encounter, the ground within 1 square of the target is overgrown with underbrush and vines. Whenever any enemy makes a strike against the target while within line of effect of that area, the enemy is pulled 5 squares toward the area after the strike is resolved. Any enemy who enters the area for the first time in a round or starts their turn there is knocked prone.'
 							})
 						]
 					})
@@ -415,25 +409,25 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 					ability: FactoryLogic.createAbility({
 						id: 'elemental-4-feature-3',
 						name: 'Rose Lash Wounds',
-						type: FactoryLogic.type.createTrigger('The field takes damage from the target.'),
+						type: FactoryLogic.type.createTrigger('A creature or object within distance deals damage to the field.'),
 						cost: 1,
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
-						target: 'One creature or object',
+						target: 'The triggering creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The field deals 6 damage to the target and A<2 bleeding (save ends).')
+							FactoryLogic.createAbilitySectionText('The target takes 6 damage, and if they have A<2, they are bleeding (save ends).')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elemental-4-feature-4',
 					name: 'Roots Run Deep',
-					description: 'The field can target creatures touching the ground with abilities, even if they don’t have line of eﬀect.'
+					description: 'The field can target any creature touching the ground with their abilities, even if they don’t have line of effect to that creature.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'elemental-4-feature-5',
 					name: 'Fickle and Free',
-					description: 'The field ignores diﬃcult terrain.'
+					description: 'The field ignores difficult terrain.'
 				}),
 				FactoryLogic.feature.createConditionImmunity({
 					id: 'elemental-4-feature-5b',
@@ -475,7 +469,7 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 								tier2: '12 damage; M<1 restrained (save ends)',
 								tier3: '15 damage; M<2 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('The area beneath the target becomes difficult terrain.')
+							FactoryLogic.createAbilitySectionText('The target\'s space is difficult terrain.')
 						]
 					})
 				}),
@@ -488,11 +482,11 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Self or one elemental',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target imposes a bane on melee strikes made against them until the start of the force’s next turn if they don’t already have it.'),
+							FactoryLogic.createAbilitySectionText('Until the start of the force’s next turn, any melee strike made against the target takes a bane if it doesn’t already have a bane or double bane.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'The target grows a carapace of stone, increasing their stability by 3 and granting them 15 temporary Stamina until the end of the encounter.'
+								effect: 'Until the end of the encounter, the target grows a carapace of stone. They have a +3 bonus to stability and gain 15 temporary Stamina.'
 							})
 						]
 					})
@@ -507,14 +501,14 @@ With the tidedrifter’s healthy sense of humor, it’s not hard to win their fr
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The force halves the damage, gains damage weakness 3, and increases their speed by 3. The damage weakness increases by 3 each time the force uses this ability in an encounter.')
+							FactoryLogic.createAbilitySectionText('The force halves the damage, and has damage weakness 3 and a +3 bonus to speed until the end of the encounter. This damage weakness increases by 3 each time the force uses this ability in the same encounter.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elemental-5-feature-4',
 					name: 'Primordial Strength',
-					description: 'The force deals an additional 6 damage with strikes targeting objects.'
+					description: 'The force’s strikes gain a +6 damage bonus against objects.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'elemental-5-feature-5',

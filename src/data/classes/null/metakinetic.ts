@@ -163,8 +163,8 @@ Additionally, when you fall, you reduce the effective height of the fall by 5 sq
 								ability: FactoryLogic.createAbility({
 									id: 'null-sub-3-6-1b',
 									name: 'Iron Body',
-									description: 'You weaken your connection to this manifold, allowing you to move through and damage enemies.',
-									type: FactoryLogic.type.createMain(),
+									description: 'You focus until your body becomes as hard as iron.',
+									type: FactoryLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Psionic ],
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',

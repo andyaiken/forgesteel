@@ -4,7 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
@@ -99,7 +99,7 @@ Six individual draconians are presented in this section—not an adventuring par
 						tier2: '13 damage',
 						tier3: '16 damage'
 					})),
-					FactoryLogic.createAbilitySectionText('The draconian\’s scales shatter from battle damage. The draconian has damage weakness 5 but can take two turns per round until the end of the encounter.')
+					FactoryLogic.createAbilitySectionText('The draconian’s scales shatter from battle damage. The draconian has damage weakness 5 but can take two turns per round until the end of the encounter.')
 				]
 			})
 		})

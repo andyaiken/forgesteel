@@ -8,7 +8,7 @@
 ### Library
 
 * It should be possible to add custom keywords to abilities / custom weapon or armor types in kits
-* It should be possible to create a homebrew subclass / class ability / monster individually
+* It should be possible to create a homebrew class ability / monster individually
 * Add data:
   * Rivals
 * Monster Builder:

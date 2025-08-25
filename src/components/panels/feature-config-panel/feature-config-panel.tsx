@@ -1102,15 +1102,29 @@ export const FeatureConfigPanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map((skill, n) => {
+						const duplicated = props.hero && HeroLogic.getFeatures(props.hero)
+							.map(f => f.feature)
+							.filter(f => f.type === FeatureType.SkillChoice)
+							.flatMap(f => f.data.selected)
+							.filter(s => s === skill)
+							.length > 1;
+
 						const sk = SourcebookLogic.getSkill(skill, props.sourcebooks!);
 						return (
 							<Flex key={n} className='selection-box' align='center' gap={10}>
-								{
-									sk ?
-										<Field label={sk.name} value={sk.description} style={{ flex: '1 1 0' }} />
-										:
-										<div className='ds-text' style={{ flex: '1 1 0' }}>{skill}</div>
-								}
+								<Flex vertical={true}>
+									{
+										sk ?
+											<Field label={sk.name} value={sk.description} style={{ flex: '1 1 0' }} />
+											:
+											<div className='ds-text' style={{ flex: '1 1 0' }}>{skill}</div>
+									}
+									{
+										duplicated ?
+											<Field danger={true} label='Duplicated' value='You already have this skill.' />
+											: null
+									}
+								</Flex>
 								<Flex vertical={true}>
 									<Button
 										style={{ flex: '0 0 auto' }}

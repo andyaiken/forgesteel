@@ -202,9 +202,9 @@ export const HeroViewPage = (props: Props) => {
 										block={true}
 										vertical={true}
 										options={[
-											{ value: 'modern', label: <div className='ds-text'>Modern Sheet</div> },
-											{ value: 'classic', label: <div className='ds-text'><Tag color='red'>BETA</Tag>Classic Sheet</div> },
-											{ value: 'abilities', label: <div className='ds-text'>Standard Abilities</div> }
+											{ value: 'modern', label: <div style={{ margin: '5px' }}>Modern Sheet</div> },
+											{ value: 'classic', label: <div style={{ margin: '5px' }}><Tag color='red'>BETA</Tag>Classic Sheet</div> },
+											{ value: 'abilities', label: <div style={{ margin: '5px' }}>Standard Abilities</div> }
 										]}
 										value={view}
 										onChange={setView}

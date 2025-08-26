@@ -1,4 +1,6 @@
 import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+
+import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { CharacterSheetFormatter } from '../../../../utils/character-sheet-formatter';
 import { DamageModifier } from '../../../../models/damage-modifier';
@@ -11,12 +13,14 @@ import { Markdown } from '../../../controls/markdown/markdown';
 
 import './feature-component.scss';
 
-import abilityMelee from '../../../../assets/icons/sword.svg';
-import abilityMeleeRanged from '../../../../assets/icons/melee ranged.svg';
-import abilityRanged from '../../../../assets/icons/ranged.svg';
-import abilityStar from '../../../../assets/icons/star.svg';
-import abilityTriggered from '../../../../assets/icons/trigger-solid.svg';
-import targetSelf from '../../../../assets/icons/self.svg';
+import areaIcon from '../../../../assets/icons/area-icon.svg';
+import burstIcon from '../../../../assets/icons/burst-icon.svg';
+import meleeIcon from '../../../../assets/icons/sword.svg';
+import meleeRangedIcon from '../../../../assets/icons/melee ranged.svg';
+import rangedIcon from '../../../../assets/icons/ranged.svg';
+import selfIcon from '../../../../assets/icons/self.svg';
+import starIcon from '../../../../assets/icons/star.svg';
+import triggerIcon from '../../../../assets/icons/trigger-solid.svg';
 
 interface Props {
 	feature: Feature;
@@ -102,31 +106,42 @@ const TextFeatureComponent = (feature: FeatureText | FeaturePackage | FeaturePac
 };
 
 const AbilityFeatureComponent = (feature: FeatureAbility) => {
-	let abilityIcon = abilityStar;
+	let abilityIcon = starIcon;
 	// Melee / Ranged
 	if (feature.data.ability.keywords.includes('Melee')) {
 		if (feature.data.ability.keywords.includes('Ranged')) {
-			abilityIcon = abilityMeleeRanged;
+			abilityIcon = meleeRangedIcon;
 		} else {
-			abilityIcon = abilityMelee;
+			abilityIcon = meleeIcon;
 		}
 	} else if (feature.data.ability.keywords.includes('Ranged')) {
-		abilityIcon = abilityRanged;
+		abilityIcon = rangedIcon;
 	}
 
 	// Targets
 	if (feature.data.ability.target.toLowerCase() === 'self') {
-		abilityIcon = targetSelf;
+		abilityIcon = selfIcon;
+	}
+
+	// Other Distances
+	if (feature.data.ability.distance.find(d => [ AbilityDistanceType.Aura, AbilityDistanceType.Burst ].includes(d.type))) {
+		abilityIcon = burstIcon;
+	} else if (feature.data.ability.distance.find(d => [ AbilityDistanceType.Line, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].includes(d.type))) {
+		abilityIcon = areaIcon;
 	}
 
 	// Ability Type
 	if (feature.data.ability.type.usage === AbilityUsage.Trigger) {
-		abilityIcon = abilityTriggered;
+		abilityIcon = triggerIcon;
 	}
 
 	return (
 		<>
-			<div className='feature-title'><img src={abilityIcon} alt='Ability' />{feature.name}</div>
+			<div className='feature-title'>
+				<img src={abilityIcon} alt='Ability' />
+				<span className='ability-name'>{feature.name}</span>
+				<span className='type'>{feature.data.ability.type.usage}</span>
+			</div>
 			<div className='feature-description'><em>{feature.description.replace(/^\s+/, '')}</em></div>
 		</>
 	);

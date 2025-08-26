@@ -15,9 +15,10 @@
     }
 
     .feature-line,
-    .feature-title {
-        line-height: 1.4rem;
-        font-size: 1.2rem;
+    .feature-title,
+    .feature-title span {
+        line-height: 19px;
+        font-size: 17px;
         margin-bottom: 2px;
         font-weight: 500;
 
@@ -29,16 +30,40 @@
         }
     }
 
+    .feature-title {
+        span, img {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .type {
+            float: right;
+            font-weight: 350;
+        }
+    }
+
+    .feature-title {
+        span, img {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .type {
+            float: right;
+            font-weight: 350;
+        }
+    }
+
     .feature-line {
-        line-height: 1.2rem;
-        font-size: 1.1rem;
+        line-height: 16px;
+        font-size: 15px;
     }
 
     .feature-description,
     .feature-description * {
         @include common.font-serif;
-        font-size: 1.1rem;
-        line-height: 1.3rem;
+        font-size: 15px;
+        line-height: 18px;
         font-weight: 400;
         margin-bottom: 10px;
         margin-top: 5px;
@@ -65,6 +90,8 @@
         flex-wrap: wrap;
         align-items: center;
         gap: 3px 0;
+        margin-top: 2px;
+        margin-bottom: 2px;
 
         .feature-title {
             flex-grow: 1;
@@ -83,8 +110,6 @@
         .feature-iteration {
             text-wrap: nowrap;
         }
-
-        margin-bottom: 3px;
     }
 
     .feature-iteration {
@@ -95,8 +120,8 @@
         padding: 0 3px 1px;
         opacity: 0.8;
         
-        line-height: 1.2rem;
-        font-size: 1.0rem;
+        line-height: 17px;
+        font-size: 14px;
     }
 }
 

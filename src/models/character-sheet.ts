@@ -133,7 +133,10 @@ export interface CharacterSheet {
 	otherAbilities: AbilitySheet[];
 
 	// Other Features and Reference
-	featuresReferenceOther?: Feature[];
+	featuresReferenceOther?: {
+		feature: Feature,
+		source: string
+	}[];
 }
 
 export interface ProjectSheet {

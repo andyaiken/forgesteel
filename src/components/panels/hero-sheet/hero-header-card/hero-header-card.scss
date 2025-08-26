@@ -14,22 +14,66 @@
         margin-bottom: -5px;
         padding: 0;
         text-align: center;
+        opacity: 0.6;
+
+        $logo-width: 225px;
+        $shield-size: 28px;
+        $shield-spacing: 30px;
 
         img {
             --top-offset: 5px;
-            width: 225px;
+            width: $logo-width;
             height: 50px;
-            opacity: 0.6;
             object-position: center calc(50% + var(--top-offset));
             object-fit: cover;
         }
 
-        background-image: linear-gradient(180deg, common.$color-light, common.$color-light), 
-            linear-gradient(180deg, common.$color-light, common.$color-light);
-        background-size: 485px 2px, 
-            485px 2px;
-        background-position: left center, 
-            right center;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="%23ffffff"></path></svg>'),
+            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="%23ffffff"></path></svg>'),
+            url('../../../../assets/shield.png'),
+            url('../../../../assets/shield.png'),
+            linear-gradient(180deg, common.$color-medium, common.$color-medium),
+            linear-gradient(180deg, common.$color-medium, common.$color-medium),
+            linear-gradient(180deg, common.$color-medium, common.$color-medium),
+            linear-gradient(180deg, common.$color-medium, common.$color-medium),
+            linear-gradient(180deg, common.$color-medium, common.$color-medium),
+            linear-gradient(180deg, common.$color-medium, common.$color-medium);
+
+        $shield-offset: calc(($logo-width / 2) + $shield-spacing);
+
+        $top-bar-thickness: 2px;
+        $mid-bar-thickness: 1px;
+        $bottom-bar-thickness: 2px;
+
+        $baseline-bar-width: calc(50% - $shield-offset - ($shield-size / 2) - 2px);
+        $top-bar-width: calc($baseline-bar-width);
+        $mid-bar-width: calc($baseline-bar-width - 5px);
+        $bottom-bar-width: calc($baseline-bar-width + 2px);
+
+        $side-cutin-size: 24px;
+
+        background-size: $side-cutin-size $side-cutin-size,
+            $side-cutin-size $side-cutin-size,
+            $shield-size $shield-size,
+            $shield-size $shield-size,
+            $top-bar-width $top-bar-thickness,
+            $top-bar-width $top-bar-thickness,
+            $bottom-bar-width $bottom-bar-thickness,
+            $bottom-bar-width $bottom-bar-thickness,
+            $mid-bar-width $mid-bar-thickness,
+            $mid-bar-width $mid-bar-thickness;
+
+        background-position: calc(100% + $side-cutin-size / 2) center,
+            calc(0px - $side-cutin-size / 2) center,
+            calc(50% + $shield-offset) center,
+            calc(50% - $shield-offset) center,
+            left calc(50% - 6px),
+            right calc(50% - 6px),
+            left calc(50% + 5px),
+            right calc(50% + 5px),
+            5px calc(50% - 1px),
+            calc(100% - 5px) calc(50% - 1px);
+
         background-repeat: no-repeat;
     }
     

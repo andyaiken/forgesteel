@@ -1,4 +1,6 @@
 @use 'sass:color';
+@use 'sass:meta';
+@use 'sass:string';
 
 $color-extra-light: #eee;
 $color-light: #bbb;
@@ -229,30 +231,6 @@ $color-text: #444;
         $bevel-size $bevel-size,
     ;
 
-    // background-image: linear-gradient(180deg, $border-gradient),
-    //     linear-gradient(225deg, $bevel-border-gradient),
-    //     linear-gradient(270deg, $border-gradient),
-    //     linear-gradient(315deg, $bevel-border-gradient),
-    //     linear-gradient(0deg, $border-gradient),
-    //     linear-gradient(45deg, $bevel-border-gradient),
-    //     linear-gradient(90deg, $border-gradient),
-    //     linear-gradient(135deg, $bevel-border-gradient);
-    // background-position: top center,
-    //     top right,
-    //     center right,
-    //     bottom right,
-    //     bottom center,
-    //     bottom left,
-    //     center left,
-    //     top left;
-    // background-size: calc(100% - 2 * $bevel-size) $border-full-size,
-    //     $bevel-size $bevel-size,
-    //     $border-full-size calc(100% - 2 * $bevel-size),
-    //     $bevel-size $bevel-size,
-    //     calc(100% - 2 * $bevel-size) $border-full-size,
-    //     $bevel-size $bevel-size,
-    //     $border-full-size calc(100% - 2 * $bevel-size),
-    //     $bevel-size $bevel-size;
     background-repeat: no-repeat;
 }
 
@@ -302,4 +280,69 @@ $color-text: #444;
     background-repeat: no-repeat;
 
     aspect-ratio: 1 / calc(sqrt(3) / 2);
+}
+
+@function encodecolor($string) {
+    @if meta.type-of($string) == 'color' {
+        $hex: string.slice(ie-hex-str($string), 4);
+        $string: string.unquote("#{$hex}");
+    }
+
+    $string: '%23' + $string;
+    @return $string;
+}
+
+@mixin bottom-border-fancy($border-color) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom:0;
+
+    $border-size: 2px;
+    $square-size: 10px;
+    $square-gap: 4px;
+    
+    padding-bottom: calc($border-size + $square-size + $square-gap + 2px);
+
+    $top-border-offset: calc($square-gap + ($square-size + $border-size) / 2);
+    $lower-border-offset: calc($top-border-offset - (1.5 * $border-size));
+
+    $angle: 45deg;
+    $point-size: calc($square-size / 2 + $square-gap);
+    $epsilon: calc(($square-gap - ($square-gap * cos($angle))));
+
+    $point-border-start: calc($point-size * cos($angle));
+    $point-border-fade-start: calc($point-border-start - 0.1px);
+    $point-border-end: calc($point-border-start + $border-size);
+    $point-border-fade-end: calc($point-border-end + 0.1px);
+
+    $point-border-gradient: transparent $point-border-fade-start,
+        $border-color $point-border-start,
+        $border-color $point-border-end,
+        transparent $point-border-fade-end;
+
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="#{encodecolor($border-color)}"></path></svg>'),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg + $angle), $point-border-gradient),
+        linear-gradient(calc(180deg - $angle), $point-border-gradient);
+
+    background-size: $square-size $square-size,
+        calc(50% - $top-border-offset) $border-size,
+        calc(50% - $lower-border-offset) calc($border-size / 2),
+        calc(50% - $top-border-offset) $border-size,
+        calc(50% - $lower-border-offset) calc($border-size / 2),
+        50% calc($point-size + ($border-size * 3/2)),
+        50% calc($point-size + ($border-size * 3/2));
+
+    background-position: 50% calc(100% - (($border-size * 3/2) + $square-gap)),
+        left calc(100% - $top-border-offset),
+        left calc(100% - $lower-border-offset),
+        right calc(100% - $top-border-offset),
+        right calc(100% - $lower-border-offset),
+        left bottom,
+        right bottom;
+
+    background-repeat: no-repeat;
 }

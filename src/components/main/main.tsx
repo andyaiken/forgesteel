@@ -291,7 +291,7 @@ export const Main = (props: Props) => {
 				++p;
 			}
 
-			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero');
+			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize);
 		} else {
 			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], mode, !formFillable);
 		}

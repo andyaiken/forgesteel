@@ -1,10 +1,11 @@
-import { Divider, Segmented, Select } from 'antd';
+import { Divider, Segmented, Select, Space } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../models/hero';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
 import { PanelWidth } from '../../../enums/panel-width';
+import { SheetPageSize } from '../../../enums/sheet-page-size';
 import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
 
@@ -57,6 +58,12 @@ export const OptionsPanel = (props: Props) => {
 	const setIncludePlayState = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.includePlayState = value;
+		props.setOptions(copy);
+	};
+
+	const setClassicSheetPageSize = (value: SheetPageSize) => {
+		const copy = Utils.copy(props.options);
+		copy.classicSheetPageSize = value;
 		props.setOptions(copy);
 	};
 
@@ -207,6 +214,15 @@ export const OptionsPanel = (props: Props) => {
 						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 						<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
 						<Toggle label='Show play state in PDF' value={props.options.includePlayState} onChange={setIncludePlayState} />
+						<Space style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5px 10px' }}>
+							<div>Page Size</div>
+							<Segmented
+								name='pagesize'
+								options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
+								value={props.options.classicSheetPageSize}
+								onChange={setClassicSheetPageSize}
+							/>
+						</Space>
 						<Divider>View</Divider>
 						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
 						<Toggle label='Compact' value={props.options.compactView} onChange={setCompactView} />

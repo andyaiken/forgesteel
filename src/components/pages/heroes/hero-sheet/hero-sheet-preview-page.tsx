@@ -1,8 +1,9 @@
+import { Segmented, Select, Space } from 'antd';
 import { useMemo, useState } from 'react';
 import { Hero } from '../../../../models/hero';
 import { HeroSheetPage } from './hero-sheet-page';
 import { Options } from '../../../../models/options';
-import { Segmented } from 'antd';
+import { SheetPageSize } from '../../../../enums/sheet-page-size';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
@@ -29,6 +30,12 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	const setIncludePlayState = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.includePlayState = value;
+		props.setOptions(copy);
+	};
+
+	const setClassicSheetPageSize = (value: SheetPageSize) => {
+		const copy = Utils.copy(props.options);
+		copy.classicSheetPageSize = value;
 		props.setOptions(copy);
 	};
 
@@ -59,19 +66,32 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		return (
 			<div id='pdf-preview'>
 				<div className='menu'>
-					<Segmented
-						options={[
-							{ value: 'html', label: 'HTML' },
-							{ value: 'canvas', label: 'Canvas' }
-						]}
-						value={previewOptions}
-						onChange={setDisplay}
-					/>
-					<Toggle
-						label='Include current play state'
-						value={props.options.includePlayState}
-						onChange={setIncludePlayState}
-					/>
+					<Space>
+						<Segmented
+							options={[
+								{ value: 'html', label: 'HTML' },
+								{ value: 'canvas', label: 'Canvas' }
+							]}
+							value={previewOptions}
+							onChange={setDisplay}
+						/>
+						<Toggle
+							label='Include current play state'
+							value={props.options.includePlayState}
+							onChange={setIncludePlayState}
+						/>
+						<Space.Compact block>
+							Page Size
+							<Select
+								options={[
+									{ value: 'letter', label: 'Letter' },
+									{ value: 'a4', label: 'A4' }
+								]}
+								value={props.options.classicSheetPageSize}
+								onChange={setClassicSheetPageSize}
+							/>
+						</Space.Compact>
+					</Space>
 				</div>
 				<HeroSheetPage
 					hero={hero}

@@ -40,21 +40,22 @@ export class CharacterSheetBuilder {
 		let coveredFeatureIds: string[] = [];
 		const allFeatures = HeroLogic.getFeatures(hero);
 
+		// #region Ancestry
 		if (hero.ancestry) {
 			sheet.ancestryName = hero.ancestry.name;
 
-			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero)
-				.map(f => f.feature);
+			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero);
 
-			const ancestryTraits = ancestryFeatures.filter(f => f.type !== FeatureType.Choice);
+			const ancestryTraits = ancestryFeatures.filter(f => f.feature.type !== FeatureType.Choice);
 			const longFeatures = ancestryTraits
-				.filter(f => f.type === FeatureType.Text)
-				.filter(f => CharacterSheetFormatter.isLongFeature(f));
-			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(ancestryTraits);
+				.filter(f => f.feature.type === FeatureType.Text)
+				.filter(f => CharacterSheetFormatter.isLongFeature(f.feature));
+			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(ancestryTraits.map(f => f.feature));
 			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(longFeatures);
 
-			coveredFeatureIds = coveredFeatureIds.concat(ancestryFeatures.map(f => f.id));
+			coveredFeatureIds = coveredFeatureIds.concat(ancestryFeatures.map(f => f.feature.id));
 		}
+		// #endregion
 
 		sheet.currentVictories = hero.state.victories;
 		sheet.wealth = hero.state.wealth;
@@ -71,6 +72,7 @@ export class CharacterSheetBuilder {
 		});
 		coveredFeatureIds = coveredFeatureIds.concat(sheet.inventory.flatMap(i => i.features?.map(f => f.id) || []));
 
+		// #region Class
 		if (hero.class) {
 			sheet.className = hero.class.name;
 			sheet.subclassTypeName = hero.class.subclassName;
@@ -92,6 +94,7 @@ export class CharacterSheetBuilder {
 				.filter(f => f.type === FeatureType.HeroicResource)
 				.find(f => f.data.type === 'heroic')?.data.value;
 		}
+		// #endregion
 
 		sheet.size = FormatLogic.getSize(HeroLogic.getSize(hero));
 		sheet.speed = FormatLogic.getSpeed(HeroLogic.getSpeed(hero));
@@ -111,8 +114,8 @@ export class CharacterSheetBuilder {
 		sheet.surgeDamageAmount = CharacterSheetFormatter.addSign(HeroLogic.calculateSurgeDamage(hero));
 		sheet.surgesCurrent = hero.state.surges;
 
+		// #region Kits / Modifiers
 		const kits = HeroLogic.getKits(hero);
-
 		const modifiers = allFeatures.map(f => f.feature)
 			.filter(f => f.type !== FeatureType.Choice)
 			.filter(f => f.name.match(' Augmentation')
@@ -176,6 +179,41 @@ export class CharacterSheetBuilder {
 			});
 			sheet.modifierBenefits = CharacterSheetFormatter.convertFeatures(modifiers);
 		}
+		// #endregion
+
+		// #region Class Features
+		if (hero.class) {
+			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
+				.filter(f => !coveredFeatureIds.includes(f.feature.id))
+				.filter(f => f.feature.type !== FeatureType.ClassAbility);
+
+			// Place any previous level basic features in the reference section
+			const prevLevelBasicFeatures = classFeatures
+				.filter(f => (f.level || 0) < (hero.class?.level || 1))
+				.filter(f => CharacterSheetFormatter.isBasicFeature(f.feature));
+
+			classFeatures = classFeatures.filter(f => !prevLevelBasicFeatures.map(f => f.feature.id).includes(f.feature.id));
+
+			// Perks are covered elsewhere - just keep the choice here
+			const perkIds = classFeatures.map(f => f.feature)
+				.filter(f => (f.type === FeatureType.Perk) || f.id.startsWith('perk-'))
+				.flatMap(f => (f.type === FeatureType.Perk) ? f.data.selected.map(p => p.id) : f.id);
+			classFeatures = classFeatures.filter(f => !perkIds.includes(f.feature.id));
+
+			const classFeaturesForSheet = classFeatures.map(f => f.feature).sort(CharacterSheetFormatter.sortFeatures);
+			const longFeatures = classFeatures
+				.filter(f => f.feature.type === FeatureType.Text)
+				.filter(f => CharacterSheetFormatter.isLongFeature(f.feature));
+			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(classFeaturesForSheet);
+			sheet.featuresReferenceOther = (sheet.featuresReferenceOther || [])
+				.concat(prevLevelBasicFeatures)
+				.concat(longFeatures);
+
+			coveredFeatureIds = coveredFeatureIds
+				.concat(prevLevelBasicFeatures.map(f => f.feature.id))
+				.concat(classFeatures.map(f => f.feature.id));
+		}
+		// #endregion
 
 		sheet.immunities = HeroLogic.getDamageModifiers(hero, DamageModifierType.Immunity);
 		sheet.weaknesses = HeroLogic.getDamageModifiers(hero, DamageModifierType.Weakness);
@@ -200,27 +238,6 @@ export class CharacterSheetBuilder {
 				}
 			});
 		sheet.conditions = conditions;
-
-		if (hero.class) {
-			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
-				.filter(f => !coveredFeatureIds.includes(f.feature.id))
-				.filter(f => f.feature.type !== FeatureType.ClassAbility)
-				.map(f => f.feature);
-
-			// Perks are covered elsewhere - just keep the choice here
-			const perkIds = classFeatures.filter(f => f.type === FeatureType.Perk)
-				.flatMap(f => f.data.selected.map(p => p.id));
-			classFeatures = classFeatures.filter(f => !perkIds.includes(f.id));
-			classFeatures.sort(CharacterSheetFormatter.sortFeatures);
-
-			const longFeatures = classFeatures
-				.filter(f => f.type === FeatureType.Text)
-				.filter(CharacterSheetFormatter.isLongFeature);
-			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(classFeatures);
-			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(CharacterSheetFormatter.enhanceFeatures(longFeatures));
-
-			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.id));
-		}
 
 		if (hero.career) {
 			sheet.careerName = hero.career.name;
@@ -332,7 +349,7 @@ export class CharacterSheetBuilder {
 		allFeatures.filter(f => !coveredFeatureIds.includes(f.feature.id)).forEach(f => missedFeatures.push(f));
 		if (missedFeatures.length) {
 			console.warn('Missed features! - adding to "other"', missedFeatures);
-			sheet.featuresReferenceOther = (sheet.featuresReferenceOther || []).concat(missedFeatures.map(f => f.feature));
+			sheet.featuresReferenceOther = (sheet.featuresReferenceOther || []).concat(missedFeatures);
 		}
 		// Ability coverage check
 		const missedAbilities: Ability[] = [];

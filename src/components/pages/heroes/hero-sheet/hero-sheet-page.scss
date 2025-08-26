@@ -42,9 +42,6 @@
     }
 }
 
-// .hero-sheet *:not(p):not(.labeled-field-content span):not(.feature-description):not(.feature-description *):not(.symbol-text .characteristic):not(.symbol-text .potency) {
-//     @include common.font-slab();
-// }
 .hero-sheet:not(#base-override) {
     &, 
     li, p {
@@ -62,12 +59,23 @@
     flex-direction: column;
     align-items: center;
 
-    .page {
+    &.letter .page {
         aspect-ratio: 8.5 / 11;
         width: 1275px; // ~150dpi printed
         height: 1650px;
         max-width: 1275px;
         max-height: 1650px;
+    }
+
+    &.a4 .page {
+        aspect-ratio: 1 / 1.41;
+        width: 1240px; // ~150dpi printed
+        height: 1754px;
+        max-width: 1240px;
+        max-height: 1754px;
+    }
+
+    .page {
         overflow: hidden;
         margin: 0;
 
@@ -100,10 +108,12 @@
     }
 
     h2 {
-        line-height: 1.4rem;
-        font-size: 1.3rem;
+        line-height: 20px;
+        font-size: 18px;
         padding: 5px 0;
         border-bottom: 2px solid common.$color-medium;
+
+        @include common.bottom-border-fancy(common.$color-medium);
     }
 
     h3 {
@@ -122,7 +132,7 @@
         background: #fff;
         border:2px solid common.$color-light;
         border-radius: 2px;
-        margin: 10px;
+        margin: 5px;
         padding: 5px 15px;
     }
 
@@ -180,13 +190,10 @@
     }
 
     .abilities.page {
-        // display: grid;
-        // grid-template-columns: 1fr 1fr 1fr;
-        // place-items: stretch;
-        --gap: 20px;
+        --gap: 10px;
         display: flex;
         flex-wrap: wrap;
-        gap: var(--gap);//20px;
+        gap: var(--gap);
         padding: 10px;
 
         .card {
@@ -242,7 +249,7 @@
 
             background-image: linear-gradient(0deg, common.$color-light, common.$color-light);
             background-size: 2px 100%;
-            background-position: calc(50% - 1px) 0;
+            background-position: 50% 4px;
             background-repeat: no-repeat;
         }
 

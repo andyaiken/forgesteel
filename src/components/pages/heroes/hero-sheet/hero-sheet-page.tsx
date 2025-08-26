@@ -159,7 +159,7 @@ export const HeroSheetPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<main id='hero-sheet-page'>
-					<div className='hero-sheet' id={hero.id}>
+					<div className={[ 'hero-sheet', props.options.classicSheetPageSize.toLowerCase() ].join(' ')} id={hero.id}>
 						<div className='page page-1' id={addPageId(hero)}>
 							<HeroHeaderCard
 								character={character}

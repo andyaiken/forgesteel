@@ -236,17 +236,20 @@
         flex-direction: column;
         justify-content: center;
         padding-top: 15px;
+        text-align: center;
+        margin-left: -5px;
+        margin-right: -5px;
         color: common.$color-medium;
 
         div, .data {
             @include common.font-slab();
+            text-wrap: nowrap;
         }
         .data {
             border-bottom: 1px solid common.$color-medium;
             min-width: 24px;
             display: inline-block;
             text-align: center;
-            // line-height: 1.5rem;
             font-size: 1.3rem;
         }
     }

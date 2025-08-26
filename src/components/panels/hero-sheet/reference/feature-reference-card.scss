@@ -1,4 +1,8 @@
 .feature-reference.card {
+    h3 {
+        text-align: left;
+        text-decoration: underline;
+    }
     li li {
         list-style-type: disc;
     }

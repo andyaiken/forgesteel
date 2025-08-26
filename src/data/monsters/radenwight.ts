@@ -11,28 +11,28 @@ export const radenwight: MonsterGroup = {
 	id: 'monster-group-radenwight',
 	name: 'Radenwight',
 	description: `
-Small, agile, and hardy, radenwights have the appearance of humanoid rodents. They’re often referred to as “ratfolk,” a name they don’t particularly mind but also don’t embrace. Should anyone ask, many radenwights speak of being a ratfolk when they’re alone, but always a radenwight when part of a group. Radenwight groups proudly call themselves a “meddle,” and have a knack for appearing where others hoped they wouldn’t or whenever they are least expected. Radenwight meddles can be found in the wilderness as easily as in any city, so long as there’s suitable work and excitement to keep the members of the meddle occupied.
+The ratfolk known as radenwights are blessed with coordination and acrobatics so impressive and effective that they might be a highly trained and practiced circus act. They enjoy building their warrens, known as “meddles,” under cities where the chaos of daily life makes raiding the people above fun and easy.
 
-If radenwights’ enemies expect them to scurry away like rats, they will be painfully surprised to see the combined arrows, bodies, and blades of a meddle thrown against them all at once. Whatever radenwights do, they do it fearlessly, with deeply cherished values of bravery and fair play shining through even the most rakish and roguish of them. Radenwights aren’t above banditry if it would support the meddle, but they greatly prefer to overwhelm, knock down, and knock out their targets rather than engage in deadly violence. They prefer weapons of precision and look for opportunities to strike as they and their comrades create openings for one another.`,
+When the radenwights’ enemies expect them to scurry away like rats, they are painfully surprised to see the combined arrows, bodies, and blades of a meddle thrown against them all at once. Whatever the ratfolk do, they do it fearlessly, with deeply cherished values of bravery and fair play shining through for even the most rakish and roguish of them. Radenwights aren’t above banditry if it would support the meddle, but they greatly prefer to overwhelm, knock down, and knock out their targets rather than engage in deadly violence. They prefer weapons of precision and look for opportunities to strike as they and their comrades create openings for one another.`,
 	picture: null,
 	information: [
 		{
 			id: 'radenwight-info-1',
 			name: 'Bonds and Bravado',
-			description: 'It’s a big world out there for a bunch of small ratfolk, and radenwights learned long ago that trying to survive by running away or climbing to safety only gets you so far. Radenwights learn boldness from birth and are taught to hurl themselves fearlessly against any challenge that stands in their way. The key to this bravery is the intense bond of trust that exists between every radenwight, their comrades, and their community, and the knowledge that every other radenwight will act just as decisively as they do. In a scrap, it’s not one radenwight’s blade or arrow that brings down the foe, but the instant and instinctual follow-up from their fellows.'
+			description: 'It’s a big world out there for a bunch of small ratfolk, and radenwights learned long ago that trying to survive by running away or climbing to safety gets you only so far. Radenwights learn boldness from birth, and are taught to hurl themselves fearlessly against any challenge that stands in their way. The key to this bravery is the intense bond of trust that exists between every radenwight, their comrades, and their community—as well as the knowledge that every other radenwight will act just as decisively as they do. In a scrap, it’s not one radenwight’s blade or arrow that brings down the foe, but the instant and instinctual follow-up from their fellows.'
 		},
 		{
 			id: 'radenwight-info-2',
 			name: 'The Magic of Music',
-			description: 'The pursuit of arcane studies is unusual among radenwights, though the community throws their support behind any child who happens to show that talent. Somewhat more common is the spontaneous discovery of magical aptitude through music, as the culture of radenwight meddles strongly emphasizes both music and dance. Radenwights are particularly drawn to flutes and panpipes, inspired by the legend of a flutist who enraptured an evil dragon while her meddle lined up a suitably sized boulder to be dropped from the cliff above.'
+			description: 'The pursuit of arcane studies is unusual among radenwights, though the community throws their support behind any child who happens to show that talent. Somewhat more common is the spontaneous discovery of magical aptitude through music, as the culture of radenwight meddles strongly emphasizes both music and dance. Radenwights are particularly drawn to flutes and panpipes, inspired by the legend of a flutist whose playing enraptured an evil dragon—even as others in her meddle lined up a suitably sized boulder to be dropped on the creature from the cliff above.'
 		},
 		{
 			id: 'radenwight-info-3',
 			name: 'The Great Maclette',
 			description: `
-The name Maclette is never uttered without The Great before it. The radenwight maestro leads his band in complex city-wide robberies that always seem to be one step ahead of any would-be ratcatchers. Some say Maclette leads his life of crime to provide for his meddle, while others claim he strives to be king of the criminal world.
+The name Maclette is never uttered by radenwights without “The Great” before it. That maestro leads his band in complex city-wide robberies while always staying one step ahead of any would-be ratcatchers. Some say Maclette leads his life of crime to provide for his meddle, while others claim he strives to be king of the criminal world.
 
-In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is as euphonious as music to his ears, and the maestro treats every operation like a new composition. As long as his band remains at large, he’ll always be looking to outdo himself with his next great masterpiece.`
+In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is as euphonious as music to his ears, and the maestro treats every operation like a new composition. As long as his band remains at large, he’ll always be looking to outdo himself with his next great overture.`
 		},
 		{
 			id: 'radenwight-info-4',
@@ -57,7 +57,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						tier2: '10 damage; push 3; taunted (EoT)',
 						tier3: '13 damage; push 5; taunted (EoT)'
 					})),
-					FactoryLogic.createAbilitySectionText('If a target is wearing clothing covering the lower half of their body, they must use a maneuver to pull that clothing up before they can move.')
+					FactoryLogic.createAbilitySectionText('If the target is wearing clothing covering the lower half of their body, they must use a maneuver once to pull that clothing up before they can move.')
 				]
 			})
 		}),
@@ -66,7 +66,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			name: 'Rat Race',
 			cost: 5,
 			sections: [
-				'Each radenwight shifts up to their speed. Wherever a radenwight ends this movement adjacent to at least one other radenwight, they can make a melee free strike against each adjacent enemy.'
+				'Each radenwight in the encounter shifts up to their speed. If a radenwight ends this shift adjacent to one or more radenwights, they can make a melee free strike against each enemy adjacent to them.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -74,7 +74,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			name: 'Rally the Rodents',
 			cost: 7,
 			sections: [
-				'A radenwight uses music to coordinate rats to form a 10 wall of living rats scurrying atop one another into unoccupied spaces anywhere on the encounter map. The wall doesn’t block line of effect for radenwights and their allies, but it does for other creatures, as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map makes an Intuition test.',
+				'A radenwight uses music to coordinate living rats, forming a 10 wall of rats scurrying atop one another into unoccupied spaces anywhere on the encounter map. The wall doesn’t block line of effect for radenwights and their allies, but it does for other creatures as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Intuition,
 					tier1: '7 sonic damage; target can’t take a respite activity during their next respite',
@@ -91,14 +91,14 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
 			keywords: [ 'Humanoid', 'Radenwight' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 4,
 			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 1, 0),
-			withCaptain: 'Strike damage +1',
+			withCaptain: '+1 damage bonus to strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -144,14 +144,14 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
 			keywords: [ 'Humanoid', 'Radenwight' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'S'),
-			speed: FactoryLogic.createSpeed(6, 'climb'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 5,
 			stability: 1,
 			freeStrikeDamage: 1,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 2),
-			withCaptain: 'Melee distance +2',
+			withCaptain: '+2 bonus to melee distance',
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -193,14 +193,14 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Humanoid', 'Radenwight' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 4,
 			stability: 0,
 			freeStrikeDamage: 1,
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
-			withCaptain: 'Edge on strikes',
+			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -214,9 +214,9 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '1 damage; slide 1; shift 1',
-								tier2: '2 damage; slide 2; shift 2',
-								tier3: '3 damage; slide 3; shift 3'
+								tier1: '1 damage; slide 1; the swiftpaw can shift 1 square',
+								tier2: '2 damage; slide 2; the swiftpaw can shift up to 2 squares',
+								tier3: '3 damage; slide 3; the swiftpaw can shift up to 3 squares'
 							}))
 						]
 					})
@@ -242,14 +242,14 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Humanoid', 'Radenwight' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 3,
 			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(1, 2, -1, 0, 0),
-			withCaptain: 'Edge on strikes',
+			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -266,8 +266,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 								tier1: '2 damage',
 								tier2: '4 damage',
 								tier3: '5 damage'
-							})),
-							FactoryLogic.createAbilitySectionText('An ally of the redeye within 2 squares of the target can shift up to 2 squares.')
+							}))
 						]
 					})
 				}),
@@ -298,7 +297,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stamina: 40,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 0, 0),
+			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -316,7 +315,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 								tier2: '9 damage',
 								tier3: '12 damage; grabbed'
 							})),
-							FactoryLogic.createAbilitySectionText('While the target is grabbed, they take 2 damage at the start of each of the bruxer’s turns.')
+							FactoryLogic.createAbilitySectionText('A target grabbed this way takes 2 damage at the start of each of the bruxer’s turns.')
 						]
 					})
 				}),
@@ -327,7 +326,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						cost: 3,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -355,7 +354,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 				FactoryLogic.feature.create({
 					id: 'radenwight-5-feature-4',
 					name: 'Lockdown',
-					description: 'An enemy can’t shift while adjacent to the bruxer.'
+					description: 'Any enemy who shifts adjacent to the bruxer has that shift end. Additionally, any enemy adjacent to the bruxer can’t shift.'
 				})
 			]
 		}),
@@ -392,7 +391,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 								tier2: '7 sonic damage; push 3',
 								tier3: '9 sonic damage; push 4'
 							})),
-							FactoryLogic.createAbilitySectionText('The piper or an ally within distance regains Stamina equal to half the damage dealt.')
+							FactoryLogic.createAbilitySectionText('The piper or one ally within distance regains Stamina equal to the damage dealt.')
 						]
 					})
 				}),
@@ -403,10 +402,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'Each ally in the burst',
+						target: 'Each ally in the area',
 						cost: 3,
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target who has used their Ready Rodent ability since their last turn regains the use of their triggered action.'),
+							FactoryLogic.createAbilitySectionText('Each target who has used their Ready Rodent ability this round regains the use of their triggered action.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -431,7 +430,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 				FactoryLogic.feature.create({
 					id: 'radenwight-6-feature-4',
 					name: 'Musical Suggestion',
-					description: 'At the end of the piper’s turn, they can choose an adjacent creature and slide them 2, ignoring stability.'
+					description: 'At the end of the piper’s turn, they can slide one adjacent creature up to 2 squares, ignoring stability.'
 				})
 			]
 		}),
@@ -465,7 +464,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 								tier2: '6 damage',
 								tier3: '8 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The ratcrobat can shift up to 2 squares after striking the first target, then can shift 1 square after striking the second target.')
+							FactoryLogic.createAbilitySectionText('The ratcrobat shifts up to 2 squares after striking the first target, then can shift 1 square after striking the second target.')
 						]
 					})
 				}),
@@ -478,7 +477,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Slide 3; the ratcrobat can then shift into the any of the squares the target left.')
+							FactoryLogic.createAbilitySectionText('The ratcrobat slides the target up to 3 squares, then can shift into any square the target left.')
 						]
 					})
 				}),
@@ -498,7 +497,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 				FactoryLogic.feature.create({
 					id: 'radenwight-7-feature-1',
 					name: 'Gymratstics',
-					description: 'The ratcrobat has an edge on strikes against larger creatures.'
+					description: 'The ratcrobat gains an edge on strikes against larger creatures.'
 				})
 			]
 		}),
@@ -525,15 +524,15 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '3 sonic damage; slide 1; shift 1',
-								tier2: '6 sonic damage; slide 3; shift 3',
-								tier3: '8 sonic damage; slide 5; shift 5'
+								tier1: '3 sonic damage; slide 1, the maestro can shift 1 square',
+								tier2: '6 sonic damage; slide 3, the maestro shifts up to 3 squares',
+								tier3: '8 sonic damage; slide 5, the maestro shifts up to 5 squares'
 							})),
-							FactoryLogic.createAbilitySectionText('Each all within distance can use Ready Roden as a free triggered action once before the end of the round.')
+							FactoryLogic.createAbilitySectionText('Each ally within distance can use Ready Rodent as a free triggered action once before the end of the round.')
 						]
 					})
 				}),
@@ -555,7 +554,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'Each ally within 3 of a target has their speed increased by 2 until the end of their next turn.'
+								effect: 'Each ally within 3 squares of any target has a +2 bonus to speed until the end of their next turn.'
 							})
 						]
 					})
@@ -563,12 +562,12 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-3',
-						name: 'Ever Ready Rodent',
-						type: FactoryLogic.type.createTrigger('The target deals damage to an ally or takes damage from an ally.', { free: true }),
+						name: 'Ever-Ready Rodent',
+						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to an ally or takes damage from an ally.', { free: true }),
 						cost: 2,
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: 'One creature',
+						target: 'The triggering creature',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The maestro makes a free strike against the target.')
 						]
@@ -577,7 +576,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 				FactoryLogic.feature.create({
 					id: 'radenwight-8-feature-4',
 					name: 'End Effect',
-					description: 'At the end of their turn, the maestro can take 5 damage to end one save ends effect affecting them. This damage can’t be reduced in any way.'
+					description: 'At the end of each of their turns, the maestro can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -586,9 +585,9 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
-						target: 'All allies in the burst',
+						target: 'Each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed or takes the Defend action.')
+							FactoryLogic.createAbilitySectionText('Each target can shift up to their speed or take the Defend action.')
 						]
 					})
 				}),
@@ -601,7 +600,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Until the end of their next turn, the target halves incoming damage, deals an additional 4 damage on strikes, and their speed is doubled.')
+							FactoryLogic.createAbilitySectionText('Until the end of their next turn, the target halves any damage they take, gains a +4 damage bonus to strikes, and has their speed doubled.')
 						]
 					})
 				}),
@@ -612,9 +611,9 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
-						target: 'All dead allies in the burst',
+						target: 'Each dead ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target stands, makes a free strike, then collapses again. Allies of the targets can use Ready Rodent as a free triggered action once in conjunction with these free strikes.')
+							FactoryLogic.createAbilitySectionText('Each target stands, makes a free strike, then falls dead again. Any ally of the targets can use Ready Rodent as a free triggered action once in conjunction with these free strikes.')
 						]
 					})
 				})
@@ -629,7 +628,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 			encounterValue: 13,
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
-			stamina: 30,
+			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
@@ -680,7 +679,7 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('If the sidekick’s mentor comes within 1 of the sidekick at any point during their turn, the mentor’s speed increases by 1 and the mentor’s movement gains the climb keyword until the end of the turn.')
+							FactoryLogic.createAbilitySectionText('If the sidekick’s mentor moves adjacent to the sidekick at any point during the mentor’s turn, the mentor gains a +1 bonus to speed and can automatically climb at full speed while moving until the end of their turn.')
 						]
 					})
 				}),
@@ -695,9 +694,9 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '6 poison damage; (weak) M weakened (save ends)',
-								tier2: '9 poison damage (average) M weakened (save ends)',
-								tier3: '13 poison damage; (strong) M weakened (save ends)'
+								tier1: '6 poison damage; M < [weak] weakened (save ends)',
+								tier2: '9 poison damage; M < [medium] weakened (save ends)',
+								tier3: '13 poison damage; M < [strong] weakened (save ends)'
 							}))
 						]
 					})
@@ -708,10 +707,10 @@ In truth, The Great Maclette finds beauty in the thrill of the heist. Robbery is
 						name: 'Triumphant Squeak',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
-						distance: [ FactoryLogic.distance.createSelf() ],
-						target: 'Self',
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'Self and each ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target can use a Recovery. The dazed, frightened, and weakened conditions end for the target. Allies within 3 can use Triumphant Squeak as a triggered action, targeting themselves.')
+							FactoryLogic.createAbilitySectionText('Each target can spend a Recovery, and ends the dazed, frightened, and weakened conditions on themself.')
 						]
 					})
 				})

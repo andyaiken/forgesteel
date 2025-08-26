@@ -1,5 +1,6 @@
 import { Options } from '../../models/options';
 import { PanelWidth } from '../../enums/panel-width';
+import { SheetPageSize } from '../../enums/sheet-page-size';
 
 export class OptionsUpdateLogic {
 	static updateOptions = (options: Options) => {
@@ -28,7 +29,7 @@ export class OptionsUpdateLogic {
 		}
 
 		if (options.classicSheetPageSize === undefined) {
-			options.classicSheetPageSize = 'letter';
+			options.classicSheetPageSize = SheetPageSize.Letter;
 		}
 
 		if (options.showMonstersInGroups === undefined) {

@@ -1,8 +1,9 @@
-import { Input, Segmented, Select, Space } from 'antd';
+import { Segmented, Select, Space } from 'antd';
 import { useMemo, useState } from 'react';
 import { Hero } from '../../../../models/hero';
 import { HeroSheetPage } from './hero-sheet-page';
 import { Options } from '../../../../models/options';
+import { SheetPageSize } from '../../../../enums/sheet-page-size';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
@@ -32,7 +33,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const setClassicSheetPageSize = (value: 'letter' | 'a4') => {
+	const setClassicSheetPageSize = (value: SheetPageSize) => {
 		const copy = Utils.copy(props.options);
 		copy.classicSheetPageSize = value;
 		props.setOptions(copy);
@@ -80,15 +81,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 							onChange={setIncludePlayState}
 						/>
 						<Space.Compact block>
-							<Input
-								style={{
-									width: 100,
-									borderInlineEnd: 0,
-									pointerEvents: 'none'
-								}}
-								placeholder='Page Size'
-								disabled
-							/>
+							Page Size
 							<Select
 								options={[
 									{ value: 'letter', label: 'Letter' },

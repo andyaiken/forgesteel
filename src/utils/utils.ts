@@ -2,6 +2,7 @@ import * as htmlToImage from 'html-to-image';
 import { Collections } from './collections';
 import { Converter } from 'showdown';
 import { Random } from './random';
+import { SheetPageSize } from '../enums/sheet-page-size';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
 
@@ -118,7 +119,7 @@ export class Utils {
 		});
 	};
 
-	static elementsToPdf = (elementIDs: string[], filename: string, pdfPaperSize: 'letter' | 'a4') => {
+	static elementsToPdf = (elementIDs: string[], filename: string, pdfPaperSize: SheetPageSize) => {
 		const elements = elementIDs
 			.map(id => document.getElementById(id))
 			.filter(element => !!element);
@@ -165,18 +166,18 @@ export class Utils {
 		pdf.save(filename);
 	};
 
-	static savePdfPages = (filename: string, pageCanvases: HTMLCanvasElement[], pdfPaperSize: 'letter' | 'a4') => {
+	static savePdfPages = (filename: string, pageCanvases: HTMLCanvasElement[], pdfPaperSize: SheetPageSize) => {
 		const orientation = 'portrait';
-
+		const paperSize = pdfPaperSize.toString().toLowerCase();
 		// @ts-expect-error Undocumented
 		const pdf = new jspdf({
 			orientation: orientation,
 			unit: (72 / 150), // undocumented feature to set ~150dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
-			format: pdfPaperSize,
+			format: paperSize,
 			hotfixes: [ 'px_scaling' ]
 		});
 		pageCanvases.forEach((canvas, n) => {
-			const page = (n === 0) ? pdf : pdf.addPage(pdfPaperSize, orientation);
+			const page = (n === 0) ? pdf : pdf.addPage(paperSize, orientation);
 			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
 		});
 

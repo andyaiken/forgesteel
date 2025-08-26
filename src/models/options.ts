@@ -1,4 +1,5 @@
 import { PanelWidth } from '../enums/panel-width';
+import { SheetPageSize } from '../enums/sheet-page-size';
 
 export interface Options {
 	// Hero
@@ -11,7 +12,7 @@ export interface Options {
 	includePlayState: boolean;
 	compactView: boolean;
 	abilityWidth: PanelWidth;
-	classicSheetPageSize: 'letter' | 'a4';
+	classicSheetPageSize: SheetPageSize;
 	// Library
 	showMonstersInGroups: boolean;
 	showContentInTable: boolean;

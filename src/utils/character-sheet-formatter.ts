@@ -98,6 +98,18 @@ export class CharacterSheetFormatter {
 		return f.name.includes('Persistent Magic');
 	};
 
+	static isBasicFeature = (f: Feature): boolean => {
+		return [
+			FeatureType.HeroicResource,
+			FeatureType.Bonus,
+			FeatureType.CharacteristicBonus,
+			FeatureType.LanguageChoice,
+			FeatureType.SkillChoice,
+			FeatureType.Perk,
+			FeatureType.Choice
+		].includes(f.type);
+	};
+
 	static featureTypeOrder: FeatureType[] = [
 		FeatureType.Text,
 		FeatureType.Package,

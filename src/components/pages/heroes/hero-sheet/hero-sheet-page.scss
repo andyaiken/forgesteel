@@ -42,9 +42,6 @@
     }
 }
 
-// .hero-sheet *:not(p):not(.labeled-field-content span):not(.feature-description):not(.feature-description *):not(.symbol-text .characteristic):not(.symbol-text .potency) {
-//     @include common.font-slab();
-// }
 .hero-sheet:not(#base-override) {
     &, 
     li, p {
@@ -122,7 +119,7 @@
         background: #fff;
         border:2px solid common.$color-light;
         border-radius: 2px;
-        margin: 10px;
+        margin: 5px;
         padding: 5px 15px;
     }
 
@@ -180,13 +177,10 @@
     }
 
     .abilities.page {
-        // display: grid;
-        // grid-template-columns: 1fr 1fr 1fr;
-        // place-items: stretch;
-        --gap: 20px;
+        --gap: 10px;
         display: flex;
         flex-wrap: wrap;
-        gap: var(--gap);//20px;
+        gap: var(--gap);
         padding: 10px;
 
         .card {

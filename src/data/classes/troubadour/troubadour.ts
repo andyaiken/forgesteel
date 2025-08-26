@@ -774,6 +774,46 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			]
 		}),
 		FactoryLogic.createAbility({
+			id: '7vm0VdMiqgrZtpcu2',
+			name: 'Star Solo',
+			description: 'Your performance travels and doesn’t stop moving until your audience is completely rocked.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(10)
+			],
+			target: 'One creature or object',
+			cost: 7,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '5 + P damage',
+						tier2: '8 + P damage; push 3',
+						tier3: '11 + P damage; push 5'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can choose to have this ability deal sonic damage. Additionally, you can use this ability against the same target for the next 2 combat rounds without spending drama.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: '7vm0VdMiqgrZtpcu3',
+			name: 'We Meet at Last',
+			description: 'You magically intertwine your fate with another creature—for better or worse.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature',
+			cost: 7,
+			sections: [
+				FactoryLogic.createAbilitySectionText(`
+Until the end of the encounter, both you and the target can target each other with abilities even if you are beyond distance, with the distance of this ability replacing those abilities’ distances. The target can’t be force moved by an ability used beyond distance this way.
+
+Additionally, once on each of your turns, you can use a free maneuver to communicate a motivating or dispiriting message to the target, either granting them 2 surges or forcing them to take a bane on the next ability roll they make before the start of your next turn.`)
+			]
+		}),
+		FactoryLogic.createAbility({
 			id: 'fyx732V0Vlq49a1N',
 			name: 'Action Hero',
 			description: 'You wield your weapon at blistering speed, leaving everyone around you fighting for their lives.',

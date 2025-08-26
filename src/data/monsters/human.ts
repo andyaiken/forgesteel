@@ -19,31 +19,31 @@ export const human: MonsterGroup = {
 			id: 'human-info-1',
 			name: 'Villains and Heroes',
 			description: `
-Recognizing their limited lifespan, humans often set their eyes on immortality. They unfurl empires at the tip of a sword, sacrifice lives to erect grand monuments, and even aspire to godhood, all in hopes their names will be remembered forever.
+Recognizing their limited lifespans, humans often set their eyes on immortality. They unfurl empires at the tip of a sword, sacrifice lives to erect grand monuments, and even aspire to godhood, all in hopes that their names will be remembered forever. 
 
-Violence and greed are close cousins in the human family. Those with power and wealth often strive for more by the sword. Others turn to theft, often driven to desperation by rapacious neighbors. Travelers in human lands are likely to encounter robbers and barons—both exact a toll.
+Violence and greed are close cousins in the human fam ily. Those with power and wealth often strive for more with might or magic. Others turn to theft, sometimes driven to desperation by rapacious neighbors. Travelers in human lands are likely to encounter robbers and barons both seeking to exact a toll. 
 
-Other humans pursue power more subtly, turning their cunning toward selfish ends. When ambitions exceed circumstances, there is always some ancient evil power to call on. Cultists seek dark desires in exchange for service, sacrificing to forbidden gods and courting apocalypse.
+Other humans pursue power more subtly, turning their cunning toward selfish ends. When ambitions exceed circumstances, there is always some ancient evil power to call on. Cultists seek fell power in exchange for service, sacrificing to forbidden gods and courting apocalypse. 
 
-Fortunately, many humans devote themselves to righting wrongs and reshaping the world for the better. Heroes plunge themselves into danger time and time again, standing against natural and supernatural perils in pursuit of justice.`
+Fortunately, many humans devote themselves to righting wrongs and reshaping the world for the better. Human heroes plunge themselves into danger time and time again, standing against natural and supernatural perils in pursuit of justice. `
 		},
 		{
 			id: 'human-info-2',
 			name: 'Risks and Rewards',
 			description: `
-Humans devote as much attention to games and gambling as to more serious pursuits. Perhaps this competitive training explains their renowned knack for seizing the moment—knowing when to risk it all on a throw of the dice. Whether in sport or battle, humans quickly spot their opponent’s mistakes and seize the advantage.
+Humans devote as much atten tion to games and gambling as to more serious pursuits. Perhaps this competitive nature explains their renowned knack for seizing the moment—knowing when to risk all on a throw of the dice. Whether in sport or battle, humans quickly spot their opponent’s mistakes and seize the advantage.
 
-Humans see unrealized potential everywhere, whether envisioning an untamed forest transformed into a prosper-ous village or an ancient dungeon yielding a chest full of coins. Pursuing such ambitions might end in catastrophe, but for these gamblers, it’s a game worth playing.`
+Humans see unrealized potential everywhere, whether envisioning an untamed forest transformed into a prosper ous village, or an ancient dungeon yielding chests filled with coins. Pursuing such ambitions might end in catastrophe, but for these gamblers, it’s a game worth playing.`
 		},
 		{
 			id: 'human-info-3',
 			name: 'Swords for Hire',
-			description: 'With an appetite for warfare and gold, human adventurers are well represented in most mercenary bands. A human mercenary makes a stout ally… if you can afford their price.'
+			description: 'With an appetite for warfare and gold, human adventurers are well represented in most mer cenary bands. A human mercenary makes a stout ally … if you can afford their price.'
 		},
 		{
 			id: 'human-info-4',
 			name: 'Connected to the Natural World',
-			description: 'Humans are connected to the natural world in a way that other species are not. As such, they have an uncanny knack for detecting when nearby creatures, objects, and phenomena are created by magic and psionics. This same sense allows them to resist supernatural abilities and effects.'
+			description: ' Humans are connected to the natural world in a way that many other folk are not. As such, they have an uncanny knack for detecting when nearby creatures, objects, and phenomena have been created by magic and psionics. This same sense allows them to resist supernatural effects.'
 		},
 		{
 			id: 'human-info-5',
@@ -60,7 +60,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				cost: 3,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-				target: 'Each enemy in the cube',
+				target: 'Each enemy and object in the area',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						tier1: '4 corruption damage; A<0 slowed (save ends)',
@@ -75,7 +75,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			name: 'Exploit Opening',
 			cost: 5,
 			sections: [
-				'Until the end of their turn, each human acting this turn has an edge on their abilities, or a double edge if their ability targets an enemy affected by a condition.'
+				'Each human acting this turn gains an edge on abilities until the end of their turn, or has a double edge on any ability that targets an enemy affected by a condition.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -83,7 +83,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			name: 'Staying Power',
 			cost: 7,
 			sections: [
-				'Each non-minion human in the encounter regains Stamina equal to 5 times their level.'
+				' Each non-minion human in the encounter regains Stamina equal to 5 times their level.'
 			]
 		})
 	],
@@ -94,13 +94,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
 			keywords: [ 'Human', 'Humanoid' ],
-			encounterValue: 8,
+			encounterValue: 4,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 4,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Ranged distance +5',
+			withCaptain: '+5 bonus to ranged distance',
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -133,14 +133,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '3 lightning damage',
 								tier3: '5 lightning damage'
 							})),
-							FactoryLogic.createAbilitySectionText('If the apprentice mage doesn’t use a maneuver or a move action this turn, the target is slowed (EoT).')
+							FactoryLogic.createAbilitySectionText('If the apprentice mage doesn’t use a maneuver or a move action this turn, the target is also slowed (EoT).')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-1-4',
 					name: 'Supernatural Insight',
-					description: 'The apprentice mage ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The apprentice mage ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -150,13 +150,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Human', 'Humanoid' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 5,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Speed +2',
+			withCaptain: '+5 bonus to speed2',
 			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -189,14 +189,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '4 damage',
 								tier3: '5 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('If the guard is flanked, they can make a free strike against an additional target adjacent to them.')
+							FactoryLogic.createAbilitySectionText('If the guard is flanked, they can make a free strike against a different target adjacent to them.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-2-4',
 					name: 'Supernatural Insight',
-					description: 'The guard ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The guard ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -206,13 +206,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Human', 'Humanoid' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 3,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Ranged distance +5',
+			withCaptain: '+5 bonus to ranged distance',
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -251,7 +251,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.create({
 					id: 'human-3-4',
 					name: 'Supernatural Insight',
-					description: 'The archer ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The archer ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -261,13 +261,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Human', 'Humanoid' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
 			stamina: 4,
 			stability: 0,
 			freeStrikeDamage: 1,
-			withCaptain: 'Edge on strikes',
+			withCaptain: 'Gain an edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -288,10 +288,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						name: 'Handaxe',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
-							FactoryLogic.distance.createMelee(1),
-							FactoryLogic.distance.createRanged(5)
+							FactoryLogic.distance.createMelee(1)
 						],
 						target: 'One creature or object per minion',
 						sections: [
@@ -301,14 +300,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '2 damage',
 								tier3: '3 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('If this ability is used while charging, the raider can make a ranged free strike before using the ability.')
+							FactoryLogic.createAbilitySectionText('If this ability is used as part of a charge, the raider can make a ranged free strike before using the ability.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-4-4',
 					name: 'Supernatural Insight',
-					description: 'The raider ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The raider ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -318,7 +317,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
 			keywords: [ 'Human', 'Humanoid' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 3,
@@ -357,14 +356,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '2 corruption damage',
 								tier3: '3 corruption damage'
 							})),
-							FactoryLogic.createAbilitySectionText('A creature within 5 squares of the death acolyte regains 1 Stamina.')
+							FactoryLogic.createAbilitySectionText('One creature within 5 squares regains 1 Stamina.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-5-4',
 					name: 'Supernatural Insight',
-					description: 'The death acolyte ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The death acolyte ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -374,13 +373,13 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
 			keywords: [ 'Human', 'Humanoid' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
 			stamina: 4,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Edge on strikes',
+			withCaptain: 'Gain an edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -410,18 +409,18 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '2 corruption damage',
-								tier2: '4 corruption damage',
-								tier3: '5 corruption damage'
+								tier1: '1 corruption damage',
+								tier2: '2 corruption damage',
+								tier3: '3 corruption damage'
 							})),
-							FactoryLogic.createAbilitySectionText('This ability deals an additional 3 damage if the rogue was disguised or hidden before using it.')
+							FactoryLogic.createAbilitySectionText('If the rogue is disguised or hidden when they use this ability, it deals an extra 3 damage.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-6-4',
 					name: 'Supernatural Insight',
-					description: 'The rogue ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The rogue ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -467,9 +466,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								bonus: 2,
 								tier1: '6 damage',
 								tier2: '9 damage',
-								tier3: '12 damage; M<2 grabbed, target has a bane on escaping the grab'
+								tier3: '12 damage; M<2 grabbed and the target takes a bane on the Escape Grab maneuver'
 							})),
-							FactoryLogic.createAbilitySectionText('The brawler deals an additional 2 damage if the target is already grabbed.')
+							FactoryLogic.createAbilitySectionText('A target who is already grabbed takes an extra 2 damage.')
 						]
 					})
 				}),
@@ -483,19 +482,19 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature grabbed by the brawler',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Push 5.')
+							FactoryLogic.createAbilitySectionText('The brawler pushes the target up to 5 squares.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-7-feature-5',
 					name: 'Shoot the Hostage',
-					description: 'The brawler takes half damage from strikes if they have a creature or object grabbed. The grabbed creature or object takes the other half of the damage.'
+					description: 'The brawler halves the damage from any strike if they have a creature or object grabbed of size 1S or larger. The grabbed creature or object takes the remaining damage.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-7-feature-6',
 					name: 'Supernatural Insight',
-					description: 'The brawler ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The brawler ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -544,14 +543,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '9 damage',
 								tier3: '12 damage; M<2 the target has a double bane on their next power roll'
 							})),
-							FactoryLogic.createAbilitySectionText('Taunted (EoT).')
+							FactoryLogic.createAbilitySectionText('The target is taunted (EoT).')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-8-feature-4',
 					name: 'I\'m Your Enemy',
-					description: 'The knave can make a free strike against an adjacent creature they have taunted whenever the creature deals damage to a creature other than the knave.'
+					description: 'Whenever an adjacent creature the knave has taunted deals damage to a creature other than the knave, the knave can make a free strike against them.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-8-feature-5',
@@ -561,7 +560,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.create({
 					id: 'human-8-feature-6',
 					name: 'Supernatural Insight',
-					description: 'The knave ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The knave ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -613,7 +612,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
-								effect: 'The death cultist regains Stamina equal to half the damage dealt by this ability.'
+								effect: 'The death cultist regains Stamina equal to half the damage dealt.'
 							})
 						]
 					})
@@ -626,16 +625,16 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						cost: 1,
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'One or more dead minions (each target must have died during this encounter)',
+						target: 'Each dead minion in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target revives with their full Stamina. They immediately die at the end of the encounter or if the death cultist is killed. A target can be revived multiple times by this ability.')
+							FactoryLogic.createAbilitySectionText('Each target who died during this encounter revives with full Stamina. They immediately die at the end of the encounter or if the death cultist is killed. A target can be revived multiple times by this ability.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-9-feature-5',
 					name: 'Supernatural Insight',
-					description: 'The death cultist ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The death cultist ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -683,7 +682,11 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '9 damage',
 								tier3: '12 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('This ability deals an additional 2 damage if the scoundrel has an edge on the power roll.')
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'If this ability gains an edge or has a double edge, it deals an extra 2 damage.'
+							})
 						]
 					})
 				}),
@@ -697,14 +700,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						target: '',
 						cost: 5,
 						sections: [
-							FactoryLogic.createAbilitySectionText('The scoundrel uses Rapier & Dagger targeting three creatures or objects. They can shift 2 before or after each strike.')
+							FactoryLogic.createAbilitySectionText('The scoundrel uses Rapier and Dagger against up to three targets. They shift up to 2 squares before or after each strike.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-10-feature-5',
 					name: 'Supernatural Insight',
-					description: 'The scoundrel ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The scoundrel ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -755,7 +758,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
-								effect: 'The ability takes the Area keyword and becomes a 10 × 1 line that targets each enemy and object in the area.'
+								effect: 'The ability loses the Ranged and Strike keywords, takes the Area keyword, and is a 10 × 1 line within 15 that targets each enemy and object in the area. '
 							})
 						]
 					})
@@ -768,7 +771,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						cost: 3,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 1 }) ],
-						target: 'All enemies and objects',
+						target: 'Each enemy and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
@@ -776,19 +779,19 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: 'Slide 4; M<1 slowed (save ends)',
 								tier3: 'Slide 6; M<2 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('The gust of wind disperses gas or vapor and extinguishes any flames, including persistent effects.')
+							FactoryLogic.createAbilitySectionText('The gust of wind disperses gas or vapor and extinguishes any flames, including supernatural effects.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-11-feature-5',
 					name: 'Arcane Shield',
-					description: 'The mage imposes a bane on incoming melee strikes and abilities. Whenever the mage takes damage from an adjacent enemy, the enemy takes 2 lightning damage and is R<1 pushed 2.'
+					description: 'Any melee ability targeting the storm mage takes a bane. Additionally, whenever the mage takes damage from an adjacent enemy, the enemy takes 2 lightning damage, and if they have R<1 they are pushed up to 2 squares.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-11-feature-6',
 					name: 'Supernatural Insight',
-					description: 'The storm mage ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The storm mage ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -824,7 +827,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						name: 'Trick Crossbow',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(1),
 							FactoryLogic.distance.createRanged(15)
@@ -837,11 +840,11 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '9 damage',
 								tier3: '12 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The trickshot ignores cover and concealment.'),
+							FactoryLogic.createAbilitySectionText('This ability ignores cover and concealment.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'The trickshot targets an additional creature or object.'
+								effect: 'This ability targets one additional target.'
 							})
 						]
 					})
@@ -849,7 +852,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.create({
 					id: 'human-12-feature-4',
 					name: 'Supernatural Insight',
-					description: 'The trickshot ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The trickshot ignores concealment if it’s granted by a supernatural effect.'
 				})
 			]
 		}),
@@ -885,11 +888,11 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						name: 'Zweihander Swing',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 })
 						],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -897,11 +900,11 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '6 damage; M<2 slowed (save ends)',
 								tier3: '8 damage; M<3 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('An ally within 10 of the blackguard can make a free strike.'),
+							FactoryLogic.createAbilitySectionText('One ally within 10 squares can make a free strike.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'The ally can use their signature action instead.'
+								effect: 'One ally within 10 squares can use their signature ability instead.'
 							})
 						]
 					})
@@ -922,19 +925,19 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.create({
 					id: 'human-13-feature-5',
 					name: 'End Effect',
-					description: 'At the end of their turn, the blackguard can take 5 damage to end one save ends effect affecting them. This damage can’t be reduced in any way.'
+					description: 'At the end of each of their turns, the blackguard can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-13-feature-6',
 					name: 'Supernatural Insight',
-					description: 'The blackguard ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The blackguard ignores concealment if it’s granted by a supernatural effect.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'human-13-feature-7',
 						name: 'Parry!',
-						type: FactoryLogic.type.createTrigger('A creature targets the blackguard or an ally adjacent to the blackguard with a strike.'),
-						keywords: [],
+						type: FactoryLogic.type.createTrigger('A creature makes a strike against the blackguard or an ally adjacent to them.'),
+						keywords: [ AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(1)
 						],
@@ -964,9 +967,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Slide 5.')
+							FactoryLogic.createAbilitySectionText('The blackguard slides each target up to 5 squares.')
 						]
 					})
 				}),
@@ -977,9 +980,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
-						target: 'Each enemy in the cube',
+						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The blackguard uses their Zweihander Swing against each enemy in the area. Each ally within 5 of the area can make a free strike against any enemy in the area.')
+							FactoryLogic.createAbilitySectionText('The blackguard uses their Zweihander Swing against each target. Each ally within 5 squares of the area can then make a free strike against a target (one target per ally).')
 						]
 					})
 				})
@@ -1014,7 +1017,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'human-14-feature-3',
-						name: 'Whip & Magic Longsword',
+						name: 'Whip and Magic Longsword',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -1029,11 +1032,11 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '12 damage; pull 2',
 								tier3: '15 damage; pull 3'
 							})),
-							FactoryLogic.createAbilitySectionText('A target who is adjacent to the bandit chief after the ability resolves takes 5 corruption damage.'),
+							FactoryLogic.createAbilitySectionText('Any target who is adjacent to the bandit chief after the power roll is resolved takes 3 corruption damage.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
-								effect: 'The bandit chief targets an additional enemy or object.'
+								effect: 'This ability targets one additional target.'
 							})
 						]
 					})
@@ -1043,9 +1046,9 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-14-feature-4',
 						name: 'Kneel, Peasant!',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
-						target: 'One enemy or object',
+						target: 'One enemy',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -1056,7 +1059,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
-								effect: 'This ability targets each enemy adjacent to the bandit chief.'
+								effect: 'The ability takes the Area keyword, loses the Melee keyword, and is a 1 burst that targets each enemy in the area.'
 							})
 						]
 					})
@@ -1072,19 +1075,19 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The bandit chief takes 4 corruption damage and increases the result of the power roll by one tier.')
+							FactoryLogic.createAbilitySectionText('The bandit chief takes 5 corruption damage and increases the outcome of the power roll by one tier. This damage can’t be reduced in any way.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-14-feature-6',
 					name: 'End Effect',
-					description: 'At the end of their turn, the bandit chief can take 5 damage to end one save ends effect affecting them. This damage can’t be reduced in any way.'
+					description: 'At the end of each of their turns, the bandit chief can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-14-feature-7',
 					name: 'Supernatural Insight',
-					description: 'The blackguard ignores concealment if it’s granted by a supernatural effect, or the target is supernatural.'
+					description: 'The bandit chief ignores concealment if it’s granted by a supernatural effect.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1093,22 +1096,22 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
-						target: 'All allies in the hurst',
+						target: 'Each artillery ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target makes a ranged free strike')
+							FactoryLogic.createAbilitySectionText('Each target makes a ranged free strike.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'human-14-feature-9',
-						name: 'Form UP!',
+						name: 'Form Up!',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
-						target: 'All allies in the burst',
+						target: 'Each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed. Until the end of the encounter, the bandit chief and all allies have damage immunity 2 while adjacent to a target.')
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed. Additionally, until the end of the encounter, while the bandit chief or any ally is adjacent to a target, they have damage immunity 2.')
 						]
 					})
 				}),
@@ -1121,7 +1124,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Shift 10. During or after this movement, the bandit chief can use their Whip & Magic Longsword against up to four targets. Each ally adjacent to a target can make a free strike against them.')
+							FactoryLogic.createAbilitySectionText('The bandit chief shifts up to 10 squares. During or after this movement, they can use their Whip and Magic Longsword against up to four targets. Additionally, one ally adjacent to each target can make a free strike against that target.')
 						]
 					})
 				})
@@ -1135,7 +1138,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			keywords: [ 'Human', 'Animal' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(2),
-			speed: FactoryLogic.createSpeed(7, 'flying'),
+			speed: FactoryLogic.createSpeed(5, 'flying'),
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
@@ -1158,7 +1161,12 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier1: '5 damage',
 								tier2: '7 damage',
 								tier3: '9 damage; grabbed'
-							}))
+							})),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'If this ability gains an edge or has a double edge, it deals an extra 2 damage.'
+							})
 						]
 					})
 				}),
@@ -1178,7 +1186,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 				FactoryLogic.feature.create({
 					id: 'human-15-feature-3',
 					name: 'Mounted Platform',
-					description: 'Any creature riding the hawk can make a free strike during or after the hawk’s movement.'
+					description: 'Once per turn when the hawk moves, any creature riding the hawk can make a free strike during or after the movement.'
 				})
 			]
 		}),
@@ -1191,7 +1199,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			encounterValue: 15,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 40,
+			stamina: 21,
 			stability: 3,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 1),
@@ -1212,14 +1220,14 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '5 damage',
 								tier3: '7 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The attack gains an edge if the warrior is adjacent to their mentor.')
+							FactoryLogic.createAbilitySectionText('If the warrior is adjacent to their mentor, this ability gains an edge.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'human-16-feature-2',
 					name: 'Supernatural Insight',
-					description: 'The warrior ignores concealment if it’s granted by a supernatural effect, or if the target is supernatural.'
+					description: 'The warrior ignores concealment if it’s granted by a supernatural effect.'
 				})
 			],
 			retainer: {
@@ -1227,12 +1235,12 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-16-retainer-4',
 						name: '‘Scuse Me, Boss',
-						type: FactoryLogic.type.createTrigger('The warrior’s mentor is targeted with an attack.', { qualifiers: [ 'encounter' ] }),
+						type: FactoryLogic.type.createTrigger('The warrior’s mentor is targeted by a strike while within distance.', { qualifiers: [ 'encounter' ] }),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The warrior’s mentor',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The warrior and the mentor switch places. The warrior becomes the attack’s new target and gains 2 shields against the attack.')
+							FactoryLogic.createAbilitySectionText('The warrior and the mentor switch places. The warrior is the strike’s new target and the strike has a double bane.')
 						]
 					})
 				}),
@@ -1243,7 +1251,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
-						target: 'One creatures',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -1251,7 +1259,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								tier2: '11 damage',
 								tier3: '16 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('Until the start of the warrior’s next turn, the warrior and allies within 1 gain 1 shield.')
+							FactoryLogic.createAbilitySectionText('Until the start of the warrior’s next turn, ability rolls against the warrior or any ally adjacent to the warrior have a double bane.')
 						]
 					})
 				}),
@@ -1262,7 +1270,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],

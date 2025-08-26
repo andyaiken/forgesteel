@@ -302,7 +302,7 @@ $color-text: #444;
     padding-bottom: calc($border-size + $square-size + $square-gap + 2px);
 
     $top-border-offset: calc($square-gap + ($square-size + $border-size) / 2);
-    $lower-border-offset: calc($top-border-offset - (2 * $border-size));
+    $lower-border-offset: calc($top-border-offset - (1.5 * $border-size));
 
     $angle: 45deg;
     $point-size: calc($square-size / 2 + $square-gap);

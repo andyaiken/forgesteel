@@ -14,22 +14,43 @@
         margin-bottom: -5px;
         padding: 0;
         text-align: center;
+        opacity: 0.6;
 
         img {
             --top-offset: 5px;
             width: 225px;
             height: 50px;
-            opacity: 0.6;
             object-position: center calc(50% + var(--top-offset));
             object-fit: cover;
         }
 
-        background-image: linear-gradient(180deg, common.$color-light, common.$color-light), 
-            linear-gradient(180deg, common.$color-light, common.$color-light);
-        background-size: 485px 2px, 
-            485px 2px;
-        background-position: left center, 
+        background-image: url('../../../../assets/shield.png'),
+            url('../../../../assets/shield.png'),
+            linear-gradient(180deg, common.$color-dark, common.$color-dark),
+            linear-gradient(180deg, common.$color-dark, common.$color-dark),
+            linear-gradient(180deg, common.$color-dark, common.$color-dark),
+            linear-gradient(180deg, common.$color-dark, common.$color-dark),
+            linear-gradient(180deg, common.$color-dark, common.$color-dark),
+            linear-gradient(180deg, common.$color-dark, common.$color-dark);
+
+        background-size: 24px 24px,
+            24px 24px,
+            465px 1px,
+            465px 1px,
+            467px 1px,
+            467px 1px,
+            465px 2px,
+            465px 2px;
+
+        background-position: calc(50% + 135px) center,
+            calc(50% - 135px) center,
+            left calc(50% - 5px),
+            right calc(50% - 5px),
+            left calc(50% + 4px),
+            right calc(50% + 4px),
+            left center,
             right center;
+
         background-repeat: no-repeat;
     }
     

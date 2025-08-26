@@ -97,10 +97,12 @@
     }
 
     h2 {
-        line-height: 1.4rem;
-        font-size: 1.3rem;
+        line-height: 20px;
+        font-size: 18px;
         padding: 5px 0;
         border-bottom: 2px solid common.$color-medium;
+
+        @include common.bottom-border-fancy(common.$color-medium);
     }
 
     h3 {
@@ -236,7 +238,7 @@
 
             background-image: linear-gradient(0deg, common.$color-light, common.$color-light);
             background-size: 2px 100%;
-            background-position: calc(50% - 1px) 0;
+            background-position: 50% 4px;
             background-repeat: no-repeat;
         }
 

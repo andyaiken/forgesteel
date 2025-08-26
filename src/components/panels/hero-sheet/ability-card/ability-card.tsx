@@ -89,7 +89,9 @@ export const AbilityCard = (props: Props) => {
 					</div>
 					<div className='distance-target'>
 						<div className='distance'>
-							<img src={distanceIcon} alt='Distance' />
+							{ability.distance?.length ?
+								<img src={distanceIcon} alt='Distance' />
+								: undefined }
 							<span>{ability.distance}</span>
 						</div>
 						<div className='target'>

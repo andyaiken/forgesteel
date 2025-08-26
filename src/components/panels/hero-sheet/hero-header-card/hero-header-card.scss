@@ -16,9 +16,13 @@
         text-align: center;
         opacity: 0.6;
 
+        $logo-width: 225px;
+        $shield-size: 24px;
+        $shield-spacing: 30px;
+
         img {
             --top-offset: 5px;
-            width: 225px;
+            width: $logo-width;
             height: 50px;
             object-position: center calc(50% + var(--top-offset));
             object-fit: cover;
@@ -33,17 +37,22 @@
             linear-gradient(180deg, common.$color-dark, common.$color-dark),
             linear-gradient(180deg, common.$color-dark, common.$color-dark);
 
-        background-size: 24px 24px,
-            24px 24px,
-            465px 1px,
-            465px 1px,
-            467px 1px,
-            467px 1px,
-            465px 2px,
-            465px 2px;
+        $shield-offset: calc(($logo-width / 2) + $shield-spacing);
+        $mid-bar-width: calc(50% - $shield-offset - ($shield-size / 2) - 2px);
+        $top-bar-width: calc($mid-bar-width);
+        $bottom-bar-width: calc($mid-bar-width + 2px);
 
-        background-position: calc(50% + 135px) center,
-            calc(50% - 135px) center,
+        background-size: $shield-size $shield-size,
+            $shield-size $shield-size,
+            $top-bar-width 1px,
+            $top-bar-width 1px,
+            $bottom-bar-width 1px,
+            $bottom-bar-width 1px,
+             $mid-bar-width 2px,
+             $mid-bar-width 2px;
+
+        background-position: calc(50% + $shield-offset) center,
+            calc(50% - $shield-offset) center,
             left calc(50% - 5px),
             right calc(50% - 5px),
             left calc(50% + 4px),

@@ -27,6 +27,10 @@ export class OptionsUpdateLogic {
 			options.includePlayState = true;
 		}
 
+		if (options.classicSheetPageSize === undefined) {
+			options.classicSheetPageSize = 'letter';
+		}
+
 		if (options.showMonstersInGroups === undefined) {
 			options.showMonstersInGroups = true;
 		}

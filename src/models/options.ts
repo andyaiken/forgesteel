@@ -11,6 +11,7 @@ export interface Options {
 	includePlayState: boolean;
 	compactView: boolean;
 	abilityWidth: PanelWidth;
+	classicSheetPageSize: 'letter' | 'a4';
 	// Library
 	showMonstersInGroups: boolean;
 	showContentInTable: boolean;

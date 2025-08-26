@@ -1,4 +1,4 @@
-import { Divider, Segmented, Select } from 'antd';
+import { Divider, Input, Segmented, Select, Space } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../models/hero';
@@ -57,6 +57,12 @@ export const OptionsPanel = (props: Props) => {
 	const setIncludePlayState = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.includePlayState = value;
+		props.setOptions(copy);
+	};
+
+	const setClassicSheetPageSize = (value: 'letter' | 'a4') => {
+		const copy = Utils.copy(props.options);
+		copy.classicSheetPageSize = value;
 		props.setOptions(copy);
 	};
 
@@ -207,6 +213,25 @@ export const OptionsPanel = (props: Props) => {
 						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 						<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
 						<Toggle label='Show play state in PDF' value={props.options.includePlayState} onChange={setIncludePlayState} />
+						<Space.Compact block>
+							<Input
+								style={{
+									width: 100,
+									borderInlineEnd: 0,
+									pointerEvents: 'none'
+								}}
+								placeholder='Page Size'
+								disabled
+							/>
+							<Select
+								options={[
+									{ value: 'letter', label: 'Letter' },
+									{ value: 'a4', label: 'A4' }
+								]}
+								value={props.options.classicSheetPageSize}
+								onChange={setClassicSheetPageSize}
+							/>
+						</Space.Compact>
 						<Divider>View</Divider>
 						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
 						<Toggle label='Compact' value={props.options.compactView} onChange={setCompactView} />

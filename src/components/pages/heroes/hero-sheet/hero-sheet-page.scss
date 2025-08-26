@@ -59,12 +59,23 @@
     flex-direction: column;
     align-items: center;
 
-    .page {
+    &.letter .page {
         aspect-ratio: 8.5 / 11;
         width: 1275px; // ~150dpi printed
         height: 1650px;
         max-width: 1275px;
         max-height: 1650px;
+    }
+
+    &.a4 .page {
+        aspect-ratio: 1 / 1.41;
+        width: 1240px; // ~150dpi printed
+        height: 1754px;
+        max-width: 1240px;
+        max-height: 1754px;
+    }
+
+    .page {
         overflow: hidden;
         margin: 0;
 

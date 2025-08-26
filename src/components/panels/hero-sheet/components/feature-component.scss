@@ -15,7 +15,8 @@
     }
 
     .feature-line,
-    .feature-title {
+    .feature-title,
+    .feature-title span {
         line-height: 1.4rem;
         font-size: 1.2rem;
         margin-bottom: 2px;
@@ -26,6 +27,30 @@
             height: 15px;
             opacity: 0.7;
             margin-right: 5px;
+        }
+    }
+
+    .feature-title {
+        span, img {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .type {
+            float: right;
+            font-weight: 350;
+        }
+    }
+
+    .feature-title {
+        span, img {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .type {
+            float: right;
+            font-weight: 350;
         }
     }
 

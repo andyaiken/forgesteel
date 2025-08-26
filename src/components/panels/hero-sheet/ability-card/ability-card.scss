@@ -36,9 +36,9 @@
                 line-height: 0.6rem;
                 height: 0.6rem;
                 font-weight: 450;
-                bottom: 9px;
+                bottom: 10px;
                 left: 50%;
-                transform: translateX(-52%);
+                transform: translateX(-16px);
                 background: #fff;
                 padding: 1px 2px;
                 border-radius: 6px;
@@ -49,41 +49,43 @@
     .stats {
         display: grid;
         place-content: stretch;
-        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: min-content min-content;
+        margin-bottom: 15px;
 
-        .labeled-field {
+        * {
+            @include common.font-slab;
+            font-size: 1.1rem;
+            line-height: 1.4rem;
             text-wrap: nowrap;
-            margin: 0;
-
-            label {
-                font-size: 1rem;
-                margin-top: 0;
-            }
-
-            .labeled-field-content {
-                height: 2rem;
-                span {
-                    font-size: 1rem;
-                }
-            }
         }
 
-        .keywords {
-            grid-column-end: span 6;
-
-            .labeled-field-content {
-                overflow: hidden;
-                text-wrap: nowrap;
-            }
+        .keywords-action-type * {
+            font-weight: 450;
         }
 
-        .action-type {
-            grid-column-end: span 4;
+        .keywords-action-type,
+        .distance-target {
+            display: flex;
+            justify-content: space-between;
         }
 
-        .distance,
+        .action-type,
         .target {
-            grid-column-end: span 5;
+            text-align: right;
+        }
+
+        .distance, 
+        .target {
+            img {
+                height: 1.2rem;
+                margin-right: 3px;
+            }
+
+            img, span {
+                font-weight: 350;
+                display: inline-block;
+                vertical-align: middle;
+            }
         }
     }
 
@@ -98,14 +100,18 @@
         }
         .power  {
             font-weight: 600;
-            margin: 10px;
+            margin: 0 10px 10px;
             > span {
                 display: inline-block;
+                font-size: 1.2rem;
+
                 border-bottom: 1px solid common.$color-medium;
                 min-width: 50%;
 
                 .characteristic {
                     transform: translateY(3px);
+                    font-size: 1.1rem;
+                    color: common.$color-medium;
                 }
             }
         }

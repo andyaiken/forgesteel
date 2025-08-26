@@ -48,6 +48,7 @@ import { Playbook } from '../models/playbook';
 import { Plot } from '../models/plot';
 import { PowerRoll } from '../models/power-roll';
 import { RetainerData } from '../data/retainer-data';
+import { SheetPageSize } from '../enums/sheet-page-size';
 import { Size } from '../models/size';
 import { Sourcebook } from '../models/sourcebook';
 import { Speed } from '../models/speed';
@@ -967,6 +968,7 @@ export class FactoryLogic {
 			showSources: true,
 			includePlayState: true,
 			abilityWidth: PanelWidth.Medium,
+			classicSheetPageSize: SheetPageSize.Letter,
 			compactView: false,
 			showMonstersInGroups: true,
 			showContentInTable: false,

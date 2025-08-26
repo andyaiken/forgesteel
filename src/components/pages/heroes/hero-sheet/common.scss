@@ -1,4 +1,6 @@
 @use 'sass:color';
+@use 'sass:meta';
+@use 'sass:string';
 
 $color-extra-light: #eee;
 $color-light: #bbb;
@@ -281,9 +283,9 @@ $color-text: #444;
 }
 
 @function encodecolor($string) {
-    @if type-of($string) == 'color' {
-        $hex: str-slice(ie-hex-str($string), 4);
-        $string: unquote("#{$hex}");
+    @if meta.type-of($string) == 'color' {
+        $hex: string.slice(ie-hex-str($string), 4);
+        $string: string.unquote("#{$hex}");
     }
 
     $string: '%23' + $string;

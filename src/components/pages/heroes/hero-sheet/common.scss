@@ -8,6 +8,13 @@ $color-medium: #666;
 $color-dark: #444;
 $color-text: #444;
 
+$color-free-strike: #7d7d7d;//#722ed1;//#6c71c4;
+$color-main-action: #268bd2;
+$color-triggered-action: #b0401e;//#dc322f;
+$color-maneuver: #509e2e;//#859900;
+$color-performance: #d33682;
+$color-move: #7d7d7d;//#ad8b00;
+
 @mixin font-slab() {
     font-family: 'Roboto Slab', Georgia, serif !important;
     font-weight: 400;
@@ -292,6 +299,10 @@ $color-text: #444;
     @return $string;
 }
 
+@function svg-diamond-color($color) {
+    @return url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="#{encodecolor($color)}"></path></svg>');
+}
+
 @mixin bottom-border-fancy($border-color) {
     border: 0;
     background-color: transparent;
@@ -345,4 +356,147 @@ $color-text: #444;
         right bottom;
 
     background-repeat: no-repeat;
+}
+
+@mixin bottom-border-fancy-2($border-color) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom: 0;
+
+    $border-size: 2px;
+    $square-size: 10px;
+    $square-gap: 4px;
+    $angle-2-size: 1.1px;
+    $angle-2-gap: 5px;
+
+    padding-bottom: calc($border-size + $square-size + $square-gap + $angle-2-size + $angle-2-gap);
+
+    $main-border-offset: calc($square-gap + ($square-size + $border-size) / 2);
+    $lower-border-offset: calc($main-border-offset - (1.5 * $border-size));
+
+    $angle: 45deg;
+    $point-size: calc($square-size / 2 + $square-gap);
+    $epsilon: calc(($square-gap - ($square-gap * cos($angle))));
+
+    $point-border-start: calc($point-size * cos($angle));
+    $point-border-fade-start: calc($point-border-start - 0.1px);
+    $point-border-end: calc($point-border-start + $border-size);
+    $point-border-fade-end: calc($point-border-end + 0.1px);
+
+    $point-border-gradient: transparent $point-border-fade-start,
+        $border-color $point-border-start,
+        $border-color $point-border-end,
+        transparent $point-border-fade-end;
+
+    $angle-2-gap-b: 3px;
+    $angle-2-h: calc($point-size + $angle-2-gap + $angle-2-size - $angle-2-gap-b);
+    $angle-2-start: calc(($angle-2-h * cos($angle)) - ($angle-2-size / 2));
+    $angle-2-fade-start: calc($angle-2-start - 0.1px);
+    $angle-2-end: calc($angle-2-start + $angle-2-size);
+    $angle-2-fade-end: calc($angle-2-end + 0.1px);
+
+    $angle-2-w: calc($angle-2-start / sin($angle));
+    $angle-2-w-offset: calc($angle-2-gap-b * cos($angle));
+
+    $angle-2-gradient: transparent $angle-2-fade-start,
+        $border-color $angle-2-start,
+        $border-color $angle-2-end,
+        transparent $angle-2-fade-end;
+
+    $side-sq: calc(($border-size * 3/2) + $angle-2-size + $angle-2-gap - 2px);
+    $side-cutin-size: calc(($side-sq + 3px) * 2);
+    $half-cutin: calc($side-cutin-size / 2);
+    $cutin-dy: calc($main-border-offset - $half-cutin + $border-size / 2);
+    $side-sq-dy: calc($main-border-offset - ($side-sq / 2) + $border-size / 2);
+
+    background-image: svg-diamond-color($border-color),
+        svg-diamond-color(#fff),
+        svg-diamond-color($border-color),
+        svg-diamond-color(#fff),
+        svg-diamond-color($border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg + $angle), $point-border-gradient),
+        linear-gradient(calc(180deg - $angle), $point-border-gradient),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg + $angle), $angle-2-gradient),
+        linear-gradient(calc(180deg - $angle), $angle-2-gradient);
+
+    background-size: $side-sq $side-sq,
+        $side-cutin-size $side-cutin-size,
+        $side-sq $side-sq,
+        $side-cutin-size $side-cutin-size,
+        $square-size $square-size,
+        calc(50% - $main-border-offset) $border-size,
+        calc(50% - $lower-border-offset) calc($border-size / 2),
+        calc(50% - $main-border-offset) $border-size,
+        calc(50% - $lower-border-offset) calc($border-size / 2),
+        50% calc($point-size + ($border-size * 3/2)),
+        50% calc($point-size + ($border-size * 3/2)),
+        calc(50% - $angle-2-gap - $angle-2-w - $angle-2-w-offset) $angle-2-size,
+        calc(50% - $angle-2-gap - $angle-2-w - $angle-2-w-offset) $angle-2-size,
+        calc(50% - $angle-2-gap - $angle-2-w-offset) $angle-2-h,
+        calc(50% - $angle-2-gap - $angle-2-w-offset) $angle-2-h;
+
+    background-position: left calc(100% - $side-sq-dy),
+        calc(0% - $half-cutin) calc(100% - $cutin-dy),
+        right calc(100% - $side-sq-dy),
+        calc(100% + $half-cutin) calc(100% - $cutin-dy),
+        50% calc(100% - (($border-size * 3/2) + $square-gap)),
+        left calc(100% - $main-border-offset),
+        left calc(100% - $lower-border-offset),
+        right calc(100% - $main-border-offset),
+        right calc(100% - $lower-border-offset),
+        left bottom,
+        right bottom,
+        left calc(100% - $angle-2-h - $angle-2-gap-b + $angle-2-size),
+        right calc(100% - $angle-2-h - $angle-2-gap-b + $angle-2-size),
+        left calc(100% - $angle-2-gap-b),
+        right calc(100% - $angle-2-gap-b);
+
+    background-repeat: no-repeat;
+}
+
+@mixin bottom-border-fancy-3($border-color) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom: 0;
+    background-repeat: no-repeat;
+
+    $circle1-d: 8px;
+    $circle1-r: calc($circle1-d / 2);
+    $circle-gap: 3px;
+    $line-thickness: 2px;
+
+    $circle2-r1: calc($circle1-r + $circle-gap);
+    $circle2-r2: calc($circle2-r1 + $line-thickness);
+    $circle2-d: calc(2 * $circle2-r2);
+
+    $line-gap: 3px;
+    $top-line-y: calc(100% - ($line-thickness / 2) - $circle-gap - $circle1-r);
+    $bottom-line-y: calc($top-line-y + $line-gap);
+
+    background-image: radial-gradient(circle, $border-color calc($circle1-r - 0.1px), transparent $circle1-r),
+        radial-gradient(circle at $circle2-r2 0px, transparent $circle2-r1, $border-color $circle2-r1, $border-color calc($circle2-r2 - 0.1px), transparent $circle2-r2),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color);
+    
+    background-size: calc($circle1-d) calc($circle1-d),
+        $circle2-d $circle2-r2,
+        calc(50% - $circle2-r1) $line-thickness,
+        calc(50% - $circle2-r1) $line-thickness,
+        calc(50% - $circle2-r1) 1px,
+        calc(50% - $circle2-r1) 1px;
+    
+    background-position: center calc(100% - $line-thickness - $circle-gap),
+        center 100%,
+        left $top-line-y,
+        right $top-line-y,
+        left $bottom-line-y,
+        right $bottom-line-y;
 }

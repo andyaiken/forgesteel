@@ -1,6 +1,54 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
-.extra-reference.card {
+.turn-reference.card {
+    & * {
+        @include common.font-slab();
+    }
+
+    .actions-maneuvers {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        * {
+            color: common.$color-medium;
+        }
+
+        h5 {
+            margin: 4px 20px 4px 0;
+            border-bottom: 2px solid common.$color-light;
+            font-size: 1rem;
+            font-weight: 450;
+        }
+
+        ul {
+            margin: 4px 10px 4px 4px;
+            list-style-type: '— ';
+            list-style-position: outside;
+
+            li {
+                margin-top: 2px;
+            }
+        }
+
+        .main-actions,
+        .move-actions {
+            grid-column-start: 1;
+        }
+
+        .maneuvers {
+            grid-column-start: 2;
+            grid-row-start: 1;
+            grid-row-end: span 2;
+        }
+    }
+}
+
+.hero-sheet .extra-reference.card {
+    // background-image: linear-gradient(180deg, transparent 17px, #ccc 17px, #ccc 18px, #eee 18px, #eee 35px, #ccc 35px);
+    // background-size: 100% 36px;
+    // background-position: center top;
+    // background-repeat: repeat-y;
+
     h2 {
         color: common.$color-dark;
     }

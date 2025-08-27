@@ -73,7 +73,7 @@ export const StatsResourcesCard = (props: Props) => {
 						/>
 					</div>
 				</div>
-				<div className='currentState'>
+				<div className='current-state'>
 					<div className='winded'>
 						<LabeledBooleanField
 							label='Winded'

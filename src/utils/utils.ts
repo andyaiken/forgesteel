@@ -167,8 +167,11 @@ export class Utils {
 	};
 
 	static savePdfPages = (filename: string, pageCanvases: HTMLCanvasElement[], pdfPaperSize: SheetPageSize) => {
-		const orientation = 'portrait';
+		const width = Collections.max(pageCanvases.map(c => c.width), c => c) || 0;
+		const height = Collections.max(pageCanvases.map(c => c.height), c => c) || 0;
+		const orientation = (height >= width) ? 'portrait' : 'landscape';
 		const paperSize = pdfPaperSize.toString().toLowerCase();
+
 		// @ts-expect-error Undocumented
 		const pdf = new jspdf({
 			orientation: orientation,

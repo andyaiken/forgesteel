@@ -1,4 +1,5 @@
 import { AbilitySheet } from '../../../../models/character-sheet';
+import { Collections } from '../../../../utils/collections';
 import { DrawSteelSymbolText } from '../components/ds-symbol-text-component';
 import { Markdown } from '../../../controls/markdown/markdown';
 
@@ -77,11 +78,25 @@ export const AbilityCard = (props: Props) => {
 		}
 	};
 
+	const getCardClasses = (ability: AbilitySheet) => {
+		const classes = [ 'ability', 'card' ];
+		if (ability.actionType) {
+			classes.push(ability.actionType.toLocaleLowerCase().split(' ').join('-'));
+		}
+		if (ability.abilityType) {
+			classes.push(ability.abilityType.toLocaleLowerCase().split(' ').join('-'));
+		}
+		return Collections.distinct(classes, c => c).join(' ');
+	};
+
 	return (
-		<div className='ability card'>
+		<div className={getCardClasses(ability)}>
 			<section className='bordered'>
 				<h3>{ability.abilityType}</h3>
 				<h2>{ability.name}{getAbilityCost()}</h2>
+				{ability.description?.length ?
+					<p className='description'>{ability.description}</p>
+					: undefined }
 				<div className='stats'>
 					<div className='keywords-action-type'>
 						<div className='keywords'>{ability.keywords}</div>
@@ -100,7 +115,9 @@ export const AbilityCard = (props: Props) => {
 						</div>
 					</div>
 				</div>
-
+				{ability.qualifiers?.map(q => {
+					return (<div className='action-qualifier'>{q}</div>);
+				})}
 				{getPowerRollSection()}
 				{getTriggerSection()}
 				{getEffectSection()}

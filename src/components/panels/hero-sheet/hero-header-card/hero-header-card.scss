@@ -28,8 +28,10 @@
             object-fit: cover;
         }
 
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="%23ffffff"></path></svg>'),
-            url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="%23ffffff"></path></svg>'),
+        background-image: common.svg-diamond-color(common.$color-medium),
+            common.svg-diamond-color(#fff),
+            common.svg-diamond-color(common.$color-medium),
+            common.svg-diamond-color(#fff),
             url('../../../../assets/shield.png'),
             url('../../../../assets/shield.png'),
             linear-gradient(180deg, common.$color-medium, common.$color-medium),
@@ -50,9 +52,19 @@
         $mid-bar-width: calc($baseline-bar-width - 5px);
         $bottom-bar-width: calc($baseline-bar-width + 2px);
 
-        $side-cutin-size: 24px;
+        $top-space: 5px;
+        $bottom-space: 5px;
+        $bars-dy: 1px;
 
-        background-size: $side-cutin-size $side-cutin-size,
+        $side-sq: calc($top-bar-thickness + $top-space + $mid-bar-thickness + $bottom-space + $bottom-bar-thickness - 4px);
+        $side-cutin-size: calc(($side-sq + 5px) * 2);
+        $half-cutin: calc($side-cutin-size / 2);
+        $cutin-dy: $bars-dy;
+        $side-sq-dy: $bars-dy;
+
+        background-size: $side-sq $side-sq,
+            $side-cutin-size $side-cutin-size,
+            $side-sq $side-sq,
             $side-cutin-size $side-cutin-size,
             $shield-size $shield-size,
             $shield-size $shield-size,
@@ -63,8 +75,10 @@
             $mid-bar-width $mid-bar-thickness,
             $mid-bar-width $mid-bar-thickness;
 
-        background-position: calc(100% + $side-cutin-size / 2) center,
-            calc(0px - $side-cutin-size / 2) center,
+        background-position: left calc(50% - $side-sq-dy),
+            calc(0% - $half-cutin) calc(50% - $cutin-dy),
+            right calc(50% - $side-sq-dy),
+            calc(100% + $half-cutin) calc(50% - $cutin-dy),
             calc(50% + $shield-offset) center,
             calc(50% - $shield-offset) center,
             left calc(50% - 6px),

@@ -61,9 +61,21 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setColorAbilityCards = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.colorAbilityCards = value;
+		props.setOptions(copy);
+	};
+
 	const setClassicSheetPageSize = (value: SheetPageSize) => {
 		const copy = Utils.copy(props.options);
 		copy.classicSheetPageSize = value;
+		props.setOptions(copy);
+	};
+
+	const setPageOrientation = (value: 'portrait' | 'landscape') => {
+		const copy = Utils.copy(props.options);
+		copy.pageOrientation = value;
 		props.setOptions(copy);
 	};
 
@@ -246,6 +258,8 @@ export const OptionsPanel = (props: Props) => {
 									children: (
 										<>
 											<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
+											<Toggle label='Color ability cards' value={props.options.colorAbilityCards} onChange={setColorAbilityCards} />
+											<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 											<Divider>Layout</Divider>
 											<Segmented
 												name='pagesize'
@@ -253,6 +267,17 @@ export const OptionsPanel = (props: Props) => {
 												options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
 												value={props.options.classicSheetPageSize}
 												onChange={setClassicSheetPageSize}
+											/>
+											<Divider>Page Orientation</Divider>
+											<Segmented
+												name='orientation'
+												block={true}
+												options={[
+													{ value: 'portrait', label: 'Portrait' },
+													{ value: 'landscape', label: 'Landscape' }
+												]}
+												value={props.options.pageOrientation}
+												onChange={setPageOrientation}
 											/>
 										</>
 									)

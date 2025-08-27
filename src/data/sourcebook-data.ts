@@ -556,6 +556,7 @@ export class SourcebookData {
 			MonsterData.chimera,
 			MonsterData.demon,
 			MonsterData.demon2nd,
+			MonsterData.demon3rd,
 			MonsterData.devil,
 			MonsterData.draconian,
 			MonsterData.dragonCrucible,

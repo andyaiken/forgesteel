@@ -1111,7 +1111,7 @@ export const FeatureConfigPanel = (props: Props) => {
 
 						const sk = SourcebookLogic.getSkill(skill, props.sourcebooks!);
 						return (
-							<Flex key={n} className='selection-box' align='center' gap={10}>
+							<Flex key={n} className='selection-box' align='center' justify='space-between' gap={10}>
 								<Flex vertical={true}>
 									{
 										sk ?

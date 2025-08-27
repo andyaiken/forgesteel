@@ -335,7 +335,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	static createLanguage = (data: { id: string, name?: string, description?: string, language: string }): FeatureLanguage => {
+	createLanguage = (data: { id: string, name?: string, description?: string, language: string }): FeatureLanguage => {
 		return {
 			id: data.id,
 			name: data.name || data.language,

@@ -1,5 +1,4 @@
 import { AbilitySheet, CharacterSheet } from '../models/character-sheet';
-
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -10,7 +9,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
-import { FactoryFeatureLogic } from '../logic/factory-feature-logic';
+import { FactoryLogic } from '../logic/factory-logic';
 import { Feature } from '../models/feature';
 import { FeatureLogic } from '../logic/feature-logic';
 import { FeatureType } from '../enums/feature-type';
@@ -283,7 +282,7 @@ export class CharacterSheetBuilder {
 		if (hero.culture) {
 			let cultureFeatures: Feature[] = [];
 			cultureFeatures = cultureFeatures.concat(allFeatures.filter(f => f.source.includes('Culture')).map(f => f.feature))
-				.concat(hero.culture.languages.map(lang => FactoryFeatureLogic.createLanguage({
+				.concat(hero.culture.languages.map(lang => FactoryLogic.feature.createLanguage({
 					id: `culture-${hero.culture?.name}-language-${lang}`,
 					language: lang
 				})));

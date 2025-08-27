@@ -471,9 +471,17 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const items = [
+			...hero.state.inventory.map(i => ({ item: i, source: 'inventory' })),
+			...HeroLogic.getFeatures(hero)
+				.map(f => f.feature)
+				.filter(f => f.type === FeatureType.ItemChoice)
+				.flatMap(f => f.data.selected)
+				.map(i => ({ item: i, source: 'feature' }))
+		];
+
 		let warning = null;
-		const leveled = hero.state.inventory.filter(i => [ ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon ].includes(i.type));
-		if (leveled.length > 3) {
+		if (items.filter(i => [ ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon ].includes(i.item.type)).length > 3) {
 			warning = (
 				<Alert
 					type='warning'
@@ -494,30 +502,51 @@ export const HeroStateModal = (props: Props) => {
 				</HeaderText>
 				{warning}
 				{
-					hero.state.inventory.map(item => (
-						<Expander
-							key={item.id}
-							title={item.count === 1 ? item.name : `${item.name} (x${item.count})`}
-							tags={[ item.type ]}
-							extra={[
-								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'up'); }} />,
-								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveItem(item, 'down'); }} />,
-								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteItem(item); }} />
-							]}
-						>
-							<ItemPanel
-								item={item}
-								options={props.options}
-								hero={hero}
-								sourcebooks={props.sourcebooks}
-								mode={PanelMode.Full}
-								onChange={changeItem}
-							/>
-						</Expander>
-					))
+					items.map(i => {
+						switch (i.source) {
+							case 'inventory':
+								return (
+									<Expander
+										key={i.item.id}
+										title={i.item.count === 1 ? i.item.name : `${i.item.name} (x${i.item.count})`}
+										tags={[ i.item.type ]}
+										extra={[
+											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveItem(i.item, 'up'); }} />,
+											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveItem(i.item, 'down'); }} />,
+											<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteItem(i.item); }} />
+										]}
+									>
+										<ItemPanel
+											item={i.item}
+											options={props.options}
+											hero={hero}
+											sourcebooks={props.sourcebooks}
+											mode={PanelMode.Full}
+											onChange={changeItem}
+										/>
+									</Expander>
+								);
+							case 'feature':
+								return (
+									<Expander
+										key={i.item.id}
+										title={i.item.count === 1 ? i.item.name : `${i.item.name} (x${i.item.count})`}
+										tags={[ i.item.type ]}
+									>
+										<ItemPanel
+											item={i.item}
+											options={props.options}
+											hero={hero}
+											sourcebooks={props.sourcebooks}
+											mode={PanelMode.Full}
+										/>
+									</Expander>
+								);
+						}
+					})
 				}
 				{
-					hero.state.inventory.length === 0 ?
+					items.length === 0 ?
 						<Empty text='Your inventory is empty.' />
 						: null
 				}

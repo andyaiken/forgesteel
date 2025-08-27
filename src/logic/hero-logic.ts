@@ -8,7 +8,6 @@ import { Collections } from '../utils/collections';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { DamageType } from '../enums/damage-type';
-import { Domain } from '../models/domain';
 import { FactoryLogic } from './factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
@@ -23,14 +22,12 @@ import { Modifier } from '../models/damage-modifier';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { NameGenerator } from '../utils/name-generator';
-import { Perk } from '../models/perk';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import { SourcebookLogic } from './sourcebook-logic';
-import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
 export class HeroLogic {
@@ -76,62 +73,6 @@ export class HeroLogic {
 		});
 
 		return Collections.sort(features, f => f.feature.name);
-	};
-
-	static getPerks = (hero: Hero) => {
-		const perks: Perk[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Perk)
-			.forEach(f => {
-				perks.push(...f.data.selected);
-			});
-
-		return perks;
-	};
-
-	static getKits = (hero: Hero) => {
-		const kits: Kit[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Kit)
-			.forEach(f => {
-				kits.push(...f.data.selected);
-			});
-
-		return kits;
-	};
-
-	static getTitles = (hero: Hero) => {
-		const titles: Title[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.TitleChoice)
-			.forEach(f => {
-				titles.push(...f.data.selected);
-			});
-
-		return titles;
-	};
-
-	static getDomains = (hero: Hero) => {
-		const domains: Domain[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Domain)
-			.forEach(f => {
-				domains.push(...f.data.selected);
-			});
-
-		return domains;
 	};
 
 	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], includeStandard: boolean) => {
@@ -207,6 +148,41 @@ export class HeroLogic {
 		}
 
 		return abilities;
+	};
+
+	static getPerks = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Perk)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getKits = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Kit)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getTitles = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.TitleChoice)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getDomains = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Domain)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getItems = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.ItemChoice)
+			.flatMap(f => f.data.selected);
 	};
 
 	static getFormerAncestries = (hero: Hero) => {

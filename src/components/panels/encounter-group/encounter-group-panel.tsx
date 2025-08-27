@@ -2,6 +2,7 @@ import { Alert, Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
 import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined, UpOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '../../../models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '../token/token';
+import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { DangerButton } from '../../controls/danger-button/danger-button';
@@ -15,6 +16,7 @@ import { MonsterOrganizationType } from '../../../enums/monster-organization-typ
 import { Options } from '../../../models/options';
 import { Terrain } from '../../../models/terrain';
 import { TerrainLogic } from '../../../logic/terrain-logic';
+import { useMediaQuery } from '../../../hooks/use-media-query';
 import { useState } from 'react';
 
 import './encounter-group-panel.scss';
@@ -34,6 +36,10 @@ interface EncounterGroupHeroProps {
 }
 
 export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
+	const showStamina = useMediaQuery('(min-width: 1200px)');
+	const showCharacteristics = useMediaQuery('(min-width: 1300px)');
+	const showStats = useMediaQuery('(min-width: 1400px)');
+
 	try {
 		let className = 'encounter-group';
 		if (props.hero.state.defeated) {
@@ -93,13 +99,55 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 								<HeroInfo hero={props.hero} />
 							</div>
 							{
-								HeroLogic.getStamina(props.hero) === 0 ?
-									<div className='stamina-column' />
-									:
-									<div className='stamina-column'>
-										{getStaminaDescription()}
-										<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								showStamina ?
+									HeroLogic.getStamina(props.hero) === 0 ?
+										<div className='stamina-column' />
+										:
+										<div className='stamina-column'>
+											{getStaminaDescription()}
+											<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+										</div>
+									: null
+							}
+							{
+								showCharacteristics ?
+									<div className='characteristics-column'>
+										<div className='characteristics-column-item'>
+											<div>M</div>
+											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Might)}</div>
+										</div>
+										<div className='characteristics-column-item'>
+											<div>A</div>
+											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)}</div>
+										</div>
+										<div className='characteristics-column-item'>
+											<div>R</div>
+											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)}</div>
+										</div>
+										<div className='characteristics-column-item'>
+											<div>I</div>
+											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)}</div>
+										</div>
+										<div className='characteristics-column-item'>
+											<div>P</div>
+											<div>{HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)}</div>
+										</div>
 									</div>
+									: null
+							}
+							{
+								showStats ?
+									<div className='stats-column'>
+										<div className='stats-column-item'>
+											<div>Spd</div>
+											<div>{HeroLogic.getSpeed(props.hero).value}</div>
+										</div>
+										<div className='stats-column-item'>
+											<div>Stab</div>
+											<div>{HeroLogic.getStability(props.hero)}</div>
+										</div>
+									</div>
+									: null
 							}
 							<div className='conditions-column'>
 								{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
@@ -248,6 +296,10 @@ interface MonsterSlotProps {
 }
 
 export const MonsterSlot = (props: MonsterSlotProps) => {
+	const showStamina = useMediaQuery('(min-width: 1200px)');
+	const showCharacteristics = useMediaQuery('(min-width: 1300px)');
+	const showStats = useMediaQuery('(min-width: 1400px)');
+
 	const isMinionSlot = props.slot.monsters.every(m => m.role.organization === MonsterOrganizationType.Minion);
 	const [ showMonsters, setShowMonsters ] = useState<boolean>(!isMinionSlot);
 
@@ -320,10 +372,54 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 						<div className='name-column'>
 							<b>Minions</b>
 						</div>
-						<div className='stamina-column'>
-							{getStaminaDescription()}
-							<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
-						</div>
+						{
+							showStamina ?
+								<div className='stamina-column'>
+									{getStaminaDescription()}
+									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								</div>
+								: null
+						}
+						{
+							showCharacteristics ?
+								<div className='characteristics-column'>
+									<div className='characteristics-column-item'>
+										<div>M</div>
+										<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Might)}</div>
+									</div>
+									<div className='characteristics-column-item'>
+										<div>A</div>
+										<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Agility)}</div>
+									</div>
+									<div className='characteristics-column-item'>
+										<div>R</div>
+										<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Reason)}</div>
+									</div>
+									<div className='characteristics-column-item'>
+										<div>I</div>
+										<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Intuition)}</div>
+									</div>
+									<div className='characteristics-column-item'>
+										<div>P</div>
+										<div>{MonsterLogic.getCharacteristic(props.slot.monsters[0], Characteristic.Presence)}</div>
+									</div>
+								</div>
+								: null
+						}
+						{
+							showStats ?
+								<div className='stats-column'>
+									<div className='stats-column-item'>
+										<div>Spd</div>
+										<div>{MonsterLogic.getSpeed(props.slot.monsters[0]).value}</div>
+									</div>
+									<div className='stats-column-item'>
+										<div>Stab</div>
+										<div>{props.slot.monsters[0].stability}</div>
+									</div>
+								</div>
+								: null
+						}
 						<div className='conditions-column'>
 							{getMinionCaptainTag()}
 							{props.slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
@@ -350,13 +446,55 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 								<MonsterInfo monster={monster} />
 							</div>
 							{
-								isMinionSlot ?
-									<div className='stamina-column' />
-									:
-									<div className='stamina-column'>
-										{MonsterLogic.getStaminaDescription(monster)}
-										<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								showStamina ?
+									isMinionSlot ?
+										<div className='stamina-column' />
+										:
+										<div className='stamina-column'>
+											{MonsterLogic.getStaminaDescription(monster)}
+											<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
+										</div>
+									: null
+							}
+							{
+								showCharacteristics ?
+									<div className='characteristics-column'>
+										<div className='characteristics-column-item'>
+											<div>M</div>
+											<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Might)}</div>
+										</div>
+										<div className='characteristics-column-item'>
+											<div>A</div>
+											<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Agility)}</div>
+										</div>
+										<div className='characteristics-column-item'>
+											<div>R</div>
+											<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Reason)}</div>
+										</div>
+										<div className='characteristics-column-item'>
+											<div>I</div>
+											<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Intuition)}</div>
+										</div>
+										<div className='characteristics-column-item'>
+											<div>P</div>
+											<div>{MonsterLogic.getCharacteristic(monster, Characteristic.Presence)}</div>
+										</div>
 									</div>
+									: null
+							}
+							{
+								showStats ?
+									<div className='stats-column'>
+										<div className='stats-column-item'>
+											<div>Spd</div>
+											<div>{MonsterLogic.getSpeed(monster).value}</div>
+										</div>
+										<div className='stats-column-item'>
+											<div>Stab</div>
+											<div>{monster.stability}</div>
+										</div>
+									</div>
+									: null
 							}
 							<div className='conditions-column'>
 								{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}

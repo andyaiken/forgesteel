@@ -1,11 +1,15 @@
-import { Alert, AutoComplete, Button, Flex, Input, Tag, Upload } from 'antd';
+import { Alert, AutoComplete, Button, Divider, Flex, Input, Tag, Upload } from 'antd';
 import { DownloadOutlined, SyncOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Collections } from '../../../../../utils/collections';
 import { DangerButton } from '../../../../controls/danger-button/danger-button';
+import { Expander } from '../../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../../logic/factory-logic';
 import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '../../../../../models/feature';
+import { FeatureType } from '../../../../../enums/feature-type';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
+import { HeroLogic } from '../../../../../logic/hero-logic';
 import { Markdown } from '../../../../controls/markdown/markdown';
 import { NameGenerator } from '../../../../../utils/name-generator';
 import { Options } from '../../../../../models/options';
@@ -89,40 +93,80 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 						showIcon={true}
 						message='You can add your hero to a folder to group it with other heroes.'
 					/>
-					{
-						props.hero.features.filter(f => f.id === 'default-language').map(f => (
-							<FeatureConfigPanel
-								key={f.id}
-								feature={f}
-								options={props.options}
-								hero={props.hero}
-								sourcebooks={props.sourcebooks}
-								setData={props.setFeatureData}
-							/>
-						))
-					}
-					<HeaderText ribbon={<Tag color='red'>BETA</Tag>}>
-						Update
-					</HeaderText>
-					<div className='ds-text'>
-						To ensure that your hero is using the most up-to-date version of the Draw Steel rules, press the button below.
-					</div>
-					<DangerButton
-						mode='block'
-						label='Update Hero Data'
-						icon={<SyncOutlined />}
-						message={
-							<Markdown
-								text={`
+					<Divider />
+					<Expander title='Default language'>
+						{
+							props.hero.features.filter(f => f.id === 'default-language').map(f => (
+								<FeatureConfigPanel
+									key={f.id}
+									feature={f}
+									options={props.options}
+									hero={props.hero}
+									sourcebooks={props.sourcebooks}
+									setData={props.setFeatureData}
+								/>
+							))
+						}
+					</Expander>
+					<Expander title='Skill Choices'>
+						{
+							HeroLogic.getFeatures(props.hero)
+								.map(f => f.feature)
+								.filter(f => f.type === FeatureType.SkillChoice)
+								.map(f => {
+									return FactoryLogic.feature.createSkillChoice({
+										id: f.id,
+										name: 'Skill',
+										description: `
+${f.data.options.length > 0 ? `**Skills**: ${f.data.options.join(', ')}` : ''}
+${f.data.listOptions.length > 0 ? `**Lists**: ${f.data.listOptions.map(s => `${s} Skills`).join(', ')}` : ''}`,
+										options: [ ...f.data.options ],
+										listOptions: [ ...f.data.listOptions ],
+										count: f.data.count,
+										selected: [ ...f.data.selected ]
+									});
+								})
+								.map(f => (
+									<FeatureConfigPanel
+										key={f.id}
+										feature={f}
+										options={props.options}
+										hero={props.hero}
+										sourcebooks={props.sourcebooks}
+										setData={props.setFeatureData}
+									/>
+								))
+						}
+					</Expander>
+					<Expander
+						title={
+							<>
+								<Tag color='red'>BETA</Tag>
+								Update
+							</>
+						}
+					>
+						<HeaderText>Update</HeaderText>
+						<div className='ds-text'>
+							To ensure that your hero is using the most up-to-date version of the Draw Steel rules, press the button below.
+						</div>
+						<DangerButton
+							mode='block'
+							label='Update Hero Data'
+							icon={<SyncOutlined />}
+							message={
+								<Markdown
+									text={`
 This feature **has not been fully tested** and **could cause data loss**.
 
 Please create a data backup of your hero before proceeding.
 
 If you discover any problems, please raise an issue in GitHub or on Discord.`}
-							/>
-						}
-						onConfirm={props.updateHeroData}
-					/>
+								/>
+							}
+							onConfirm={props.updateHeroData}
+						/>
+					</Expander>
 				</div>
 			</div>
 		);

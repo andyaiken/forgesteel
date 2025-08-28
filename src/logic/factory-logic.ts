@@ -612,6 +612,7 @@ export class FactoryLogic {
 	static createEncounterGroup = (): EncounterGroup => {
 		return {
 			id: Utils.guid(),
+			name: '',
 			slots: [],
 			encounterState: 'ready'
 		};

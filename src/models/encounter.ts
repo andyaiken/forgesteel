@@ -5,6 +5,7 @@ import { Terrain } from './terrain';
 
 export interface EncounterGroup {
 	id: string;
+	name: string;
 	slots: EncounterSlot[];
 	encounterState: 'ready' | 'current' | 'finished';
 }

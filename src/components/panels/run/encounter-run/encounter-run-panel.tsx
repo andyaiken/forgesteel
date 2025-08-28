@@ -86,7 +86,10 @@ export const EncounterRunPanel = (props: Props) => {
 
 	const addHeroes = (heroes: Hero[]) => {
 		const copy = Utils.copy(encounter);
-		heroes.forEach(h => copy.heroes.push(Utils.copy(h)));
+		heroes.forEach(h => {
+			h.state.controlledSlots = [];
+			copy.heroes.push(h);
+		});
 		setEncounter(copy);
 		props.onChange(copy);
 	};
@@ -210,7 +213,16 @@ export const EncounterRunPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			const setEncounterState = (value: 'ready' | 'current' | 'finished') => {
+			const setGroupName = (value: string) => {
+				const copy = Utils.copy(encounter);
+				copy.groups
+					.filter(g => g.id === group.id)
+					.forEach(g => g.name = value);
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const setGroupEncounterState = (value: 'ready' | 'current' | 'finished') => {
 				const copy = Utils.copy(encounter);
 				copy.groups
 					.filter(g => g.id === group.id)
@@ -227,7 +239,8 @@ export const EncounterRunPanel = (props: Props) => {
 					encounter={encounter}
 					onSelectMonster={setSelectedMonster}
 					onSelectMinionSlot={setSelectedMinionSlot}
-					onSetState={(_group, state) => setEncounterState(state)}
+					onSetName={(_group, value) => setGroupName(value)}
+					onSetState={(_group, value) => setGroupEncounterState(value)}
 					onDuplicate={duplicateGroup}
 					onDelete={deleteGroup}
 				/>

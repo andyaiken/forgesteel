@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Popover, Segmented, Space, Tag } from 'antd';
+import { Alert, Button, Flex, Input, Popover, Segmented, Space, Tag } from 'antd';
 import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined, UpOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '../../../models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '../token/token';
@@ -33,7 +33,7 @@ interface EncounterGroupHeroProps {
 	onSelect: (hero: Hero) => void;
 	onSelectMonster: (monster: Monster) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
-	onSetState: (hero: Hero, state: 'ready' | 'current' | 'finished') => void;
+	onSetState: (hero: Hero, value: 'ready' | 'current' | 'finished') => void;
 	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
 	onRemoveSquad: (hero: Hero, slotID: string) => void;
 	onAddMonsterToSquad: (hero: Hero, slotID: string) => void;
@@ -81,7 +81,6 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 							content={(
 								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 									<Segmented
-										vertical={true}
 										disabled={props.hero.state.defeated}
 										options={[
 											{ value: 'ready', label: 'Ready To Act' },
@@ -228,7 +227,8 @@ interface EncounterGroupMonsterProps {
 	encounter: Encounter;
 	onSelectMonster: (monster: Monster) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
-	onSetState: (group: EncounterGroup, state: 'ready' | 'current' | 'finished') => void;
+	onSetName: (group: EncounterGroup, value: string) => void;
+	onSetState: (group: EncounterGroup, value: 'ready' | 'current' | 'finished') => void;
 	onDuplicate: (group: EncounterGroup) => void;
 	onDelete: (group: EncounterGroup) => void;
 }
@@ -248,14 +248,19 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 				<div className='group-column'>
 					<Flex align='center' justify='space-between'>
 						<div className='group-name'>
-							Group {(props.index + 1).toString()}
+							{props.group.name || `Group ${props.index + 1}`}
 						</div>
 						<Popover
 							trigger='click'
 							content={(
 								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+									<Input
+										placeholder='Group name'
+										allowClear={true}
+										value={props.group.name}
+										onChange={e => props.onSetName(props.group, e.target.value)}
+									/>
 									<Segmented
-										vertical={true}
 										disabled={defeated}
 										options={[
 											{ value: 'ready', label: 'Ready To Act' },

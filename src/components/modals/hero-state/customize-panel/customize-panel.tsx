@@ -21,6 +21,7 @@ import { FollowerType } from '../../../../enums/follower-type';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { HeroLogic } from '../../../../logic/hero-logic';
 import { KitArmor } from '../../../../enums/kit-armor';
 import { KitWeapon } from '../../../../enums/kit-weapon';
 import { NameGenerator } from '../../../../utils/name-generator';
@@ -39,14 +40,48 @@ interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
 	options: Options;
-	addFeature: (feature: Feature) => void;
-	deleteFeature: (feature: Feature) => void;
-	setFeature: (featureID: string, feature: Feature) => void;
-	setFeatureData: (featureID: string, data: FeatureData) => void;
+	onChange: (hero: Hero) => void;
 }
 
 export const CustomizePanel = (props: Props) => {
+	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
+
+	const addFeature = (feature: Feature) => {
+		const heroCopy = Utils.copy(hero);
+		heroCopy.features.push(feature);
+		setHero(heroCopy);
+		props.onChange(heroCopy);
+	};
+
+	const deleteFeature = (feature: Feature) => {
+		const heroCopy = Utils.copy(hero);
+		heroCopy.features = heroCopy.features.filter(f => f.id !== feature.id);
+		setHero(heroCopy);
+		props.onChange(heroCopy);
+	};
+
+	const setFeature = (featureID: string, feature: Feature) => {
+		const heroCopy = Utils.copy(hero);
+		const index = heroCopy.features.findIndex(f => f.id === featureID);
+		if (index !== -1) {
+			heroCopy.features[index] = feature;
+		}
+		setHero(heroCopy);
+		props.onChange(heroCopy);
+	};
+
+	const setFeatureData = (featureID: string, data: FeatureData) => {
+		const heroCopy = Utils.copy(hero);
+		const feature = HeroLogic.getFeatures(heroCopy)
+			.map(f => f.feature)
+			.find(f => f.id === featureID);
+		if (feature) {
+			feature.data = data;
+		}
+		setHero(heroCopy);
+		props.onChange(heroCopy);
+	};
 
 	const getMenu = () => {
 		return (
@@ -61,7 +96,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createClassAbilityChoice({
+									addFeature(FactoryLogic.feature.createClassAbilityChoice({
 										id: Utils.guid(),
 										cost: 'signature',
 										allowAnySource: true
@@ -75,7 +110,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createAbility({
+									addFeature(FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
 											id: Utils.guid(),
 											name: 'Unnamed Ability',
@@ -97,7 +132,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createCharacteristicBonus({
+									addFeature(FactoryLogic.feature.createCharacteristicBonus({
 										id: Utils.guid(),
 										name: `${Characteristic.Might} + 1`,
 										characteristic: Characteristic.Might,
@@ -112,7 +147,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createConditionImmunity({
+									addFeature(FactoryLogic.feature.createConditionImmunity({
 										id: Utils.guid(),
 										conditions: []
 									}));
@@ -125,7 +160,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createDamageModifier({
+									addFeature(FactoryLogic.feature.createDamageModifier({
 										id: Utils.guid(),
 										modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 									}));
@@ -138,7 +173,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createBonus({
+									addFeature(FactoryLogic.feature.createBonus({
 										id: Utils.guid(),
 										name: `${FeatureField.Stamina} + 6`,
 										field: FeatureField.Stamina,
@@ -156,7 +191,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createAncestryFeature({
+									addFeature(FactoryLogic.feature.createAncestryFeature({
 										id: Utils.guid(),
 										value: 1,
 										current: true,
@@ -172,7 +207,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createKitChoice({
+									addFeature(FactoryLogic.feature.createKitChoice({
 										id: Utils.guid()
 									}));
 								}}
@@ -184,7 +219,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createPerk({
+									addFeature(FactoryLogic.feature.createPerk({
 										id: Utils.guid(),
 										lists: [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ]
 									}));
@@ -197,7 +232,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createTitleChoice({
+									addFeature(FactoryLogic.feature.createTitleChoice({
 										id: Utils.guid(),
 										echelon: 1
 									}));
@@ -213,7 +248,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createCompanion({
+									addFeature(FactoryLogic.feature.createCompanion({
 										id: Utils.guid(),
 										type: 'companion'
 									}));
@@ -226,7 +261,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createFollower({
+									addFeature(FactoryLogic.feature.createFollower({
 										id: Utils.guid(),
 										follower: FactoryLogic.createFollower()
 									}));
@@ -239,7 +274,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createSummon({
+									addFeature(FactoryLogic.feature.createSummon({
 										id: Utils.guid(),
 										options: []
 									}));
@@ -255,7 +290,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createLanguageChoice({
+									addFeature(FactoryLogic.feature.createLanguageChoice({
 										id: Utils.guid(),
 										count: -1
 									}));
@@ -268,7 +303,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createMovementMode({
+									addFeature(FactoryLogic.feature.createMovementMode({
 										id: Utils.guid(),
 										mode: 'fly'
 									}));
@@ -281,7 +316,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createProficiency({
+									addFeature(FactoryLogic.feature.createProficiency({
 										id: Utils.guid()
 									}));
 								}}
@@ -293,7 +328,7 @@ export const CustomizePanel = (props: Props) => {
 								type='text'
 								onClick={() => {
 									setMenuOpen(false);
-									props.addFeature(FactoryLogic.feature.createSkillChoice({
+									addFeature(FactoryLogic.feature.createSkillChoice({
 										id: Utils.guid(),
 										listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
 										count: -1
@@ -318,124 +353,124 @@ export const CustomizePanel = (props: Props) => {
 			const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
 			copy.data.value = value;
 			copy.data.selected = null;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setCharacteristic = (value: Characteristic) => {
 			const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
 			copy.data.characteristic = value;
 			copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setCharacteristicBonus = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureCharacteristicBonus;
 			copy.data.value = value;
 			copy.name = `${copy.data.characteristic} + ${copy.data.value}`;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setValueField = (value: FeatureField) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.field = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setValueBonus = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.value = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setValuePerLevel = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.valuePerLevel = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setValuePerEchelon = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.valuePerEchelon = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setValueCharacteristics = (value: Characteristic[]) => {
 			const copy = Utils.copy(feature) as FeatureBonus;
 			copy.data.valueCharacteristics = value;
 			copy.name = `${copy.data.field} ${FormatLogic.getModifier(copy.data)}`;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setDamageModifierDamageType = (value: DamageType) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].damageType = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setDamageModifierType = (value: DamageModifierType) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].type = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setDamageModifierBonus = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].value = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setDamageModifierValuePerLevel = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].valuePerLevel = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setDamageModifierValuePerEchelon = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].valuePerEchelon = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setDamageModifierCharacteristics = (value: Characteristic[]) => {
 			const copy = Utils.copy(feature) as FeatureDamageModifier;
 			copy.data.modifiers[0].valueCharacteristics = value;
 			copy.name = FormatLogic.getDamageModifier(copy.data.modifiers[0]);
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setClassID = (value: string) => {
 			const copy = Utils.copy(feature) as FeatureClassAbility;
 			copy.data.classID = value === '' ? undefined : value;
 			copy.data.selectedIDs = [];
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setCost = (value: number | 'signature') => {
 			const copy = Utils.copy(feature) as FeatureClassAbility;
 			copy.data.cost = value;
 			copy.data.selectedIDs = [];
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setConditionTypes = (value: ConditionType[]) => {
 			const copy = Utils.copy(feature) as FeatureConditionImmunity;
 			copy.data.conditions = value;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setFollowerName = (value: string) => {
 			const copy = Utils.copy(feature) as FeatureFollower;
 			copy.data.follower.name = value;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setFollowerType = (value: FollowerType) => {
@@ -458,71 +493,71 @@ export const CustomizePanel = (props: Props) => {
 				}
 			});
 			copy.data.follower.skills = [];
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setFollowerCharacteristics = (value: { characteristic: Characteristic, value: number }[]) => {
 			const copy = Utils.copy(feature) as FeatureFollower;
 			copy.data.follower.characteristics = value;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setFollowerSkills = (value: string[]) => {
 			const copy = Utils.copy(feature) as FeatureFollower;
 			copy.data.follower.skills = value;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setFollowerLanguages = (value: string[]) => {
 			const copy = Utils.copy(feature) as FeatureFollower;
 			copy.data.follower.languages = value;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setMovementMode = (value: string) => {
 			const copy = Utils.copy(feature) as FeatureMovementMode;
 			copy.data.mode = value;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setPerkLists = (value: PerkList[]) => {
 			const copy = Utils.copy(feature) as FeaturePerk;
 			copy.data.lists = value;
 			copy.data.selected = [];
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setEchelon = (value: number) => {
 			const copy = Utils.copy(feature) as FeatureTitleChoice;
 			copy.data.echelon = value;
 			copy.data.selected = [];
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setAbility = (value: Ability) => {
 			const copy = Utils.copy(feature) as FeatureAbility;
 			copy.data.ability = value;
 			copy.name = value.name || 'Unnamed Ability';
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setCustomAncestryID = (value: string) => {
 			const copy = Utils.copy(feature) as FeatureAncestryFeatureChoice;
 			copy.data.source.customID = value;
 			copy.data.selected = null;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setProficiencyWeapons = (value: KitWeapon[]) => {
 			const copy = Utils.copy(feature) as FeatureProficiency;
 			copy.data.weapons = value;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		const setProficiencyArmor = (value: KitArmor[]) => {
 			const copy = Utils.copy(feature) as FeatureProficiency;
 			copy.data.armor = value;
-			props.setFeature(feature.id, copy);
+			setFeature(feature.id, copy);
 		};
 
 		switch (feature.type) {
@@ -920,14 +955,14 @@ export const CustomizePanel = (props: Props) => {
 						Customize
 					</HeaderText>
 					{
-						props.hero.features
+						hero.features
 							.filter(f => f.id !== 'default-language')
 							.map(f => (
 								<Expander
 									key={f.id}
 									title={f.name}
 									extra={[
-										<DangerButton key='delete' mode='clear' onConfirm={() => props.deleteFeature(f)} />
+										<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
 									]}
 								>
 									{getEditSection(f)}
@@ -938,16 +973,16 @@ export const CustomizePanel = (props: Props) => {
 											<FeatureConfigPanel
 												feature={f}
 												options={props.options}
-												hero={props.hero}
+												hero={hero}
 												sourcebooks={props.sourcebooks}
-												setData={props.setFeatureData}
+												setData={setFeatureData}
 											/>
 									}
 								</Expander>
 							))
 					}
 					{
-						props.hero.features.filter(f => f.id !== 'default-language').length === 0 ?
+						hero.features.filter(f => f.id !== 'default-language').length === 0 ?
 							<Empty text='You have no customizations.' />
 							: null
 					}

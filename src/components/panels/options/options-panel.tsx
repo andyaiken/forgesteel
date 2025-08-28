@@ -246,7 +246,7 @@ export const OptionsPanel = (props: Props) => {
 									children: (
 										<>
 											<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
-											<Divider>Page Size</Divider>
+											<Divider>Layout</Divider>
 											<Segmented
 												name='pagesize'
 												block={true}

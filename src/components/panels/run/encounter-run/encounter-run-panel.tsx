@@ -648,8 +648,8 @@ export const EncounterRunPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={className} id={encounter.id}>
-					<Flex align='flex-start' gap={20}>
-						<div style={{ flex: '1 1 0' }}>
+					<Flex align='flex-start' gap={20} style={{ height: '100%' }}>
+						<div style={{ flex: '1 1 0', height: '100%', overflowY: 'auto' }}>
 							<HeaderText
 								level={1}
 								extra={[
@@ -694,7 +694,7 @@ export const EncounterRunPanel = (props: Props) => {
 						</div>
 						{
 							showSidebar ?
-								<div style={{ flex: '0 0 400px' }}>
+								<div style={{ flex: '0 0 400px', height: '100%', overflowY: 'auto' }}>
 									{getSidebar()}
 								</div>
 								: null

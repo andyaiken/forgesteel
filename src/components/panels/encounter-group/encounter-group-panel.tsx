@@ -16,10 +16,15 @@ import { MonsterOrganizationType } from '../../../enums/monster-organization-typ
 import { Options } from '../../../models/options';
 import { Terrain } from '../../../models/terrain';
 import { TerrainLogic } from '../../../logic/terrain-logic';
-import { useMediaQuery } from '../../../hooks/use-media-query';
+import { useDimensions } from '../../../hooks/use-dimensions';
 import { useState } from 'react';
 
 import './encounter-group-panel.scss';
+
+const widthBase = 500;
+const widthStaminaColumn = 90;
+const widthCharacteristicsColumn = 80;
+const widthStatsColumn = 50;
 
 interface EncounterGroupHeroProps {
 	hero: Hero;
@@ -36,9 +41,11 @@ interface EncounterGroupHeroProps {
 }
 
 export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
-	const showStamina = useMediaQuery('(min-width: 1200px)');
-	const showCharacteristics = useMediaQuery('(min-width: 1300px)');
-	const showStats = useMediaQuery('(min-width: 1400px)');
+	const [ setRef, size ] = useDimensions();
+
+	const showStamina = size.width >= (widthBase + widthStaminaColumn);
+	const showCharacteristics = size.width >= (widthBase + widthStaminaColumn + widthCharacteristicsColumn);
+	const showStats = size.width >= (widthBase + widthStaminaColumn + widthCharacteristicsColumn + widthStatsColumn);
 
 	try {
 		let className = 'encounter-group';
@@ -93,7 +100,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 					</Flex>
 				</div>
 				<div className='encounter-slots'>
-					<div className='encounter-slot'>
+					<div className='encounter-slot' ref={setRef}>
 						<div className={props.hero.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'} onClick={() => props.onSelect(props.hero)}>
 							<div className='name-column'>
 								<HeroInfo hero={props.hero} />
@@ -296,9 +303,11 @@ interface MonsterSlotProps {
 }
 
 export const MonsterSlot = (props: MonsterSlotProps) => {
-	const showStamina = useMediaQuery('(min-width: 1200px)');
-	const showCharacteristics = useMediaQuery('(min-width: 1300px)');
-	const showStats = useMediaQuery('(min-width: 1400px)');
+	const [ setRef, size ] = useDimensions();
+
+	const showStamina = size.width >= (widthBase + widthStaminaColumn);
+	const showCharacteristics = size.width >= (widthBase + widthStaminaColumn + widthCharacteristicsColumn);
+	const showStats = size.width >= (widthBase + widthStaminaColumn + widthCharacteristicsColumn + widthStatsColumn);
 
 	const isMinionSlot = props.slot.monsters.every(m => m.role.organization === MonsterOrganizationType.Minion);
 	const [ showMonsters, setShowMonsters ] = useState<boolean>(!isMinionSlot);
@@ -365,7 +374,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 	};
 
 	return (
-		<div key={props.slot.id} className='encounter-slot'>
+		<div key={props.slot.id} className='encounter-slot' ref={setRef}>
 			{
 				isMinionSlot ?
 					<div key='minions' className={props.slot.state.defeated ? 'encounter-slot-row minion defeated' : 'encounter-slot-row minion'} onClick={() => props.onSelectMinionSlot(props.slot)}>

@@ -301,6 +301,13 @@ export const Main = (props: Props) => {
 		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', 'pdf');
 	};
 
+	const setNotes = (hero: Hero, value: string) => {
+		const copy = Utils.copy(hero);
+		copy.state.notes = value;
+
+		persistHero(copy);
+	};
+
 	// #endregion
 
 	// #region Library
@@ -1374,7 +1381,7 @@ export const Main = (props: Props) => {
 	};
 
 	const showReference = () => {
-		onshowReference(null);
+		onShowReference(null);
 	};
 
 	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
@@ -1484,7 +1491,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onshowReference = (hero: Hero | null, page?: RulesPage) => {
+	const onShowReference = (hero: Hero | null, page?: RulesPage) => {
 		setDrawer(
 			<ReferenceModal
 				hero={hero}
@@ -1609,7 +1616,8 @@ export const Main = (props: Props) => {
 										showFeature={onSelectFeature}
 										showAbility={onSelectAbility}
 										showHeroState={onShowHeroState}
-										showReference={onshowReference}
+										showReference={onShowReference}
+										setNotes={setNotes}
 									/>
 								}
 							/>

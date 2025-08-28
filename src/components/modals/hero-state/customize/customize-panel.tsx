@@ -1,39 +1,39 @@
 import { Button, Divider, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
-import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '../../../models/feature';
+import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '../../../../models/feature';
 import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { Ability } from '../../../models/ability';
-import { AbilityEditPanel } from '../edit/ability-edit/ability-edit-panel';
-import { Characteristic } from '../../../enums/characteristic';
-import { ConditionType } from '../../../enums/condition-type';
-import { DamageModifierType } from '../../../enums/damage-modifier-type';
-import { DamageType } from '../../../enums/damage-type';
-import { DangerButton } from '../../controls/danger-button/danger-button';
-import { Empty } from '../../controls/empty/empty';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Expander } from '../../controls/expander/expander';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureConfigPanel } from '../feature-config-panel/feature-config-panel';
-import { FeatureField } from '../../../enums/feature-field';
-import { FeatureType } from '../../../enums/feature-type';
-import { Field } from '../../controls/field/field';
-import { FollowerLogic } from '../../../logic/follower-logic';
-import { FollowerType } from '../../../enums/follower-type';
-import { FormatLogic } from '../../../logic/format-logic';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
-import { KitArmor } from '../../../enums/kit-armor';
-import { KitWeapon } from '../../../enums/kit-weapon';
-import { NameGenerator } from '../../../utils/name-generator';
-import { NumberSpin } from '../../controls/number-spin/number-spin';
-import { Options } from '../../../models/options';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { Sourcebook } from '../../../models/sourcebook';
-import { SourcebookLogic } from '../../../logic/sourcebook-logic';
-import { Utils } from '../../../utils/utils';
+import { Ability } from '../../../../models/ability';
+import { AbilityEditPanel } from '../../../panels/edit/ability-edit/ability-edit-panel';
+import { Characteristic } from '../../../../enums/characteristic';
+import { ConditionType } from '../../../../enums/condition-type';
+import { DamageModifierType } from '../../../../enums/damage-modifier-type';
+import { DamageType } from '../../../../enums/damage-type';
+import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { Empty } from '../../../controls/empty/empty';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { Expander } from '../../../controls/expander/expander';
+import { FactoryLogic } from '../../../../logic/factory-logic';
+import { FeatureConfigPanel } from '../../../panels/feature-config-panel/feature-config-panel';
+import { FeatureField } from '../../../../enums/feature-field';
+import { FeatureType } from '../../../../enums/feature-type';
+import { Field } from '../../../controls/field/field';
+import { FollowerLogic } from '../../../../logic/follower-logic';
+import { FollowerType } from '../../../../enums/follower-type';
+import { FormatLogic } from '../../../../logic/format-logic';
+import { HeaderText } from '../../../controls/header-text/header-text';
+import { Hero } from '../../../../models/hero';
+import { KitArmor } from '../../../../enums/kit-armor';
+import { KitWeapon } from '../../../../enums/kit-weapon';
+import { NameGenerator } from '../../../../utils/name-generator';
+import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Options } from '../../../../models/options';
+import { PerkList } from '../../../../enums/perk-list';
+import { SkillList } from '../../../../enums/skill-list';
+import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
-import './hero-customize-panel.scss';
+import './customize-panel.scss';
 
 interface Props {
 	hero: Hero;
@@ -45,7 +45,7 @@ interface Props {
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
-export const HeroCustomizePanel = (props: Props) => {
+export const CustomizePanel = (props: Props) => {
 	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
 
 	const getMenu = () => {
@@ -915,7 +915,7 @@ export const HeroCustomizePanel = (props: Props) => {
 	try {
 		return (
 			<ErrorBoundary>
-				<div className='hero-customize-panel'>
+				<div className='customize-panel'>
 					<HeaderText extra={getMenu()}>
 						Customize
 					</HeaderText>

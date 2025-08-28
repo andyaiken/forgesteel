@@ -22,6 +22,7 @@ import { HeroSheetPage } from '../hero-sheet/hero-sheet-page';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
 import { Monster } from '../../../../models/monster';
+import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
@@ -64,13 +65,14 @@ interface Props {
 	showFeature: (feature: Feature, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;
+	setNotes: (hero: Hero, value: string) => void;
 }
 
 export const HeroViewPage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
-	const [ view, setView ] = useState<'modern' | 'classic' | 'abilities'>('modern');
+	const [ view, setView ] = useState<'modern' | 'classic' | 'abilities' | 'notes'>('modern');
 	const [ pdfOrientation, setPdfOrientation ] = useState<'portrait' | 'landscape'>('portrait');
 	const [ pdfFormFillable, setPdfFormFillable ] = useState<boolean>(false);
 	const hero = useMemo(
@@ -130,6 +132,16 @@ export const HeroViewPage = (props: Props) => {
 				case 'abilities':
 					return (
 						<StandardAbilitiesPanel hero={hero} />
+					);
+				case 'notes':
+					return (
+						<MultiLine
+							style={{ height: '100%', flex: '1 1 0' }}
+							inputStyle={{ flex: '1 1 0', resize: 'none' }}
+							value={hero.state.notes}
+							showMarkdownPrompt={false}
+							onChange={value => props.setNotes(hero, value)}
+						/>
 					);
 			}
 		};
@@ -204,7 +216,8 @@ export const HeroViewPage = (props: Props) => {
 										options={[
 											{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
 											{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Tag color='red'>BETA</Tag>Classic Sheet</div> },
-											{ value: 'abilities', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Standard Abilities</div> }
+											{ value: 'abilities', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Standard Abilities</div> },
+											{ value: 'notes', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Notes</div> }
 										]}
 										value={view}
 										onChange={setView}

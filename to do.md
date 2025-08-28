@@ -4,8 +4,6 @@
 
 * Hero Builder:
   * Revenants should have 3 ancestry points if small
-* Hero Sheet:
-  * Add retinue tab, include followers / companions / summons / etc
 
 ### Library
 

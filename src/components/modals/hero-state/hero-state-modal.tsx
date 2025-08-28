@@ -2,6 +2,7 @@ import { Alert, Button, Divider, Drawer, Flex, Segmented, Space, notification } 
 import { ArrowUpOutlined, CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Feature, FeatureData } from '../../../models/feature';
 import { Collections } from '../../../utils/collections';
+import { CustomizePanel } from './customize/customize-panel';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Empty } from '../../controls/empty/empty';
 import { Expander } from '../../controls/expander/expander';
@@ -10,7 +11,6 @@ import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
-import { HeroCustomizePanel } from '../../panels/hero-customize/hero-customize-panel';
 import { HeroHealthPanel } from '../../panels/health/health-panel';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
@@ -19,7 +19,6 @@ import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { ItemSelectModal } from '../select/item-select/item-select-modal';
 import { ItemType } from '../../../enums/item-type';
 import { Modal } from '../modal/modal';
-import { MultiLine } from '../../controls/multi-line/multi-line';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -47,6 +46,7 @@ export const HeroStateModal = (props: Props) => {
 	const [ notify, notifyContext ] = notification.useNotification();
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ page, setPage ] = useState<HeroStatePage>(props.startPage);
+	const [ respiteVisible, setRespiteVisible ] = useState<boolean>(false);
 	const [ shopVisible, setShopVisible ] = useState<boolean>(false);
 	const [ projectsVisible, setProjectsVisible ] = useState<boolean>(false);
 
@@ -133,6 +133,19 @@ export const HeroStateModal = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const takeRespite = () => {
+			const copy = Utils.copy(hero);
+			HeroLogic.takeRespite(copy);
+			setHero(copy);
+			props.onChange(copy);
+
+			notify.info({
+				message: 'Respite',
+				description: 'You\'ve taken a respite. Your hero\'s stats have been reset.',
+				placement: 'top'
+			});
+		};
+
 		const startEncounter = (featureID: string) => {
 			const copy = Utils.copy(hero);
 
@@ -210,6 +223,9 @@ export const HeroStateModal = (props: Props) => {
 							format={() => HeroLogic.getWealth(hero).toString()}
 							onChange={setWealth}
 						/>
+						<Button className='tall-button' block={true} onClick={() => setRespiteVisible(true)}>
+							Respite
+						</Button>
 					</Space>
 				</Flex>
 				{
@@ -357,6 +373,59 @@ export const HeroStateModal = (props: Props) => {
 						</Space>
 					}
 				/>
+				<Drawer open={respiteVisible} onClose={() => setRespiteVisible(false)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							<Space direction='vertical' style={{ width: '100%', padding: '0 20px' }}>
+								<HeaderText>Respite</HeaderText>
+								<div className='ds-text'>
+									Taking a respite has the following effects:
+								</div>
+								<ul>
+									<li>
+										Your Stamina and Recoveries are reset (and any temporary Stamina goes away)
+									</li>
+									<li>
+										Your Victories are turned into XP
+									</li>
+									<li>
+										Any conditions affecting you are removed
+									</li>
+								</ul>
+								<div className='ds-text'>
+									During a respite you can take one respite action. Standard respite actions are:
+								</div>
+								<ul>
+									<li>
+										Make a project roll
+									</li>
+									<li>
+										Change your kit / prayer / enchantment / augmentation / ward
+									</li>
+									<li>
+										Attract followers (for every 3 renown, you can have 1 follower)
+									</li>
+								</ul>
+								<Divider />
+								<Button
+									key='take-respite'
+									block={true}
+									className='tall-button'
+									onClick={takeRespite}
+								>
+									<div>
+										<div>Take a Respite</div>
+										<div className='subtext'>
+											24 hours of rest
+										</div>
+									</div>
+								</Button>
+							</Space>
+
+						}
+						onClose={() => setRespiteVisible(false)}
+					/>
+				</Drawer>
 			</Space>
 		);
 	};
@@ -373,69 +442,6 @@ export const HeroStateModal = (props: Props) => {
 				showEncounterControls={props.showEncounterControls}
 				onChange={onHeroChange}
 			/>
-		);
-	};
-
-	const getRespiteSection = () => {
-		const takeRespite = () => {
-			const copy = Utils.copy(hero);
-			HeroLogic.takeRespite(copy);
-			setHero(copy);
-			props.onChange(copy);
-
-			notify.info({
-				message: 'Respite',
-				description: 'You\'ve taken a respite. Your hero\'s stats have been reset.',
-				placement: 'top'
-			});
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>Respite</HeaderText>
-				<div className='ds-text'>
-					Taking a respite has the following effects:
-				</div>
-				<ul>
-					<li>
-						Your Stamina and Recoveries are reset (and any temporary Stamina goes away)
-					</li>
-					<li>
-						Your Victories are turned into XP
-					</li>
-					<li>
-						Any conditions affecting you are removed
-					</li>
-				</ul>
-				<div className='ds-text'>
-					During a respite you can take one respite action. Standard respite actions are:
-				</div>
-				<ul>
-					<li>
-						Make a project roll
-					</li>
-					<li>
-						Change your kit / prayer / enchantment / augmentation / ward
-					</li>
-					<li>
-						Attract followers (for every 3 renown, you can have 1 follower)
-					</li>
-				</ul>
-				<Divider />
-				<Button
-					key='take-respite'
-					block={true}
-					className='tall-button'
-					onClick={takeRespite}
-				>
-					<div>
-						<div>Take a Respite</div>
-						<div className='subtext'>
-							24 hours of rest
-						</div>
-					</div>
-				</Button>
-			</Space>
 		);
 	};
 
@@ -694,7 +700,7 @@ export const HeroStateModal = (props: Props) => {
 
 		return (
 			<div style={{ paddingBottom: '20px' }}>
-				<HeroCustomizePanel
+				<CustomizePanel
 					hero={hero}
 					sourcebooks={props.sourcebooks}
 					options={props.options}
@@ -707,44 +713,18 @@ export const HeroStateModal = (props: Props) => {
 		);
 	};
 
-	const getNotesSection = () => {
-		const setNotes = (value: string) => {
-			const copy = Utils.copy(hero);
-			copy.state.notes = value;
-			setHero(copy);
-			props.onChange(copy);
-		};
-
-		return (
-			<div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-				<HeaderText>Notes</HeaderText>
-				<MultiLine
-					style={{ flex: '1 1 0' }}
-					inputStyle={{ flex: '1 1 0', resize: 'none' }}
-					value={hero.state.notes}
-					showMarkdownPrompt={false}
-					onChange={setNotes}
-				/>
-			</div>
-		);
-	};
-
 	const getContent = () => {
 		switch (page) {
 			case HeroStatePage.Hero:
 				return getHeroSection();
 			case HeroStatePage.Vitals:
 				return getVitalsSection();
-			case HeroStatePage.Respite:
-				return getRespiteSection();
 			case HeroStatePage.Inventory:
 				return getInventorySection();
 			case HeroStatePage.Projects:
 				return getProjectsSection();
 			case HeroStatePage.Customize:
 				return getCustomizeSection();
-			case HeroStatePage.Notes:
-				return getNotesSection();
 		}
 	};
 
@@ -754,25 +734,23 @@ export const HeroStateModal = (props: Props) => {
 			pages = [
 				HeroStatePage.Hero,
 				HeroStatePage.Vitals,
-				HeroStatePage.Respite,
 				HeroStatePage.Inventory,
 				HeroStatePage.Projects,
-				HeroStatePage.Customize,
-				HeroStatePage.Notes
+				HeroStatePage.Customize
 			];
 		} else {
 			pages = [
-				HeroStatePage.Vitals,
-				HeroStatePage.Notes
+				HeroStatePage.Vitals
 			];
 		}
 
 		return (
 			<Modal
 				toolbar={
-					<div style={{ width: '100%', textAlign: 'center' }}>
+					<div style={{ width: '100%' }}>
 						<Segmented
 							name='tabs'
+							block={true}
 							options={pages}
 							value={page}
 							onChange={setPage}

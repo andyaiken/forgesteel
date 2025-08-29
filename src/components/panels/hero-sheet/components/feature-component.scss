@@ -106,7 +106,7 @@
             margin-bottom: 0;
         }
 
-        .feature-line,
+        // .feature-line,
         .feature-iteration {
             text-wrap: nowrap;
         }
@@ -122,6 +122,11 @@
         
         line-height: 17px;
         font-size: 14px;
+
+        &.no-selection {
+            @include common.font-serif;
+            font-style: italic;
+        }
     }
 }
 

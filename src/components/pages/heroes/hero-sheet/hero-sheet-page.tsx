@@ -324,10 +324,12 @@ export const HeroSheetPage = (props: Props) => {
 						<hr className='dashed' />
 						<div className='page page-2' id={addPageId(hero)}>
 							<CareerCard
-								character={character}
+								career={character.career}
+								hero={hero}
 							/>
 							<ComplicationCard
-								character={character}
+								complication={character.complication}
+								hero={hero}
 							/>
 							<SkillsCard
 								character={character}

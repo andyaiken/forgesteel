@@ -24,7 +24,20 @@
         background-color: #44444488;
         z-index: 999;
     }
+
+    .all-careers,
+    .all-complications {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .card {
+            width: 428px;
+            height: 506px;
+        }
+    }
 }
+
 
 .hidden {
     display:none;

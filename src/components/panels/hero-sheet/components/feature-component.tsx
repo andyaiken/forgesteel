@@ -46,6 +46,10 @@ const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice |
 		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : s.name).map(s => {
 			return (<div className='feature-iteration' key={s}>{s}</div>);
 		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection'>Unselected</div>
+		];
 	}
 	const count = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
 	return (
@@ -69,12 +73,17 @@ const AncestryChoiceFeatureComponent = (feature: FeatureAncestryChoice) => {
 };
 
 const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice) => {
-	const lists = feature.data.listOptions.join('/');
+	// const lists = feature.data.listOptions.join('/');
+	const lists = CharacterSheetFormatter.joinCommasOr(feature.data.listOptions);
 	let selectedOptions;
-	if (feature.data.selected) {
+	if (feature.data.selected.length) {
 		selectedOptions = feature.data.selected.map(s => {
 			return (<div className='feature-iteration' key={s}>{s}</div>);
 		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection'>Unselected</div>
+		];
 	}
 	return (
 		<>

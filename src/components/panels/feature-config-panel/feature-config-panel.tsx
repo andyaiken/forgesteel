@@ -246,7 +246,8 @@ export const FeatureConfigPanel = (props: Props) => {
 			const original = allOptions.find(o => o.feature.id === id);
 			return original ? original.value : 0;
 		});
-		const pointsLeft = data.count - pointsUsed;
+		const pointsMax = data.count === 'ancestry' ? HeroLogic.getAncestryPoints(props.hero!) : data.count;
+		const pointsLeft = pointsMax - pointsUsed;
 
 		let unavailableIDs: string[] = [];
 		if (data.options.some(opt => opt.value > 1)) {

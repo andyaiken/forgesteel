@@ -70,7 +70,8 @@ You can have one rune active at a time, and can change or remove a rune with 10 
 					value: 2
 				}
 			],
-			count: 3
+			count: 'ancestry'
 		})
-	]
+	],
+	ancestryPoints: 3
 };

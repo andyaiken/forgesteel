@@ -162,8 +162,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createChoice = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }): FeatureChoice => {
-		const count = data.count || 1;
+	createChoice = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number | 'ancestry' }): FeatureChoice => {
 		return {
 			id: data.id,
 			name: data.name || 'Choice',
@@ -171,14 +170,13 @@ export class FactoryFeatureLogic {
 			type: FeatureType.Choice,
 			data: {
 				options: data.options,
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};
 	};
 
 	createClassAbilityChoice = (data: { id: string, name?: string, description?: string, cost: number | 'signature', allowAnySource?: boolean, minLevel?: number, count?: number }): FeatureClassAbility => {
-		const count = data.count || 1;
 		return {
 			id: data.id,
 			name: data.name || 'Ability',
@@ -189,7 +187,7 @@ export class FactoryFeatureLogic {
 				cost: data.cost,
 				allowAnySource: data.allowAnySource ?? false,
 				minLevel: data.minLevel || 1,
-				count: count,
+				count: data.count || 1,
 				selectedIDs: []
 			}
 		};
@@ -233,21 +231,19 @@ export class FactoryFeatureLogic {
 	};
 
 	createDomainChoice = (data: { id: string, name?: string, description?: string, count?: number }): FeatureDomain => {
-		const count = data.count || 1;
 		return {
 			id: data.id,
 			name: data.name || 'Domain',
 			description: data.description || '',
 			type: FeatureType.Domain,
 			data: {
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};
 	};
 
 	createDomainFeature = (data: { id: string, name?: string, description?: string, level: number, count?: number }): FeatureDomainFeature => {
-		const count = data.count || 1;
 		return {
 			id: data.id,
 			name: data.name || 'Domain Feature Choice',
@@ -255,7 +251,7 @@ export class FactoryFeatureLogic {
 			type: FeatureType.DomainFeature,
 			data: {
 				level: data.level,
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};
@@ -305,7 +301,6 @@ export class FactoryFeatureLogic {
 	};
 
 	createItemChoice = (data: { id: string, name?: string, description?: string, types?: ItemType[], count?: number }): FeatureItemChoice => {
-		const count = data.count || 1;
 		const type = data.types && (data.types.length === 1) ? data.types[0] : 'Item';
 		return {
 			id: data.id,
@@ -314,14 +309,13 @@ export class FactoryFeatureLogic {
 			type: FeatureType.ItemChoice,
 			data: {
 				types: data.types || [ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket ],
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};
 	};
 
 	createKitChoice = (data: { id: string, name?: string, description?: string, types?: string[], count?: number }): FeatureKit => {
-		const count = data.count || 1;
 		return {
 			id: data.id,
 			name: data.name || 'Kit',
@@ -329,7 +323,7 @@ export class FactoryFeatureLogic {
 			type: FeatureType.Kit,
 			data: {
 				types: data.types || [ '' ],
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};

@@ -1,6 +1,7 @@
 import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '../../models/feature';
 import { AbilityUpdateLogic } from './ability-update-logic';
 import { Ancestry } from '../../models/ancestry';
+import { AncestryData } from '../../data/ancestry-data';
 import { CultureData } from '../../data/culture-data';
 import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
@@ -32,7 +33,26 @@ export class HeroUpdateLogic {
 		}
 
 		if (hero.ancestry) {
+			hero.ancestry.features
+				.filter(f => f.type === FeatureType.Choice)
+				.forEach(f => f.data.count = 'ancestry');
+
 			hero.ancestry.features.forEach(FeatureUpdateLogic.updateFeature);
+
+			if (hero.ancestry.ancestryPoints === undefined) {
+				switch (hero.ancestry.id) {
+					case AncestryData.memonek.id:
+					case AncestryData.polder.id:
+						hero.ancestry.ancestryPoints = 4;
+						break;
+					case AncestryData.revenant.id:
+						hero.ancestry.ancestryPoints = 2;
+						break;
+					default:
+						hero.ancestry.ancestryPoints = 3;
+						break;
+				}
+			}
 		}
 
 		if (hero.career) {

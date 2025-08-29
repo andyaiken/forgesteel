@@ -146,7 +146,7 @@ export const wodeElfTroubadour = {
 							value: 1
 						}
 					],
-					count: 3,
+					count: 'ancestry',
 					selected: [
 						{
 							id: 'wode-elf-feature-2-4',
@@ -167,7 +167,8 @@ export const wodeElfTroubadour = {
 					]
 				}
 			}
-		]
+		],
+		ancestryPoints: 3
 	},
 	culture: {
 		id: 'culture-bespoke-culture',

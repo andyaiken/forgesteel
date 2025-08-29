@@ -34,7 +34,6 @@ export const revenant: Ancestry = {
 		FactoryLogic.feature.createChoice({
 			id: 'revenant-feature-4',
 			name: 'Revenant Traits',
-			description: 'You have 2 ancestry points to spend on the following traits, or 3 ancestry points if your size is 1S.',
 			options: [
 				{
 					feature: FactoryLogic.feature.createAncestryFeature({
@@ -114,7 +113,8 @@ You always know the direction to the exact location of a creature who bears one 
 					value: 2
 				}
 			],
-			count: 2
+			count: 'ancestry'
 		})
-	]
+	],
+	ancestryPoints: 2
 };

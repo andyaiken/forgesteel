@@ -212,7 +212,7 @@ export const humanCensor = {
 							value: 2
 						}
 					],
-					count: 3,
+					count: 'ancestry',
 					selected: [
 						{
 							id: 'human-feature-2-3',
@@ -280,7 +280,8 @@ export const humanCensor = {
 					]
 				}
 			}
-		]
+		],
+		ancestryPoints: 3
 	},
 	culture: {
 		id: 'culture-human',

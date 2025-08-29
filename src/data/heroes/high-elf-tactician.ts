@@ -100,7 +100,7 @@ export const highElfTactician = {
 							value: 2
 						}
 					],
-					count: 3,
+					count: 'ancestry',
 					selected: [
 						{
 							id: 'high-elf-feature-2-2',
@@ -119,7 +119,8 @@ export const highElfTactician = {
 					]
 				}
 			}
-		]
+		],
+		ancestryPoints: 3
 	},
 	culture: {
 		id: 'culture-high-elf',

@@ -210,7 +210,7 @@ export const polderElementalist = {
 							value: 2
 						}
 					],
-					count: 4,
+					count: 'ancestry',
 					selected: [
 						{
 							id: 'polder-feature-3-5',
@@ -259,7 +259,8 @@ export const polderElementalist = {
 					]
 				}
 			}
-		]
+		],
+		ancestryPoints: 4
 	},
 	culture: {
 		id: 'culture-polder',

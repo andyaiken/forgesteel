@@ -90,7 +90,7 @@ export const orcConduit = {
 							value: 2
 						}
 					],
-					count: 3,
+					count: 'ancestry',
 					selected: [
 						{
 							id: 'orc-feature-2-5',
@@ -120,7 +120,8 @@ export const orcConduit = {
 					]
 				}
 			}
-		]
+		],
+		ancestryPoints: 3
 	},
 	culture: {
 		id: 'culture-bespoke-culture',

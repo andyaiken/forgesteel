@@ -40,17 +40,18 @@ const BasicFeatureComponent = (feature: Feature) => {
 	);
 };
 
-const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeaturePerk | FeatureItemChoice) => {
+const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeaturePerk | FeatureItemChoice, hero: Hero) => {
 	let selectedOptions;
 	if (feature.data.selected.length > 0) {
 		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : s.name).map(s => {
 			return (<div className='feature-iteration' key={s}>{s}</div>);
 		});
 	}
+	const count = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
 	return (
 		<>
 			<div className='feature-line'>
-				{`• ${feature.data.count} ${CharacterSheetFormatter.pluralize(feature.name, feature.data.count)}`}
+				{`• ${feature.data.count} ${CharacterSheetFormatter.pluralize(feature.name, count)}`}
 			</div>
 			{selectedOptions}
 		</>
@@ -232,7 +233,7 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.Perk:
 		case FeatureType.Choice:
 		case FeatureType.ItemChoice:
-			content = ChoiceFeatureComponent(feature);
+			content = ChoiceFeatureComponent(feature, hero);
 			break;
 		case FeatureType.AncestryChoice:
 			content = AncestryChoiceFeatureComponent(feature);

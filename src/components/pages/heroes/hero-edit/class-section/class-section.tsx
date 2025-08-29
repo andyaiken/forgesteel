@@ -272,7 +272,7 @@ export const ClassSection = (props: Props) => {
 									<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 								</SelectablePanel>
 							)),
-						completed: featuresForLevel.every(f => FeatureLogic.isChosen(f, HeroLogic.getFormerAncestries(props.hero)))
+						completed: featuresForLevel.every(f => FeatureLogic.isChosen(f, props.hero))
 					});
 				}
 			}

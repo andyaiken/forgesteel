@@ -3,6 +3,7 @@ import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
+import { AncestryData } from '../data/ancestry-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { ConditionType } from '../enums/condition-type';
@@ -191,6 +192,23 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.AncestryChoice)
 			.map(f => f.data.selected)
 			.filter(a => !!a);
+	};
+
+	static getAncestryPoints = (hero: Hero) => {
+		if (hero.ancestry) {
+			let points = hero.ancestry.ancestryPoints;
+
+			if (hero.ancestry.id === AncestryData.revenant.id) {
+				const size = HeroLogic.getSize(hero);
+				if ((size.value == 1) && (size.mod === 'S')) {
+					points += 1;
+				}
+			}
+
+			return points;
+		}
+
+		return 0;
 	};
 
 	static getCompanions = (hero: Hero) => {
@@ -988,7 +1006,7 @@ export class HeroLogic {
 						break;
 					}
 					case FeatureType.Choice: {
-						let remaining = feature.data.count;
+						let remaining = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
 						while (feature.data.options.some(o => o.value <= remaining)) {
 							const currentIDs = feature.data.selected.map(f => f.id);
 							const options = feature.data.options

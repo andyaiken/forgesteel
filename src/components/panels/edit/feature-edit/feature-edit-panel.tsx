@@ -96,7 +96,13 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureSummonData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureSummonData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
+			copy.count = value;
+			setData(copy);
+		};
+
+		const setChoiceCount = (value: number | 'ancestry') => {
+			const copy = Utils.copy(feature.data) as FeatureChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -914,7 +920,8 @@ export const FeatureEditPanel = (props: Props) => {
 								: null
 						}
 						<HeaderText>Count</HeaderText>
-						<NumberSpin min={1} value={data.count} onChange={setCount} />
+						<Toggle label='Use ancestry points' value={data.count === 'ancestry'} onChange={value => setChoiceCount(value ? 'ancestry' : 3)} />
+						{data.count !== 'ancestry' ? <NumberSpin min={1} value={data.count} onChange={setChoiceCount} /> : null}
 					</Space>
 				);
 			}

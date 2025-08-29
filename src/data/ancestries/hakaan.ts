@@ -64,7 +64,8 @@ Additionally, when your Stamina reaches the negative of your winded value and yo
 					value: 2
 				}
 			],
-			count: 3
+			count: 'ancestry'
 		})
-	]
+	],
+	ancestryPoints: 3
 };

@@ -167,9 +167,10 @@ export class FactoryLogic {
 					id: Utils.guid(),
 					name: 'Purchased Traits',
 					options: [],
-					count: 3
+					count: 'ancestry'
 				})
-			]
+			],
+			ancestryPoints: 3
 		};
 	};
 

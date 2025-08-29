@@ -212,7 +212,7 @@ export const humanNull = {
 							value: 2
 						}
 					],
-					count: 3,
+					count: 'ancestry',
 					selected: [
 						{
 							id: 'human-feature-2-5',
@@ -238,7 +238,8 @@ export const humanNull = {
 					]
 				}
 			}
-		]
+		],
+		ancestryPoints: 3
 	},
 	culture: {
 		id: 'culture-bespoke-culture',

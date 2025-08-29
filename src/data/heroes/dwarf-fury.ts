@@ -97,7 +97,7 @@ export const dwarfFury = {
 							value: 2
 						}
 					],
-					count: 3,
+					count: 'ancestry',
 					selected: [
 						{
 							id: 'dwarf-feature-2-1',
@@ -130,7 +130,8 @@ export const dwarfFury = {
 					]
 				}
 			}
-		]
+		],
+		ancestryPoints: 3
 	},
 	culture: {
 		id: 'culture-dwarf',

@@ -43,10 +43,202 @@
 }
 
 .hero-sheet:not(#base-override) {
-    &, 
-    li, p {
+    &, li, p {
         @include common.font-serif();
         font-weight: 300;
+    }
+}
+
+.hero-sheet {
+    &.letter.portrait .page {
+        aspect-ratio: 8.5 / 11;
+        width: 1275px; // ~150dpi
+        height: 1650px;
+        max-width: 1275px;
+        max-height: 1650px;
+    }
+
+    &.letter.landscape .page {
+        aspect-ratio: 11 / 8.5;
+        width: 1650px; // ~150dpi
+        height: 1275px;
+        max-width: 1650px;
+        max-height: 1275px;
+    }
+
+    &.a4.portrait .page {
+        aspect-ratio: 1 / 1.41;
+        width: 1240px; // ~150dpi
+        height: 1754px;
+        max-width: 1240px;
+        max-height: 1754px;
+    }
+    
+    &.a4.landscape .page {
+        aspect-ratio: 1.41 / 1;
+        width: 1754px; // ~150dpi
+        height: 1240px;
+        max-width: 1754px;
+        max-height: 1240px;
+    }
+
+    .page-1 {
+        display: grid;
+        align-items: stretch;
+        justify-items: stretch;
+        grid-template-rows: 248px 213px 102px min-content min-content 1fr;// 213px 102px min-content
+        
+        $last-col: 350px;
+        grid-template-columns: 6fr 1fr calc(($last-col + 395px) - (100% / 3)) calc((100% / 3) - $last-col) $last-col;
+    }
+
+    &.landscape .page-1 {
+        grid-template-rows: 248px 213px 102px min-content min-content 1fr;
+        $last-col: 350px;
+        grid-template-columns: 1fr min-content $last-col;
+
+        .hero-header.card,
+        .stats-resources.card {
+            grid-column-end: span 2;
+        }
+
+        .conditions {
+            grid-column-start: 3;
+            grid-row-start: 1;
+            grid-row-end: span 3;
+        }
+
+        .primary-reference {
+            grid-row-start: 3;
+            grid-row-end: span 3;
+            grid-column-start: 1;
+        }
+
+        .potencies {
+            grid-column-start: 2;
+        }
+
+        .immunities-weaknesses.card {
+            grid-column-start: 2;
+        }
+
+        .ancestry-traits.card {
+            grid-column-start: 3;
+            grid-row-start: 4;
+            grid-row-end: span 3;
+        }
+        .modifiers {
+            grid-column-start: 2;
+            grid-row-start: 5;
+            grid-row-end: span 2;
+        }
+    
+        .class-features.card {
+            grid-row-start: 6;
+            // grid-row-end: span 2;
+        }
+    
+    }
+
+    &.a4.landscape .page-1 {
+        $last-col: 430px;
+        grid-template-columns: 1fr min-content $last-col;
+    }
+
+    &.portrait .page-1 {
+        .hero-header.card,
+        .stats-resources.card {
+            grid-column-end: span 5;
+        }
+        
+        .modifiers {
+            grid-column-end: span 2;
+            grid-row-end: span 3;
+        }
+        
+        .potencies {
+            grid-column-end: span 2;
+        }
+        .conditions {
+            grid-column-end: span 2;
+            grid-column-start: 3;
+            grid-row-start: 4;
+            grid-row-end: span 2;
+        }
+           
+        .primary-reference {
+            grid-row-end: span 2;
+        }
+        .immunities-weaknesses.card {
+            grid-column-start: 5;
+        }
+        .class-features.card {
+            grid-column-end: span 3;
+        }
+        .ancestry-traits.card {
+            grid-column-end: span 2;
+        }
+    }
+    
+    .page-2 {
+        display: grid;
+        grid-template-columns: 438px 1fr 365px;
+        grid-template-rows: min-content 1fr 1fr 2fr 315px;
+    }
+
+    &.portrait .page-2 {
+        .skills {
+            grid-row-end: span 4;
+        }
+
+        .culture, .perks {
+            grid-column-end: span 2;
+        }
+
+        .perks {
+            grid-row-end: span 2;
+        }
+
+        .titles.card {
+            grid-row-start: 5;
+        }
+
+        .projects.card {
+            grid-column-start: 2;
+            grid-column-end: span 2;
+        }
+    }
+
+    &.landscape .page-2 {
+        .career {
+            grid-row-end: span 2;
+            grid-column-start: 1;
+        }
+
+        .complication {
+            grid-row-start: 3;
+            grid-row-end: span 3;
+            grid-column-start: 1;
+        }
+
+        .skills {
+            grid-column-start: 3;
+            grid-row-start: 1;
+            grid-row-end: span 5;
+        }
+
+        .culture {
+            grid-row-start: 1;
+            grid-column-start: 2;
+        }
+
+        .perks {
+            grid-row-end: span 2;
+        }
+
+        .projects.card {
+            grid-row-start: 5;
+        }
     }
 }
 
@@ -59,32 +251,9 @@
     flex-direction: column;
     align-items: center;
 
-    &.letter .page {
-        aspect-ratio: 8.5 / 11;
-        width: 1275px; // ~150dpi printed
-        height: 1650px;
-        max-width: 1275px;
-        max-height: 1650px;
-    }
-
-    &.a4 .page {
-        aspect-ratio: 1 / 1.41;
-        width: 1240px; // ~150dpi printed
-        height: 1754px;
-        max-width: 1240px;
-        max-height: 1754px;
-    }
-
     .page {
         overflow: hidden;
         margin: 0;
-
-        &.page-1 {
-            display: grid;
-            grid-template-rows: min-content min-content min-content 1fr;
-            align-items: stretch;
-            justify-items: stretch;
-        }
     }
 
     p, .labeled-field-content span {
@@ -142,53 +311,6 @@
         padding: 0.5rem;
     }
     
-    .modifiers-statuses {
-        display: grid;
-        grid-template-columns: 40% 32% 28%;
-        grid-template-rows: min-content 1fr;
-        
-        .conditions {
-            grid-column-start: 2;
-            grid-row-start: 2;
-        }
-    }
-
-    .class-ancestry-features {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-    }
-
-    .reference-damages {
-        grid-row-end: span 2;
-
-        display: grid;
-        grid-template-rows: 1fr min-content;
-    }
-
-    .page-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr 0.8fr;
-        grid-template-rows:repeat(5, 1fr);
-
-        .career, .complication {
-            grid-row-end: span 2;
-        }
-
-        .skills {
-            grid-row-end: span 4;
-        }
-
-        .culture, .perks {
-            grid-column-end: span 2;
-        }
-
-        .titles-projects {
-            grid-column-end: span 3;
-            display: grid;
-            grid-template-columns: 3fr 7fr;
-        }
-    }
-
     .abilities.page {
         --gap: 10px;
         display: flex;
@@ -199,12 +321,27 @@
         .card {
             margin: 0;
         }
+    }
+
+    &.portrait .abilities.page {
         .card,
         .feature-reference.single {
             flex-basis: calc((100% - 2 * var(--gap)) / 3);
         }
+
         .feature-reference {
             flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
+        }
+    }
+
+    &.landscape .abilities.page {
+        .card,
+        .feature-reference.single {
+            flex-basis: calc((100% - 3 * var(--gap)) / 4);
+        }
+
+        .feature-reference {
+            flex-basis: calc(2 * ((100% - 3 * var(--gap)) / 4) + var(--gap));
         }
     }
 

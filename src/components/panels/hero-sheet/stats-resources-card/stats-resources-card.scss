@@ -1,8 +1,10 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
-.stats-resources {
+.stats-resources.card {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
+    align-items: stretch;
+    justify-items: stretch;
 
     .characteristics-measurements {
         grid-column-end: span 3;
@@ -88,15 +90,15 @@
         position: relative;
         border-left: 2px solid common.$color-light;
         border-right: 2px solid common.$color-light;
-        margin: 5px 0;
 
         grid-column-end: span 2;
 
         display: grid;
-        grid-template-rows: min-content min-content 1fr;
+        grid-template-rows: min-content min-content min-content 1fr;
+        place-items: stretch;
 
         h4 {
-            margin: 0 3px;
+            margin: 5px 3px 0;
             padding: 0;
             text-align:center;
             text-transform: uppercase;
@@ -125,14 +127,14 @@
             }
         }
 
-        .currentState {
+        .current-state {
             @include common.beveled(10px, 2px, common.$color-medium);
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             align-items: center;
             justify-items: stretch;
 
-            margin: 12px 15px 26px 15px;
+            margin: 12px 15px 11px 15px;
             padding: 5px;
 
             .winded {
@@ -159,7 +161,6 @@
         }
 
         .reference {
-            margin-bottom: -5px;
             .labeled-field {
                 width: 30%;
             }
@@ -200,7 +201,7 @@
     .recoveries .reference {
         display: flex;
         justify-content: center;
-        margin-top: -8px;
+        align-items: stretch;
     }
     .stamina .reference,
     .recoveries .reference,

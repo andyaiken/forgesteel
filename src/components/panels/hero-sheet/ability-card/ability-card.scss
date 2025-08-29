@@ -1,19 +1,31 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
 .hero-sheet .ability.card {
+    // background-image: linear-gradient(180deg, transparent 17px, #ccc 17px, #ccc 18px, #eee 18px,#eee 35px, #ccc 35px);
+    // background-size: 100% 36px;
+    // background-position: center top;
+    // background-repeat: repeat-y;
+
     padding: 10px;
     display:grid;
     justify-self: stretch;
 
-    p strong {
+    p strong,
+    li strong {
         @include common.font-slab;
+        font-weight: 450;
     }
 
     section.bordered {
         margin-bottom: 0;
+
+        :last-child {
+            margin-bottom: 0;
+        }
     }
     h2 {
         margin-top: -8px;
+        @include common.bottom-border-fancy-2(common.$color-medium);
 
         .cost {
             @include common.font-slab;
@@ -37,13 +49,23 @@
                 height: 9px;
                 font-weight: 450;
                 bottom: 9px;
-                left: 50%;
-                transform: translateX(-16px);
                 background: #fff;
                 padding: 1px 2px;
                 border-radius: 6px;
+                border-bottom: 1px solid #fff;
             }
         }
+    }
+
+    p.description {
+        font-style: italic;
+        margin: 0 0 3px;
+        padding-bottom: 2px;
+
+        background-image: linear-gradient(90deg, common.$color-medium, transparent);
+        background-size: 80% 1px;
+        background-position: left bottom;
+        background-repeat: no-repeat;
     }
 
     .stats {
@@ -88,6 +110,15 @@
                 vertical-align: middle;
             }
         }
+    }
+
+    .action-qualifier {
+        text-align: right;
+        @include common.font-serif;
+        font-style: italic;
+        font-size: 13px;
+        font-weight: 300;
+        margin-top: -12px;
     }
 
     .power-roll {
@@ -160,6 +191,68 @@
 
         ul {
             margin-left: 10px;
+        }
+    }
+}
+
+.hero-sheet .ability.card {
+    &.no-action h2 {
+        @include common.bottom-border-fancy(common.$color-medium);
+    }
+    &.free-strike h2 {
+        @include common.bottom-border-fancy-3(common.$color-medium);
+    }
+}
+
+.hero-sheet .color .ability.card {
+    @mixin color-ability-card($color) {
+        section.bordered {
+            @include common.beveled(10px, 2px, $color);
+
+            h3,
+            .action-type {
+                color: $color;
+            }
+        }
+    }
+
+    &.main-action {
+        @include color-ability-card(common.$color-main-action);
+        h2 {
+            @include common.bottom-border-fancy-2(common.$color-main-action);
+        }
+    }
+
+    &.maneuver {
+        @include color-ability-card(common.$color-maneuver);
+        h2 {
+            @include common.bottom-border-fancy-2(common.$color-maneuver);
+        }
+    }
+
+    &.triggered-action {
+        @include color-ability-card(common.$color-triggered-action);
+        h2 {
+            @include common.bottom-border-fancy-2(common.$color-triggered-action);
+        }
+    }
+
+    // &.free-strike {
+    //     @include color-ability-card(common.$color-free-strike);
+    //     h2 {
+    //         @include common.bottom-border-fancy-3(common.$color-free-strike);
+    //     }
+    // }
+    &.performance {
+        @include color-ability-card(common.$color-performance);
+        h2 {
+            @include common.bottom-border-fancy-2(common.$color-performance);
+        }
+    }
+    &.move-action {
+        @include color-ability-card(common.$color-move);
+        h2 {
+            @include common.bottom-border-fancy-3(common.$color-move);
         }
     }
 }

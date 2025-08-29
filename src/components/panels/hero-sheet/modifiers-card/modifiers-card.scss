@@ -1,12 +1,11 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
-.modifiers {
-    grid-row-end: span 2;
-
+.hero-sheet .modifiers.card {
+    min-width: 450px;
     display: grid;
     grid-template-rows: repeat(4, max-content) 1fr;
 
-    h2, ul, .name {
+    ul, .name {
         margin: 0 10px;
         padding: 8px 0;
     }

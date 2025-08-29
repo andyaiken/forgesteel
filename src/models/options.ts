@@ -13,6 +13,8 @@ export interface Options {
 	compactView: boolean;
 	abilityWidth: PanelWidth;
 	classicSheetPageSize: SheetPageSize;
+	colorAbilityCards: boolean;
+	pageOrientation: 'portrait' | 'landscape';
 	// Library
 	showMonstersInGroups: boolean;
 	showContentInTable: boolean;

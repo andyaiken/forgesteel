@@ -970,6 +970,8 @@ export class FactoryLogic {
 			includePlayState: true,
 			abilityWidth: PanelWidth.Medium,
 			classicSheetPageSize: SheetPageSize.Letter,
+			pageOrientation: 'portrait',
+			colorAbilityCards: true,
 			compactView: false,
 			showMonstersInGroups: true,
 			showContentInTable: false,

@@ -1,5 +1,6 @@
 import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 
+import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { CharacterSheetFormatter } from '../../../../utils/character-sheet-formatter';
@@ -131,16 +132,26 @@ const AbilityFeatureComponent = (feature: FeatureAbility) => {
 	}
 
 	// Ability Type
-	if (feature.data.ability.type.usage === AbilityUsage.Trigger) {
+	const usage = feature.data.ability.type.usage;
+	if (usage === AbilityUsage.Trigger) {
 		abilityIcon = triggerIcon;
 	}
+
+	const getAbilityType = (ability: Ability) => {
+		if (![ AbilityUsage.NoAction, AbilityUsage.Other ].includes(ability.type.usage)) {
+			return ability.type.usage;
+		}
+		if (ability.keywords.includes('Performance')) {
+			return 'Performance';
+		}
+	};
 
 	return (
 		<>
 			<div className='feature-title'>
 				<img src={abilityIcon} alt='Ability' />
 				<span className='ability-name'>{feature.name}</span>
-				<span className='type'>{feature.data.ability.type.usage}</span>
+				<span className='type'>{getAbilityType(feature.data.ability)}</span>
 			</div>
 			<div className='feature-description'><em>{feature.description.replace(/^\s+/, '')}</em></div>
 		</>
@@ -151,10 +162,9 @@ const AbilityModifierComponent = (feature: FeatureAbilityDamage | FeatureAbility
 	const value = HeroLogic.calculateModifierValue(hero, feature.data);
 	const type = feature.type === FeatureType.AbilityDistance ? 'distance' : 'damage';
 	return (
-		<>
-			<div className='feature-title'>{feature.name}</div>
-			<div className='feature-description'>{`[${feature.data.keywords.sort(CharacterSheetFormatter.sortKeywords).join(' ')}] Abilities: ${CharacterSheetFormatter.addSign(value)} ${type}`}</div>
-		</>
+		<div className='feature-line'>
+			• [{feature.data.keywords.sort(CharacterSheetFormatter.sortKeywords).join(' ')}] Abilities: {CharacterSheetFormatter.addSign(value)} {type}
+		</div>
 	);
 };
 

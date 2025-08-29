@@ -1,7 +1,8 @@
 import { AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
 
-import { AbilitySheet } from '../models/character-sheet';
+import { AbilitySheet, ItemSheet } from '../models/character-sheet';
 import { Characteristic } from '../enums/characteristic';
+import { Collections } from './collections';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Utils } from './utils';
@@ -87,7 +88,8 @@ export class CharacterSheetFormatter {
 	};
 
 	static isLongFeature = (f: Feature, check: number = 2): boolean => {
-		return f.description.split('\n').length > check;
+		return ([ FeatureType.Text, FeatureType.Package ].includes(f.type))
+			&& (f.description.split('\n').length > check);
 	};
 
 	// There are some that might just be *too* long for the Class Features section,
@@ -98,16 +100,81 @@ export class CharacterSheetFormatter {
 		return f.name.includes('Persistent Magic');
 	};
 
-	static isBasicFeature = (f: Feature): boolean => {
-		return [
-			FeatureType.HeroicResource,
-			FeatureType.Bonus,
-			FeatureType.CharacteristicBonus,
-			FeatureType.LanguageChoice,
-			FeatureType.SkillChoice,
-			FeatureType.Perk,
-			FeatureType.Choice
-		].includes(f.type);
+	static divideFeatures = (features: Feature[], availableSpace: number) => {
+		const displayed: Feature[] = [];
+		const reference: Feature[] = [];
+
+		features.sort(this.sortFeatures);
+		let size = 0;
+		features.forEach(f => {
+			let display = false;
+			let fSize = 1;
+			if (size < availableSpace) {
+				fSize = this.calculateFeatureSize(f, 50);
+				if (this.isLongFeature(f)) {
+					reference.push(f);
+				}
+				if (size + fSize <= availableSpace) {
+					display = true;
+				}
+			}
+			size += fSize;
+
+			if (display) {
+				displayed.push(f);
+			} else {
+				reference.push(f);
+			}
+		});
+
+		return {
+			displayed: displayed,
+			referenceIds: Collections.distinct(reference.map(f => f.id), f => f)
+		};
+	};
+
+	static calculateFeatureSize = (f: Feature, lineWidth: number, countShortenedText: boolean = true): number => {
+		let size = 1;
+		if (this.isLongFeature(f)) {
+			size = 2;
+			if (countShortenedText) {
+				size += this.countLines(f.description.split('\n')[0], lineWidth);
+			} else {
+				size += this.countLines(f.description, lineWidth);
+			}
+		} else if (f.type === FeatureType.Text) {
+			size = 2 + this.countLines(f.description, lineWidth);
+		} else if (f.type === FeatureType.Ability) {
+			size = 3;
+		} else if (f.type === FeatureType.DamageModifier) {
+			size = 3 + (2 * Collections.distinct(f.data.modifiers, m => m.type).length);
+		}
+
+		return size;
+	};
+
+	static calculateFeaturesSize = (features: { feature: Feature, source: string }[] | undefined, lineWidth: number): number => {
+		let size = 0;
+		if (features) {
+			features.forEach(f => {
+				size += this.calculateFeatureSize(f.feature, lineWidth, false);
+			});
+
+			size += 2 * Collections.distinct(features, f => f.source).length;
+		}
+		return size;
+	};
+
+	static calculateInventorySize = (items: ItemSheet[] | undefined, lineWidth: number): number => {
+		let size = 0;
+		if (items) {
+			items.forEach(i => {
+				if (i.features)
+					size += i.features.reduce((s, f) => s += this.calculateFeatureSize(f, lineWidth, false), 0);
+				size += 2;
+			});
+		}
+		return size;
 	};
 
 	static featureTypeOrder: FeatureType[] = [
@@ -159,24 +226,40 @@ export class CharacterSheetFormatter {
 	};
 
 	static sortAbilitiesByLength = (a: AbilitySheet, b: AbilitySheet): number => {
-		const aLength = this.calculateAbilitySize(a);
-		const bLength = this.calculateAbilitySize(b);
+		const aLength = this.calculateAbilitySize(a, 50);
+		const bLength = this.calculateAbilitySize(b, 50);
 
 		return aLength - bLength;
 	};
 
-	static calculateAbilitySize = (ability: AbilitySheet): number => {
+	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
 		let size = 0;
-		size += this.countLines(ability.rollT1Effect, 40);
-		size += this.countLines(ability.rollT2Effect, 40);
-		size += this.countLines(ability.rollT3Effect, 40);
-		size += this.countLines(ability.effect, 50);
+		const rollLineLen = Math.ceil(0.8 * lineWidth);
+		if (ability) {
+			size += 4; // title
+			size += this.countLines(ability.description, lineWidth);
+			size += 4; // keywords, distance, etc
+			size += ability.hasPowerRoll ? 2 : 0;
+			size += 2 * this.countLines(ability.rollT1Effect, rollLineLen);
+			size += 2 * this.countLines(ability.rollT2Effect, rollLineLen);
+			size += 2 * this.countLines(ability.rollT3Effect, rollLineLen);
+			if (ability.trigger)
+				size += 1 + this.countLines(ability.trigger, lineWidth);
+			if (ability.effect) {
+				const effectSize = this.countLines(ability.effect, lineWidth, 1);
+				// console.log('Effect size: ', effectSize);
+				size += 2 + effectSize;
+			}
+		}
 		return size;
 	};
 
-	static countLines = (text: string | undefined, lineWidth: number) => {
+	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0) => {
 		return text?.split('\n').reduce((n, l) => {
-			return n + Math.ceil(l.length / lineWidth);
+			let len = Math.max(emptyLineSize, Math.ceil(l.length / lineWidth));
+			if (l.startsWith('*'))// list item, will be indented
+				len = Math.ceil(l.length / (lineWidth - 5));
+			return n + len;
 		}, 0) || 0;
 	};
 

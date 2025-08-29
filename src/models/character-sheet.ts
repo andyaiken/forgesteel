@@ -104,6 +104,7 @@ export interface CharacterSheet {
 
 	// Complication
 	complicationName?: string;
+	complicationDescription?: string;
 	complicationBenefits?: Feature[];
 	complicationDrawbacks?: Feature[];
 
@@ -131,6 +132,7 @@ export interface CharacterSheet {
 	triggeredActions: AbilitySheet[];
 	otherRollAbilities: AbilitySheet[];
 	otherAbilities: AbilitySheet[];
+	standardAbilities: AbilitySheet[];
 
 	// Other Features and Reference
 	featuresReferenceOther?: {
@@ -161,10 +163,12 @@ export interface AbilitySheet {
 	isSignature: boolean;
 	abilityType?: string;
 	actionType?: string;
+	description?: string;
 	keywords?: string;
 	distance?: string;
 	target?: string;
 	trigger?: string;
+	qualifiers?: string[];
 	effect?: string;
 
 	hasPowerRoll: boolean;

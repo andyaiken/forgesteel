@@ -4,3 +4,22 @@
 	flex-direction: column;
 	gap: 10px;	
 }
+
+.expression {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 50px 0;
+
+	.expression-result {
+		font-size: 36px;
+		font-weight: 600;
+		letter-spacing: 3px;
+		text-align: center;
+		text-transform: uppercase;
+		border: 2px solid rgb(64, 150, 255);
+		border-radius: 10px;
+		background-color: rgb(230, 244, 255);
+		padding: 20px;
+	}
+}

@@ -7,10 +7,20 @@ import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Modal } from '../../modal/modal';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
+import { Random } from '../../../../utils/random';
 import { Utils } from '../../../../utils/utils';
 import { useState } from 'react';
 
 import './stats-panel.scss';
+
+interface Expression {
+	resourceID: string;
+	resourceName: string;
+	throws: number;
+	sides: number;
+	constant: number;
+	result: number | null;
+}
 
 interface Props {
 	hero: Hero;
@@ -21,6 +31,7 @@ interface Props {
 export const StatsPanel = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ respiteVisible, setRespiteVisible ] = useState<boolean>(false);
+	const [ expression, setExpression ] = useState<Expression | null>(null);
 	const [ notify, notifyContext ] = notification.useNotification();
 
 	const setHeroicResource = (featureID: string, value: number) => {
@@ -246,7 +257,22 @@ export const StatsPanel = (props: Props) => {
 											if (digits.test(g.value)) {
 												const v = parseInt(g.value);
 												btn = (
-													<Button onClick={() => gainResource(hr.id, v)}>+{v}</Button>
+													<Button onClick={() => gainResource(hr.id, v)}>+{g.value}</Button>
+												);
+											}
+											const dice = /^(?<throws>\d+)d(?<sides>\d+)(?:\s*)(?:\+(?<constant>\d))?$/;
+											const match = dice.exec(g.value);
+											if (match) {
+												const exp: Expression = {
+													resourceID: hr.id,
+													resourceName: hr.name,
+													throws: parseInt(match.groups?.throws || '1'),
+													sides: parseInt(match.groups?.sides || '3'),
+													constant: parseInt(match.groups?.constant || '0'),
+													result: null
+												};
+												btn = (
+													<Button onClick={() => setExpression(exp)}>+{g.value}</Button>
 												);
 											}
 
@@ -393,9 +419,59 @@ export const StatsPanel = (props: Props) => {
 								</div>
 							</Button>
 						</Space>
-
 					}
 					onClose={() => setRespiteVisible(false)}
+				/>
+			</Drawer>
+			<Drawer open={!!expression} onClose={() => setExpression(null)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						expression ?
+							<Space direction='vertical' style={{ width: '100%', padding: '0 20px' }}>
+								<HeaderText level={1}>
+									Roll
+								</HeaderText>
+								<div className='expression'>
+									<div className='expression-result'>
+										{
+											expression.result === null ?
+												expression.constant !== 0 ?
+													`+${expression.throws}d${expression.sides} +${expression.constant} ${expression.resourceName}`
+													:
+													`+${expression.throws}d${expression.sides} ${expression.resourceName}`
+												:
+												`+${expression.result}`
+										}
+									</div>
+								</div>
+								<Button
+									block={true}
+									onClick={() => {
+										const copy = Utils.copy(expression);
+										copy.result = Random.dieRoll(copy.throws, copy.sides) + copy.constant;
+										setExpression(copy);
+									}}
+								>
+									Roll
+								</Button>
+								<Button
+									block={true}
+									className='tall-button'
+									type='primary'
+									disabled={expression.result === null}
+									onClick={() => {
+										if (expression.result !== null) {
+											gainResource(expression.resourceID, expression.result);
+											setExpression(null);
+										}
+									}}
+								>
+									Gain {expression.result || 0} {expression.resourceName}
+								</Button>
+							</Space>
+							: null
+					}
+					onClose={() => setExpression(null)}
 				/>
 			</Drawer>
 			{notifyContext}

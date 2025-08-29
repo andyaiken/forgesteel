@@ -1615,7 +1615,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-sharedSpirit-b',
 				name: 'Shared Spirit',
-				description: 'At the start of each day, roll 1d6. On a 1-4, you control your body. On a 5-6, the spirit does. Alternatively, if you and the spirit are on good terms, you can choose each day who is in control. CYou can use those skills only while you are in control of your body. Then choose three new skills, which you have and can use only while your spirit is in control.'
+				description: 'At the start of each day, roll 1d6. On a 1-4, you control your body. On a 5-6, the spirit does. Alternatively, if you and the spirit are on good terms, you can choose each day who is in control. You can use those skills only while you are in control of your body. Then choose three new skills, which you have and can use only while your spirit is in control.'
 			})
 		]
 	};

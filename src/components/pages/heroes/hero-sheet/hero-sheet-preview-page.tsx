@@ -1,11 +1,17 @@
 import { Divider, Drawer, FloatButton, Segmented } from 'antd';
 import { useMemo, useState } from 'react';
+import { Career } from '../../../../models/career';
+import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
+import { CharacterSheetBuilder } from '../../../../utils/sheet-builder';
+import { ComplicationCard } from '../../../panels/hero-sheet/complication-card/complication-card';
+import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Hero } from '../../../../models/hero';
 import { HeroSheetPage } from './hero-sheet-page';
 import { Options } from '../../../../models/options';
 import { SettingFilled } from '@ant-design/icons';
 import { SheetPageSize } from '../../../../enums/sheet-page-size';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Toggle } from '../../../controls/toggle/toggle';
 import { Utils } from '../../../../utils/utils';
 import { useParams } from 'react-router';
@@ -90,6 +96,87 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		}
 	};
 
+	const fakeHero = FactoryLogic.createHero(props.sourcebooks.map(s => s.id));
+	const getPageClasses = () => {
+		return [
+			'hero-sheet',
+			props.options.classicSheetPageSize.toLowerCase(),
+			props.options.pageOrientation
+		].join(' ');
+	};
+
+	const getAllCareers = () => {
+		return SourcebookLogic.getCareers(props.sourcebooks)
+			.flatMap(c => {
+				const withIncidents: Career[] = [];
+				c.incitingIncidents.options.forEach(i => {
+					const selected = Utils.copy(c.incitingIncidents);
+					selected.selectedID = i.id;
+					withIncidents.push({
+						...c,
+						incitingIncidents: selected
+					});
+				});
+				return withIncidents;
+			})
+			.map(CharacterSheetBuilder.buildCareerSheet);
+	};
+
+	const getAllComplications = () => {
+		return SourcebookLogic.getComplications(props.sourcebooks)
+			.map(CharacterSheetBuilder.buildComplicationSheet);
+	};
+
+	const getPreviewPage = () => {
+		if (heroID === 'careers') {
+			return (
+				<main id='hero-sheet-page'>
+					<div className={getPageClasses()}>
+						<h2>All Careers</h2>
+						<div className='all-careers'>
+							{getAllCareers().map(c => {
+								return (
+									<CareerCard
+										key={c.id}
+										career={c}
+										hero={fakeHero}
+									/>
+								);
+							})}
+						</div>
+					</div>
+				</main>
+			);
+		} else if (heroID === 'complications') {
+			return (
+				<main id='hero-sheet-page'>
+					<div className={getPageClasses()}>
+						<h2>All Complications</h2>
+						<div className='all-complications'>
+							{getAllComplications().map(c => {
+								return (
+									<ComplicationCard
+										key={c.id}
+										complication={c}
+										hero={fakeHero}
+									/>
+								);
+							})}
+						</div>
+					</div>
+				</main>
+			);
+		} else {
+			return (
+				<HeroSheetPage
+					hero={hero}
+					sourcebooks={props.sourcebooks}
+					options={props.options}
+				/>
+			);
+		}
+	};
+
 	try {
 		return (
 			<div id='pdf-preview'>
@@ -103,11 +190,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 						onChange={setDisplay}
 					/>
 				</div>
-				<HeroSheetPage
-					hero={hero}
-					sourcebooks={props.sourcebooks}
-					options={props.options}
-				/>
+				{getPreviewPage()}
 				<div id='pdf-canvas'></div>
 				<FloatButton
 					icon={<SettingFilled />}

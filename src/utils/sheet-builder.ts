@@ -1,12 +1,14 @@
-import { AbilitySheet, CharacterSheet } from '../models/character-sheet';
+import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet } from '../models/character-sheet';
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
+import { Career } from '../models/career';
 import { CharacterSheetFormatter } from './character-sheet-formatter';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
+import { Complication } from '../models/complication';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FactoryLogic } from '../logic/factory-logic';
@@ -239,30 +241,16 @@ export class CharacterSheetBuilder {
 		sheet.conditions = conditions;
 
 		if (hero.career) {
-			sheet.careerName = hero.career.name;
-			const careerFeatures = hero.career.features;
-			sheet.careerBenefits = CharacterSheetFormatter.convertFeatures(careerFeatures);
-			coveredFeatureIds = coveredFeatureIds.concat(careerFeatures.map(f => f.id));
+			sheet.career = this.buildCareerSheet(hero.career);
 
-			const incident = hero.career.incitingIncidents.options.find(
-				o => o.id === (hero.career && hero.career.incitingIncidents.selectedID)
-			);
-			sheet.careerInsightingIncident = incident;
+			coveredFeatureIds = coveredFeatureIds.concat(hero.career.features.map(f => f.id));
 		}
 
 		if (hero.complication) {
-			sheet.complicationName = hero.complication.name;
-			sheet.complicationDescription = hero.complication.description;
-			const complicationFeatures = hero.complication.features;
+			sheet.complication = this.buildComplicationSheet(hero.complication);
 
-			const drawbacks = complicationFeatures.filter(this.isFeatureDrawback);
-			sheet.complicationDrawbacks = drawbacks;
-
-			const benefits = complicationFeatures.filter(f => !this.isFeatureDrawback(f));
-			sheet.complicationBenefits = benefits;
-
-			coveredFeatureIds = coveredFeatureIds.concat(benefits.map(f => f.id));
-			coveredFeatureIds = coveredFeatureIds.concat(drawbacks.map(f => f.id));
+			coveredFeatureIds = coveredFeatureIds.concat(sheet.complication.benefits.map(f => f.id));
+			coveredFeatureIds = coveredFeatureIds.concat(sheet.complication.drawbacks.map(f => f.id));
 		}
 
 		const skillsMap = new Map<string, string[]>();
@@ -396,6 +384,22 @@ export class CharacterSheetBuilder {
 		}
 	};
 
+	// Returns true for features that are categorized as part of the Kit,
+	// but which (I feel) should go with the Class features.
+	static isClassFeatureInKit = (f: Feature): boolean => {
+		return (f.name.includes('Aspect')
+			|| f.name.includes('Animal Form')
+			|| f.name.includes('Hybrid Form')
+			|| f.name.includes('Growing Ferocity'));
+	};
+
+	static isFeatureDrawback = (f: Feature): boolean => {
+		return (f.name.includes('Drawback')
+			|| /-d$/.test(f.id));
+	};
+	// #endregion
+
+	// #region Ability Sheet
 	static buildAbilitySheet = (ability: Ability, hero: Hero): AbilitySheet => {
 		const sheet: AbilitySheet = {
 			id: ability.id,
@@ -410,6 +414,8 @@ export class CharacterSheetBuilder {
 			trigger: ability.type.trigger,
 			hasPowerRoll: false
 		};
+
+		sheet.name = sheet.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
 
 		if (ability.cost === 'signature') {
 			sheet.isSignature = true;
@@ -478,20 +484,57 @@ export class CharacterSheetBuilder {
 
 		return sheet;
 	};
+	// #endregion
 
-	// Returns true for features that are categorized as part of the Kit,
-	// but which (I feel) should go with the Class features.
-	static isClassFeatureInKit = (f: Feature): boolean => {
-		return (f.name.includes('Aspect')
-            || f.name.includes('Animal Form')
-            || f.name.includes('Hybrid Form')
-            || f.name.includes('Growing Ferocity'));
+	// #region Career Sheet
+	static buildCareerSheet = (career: Career): CareerSheet => {
+		const sheet: CareerSheet = {
+			id: career.id,
+			name: career.name,
+			benefits: []
+		};
+
+		const careerFeatures = career.features;
+		sheet.benefits = CharacterSheetFormatter.convertFeatures(careerFeatures);
+		const incident = career.incitingIncidents.options.find(
+			o => o.id === (career && career.incitingIncidents.selectedID)
+		);
+		sheet.incitingIncident = incident;
+
+		return sheet;
+	};
+	// #endregion
+
+	// #region Complication Sheet
+	static buildComplicationSheet = (complication: Complication): ComplicationSheet => {
+		const sheet: ComplicationSheet = {
+			id: complication.id,
+			name: complication.name,
+			description: complication.description,
+			benefits: [],
+			drawbacks: []
+		};
+
+		const complicationFeatures = complication.features;
+
+		const drawbacks = complicationFeatures.filter(this.isFeatureDrawback)
+			.map(f => this.stripDuplicateComplicationName(complication.name, f));
+		sheet.drawbacks = drawbacks;
+
+		const benefits = complicationFeatures.filter(f => !this.isFeatureDrawback(f))
+			.map(f => this.stripDuplicateComplicationName(complication.name, f));
+		sheet.benefits = benefits;
+
+		return sheet;
 	};
 
-	static isFeatureDrawback = (f: Feature): boolean => {
-		return (f.name.includes('Drawback')
-			|| /-d-?/.test(f.id));
+	static stripDuplicateComplicationName = (complicationName: string, f: Feature) => {
+		if (f.type === FeatureType.Text && f.name.startsWith(complicationName)) {
+			f.name = '';
+		} else if (f.type === FeatureType.Ability) {
+			f.name = f.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
+		}
+		return f;
 	};
-
 	// #endregion
 }

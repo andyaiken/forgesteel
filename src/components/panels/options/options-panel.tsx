@@ -1,4 +1,4 @@
-import { Divider, Segmented, Select, Tabs } from 'antd';
+import { Divider, Segmented, Select, Space } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../models/hero';
@@ -12,7 +12,7 @@ import { Utils } from '../../../utils/utils';
 import './options-panel.scss';
 
 interface Props {
-	mode: 'hero' | 'library' | 'monster' | 'encounter' | 'tactical-map' | 'session' | 'player';
+	mode: 'hero-modern' | 'hero-classic' | 'library' | 'monster' | 'encounter' | 'tactical-map' | 'session' | 'player';
 	options: Options;
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
@@ -217,73 +217,59 @@ export const OptionsPanel = (props: Props) => {
 		};
 
 		switch (props.mode) {
-			case 'hero':
+			case 'hero-modern':
 				return (
 					<>
-						<Tabs
-							items={[
-								{
-									key: '1',
-									label: 'Modern Sheet',
-									children: (
-										<>
-											<Toggle label='Separate inventory features' value={props.options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
-											<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
-											<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
-											<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
-											<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
-											<Divider>View</Divider>
-											<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
-											<Toggle label='Compact' value={props.options.compactView} onChange={setCompactView} />
-											<Divider>Abilities</Divider>
-											<Segmented
-												name='abilitywidth'
-												block={true}
-												disabled={props.options.compactView}
-												options={[
-													{ value: PanelWidth.Narrow, label: 'S' },
-													{ value: PanelWidth.Medium, label: 'M' },
-													{ value: PanelWidth.Wide, label: 'L' },
-													{ value: PanelWidth.ExtraWide, label: 'XL' }
-												]}
-												value={props.options.abilityWidth}
-												onChange={setAbilityWidth}
-											/>
-										</>
-									)
-								},
-								{
-									key: '2',
-									label: 'Classic Sheet',
-									children: (
-										<>
-											<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
-											<Toggle label='Color ability cards' value={props.options.colorAbilityCards} onChange={setColorAbilityCards} />
-											<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
-											<Divider>Layout</Divider>
-											<Segmented
-												name='pagesize'
-												block={true}
-												options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
-												value={props.options.classicSheetPageSize}
-												onChange={setClassicSheetPageSize}
-											/>
-											<Divider>Page Orientation</Divider>
-											<Segmented
-												name='orientation'
-												block={true}
-												options={[
-													{ value: 'portrait', label: 'Portrait' },
-													{ value: 'landscape', label: 'Landscape' }
-												]}
-												value={props.options.pageOrientation}
-												onChange={setPageOrientation}
-											/>
-										</>
-									)
-								}
+						<Toggle label='Separate inventory features' value={props.options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
+						<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
+						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
+						<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
+						<Divider>View</Divider>
+						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
+						<Toggle label='Compact' value={props.options.compactView} onChange={setCompactView} />
+						<Divider>Abilities</Divider>
+						<Segmented
+							name='abilitywidth'
+							block={true}
+							disabled={props.options.compactView}
+							options={[
+								{ value: PanelWidth.Narrow, label: 'S' },
+								{ value: PanelWidth.Medium, label: 'M' },
+								{ value: PanelWidth.Wide, label: 'L' },
+								{ value: PanelWidth.ExtraWide, label: 'XL' }
 							]}
+							value={props.options.abilityWidth}
+							onChange={setAbilityWidth}
 						/>
+					</>
+				);
+			case 'hero-classic':
+				return (
+					<>
+						<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
+						<Toggle label='Color ability cards' value={props.options.colorAbilityCards} onChange={setColorAbilityCards} />
+						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+						<Divider>Layout</Divider>
+						<Space direction='vertical' style={{ width: '100%' }}>
+							<Segmented
+								name='pagesize'
+								block={true}
+								options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
+								value={props.options.classicSheetPageSize}
+								onChange={setClassicSheetPageSize}
+							/>
+							<Segmented
+								name='orientation'
+								block={true}
+								options={[
+									{ value: 'portrait', label: 'Portrait' },
+									{ value: 'landscape', label: 'Landscape' }
+								]}
+								value={props.options.pageOrientation}
+								onChange={setPageOrientation}
+							/>
+						</Space>
 					</>
 				);
 			case 'library':

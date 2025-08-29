@@ -232,9 +232,9 @@ export const HeroViewPage = (props: Props) => {
 						</Popover>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode='hero' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 						>
-							<Button icon={<SettingOutlined />}>
+							<Button disabled={![ 'modern', 'classic' ].includes(view)} icon={<SettingOutlined />}>
 								Options
 								<DownOutlined />
 							</Button>

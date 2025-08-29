@@ -266,6 +266,7 @@ export const polderElementalist = {
 		id: 'culture-polder',
 		name: 'Polder',
 		description: 'Urban, communal, creative.',
+		type: 'Ancestral',
 		languages: [
 			'Khoursirian'
 		],

@@ -287,6 +287,7 @@ export const humanCensor = {
 		id: 'culture-human',
 		name: 'Human',
 		description: 'Urban, communal, labor.',
+		type: 'Ancestral',
 		languages: [
 			'Vaslorian'
 		],

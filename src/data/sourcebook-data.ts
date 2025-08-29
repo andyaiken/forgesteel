@@ -5,6 +5,7 @@ import { CareerData } from './career-data';
 import { ClassData } from './class-data';
 import { ComplicationData } from './complication-data';
 import { ConsumableData } from './items/consumable-data';
+import { CultureType } from '../enums/culture-type';
 import { DomainData } from './domain-data';
 import { FactoryLogic } from '../logic/factory-logic';
 import { ImbuedArmorData } from './imbuements/imbued-armor-data';
@@ -44,22 +45,22 @@ export class SourcebookData {
 			AncestryData.revenant
 		],
 		cultures: [
-			FactoryLogic.createCulture('Artisan Guild', 'Urban, bureaucratic, creative.', [], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.creative),
-			FactoryLogic.createCulture('Borderland Homestead', 'Wilderness, communal, labor.', [], EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.labor),
-			FactoryLogic.createCulture('College Conclave', 'Urban, bureaucratic, academic.', [], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic),
-			FactoryLogic.createCulture('Criminal Gang', 'Urban, communal, lawless.', [], EnvironmentData.urban, OrganizationData.communal, UpbringingData.lawless),
-			FactoryLogic.createCulture('Farming Village', 'Rural, bureaucratic, labor.', [], EnvironmentData.rural, OrganizationData.bureaucratic, UpbringingData.labor),
-			FactoryLogic.createCulture('Herding Community', 'Nomadic, communal, labor.', [], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.labor),
-			FactoryLogic.createCulture('Knightly Order', 'Secluded, bureaucratic, martial.', [], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial),
-			FactoryLogic.createCulture('Mercenary Band', 'Nomadic, bureaucratic, martial.', [], EnvironmentData.nomadic, OrganizationData.bureaucratic, UpbringingData.martial),
-			FactoryLogic.createCulture('Merchant Caravan', 'Nomadic, bureaucratic, creative.', [], EnvironmentData.nomadic, OrganizationData.bureaucratic, UpbringingData.creative),
-			FactoryLogic.createCulture('Monastic Order', 'Secluded, bureaucratic, academic.', [], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.academic),
-			FactoryLogic.createCulture('Noble House', 'Urban, bureaucratic, noble.', [], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.noble),
-			FactoryLogic.createCulture('Outlaw Band', 'Wilderness, communal, lawless.', [], EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.lawless),
-			FactoryLogic.createCulture('Pauper Neighborhood', 'Urban, communal, labor.', [], EnvironmentData.urban, OrganizationData.communal, UpbringingData.labor),
-			FactoryLogic.createCulture('Pirate Crew', 'Nomadic, communal, lawless.', [], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.lawless),
-			FactoryLogic.createCulture('Telepathic Hive', 'Secluded, communal, creative.', [], EnvironmentData.secluded, OrganizationData.communal, UpbringingData.creative),
-			FactoryLogic.createCulture('Traveling Entertainers', 'Nomadic, communal, creative.', [], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.creative)
+			FactoryLogic.createCulture('Artisan Guild', 'Urban, bureaucratic, creative.', CultureType.Professional, [], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.creative),
+			FactoryLogic.createCulture('Borderland Homestead', 'Wilderness, communal, labor.', CultureType.Professional, [], EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.labor),
+			FactoryLogic.createCulture('College Conclave', 'Urban, bureaucratic, academic.', CultureType.Professional, [], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic),
+			FactoryLogic.createCulture('Criminal Gang', 'Urban, communal, lawless.', CultureType.Professional, [], EnvironmentData.urban, OrganizationData.communal, UpbringingData.lawless),
+			FactoryLogic.createCulture('Farming Village', 'Rural, bureaucratic, labor.', CultureType.Professional, [], EnvironmentData.rural, OrganizationData.bureaucratic, UpbringingData.labor),
+			FactoryLogic.createCulture('Herding Community', 'Nomadic, communal, labor.', CultureType.Professional, [], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.labor),
+			FactoryLogic.createCulture('Knightly Order', 'Secluded, bureaucratic, martial.', CultureType.Professional, [], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial),
+			FactoryLogic.createCulture('Mercenary Band', 'Nomadic, bureaucratic, martial.', CultureType.Professional, [], EnvironmentData.nomadic, OrganizationData.bureaucratic, UpbringingData.martial),
+			FactoryLogic.createCulture('Merchant Caravan', 'Nomadic, bureaucratic, creative.', CultureType.Professional, [], EnvironmentData.nomadic, OrganizationData.bureaucratic, UpbringingData.creative),
+			FactoryLogic.createCulture('Monastic Order', 'Secluded, bureaucratic, academic.', CultureType.Professional, [], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.academic),
+			FactoryLogic.createCulture('Noble House', 'Urban, bureaucratic, noble.', CultureType.Professional, [], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.noble),
+			FactoryLogic.createCulture('Outlaw Band', 'Wilderness, communal, lawless.', CultureType.Professional, [], EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.lawless),
+			FactoryLogic.createCulture('Pauper Neighborhood', 'Urban, communal, labor.', CultureType.Professional, [], EnvironmentData.urban, OrganizationData.communal, UpbringingData.labor),
+			FactoryLogic.createCulture('Pirate Crew', 'Nomadic, communal, lawless.', CultureType.Professional, [], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.lawless),
+			FactoryLogic.createCulture('Telepathic Hive', 'Secluded, communal, creative.', CultureType.Professional, [], EnvironmentData.secluded, OrganizationData.communal, UpbringingData.creative),
+			FactoryLogic.createCulture('Traveling Entertainers', 'Nomadic, communal, creative.', CultureType.Professional, [], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.creative)
 		],
 		careers: [
 			CareerData.agent,
@@ -727,17 +728,17 @@ export class SourcebookData {
 			AncestryData.timeRaider
 		],
 		cultures: [
-			FactoryLogic.createCulture('Devil', 'Urban, bureaucratic, academic.', [ 'Anjali' ], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic),
-			FactoryLogic.createCulture('Dragon Knight', 'Secluded, bureaucratic, martial.', [ 'Vastariax' ], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial),
-			FactoryLogic.createCulture('Dwarf', 'Secluded, bureaucratic, creative.', [ 'Zaliac' ], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.creative),
-			FactoryLogic.createCulture('Wode Elf', 'Wilderness, bureaucratic, martial.', [ 'Yllyric' ], EnvironmentData.wilderness, OrganizationData.bureaucratic, UpbringingData.martial),
-			FactoryLogic.createCulture('High Elf', 'Secluded, bureaucratic, martial.', [ 'Hyrallic' ], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial),
-			FactoryLogic.createCulture('Hakaan', 'Rural, communal, labor.', [ 'Vhoric' ], EnvironmentData.rural, OrganizationData.communal, UpbringingData.labor),
-			FactoryLogic.createCulture('Human', 'Urban, communal, labor.', [ 'Vaslorian' ], EnvironmentData.urban, OrganizationData.communal, UpbringingData.labor),
-			FactoryLogic.createCulture('Memonek', 'Nomadic, communal, academic.', [ 'Axiomatic' ], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.academic),
-			FactoryLogic.createCulture('Orc', 'Wilderness, anarchic, creative.', [ 'Kalliac' ], EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.creative),
-			FactoryLogic.createCulture('Polder', 'Urban, communal, creative.', [ 'Khoursirian' ], EnvironmentData.urban, OrganizationData.communal, UpbringingData.creative),
-			FactoryLogic.createCulture('Time Raider', 'Nomadic, anarchic, martial.', [ 'Voll' ], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.martial)
+			FactoryLogic.createCulture('Devil', 'Urban, bureaucratic, academic.', CultureType.Ancestral, [ 'Anjali' ], EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic),
+			FactoryLogic.createCulture('Dragon Knight', 'Secluded, bureaucratic, martial.', CultureType.Ancestral, [ 'Vastariax' ], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial),
+			FactoryLogic.createCulture('Dwarf', 'Secluded, bureaucratic, creative.', CultureType.Ancestral, [ 'Zaliac' ], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.creative),
+			FactoryLogic.createCulture('Wode Elf', 'Wilderness, bureaucratic, martial.', CultureType.Ancestral, [ 'Yllyric' ], EnvironmentData.wilderness, OrganizationData.bureaucratic, UpbringingData.martial),
+			FactoryLogic.createCulture('High Elf', 'Secluded, bureaucratic, martial.', CultureType.Ancestral, [ 'Hyrallic' ], EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial),
+			FactoryLogic.createCulture('Hakaan', 'Rural, communal, labor.', CultureType.Ancestral, [ 'Vhoric' ], EnvironmentData.rural, OrganizationData.communal, UpbringingData.labor),
+			FactoryLogic.createCulture('Human', 'Urban, communal, labor.', CultureType.Ancestral, [ 'Vaslorian' ], EnvironmentData.urban, OrganizationData.communal, UpbringingData.labor),
+			FactoryLogic.createCulture('Memonek', 'Nomadic, communal, academic.', CultureType.Ancestral, [ 'Axiomatic' ], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.academic),
+			FactoryLogic.createCulture('Orc', 'Wilderness, anarchic, creative.', CultureType.Ancestral, [ 'Kalliac' ], EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.creative),
+			FactoryLogic.createCulture('Polder', 'Urban, communal, creative.', CultureType.Ancestral, [ 'Khoursirian' ], EnvironmentData.urban, OrganizationData.communal, UpbringingData.creative),
+			FactoryLogic.createCulture('Time Raider', 'Nomadic, anarchic, martial.', CultureType.Ancestral, [ 'Voll' ], EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.martial)
 		],
 		careers: [],
 		classes: [],

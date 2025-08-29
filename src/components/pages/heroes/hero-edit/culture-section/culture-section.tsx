@@ -6,6 +6,7 @@ import { ReactNode, useState } from 'react';
 import { Collections } from '../../../../../utils/collections';
 import { Culture } from '../../../../../models/culture';
 import { CulturePanel } from '../../../../panels/elements/culture-panel/culture-panel';
+import { CultureType } from '../../../../../enums/culture-type';
 import { Element } from '../../../../../models/element';
 import { EmptyMessage } from '../empty-message/empty-message';
 import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
@@ -65,7 +66,17 @@ export const CultureSection = (props: CultureSectionProps) => {
 
 	try {
 		const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].filter(c => matchElement(c, props.searchTerm));
-		const options = cultures.map(c => (
+		const optionsAncestral = cultures.filter(c => c.type === CultureType.Ancestral).map(c => (
+			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
+				<CulturePanel culture={c} options={props.options} />
+			</SelectablePanel>
+		));
+		const optionsProfessional = cultures.filter(c => c.type === CultureType.Professional).map(c => (
+			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
+				<CulturePanel culture={c} options={props.options} />
+			</SelectablePanel>
+		));
+		const optionsBespoke = cultures.filter(c => c.type === CultureType.Bespoke).map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
 				<CulturePanel culture={c} options={props.options} />
 			</SelectablePanel>
@@ -216,14 +227,25 @@ export const CultureSection = (props: CultureSectionProps) => {
 							: null
 					}
 					{
-						!props.hero.culture && (options.length > 0) ?
-							<div className='hero-edit-content-column grid' id='culture-list'>
-								{options}
+						!props.hero.culture && ([ ...optionsAncestral, ...optionsProfessional, ...optionsBespoke ].length > 0) ?
+							<div className='hero-edit-content-column list' id='culture-list'>
+								<HeaderText level={1}>Ancestral Cultures</HeaderText>
+								<div className='grid'>
+									{optionsAncestral}
+								</div>
+								<HeaderText level={1}>Professional Cultures</HeaderText>
+								<div className='grid'>
+									{optionsProfessional}
+								</div>
+								<HeaderText level={1}>Bespoke Cultures</HeaderText>
+								<div className='grid'>
+									{optionsBespoke}
+								</div>
 							</div>
 							: null
 					}
 					{
-						!props.hero.culture && (options.length === 0) ?
+						!props.hero.culture && ([ ...optionsAncestral, ...optionsProfessional, ...optionsBespoke ].length === 0) ?
 							<div className='hero-edit-content-column' id='culture-list'>
 								<EmptyMessage hero={props.hero} />
 							</div>

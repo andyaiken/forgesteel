@@ -126,6 +126,7 @@ export const highElfTactician = {
 		id: 'culture-high-elf',
 		name: 'High Elf',
 		description: 'Secluded, bureaucratic, martial.',
+		type: 'Ancestral',
 		languages: [
 			'Hyrallic'
 		],

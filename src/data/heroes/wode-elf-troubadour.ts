@@ -174,6 +174,7 @@ export const wodeElfTroubadour = {
 		id: 'culture-bespoke-culture',
 		name: 'Bespoke Culture',
 		description: 'Choose any Environment, Organization, and Upbringing.',
+		type: 'Bespoke',
 		languages: [
 			'Yllyric'
 		],

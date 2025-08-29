@@ -94,7 +94,7 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 						message='You can add your hero to a folder to group it with other heroes.'
 					/>
 					<Divider />
-					<Expander title='Default language'>
+					<Expander title='Default Language'>
 						{
 							props.hero.features.filter(f => f.id === 'default-language').map(f => (
 								<FeatureConfigPanel

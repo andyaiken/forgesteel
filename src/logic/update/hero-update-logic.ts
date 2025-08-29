@@ -3,6 +3,7 @@ import { AbilityUpdateLogic } from './ability-update-logic';
 import { Ancestry } from '../../models/ancestry';
 import { AncestryData } from '../../data/ancestry-data';
 import { CultureData } from '../../data/culture-data';
+import { CultureType } from '../../enums/culture-type';
 import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { Hero } from '../../models/hero';
@@ -52,6 +53,12 @@ export class HeroUpdateLogic {
 						hero.ancestry.ancestryPoints = 3;
 						break;
 				}
+			}
+		}
+
+		if (hero.culture) {
+			if (hero.culture.type === undefined) {
+				hero.culture.type = CultureType.Ancestral;
 			}
 		}
 

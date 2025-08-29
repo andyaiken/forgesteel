@@ -287,6 +287,7 @@ export const humanTalent = {
 		id: 'culture-monastic-order',
 		name: 'Monastic Order',
 		description: 'Secluded, bureaucratic, academic.',
+		type: 'Professional',
 		languages: [
 			'Hyrallic'
 		],

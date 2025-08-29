@@ -23,7 +23,12 @@ export const CulturePanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={props.mode === PanelMode.Full ? 'culture-panel' : 'culture-panel compact'} id={props.mode === PanelMode.Full ? props.culture.id : undefined}>
-					<HeaderText level={1}>{props.culture.name || 'Unnamed Culture'}</HeaderText>
+					<HeaderText
+						level={1}
+						tags={[ props.culture.type ]}
+					>
+						{props.culture.name || 'Unnamed Culture'}
+					</HeaderText>
 					<Markdown text={props.culture.description} />
 					{
 						props.mode === PanelMode.Full ?

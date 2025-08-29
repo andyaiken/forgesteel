@@ -14,6 +14,7 @@ import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { Counter } from '../../models/counter';
 import { Culture } from '../../models/culture';
+import { CultureType } from '../../enums/culture-type';
 import { DirectoryModal } from '../modals/directory/directory-modal';
 import { Domain } from '../../models/domain';
 import { Element } from '../../models/element';
@@ -661,7 +662,7 @@ export const Main = (props: Props) => {
 			culture = Utils.copy(original);
 			culture.id = Utils.guid();
 		} else {
-			culture = FactoryLogic.createCulture();
+			culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
 		}
 
 		sourcebook.cultures.push(culture);

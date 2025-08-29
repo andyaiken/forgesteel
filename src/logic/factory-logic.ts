@@ -13,6 +13,7 @@ import { Career } from '../models/career';
 import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
+import { CultureType } from '../enums/culture-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
 import { EncounterSlot } from '../models/encounter-slot';
@@ -174,11 +175,12 @@ export class FactoryLogic {
 		};
 	};
 
-	static createCulture = (name?: string, description?: string, languages?: string[], environment?: Feature, organization?: Feature, upbringing?: Feature): Culture => {
+	static createCulture = (name: string, description: string, type: CultureType, languages?: string[], environment?: Feature, organization?: Feature, upbringing?: Feature): Culture => {
 		return {
 			id: name ? `culture-${name.replace(' ', '-').toLowerCase()}` : Utils.guid(),
-			name: name || '',
-			description: description || '',
+			name: name,
+			description: description,
+			type: type,
 			languages: languages || [],
 			environment: environment || null,
 			organization: organization || null,

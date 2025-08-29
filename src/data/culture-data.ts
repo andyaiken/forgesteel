@@ -1,3 +1,4 @@
+import { CultureType } from '../enums/culture-type';
 import { FactoryLogic } from '../logic/factory-logic';
 import { SkillList } from '../enums/skill-list';
 
@@ -177,5 +178,5 @@ export class UpbringingData {
 }
 
 export class CultureData {
-	static bespoke = FactoryLogic.createCulture('Bespoke Culture', 'Choose any Environment, Organization, and Upbringing.');
+	static bespoke = FactoryLogic.createCulture('Bespoke Culture', 'Choose any Environment, Organization, and Upbringing.', CultureType.Bespoke);
 }

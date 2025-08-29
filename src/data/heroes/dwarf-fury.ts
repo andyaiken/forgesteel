@@ -137,6 +137,7 @@ export const dwarfFury = {
 		id: 'culture-dwarf',
 		name: 'Dwarf',
 		description: 'Secluded, bureaucratic, creative.',
+		type: 'Ancestral',
 		languages: [
 			'Zaliac'
 		],

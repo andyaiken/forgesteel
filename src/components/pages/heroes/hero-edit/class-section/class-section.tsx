@@ -26,6 +26,7 @@ import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../../models/subclass';
 import { SubClassSelectModal } from '../../../../modals/select/subclass-select/subclass-select-modal';
 import { SubclassPanel } from '../../../../panels/elements/subclass-panel/subclass-panel';
+import { Utils } from '../../../../../utils/utils';
 import { useMediaQuery } from '../../../../../hooks/use-media-query';
 
 import './class-section.scss';
@@ -246,7 +247,7 @@ export const ClassSection = (props: Props) => {
 	};
 
 	try {
-		const classes = SourcebookLogic.getClasses(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
+		const classes = SourcebookLogic.getClasses(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 		const options = classes.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
 				<ClassPanel heroClass={c} options={props.options} />

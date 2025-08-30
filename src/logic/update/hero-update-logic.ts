@@ -197,7 +197,7 @@ export class HeroUpdateLogic {
 			const id = original.ancestry.id;
 			const ancestry = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === id);
 			if (ancestry) {
-				hero.ancestry = ancestry;
+				hero.ancestry = Utils.copy(ancestry);
 			}
 		}
 
@@ -205,7 +205,7 @@ export class HeroUpdateLogic {
 			const id = original.culture.id;
 			const culture = SourcebookLogic.getCultures(sourcebooks).find(c => c.id === id);
 			if (culture) {
-				hero.culture = culture;
+				hero.culture = Utils.copy(culture);
 			}
 
 			if (hero.culture && (hero.culture.id === CultureData.bespoke.id)) {
@@ -222,7 +222,7 @@ export class HeroUpdateLogic {
 			const id = original.career.id;
 			const career = SourcebookLogic.getCareers(sourcebooks).find(c => c.id === id);
 			if (career) {
-				hero.career = career;
+				hero.career = Utils.copy(career);
 
 				hero.career.incitingIncidents.selectedID = original.career.incitingIncidents.selectedID;
 			}
@@ -232,7 +232,7 @@ export class HeroUpdateLogic {
 			const id = original.class.id;
 			const heroClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === id);
 			if (heroClass) {
-				hero.class = heroClass;
+				hero.class = Utils.copy(heroClass);
 
 				// Level
 				hero.class.level = original.class.level;
@@ -255,7 +255,7 @@ export class HeroUpdateLogic {
 			const id = original.complication.id;
 			const complication = SourcebookLogic.getComplications(sourcebooks).find(c => c.id === id);
 			if (complication) {
-				hero.complication = complication;
+				hero.complication = Utils.copy(complication);
 			}
 		}
 

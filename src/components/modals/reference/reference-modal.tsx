@@ -261,6 +261,7 @@ export const ReferenceModal = (props: Props) => {
 										[
 											AbilityData.aidAttack,
 											AbilityData.catchBreath,
+											AbilityData.clawDirt,
 											AbilityData.escapeGrab,
 											AbilityData.goProne,
 											AbilityData.grab,

@@ -129,6 +129,7 @@ export class HeroLogic {
 
 			abilities.push({ ability: AbilityData.aidAttack, source: 'Standard' });
 			abilities.push({ ability: AbilityData.catchBreath, source: 'Standard' });
+			abilities.push({ ability: AbilityData.clawDirt, source: 'Standard' });
 			abilities.push({ ability: AbilityData.escapeGrab, source: 'Standard' });
 			abilities.push({ ability: AbilityData.goProne, source: 'Standard' });
 			abilities.push({ ability: AbilityData.grab, source: 'Standard' });

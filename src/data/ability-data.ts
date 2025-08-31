@@ -121,6 +121,26 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		]
 	});
 
+	static clawDirt = FactoryLogic.createAbility({
+		id: 'claw-dirt',
+		name: 'Claw Dirt',
+		description: '',
+		type: FactoryLogic.type.createManeuver({ qualifiers: [ 'usable if your speed is at least 2' ] }),
+		keywords: [],
+		distance: [ FactoryLogic.distance.createSelf() ],
+		target: 'Self',
+		sections: [
+			FactoryLogic.createAbilitySectionRoll(
+				FactoryLogic.createPowerRoll({
+					characteristic: Characteristic.Might,
+					tier1: 'You can move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed and weakened (EoT).',
+					tier2: 'You can use your main action this turn to move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed (EoT).',
+					tier3: 'You can move 1 square into, out of, or through ground you are touching that can be burrowed through.'
+				})
+			)
+		]
+	});
+
 	static escapeGrab = FactoryLogic.createAbility({
 		id: 'escape-grab',
 		name: 'Escape Grab',

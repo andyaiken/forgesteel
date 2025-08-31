@@ -103,10 +103,6 @@ export const ManeuversReferenceCard = () => {
 			<p>Any creature can take the following maneuvers, in addition to those listed in their stats:</p>
 			<ul className='actions'>
 				<li>
-					<strong>Advance:</strong> Move a number of squares up to your speed. You can break
-					up this movement with your maneuver and action however you wish.
-				</li>
-				<li>
 					<strong>Aid Attack:</strong> Choose an adjacent enemy. The next ability power roll
 					an ally makes against them before the start of your next turn has
 					an edge.

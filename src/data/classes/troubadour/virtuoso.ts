@@ -146,9 +146,9 @@ your Routines feature.`,
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Presence ],
-												tier1: '5 corruption damage; m < [weak], pull 1 toward the center of the area',
-												tier2: '9 corruption damage; m < [average], pull 2 toward the center of the area',
-												tier3: '12 corruption damage; m < [strong], pull 3 toward the center of the area'
+												tier1: '5 corruption damage; M < [weak], pull 1 toward the center of the area',
+												tier2: '9 corruption damage; M < [average], pull 2 toward the center of the area',
+												tier3: '12 corruption damage; M < [strong], pull 3 toward the center of the area'
 											})
 										)
 									]
@@ -252,9 +252,9 @@ your Routines feature.`,
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Presence ],
-												tier1: '7 sonic damage; p < [weak], prone',
-												tier2: '10 sonic damage; p < [average], prone',
-												tier3: '13 sonic damage; p < [strong], prone'
+												tier1: '7 sonic damage; P < [weak], prone',
+												tier2: '10 sonic damage; P < [average], prone',
+												tier3: '13 sonic damage; P < [strong], prone'
 											})
 										)
 									]

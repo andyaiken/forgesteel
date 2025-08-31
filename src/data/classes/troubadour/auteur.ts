@@ -191,9 +191,9 @@ export const auteur: SubClass = {
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Presence ],
-												tier1: '2 psychic damage; p < [weak], frightened (save ends)',
-												tier2: '5 psychic damage; p < [average], frightened (save ends)',
-												tier3: '7 psychic damage; p < [strong], frightened (save ends)'
+												tier1: '2 psychic damage; P < [weak], frightened (save ends)',
+												tier2: '5 psychic damage; P < [average], frightened (save ends)',
+												tier3: '7 psychic damage; P < [strong], frightened (save ends)'
 											})
 										)
 									]

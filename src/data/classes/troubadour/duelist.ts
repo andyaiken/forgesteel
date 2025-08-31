@@ -192,9 +192,9 @@ competition with that creature. The chosen creature also has a double edge on po
 										FactoryLogic.createAbilitySectionRoll(
 											FactoryLogic.createPowerRoll({
 												characteristic: [ Characteristic.Agility ],
-												tier1: '12 + A damage; m < [weak], bleeding (save ends)',
-												tier2: '18 + A damage; m < [average], bleeding (save ends)',
-												tier3: '24 + A damage; bleeding (EoT), or if m < [strong], bleeding (save ends)'
+												tier1: '12 + A damage; M < [weak], bleeding (save ends)',
+												tier2: '18 + A damage; M < [average], bleeding (save ends)',
+												tier3: '24 + A damage; bleeding (EoT), or if M < [strong], bleeding (save ends)'
 											})
 										)
 									]
@@ -263,7 +263,7 @@ Additionally, when your named signature ability is the last ability you use in a
 												characteristic: [ Characteristic.Agility ],
 												tier1: '15 + A damage',
 												tier2: '21 + A damage',
-												tier3: '28 + A damage; m < [strong], bleeding (save ends)'
+												tier3: '28 + A damage; M < [strong], bleeding (save ends)'
 											})
 										)
 									]

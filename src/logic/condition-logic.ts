@@ -31,9 +31,15 @@ export class ConditionLogic {
 	};
 
 	static getFullDescription = (condition: Condition) => {
-		let type = condition.type.toString();
-		if (condition.type === ConditionType.Quick) {
-			type = condition.text;
+		let type = '';
+		switch (condition.type) {
+			case ConditionType.Custom:
+			case ConditionType.Quick:
+				type = condition.text;
+				break;
+			default:
+				type = condition.type.toString();
+				break;
 		}
 
 		switch (condition.ends) {

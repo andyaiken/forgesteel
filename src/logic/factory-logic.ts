@@ -13,6 +13,7 @@ import { Career } from '../models/career';
 import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
+import { CultureType } from '../enums/culture-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
 import { EncounterSlot } from '../models/encounter-slot';
@@ -48,6 +49,7 @@ import { Playbook } from '../models/playbook';
 import { Plot } from '../models/plot';
 import { PowerRoll } from '../models/power-roll';
 import { RetainerData } from '../data/retainer-data';
+import { SheetPageSize } from '../enums/sheet-page-size';
 import { Size } from '../models/size';
 import { Sourcebook } from '../models/sourcebook';
 import { Speed } from '../models/speed';
@@ -166,17 +168,19 @@ export class FactoryLogic {
 					id: Utils.guid(),
 					name: 'Purchased Traits',
 					options: [],
-					count: 3
+					count: 'ancestry'
 				})
-			]
+			],
+			ancestryPoints: 3
 		};
 	};
 
-	static createCulture = (name?: string, description?: string, languages?: string[], environment?: Feature, organization?: Feature, upbringing?: Feature): Culture => {
+	static createCulture = (name: string, description: string, type: CultureType, languages?: string[], environment?: Feature, organization?: Feature, upbringing?: Feature): Culture => {
 		return {
 			id: name ? `culture-${name.replace(' ', '-').toLowerCase()}` : Utils.guid(),
-			name: name || '',
-			description: description || '',
+			name: name,
+			description: description,
+			type: type,
 			languages: languages || [],
 			environment: environment || null,
 			organization: organization || null,
@@ -611,6 +615,7 @@ export class FactoryLogic {
 	static createEncounterGroup = (): EncounterGroup => {
 		return {
 			id: Utils.guid(),
+			name: '',
 			slots: [],
 			encounterState: 'ready'
 		};
@@ -967,6 +972,9 @@ export class FactoryLogic {
 			showSources: true,
 			includePlayState: true,
 			abilityWidth: PanelWidth.Medium,
+			classicSheetPageSize: SheetPageSize.Letter,
+			pageOrientation: 'portrait',
+			colorAbilityCards: true,
 			compactView: false,
 			showMonstersInGroups: true,
 			showContentInTable: false,

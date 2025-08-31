@@ -14,6 +14,7 @@ import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { Counter } from '../../models/counter';
 import { Culture } from '../../models/culture';
+import { CultureType } from '../../enums/culture-type';
 import { DirectoryModal } from '../modals/directory/directory-modal';
 import { Domain } from '../../models/domain';
 import { Element } from '../../models/element';
@@ -291,7 +292,7 @@ export const Main = (props: Props) => {
 				++p;
 			}
 
-			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero');
+			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize);
 		} else {
 			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], mode, !formFillable);
 		}
@@ -299,6 +300,13 @@ export const Main = (props: Props) => {
 
 	const exportStandardAbilities = () => {
 		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', 'pdf');
+	};
+
+	const setNotes = (hero: Hero, value: string) => {
+		const copy = Utils.copy(hero);
+		copy.state.notes = value;
+
+		persistHero(copy);
 	};
 
 	// #endregion
@@ -654,7 +662,7 @@ export const Main = (props: Props) => {
 			culture = Utils.copy(original);
 			culture.id = Utils.guid();
 		} else {
-			culture = FactoryLogic.createCulture();
+			culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
 		}
 
 		sourcebook.cultures.push(culture);
@@ -1374,7 +1382,7 @@ export const Main = (props: Props) => {
 	};
 
 	const showReference = () => {
-		onshowReference(null);
+		onShowReference(null);
 	};
 
 	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
@@ -1484,7 +1492,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onshowReference = (hero: Hero | null, page?: RulesPage) => {
+	const onShowReference = (hero: Hero | null, page?: RulesPage) => {
 		setDrawer(
 			<ReferenceModal
 				hero={hero}
@@ -1609,7 +1617,8 @@ export const Main = (props: Props) => {
 										showFeature={onSelectFeature}
 										showAbility={onSelectAbility}
 										showHeroState={onShowHeroState}
-										showReference={onshowReference}
+										showReference={onShowReference}
+										setNotes={setNotes}
 									/>
 								}
 							/>

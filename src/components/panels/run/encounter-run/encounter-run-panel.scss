@@ -1,8 +1,8 @@
 .encounter-run-panel {
 	display: flex;
 	flex-direction: column;
-	padding: 0 20px 20px 20px;
-	overflow: hidden;
+	padding: 0 20px;
+	height: 100%;
 
 	&.is-small {
 		.encounter-groups {

@@ -1,6 +1,7 @@
 import { CharacterSheet } from '../../../../models/character-sheet';
-import { CharacterSheetFormatter } from '../../../../utils/character-sheet-formatter';
 import { FeatureComponent } from '../components/feature-component';
+import { JSX } from 'react';
+
 import './ancestry-traits-card.scss';
 
 interface Props {
@@ -11,29 +12,25 @@ export const AncestryTraitsCard = (props: Props) => {
 	const character = props.character;
 
 	const getTraits = () => {
-		let traits = character.ancestryTraits || [];
-		const numLines = traits.reduce((n, f) => {
-			const lines = CharacterSheetFormatter.countLines(f.description, 40);
-			return n + 1 + lines;
-		}, 0);
+		const results: JSX.Element[] = [];
 
-		if (numLines > 26) {
-			traits = traits.map(f => {
-				if (f.description.includes('…')) {
-					f.description = '*See Reference for details…*';
-				}
-				return f;
-			});
+		character.ancestryTraits?.forEach(f => {
+			results.push(
+				<li key={f.id}>
+					<FeatureComponent
+						feature={f}
+						hero={character.hero}
+					/>
+				</li>
+			);
+		});
+		const shownIds = character.ancestryTraits?.map(f => f.id);
+		if (character.featuresReferenceOther?.find(r => (r.source === character.ancestryName) && !(shownIds?.includes(r.feature.id)))) {
+			results.push(
+				<li><em>More in Reference…</em></li>
+			);
 		}
-
-		return traits.map(f =>
-			<li key={f.id}>
-				<FeatureComponent
-					feature={f}
-					hero={character.hero}
-				/>
-			</li>
-		);
+		return results;
 	};
 
 	return (

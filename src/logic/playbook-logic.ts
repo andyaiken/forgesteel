@@ -173,8 +173,8 @@ export class PlaybookLogic {
 		if (options.party !== '') {
 			heroes
 				.filter(h => h.folder === options.party)
-				.map(h => Utils.copy(h))
 				.forEach(h => {
+					h.state.controlledSlots = [];
 					HeroLogic.getCompanions(h).forEach(monster => {
 						if (!h.state.controlledSlots.some(slot => slot.monsters.some(m => m.name === monster.name))) {
 							h.state.controlledSlots.push(FactoryLogic.createEncounterSlotFromMonster(monster));

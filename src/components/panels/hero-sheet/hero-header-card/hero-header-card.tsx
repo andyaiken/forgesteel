@@ -34,7 +34,7 @@ export const HeroHeaderCard = (props: Props) => {
 				/>
 				<LabeledTextField
 					label='Career'
-					content={character.careerName}
+					content={character.career?.name || ''}
 					additionalClasses={[ 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField

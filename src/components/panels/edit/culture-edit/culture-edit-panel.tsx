@@ -1,6 +1,7 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { Input, Select, Space, Tabs } from 'antd';
+import { Input, Segmented, Select, Space, Tabs } from 'antd';
 import { Culture } from '../../../../models/culture';
+import { CultureType } from '../../../../enums/culture-type';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Feature } from '../../../../models/feature';
 import { Field } from '../../../controls/field/field';
@@ -60,6 +61,17 @@ export const CultureEditPanel = (props: Props) => {
 		const getDetailsEditSection = () => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
+					<Segmented
+						block={true}
+						options={[ CultureType.Ancestral, CultureType.Professional ]}
+						value={culture.type}
+						onChange={value => {
+							const copy = Utils.copy(culture);
+							copy.type = value;
+							setCulture(copy);
+							props.onChange(copy);
+						}}
+					/>
 					<Select
 						style={{ width: '100%' }}
 						status={culture.languages.length === 0 ? 'warning' : ''}

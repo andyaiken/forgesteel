@@ -1,7 +1,9 @@
 import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '../../models/feature';
 import { AbilityUpdateLogic } from './ability-update-logic';
 import { Ancestry } from '../../models/ancestry';
+import { AncestryData } from '../../data/ancestry-data';
 import { CultureData } from '../../data/culture-data';
+import { CultureType } from '../../enums/culture-type';
 import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { Hero } from '../../models/hero';
@@ -32,7 +34,32 @@ export class HeroUpdateLogic {
 		}
 
 		if (hero.ancestry) {
+			hero.ancestry.features
+				.filter(f => f.type === FeatureType.Choice)
+				.forEach(f => f.data.count = 'ancestry');
+
 			hero.ancestry.features.forEach(FeatureUpdateLogic.updateFeature);
+
+			if (hero.ancestry.ancestryPoints === undefined) {
+				switch (hero.ancestry.id) {
+					case AncestryData.memonek.id:
+					case AncestryData.polder.id:
+						hero.ancestry.ancestryPoints = 4;
+						break;
+					case AncestryData.revenant.id:
+						hero.ancestry.ancestryPoints = 2;
+						break;
+					default:
+						hero.ancestry.ancestryPoints = 3;
+						break;
+				}
+			}
+		}
+
+		if (hero.culture) {
+			if (hero.culture.type === undefined) {
+				hero.culture.type = CultureType.Ancestral;
+			}
 		}
 
 		if (hero.career) {
@@ -170,7 +197,7 @@ export class HeroUpdateLogic {
 			const id = original.ancestry.id;
 			const ancestry = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === id);
 			if (ancestry) {
-				hero.ancestry = ancestry;
+				hero.ancestry = Utils.copy(ancestry);
 			}
 		}
 
@@ -178,7 +205,7 @@ export class HeroUpdateLogic {
 			const id = original.culture.id;
 			const culture = SourcebookLogic.getCultures(sourcebooks).find(c => c.id === id);
 			if (culture) {
-				hero.culture = culture;
+				hero.culture = Utils.copy(culture);
 			}
 
 			if (hero.culture && (hero.culture.id === CultureData.bespoke.id)) {
@@ -195,7 +222,7 @@ export class HeroUpdateLogic {
 			const id = original.career.id;
 			const career = SourcebookLogic.getCareers(sourcebooks).find(c => c.id === id);
 			if (career) {
-				hero.career = career;
+				hero.career = Utils.copy(career);
 
 				hero.career.incitingIncidents.selectedID = original.career.incitingIncidents.selectedID;
 			}
@@ -205,7 +232,7 @@ export class HeroUpdateLogic {
 			const id = original.class.id;
 			const heroClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === id);
 			if (heroClass) {
-				hero.class = heroClass;
+				hero.class = Utils.copy(heroClass);
 
 				// Level
 				hero.class.level = original.class.level;
@@ -228,7 +255,7 @@ export class HeroUpdateLogic {
 			const id = original.complication.id;
 			const complication = SourcebookLogic.getComplications(sourcebooks).find(c => c.id === id);
 			if (complication) {
-				hero.complication = complication;
+				hero.complication = Utils.copy(complication);
 			}
 		}
 

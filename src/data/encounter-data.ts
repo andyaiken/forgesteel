@@ -11,6 +11,7 @@ export class EncounterData {
 		groups: [
 			{
 				id: 'group-1',
+				name: '',
 				slots: [
 					{
 						id: 'group-1-slot-1',
@@ -39,6 +40,7 @@ export class EncounterData {
 			},
 			{
 				id: 'group-2',
+				name: '',
 				slots: [
 					{
 						id: 'group-2-slot-1',
@@ -67,6 +69,7 @@ export class EncounterData {
 			},
 			{
 				id: 'group-3',
+				name: '',
 				slots: [
 					{
 						id: 'group-3-slot-1',
@@ -95,6 +98,7 @@ export class EncounterData {
 			},
 			{
 				id: 'group-4',
+				name: '',
 				slots: [
 					{
 						id: 'group-4-slot-1',
@@ -153,6 +157,7 @@ export class EncounterData {
 		groups: [
 			{
 				id: 'group-1',
+				name: '',
 				slots: [
 					{
 						id: 'group-1-slot-1',

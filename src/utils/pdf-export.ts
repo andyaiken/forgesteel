@@ -340,12 +340,7 @@ export class PDFExport {
 								break;
 							case 'roll': {
 								let powerRollText = '';
-								powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...section.roll.characteristic
-									.map(
-										c => hero.class && hero.class.characteristics.find(d => d.characteristic === c)
-									)
-									.map(c => (c && c.value) || 0)
-								);
+								powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...section.roll.characteristic.map(c => HeroLogic.getCharacteristic(hero, c)));
 								powerRollText = powerRollText + '\n   • 11 or less\t' + AbilityLogic.getTierEffect(
 									section.roll.tier1,
 									1,

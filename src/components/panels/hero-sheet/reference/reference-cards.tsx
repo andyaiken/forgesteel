@@ -2,7 +2,7 @@ import './reference-cards.scss';
 
 export const TurnOptionsReferenceCard = () => {
 	return (
-		<div className='turn-reference card'>
+		<div className='turn-reference extra-reference card'>
 			<h2>Your Turn</h2>
 			<p>Each creature can take a move action, a maneuver, and an action on their turn — in any order</p>
 			<p>You can also take <strong>one triggered action per round</strong> when the trigger happens. There is no limit to the number of free triggered actions you can take.</p>

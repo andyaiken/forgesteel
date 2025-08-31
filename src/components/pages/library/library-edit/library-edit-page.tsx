@@ -1,4 +1,4 @@
-import { Button, Drawer, Popover, Select, Space, Tabs } from 'antd';
+import { Button, Drawer, Flex, Popover, Select, Space, Tabs } from 'antd';
 import { CloseOutlined, DownOutlined, LeftOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -160,15 +160,19 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<div>
 				<HeaderText>Stats</HeaderText>
-				<Field label='Highest characteristic' value={stats.highestCharacteristic} />
-				<Field label='EV' value={stats.ev} />
-				<Field label='Stamina' value={stats.stamina} />
-				<Field label='Free strike damage' value={stats.freeStrikeDamage} />
+				<Flex align='center' justify='space-around'>
+					<Field orientation='vertical' label='Highest characteristic' value={stats.highestCharacteristic} />
+					<Field orientation='vertical' label='EV' value={stats.ev} />
+					<Field orientation='vertical' label='Stamina' value={stats.stamina} />
+					<Field orientation='vertical' label='Free strike damage' value={stats.freeStrikeDamage} />
+				</Flex>
 				<HeaderText>Ability Damage</HeaderText>
-				<Field label='Damage (typical)' value={`${stats.damage.tier1} / ${stats.damage.tier2} / ${stats.damage.tier3}`} />
-				<Field label='Damage (1 extra target)' value={`${stats.damagePlus1.tier1} / ${stats.damagePlus1.tier2} / ${stats.damagePlus1.tier3}`} />
-				<Field label='Damage (2 or more extra targets)' value={`${stats.damagePlus2.tier1} / ${stats.damagePlus2.tier2} / ${stats.damagePlus2.tier3}`} />
-				<Field label='Damage (Fewer targets)' value={`${stats.damageMinus1.tier1} / ${stats.damageMinus1.tier2} / ${stats.damageMinus1.tier3}`} />
+				<Flex align='center' justify='space-around'>
+					<Field orientation='vertical' label='Fewer targets' value={`${stats.damageMinus1.tier1} / ${stats.damageMinus1.tier2} / ${stats.damageMinus1.tier3}`} />
+					<Field highlight={true} orientation='vertical' label='Typical targets' value={`${stats.damage.tier1} / ${stats.damage.tier2} / ${stats.damage.tier3}`} />
+					<Field orientation='vertical' label='1 extra target' value={`${stats.damagePlus1.tier1} / ${stats.damagePlus1.tier2} / ${stats.damagePlus1.tier3}`} />
+					<Field orientation='vertical' label='2+ extra targets' value={`${stats.damagePlus2.tier1} / ${stats.damagePlus2.tier2} / ${stats.damagePlus2.tier3}`} />
+				</Flex>
 			</div>
 		);
 	};

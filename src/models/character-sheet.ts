@@ -98,14 +98,10 @@ export interface CharacterSheet {
 	ancestryTraits?: Feature[];
 
 	// Career
-	careerName?: string;
-	careerBenefits?: Feature[];
-	careerInsightingIncident?: Element;
+	career?: CareerSheet;
 
 	// Complication
-	complicationName?: string;
-	complicationBenefits?: Feature[];
-	complicationDrawbacks?: Feature[];
+	complication?: ComplicationSheet;
 
 	// Skills
 	allSkills?: Map<string, string[]>;
@@ -131,9 +127,28 @@ export interface CharacterSheet {
 	triggeredActions: AbilitySheet[];
 	otherRollAbilities: AbilitySheet[];
 	otherAbilities: AbilitySheet[];
+	standardAbilities: AbilitySheet[];
 
 	// Other Features and Reference
-	featuresReferenceOther?: Feature[];
+	featuresReferenceOther?: {
+		feature: Feature,
+		source: string
+	}[];
+}
+
+export interface CareerSheet {
+	id: string;
+	name: string;
+	benefits: Feature[];
+	incitingIncident?: Element;
+}
+
+export interface ComplicationSheet {
+	id: string;
+	name: string;
+	description: string;
+	benefits: Feature[];
+	drawbacks: Feature[];
 }
 
 export interface ProjectSheet {
@@ -158,10 +173,12 @@ export interface AbilitySheet {
 	isSignature: boolean;
 	abilityType?: string;
 	actionType?: string;
+	description?: string;
 	keywords?: string;
 	distance?: string;
 	target?: string;
 	trigger?: string;
+	qualifiers?: string[];
 	effect?: string;
 
 	hasPowerRoll: boolean;

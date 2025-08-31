@@ -1,4 +1,7 @@
 import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+
+import { Ability } from '../../../../models/ability';
+import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { CharacterSheetFormatter } from '../../../../utils/character-sheet-formatter';
 import { DamageModifier } from '../../../../models/damage-modifier';
@@ -11,12 +14,14 @@ import { Markdown } from '../../../controls/markdown/markdown';
 
 import './feature-component.scss';
 
-import abilityMelee from '../../../../assets/icons/sword.svg';
-import abilityMeleeRanged from '../../../../assets/icons/melee ranged.svg';
-import abilityRanged from '../../../../assets/icons/ranged.svg';
-import abilityStar from '../../../../assets/icons/star.svg';
-import abilityTriggered from '../../../../assets/icons/trigger-solid.svg';
-import targetSelf from '../../../../assets/icons/self.svg';
+import areaIcon from '../../../../assets/icons/area-icon.svg';
+import burstIcon from '../../../../assets/icons/burst-icon.svg';
+import meleeIcon from '../../../../assets/icons/sword.svg';
+import meleeRangedIcon from '../../../../assets/icons/melee ranged.svg';
+import rangedIcon from '../../../../assets/icons/ranged.svg';
+import selfIcon from '../../../../assets/icons/self.svg';
+import starIcon from '../../../../assets/icons/star.svg';
+import triggerIcon from '../../../../assets/icons/trigger-solid.svg';
 
 interface Props {
 	feature: Feature;
@@ -35,17 +40,22 @@ const BasicFeatureComponent = (feature: Feature) => {
 	);
 };
 
-const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeaturePerk | FeatureItemChoice) => {
+const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeaturePerk | FeatureItemChoice, hero: Hero) => {
 	let selectedOptions;
 	if (feature.data.selected.length > 0) {
 		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : s.name).map(s => {
 			return (<div className='feature-iteration' key={s}>{s}</div>);
 		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection'>Unselected</div>
+		];
 	}
+	const count = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
 	return (
 		<>
 			<div className='feature-line'>
-				{`• ${feature.data.count} ${CharacterSheetFormatter.pluralize(feature.name, feature.data.count)}`}
+				{`• ${feature.data.count} ${CharacterSheetFormatter.pluralize(feature.name, count)}`}
 			</div>
 			{selectedOptions}
 		</>
@@ -63,12 +73,17 @@ const AncestryChoiceFeatureComponent = (feature: FeatureAncestryChoice) => {
 };
 
 const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice) => {
-	const lists = feature.data.listOptions.join('/');
+	// const lists = feature.data.listOptions.join('/');
+	const lists = CharacterSheetFormatter.joinCommasOr(feature.data.listOptions);
 	let selectedOptions;
-	if (feature.data.selected) {
+	if (feature.data.selected.length) {
 		selectedOptions = feature.data.selected.map(s => {
 			return (<div className='feature-iteration' key={s}>{s}</div>);
 		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection'>Unselected</div>
+		];
 	}
 	return (
 		<>
@@ -102,31 +117,52 @@ const TextFeatureComponent = (feature: FeatureText | FeaturePackage | FeaturePac
 };
 
 const AbilityFeatureComponent = (feature: FeatureAbility) => {
-	let abilityIcon = abilityStar;
+	let abilityIcon = starIcon;
 	// Melee / Ranged
 	if (feature.data.ability.keywords.includes('Melee')) {
 		if (feature.data.ability.keywords.includes('Ranged')) {
-			abilityIcon = abilityMeleeRanged;
+			abilityIcon = meleeRangedIcon;
 		} else {
-			abilityIcon = abilityMelee;
+			abilityIcon = meleeIcon;
 		}
 	} else if (feature.data.ability.keywords.includes('Ranged')) {
-		abilityIcon = abilityRanged;
+		abilityIcon = rangedIcon;
 	}
 
 	// Targets
 	if (feature.data.ability.target.toLowerCase() === 'self') {
-		abilityIcon = targetSelf;
+		abilityIcon = selfIcon;
+	}
+
+	// Other Distances
+	if (feature.data.ability.distance.find(d => [ AbilityDistanceType.Aura, AbilityDistanceType.Burst ].includes(d.type))) {
+		abilityIcon = burstIcon;
+	} else if (feature.data.ability.distance.find(d => [ AbilityDistanceType.Line, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].includes(d.type))) {
+		abilityIcon = areaIcon;
 	}
 
 	// Ability Type
-	if (feature.data.ability.type.usage === AbilityUsage.Trigger) {
-		abilityIcon = abilityTriggered;
+	const usage = feature.data.ability.type.usage;
+	if (usage === AbilityUsage.Trigger) {
+		abilityIcon = triggerIcon;
 	}
+
+	const getAbilityType = (ability: Ability) => {
+		if (![ AbilityUsage.NoAction, AbilityUsage.Other ].includes(ability.type.usage)) {
+			return ability.type.usage;
+		}
+		if (ability.keywords.includes('Performance')) {
+			return 'Performance';
+		}
+	};
 
 	return (
 		<>
-			<div className='feature-title'><img src={abilityIcon} alt='Ability' />{feature.name}</div>
+			<div className='feature-title'>
+				<img src={abilityIcon} alt='Ability' />
+				<span className='ability-name'>{feature.name}</span>
+				<span className='type'>{getAbilityType(feature.data.ability)}</span>
+			</div>
 			<div className='feature-description'><em>{feature.description.replace(/^\s+/, '')}</em></div>
 		</>
 	);
@@ -136,10 +172,9 @@ const AbilityModifierComponent = (feature: FeatureAbilityDamage | FeatureAbility
 	const value = HeroLogic.calculateModifierValue(hero, feature.data);
 	const type = feature.type === FeatureType.AbilityDistance ? 'distance' : 'damage';
 	return (
-		<>
-			<div className='feature-title'>{feature.name}</div>
-			<div className='feature-description'>{`[${feature.data.keywords.sort(CharacterSheetFormatter.sortKeywords).join(' ')}] Abilities: ${CharacterSheetFormatter.addSign(value)} ${type}`}</div>
-		</>
+		<div className='feature-line'>
+			• [{feature.data.keywords.sort(CharacterSheetFormatter.sortKeywords).join(' ')}] Abilities: {CharacterSheetFormatter.addSign(value)} {type}
+		</div>
 	);
 };
 
@@ -207,7 +242,7 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.Perk:
 		case FeatureType.Choice:
 		case FeatureType.ItemChoice:
-			content = ChoiceFeatureComponent(feature);
+			content = ChoiceFeatureComponent(feature, hero);
 			break;
 		case FeatureType.AncestryChoice:
 			content = AncestryChoiceFeatureComponent(feature);

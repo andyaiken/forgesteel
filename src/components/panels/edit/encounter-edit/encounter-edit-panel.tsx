@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditFilled, EditOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '../../../../models/encounter';
 import { MonsterFilter, TerrainFilter } from '../../../../models/filter';
 import { MonsterInfo, TerrainInfo } from '../../token/token';
@@ -95,6 +95,13 @@ export const EncounterEditPanel = (props: Props) => {
 		};
 
 		const getMonstersSection = () => {
+			const setName = (group: EncounterGroup, value: string) => {
+				const copy = Utils.copy(encounter);
+				copy.groups.filter(g => g.id === group.id).forEach(g => g.name = value);
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
 			const deleteGroup = (group: EncounterGroup) => {
 				const copy = Utils.copy(encounter);
 				copy.groups = copy.groups.filter(g => g.id !== group.id);
@@ -248,39 +255,16 @@ export const EncounterEditPanel = (props: Props) => {
 					{warnings}
 					{
 						encounter.groups.map((group, n) => (
-							<div key={group.id} className='group-row'>
-								<HeaderText
-									extra={[
-										<DangerButton key='delete' mode='clear' label='Delete Group' onConfirm={() => deleteGroup(group)} />
-									]}
-								>
-									Group {(n + 1).toString()}
-								</HeaderText>
-								{group.slots.map(slot => getSlot(slot, group))}
-								{
-									group.slots.length === 0 ?
-										<Empty />
-										: null
-								}
-								{
-									EncounterDifficultyLogic.getGroupStrength(group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) ?
-										<Alert
-											type='warning'
-											showIcon={true}
-											message='This group is probably not strong enough; you might want to add more monsters'
-										/>
-										: null
-								}
-								{
-									EncounterDifficultyLogic.getGroupStrength(group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2) ?
-										<Alert
-											type='warning'
-											showIcon={true}
-											message='This group is probably too strong; you might want to split it into smaller groups'
-										/>
-										: null
-								}
-							</div>
+							<GroupPanel
+								key={group.id}
+								group={group}
+								index={n}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								setName={setName}
+								deleteGroup={deleteGroup}
+								getSlot={getSlot}
+							/>
 						))
 					}
 					{
@@ -572,7 +556,7 @@ export const EncounterEditPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			const monsters = Collections.sort(props.sourcebooks.flatMap(s => s.monsterGroups.flatMap(mg => mg.monsters).filter(m => MonsterLogic.matches(m, monsterFilter))), m => m.name);
+			const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => MonsterLogic.matches(m, monsterFilter))), g => g.name);
 
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
@@ -593,45 +577,53 @@ export const EncounterEditPanel = (props: Props) => {
 							: null
 					}
 					{
-						monsters.map(m => {
-							const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
+						groups.map(g => (
+							<Expander key={g.id} title={g.name}>
+								<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+									{
+										g.monsters.filter(m => MonsterLogic.matches(m, monsterFilter)).map(m => {
+											const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
 
-							let addBtn: ReactNode;
-							if (encounter.groups.length === 0) {
-								addBtn = (
-									<Button icon={<PlusOutlined />} onClick={() => addMonster(m, null)}>Add</Button>
-								);
-							} else {
-								const groups = encounter.groups.map((group, n) => ({
-									key: group.id,
-									label: <div className='ds-text centered-text'>Group {n + 1}</div>
-								}));
-								groups.push({
-									key: '',
-									label: <div className='ds-text centered-text'>New Group</div>
-								});
-								addBtn = (
-									<DropdownButton
-										label='Add'
-										items={groups}
-										onClick={groupID => addMonster(m, groupID !== '' ? groupID : null)}
-									/>
-								);
-							}
+											let addBtn: ReactNode;
+											if (encounter.groups.length === 0) {
+												addBtn = (
+													<Button icon={<PlusOutlined />} onClick={() => addMonster(m, null)}>Add</Button>
+												);
+											} else {
+												const groups = encounter.groups.map((group, n) => ({
+													key: group.id,
+													label: <div className='ds-text centered-text'>Group {n + 1}</div>
+												}));
+												groups.push({
+													key: '',
+													label: <div className='ds-text centered-text'>New Group</div>
+												});
+												addBtn = (
+													<DropdownButton
+														label='Add'
+														items={groups}
+														onClick={groupID => addMonster(m, groupID !== '' ? groupID : null)}
+													/>
+												);
+											}
 
-							return (
-								<div key={m.id} className='monster-row'>
-									<MonsterInfo monster={m} />
-									<Flex gap={10}>
-										<Button onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
-										{addBtn}
-									</Flex>
-								</div>
-							);
-						})
+											return (
+												<div key={m.id} className='monster-row'>
+													<MonsterInfo monster={m} />
+													<Flex gap={10}>
+														<Button onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
+														{addBtn}
+													</Flex>
+												</div>
+											);
+										})
+									}
+								</Space>
+							</Expander>
+						))
 					}
 					{
-						monsters.length === 0 ?
+						groups.length === 0 ?
 							<Empty />
 							: null
 					}
@@ -792,6 +784,69 @@ export const EncounterEditPanel = (props: Props) => {
 		console.error(ex);
 		return null;
 	}
+};
+
+interface GroupPanelProps {
+	group: EncounterGroup;
+	index: number;
+	sourcebooks: Sourcebook[];
+	options: Options;
+	setName: (group: EncounterGroup, value: string) => void;
+	deleteGroup: (group: EncounterGroup) => void;
+	getSlot: (slot: EncounterSlot, group: EncounterGroup) => ReactNode;
+}
+
+const GroupPanel = (props: GroupPanelProps) => {
+	const [ editing, setEditing ] = useState<boolean>(false);
+
+	return (
+		<div className='group-row'>
+			<HeaderText
+				extra={
+					<Flex>
+						<Button key='edit' type='text' icon={editing ? <EditFilled /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
+						<DangerButton key='delete' mode='clear' label='Delete Group' onConfirm={() => props.deleteGroup(props.group)} />
+					</Flex>
+				}
+			>
+				{
+					editing ?
+						<Input
+							placeholder='Group name'
+							value={props.group.name}
+							allowClear={true}
+							onChange={e => props.setName(props.group, e.target.value)}
+						/>
+						:
+						(props.group.name || `Group ${props.index + 1}`)
+				}
+			</HeaderText>
+			{props.group.slots.map(slot => props.getSlot(slot, props.group))}
+			{
+				props.group.slots.length === 0 ?
+					<Empty />
+					: null
+			}
+			{
+				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) ?
+					<Alert
+						type='warning'
+						showIcon={true}
+						message='This group is probably not strong enough; you might want to add more monsters'
+					/>
+					: null
+			}
+			{
+				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2) ?
+					<Alert
+						type='warning'
+						showIcon={true}
+						message='This group is probably too strong; you might want to split it into smaller groups'
+					/>
+					: null
+			}
+		</div>
+	);
 };
 
 interface MonsterSlotPanelProps {

@@ -14,32 +14,48 @@ export const ImmunitiesWeaknessesCard = (props: Props) => {
 		[ props.character ]
 	);
 
+	const getImmunities = () => {
+		if (character.immunities?.length) {
+			return (
+				<ul>
+					{character.immunities?.map(im => (
+						<li className='immunity' key={im.damageType}>
+							{im.damageType} {im.value}
+						</li>
+					))}
+				</ul>
+			);
+		} else {
+			return (
+				<em>None</em>
+			);
+		}
+	};
+
+	const getWeaknesses = () => {
+		if (character.weaknesses?.length) {
+			return (
+				<ul>
+					{character.weaknesses?.map(w => (
+						<li className='weakness' key={w.damageType}>
+							{w.damageType} {w.value}
+						</li>
+					))}
+				</ul>
+			);
+		} else {
+			return (
+				<em>None</em>
+			);
+		}
+	};
+
 	return (
 		<div className='immunities-weaknesses card'>
-			{character.immunities?.length ?
-				<>
-					<h3>Immunities</h3>
-					<ul>
-						{character.immunities?.map(im => (
-							<li className='immunity' key={im.damageType}>
-								{im.damageType} {im.value}
-							</li>
-						))}
-					</ul>
-				</>
-				: undefined }
-			{character.weaknesses?.length ?
-				<>
-					<h3>Weaknesses</h3>
-					<ul>
-						{character.weaknesses?.map(w => (
-							<li className='weakness' key={w.damageType}>
-								{w.damageType} {w.value}
-							</li>
-						))}
-					</ul>
-				</>
-				: undefined }
+			<h4>Immunities</h4>
+			{getImmunities()}
+			<h4>Weaknesses</h4>
+			{getWeaknesses()}
 		</div>
 	);
 };

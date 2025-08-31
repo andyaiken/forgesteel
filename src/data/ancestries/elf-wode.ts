@@ -83,7 +83,8 @@ export const wodeElf: Ancestry = {
 					value: 1
 				}
 			],
-			count: 3
+			count: 'ancestry'
 		})
-	]
+	],
+	ancestryPoints: 3
 };

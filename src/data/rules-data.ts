@@ -1,7 +1,4 @@
-interface RulesItem {
-	label: string;
-	content: string;
-}
+import { RulesItem } from '../models/rules-item';
 
 export class RulesData {
 	static abilityDistance: RulesItem = {

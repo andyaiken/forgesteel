@@ -193,70 +193,90 @@ export class HeroUpdateLogic {
 	static updateHeroData = (hero: Hero, sourcebooks: Sourcebook[]) => {
 		const original = Utils.copy(hero);
 
-		if (original.ancestry) {
-			const id = original.ancestry.id;
-			const ancestry = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === id);
-			if (ancestry) {
-				hero.ancestry = Utils.copy(ancestry);
+		try {
+			if (original.ancestry) {
+				const id = original.ancestry.id;
+				const ancestry = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === id);
+				if (ancestry) {
+					hero.ancestry = Utils.copy(ancestry);
+				}
 			}
+		} catch (ex) {
+			console.error(ex);
 		}
 
-		if (original.culture) {
-			const id = original.culture.id;
-			const culture = SourcebookLogic.getCultures(sourcebooks).find(c => c.id === id);
-			if (culture) {
-				hero.culture = Utils.copy(culture);
-			}
+		try {
+			if (original.culture) {
+				const id = original.culture.id;
+				const culture = SourcebookLogic.getCultures(sourcebooks).find(c => c.id === id);
+				if (culture) {
+					hero.culture = Utils.copy(culture);
+				}
 
-			if (hero.culture && (hero.culture.id === CultureData.bespoke.id)) {
-				hero.culture.name = original.culture.name || CultureData.bespoke.name;
-			}
+				if (hero.culture && (hero.culture.id === CultureData.bespoke.id)) {
+					hero.culture.name = original.culture.name || CultureData.bespoke.name;
+				}
 
-			if (hero.culture) {
-				const languages = SourcebookLogic.getLanguages(sourcebooks).map(l => l.name);
-				hero.culture.languages = original.culture.languages.filter(l => languages.includes(l));
+				if (hero.culture) {
+					const languages = SourcebookLogic.getLanguages(sourcebooks).map(l => l.name);
+					hero.culture.languages = original.culture.languages.filter(l => languages.includes(l));
+				}
 			}
+		} catch (ex) {
+			console.error(ex);
 		}
 
-		if (original.career) {
-			const id = original.career.id;
-			const career = SourcebookLogic.getCareers(sourcebooks).find(c => c.id === id);
-			if (career) {
-				hero.career = Utils.copy(career);
+		try {
+			if (original.career) {
+				const id = original.career.id;
+				const career = SourcebookLogic.getCareers(sourcebooks).find(c => c.id === id);
+				if (career) {
+					hero.career = Utils.copy(career);
 
-				hero.career.incitingIncidents.selectedID = original.career.incitingIncidents.selectedID;
+					hero.career.incitingIncidents.selectedID = original.career.incitingIncidents.selectedID;
+				}
 			}
+		} catch (ex) {
+			console.error(ex);
 		}
 
-		if (original.class) {
-			const id = original.class.id;
-			const heroClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === id);
-			if (heroClass) {
-				hero.class = Utils.copy(heroClass);
+		try {
+			if (original.class) {
+				const id = original.class.id;
+				const heroClass = SourcebookLogic.getClasses(sourcebooks).find(c => c.id === id);
+				if (heroClass) {
+					hero.class = Utils.copy(heroClass);
 
-				// Level
-				hero.class.level = original.class.level;
+					// Level
+					hero.class.level = original.class.level;
 
-				// Characteristics
-				hero.class.primaryCharacteristics = original.class.primaryCharacteristics;
-				hero.class.characteristics = original.class.characteristics;
+					// Characteristics
+					hero.class.primaryCharacteristics = original.class.primaryCharacteristics;
+					hero.class.characteristics = original.class.characteristics;
 
-				// Update subclass
-				hero.class.subclasses.forEach(sc => {
-					const originalSubClass = original.class!.subclasses.find(s => s.id === sc.id);
-					if (originalSubClass) {
-						sc.selected = originalSubClass.selected;
-					}
-				});
+					// Update subclass
+					hero.class.subclasses.forEach(sc => {
+						const originalSubClass = original.class!.subclasses.find(s => s.id === sc.id);
+						if (originalSubClass) {
+							sc.selected = originalSubClass.selected;
+						}
+					});
+				}
 			}
+		} catch (ex) {
+			console.error(ex);
 		}
 
-		if (original.complication) {
-			const id = original.complication.id;
-			const complication = SourcebookLogic.getComplications(sourcebooks).find(c => c.id === id);
-			if (complication) {
-				hero.complication = Utils.copy(complication);
+		try {
+			if (original.complication) {
+				const id = original.complication.id;
+				const complication = SourcebookLogic.getComplications(sourcebooks).find(c => c.id === id);
+				if (complication) {
+					hero.complication = Utils.copy(complication);
+				}
 			}
+		} catch (ex) {
+			console.error(ex);
 		}
 
 		HeroLogic.getFeatures(hero)
@@ -273,155 +293,160 @@ export class HeroUpdateLogic {
 	};
 
 	static updateFeatureData = (feature: Feature, originalFeature: Feature, hero: Hero, sourcebooks: Sourcebook[]) => {
-		switch (feature.type) {
-			case FeatureType.AncestryChoice: {
-				const oFeature = originalFeature as FeatureAncestryChoice;
+		try {
+			switch (feature.type) {
+				case FeatureType.AncestryChoice: {
+					const oFeature = originalFeature as FeatureAncestryChoice;
 
-				if (oFeature.data.selected) {
-					const ancestryID = oFeature.data.selected.id;
-					feature.data.selected = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === ancestryID) || null;
-				}
-				break;
-			}
-			case FeatureType.AncestryFeatureChoice: {
-				const oFeature = originalFeature as FeatureAncestryChoice;
-
-				const ancestries: Ancestry[] = [];
-				if (feature.data.source.customID) {
-					const a = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === feature.data.source.customID);
-					if (a) {
-						ancestries.push(a);
+					if (oFeature.data.selected) {
+						const ancestryID = oFeature.data.selected.id;
+						feature.data.selected = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === ancestryID) || null;
 					}
+					break;
 				}
-				if (feature.data.source.current && hero.ancestry) {
-					ancestries.push(hero.ancestry);
-				}
-				if (feature.data.source.former) {
-					ancestries.push(...HeroLogic.getFormerAncestries(hero));
-				}
-				const availableOptions = ancestries
-					.flatMap(a => a.features)
-					.filter(f => f.type === FeatureType.Choice)
-					.flatMap(f => f.data.options)
-					.filter(opt => feature.data.value === opt.value)
-					.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice)
-					.map(opt => opt.feature);
+				case FeatureType.AncestryFeatureChoice: {
+					const oFeature = originalFeature as FeatureAncestryChoice;
 
-				feature.data.selected = availableOptions.find(o => oFeature.data.selected?.id === o.id) || null;
-				break;
-			}
-			case FeatureType.Choice: {
-				const oFeature = originalFeature as FeatureChoice;
-
-				const selectedIDs = oFeature.data.selected.map(s => s.id);
-				let availableOptions = [ ...feature.data.options ];
-				if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
-					availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
-					const additionalOptions = HeroLogic.getFormerAncestries(hero)
+					const ancestries: Ancestry[] = [];
+					if (feature.data.source.customID) {
+						const a = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === feature.data.source.customID);
+						if (a) {
+							ancestries.push(a);
+						}
+					}
+					if (feature.data.source.current && hero.ancestry) {
+						ancestries.push(hero.ancestry);
+					}
+					if (feature.data.source.former) {
+						ancestries.push(...HeroLogic.getFormerAncestries(hero));
+					}
+					const availableOptions = ancestries
 						.flatMap(a => a.features)
 						.filter(f => f.type === FeatureType.Choice)
 						.flatMap(f => f.data.options)
-						.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
-					availableOptions.push(...additionalOptions);
+						.filter(opt => feature.data.value === opt.value)
+						.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice)
+						.map(opt => opt.feature);
+
+					feature.data.selected = availableOptions.find(o => oFeature.data.selected?.id === o.id) || null;
+					break;
 				}
+				case FeatureType.Choice: {
+					const oFeature = originalFeature as FeatureChoice;
 
-				feature.data.selected = availableOptions.map(o => o.feature).filter(o => selectedIDs.includes(o.id));
-				break;
-			}
-			case FeatureType.ClassAbility: {
-				const oFeature = originalFeature as FeatureClassAbility;
+					const selectedIDs = oFeature.data.selected.map(s => s.id);
+					let availableOptions = [ ...feature.data.options ];
+					if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
+						availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
+						const additionalOptions = HeroLogic.getFormerAncestries(hero)
+							.flatMap(a => a.features)
+							.filter(f => f.type === FeatureType.Choice)
+							.flatMap(f => f.data.options)
+							.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
+						availableOptions.push(...additionalOptions);
+					}
 
-				const abilityIDs = hero.class ? hero.class.abilities.map(a => a.id) : [];
-				feature.data.selectedIDs = oFeature.data.selectedIDs.filter(id => abilityIDs.includes(id));
-				break;
-			}
-			case FeatureType.Companion: {
-				const oFeature = originalFeature as FeatureCompanion;
-				feature.data.selected = oFeature.data.selected;
-				break;
-			}
-			case FeatureType.Domain: {
-				const oFeature = originalFeature as FeatureDomain;
+					feature.data.selected = availableOptions.map(o => o.feature).filter(o => selectedIDs.includes(o.id));
+					break;
+				}
+				case FeatureType.ClassAbility: {
+					const oFeature = originalFeature as FeatureClassAbility;
 
-				const selectedIDs = oFeature.data.selected.map(d => d.id);
-				feature.data.selected = SourcebookLogic.getDomains(sourcebooks).filter(d => selectedIDs.includes(d.id));
-				break;
-			}
-			case FeatureType.DomainFeature: {
-				const oFeature = originalFeature as FeatureDomainFeature;
+					const abilityIDs = hero.class ? hero.class.abilities.map(a => a.id) : [];
+					feature.data.selectedIDs = oFeature.data.selectedIDs.filter(id => abilityIDs.includes(id));
+					break;
+				}
+				case FeatureType.Companion: {
+					const oFeature = originalFeature as FeatureCompanion;
+					feature.data.selected = oFeature.data.selected;
+					break;
+				}
+				case FeatureType.Domain: {
+					const oFeature = originalFeature as FeatureDomain;
 
-				const domainFeatures: Feature[] = [];
-				HeroLogic.getDomains(hero).forEach(d => {
-					d.featuresByLevel
-						.filter(lvl => lvl.level === feature.data.level)
-						.forEach(lvl => domainFeatures.push(...lvl.features));
-				});
+					const selectedIDs = oFeature.data.selected.map(d => d.id);
+					feature.data.selected = SourcebookLogic.getDomains(sourcebooks).filter(d => selectedIDs.includes(d.id));
+					break;
+				}
+				case FeatureType.DomainFeature: {
+					const oFeature = originalFeature as FeatureDomainFeature;
 
-				const selectedIDs = oFeature.data.selected.map(f => f.id);
-				feature.data.selected = domainFeatures.filter(df => selectedIDs.includes(df.id));
-				break;
-			}
-			case FeatureType.ItemChoice: {
-				const oFeature = originalFeature as FeatureItemChoice;
+					const domainFeatures: Feature[] = [];
+					HeroLogic.getDomains(hero).forEach(d => {
+						d.featuresByLevel
+							.filter(lvl => lvl.level === feature.data.level)
+							.forEach(lvl => domainFeatures.push(...lvl.features));
+					});
 
-				const selectedIDs = oFeature.data.selected.map(i => i.id);
-				feature.data.selected = SourcebookLogic.getItems(sourcebooks).filter(i => selectedIDs.includes(i.id));
-				break;
-			}
-			case FeatureType.Kit: {
-				const oFeature = originalFeature as FeatureKit;
+					const selectedIDs = oFeature.data.selected.map(f => f.id);
+					feature.data.selected = domainFeatures.filter(df => selectedIDs.includes(df.id));
+					break;
+				}
+				case FeatureType.ItemChoice: {
+					const oFeature = originalFeature as FeatureItemChoice;
 
-				const selectedIDs = oFeature.data.selected.map(k => k.id);
-				feature.data.selected = SourcebookLogic.getKits(sourcebooks).filter(k => selectedIDs.includes(k.id));
-				break;
-			}
-			case FeatureType.LanguageChoice: {
-				const oFeature = originalFeature as FeatureLanguageChoice;
+					const selectedIDs = oFeature.data.selected.map(i => i.id);
+					feature.data.selected = SourcebookLogic.getItems(sourcebooks).filter(i => selectedIDs.includes(i.id));
+					break;
+				}
+				case FeatureType.Kit: {
+					const oFeature = originalFeature as FeatureKit;
 
-				const languageNames = SourcebookLogic.getLanguages(sourcebooks)
-					.map(l => l.name);
-				feature.data.selected = oFeature.data.selected.filter(l => languageNames.includes(l));
-				break;
-			}
-			case FeatureType.Perk: {
-				const oFeature = originalFeature as FeaturePerk;
+					const selectedIDs = oFeature.data.selected.map(k => k.id);
+					feature.data.selected = SourcebookLogic.getKits(sourcebooks).filter(k => selectedIDs.includes(k.id));
+					break;
+				}
+				case FeatureType.LanguageChoice: {
+					const oFeature = originalFeature as FeatureLanguageChoice;
 
-				const selectedIDs = oFeature.data.selected.map(p => p.id);
-				feature.data.selected = SourcebookLogic.getPerks(sourcebooks).filter(p => selectedIDs.includes(p.id));
-				break;
-			}
-			case FeatureType.SkillChoice: {
-				const oFeature = originalFeature as FeatureSkillChoice;
+					const languageNames = SourcebookLogic.getLanguages(sourcebooks)
+						.map(l => l.name);
+					feature.data.selected = oFeature.data.selected.filter(l => languageNames.includes(l));
+					break;
+				}
+				case FeatureType.Perk: {
+					const oFeature = originalFeature as FeaturePerk;
 
-				const skillNames = SourcebookLogic.getSkills(sourcebooks)
-					.filter(s => oFeature.data.options.includes(s.name) || oFeature.data.listOptions.includes(s.list))
-					.map(s => s.name);
-				feature.data.selected = oFeature.data.selected.filter(s => skillNames.includes(s));
-				break;
-			}
-			case FeatureType.Summon: {
-				const oFeature = originalFeature as FeatureSummon;
-				feature.data.selected = oFeature.data.selected;
-				break;
-			}
-			case FeatureType.TaggedFeatureChoice: {
-				const oFeature = originalFeature as FeatureTaggedFeatureChoice;
+					const selectedIDs = oFeature.data.selected.map(p => p.id);
+					feature.data.selected = SourcebookLogic.getPerks(sourcebooks).filter(p => selectedIDs.includes(p.id));
+					break;
+				}
+				case FeatureType.SkillChoice: {
+					const oFeature = originalFeature as FeatureSkillChoice;
 
-				const taggedFeatures = HeroLogic.getFeatures(hero)
-					.map(f => f.feature)
-					.filter(f => f.type === FeatureType.TaggedFeature)
-					.filter(f => f.data.tag === oFeature.data.tag);
-				const selectedIDs = oFeature.data.selected.map(f => f.id);
-				feature.data.selected = taggedFeatures.filter(f => selectedIDs.includes(f.id));
-				break;
-			}
-			case FeatureType.TitleChoice: {
-				const oFeature = originalFeature as FeatureTitleChoice;
+					const skillNames = SourcebookLogic.getSkills(sourcebooks)
+						.filter(s => oFeature.data.options.includes(s.name) || oFeature.data.listOptions.includes(s.list))
+						.map(s => s.name);
+					feature.data.selected = oFeature.data.selected.filter(s => skillNames.includes(s));
+					break;
+				}
+				case FeatureType.Summon: {
+					const oFeature = originalFeature as FeatureSummon;
+					feature.data.selected = oFeature.data.selected;
+					break;
+				}
+				case FeatureType.TaggedFeatureChoice: {
+					const oFeature = originalFeature as FeatureTaggedFeatureChoice;
 
-				const selectedIDs = oFeature.data.selected.map(p => p.id);
-				feature.data.selected = SourcebookLogic.getTitles(sourcebooks).filter(t => selectedIDs.includes(t.id));
-				break;
-			}
-		};
+					const taggedFeatures = HeroLogic.getFeatures(hero)
+						.map(f => f.feature)
+						.filter(f => f.type === FeatureType.TaggedFeature)
+						.filter(f => f.data.tag === oFeature.data.tag);
+					const selectedIDs = oFeature.data.selected.map(f => f.id);
+					feature.data.selected = taggedFeatures.filter(f => selectedIDs.includes(f.id));
+					break;
+				}
+				case FeatureType.TitleChoice: {
+					const oFeature = originalFeature as FeatureTitleChoice;
+
+					const selectedIDs = oFeature.data.selected.map(p => p.id);
+					feature.data.selected = SourcebookLogic.getTitles(sourcebooks).filter(t => selectedIDs.includes(t.id));
+					break;
+				}
+			};
+		}
+		catch (ex) {
+			console.error(ex);
+		}
 	};
 }

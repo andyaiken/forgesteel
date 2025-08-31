@@ -276,7 +276,7 @@ export const StatsPanel = (props: Props) => {
 				{
 					HeroLogic.getHeroicResources(hero)
 						.map(hr => (
-							<div key={hr.id}>
+							<Space key={hr.id} direction='vertical' style={{ width: '100%' }}>
 								<HeaderText>Heroic Resource: {hr.name}</HeaderText>
 								<NumberSpin
 									value={hr.value}
@@ -285,7 +285,7 @@ export const StatsPanel = (props: Props) => {
 								/>
 								{
 									hr.gains.length > 0 ?
-										<Space direction='vertical' style={{ width: '100%' }}>
+										<>
 											{
 												hr.gains.map((g, n) => {
 													let btn = (
@@ -354,10 +354,10 @@ export const StatsPanel = (props: Props) => {
 													</div>
 												</Button>
 											</Flex>
-										</Space>
+										</>
 										: null
 								}
-							</div>
+							</Space>
 						))
 				}
 				<Drawer open={!!expression} onClose={() => setExpression(null)} closeIcon={null} width='500px'>

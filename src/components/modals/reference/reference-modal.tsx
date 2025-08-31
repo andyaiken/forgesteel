@@ -41,6 +41,7 @@ export const ReferenceModal = (props: Props) => {
 		const getRulesSection = () => {
 			const rules = [
 				RulesData.abilityDistance,
+				RulesData.abilityTarget,
 				RulesData.assist,
 				RulesData.burrowing,
 				RulesData.climbingAndSwimming,
@@ -60,16 +61,16 @@ export const ReferenceModal = (props: Props) => {
 				RulesData.invisibility,
 				RulesData.jumping,
 				RulesData.mountedCombat,
-				RulesData.multipleTargets,
 				RulesData.opportunityAttack,
+				RulesData.rollVsMultipleCreatures,
 				RulesData.shifting,
 				RulesData.slammingCreatures,
 				RulesData.slammingObjects,
 				RulesData.sneaking,
 				RulesData.suffocating,
 				RulesData.surprise,
-				RulesData.teleporting,
 				RulesData.takingATurn,
+				RulesData.teleporting,
 				RulesData.underwaterCombat
 			];
 

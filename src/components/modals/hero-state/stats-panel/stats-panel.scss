@@ -7,6 +7,10 @@
 	.gain-btn {
 		min-width: 100px;
 	}
+
+	.alert-text {
+		color: rgba(0, 0, 0, 0.88) !important;
+	}
 }
 
 .expression {
@@ -16,6 +20,7 @@
 	margin: 50px 0;
 
 	.expression-result {
+		color: rgba(0, 0, 0, 0.88) !important;
 		font-size: 36px;
 		font-weight: 600;
 		letter-spacing: 3px;

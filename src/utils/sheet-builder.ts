@@ -88,11 +88,11 @@ export class CharacterSheetBuilder {
 
 			sheet.level = hero.class.level;
 
-			sheet.might = hero.class.characteristics.find(c => c.characteristic === Characteristic.Might)?.value;
-			sheet.agility = hero.class.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value;
-			sheet.reason = hero.class.characteristics.find(c => c.characteristic === Characteristic.Reason)?.value;
-			sheet.intuition = hero.class.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value;
-			sheet.presence = hero.class.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value;
+			sheet.might = HeroLogic.getCharacteristic(hero, Characteristic.Might);
+			sheet.agility = HeroLogic.getCharacteristic(hero, Characteristic.Agility);
+			sheet.reason = HeroLogic.getCharacteristic(hero, Characteristic.Reason);
+			sheet.intuition = HeroLogic.getCharacteristic(hero, Characteristic.Intuition);
+			sheet.presence = HeroLogic.getCharacteristic(hero, Characteristic.Presence);
 
 			const heroicResource = HeroLogic.getHeroicResources(hero)[0];
 			sheet.heroicResourceGains = heroicResource.gains;

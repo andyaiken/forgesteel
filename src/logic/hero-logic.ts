@@ -894,7 +894,7 @@ export class HeroLogic {
 	};
 
 	static calculateSurgeDamage = (hero: Hero) => {
-		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
+		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => this.getCharacteristic(hero, c.characteristic))) : 0;
 		return value;
 	};
 

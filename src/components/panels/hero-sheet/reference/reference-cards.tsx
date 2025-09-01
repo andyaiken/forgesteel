@@ -1,3 +1,6 @@
+import { Markdown } from '../../../controls/markdown/markdown';
+import { RulesData } from '../../../../data/rules-data';
+
 import './reference-cards.scss';
 
 export const TurnOptionsReferenceCard = () => {
@@ -177,6 +180,40 @@ export const EdgesBanesReferenceCard = () => {
 				<li>If you have a double edge and a bane, the roll has one edge.</li>
 				<li>If you have a double bane and an edge, the roll has one bane.</li>
 			</ul>
+		</div>
+	);
+};
+
+export const ClimbSwimReferenceCard = () => {
+	return (
+		<div className='extra-reference card'>
+			<h2>Climbing and Swimming</h2>
+			<p>
+				A creature who has “climb” in their speed entry, or who gains the temporary
+				ability to automatically climb, can climb across vertical and horizontal surfaces
+				at full speed. Likewise, a creature who has “swim” in their speed entry, or who
+				gains the temporary ability to automatically swim, can swim in liquid at full speed.
+			</p>
+			<p>
+				Creatures without those types of movement can still climb or swim when a rule
+				allows them to move, but each square of climbing or swimming costs 2 squares
+				of movement. If a surface is difficult to climb (for instance, a sheer cliff or
+				ice-covered wall) or a liquid is hard to swim through (a raging river or whirlpool),
+				the Director can call for a Might test. On a failure, a creature can’t climb or swim
+				but wastes no movement in the attempt. The Director can also impose other consequences
+				to failure, such as being caught in the spinning current of a whirlpool.
+			</p>
+		</div>
+	);
+};
+
+export const JumpReferenceCard = () => {
+	return (
+		<div className='extra-reference card'>
+			<h2>Jump</h2>
+			<Markdown
+				text={RulesData.jumping.content}
+			/>
 		</div>
 	);
 };

@@ -37,7 +37,9 @@ export class CharacterSheetBuilder {
 			otherAbilities: [],
 			standardAbilities: [],
 
-			featuresReferenceOther: []
+			featuresReferenceOther: [],
+
+			notes: hero.state.notes
 		};
 
 		let coveredFeatureIds: string[] = [];

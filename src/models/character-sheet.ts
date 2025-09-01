@@ -134,6 +134,8 @@ export interface CharacterSheet {
 		feature: Feature,
 		source: string
 	}[];
+
+	notes: string;
 }
 
 export interface CareerSheet {

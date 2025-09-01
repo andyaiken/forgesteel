@@ -234,7 +234,8 @@
         }
     }
 
-    &.triggered-action {
+    &.triggered-action,
+    &.free-triggered-action {
         @include color-ability-card(common.$color-triggered-action);
         h2 {
             @include common.bottom-border-fancy-2(common.$color-triggered-action);

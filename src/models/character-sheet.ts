@@ -165,6 +165,7 @@ export interface ProjectSheet {
 export interface ItemSheet {
 	id: string;
 	item: Item;
+	effect: string;
 	features?: Feature[];
 }
 

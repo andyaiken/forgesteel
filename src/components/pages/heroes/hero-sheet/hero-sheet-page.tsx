@@ -97,7 +97,7 @@ export const HeroSheetPage = (props: Props) => {
 			{
 				element: <TurnOptionsReferenceCard key='turn-options-reference' />,
 				width: 1,
-				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 28 : 28
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 29 : 29
 			},
 			{
 				element: <EdgesBanesReferenceCard key='edges-banes-reference' />,
@@ -107,7 +107,7 @@ export const HeroSheetPage = (props: Props) => {
 			{
 				element: <MainActionsReferenceCard key='main-actions-reference' />,
 				width: 1,
-				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 19 : 19
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 23 : 23
 			},
 			{
 				element: <MoveActionsReferenceCard key='move-actions-reference' />,
@@ -117,7 +117,7 @@ export const HeroSheetPage = (props: Props) => {
 			{
 				element: <ManeuversReferenceCard key='maneuvers-reference' />,
 				width: 1,
-				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 28 : 28
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 38 : 38
 			}
 		];
 

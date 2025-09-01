@@ -9,28 +9,28 @@ import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 export const manticore: MonsterGroup = {
 	id: 'monster-group-manticore',
 	name: 'Manticore',
-	description: 'A weary traveler hears a clarion call through the forest or friendly voices from a rocky shelter, and their heart leaps at the promise of refuge - only to find themself at the mercy of serrated teeth and poisoned spikes. In a manticore’s territory, people go missing without a trace. These fearsome creatures carve out their hunting grounds in forests near small villages, mountain passes where caravans travel, and other locations with plentiful wildlife. While manticores can subsist on a carnivorous diet of any nearby prey, their choicest meal is humanoid flesh.',
+	description: 'A weary traveler hears a call through the forest or friendly voices from a rocky shelter, and their heart leaps at the promise of refuge—only to find themself at the mercy of serrated teeth and poisonous spikes. In a manticore’s territory, people go missing without a trace. These fearsome creatures carve out their hunting grounds in forests near small villages, mountain passes where caravans travel, and other locations with plentiful wildlife. Though manticores can subsist on a carnivorous diet of any nearby prey, their choicest meal is humanoid flesh.',
 	picture: null,
 	information: [
 		{
 			id: 'manticore-info-1',
 			name: 'Uncanny Appearances',
-			description: 'A manticore has a lion’s body, a dragon’s wings, and a scorpion’s tail barbed with spines, but their most unnerving trait is their humanoid face. Owing to a quirk of magical evolution, manticores develop the features of common ancestries that populate their region of birth. For example, a manticore in an area densely populated by devils inherits fiendish eyes and devilish horns. Manticores are born with an inherent understanding of a regional language, but they can speak only through mimicking that which they’ve heard - a talent manticores use to lure in prey.'
+			description: 'A manticore has a lion’s body, a dragon’s wings, and a scorpion’s tail barbed with spines, but their most unnerving trait is their humanoid face. Owing to a quirk of magical evolution, manticores develop the features of common ancestries that populate their region of birth. For example, a manticore in an area densely populated by devils inherits fiendish eyes and devilish horns. Manticores are born with an inherent understanding of a regional language, but they can speak only through mimicking that which they’ve heard—a talent manticores use to lure in prey.'
 		},
 		{
 			id: 'manticore-info-2',
 			name: 'Heralds of Death',
-			description: 'Manticores have a magical howl like a trumpet. This haunting sound not only terrifies creatures, but makes them more susceptible to the manticore’s bite. While on the hunt, manticores often take to the skies, shooting poison-tipped spikes from their tail to weaken their victims before howling and closing in.'
+			description: 'Manticores have a magical howl like a trumpet blast. This haunting sound unnerves and terrifies creatures, making them more susceptible to the manticore’s bite. While on the hunt, manticores often take to the skies, shooting poison-tipped spikes from their tail to weaken their victims before howling and closing in.'
 		},
 		{
 			id: 'manticore-info-3',
 			name: 'Ferocious Companions',
-			description: 'A manticore who develops a taste for humanoids can rarely be tamed. But a young manticore who has yet to cut their teeth on such flesh can be raised into a fearsome ally. After a trained manticore companion finally tastes delicious humanoid flesh, they typically remain loyal to their caregiver.'
+			description: 'A manticore who develops a taste for humanoids can rarely be tamed. But a young manticore who has yet to cut their teeth on such flesh can be raised into a fearsome ally. Even after a trained manticore companion finally tastes delicious humanoid flesh, they typically remain loyal to their caregiver.'
 		},
 		{
 			id: 'manticore-info-4',
 			name: 'Manticore Languages',
-			description: 'Most manticores can mimic Caelian and one language commonly spoken in the region they dwell in. Outside of a rare few, manticores are not intelligent enough to communicate in full sentences and are too driven by hunger to engage in negotiations.'
+			description: 'Most manticores can mimic Caelian and one language commonly spoken in the region where they dwell. Except in rare cases, manticores don’t communicate in full sentences and are too driven by hunger to engage in negotiation.'
 		}
 	],
 	malice: [
@@ -39,17 +39,25 @@ export const manticore: MonsterGroup = {
 			name: 'Uncanny Mimicry',
 			cost: 3,
 			sections: [
-				'The manticore uses their mimicry to unnerve a creature they have line of eﬀect to. The target R<4 has a bane on power rolls made against the manticore (save ends). The potency of this feature decreases by 2 when it’s used against the same target.'
+				'The manticore uses their mimicry in an attempt to unnerve one creature within their line of effect. If the target has R<4, they take a bane on power rolls against the manticore (save ends). Each time this feature is used against the same target during the encounter, its potency decreases by 2.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'manticore-malice-2',
+			name: 'Solo Action',
+			cost: 5,
+			sections: [
+				'The manticore takes an additional main action on their turn. They can use this feature even if they are dazed.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'manticore-malice-3',
 			name: 'Desperate Howl',
 			cost: 5,
 			sections: [
-				'The manticore lets out an unnerving cry. Each enemy within 3 of the manticore makes an **Intuition test**.',
+				'The manticore lets out an unnerving cry. Each enemy within the manticore’s line of effect makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
-					characteristic: [ Characteristic.Intuition ],
+					characteristic: Characteristic.Intuition,
 					tier1: 'Frightened (save ends)',
 					tier2: 'Frightened (EoT)',
 					tier3: 'No effect'
@@ -57,11 +65,11 @@ export const manticore: MonsterGroup = {
 			]
 		}),
 		FactoryLogic.feature.createMalice({
-			id: 'manticore-malice-3',
+			id: 'manticore-malice-4',
 			name: 'Barrage of Barbs',
 			cost: 7,
 			sections: [
-				'The manticore sprays needles across the ground within 5 squares of them. Each enemy within 5 squares is A<3 bleeding (save ends). The aﬀected area becomes diﬃcult terrain. An enemy that enters an aﬀected square takes 3 poison damage. If an enemy takes 10 poison damage this way in a single turn, they are weakened until the end of the encounter.'
+				'The manticore sprays tail spikes across the ground within 5 squares of them. Each enemy in that area who has A<3 is bleeding (save ends). Additionally, the area is difficult terrain, and any enemy takes 3 poison damage for each square of the area they enter. An enemy who takes 9 poison damage this way on one turn is weakened until the end of the encounter.'
 			]
 		})
 	],
@@ -72,22 +80,23 @@ export const manticore: MonsterGroup = {
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Beast', 'Manticore' ],
-			encounterValue: 60,
+			encounterValue: 72,
 			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(10, 'fly'),
 			stamina: 350,
-			stability: 3,
+			stability: 2,
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(4, 3, -0, 0, -1),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'manticore-feature-1',
-					name: 'the manticore'
+					name: 'the manticore',
+					endEfect: 10
 				}),
 				FactoryLogic.feature.create({
 					id: 'manticore-feature-2',
 					name: 'Agile Predator',
-					description: 'When the manticore deals damage to a creature, they don’t provoke opportunity attacks from that creature during that turn.'
+					description: 'Whenever the manticore deals damage to a creature, they don’t provoke opportunity attacks from that creature during that turn.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -105,7 +114,7 @@ export const manticore: MonsterGroup = {
 								tier2: '17 damage; A<3 bleeding (save ends)',
 								tier3: '21 damage; A<4 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('This ability has an edge against frightened targets.')
+							FactoryLogic.createAbilitySectionText('If the target is frightened, this ability gains an edge.')
 						]
 					})
 				}),
@@ -114,20 +123,20 @@ export const manticore: MonsterGroup = {
 						id: 'manticore-feature-4',
 						name: 'Tail Spike',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
-								tier1: '10 damage; M<2 3 poison damage',
-								tier2: '15 damage; M<3 7 poison damage, weakened (save ends)',
-								tier3: '19 damage; M<4 10 poison damage, weakened (save ends)'
+								tier1: '6 damage; M<2 4 poison damage',
+								tier2: '11 damage; M<3 4 poison damage, weakened (save ends)',
+								tier3: '14 damage; M<4 8 poison damage, weakened (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'A target weakened from this ability takes 1d6 poison damage at the start of each of their turns until the condition ends.'
+								effect: 'While weakened this way, a target takes 1d6 poison damage at the start of each of their turns.'
 							})
 						]
 					})
@@ -137,7 +146,7 @@ export const manticore: MonsterGroup = {
 						id: 'manticore-feature-5',
 						name: 'Harrying Claws',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [ AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
 						sections: [
@@ -154,13 +163,13 @@ export const manticore: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'manticore-feature-6',
 						name: 'Reflexive Instinct',
-						type: FactoryLogic.type.createTrigger('A creature deals damage to the manticore.'),
+						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the manticore.'),
 						keywords: [ ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering creature',
 						cost: 2,
 						sections: [
-							FactoryLogic.createAbilitySectionText('The manticore shifts up to 5 into the air, then uses their Tail Spike ability against the target.')
+							FactoryLogic.createAbilitySectionText('The manticore shifts up to 5 squares into the air, then can use Tail Spike against the target.')
 						]
 					})
 				}),
@@ -168,16 +177,16 @@ export const manticore: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'manticore-feature-7',
 						name: 'Trumpeting Howl',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'All creatures',
+						target: 'Each creature in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
-								tier1: 'Frightened (EoT) or I<2 (save ends)',
-								tier2: 'Frightened (EoT) or I<3 (save ends)',
-								tier3: 'Frightened (save ends); I<4 dazed (save ends)'
+								tier1: 'Frightened (EoT); if the target has I<2 they are instead frightened (save ends)',
+								tier2: 'Frightened (EoT); if the target has I<3 they are instead frightened (save ends)',
+								tier3: 'Frightened (EoT); if the target has I<4 they are instead dazed (save ends)'
 							}))
 						]
 					})
@@ -186,12 +195,11 @@ export const manticore: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'manticore-feature-8',
 						name: 'Cornered Predator',
-						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+						type: FactoryLogic.type.createVillainAction(2),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The manticore shifts up to their speed, then uses their Tail Spike ability against each enemy within 10 squares.')
+							FactoryLogic.createAbilitySectionText('The manticore shifts up to their speed, then can use Tail Spike against each enemy within distance of that ability.')
 						]
 					})
 				}),
@@ -199,12 +207,11 @@ export const manticore: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'manticore-feature-9',
 						name: 'Debilitating Poison',
-						type: FactoryLogic.type.createVillainAction(),
-						keywords: [],
+						type: FactoryLogic.type.createVillainAction(3),
 						distance: [ FactoryLogic.distance.createSelf() ],
-						target: 'Special',
+						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The manticore sours their own poison with enmity. Until the end of the encounter, the manticore has a double edge on power rolls targeting weakened creatures. A creature weakened by the manticore’s Tail Spike ability has their speed halved and takes an additional 1d3 poison damage at the start of each of their turns until the condition ends.')
+							FactoryLogic.createAbilitySectionText('The manticore sours their poison with enmity. Until the end of the encounter, the manticore has a double edge on power rolls against weakened creatures. Additionally, any creature weakened by the manticore’s Tail Spike ability has their speed halved and takes an extra 3 poison damage at the start of each of their turns.')
 						]
 					})
 				})

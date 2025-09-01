@@ -102,7 +102,8 @@ When a gloom dragon slays a victim, they take not just their valuables, but also
 				}),
 				FactoryLogic.feature.createSoloMonster({
 					id: 'dragon-gloom-feature-2',
-					name: 'the dragon'
+					name: 'the dragon',
+					endEfect: 10
 				}),
 				FactoryLogic.feature.create({
 					id: 'dragon-gloom-feature-3',

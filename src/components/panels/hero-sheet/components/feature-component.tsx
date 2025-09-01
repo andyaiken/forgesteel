@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -73,7 +73,6 @@ const AncestryChoiceFeatureComponent = (feature: FeatureAncestryChoice) => {
 };
 
 const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice) => {
-	// const lists = feature.data.listOptions.join('/');
 	const lists = CharacterSheetFormatter.joinCommasOr(feature.data.listOptions);
 	let selectedOptions;
 	if (feature.data.selected.length) {
@@ -232,6 +231,17 @@ const ConditionImmunityFeatureComponent = (feature: FeatureConditionImmunity) =>
 	);
 };
 
+const HeroicResourceComponent = (feature: FeatureHeroicResource) => {
+	return (
+		<>
+			<div className='feature-line'><strong>{`• ${feature.type}: `}</strong>{feature.name}</div>
+			{feature.data.details ?
+				<div className='feature-description'>{feature.data.details}</div>
+				: undefined}
+		</>
+	);
+};
+
 export const FeatureComponent = (props: Props) => {
 	const classes = [ 'feature' ].concat(props.additionalClasses || []).join(' ');
 	const feature = props.feature;
@@ -274,6 +284,9 @@ export const FeatureComponent = (props: Props) => {
 			break;
 		case FeatureType.ConditionImmunity:
 			content = ConditionImmunityFeatureComponent(feature);
+			break;
+		case FeatureType.HeroicResource:
+			content = HeroicResourceComponent(feature);
 			break;
 		case FeatureType.Multiple:
 			// Do nothing for these since the individual sub-features are also iterated over, no need to double up

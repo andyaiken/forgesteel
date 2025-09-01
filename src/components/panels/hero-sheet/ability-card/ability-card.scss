@@ -85,6 +85,10 @@
             font-weight: 450;
         }
 
+        .keywords-action-type .keywords {
+            text-wrap: wrap;
+        }
+
         .keywords-action-type,
         .distance-target {
             display: flex;

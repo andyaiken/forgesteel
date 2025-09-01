@@ -1,0 +1,30 @@
+.health-gauge {
+	width: 200px;
+	height: 180px;
+	padding-top: 10px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	.stamina-temp-progress {
+		position: absolute;
+		transform: scale(1.6);
+	}
+
+	.stamina-progress {
+		position: absolute;
+		transform: scale(1.3);
+	}
+
+	.recovery-progress {
+		position: absolute;
+	}
+
+	.gauge-info {
+		position: absolute;
+		text-align: center;
+		font-size: 13px;
+	}
+}

@@ -20,6 +20,7 @@ import { PanelMode } from '../../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
+import { Utils } from '../../../../../utils/utils';
 import { useMediaQuery } from '../../../../../hooks/use-media-query';
 
 import './career-section.scss';
@@ -48,7 +49,7 @@ export const CareerSection = (props: Props) => {
 	const [ showIncitingIncidents, setShowIncitingIncidents ] = useState<boolean>(false);
 
 	try {
-		const careers = SourcebookLogic.getCareers(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
+		const careers = SourcebookLogic.getCareers(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 		const options = careers.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCareer(c)}>
 				<CareerPanel career={c} options={props.options} />

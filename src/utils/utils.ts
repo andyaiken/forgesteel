@@ -1,8 +1,10 @@
+import * as htmlToImage from 'html-to-image';
 import { Collections } from './collections';
 import { Converter } from 'showdown';
 import { Random } from './random';
+import { SheetPageSize } from '../enums/sheet-page-size';
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import jspdf from 'jspdf';
 
 export class Utils {
 	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
@@ -92,13 +94,44 @@ export class Utils {
 					});
 				break;
 			case 'pdf':
-				Promise.all(elements.map(element => html2canvas(element)))
+				Promise.all(elements.map(this.elementToCanvas))
 					.then(canvases => {
 						Utils.savePDF(`${name}.pdf`, canvases);
 						elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
 					});
 				break;
 		}
+	};
+
+	static elementToCanvas = (element: HTMLElement): Promise<HTMLCanvasElement> => {
+		const width = element.clientWidth;
+		const height = element.clientHeight;
+		const dpr = window.devicePixelRatio;
+		// It looks like there is an issue with the library scaling properly with the devicePixelRatio in
+		// some cases. I suspect canvas also suffers from this:
+		// https://github.com/bubkoo/html-to-image/issues/553
+
+		return htmlToImage.toCanvas(element, {
+			width: width,
+			height: height,
+			canvasWidth: width / dpr,
+			canvasHeight: height / dpr
+		});
+	};
+
+	static elementsToPdf = (elementIDs: string[], filename: string, pdfPaperSize: SheetPageSize) => {
+		const elements = elementIDs
+			.map(id => document.getElementById(id))
+			.filter(element => !!element);
+
+		if (elements.length === 0) {
+			return;
+		}
+
+		Promise.all(elements.map(this.elementToCanvas))
+			.then(canvases => {
+				Utils.savePdfPages(`${filename}.pdf`, canvases, pdfPaperSize);
+			});
 	};
 
 	static saveFile = (data: unknown, name: string, type: string) => {
@@ -124,12 +157,37 @@ export class Utils {
 
 		const orientation = (height >= width) ? 'portrait' : 'landscape';
 
-		const pdf = new jsPDF(orientation, 'pt', [ width, height ]);
+		const pdf = new jspdf(orientation, 'pt', [ width, height ]);
 		canvases.forEach((canvas, n) => {
 			const page = (n === 0) ? pdf : pdf.addPage([ width, height ], orientation);
 			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
 		});
 
 		pdf.save(filename);
+	};
+
+	static savePdfPages = (filename: string, pageCanvases: HTMLCanvasElement[], pdfPaperSize: SheetPageSize) => {
+		const width = Collections.max(pageCanvases.map(c => c.width), c => c) || 0;
+		const height = Collections.max(pageCanvases.map(c => c.height), c => c) || 0;
+		const orientation = (height >= width) ? 'portrait' : 'landscape';
+		const paperSize = pdfPaperSize.toString().toLowerCase();
+
+		// @ts-expect-error Undocumented
+		const pdf = new jspdf({
+			orientation: orientation,
+			unit: (72 / 150), // undocumented feature to set ~150dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
+			format: paperSize,
+			hotfixes: [ 'px_scaling' ]
+		});
+		pageCanvases.forEach((canvas, n) => {
+			const page = (n === 0) ? pdf : pdf.addPage(paperSize, orientation);
+			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
+		});
+
+		pdf.save(filename);
+	};
+
+	static isNullOrEmpty = (str: string | undefined) => {
+		return (str === null || str === undefined || str.trim() === '');
 	};
 }

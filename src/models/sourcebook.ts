@@ -9,7 +9,7 @@ import { Imbuement } from './imbuement';
 import { Item } from './item';
 import { Kit } from './kit';
 import { Language } from './language';
-import { MonsterGroup } from './monster';
+import { MonsterGroup } from './monster-group';
 import { Perk } from './perk';
 import { Project } from './project';
 import { Skill } from './skill';

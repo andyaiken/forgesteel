@@ -1,12 +1,13 @@
 import { Button, Divider, Flex, Input, Popover, Segmented } from 'antd';
 import { DownOutlined, EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
-import { Monster, MonsterGroup } from '../../../models/monster';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Modal } from '../modal/modal';
+import { Monster } from '../../../models/monster';
+import { MonsterGroup } from '../../../models/monster-group';
 import { MonsterHealthPanel } from '../../panels/health/health-panel';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel';
-import { MonsterToken } from '../../controls/token/token';
+import { MonsterToken } from '../../panels/token/token';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { Utils } from '../../../utils/utils';

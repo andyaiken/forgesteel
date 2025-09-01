@@ -267,7 +267,7 @@ For each piety spent, you can choose one of the following enhancements:
 							feature: FactoryLogic.feature.create({
 								id: 'conduit-1-9a',
 								name: 'Bastion Ward',
-								description: 'You god grants you a holy countenance that protects you at all times. You gain a +1 bonus to saving throws.'
+								description: 'Your god grants you a holy countenance that protects you at all times. You gain a +1 bonus to saving throws.'
 							}),
 							value: 1
 						},

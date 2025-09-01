@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
@@ -9,10 +9,12 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageType } from '../enums/damage-type';
 import { FactoryLogic } from './factory-logic';
+import { FeatureAddOnType } from '../enums/feature-addon-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
+import { HeroLogic } from './hero-logic';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { MonsterFeatureCategory } from '../enums/monster-feature-category';
@@ -38,6 +40,16 @@ export class FeatureLogic {
 		}
 		if (culture.upbringing) {
 			features.push({ feature: culture.upbringing, source: culture.name });
+		}
+		if (culture) {
+			features.push({
+				feature: FactoryLogic.feature.create({
+					id: Utils.guid(),
+					name: `${culture.name} Culture`.trim(),
+					description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
+				}),
+				source: `${culture.name} Culture`.trim()
+			});
 		}
 
 		return FeatureLogic.simplifyFeatures(features, hero);
@@ -622,7 +634,7 @@ export class FeatureLogic {
 		return false;
 	};
 
-	static isChosen = (feature: Feature, formerAncestries: Ancestry[]) => {
+	static isChosen = (feature: Feature, hero: Hero) => {
 		switch (feature.type) {
 			case FeatureType.AncestryChoice:
 				return !!feature.data.selected;
@@ -632,7 +644,7 @@ export class FeatureLogic {
 				let availableOptions = [ ...feature.data.options ];
 				if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
 					availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
-					const additionalOptions = formerAncestries
+					const additionalOptions = HeroLogic.getFormerAncestries(hero)
 						.flatMap(a => a.features)
 						.filter(f => f.type === FeatureType.Choice)
 						.flatMap(f => f.data.options)
@@ -642,7 +654,8 @@ export class FeatureLogic {
 				const selected = feature.data.selected
 					.map(f => availableOptions.find(opt => opt.feature.id === f.id))
 					.filter(opt => !!opt);
-				return Collections.sum(selected, i => i.value) >= feature.data.count;
+				const count = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
+				return Collections.sum(selected, i => i.value) >= count;
 			}
 			case FeatureType.ClassAbility:
 				return feature.data.selectedIDs.length >= feature.data.count;

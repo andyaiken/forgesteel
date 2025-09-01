@@ -3,12 +3,12 @@ import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
+import { AncestryData } from '../data/ancestry-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { DamageType } from '../enums/damage-type';
-import { Domain } from '../models/domain';
 import { FactoryLogic } from './factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
@@ -23,14 +23,12 @@ import { Modifier } from '../models/damage-modifier';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { NameGenerator } from '../utils/name-generator';
-import { Perk } from '../models/perk';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import { SourcebookLogic } from './sourcebook-logic';
-import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
 export class HeroLogic {
@@ -51,14 +49,6 @@ export class HeroLogic {
 
 		if (hero.culture) {
 			features.push(...FeatureLogic.getFeaturesFromCulture(hero.culture, hero));
-			features.push({
-				feature: FactoryLogic.feature.create({
-					id: Utils.guid(),
-					name: hero.culture.name || 'Culture',
-					description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
-				}),
-				source: hero.culture.name || 'Culture'
-			});
 		}
 
 		if (hero.career) {
@@ -84,62 +74,6 @@ export class HeroLogic {
 		});
 
 		return Collections.sort(features, f => f.feature.name);
-	};
-
-	static getPerks = (hero: Hero) => {
-		const perks: Perk[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Perk)
-			.forEach(f => {
-				perks.push(...f.data.selected);
-			});
-
-		return perks;
-	};
-
-	static getKits = (hero: Hero) => {
-		const kits: Kit[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Kit)
-			.forEach(f => {
-				kits.push(...f.data.selected);
-			});
-
-		return kits;
-	};
-
-	static getTitles = (hero: Hero) => {
-		const titles: Title[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.TitleChoice)
-			.forEach(f => {
-				titles.push(...f.data.selected);
-			});
-
-		return titles;
-	};
-
-	static getDomains = (hero: Hero) => {
-		const domains: Domain[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Domain)
-			.forEach(f => {
-				domains.push(...f.data.selected);
-			});
-
-		return domains;
 	};
 
 	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], includeStandard: boolean) => {
@@ -195,6 +129,7 @@ export class HeroLogic {
 
 			abilities.push({ ability: AbilityData.aidAttack, source: 'Standard' });
 			abilities.push({ ability: AbilityData.catchBreath, source: 'Standard' });
+			abilities.push({ ability: AbilityData.clawDirt, source: 'Standard' });
 			abilities.push({ ability: AbilityData.escapeGrab, source: 'Standard' });
 			abilities.push({ ability: AbilityData.goProne, source: 'Standard' });
 			abilities.push({ ability: AbilityData.grab, source: 'Standard' });
@@ -217,12 +152,64 @@ export class HeroLogic {
 		return abilities;
 	};
 
+	static getPerks = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Perk)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getKits = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Kit)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getTitles = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.TitleChoice)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getDomains = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Domain)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getItems = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.ItemChoice)
+			.flatMap(f => f.data.selected);
+	};
+
 	static getFormerAncestries = (hero: Hero) => {
 		return HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.AncestryChoice)
 			.map(f => f.data.selected)
 			.filter(a => !!a);
+	};
+
+	static getAncestryPoints = (hero: Hero) => {
+		if (hero.ancestry) {
+			let points = hero.ancestry.ancestryPoints;
+
+			if (hero.ancestry.id === AncestryData.revenant.id) {
+				const size = HeroLogic.getSize(hero);
+				if ((size.value == 1) && (size.mod === 'S')) {
+					points += 1;
+				}
+			}
+
+			return points;
+		}
+
+		return 0;
 	};
 
 	static getCompanions = (hero: Hero) => {
@@ -418,6 +405,14 @@ export class HeroLogic {
 			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
 
 		return value;
+	};
+
+	static getWindedThreshold = (hero: Hero) => {
+		return Math.floor(HeroLogic.getStamina(hero) / 2);
+	};
+
+	static getDeadThreshold = (hero: Hero) => {
+		return -HeroLogic.getWindedThreshold(hero);
 	};
 
 	static getRecoveryValue = (hero: Hero) => {
@@ -667,6 +662,13 @@ export class HeroLogic {
 		return reducedKits;
 	};
 
+	static getBonusFromModifier = (hero: Hero, attrFn: (kit: Kit) => number): number => {
+		const kits = HeroLogic.getKits(hero);
+		const result = Collections.max(kits.map(attrFn), s => s) || 0;
+
+		return result;
+	};
+
 	static getFeatureDamageBonuses = (hero: Hero, ability: Ability) => {
 		const array: { feature: string, value: number, type: DamageType }[] = [];
 
@@ -858,6 +860,20 @@ export class HeroLogic {
 		});
 	};
 
+	static calculateSaveValue = (hero: Hero) => {
+		// Account for Ancestry Traits that reduce Saving Throw
+		const featureIdsSaveOn5: string[] = [
+			'devil-feature-2-5', // Impressive Horns
+			'high-elf-feature-2-4', // Otherworldly Grace
+			'wode-elf-feature-2-4' // Otherworldly Grace
+		];
+		const features = HeroLogic.getFeatures(hero);
+		if (features.find(f => featureIdsSaveOn5.includes(f.feature.id))) {
+			return 5;
+		}
+		return 6;
+	};
+
 	static getPotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {
 		const value = Math.max(
 			HeroLogic.getCharacteristic(hero, Characteristic.Might),
@@ -877,13 +893,19 @@ export class HeroLogic {
 		}
 	};
 
+	static calculateSurgeDamage = (hero: Hero) => {
+		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
+		return value;
+	};
+
 	static getCombatState = (hero: Hero) => {
 		const maxStamina = HeroLogic.getStamina(hero);
 		if (maxStamina > 0) {
-			const winded = Math.floor(maxStamina / 2);
+			const winded = HeroLogic.getWindedThreshold(hero);
+			const dead = HeroLogic.getDeadThreshold(hero);
 			const currentStamina = maxStamina - hero.state.staminaDamage;
 
-			if (currentStamina <= -winded) {
+			if (currentStamina <= dead) {
 				return 'dead';
 			}
 
@@ -985,7 +1007,7 @@ export class HeroLogic {
 						break;
 					}
 					case FeatureType.Choice: {
-						let remaining = feature.data.count;
+						let remaining = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
 						while (feature.data.options.some(o => o.value <= remaining)) {
 							const currentIDs = feature.data.selected.map(f => f.id);
 							const options = feature.data.options

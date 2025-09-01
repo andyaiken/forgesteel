@@ -515,9 +515,9 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Presence ],
-						tier1: '2 + P psychic damage; p < [weak] , bleeding (save ends)',
-						tier2: '5 + P psychic damage; p < [average] , bleeding (save ends)',
-						tier3: '7 + P psychic damage; p < [strong] , bleeding (save ends)'
+						tier1: '2 + P psychic damage; P < [weak] , bleeding (save ends)',
+						tier2: '5 + P psychic damage; P < [average] , bleeding (save ends)',
+						tier3: '7 + P psychic damage; P < [strong] , bleeding (save ends)'
 					})
 				)
 			]
@@ -609,9 +609,9 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Presence ],
-						tier1: 'Slide 1; i < [weak], dazed (save ends)',
-						tier2: 'Slide 1; i < [average], dazed (save ends)',
-						tier3: 'Slide 2; i < [strong], dazed (save ends)'
+						tier1: 'Slide 1; I < [weak], dazed (save ends)',
+						tier2: 'Slide 1; I < [average], dazed (save ends)',
+						tier3: 'Slide 2; I < [strong], dazed (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionField({
@@ -635,9 +635,9 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Presence ],
-						tier1: '4 damage; p < [weak], slowed (save ends)',
-						tier2: '5 damage; p < [average], slowed (save ends)',
-						tier3: '6 damage; p < [strong], restrained (save ends)'
+						tier1: '4 damage; P < [weak], slowed (save ends)',
+						tier2: '5 damage; P < [average], slowed (save ends)',
+						tier3: '6 damage; P < [strong], restrained (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('The area is difficult terrain for enemies.')
@@ -657,9 +657,9 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility, Characteristic.Presence ],
-						tier1: 'Taunted (EoT); a < [weak], prone',
-						tier2: 'Taunted (EoT); a < [average], prone',
-						tier3: 'Taunted (EoT); a < [strong], prone and can’t stand (EoT)'
+						tier1: 'Taunted (EoT); A < [weak], prone',
+						tier2: 'Taunted (EoT); A < [average], prone',
+						tier3: 'Taunted (EoT); A < [strong], prone and can’t stand (EoT)'
 					})
 				)
 			]
@@ -688,7 +688,7 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 			id: 'y4twMNJioffMnTAp',
 			name: 'Fake Your Death',
 			description: 'O happy dagger, this is thy sheath!',
-			type: FactoryLogic.type.createMain(),
+			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Magic ],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
@@ -723,9 +723,9 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility ],
-						tier1: '6 + A damage; p < [weak], weakened (save ends)',
-						tier2: '10 + A damage; p < [weak], weakened (save ends)',
-						tier3: '14 + A damage; p < [weak], weakened (save ends)'
+						tier1: '6 + A damage; P < [weak], weakened (save ends)',
+						tier2: '10 + A damage; P < [weak], weakened (save ends)',
+						tier3: '14 + A damage; P < [weak], weakened (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('You can become bleeding (save ends) to deal an extra 5 corruption damage to the target.')
@@ -744,9 +744,9 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Presence ],
-						tier1: 'Slide 3; p < [weak], this slide ignores the target’s stability',
-						tier2: 'Slide 5; p < [average], this slide ignores the target’s stability',
-						tier3: 'Slide 7; p < [strong], this slide ignores the target’s stability'
+						tier1: 'Slide 3; P < [weak], this slide ignores the target’s stability',
+						tier2: 'Slide 5; P < [average], this slide ignores the target’s stability',
+						tier3: 'Slide 7; P < [strong], this slide ignores the target’s stability'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('Instead of sliding a target, you can swap their location with another target as long as each can fit into the other’s space. You can’t slide targets into other creatures or objects using this ability.')
@@ -765,12 +765,52 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Presence ],
-						tier1: '5 fire damage; a < [weak], weakened (save ends)',
-						tier2: '7 fire damage; a < [average], weakened (save ends)',
-						tier3: '10 fire damage; a < [strong], weakened (save ends)'
+						tier1: '5 fire damage; A < [weak], weakened (save ends)',
+						tier2: '7 fire damage; A < [average], weakened (save ends)',
+						tier3: '10 fire damage; A < [strong], weakened (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('Each ally in the area can shift up to 2 squares.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: '7vm0VdMiqgrZtpcu2',
+			name: 'Star Solo',
+			description: 'Your performance travels and doesn’t stop moving until your audience is completely rocked.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(10)
+			],
+			target: 'One creature or object',
+			cost: 7,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: [ Characteristic.Presence ],
+						tier1: '5 + P damage',
+						tier2: '8 + P damage; push 3',
+						tier3: '11 + P damage; push 5'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can choose to have this ability deal sonic damage. Additionally, you can use this ability against the same target for the next 2 combat rounds without spending drama.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: '7vm0VdMiqgrZtpcu3',
+			name: 'We Meet at Last',
+			description: 'You magically intertwine your fate with another creature—for better or worse.',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature',
+			cost: 7,
+			sections: [
+				FactoryLogic.createAbilitySectionText(`
+Until the end of the encounter, both you and the target can target each other with abilities even if you are beyond distance, with the distance of this ability replacing those abilities’ distances. The target can’t be force moved by an ability used beyond distance this way.
+
+Additionally, once on each of your turns, you can use a free maneuver to communicate a motivating or dispiriting message to the target, either granting them 2 surges or forcing them to take a bane on the next ability roll they make before the start of your next turn.`)
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -896,9 +936,9 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Presence ],
-						tier1: '6 damage; p < [weak], the target can’t willingly leave the area (EoT)',
-						tier2: '8 damage; p < [average], the target can’t willingly leave the area (save ends)',
-						tier3: '12 damage; the target can’t willingly leave the area (EoT); if p < [strong], they can’t willingly leave the area (save ends)'
+						tier1: '6 damage; P < [weak], the target can’t willingly leave the area (EoT)',
+						tier2: '8 damage; P < [average], the target can’t willingly leave the area (save ends)',
+						tier3: '12 damage; the target can’t willingly leave the area (EoT); if P < [strong], they can’t willingly leave the area (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('Each ally within distance can’t obtain lower than a tier 2 outcome on the next test they make before the start of your next turn.')

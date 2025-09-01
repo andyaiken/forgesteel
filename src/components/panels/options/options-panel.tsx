@@ -1,17 +1,18 @@
-import { Divider, Segmented, Select } from 'antd';
+import { Divider, Segmented, Select, Space } from 'antd';
 import { Collections } from '../../../utils/collections';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Hero } from '../../../models/hero';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { Options } from '../../../models/options';
 import { PanelWidth } from '../../../enums/panel-width';
+import { SheetPageSize } from '../../../enums/sheet-page-size';
 import { Toggle } from '../../controls/toggle/toggle';
 import { Utils } from '../../../utils/utils';
 
 import './options-panel.scss';
 
 interface Props {
-	mode: 'hero' | 'library' | 'monster' | 'encounter' | 'tactical-map' | 'session' | 'player';
+	mode: 'hero-modern' | 'hero-classic' | 'library' | 'monster' | 'encounter' | 'tactical-map' | 'session' | 'player';
 	options: Options;
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
@@ -54,6 +55,30 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setIncludePlayState = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.includePlayState = value;
+		props.setOptions(copy);
+	};
+
+	const setColorAbilityCards = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.colorAbilityCards = value;
+		props.setOptions(copy);
+	};
+
+	const setClassicSheetPageSize = (value: SheetPageSize) => {
+		const copy = Utils.copy(props.options);
+		copy.classicSheetPageSize = value;
+		props.setOptions(copy);
+	};
+
+	const setPageOrientation = (value: 'portrait' | 'landscape') => {
+		const copy = Utils.copy(props.options);
+		copy.pageOrientation = value;
+		props.setOptions(copy);
+	};
+
 	const setAbilityWidth = (value: PanelWidth) => {
 		const copy = Utils.copy(props.options);
 		copy.abilityWidth = value;
@@ -69,12 +94,6 @@ export const OptionsPanel = (props: Props) => {
 	const setShowMonstersInGroups = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.showMonstersInGroups = value;
-		props.setOptions(copy);
-	};
-
-	const setShowSimilarMonsters = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.showSimilarMonsters = value;
 		props.setOptions(copy);
 	};
 
@@ -173,7 +192,7 @@ export const OptionsPanel = (props: Props) => {
 			return (
 				<>
 					{initialDivider ? <Divider /> : null}
-					<div>
+					<div className='ds-text'>
 						Start encounters with these heroes:
 					</div>
 					<Select
@@ -198,7 +217,7 @@ export const OptionsPanel = (props: Props) => {
 		};
 
 		switch (props.mode) {
-			case 'hero':
+			case 'hero-modern':
 				return (
 					<>
 						<Toggle label='Separate inventory features' value={props.options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
@@ -212,11 +231,45 @@ export const OptionsPanel = (props: Props) => {
 						<Divider>Abilities</Divider>
 						<Segmented
 							name='abilitywidth'
+							block={true}
 							disabled={props.options.compactView}
-							options={[ PanelWidth.Narrow, PanelWidth.Medium, PanelWidth.Wide, PanelWidth.ExtraWide ]}
+							options={[
+								{ value: PanelWidth.Narrow, label: 'S' },
+								{ value: PanelWidth.Medium, label: 'M' },
+								{ value: PanelWidth.Wide, label: 'L' },
+								{ value: PanelWidth.ExtraWide, label: 'XL' }
+							]}
 							value={props.options.abilityWidth}
 							onChange={setAbilityWidth}
 						/>
+					</>
+				);
+			case 'hero-classic':
+				return (
+					<>
+						<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
+						<Toggle label='Color ability cards' value={props.options.colorAbilityCards} onChange={setColorAbilityCards} />
+						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+						<Divider>Layout</Divider>
+						<Space direction='vertical' style={{ width: '100%' }}>
+							<Segmented
+								name='pagesize'
+								block={true}
+								options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
+								value={props.options.classicSheetPageSize}
+								onChange={setClassicSheetPageSize}
+							/>
+							<Segmented
+								name='orientation'
+								block={true}
+								options={[
+									{ value: 'portrait', label: 'Portrait' },
+									{ value: 'landscape', label: 'Landscape' }
+								]}
+								value={props.options.pageOrientation}
+								onChange={setPageOrientation}
+							/>
+						</Space>
 					</>
 				);
 			case 'library':
@@ -228,18 +281,11 @@ export const OptionsPanel = (props: Props) => {
 			case 'monster':
 				return (
 					<>
-						<Toggle label='Show data from similar monsters in the monster builder' value={props.options.showSimilarMonsters} onChange={setShowSimilarMonsters} />
-						{
-							props.options.showSimilarMonsters ?
-								<div>
-									<div className='ds-text centered-text'>Determine similarity using:</div>
-									<Toggle label='Monster level' value={props.options.similarLevel} onChange={setSimilarLevel} />
-									<Toggle label='Monster role' value={props.options.similarRole} onChange={setSimilarRole} />
-									<Toggle label='Monster organization' value={props.options.similarOrganization} onChange={setSimilarOrganization} />
-									<Toggle label='Monster size' value={props.options.similarSize} onChange={setSimilarSize} />
-								</div>
-								: null
-						}
+						<div className='ds-text'>Show data from similar monsters using these fields:</div>
+						<Toggle label='Monster level' value={props.options.similarLevel} onChange={setSimilarLevel} />
+						<Toggle label='Monster role' value={props.options.similarRole} onChange={setSimilarRole} />
+						<Toggle label='Monster organization' value={props.options.similarOrganization} onChange={setSimilarOrganization} />
+						<Toggle label='Monster size' value={props.options.similarSize} onChange={setSimilarSize} />
 					</>
 				);
 			case 'encounter':
@@ -248,7 +294,7 @@ export const OptionsPanel = (props: Props) => {
 						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
 						{getPartySection(true)}
 						<Divider />
-						<div>
+						<div className='ds-text'>
 							Calculate encounter difficulty based on these heroes:
 						</div>
 						<Select

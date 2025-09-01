@@ -1,6 +1,5 @@
 import { Button, Popover } from 'antd';
 import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
@@ -19,7 +18,6 @@ import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel'
 import { Element } from '../../../../models/element';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
-import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { Imbuement } from '../../../../models/imbuement';
 import { ImbuementPanel } from '../../../panels/elements/imbuement-panel/imbuement-panel';
@@ -27,6 +25,8 @@ import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
+import { Monster } from '../../../../models/monster';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { Options } from '../../../../models/options';
@@ -49,7 +49,6 @@ import { useParams } from 'react-router';
 import './library-view-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
 	options: Options;
@@ -57,7 +56,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	showSourcebooks: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, isSubElement: boolean, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	copy: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -388,7 +386,7 @@ export const LibraryViewPage = (props: Props) => {
 					<div className='library-view-page-content'>
 						{panel}
 					</div>
-					<AppFooter page='library' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

@@ -1,7 +1,6 @@
-import { Alert, Button, Divider, Drawer, Flex, InputNumber, Popover, Progress, Segmented, Space, Tag } from 'antd';
+import { Alert, Button, Drawer, Flex, InputNumber, Popover, Segmented, Space, Tag } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import { Encounter, EncounterSlot } from '../../../models/encounter';
 import { Collections } from '../../../utils/collections';
 import { Condition } from '../../../models/condition';
 import { ConditionPanel } from '../condition/condition-panel';
@@ -9,15 +8,18 @@ import { ConditionSelectModal } from '../../modals/select/condition-select/condi
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { DropdownButton } from '../../controls/dropdown-button/dropdown-button';
 import { Empty } from '../../controls/empty/empty';
+import { Encounter } from '../../../models/encounter';
+import { EncounterSlot } from '../../../models/encounter-slot';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
 import { Format } from '../../../utils/format';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { HealthGauge } from '../health-gauge/health-gauge';
 import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Markdown } from '../../controls/markdown/markdown';
 import { Monster } from '../../../models/monster';
-import { MonsterInfo } from '../../controls/token/token';
+import { MonsterInfo } from '../token/token';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { NumberSpin } from '../../controls/number-spin/number-spin';
@@ -618,71 +620,6 @@ const HealthPanel = (props: Props) => {
 		});
 	};
 
-	const getHealthGauges = () => {
-		if (!props.stamina) {
-			return null;
-		}
-
-		return (
-			<div className='health-gauges'>
-				{
-					props.staminaTemp && (props.staminaTemp.staminaTemp > 0) ?
-						<Progress
-							className='stamina-temp-progress'
-							type='dashboard'
-							percent={100 * props.staminaTemp.staminaTemp / props.stamina!.staminaMax}
-							showInfo={false}
-							status='active'
-						/>
-						: null
-				}
-				<Progress
-					className='stamina-progress'
-					type='dashboard'
-					percent={100 * (props.stamina!.staminaMax - props.stamina!.staminaDamage) / props.stamina!.staminaMax}
-					showInfo={false}
-					status={(props.stamina!.state === 'winded') ? 'exception' : 'active'}
-				/>
-				{
-					props.recoveries && (props.recoveries.recoveriesMax > 0) ?
-						<Progress
-							className='recovery-progress'
-							type='dashboard'
-							percent={100 * (props.recoveries!.recoveriesMax - props.recoveries!.recoveriesUsed) / props.recoveries!.recoveriesMax}
-							showInfo={false}
-							status='active'
-						/>
-						: null
-				}
-				<div className='gauge-info'>
-					{
-						props.staminaTemp && (props.staminaTemp.staminaTemp > 0) ?
-							<>
-								<div>
-									Tmp <b>{props.staminaTemp.staminaTemp}</b>
-								</div>
-								<Divider style={{ margin: '5px 0' }} />
-							</>
-							: null
-					}
-					<div>
-						Sta <b>{props.stamina!.staminaDamage ? `${props.stamina!.staminaMax - props.stamina!.staminaDamage} / ${props.stamina!.staminaMax}` : `${props.stamina!.staminaMax}`}</b>
-					</div>
-					{
-						props.recoveries && (props.recoveries.recoveriesMax > 0) ?
-							<>
-								<Divider style={{ margin: '5px 0' }} />
-								<div>
-									Rec <b>{props.recoveries!.recoveriesUsed ? `${props.recoveries!.recoveriesMax - props.recoveries!.recoveriesUsed} / ${props.recoveries!.recoveriesMax}` : `${props.recoveries!.recoveriesMax}`}</b>
-								</div>
-							</>
-							: null
-					}
-				</div>
-			</div>
-		);
-	};
-
 	const getHealthControls = () => {
 		return (
 			<Space direction='vertical' style={{ flex: '1 1 0', width: '100%' }}>
@@ -809,7 +746,7 @@ const HealthPanel = (props: Props) => {
 				{
 					props.stamina ?
 						<div className='health-panel-stamina'>
-							{getHealthGauges()}
+							<HealthGauge stamina={props.stamina} staminaTemp={props.staminaTemp} recoveries={props.recoveries} />
 							{getHealthControls()}
 						</div>
 						: null

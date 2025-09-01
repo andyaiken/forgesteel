@@ -1,6 +1,6 @@
 import { BarsOutlined, CloseOutlined, DownloadOutlined, DragOutlined, FileTextOutlined, InfoCircleOutlined, LinkOutlined, RotateRightOutlined } from '@ant-design/icons';
 import { Button, ColorPicker, Divider, Drawer, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
-import { HeroToken, MonsterToken } from '../../../controls/token/token';
+import { HeroToken, MonsterToken } from '../../token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '../../../../models/tactical-map';
 import { ReactNode, useState } from 'react';
 import { Collections } from '../../../../utils/collections';

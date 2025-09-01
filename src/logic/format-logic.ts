@@ -112,7 +112,8 @@ export class FormatLogic {
 					'2x',
 					'2 x',
 					'2×',
-					'2 ×'
+					'2 ×',
+					'2 times'
 				]
 			},
 			{
@@ -143,7 +144,8 @@ export class FormatLogic {
 					'5x',
 					'5 x',
 					'5×',
-					'5 ×'
+					'5 ×',
+					'5 times'
 				]
 			},
 			{

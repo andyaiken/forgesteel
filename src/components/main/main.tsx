@@ -1,5 +1,4 @@
 import { Adventure, AdventurePackage } from '../../models/adventure';
-import { Monster, MonsterGroup } from '../../models/monster';
 import { Navigate, Route, Routes } from 'react-router';
 import { Playbook, PlaybookElementKind } from '../../models/playbook';
 import { ReactNode, useState } from 'react';
@@ -9,11 +8,13 @@ import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
+import { CharacterSheetFormatter } from '../../utils/character-sheet-formatter';
 import { Characteristic } from '../../enums/characteristic';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { Counter } from '../../models/counter';
 import { Culture } from '../../models/culture';
+import { CultureType } from '../../enums/culture-type';
 import { DirectoryModal } from '../modals/directory/directory-modal';
 import { Domain } from '../../models/domain';
 import { Element } from '../../models/element';
@@ -30,8 +31,8 @@ import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
-import { HeroExportPage } from '../pages/heroes/hero-export/hero-export-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
+import { HeroSheetPreviewPage } from '../pages/heroes/hero-sheet/hero-sheet-preview-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../enums/hero-state-page';
 import { HeroUpdateLogic } from '../../logic/update/hero-update-logic';
@@ -44,6 +45,8 @@ import { LibraryEditPage } from '../pages/library/library-edit/library-edit-page
 import { LibraryListPage } from '../pages/library/library-list/library-list-page';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
+import { Monster } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Montage } from '../../models/montage';
 import { Negotiation } from '../../models/negotiation';
@@ -280,12 +283,30 @@ export const Main = (props: Props) => {
 		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const exportHeroPDF = (hero: Hero, format: 'portrait' | 'landscape') => {
-		PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], format);
+	const exportHeroPdf = (hero: Hero, mode: 'portrait' | 'landscape' | 'html', formFillable: boolean) => {
+		if (mode === 'html') {
+			const pageIds: string[] = [];
+			let p = 1;
+			while (document.getElementById(CharacterSheetFormatter.getPageId(hero.id, p)) !== null) {
+				pageIds.push(CharacterSheetFormatter.getPageId(hero.id, p));
+				++p;
+			}
+
+			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize);
+		} else {
+			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], mode, !formFillable);
+		}
 	};
 
-	const exportStandardAbilities = (format: 'image' | 'pdf') => {
-		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', format);
+	const exportStandardAbilities = () => {
+		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', 'pdf');
+	};
+
+	const setNotes = (hero: Hero, value: string) => {
+		const copy = Utils.copy(hero);
+		copy.state.notes = value;
+
+		persistHero(copy);
 	};
 
 	// #endregion
@@ -641,7 +662,7 @@ export const Main = (props: Props) => {
 			culture = Utils.copy(original);
 			culture.id = Utils.guid();
 		} else {
-			culture = FactoryLogic.createCulture();
+			culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
 		}
 
 		sourcebook.cultures.push(culture);
@@ -1361,7 +1382,7 @@ export const Main = (props: Props) => {
 	};
 
 	const showReference = () => {
-		onshowReference(null);
+		onShowReference(null);
 	};
 
 	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
@@ -1471,7 +1492,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onshowReference = (hero: Hero | null, page?: RulesPage) => {
+	const onShowReference = (hero: Hero | null, page?: RulesPage) => {
 		setDrawer(
 			<ReferenceModal
 				hero={hero}
@@ -1540,12 +1561,10 @@ export const Main = (props: Props) => {
 							index={true}
 							element={
 								<WelcomePage
-									heroes={heroes}
 									showDirectory={showDirectoryPane}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
-									showSourcebooks={showSourcebooks}
 								/>
 							}
 						/>
@@ -1562,7 +1581,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										addHero={createHero}
 										importHero={importHero}
 										showParty={onShowParty}
@@ -1581,7 +1599,7 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										exportHero={exportHero}
-										exportHeroPDF={exportHeroPDF}
+										exportPdf={exportHeroPdf}
 										exportStandardAbilities={exportStandardAbilities}
 										copyHero={copyHero}
 										deleteHero={deleteHero}
@@ -1599,8 +1617,8 @@ export const Main = (props: Props) => {
 										showFeature={onSelectFeature}
 										showAbility={onSelectAbility}
 										showHeroState={onShowHeroState}
-										showReference={onshowReference}
-										showSourcebooks={showSourcebooks}
+										showReference={onShowReference}
+										setNotes={setNotes}
 									/>
 								}
 							/>
@@ -1619,7 +1637,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										saveChanges={saveHero}
 										importSourcebook={sourcebook => {
 											const copy = Utils.copy(homebrewSourcebooks);
@@ -1630,8 +1647,15 @@ export const Main = (props: Props) => {
 								}
 							/>
 							<Route
-								path='export/:heroID'
-								element={<HeroExportPage heroes={heroes} />}
+								path='sheet/:heroID'
+								element={
+									<HeroSheetPreviewPage
+										heroes={heroes}
+										sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+										options={options}
+										setOptions={persistOptions}
+									/>
+								}
 							/>
 						</Route>
 						<Route path='library'>
@@ -1662,7 +1686,6 @@ export const Main = (props: Props) => {
 								path='view/:kind/:elementID/:subElementID?'
 								element={
 									<LibraryViewPage
-										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
 										options={options}
@@ -1670,7 +1693,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										createElement={createLibraryElement}
 										export={exportLibraryElement}
 										copy={copyLibraryElement}
@@ -1690,7 +1712,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showMonster={onSelectMonster}
 										saveChanges={saveLibraryElement}
 										setOptions={persistOptions}
@@ -1715,7 +1736,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										createElement={createPlaybookElement}
 										importElement={importPlaybookElement}
 										importAdventurePackage={importAdventurePackage}
@@ -1735,7 +1755,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showEncounterTools={showEncounterTools}
 										export={exportPlaybookElement}
 										start={startPlaybookElement}
@@ -1757,7 +1776,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showMonster={onSelectMonster}
 										showTerrain={onSelectTerrain}
 										saveChanges={savePlaybookElement}
@@ -1784,7 +1802,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showPlayerView={showPlayerView}
 										startEncounter={startEncounter}
 										startMontage={startMontage}
@@ -1814,7 +1831,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										setOptions={persistOptions}
 									/>
 								}

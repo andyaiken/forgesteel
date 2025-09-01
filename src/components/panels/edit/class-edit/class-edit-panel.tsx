@@ -1,5 +1,5 @@
-import { Alert, Button, Input, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Button, Drawer, Flex, Input, Space, Tabs, Upload } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { Characteristic } from '../../../../enums/characteristic';
@@ -14,10 +14,12 @@ import { FeatureEditPanel } from '../feature-edit/feature-edit-panel';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HeroClass } from '../../../../models/class';
+import { Modal } from '../../../modals/modal/modal';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SubClass } from '../../../../models/subclass';
 import { SubclassPanel } from '../../elements/subclass-panel/subclass-panel';
@@ -37,6 +39,7 @@ interface Props {
 
 export const ClassEditPanel = (props: Props) => {
 	const [ heroClass, setHeroClass ] = useState<HeroClass>(props.heroClass);
+	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
 	try {
 		const getNameAndDescriptionSection = () => {
@@ -371,6 +374,16 @@ export const ClassEditPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
+			const copySubclass = (subclass: SubClass) => {
+				const subclassCopy = Utils.copy(subclass);
+				subclassCopy.id = Utils.guid();
+
+				const copy = Utils.copy(heroClass);
+				copy.subclasses.push(subclassCopy);
+				setHeroClass(copy);
+				props.onChange(copy);
+			};
+
 			const moveSubclass = (subclass: SubClass, direction: 'up' | 'down') => {
 				const copy = Utils.copy(heroClass);
 				const index = copy.subclasses.findIndex(sc => sc.id === subclass.id);
@@ -388,13 +401,6 @@ export const ClassEditPanel = (props: Props) => {
 
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
-					<HeaderText
-						extra={
-							<Button type='text' icon={<PlusOutlined />} onClick={addSubclass} />
-						}
-					>
-						Subclasses
-					</HeaderText>
 					{
 						heroClass.subclasses.map(sc => (
 							<Expander
@@ -416,6 +422,58 @@ export const ClassEditPanel = (props: Props) => {
 							<Empty />
 							: null
 					}
+					<Flex gap={10}>
+						<Button block={true} icon={<PlusOutlined />} onClick={addSubclass}>
+							Add a new subclass
+						</Button>
+						<Upload
+							accept='.drawsteel-subclass,.ds-subclass'
+							showUploadList={false}
+							beforeUpload={file => {
+								file
+									.text()
+									.then(json => {
+										const sc = JSON.parse(json) as SubClass;
+										copySubclass(sc);
+									});
+								return false;
+							}}
+						>
+							<Button block={true} onClick={() => null}>
+								<DownloadOutlined />
+								Import a subclass
+							</Button>
+						</Upload>
+						<Button block={true} onClick={() => setDrawerOpen(true)}>
+							<CopyOutlined />
+							Copy an existing subclass
+						</Button>
+					</Flex>
+					<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
+						<Modal
+							content={
+								<Space direction='vertical' style={{ width: '100%', padding: '20px' }}>
+									{
+										[
+											...props.sourcebooks.flatMap(sb => sb.classes).flatMap(c => c.subclasses),
+											...props.sourcebooks.flatMap(sb => sb.subclasses)
+										].map((sc, n) => (
+											<SelectablePanel
+												key={n}
+												onSelect={() => {
+													copySubclass(sc);
+													setDrawerOpen(false);
+												}}
+											>
+												<SubclassPanel subclass={sc} options={props.options} />
+											</SelectablePanel>
+										))
+									}
+								</Space>
+							}
+							onClose={() => setDrawerOpen(false)}
+						/>
+					</Drawer>
 				</Space>
 			);
 		};

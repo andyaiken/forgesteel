@@ -1,5 +1,5 @@
 import { HeroHealthPanel, MonsterHealthPanel } from '../../../health/health-panel';
-import { HeroInfo, HeroToken, MonsterInfo, MonsterToken } from '../../../../controls/token/token';
+import { HeroInfo, HeroToken, MonsterInfo, MonsterToken } from '../../../token/token';
 import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../../logic/factory-logic';
 import { Hero } from '../../../../../models/hero';

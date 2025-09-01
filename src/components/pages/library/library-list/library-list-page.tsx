@@ -2,7 +2,6 @@ import { Badge, Button, Divider, Input, Popover, Segmented, Select, Space, Table
 import { BarsOutlined, BookOutlined, DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, TableOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
@@ -17,6 +16,7 @@ import { Complication } from '../../../../models/complication';
 import { ComplicationPanel } from '../../../panels/elements/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/elements/culture-panel/culture-panel';
+import { CultureType } from '../../../../enums/culture-type';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
@@ -35,8 +35,10 @@ import { Kit } from '../../../../models/kit';
 import { KitArmor } from '../../../../enums/kit-armor';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { KitWeapon } from '../../../../enums/kit-weapon';
+import { Monster } from '../../../../models/monster';
 import { MonsterFilter } from '../../../../models/filter';
 import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
@@ -751,6 +753,7 @@ export const LibraryListPage = (props: Props) => {
 								key: c.id,
 								name: c.name,
 								sourcebook: SourcebookLogic.getCultureSourcebook(props.sourcebooks, c)!.name,
+								type: c.type,
 								languages: c.languages.join(', '),
 								environment: c.environment ? c.environment.name : '',
 								organization: c.organization ? c.organization.name : '',
@@ -777,6 +780,14 @@ export const LibraryListPage = (props: Props) => {
 								},
 								{
 									key: '3',
+									title: 'Type',
+									dataIndex: 'type',
+									filters: [ CultureType.Ancestral, CultureType.Professional ].map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.type.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.type.localeCompare(b.type)
+								},
+								{
+									key: '4',
 									title: 'Languages',
 									dataIndex: 'languages',
 									filters: SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ text: l.name, value: l.name })),
@@ -784,7 +795,7 @@ export const LibraryListPage = (props: Props) => {
 									sorter: (a, b) => a.languages.localeCompare(b.languages)
 								},
 								{
-									key: '4',
+									key: '5',
 									title: 'Environment',
 									dataIndex: 'environment',
 									filters: EnvironmentData.getEnvironments().map(e => ({ text: e.name, value: e.name })),
@@ -792,7 +803,7 @@ export const LibraryListPage = (props: Props) => {
 									sorter: (a, b) => a.environment.localeCompare(b.environment)
 								},
 								{
-									key: '5',
+									key: '6',
 									title: 'Organization',
 									dataIndex: 'organization',
 									filters: OrganizationData.getOrganizations().map(o => ({ text: o.name, value: o.name })),
@@ -800,7 +811,7 @@ export const LibraryListPage = (props: Props) => {
 									sorter: (a, b) => a.organization.localeCompare(b.organization)
 								},
 								{
-									key: '6',
+									key: '7',
 									title: 'Upbringing',
 									dataIndex: 'upbringing',
 									filters: UpbringingData.getUpbringings().map(u => ({ text: u.name, value: u.name })),
@@ -2053,7 +2064,7 @@ export const LibraryListPage = (props: Props) => {
 							}
 						/>
 					</div>
-					<AppFooter page='library' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

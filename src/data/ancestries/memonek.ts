@@ -89,7 +89,8 @@ export const memonek: Ancestry = {
 					value: 2
 				}
 			],
-			count: 4
+			count: 'ancestry'
 		})
-	]
+	],
+	ancestryPoints: 4
 };

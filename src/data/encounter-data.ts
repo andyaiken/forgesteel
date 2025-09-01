@@ -11,13 +11,17 @@ export class EncounterData {
 		groups: [
 			{
 				id: 'group-1',
+				name: '',
 				slots: [
 					{
 						id: 'group-1-slot-1',
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Assassin')!.id,
 						count: 2,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							itemIDs: [],
+							levelAdjustment: 0,
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {
@@ -36,13 +40,17 @@ export class EncounterData {
 			},
 			{
 				id: 'group-2',
+				name: '',
 				slots: [
 					{
 						id: 'group-2-slot-1',
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Sniper')!.id,
 						count: 1,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							itemIDs: [],
+							levelAdjustment: 0,
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {
@@ -61,13 +69,17 @@ export class EncounterData {
 			},
 			{
 				id: 'group-3',
+				name: '',
 				slots: [
 					{
 						id: 'group-3-slot-1',
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Spinecleaver')!.id,
 						count: 1,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							itemIDs: [],
+							levelAdjustment: 0,
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {
@@ -86,13 +98,17 @@ export class EncounterData {
 			},
 			{
 				id: 'group-4',
+				name: '',
 				slots: [
 					{
 						id: 'group-4-slot-1',
 						monsterID: MonsterData.goblin.monsters.find(m => m.name === 'Goblin Underboss')!.id,
 						count: 1,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							itemIDs: [],
+							levelAdjustment: 0,
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {
@@ -141,13 +157,17 @@ export class EncounterData {
 		groups: [
 			{
 				id: 'group-1',
+				name: '',
 				slots: [
 					{
 						id: 'group-1-slot-1',
 						monsterID: MonsterData.dragonThorn.monsters[0].id,
 						count: 1,
 						customization: {
-							addOnIDs: []
+							addOnIDs: [],
+							itemIDs: [],
+							levelAdjustment: 0,
+							convertToSolo: false
 						},
 						monsters: [],
 						state: {

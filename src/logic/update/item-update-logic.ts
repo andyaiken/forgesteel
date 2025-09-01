@@ -10,7 +10,7 @@ export class ItemUpdateLogic {
 		}
 
 		/* eslint-disable @typescript-eslint/no-deprecated */
-		if (item.customizationsByLevel.length > 0) {
+		if (item.customizationsByLevel && (item.customizationsByLevel.length > 0)) {
 			item.customizationsByLevel.forEach(level => {
 				level.features.forEach(feature => {
 					if (feature.selected) {

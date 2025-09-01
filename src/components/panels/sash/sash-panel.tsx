@@ -10,7 +10,7 @@ export const SashPanel = (props: Props) => {
 	try {
 		return (
 			<ErrorBoundary>
-				<div className={`sash-panel ${props.monogram.toLowerCase()}`}>{props.monogram}</div>
+				<div className={`sash-panel type-${props.monogram.toLowerCase()}`}>{props.monogram}</div>
 			</ErrorBoundary>
 		);
 	} catch (ex) {

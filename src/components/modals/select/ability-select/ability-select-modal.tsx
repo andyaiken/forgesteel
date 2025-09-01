@@ -26,7 +26,11 @@ export const AbilitySelectModal = (props: Props) => {
 		const abilities = props.abilities
 			.filter(a => Utils.textMatches([
 				a.name,
-				a.description
+				a.description,
+				a.type.usage,
+				...a.keywords,
+				...a.sections.filter(s => s.type === 'text').map(s => s.text),
+				...a.sections.filter(s => s.type === 'field').map(s => s.effect)
 			], searchTerm));
 
 		return (

@@ -293,7 +293,7 @@ This ability remains active even after an encounter ends. It ends only if you ar
 				FactoryLogic.feature.createPackageContent({
 					id: 'null-6-1',
 					name: 'Elemental Absorption',
-					description: 'Gain immunity to acid, cold, corruption, fire, lightning, poison, and sonic damage equal to your Intuition score against the triggering damage.',
+					description: 'Whenever you use your Inertial Shield triggered action, you gain immunity to acid, cold, corruption, fire, lightning, poison, and sonic damage equal to your Intuition score against the triggering damage.',
 					tag: 'inertial-shield'
 				}),
 				FactoryLogic.feature.create({

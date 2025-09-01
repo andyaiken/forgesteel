@@ -27,20 +27,27 @@ interface Props {
 export const SubClassSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	const customSubclasses = Collections.sort(
-		props.sourcebooks
-			.flatMap(sb => sb.subclasses),
-		sc => sc.name);
-
-	const otherSubclasses = Collections.sort(
-		props.sourcebooks
-			.flatMap(sb => sb.classes)
-			.filter(c => c.id !== props.classID)
-			.flatMap(c => c.subclasses),
-		sc => sc.name);
-
 	try {
 		const subClasses = props.subClasses
+			.filter(l => Utils.textMatches([
+				l.name,
+				l.description
+			], searchTerm));
+
+		const customSubclasses = Collections.sort(
+			props.sourcebooks.flatMap(sb => sb.subclasses),
+			sc => sc.name)
+			.filter(l => Utils.textMatches([
+				l.name,
+				l.description
+			], searchTerm));
+
+		const otherSubclasses = Collections.sort(
+			props.sourcebooks
+				.flatMap(sb => sb.classes)
+				.filter(c => c.id !== props.classID)
+				.flatMap(c => c.subclasses),
+			sc => sc.name)
 			.filter(l => Utils.textMatches([
 				l.name,
 				l.description

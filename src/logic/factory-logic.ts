@@ -1,9 +1,7 @@
 import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
-import { Encounter, EncounterGroup, EncounterObjective, EncounterSlot } from '../models/encounter';
-import { Hero, HeroState } from '../models/hero';
+import { Encounter, EncounterGroup, EncounterObjective } from '../models/encounter';
 import { Kit, KitDamageBonus } from '../models/kit';
 import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
-import { Monster, MonsterGroup, MonsterRole, MonsterState } from '../models/monster';
 import { MonsterFilter, TerrainFilter } from '../models/filter';
 import { Montage, MontageChallenge, MontageSection } from '../models/montage';
 import { Project, ProjectProgress } from '../models/project';
@@ -15,8 +13,10 @@ import { Career } from '../models/career';
 import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
+import { CultureType } from '../enums/culture-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
+import { EncounterSlot } from '../models/encounter-slot';
 import { FactoryAbilityTypeLogic } from './factory-ability-type-logic';
 import { FactoryDamageModifierLogic } from './factory-damage-modifier-logic';
 import { FactoryDistanceLogic } from './factory-distance-logic';
@@ -26,15 +26,20 @@ import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Follower } from '../models/follower';
 import { FollowerType } from '../enums/follower-type';
+import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
+import { HeroState } from '../models/hero-state';
 import { Imbuement } from '../models/imbuement';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { KitArmor } from '../enums/kit-armor';
 import { KitWeapon } from '../enums/kit-weapon';
-import { MonsterLogic } from './monster-logic';
+import { Monster } from '../models/monster';
+import { MonsterGroup } from '../models/monster-group';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
+import { MonsterRole } from '../models/monster-roll';
 import { MonsterRoleType } from '../enums/monster-role-type';
+import { MonsterState } from '../models/monster-state';
 import { Negotiation } from '../models/negotiation';
 import { Options } from '../models/options';
 import { PanelWidth } from '../enums/panel-width';
@@ -44,6 +49,7 @@ import { Playbook } from '../models/playbook';
 import { Plot } from '../models/plot';
 import { PowerRoll } from '../models/power-roll';
 import { RetainerData } from '../data/retainer-data';
+import { SheetPageSize } from '../enums/sheet-page-size';
 import { Size } from '../models/size';
 import { Sourcebook } from '../models/sourcebook';
 import { Speed } from '../models/speed';
@@ -162,17 +168,19 @@ export class FactoryLogic {
 					id: Utils.guid(),
 					name: 'Purchased Traits',
 					options: [],
-					count: 3
+					count: 'ancestry'
 				})
-			]
+			],
+			ancestryPoints: 3
 		};
 	};
 
-	static createCulture = (name?: string, description?: string, languages?: string[], environment?: Feature, organization?: Feature, upbringing?: Feature): Culture => {
+	static createCulture = (name: string, description: string, type: CultureType, languages?: string[], environment?: Feature, organization?: Feature, upbringing?: Feature): Culture => {
 		return {
 			id: name ? `culture-${name.replace(' ', '-').toLowerCase()}` : Utils.guid(),
-			name: name || '',
-			description: description || '',
+			name: name,
+			description: description,
+			type: type,
 			languages: languages || [],
 			environment: environment || null,
 			organization: organization || null,
@@ -475,6 +483,14 @@ export class FactoryLogic {
 		};
 	};
 
+	static defaultMonsterChatacteristics = [
+		{ characteristic: Characteristic.Might, value: 0 },
+		{ characteristic: Characteristic.Agility, value: 0 },
+		{ characteristic: Characteristic.Reason, value: 0 },
+		{ characteristic: Characteristic.Intuition, value: 0 },
+		{ characteristic: Characteristic.Presence, value: 0 }
+	];
+
 	static createMonster = (data: {
 		id: string,
 		name: string,
@@ -516,7 +532,7 @@ export class FactoryLogic {
 			stamina: data.stamina || 5,
 			stability: data.stability || 0,
 			freeStrikeDamage: data.freeStrikeDamage || 2,
-			characteristics: data.characteristics || MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
+			characteristics: data.characteristics || FactoryLogic.defaultMonsterChatacteristics,
 			withCaptain: data.withCaptain || '',
 			features: data.features || [],
 			retainer: retainer,
@@ -599,6 +615,7 @@ export class FactoryLogic {
 	static createEncounterGroup = (): EncounterGroup => {
 		return {
 			id: Utils.guid(),
+			name: '',
 			slots: [],
 			encounterState: 'ready'
 		};
@@ -610,7 +627,10 @@ export class FactoryLogic {
 			monsterID: monsterID,
 			count: 1,
 			customization: {
-				addOnIDs: []
+				addOnIDs: [],
+				itemIDs: [],
+				levelAdjustment: 0,
+				convertToSolo: false
 			},
 			monsters: [],
 			state: {
@@ -635,7 +655,10 @@ export class FactoryLogic {
 			monsterID: monster.id,
 			count: 1,
 			customization: {
-				addOnIDs: []
+				addOnIDs: [],
+				itemIDs: [],
+				levelAdjustment: 0,
+				convertToSolo: false
 			},
 			monsters: [ m ],
 			state: {
@@ -947,11 +970,14 @@ export class FactoryLogic {
 			showStandardAbilities: true,
 			dimUnavailableAbilities: true,
 			showSources: true,
+			includePlayState: true,
 			abilityWidth: PanelWidth.Medium,
+			classicSheetPageSize: SheetPageSize.Letter,
+			pageOrientation: 'portrait',
+			colorAbilityCards: true,
 			compactView: false,
 			showMonstersInGroups: true,
 			showContentInTable: false,
-			showSimilarMonsters: false,
 			similarLevel: true,
 			similarRole: true,
 			similarOrganization: true,

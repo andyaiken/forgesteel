@@ -7,7 +7,7 @@ import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterGroup } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 
 export const warDog1st: MonsterGroup = {
 	id: 'monster-group-wardog-1st',
@@ -909,7 +909,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 					})
 				})
 			]
-		}),
+		})
 	],
 	addOns: []
 };

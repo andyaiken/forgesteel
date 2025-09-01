@@ -3,6 +3,14 @@ export class Random {
 		return Random.randomNumber(sides, rng) + 1;
 	};
 
+	static dieRoll = (throws: number, sides: number, rng: () => number = Math.random) => {
+		let result = 0;
+		for (let n = 0; n < throws; ++n) {
+			result += Random.die(sides, rng);
+		}
+		return result;
+	};
+
 	static randomNumber = (max: number, rng: () => number = Math.random) => {
 		if (max <= 0) {
 			return 0;

@@ -94,8 +94,8 @@ export class CharacterSheetBuilder {
 			sheet.intuition = hero.class.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value;
 			sheet.presence = hero.class.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value;
 
-			const heroicResource = allFeatures.map(f => f.feature).find(f => f.type === FeatureType.HeroicResource);
-			sheet.heroicResourceFeature = heroicResource;
+			const heroicResource = HeroLogic.getHeroicResources(hero)[0];
+			sheet.heroicResourceGains = heroicResource.gains;
 			sheet.heroicResourceName = heroicResource?.name;
 			sheet.heroicResourceCurrent = allFeatures
 				.map(f => f.feature)

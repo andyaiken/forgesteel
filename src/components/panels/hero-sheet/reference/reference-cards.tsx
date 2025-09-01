@@ -1,5 +1,6 @@
-import { Markdown } from '../../../controls/markdown/markdown';
-import { RulesData } from '../../../../data/rules-data';
+import rollT1Icon from '../../../../assets/icons/power-roll-t1.svg';
+import rollT2Icon from '../../../../assets/icons/power-roll-t2.svg';
+import rollT3Icon from '../../../../assets/icons/power-roll-t3.svg';
 
 import './reference-cards.scss';
 
@@ -211,9 +212,162 @@ export const JumpReferenceCard = () => {
 	return (
 		<div className='extra-reference card'>
 			<h2>Jump</h2>
-			<Markdown
-				text={RulesData.jumping.content}
-			/>
+			<p>
+				Whenever an effect allows you to move (including using the Advance move action), you
+				can automatically long jump a number of squares up to your Might or Agility score
+				(your choice; minimum 1 square) as part of that movement. The height of your jump
+				is automatically 1 square as part of that movement.
+			</p>
+			<p>If you want to jump even longer or higher than your baseline jump allows, make a Might or Agility test:</p>
+			<p><strong>Power Roll + Might or Agility</strong>:</p>
+			<table className='power-roll'>
+				<tbody>
+					<tr>
+						<td>
+							<img src={rollT1Icon} alt='≤ 11' />
+						</td>
+						<td>You don’t jump any farther than your baseline jump allows.</td>
+					</tr>
+					<tr>
+						<td><img src={rollT2Icon} alt='12 - 16' /></td>
+						<td>You jump 1 square longer and higher than your baseline jump allows.</td>
+					</tr>
+					<tr>
+						<td>
+							<img src={rollT3Icon} alt='17+' />
+						</td>
+						<td>You jump 2 squares longer and higher than your baselinejump allows.</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				You can’t jump farther or higher than the distance of the effect that allows you to move. You can’t
+				jump out of difficult terrain or damaging terrain.
+			</p>
+		</div>
+	);
+};
+
+export const ClimbCreaturesCard = () => {
+	return (
+		<div className='extra-reference card'>
+			<h2>Climbing Other Creatures</h2>
+			<p>
+				You can attempt to climb a creature whose size is greater than yours. If
+				the creature is willing, you can climb them without any trouble. If the
+				creature is unwilling, you make the following test:
+			</p>
+			<p><strong>Power Roll + Might or Agility</strong>:</p>
+			<table className='power-roll'>
+				<tbody>
+					<tr>
+						<td>
+							<img src={rollT1Icon} alt='≤ 11' />
+						</td>
+						<td>
+							You fail to climb the creature, and they can make a free strike
+							against you.
+						</td>
+					</tr>
+					<tr>
+						<td><img src={rollT2Icon} alt='12 - 16' /></td>
+						<td>You fail to climb the creature.</td>
+					</tr>
+					<tr>
+						<td>
+							<img src={rollT3Icon} alt='17+' />
+						</td>
+						<td>You climb the creature.</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				While you climb or ride a creature, you gain an edge on melee abilities
+				used against them. The creature can use a maneuver to attempt to
+				knock you off, forcing you to make the following test:
+			</p>
+			<table className='power-roll'>
+				<tbody>
+					<tr>
+						<td>
+							<img src={rollT1Icon} alt='≤ 11' />
+						</td>
+						<td>
+							You fall off the creature into an unoccupied adjacent space of
+							your choice, taking falling damage and landing prone as usual.
+						</td>
+					</tr>
+					<tr>
+						<td><img src={rollT2Icon} alt='12 - 16' /></td>
+						<td>
+							You slide down the creature into an unoccupied adjacent
+							space of your choice and don’t land prone.
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src={rollT3Icon} alt='17+' />
+						</td>
+						<td>You continue to hold on to the creature.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	);
+};
+
+export const MovementReferenceCard = () => {
+	return (
+		<div className='extra-reference card'>
+			<h2>Movement</h2>
+			<p>
+				All squares adjacent to your character cost 1 movement to move into. No,
+				there’s no Pythagorean theorem on the grid. It’s a game, don’t overthink it.
+			</p>
+			<p>
+				Your hero can move freely through an ally’s space. You can move through
+				an enemy’s space, but that space is difficult terrain. You can’t
+				stop moving in any other creature’s space, including to make a strike or use
+				a main action or maneuver while in that space and then continuing your
+				move, unless that creature’s size is two or more sizes greater or smaller
+				than your own.
+			</p>
+			<p>
+				At the Director’s discretion, you can be forced into the same space as
+				another creature whose size is within 1 of yours, such as by falling down
+				a narrow shaft with such a creature already at the bottom. When you are
+				squeezed into the same space as another creature whose size is within 1 of
+				yours, your ability rolls and tests take a bane.
+			</p>
+		</div>
+	);
+};
+
+export const FallingReferenceCard = () => {
+	return (
+		<div className='extra-reference card'>
+			<h2>Falling</h2>
+			<p>
+				When a creature falls 2 or more squares and lands on the ground, they
+				take 2 damage for each square they fall (to a maximum of 50 damage)
+				and land prone. A creature who falls can reduce the effective height
+				of the fall by a number of squares equal to their Agility score (to a
+				minimum of 0). Falling into liquid that is 1 square or more deep reduces
+				the effective height of a fall by 4 squares (to a minimum of 0).
+			</p>
+			<p>
+				Falling is not forced movement, but being force moved downward is
+				considered falling. Movement from falling doesn’t
+				provoke opportunity attacks.
+			</p>
+			<h3>Falling Onto Another Creature</h3>
+			<p>
+				A creature who falls and lands on another creature causes that creature
+				to take the same damage from the fall. The falling creature then lands
+				prone in the nearest unoccupied space of their choice. If the falling
+				creature’s size is greater than the Might score of the creature they land
+				on, that creature is knocked prone.
+			</p>
 		</div>
 	);
 };

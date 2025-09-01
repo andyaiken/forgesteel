@@ -263,13 +263,19 @@ export class CharacterSheetFormatter {
 		}, 0) || 0;
 	};
 
+	static getLargestSize = (abilities: AbilitySheet[], lineLength: number): number => {
+		const largestSize = abilities.reduce((h, a) => {
+			return Math.max(h, this.calculateAbilitySize(a, lineLength));
+		}, 0);
+		return largestSize;
+	};
+
 	static abilityTypeOrder: string[] = [
 		'Main Action',
 		'Free Triggered Action',
 		'Triggered Action',
 		'Free Maneuver',
 		'Maneuver',
-		'Performance',
 		'Free Strike',
 		'Move Action'
 	];
@@ -281,13 +287,21 @@ export class CharacterSheetFormatter {
 		const bSort = bType.length && this.abilityTypeOrder.includes(bType);
 
 		if (aSort && bSort) {
-			return this.abilityTypeOrder.indexOf(aType) - this.abilityTypeOrder.indexOf(bType);
+			const s = this.abilityTypeOrder.indexOf(aType) - this.abilityTypeOrder.indexOf(bType);
+			if (s === 0) {
+				return this.sortAbilitiesByLength(a, b);
+			}
+			return s;
 		} else if (aSort) {
 			return -1;
 		} else if (bSort) {
 			return 1;
 		} else {
-			return aType.localeCompare(bType);
+			const alpha = aType.localeCompare(bType);
+			if (alpha === 0) {
+				return this.sortAbilitiesByLength(a, b);
+			}
+			return alpha;
 		}
 	};
 

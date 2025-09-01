@@ -37,7 +37,9 @@ export class CharacterSheetBuilder {
 			otherAbilities: [],
 			standardAbilities: [],
 
-			featuresReferenceOther: []
+			featuresReferenceOther: [],
+
+			notes: hero.state.notes
 		};
 
 		let coveredFeatureIds: string[] = [];
@@ -427,10 +429,8 @@ export class CharacterSheetBuilder {
 		} else if (ability.type.usage === AbilityUsage.FreeStrike) {
 			sheet.abilityType = 'Free Strike';
 			if (ability.name.toLowerCase().includes('melee')) {
-				sheet.abilityType = 'Free Strike';
 				sheet.name = 'Melee Free Strike';
 			} else if (ability.name.toLowerCase().includes('ranged')) {
-				sheet.abilityType = 'Free Strike';
 				sheet.name = 'Ranged Free Strike';
 			}
 		} else if (ability.type.usage === AbilityUsage.Maneuver) {

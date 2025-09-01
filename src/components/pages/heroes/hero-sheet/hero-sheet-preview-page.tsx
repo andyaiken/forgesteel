@@ -51,7 +51,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 
 	const setColorAbilityCards = (value: boolean) => {
 		const copy = Utils.copy(props.options);
-		copy.colorAbilityCards = value;
+		copy.colorSheet = value;
 		props.setOptions(copy);
 	};
 
@@ -205,7 +205,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					style={{ padding: '10px' }}
 				>
 					<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
-					<Toggle label='Color ability cards' value={props.options.colorAbilityCards} onChange={setColorAbilityCards} />
+					<Toggle label='Color ability cards' value={props.options.colorSheet} onChange={setColorAbilityCards} />
 					<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 					<Divider>Page Size</Divider>
 					<Segmented

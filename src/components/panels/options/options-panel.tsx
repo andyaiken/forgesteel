@@ -61,9 +61,15 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const setColorAbilityCards = (value: boolean) => {
+	const setColorSheet = (value: boolean) => {
 		const copy = Utils.copy(props.options);
-		copy.colorAbilityCards = value;
+		copy.colorSheet = value;
+		props.setOptions(copy);
+	};
+
+	const setAbilitySort = (value: 'size' | 'type') => {
+		const copy = Utils.copy(props.options);
+		copy.abilitySort = value;
 		props.setOptions(copy);
 	};
 
@@ -248,8 +254,20 @@ export const OptionsPanel = (props: Props) => {
 				return (
 					<>
 						<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
-						<Toggle label='Color ability cards' value={props.options.colorAbilityCards} onChange={setColorAbilityCards} />
+						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+						<Divider>Abilities</Divider>
 						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+						<Divider size='small'>Sort Abilities By</Divider>
+						<Segmented
+							name='abilitySort'
+							block={true}
+							options={[
+								{ value: 'size', label: 'Length' },
+								{ value: 'type', label: 'Action Type' }
+							]}
+							value={props.options.abilitySort}
+							onChange={setAbilitySort}
+						/>
 						<Divider>Layout</Divider>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Segmented

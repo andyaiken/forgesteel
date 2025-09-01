@@ -1,5 +1,5 @@
 import { AbilitySheet, CharacterSheet } from '../../../../models/character-sheet';
-import { EdgesBanesReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
+import { ClimbSwimReferenceCard, EdgesBanesReferenceCard, JumpReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
 import { Fragment, JSX, useMemo } from 'react';
 
 import { AbilityCard } from '../../../panels/hero-sheet/ability-card/ability-card';
@@ -18,6 +18,7 @@ import { HeroHeaderCard } from '../../../panels/hero-sheet/hero-header-card/hero
 import { ImmunitiesWeaknessesCard } from '../../../panels/hero-sheet/immunities-weaknesses-card/immunities-weaknesses-card';
 import { InventoryCard } from '../../../panels/hero-sheet/inventory-card/inventory-card';
 import { ModifiersCard } from '../../../panels/hero-sheet/modifiers-card/modifiers-card';
+import { NotesCard } from '../../../panels/hero-sheet/notes-card/notes-card';
 import { Options } from '../../../../models/options';
 import { PerksCard } from '../../../panels/hero-sheet/perks-card/perks-card';
 import { PotenciesCard } from '../../../panels/hero-sheet/potencies-card/potencies-card';
@@ -41,6 +42,7 @@ interface FillerCard {
 	element: JSX.Element;
 	width: number;
 	height: number;
+	shown: boolean;
 };
 
 interface ExtraCards {
@@ -88,36 +90,62 @@ export const HeroSheetPage = (props: Props) => {
 	const populateExtraCards = (character: CharacterSheet): ExtraCards => {
 		const invH = 4 + CharacterSheetFormatter.calculateInventorySize(character.inventory, layout.lineLen);
 		// console.log('Inventory length:', invH);
-		const required = [ {
-			element: <InventoryCard character={character} key='inventory' />,
-			width: 1,
-			height: Math.max(invH, 20)
-		} ];
+		const required = [
+			{
+				element: <InventoryCard character={character} key='inventory' />,
+				width: 1,
+				height: Math.max(invH, 20),
+				shown: false
+			},
+			{
+				element: <NotesCard character={character} key='notes' />,
+				width: 1,
+				height: CharacterSheetFormatter.countLines(character.notes, layout.lineLen),
+				shown: false
+			}
+		];
 		const optional = [
 			{
 				element: <TurnOptionsReferenceCard key='turn-options-reference' />,
 				width: 1,
-				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 28 : 28
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 29 : 29,
+				shown: false
 			},
 			{
 				element: <EdgesBanesReferenceCard key='edges-banes-reference' />,
 				width: 1,
-				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 22 : 22
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 22 : 22,
+				shown: false
 			},
 			{
 				element: <MainActionsReferenceCard key='main-actions-reference' />,
 				width: 1,
-				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 19 : 19
-			},
-			{
-				element: <MoveActionsReferenceCard key='move-actions-reference' />,
-				width: 1,
-				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 14 : 14
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 23 : 23,
+				shown: false
 			},
 			{
 				element: <ManeuversReferenceCard key='maneuvers-reference' />,
 				width: 1,
-				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 28 : 28
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 38 : 38,
+				shown: false
+			},
+			{
+				element: <MoveActionsReferenceCard key='move-actions-reference' />,
+				width: 1,
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 14 : 14,
+				shown: false
+			},
+			{
+				element: <ClimbSwimReferenceCard key='climb-swim' />,
+				width: 1,
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 23 : 23,
+				shown: false
+			},
+			{
+				element: <JumpReferenceCard key='jump' />,
+				width: 1,
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 26 : 26,
+				shown: false
 			}
 		];
 
@@ -127,7 +155,8 @@ export const HeroSheetPage = (props: Props) => {
 			required.unshift({
 				element: <FeatureReferenceCard character={character} key='feature-reference' />,
 				width: 2,
-				height: len
+				height: len,
+				shown: false
 			});
 		}
 
@@ -138,7 +167,7 @@ export const HeroSheetPage = (props: Props) => {
 	};
 
 	const getFillerCards = (spacesToFill: number, availableH: number, rowH: number, extraCards: ExtraCards): JSX.Element[] => {
-		const refCards = [];
+		let refCards = [];
 		// console.log(`Filling ${spacesToFill} spaces, with ${rowH} + ${availableH} available Y lines`);
 		let availableRowH = rowH;
 		let spaceInRow = (spacesToFill % layout.perRow) || layout.perRow;
@@ -148,7 +177,7 @@ export const HeroSheetPage = (props: Props) => {
 			availableH += rowH;
 		}
 
-		nextCard: while (spacesToFill > 0 && (extraCards.required.length > 0 || extraCards.optional.length > 0)) {
+		nextCard: while (spacesToFill > 0 && (extraCards.required.find(c => !c.shown) || extraCards.optional.find(c => !c.shown))) {
 			spaceInRow = (spacesToFill % layout.perRow) || layout.perRow;
 			if (spaceInRow === layout.perRow) {
 				// new row
@@ -158,24 +187,41 @@ export const HeroSheetPage = (props: Props) => {
 			}
 			// console.log('Available space in current row: ', spaceInRow, ' H:', availableRowH);
 			for (const card of extraCards.required) {
-				if (card.width <= spaceInRow && card.height <= availableRowH) {
+				if (!card.shown && card.width <= spaceInRow && card.height <= availableRowH) {
 					refCards.push(card.element);
 					spacesToFill -= card.width;
-					extraCards.required = extraCards.required.filter(c => c !== card);
+					// extraCards.required = extraCards.required.filter(c => c !== card);
+					card.shown = true;
 					rowH = Math.max(rowH, card.height);
 					continue nextCard;
 				}
 			}
 			for (const card of extraCards.optional) {
-				if (card.width <= spaceInRow && card.height <= availableRowH) {
+				if (!card.shown && card.width <= spaceInRow && card.height <= availableRowH) {
 					refCards.push(card.element);
 					spacesToFill -= card.width;
-					extraCards.optional = extraCards.optional.filter(c => c !== card);
+					// extraCards.optional = extraCards.optional.filter(c => c !== card);
+					card.shown = true;
 					rowH = Math.max(rowH, card.height);
 					continue nextCard;
 				}
 			}
-			// no cards found to fill the spot, break out
+			// no cards found to fill the spot, clean up and break out
+			if (spaceInRow !== layout.perRow) {
+				// Incomplete row, remove partial row
+				const newEnd = refCards.length - (layout.perRow - spaceInRow);
+				refCards.slice(newEnd).forEach(card => {
+					const req = extraCards.required.find(c => c.element === card);
+					if (req) {
+						req.shown = false;
+					} else {
+						const opt = extraCards.optional.find(c => c.element === card);
+						if (opt)
+							opt.shown = false;
+					}
+				});
+				refCards = refCards.slice(0, newEnd);
+			}
 			return refCards;
 		}
 		return refCards;
@@ -183,14 +229,23 @@ export const HeroSheetPage = (props: Props) => {
 
 	const addAbilityPages = (character: CharacterSheet, extraCards: ExtraCards) => {
 		// future: Allow options to filter abilities displayed?
-		const allAbilities = character.freeStrikes.concat(character.signatureAbilities,
+		let allAbilities = character.freeStrikes.concat(character.signatureAbilities,
 			character.heroicAbilities,
 			character.triggeredActions,
 			character.otherRollAbilities,
 			character.otherAbilities);
 
+		// future: Allow filtering *these* separately?
+		if (props.options.showStandardAbilities) {
+			allAbilities = allAbilities.concat(character.standardAbilities);
+		}
+
 		// future: Allow sorting by other things?
-		allAbilities.sort(CharacterSheetFormatter.sortAbilitiesByLength);
+		if (props.options.abilitySort === 'type') {
+			allAbilities.sort(CharacterSheetFormatter.sortAbilitiesByType);
+		} else {
+			allAbilities.sort(CharacterSheetFormatter.sortAbilitiesByLength);
+		}
 
 		const abilitiesSplit: AbilitySheet[][] = [];
 		const layout = getAbilityLayout(props.options);
@@ -231,19 +286,6 @@ export const HeroSheetPage = (props: Props) => {
 
 		// console.log('Abilities split: ', abilitiesSplit);
 
-		// future: include mixed in? Allow filtering *these* separately?
-		if (props.options.showStandardAbilities) {
-			const standard = character.standardAbilities.sort(CharacterSheetFormatter.sortAbilitiesByLength);
-			let n = 0;
-			while (n < standard.length) {
-				const start = n;
-				const end = Math.min(n + layout.perPage, standard.length);
-				const pageAbilities = standard.slice(start, end);
-				abilitiesSplit.push(pageAbilities);
-				n = end;
-			}
-		}
-
 		const abilityCardPages = abilitiesSplit.map(pageAbilities => {
 			let refCards: JSX.Element[] = [];
 			if (pageAbilities.length < layout.perPage) {
@@ -262,7 +304,7 @@ export const HeroSheetPage = (props: Props) => {
 				refCards = getFillerCards(spacesToFill, spaceY, rowY, extraCards);
 			}
 			const abilityPageClasses = [ 'abilities', 'page' ];
-			if (props.options.colorAbilityCards) {
+			if (props.options.colorSheet) {
 				abilityPageClasses.push('color');
 			}
 			return (
@@ -348,7 +390,7 @@ export const HeroSheetPage = (props: Props) => {
 							/>
 						</div>
 						{addAbilityPages(character, extraCards)}
-						{extraCards.required.length > 0
+						{extraCards.required.find(c => !c.shown)
 							? (
 								<>
 									<hr className='dashed' />

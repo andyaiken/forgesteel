@@ -1,3 +1,6 @@
+import { Markdown } from '../../../controls/markdown/markdown';
+import { RulesData } from '../../../../data/rules-data';
+
 import './reference-cards.scss';
 
 export const TurnOptionsReferenceCard = () => {
@@ -31,8 +34,11 @@ export const TurnOptionsReferenceCard = () => {
 					<ul>
 						<li>Aid Attack</li>
 						<li>Catch Breath</li>
+						<li>Claw Dirt</li>
 						<li>Escape Grab</li>
 						<li>Grab</li>
+						<li>Hide</li>
+						<li>Knockback</li>
 						<li>Make or Assist Test</li>
 						<li>Search for Hidden Creature</li>
 						<li>Stand Up</li>
@@ -68,6 +74,10 @@ export const MainActionsReferenceCard = () => {
 				<li>
 					<strong>Heal:</strong> Choose an adjacent creature who can spend a Recovery or
 					make a saving throw.
+				</li>
+				<li>
+					<strong>Trade:</strong> You can convert your main action into a maneuver or move
+					action, allowing you to take two maneuvers or move actions on your turn.
 				</li>
 			</ul>
 		</div>
@@ -111,6 +121,9 @@ export const ManeuversReferenceCard = () => {
 					<strong>Catch Breath:</strong> Spend a Recovery.
 				</li>
 				<li>
+					<strong>Claw Dirt:</strong> You use the Claw Dirt ability.
+				</li>
+				<li>
 					<strong>Escape Grab:</strong> You use the Escape Grab ability while grabbed.
 				</li>
 				<li>
@@ -124,9 +137,20 @@ export const ManeuversReferenceCard = () => {
 					<strong>Knockback:</strong> You use the Knockback ability.
 				</li>
 				<li>
+					<strong>Make or Assist a Test:</strong> Making or assisting a test is a maneuver in combat.
+				</li>
+				<li>
+					<strong>Search for Hidden Creatures:</strong> Attempt to locate creatures hidden from you.
+				</li>
+				<li>
 					<strong>Stand Up:</strong> You stand up from prone, ending that condition.
 					Alternatively, you can use this maneuver to make an adjacent prone
 					creature stand up.
+				</li>
+				<li>
+					<strong>Use Consumable:</strong> Unless otherwise noted in its description, you can use this
+					maneuver to activate a consumable treasure. A creature can use this maneuver to administer a
+					consumable treasure that benefits the user either to thelself or a willing adjacent creature.
 				</li>
 			</ul>
 		</div>
@@ -156,6 +180,40 @@ export const EdgesBanesReferenceCard = () => {
 				<li>If you have a double edge and a bane, the roll has one edge.</li>
 				<li>If you have a double bane and an edge, the roll has one bane.</li>
 			</ul>
+		</div>
+	);
+};
+
+export const ClimbSwimReferenceCard = () => {
+	return (
+		<div className='extra-reference card'>
+			<h2>Climbing and Swimming</h2>
+			<p>
+				A creature who has “climb” in their speed entry, or who gains the temporary
+				ability to automatically climb, can climb across vertical and horizontal surfaces
+				at full speed. Likewise, a creature who has “swim” in their speed entry, or who
+				gains the temporary ability to automatically swim, can swim in liquid at full speed.
+			</p>
+			<p>
+				Creatures without those types of movement can still climb or swim when a rule
+				allows them to move, but each square of climbing or swimming costs 2 squares
+				of movement. If a surface is difficult to climb (for instance, a sheer cliff or
+				ice-covered wall) or a liquid is hard to swim through (a raging river or whirlpool),
+				the Director can call for a Might test. On a failure, a creature can’t climb or swim
+				but wastes no movement in the attempt. The Director can also impose other consequences
+				to failure, such as being caught in the spinning current of a whirlpool.
+			</p>
+		</div>
+	);
+};
+
+export const JumpReferenceCard = () => {
+	return (
+		<div className='extra-reference card'>
+			<h2>Jump</h2>
+			<Markdown
+				text={RulesData.jumping.content}
+			/>
 		</div>
 	);
 };

@@ -441,6 +441,10 @@ export class CharacterSheetBuilder {
 			sheet.abilityType = 'Performance';
 		}
 
+		if (sheet.actionType && ability.type.free) {
+			sheet.actionType = `Free ${sheet.actionType}`;
+		}
+
 		sheet.qualifiers = ability.type.qualifiers;
 
 		if (ability.distance.length) {

@@ -124,15 +124,15 @@ export const HeroSheetPage = (props: Props) => {
 				shown: false
 			},
 			{
-				element: <MoveActionsReferenceCard key='move-actions-reference' />,
-				width: 1,
-				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 14 : 14,
-				shown: false
-			},
-			{
 				element: <ManeuversReferenceCard key='maneuvers-reference' />,
 				width: 1,
 				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 38 : 38,
+				shown: false
+			},
+			{
+				element: <MoveActionsReferenceCard key='move-actions-reference' />,
+				width: 1,
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 14 : 14,
 				shown: false
 			},
 			{
@@ -229,14 +229,23 @@ export const HeroSheetPage = (props: Props) => {
 
 	const addAbilityPages = (character: CharacterSheet, extraCards: ExtraCards) => {
 		// future: Allow options to filter abilities displayed?
-		const allAbilities = character.freeStrikes.concat(character.signatureAbilities,
+		let allAbilities = character.freeStrikes.concat(character.signatureAbilities,
 			character.heroicAbilities,
 			character.triggeredActions,
 			character.otherRollAbilities,
 			character.otherAbilities);
 
+		// future: Allow filtering *these* separately?
+		if (props.options.showStandardAbilities) {
+			allAbilities = allAbilities.concat(character.standardAbilities);
+		}
+
 		// future: Allow sorting by other things?
-		allAbilities.sort(CharacterSheetFormatter.sortAbilitiesByLength);
+		if (props.options.abilitySort === 'type') {
+			allAbilities.sort(CharacterSheetFormatter.sortAbilitiesByType);
+		} else {
+			allAbilities.sort(CharacterSheetFormatter.sortAbilitiesByLength);
+		}
 
 		const abilitiesSplit: AbilitySheet[][] = [];
 		const layout = getAbilityLayout(props.options);
@@ -277,19 +286,6 @@ export const HeroSheetPage = (props: Props) => {
 
 		// console.log('Abilities split: ', abilitiesSplit);
 
-		// future: include mixed in? Allow filtering *these* separately?
-		if (props.options.showStandardAbilities) {
-			const standard = character.standardAbilities.sort(CharacterSheetFormatter.sortAbilitiesByLength);
-			let n = 0;
-			while (n < standard.length) {
-				const start = n;
-				const end = Math.min(n + layout.perPage, standard.length);
-				const pageAbilities = standard.slice(start, end);
-				abilitiesSplit.push(pageAbilities);
-				n = end;
-			}
-		}
-
 		const abilityCardPages = abilitiesSplit.map(pageAbilities => {
 			let refCards: JSX.Element[] = [];
 			if (pageAbilities.length < layout.perPage) {
@@ -308,7 +304,7 @@ export const HeroSheetPage = (props: Props) => {
 				refCards = getFillerCards(spacesToFill, spaceY, rowY, extraCards);
 			}
 			const abilityPageClasses = [ 'abilities', 'page' ];
-			if (props.options.colorAbilityCards) {
+			if (props.options.colorSheet) {
 				abilityPageClasses.push('color');
 			}
 			return (

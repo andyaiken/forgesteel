@@ -263,6 +263,34 @@ export class CharacterSheetFormatter {
 		}, 0) || 0;
 	};
 
+	static abilityTypeOrder: string[] = [
+		'Main Action',
+		'Free Triggered Action',
+		'Triggered Action',
+		'Free Maneuver',
+		'Maneuver',
+		'Performance',
+		'Free Strike',
+		'Move Action'
+	];
+
+	static sortAbilitiesByType = (a: AbilitySheet, b: AbilitySheet): number => {
+		const aType = a.actionType || '';
+		const bType = b.actionType || '';
+		const aSort = aType.length && this.abilityTypeOrder.includes(aType);
+		const bSort = bType.length && this.abilityTypeOrder.includes(bType);
+
+		if (aSort && bSort) {
+			return this.abilityTypeOrder.indexOf(aType) - this.abilityTypeOrder.indexOf(bType);
+		} else if (aSort) {
+			return -1;
+		} else if (bSort) {
+			return 1;
+		} else {
+			return aType.localeCompare(bType);
+		}
+	};
+
 	static characteristicOrder: string[] = [
 		'M', 'A', 'R', 'I', 'P'
 	];

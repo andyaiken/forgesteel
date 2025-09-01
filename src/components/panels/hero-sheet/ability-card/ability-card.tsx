@@ -115,8 +115,8 @@ export const AbilityCard = (props: Props) => {
 						</div>
 					</div>
 				</div>
-				{ability.qualifiers?.map(q => {
-					return (<div className='action-qualifier'>{q}</div>);
+				{ability.qualifiers?.map((q, i) => {
+					return (<div className='action-qualifier' key={`qualifier-${i}`}>{q}</div>);
 				})}
 				{getPowerRollSection()}
 				{getTriggerSection()}

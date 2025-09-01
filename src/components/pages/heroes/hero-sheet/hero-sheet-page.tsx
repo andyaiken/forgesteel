@@ -67,7 +67,7 @@ export const HeroSheetPage = (props: Props) => {
 	const getAbilityLayout = (options: Options) => {
 		const abilitiesPerPage = options.pageOrientation === 'portrait' ? 9 : 12;
 		const abilitiesPerRow = options.pageOrientation === 'portrait' ? 3 : 4;
-		let linesY = options.pageOrientation === 'portrait' ? 88 : 67;
+		let linesY = options.pageOrientation === 'portrait' ? 91 : 70;
 		let lineLen = options.pageOrientation === 'portrait' ? 50 : 47;
 		if (options.classicSheetPageSize === SheetPageSize.A4) {
 			linesY = options.pageOrientation === 'portrait' ? 94 : 67;

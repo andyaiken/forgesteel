@@ -190,7 +190,7 @@ export const warDog4th: MonsterGroup = {
 					id: 'wardog-4th-1-feature-3',
 					name: 'Loyalty Collar',
 					description: 'When the jumper is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -232,7 +232,7 @@ export const warDog4th: MonsterGroup = {
 					id: 'wardog-4th-2-feature-2',
 					name: 'Loyalty Collar',
 					description: 'When the hunter-killer is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -274,7 +274,7 @@ export const warDog4th: MonsterGroup = {
 					id: 'wardog-4th-3-feature-2',
 					name: 'Loyalty Collar',
 					description: 'When the socialite is reduced to 0 Stamina, their loyalty collar explodes, dealing 3d6 damage to each adjacent enemy and object.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -475,7 +475,7 @@ export const warDog4th: MonsterGroup = {
 					id: 'wardog-4th-5-feature-7',
 					name: 'Champion’s Loyalty Collar',
 					description: 'When Doru is reduced to 0 Stamina, his loyalty collar explodes, dealing 20 damage to each enemy and object within 3 squares of him.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -534,7 +534,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '12 fire damage',
 								tier3: '15 fire damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain. Any creature who enters the area for the first time in a round or starts their turn there takes 10 fire damage. Until the end of the encounter, the size of the area increases by 1 at the start of each round.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain. Any creature who enters the area for the first time in a round or starts their turn there takes 10 fire damage. Until the end of the encounter, the size of the area increases by 1 at the start of each round.')
 						]
 					})
 				}),
@@ -583,7 +583,7 @@ export const warDog4th: MonsterGroup = {
 					id: 'wardog-4th-6-feature-6',
 					name: 'Crash and Burn',
 					description: 'When Vesper is reduced to 0 Stamina, they move up to their speed and then explode, dealing 4d6 damage to each adjacent enemy and object. Any enemy who takes more than 14 damage this way vertically slides 5 squares.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -616,7 +616,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '20 holy damage; R < 4 the target is soulbound (save ends)',
 								tier3: '24 holy damage; R < 5 the target is soulbound (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A soulbound creature can’t benefit from edges or double edges, and can’t gain or use surges.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** A soulbound creature can’t benefit from edges or double edges, and can’t gain or use surges.')
 						]
 					})
 				}),
@@ -703,10 +703,10 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target takes 10 psychic damage.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** The target takes 10 psychic damage.')
 						]
 					})
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -730,7 +730,7 @@ export const warDog4th: MonsterGroup = {
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ 
+						distance: [
 							FactoryLogic.distance.createMelee(1),
 							FactoryLogic.distance.createRanged(10)
 						],
@@ -760,7 +760,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of Alkestis’s next turn, any effect that reduces the damage taken by the target has no effect.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of Alkestis’s next turn, any effect that reduces the damage taken by the target has no effect.')
 						]
 					})
 				}),
@@ -768,7 +768,7 @@ export const warDog4th: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'wardog-4th-8-feature-3',
 						name: 'Artillery Enfilade',
-						type: FactoryLogic.type.createTrigger("An ally is reduced to 0 Stamina within 10 squares of Alkestis."),
+						type: FactoryLogic.type.createTrigger('An ally is reduced to 0 Stamina within 10 squares of Alkestis.'),
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 7, value2: 3, within: 10 }) ],
@@ -780,7 +780,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '13 damage; A < 5 slowed (save ends)',
 								tier3: '16 damage; A < 6 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain until the start of the next round.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain until the start of the next round.')
 						]
 					})
 				}),
@@ -800,10 +800,10 @@ export const warDog4th: MonsterGroup = {
 						name: 'Fog of War',
 						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [],
-						distance: [ FactoryLogic.distance.createSpecial("") ],
+						distance: [ FactoryLogic.distance.createSpecial('') ],
 						target: 'Each ally in the encounter',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target can disappear, then reappear anywhere on the encounter map 3 or more squares away from any enemy. Additionally, each target has a double edge on their next power roll.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** Each target can disappear, then reappear anywhere on the encounter map 3 or more squares away from any enemy. Additionally, each target has a double edge on their next power roll.')
 						]
 					})
 				}),
@@ -816,7 +816,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** For each war dog reduced to 0 Stamina in the encounter, a war dog shriketrooper appears in an unoccupied space within distance.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** For each war dog reduced to 0 Stamina in the encounter, a war dog shriketrooper appears in an unoccupied space within distance.')
 						]
 					})
 				}),
@@ -829,10 +829,10 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each creature in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of the next round, each target enemy who has <code>I < 4</code> is dazed, each target enemy who has <code>M < 4</code> is restrained, and each target enemy who has <code>A < 4</code> can’t use triggered actions. Additionally, until the end of the encounter, Alkestis and each target ally have damage immunity 3 and deal an extra 5 damage with strikes.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of the next round, each target enemy who has <code>I < 4</code> is dazed, each target enemy who has <code>M < 4</code> is restrained, and each target enemy who has <code>A < 4</code> can’t use triggered actions. Additionally, until the end of the encounter, Alkestis and each target ally have damage immunity 3 and deal an extra 5 damage with strikes.')
 						]
 					})
-				}),
+				})
 			]
 		})
 	],

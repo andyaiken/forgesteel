@@ -1,13 +1,13 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { DamageType } from '../../enums/damage-type';
+import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
-import { DamageType } from '../../enums/damage-type';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
 
 export const warDog3rd: MonsterGroup = {
 	id: 'monster-group-wardog-3rd',

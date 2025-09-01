@@ -1,5 +1,6 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
+import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -7,14 +8,14 @@ import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const hag: MonsterGroup = {
 	id: 'monster-group-hag',
-	name: 'Hag of the Green and Rot',
-	description: 'When fear of death or hunger for power grips a mortal spellcaster, often a druid or a witch, they might forge a pact with an evil archfey. The mortal becomes a hag—aged, clawed, and cruel—another ruthlessly powerful fey in their own right. In exchange, hags use their magic to bring about the misery that their archfey wills.',
+	name: 'Hag',
+	description: 'When fear of death or hunger for power grips a mortal spellcaster, often a druid or a witch, they might forge a pact with an evil archfey. The mortal becomes a hag—aged, clawed, and cruel. A ruthlessly powerful fey in their own right, a hag uses their magic to bring about the misery their archfey wills.',
 	picture: null,
 	information: [
 		{
 			id: 'hag-info-1',
 			name: 'Hiding in Plain Sight',
-			description: 'Though hags typically appear as older humanoid women, their true form is as vicious and nasty as their nature. They prefer to show the world a charitable face, but the general wisdom concerning hags is that the more beautiful their appearance, the deeper the rot within. However, this theory has never been confirmed, as few who see a hag’s true form live to tell the tale.'
+			description: 'Though hags typically appear as older humanoids, their true form is as vicious and nasty as their nature. They prefer to show the world a charitable face, but the general wisdom concerning hags is that the more beautiful their appearance, the deeper the rot within. This theory has never been confirmed, however, as few who see a hag’s true form live to tell the tale.'
 		},
 		{
 			id: 'hag-info-2',
@@ -22,31 +23,31 @@ export const hag: MonsterGroup = {
 			description: `
 As old age can’t kill them, the oldest hags accumulate swathes of knowledge, magic, and repute over time. They are happy to share their wares … for the right price. Rather than ask for paltry coin, a hag usually bargains for something dear to the customer—perhaps their ability to love, the sound of their child’s laugh, or their left pinky toe.
 
-Adding insult to injury, those who deal with hags almost always discover the product is worse than advertised. Mortals should pay close attention to the precise wording of their agreements, lest they end up with a hex they thought would be a gift. Such curses often lead to the corruption of good but desperate folk, and some get so twisted up in fey deals that they become hags themselves.`
+Adding insult to injury, those who deal with hags almost always discover the product is worse than advertised. Mortals should pay close attention to the precise wording of their agreements, lest they end up with a hex they thought would be a gift. Such curses often lead to the corruption of good but desperate folk, with some getting so twisted up in fey deals that they become hags themselves.`
 		},
 		{
 			id: 'hag-info-3',
 			name: 'What\'s in a Name?',
-			description: 'Hags give themselves whimsical names, and older hags often select monikers like Auntie, Granny, or Nanny. Such relatable names help entice their favorite prey: the innocent. Who would fear Granny Gumdrops or Auntie Twothumbs?'
+			description: 'Hags give themselves whimsical names, and older hags often select monikers such as Auntie, Uncle, or Nanny. Such relatable names help entice their favorite prey: the innocent. Who would fear Granny Gumdrops or Uncle Twothumbs?'
 		},
 		{
 			id: 'hag-info-4',
 			name: 'Loyal Underlings',
-			description: 'Hags are treacherous by nature, and they only recruit creatures they trust to be loyal underlings. Most of these creatures lack sapience (such as animals, constructs, and undead), though hags sometimes command weaker fey who are too scared to betray them.'
+			description: 'Hags are treacherous by nature, and they only recruit creatures they can trust to be loyal underlings. Most of these creatures lack sapience (such as animals, constructs, and undead), though hags sometimes command weaker fey who are too scared to betray them.'
 		},
 		{
 			id: 'hag-info-5',
 			name: 'Hag Languages',
-			description: 'Most hags speak Caelian, Anjali, Khelt, and Yllyric, but often go on to learn several more.'
+			description: 'Most hags speak Anjali, Caelian, Khelt, and Yllyric, with older hags often knowing several more languages.'
 		}
 	],
 	malice: [
 		FactoryLogic.feature.createMalice({
 			id: 'hag-malice-1',
-			name: 'Cage of Thorns',
+			name: 'Casting Curses and Bodies',
 			cost: 3,
 			sections: [
-				'The hag utters terrible words that push each enemy within 2 squares of her up to 3 squares.'
+				'The hag utters terrible words that push each enemy within 2 squares of them up to 3 squares.'
 			]
 		}),
 		FactoryLogic.feature.createAbility({
@@ -57,7 +58,7 @@ Adding insult to injury, those who deal with hags almost always discover the pro
 				cost: 5,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
-				target: 'All enemies in the line',
+				target: 'Each enemy in the area',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						bonus: 3,
@@ -65,23 +66,31 @@ Adding insult to injury, those who deal with hags almost always discover the pro
 						tier2: '8 fire damage; R<2 frightened (save ends)',
 						tier3: '11 fire damage; R<3 frightened (save ends)'
 					})),
-					FactoryLogic.createAbilitySectionText('After rolling power, the hag can choose to replace the damage type and effect of the attack with lightning and dazed or cold and slowed.')
+					FactoryLogic.createAbilitySectionText('After making the power roll, the hag can choose to replace the damage type and condition with lightning damage and dazed, or cold damage and slowed.')
 				]
 			})
 		}),
+		FactoryLogic.feature.createMalice({
+			id: 'hag-malice-3',
+			name: 'Solo Action',
+			cost: 5,
+			sections: [
+				'The hag takes an additional main action on their turn. They can use this feature even if they are dazed.'
+			]
+		}),
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
-				id: 'hag-malice-3',
+				id: 'hag-malice-4',
 				name: 'House Call',
 				description: `
-The hag’s hut springs to life. It enters the encounter map within 10 of the hag if it isn’t already there and takes its turn. The hut is Size-4, has 75 Stamina and damage immunity 3, a speed of 8, and a set of powerful animal legs. This feature can’t be used if the hut is reduced to 0 Stamina. The house can only take the following action.
+The hag’s hut springs to life. It enters the encounter map within 10 squares of the hag if it isn’t already there and takes its turn. The hut is size 4, has 75 Stamina and damage immunity 3, and has speed 8 from its powerful set of animal legs. This feature can’t be used if the hut is reduced to 0 Stamina. In addition to its move action, the house can take only the following main action.
 
 **KICK**`,
 				type: FactoryLogic.type.createMain(),
-				cost: 7,
-				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+				cost: 10,
+				keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 2 }) ],
-				target: 'All enemies in the line',
+				target: 'Each enemy in the area',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						bonus: 3,
@@ -96,11 +105,11 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 	monsters: [
 		FactoryLogic.createMonster({
 			id: 'hag-1',
-			name: 'Hag of the Green and Rot',
+			name: 'Wode Hag',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Fey', 'Hag' ],
-			encounterValue: 50,
+			encounterValue: 60,
 			size: FactoryLogic.createSize(1, 'L'),
 			speed: FactoryLogic.createSpeed(5, 'fly, hover'),
 			stamina: 300,
@@ -115,7 +124,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 				FactoryLogic.feature.create({
 					id: 'hag-feature-2',
 					name: 'Supernatural Resistance',
-					description: 'Magic and Psionic abilities used against the hag have a bane.'
+					description: 'Magic and Psionic abilities used against the hag take a bane.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -143,7 +152,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 1 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -151,7 +160,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 								tier2: '8 corruption damage; P<2 5 corruption damage',
 								tier3: '10 corruption damage; P<3 6 corruption damage'
 							})),
-							FactoryLogic.createAbilitySectionText('This ability has an edge against creatures with a soul.'),
+							FactoryLogic.createAbilitySectionText('This ability gains an edge against a target who has a soul.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -169,11 +178,11 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The hag alters their body to become any Size-1 creature, such as a house cat. If the hag uses this ability while outside of an enemy’s line of eﬀect, the hag is considered hidden. The hag can return to their original form as a free maneuver.'),
+							FactoryLogic.createAbilitySectionText('The hag alters their body to become any size 1 creature, from a house cat to a humanoid. If the hag uses this ability while outside of any enemy’s line of effect, they can choose to be automatically hidden. The hag can return to their original form as a free maneuver.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
-								effect: 'The hag becomes a Size-2 creature instead, such as a bear. While in this form, the distance of their melee abilities increases by 1 and deal an additional 4 damage.'
+								effect: 'The hag becomes a size 2 creature instead, from a bear to an ogre. While in this form, the hag’s melee abilities gain a +1 bonus to distance and deal an extra 4 damage.'
 							})
 						]
 					})
@@ -182,19 +191,19 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 					ability: FactoryLogic.createAbility({
 						id: 'hag-feature-6',
 						name: 'Turned Upside Down',
-						type: FactoryLogic.type.createTrigger('A creature hits the hag with a melee strike.'),
+						type: FactoryLogic.type.createTrigger('A creature targets the hag with a melee strike.'),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-						target: 'All enemies in burst',
+						target: 'Each enemy in the area',
 						cost: 2,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: 'Slide 2; R<1 slide is vertical',
-								tier2: 'Slide 3; R<2 slide is vertical, restrained (EoT)',
+								tier1: 'Slide 2; R<1 the slide is vertical',
+								tier2: 'Slide 3; R<2 the slide is vertical, and the target is restrained (EoT)',
 								tier3: 'Vertical slide 5; R<3 restrained (EoT)'
 							})),
-							FactoryLogic.createAbilitySectionText('A creature restrained by this ability that is force moved vertically is suspended in midair until the condition ends.')
+							FactoryLogic.createAbilitySectionText('While restrained this way, a creature who is vertical force moved is suspended in midair. The creature falls when the condition ends.')
 						]
 					})
 				}),
@@ -202,32 +211,38 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 					ability: FactoryLogic.createAbility({
 						id: 'hag-feature-7',
 						name: 'Snackies for Sweeties',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'All creatures',
+						target: 'Each creature in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The hag A<2 attaches an ornate explosive pastry to each target. Roll power at the end of the round, targeting each creature with a pastry attached to them.'),
+							FactoryLogic.createAbilitySectionText('The hag attaches an ornate explosive pastry to each target who has A<2. At the end of the round, the hag makes one power roll against each creature with a pastry attached to them.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '6 poison damage',
 								tier2: '10 poison damage',
 								tier3: '13 poison damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Special** A creature wearing a pastry or adjacent to a creature wearing a pastry can attempt a hard Agility test to remove the pastry as a maneuver. On success, the pastry is destroyed without exploding. On failure, the hag rolls power for all pastries immediately.')
+							FactoryLogic.createAbilitySectionText('**Special** A creature wearing a pastry or adjacent to a creature wearing a pastry can attempt an **Agility test** to remove the pastry as a maneuver.'),
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: Characteristic.Agility,
+								tier1: 'The hag makes the power roll for all pastries.',
+								tier2: 'The pastry is not removed.',
+								tier3: 'The pastry is removed and can no longer explode.'
+							}))
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'hag-feature-8',
-						name: 'Animal Alacrity',
-						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Weapon ],
+						name: 'Predator’s Alacrity',
+						type: FactoryLogic.type.createVillainAction(2),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-						target: 'All enemies in burst',
+						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The hag shifts up to their speed before using this action, uses Corrosive Claws against each target of this ability, pushes each target 2 squares, then shifts up to their speed again.')
+							FactoryLogic.createAbilitySectionText('Before using this villain action, the hag shifts up to their speed. They then use Corrosive Claws against each target, push each target up to 2 squares, and shift up to their speed again.')
 						]
 					})
 				}),
@@ -235,10 +250,10 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 					ability: FactoryLogic.createAbility({
 						id: 'hag-feature-9',
 						name: 'Open the Oven',
-						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						type: FactoryLogic.type.createVillainAction(3),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 1 }) ],
-						target: 'All creatures in the cube',
+						target: 'Each creature in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -246,7 +261,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 of the ha
 								tier2: '10 fire damage; A<2 weakened (save ends)',
 								tier3: '13 fire damage; A<3 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('The hag turns the affected area into a roiling oven. The hag deals an additional 5 damage on abilities that target creatures in the affected area.')
+							FactoryLogic.createAbilitySectionText('The hag turns the area into a roiling oven until the end of the encounter. Any creature in area takes an extra 5 damage from the hag’s damage-dealing abilities.')
 						]
 					})
 				})

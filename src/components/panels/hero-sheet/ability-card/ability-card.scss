@@ -208,7 +208,7 @@
     }
 }
 
-.hero-sheet .color .ability.card {
+.hero-sheet.color .ability.card {
     @mixin color-ability-card($color) {
         section.bordered {
             @include common.beveled(10px, 2px, $color);

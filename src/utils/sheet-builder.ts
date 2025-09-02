@@ -191,9 +191,13 @@ export class CharacterSheetBuilder {
 
 		// #region Class Features
 		if (hero.class) {
+			const refAbilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
-				.filter(f => f.feature.type !== FeatureType.ClassAbility);
+				.map(f => {
+					f.feature = CharacterSheetFormatter.fixClassAbilityNames(f.feature, refAbilities);
+					return f;
+				});
 
 			const perkIds = classFeatures.map(f => f.feature)
 				.filter(f => (f.type === FeatureType.Perk) || f.id.startsWith('perk-'))

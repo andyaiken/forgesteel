@@ -1,4 +1,4 @@
-import { AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
+import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
 
 import { AbilitySheet, ItemSheet } from '../models/character-sheet';
 import { Characteristic } from '../enums/characteristic';
@@ -33,7 +33,6 @@ export class CharacterSheetFormatter {
 
 	static cleanupFeature = (feature: Feature): Feature => {
 		const result = Utils.copy(feature);
-
 		if (this.isVERYLongFeature(feature)) {
 			result.description = '*See Reference for details…*';
 		} else if (this.isLongFeature(feature)) {
@@ -54,6 +53,17 @@ export class CharacterSheetFormatter {
 			.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
 			.replace(/\n\* /g, '\n   • ');
 		return text;
+	};
+
+	static fixClassAbilityNames = (feature: Feature, abilities: Ability[]) => {
+		let result = feature;
+		if (result.type === FeatureType.ClassAbility) {
+			result = Utils.copy(result);
+			result.data.selectedIDs = result.data.selectedIDs.map(id => {
+				return abilities.find(a => a.id === id)?.name || id;
+			});
+		}
+		return result;
 	};
 
 	static enhanceFeatures = (features: Feature[]): Feature[] => {
@@ -186,12 +196,12 @@ export class CharacterSheetFormatter {
 		FeatureType.Package,
 		FeatureType.PackageContent,
 		FeatureType.Ability,
+		FeatureType.HeroicResource,
+		FeatureType.Domain,
+		FeatureType.Kit,
 		FeatureType.ClassAbility,
 		FeatureType.AbilityDistance,
 		FeatureType.DamageModifier,
-		FeatureType.Kit,
-		FeatureType.HeroicResource,
-		FeatureType.Domain,
 		FeatureType.ConditionImmunity
 	];
 
@@ -291,9 +301,14 @@ export class CharacterSheetFormatter {
 		const bSort = bType.length && this.abilityTypeOrder.includes(bType);
 
 		if (aSort && bSort) {
-			const s = this.abilityTypeOrder.indexOf(aType) - this.abilityTypeOrder.indexOf(bType);
+			let s = this.abilityTypeOrder.indexOf(aType) - this.abilityTypeOrder.indexOf(bType);
 			if (s === 0) {
-				return this.sortAbilitiesByLength(a, b);
+				s = a.cost - b.cost;
+				if (s === 0) {
+					return this.sortAbilitiesByLength(a, b);
+				} else {
+					return s;
+				}
 			}
 			return s;
 		} else if (aSort) {

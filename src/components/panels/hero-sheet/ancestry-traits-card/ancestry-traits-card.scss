@@ -1,7 +1,0 @@
-@use '../../../pages/heroes/hero-sheet/common.scss';
-
-.hero-sheet .ancestry-traits.card {
-    li em {
-        @include common.font-serif();
-    }
-}

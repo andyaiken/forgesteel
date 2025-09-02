@@ -417,6 +417,10 @@
             margin-bottom: 10px;
         }
 
+        li em {
+            @include common.font-serif();
+        }
+
         li > em {
             font-weight: 400;
             font-size: 1.1rem;

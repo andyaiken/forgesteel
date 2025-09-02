@@ -168,12 +168,17 @@ export const HeroSheetPage = (props: Props) => {
 		];
 
 		if (character.featuresReferenceOther?.length) {
-			const len = 4 + CharacterSheetFormatter.calculateFeaturesSize(character.featuresReferenceOther, 2 * layout.lineLen);
-			// console.log('Reference length: ', len);
+			let h = 4 + CharacterSheetFormatter.calculateFeaturesSize(character.featuresReferenceOther, 2 * layout.lineLen);
+			let w = 2;
+			// console.log('Reference length: ', h);
+			if (h > 60) {
+				w = 3;
+				h = 4 + Math.ceil(CharacterSheetFormatter.calculateFeaturesSize(character.featuresReferenceOther, 1.4 * layout.lineLen) * 0.53);
+			}
 			required.unshift({
-				element: <FeatureReferenceCard character={character} key='feature-reference' />,
-				width: 2,
-				height: len,
+				element: <FeatureReferenceCard character={character} columns={w > 2} key='feature-reference' />,
+				width: w,
+				height: h,
 				shown: false
 			});
 		}

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureHeroicResource, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -220,7 +220,7 @@ const DamageModifierComponent = (feature: FeatureDamageModifier, hero: Hero) => 
 	);
 };
 
-const DomainFeatureComponent = (feature: FeatureDomain) => {
+const DomainFeatureComponent = (feature: FeatureDomain | FeatureDomainFeature) => {
 	let selectedOptions;
 	if (feature.data.selected.length) {
 		selectedOptions = feature.data.selected.map(s => {
@@ -302,6 +302,7 @@ export const FeatureComponent = (props: Props) => {
 			content = DamageModifierComponent(feature, hero);
 			break;
 		case FeatureType.Domain:
+		case FeatureType.DomainFeature:
 			content = DomainFeatureComponent(feature);
 			break;
 		case FeatureType.ConditionImmunity:
@@ -311,7 +312,6 @@ export const FeatureComponent = (props: Props) => {
 			content = HeroicResourceComponent(feature);
 			break;
 		case FeatureType.Multiple:
-		case FeatureType.DomainFeature:
 			// Do nothing for these since the individual sub-features are also iterated over, no need to double up
 			break;
 		default:

@@ -1,4 +1,5 @@
 import { CharacterSheet } from '../../../../models/character-sheet';
+import { Feature } from '../../../../models/feature';
 import { FeatureComponent } from '../components/feature-component';
 import './culture-card.scss';
 
@@ -8,6 +9,16 @@ interface Props {
 
 export const CultureCard = (props: Props) => {
 	const character = props.character;
+
+	const getFeatures = () => {
+		let results: Feature[] = [];
+		if (character.cultureFeatures) {
+			results = character.cultureFeatures.filter(f => f.id !== character.culture?.environment?.id)
+				.filter(f => f.id !== character.culture?.organization?.id)
+				.filter(f => f.id !== character.culture?.upbringing?.id);
+		}
+		return results;
+	};
 	return (
 		<div className='culture card'>
 			<h2>Culture</h2>
@@ -46,7 +57,7 @@ export const CultureCard = (props: Props) => {
 			<section className='bordered features'>
 				<h3>Features</h3>
 				<ul>
-					{character.cultureFeatures?.map(f => (
+					{getFeatures().map(f => (
 						<FeatureComponent
 							feature={f}
 							hero={character.hero}

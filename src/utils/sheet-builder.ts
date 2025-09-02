@@ -275,7 +275,7 @@ export class CharacterSheetBuilder {
 
 		// Culture
 		if (hero.culture) {
-			const cultureFeatures = FeatureLogic.getFeaturesFromCulture(hero.culture, hero).map(f => f.feature);
+			const cultureFeatures = allFeatures.filter(f => f.source === hero.culture?.name).map(f => f.feature);
 			sheet.culture = hero.culture;
 			sheet.cultureFeatures = cultureFeatures;
 

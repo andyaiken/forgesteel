@@ -85,6 +85,11 @@ export class CharacterSheetBuilder {
 			sheet.className = hero.class.name;
 			sheet.subclassTypeName = hero.class.subclassName;
 			sheet.subclassName = hero.class.subclasses.find(s => s.selected)?.name;
+			// Conduit subclass fix
+			if (hero.class.name === 'Conduit') {
+				sheet.subclassTypeName = 'Domains';
+				sheet.subclassName = HeroLogic.getDomains(hero).map(d => d.name).join(', ');
+			}
 
 			sheet.level = hero.class.level;
 

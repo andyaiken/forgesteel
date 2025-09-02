@@ -106,20 +106,21 @@ export class Utils {
 	static elementToCanvas = (element: HTMLElement): Promise<HTMLCanvasElement> => {
 		const width = element.clientWidth;
 		const height = element.clientHeight;
-		const dpr = window.devicePixelRatio;
-		// It looks like there is an issue with the library scaling properly with the devicePixelRatio in
-		// some cases. I suspect canvas also suffers from this:
+		// It looks like there is an issue with the library scaling properly with
+		// the devicePixelRatio in some cases. I suspect canvas also suffers from this:
 		// https://github.com/bubkoo/html-to-image/issues/553
+		// However - for the time being we're taking advantage of this to get
+		// varying output resolutions
 
 		return htmlToImage.toCanvas(element, {
 			width: width,
 			height: height,
-			canvasWidth: width / dpr,
-			canvasHeight: height / dpr
+			canvasWidth: width,
+			canvasHeight: height
 		});
 	};
 
-	static elementsToPdf = (elementIDs: string[], filename: string, pdfPaperSize: SheetPageSize) => {
+	static elementsToPdf = async (elementIDs: string[], filename: string, pdfPaperSize: SheetPageSize, resolution: 'standard' | 'high') => {
 		const elements = elementIDs
 			.map(id => document.getElementById(id))
 			.filter(element => !!element);
@@ -127,10 +128,16 @@ export class Utils {
 		if (elements.length === 0) {
 			return;
 		}
-
-		Promise.all(elements.map(this.elementToCanvas))
+		const prevDpr = window.devicePixelRatio;
+		let dpi = 150;
+		if (resolution === 'high') {
+			window.devicePixelRatio = 2;
+			dpi = 300;
+		}
+		return Promise.all(elements.map(this.elementToCanvas))
 			.then(canvases => {
-				Utils.savePdfPages(`${filename}.pdf`, canvases, pdfPaperSize);
+				Utils.savePdfPages(`${filename}.pdf`, canvases, pdfPaperSize, dpi);
+				window.devicePixelRatio = prevDpr;
 			});
 	};
 
@@ -166,7 +173,7 @@ export class Utils {
 		pdf.save(filename);
 	};
 
-	static savePdfPages = (filename: string, pageCanvases: HTMLCanvasElement[], pdfPaperSize: SheetPageSize) => {
+	static savePdfPages = async (filename: string, pageCanvases: HTMLCanvasElement[], pdfPaperSize: SheetPageSize, dpi: number) => {
 		const width = Collections.max(pageCanvases.map(c => c.width), c => c) || 0;
 		const height = Collections.max(pageCanvases.map(c => c.height), c => c) || 0;
 		const orientation = (height >= width) ? 'portrait' : 'landscape';
@@ -175,7 +182,7 @@ export class Utils {
 		// @ts-expect-error Undocumented
 		const pdf = new jspdf({
 			orientation: orientation,
-			unit: (72 / 150), // undocumented feature to set ~150dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
+			unit: (72 / dpi), // undocumented feature to set arbitrary dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
 			format: paperSize,
 			hotfixes: [ 'px_scaling' ]
 		});
@@ -183,7 +190,6 @@ export class Utils {
 			const page = (n === 0) ? pdf : pdf.addPage(paperSize, orientation);
 			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
 		});
-
 		pdf.save(filename);
 	};
 

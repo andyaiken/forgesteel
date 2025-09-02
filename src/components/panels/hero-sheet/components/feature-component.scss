@@ -131,6 +131,14 @@
             font-style: italic;
         }
     }
+
+    table, th, td {
+        border: 0;
+    }
+    th {
+        font-weight: 450;
+        border-bottom: 1px solid common.$color-light;
+    }
 }
 
 li .feature ul.feature-description {

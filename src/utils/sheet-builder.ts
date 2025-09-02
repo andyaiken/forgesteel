@@ -1,4 +1,4 @@
-import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet } from '../models/character-sheet';
+import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet, ItemSheet } from '../models/character-sheet';
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -19,6 +19,7 @@ import { Format } from './format';
 import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from '../logic/hero-logic';
+import { Item } from '../models/item';
 import { Options } from '../models/options';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from '../logic/sourcebook-logic';
@@ -74,14 +75,7 @@ export class CharacterSheetBuilder {
 			.filter(f => f.type === FeatureType.ItemChoice)
 			.flatMap(f => f.data.selected);
 
-		const inventory = hero.state.inventory.concat(featureItems).map(item => {
-			const features = FeatureLogic.getFeaturesFromItem(item, hero).map(f => f.feature);
-			return {
-				id: item.id,
-				item: item,
-				features: features
-			};
-		});
+		const inventory = hero.state.inventory.concat(featureItems).map(item => this.buildItemSheet(item, hero));
 
 		sheet.inventory = inventory;
 		coveredFeatureIds = coveredFeatureIds.concat(inventory.flatMap(i => i.features?.map(f => f.id) || []));
@@ -94,14 +88,14 @@ export class CharacterSheetBuilder {
 
 			sheet.level = hero.class.level;
 
-			sheet.might = hero.class.characteristics.find(c => c.characteristic === Characteristic.Might)?.value;
-			sheet.agility = hero.class.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value;
-			sheet.reason = hero.class.characteristics.find(c => c.characteristic === Characteristic.Reason)?.value;
-			sheet.intuition = hero.class.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value;
-			sheet.presence = hero.class.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value;
+			sheet.might = HeroLogic.getCharacteristic(hero, Characteristic.Might);
+			sheet.agility = HeroLogic.getCharacteristic(hero, Characteristic.Agility);
+			sheet.reason = HeroLogic.getCharacteristic(hero, Characteristic.Reason);
+			sheet.intuition = HeroLogic.getCharacteristic(hero, Characteristic.Intuition);
+			sheet.presence = HeroLogic.getCharacteristic(hero, Characteristic.Presence);
 
-			const heroicResource = allFeatures.map(f => f.feature).find(f => f.type === FeatureType.HeroicResource);
-			sheet.heroicResourceFeature = heroicResource;
+			const heroicResource = HeroLogic.getHeroicResources(hero)[0];
+			sheet.heroicResourceGains = heroicResource.gains;
 			sheet.heroicResourceName = heroicResource?.name;
 			sheet.heroicResourceCurrent = allFeatures
 				.map(f => f.feature)
@@ -504,6 +498,24 @@ export class CharacterSheetBuilder {
 			o => o.id === (career && career.incitingIncidents.selectedID)
 		);
 		sheet.incitingIncident = incident;
+
+		return sheet;
+	};
+	// #endregion
+
+	// #region Item Sheet
+	static buildItemSheet = (item: Item, hero: Hero): ItemSheet => {
+		const features = FeatureLogic.getFeaturesFromItem(item, hero).map(f => f.feature);
+		const sheet: ItemSheet = {
+			id: item.id,
+			item: item,
+			effect: item.effect,
+			features: features
+		};
+
+		if (!item.effect.length) {
+			sheet.effect = features.find(f => f.id === item.id)?.description || '';
+		}
 
 		return sheet;
 	};

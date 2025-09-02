@@ -63,4 +63,15 @@
     li {
         margin-bottom: 10px;
     }
+
+    table.power-roll {
+        border: 0;
+        td:first-child {
+            vertical-align: baseline;
+        }
+        img {
+            width: 50px;
+            height: 18px;
+        }
+    }
 }

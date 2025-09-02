@@ -1,5 +1,5 @@
 import { AbilitySheet, CharacterSheet } from '../../../../models/character-sheet';
-import { ClimbSwimReferenceCard, EdgesBanesReferenceCard, JumpReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
+import { ClimbCreaturesCard, ClimbSwimReferenceCard, EdgesBanesReferenceCard, FallingReferenceCard, JumpReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
 import { Fragment, JSX, useMemo } from 'react';
 
 import { AbilityCard } from '../../../panels/hero-sheet/ability-card/ability-card';
@@ -67,7 +67,7 @@ export const HeroSheetPage = (props: Props) => {
 	const getAbilityLayout = (options: Options) => {
 		const abilitiesPerPage = options.pageOrientation === 'portrait' ? 9 : 12;
 		const abilitiesPerRow = options.pageOrientation === 'portrait' ? 3 : 4;
-		let linesY = options.pageOrientation === 'portrait' ? 88 : 67;
+		let linesY = options.pageOrientation === 'portrait' ? 91 : 70;
 		let lineLen = options.pageOrientation === 'portrait' ? 50 : 47;
 		if (options.classicSheetPageSize === SheetPageSize.A4) {
 			linesY = options.pageOrientation === 'portrait' ? 94 : 67;
@@ -146,6 +146,24 @@ export const HeroSheetPage = (props: Props) => {
 				width: 1,
 				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 26 : 26,
 				shown: false
+			},
+			{
+				element: <ClimbCreaturesCard key='climbing-creatures-reference' />,
+				width: 1,
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 31 : 31,
+				shown: false
+			},
+			{
+				element: <MovementReferenceCard key='movement-reference' />,
+				width: 1,
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 23 : 23,
+				shown: false
+			},
+			{
+				element: <FallingReferenceCard key='falling-reference' />,
+				width: 1,
+				height: props.options.classicSheetPageSize === SheetPageSize.Letter ? 25 : 25,
+				shown: false
 			}
 		];
 
@@ -168,7 +186,6 @@ export const HeroSheetPage = (props: Props) => {
 
 	const getFillerCards = (spacesToFill: number, availableH: number, rowH: number, extraCards: ExtraCards): JSX.Element[] => {
 		let refCards = [];
-		// console.log(`Filling ${spacesToFill} spaces, with ${rowH} + ${availableH} available Y lines`);
 		let availableRowH = rowH;
 		let spaceInRow = (spacesToFill % layout.perRow) || layout.perRow;
 		if (spaceInRow === layout.perRow) {
@@ -176,6 +193,7 @@ export const HeroSheetPage = (props: Props) => {
 		} else {
 			availableH += rowH;
 		}
+		// console.log(`Filling ${spacesToFill} spaces, with ${rowH} + ${availableH} available Y lines`);
 
 		nextCard: while (spacesToFill > 0 && (extraCards.required.find(c => !c.shown) || extraCards.optional.find(c => !c.shown))) {
 			spaceInRow = (spacesToFill % layout.perRow) || layout.perRow;
@@ -240,7 +258,6 @@ export const HeroSheetPage = (props: Props) => {
 			allAbilities = allAbilities.concat(character.standardAbilities);
 		}
 
-		// future: Allow sorting by other things?
 		if (props.options.abilitySort === 'type') {
 			allAbilities.sort(CharacterSheetFormatter.sortAbilitiesByType);
 		} else {
@@ -255,31 +272,33 @@ export const HeroSheetPage = (props: Props) => {
 			// build a single page
 			const pageStart = n;
 			let h = 0;
-			let pageAbilities: AbilitySheet[] = [];
+			const pageAbilities: AbilitySheet[] = [];
 			while (n < allAbilities.length && pageAbilities.length < layout.perPage && h < layout.linesY) {
 				// get a row, calculate height
 				const rowStart = n;
 				const rowEnd = Math.min(n + layout.perRow, allAbilities.length);
 				const rowAbilities = allAbilities.slice(rowStart, rowEnd);
-				const rowH = rowAbilities.reduce((h, a) => {
-					return Math.max(h, CharacterSheetFormatter.calculateAbilitySize(a, layout.lineLen));
-				}, 0);
-				// console.log(`Row (${rowStart}, ${rowEnd}):`, rowAbilities.map(a => a.name), 'Height', rowH);
 
-				if (h + rowH <= layout.linesY) {
-					pageAbilities = pageAbilities.concat(rowAbilities);
-					h += rowH;
-					n = rowEnd;
-				} else {
-					// console.log('moving to new page, not adding last row', `${h} + ${rowH} > ${layout.linesY}`);
-					h = layout.linesY;
-				}
+				let rowH = 0;
+				rowAbilities.every(a => {
+					const aH = CharacterSheetFormatter.calculateAbilitySize(a, layout.lineLen);
+					if (h + aH <= layout.linesY) {
+						pageAbilities.push(a);
+						rowH = Math.max(rowH, aH);
+						n += 1;
+						return true;
+					} else {
+						h = layout.linesY;
+						return false;
+					}
+				});
+				h += rowH;
+				// console.log(`Row (${rowStart}, ${rowEnd}):`, rowAbilities.map(a => a.name), 'Height', rowH);
 			}
 			if (n === pageStart) {
 				console.warn('Didn\'t add any abilities to this page!');
 				n = allAbilities.length;
 			}
-
 			// console.log(`page abilities (${pageStart}, ${n}):`, pageAbilities);
 			abilitiesSplit.push(pageAbilities);
 		}
@@ -290,14 +309,14 @@ export const HeroSheetPage = (props: Props) => {
 			let refCards: JSX.Element[] = [];
 			if (pageAbilities.length < layout.perPage) {
 				const spacesToFill = layout.perPage - pageAbilities.length;
-				// for now, assume abilities are sorted based on height so we can use the last one to get a reference height
 				const numRows = Math.ceil(pageAbilities.length / layout.perRow);
 				let spaceY = layout.linesY;
 				let rowY = spaceY;
 				for (let r = 0; r < numRows; ++r) {
-					const x = Math.min(pageAbilities.length, (r + 1) * layout.perRow);
-					rowY = CharacterSheetFormatter.calculateAbilitySize(pageAbilities.at(x - 1), layout.lineLen);
-					// console.log(`row ${r} H: `, rowY);
+					const iRowStart = r * layout.perRow;
+					const iRowEnd = Math.min(pageAbilities.length, (r + 1) * layout.perRow);
+					rowY = CharacterSheetFormatter.getLargestSize(pageAbilities.slice(iRowStart, iRowEnd), layout.lineLen);
+					// console.log(`row ${r} (${iRowStart}, ${iRowEnd}) H: `, rowY);
 					spaceY -= rowY;
 				}
 				// console.log('overall spaceY:', spaceY, '/', layout.linesY, ' current rowY:', rowY);

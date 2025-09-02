@@ -80,7 +80,7 @@ export class CharacterSheetFormatter {
 	};
 
 	static shortenText = (text: string, splitAt: number = 2) => {
-		const split = text.split('\n');
+		const split = text.trim().split('\n');
 		if (split.length > splitAt) {
 			text = split.slice(0, splitAt).join('\n') + '\n*…(continued in reference)…*';
 		}
@@ -89,7 +89,7 @@ export class CharacterSheetFormatter {
 
 	static isLongFeature = (f: Feature, check: number = 2): boolean => {
 		return ([ FeatureType.Text, FeatureType.Package ].includes(f.type))
-			&& (f.description.split('\n').length > check);
+			&& (f.description.trim().split('\n').length > check);
 	};
 
 	// There are some that might just be *too* long for the Class Features section,
@@ -135,10 +135,12 @@ export class CharacterSheetFormatter {
 
 	static calculateFeatureSize = (f: Feature, lineWidth: number, countShortenedText: boolean = true): number => {
 		let size = 1;
-		if (this.isLongFeature(f)) {
+		if ([ FeatureType.Multiple, FeatureType.DomainFeature ].includes(f.type)) {
+			size = 0;
+		} else if (this.isLongFeature(f)) {
 			size = 2;
 			if (countShortenedText) {
-				size += this.countLines(f.description.split('\n')[0], lineWidth);
+				size += this.countLines(f.description.trim().split('\n')[0], lineWidth);
 			} else {
 				size += this.countLines(f.description, lineWidth);
 			}
@@ -148,6 +150,8 @@ export class CharacterSheetFormatter {
 			size = 3;
 		} else if (f.type === FeatureType.DamageModifier) {
 			size = 3 + (2 * Collections.distinct(f.data.modifiers, m => m.type).length);
+		} else if (f.type === FeatureType.HeroicResource) {
+			size = 2 + (2 * this.countLines(f.data.details, lineWidth));
 		}
 
 		return size;
@@ -255,12 +259,19 @@ export class CharacterSheetFormatter {
 	};
 
 	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0) => {
-		return text?.split('\n').reduce((n, l) => {
+		return text?.trim().split('\n').reduce((n, l) => {
 			let len = Math.max(emptyLineSize, Math.ceil(l.length / lineWidth));
 			if (l.startsWith('*'))// list item, will be indented
 				len = Math.ceil(l.length / (lineWidth - 5));
 			return n + len;
 		}, 0) || 0;
+	};
+
+	static getLargestSize = (abilities: AbilitySheet[], lineLength: number): number => {
+		const largestSize = abilities.reduce((h, a) => {
+			return Math.max(h, this.calculateAbilitySize(a, lineLength));
+		}, 0);
+		return largestSize;
 	};
 
 	static abilityTypeOrder: string[] = [
@@ -269,7 +280,6 @@ export class CharacterSheetFormatter {
 		'Triggered Action',
 		'Free Maneuver',
 		'Maneuver',
-		'Performance',
 		'Free Strike',
 		'Move Action'
 	];
@@ -281,13 +291,21 @@ export class CharacterSheetFormatter {
 		const bSort = bType.length && this.abilityTypeOrder.includes(bType);
 
 		if (aSort && bSort) {
-			return this.abilityTypeOrder.indexOf(aType) - this.abilityTypeOrder.indexOf(bType);
+			const s = this.abilityTypeOrder.indexOf(aType) - this.abilityTypeOrder.indexOf(bType);
+			if (s === 0) {
+				return this.sortAbilitiesByLength(a, b);
+			}
+			return s;
 		} else if (aSort) {
 			return -1;
 		} else if (bSort) {
 			return 1;
 		} else {
-			return aType.localeCompare(bType);
+			const alpha = aType.localeCompare(bType);
+			if (alpha === 0) {
+				return this.sortAbilitiesByLength(a, b);
+			}
+			return alpha;
 		}
 	};
 

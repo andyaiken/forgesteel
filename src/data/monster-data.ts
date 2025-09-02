@@ -31,6 +31,7 @@ import { griffon } from './monsters/griffon';
 import { hag } from './monsters/hag';
 import { hobgoblin } from './monsters/hobgoblin';
 import { human } from './monsters/human';
+import { kingfissureWorm } from './monsters/kingfissure-worm';
 import { kobold } from './monsters/kobold';
 import { lightbender } from './monsters/lightbender';
 import { lizardfolk } from './monsters/lizardfolk';
@@ -89,6 +90,7 @@ export class MonsterData {
 	static hag = hag;
 	static hobgoblin = hobgoblin;
 	static human = human;
+	static kingfissureWorm = kingfissureWorm;
 	static kobold = kobold;
 	static lightbender = lightbender;
 	static lizardfolk = lizardfolk;

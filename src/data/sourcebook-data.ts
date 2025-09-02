@@ -578,6 +578,7 @@ export class SourcebookData {
 			MonsterData.hag,
 			MonsterData.hobgoblin,
 			MonsterData.human,
+			MonsterData.kingfissureWorm,
 			MonsterData.kobold,
 			MonsterData.lightbender,
 			MonsterData.lizardfolk,

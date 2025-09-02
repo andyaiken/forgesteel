@@ -92,7 +92,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			sections: [
 				'Each enemy in the encounter is subject to a bad deal proposed by the devils. An enemy must choose between having damage weakness 5 or taking a bane on power rolls. The bad deal lasts until the end of the encounter.'
 			]
-		}),
+		})
 	],
 	monsters: [
 		FactoryLogic.createMonster({
@@ -721,7 +721,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 								tier2: 'The high judge chooses a new target for the strike',
 								tier3: 'The target takes a bane on the strike'
 							})),
-							FactoryLogic.createAbilitySectionText('While charmed this way, a creature treats the high judge as an ally, and the high judge can spend 1 Malice on their turn to make that creature move up to 3 squares.'),
+							FactoryLogic.createAbilitySectionText('While charmed this way, a creature treats the high judge as an ally, and the high judge can spend 1 Malice on their turn to make that creature move up to 3 squares.')
 						]
 					})
 				}),
@@ -755,7 +755,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 								tier2: '12 psychic damage; the target is charmed (save ends)',
 								tier3: '7 psychic damage'
 							})),
-							FactoryLogic.createAbilitySectionText('While charmed this way, a creature treats the high judge as an ally, and the high judge can spend 1 Malice on their turn to make that creature move up to 3 squares.'),
+							FactoryLogic.createAbilitySectionText('While charmed this way, a creature treats the high judge as an ally, and the high judge can spend 1 Malice on their turn to make that creature move up to 3 squares.')
 						]
 					})
 				}),

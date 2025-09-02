@@ -2,6 +2,7 @@ import { Alert, Button, Divider, Drawer, Flex, Space, notification } from 'antd'
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
@@ -277,7 +278,7 @@ export const StatsPanel = (props: Props) => {
 					HeroLogic.getHeroicResources(hero)
 						.map(hr => (
 							<Space key={hr.id} direction='vertical' style={{ width: '100%' }}>
-								<HeaderText>Heroic Resource: {hr.name}</HeaderText>
+								<HeaderText>{Format.capitalize(hr.type)} Resource: {hr.name}</HeaderText>
 								<NumberSpin
 									value={hr.value}
 									min={hr.canBeNegative ? undefined : 0}

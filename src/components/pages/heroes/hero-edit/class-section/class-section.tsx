@@ -5,6 +5,7 @@ import { Characteristic } from '../../../../../enums/characteristic';
 import { ClassPanel } from '../../../../panels/elements/class-panel/class-panel';
 import { Collections } from '../../../../../utils/collections';
 import { Element } from '../../../../../models/element';
+import { Empty } from '../../../../controls/empty/empty';
 import { EmptyMessage } from '../empty-message/empty-message';
 import { Expander } from '../../../../controls/expander/expander';
 import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
@@ -327,6 +328,11 @@ export const ClassSection = (props: Props) => {
 									>
 										<Space direction='vertical' size={20} style={{ width: '100%', paddingTop: '15px' }}>
 											{lvl.choices}
+											{
+												lvl.choices.length === 0 ?
+													<Empty text='Nothing to choose for this level' />
+													: null
+											}
 										</Space>
 									</Expander>
 								))

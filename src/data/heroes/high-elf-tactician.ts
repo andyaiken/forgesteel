@@ -127,9 +127,18 @@ export const highElfTactician = {
 		name: 'High Elf',
 		description: 'Secluded, bureaucratic, martial.',
 		type: 'Ancestral',
-		languages: [
-			'Hyrallic'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Hyrallic' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-secluded',
 			name: 'Secluded',

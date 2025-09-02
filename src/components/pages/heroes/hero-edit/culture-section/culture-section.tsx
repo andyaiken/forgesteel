@@ -1,17 +1,15 @@
 import { Button, Divider, Drawer, Flex, Input, Space } from 'antd';
 import { CloseOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../../data/culture-data';
-import { FeatureData, FeatureLanguageChoiceData } from '../../../../../models/feature';
 import { ReactNode, useState } from 'react';
-import { Collections } from '../../../../../utils/collections';
 import { Culture } from '../../../../../models/culture';
 import { CulturePanel } from '../../../../panels/elements/culture-panel/culture-panel';
 import { CultureType } from '../../../../../enums/culture-type';
 import { Element } from '../../../../../models/element';
 import { EmptyMessage } from '../empty-message/empty-message';
 import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
-import { FactoryLogic } from '../../../../../logic/factory-logic';
 import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '../../../../../models/feature';
 import { FeatureLogic } from '../../../../../logic/feature-logic';
 import { FeatureSelectModal } from '../../../../modals/select/feature-select/feature-select-modal';
 import { Field } from '../../../../controls/field/field';
@@ -44,7 +42,6 @@ interface CultureSectionProps {
 	options: Options;
 	searchTerm: string;
 	selectCulture: (culture: Culture) => void;
-	selectLanguages: (languages: string[]) => void;
 	selectEnvironment: (id: string | null) => void;
 	selectOrganization: (id: string | null) => void;
 	selectUpbringing: (id: string | null) => void;
@@ -182,31 +179,6 @@ export const CultureSection = (props: CultureSectionProps) => {
 					</SelectablePanel>
 				);
 			}
-
-			const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
-			const distinctLanguages = Collections.distinct(languages, l => l.name);
-			const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
-
-			choices.unshift(
-				<SelectablePanel key='language'>
-					<FeatureConfigPanel
-						feature={FactoryLogic.feature.createLanguageChoice({
-							id: 'culture-language',
-							name: 'Language',
-							description: 'Choose your language.',
-							options: sortedLanguages.map(l => l.name),
-							selected: props.hero.culture.languages
-						})}
-						options={props.options}
-						hero={props.hero}
-						sourcebooks={props.sourcebooks}
-						setData={(_id, data) => {
-							const d = data as FeatureLanguageChoiceData;
-							props.selectLanguages(d.selected);
-						}}
-					/>
-				</SelectablePanel>
-			);
 		}
 
 		let columnClassName = 'hero-edit-content-column selected';

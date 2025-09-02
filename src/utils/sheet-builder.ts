@@ -265,15 +265,7 @@ export class CharacterSheetBuilder {
 
 		// Culture
 		if (hero.culture) {
-			let cultureFeatures: Feature[] = [];
-			const featuresFromAll = allFeatures.filter(f => f.source.includes('Culture'))
-				.filter(f => ![ hero.culture?.environment?.id, hero.culture?.organization?.id, hero.culture?.upbringing?.id ].includes(f.feature.id))
-				.map(f => f.feature);
-			cultureFeatures = cultureFeatures.concat(featuresFromAll)
-				.concat(hero.culture.languages.map(lang => FactoryLogic.feature.createLanguage({
-					id: `culture-${hero.culture?.name}-language-${lang}`,
-					language: lang
-				})));
+			const cultureFeatures = FeatureLogic.getFeaturesFromCulture(hero.culture, hero).map(f => f.feature);
 			sheet.culture = hero.culture;
 			sheet.cultureFeatures = cultureFeatures;
 

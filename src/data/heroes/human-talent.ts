@@ -288,9 +288,18 @@ export const humanTalent = {
 		name: 'Monastic Order',
 		description: 'Secluded, bureaucratic, academic.',
 		type: 'Professional',
-		languages: [
-			'Hyrallic'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Hyrallic' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-secluded',
 			name: 'Secluded',

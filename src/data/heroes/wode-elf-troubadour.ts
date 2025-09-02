@@ -175,9 +175,18 @@ export const wodeElfTroubadour = {
 		name: 'Bespoke Culture',
 		description: 'Choose any Environment, Organization, and Upbringing.',
 		type: 'Bespoke',
-		languages: [
-			'Yllyric'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Yllyric' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-wilderness',
 			name: 'Wilderness',

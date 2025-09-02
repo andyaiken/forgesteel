@@ -138,9 +138,18 @@ export const dwarfFury = {
 		name: 'Dwarf',
 		description: 'Secluded, bureaucratic, creative.',
 		type: 'Ancestral',
-		languages: [
-			'Zaliac'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Zaliac' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-secluded',
 			name: 'Secluded',

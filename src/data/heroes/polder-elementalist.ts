@@ -267,9 +267,18 @@ export const polderElementalist = {
 		name: 'Polder',
 		description: 'Urban, communal, creative.',
 		type: 'Ancestral',
-		languages: [
-			'Khoursirian'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Khoursirian' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-urban',
 			name: 'Urban',

@@ -128,9 +128,18 @@ export const orcConduit = {
 		name: 'Bespoke Culture',
 		description: 'Choose any Environment, Organization, and Upbringing.',
 		type: 'Bespoke',
-		languages: [
-			'Kalliak'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Kalliak' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-wilderness',
 			name: 'Wilderness',

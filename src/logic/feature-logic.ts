@@ -32,6 +32,11 @@ export class FeatureLogic {
 	static getFeaturesFromCulture = (culture: Culture, hero: Hero) => {
 		const features: { feature: Feature, source: string }[] = [];
 
+		features.push({
+			feature: culture.language,
+			source: culture.name
+		});
+
 		if (culture.environment) {
 			features.push({ feature: culture.environment, source: culture.name });
 		}
@@ -41,16 +46,15 @@ export class FeatureLogic {
 		if (culture.upbringing) {
 			features.push({ feature: culture.upbringing, source: culture.name });
 		}
-		if (culture) {
-			features.push({
-				feature: FactoryLogic.feature.create({
-					id: Utils.guid(),
-					name: `${culture.name} Culture`.trim(),
-					description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
-				}),
-				source: `${culture.name} Culture`.trim()
-			});
-		}
+
+		features.push({
+			feature: FactoryLogic.feature.create({
+				id: Utils.guid(),
+				name: `${culture.name} Culture`.trim(),
+				description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
+			}),
+			source: culture.name
+		});
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};

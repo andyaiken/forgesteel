@@ -79,13 +79,11 @@ export const HeroEditPage = (props: Props) => {
 					}
 				case 'culture':
 					if (hero.culture) {
-						if (hero.culture.languages.length === 0) {
-							return PageState.InProgress;
-						}
 						if (!hero.culture.environment || !hero.culture.organization || !hero.culture.upbringing) {
 							return PageState.InProgress;
 						}
 						const features: Feature[] = [];
+						features.push(hero.culture.language);
 						if (hero.culture.environment) {
 							features.push(hero.culture.environment);
 						}
@@ -174,21 +172,20 @@ export const HeroEditPage = (props: Props) => {
 		const setCulture = (culture: Culture | null) => {
 			const cultureCopy = Utils.copy(culture) as Culture | null;
 			if (cultureCopy) {
-				const sourcebooks = props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
-				const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
-				cultureCopy.languages = cultureCopy.languages.filter(language => !knownLanguages.includes(language));
+				const features: Feature[] = [ cultureCopy.language ];
+				if (cultureCopy.environment) {
+					features.push(cultureCopy.environment);
+				}
+				if (cultureCopy.organization) {
+					features.push(cultureCopy.organization);
+				}
+				if (cultureCopy.upbringing) {
+					features.push(cultureCopy.upbringing);
+				}
+				clearRedundantSelections(hero, features);
 			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.culture = cultureCopy;
-			setHero(heroCopy);
-			setDirty(true);
-		};
-
-		const setLanguages = (languages: string[]) => {
-			const heroCopy = Utils.copy(hero);
-			if (heroCopy.culture) {
-				heroCopy.culture.languages = languages;
-			}
 			setHero(heroCopy);
 			setDirty(true);
 		};
@@ -545,7 +542,6 @@ export const HeroEditPage = (props: Props) => {
 							options={props.options}
 							searchTerm={searchTerm}
 							selectCulture={setCulture}
-							selectLanguages={setLanguages}
 							selectEnvironment={setEnvironment}
 							selectOrganization={setOrganization}
 							selectUpbringing={setUpbringing}

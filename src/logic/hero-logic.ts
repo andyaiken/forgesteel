@@ -257,10 +257,6 @@ export class HeroLogic {
 	static getLanguages = (hero: Hero, sourcebooks: Sourcebook[]) => {
 		const languageNames: string[] = [];
 
-		if (hero.culture) {
-			languageNames.push(...hero.culture.languages);
-		}
-
 		// Collate from features
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
@@ -1153,12 +1149,6 @@ export class HeroLogic {
 					}
 				};
 			});
-
-		// Choose culture language
-		const currentLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(l => l.name);
-		const options = SourcebookLogic.getLanguages(sourcebooks)
-			.filter(l => !currentLanguages.includes(l.name));
-		hero.culture.languages.push(Collections.draw(options).name);
 
 		// Choose career inciting incident
 		hero.career.incitingIncidents.selectedID = Collections.draw(hero.career.incitingIncidents.options.map(ii => ii.id));

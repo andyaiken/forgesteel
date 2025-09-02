@@ -5,6 +5,7 @@ import './field.scss';
 interface Props {
 	className?: string;
 	style?: CSSProperties;
+	innerStyle?: CSSProperties;
 	label: ReactNode;
 	labelTag?: ReactNode;
 	value: ReactNode;
@@ -37,7 +38,7 @@ export const Field = (props: Props) => {
 
 		return (
 			<div className={className} style={props.style}>
-				<span className='field-label'>
+				<span className='field-label' style={props.innerStyle}>
 					{
 						props.labelTag ?
 							<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
@@ -48,7 +49,7 @@ export const Field = (props: Props) => {
 							props.label
 					}
 				</span>
-				<span className='field-value'>
+				<span className='field-value' style={props.innerStyle}>
 					{props.value}
 				</span>
 				{

@@ -49,7 +49,7 @@ const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice |
 		});
 	} else {
 		selectedOptions = [
-			<div className='feature-iteration no-selection'>Unselected</div>
+			<div className='feature-iteration no-selection' key='unselected'>Unselected</div>
 		];
 	}
 	const count = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
@@ -82,7 +82,7 @@ const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice) => {
 		});
 	} else {
 		selectedOptions = [
-			<div className='feature-iteration no-selection'>Unselected</div>
+			<div className='feature-iteration no-selection' key='unselected'>Unselected</div>
 		];
 	}
 	return (
@@ -228,7 +228,7 @@ const DomainFeatureComponent = (feature: FeatureDomain) => {
 		});
 	} else {
 		selectedOptions = [
-			<div className='feature-iteration no-selection'>Unselected</div>
+			<div className='feature-iteration no-selection' key='unselected'>Unselected</div>
 		];
 	}
 	return (

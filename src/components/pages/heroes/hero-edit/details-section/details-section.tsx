@@ -94,18 +94,31 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 						message='You can add your hero to a folder to group it with other heroes.'
 					/>
 					<Divider />
-					<Expander title='Default Language'>
+					<Expander title='Language Choices'>
 						{
-							props.hero.features.filter(f => f.id === 'default-language').map(f => (
-								<FeatureConfigPanel
-									key={f.id}
-									feature={f}
-									options={props.options}
-									hero={props.hero}
-									sourcebooks={props.sourcebooks}
-									setData={props.setFeatureData}
-								/>
-							))
+							HeroLogic.getFeatures(props.hero)
+								.map(f => f.feature)
+								.filter(f => f.type === FeatureType.LanguageChoice)
+								.map(f => {
+									return FactoryLogic.feature.createLanguageChoice({
+										id: f.id,
+										name: f.name || 'Language',
+										description: `${f.data.options.length > 0 ? `**Skills**: ${f.data.options.join(', ')}` : ''}`,
+										options: [ ...f.data.options ],
+										count: f.data.count,
+										selected: [ ...f.data.selected ]
+									});
+								})
+								.map(f => (
+									<FeatureConfigPanel
+										key={f.id}
+										feature={f}
+										options={props.options}
+										hero={props.hero}
+										sourcebooks={props.sourcebooks}
+										setData={props.setFeatureData}
+									/>
+								))
 						}
 					</Expander>
 					<Expander title='Skill Choices'>

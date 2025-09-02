@@ -4,6 +4,7 @@ import { Ancestry } from '../../models/ancestry';
 import { AncestryData } from '../../data/ancestry-data';
 import { CultureData } from '../../data/culture-data';
 import { CultureType } from '../../enums/culture-type';
+import { FactoryLogic } from '../factory-logic';
 import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { Hero } from '../../models/hero';
@@ -60,6 +61,19 @@ export class HeroUpdateLogic {
 			if (hero.culture.type === undefined) {
 				hero.culture.type = CultureType.Ancestral;
 			}
+
+			/* eslint-disable @typescript-eslint/no-deprecated */
+
+			if (hero.culture.language === undefined) {
+				hero.culture.language = FactoryLogic.feature.createLanguageChoice({
+					id: Utils.guid(),
+					selected: hero.culture.languages
+				});
+
+				hero.culture.languages = [];
+			}
+
+			/* eslint-enable @typescript-eslint/no-deprecated */
 		}
 
 		if (hero.career) {
@@ -215,11 +229,6 @@ export class HeroUpdateLogic {
 
 				if (hero.culture && (hero.culture.id === CultureData.bespoke.id)) {
 					hero.culture.name = original.culture.name || CultureData.bespoke.name;
-				}
-
-				if (hero.culture) {
-					const languages = SourcebookLogic.getLanguages(sourcebooks).map(l => l.name);
-					hero.culture.languages = original.culture.languages.filter(l => languages.includes(l));
 				}
 			}
 		} catch (ex) {

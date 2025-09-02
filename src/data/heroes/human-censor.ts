@@ -288,9 +288,18 @@ export const humanCensor = {
 		name: 'Human',
 		description: 'Urban, communal, labor.',
 		type: 'Ancestral',
-		languages: [
-			'Vaslorian'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Vaslorian' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-urban',
 			name: 'Urban',

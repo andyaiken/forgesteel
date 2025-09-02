@@ -483,6 +483,7 @@ export const StatsPanel = (props: Props) => {
 										<div className='alert-text'>Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your Recovery value without spending a Recovery.</div>
 										<div>
 											<Field
+												innerStyle={{ color: 'rgba(0, 0, 0, 0.88)' }}
 												orientation='vertical'
 												label='Stamina'
 												value={`${HeroLogic.getStamina(hero) - hero.state.staminaDamage} / ${HeroLogic.getStamina(hero)}`}

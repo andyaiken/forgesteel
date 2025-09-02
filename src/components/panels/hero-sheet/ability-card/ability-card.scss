@@ -231,7 +231,7 @@
     &.maneuver {
         @include color-ability-card(common.$color-maneuver);
         h2 {
-            @include common.bottom-border-fancy-2(common.$color-maneuver);
+            @include common.bottom-border-fancy-4(common.$color-maneuver);
         }
     }
 

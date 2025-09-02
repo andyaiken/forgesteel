@@ -544,3 +544,81 @@ $color-move: #7d7d7d;//#ad8b00;
         left $bottom-line-y,
         right $bottom-line-y;
 }
+
+@mixin bottom-border-fancy-4($border-color) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom: 0;
+
+    $line-size: 2px;
+    $centerline-h: 20px;
+    $line-gap: 4px;
+
+    $sq-size: calc(4 * $line-size);
+    $sq-half: calc($sq-size / 2);
+
+    $v1-h: calc($centerline-h - (3 / 2 * $line-gap));
+    $v1-dx: calc($line-gap + ($line-size / 2));
+    $h1-w: calc(50% - $v1-dx - $sq-half);
+    $h1-dy: calc($v1-h + ($line-gap / 2) - $line-size);
+
+    $sq-dy: calc($h1-dy + ($line-size / 2) - $sq-half);
+
+    $v2-h: calc($v1-h - $line-gap - $line-size + 1px);
+    $v2-dx: calc($v1-dx + $line-gap);
+    $h2-w: calc(50% - $v2-dx - $sq-size);
+    $h2-dy: calc($v2-h + ($line-gap / 2) - 1px);
+
+    $h3-w: calc($h2-w - $line-gap);
+    $h3-dy: calc($h2-dy - $line-gap - 1px);
+    $h3-size: calc($line-size);
+
+    padding-bottom: calc($centerline-h + $line-gap + $line-size);
+
+    background-image: linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        svg-diamond-color($border-color),
+        svg-diamond-color($border-color),
+        linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color)
+        ;
+
+    background-size: $line-size $centerline-h,
+        $line-size $v1-h,
+        $line-size $v1-h,
+        $h1-w $line-size,
+        $h1-w $line-size,
+        $sq-size $sq-size,
+        $sq-size $sq-size,
+        1px $v2-h,
+        1px $v2-h,
+        $h2-w 1px,
+        $h2-w 1px,
+        $h3-w $h3-size,
+        $h3-w $h3-size
+        ;
+
+    background-position: center bottom,
+        calc(50% - $v1-dx) calc(100% - ($line-gap / 2)),
+        calc(50% + $v1-dx) calc(100% - ($line-gap / 2)),
+        $sq-half calc(100% - $h1-dy),
+        calc(100% - $sq-half) calc(100% - $h1-dy),
+        right calc(100% - $sq-dy),
+        left calc(100% - $sq-dy),
+        calc(50% - $v2-dx) calc(100% - ($line-gap / 2)),
+        calc(50% + $v2-dx) calc(100% - ($line-gap / 2)),
+        $sq-size calc(100% - $h2-dy),
+        calc(100% - $sq-size) calc(100% - $h2-dy),
+        $sq-size calc(100% - $h3-dy),
+        calc(100% - $sq-size) calc(100% - $h3-dy)
+        ;
+
+    background-repeat: no-repeat;
+}

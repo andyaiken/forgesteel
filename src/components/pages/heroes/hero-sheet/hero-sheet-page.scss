@@ -406,6 +406,13 @@
         .feature {
             overflow: hidden;
         }
+
+        .feature:has(.feature-title):has(.feature-iteration) {
+            .feature-title {
+                margin-bottom: 0;
+            }
+            margin-bottom: 10px;
+        }
     }
 
     .colorful {

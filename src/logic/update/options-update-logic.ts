@@ -28,8 +28,8 @@ export class OptionsUpdateLogic {
 			options.includePlayState = false;
 		}
 
-		if (options.colorAbilityCards === undefined) {
-			options.colorAbilityCards = true;
+		if (options.colorSheet === undefined) {
+			options.colorSheet = true;
 		}
 
 		if (options.classicSheetPageSize === undefined) {

@@ -15,6 +15,8 @@ import { devil } from './monsters/devil';
 import { draconian } from './monsters/draconian';
 import { dragonCrucible } from './monsters/dragon-crucible';
 import { dragonGloom } from './monsters/dragon-gloom';
+import { dragonMeteor } from './monsters/dragon-meteor';
+import { dragonOmen } from './monsters/dragon-omen';
 import { dragonThorn } from './monsters/dragon-thorn';
 import { dwarf } from './monsters/dwarf';
 import { elemental } from './monsters/elemental';
@@ -71,6 +73,8 @@ export class MonsterData {
 	static draconian = draconian;
 	static dragonCrucible = dragonCrucible;
 	static dragonGloom = dragonGloom;
+	static dragonMeteor = dragonMeteor;
+	static dragonOmen = dragonOmen;
 	static dragonThorn = dragonThorn;
 	static dwarf = dwarf;
 	static elemental = elemental;

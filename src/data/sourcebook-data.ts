@@ -562,6 +562,8 @@ export class SourcebookData {
 			MonsterData.draconian,
 			MonsterData.dragonCrucible,
 			MonsterData.dragonGloom,
+			MonsterData.dragonMeteor,
+			MonsterData.dragonOmen,
 			MonsterData.dragonThorn,
 			MonsterData.dwarf,
 			MonsterData.elemental,

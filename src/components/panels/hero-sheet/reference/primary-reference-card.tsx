@@ -15,14 +15,14 @@ export const PrimaryReferenceCard = (props: Props) => {
 	);
 
 	const getResourceSection = () => {
-		if (character.heroicResourceFeature) {
+		if (character.heroicResourceGains) {
 			return (
 				<div className='heroic-resource'>
 					<h3>Gaining {character.heroicResourceName}</h3>
 					<div className='heroic-resource-gain'>
 						<div className='header value'>Gain</div>
 						<div className='header trigger'>When</div>
-						{character.heroicResourceFeature.data.gains.map((g, n) =>
+						{character.heroicResourceGains.map((g, n) =>
 							<Fragment key={n}>
 								<div className='value'>{g.value}</div>
 								<div className='trigger'>{g.trigger}</div>

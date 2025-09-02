@@ -31,7 +31,7 @@ export const ItemComponent = (props: ItemProps) => {
 				<div className='item-type'>{item.type}</div>
 			</div>
 			<Markdown
-				text={item.effect}
+				text={itemSheet.effect}
 				className='item-effect'
 			/>
 			<div className='item-features'>

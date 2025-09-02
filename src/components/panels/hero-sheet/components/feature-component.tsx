@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureHeroicResource, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -30,6 +30,7 @@ interface Props {
 }
 
 const BasicFeatureComponent = (feature: Feature) => {
+	// console.warn('Default feature display: ', feature);
 	return (
 		<>
 			<div className='feature-line'><strong>{`• ${feature.type}: `}</strong>{feature.name}</div>
@@ -73,7 +74,6 @@ const AncestryChoiceFeatureComponent = (feature: FeatureAncestryChoice) => {
 };
 
 const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice) => {
-	// const lists = feature.data.listOptions.join('/');
 	const lists = CharacterSheetFormatter.joinCommasOr(feature.data.listOptions);
 	let selectedOptions;
 	if (feature.data.selected.length) {
@@ -100,6 +100,14 @@ const BonusFeatureComponent = (feature: FeatureBonus, hero: Hero) => {
 	return (
 		<>
 			<div className='feature-line'><strong>{`• ${feature.name}: `}</strong>{`${feature.data.field} ${CharacterSheetFormatter.addSign(value)}`}</div>
+		</>
+	);
+};
+
+const CharacteristicBonusFeatureComponent = (feature: FeatureCharacteristicBonus) => {
+	return (
+		<>
+			<div className='feature-line'><strong>• Characteristic Bonus: </strong>{`${feature.data.characteristic} ${CharacterSheetFormatter.addSign(feature.data.value)}`}</div>
 		</>
 	);
 };
@@ -212,10 +220,21 @@ const DamageModifierComponent = (feature: FeatureDamageModifier, hero: Hero) => 
 	);
 };
 
-const DomainFeatureComponent = (feature: FeatureDomain | FeatureDomainFeature) => {
+const DomainFeatureComponent = (feature: FeatureDomain) => {
+	let selectedOptions;
+	if (feature.data.selected.length) {
+		selectedOptions = feature.data.selected.map(s => {
+			return (<div className='feature-iteration' key={s.id}>{s.name}</div>);
+		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection'>Unselected</div>
+		];
+	}
 	return (
 		<>
-			<div className='feature-line'><strong>• {feature.type}:</strong> {feature.name}</div>
+			<div className='feature-line'><strong>• {CharacterSheetFormatter.pluralize(feature.name, feature.data.count)}:</strong></div>
+			{selectedOptions}
 		</>
 	);
 };
@@ -228,6 +247,17 @@ const ConditionImmunityFeatureComponent = (feature: FeatureConditionImmunity) =>
 		<>
 			<div className='feature-line'><strong>• {feature.name}</strong>: Immune to </div>
 			{immunities}
+		</>
+	);
+};
+
+const HeroicResourceComponent = (feature: FeatureHeroicResource) => {
+	return (
+		<>
+			<div className='feature-line'><strong>{`• ${feature.type}: `}</strong>{feature.name}</div>
+			{feature.data.details ?
+				<div className='feature-description'>{feature.data.details}</div>
+				: undefined}
 		</>
 	);
 };
@@ -253,6 +283,9 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.Bonus:
 			content = BonusFeatureComponent(feature, hero);
 			break;
+		case FeatureType.CharacteristicBonus:
+			content = CharacteristicBonusFeatureComponent(feature);
+			break;
 		case FeatureType.Text:
 		case FeatureType.Package:
 		case FeatureType.PackageContent:
@@ -269,13 +302,16 @@ export const FeatureComponent = (props: Props) => {
 			content = DamageModifierComponent(feature, hero);
 			break;
 		case FeatureType.Domain:
-		case FeatureType.DomainFeature:
 			content = DomainFeatureComponent(feature);
 			break;
 		case FeatureType.ConditionImmunity:
 			content = ConditionImmunityFeatureComponent(feature);
 			break;
+		case FeatureType.HeroicResource:
+			content = HeroicResourceComponent(feature);
+			break;
 		case FeatureType.Multiple:
+		case FeatureType.DomainFeature:
 			// Do nothing for these since the individual sub-features are also iterated over, no need to double up
 			break;
 		default:

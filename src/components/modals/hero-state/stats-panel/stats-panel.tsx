@@ -473,7 +473,7 @@ export const StatsPanel = (props: Props) => {
 							{
 								hero.state.heroTokens > 0 ?
 									<div className='alert-text'>
-										Spend a hero token when you fail a test (or succeed on a test with a consequence) to turn the failure into a success and to lose any consequence suffered.
+										Spend a hero token to reroll a test. You must use the new roll.
 									</div>
 									: null
 							}

@@ -204,6 +204,9 @@ export class CharacterSheetBuilder {
 					return f;
 				});
 
+			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.feature.id));
+			classFeatures = classFeatures.filter(f => this.includeFeature(f.feature, options));
+
 			const perkIds = classFeatures.map(f => f.feature)
 				.filter(f => (f.type === FeatureType.Perk) || f.id.startsWith('perk-'))
 				.flatMap(f => (f.type === FeatureType.Perk) ? f.data.selected.map(p => p.id) : f.id);
@@ -216,8 +219,6 @@ export class CharacterSheetBuilder {
 
 			const referenceFeatures = classFeatures.filter(f => dividedClassFeatures.referenceIds.includes(f.feature.id));
 			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(referenceFeatures);
-
-			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.feature.id));
 		}
 		// #endregion
 
@@ -394,6 +395,44 @@ export class CharacterSheetBuilder {
 		return (f.name.includes('Drawback')
 			|| /-d$/.test(f.id));
 	};
+
+	static minimalFeatureTypes: FeatureType[] = [
+		FeatureType.Text,
+		FeatureType.Package,
+		FeatureType.PackageContent
+	];
+
+	static nonBasicFeatureTypes: FeatureType[] = [
+		FeatureType.Text,
+		FeatureType.Package,
+		FeatureType.PackageContent,
+		FeatureType.Ability,
+		FeatureType.HeroicResource,
+		FeatureType.Kit
+	];
+
+	static includeFeature = (f: Feature, options: Options): boolean => {
+		switch (options.featuresInclude) {
+			case 'minimal':
+				return this.minimalFeatureTypes.includes(f.type);
+			case 'no-basic':
+				return this.isNotBasicFeature(f);
+			case 'all':
+			default:
+				return true;
+		}
+	};
+
+	static isNotBasicFeature(f: Feature) {
+		let notBasic = this.nonBasicFeatureTypes.includes(f.type);
+		if (notBasic && f.type === FeatureType.Kit) {
+			notBasic = f.description.length > 0;
+		} else if (notBasic && f.type === FeatureType.HeroicResource) {
+			notBasic = f.data.details.length > 0;
+		}
+
+		return notBasic;
+	}
 	// #endregion
 
 	// #region Ability Sheet

@@ -17,6 +17,7 @@
     }
 
     section.bordered {
+        @include common.beveled-fancy-curve(10px, 2px, common.$color-light);
         margin-bottom: 0;
 
         :last-child {

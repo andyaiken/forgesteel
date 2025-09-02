@@ -32,6 +32,10 @@ export class OptionsUpdateLogic {
 			options.colorSheet = true;
 		}
 
+		if (options.featuresInclude === undefined) {
+			options.featuresInclude = 'all';
+		}
+
 		if (options.classicSheetPageSize === undefined) {
 			options.classicSheetPageSize = SheetPageSize.Letter;
 		}

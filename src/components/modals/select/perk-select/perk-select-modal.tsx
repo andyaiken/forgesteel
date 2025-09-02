@@ -1,10 +1,12 @@
 import { Input, Space } from 'antd';
 import { Empty } from '../../../controls/empty/empty';
+import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { Modal } from '../../modal/modal';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
+import { PerkList } from '../../../../enums/perk-list';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
@@ -47,23 +49,32 @@ export const PerkSelectModal = (props: Props) => {
 				}
 				content={
 					<div className='perk-select-modal'>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								perks.map(p => (
-									<SelectablePanel
-										key={p.id}
-										onSelect={() => props.onSelect(p)}
-									>
-										<PerkPanel perk={p} hero={props.hero} mode={PanelMode.Full} options={props.options} />
-									</SelectablePanel>
-								))
-							}
-							{
-								perks.length === 0 ?
-									<Empty />
-									: null
-							}
-						</Space>
+						{
+							[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(list => {
+								const subset = perks.filter(p => p.list === list);
+								if (subset.length === 0) {
+									return null;
+								}
+
+								return (
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText level={1}>{list}</HeaderText>
+										{
+											subset.map((p, n) => (
+												<SelectablePanel key={n} onSelect={() => props.onSelect(p)}>
+													<PerkPanel perk={p} hero={props.hero} mode={PanelMode.Full} options={props.options} />
+												</SelectablePanel>
+											))
+										}
+									</Space>
+								);
+							})
+						}
+						{
+							perks.length === 0 ?
+								<Empty />
+								: null
+						}
 					</div>
 				}
 				onClose={props.onClose}

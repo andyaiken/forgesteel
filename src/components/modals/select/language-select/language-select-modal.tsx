@@ -45,32 +45,41 @@ export const LanguageSelectModal = (props: Props) => {
 				}
 				content={
 					<div className='language-select-modal'>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								languages.map((l, n) => (
-									<SelectablePanel
-										key={n}
-										onSelect={() => props.onSelect(l)}
-									>
-										<HeaderText tags={[ l.type ]}>{l.name}</HeaderText>
-										<Markdown text={l.description} />
-									</SelectablePanel>
-								))
-							}
-							<Divider />
-							<Expander title='Add a custom language'>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									<HeaderText>Custom Language</HeaderText>
-									<Input
-										placeholder='Custom Language Name'
-										allowClear={true}
-										value={customLanguage}
-										onChange={e => setCustomLanguage(e.target.value)}
-									/>
-									<Button block={true} disabled={!customLanguage} onClick={() => props.onSelect({ name: customLanguage, description: '', type: LanguageType.Cultural, related: [] })}>Select</Button>
-								</Space>
-							</Expander>
-						</Space>
+						{
+							[ LanguageType.Common, LanguageType.Cultural, LanguageType.Regional, LanguageType.Dead ].map(type => {
+								const subset = languages.filter(l => l.type === type);
+								if (subset.length === 0) {
+									return null;
+								}
+
+								return (
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText level={1}>{type}</HeaderText>
+										{
+											subset.map((l, n) => (
+												<SelectablePanel key={n} onSelect={() => props.onSelect(l)}>
+													<HeaderText>{l.name}</HeaderText>
+													<Markdown text={l.description} />
+												</SelectablePanel>
+											))
+										}
+									</Space>
+								);
+							})
+						}
+						<Divider />
+						<Expander title='Add a custom language'>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<HeaderText>Custom Language</HeaderText>
+								<Input
+									placeholder='Custom Language Name'
+									allowClear={true}
+									value={customLanguage}
+									onChange={e => setCustomLanguage(e.target.value)}
+								/>
+								<Button block={true} disabled={!customLanguage} onClick={() => props.onSelect({ name: customLanguage, description: '', type: LanguageType.Cultural, related: [] })}>Select</Button>
+							</Space>
+						</Expander>
 					</div>
 				}
 				onClose={props.onClose}

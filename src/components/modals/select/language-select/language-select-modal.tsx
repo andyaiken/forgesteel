@@ -53,7 +53,7 @@ export const LanguageSelectModal = (props: Props) => {
 								}
 
 								return (
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space key={type} direction='vertical' style={{ width: '100%' }}>
 										<HeaderText level={1}>{type}</HeaderText>
 										{
 											subset.map((l, n) => (

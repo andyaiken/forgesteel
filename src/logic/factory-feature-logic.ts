@@ -496,7 +496,7 @@ export class FactoryFeatureLogic {
 			type: FeatureType.SkillChoice,
 			data: {
 				options: data.options || [],
-				listOptions: data.listOptions || [],
+				listOptions: listOptions || [],
 				count: count,
 				selected: data.selected || []
 			}

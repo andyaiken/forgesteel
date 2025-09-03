@@ -86,11 +86,11 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				sections: [
 					FactoryLogic.createAbilitySectionText('The high elf chooses a damage type and condition from one of the following combinations: cold damage and slowed, poison damage and weakened, or corruption damage and frightened.'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '5 damage; R<1 chosen condition (save ends)',
-								tier2: '9 damage; R<2 chosen condition (save ends)',
-								tier3: '12 damage; R<3 chosen condition (save ends)'
-							})),
+						bonus: 2,
+						tier1: '5 damage; R<1 chosen condition (save ends)',
+						tier2: '9 damage; R<2 chosen condition (save ends)',
+						tier3: '12 damage; R<3 chosen condition (save ends)'
+					})),
 					FactoryLogic.createAbilitySectionText('**Special:** This ability can’t be used by a minion.')
 				]
 			})

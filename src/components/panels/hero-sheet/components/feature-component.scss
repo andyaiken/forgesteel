@@ -70,6 +70,9 @@
 
         p > em {
             display: block;
+            margin-top: -5px;
+            font-size: 1rem;
+            font-weight: 350;
         }
 
         blockquote, blockquote * {
@@ -128,6 +131,14 @@
             font-style: italic;
         }
     }
+
+    table, th, td {
+        border: 0;
+    }
+    th {
+        font-weight: 450;
+        border-bottom: 1px solid common.$color-light;
+    }
 }
 
 li .feature ul.feature-description {
@@ -142,5 +153,26 @@ li .feature ul.feature-description {
         width: 50px;
         height: 18px;
         margin: 1px 0;
+    }
+}
+
+.hero-sheet.color .feature {
+    .type {
+        font-weight: 380;
+        &.main-action {
+            color: common.$color-main-action;
+        }
+        &.triggered-action {
+            color: common.$color-triggered-action;
+        }
+        &.maneuver {
+            color: common.$color-maneuver;
+        }
+        &.performance {
+            color: common.$color-performance;
+        }
+        &.move {
+            color: common.$color-move;
+        }
     }
 }

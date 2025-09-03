@@ -67,6 +67,12 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const setFeaturesInclude = (value: 'minimal' | 'no-basic' | 'all') => {
+		const copy = Utils.copy(props.options);
+		copy.featuresInclude = value;
+		props.setOptions(copy);
+	};
+
 	const setAbilitySort = (value: 'size' | 'type') => {
 		const copy = Utils.copy(props.options);
 		copy.abilitySort = value;
@@ -255,6 +261,18 @@ export const OptionsPanel = (props: Props) => {
 					<>
 						<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
 						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+						<Divider size='small'>Include Class Features:</Divider>
+						<Segmented
+							name='abilitySort'
+							block={true}
+							options={[
+								{ value: 'minimal', label: 'Minimal' },
+								{ value: 'no-basic', label: 'No Simple' },
+								{ value: 'all', label: 'All' }
+							]}
+							value={props.options.featuresInclude}
+							onChange={setFeaturesInclude}
+						/>
 						<Divider>Abilities</Divider>
 						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 						<Divider size='small'>Sort Abilities By</Divider>

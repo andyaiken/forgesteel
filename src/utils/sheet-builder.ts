@@ -85,6 +85,11 @@ export class CharacterSheetBuilder {
 			sheet.className = hero.class.name;
 			sheet.subclassTypeName = hero.class.subclassName;
 			sheet.subclassName = hero.class.subclasses.find(s => s.selected)?.name;
+			// Conduit subclass fix
+			if (hero.class.name === 'Conduit') {
+				sheet.subclassTypeName = 'Domains';
+				sheet.subclassName = HeroLogic.getDomains(hero).map(d => d.name).join(', ');
+			}
 
 			sheet.level = hero.class.level;
 
@@ -191,9 +196,16 @@ export class CharacterSheetBuilder {
 
 		// #region Class Features
 		if (hero.class) {
+			const refAbilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
-				.filter(f => f.feature.type !== FeatureType.ClassAbility);
+				.map(f => {
+					f.feature = CharacterSheetFormatter.fixClassAbilityNames(f.feature, refAbilities);
+					return f;
+				});
+
+			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.feature.id));
+			classFeatures = classFeatures.filter(f => this.includeFeature(f.feature, options));
 
 			const perkIds = classFeatures.map(f => f.feature)
 				.filter(f => (f.type === FeatureType.Perk) || f.id.startsWith('perk-'))
@@ -207,8 +219,6 @@ export class CharacterSheetBuilder {
 
 			const referenceFeatures = classFeatures.filter(f => dividedClassFeatures.referenceIds.includes(f.feature.id));
 			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(referenceFeatures);
-
-			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.feature.id));
 		}
 		// #endregion
 
@@ -265,7 +275,7 @@ export class CharacterSheetBuilder {
 
 		// Culture
 		if (hero.culture) {
-			const cultureFeatures = FeatureLogic.getFeaturesFromCulture(hero.culture, hero).map(f => f.feature);
+			const cultureFeatures = allFeatures.filter(f => f.source === hero.culture?.name).map(f => f.feature);
 			sheet.culture = hero.culture;
 			sheet.cultureFeatures = cultureFeatures;
 
@@ -385,6 +395,44 @@ export class CharacterSheetBuilder {
 		return (f.name.includes('Drawback')
 			|| /-d$/.test(f.id));
 	};
+
+	static minimalFeatureTypes: FeatureType[] = [
+		FeatureType.Text,
+		FeatureType.Package,
+		FeatureType.PackageContent
+	];
+
+	static nonBasicFeatureTypes: FeatureType[] = [
+		FeatureType.Text,
+		FeatureType.Package,
+		FeatureType.PackageContent,
+		FeatureType.Ability,
+		FeatureType.HeroicResource,
+		FeatureType.Kit
+	];
+
+	static includeFeature = (f: Feature, options: Options): boolean => {
+		switch (options.featuresInclude) {
+			case 'minimal':
+				return this.minimalFeatureTypes.includes(f.type);
+			case 'no-basic':
+				return this.isNotBasicFeature(f);
+			case 'all':
+			default:
+				return true;
+		}
+	};
+
+	static isNotBasicFeature(f: Feature) {
+		let notBasic = this.nonBasicFeatureTypes.includes(f.type);
+		if (notBasic && f.type === FeatureType.Kit) {
+			notBasic = f.description.length > 0;
+		} else if (notBasic && f.type === FeatureType.HeroicResource) {
+			notBasic = f.data.details.length > 0;
+		}
+
+		return notBasic;
+	}
 	// #endregion
 
 	// #region Ability Sheet

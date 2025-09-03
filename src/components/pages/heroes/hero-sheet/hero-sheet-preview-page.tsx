@@ -1,4 +1,4 @@
-import { Divider, Drawer, FloatButton, Segmented } from 'antd';
+import { Divider, Drawer, FloatButton, Segmented, Space } from 'antd';
 import { useMemo, useState } from 'react';
 import { Career } from '../../../../models/career';
 import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
@@ -49,9 +49,21 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const setColorAbilityCards = (value: boolean) => {
+	const setColorSheet = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.colorSheet = value;
+		props.setOptions(copy);
+	};
+
+	const setFeaturesInclude = (value: 'minimal' | 'no-basic' | 'all') => {
+		const copy = Utils.copy(props.options);
+		copy.featuresInclude = value;
+		props.setOptions(copy);
+	};
+
+	const setAbilitySort = (value: 'size' | 'type') => {
+		const copy = Utils.copy(props.options);
+		copy.abilitySort = value;
 		props.setOptions(copy);
 	};
 
@@ -204,28 +216,54 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					open={drawerOpen}
 					style={{ padding: '10px' }}
 				>
+
 					<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
-					<Toggle label='Color ability cards' value={props.options.colorSheet} onChange={setColorAbilityCards} />
-					<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
-					<Divider>Page Size</Divider>
+					<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+					<Divider size='small'>Include Class Features:</Divider>
 					<Segmented
-						name='pagesize'
-						block={true}
-						options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
-						value={props.options.classicSheetPageSize}
-						onChange={setClassicSheetPageSize}
-					/>
-					<Divider>Page Orientation</Divider>
-					<Segmented
-						name='orientation'
+						name='abilitySort'
 						block={true}
 						options={[
-							{ value: 'portrait', label: 'Portrait' },
-							{ value: 'landscape', label: 'Landscape' }
+							{ value: 'minimal', label: 'Minimal' },
+							{ value: 'no-basic', label: 'No Simple' },
+							{ value: 'all', label: 'All' }
 						]}
-						value={props.options.pageOrientation}
-						onChange={setPageOrientation}
+						value={props.options.featuresInclude}
+						onChange={setFeaturesInclude}
 					/>
+					<Divider>Abilities</Divider>
+					<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+					<Divider size='small'>Sort Abilities By</Divider>
+					<Segmented
+						name='abilitySort'
+						block={true}
+						options={[
+							{ value: 'size', label: 'Length' },
+							{ value: 'type', label: 'Action Type' }
+						]}
+						value={props.options.abilitySort}
+						onChange={setAbilitySort}
+					/>
+					<Divider>Layout</Divider>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<Segmented
+							name='pagesize'
+							block={true}
+							options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
+							value={props.options.classicSheetPageSize}
+							onChange={setClassicSheetPageSize}
+						/>
+						<Segmented
+							name='orientation'
+							block={true}
+							options={[
+								{ value: 'portrait', label: 'Portrait' },
+								{ value: 'landscape', label: 'Landscape' }
+							]}
+							value={props.options.pageOrientation}
+							onChange={setPageOrientation}
+						/>
+					</Space>
 				</Drawer>
 			</div>
 		);

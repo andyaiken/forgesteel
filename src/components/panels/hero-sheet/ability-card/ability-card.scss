@@ -17,6 +17,7 @@
     }
 
     section.bordered {
+        @include common.beveled-fancy-curve(10px, 2px, common.$color-light);
         margin-bottom: 0;
 
         :last-child {
@@ -203,12 +204,19 @@
     &.no-action h2 {
         @include common.bottom-border-fancy(common.$color-medium);
     }
+    &.maneuver h2 {
+        @include common.bottom-border-fancy-4(common.$color-medium);
+    }
+    &.triggered-action h2,
+    &.free-triggered-action h2 {
+        @include common.bottom-border-fancy-5(common.$color-medium);
+    }
     &.free-strike h2 {
         @include common.bottom-border-fancy-3(common.$color-medium);
     }
 }
 
-.hero-sheet .color .ability.card {
+.hero-sheet.color .ability.card {
     @mixin color-ability-card($color) {
         section.bordered {
             @include common.beveled(10px, 2px, $color);
@@ -230,7 +238,7 @@
     &.maneuver {
         @include color-ability-card(common.$color-maneuver);
         h2 {
-            @include common.bottom-border-fancy-2(common.$color-maneuver);
+            @include common.bottom-border-fancy-4(common.$color-maneuver);
         }
     }
 
@@ -238,7 +246,7 @@
     &.free-triggered-action {
         @include color-ability-card(common.$color-triggered-action);
         h2 {
-            @include common.bottom-border-fancy-2(common.$color-triggered-action);
+            @include common.bottom-border-fancy-5(common.$color-triggered-action);
         }
     }
 

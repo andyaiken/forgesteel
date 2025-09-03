@@ -345,6 +345,9 @@
         .feature-reference {
             flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
         }
+        .feature-reference.wide {
+            flex-basis: calc(3 * ((100% - 2 * var(--gap)) / 3) + 2 * var(--gap));
+        }
     }
 
     &.landscape .abilities.page {
@@ -412,6 +415,15 @@
                 margin-bottom: 0;
             }
             margin-bottom: 10px;
+        }
+
+        li em {
+            @include common.font-serif();
+        }
+
+        li > em {
+            font-weight: 400;
+            font-size: 1.1rem;
         }
     }
 

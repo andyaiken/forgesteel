@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureHeroicResource, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -7,6 +7,7 @@ import { CharacterSheetFormatter } from '../../../../utils/character-sheet-forma
 import { DamageModifier } from '../../../../models/damage-modifier';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { FeatureType } from '../../../../enums/feature-type';
+import { Format } from '../../../../utils/format';
 import { Fragment } from 'react';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
@@ -164,14 +165,47 @@ const AbilityFeatureComponent = (feature: FeatureAbility) => {
 		}
 	};
 
+	const type = getAbilityType(feature.data.ability)?.toString() || '';
+	const typeClasses = [ 'type' ];
+	typeClasses.push(type?.toLocaleLowerCase().split(' ').join('-'));
+
 	return (
 		<>
 			<div className='feature-title'>
 				<img src={abilityIcon} alt='Ability' />
 				<span className='ability-name'>{feature.name}</span>
-				<span className='type'>{getAbilityType(feature.data.ability)}</span>
+				<span className={typeClasses.join(' ')}>{type}</span>
 			</div>
 			<div className='feature-description'><em>{feature.description.replace(/^\s+/, '')}</em></div>
+		</>
+	);
+};
+
+const ClassAbilityFeatureComponent = (feature: FeatureClassAbility) => {
+	let abilityCost = Format.capitalize(feature.data.cost.toString());
+	if (typeof feature.data.cost === 'number') {
+		abilityCost += ' Cost';
+	}
+	let ability = 'Ability';
+	if (feature.data.count > 1)
+		ability = 'Abilities';
+
+	let selectedOptions;
+	if (feature.data.selectedIDs.length) {
+		selectedOptions = feature.data.selectedIDs.map(s => {
+			return (<div className='feature-iteration' key={s}>{s}</div>);
+		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection'>Unselected</div>
+		];
+	}
+	return (
+		<>
+			<div className='feature-line'>
+				• {abilityCost} Class {ability}:
+			</div>
+			{selectedOptions}
 		</>
 	);
 };
@@ -220,7 +254,7 @@ const DamageModifierComponent = (feature: FeatureDamageModifier, hero: Hero) => 
 	);
 };
 
-const DomainFeatureComponent = (feature: FeatureDomain) => {
+const DomainFeatureComponent = (feature: FeatureDomain | FeatureDomainFeature) => {
 	let selectedOptions;
 	if (feature.data.selected.length) {
 		selectedOptions = feature.data.selected.map(s => {
@@ -294,6 +328,9 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.Ability:
 			content = AbilityFeatureComponent(feature);
 			break;
+		case FeatureType.ClassAbility:
+			content = ClassAbilityFeatureComponent(feature);
+			break;
 		case FeatureType.AbilityDistance:
 		case FeatureType.AbilityDamage:
 			content = AbilityModifierComponent(feature, hero);
@@ -302,6 +339,7 @@ export const FeatureComponent = (props: Props) => {
 			content = DamageModifierComponent(feature, hero);
 			break;
 		case FeatureType.Domain:
+		case FeatureType.DomainFeature:
 			content = DomainFeatureComponent(feature);
 			break;
 		case FeatureType.ConditionImmunity:
@@ -311,7 +349,6 @@ export const FeatureComponent = (props: Props) => {
 			content = HeroicResourceComponent(feature);
 			break;
 		case FeatureType.Multiple:
-		case FeatureType.DomainFeature:
 			// Do nothing for these since the individual sub-features are also iterated over, no need to double up
 			break;
 		default:

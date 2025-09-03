@@ -9,16 +9,17 @@ import './feature-reference-card.scss';
 
 interface Props {
 	character: CharacterSheet;
-	classes?: string | string[];
+	columns?: boolean;
 }
 
 export const FeatureReferenceCard = (props: Props) => {
 	const character = props.character;
 
-	let classes = [ 'feature-reference', 'card' ];
-	if (props.classes) {
-		const additionalClasses = (typeof props.classes === 'string') ? [ props.classes ] : props.classes;
-		classes = classes.concat(additionalClasses);
+	const columns = props.columns || false;
+
+	const cardClasses = [ 'feature-reference', 'card' ];
+	if (columns) {
+		cardClasses.push('wide');
 	}
 
 	const getFeatureSections = () => {
@@ -30,31 +31,59 @@ export const FeatureReferenceCard = (props: Props) => {
 				return m;
 			}, new Map<string, Feature[]>());
 
+			const containerClasses = [ 'features-container' ];
+			if (columns) {
+				containerClasses.push('two-column');
+			}
+
 			const sections: JSX.Element[] = [];
 			bySource.forEach((features, source) => {
 				features.sort(CharacterSheetFormatter.sortFeatures);
 				sections.push(
 					<Fragment key={source}>
-						<h3>{source}</h3>
-						<ul className='features-container'>
-							{features.map(f =>
-								<li key={f.id}>
-									<FeatureComponent
-										feature={CharacterSheetFormatter.enhanceFeature(f)}
-										hero={character.hero}
-									/>
-								</li>
-							)}
-						</ul>
+						<li><h3>{source}</h3></li>
+						{features.map(f =>
+							<li key={f.id}>
+								<FeatureComponent
+									feature={CharacterSheetFormatter.enhanceFeature(f)}
+									hero={character.hero}
+								/>
+							</li>
+						)}
 					</Fragment>
 				);
 			});
-			return sections;
+
+			return (
+				<ul className={containerClasses.join(' ')}>
+					{sections}
+				</ul>
+			);
+
+			// bySource.forEach((features, source) => {
+			// 	features.sort(CharacterSheetFormatter.sortFeatures);
+			// 	sections.push(
+			// 		<Fragment key={source}>
+			// 			<h3>{source}</h3>
+			// 			<ul className={containerClasses.join(' ')}>
+			// 				{features.map(f =>
+			// 					<li key={f.id}>
+			// 						<FeatureComponent
+			// 							feature={CharacterSheetFormatter.enhanceFeature(f)}
+			// 							hero={character.hero}
+			// 						/>
+			// 					</li>
+			// 				)}
+			// 			</ul>
+			// 		</Fragment>
+			// 	);
+			// });
+			// return sections;
 		}
 	};
 
 	return (
-		<div className={classes.join(' ')}>
+		<div className={cardClasses.join(' ')}>
 			<h2>Other Features & Reference</h2>
 			{getFeatureSections()}
 		</div>

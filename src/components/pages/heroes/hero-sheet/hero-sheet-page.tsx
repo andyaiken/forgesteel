@@ -58,6 +58,21 @@ export const HeroSheetPage = (props: Props) => {
 		[ hero, props.sourcebooks, props.options ]
 	);
 
+	const sheetClasses = useMemo(
+		() => {
+			const classes = [
+				'hero-sheet',
+				props.options.classicSheetPageSize.toLowerCase(),
+				props.options.pageOrientation
+			];
+			if (props.options.colorSheet) {
+				classes.push('color');
+			}
+			return classes;
+		},
+		[ props.options.classicSheetPageSize, props.options.pageOrientation, props.options.colorSheet ]
+	);
+
 	let pageNum = 0;
 	const addPageId = (hero: Hero): string => {
 		pageNum += 1;
@@ -168,12 +183,17 @@ export const HeroSheetPage = (props: Props) => {
 		];
 
 		if (character.featuresReferenceOther?.length) {
-			const len = 4 + CharacterSheetFormatter.calculateFeaturesSize(character.featuresReferenceOther, 2 * layout.lineLen);
-			// console.log('Reference length: ', len);
+			let h = 4 + CharacterSheetFormatter.calculateFeaturesSize(character.featuresReferenceOther, 2 * layout.lineLen);
+			let w = 2;
+			// console.log('Reference length: ', h);
+			if (h > 60) {
+				w = 3;
+				h = 4 + Math.ceil(CharacterSheetFormatter.calculateFeaturesSize(character.featuresReferenceOther, 1.4 * layout.lineLen) * 0.53);
+			}
 			required.unshift({
-				element: <FeatureReferenceCard character={character} key='feature-reference' />,
-				width: 2,
-				height: len,
+				element: <FeatureReferenceCard character={character} columns={w > 2} key='feature-reference' />,
+				width: w,
+				height: h,
 				shown: false
 			});
 		}
@@ -323,9 +343,6 @@ export const HeroSheetPage = (props: Props) => {
 				refCards = getFillerCards(spacesToFill, spaceY, rowY, extraCards);
 			}
 			const abilityPageClasses = [ 'abilities', 'page' ];
-			if (props.options.colorSheet) {
-				abilityPageClasses.push('color');
-			}
 			return (
 				<Fragment key={pageNum}>
 					<hr className='dashed' />
@@ -349,7 +366,7 @@ export const HeroSheetPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<main id='hero-sheet-page'>
-					<div className={[ 'hero-sheet', props.options.classicSheetPageSize.toLowerCase(), props.options.pageOrientation ].join(' ')} id={hero.id}>
+					<div className={sheetClasses.join(' ')} id={hero.id}>
 						<div className='page page-1' id={addPageId(hero)}>
 							<HeroHeaderCard
 								character={character}

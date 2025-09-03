@@ -529,10 +529,10 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'talent-10-2',
 					name: 'Clear Mind',
-					tag: 'move 2',
+					tag: 'move 3',
 					trigger: 'The first time each combat round that a creature is force moved',
-					value: '2',
-					replacesTags: [ 'move' ]
+					value: '3',
+					replacesTags: [ 'move', 'move 2' ]
 				}),
 				FactoryLogic.feature.createMultiple({
 					id: 'talent-10-3',

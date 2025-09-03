@@ -10,6 +10,7 @@ import { bugbear } from './monsters/bugbear';
 import { chimera } from './monsters/chimera';
 import { demon } from './monsters/demon';
 import { demon2nd } from './monsters/demon-2nd';
+import { demon3rd } from './monsters/demon-3rd';
 import { demon4th } from './monsters/demon-4th';
 import { devil } from './monsters/devil';
 import { draconian } from './monsters/draconian';
@@ -66,6 +67,7 @@ export class MonsterData {
 	static chimera = chimera;
 	static demon = demon;
 	static demon2nd = demon2nd;
+	static demon3rd = demon3rd;
 	static demon4th = demon4th;
 	static devil = devil;
 	static draconian = draconian;

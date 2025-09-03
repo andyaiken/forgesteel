@@ -103,7 +103,7 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 				FactoryLogic.feature.createSoloMonster({
 					id: 'dragon-crucible-feature-2',
 					name: 'the dragon',
-					endEfect: 10
+					endEffect: 10
 				}),
 				FactoryLogic.feature.create({
 					id: 'dragon-crucible-feature-3',

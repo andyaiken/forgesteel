@@ -91,7 +91,7 @@ export const manticore: MonsterGroup = {
 				FactoryLogic.feature.createSoloMonster({
 					id: 'manticore-feature-1',
 					name: 'the manticore',
-					endEfect: 10
+					endEffect: 10
 				}),
 				FactoryLogic.feature.create({
 					id: 'manticore-feature-2',

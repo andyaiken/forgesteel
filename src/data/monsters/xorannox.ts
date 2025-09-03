@@ -116,7 +116,8 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 				FactoryLogic.feature.createSoloMonster({
 					id: 'xorannox-feature-1',
 					name: 'xorannox',
-					endEfect: 10
+					gender: 'm',
+					endEffect: 10
 				}),
 				FactoryLogic.feature.create({
 					id: 'xorannox-1-feature-2',

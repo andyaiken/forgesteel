@@ -99,7 +99,7 @@ A meteor dragon’s body is infused with crystalline starlight, which they can c
 				FactoryLogic.feature.createSoloMonster({
 					id: 'dragon-meteor-feature-2',
 					name: 'the dragon',
-					endEfect: 20
+					endEffect: 20
 				}),
 				FactoryLogic.feature.create({
 					id: 'dragon-meteor-feature-3',

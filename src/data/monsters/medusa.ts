@@ -127,7 +127,7 @@ Followers of the gods who imposes this punishment spread terrifying myths about 
 				FactoryLogic.feature.createSoloMonster({
 					id: 'medusa-feature-2',
 					name: 'the medusa',
-					endEfect: 10
+					endEffect: 10
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

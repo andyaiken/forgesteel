@@ -114,7 +114,7 @@ export const kingfissureWorm: MonsterGroup = {
 				FactoryLogic.feature.createSoloMonster({
 					id: 'kingfissure-worm-1-feature-1',
 					name: 'the kingfissure worm',
-					endEfect: 10
+					endEffect: 10
 				}),
 				FactoryLogic.feature.create({
 					id: 'kingfissure-worm-1-feature-2',

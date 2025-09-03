@@ -103,7 +103,7 @@ The effects that surround an omen dragon also mean that new life cannot begin. C
 				FactoryLogic.feature.createSoloMonster({
 					id: 'dragon-omen-feature-2',
 					name: 'the dragon',
-					endEfect: 15
+					endEffect: 15
 				}),
 				FactoryLogic.feature.create({
 					id: 'dragon-omen-feature-3a',

@@ -95,7 +95,7 @@ One must also be wary of the area around a shambling mound. Their vines reach ou
 				FactoryLogic.feature.createSoloMonster({
 					id: 'shambling-mound-feature-1',
 					name: 'the shambling mound',
-					endEfect: 10
+					endEffect: 10
 				}),
 				FactoryLogic.feature.create({
 					id: 'shambling-mound-feature-2',

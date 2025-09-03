@@ -131,7 +131,7 @@ In his mind, everything that is not Lord Syuul is flawed. When his new device is
 					id: 'lord-syuul-feature-1',
 					name: 'Lord Syuul',
 					gender: 'm',
-					endEfect: 10
+					endEffect: 10
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

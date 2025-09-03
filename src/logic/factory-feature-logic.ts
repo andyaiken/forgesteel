@@ -503,7 +503,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createSoloMonster = (data: { id: string, name: string, gender?: 'm' | 'f' | 'n', endEfect?: number }): FeatureText => {
+	createSoloMonster = (data: { id: string, name: string, gender?: 'm' | 'f' | 'n', endEffect?: number }): FeatureText => {
 		const capitalizedName = data.name.split(' ').map((n, i) => i === 0 ? Format.capitalize(n) : n).join(' ');
 		const genderWithDefault = data.gender ?? 'n';
 		const heSheThey = ({ m: 'he', f: 'she', n: 'they' } as const)[ genderWithDefault ];
@@ -513,8 +513,8 @@ export class FactoryFeatureLogic {
 			id: data.id,
 			name: 'Solo Monster',
 			description: `
-* **Solo Turns** ${capitalizedName} takes up to two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively. ${Format.capitalize(heSheThey)} can use two main actions on each of ${hisHerTheir} turns. While dazed, ${data.name} can take one action and one maneuver per turn.
-* **End Effect** At the end of ${hisHerTheir} turn, ${data.name} can take ${data.endEfect || 5} damage to end one *save ends* effect affecting ${himHerThem}. This damage can’t be reduced in any way.`,
+* **End Effect** At the end of each of ${hisHerTheir} turns, ${data.name} can take ${data.endEffect || 5} damage to end one effect on ${himHerThem} that can be ended by a saving throw. This damage can’t be reduced in any way.
+* **Solo Turns** ${capitalizedName} can take two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively.`,
 			type: FeatureType.Text,
 			data: null
 		};

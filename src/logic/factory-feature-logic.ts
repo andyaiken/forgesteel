@@ -480,9 +480,14 @@ export class FactoryFeatureLogic {
 	createSkillChoice = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
 		const count = data.count || 1;
 		const options = data.options || [];
-		const listOptions = data.listOptions || [];
+		let listOptions = data.listOptions || [];
 
 		const prefix = (listOptions.length < 5) ? ((options.length === 0) && (listOptions.length > 0) ? `${listOptions.join(' / ')} ` : '') : '';
+
+		if ((options.length === 0) && (listOptions.length === 0)) {
+			// No options provided - let the user choose any skill
+			listOptions = [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ];
+		}
 
 		return {
 			id: data.id,

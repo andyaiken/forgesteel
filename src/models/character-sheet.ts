@@ -1,8 +1,8 @@
-import { Feature, FeatureHeroicResource } from './feature';
 import { Condition } from './condition';
 import { ConditionType } from '../enums/condition-type';
 import { Culture } from './culture';
 import { Element } from './element';
+import { Feature } from './feature';
 import { Hero } from './hero';
 import { Item } from './item';
 import { Perk } from './perk';
@@ -47,7 +47,11 @@ export interface CharacterSheet {
 
 	heroicResourceName?: string;
 	heroicResourceCurrent?: number;
-	heroicResourceFeature?: FeatureHeroicResource;
+	heroicResourceGains?: {
+		tag: string;
+		trigger: string;
+		value: string;
+	}[];
 
 	surgeDamageAmount?: string;
 	surgesCurrent?: number;
@@ -98,14 +102,10 @@ export interface CharacterSheet {
 	ancestryTraits?: Feature[];
 
 	// Career
-	careerName?: string;
-	careerBenefits?: Feature[];
-	careerInsightingIncident?: Element;
+	career?: CareerSheet;
 
 	// Complication
-	complicationName?: string;
-	complicationBenefits?: Feature[];
-	complicationDrawbacks?: Feature[];
+	complication?: ComplicationSheet;
 
 	// Skills
 	allSkills?: Map<string, string[]>;
@@ -131,12 +131,30 @@ export interface CharacterSheet {
 	triggeredActions: AbilitySheet[];
 	otherRollAbilities: AbilitySheet[];
 	otherAbilities: AbilitySheet[];
+	standardAbilities: AbilitySheet[];
 
 	// Other Features and Reference
 	featuresReferenceOther?: {
 		feature: Feature,
 		source: string
 	}[];
+
+	notes: string;
+}
+
+export interface CareerSheet {
+	id: string;
+	name: string;
+	benefits: Feature[];
+	incitingIncident?: Element;
+}
+
+export interface ComplicationSheet {
+	id: string;
+	name: string;
+	description: string;
+	benefits: Feature[];
+	drawbacks: Feature[];
 }
 
 export interface ProjectSheet {
@@ -151,6 +169,7 @@ export interface ProjectSheet {
 export interface ItemSheet {
 	id: string;
 	item: Item;
+	effect: string;
 	features?: Feature[];
 }
 
@@ -161,10 +180,12 @@ export interface AbilitySheet {
 	isSignature: boolean;
 	abilityType?: string;
 	actionType?: string;
+	description?: string;
 	keywords?: string;
 	distance?: string;
 	target?: string;
 	trigger?: string;
+	qualifiers?: string[];
 	effect?: string;
 
 	hasPowerRoll: boolean;

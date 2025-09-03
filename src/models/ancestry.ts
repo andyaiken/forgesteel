@@ -3,4 +3,5 @@ import { Feature } from './feature';
 
 export interface Ancestry extends Element {
 	features: Feature[];
+	ancestryPoints: number;
 }

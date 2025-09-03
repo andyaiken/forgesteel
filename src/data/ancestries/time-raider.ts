@@ -174,7 +174,8 @@ export const timeRaider: Ancestry = {
 					value: 2
 				}
 			],
-			count: 3
+			count: 'ancestry'
 		})
-	]
+	],
+	ancestryPoints: 3
 };

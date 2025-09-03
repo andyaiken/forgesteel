@@ -1,7 +1,8 @@
-import { AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
+import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
 
-import { AbilitySheet } from '../models/character-sheet';
+import { AbilitySheet, ItemSheet } from '../models/character-sheet';
 import { Characteristic } from '../enums/characteristic';
+import { Collections } from './collections';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Utils } from './utils';
@@ -32,7 +33,6 @@ export class CharacterSheetFormatter {
 
 	static cleanupFeature = (feature: Feature): Feature => {
 		const result = Utils.copy(feature);
-
 		if (this.isVERYLongFeature(feature)) {
 			result.description = '*See Reference for details…*';
 		} else if (this.isLongFeature(feature)) {
@@ -53,6 +53,17 @@ export class CharacterSheetFormatter {
 			.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
 			.replace(/\n\* /g, '\n   • ');
 		return text;
+	};
+
+	static fixClassAbilityNames = (feature: Feature, abilities: Ability[]) => {
+		let result = feature;
+		if (result.type === FeatureType.ClassAbility) {
+			result = Utils.copy(result);
+			result.data.selectedIDs = result.data.selectedIDs.map(id => {
+				return abilities.find(a => a.id === id)?.name || id;
+			});
+		}
+		return result;
 	};
 
 	static enhanceFeatures = (features: Feature[]): Feature[] => {
@@ -79,7 +90,7 @@ export class CharacterSheetFormatter {
 	};
 
 	static shortenText = (text: string, splitAt: number = 2) => {
-		const split = text.split('\n');
+		const split = text.trim().split('\n');
 		if (split.length > splitAt) {
 			text = split.slice(0, splitAt).join('\n') + '\n*…(continued in reference)…*';
 		}
@@ -87,7 +98,8 @@ export class CharacterSheetFormatter {
 	};
 
 	static isLongFeature = (f: Feature, check: number = 2): boolean => {
-		return f.description.split('\n').length > check;
+		return ([ FeatureType.Text, FeatureType.Package ].includes(f.type))
+			&& (f.description.trim().split('\n').length > check);
 	};
 
 	// There are some that might just be *too* long for the Class Features section,
@@ -98,16 +110,85 @@ export class CharacterSheetFormatter {
 		return f.name.includes('Persistent Magic');
 	};
 
-	static isBasicFeature = (f: Feature): boolean => {
-		return [
-			FeatureType.HeroicResource,
-			FeatureType.Bonus,
-			FeatureType.CharacteristicBonus,
-			FeatureType.LanguageChoice,
-			FeatureType.SkillChoice,
-			FeatureType.Perk,
-			FeatureType.Choice
-		].includes(f.type);
+	static divideFeatures = (features: Feature[], availableSpace: number) => {
+		const displayed: Feature[] = [];
+		const reference: Feature[] = [];
+
+		features.sort(this.sortFeatures);
+		let size = 0;
+		features.forEach(f => {
+			let display = false;
+			let fSize = 1;
+			if (size < availableSpace) {
+				fSize = this.calculateFeatureSize(f, 50);
+				if (this.isLongFeature(f)) {
+					reference.push(f);
+				}
+				if (size + fSize <= availableSpace) {
+					display = true;
+				}
+			}
+			size += fSize;
+
+			if (display) {
+				displayed.push(f);
+			} else {
+				reference.push(f);
+			}
+		});
+
+		return {
+			displayed: displayed,
+			referenceIds: Collections.distinct(reference.map(f => f.id), f => f)
+		};
+	};
+
+	static calculateFeatureSize = (f: Feature, lineWidth: number, countShortenedText: boolean = true): number => {
+		let size = 1;
+		if ([ FeatureType.Multiple, FeatureType.DomainFeature ].includes(f.type)) {
+			size = 0;
+		} else if (this.isLongFeature(f)) {
+			size = 2;
+			if (countShortenedText) {
+				size += this.countLines(f.description.trim().split('\n')[0], lineWidth);
+			} else {
+				size += this.countLines(f.description, lineWidth);
+			}
+		} else if (f.type === FeatureType.Text) {
+			size = 2 + this.countLines(f.description, lineWidth);
+		} else if (f.type === FeatureType.Ability) {
+			size = 3;
+		} else if (f.type === FeatureType.DamageModifier) {
+			size = 3 + (2 * Collections.distinct(f.data.modifiers, m => m.type).length);
+		} else if (f.type === FeatureType.HeroicResource) {
+			size = 2 + (2 * this.countLines(f.data.details, lineWidth));
+		}
+
+		return size;
+	};
+
+	static calculateFeaturesSize = (features: { feature: Feature, source: string }[] | undefined, lineWidth: number): number => {
+		let size = 0;
+		if (features) {
+			features.forEach(f => {
+				size += this.calculateFeatureSize(f.feature, lineWidth, false);
+			});
+
+			size += 2 * Collections.distinct(features, f => f.source).length;
+		}
+		return size;
+	};
+
+	static calculateInventorySize = (items: ItemSheet[] | undefined, lineWidth: number): number => {
+		let size = 0;
+		if (items) {
+			items.forEach(i => {
+				if (i.features)
+					size += i.features.reduce((s, f) => s += this.calculateFeatureSize(f, lineWidth, false), 0);
+				size += 2;
+			});
+		}
+		return size;
 	};
 
 	static featureTypeOrder: FeatureType[] = [
@@ -115,12 +196,12 @@ export class CharacterSheetFormatter {
 		FeatureType.Package,
 		FeatureType.PackageContent,
 		FeatureType.Ability,
+		FeatureType.HeroicResource,
+		FeatureType.Domain,
+		FeatureType.Kit,
 		FeatureType.ClassAbility,
 		FeatureType.AbilityDistance,
 		FeatureType.DamageModifier,
-		FeatureType.Kit,
-		FeatureType.HeroicResource,
-		FeatureType.Domain,
 		FeatureType.ConditionImmunity
 	];
 
@@ -159,25 +240,88 @@ export class CharacterSheetFormatter {
 	};
 
 	static sortAbilitiesByLength = (a: AbilitySheet, b: AbilitySheet): number => {
-		const aLength = this.calculateAbilitySize(a);
-		const bLength = this.calculateAbilitySize(b);
+		const aLength = this.calculateAbilitySize(a, 50);
+		const bLength = this.calculateAbilitySize(b, 50);
 
 		return aLength - bLength;
 	};
 
-	static calculateAbilitySize = (ability: AbilitySheet): number => {
+	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
 		let size = 0;
-		size += this.countLines(ability.rollT1Effect, 40);
-		size += this.countLines(ability.rollT2Effect, 40);
-		size += this.countLines(ability.rollT3Effect, 40);
-		size += this.countLines(ability.effect, 50);
+		const rollLineLen = Math.ceil(0.8 * lineWidth);
+		if (ability) {
+			size += 4; // title
+			size += this.countLines(ability.description, lineWidth);
+			size += 4; // keywords, distance, etc
+			size += ability.hasPowerRoll ? 2 : 0;
+			size += 2 * this.countLines(ability.rollT1Effect, rollLineLen);
+			size += 2 * this.countLines(ability.rollT2Effect, rollLineLen);
+			size += 2 * this.countLines(ability.rollT3Effect, rollLineLen);
+			if (ability.trigger)
+				size += 1 + this.countLines(ability.trigger, lineWidth);
+			if (ability.effect) {
+				const effectSize = this.countLines(ability.effect, lineWidth, 1);
+				// console.log('Effect size: ', effectSize);
+				size += 2 + effectSize;
+			}
+		}
 		return size;
 	};
 
-	static countLines = (text: string | undefined, lineWidth: number) => {
-		return text?.split('\n').reduce((n, l) => {
-			return n + Math.ceil(l.length / lineWidth);
+	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0) => {
+		return text?.trim().split('\n').reduce((n, l) => {
+			let len = Math.max(emptyLineSize, Math.ceil(l.length / lineWidth));
+			if (l.startsWith('*'))// list item, will be indented
+				len = Math.ceil(l.length / (lineWidth - 5));
+			return n + len;
 		}, 0) || 0;
+	};
+
+	static getLargestSize = (abilities: AbilitySheet[], lineLength: number): number => {
+		const largestSize = abilities.reduce((h, a) => {
+			return Math.max(h, this.calculateAbilitySize(a, lineLength));
+		}, 0);
+		return largestSize;
+	};
+
+	static abilityTypeOrder: string[] = [
+		'Main Action',
+		'Free Triggered Action',
+		'Triggered Action',
+		'Free Maneuver',
+		'Maneuver',
+		'Free Strike',
+		'Move Action'
+	];
+
+	static sortAbilitiesByType = (a: AbilitySheet, b: AbilitySheet): number => {
+		const aType = a.actionType || '';
+		const bType = b.actionType || '';
+		const aSort = aType.length && this.abilityTypeOrder.includes(aType);
+		const bSort = bType.length && this.abilityTypeOrder.includes(bType);
+
+		if (aSort && bSort) {
+			let s = this.abilityTypeOrder.indexOf(aType) - this.abilityTypeOrder.indexOf(bType);
+			if (s === 0) {
+				s = a.cost - b.cost;
+				if (s === 0) {
+					return this.sortAbilitiesByLength(a, b);
+				} else {
+					return s;
+				}
+			}
+			return s;
+		} else if (aSort) {
+			return -1;
+		} else if (bSort) {
+			return 1;
+		} else {
+			const alpha = aType.localeCompare(bType);
+			if (alpha === 0) {
+				return this.sortAbilitiesByLength(a, b);
+			}
+			return alpha;
+		}
 	};
 
 	static characteristicOrder: string[] = [

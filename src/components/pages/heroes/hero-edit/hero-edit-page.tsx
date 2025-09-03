@@ -67,29 +67,23 @@ export const HeroEditPage = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	try {
-		const isChosen = (feature: Feature) => {
-			return FeatureLogic.isChosen(feature, HeroLogic.getFormerAncestries(hero));
-		};
-
 		const getPageState = (page: HeroEditTab) => {
 			switch (page) {
 				case 'start':
 					return PageState.Blank;
 				case 'ancestry':
 					if (hero.ancestry) {
-						return (hero.ancestry.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.ancestry.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case 'culture':
 					if (hero.culture) {
-						if (hero.culture.languages.length === 0) {
-							return PageState.InProgress;
-						}
 						if (!hero.culture.environment || !hero.culture.organization || !hero.culture.upbringing) {
 							return PageState.InProgress;
 						}
 						const features: Feature[] = [];
+						features.push(hero.culture.language);
 						if (hero.culture.environment) {
 							features.push(hero.culture.environment);
 						}
@@ -99,13 +93,13 @@ export const HeroEditPage = (props: Props) => {
 						if (hero.culture.upbringing) {
 							features.push(hero.culture.upbringing);
 						}
-						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case 'career':
 					if (hero.career) {
-						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) || !hero.career.incitingIncidents.selectedID ? PageState.InProgress : PageState.Completed;
+						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) || !hero.career.incitingIncidents.selectedID ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
@@ -129,13 +123,13 @@ export const HeroEditPage = (props: Props) => {
 									.filter(lvl => lvl.level <= level)
 									.forEach(lvl => features.push(...lvl.features));
 							});
-						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case 'complication':
 					if (hero.complication) {
-						return (hero.complication.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.complication.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.Optional;
 					}
@@ -178,21 +172,20 @@ export const HeroEditPage = (props: Props) => {
 		const setCulture = (culture: Culture | null) => {
 			const cultureCopy = Utils.copy(culture) as Culture | null;
 			if (cultureCopy) {
-				const sourcebooks = props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
-				const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
-				cultureCopy.languages = cultureCopy.languages.filter(language => !knownLanguages.includes(language));
+				const features: Feature[] = [ cultureCopy.language ];
+				if (cultureCopy.environment) {
+					features.push(cultureCopy.environment);
+				}
+				if (cultureCopy.organization) {
+					features.push(cultureCopy.organization);
+				}
+				if (cultureCopy.upbringing) {
+					features.push(cultureCopy.upbringing);
+				}
+				clearRedundantSelections(hero, features);
 			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.culture = cultureCopy;
-			setHero(heroCopy);
-			setDirty(true);
-		};
-
-		const setLanguages = (languages: string[]) => {
-			const heroCopy = Utils.copy(hero);
-			if (heroCopy.culture) {
-				heroCopy.culture.languages = languages;
-			}
 			setHero(heroCopy);
 			setDirty(true);
 		};
@@ -549,7 +542,6 @@ export const HeroEditPage = (props: Props) => {
 							options={props.options}
 							searchTerm={searchTerm}
 							selectCulture={setCulture}
-							selectLanguages={setLanguages}
 							selectEnvironment={setEnvironment}
 							selectOrganization={setOrganization}
 							selectUpbringing={setUpbringing}

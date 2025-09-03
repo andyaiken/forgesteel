@@ -8,6 +8,12 @@ interface Props {
 
 export const ClassFeaturesCard = (props: Props) => {
 	const character = props.character;
+
+	let moreInRef;
+	if (character.featuresReferenceOther?.find(r => [ character.className, character.subclassName ].includes(r.source))) {
+		moreInRef = (<li key='more'><em>Remaining features in Reference…</em></li>);
+	}
+
 	return (
 		<div className='class-features card'>
 			<h2>Class Features</h2>
@@ -20,6 +26,7 @@ export const ClassFeaturesCard = (props: Props) => {
 						/>
 					</li>
 				)}
+				{moreInRef}
 			</ul>
 		</div>
 	);

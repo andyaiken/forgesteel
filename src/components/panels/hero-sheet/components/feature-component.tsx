@@ -1,11 +1,13 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureChoice, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 
+import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { CharacterSheetFormatter } from '../../../../utils/character-sheet-formatter';
 import { DamageModifier } from '../../../../models/damage-modifier';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { FeatureType } from '../../../../enums/feature-type';
+import { Format } from '../../../../utils/format';
 import { Fragment } from 'react';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
@@ -29,6 +31,7 @@ interface Props {
 }
 
 const BasicFeatureComponent = (feature: Feature) => {
+	// console.warn('Default feature display: ', feature);
 	return (
 		<>
 			<div className='feature-line'><strong>{`• ${feature.type}: `}</strong>{feature.name}</div>
@@ -39,17 +42,22 @@ const BasicFeatureComponent = (feature: Feature) => {
 	);
 };
 
-const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeaturePerk | FeatureItemChoice) => {
+const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeaturePerk | FeatureItemChoice, hero: Hero) => {
 	let selectedOptions;
 	if (feature.data.selected.length > 0) {
 		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : s.name).map(s => {
 			return (<div className='feature-iteration' key={s}>{s}</div>);
 		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection' key='unselected'>Unselected</div>
+		];
 	}
+	const count = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
 	return (
 		<>
 			<div className='feature-line'>
-				{`• ${feature.data.count} ${CharacterSheetFormatter.pluralize(feature.name, feature.data.count)}`}
+				{`• ${feature.data.count} ${CharacterSheetFormatter.pluralize(feature.name, count)}`}
 			</div>
 			{selectedOptions}
 		</>
@@ -67,12 +75,16 @@ const AncestryChoiceFeatureComponent = (feature: FeatureAncestryChoice) => {
 };
 
 const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice) => {
-	const lists = feature.data.listOptions.join('/');
+	const lists = CharacterSheetFormatter.joinCommasOr(feature.data.listOptions);
 	let selectedOptions;
-	if (feature.data.selected) {
+	if (feature.data.selected.length) {
 		selectedOptions = feature.data.selected.map(s => {
 			return (<div className='feature-iteration' key={s}>{s}</div>);
 		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection' key='unselected'>Unselected</div>
+		];
 	}
 	return (
 		<>
@@ -89,6 +101,14 @@ const BonusFeatureComponent = (feature: FeatureBonus, hero: Hero) => {
 	return (
 		<>
 			<div className='feature-line'><strong>{`• ${feature.name}: `}</strong>{`${feature.data.field} ${CharacterSheetFormatter.addSign(value)}`}</div>
+		</>
+	);
+};
+
+const CharacteristicBonusFeatureComponent = (feature: FeatureCharacteristicBonus) => {
+	return (
+		<>
+			<div className='feature-line'><strong>• Characteristic Bonus: </strong>{`${feature.data.characteristic} ${CharacterSheetFormatter.addSign(feature.data.value)}`}</div>
 		</>
 	);
 };
@@ -131,18 +151,61 @@ const AbilityFeatureComponent = (feature: FeatureAbility) => {
 	}
 
 	// Ability Type
-	if (feature.data.ability.type.usage === AbilityUsage.Trigger) {
+	const usage = feature.data.ability.type.usage;
+	if (usage === AbilityUsage.Trigger) {
 		abilityIcon = triggerIcon;
 	}
+
+	const getAbilityType = (ability: Ability) => {
+		if (![ AbilityUsage.NoAction, AbilityUsage.Other ].includes(ability.type.usage)) {
+			return ability.type.usage;
+		}
+		if (ability.keywords.includes('Performance')) {
+			return 'Performance';
+		}
+	};
+
+	const type = getAbilityType(feature.data.ability)?.toString() || '';
+	const typeClasses = [ 'type' ];
+	typeClasses.push(type?.toLocaleLowerCase().split(' ').join('-'));
 
 	return (
 		<>
 			<div className='feature-title'>
 				<img src={abilityIcon} alt='Ability' />
 				<span className='ability-name'>{feature.name}</span>
-				<span className='type'>{feature.data.ability.type.usage}</span>
+				<span className={typeClasses.join(' ')}>{type}</span>
 			</div>
 			<div className='feature-description'><em>{feature.description.replace(/^\s+/, '')}</em></div>
+		</>
+	);
+};
+
+const ClassAbilityFeatureComponent = (feature: FeatureClassAbility) => {
+	let abilityCost = Format.capitalize(feature.data.cost.toString());
+	if (typeof feature.data.cost === 'number') {
+		abilityCost += ' Cost';
+	}
+	let ability = 'Ability';
+	if (feature.data.count > 1)
+		ability = 'Abilities';
+
+	let selectedOptions;
+	if (feature.data.selectedIDs.length) {
+		selectedOptions = feature.data.selectedIDs.map(s => {
+			return (<div className='feature-iteration' key={s}>{s}</div>);
+		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection'>Unselected</div>
+		];
+	}
+	return (
+		<>
+			<div className='feature-line'>
+				• {abilityCost} Class {ability}:
+			</div>
+			{selectedOptions}
 		</>
 	);
 };
@@ -151,10 +214,9 @@ const AbilityModifierComponent = (feature: FeatureAbilityDamage | FeatureAbility
 	const value = HeroLogic.calculateModifierValue(hero, feature.data);
 	const type = feature.type === FeatureType.AbilityDistance ? 'distance' : 'damage';
 	return (
-		<>
-			<div className='feature-title'>{feature.name}</div>
-			<div className='feature-description'>{`[${feature.data.keywords.sort(CharacterSheetFormatter.sortKeywords).join(' ')}] Abilities: ${CharacterSheetFormatter.addSign(value)} ${type}`}</div>
-		</>
+		<div className='feature-line'>
+			• [{feature.data.keywords.sort(CharacterSheetFormatter.sortKeywords).join(' ')}] Abilities: {CharacterSheetFormatter.addSign(value)} {type}
+		</div>
 	);
 };
 
@@ -193,9 +255,20 @@ const DamageModifierComponent = (feature: FeatureDamageModifier, hero: Hero) => 
 };
 
 const DomainFeatureComponent = (feature: FeatureDomain | FeatureDomainFeature) => {
+	let selectedOptions;
+	if (feature.data.selected.length) {
+		selectedOptions = feature.data.selected.map(s => {
+			return (<div className='feature-iteration' key={s.id}>{s.name}</div>);
+		});
+	} else {
+		selectedOptions = [
+			<div className='feature-iteration no-selection' key='unselected'>Unselected</div>
+		];
+	}
 	return (
 		<>
-			<div className='feature-line'><strong>• {feature.type}:</strong> {feature.name}</div>
+			<div className='feature-line'><strong>• {CharacterSheetFormatter.pluralize(feature.name, feature.data.count)}:</strong></div>
+			{selectedOptions}
 		</>
 	);
 };
@@ -212,6 +285,17 @@ const ConditionImmunityFeatureComponent = (feature: FeatureConditionImmunity) =>
 	);
 };
 
+const HeroicResourceComponent = (feature: FeatureHeroicResource) => {
+	return (
+		<>
+			<div className='feature-line'><strong>{`• ${feature.type}: `}</strong>{feature.name}</div>
+			{feature.data.details ?
+				<div className='feature-description'>{feature.data.details}</div>
+				: undefined}
+		</>
+	);
+};
+
 export const FeatureComponent = (props: Props) => {
 	const classes = [ 'feature' ].concat(props.additionalClasses || []).join(' ');
 	const feature = props.feature;
@@ -222,7 +306,7 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.Perk:
 		case FeatureType.Choice:
 		case FeatureType.ItemChoice:
-			content = ChoiceFeatureComponent(feature);
+			content = ChoiceFeatureComponent(feature, hero);
 			break;
 		case FeatureType.AncestryChoice:
 			content = AncestryChoiceFeatureComponent(feature);
@@ -233,6 +317,9 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.Bonus:
 			content = BonusFeatureComponent(feature, hero);
 			break;
+		case FeatureType.CharacteristicBonus:
+			content = CharacteristicBonusFeatureComponent(feature);
+			break;
 		case FeatureType.Text:
 		case FeatureType.Package:
 		case FeatureType.PackageContent:
@@ -240,6 +327,9 @@ export const FeatureComponent = (props: Props) => {
 			break;
 		case FeatureType.Ability:
 			content = AbilityFeatureComponent(feature);
+			break;
+		case FeatureType.ClassAbility:
+			content = ClassAbilityFeatureComponent(feature);
 			break;
 		case FeatureType.AbilityDistance:
 		case FeatureType.AbilityDamage:
@@ -254,6 +344,9 @@ export const FeatureComponent = (props: Props) => {
 			break;
 		case FeatureType.ConditionImmunity:
 			content = ConditionImmunityFeatureComponent(feature);
+			break;
+		case FeatureType.HeroicResource:
+			content = HeroicResourceComponent(feature);
 			break;
 		case FeatureType.Multiple:
 			// Do nothing for these since the individual sub-features are also iterated over, no need to double up

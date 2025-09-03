@@ -26,6 +26,7 @@ import { Field } from '../../controls/field/field';
 import { Follower } from '../../../models/follower';
 import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { HealthGauge } from '../health-gauge/health-gauge';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
@@ -233,17 +234,38 @@ export const HeroPanel = (props: Props) => {
 						)
 					}
 					{
+						useRows ?
+							null
+							:
+							<div className='overview-tile clickable' style={{ display: 'flex', justifyContent: 'center', padding: '0' }} onClick={onShowVitals}>
+								<HealthGauge
+									stamina={{
+										staminaMax: HeroLogic.getStamina(props.hero),
+										staminaDamage: props.hero.state.staminaDamage,
+										state: HeroLogic.getCombatState(props.hero)
+									}}
+									staminaTemp={{
+										staminaTemp: props.hero.state.staminaTemp
+									}}
+									recoveries={{
+										recoveriesMax: HeroLogic.getRecoveries(props.hero),
+										recoveriesUsed: props.hero.state.recoveriesUsed
+									}}
+								/>
+							</div>
+					}
+					{
 						(heroicResources.length > 0) && !props.options.singlePage ?
 							<>
 								{
 									heroicResources.map(hr =>
 										useRows ?
-											<div key={hr.id} className='selectable-row clickable' onClick={onShowStats}>
+											<div key={hr.id} className={hr.value >= 0 ? 'selectable-row clickable' : 'selectable-row warning clickable'} onClick={onShowStats}>
 												<div>Resource: <b>{hr.name}</b></div>
 												<div>{hr.value}</div>
 											</div>
 											:
-											<div key={hr.id} className='overview-tile clickable' onClick={onShowStats}>
+											<div key={hr.id} className={hr.value >= 0 ? 'overview-tile clickable' : 'overview-tile warning clickable'} onClick={onShowStats}>
 												<HeaderText
 													extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{hr.value}</div>}
 												>

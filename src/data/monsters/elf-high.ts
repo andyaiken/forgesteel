@@ -12,60 +12,57 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const elfHigh: MonsterGroup = {
 	id: 'monster-group-elf-high',
 	name: 'Elf, High',
-	description: 'The children of the solar celestials. The high elves were created to tend to the sun elves as librarians and heralds. They sequester themselves away from the world amid sky elf ruins, remembering a better age before the arrival of war.',
+	description: 'The children of the solar celestials, the high elves were created to tend to the sun elves as librarians and heralds. Now they sequester themselves away from the world amid the fallen cities of the sky elves, remembering a better age, before the arrival of humans and war to the world made the high elves who they are today.',
 	picture: null,
 	information: [
 		{
 			id: 'elf-high-info-1',
 			name: 'Glamorous',
-			description: 'The high elves hold an unwavering poise worthy of a noble background. They also emit a glamor that allows them to take on any skin, hair, or eye color they desire. Each person sees this glamor slightly differently, emphasizing some details over others based on one\'s own values and fascinations.'
+			description: 'The high elves hold an unwavering poise worthy of a noble background. They also emit a glamor that allows them to take on physical features and aspects of personality as they desire. Each person sees this glamor slightly differently, emphasizing some details over others based on one’s own values and fascinations.'
 		},
 		{
 			id: 'elf-high-info-2',
 			name: 'Loremasters',
 			description: `
-The adage “knowledge is power” is a rough translation of an ancient Hyrallic saying. A closer translation might be, “knowledge before power.” High elves believe knowledge is the pursuit from which all good things flow: life, power, legacy.
+The adage “knowledge is power” is a rough translation of an ancient Hyrallic saying. A closer translation is “knowledge before power.” High elves believe knowledge is the pursuit from which all good things flow: life, power, legacy.
 
-In their ruined towers they study ancient history and magic thought long extinct. They revive dead spells and languages and manipulate their use to suit their means. High elves can use this magic for wondrous creations. They can also use it to kill without lifting more than a few fingers.`
+In their ruined towers, they study ancient history and magic thought long extinct. They revive dead spells and languages and manipulate their use to suit their means. High elves can use this magic for wondrous creations. They can also use it to kill by lifting a finger.`
 		},
 		{
 			id: 'elf-high-info-3',
 			name: 'Elemental Summoners',
 			description: `
-Through their studies of ancient magic, the high elves have cultivated a strong bond to elementals and can call upon their aid where they need it. Soot crows scout from the sky, living vine walls called brambleguards create labyrinthine barricades, and ceramic horses provide fast transport over long distances. 
+Through their studies of ancient magic, many high elves have cultivated a strong bond to elemental creatures and can call upon their aid. In service to high elves, soot crows scout from the sky, living vine walls called brambleguards create labyrinthine barricades, and ceramic horses provide fast transport over long distances.
 
-Most high elves have also learned to summon magical wisps called elemental motes. These sprites enervate their foes to expose them to high elf magic, and can transfer their energy into fallen elementals to revive them in a brilliant flash.`
+Many high elves can also summon magical wisps called elemental motes. These sprites enervate their foes against high elf magic and revive fallen elementals in a brilliant flash by sacrificing their own energy.`
 		},
 		{
 			id: 'elf-high-info-4',
 			name: 'Surround and Suppress',
-			description: 'Foes that threaten high elf armies are dealt with quickly and entirely. They take advantage of each other’s magic to corral enemies together and throw huge waves of destruction upon them. The more exposure a victim has to high elf magic, the more effective it is in destroying them. Wyrds ensure there’s no escape, warping the environment into treacherous pits and, eventually, graveyards.'
+			description: 'Foes who threaten high elf armies are dealt with quickly and entirely. High elves take advantage of each other’s magic to corral enemies together and throw huge waves of destruction upon them. The more exposure a victim has to high elf magic, the more effective that magic is in destroying them. High elf wyrds ensure there’s no escape, warping the environment into treacherous pits—and eventually, graveyards.'
 		},
 		{
 			id: 'elf-high-info-5',
 			name: 'Magical Manipulation',
 			description: `
-The high elves practice a tradition of group-casting magic that empowers their abilities as more elves participate. This enables them to extend their spells further, sometimes miles away from the caster with an entire platoon working in unison.
+The high elves practice a tradition of group-casting magic that empowers their abilities as more elves participate. This enables them to extend their spells farther, sometimes even miles away from the caster when an entire platoon works in unison.
 
-Many high elves have also collected extensive libraries of tomes over the centuries. Even on the battlefield, an elf can turn to a book to turn their mundane volleys into magical ones.`
+Many high elves have also collected extensive libraries of tomes over the centuries. Even on the battlefield, an elf can turn to a book to transform a mundane weapon volley into a magical one.`
 		},
 		{
 			id: 'elf-high-info-6',
-			name: 'Unseen Hands Will Illuminate Their Unchanged Minds',
-			description: 'Unseen Hands Will Illuminate Their Unchanged Minds are a sect of high elf radicals who believe they have stumbled upon sky elf texts detailing their downfall by the hands of the sun elves. The story surrounding their purported discoveries have twisted into a narrative decrying all modern society for benefiting from the lore accumulated in service to the sun elves. The sect hides among high elf society in plain sight, slowly manipulating nobles and reshaping the world as they see fit.'
+			name: 'The Unseen Hands',
+			description: 'The Unseen Hands is a sect of high elf radicals who believe they have stumbled upon sky elf texts detailing their downfall at the hands of the sun elves. The story surrounding their purported discoveries has twisted into a narrative decrying modern society for benefiting from the lore accumulated in service to the sun elves. The sect hides among high elf society in plain sight, slowly manipulating nobles as they attempt to dismantle that society and plunge the world into anarchy.'
 		},
 		{
 			id: 'elf-high-info-7',
 			name: 'The Ordinator',
-			description: `
-Being in the presence of a high elf ordinator inspires an ancient fear in your chest. An ordinator is capable of focusing an army of high elves to precisely strike an arrow’s tip from the other end of the battlefield. These spellcasters are among the most studied elves in their circles, and their strategic minds are matched only by their affinity with elementals.  
-
-The ordinator is not only an illuminating beacon of command for their platoon; they are spiritual beacon of hope for their people. Ordinators carry out their circles’ will, knowledge, and power, not unlike a conduit’s duty to their saint.`
+			description: 'Being in the presence of a high elf ordinator inspires an ancient fear in those who know high elf history. Occupying a position of both military and clerical authority, an ordinator is capable of focusing a force of high elves to precisely strike an arrow’s tip from the other end of the battlefield. These spellcasters are among the most studied elves in their communities and courts, and their strategic minds are matched only by their affinity with elementals. The ordinator is not only an illuminating beacon of command for their platoon; they are a spiritual beacon of hope for their people.'
 		},
 		{
 			id: 'elf-high-info-8',
 			name: 'High Elf Languages',
-			description: 'Most high elves speak Caelian and Hyrallic.'
+			description: 'Most high elves speak Caelian and Hyrallic, with some also speaking Yllyric.'
 		}
 	],
 	malice: [
@@ -74,7 +71,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'Chaincast',
 			cost: 3,
 			sections: [
-				'Until the end of the round, whenever a high elf uses a Magic ability, they can use it as if they were occupying the space of another high elf on the encounter map to whom they have line of eﬀect.'
+				'Until the end of the round, whenever a high elf uses a magic ability, they can use it as if they were occupying the square of another high elf on the encounter map to whom they have line of effect.'
 			]
 		}),
 		FactoryLogic.feature.createAbility({
@@ -85,15 +82,16 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 				cost: 5,
 				keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 1, within: 1 }) ],
-				target: 'All enemies',
+				target: 'Each enemy in the area',
 				sections: [
+					FactoryLogic.createAbilitySectionText('The high elf chooses a damage type and condition from one of the following combinations: cold damage and slowed, poison damage and weakened, or corruption damage and frightened.'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-						characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-						tier1: '5 damage; R<1 condition (save ends)',
-						tier2: '9 damage; R<2 condition (save ends)',
-						tier3: '12 damage; R<3 condition (save ends)'
+						bonus: 2,
+						tier1: '5 damage; R<1 chosen condition (save ends)',
+						tier2: '9 damage; R<2 chosen condition (save ends)',
+						tier3: '12 damage; R<3 chosen condition (save ends)'
 					})),
-					FactoryLogic.createAbilitySectionText('The high elf chooses damage type and condition afflicted from one of the following pairs: cold and slowed, poison and weakened, or corruption and frightened of the high elf.')
+					FactoryLogic.createAbilitySectionText('**Special:** This ability can’t be used by a minion.')
 				]
 			})
 		}),
@@ -102,7 +100,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'In Defiance of Time',
 			cost: 7,
 			sections: [
-				'Until the end of the round, all high elves have their speed increased by 4. When a high elf uses an ability against an enemy, each high elf adjacent to the enemy can make a free strike against them.'
+				'Until the end of the round, each high elf in the encounter gains a +4 bonus to speed, and whenever a high elf uses an ability against an enemy, each high elf adjacent to that enemy can make a free strike against them.'
 			]
 		})
 	],
@@ -112,14 +110,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'Elemental Mote',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
-			keywords: [ 'Elemental', 'High Elf' ],
-			encounterValue: 6,
+			keywords: [ 'Elemental', 'High Elf', 'Soulless' ],
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'T'),
 			speed: FactoryLogic.createSpeed(5, 'fly'),
 			stamina: 3,
 			stability: 0,
 			freeStrikeDamage: 1,
-			withCaptain: 'Speed +2',
+			withCaptain: '+2 bonus to speed',
 			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -129,14 +127,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
-						distance: [ FactoryLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
 								tier1: '1 damage',
-								tier2: '2 damage; R<1 Magic weakness 3 (save ends)',
-								tier3: '3 damage; R<2 Magic weakness 3 (save ends)'
+								tier2: '2 damage; R<1 damage weakness 3 (save ends)',
+								tier3: '3 damage; R<2 damage weakness 3 (save ends)'
 							}))
 						]
 					})
@@ -144,7 +142,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 				FactoryLogic.feature.create({
 					id: 'elf-high-1-feature-2',
 					name: 'Spark of Life',
-					description: 'On their turn, the mote can choose to die to revive a dead soot crow, brambleguard, or ceramic horse within 1, returning with 3 Stamina.'
+					description: 'On their turn, the mote can leave the encounter in a flash of light to revive one adjacent dead soot crow, brambleguard, or ceramic horse. The revived creature returns with 3 Stamina.'
 				})
 			]
 		}),
@@ -153,15 +151,15 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Dawn Mage',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
-			encounterValue: 6,
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 3,
 			stability: 0,
 			freeStrikeDamage: 1,
-			withCaptain: 'Ranged distance +5',
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 1, 1, 1),
+			withCaptain: '+5 bonus to ranged distance',
+			characteristics: MonsterLogic.createCharacteristics(0, 0, 2, -1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -179,14 +177,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								tier2: '2 holy damage',
 								tier3: '3 holy damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The target can’t hide until the start of the dawn mage’s next turn.')
+							FactoryLogic.createAbilitySectionText('Until the start of the dawn mage’s next turn, the target can’t hide.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-2-feature-2',
 					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the dawn mage can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					description: 'At the start of each of their turns, the dawn mage can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
 		}),
@@ -195,14 +193,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Quiver',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
-			encounterValue: 6,
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 3,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Ranged distance +5',
+			withCaptain: '+5 bonus to ranged distance',
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -212,7 +210,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createRanged(5) ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object per minion',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -221,14 +219,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								tier2: '4 damage',
 								tier3: '5 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('Each ally adjacent to the target can shift 2.')
+							FactoryLogic.createAbilitySectionText('Each ally adjacent to the target shifts up to 2 squares.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-3-feature-2',
 					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the quiver can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					description: 'At the start of each of their turns, the quiver can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
 		}),
@@ -238,13 +236,13 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Elemental', 'High Elf' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			size: FactoryLogic.createSize(1, 'T'),
 			speed: FactoryLogic.createSpeed(7, 'fly'),
 			stamina: 4,
 			stability: 0,
 			freeStrikeDamage: 1,
-			withCaptain: 'Edge on strikes',
+			withCaptain: 'Gain an edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -263,7 +261,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								tier2: '2 damage',
 								tier3: '3 damage; taunted (EoT)'
 							})),
-							FactoryLogic.createAbilitySectionText('The soot crow ignores opportunity attacks from the target until the end of its turn.')
+							FactoryLogic.createAbilitySectionText('Until the end of their turn, the soot crow ignores opportunity attacks from the target.')
 						]
 					})
 				})
@@ -290,10 +288,10 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [ FactoryLogic.distance.createSelf() ],
+						distance: [ FactoryLogic.distance.createSpecial('Special; see below') ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The brambleguard’s speed becomes 0 and they extend themself into a 5 wall until the start of their next turn. Each ally adjacent to the brambleguard at the start of their turn regains 5 Stamina and can apply the Magic keyword to their weapon abilities until the end of their turn.')
+							FactoryLogic.createAbilitySectionText('Until the start of the brambleguard’s next turn, their speed is 0 and they extend themself into a 5 wall. Each ally who starts their turn adjacent to the brambleguard regains 5 Stamina and can apply the Magic keyword to their weapon abilities until the end of their turn.')
 						]
 					})
 				}),
@@ -302,9 +300,9 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						id: 'elf-high-5-feature-2',
 						name: 'Whip Frenzy',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-						target: 'Each enemy in burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
@@ -318,7 +316,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 				FactoryLogic.feature.create({
 					id: 'elf-high-5-feature-3',
 					name: 'Thicket and Thorns',
-					description: 'The brambleguard blocks line of eﬀect for enemies. An enemy that starts their turn adjacent to a brambleguard takes 4 damage.'
+					description: 'The brambleguard blocks line of effect for enemies. Each enemy who starts their turn adjacent to a brambleguard takes 4 damage.'
 				})
 			]
 		}),
@@ -327,7 +325,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Bloodletter',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Ambusher),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
@@ -352,7 +350,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								tier2: '9 damage',
 								tier3: '12 damage; R<2 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('The bloodletter and each ally has a double edge on abilities targeting a creature or object bleeding from this ability.')
+							FactoryLogic.createAbilitySectionText('The bloodletter and each of their allies has a double edge on abilities targeting a creature bleeding this way.')
 						]
 					})
 				}),
@@ -362,18 +360,18 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'Blood Haze',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The bloodletter creates a cloud of blood vapor in the area until the end of the next round. The cloud blocks line of effect for enemies, and an enemy has Magic weakness 3 occupying an affected square. The bloodletter then shifts up to their speed, hiding if they end their movement under concealment.')
+							FactoryLogic.createAbilitySectionText('Until the end of the next round, a cloud of blood vapor fills the area. The cloud blocks line of effect for enemies, and any enemy has damage weakness 3 while in the area. The bloodletter can then shift up to their speed, and can attempt to hide if they end that shift with concealment.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-6-feature-4',
 					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the bloodletter can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					description: 'At the start of each of their turns, the bloodletter can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
 		}),
@@ -382,7 +380,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Deathtouch',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Artillery),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
 			encounterValue: 8,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
@@ -410,7 +408,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
-								effect: 'The ability replaces Strike with the Area keyword, the distance becomes 3 cube within 10, and it targets all creatures in the cube.'
+								effect: 'The ability takes the Area keyword and loses the Strike keyword, its distance becomes a 3 cube within 10, and it targets each enemy in the area.'
 							})
 						]
 					})
@@ -421,16 +419,16 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'Kiss of Death',
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'One ally',
+						target: 'One willing ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target’s speed increases by 5 and they cannot get results lower than tier 3 on their power rolls. The target immediately dies at the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('The target has a +5 bonus to speed and automatically obtains a tier 3 outcome on power rolls. They can still roll to determine if they score a critical hit. At the end of their next turn, the target immediately dies.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-7-feature-3',
 					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the deathtouch can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					description: 'At the start of each of their turns, the deathtouch can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
 		}),
@@ -439,7 +437,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Orbweaver',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Hexer),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
 			encounterValue: 10,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
@@ -456,12 +454,12 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
-						target: 'All creatures in the cube',
+						target: 'Each creature in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '4 cold damage; M<0 slide 3',
-								tier2: '6 cold damage; M<1 slide 4 or prone',
+								tier1: '4 cold damage; M<0 push 3',
+								tier2: '6 cold damage; M<1 push 4 or prone',
 								tier3: '9 cold damage; M<2 slide 5 or prone'
 							}))
 						]
@@ -472,7 +470,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						id: 'elf-high-8-feature-2',
 						name: 'Aetherweb',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'Two enemies or objects',
 						sections: [
@@ -482,14 +480,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								tier2: '8 damage; R<1 slowed (save ends)',
 								tier3: '11 damage; R<2 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('Each enemy within 3 of a target suffers the same additional effects as the target unless they shift into an unoccupied square adjacent to them.')
+							FactoryLogic.createAbilitySectionText('Each enemy within 3 squares of a target suffers the same potency effect as the target unless they are already adjacent to them, or if they immediately shift into an unoccupied space adjacent to the target (no action required).')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-8-feature-3',
 					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the mage can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					description: 'At the start of each of their turns, the orbweaver can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
 		}),
@@ -498,14 +496,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Palinode',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Support),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 30,
 			stability: 0,
-			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
+			freeStrikeDamage: 3,
+			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -526,7 +524,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
-								effect: 'The potency of this ability increases by 1. If the target is still weakened by this ability at the end of the encounter they cannot take a respite activity during their next respite.'
+								effect: 'The potency increases by 1. If the target is weakened this way at the end of the encounter, they can’t take a respite activity during their next respite.'
 							})
 						]
 					})
@@ -540,14 +538,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Two allies',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target is teleported to an unoccupied square adjacent to the palinode. Then, the palinode and each target gain 5 temporary Stamina.')
+							FactoryLogic.createAbilitySectionText('Each target can teleport to an unoccupied space adjacent to the palinode. The palinode and each target then gain 5 temporary Stamina.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-9-feature-3',
 					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the palinode can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					description: 'At the start of each of their turns, the palinode can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'elf-high-9-feature-4',
@@ -560,7 +558,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Wyrd',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Controller),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
 			encounterValue: 10,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
@@ -575,17 +573,17 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'Twystrd',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 5 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: 'vertical push 3',
-								tier2: 'vertical push 5',
-								tier3: 'vertical push 6'
+								tier1: 'Vertical push 3',
+								tier2: 'Vertical push 5',
+								tier3: 'Vertical push 6'
 							})),
-							FactoryLogic.createAbilitySectionText('The area of the cube increases by 1 for each elemental mote adjacent to the wyrd.')
+							FactoryLogic.createAbilitySectionText('For each elemental mote adjacent to the wyrd, the size of the cube increases by 1.')
 						]
 					})
 				}),
@@ -595,11 +593,11 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'Summon Elemental',
 						cost: 2,
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
+						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The wyrd summons 2 **elemental motes** or 2 **soot crows** into unoccupied squares within distance.')
+							FactoryLogic.createAbilitySectionText('The wyrd summons two **elemental motes** or two **soot crows** into unoccupied spaces within distance.')
 						]
 					})
 				}),
@@ -609,18 +607,22 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'Wyrd Warp',
 						cost: 2,
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 8, within: 8 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The wyrd shapes the land as if it were loose clay. Each wall segment takes up the entire square. A segment can also be used to push a square of the terrain further into the ground. An enemy on top of an affected square moves with the elevation of the terrain.')
+							FactoryLogic.createAbilitySectionText('The wyrd shapes the land in the area as if it were loose clay, either raising the ground or pushing it down to create a trench. Any creature in the area moves with the terrain to its new higher elevation, or falls if the ground is lowered beneath them.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-10-feature-4',
 					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the wyrd can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					description: 'At the start of each of their turns, the wyrd can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
+				}),
+				FactoryLogic.feature.createDamageModifier({
+					id: 'elf-high-10-feature-5',
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 5 }) ]
 				})
 			]
 		}),
@@ -629,7 +631,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Zephyr',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Harrier),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
@@ -652,9 +654,9 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								bonus: 2,
 								tier1: '5 damage',
 								tier2: '7 damage',
-								tier3: '9 damage; the zephyr makes a free strike on a creature adjacent to the target; both creatures are A<2 prone'
+								tier3: '9 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('Shift 2.')
+							FactoryLogic.createAbilitySectionText('On a tier 3 outcome, the zephyr can make a free strike against a creature adjacent to the target. If they do so and that creature and the target both have A<2, the creature and the target are both prone. On any tier outcome, the zephyr can then shift up to 2 squares.')
 						]
 					})
 				}),
@@ -667,19 +669,19 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The zephyr moves up to their speed through the air. They must end this movement on solid ground or immediately fall prone.')
+							FactoryLogic.createAbilitySectionText('The zephyr flies up to their speed. If they don’t end this movement on solid ground, they are prone.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-11-feature-3',
 					name: 'Like the Wind',
-					description: 'All of the zephyr\'s movement is considered shifting.'
+					description: 'The zephyr doesn’t provoke opportunity attacks by moving.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-11-feature-4',
 					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the zephyr can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					description: 'At the start of each of their turns, the zephyr can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
 		}),
@@ -688,10 +690,10 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Ordinator',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Leader),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
 			encounterValue: 20,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5, 'fly, hover'),
+			speed: FactoryLogic.createSpeed(5, 'fly'),
 			stamina: 120,
 			stability: 0,
 			freeStrikeDamage: 5,
@@ -704,8 +706,8 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-						distance: [ FactoryLogic.distance.createRanged(20) ],
-						target: 'One creatures or objects',
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -713,7 +715,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								tier2: '14 lightning damage; R<2 dazed (save ends)',
 								tier3: '17 lightning damage; R<3 dazed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('High elves have an edge on abilities used against the target until the start of the ordinator’s next turn.')
+							FactoryLogic.createAbilitySectionText('Until the start of the ordinator’s next turn, each ally high elf in the encounter gains an edge on ability rolls against the target.')
 						]
 					})
 				}),
@@ -724,9 +726,9 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
-						target: 'Each elemental ally in the burst',
+						target: 'Each elemental ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target moves up to their speed or makes a free strike. An elemental mote target can use their Spark of Life trait.')
+							FactoryLogic.createAbilitySectionText('Each target can move up to their speed or make a free strike. Elemental mote targets can, instead, use their Spark of Life trait.')
 						]
 					})
 				}),
@@ -734,14 +736,20 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-12-feature-3',
 						name: 'Summon Elemental',
-						cost: 3,
+						cost: 2,
 						repeatable: true,
-						type: FactoryLogic.type.createManeuver({ free: true }),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('For every 3 malice spent, the ordinator summons 5 **elemental motes**, 3 **soot crows**, 1 **ceramic horse**, or 1 **brambleguard** into unoccupied squares within distance.')
+							FactoryLogic.createAbilitySectionText('The ordinator summons four **elemental motes** or four **soot crows** into unoccupied space within distance.'),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 3,
+								effect: 'The ordinator instead summons one **ceramic horse** or one winded **brambleguard** into an unoccupied space within distance.'
+							})
+
 						]
 					})
 				}),
@@ -749,54 +757,55 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-12-feature-4',
 						name: 'Enough!',
-						type: FactoryLogic.type.createTrigger('An enemy targets the ordinator or an ally within distance with an ability.'),
+						type: FactoryLogic.type.createTrigger('An enemy within distance uses an ability against the ordinator or any ally within distance.'),
+						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'Triggering enemy',
+						target: 'The triggering enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The ordinator uses Lightning Rod against the target.')
+							FactoryLogic.createAbilitySectionText('The ordinator uses Lightning Rod against the target after the ability is resolved.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-12-feature-5',
-					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the ordinator can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					name: 'Otherworldly Blessing',
+					description: 'At the start of each of their turns, the ordinator can choose one or more effects on them that can be ended by a saving throw. The effects instead end at the end of the ordinator’s turn.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-12-feature-6',
 					name: 'Magic Beacon',
-					description: 'While using Chaincast, magic abilities tha tuse the Ordinator\'s space have a double edge (see Chaincast).'
+					description: 'Whenever a high elf ordinator appears on an encounter map, the Chaincast Malice feature is improved and always active. When any elf uses a magic ability as if they were in the ordinator’s space, that ability has a double edge.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-12-feature-7',
-						name: 'Fountains Roar, Now Free From The Earth',
+						name: 'Fountains Roar, Now Free From the Earth',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
-						target: 'All allies in the burst',
+						target: 'Each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target glows, ending one condition on themselves and then moving up to twice their speed.')
+							FactoryLogic.createAbilitySectionText('Each target glows briefly, and can end one effect on themself, then move up to their speed.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-12-feature-8',
-						name: 'And The Sun Forsook Her Children',
+						name: 'And the Sun Forsook Her Children',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target makes a **Presence test**.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: Characteristic.Presence,
 								tier1: '12 corruption damage; pull 5 towards the center of the cube',
 								tier2: '9 corruption damage; pull 3 towards the center of the cube',
-								tier3: 'pull 1 towards the center of the cube'
+								tier3: 'Pull 1 towards the center of the cube'
 							})),
-							FactoryLogic.createAbilitySectionText('The affected area becomes darkened and its space warps violently in every direction.')
+							FactoryLogic.createAbilitySectionText('The area turns dark and distorted, and is difficult terrain for enemies.')
 						]
 					})
 				}),
@@ -806,13 +815,10 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						name: 'But We Will Change Her Mind.',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [
-							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
-						],
-						target: 'Self and all allies in the burst',
+						distance: [	FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
+						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('All elves radiate wisps of magic. Each target makes a free strike that has the Magic keyword and deals an additional 3 damage.')
+							FactoryLogic.createAbilitySectionText('Each target’s free strike now has the Magic keyword and can target two creatures or objects. Additionally, each target glows with magic.')
 						]
 					})
 				})
@@ -823,7 +829,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'Ceramic Horse',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Mount),
-			keywords: [ 'Plant', 'High Elf' ],
+			keywords: [ 'Elemental', 'High Elf' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(10),
@@ -856,9 +862,9 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						id: 'elf-high-13-feature-2',
 						name: 'Stomp',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-						target: 'All enemies in burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
@@ -866,7 +872,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								tier2: '5 damage',
 								tier3: '7 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('This attack deals an additional 2 damage to prone targets.')
+							FactoryLogic.createAbilitySectionText('Any target who is prone takes an extra 2 damage.')
 						]
 					})
 				}),
@@ -880,14 +886,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'The horse\'s rider',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Vertical slide 3; The rider can use a ranged ability at any point during the movement and then fall without taking damage.')
+							FactoryLogic.createAbilitySectionText('The horse vertical slides the target up to 3 squares, ignoring stability. The target can use a ranged ability at any point during this forced movement, and takes no damage if they then fall.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-13-feature-4',
 					name: 'Shared Otherwordly Grace',
-					description: 'If the ceramic horse’s rider has the Otherworldly Grace trait, it also gains the Otherworldly Grace trait.'
+					description: 'If the ceramic horse’s rider has the Otherworldly Grace trait, the ceramic horse also has that trait.'
 				})
 			]
 		}),
@@ -896,11 +902,11 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 			name: 'High Elf Weatherwise',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Controller),
-			keywords: [ 'Fey', 'Humanoid', 'High Elf' ],
-			encounterValue: 11,
+			keywords: [ 'Fey', 'High Elf', 'Humanoid' ],
+			encounterValue: 0,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 20,
+			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-1, 1, 2, 0, 1),
@@ -921,14 +927,14 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								tier2: '5 fire damage',
 								tier3: '7 fire damage'
 							})),
-							FactoryLogic.createAbilitySectionText('If the weatherwise targets their mentor, instead of taking damage the mentor gains the same amount of Temporary Stamina.')
+							FactoryLogic.createAbilitySectionText('If the weatherwise targets their mentor, the mentor ignores the damage and instead gains temporary Stamina equal to the damage dealt.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-14-feature-2',
 					name: 'Otherwordly Grace',
-					description: 'At the start of their turn, the weatherwise can turn the duration of one save ends eﬀect they suﬀer from into EoT.'
+					description: 'At the start of each of their turns, the weatherwise can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			],
 			retainer: {
@@ -939,7 +945,7 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -947,20 +953,20 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 								tier2: '5 cold damage; push 3',
 								tier3: '8 cold damage; push 5'
 							})),
-							FactoryLogic.createAbilitySectionText('The weatherwise can teleport 5 before or after using this ability.')
+							FactoryLogic.createAbilitySectionText('The weatherwise can teleport up to 5 squares before or after using this ability.')
 						]
 					})
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-14-retainer-7',
-						name: 'Magic Arrows',
+						name: 'Spring’s Rebirth',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'All allies',
+						target: 'Each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target can spend a recovery. Additionally, they can turn the duration of one Save Ends effect they suffer from into EoT or end one EoT effect.')
+							FactoryLogic.createAbilitySectionText('Each target can spend a Recovery, and can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.')
 						]
 					})
 				}),
@@ -971,13 +977,13 @@ The ordinator is not only an illuminating beacon of command for their platoon; t
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '6 corruption damage; P (weak) prone and can\'t stand (save ends)',
-								tier2: '10 corruption damage; P (average) prone and can\'t stand (save ends)',
-								tier3: '14 corruption damage; P (strong) prone and can\'t stand (save ends)'
+								tier1: '6 corruption damage; P < [weak] prone and can\'t stand (save ends)',
+								tier2: '10 corruption damage; P < [average] prone and can\'t stand (save ends)',
+								tier3: '14 corruption damage; P < [strong] prone and can\'t stand (save ends)'
 							}))
 						]
 					})

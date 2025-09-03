@@ -1,7 +1,8 @@
-.hero-customize-panel {
+.customize-panel {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	padding-bottom: 20px;
 
 	.random-btn {
 		color: rgba(0, 0, 0, 0.88);
@@ -16,7 +17,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	.hero-customize-panel {
+	.customize-panel {
 		.random-btn {
 			color: rgba(255, 255, 255, 0.88);
 		}

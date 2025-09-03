@@ -68,7 +68,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 	monsters: [
 		FactoryLogic.createMonster({
 			id: 'arixx-1',
-			name: 'arixx',
+			name: 'Arixx',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Arixx', 'Beast' ],

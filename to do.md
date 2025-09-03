@@ -2,8 +2,7 @@
 
 ### Heroes
 
-* Hero Builder:
-  * Revenants should have 3 ancestry points if small
+(nothing)
 
 ### Library
 

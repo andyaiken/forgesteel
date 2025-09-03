@@ -3,12 +3,12 @@ import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Ancestry } from '../models/ancestry';
+import { AncestryData } from '../data/ancestry-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { DamageType } from '../enums/damage-type';
-import { Domain } from '../models/domain';
 import { FactoryLogic } from './factory-logic';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureLogic } from './feature-logic';
@@ -23,14 +23,12 @@ import { Modifier } from '../models/damage-modifier';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { NameGenerator } from '../utils/name-generator';
-import { Perk } from '../models/perk';
 import { Size } from '../models/size';
 import { Skill } from '../models/skill';
 import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import { SourcebookLogic } from './sourcebook-logic';
-import { Title } from '../models/title';
 import { Utils } from '../utils/utils';
 
 export class HeroLogic {
@@ -76,62 +74,6 @@ export class HeroLogic {
 		});
 
 		return Collections.sort(features, f => f.feature.name);
-	};
-
-	static getPerks = (hero: Hero) => {
-		const perks: Perk[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Perk)
-			.forEach(f => {
-				perks.push(...f.data.selected);
-			});
-
-		return perks;
-	};
-
-	static getKits = (hero: Hero) => {
-		const kits: Kit[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Kit)
-			.forEach(f => {
-				kits.push(...f.data.selected);
-			});
-
-		return kits;
-	};
-
-	static getTitles = (hero: Hero) => {
-		const titles: Title[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.TitleChoice)
-			.forEach(f => {
-				titles.push(...f.data.selected);
-			});
-
-		return titles;
-	};
-
-	static getDomains = (hero: Hero) => {
-		const domains: Domain[] = [];
-
-		// Collate from features
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Domain)
-			.forEach(f => {
-				domains.push(...f.data.selected);
-			});
-
-		return domains;
 	};
 
 	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], includeStandard: boolean) => {
@@ -187,6 +129,7 @@ export class HeroLogic {
 
 			abilities.push({ ability: AbilityData.aidAttack, source: 'Standard' });
 			abilities.push({ ability: AbilityData.catchBreath, source: 'Standard' });
+			abilities.push({ ability: AbilityData.clawDirt, source: 'Standard' });
 			abilities.push({ ability: AbilityData.escapeGrab, source: 'Standard' });
 			abilities.push({ ability: AbilityData.goProne, source: 'Standard' });
 			abilities.push({ ability: AbilityData.grab, source: 'Standard' });
@@ -209,12 +152,64 @@ export class HeroLogic {
 		return abilities;
 	};
 
+	static getPerks = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Perk)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getKits = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Kit)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getTitles = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.TitleChoice)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getDomains = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Domain)
+			.flatMap(f => f.data.selected);
+	};
+
+	static getItems = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.ItemChoice)
+			.flatMap(f => f.data.selected);
+	};
+
 	static getFormerAncestries = (hero: Hero) => {
 		return HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.AncestryChoice)
 			.map(f => f.data.selected)
 			.filter(a => !!a);
+	};
+
+	static getAncestryPoints = (hero: Hero) => {
+		if (hero.ancestry) {
+			let points = hero.ancestry.ancestryPoints;
+
+			if (hero.ancestry.id === AncestryData.revenant.id) {
+				const size = HeroLogic.getSize(hero);
+				if ((size.value == 1) && (size.mod === 'S')) {
+					points += 1;
+				}
+			}
+
+			return points;
+		}
+
+		return 0;
 	};
 
 	static getCompanions = (hero: Hero) => {
@@ -261,10 +256,6 @@ export class HeroLogic {
 
 	static getLanguages = (hero: Hero, sourcebooks: Sourcebook[]) => {
 		const languageNames: string[] = [];
-
-		if (hero.culture) {
-			languageNames.push(...hero.culture.languages);
-		}
 
 		// Collate from features
 		HeroLogic.getFeatures(hero)
@@ -899,7 +890,7 @@ export class HeroLogic {
 	};
 
 	static calculateSurgeDamage = (hero: Hero) => {
-		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
+		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => this.getCharacteristic(hero, c.characteristic))) : 0;
 		return value;
 	};
 
@@ -1012,7 +1003,7 @@ export class HeroLogic {
 						break;
 					}
 					case FeatureType.Choice: {
-						let remaining = feature.data.count;
+						let remaining = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
 						while (feature.data.options.some(o => o.value <= remaining)) {
 							const currentIDs = feature.data.selected.map(f => f.id);
 							const options = feature.data.options
@@ -1158,12 +1149,6 @@ export class HeroLogic {
 					}
 				};
 			});
-
-		// Choose culture language
-		const currentLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(l => l.name);
-		const options = SourcebookLogic.getLanguages(sourcebooks)
-			.filter(l => !currentLanguages.includes(l.name));
-		hero.culture.languages.push(Collections.draw(options).name);
 
 		// Choose career inciting incident
 		hero.career.incitingIncidents.selectedID = Collections.draw(hero.career.incitingIncidents.options.map(ii => ii.id));

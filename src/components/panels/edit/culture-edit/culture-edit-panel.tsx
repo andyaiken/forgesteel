@@ -1,6 +1,7 @@
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
-import { Input, Select, Space, Tabs } from 'antd';
+import { Input, Segmented, Select, Space, Tabs } from 'antd';
 import { Culture } from '../../../../models/culture';
+import { CultureType } from '../../../../enums/culture-type';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Feature } from '../../../../models/feature';
 import { Field } from '../../../controls/field/field';
@@ -60,9 +61,19 @@ export const CultureEditPanel = (props: Props) => {
 		const getDetailsEditSection = () => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
+					<Segmented
+						block={true}
+						options={[ CultureType.Ancestral, CultureType.Professional ]}
+						value={culture.type}
+						onChange={value => {
+							const copy = Utils.copy(culture);
+							copy.type = value;
+							setCulture(copy);
+							props.onChange(copy);
+						}}
+					/>
 					<Select
 						style={{ width: '100%' }}
-						status={culture.languages.length === 0 ? 'warning' : ''}
 						allowClear={true}
 						placeholder='Select language'
 						options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
@@ -77,10 +88,10 @@ export const CultureEditPanel = (props: Props) => {
 								: [];
 							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 						}}
-						value={culture.languages.length > 0 ? culture.languages[0] : null}
+						value={culture.language.data.selected.length > 0 ? culture.language.data.selected[0] : null}
 						onChange={value => {
 							const copy = Utils.copy(culture);
-							copy.languages = value ? [ value ] : [];
+							copy.language.data.selected = value ? [ value ] : [];
 							setCulture(copy);
 							props.onChange(copy);
 						}}

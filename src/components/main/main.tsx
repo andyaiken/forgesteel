@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { Playbook, PlaybookElementKind } from '../../models/playbook';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '../../models/sourcebook';
+import { Spin, notification } from 'antd';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
@@ -14,6 +15,7 @@ import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { Counter } from '../../models/counter';
 import { Culture } from '../../models/culture';
+import { CultureType } from '../../enums/culture-type';
 import { DirectoryModal } from '../modals/directory/directory-modal';
 import { Domain } from '../../models/domain';
 import { Element } from '../../models/element';
@@ -52,6 +54,7 @@ import { Negotiation } from '../../models/negotiation';
 import { Options } from '../../models/options';
 import { PDFExport } from '../../utils/pdf-export';
 import { PartyModal } from '../modals/party/party-modal';
+import { PdfOptions } from '../../models/pdf-options';
 import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-page';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
@@ -76,7 +79,6 @@ import { Title } from '../../models/title';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
-import { notification } from 'antd';
 import { useMediaQuery } from '../../hooks/use-media-query';
 import { useNavigation } from '../../hooks/use-navigation';
 
@@ -110,6 +112,7 @@ export const Main = (props: Props) => {
 	const [ directory, setDirectory ] = useState<ReactNode>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
+	const [ spinning, setSpinning ] = useState(false);
 
 	// #region Persistence
 
@@ -282,16 +285,23 @@ export const Main = (props: Props) => {
 		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const exportHeroPdf = (hero: Hero, mode: 'portrait' | 'landscape' | 'html', formFillable: boolean) => {
+	const exportHeroPdf = (hero: Hero, data: PdfOptions) => {
+		const mode = data.mode;
+		const formFillable = data.formFillable || false;
+		const resolution = data.resolution || 'standard';
+
 		if (mode === 'html') {
+			setSpinning(true);
 			const pageIds: string[] = [];
 			let p = 1;
 			while (document.getElementById(CharacterSheetFormatter.getPageId(hero.id, p)) !== null) {
 				pageIds.push(CharacterSheetFormatter.getPageId(hero.id, p));
 				++p;
 			}
-
-			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize);
+			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize, resolution)
+				.then(() => {
+					setSpinning(false);
+				});
 		} else {
 			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], mode, !formFillable);
 		}
@@ -299,6 +309,13 @@ export const Main = (props: Props) => {
 
 	const exportStandardAbilities = () => {
 		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', 'pdf');
+	};
+
+	const setNotes = (hero: Hero, value: string) => {
+		const copy = Utils.copy(hero);
+		copy.state.notes = value;
+
+		persistHero(copy);
 	};
 
 	// #endregion
@@ -654,7 +671,7 @@ export const Main = (props: Props) => {
 			culture = Utils.copy(original);
 			culture.id = Utils.guid();
 		} else {
-			culture = FactoryLogic.createCulture();
+			culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
 		}
 
 		sourcebook.cultures.push(culture);
@@ -1374,7 +1391,7 @@ export const Main = (props: Props) => {
 	};
 
 	const showReference = () => {
-		onshowReference(null);
+		onShowReference(null);
 	};
 
 	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
@@ -1484,7 +1501,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onshowReference = (hero: Hero | null, page?: RulesPage) => {
+	const onShowReference = (hero: Hero | null, page?: RulesPage) => {
 		setDrawer(
 			<ReferenceModal
 				hero={hero}
@@ -1609,7 +1626,8 @@ export const Main = (props: Props) => {
 										showFeature={onSelectFeature}
 										showAbility={onSelectAbility}
 										showHeroState={onShowHeroState}
-										showReference={onshowReference}
+										showReference={onShowReference}
+										setNotes={setNotes}
 									/>
 								}
 							/>
@@ -1830,6 +1848,7 @@ export const Main = (props: Props) => {
 					</Route>
 				</Routes>
 				{notifyContext}
+				<Spin spinning={spinning} size='large' fullscreen />
 			</ErrorBoundary>
 		);
 	} catch (ex) {

@@ -13,6 +13,7 @@ import { ReactNode } from 'react';
 import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
+import { Utils } from '../../../../../utils/utils';
 import { useMediaQuery } from '../../../../../hooks/use-media-query';
 
 import './ancestry-section.scss';
@@ -39,7 +40,7 @@ export const AncestrySection = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 
 	try {
-		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks).filter(a => matchElement(a, props.searchTerm));
+		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks).map(Utils.copy).filter(a => matchElement(a, props.searchTerm));
 		const options = ancestries.map(a => (
 			<SelectablePanel key={a.id} onSelect={() => props.selectAncestry(a)}>
 				<AncestryPanel ancestry={a} options={props.options} />

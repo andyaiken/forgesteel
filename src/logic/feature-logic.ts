@@ -14,6 +14,7 @@ import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
+import { HeroLogic } from './hero-logic';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { MonsterFeatureCategory } from '../enums/monster-feature-category';
@@ -31,6 +32,11 @@ export class FeatureLogic {
 	static getFeaturesFromCulture = (culture: Culture, hero: Hero) => {
 		const features: { feature: Feature, source: string }[] = [];
 
+		features.push({
+			feature: culture.language,
+			source: culture.name
+		});
+
 		if (culture.environment) {
 			features.push({ feature: culture.environment, source: culture.name });
 		}
@@ -40,16 +46,15 @@ export class FeatureLogic {
 		if (culture.upbringing) {
 			features.push({ feature: culture.upbringing, source: culture.name });
 		}
-		if (culture) {
-			features.push({
-				feature: FactoryLogic.feature.create({
-					id: Utils.guid(),
-					name: `${culture.name} Culture`.trim(),
-					description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
-				}),
-				source: `${culture.name} Culture`.trim()
-			});
-		}
+
+		features.push({
+			feature: FactoryLogic.feature.create({
+				id: Utils.guid(),
+				name: `${culture.name} Culture`.trim(),
+				description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
+			}),
+			source: culture.name
+		});
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
@@ -633,7 +638,7 @@ export class FeatureLogic {
 		return false;
 	};
 
-	static isChosen = (feature: Feature, formerAncestries: Ancestry[]) => {
+	static isChosen = (feature: Feature, hero: Hero) => {
 		switch (feature.type) {
 			case FeatureType.AncestryChoice:
 				return !!feature.data.selected;
@@ -643,7 +648,7 @@ export class FeatureLogic {
 				let availableOptions = [ ...feature.data.options ];
 				if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
 					availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
-					const additionalOptions = formerAncestries
+					const additionalOptions = HeroLogic.getFormerAncestries(hero)
 						.flatMap(a => a.features)
 						.filter(f => f.type === FeatureType.Choice)
 						.flatMap(f => f.data.options)
@@ -653,7 +658,8 @@ export class FeatureLogic {
 				const selected = feature.data.selected
 					.map(f => availableOptions.find(opt => opt.feature.id === f.id))
 					.filter(opt => !!opt);
-				return Collections.sum(selected, i => i.value) >= feature.data.count;
+				const count = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
+				return Collections.sum(selected, i => i.value) >= count;
 			}
 			case FeatureType.ClassAbility:
 				return feature.data.selectedIDs.length >= feature.data.count;

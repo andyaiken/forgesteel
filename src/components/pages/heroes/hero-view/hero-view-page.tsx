@@ -22,9 +22,11 @@ import { HeroSheetPage } from '../hero-sheet/hero-sheet-page';
 import { HeroStatePage } from '../../../../enums/hero-state-page';
 import { Kit } from '../../../../models/kit';
 import { Monster } from '../../../../models/monster';
+import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { Options } from '../../../../models/options';
 import { OptionsPanel } from '../../../panels/options/options-panel';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { PdfOptions } from '../../../../models/pdf-options';
 import { RulesPage } from '../../../../enums/rules-page';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
@@ -46,7 +48,7 @@ interface Props {
 	showReference: (hero: Hero, page?: RulesPage) => void;
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'json') => void;
-	exportPdf: (hero: Hero, mode: 'portrait' | 'landscape' | 'html', formFillable: boolean) => void;
+	exportPdf: (hero: Hero, data: PdfOptions) => void;
 	exportStandardAbilities: () => void;
 	copyHero: (hero: Hero) => void;
 	deleteHero: (hero: Hero) => void;
@@ -64,33 +66,41 @@ interface Props {
 	showFeature: (feature: Feature, hero: Hero) => void;
 	showAbility: (ability: Ability, hero: Hero) => void;
 	showHeroState: (hero: Hero, page: HeroStatePage) => void;
+	setNotes: (hero: Hero, value: string) => void;
 }
 
 export const HeroViewPage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
-	const [ view, setView ] = useState<'modern' | 'classic' | 'abilities'>('modern');
+	const [ view, setView ] = useState<'modern' | 'classic' | 'abilities' | 'notes'>('modern');
 	const [ pdfOrientation, setPdfOrientation ] = useState<'portrait' | 'landscape'>('portrait');
 	const [ pdfFormFillable, setPdfFormFillable ] = useState<boolean>(false);
+	const [ pdfResolution, setPdfResolution ] = useState<'standard' | 'high'>('standard');
+	const [ exportPopoverOpen, setExportPopoverOpen ] = useState<boolean>(false);
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
 	);
 
+	const handleExportPopoverOpenChange = (open: boolean) => {
+		setExportPopoverOpen(open);
+	};
+
 	try {
 		const exportPDF = () => {
 			switch (view) {
 				case 'modern':
-					props.exportPdf(hero, pdfOrientation, pdfFormFillable);
+					props.exportPdf(hero, { mode: pdfOrientation, formFillable: pdfFormFillable });
 					break;
 				case 'classic':
-					props.exportPdf(hero, 'html', pdfFormFillable);
+					props.exportPdf(hero, { mode: 'html', resolution: pdfResolution });
 					break;
 				case 'abilities':
 					props.exportStandardAbilities();
 					break;
 			}
+			setExportPopoverOpen(false);
 		};
 
 		const getContent = () => {
@@ -131,6 +141,16 @@ export const HeroViewPage = (props: Props) => {
 					return (
 						<StandardAbilitiesPanel hero={hero} />
 					);
+				case 'notes':
+					return (
+						<MultiLine
+							style={{ height: '100%', flex: '1 1 0' }}
+							inputStyle={{ flex: '1 1 0', resize: 'none' }}
+							value={hero.state.notes}
+							showMarkdownPrompt={false}
+							onChange={value => props.setNotes(hero, value)}
+						/>
+					);
 			}
 		};
 
@@ -150,6 +170,8 @@ export const HeroViewPage = (props: Props) => {
 						</Button>
 						<Popover
 							trigger='click'
+							open={exportPopoverOpen}
+							onOpenChange={handleExportPopoverOpenChange}
 							content={(
 								<div style={{ width: '250px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 									<Button onClick={exportPDF}>Export as PDF</Button>
@@ -172,6 +194,16 @@ export const HeroViewPage = (props: Props) => {
 												label='Form fillable'
 												value={pdfFormFillable}
 												onChange={setPdfFormFillable}
+											/>
+											<Segmented
+												disabled={view !== 'classic'}
+												block={true}
+												options={[
+													{ value: 'standard', label: 'Standard' },
+													{ value: 'high', label: 'High-Res' }
+												]}
+												value={pdfResolution}
+												onChange={setPdfResolution}
 											/>
 										</Space>
 									</Expander>
@@ -202,9 +234,10 @@ export const HeroViewPage = (props: Props) => {
 										block={true}
 										vertical={true}
 										options={[
-											{ value: 'modern', label: <div style={{ margin: '5px' }}>Modern Sheet</div> },
-											{ value: 'classic', label: <div style={{ margin: '5px' }}><Tag color='red'>BETA</Tag>Classic Sheet</div> },
-											{ value: 'abilities', label: <div style={{ margin: '5px' }}>Standard Abilities</div> }
+											{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
+											{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Tag color='red'>BETA</Tag>Classic Sheet</div> },
+											{ value: 'abilities', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Standard Abilities</div> },
+											{ value: 'notes', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Notes</div> }
 										]}
 										value={view}
 										onChange={setView}
@@ -219,9 +252,9 @@ export const HeroViewPage = (props: Props) => {
 						</Popover>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode='hero' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 						>
-							<Button icon={<SettingOutlined />}>
+							<Button disabled={![ 'modern', 'classic' ].includes(view)} icon={<SettingOutlined />}>
 								Options
 								<DownOutlined />
 							</Button>

@@ -1,32 +1,34 @@
-import { CharacterSheet } from '../../../../models/character-sheet';
+import { CareerSheet } from '../../../../models/character-sheet';
 import { FeatureComponent } from '../components/feature-component';
+import { Hero } from '../../../../models/hero';
 import './career-card.scss';
 
 interface Props {
-	character: CharacterSheet;
+	career?: CareerSheet;
+	hero: Hero;
 }
 
 export const CareerCard = (props: Props) => {
-	const character = props.character;
+	const career = props.career;
 	return (
 		<div className='career card'>
 			<h2>Career</h2>
-			<div className='name'>{character.careerName}</div>
-			<section className='bordered'>
+			<div className='name'>{career?.name}</div>
+			<section className='bordered benefit'>
 				<h3>Benefit</h3>
-				{character.careerBenefits?.map(f =>
+				{career?.benefits?.map(f =>
 					<FeatureComponent
 						feature={f}
-						hero={character.hero}
+						hero={props.hero}
 						key={f.id}
 					/>
 				)}
 			</section>
 
-			<section className='bordered'>
+			<section className='bordered inciting-incident'>
 				<h3>Inciting Incident</h3>
-				<h4>{character.careerInsightingIncident?.name}</h4>
-				<p>{character.careerInsightingIncident?.description}</p>
+				<h4>{career?.incitingIncident?.name}</h4>
+				<p>{career?.incitingIncident?.description}</p>
 			</section>
 		</div>
 	);

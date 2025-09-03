@@ -246,7 +246,8 @@ export const FeatureConfigPanel = (props: Props) => {
 			const original = allOptions.find(o => o.feature.id === id);
 			return original ? original.value : 0;
 		});
-		const pointsLeft = data.count - pointsUsed;
+		const pointsMax = data.count === 'ancestry' ? HeroLogic.getAncestryPoints(props.hero!) : data.count;
+		const pointsLeft = pointsMax - pointsUsed;
 
 		let unavailableIDs: string[] = [];
 		if (data.options.some(opt => opt.value > 1)) {
@@ -1111,7 +1112,7 @@ export const FeatureConfigPanel = (props: Props) => {
 
 						const sk = SourcebookLogic.getSkill(skill, props.sourcebooks!);
 						return (
-							<Flex key={n} className='selection-box' align='center' gap={10}>
+							<Flex key={n} className='selection-box' align='center' justify='space-between' gap={10}>
 								<Flex vertical={true}>
 									{
 										sk ?

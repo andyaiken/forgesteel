@@ -13,6 +13,7 @@ import { FeatureLogic } from '../../../../logic/feature-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
+import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { Utils } from '../../../../utils/utils';
@@ -139,6 +140,22 @@ export const AncestryEditPanel = (props: Props) => {
 			);
 		};
 
+		const getAncestryPointsEditSection = () => {
+			const setPoints = (value: number) => {
+				const copy = Utils.copy(ancestry);
+				copy.ancestryPoints = value;
+				setAncestry(copy);
+				props.onChange(copy);
+			};
+
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<HeaderText>Ancestry Points</HeaderText>
+					<NumberSpin min={1} value={ancestry.ancestryPoints} onChange={setPoints} />
+				</Space>
+			);
+		};
+
 		return (
 			<ErrorBoundary>
 				<div className='ancestry-edit-panel'>
@@ -153,6 +170,11 @@ export const AncestryEditPanel = (props: Props) => {
 								key: '2',
 								label: 'Features',
 								children: getFeaturesEditSection()
+							},
+							{
+								key: '3',
+								label: 'Ancestry Points',
+								children: getAncestryPointsEditSection()
 							}
 						]}
 					/>

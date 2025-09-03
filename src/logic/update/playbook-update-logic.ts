@@ -28,6 +28,10 @@ export class PlaybookUpdateLogic {
 
 		playbook.encounters.forEach(e => {
 			e.groups.forEach(g => {
+				if (g.name === undefined) {
+					g.name = '';
+				}
+
 				if (g.encounterState === undefined) {
 					g.encounterState = 'ready';
 				}

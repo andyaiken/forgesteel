@@ -45,32 +45,41 @@ export const SkillSelectModal = (props: Props) => {
 				}
 				content={
 					<div className='skill-select-modal'>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								skills.map((s, n) => (
-									<SelectablePanel
-										key={n}
-										onSelect={() => props.onSelect(s)}
-									>
-										<HeaderText tags={[ s.list ]}>{s.name}</HeaderText>
-										<Markdown text={s.description} />
-									</SelectablePanel>
-								))
-							}
-							<Divider />
-							<Expander title='Add a custom skill'>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									<HeaderText>Custom Skill</HeaderText>
-									<Input
-										placeholder='Custom Skill Name'
-										allowClear={true}
-										value={customSkill}
-										onChange={e => setCustomSkill(e.target.value)}
-									/>
-									<Button block={true} disabled={!customSkill} onClick={() => props.onSelect({ name: customSkill, description: '', list: SkillList.Custom })}>Select</Button>
-								</Space>
-							</Expander>
-						</Space>
+						{
+							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map(list => {
+								const subset = skills.filter(s => s.list === list);
+								if (subset.length === 0) {
+									return null;
+								}
+
+								return (
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText level={1}>{list}</HeaderText>
+										{
+											subset.map((s, n) => (
+												<SelectablePanel key={n} onSelect={() => props.onSelect(s)}>
+													<HeaderText>{s.name}</HeaderText>
+													<Markdown text={s.description} />
+												</SelectablePanel>
+											))
+										}
+									</Space>
+								);
+							})
+						}
+						<Divider />
+						<Expander title='Add a custom skill'>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<HeaderText>Custom Skill</HeaderText>
+								<Input
+									placeholder='Custom Skill Name'
+									allowClear={true}
+									value={customSkill}
+									onChange={e => setCustomSkill(e.target.value)}
+								/>
+								<Button block={true} disabled={!customSkill} onClick={() => props.onSelect({ name: customSkill, description: '', list: SkillList.Custom })}>Select</Button>
+							</Space>
+						</Expander>
 					</div>
 				}
 				onClose={props.onClose}

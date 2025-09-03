@@ -1,7 +1,45 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
-.inventory.card {
+.hero-sheet .inventory.card {
+    // background-image: linear-gradient(180deg, transparent 17px, #ccc 17px, #ccc 18px, #eee 18px, #eee 35px, #ccc 35px);
+    // background-size: 100% 36px;
+    // background-position: center top;
+    // background-repeat: repeat-y;
     .item {
         margin-bottom: 15px;
+
+        h3:not(#priority) {
+            text-align: left;
+            text-transform: none;
+            padding-bottom: 2px;
+            margin-bottom: 3px;
+            color: common.$color-text;
+            font-weight: 450;
+
+            background-image: linear-gradient(90deg, common.$color-medium, transparent);
+            background-size: 80% 1px;
+            background-position: left bottom;
+            background-repeat: no-repeat;
+        }
+
+        .item-effect * {
+            line-height: 19px;
+            font-size: 15px;
+        }
+
+        .keywords-item-type {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .keywords,
+        .item-type {
+            @include common.font-slab;
+            font-weight: 400;
+        }
+
+        .item-features .feature-line {
+            font-weight: 400;
+        }
     }
 }

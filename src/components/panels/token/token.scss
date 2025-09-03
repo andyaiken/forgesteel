@@ -14,51 +14,52 @@ $monster-support: rgb(245, 213, 184);
 .token {
 	aspect-ratio: 1/1;
 	border-radius: 50%;
-	background-color: $monster-default;
+	background: linear-gradient(color.scale($monster-default, $lightness: 10%), color.scale($monster-default, $lightness: -10%));
 	border: 1px solid color.scale($monster-default, $lightness: -20%);
+	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.25);
 
 	&.ambusher {
-		background-color: $monster-ambusher;
+		background: linear-gradient(color.scale($monster-ambusher, $lightness: 10%), color.scale($monster-ambusher, $lightness: -10%));
 		border-color: color.scale($monster-ambusher, $lightness: -20%);
 	}
 
 	&.artillery {
-		background-color: $monster-artillery;
+		background: linear-gradient(color.scale($monster-artillery, $lightness: 10%), color.scale($monster-artillery, $lightness: -10%));
 		border-color: color.scale($monster-artillery, $lightness: -20%);
 	}
 
 	&.brute {
-		background-color: $monster-brute;
+		background: linear-gradient(color.scale($monster-brute, $lightness: 10%), color.scale($monster-brute, $lightness: -10%));
 		border-color: color.scale($monster-brute, $lightness: -20%);
 	}
 
 	&.controller {
-		background-color: $monster-controller;
+		background: linear-gradient(color.scale($monster-controller, $lightness: 10%), color.scale($monster-controller, $lightness: -10%));
 		border-color: color.scale($monster-controller, $lightness: -20%);
 	}
 
 	&.defender {
-		background-color: $monster-defender;
+		background: linear-gradient(color.scale($monster-defender, $lightness: 10%), color.scale($monster-defender, $lightness: -10%));
 		border-color: color.scale($monster-defender, $lightness: -20%);
 	}
 
 	&.harrier {
-		background-color: $monster-harrier;
+		background: linear-gradient(color.scale($monster-harrier, $lightness: 10%), color.scale($monster-harrier, $lightness: -10%));
 		border-color: color.scale($monster-harrier, $lightness: -20%);
 	}
 
 	&.hexer {
-		background-color: $monster-hexer;
+		background: linear-gradient(color.scale($monster-hexer, $lightness: 10%), color.scale($monster-hexer, $lightness: -10%));
 		border-color: color.scale($monster-hexer, $lightness: -20%);
 	}
 
 	&.mount {
-		background-color: $monster-mount;
+		background: linear-gradient(color.scale($monster-mount, $lightness: 10%), color.scale($monster-mount, $lightness: -10%));
 		border-color: color.scale($monster-mount, $lightness: -20%);
 	}
 
 	&.support {
-		background-color: $monster-support;
+		background: linear-gradient(color.scale($monster-support, $lightness: 10%), color.scale($monster-support, $lightness: -10%));
 		border-color: color.scale($monster-support, $lightness: -20%);
 	}
 
@@ -80,11 +81,11 @@ $monster-support: rgb(245, 213, 184);
 		overflow: hidden;
 
 		&.hero {
-			background: rgb(0, 80, 0);
+			background: linear-gradient(rgb(0, 100, 0), rgb(0, 60, 0));
 		}
 
 		&.monster {
-			background: rgb(80, 0, 0);
+			background: linear-gradient(rgb(100, 0, 0), rgb(60, 0, 0));
 		}
 
 		&.defeated {

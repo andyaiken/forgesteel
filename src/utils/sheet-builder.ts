@@ -1,16 +1,17 @@
-import { AbilitySheet, CharacterSheet } from '../models/character-sheet';
-
+import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet, ItemSheet } from '../models/character-sheet';
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
+import { Career } from '../models/career';
 import { CharacterSheetFormatter } from './character-sheet-formatter';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
+import { Complication } from '../models/complication';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
-import { FactoryFeatureLogic } from '../logic/factory-feature-logic';
+import { FactoryLogic } from '../logic/factory-logic';
 import { Feature } from '../models/feature';
 import { FeatureLogic } from '../logic/feature-logic';
 import { FeatureType } from '../enums/feature-type';
@@ -18,11 +19,13 @@ import { Format } from './format';
 import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from '../logic/hero-logic';
+import { Item } from '../models/item';
+import { Options } from '../models/options';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from '../logic/sourcebook-logic';
 
 export class CharacterSheetBuilder {
-	static buildSheetForHero = (hero: Hero, sourcebooks: Sourcebook[]) => {
+	static buildSheetForHero = (hero: Hero, sourcebooks: Sourcebook[], options: Options) => {
 		const sheet: CharacterSheet = {
 			hero: hero,
 			name: hero.name,
@@ -33,8 +36,11 @@ export class CharacterSheetBuilder {
 			triggeredActions: [],
 			otherRollAbilities: [],
 			otherAbilities: [],
+			standardAbilities: [],
 
-			featuresReferenceOther: []
+			featuresReferenceOther: [],
+
+			notes: hero.state.notes
 		};
 
 		let coveredFeatureIds: string[] = [];
@@ -46,12 +52,15 @@ export class CharacterSheetBuilder {
 
 			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero);
 
-			const ancestryTraits = ancestryFeatures.filter(f => f.feature.type !== FeatureType.Choice);
-			const longFeatures = ancestryTraits
-				.filter(f => f.feature.type === FeatureType.Text)
-				.filter(f => CharacterSheetFormatter.isLongFeature(f.feature));
-			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(ancestryTraits.map(f => f.feature));
-			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(longFeatures);
+			const ancestryTraits = ancestryFeatures.filter(f => f.feature.type !== FeatureType.Choice)
+				.map(f => f.feature);
+
+			const ancestrySpace = options.pageOrientation === 'portrait' ? 26 : 33;
+			const dividedAncestry = CharacterSheetFormatter.divideFeatures(ancestryTraits, ancestrySpace);
+			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(dividedAncestry.displayed);
+
+			const refAncestry = ancestryFeatures.filter(f => dividedAncestry.referenceIds.includes(f.feature.id));
+			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(refAncestry);
 
 			coveredFeatureIds = coveredFeatureIds.concat(ancestryFeatures.map(f => f.feature.id));
 		}
@@ -62,32 +71,36 @@ export class CharacterSheetBuilder {
 		sheet.renown = HeroLogic.getRenown(hero);
 		sheet.xp = hero.state.xp;
 
-		sheet.inventory = hero.state.inventory.map(item => {
-			const features = FeatureLogic.getFeaturesFromItem(item, hero).map(f => f.feature);
-			return {
-				id: item.id,
-				item: item,
-				features: features
-			};
-		});
-		coveredFeatureIds = coveredFeatureIds.concat(sheet.inventory.flatMap(i => i.features?.map(f => f.id) || []));
+		const featureItems = allFeatures.map(f => f.feature)
+			.filter(f => f.type === FeatureType.ItemChoice)
+			.flatMap(f => f.data.selected);
+
+		const inventory = hero.state.inventory.concat(featureItems).map(item => this.buildItemSheet(item, hero));
+
+		sheet.inventory = inventory;
+		coveredFeatureIds = coveredFeatureIds.concat(inventory.flatMap(i => i.features?.map(f => f.id) || []));
 
 		// #region Class
 		if (hero.class) {
 			sheet.className = hero.class.name;
 			sheet.subclassTypeName = hero.class.subclassName;
 			sheet.subclassName = hero.class.subclasses.find(s => s.selected)?.name;
+			// Conduit subclass fix
+			if (hero.class.name === 'Conduit') {
+				sheet.subclassTypeName = 'Domains';
+				sheet.subclassName = HeroLogic.getDomains(hero).map(d => d.name).join(', ');
+			}
 
 			sheet.level = hero.class.level;
 
-			sheet.might = hero.class.characteristics.find(c => c.characteristic === Characteristic.Might)?.value;
-			sheet.agility = hero.class.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value;
-			sheet.reason = hero.class.characteristics.find(c => c.characteristic === Characteristic.Reason)?.value;
-			sheet.intuition = hero.class.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value;
-			sheet.presence = hero.class.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value;
+			sheet.might = HeroLogic.getCharacteristic(hero, Characteristic.Might);
+			sheet.agility = HeroLogic.getCharacteristic(hero, Characteristic.Agility);
+			sheet.reason = HeroLogic.getCharacteristic(hero, Characteristic.Reason);
+			sheet.intuition = HeroLogic.getCharacteristic(hero, Characteristic.Intuition);
+			sheet.presence = HeroLogic.getCharacteristic(hero, Characteristic.Presence);
 
-			const heroicResource = allFeatures.map(f => f.feature).find(f => f.type === FeatureType.HeroicResource);
-			sheet.heroicResourceFeature = heroicResource;
+			const heroicResource = HeroLogic.getHeroicResources(hero)[0];
+			sheet.heroicResourceGains = heroicResource.gains;
 			sheet.heroicResourceName = heroicResource?.name;
 			sheet.heroicResourceCurrent = allFeatures
 				.map(f => f.feature)
@@ -183,35 +196,29 @@ export class CharacterSheetBuilder {
 
 		// #region Class Features
 		if (hero.class) {
+			const refAbilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
-				.filter(f => f.feature.type !== FeatureType.ClassAbility);
+				.map(f => {
+					f.feature = CharacterSheetFormatter.fixClassAbilityNames(f.feature, refAbilities);
+					return f;
+				});
 
-			// Place any previous level basic features in the reference section
-			const prevLevelBasicFeatures = classFeatures
-				.filter(f => (f.level || 0) < (hero.class?.level || 1))
-				.filter(f => CharacterSheetFormatter.isBasicFeature(f.feature));
+			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.feature.id));
+			classFeatures = classFeatures.filter(f => this.includeFeature(f.feature, options));
 
-			classFeatures = classFeatures.filter(f => !prevLevelBasicFeatures.map(f => f.feature.id).includes(f.feature.id));
-
-			// Perks are covered elsewhere - just keep the choice here
 			const perkIds = classFeatures.map(f => f.feature)
 				.filter(f => (f.type === FeatureType.Perk) || f.id.startsWith('perk-'))
 				.flatMap(f => (f.type === FeatureType.Perk) ? f.data.selected.map(p => p.id) : f.id);
 			classFeatures = classFeatures.filter(f => !perkIds.includes(f.feature.id));
 
-			const classFeaturesForSheet = classFeatures.map(f => f.feature).sort(CharacterSheetFormatter.sortFeatures);
-			const longFeatures = classFeatures
-				.filter(f => f.feature.type === FeatureType.Text)
-				.filter(f => CharacterSheetFormatter.isLongFeature(f.feature));
-			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(classFeaturesForSheet);
-			sheet.featuresReferenceOther = (sheet.featuresReferenceOther || [])
-				.concat(prevLevelBasicFeatures)
-				.concat(longFeatures);
+			const classFeatureSpace = options.pageOrientation === 'portrait' ? 50 : 47;
+			const dividedClassFeatures = CharacterSheetFormatter.divideFeatures(classFeatures.map(f => f.feature), classFeatureSpace);
 
-			coveredFeatureIds = coveredFeatureIds
-				.concat(prevLevelBasicFeatures.map(f => f.feature.id))
-				.concat(classFeatures.map(f => f.feature.id));
+			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(dividedClassFeatures.displayed);
+
+			const referenceFeatures = classFeatures.filter(f => dividedClassFeatures.referenceIds.includes(f.feature.id));
+			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(referenceFeatures);
 		}
 		// #endregion
 
@@ -240,29 +247,16 @@ export class CharacterSheetBuilder {
 		sheet.conditions = conditions;
 
 		if (hero.career) {
-			sheet.careerName = hero.career.name;
-			const careerFeatures = hero.career.features;
-			sheet.careerBenefits = CharacterSheetFormatter.convertFeatures(careerFeatures);
-			coveredFeatureIds = coveredFeatureIds.concat(careerFeatures.map(f => f.id));
+			sheet.career = this.buildCareerSheet(hero.career);
 
-			const incident = hero.career.incitingIncidents.options.find(
-				o => o.id === (hero.career && hero.career.incitingIncidents.selectedID)
-			);
-			sheet.careerInsightingIncident = incident;
+			coveredFeatureIds = coveredFeatureIds.concat(hero.career.features.map(f => f.id));
 		}
 
 		if (hero.complication) {
-			sheet.complicationName = hero.complication.name;
-			const complicationFeatures = hero.complication.features;
+			sheet.complication = this.buildComplicationSheet(hero.complication);
 
-			const drawbacks = complicationFeatures.filter(this.isFeatureDrawback);
-			sheet.complicationDrawbacks = drawbacks;
-
-			const benefits = complicationFeatures.filter(f => !this.isFeatureDrawback(f));
-			sheet.complicationBenefits = benefits;
-
-			coveredFeatureIds = coveredFeatureIds.concat(benefits.map(f => f.id));
-			coveredFeatureIds = coveredFeatureIds.concat(drawbacks.map(f => f.id));
+			coveredFeatureIds = coveredFeatureIds.concat(sheet.complication.benefits.map(f => f.id));
+			coveredFeatureIds = coveredFeatureIds.concat(sheet.complication.drawbacks.map(f => f.id));
 		}
 
 		const skillsMap = new Map<string, string[]>();
@@ -281,12 +275,7 @@ export class CharacterSheetBuilder {
 
 		// Culture
 		if (hero.culture) {
-			let cultureFeatures: Feature[] = [];
-			cultureFeatures = cultureFeatures.concat(allFeatures.filter(f => f.source.includes('Culture')).map(f => f.feature))
-				.concat(hero.culture.languages.map(lang => FactoryFeatureLogic.createLanguage({
-					id: `culture-${hero.culture?.name}-language-${lang}`,
-					language: lang
-				})));
+			const cultureFeatures = allFeatures.filter(f => f.source === hero.culture?.name).map(f => f.feature);
 			sheet.culture = hero.culture;
 			sheet.cultureFeatures = cultureFeatures;
 
@@ -320,7 +309,7 @@ export class CharacterSheetBuilder {
 			pointsCurrent: p.progress?.points
 		}));
 
-		// Abilities
+		// #region Abilities
 		const abilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 
 		sheet.freeStrikes = [ AbilityData.freeStrikeMelee, AbilityData.freeStrikeRanged ].map(a => this.buildAbilitySheet(a, hero));
@@ -336,6 +325,9 @@ export class CharacterSheetBuilder {
 		sheet.otherRollAbilities = otherAbilities.filter(a => a.sections.some(s => s.type === 'roll')).map(a => this.buildAbilitySheet(a, hero));
 		sheet.otherAbilities = otherAbilities.filter(a => !a.sections.some(s => s.type === 'roll')).map(a => this.buildAbilitySheet(a, hero));
 
+		const standard = HeroLogic.getAbilities(FactoryLogic.createHero([]), sourcebooks, true).map(a => a.ability);
+		sheet.standardAbilities = standard.map(a => this.buildAbilitySheet(a, hero));
+
 		coveredAbilityIds = coveredAbilityIds
 			.concat(sheet.otherRollAbilities.map(a => a.id))
 			.concat(sheet.otherAbilities.map(a => a.id));
@@ -343,6 +335,7 @@ export class CharacterSheetBuilder {
 		coveredFeatureIds = coveredFeatureIds.concat(
 			allFeatures.filter(f => [ FeatureType.ClassAbility, FeatureType.Ability ].includes(f.feature.type))
 				.map(f => f.feature.id));
+		// #endregion
 
 		// Feature coverage check
 		const missedFeatures: { feature: Feature; source: string; }[] = [];
@@ -360,6 +353,8 @@ export class CharacterSheetBuilder {
 
 		return sheet;
 	};
+
+	// #region Helper Methods
 
 	private static modifierFieldMapping: { [key: string]: (s: CharacterSheet, v: string | number | undefined) => void } = {
 		Stamina: (s, v) => s.modifierStamina = Number(v),
@@ -387,11 +382,66 @@ export class CharacterSheetBuilder {
 		}
 	};
 
+	// Returns true for features that are categorized as part of the Kit,
+	// but which (I feel) should go with the Class features.
+	static isClassFeatureInKit = (f: Feature): boolean => {
+		return (f.name.includes('Aspect')
+			|| f.name.includes('Animal Form')
+			|| f.name.includes('Hybrid Form')
+			|| f.name.includes('Growing Ferocity'));
+	};
+
+	static isFeatureDrawback = (f: Feature): boolean => {
+		return (f.name.includes('Drawback')
+			|| /-d$/.test(f.id));
+	};
+
+	static minimalFeatureTypes: FeatureType[] = [
+		FeatureType.Text,
+		FeatureType.Package,
+		FeatureType.PackageContent
+	];
+
+	static nonBasicFeatureTypes: FeatureType[] = [
+		FeatureType.Text,
+		FeatureType.Package,
+		FeatureType.PackageContent,
+		FeatureType.Ability,
+		FeatureType.HeroicResource,
+		FeatureType.Kit
+	];
+
+	static includeFeature = (f: Feature, options: Options): boolean => {
+		switch (options.featuresInclude) {
+			case 'minimal':
+				return this.minimalFeatureTypes.includes(f.type);
+			case 'no-basic':
+				return this.isNotBasicFeature(f);
+			case 'all':
+			default:
+				return true;
+		}
+	};
+
+	static isNotBasicFeature(f: Feature) {
+		let notBasic = this.nonBasicFeatureTypes.includes(f.type);
+		if (notBasic && f.type === FeatureType.Kit) {
+			notBasic = f.description.length > 0;
+		} else if (notBasic && f.type === FeatureType.HeroicResource) {
+			notBasic = f.data.details.length > 0;
+		}
+
+		return notBasic;
+	}
+	// #endregion
+
+	// #region Ability Sheet
 	static buildAbilitySheet = (ability: Ability, hero: Hero): AbilitySheet => {
 		const sheet: AbilitySheet = {
 			id: ability.id,
 			abilityType: 'Ability',
 			name: ability.name,
+			description: ability.description,
 			isSignature: false,
 			cost: Number(ability.cost) || 0,
 			actionType: ability.type.usage.toString(),
@@ -400,6 +450,8 @@ export class CharacterSheetBuilder {
 			trigger: ability.type.trigger,
 			hasPowerRoll: false
 		};
+
+		sheet.name = sheet.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
 
 		if (ability.cost === 'signature') {
 			sheet.isSignature = true;
@@ -411,11 +463,23 @@ export class CharacterSheetBuilder {
 		} else if (ability.type.usage === AbilityUsage.FreeStrike) {
 			sheet.abilityType = 'Free Strike';
 			if (ability.name.toLowerCase().includes('melee')) {
-				sheet.abilityType = 'Melee Free Strike';
+				sheet.name = 'Melee Free Strike';
 			} else if (ability.name.toLowerCase().includes('ranged')) {
-				sheet.abilityType = 'Ranged Free Strike';
+				sheet.name = 'Ranged Free Strike';
 			}
+		} else if (ability.type.usage === AbilityUsage.Maneuver) {
+			sheet.abilityType = 'Maneuver';
+		} else if (ability.type.usage === AbilityUsage.Move) {
+			sheet.abilityType = 'Move Action';
+		} else if (ability.keywords.includes('Performance')) {
+			sheet.abilityType = 'Performance';
 		}
+
+		if (sheet.actionType && ability.type.free) {
+			sheet.actionType = `Free ${sheet.actionType}`;
+		}
+
+		sheet.qualifiers = ability.type.qualifiers;
 
 		if (ability.distance.length) {
 			sheet.distance = ability.distance.map(d => AbilityLogic.getDistance(d, ability, hero)).join(' | ');
@@ -458,18 +522,75 @@ export class CharacterSheetBuilder {
 
 		return sheet;
 	};
+	// #endregion
 
-	// Returns true for features that are categorized as part of the Kit,
-	// but which (I feel) should go with the Class features.
-	static isClassFeatureInKit = (f: Feature): boolean => {
-		return (f.name.includes('Aspect')
-            || f.name.includes('Animal Form')
-            || f.name.includes('Hybrid Form')
-            || f.name.includes('Growing Ferocity'));
+	// #region Career Sheet
+	static buildCareerSheet = (career: Career): CareerSheet => {
+		const sheet: CareerSheet = {
+			id: career.id,
+			name: career.name,
+			benefits: []
+		};
+
+		const careerFeatures = career.features;
+		sheet.benefits = CharacterSheetFormatter.convertFeatures(careerFeatures);
+		const incident = career.incitingIncidents.options.find(
+			o => o.id === (career && career.incitingIncidents.selectedID)
+		);
+		sheet.incitingIncident = incident;
+
+		return sheet;
+	};
+	// #endregion
+
+	// #region Item Sheet
+	static buildItemSheet = (item: Item, hero: Hero): ItemSheet => {
+		const features = FeatureLogic.getFeaturesFromItem(item, hero).map(f => f.feature);
+		const sheet: ItemSheet = {
+			id: item.id,
+			item: item,
+			effect: item.effect,
+			features: features
+		};
+
+		if (!item.effect.length) {
+			sheet.effect = features.find(f => f.id === item.id)?.description || '';
+		}
+
+		return sheet;
+	};
+	// #endregion
+
+	// #region Complication Sheet
+	static buildComplicationSheet = (complication: Complication): ComplicationSheet => {
+		const sheet: ComplicationSheet = {
+			id: complication.id,
+			name: complication.name,
+			description: complication.description,
+			benefits: [],
+			drawbacks: []
+		};
+
+		const complicationFeatures = complication.features;
+
+		const drawbacks = complicationFeatures.filter(this.isFeatureDrawback)
+			.map(f => this.stripDuplicateComplicationName(complication.name, f));
+		sheet.drawbacks = drawbacks;
+
+		const benefits = complicationFeatures.filter(f => !this.isFeatureDrawback(f))
+			.map(f => this.stripDuplicateComplicationName(complication.name, f));
+		sheet.benefits = benefits;
+
+		return sheet;
 	};
 
-	static isFeatureDrawback = (f: Feature): boolean => {
-		return (f.name.includes('Drawback')
-			|| /-d-?/.test(f.id));
+	static stripDuplicateComplicationName = (complicationName: string, f: Feature) => {
+		if (f.type === FeatureType.Text && f.name.startsWith(complicationName)) {
+			f.name = '';
+		} else if (f.type === FeatureType.Ability) {
+			f.name = f.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
+		}
+		return f;
 	};
+	// #endregion
 }

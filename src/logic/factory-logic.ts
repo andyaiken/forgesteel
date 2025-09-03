@@ -13,6 +13,7 @@ import { Career } from '../models/career';
 import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
+import { CultureType } from '../enums/culture-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
 import { EncounterSlot } from '../models/encounter-slot';
@@ -167,18 +168,26 @@ export class FactoryLogic {
 					id: Utils.guid(),
 					name: 'Purchased Traits',
 					options: [],
-					count: 3
+					count: 'ancestry'
 				})
-			]
+			],
+			ancestryPoints: 3
 		};
 	};
 
-	static createCulture = (name?: string, description?: string, languages?: string[], environment?: Feature, organization?: Feature, upbringing?: Feature): Culture => {
+	static createCulture = (name: string, description: string, type: CultureType, environment?: Feature, organization?: Feature, upbringing?: Feature, language?: string): Culture => {
+		const id = name ? `culture-${name.replace(' ', '-').toLowerCase()}` : Utils.guid();
+
 		return {
-			id: name ? `culture-${name.replace(' ', '-').toLowerCase()}` : Utils.guid(),
-			name: name || '',
-			description: description || '',
-			languages: languages || [],
+			id: id,
+			name: name,
+			description: description,
+			type: type,
+			language: FactoryLogic.feature.createLanguageChoice({
+				id: id,
+				selected: language ? [ language ] : []
+			}),
+			languages: [],
 			environment: environment || null,
 			organization: organization || null,
 			upbringing: upbringing || null
@@ -612,6 +621,7 @@ export class FactoryLogic {
 	static createEncounterGroup = (): EncounterGroup => {
 		return {
 			id: Utils.guid(),
+			name: '',
 			slots: [],
 			encounterState: 'ready'
 		};
@@ -969,6 +979,10 @@ export class FactoryLogic {
 			includePlayState: true,
 			abilityWidth: PanelWidth.Medium,
 			classicSheetPageSize: SheetPageSize.Letter,
+			pageOrientation: 'portrait',
+			colorSheet: true,
+			featuresInclude: 'all',
+			abilitySort: 'size',
 			compactView: false,
 			showMonstersInGroups: true,
 			showContentInTable: false,

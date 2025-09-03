@@ -5,6 +5,7 @@ import { ItemUpdateLogic } from './item-update-logic';
 import { LanguageType } from '../../enums/language-type';
 import { MonsterUpdateLogic } from './monster-update-logic';
 import { Sourcebook } from '../../models/sourcebook';
+import { Utils } from '../../utils/utils';
 
 export class SourcebookUpdateLogic {
 	static updateSourcebook = (sourcebook: Sourcebook) => {
@@ -49,6 +50,21 @@ export class SourcebookUpdateLogic {
 			});
 
 			c.abilities.forEach(AbilityUpdateLogic.updateAbility);
+		});
+
+		sourcebook.cultures.forEach(culture => {
+			/* eslint-disable @typescript-eslint/no-deprecated */
+
+			if (culture.language === undefined) {
+				culture.language = FactoryLogic.feature.createLanguageChoice({
+					id: Utils.guid(),
+					selected: culture.languages
+				});
+
+				culture.languages = [];
+			}
+
+			/* eslint-enable @typescript-eslint/no-deprecated */
 		});
 
 		sourcebook.monsterGroups.forEach(group => {

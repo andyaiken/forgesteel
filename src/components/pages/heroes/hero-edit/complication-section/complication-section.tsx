@@ -13,6 +13,7 @@ import { PanelMode } from '../../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
+import { Utils } from '../../../../../utils/utils';
 import { useMediaQuery } from '../../../../../hooks/use-media-query';
 
 import './complication-section.scss';
@@ -48,7 +49,7 @@ export const ComplicationSection = (props: Props) => {
 	}, [ props.hero.complication ]);
 
 	try {
-		const complications = SourcebookLogic.getComplications(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
+		const complications = SourcebookLogic.getComplications(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 		const options = complications.map(c => (
 			<SelectablePanel
 				key={c.id}

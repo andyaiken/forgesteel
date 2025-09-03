@@ -73,8 +73,8 @@ export class PDFExport {
 			ClassTop: hero.class && hero.class.name,
 			SubclassTop: (hero.class && (hero.class.subclassName !== '') && (hero.class.subclasses.filter(s => s.selected).length > 0) && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name) || null,
 			Level: hero.class && hero.class.level,
-			Wealth: hero.state.wealth,
-			Renown: hero.state.renown,
+			Wealth: HeroLogic.getWealth(hero),
+			Renown: HeroLogic.getRenown(hero),
 			XP: hero.state.xp,
 			Speed: FormatLogic.getSpeed(HeroLogic.getSpeed(hero)),
 			Stability: HeroLogic.getStability(hero),
@@ -340,12 +340,7 @@ export class PDFExport {
 								break;
 							case 'roll': {
 								let powerRollText = '';
-								powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...section.roll.characteristic
-									.map(
-										c => hero.class && hero.class.characteristics.find(d => d.characteristic === c)
-									)
-									.map(c => (c && c.value) || 0)
-								);
+								powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...section.roll.characteristic.map(c => HeroLogic.getCharacteristic(hero, c)));
 								powerRollText = powerRollText + '\n   • 11 or less\t' + AbilityLogic.getTierEffect(
 									section.roll.tier1,
 									1,

@@ -52,7 +52,7 @@ export const EncounterPanel = (props: Props) => {
 						<SelectablePanel key={group.id} style={{ paddingTop: '0' }}>
 							{
 								props.encounter.groups.filter(g => g.slots.length > 0).length > 1 ?
-									<HeaderText>Group {(n + 1).toString()}</HeaderText>
+									<HeaderText>{group.name || `Group ${n + 1}`}</HeaderText>
 									:
 									<HeaderText>Monsters</HeaderText>
 							}

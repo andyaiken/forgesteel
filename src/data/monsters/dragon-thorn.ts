@@ -102,7 +102,8 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 				}),
 				FactoryLogic.feature.createSoloMonster({
 					id: 'dragon-thorn-feature-2',
-					name: 'thorn dragon'
+					name: 'thorn dragon',
+					endEfect: 10
 				}),
 				FactoryLogic.feature.create({
 					id: 'dragon-thorn-feature-3',

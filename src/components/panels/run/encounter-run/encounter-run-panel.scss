@@ -51,20 +51,6 @@
 		flex-direction: column;
 		gap: 5px;
 	}
-
-	.malice {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 20px;
-
-		.malice-progress {
-			height: 32px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 10px;
-		}
-	}
 }
 
 @media (prefers-color-scheme: dark) {

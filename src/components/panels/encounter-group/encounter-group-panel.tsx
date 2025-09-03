@@ -14,6 +14,8 @@ import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { Options } from '../../../models/options';
+import { Sourcebook } from '../../../models/sourcebook';
+import { SourcebookLogic } from '../../../logic/sourcebook-logic';
 import { Terrain } from '../../../models/terrain';
 import { TerrainLogic } from '../../../logic/terrain-logic';
 import { useDimensions } from '../../../hooks/use-dimensions';
@@ -29,9 +31,10 @@ const widthStatsColumn = 50;
 interface EncounterGroupHeroProps {
 	hero: Hero;
 	encounter: Encounter;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onSelect: (hero: Hero) => void;
-	onSelectMonster: (monster: Monster) => void;
+	onSelectMonster: (monster: Monster, monsterGroupID: string) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
 	onSetState: (hero: Hero, value: 'ready' | 'current' | 'finished') => void;
 	onAddSquad: (hero: Hero, monster: Monster, count: number) => void;
@@ -176,6 +179,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 											<MonsterSlot
 												slot={slot}
 												encounter={props.encounter}
+												sourcebooks={props.sourcebooks}
 												onSelectMonster={props.onSelectMonster}
 												onSelectMinionSlot={props.onSelectMinionSlot}
 											/>
@@ -225,7 +229,8 @@ interface EncounterGroupMonsterProps {
 	group: EncounterGroup;
 	index: number;
 	encounter: Encounter;
-	onSelectMonster: (monster: Monster) => void;
+	sourcebooks: Sourcebook[];
+	onSelectMonster: (monster: Monster, monsterGroupID: string) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
 	onSetName: (group: EncounterGroup, value: string) => void;
 	onSetState: (group: EncounterGroup, value: 'ready' | 'current' | 'finished') => void;
@@ -286,6 +291,7 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 								key={slot.id}
 								slot={slot}
 								encounter={props.encounter}
+								sourcebooks={props.sourcebooks}
 								onSelectMonster={props.onSelectMonster}
 								onSelectMinionSlot={props.onSelectMinionSlot}
 							/>
@@ -303,7 +309,8 @@ export const EncounterGroupMonster = (props: EncounterGroupMonsterProps) => {
 interface MonsterSlotProps {
 	slot: EncounterSlot;
 	encounter: Encounter;
-	onSelectMonster: (monster: Monster) => void;
+	sourcebooks: Sourcebook[];
+	onSelectMonster: (monster: Monster, monsterGroupID: string) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;
 }
 
@@ -316,6 +323,8 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 
 	const isMinionSlot = props.slot.monsters.every(m => m.role.organization === MonsterOrganizationType.Minion);
 	const [ showMonsters, setShowMonsters ] = useState<boolean>(!isMinionSlot);
+
+	const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, props.slot.monsterID);
 
 	const getStaminaDescription = () => {
 		const max = Collections.sum(props.slot.monsters, m => MonsterLogic.getStamina(m));
@@ -455,7 +464,11 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 			{
 				showMonsters ?
 					props.slot.monsters.map(monster => (
-						<div key={monster.id} className={props.slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'} onClick={() => props.onSelectMonster(monster)}>
+						<div
+							key={monster.id}
+							className={props.slot.state.defeated || monster.state.defeated ? 'encounter-slot-row defeated' : 'encounter-slot-row'}
+							onClick={() => props.onSelectMonster(monster, monsterGroup ? monsterGroup.id : '')}
+						>
 							<div className='name-column'>
 								<MonsterInfo monster={monster} />
 							</div>

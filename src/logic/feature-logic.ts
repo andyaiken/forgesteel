@@ -286,6 +286,10 @@ export class FeatureLogic {
 		const list: { feature: Feature, source: string, level?: number }[] = [];
 
 		const addFeature = (feature: Feature, source: string, level?: number) => {
+			if (!feature) {
+				return;
+			}
+
 			list.push({ feature: feature, source: source, level: level });
 
 			switch (feature.type) {

@@ -49,11 +49,11 @@ export const demon4th: MonsterGroup = {
 			sections: [
 				'One demon acting this turn unleashes their pent-up agony and pain on every non-demon in a 5 burst. Each target makes a **Presence test**.',
 				FactoryLogic.createPowerRoll({
-									characteristic: Characteristic.Presence,
-									tier1: '10 corruption damage; the target is soul flensed',
-									tier2: 'The target is soul flensed',
-									tier3: 'No effect'
-								}),
+					characteristic: Characteristic.Presence,
+					tier1: '10 corruption damage; the target is soul flensed',
+					tier2: 'The target is soul flensed',
+					tier3: 'No effect'
+				}),
 				'The demon removes all conditions and effects on themself that can be ended by a saving throw, and transfers all those effects to each creature soul flensed this way.'
 			]
 		})
@@ -410,7 +410,7 @@ export const demon4th: MonsterGroup = {
 								name: 'Spend',
 								value: 2,
 								effect: 'While dazed this way, a target can’t gain Heroic Resources.'
-							}),
+							})
 						]
 					})
 				}),
@@ -483,7 +483,7 @@ export const demon4th: MonsterGroup = {
 								tier1: '10 fire damage; push 1',
 								tier2: '15 fire damage; push 2',
 								tier3: '19 fire damage; push 3'
-							})),
+							}))
 						]
 					})
 				})

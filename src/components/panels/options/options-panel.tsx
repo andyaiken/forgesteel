@@ -261,6 +261,7 @@ export const OptionsPanel = (props: Props) => {
 					<>
 						<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
 						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 						<Divider size='small'>Include Class Features:</Divider>
 						<Segmented
 							name='abilitySort'
@@ -273,8 +274,6 @@ export const OptionsPanel = (props: Props) => {
 							value={props.options.featuresInclude}
 							onChange={setFeaturesInclude}
 						/>
-						<Divider>Abilities</Divider>
-						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 						<Divider size='small'>Sort Abilities By</Divider>
 						<Segmented
 							name='abilitySort'

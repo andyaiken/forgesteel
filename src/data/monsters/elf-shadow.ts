@@ -9,56 +9,56 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const elfShadow: MonsterGroup = {
 	id: 'monster-group-elf-shadow',
-	name: 'Elf, Shadow',
-	description: 'Long ago, the shadow elves of the manifold Equinox committed the Great Sin and for their impunity were exiled to Orden. The descendants of those elves now skulk about the World Below, searching for a means to return to their home.',
+	name: 'Elves, Shadow',
+	description: `
+Children of the Twilight Celestials, the shadow elves are the native denizens of the parasitic manifold of Equinox, also known as Dusk. Theirs is a world of perpetual twilight, a sun that never rises nor sets, a world that knows neither noon nor midnight.
+
+Equinox is a dying world. The shadow elves plan to use their magic to rewrite Orden’s topography, creating a new home with themselves as rulers over all.`,
 	picture: null,
 	information: [
 		{
 			id: 'elf-shadow-info-1',
 			name: 'In Equinox\'s Shadow',
-			description: 'Shadow elves are lit by an unseen sun. In places like Orden, they appear washed out, silhouetted, or grayscale.  In Equinox, they lived in the shadow of their manifold’s eternal dusk, making them incompatible with other light sources. Their skills, magic, and weapons do not fare well in the sun. However, this does allow them to blend in with existing darkness and dissolve out of sight.'
+			description: 'Shadow elves are lit by an unseen sun. In places like Orden, they appear washed out, silhouetted, or grayscale. In Equinox, they have lived in the shadow of their manifold’s eternal dusk, making them incompatible with other light sources. Their skills, magic, and weapons do not fare well in the sun. But in turn, they can blend in with existing darkness and dissolve out of sight.'
 		},
 		{
 			id: 'elf-shadow-info-2',
 			name: 'Manifold Weaponry',
-			description: 'The shadow elves have mastered the art of combining deep, ancient magic with cutting-edge technology. The closest they’ve gotten to reconnecting with their home is through their manifold weapons, blades crafted of shadow that strike and wound in many dimensions at once. A creature hit by one of these blades is injured in multiple worlds at a time. Only one of strong mind can compartmentalize and end these effects on their body in the here and now.'
+			description: 'The shadow elves have mastered the art of combining deep, ancient magic with cutting-edge technology. Their weaponsmiths craft blades of solid shadow that strike and wound in many dimensions at once. A creature hit by one of these blades is injured in multiple worlds at a time. Only a victim of strong mind can compartmentalize and end these effects on their body in the here and now.'
 		},
 		{
 			id: 'elf-shadow-info-3',
 			name: 'Brush Stalkers',
 			description: `
-When the shadow elves were exiled from Equinox, many left on ancient beasts known as brush stalkers, quadrupedal beasts that carry entire ecosystems on their rack of antlers. Brush stalkers cannot reproduce unless they are in Equinox, so the ones who still walk with Shadow elves are old indeed: overgrown with bioluminescent moss, cracks on their ancient cloven hooves. 
+When the shadow elves invade Orden, they often ride domesticated dwimmerbeasts known as brush stalkers—quadrupeds who carry entire ecosystems on their rack of antlers. Newly born brush stalkers do not survive translation into Orden, so the ones the shadow elves ride are old: overgrown with bioluminescent moss, cracks on their ancient cloven hooves.
 
-A brush stalker’s glamor allows it to look just like a normal deer. But when the glamour is off, the creature devours the light around it and plunges its surroundings into darkness.`
+A brush stalker’s glamor allows them to look like a mundane deer. But when the glamour falls, the creature devours the light around them and plunges their surroundings into darkness.`
 		},
 		{
 			id: 'elf-shadow-info-4',
 			name: 'Fractured Factions',
-			description: `
-Almost immediately upon arrival in The World Below, the shadow elves developed wildly different ideas for what to do about it. Some want desperately to return, while others seek to assimilate into their new home. As generations come and go, and memories of Equinox are lost to time, the shadow elves who have not yet carved a new place for themselves grow anxious. 
-
-One particularly fanatical sect has made it to Orden and mold the manifold in Equinox’s image. They believe their home is lost to them forever, and their only recourse is to blot out Orden’s sun and make a new one. `
+			description: 'Equinox is a small world, ruled by Every Strike of Lightning a Lover Betrayed, the Queen of Shadows. It is her shadow elf scouts and assassins who scour Orden seeking allies who might be persuaded that their lives would be better under a different master. But there are other factions of shadow elves in Equinox. Not all who dwell under the invisible sun seek conquest. Others are sages and pacifists who seek to heal their world or find an empty world somewhere in the timescape to resettle to.'
 		},
 		{
 			id: 'elf-shadow-info-5',
 			name: 'Dusk Calling',
 			description: `
-Certain shadow elf warriors have a natural link to the unseen cosmos by which they are lit. With this link, a warrior can perform the Call: a mix of humming and throat singing that aligns celestial bodies across manifolds. This can temporarily induce an eclipse on the manifold in which the Caller is performing, allowing their comrades to gain the advantage. 
+Certain shadow elf warriors have a natural link to the unseen sun that illuminates their world. With this link, a warrior can perform a Lay: a mix of humming and throat singing that aligns celestial bodies across manifolds. Some Lays can temporarily induce an eclipse on the manifold in which the duskcaller is performing, allowing their comrades to gain the advantage.
 
-A skilled duskcaller can lead a band in a group Call, which is powerful enough to recreate the conditions of Equinox for a short time. Some shadow elf factions are researching this connection in earnest, considering it a viable step towards terraforming a second Equinox. `
+A skilled duskcaller can lead a band in a group song powerful enough to recreate the conditions of Equinox for a short time. Some shadow elf factions are researching this connection in earnest, considering it a viable step toward terraforming a second Equinox.`
 		},
 		{
 			id: 'elf-shadow-info-6',
 			name: 'Shadow Tactics',
 			description: `
-Since shadow elves have no permanent home, their military strength typically emphasizes both impenetrable defense and a swift and decisive offense. Since they cannot benefit from a home advantage, all warriors are taught to create one. If there are no places to hide, create them. If the light is too bright, remove it.  
+Belief that Equinox is a dying world makes the shadow elves desperate, for soon they’ll have no home to retreat to. Their tactics rely on both impenetrable defense and a swift and decisive offense. Since they can’t benefit from a home advantage, all warriors are taught to create one. If there are no places to hide, form them. If the light is too bright, remove it.
 
-In many shadow elf societies, all people are given at least basic combat training and are expected to serve at least one military tour in their life. Those who excel move on to become duskcallers, mournblades, and eclipses: paragons of strength who are venerated by the people. Research and discovery are employed for the primary purpose of furthering military goals. Even the popular children’s game hide and seek is a military device created to prepare a people for constant, imminent conflict.`
+In many shadow elf societies, all people are given basic combat training and are expected to serve at least one military tour in their life. Those who excel move on to become duskcallers, mournblades, and eclipses: paragons of strength who are venerated by the people. Research and discovery are employed for the primary purpose of furthering military goals. Even the popular children’s game hide-and-seek is a military device created to prepare a people for constant, imminent conflict.`
 		},
 		{
 			id: 'elf-shadow-info-7',
 			name: 'Shadow Elf Languages',
-			description: 'Most shadow elves speak Variac and Illyvric, though platoon leaders may speak some Caelian or Hyrallic. '
+			description: 'Most shadow elves speak Illyvric, though platoon leaders might speak some Caelian or Hyrallic.'
 		}
 	],
 	malice: [
@@ -67,7 +67,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			name: 'Watch Me Disappear',
 			cost: 3,
 			sections: [
-				'All shadow elves acting on this turn can hide as a free maneuver while concealed.'
+				'Each shadow elf acting this turn can attempt to hide as a free maneuver if they have concealment.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -75,15 +75,15 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			name: 'Extra Dimension',
 			cost: 5,
 			sections: [
-				'All shadow elves acting on this turn inﬂict I<2 bleeding (save ends) or slowed (save ends) on their strikes, even if their attacks already inﬂict a condition.'
+				'When any shadow elf acting this turn makes a strike against a target who has I<2 in addition to the strike’s regular effects, the target is bleeding (save ends) or slowed (save ends).'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'elf-shadow-malice-3',
-			name: 'Home is Where the Hurt is',
+			name: 'Home Is Where the Hurt Is',
 			cost: 7,
 			sections: [
-				'The shadow elves synthesize a concentrated pocket manifold reminiscent of Equinox and graft it onto the encounter map. Until the end of the encounter, all creatures can see shadow elves in full color, and shadow elves no longer beneﬁt from their Of the Umbra ability. The potency of all shadow elf abilities increases by 2, and a creature needs an 8 or higher to end a save ends eﬀect inﬂicted by a shadow elf, as they are impacted by the condition across two worlds.'
+				'The shadow elves synthesize a concentrated pocket manifold reminiscent of Equinox and graft it onto the encounter map. Until the end of the encounter, all creatures can see shadow elves in full color, and shadow elves no longer benefit from their Of the Umbra trait. Additionally, the potency of all shadow elf abilities increases by 2, and any enemy making a saving throw against an effect imposed by a shadow elf ability must roll an 8 or higher as they feel the effect across two worlds.'
 			]
 		})
 	],
@@ -94,13 +94,13 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
-			encounterValue: 12,
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(8, 'climb'),
 			stamina: 8,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Speed +2',
+			withCaptain: '+2 bonus to speed',
 			characteristics: MonsterLogic.createCharacteristics(3, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -118,14 +118,15 @@ In many shadow elf societies, all people are given at least basic combat trainin
 								tier1: '2 damage',
 								tier2: '4 damage',
 								tier3: '6 damage'
-							}))
+							})),
+							FactoryLogic.createAbilitySectionText('The cloak shifts up to 2 squares.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-1-feature-2',
 					name: 'Of the Umbra',
-					description: 'The cloak ignores concealment granted by darkness. While the cloak is in direct sunlight, they have damage weakness 3. While the cloak is concealed, they have damage immunity 3.'
+					description: 'The cloak ignores concealment created by darkness. While the cloak is in direct sunlight, they have damage weakness 3. While the cloak has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
@@ -135,23 +136,23 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
-			encounterValue: 12,
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 7,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Edge on strikes',
+			withCaptain: 'Gain an edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(0, 3, 2, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-2-feature-1',
-						name: 'Gloom Strike',
+						name: 'Gloom Bolt',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object per minion',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -166,73 +167,29 @@ In many shadow elf societies, all people are given at least basic combat trainin
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-2-feature-2',
 					name: 'Of the Umbra',
-					description: 'The dusk mage ignores concealment granted by darkness. While the dusk mage is in direct sunlight, they have damage weakness 3. While the dusk mage is concealed, they have damage immunity 3.'
+					description: 'The dusk mage ignores concealment created by darkness. While the dusk mage is in direct sunlight, they have damage weakness 3. While the dusk mage has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'elf-shadow-3',
-			name: 'Shadow Elf Nightstrike',
-			level: 4,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
-			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
-			encounterValue: 12,
-			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5, 'climb'),
-			stamina: 8,
-			stability: 0,
-			freeStrikeDamage: 3,
-			withCaptain: 'Edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 1, 1),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-3-feature-1',
-						name: 'Vault',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'One creature or object per minion',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(
-								FactoryLogic.createPowerRoll({
-									bonus: 3,
-									tier1: '3 damage',
-									tier2: '5 damage',
-									tier3: '7 damage'
-								})
-							),
-							FactoryLogic.createAbilitySectionText('The nightstrike leaps over the target, shifting into an unoccupied square adjacent to the target opposite from their starting position.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'elf-shadow-3-feature-2',
-					name: 'Of the Umbra',
-					description: 'The nightstrike ignores concealment granted by darkness. While the nightstrike is in direct sunlight, they have damage weakness 3. While the nightstrike is concealed, they have damage immunity 3.'
-				})
-			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'elf-shadow-4',
 			name: 'Shadow Elf Sniper',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
-			encounterValue: 12,
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 7,
 			stability: 0,
 			freeStrikeDamage: 3,
-			withCaptain: 'Strike damage +2',
+			withCaptain: '+2 damage bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-4-feature-1',
-						name: 'Neon Arrow',
+						id: 'elf-shadow-3-feature-1',
+						name: 'Lumina Arrow',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -247,14 +204,58 @@ In many shadow elf societies, all people are given at least basic combat trainin
 									tier3: '7 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The next strike made against the target has an edge.')
+							FactoryLogic.createAbilitySectionText('The next strike made against the target gains an edge.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'elf-shadow-3-feature-2',
+					name: 'Of the Umbra',
+					description: 'The sniper ignores concealment created by darkness. While the sniper is in direct sunlight, they have damage weakness 3. While the sniper has concealment, they have damage immunity 3.'
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'elf-shadow-4',
+			name: 'Shadow Elf Nightstrike',
+			level: 4,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
+			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
+			encounterValue: 6,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
+			stamina: 8,
+			stability: 0,
+			freeStrikeDamage: 3,
+			withCaptain: 'Gain an edge on strikes',
+			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 1, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'elf-shadow-4-feature-1',
+						name: 'Vault',
+						type: FactoryLogic.type.createMain(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee(2) ],
+						target: 'One creature or object per minion',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '3 damage',
+									tier2: '5 damage',
+									tier3: '7 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The nightstrike shifts to leap over the target and into an unoccupied space adjacent to the target, opposite from the nightstrike’s original space.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-4-feature-2',
 					name: 'Of the Umbra',
-					description: 'The sniper ignores concealment granted by darkness. While the sniper is in direct sunlight, they have damage weakness 3. While the sniper is concealed, they have damage immunity 3.'
+					description: 'The nightstrike ignores concealment created by darkness. While the nightstrike is in direct sunlight, they have damage weakness 3. While the nightstrike has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
@@ -275,7 +276,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-5-feature-1',
-						name: 'Neon Assault',
+						name: 'Lumina Assault',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -294,7 +295,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
-								effect: 'Each ally within 5 of the target makes a free strike against them.'
+								effect: 'Each non-minion ally within 3 squares of the target can make a free strike against them.'
 							})
 						]
 					})
@@ -307,7 +308,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, value2: 4, within: 10 }) ],
-						target: 'All enemies in the line',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -317,20 +318,80 @@ In many shadow elf societies, all people are given at least basic combat trainin
 									tier3: '12 damage; I<3 bleeding (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('Push 4.')
+							FactoryLogic.createAbilitySectionText('Each target is pushed up to 4 squares.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-5-feature-3',
 					name: 'Of the Umbra',
-					description: 'The assassin ignores concealment granted by darkness. While the assassin is in direct sunlight, they have damage weakness 3. While the assassin is concealed, they have damage immunity 3.'
+					description: 'The assassin ignores concealment created by darkness. While the assassin is in direct sunlight, they have damage weakness 3. While the assassin has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'elf-shadow-6',
-			name: 'Shadow Elf Dark Knight',
+			name: 'Shadow Elf Duskcaller',
+			level: 5,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Controller),
+			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
+			encounterValue: 14,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
+			stamina: 60,
+			stability: 0,
+			freeStrikeDamage: 6,
+			characteristics: MonsterLogic.createCharacteristics(0, 3, 3, 2, 1),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'elf-shadow-6-feature-1',
+						name: 'Night Knife',
+						type: FactoryLogic.type.createMain(),
+						cost: 'signature',
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature or object',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 3,
+									tier1: '9 damage',
+									tier2: '13 damage',
+									tier3: '16 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('If the duskcaller has concealment, they can target one additional creature or object.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'elf-shadow-6-feature-2',
+						name: 'The Lay of Cor’thoroth',
+						type: FactoryLogic.type.createManeuver(),
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 3 }) ],
+						target: 'Special',
+						sections: [
+							FactoryLogic.createAbilitySectionText('Until the start of the duskcaller’s next turn, the area is filled with darkness.'),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 2,
+								effect: 'The area of the cube increases by 3.'
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'elf-shadow-6-feature-3',
+					name: 'Of the Umbra',
+					description: 'The duskcaller ignores concealment created by darkness. While the duskcaller is in direct sunlight, they have damage weakness 3. While the duskcaller has concealment, they have damage immunity 3.'
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'elf-shadow-7',
+			name: 'Shadow Elf Knightfell',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Defender),
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
@@ -344,7 +405,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-6-feature-1',
+						id: 'elf-shadow-7-feature-1',
 						name: 'Suffusing Strike',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -363,80 +424,21 @@ In many shadow elf societies, all people are given at least basic combat trainin
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-6-feature-2',
+						id: 'elf-shadow-7-feature-2',
 						name: 'Trick of the Eye',
 						type: FactoryLogic.type.createTrigger('An enemy within distance makes a strike against the target.'),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The damage is halved. The dark knight takes the other half of the damage.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'elf-shadow-6-feature-3',
-					name: 'Of the Umbra',
-					description: 'The dark knight ignores concealment granted by darkness. While the dark knight is in direct sunlight, they have damage weakness 3. While the dark knight is concealed, they have damage immunity 3.'
-				})
-			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'elf-shadow-7',
-			name: 'Shadow Elf Duskcaller',
-			level: 5,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Controller),
-			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
-			encounterValue: 14,
-			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5, 'climb'),
-			stamina: 60,
-			stability: 0,
-			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 3, 2, 0),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-7-feature-1',
-						name: 'Night Knife',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'One creature or object',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(
-								FactoryLogic.createPowerRoll({
-									bonus: 3,
-									tier1: '9 damage',
-									tier2: '13 damage',
-									tier3: '16 damage'
-								})
-							),
-							FactoryLogic.createAbilitySectionText('The duskcaller can target an additional creature or object while concealed.')
-						]
-					})
-				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-7-feature-2',
-						name: 'Shadesong',
-						type: FactoryLogic.type.createManeuver(),
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 3 }) ],
-						target: 'Special',
-						sections: [
-							FactoryLogic.createAbilitySectionText('The affected area is covered in darkness and is considered concealment until the start of the duskcaller’s next turn.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 2,
-								effect: 'The area of the cube increases by 3.'
-							})
+							FactoryLogic.createAbilitySectionText('The target takes half the damage and the knightfell takes the other half.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-7-feature-3',
 					name: 'Of the Umbra',
-					description: 'The duskcaller ignores concealment granted by darkness. While the duskcaller is in direct sunlight, they have damage weakness 3. While the duskcaller is concealed, they have damage immunity 3.'
+					description: 'The knightfell ignores concealment created by darkness. While the knightfell is in direct sunlight, they have damage weakness 3. While the knightfell has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
@@ -446,7 +448,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Support),
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
-			encounterValue: 6,
+			encounterValue: 12,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
 			stamina: 60,
@@ -457,7 +459,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-8-feature-1',
-						name: 'Neon Mark',
+						name: 'Lumina Mark',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
@@ -472,36 +474,36 @@ In many shadow elf societies, all people are given at least basic combat trainin
 									tier3: '15 lightning damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The next strike against the target deals an additional 5 damage.')
+							FactoryLogic.createAbilitySectionText('The next strike made against the target deals an extra 5 damage.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-8-feature-2',
-						name: 'Mourning \'Til Dusk',
+						name: 'Mourning Till Dusk',
 						type: FactoryLogic.type.createMain(),
 						cost: 2,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-						target: 'All allies in the burst',
+						target: 'Each ally in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 3,
-									tier1: 'The target regains 2 Stamina',
-									tier2: 'The target regains 3 Stamina',
-									tier3: 'The target regains 5 Stamina; The Director gains 3 Malice'
+									tier1: 'The target regains 6 Stamina',
+									tier2: 'The target regains 9 Stamina',
+									tier3: 'The target regains 12 Stamina and the Director gains 3 Malice'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('Each target has an edge on their next strike.')
+							FactoryLogic.createAbilitySectionText('Each target gains an edge on their next strike.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-8-feature-3',
 					name: 'Of the Umbra',
-					description: 'The luminator ignores concealment granted by darkness. While the luminator is in direct sunlight, they have damage weakness 3. While the luminator is concealed, they have damage immunity 3.'
+					description: 'The luminator ignores concealment created by darkness. While the luminator is in direct sunlight, they have damage weakness 3. While the luminator has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
@@ -537,7 +539,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 									tier3: '16 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The moondancer ignores opportunity attacks from the target until the end of their turn.')
+							FactoryLogic.createAbilitySectionText('Until the end of the current turn, the moondancer ignores opportunity attacks from the target.')
 						]
 					})
 				}),
@@ -546,18 +548,18 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						id: 'elf-shadow-9-feature-2',
 						name: 'Dissolve',
 						type: FactoryLogic.type.createTrigger('The moondancer takes damage from a strike'),
-						keywords: [],
+						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
-						target: 'Special',
+						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The moondancer teleports to a square in concealment granted by darkness within 10.')
+							FactoryLogic.createAbilitySectionText('The moondancer can teleport up to 10 squares to a space with concealment created by darkness.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-1-feature-3',
 					name: 'Of the Umbra',
-					description: 'The moondancer ignores concealment granted by darkness. While the moondancer is in direct sunlight, they have damage weakness 3. While the moondancer is concealed, they have damage immunity 3.'
+					description: 'The moondancer ignores concealment created by darkness. While the moondancer is in direct sunlight, they have damage weakness 3. While the moondancer has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
@@ -593,7 +595,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 									tier3: '18 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The mournblade is invisible to the target until the start of their next turn.')
+							FactoryLogic.createAbilitySectionText('The mournblade is invisible to the target until the start of the mournblade’s next turn.')
 						]
 					})
 				}),
@@ -602,17 +604,18 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						id: 'elf-shadow-10-feature-2',
 						name: 'Shadow Step',
 						type: FactoryLogic.type.createManeuver(),
+						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
-						target: 'Special',
+						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('If the mournblade is concealed, they can teleport to another square in concealment granted by darkness within 10.')
+							FactoryLogic.createAbilitySectionText('If the mournblade has concealment, they can teleport up to 10 squares to a space with concealment created by darkness.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-10-feature-3',
 					name: 'Of the Umbra',
-					description: 'The mournblade ignores concealment granted by darkness. While the mournblade is in direct sunlight, they have damage weakness 3. While the mournblade is concealed, they have damage immunity 3.'
+					description: 'The mournblade ignores concealment created by darkness. While the mournblade is in direct sunlight, they have damage weakness 3. While the mournblade has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
@@ -648,11 +651,11 @@ In many shadow elf societies, all people are given at least basic combat trainin
 									tier3: '17 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The target has a bane on their next strike.'),
+							FactoryLogic.createAbilitySectionText('The target takes a bane on their next strike.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'The target has a double bane on the next signature action they use.'
+								effect: 'The target instead has a double bane on the next ability they use.'
 							})
 						]
 					})
@@ -662,17 +665,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						id: 'elf-shadow-11-feature-2',
 						name: 'Enemies in the Dark',
 						type: FactoryLogic.type.createManeuver(),
-						cost: 2,
+						cost: 3,
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
-						distance: [ FactoryLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Two enemies',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 3,
-									tier1: '8 damage; R<1 the target makes a free strike against an enemy of the noctis mage\'s choice',
-									tier2: '10 damage; R<2 the target makes a free strike against an enemy of the noctis mage\'s choice',
-									tier3: '13 damage; R<3 the target makes a signature action against an enemy of the noctis mage\'s choice'
+									tier1: '8 damage; R<1 the target makes a free strike against one enemy of the noctis mage’s choice.',
+									tier2: '10 damage; R<2 the target makes a free strike against one enemy of the noctis mage’s choice.',
+									tier3: '13 damage; R<3 the target uses a signature ability against one enemy of the noctis mage’s choice.'
 								})
 							)
 						]
@@ -681,7 +684,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-11-feature-3',
 					name: 'Of the Umbra',
-					description: 'The noctis mage ignores concealment granted by darkness. While the noctis mage is in direct sunlight, they have damage weakness 3. While the noctis mage is concealed, they have damage immunity 3.'
+					description: 'The noctis mage ignores concealment created by darkness. While the noctis mage is in direct sunlight, they have damage weakness 3. While the noctis mage has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
@@ -717,7 +720,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 									tier3: '16 damage; I<3 bleeding (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The panther makes a free strike against a creature or object adjacent to the target.')
+							FactoryLogic.createAbilitySectionText('The panther can make a free strike against a creature or object adjacent to the target.')
 						]
 					})
 				}),
@@ -727,26 +730,26 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						name: 'Bladestorm',
 						type: FactoryLogic.type.createMain(),
 						cost: 3,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-						target: 'All enemies in burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 3,
 									tier1: '5 corruption damage',
 									tier2: '8 corruption damage; I<2 dazed (save ends)',
-									tier3: '10 damage; I<3 dazed (save ends)'
+									tier3: '10 corruption damage; I<3 dazed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The panther has a double edge on strikes against targets dazed by this ability.')
+							FactoryLogic.createAbilitySectionText('The panther has a double edge on strikes against targets dazed this way.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-12-feature-3',
 					name: 'Of the Umbra',
-					description: 'The panther ignores concealment granted by darkness. While the panther is in direct sunlight, they have damage weakness 3. While the panther is concealed, they have damage immunity 3.'
+					description: 'The panther ignores concealment created by darkness. While the panther is in direct sunlight, they have damage weakness 3. While the panther has concealment, they have damage immunity 3.'
 				})
 			]
 		}),
@@ -783,7 +786,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
-								effect: 'The potency of this ability increases by 1.'
+								effect: 'The potency increases by 1.'
 							})
 						]
 					})
@@ -794,7 +797,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						name: 'Grasping Shadow',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 5,
-						keywords: [ AbilityKeyword.Magic ],
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Three creatures or objects casting a shadow',
 						sections: [
@@ -803,32 +806,32 @@ In many shadow elf societies, all people are given at least basic combat trainin
 								tier1: 'pull 5; I<2 slowed (save ends)',
 								tier2: 'pull 7; I<3 slowed (save ends)',
 								tier3: 'pull 10; I<4 slowed (save ends)'
-							})),
-							FactoryLogic.createAbilitySectionText('The eclipse makes a free strike against each target pulled into an adjacent square.')
+							}))
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-13-feature-3',
-						name: 'PUT IT OUT!',
-						type: FactoryLogic.type.createTrigger('An enemy uses an ability that emits light, such as fire.'),
+						name: 'Put It Out!',
+						type: FactoryLogic.type.createTrigger('An enemy within distance uses an ability that emits light, including abilities that deal fire or lightning damage.'),
+						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'Special',
+						target: 'The triggering enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The enemy has a double bane on the ability.')
+							FactoryLogic.createAbilitySectionText('The target has a double bane on the ability.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-13-feature-4',
 					name: 'End Effect',
-					description: 'At the end of their turn, the warleader can take 10 damage to end one save ends effecting them. This damage can’t be reduced in any way.'
+					description: 'At the end of each of their turns, the eclipse can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-13-feature-5',
 					name: 'Of the Umbra',
-					description: 'The eclipse ignores concealment granted by darkness. While the eclipse is in direct sunlight, they have damage weakness 3. While the eclipse is concealed, they have damage immunity 3.'
+					description: 'The eclipse ignores concealment created by darkness. While the eclipse is in direct sunlight, they have damage weakness 3. While the eclipse has concealment, they have damage immunity 3.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -837,9 +840,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: 'All allies',
+						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The eclipse calls forth one **brush stalker** that appears within distance. Each target then shifts up to their speed and makes a free strike.')
+							FactoryLogic.createAbilitySectionText('The eclipse calls forth one **brush stalker** into an unoccupied space within distance. Each ally within distance can then shift up to their speed and make a free strike.')
 						]
 					})
 				}),
@@ -848,11 +851,11 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						id: 'elf-shadow-13-feature-7',
 						name: 'Cast Away All Hope',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Magic ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The eclipse dispels their enemies’ hard-earned advantages, removing each target’s surges. Each ally ignores edges and additional effects of each target’s damaging abilities until the end of the round.')
+							FactoryLogic.createAbilitySectionText('Each target loses all their surges. Additionally, until the end of the round, allies ignore edges and double edges on any targets’ abilities, and ignore any nondamaging effects of any target’s damage-dealing abilities.')
 						]
 					})
 				}),
@@ -861,11 +864,17 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						id: 'elf-shadow-13-feature-8',
 						name: 'Umbral Hunger',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('R<3 speed becomes zero (save ends). The affected area is shrouded in darkness and becomes concealment. When an enemy starts their turn in an affected square, they take 5 corruption damage.')
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '7 corruption damage; R<2 the target has speed 0 (save ends)',
+								tier2: '12 corruption damage; R<3 the target has speed 0 (save ends)',
+								tier3: '15 corruption damage; R<4 the target has speed 0 (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The area is shrouded in darkness that creates concealment until the end of the encounter. Any enemy who starts their turn in the area takes 5 corruption damage.')
 						]
 					})
 				})
@@ -876,14 +885,14 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			name: 'Brush Stalker',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Mount),
-			keywords: [ 'Animal', 'Fey' ],
+			keywords: [ 'Animal', 'Fey', 'Shadow Elf' ],
 			encounterValue: 12,
 			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(8),
 			stamina: 60,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, 0, 1),
+			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -893,7 +902,7 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: 'One creature or object',
+						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -910,9 +919,9 @@ In many shadow elf societies, all people are given at least basic combat trainin
 						name: 'Reclamation',
 						type: FactoryLogic.type.createMain(),
 						cost: 2,
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-						target: 'All enemies in burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -926,12 +935,12 @@ In many shadow elf societies, all people are given at least basic combat trainin
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-14-feature-3',
 					name: 'Suneater',
-					description: 'The brush stalker sheds darkness like other creatures would shed light. Each square within 2 of the brush stalker is devoid of light and provides concealment.'
+					description: 'The area within 2 squares of the brush stalker is devoid of light and provides concealment.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-14-feature-4',
 					name: 'Wyrd Dyr',
-					description: 'Each non-brush stalker creature with the Animal keyword is frightened while they have line of effect to the brush stalker.'
+					description: 'While they have line of effect to the brush stalker, any animal except another brush stalker is frightened.'
 				})
 			]
 		}),
@@ -941,18 +950,18 @@ In many shadow elf societies, all people are given at least basic combat trainin
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Ambusher),
 			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
-			encounterValue: 23,
+			encounterValue: 0,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
-			stamina: 60,
+			stamina: 48,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 2, 1),
+			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-15-feature-1',
-						name: 'Shadow Dagger',
+						name: 'Gloom Dagger',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -970,27 +979,27 @@ In many shadow elf societies, all people are given at least basic combat trainin
 									tier3: '13 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('When the shade starts their turn concealed from the target gain a surge.')
+							FactoryLogic.createAbilitySectionText('Whenever the shade starts their turn with concealment from the target, they gain 1 surge.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-15-feature-2',
-						name: 'Gathering Gloom',
+						name: 'Duskfall',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
-						target: '-',
+						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Until the end of the next turn, the area is filled with darkness. The shade\'s mentor ignores concealment granted by the darkness.')
+							FactoryLogic.createAbilitySectionText('Until the end of the next turn, the area is filled with darkness. The shade’s mentor ignores concealment created by this darkness.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-shadow-15-feature-3',
 					name: 'Of the Umbra',
-					description: 'The shade ignores concealment granted by darkness. While the shade is in direct sunlight, they have damage weakness 3. While the shade is concealed, they have damage immunity 3.'
+					description: 'The shade ignores concealment created by darkness. While the shade is in direct sunlight, they have damage weakness 3. While the shade has concealment, they have damage immunity 3.'
 				})
 			],
 			retainer: {
@@ -1006,19 +1015,19 @@ In many shadow elf societies, all people are given at least basic combat trainin
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-									tier1: 'at the start of the target’s next turn, 8 poison damage and weakened (save ends)',
-									tier2: 'at the start of the target’s next turn, 12 poison damage and weakened (save ends)',
-									tier3: 'at the start of the target’s next turn, 16 poison damage and weakened (save ends)'
+									tier1: '8 poison damage; weakened (save ends)',
+									tier2: '12 poison damage; weakened (save ends)',
+									tier3: '16 poison damage; weakened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The slow-poison needle is initially painless. When using this ability, the shade can remain hidden if they are already hidden.')
+							FactoryLogic.createAbilitySectionText('The slow-poison needle is initially painless, with the damage and effect delayed until the start of the target’s next turn. If the shade is hidden, using this ability doesn’t cause them to be revealed.')
 						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-15-retainer-10',
-						name: 'Shadow-Poison Dagger',
+						name: 'Shadow Dagger',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -1027,12 +1036,12 @@ In many shadow elf societies, all people are given at least basic combat trainin
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-									tier1: '12 poison damage; shadowed vision (save ends)',
-									tier2: '17 poison damage; shadowed vision (save ends)',
-									tier3: '23 poison damage; shadowed vision (save ends)'
+									tier1: '12 poison damage; the target has shadowed vision (save ends)',
+									tier2: '17 poison damage; the target has shadowed vision (save ends)',
+									tier3: '23 poison damage; the target has shadowed vision (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('While a creature has shadowed vision, every creature has concealment from them.')
+							FactoryLogic.createAbilitySectionText('While a creature has shadowed vision, all creatures have concealment from them.')
 						]
 					})
 				})

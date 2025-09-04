@@ -148,7 +148,7 @@
                 .characteristic {
                     transform: translateY(2.5px);
                     font-size: 15px;
-                    color: common.$color-medium;
+                    color: var(--color-text-lightest);
                 }
             }
         }

@@ -35,6 +35,36 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	const [ drawerOpen, setDrawerOpen ] = useState(false);
 	const [ previewOptions, setPreviewOptions ] = useState<'html' | 'canvas'>('html');
 
+	const changeTextColor = (newColor: 'light' | 'default' | 'dark') => {
+		setDrawColor(newColor);
+		setSheetTextColor(newColor);
+	};
+
+	const setDrawColor = (newColor: 'light' | 'default' | 'dark') => {
+		let value = 34;
+		switch (newColor) {
+			case 'light':
+				value = 68;
+				break;
+			case 'dark':
+				value = 0;
+				break;
+		}
+		const base = `rgb(${value}, ${value}, ${value})`;
+		document.documentElement.style.setProperty('--color-text', base);
+		const lighter = `rgb(${value + 34}, ${value + 34}, ${value + 34})`;
+		document.documentElement.style.setProperty('--color-text-lighter', lighter);
+		const lightest = `rgb(${value + 68}, ${value + 68}, ${value + 68})`;
+		document.documentElement.style.setProperty('--color-text-lightest', lightest);
+	};
+	setDrawColor(props.options.sheetTextColor);
+
+	const setSheetTextColor = (value: 'light' | 'default' | 'dark') => {
+		const copy = Utils.copy(props.options);
+		copy.sheetTextColor = value;
+		props.setOptions(copy);
+	};
+
 	const showDrawer = () => {
 		setDrawerOpen(true);
 	};
@@ -146,6 +176,10 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					<div className={getPageClasses()}>
 						<h2>All Careers</h2>
 						<div className='all-careers'>
+							<CareerCard
+								career={undefined}
+								hero={fakeHero}
+							/>
 							{getAllCareers().map(c => {
 								return (
 									<CareerCard
@@ -165,6 +199,10 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					<div className={getPageClasses()}>
 						<h2>All Complications</h2>
 						<div className='all-complications'>
+							<ComplicationCard
+								complication={undefined}
+								hero={fakeHero}
+							/>
 							{getAllComplications().map(c => {
 								return (
 									<ComplicationCard
@@ -219,6 +257,18 @@ export const HeroSheetPreviewPage = (props: Props) => {
 
 					<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
 					<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+					<Divider size='small'>Text Color:</Divider>
+					<Segmented
+						name='textColor'
+						block={true}
+						options={[
+							{ value: 'dark', label: 'Darker' },
+							{ value: 'default', label: 'Default' },
+							{ value: 'light', label: 'Lighter' }
+						]}
+						value={props.options.sheetTextColor}
+						onChange={changeTextColor}
+					/>
 					<Divider size='small'>Include Class Features:</Divider>
 					<Segmented
 						name='abilitySort'

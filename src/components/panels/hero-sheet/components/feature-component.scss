@@ -17,6 +17,7 @@
     .feature-line,
     .feature-title,
     .feature-title span {
+        color: var(--color-text);
         line-height: 19px;
         font-size: 17px;
         margin-bottom: 2px;
@@ -62,6 +63,7 @@
     .feature-description,
     .feature-description * {
         @include common.font-serif;
+        color: var(--color-text-lighter);
         font-size: 15px;
         line-height: 18px;
         font-weight: 400;

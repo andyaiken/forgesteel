@@ -257,7 +257,7 @@
 
 .hero-sheet {
     background: common.$color-extra-light;
-    color: #222;
+    color: var(--color-text);
     padding: 5px;
     
     display: flex;
@@ -277,7 +277,7 @@
     table,
     ul {
         background: #fff;
-        color: common.$color-text;
+        color: var(--color-text);
     }
 
     h2, h3, h4 {
@@ -286,7 +286,7 @@
         margin: 0;
         margin-bottom: 10px;
         font-weight: 450;
-        color: common.$color-text;
+        color: var(--color-text);
     }
 
     h2 {

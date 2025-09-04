@@ -32,6 +32,10 @@ export class OptionsUpdateLogic {
 			options.colorSheet = true;
 		}
 
+		if (options.sheetTextColor === undefined) {
+			options.sheetTextColor = 'default';
+		}
+
 		if (options.featuresInclude === undefined) {
 			options.featuresInclude = 'all';
 		}

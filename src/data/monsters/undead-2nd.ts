@@ -18,35 +18,33 @@ export const undead2nd: MonsterGroup = {
 		{
 			id: 'undead-2nd-info-1',
 			name: 'Mummies',
-			description: 'Mummies are humanoids raised from the dead via a complex series of magical rituals. The process tethers a creature’s soul to their earthly body, preventing them from crossing into true death. As part of the mummification process, a corpse is embalmed and wrapped in cloth imbued with necromantic power. Mummification is reserved for situations of grave import. A great hero may voluntarily be mummified upon death to eternally guard future generations or a holy relic. On the other hand, a great villain may be mummified to prevent them from escaping their crimes through death.'
+			description: 'Mummies are humanoids raised from the dead through a complex series of magical rituals. The process tethers a creature’s soul to their earthly body, preventing them from crossing into true death. As part of the mummification process, a corpse is embalmed and wrapped in cloth imbued with necromantic power. Mummification is reserved for situations of grave import. A great hero might voluntarily be mummified upon death to eternally guard future generations or a holy relic. On the other hand, a great villain could be mummified to prevent them from escaping their crimes through death.'
 		},
 		{
 			id: 'undead-2nd-info-2',
 			name: 'Vampire Spawn',
 			description: `
-Vampirism is a curse of blood. A curse that harrows its victims, turning them into mirror-mockeries of life that nonetheless hunger for life’s essence: blood. With that hunger comes power everlasting over life and death. By feeding, a vampire passes this curse onto their victims.
+Vampirism is a curse of blood that harrows its victims, turning them into mirror-mockeries of life that nonetheless hunger for life’s essence: blood. With that hunger comes power everlasting over life and death. By feeding, a vampire passes this curse onto their victims.
 
-Though vampires are fundamentally changed from their mortal forms, they retain the intellect and memories of their mortal selves. A vampire’s power grows as they spend time in undeath. Vampire spawn, the youngest of their ilk, are barely separated from their mortal selves. They are driven by their thirst for blood and their master’s orders. Few spawn survive long enough to become true vampires.`
+Though vampires are fundamentally changed from their living forms, they retain the intellect and memories of their mortal selves. A vampire’s power grows as they spend time in undeath. Vampire spawn, the youngest of their ilk, are barely separated from their mortal selves. They are driven by their thirst for blood and their master’s orders. Few spawn survive long enough to become true vampires.`
 		},
 		{
 			id: 'undead-2nd-info-3',
 			name: 'Mournlings',
 			description: `
-Powered by sorrow and rage, these hulking amalgamations of dirt or flesh defend the homes of their creators, brutally attacking intruders while sobbing uncontrollably.
+Powered by sorrow and rage, these hulking amalgamations of dirt or flesh defend the homes of their creators, brutally attacking intruders while sobbing uncontrollably. Mournlings express far more emotion than many other undead guardians, for their makers imbued them with sadness and loss. Though their druidic creators are long-dead, some original mournlings still defend forests, meadows, and other natural places they were built to protect.
 
-Mournlings express far more emotion than many other undead guardians, for their makers imbued them with sadness and loss. Though their druidic creators are long-dead, some original mournlings still defend forests, meadows, and other natural places they were built to protect.
-
-Outside of battle, mournlings patrol for interlopers in a trance-like state. When an unknown creature creates a disturbance or approaches them, the mournling unleashes a primal cry that conveys the very essence of suffering, then they burst into violence. They continue to sob and moan even as they viciously beat their enemies to a pulp.`
+Outside of battle, mournlings patrol for interlopers in a trance-like state. When an unknown creature creates a disturbance or approaches them, the mournling unleashes a primal cry that conveys the very essence of suffering, then bursts into violence. They continue to sob and moan even as they viciously beat their enemies to a pulp.`
 		}
 	],
 	malice: [
 		FactoryLogic.feature.createMalice({
 			id: 'undead-2nd-malice-1',
 			name: 'Prior Malice Features',
-			cost: 1,
+			cost: 2,
 			repeatable: true,
 			sections: [
-				'The undead activates a malice feature available to undead level 3 or lower.'
+				'The undead activates a Malice feature available to undead of level 3 or lower.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -54,24 +52,24 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			name: 'Blood Hunger',
 			cost: 5,
 			sections: [
-				'As a part of the next signature action used on a bleeding creature, all undead creatures within 5 can move up to their speed and make a free strike on the same target.'
+				'One undead acting this turn uses a signature ability against a creature who is bleeding. As a free triggered action, each undead within 5 squares of the first undead moves up to their speed and can make a free strike against the same target.'
 			]
 		})
 	],
 	monsters: [
 		FactoryLogic.createMonster({
 			id: 'undead-2nd-1',
-			name: 'Fleshflayed Shambler',
+			name: 'Fleshflayed Shambler Zombie',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
-			keywords: [ 'Undead' ],
-			encounterValue: 12,
+			keywords: [ 'Undead', 'Soulless' ],
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 9,
 			stability: 0,
 			freeStrikeDamage: 3,
-			withCaptain: 'Strike damage +2',
+			withCaptain: '+2 damage bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(3, -1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -99,14 +97,14 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '7 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The target is bleeding (save ends) if the shambler has an edge on this ability.')
+							FactoryLogic.createAbilitySectionText('If this ability gains an edge or has a double edge, the target is bleeding (save ends).')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'undead-2nd-1-feature-3',
 					name: 'Fleshfused Spines',
-					description: 'Whenever an enemy makes physical contact with the shambler or uses a melee ability against the shambler, they take 2 damage.'
+					description: 'Any adjacent enemy who grabs the fleshflayed shambler or uses a melee ability against them takes 2 damage.'
 				})
 			]
 		}),
@@ -116,13 +114,13 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Undead' ],
-			encounterValue: 12,
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7, 'climb'),
 			stamina: 8,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Stike damage +2',
+			withCaptain: '+2 damage bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -150,19 +148,19 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '6 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The ghoul craver has a double edge on this ability when targeting bleeding creatures.')
+							FactoryLogic.createAbilitySectionText('This ability has a double edge against a bleeding target.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'undead-2nd-2-feature-3',
 					name: 'Ever So Hungry',
-					description: 'While 3 or more ghoul cravers are adjacent to an enemy, that enemy can’t shift.'
+					description: 'Any enemy adjacent to three or more ghoul cravers can’t shift.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'undead-2nd-2-feature-4',
 					name: 'Hunger',
-					description: 'The ghoul craver’s speed increases by 2 while charging, until the end of their turn.'
+					description: 'When the ghoul craver uses the Charge main action, they gain a +2 bonus to speed until the end of their turn.'
 				})
 			]
 		}),
@@ -171,14 +169,14 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			name: 'Hollowbone Launcher',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
-			keywords: [ 'Undead' ],
-			encounterValue: 12,
+			keywords: [ 'Undead', 'Soulless' ],
+			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 7,
 			stability: 0,
 			freeStrikeDamage: 3,
-			withCaptain: 'Ranged distance +5',
+			withCaptain: '+5 bonus to ranged distance',
 			characteristics: MonsterLogic.createCharacteristics(-2, 3, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -191,12 +189,12 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-3-feature-2',
-						name: 'Hollowbone Sling',
+						name: 'Hollowbone Slug',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object per minion',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -205,7 +203,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier2: '5 damage',
 									tier3: '7 damage; M<3 bleeding (save ends)'
 								})
-							)
+							),
+							FactoryLogic.createAbilitySectionText('Each creature adjacent to the target takes 2 damage.')
 						]
 					})
 				}),
@@ -242,10 +241,10 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-2nd-4-feature-2',
 						name: 'Multiarm Strike',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -255,11 +254,11 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '9 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The target can\'t shift away from the moundling until the end of their next turn.'),
+							FactoryLogic.createAbilitySectionText('The target can’t shift until the end of their next turn.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'The mournling targets an additional creature.'
+								effect: 'This ability targets one additional target.'
 							})
 						]
 					})
@@ -271,7 +270,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -281,19 +280,19 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '4 psychic damage; I<3 frightened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('If a target is still frightened by this ability at the end of the encounter, they cannot take a respite activity during their next respite.')
+							FactoryLogic.createAbilitySectionText('A target who is still frightened this way at the end of the encounter can’t take a respite activity during their next respite.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'undead-2nd-4-feature-4',
-					name: 'Immutable Form',
-					description: 'The mournling’s shape can’t change via any external effects.'
+					name: 'Arise',
+					description: 'The first time the mournling is reduced to 0 Stamina by damage that isn’t fire damage or holy damage and their body isn’t destroyed, they instead have 10 Stamina and fall prone.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'undead-2nd-4-feature-5',
-					name: 'Arise',
-					description: 'The ﬁrst time in an encounter that the mournling is reduced to Stamina 0 with non-fire/non-holy damage and their body isn’t destroyed, they regain half their Stamina and fall prone.'
+					name: 'Immutable Form',
+					description: 'The mournling’s shape can’t be changed by any external effect.'
 				})
 			]
 		}),
@@ -302,7 +301,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			name: 'Giant Zombie',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Brute),
-			keywords: [ 'Undead' ],
+			keywords: [ 'Undead', 'Soulless' ],
 			encounterValue: 24,
 			size: FactoryLogic.createSize(3),
 			speed: FactoryLogic.createSpeed(6),
@@ -323,17 +322,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-2nd-5-feature-2',
 						name: 'Rotten Smash',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'Two creatures or objects',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 3,
 									tier1: '9 damage',
 									tier2: '14 damage; A<2 grabbed',
-									tier3: '17 damage; M<3 grabbed'
+									tier3: '17 damage; A<3 grabbed'
 								})
 							)
 						]
@@ -343,24 +342,24 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-5-feature-3',
 						name: 'Knocking Heads',
-						type: FactoryLogic.type.createTrigger('The giant zombie grabs both targets or starts their turn with each target grabbed.'),
-						keywords: [],
+						type: FactoryLogic.type.createTrigger('The giant zombie grabs two creatures or objects, or starts their turn with two creatures or objects grabbed.'),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Two creatures or objects',
+						cost: 1,
 						sections: [
-							FactoryLogic.createAbilitySectionText('The giant zombie smashes the targets together, using their Rotten Smash against both targets with a double edge.')
+							FactoryLogic.createAbilitySectionText('The creatures or objects are smashed together using Rotten Smash, which has a double edge.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'undead-2nd-5-feature-4',
-					name: 'Negative Nerves',
-					description: 'When the giant zombie is targeted by an ability, they halve the damage from any tier-1 results.'
+					name: 'Endless Knight',
+					description: 'The first time the giant zombie is reduced to 0 Stamina by damage that isn’t fire damage or holy damage and their body isn’t destroyed, they instead have 50 Stamina and fall prone.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'undead-2nd-5-feature-5',
-					name: 'Arise',
-					description: 'The ﬁrst time in an encounter that the giant zombie is reduced to Stamina 0 with non-fire/non-holy damage and their body isn’t destroyed, they regain half their Stamina and fall prone.'
+					name: 'Negative Nerves',
+					description: 'When the giant zombie is targeted by an ability that deals rolled damage, they halve the damage from a tier 1 outcome.'
 				})
 			]
 		}),
@@ -369,7 +368,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			name: 'Mummy',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Brute),
-			keywords: [ 'Undead' ],
+			keywords: [ 'Mummy', 'Undead' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
@@ -391,10 +390,10 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-2nd-6-feature-2',
 						name: 'Accursed Bindings',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
 						target: 'One creature or object',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -404,7 +403,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '10 corruption damage; pull 2; M<3 restrained (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The potency of the mummy\'s next ability used against the target increases by 1.')
+							FactoryLogic.createAbilitySectionText('The next ability the mummy uses against the target has any potency increased by 1 for the target.')
 						]
 					})
 				}),
@@ -413,20 +412,20 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-2nd-6-feature-3',
 						name: 'Eldritch Curse',
 						type: FactoryLogic.type.createMain(),
-						cost: 3,
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
+						cost: 3,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 3,
-									tier1: '3 corruption damage; I<1 cursed (save ends)',
-									tier2: '5 corruption damage; I<2 cursed (save ends)',
-									tier3: '7 corruption damage; I<3 cursed (save ends)'
+									tier1: '3 corruption damage; I<1 the target is cursed (save ends)',
+									tier2: '5 corruption damage; I<2 the target is cursed (save ends)',
+									tier3: '7 corruption damage; I<3 the target is cursed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('A cursed target is bleeding and weakened, and allies have an edge on strikes made against them.')
+							FactoryLogic.createAbilitySectionText('A cursed target is bleeding and weakened, and allies gain an edge on strikes made against them.')
 						]
 					})
 				}),
@@ -434,13 +433,13 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-6-feature-4',
 						name: 'Blast of Mummy Dust',
-						type: FactoryLogic.type.createTrigger('The mummy comes within distance of the target or starts their turn within distance of the target'),
-						cost: 1,
+						type: FactoryLogic.type.createTrigger('The mummy comes within distance of a restrained creature or starts their turn within distance of one.'),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: '1 restrained target',
+						cost: 1,
 						sections: [
-							FactoryLogic.createAbilitySectionText('8 poison damage.')
+							FactoryLogic.createAbilitySectionText('The target takes 8 poison damage.')
 						]
 					})
 				})
@@ -451,7 +450,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			name: 'Vampire Spawn',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Harrier),
-			keywords: [ 'Undead' ],
+			keywords: [ 'Undead', 'Vampire' ],
 			encounterValue: 6,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5, 'climb'),
@@ -472,10 +471,10 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-2nd-7-feature-2',
 						name: 'Exsanguinating Bite',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -485,7 +484,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '9 corruption damage; M<3 bleeding (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The vampire spawn regains Stamina equal to the corruption damage they deal.'),
+							FactoryLogic.createAbilitySectionText('The vampire spawn regains Stamina equal to any corruption damage dealt.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
@@ -499,18 +498,17 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-2nd-7-feature-3',
 						name: 'Vampire Celerity',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The vampire spawn shifts 1 and then moves up to their speed. The next ability the vampire uses before the start of their next turn has an edge.')
+							FactoryLogic.createAbilitySectionText('The vampire spawn can shift 1 square, then move up to their speed. The next ability the vampire uses before the start of their next turn gains an edge.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'undead-2nd-7-feature-4',
 					name: 'Unslakable Bloodthirst',
-					description: 'The vampire spawn has a speed of 10 while a creature is bleeding within 10. The vampire spawn must strike a bleeding creature on their turn if they are able to.'
+					description: 'The vampire spawn has speed 10 while any creature within 10 squares of them is bleeding. The vampire spawn must use Exsanguinating Bite against a bleeding creature on their turn if they are able to.'
 				})
 			]
 		}),
@@ -524,7 +522,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(8, 'fly, hover'),
 			stamina: 25,
-			stability: 0,
+			stability: 1,
 			freeStrikeDamage: 2,
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 1, 1, 3),
 			features: [
@@ -540,10 +538,10 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-2nd-8-feature-2',
 						name: 'Chilling Gravetouch',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -553,7 +551,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '9 cold damage; P<3 slowed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('Living creatures killed by this ability return as a ghoul craver the next round, under the Director\'s control.')
+							FactoryLogic.createAbilitySectionText('Any living creature who dies from this damage rises at the start of the next round as a **ghoul craver** under the Director’s control.')
 						]
 					})
 				}),
@@ -562,11 +560,10 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-2nd-8-feature-3',
 						name: 'Hidden Movement',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The wraith turns invisible, moves up to their speed, and becomes visible again.')
+							FactoryLogic.createAbilitySectionText('The wraith turns invisible, moves up to their speed, and is visible again.')
 						]
 					})
 				}),
@@ -574,20 +571,20 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-8-feature-4',
 						name: 'Stolen Vitality',
-						type: FactoryLogic.type.createTrigger('The target regains Stamina.', { free: true }),
+						type: FactoryLogic.type.createTrigger('An enemy within distance regains Stamina.', { free: true }),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: 'One enemy',
+						target: 'The triggering creature',
 						cost: 1,
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target only regains half the Stamina they would normally. The wraith regains the remaining Stamina.')
+							FactoryLogic.createAbilitySectionText('The target regains only half the Stamina, and the wraith regains the remaining Stamina.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'undead-2nd-8-feature-5',
 					name: 'Agonizing Phasing',
-					description: 'The wraith can move through other creatures and objects at normal speed. The ﬁrst time in a round that the shade passes through a creature, that creature takes 5 corruption damage and has a bane on their next attack. The wraith doesn’t take damage from being force moved into objects.'
+					description: 'The wraith can move through creatures and objects at their usual speed, but can’t end their turn inside a creature or object. The first time in a round that the wraith moves through a creature, that creature takes 5 corruption damage and takes a bane on their next strike. The wraith doesn’t take damage from being force moved into objects.'
 				})
 			]
 		}),
@@ -596,7 +593,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			name: 'Mummy Lord',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Leader),
-			keywords: [ 'Undead' ],
+			keywords: [ 'Mummy', 'Undead' ],
 			encounterValue: 24,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(6),
@@ -609,8 +606,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					id: 'undead-2nd-9-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 6 }),
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 6 }),
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
+						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 6 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -618,10 +614,10 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-2nd-9-feature-2',
 						name: 'Accursed Slam',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -631,7 +627,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '17 corruption damage; I<4 bleeding (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The potency of ability used against a target bleeding from this ability increase by 1.')
+							FactoryLogic.createAbilitySectionText('While the target is bleeding this way, the potency of any ability used against them increases by 1 for the target.')
 						]
 					})
 				}),
@@ -642,8 +638,8 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
-						cost: 1,
 						target: 'One creature',
+						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -653,12 +649,12 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '16 corruption damage; I<4 frightened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('A target frightened by this ability takes 4 psychic damage whenever they use a move action until the condition ends.'),
+							FactoryLogic.createAbilitySectionText('While frightened this way, a target takes 4 psychic damage whenever they use a move action.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
 								repeatable: true,
-								effect: 'The mummy lord targets an addtional creature for every 2 malice spent.'
+								effect: 'This ability targets one additional target for each 2 Malice spent.'
 							})
 						]
 					})
@@ -667,12 +663,13 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-9-feature-4',
 						name: 'Summon My Guard!',
-						cost: 2,
-						type: FactoryLogic.type.createTrigger('The Mummy Lord becomes winded for the first time.'),
+						type: FactoryLogic.type.createTrigger('The mummy lord is made winded for the first time in the encounter.'),
+						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
+						cost: 2,
 						sections: [
-							FactoryLogic.createAbilitySectionText('Two **mummies** and 4 **ghoul carvers** appear within distance.')
+							FactoryLogic.createAbilitySectionText('One **mummy** or four **ghoul cravers** appear within distance.')
 						]
 					})
 				}),
@@ -685,11 +682,11 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						target: '',
 						type: FactoryLogic.type.createNoAction(),
 						sections: [
-							FactoryLogic.createAbilitySectionText('At the end of their turn, the mummy lord can take 10 damage to end one save ends effect affecting them. This damage can\'t be reduced in any way.'),
+							FactoryLogic.createAbilitySectionText('At the end of each of their turns, the mummy lord can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 5,
-								effect: 'The effect is transferred to a creature within 10.'
+								effect: 'The effect that is ended is transferred to another creature within 10 squares.'
 							})
 						]
 					})
@@ -698,10 +695,10 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-9-feature-6',
 						name: 'Plague of Flies',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -711,24 +708,23 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '10 poison damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('Each target has a bane on their next strike.')
+							FactoryLogic.createAbilitySectionText('Each target takes a bane on their next strike.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-9-feature-7',
-						name: 'Land\'s Guardian',
-						type: FactoryLogic.type.createVillainAction(),
-						keywords: [],
+						name: 'Land’s Guardian',
+						type: FactoryLogic.type.createVillainAction(2),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The mummy lord’s speed increases by 2 and adds the burrow keyword to their movement. The mummy lord burrows up to their speed. Each enemy within 2 squares of the mummy lord’s movement must make an **Agility test**.'),
+							FactoryLogic.createAbilitySectionText('The mummy lord gains a +2 bonus to speed and can automatically burrow at full speed while moving. They can then use the Dig maneuver. The next time the mummy lord breaches the surface, each enemy within 2 squares of the mummy lord makes an **Agility test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: Characteristic.Agility,
-									tier1: 'Prone, can\'t stand (EoT)',
+									tier1: 'Prone and can’t stand (EoT)',
 									tier2: 'Prone',
 									tier3: 'no effect'
 								})
@@ -740,10 +736,10 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-9-feature-9',
 						name: 'Unbound Horrors',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({

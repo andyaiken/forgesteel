@@ -50,7 +50,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			id: 'lizardfolk-info-5',
 			name: 'Lizardfolk Languages',
 			description: 'Most lizardfolk speak Caelian and their own dialect of Khamish.'
-		},
+		}
 	],
 	malice: [
 		FactoryLogic.feature.createAbility({
@@ -384,7 +384,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 						id: 'lizardfolk-6-feature-2',
 						name: 'Poison Blowdart',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike,  AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object',
 						sections: [
@@ -486,7 +486,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 						id: 'lizardfolk-7-feature-4',
 						name: 'Swat the Fly',
 						type: FactoryLogic.type.createTrigger('A creature or object within distance moves or shifts away from the deathrex.'),
-						keywords: [AbilityKeyword.Melee],
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The triggering creature or object',
 						sections: [

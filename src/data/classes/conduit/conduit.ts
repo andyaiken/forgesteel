@@ -1128,9 +1128,9 @@ Divine power remains until you spend it.`
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Intuition ],
-						tier1: '9 + I holy damage, slide 3',
-						tier2: '13 + I holy damage, slide 4',
-						tier3: '17 + I holy damage, slide 6'
+						tier1: '9 + I holy damage; slide 3',
+						tier2: '13 + I holy damage; slide 4',
+						tier3: '17 + I holy damage; slide 6'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('Each ally the target comes adjacent to during the forced movement can spend a Recovery.')

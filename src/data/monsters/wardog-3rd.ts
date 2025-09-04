@@ -140,7 +140,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
 								tier1: '4 damage',
-								tier2: '4 damage, 3 psychic damage',
+								tier2: '4 damage; 3 psychic damage',
 								tier3: '4 damage; 3 psychic damage; the target must move their speed in a straight line away from the draconite'
 							})),
 							FactoryLogic.createAbilitySectionText('**Effect:** If this damage leaves the target winded, they are frightened of the draconite until the end of the target’s next turn.')

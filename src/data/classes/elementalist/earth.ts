@@ -102,13 +102,34 @@ At the end of each of your turns, you can push each enemy in the area up to a nu
 		{
 			level: 5,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'elementalist-sub-1-5-1',
 					name: 'The Mountain Does Not Move',
 					description: `
 You stand firm and magnetize your allies to stay grounded. Your stability increases by your level.
 
-Additionally, whenever an ally within distance of your Hurl Element ability is force moved, you can use a free triggered action to decrease your stability down to a minimum of 0, then increase the ally’s stability by an amount equal to the stability you lost. This change lasts until the end of the round.`
+Additionally, whenever an ally within distance of your Hurl Element ability is force moved, you can use a free triggered action to decrease your stability down to a minimum of 0, then increase the ally’s stability by an amount equal to the stability you lost. This change lasts until the end of the round.`,
+					features: [
+						FactoryLogic.feature.createBonus({
+							id: 'elementalist-sub-1-5-1a',
+							field: FeatureField.Stability,
+							value: 1,
+							valuePerLevel: 1
+						}),
+						FactoryLogic.feature.createAbility({
+							ability: FactoryLogic.createAbility({
+								id: 'elementalist-sub-1-5-1b',
+								name: 'The Mountain Does Not Move',
+								type: FactoryLogic.type.createTrigger('The target is force moved', { free: true }),
+								keywords: [],
+								distance: [ FactoryLogic.distance.createSpecial('The distance of your Hurl Element ability') ],
+								target: 'One ally',
+								sections: [
+									FactoryLogic.createAbilitySectionText('You decrease your stability down to a minimum of 0, then increase the target’s stability by an amount equal to the stability you lost. This change lasts until the end of the round.')
+								]
+							})
+						})
+					]
 				})
 			]
 		},

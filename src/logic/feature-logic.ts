@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
@@ -9,10 +9,12 @@ import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { DamageType } from '../enums/damage-type';
 import { FactoryLogic } from './factory-logic';
+import { FeatureAddOnType } from '../enums/feature-addon-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
+import { HeroLogic } from './hero-logic';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { MonsterFeatureCategory } from '../enums/monster-feature-category';
@@ -30,6 +32,11 @@ export class FeatureLogic {
 	static getFeaturesFromCulture = (culture: Culture, hero: Hero) => {
 		const features: { feature: Feature, source: string }[] = [];
 
+		features.push({
+			feature: culture.language,
+			source: culture.name
+		});
+
 		if (culture.environment) {
 			features.push({ feature: culture.environment, source: culture.name });
 		}
@@ -39,6 +46,15 @@ export class FeatureLogic {
 		if (culture.upbringing) {
 			features.push({ feature: culture.upbringing, source: culture.name });
 		}
+
+		features.push({
+			feature: FactoryLogic.feature.create({
+				id: Utils.guid(),
+				name: `${culture.name} Culture`.trim(),
+				description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
+			}),
+			source: culture.name
+		});
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
@@ -121,152 +137,145 @@ export class FeatureLogic {
 				});
 			});
 
-		if (item.customizationsByLevel) {
-			item.customizationsByLevel
-				.forEach(lvl => {
-					lvl.features
-						.filter(f => f.selected)
-						.map(f => f.feature)
-						.forEach(f => {
-							if (f.type === FeatureType.Text) {
-								if (f.description) {
-									if (f.name) {
-										ft.description += '\n\n';
-										ft.description += `**${f.name}**`;
-									}
-									ft.description += '\n\n';
-									ft.description += f.description;
-								}
-							} else {
-								features.push({ feature: f, source: item.name });
-							}
-						});
-				});
+		item.imbuements.map(imbuement => imbuement.feature)
+			.forEach(feature => {
+				if (feature.type === FeatureType.Text) {
+					if (feature.description) {
+						if (feature.name) {
+							ft.description += '\n\n';
+							ft.description += `**${feature.name}**`;
+						}
+						ft.description += '\n\n';
+						ft.description += feature.description;
+					}
+				} else {
+					features.push({ feature: feature, source: item.name });
+				}
+			});
 
-			const hasLvl1 = item.customizationsByLevel.filter(lvl => lvl.level === 1).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
-			const hasLvl5 = item.customizationsByLevel.filter(lvl => lvl.level === 5).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
-			const hasLvl9 = item.customizationsByLevel.filter(lvl => lvl.level === 9).flatMap(lvl => lvl.features).filter(f => f.selected).length > 0;
-			if (item.type === ItemType.ImbuedArmor) {
-				// Imbued armor grants +6 / +12 / +21 stamina based on highest enhancement tier
-				if (hasLvl1) {
-					features.push({
-						feature: FactoryLogic.feature.createBonus({
-							id: item.name + '-bonus-1',
-							field: FeatureField.Stamina,
-							value: 6
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl5) {
-					features.push({
-						feature: FactoryLogic.feature.createBonus({
-							id: item.name + '-bonus-5',
-							field: FeatureField.Stamina,
-							value: 6
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl9) {
-					features.push({
-						feature: FactoryLogic.feature.createBonus({
-							id: item.name + '-bonus-9',
-							field: FeatureField.Stamina,
-							value: 9
-						}),
-						source: item.name
-					});
-				}
+		const hasLvl1 = item.imbuements.filter(lvl => lvl.level === 1).length > 0;
+		const hasLvl5 = item.imbuements.filter(lvl => lvl.level === 5).length > 0;
+		const hasLvl9 = item.imbuements.filter(lvl => lvl.level === 9).length > 0;
+		if (item.type === ItemType.ImbuedArmor) {
+			// Imbued armor grants +6 / +12 / +21 stamina based on highest enhancement tier
+			if (hasLvl1) {
+				features.push({
+					feature: FactoryLogic.feature.createBonus({
+						id: item.name + '-bonus-1',
+						field: FeatureField.Stamina,
+						value: 6
+					}),
+					source: item.name
+				});
 			}
-			if (item.type === ItemType.ImbuedImplement) {
-				// Imbued implement grants +1 / +2 / +3 damage to magic / psionic abilities based on highest enhancement tier
-				if (hasLvl1) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-1a',
-							keywords: [ AbilityKeyword.Magic ],
-							value: 1
-						}),
-						source: item.name
-					});
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-1b',
-							keywords: [ AbilityKeyword.Psionic ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl5) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-5a',
-							keywords: [ AbilityKeyword.Magic ],
-							value: 1
-						}),
-						source: item.name
-					});
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-5b',
-							keywords: [ AbilityKeyword.Psionic ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl9) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-9a',
-							keywords: [ AbilityKeyword.Magic ],
-							value: 1
-						}),
-						source: item.name
-					});
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-9b',
-							keywords: [ AbilityKeyword.Psionic ],
-							value: 1
-						}), source: item.name
-					});
-				}
+			if (hasLvl5) {
+				features.push({
+					feature: FactoryLogic.feature.createBonus({
+						id: item.name + '-bonus-5',
+						field: FeatureField.Stamina,
+						value: 6
+					}),
+					source: item.name
+				});
 			}
-			if (item.type === ItemType.ImbuedWeapon) {
-				// Imbued weapon grants +1 / +2 / +3 damage to weapon abilities based on highest enhancement tier
-				if (hasLvl1) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-1',
-							keywords: [ AbilityKeyword.Weapon ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl5) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-5',
-							keywords: [ AbilityKeyword.Weapon ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
-				if (hasLvl9) {
-					features.push({
-						feature: FactoryLogic.feature.createAbilityDamage({
-							id: item.name + '-bonus-9',
-							keywords: [ AbilityKeyword.Weapon ],
-							value: 1
-						}),
-						source: item.name
-					});
-				}
+			if (hasLvl9) {
+				features.push({
+					feature: FactoryLogic.feature.createBonus({
+						id: item.name + '-bonus-9',
+						field: FeatureField.Stamina,
+						value: 9
+					}),
+					source: item.name
+				});
+			}
+		}
+		if (item.type === ItemType.ImbuedImplement) {
+			// Imbued implement grants +1 / +2 / +3 damage to magic / psionic abilities based on highest enhancement tier
+			if (hasLvl1) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-1a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 1
+					}),
+					source: item.name
+				});
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-1b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 1
+					}),
+					source: item.name
+				});
+			}
+			if (hasLvl5) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-5a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 1
+					}),
+					source: item.name
+				});
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-5b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 1
+					}),
+					source: item.name
+				});
+			}
+			if (hasLvl9) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-9a',
+						keywords: [ AbilityKeyword.Magic ],
+						value: 1
+					}),
+					source: item.name
+				});
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-9b',
+						keywords: [ AbilityKeyword.Psionic ],
+						value: 1
+					}), source: item.name
+				});
+			}
+		}
+		if (item.type === ItemType.ImbuedWeapon) {
+			// Imbued weapon grants +1 / +2 / +3 damage to weapon abilities based on highest enhancement tier
+			if (hasLvl1) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-1',
+						keywords: [ AbilityKeyword.Weapon ],
+						value: 1
+					}),
+					source: item.name
+				});
+			}
+			if (hasLvl5) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-5',
+						keywords: [ AbilityKeyword.Weapon ],
+						value: 1
+					}),
+					source: item.name
+				});
+			}
+			if (hasLvl9) {
+				features.push({
+					feature: FactoryLogic.feature.createAbilityDamage({
+						id: item.name + '-bonus-9',
+						keywords: [ AbilityKeyword.Weapon ],
+						value: 1
+					}),
+					source: item.name
+				});
 			}
 		}
 
@@ -277,6 +286,10 @@ export class FeatureLogic {
 		const list: { feature: Feature, source: string, level?: number }[] = [];
 
 		const addFeature = (feature: Feature, source: string, level?: number) => {
+			if (!feature) {
+				return;
+			}
+
 			list.push({ feature: feature, source: source, level: level });
 
 			switch (feature.type) {
@@ -470,8 +483,10 @@ export class FeatureLogic {
 				break;
 			case FeatureType.HeroicResourceGain:
 				data = {
+					tag: '',
 					trigger: '',
-					value: '1'
+					value: '1',
+					replacesTags: []
 				} as FeatureHeroicResourceGainData;
 				break;
 			case FeatureType.ItemChoice:
@@ -627,7 +642,7 @@ export class FeatureLogic {
 		return false;
 	};
 
-	static isChosen = (feature: Feature, formerAncestries: Ancestry[]) => {
+	static isChosen = (feature: Feature, hero: Hero) => {
 		switch (feature.type) {
 			case FeatureType.AncestryChoice:
 				return !!feature.data.selected;
@@ -637,7 +652,7 @@ export class FeatureLogic {
 				let availableOptions = [ ...feature.data.options ];
 				if (availableOptions.some(opt => opt.feature.type === FeatureType.AncestryFeatureChoice)) {
 					availableOptions = availableOptions.filter(opt => opt.feature.type !== FeatureType.AncestryFeatureChoice);
-					const additionalOptions = formerAncestries
+					const additionalOptions = HeroLogic.getFormerAncestries(hero)
 						.flatMap(a => a.features)
 						.filter(f => f.type === FeatureType.Choice)
 						.flatMap(f => f.data.options)
@@ -647,7 +662,8 @@ export class FeatureLogic {
 				const selected = feature.data.selected
 					.map(f => availableOptions.find(opt => opt.feature.id === f.id))
 					.filter(opt => !!opt);
-				return Collections.sum(selected, i => i.value) >= feature.data.count;
+				const count = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
+				return Collections.sum(selected, i => i.value) >= count;
 			}
 			case FeatureType.ClassAbility:
 				return feature.data.selectedIDs.length >= feature.data.count;
@@ -726,7 +742,7 @@ export class FeatureLogic {
 			case FeatureType.AddOn:
 				return 'This feature grants you a monster customization.';
 			case FeatureType.AncestryChoice:
-				return 'This feature sets the hero\'s ancestry.';
+				return 'This feature sets the hero\'s former ancestry.';
 			case FeatureType.AncestryFeatureChoice:
 				return 'This feature allows you to select a feature from an ancestry.';
 			case FeatureType.Bonus:

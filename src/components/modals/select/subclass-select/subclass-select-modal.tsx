@@ -1,4 +1,4 @@
-import { Divider, Input, Space } from 'antd';
+import { Alert, Divider, Input, Space } from 'antd';
 import { Collections } from '../../../../utils/collections';
 import { Empty } from '../../../controls/empty/empty';
 import { Expander } from '../../../controls/expander/expander';
@@ -27,20 +27,27 @@ interface Props {
 export const SubClassSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	const customSubclasses = Collections.sort(
-		props.sourcebooks
-			.flatMap(sb => sb.subclasses),
-		sc => sc.name);
-
-	const otherSubclasses = Collections.sort(
-		props.sourcebooks
-			.flatMap(sb => sb.classes)
-			.filter(c => c.id !== props.classID)
-			.flatMap(c => c.subclasses),
-		sc => sc.name);
-
 	try {
 		const subClasses = props.subClasses
+			.filter(l => Utils.textMatches([
+				l.name,
+				l.description
+			], searchTerm));
+
+		const customSubclasses = Collections.sort(
+			props.sourcebooks.flatMap(sb => sb.subclasses),
+			sc => sc.name)
+			.filter(l => Utils.textMatches([
+				l.name,
+				l.description
+			], searchTerm));
+
+		const otherSubclasses = Collections.sort(
+			props.sourcebooks
+				.flatMap(sb => sb.classes)
+				.filter(c => c.id !== props.classID)
+				.flatMap(c => c.subclasses),
+			sc => sc.name)
 			.filter(l => Utils.textMatches([
 				l.name,
 				l.description
@@ -103,6 +110,11 @@ export const SubClassSelectModal = (props: Props) => {
 										<Divider />
 										<Expander title='From other classes'>
 											<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+												<Alert
+													type='warning'
+													showIcon={true}
+													message='Selecting a subclass from a different class is typically against the rules.'
+												/>
 												{
 													otherSubclasses.map(sc => (
 														<SelectablePanel

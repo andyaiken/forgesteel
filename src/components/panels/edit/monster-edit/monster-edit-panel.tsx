@@ -1,6 +1,5 @@
 import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
@@ -16,7 +15,9 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { HistogramPanel } from '../../histogram/histogram-panel';
+import { Monster } from '../../../../models/monster';
 import { MonsterFeatureCategory } from '../../../../enums/monster-feature-category';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../../enums/monster-role-type';

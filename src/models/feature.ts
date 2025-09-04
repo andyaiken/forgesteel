@@ -7,6 +7,7 @@ import { ConditionType } from '../enums/condition-type';
 import { DamageType } from '../enums/damage-type';
 import { Domain } from './domain';
 import { Element } from './element';
+import { FeatureAddOnType } from '../enums/feature-addon-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Follower } from './follower';
@@ -22,13 +23,6 @@ import { PowerRoll } from './power-roll';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
 import { Title } from './title';
-
-export enum FeatureAddOnType {
-	Mobility = 'Mobility',
-	Defensive = 'Defensive',
-	Offensive = 'Offensive',
-	Supernatural = 'Supernatural'
-};
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface _FeatureData { }
@@ -92,7 +86,7 @@ export type FeatureCharacteristicBonus = FeatureOf<FeatureType.CharacteristicBon
 
 export interface FeatureChoiceData extends _FeatureData {
 	options: { feature: Feature, value: number }[];
-	count: number;
+	count: number | 'ancestry';
 	selected: Feature[];
 }
 export type FeatureChoice = FeatureOf<FeatureType.Choice, FeatureChoiceData>;
@@ -143,7 +137,7 @@ export type FeatureFollower = FeatureOf<FeatureType.Follower, FeatureFollowerDat
 
 export interface FeatureHeroicResourceData extends _FeatureData {
 	type: 'heroic' | 'epic';
-	gains: { trigger: string, value: string }[];
+	gains: { tag: string, trigger: string, value: string }[];
 	details: string;
 	canBeNegative: boolean;
 	value: number;
@@ -151,8 +145,10 @@ export interface FeatureHeroicResourceData extends _FeatureData {
 export type FeatureHeroicResource = FeatureOf<FeatureType.HeroicResource, FeatureHeroicResourceData>;
 
 export interface FeatureHeroicResourceGainData extends _FeatureData {
+	tag: string;
 	trigger: string;
 	value: string;
+	replacesTags: string[];
 };
 export type FeatureHeroicResourceGain = FeatureOf<FeatureType.HeroicResourceGain, FeatureHeroicResourceGainData>;
 

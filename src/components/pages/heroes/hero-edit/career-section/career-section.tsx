@@ -4,13 +4,12 @@ import { Career } from '../../../../../models/career';
 import { CareerPanel } from '../../../../panels/elements/career-panel/career-panel';
 import { CloseOutlined } from '@ant-design/icons';
 import { Element } from '../../../../../models/element';
+import { ElementSelectModal } from '../../../../modals/select/element-select/element-select-modal';
 import { EmptyMessage } from '../empty-message/empty-message';
 import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
-import { FactoryLogic } from '../../../../../logic/factory-logic';
 import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '../../../../../models/feature';
 import { FeatureLogic } from '../../../../../logic/feature-logic';
-import { FeatureSelectModal } from '../../../../modals/select/feature-select/feature-select-modal';
 import { Field } from '../../../../controls/field/field';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
@@ -20,6 +19,7 @@ import { PanelMode } from '../../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
+import { Utils } from '../../../../../utils/utils';
 import { useMediaQuery } from '../../../../../hooks/use-media-query';
 
 import './career-section.scss';
@@ -39,7 +39,7 @@ interface Props {
 	options: Options;
 	searchTerm: string;
 	selectCareer: (career: Career) => void;
-	selectIncitingIncident: (id: string | null) => void;
+	selectIncitingIncident: (value: Element | null) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -48,7 +48,7 @@ export const CareerSection = (props: Props) => {
 	const [ showIncitingIncidents, setShowIncitingIncidents ] = useState<boolean>(false);
 
 	try {
-		const careers = SourcebookLogic.getCareers(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
+		const careers = SourcebookLogic.getCareers(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 		const options = careers.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCareer(c)}>
 				<CareerPanel career={c} options={props.options} />
@@ -66,18 +66,16 @@ export const CareerSection = (props: Props) => {
 					</SelectablePanel>
 				));
 
-			const incitingIncident = props.hero.career.incitingIncidents.options.find(i => i.id === props.hero.career!.incitingIncidents.selectedID);
-
 			choices.push(
 				<SelectablePanel key='inciting-incident'>
 					<HeaderText>Inciting Incident</HeaderText>
 					{
-						incitingIncident ?
+						props.hero.career.incitingIncidents.selected ?
 							<Flex className='selection-box' align='center' gap={10}>
 								<Field
 									style={{ flex: '1 1 0' }}
-									label={incitingIncident.name}
-									value={<Markdown text={incitingIncident.description} useSpan={true} />}
+									label={props.hero.career.incitingIncidents.selected.name}
+									value={<Markdown text={props.hero.career.incitingIncidents.selected.description} useSpan={true} />}
 								/>
 								<Flex vertical={true}>
 									<Button
@@ -139,12 +137,11 @@ export const CareerSection = (props: Props) => {
 					}
 				</div>
 				<Drawer open={showIncitingIncidents} onClose={() => setShowIncitingIncidents(false)} closeIcon={null} width='500px'>
-					<FeatureSelectModal
-						features={props.hero.career ? props.hero.career.incitingIncidents.options.map(f => ({ feature: FactoryLogic.feature.create({ id: f.id, name: f.name, description: f.description }), value: 1 })) : []}
-						options={props.options}
-						onSelect={f => {
+					<ElementSelectModal
+						elements={props.hero.career ? props.hero.career.incitingIncidents.options : []}
+						onSelect={e => {
 							setShowIncitingIncidents(false);
-							props.selectIncitingIncident(f.id);
+							props.selectIncitingIncident(Utils.copy(e));
 						}}
 						onClose={() => setShowIncitingIncidents(false)}
 					/>

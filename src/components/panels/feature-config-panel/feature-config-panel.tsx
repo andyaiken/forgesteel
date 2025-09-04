@@ -33,7 +33,7 @@ import { LanguageSelectModal } from '../../modals/select/language-select/languag
 import { Markdown } from '../../controls/markdown/markdown';
 import { Modal } from '../../modals/modal/modal';
 import { Monster } from '../../../models/monster';
-import { MonsterInfo } from '../../controls/token/token';
+import { MonsterInfo } from '../token/token';
 import { MonsterModal } from '../../modals/monster/monster-modal';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
@@ -58,8 +58,8 @@ import './feature-config-panel.scss';
 interface Props {
 	feature: Feature | Perk;
 	options: Options;
-	hero: Hero;
-	sourcebooks: Sourcebook[];
+	hero?: Hero;
+	sourcebooks?: Sourcebook[];
 	setData: (featureID: string, data: FeatureData) => void;
 }
 
@@ -246,7 +246,8 @@ export const FeatureConfigPanel = (props: Props) => {
 			const original = allOptions.find(o => o.feature.id === id);
 			return original ? original.value : 0;
 		});
-		const pointsLeft = data.count - pointsUsed;
+		const pointsMax = data.count === 'ancestry' ? HeroLogic.getAncestryPoints(props.hero!) : data.count;
+		const pointsLeft = pointsMax - pointsUsed;
 
 		let unavailableIDs: string[] = [];
 		if (data.options.some(opt => opt.value > 1)) {
@@ -519,7 +520,7 @@ export const FeatureConfigPanel = (props: Props) => {
 							</div>
 						</Flex>
 						:
-						<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
+						<Button block={true} className='status-warning' onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
 				}
 				{
 					data.selected ?
@@ -740,7 +741,7 @@ export const FeatureConfigPanel = (props: Props) => {
 	};
 
 	const getSelectionItemChoice = (data: FeatureItemChoiceData) => {
-		if (!props.hero) {
+		if (!props.hero || !props.sourcebooks) {
 			return null;
 		}
 
@@ -913,7 +914,11 @@ export const FeatureConfigPanel = (props: Props) => {
 	};
 
 	const getSelectionLanguageChoice = (data: FeatureLanguageChoiceData) => {
-		const currentLanguages = (props.hero && props.sourcebooks) ? HeroLogic.getLanguages(props.hero, props.sourcebooks).map(l => l.name) : [];
+		if (!props.hero || !props.sourcebooks) {
+			return null;
+		}
+
+		const currentLanguages = HeroLogic.getLanguages(props.hero, props.sourcebooks).map(l => l.name);
 		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[])
 			.filter(l => !currentLanguages.includes(l.name));
 		const distinctLanguages = Collections.distinct(languages, l => l.name);
@@ -933,7 +938,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map((language, n) => {
-						const lang = SourcebookLogic.getLanguage(language, props.sourcebooks);
+						const lang = SourcebookLogic.getLanguage(language, props.sourcebooks!);
 						return (
 							<Flex key={n} className='selection-box' align='center' gap={10}>
 								{
@@ -1074,7 +1079,10 @@ export const FeatureConfigPanel = (props: Props) => {
 	};
 
 	const getSelectionSkillChoice = (data: FeatureSkillChoiceData) => {
-		const currentSkills = (props.hero && props.sourcebooks) ? HeroLogic.getSkills(props.hero, props.sourcebooks).map(s => s.name) : [];
+		if (!props.hero || !props.sourcebooks) {
+			return null;
+		}
+		const currentSkills = HeroLogic.getSkills(props.hero, props.sourcebooks).map(s => s.name);
 		const skills = SourcebookLogic.getSkills(props.sourcebooks as Sourcebook[])
 			.filter(skill => (data.options.includes(skill.name)) || (data.listOptions.includes(skill.list)))
 			.filter(skill => !currentSkills.includes(skill.name));
@@ -1095,15 +1103,29 @@ export const FeatureConfigPanel = (props: Props) => {
 				{data.count > 1 ? <div className='ds-text'>Choose {data.count}:</div> : null}
 				{
 					data.selected.map((skill, n) => {
-						const sk = SourcebookLogic.getSkill(skill, props.sourcebooks);
+						const duplicated = props.hero && HeroLogic.getFeatures(props.hero)
+							.map(f => f.feature)
+							.filter(f => f.type === FeatureType.SkillChoice)
+							.flatMap(f => f.data.selected)
+							.filter(s => s === skill)
+							.length > 1;
+
+						const sk = SourcebookLogic.getSkill(skill, props.sourcebooks!);
 						return (
-							<Flex key={n} className='selection-box' align='center' gap={10}>
-								{
-									sk ?
-										<Field label={sk.name} value={sk.description} style={{ flex: '1 1 0' }} />
-										:
-										<div className='ds-text' style={{ flex: '1 1 0' }}>{skill}</div>
-								}
+							<Flex key={n} className='selection-box' align='center' justify='space-between' gap={10}>
+								<Flex vertical={true}>
+									{
+										sk ?
+											<Field label={sk.name} value={sk.description} style={{ flex: '1 1 0' }} />
+											:
+											<div className='ds-text' style={{ flex: '1 1 0' }}>{skill}</div>
+									}
+									{
+										duplicated ?
+											<Field danger={true} label='Duplicated' value='You already have this skill.' />
+											: null
+									}
+								</Flex>
 								<Flex vertical={true}>
 									<Button
 										style={{ flex: '0 0 auto' }}
@@ -1148,7 +1170,7 @@ export const FeatureConfigPanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					!data.selected ?
-						<Button block={true} onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
+						<Button block={true} className='status-warning' onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
 						: null
 				}
 				{
@@ -1307,7 +1329,8 @@ export const FeatureConfigPanel = (props: Props) => {
 
 		const customTitle = FactoryLogic.createTitle();
 		customTitle.name = 'Custom Title';
-		customTitle.features.push(FactoryLogic.feature.create({ id: Utils.guid(), name: 'Custom Benefit', description: 'Details' }));
+		customTitle.echelon = data.echelon;
+		customTitle.features.push(FactoryLogic.feature.create({ id: Utils.guid(), name: 'Custom Title', description: 'Details' }));
 
 		const getAddButton = () => {
 			return (

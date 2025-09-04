@@ -140,6 +140,7 @@ You can target yourself instead of one creature with this ability. Choose one of
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that an ally within 10 squares of you obtains a tier 3 outcome on a power roll or an enemy within 10 squares of you obtains a tier 1 outcome on a power roll',
 			value: '2'
 		}

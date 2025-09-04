@@ -291,7 +291,7 @@ export const frozenPond: Terrain = {
 						type: FactoryLogic.type.createTrigger(''),
 						keywords: [ AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -340,7 +340,7 @@ export const frozenPond: Terrain = {
 								type: FactoryLogic.type.createTrigger(''),
 								keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike ],
 								distance: [ FactoryLogic.distance.createMelee() ],
-								target: '1 creature or object',
+								target: 'One creature or object',
 								sections: [
 									FactoryLogic.createAbilitySectionRoll(
 										FactoryLogic.createPowerRoll({
@@ -422,7 +422,7 @@ export const lava: Terrain = {
 						type: FactoryLogic.type.createTrigger(''),
 						keywords: [ AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -502,7 +502,7 @@ export const quicksand: Terrain = {
 						type: FactoryLogic.type.createTrigger(''),
 						keywords: [ AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -584,7 +584,7 @@ export const toxicPlants: Terrain = {
 						type: FactoryLogic.type.createTrigger(''),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({

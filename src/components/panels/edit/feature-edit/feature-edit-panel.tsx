@@ -1,6 +1,6 @@
 import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAddOnType, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -15,6 +15,7 @@ import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FactoryLogic } from '../../../../logic/factory-logic';
+import { FeatureAddOnType } from '../../../../enums/feature-addon-type';
 import { FeatureField } from '../../../../enums/feature-field';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -95,7 +96,13 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureChoiceData | FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureSummonData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureSummonData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
+			copy.count = value;
+			setData(copy);
+		};
+
+		const setChoiceCount = (value: number | 'ancestry') => {
+			const copy = Utils.copy(feature.data) as FeatureChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -434,6 +441,7 @@ export const FeatureEditPanel = (props: Props) => {
 		const addResourceGain = (data: FeatureHeroicResourceData) => {
 			const copy = Utils.copy(data);
 			copy.gains.push({
+				tag: '',
 				trigger: '',
 				value: '1'
 			});
@@ -452,6 +460,12 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setResourceGainTag = (data: FeatureHeroicResourceData, index: number, value: string) => {
+			const copy = Utils.copy(data);
+			copy.gains[index].tag = value;
+			setData(copy);
+		};
+
 		const setResourceGainTrigger = (data: FeatureHeroicResourceData, index: number, value: string) => {
 			const copy = Utils.copy(data);
 			copy.gains[index].trigger = value;
@@ -461,6 +475,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setResourceGainValue = (data: FeatureHeroicResourceData, index: number, value: string) => {
 			const copy = Utils.copy(data);
 			copy.gains[index].value = value;
+			setData(copy);
+		};
+
+		const setHeroicResourceGainTag = (data: FeatureHeroicResourceGainData, value: string) => {
+			const copy = Utils.copy(data);
+			copy.tag = value;
 			setData(copy);
 		};
 
@@ -900,7 +920,8 @@ export const FeatureEditPanel = (props: Props) => {
 								: null
 						}
 						<HeaderText>Count</HeaderText>
-						<NumberSpin min={1} value={data.count} onChange={setCount} />
+						<Toggle label='Use ancestry points' value={data.count === 'ancestry'} onChange={value => setChoiceCount(value ? 'ancestry' : 3)} />
+						{data.count !== 'ancestry' ? <NumberSpin min={1} value={data.count} onChange={setChoiceCount} /> : null}
 					</Space>
 				);
 			}
@@ -1127,6 +1148,13 @@ export const FeatureEditPanel = (props: Props) => {
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%' }}>
+										<HeaderText>Tag</HeaderText>
+										<Input
+											placeholder='Tag'
+											allowClear={true}
+											value={gain.tag}
+											onChange={e => setResourceGainTag(data, n, e.target.value)}
+										/>
 										<HeaderText>Trigger</HeaderText>
 										<Input
 											status={gain.value === '' ? 'warning' : ''}
@@ -1163,6 +1191,13 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureHeroicResourceGainData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Tag</HeaderText>
+						<Input
+							placeholder='Tag'
+							allowClear={true}
+							value={data.tag}
+							onChange={e => setHeroicResourceGainTag(data, e.target.value)}
+						/>
 						<HeaderText>Trigger</HeaderText>
 						<Input
 							status={data.value === '' ? 'warning' : ''}
@@ -1809,6 +1844,7 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.Choice,
 			FeatureType.ClassAbility,
 			FeatureType.Companion,
+			FeatureType.ConditionImmunity,
 			FeatureType.DamageModifier,
 			FeatureType.Domain,
 			FeatureType.DomainFeature,

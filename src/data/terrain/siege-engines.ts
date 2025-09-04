@@ -526,7 +526,7 @@ export const fieldBallista: Terrain = {
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -621,7 +621,7 @@ export const fieldBallista: Terrain = {
 								type: FactoryLogic.type.createMain(),
 								keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(20) ],
-								target: '1 creature or object',
+								target: 'One creature or object',
 								sections: [
 									FactoryLogic.createAbilitySectionRoll(
 										FactoryLogic.createPowerRoll({
@@ -642,7 +642,7 @@ export const fieldBallista: Terrain = {
 								type: FactoryLogic.type.createMain(),
 								keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Strike, AbilityKeyword.Ranged ],
 								distance: [ FactoryLogic.distance.createRanged(20) ],
-								target: '1 creature slowed by the field ballista',
+								target: 'One creature slowed by the field ballista',
 								sections: [
 									FactoryLogic.createAbilitySectionRoll(
 										FactoryLogic.createPowerRoll({

@@ -5,7 +5,6 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { Negotiation } from '../../../../models/negotiation';
 import { NegotiationLogic } from '../../../../logic/negotiation-logic';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { Progress } from 'antd';
 
 import './negotiation-panel.scss';
 
@@ -24,11 +23,7 @@ export const NegotiationPanel = (props: Props) => {
 					{
 						props.mode === PanelMode.Full ?
 							<>
-								<div className='stats'>
-									{props.negotiation.impression ? <Field orientation='vertical' label='Impression' value={props.negotiation.impression} /> : null}
-									<Field orientation='vertical' label='Starting Interest' value={<Progress percent={props.negotiation.interest * 20} steps={5} showInfo={false} />} />
-									<Field orientation='vertical' label='Starting Patience' value={<Progress percent={props.negotiation.patience * 20} steps={5} showInfo={false} />} />
-								</div>
+								<Field label='Impression' value={props.negotiation.impression} />
 								<div className='negotiation-content'>
 									<div>
 										<HeaderText>Motivations</HeaderText>

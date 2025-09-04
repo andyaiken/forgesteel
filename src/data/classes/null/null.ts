@@ -19,7 +19,7 @@ The mind is not separate from the body. Perfection of one requires perfection of
 
 As a null, you resist the supernatural forces of the universe with composure and confidence. As you strive for perfect order, you are an enemy of the ultimate expression of chaos: the supernatural. Those who break the laws of nature using sorcery or psionics should fear you.
 
-"Any weapon can be turned against the hand that wields it." - Ardashir`,
+*"Any weapon can be turned against the hand that wields it."* - Ardashir`,
 	subclassName: 'Tradition',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -46,14 +46,17 @@ As a null, you resist the supernatural forces of the universe with composure and
 					name: 'Discipline',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '2'
 						},
 						{
+							tag: 'action',
 							trigger: 'The first time each combat round that an enemy in the area of your Null Field ability uses a main action',
 							value: '1'
 						},
 						{
+							tag: 'malice',
 							trigger: 'The first time each combat round that the Director uses an ability that costs Malice',
 							value: '1'
 						}
@@ -261,10 +264,13 @@ This ability remains active even after an encounter ends. It ends only if you ar
 				FactoryLogic.feature.createPerk({
 					id: 'null-4-3'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'null-4-4',
 					name: 'Regenerative Field',
-					description: 'The first time each combat round that an enemy in the area of your Null Field ability uses a main action, you gain 2 discipline instead of 1.'
+					tag: 'action 2',
+					trigger: 'The first time each combat round that an enemy in the area of your Null Field ability uses a main action',
+					value: '2',
+					replacesTags: [ 'action' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-4-5',
@@ -287,7 +293,7 @@ This ability remains active even after an encounter ends. It ends only if you ar
 				FactoryLogic.feature.createPackageContent({
 					id: 'null-6-1',
 					name: 'Elemental Absorption',
-					description: 'Gain immunity to acid, cold, corruption, fire, lightning, poison, and sonic damage equal to your Intuition score against the triggering damage.',
+					description: 'Whenever you use your Inertial Shield triggered action, you gain immunity to acid, cold, corruption, fire, lightning, poison, and sonic damage equal to your Intuition score against the triggering damage.',
 					tag: 'inertial-shield'
 				}),
 				FactoryLogic.feature.create({
@@ -343,10 +349,13 @@ Whenever you use an ability that is a main action or a maneuver with the Psionic
 **Shared Power** (5 Discipline) If the ability targets individual creatures or objects, you target one additional creature or object within distance.
 **Sharpened Power** (1 Discipline) If the ability has any power roll, that roll gains an edge.`
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'null-7-3',
 					name: 'Improved Body',
-					description: 'When you gain discipline at the start of each of your turns during combat, you gain 3 discipline instead of 2'
+					tag: 'start 2',
+					trigger: 'Start of your turn',
+					value: '3',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-7-4',
@@ -395,10 +404,13 @@ Whenever you use an ability that is a main action or a maneuver with the Psionic
 					characteristic: Characteristic.Intuition,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'null-10-2',
 					name: 'Manifold Body',
-					description: 'When you gain discipline at the start of each of your turns during combat, you gain 4 discipline instead of 3.'
+					tag: 'start 3',
+					trigger: 'Start of your turn',
+					value: '4',
+					replacesTags: [ 'start', 'start 2' ]
 				}),
 				FactoryLogic.feature.create({
 					id: 'null-10-3',
@@ -416,6 +428,7 @@ Additionally, you and allies in the area of your Null Field ability ignore banes
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}
@@ -936,7 +949,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 			type: FactoryLogic.type.createTrigger('The target takes damage from another creature’s ability while in the area of your Null Field ability', { free: true }),
 			keywords: [ AbilityKeyword.Psionic ],
 			distance: [ FactoryLogic.distance.createSpecial('Self; see below') ],
-			target: 'Self or One creature',
+			target: 'Self or one creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionText('The target takes half the damage, and if the triggering creature has I < [average], they are dazed (save ends). While the triggering creature is dazed this way, they take psychic damage equal to your Intuition score whenever they use a main action.')

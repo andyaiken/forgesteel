@@ -87,6 +87,19 @@
 					gap: 10px;
 				}
 
+				&.list {
+					padding: 10px;
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+
+					.grid {
+						display: grid;
+						grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+						gap: 10px;
+					}
+				}
+
 				&.selected {
 					display: flex;
 					flex-direction: column;

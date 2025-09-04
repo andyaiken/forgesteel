@@ -233,7 +233,8 @@ As a maneuver, you can recite the following oath. Until the start of your next t
 					value: 2
 				}
 			],
-			count: 3
+			count: 'ancestry'
 		})
-	]
+	],
+	ancestryPoints: 3
 };

@@ -1,6 +1,7 @@
-import { MonsterInfo, TerrainInfo } from '../../../controls/token/token';
+import { MonsterInfo, TerrainInfo } from '../../token/token';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
+import { EncounterDifficultyLogic } from '../../../../logic/encounter-difficulty-logic';
 import { EncounterDifficultyPanel } from '../../encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectivePanel } from '../encounter-objective/encounter-objective-panel';
@@ -51,14 +52,14 @@ export const EncounterPanel = (props: Props) => {
 						<SelectablePanel key={group.id} style={{ paddingTop: '0' }}>
 							{
 								props.encounter.groups.filter(g => g.slots.length > 0).length > 1 ?
-									<HeaderText>Group {(n + 1).toString()}</HeaderText>
+									<HeaderText>{group.name || `Group ${n + 1}`}</HeaderText>
 									:
 									<HeaderText>Monsters</HeaderText>
 							}
 							<Space direction='vertical'>
 								{
 									group.slots.map(slot => {
-										const monster = SourcebookLogic.getMonster(props.sourcebooks, slot.monsterID);
+										const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, props.sourcebooks);
 										if (!monster) {
 											return null;
 										}
@@ -140,7 +141,7 @@ export const EncounterPanel = (props: Props) => {
 				<div className='encounter-stat-blocks'>
 					{
 						monsterData.map(data => {
-							const monster = EncounterLogic.getCustomizedMonster(data.monsterID, data.addOnIDs, props.sourcebooks);
+							const monster = EncounterLogic.getCustomizedMonster(data.monsterID, data.customization, props.sourcebooks);
 							const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, data.monsterID);
 							if (monster && monsterGroup) {
 								return (
@@ -217,8 +218,8 @@ export const EncounterPanel = (props: Props) => {
 	};
 
 	try {
-		const strength = EncounterLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterLogic.getDifficulty(strength, props.options, props.heroes);
+		const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
+		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
 
 		return (
 			<ErrorBoundary>

@@ -1,0 +1,18 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.symbol-text {
+    display: inline-block;
+
+    .characteristic {
+        @include common.font-potency();
+        display: inline-block;
+        font-size: 1.2em;
+        transform: translateY(1px);
+    }
+    .potency {
+        @include common.font-potency();
+        display: inline-block;
+        font-size: 1.1em;
+        transform: translateY(2px);
+    }
+}

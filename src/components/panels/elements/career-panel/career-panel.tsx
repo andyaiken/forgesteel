@@ -21,7 +21,7 @@ interface Props {
 
 export const CareerPanel = (props: Props) => {
 	const getIncitingIncidents = () => {
-		const option = props.career.incitingIncidents.options.find(o => o.id === props.career.incitingIncidents.selectedID);
+		const option = props.career.incitingIncidents.selected;
 		if (!option) {
 			return (
 				<div>

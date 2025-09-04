@@ -1,4 +1,3 @@
-import { Monster, MonsterGroup } from '../models/monster';
 import { Ability } from '../models/ability';
 import { Ancestry } from '../models/ancestry';
 import { Career } from '../models/career';
@@ -9,9 +8,12 @@ import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { HeroClass } from '../models/class';
+import { Imbuement } from '../models/imbuement';
 import { Item } from '../models/item';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
+import { Monster } from '../models/monster';
+import { MonsterGroup } from '../models/monster-group';
 import { Options } from '../models/options';
 import { Perk } from '../models/perk';
 import { Project } from '../models/project';
@@ -81,6 +83,10 @@ export class SourcebookLogic {
 
 	static getTitleSourcebook = (sourcebooks: Sourcebook[], title: Title) => {
 		return sourcebooks.find(s => s.titles.find(t => t.id === title.id));
+	};
+
+	static getImbuementSourcebook = (sourcebooks: Sourcebook[], imbuement: Imbuement) => {
+		return sourcebooks.find(s => s.imbuements.find(i => i.id === imbuement.id));
 	};
 
 	static getItemSourcebook = (sourcebooks: Sourcebook[], item: Item) => {
@@ -232,6 +238,16 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
+	static getImbuements = (sourcebooks: Sourcebook[]) => {
+		const list: Imbuement[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.imbuements);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
 	static getMonsterGroups = (sourcebooks: Sourcebook[]) => {
 		const list: MonsterGroup[] = [];
 
@@ -270,6 +286,7 @@ export class SourcebookLogic {
 		sourcebooks.forEach(sourcebook => {
 			list.push(...sourcebook.projects);
 			list.push(...sourcebook.items.map(i => i.crafting).filter(p => !!p));
+			list.push(...sourcebook.imbuements.map(i => i.crafting).filter(p => !!p));
 		});
 
 		return Collections.sort(list, item => item.name);

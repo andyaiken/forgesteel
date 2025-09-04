@@ -28,6 +28,10 @@ export class PlaybookUpdateLogic {
 
 		playbook.encounters.forEach(e => {
 			e.groups.forEach(g => {
+				if (g.name === undefined) {
+					g.name = '';
+				}
+
 				if (g.encounterState === undefined) {
 					g.encounterState = 'ready';
 				}
@@ -35,8 +39,23 @@ export class PlaybookUpdateLogic {
 				g.slots.forEach(s => {
 					if (s.customization === undefined) {
 						s.customization = {
-							addOnIDs: []
+							addOnIDs: [],
+							itemIDs: [],
+							levelAdjustment: 0,
+							convertToSolo: false
 						};
+					}
+
+					if (s.customization.itemIDs === undefined) {
+						s.customization.itemIDs = [];
+					}
+
+					if (s.customization.levelAdjustment === undefined) {
+						s.customization.levelAdjustment = 0;
+					}
+
+					if (s.customization.convertToSolo === undefined) {
+						s.customization.convertToSolo = false;
 					}
 
 					if (s.monsters === undefined) {

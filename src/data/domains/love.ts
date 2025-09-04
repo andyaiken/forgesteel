@@ -75,7 +75,7 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 					ability: FactoryLogic.createAbility({
 						id: 'domain-love-6',
 						name: 'Lauded by God',
-						description: 'You beseech the gods to give your allies what they need to win the day, and the gods answer.With a gesture, you restore your health and that of your allies.',
+						description: 'You beseech the gods to give your allies what they need to win the day, and the gods answer.',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
@@ -144,6 +144,7 @@ Additionally, when you are present at the start of a negotiation, one NPC of you
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that you or any ally within 10 squares uses the Aid Attack maneuver or an ability that targets an ally',
 			value: '2'
 		}

@@ -6,6 +6,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
+import { Characteristic } from '../enums/characteristic';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { Domain } from '../models/domain';
 import { Feature } from '../models/feature';
@@ -19,7 +20,33 @@ import pdfLandscape from '../assets/character-sheet-landscape.pdf';
 import pdfPortrait from '../assets/character-sheet-portrait.pdf';
 
 export class PDFExport {
-	static startExport = async (hero: Hero, sourcebooks: Sourcebook[], format: 'portrait' | 'landscape') => {
+	static cleanupOutput = (text: string) => {
+		text = text
+			.replace(/(\|:-+)+\|\n/g, '')
+			.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
+			.replace(/11 -\t/g, '11 or less')
+			.replace(/17 \+/g, '17+\t')
+			.replace(/≤\s*(\d+)\t?/g, '$1 or less')
+			.replace(/≥\s*(\d+)/g, '$1+\t')
+			.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
+			.replace(/\n\* /g, '\n   • ');
+		// substitutions are for cleaning up lists to look better in the form
+		return text;
+	};
+
+	static sanitize = (str: string) => {
+		// This replaces characters the PDF doesn't support
+		return str
+			.toString()
+			.replaceAll(String.fromCodePoint(127925), '·')// musical note emoji?
+			.replaceAll('\u266a', '·')// musical note character
+			.replace(/−/g, '-')
+			.replace(/ź/g, 'z')
+			.replace(/ń/g, 'n')
+			.replace(/č/g, 'c');
+	};
+
+	static startExport = async (hero: Hero, sourcebooks: Sourcebook[], format: 'portrait' | 'landscape', flatten: boolean) => {
 		let file: string;
 		switch (format) {
 			case 'portrait':
@@ -38,17 +65,7 @@ export class PDFExport {
 
 		const autoResizingFields: string[] = [];
 
-		const sanitize = (str: string) => {
-			// This replaces characters the PDF doesn't support
-			return str
-				.toString()
-				.replace(/−/g, '-')
-				.replace(/ź/g, 'z')
-				.replace(/ń/g, 'n')
-				.replace(/č/g, 'c');
-		};
-
-		const heroicResources = HeroLogic.getFeatures(hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
+		const heroicResources = HeroLogic.getHeroicResources(hero);
 		const texts: { [key: string]: string | number | null } = {
 			CharacterName: hero.name,
 			AncestryTop: hero.ancestry && hero.ancestry.name,
@@ -56,8 +73,8 @@ export class PDFExport {
 			ClassTop: hero.class && hero.class.name,
 			SubclassTop: (hero.class && (hero.class.subclassName !== '') && (hero.class.subclasses.filter(s => s.selected).length > 0) && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name) || null,
 			Level: hero.class && hero.class.level,
-			Wealth: hero.state.wealth,
-			Renown: hero.state.renown,
+			Wealth: HeroLogic.getWealth(hero),
+			Renown: HeroLogic.getRenown(hero),
 			XP: hero.state.xp,
 			Speed: FormatLogic.getSpeed(HeroLogic.getSpeed(hero)),
 			Stability: HeroLogic.getStability(hero),
@@ -68,7 +85,7 @@ export class PDFExport {
 			RecoveryValue: HeroLogic.getRecoveryValue(hero),
 			MaxRecoveries: HeroLogic.getRecoveries(hero),
 			Recoveries: HeroLogic.getRecoveries(hero) - hero.state.recoveriesUsed,
-			HeroicResource: heroicResources.length > 0 ? heroicResources[0].data.value : 0,
+			HeroicResource: heroicResources.length > 0 ? heroicResources[0].value : 0,
 			Surges: hero.state.surges,
 			Victories: hero.state.victories,
 			AncestryFull: hero.ancestry && hero.ancestry.description,
@@ -83,18 +100,16 @@ export class PDFExport {
 
 		const features = HeroLogic.getFeatures(hero).map(f => f.feature);
 
-		{
-			if (hero.class) {
-				// might/agility/reason/intuition/presence
-				for (const details of hero.class.characteristics) {
-					texts['SurgeDamage'] = Math.max(
-						Number(texts['SurgeDamage'] || 0),
-						details.value
-					);
-					texts[details.characteristic] = details.value;
-					autoResizingFields.push(details.characteristic);
-				}
-			}
+		if (hero.class) {
+			// might/agility/reason/intuition/presence
+			let surgeDamage = 0;
+			[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].forEach(ch => {
+				const value = HeroLogic.getCharacteristic(hero, ch);
+				surgeDamage = Math.max(surgeDamage, value);
+				texts[ch] = value;
+				autoResizingFields.push(ch);
+			});
+			texts['SurgeDamage'] = surgeDamage;
 		}
 
 		const domains = features.find(f => f.type === FeatureType.Domain)?.data?.selected as Domain[];
@@ -122,18 +137,6 @@ export class PDFExport {
 
 		const GetTitle = (text: string) => text + '\n' + ('¯'.repeat(Math.ceil(font.widthOfTextAtSize(text, fontSize) / font.widthOfTextAtSize('¯', fontSize))));
 
-		const CleanupOutput = (text: string) => {
-			text = text
-				.replace(/(\|:-+)+\|\n/g, '')
-				.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
-				.replace(/≤ 11\t/g, '11 or less')
-				.replace(/17 \+/g, '17+\t')
-				.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
-				.replace(/\n\* /g, '\n   • ');
-			// substitutions are for cleaning up lists to look better in the form
-			return text;
-		};
-
 		const ConvertFeatures = (features: Feature[]) => {
 			features = features.filter(f => !ignoredFeatures[f.id]);
 			features.forEach(f => (ignoredFeatures[f.id] = true));
@@ -145,7 +148,7 @@ export class PDFExport {
 				let text = GetTitle(feature.name) + '\n' + feature.description.replace(/^\s+/, '');
 				// substitution is to convert any tables into text that presents
 				// better in the PDF form
-				text = CleanupOutput(text);
+				text = PDFExport.cleanupOutput(text);
 				if (feature.description !== '') {
 					all = all + text;
 				}
@@ -155,33 +158,17 @@ export class PDFExport {
 
 		{
 			if (heroicResources.length > 0) {
-				const heroicResourceFeature = heroicResources[0];
-				texts['HeroicResourcesPerTurn'] = heroicResourceFeature.data.gains[0].value;
-				ignoredFeatures[heroicResourceFeature.id] = true;
-				let resourceGainText = 'Your resource is ' + heroicResourceFeature.name.toLowerCase() + '.\n\n';
-				[
-					...heroicResourceFeature.data.gains,
-					...HeroLogic.getFeatures(hero)
-						.map(f => f.feature)
-						.filter(f => f.type === FeatureType.HeroicResourceGain)
-						.map(f => f.data),
-					...HeroLogic.getDomains(hero)
-						.flatMap(d => d.resourceGains)
-						.filter(g => g.resource === heroicResourceFeature.name)
-						.map(g => g)
-				].forEach(g => {
+				const hr = heroicResources[0];
+				texts['HeroicResourcesPerTurn'] = hr.gains[0].value;
+				ignoredFeatures[hr.id] = true;
+				let resourceGainText = 'Your resource is ' + hr.name.toLowerCase() + '.\n\n';
+				hr.gains.forEach(g => {
 					resourceGainText += g.trigger + ': +' + g.value + '\n';
 				});
-				HeroLogic.getFeatures(hero)
-					.map(f => f.feature)
-					.filter(f => f.type === FeatureType.HeroicResourceGain)
-					.forEach(f => {
-						resourceGainText += f.data.trigger + ': +' + f.data.value + '\n';
-					});
-				if (heroicResourceFeature.data.details) {
-					resourceGainText += '\n\n' + heroicResourceFeature.data.details;
+				if (hr.details) {
+					resourceGainText += '\n\n' + hr.details;
 				}
-				texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
+				texts['HeroicResourceGains'] = PDFExport.cleanupOutput(resourceGainText);
 			} else {
 				const resource = heroicResources.length > 0 ? heroicResources[0].name.toLowerCase() : 'XXX';
 				const startup = new RegExp(String.raw`\s*At the start of each of your turns during combat, you gain (.+?) ${resource}\.\s*`);
@@ -193,7 +180,7 @@ export class PDFExport {
 					}
 					ignoredFeatures[heroicResourceFeature.id] = true;
 					const resourceGainText = 'Your resource is ' + resource + '.\n\n' + heroicResourceFeature.description.replace(startup, '');
-					texts['HeroicResourceGains'] = CleanupOutput(resourceGainText);
+					texts['HeroicResourceGains'] = PDFExport.cleanupOutput(resourceGainText);
 				}
 			}
 		}
@@ -252,9 +239,7 @@ export class PDFExport {
 
 			if (hero.career) {
 				texts['CareerName'] = hero.career.name;
-				const incident = hero.career.incitingIncidents.options.find(
-					o => o.id === (hero.career && hero.career.incitingIncidents.selectedID)
-				);
+				const incident = hero.career.incitingIncidents.selected;
 				if (incident) {
 					texts['CareerIncident'] =
 						GetTitle(incident.name) + '\n' + incident.description;
@@ -337,28 +322,23 @@ export class PDFExport {
 
 					const details = [ ...a.type.qualifiers || [] ];
 					if (a.type.trigger !== '') {
-						details.push('Trigger:\n' + CleanupOutput(a.type.trigger));
+						details.push('Trigger:\n' + PDFExport.cleanupOutput(a.type.trigger));
 					}
 					a.sections.forEach(section => {
 						switch (section.type) {
 							case 'text':
-								details.push(CleanupOutput(section.text.replace(/^\s+/, '')));
+								details.push(PDFExport.cleanupOutput(section.text.replace(/^\s+/, '')));
 								break;
 							case 'field':
 								if (section.value !== 0) {
-									details.push(section.name + ' ' + section.value + (section.repeatable ? '+' : '') + ':\n' + CleanupOutput(section.effect));
+									details.push(section.name + ' ' + section.value + (section.repeatable ? '+' : '') + ':\n' + PDFExport.cleanupOutput(section.effect));
 								} else {
-									details.push(section.name + ':\n' + CleanupOutput(section.effect));
+									details.push(section.name + ':\n' + PDFExport.cleanupOutput(section.effect));
 								}
 								break;
 							case 'roll': {
 								let powerRollText = '';
-								powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...section.roll.characteristic
-									.map(
-										c => hero.class && hero.class.characteristics.find(d => d.characteristic === c)
-									)
-									.map(c => (c && c.value) || 0)
-								);
+								powerRollText = powerRollText + 'Power Roll: 2d10 + ' + Math.max(...section.roll.characteristic.map(c => HeroLogic.getCharacteristic(hero, c)));
 								powerRollText = powerRollText + '\n   • 11 or less\t' + AbilityLogic.getTierEffect(
 									section.roll.tier1,
 									1,
@@ -452,13 +432,13 @@ export class PDFExport {
 		for (const [ key, value ] of Object.entries(texts)) {
 			const field = form.getField(key) as PDFTextField;
 			if (value !== null && value !== undefined) {
-				field.setText(sanitize(value.toString()));
+				field.setText(PDFExport.sanitize(value.toString()));
 			}
 		}
 
 		const DoesTextFitFieldRectangle = (t: string, rect: { x: number, y: number, width: number, height: number }, size: number, multiline: boolean) => {
 			t = t.replace(/\t/g, '    ');
-			t = sanitize(t);
+			t = PDFExport.sanitize(t);
 			if (multiline) {
 				// offset of 20 for multiline and 5 for single found by testing different values
 				const widthOffset = 20;
@@ -514,12 +494,16 @@ export class PDFExport {
 			}
 		}
 
+		if (flatten) {
+			form.flatten();
+		}
+
 		const data = await pdfDoc.save();
 		const part = [ data ] as BlobPart[];
 		const url = window.URL.createObjectURL(new Blob(part, { type: 'application/pdf' }));
 
 		const downloader = document.createElement('a');
-		downloader.download = `${CleanupOutput(hero.name || 'Unnamed Hero')}.pdf`;
+		downloader.download = `${PDFExport.cleanupOutput(hero.name || 'Unnamed Hero')}.pdf`;
 		downloader.href = url;
 		downloader.click();
 

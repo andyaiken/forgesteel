@@ -30,7 +30,7 @@ export const vanguard: SubClass = {
 						type: FactoryLogic.type.createTrigger('A creature deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: 'Self or 1 ally',
+						target: 'Self or one ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You can shift 1 square. If the target is you, or if you end this shift adjacent to the target, the target takes half the damage. If the damage has any potency effect associated with it, the potency is decreased by 1.'),
 							FactoryLogic.createAbilitySectionField({
@@ -69,7 +69,7 @@ export const vanguard: SubClass = {
 									type: FactoryLogic.type.createTrigger('The target deals damage to an ally.'),
 									keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createRanged(5) ],
-									target: '1 enemy',
+									target: 'One enemy',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionText('You move up to your speed toward the triggering ally, ending this movement adjacent to them or in the nearest square if you can’t reach an adjacent square. The triggering ally can spend a Recovery and gains 5 temporary Stamina for each enemy you came adjacent to during the move. You then make a power roll against the target.'),

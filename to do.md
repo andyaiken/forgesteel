@@ -2,24 +2,22 @@
 
 ### Heroes
 
-* Automatic update of library resources when there is a newer version
-  * Indicate an update in the hero sheet (subtly)
-  * Attempt to reselect anything that needs to be selected
-* Hero Builder:
-  * Revenants should have 3 ancestry points if small
+(nothing)
 
 ### Library
 
 * It should be possible to add custom keywords to abilities / custom weapon or armor types in kits
-* It should be possible to create a homebrew subclass / class ability / monster individually
+* It should be possible to create a homebrew class ability / monster individually
 * Add data:
   * Rivals
 * Monster Builder:
   * Auto-create monsters
+  * Allow users to adjust monster level (monsters book pg 26)
 
 ### Playbook
 
 * Encounter Builder:
+  * When an encounter has monsters with items, this should be noted in the encounter info (monster info and running encounter notes)
   * Encounters should pull in monsters, rather than storing monster / group IDs
   * Set number of squares for per-square terrain
   * Use encounter templates

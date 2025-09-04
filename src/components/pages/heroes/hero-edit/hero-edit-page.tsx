@@ -18,11 +18,14 @@ import { ComplicationSection } from './complication-section/complication-section
 import { Culture } from '../../../../models/culture';
 import { CultureSection } from './culture-section/culture-section';
 import { DetailsSection } from './details-section/details-section';
+import { Element } from '../../../../models/element';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureLogic } from '../../../../logic/feature-logic';
+import { FeatureType } from '../../../../enums/feature-type';
 import { Format } from '../../../../utils/format';
 import { HeroClass } from '../../../../models/class';
 import { HeroLogic } from '../../../../logic/hero-logic';
+import { HeroUpdateLogic } from '../../../../logic/update/hero-update-logic';
 import { Options } from '../../../../models/options';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -51,7 +54,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	showSourcebooks: () => void;
 	saveChanges: (hero: Hero) => void;
 	importSourcebook: (sourcebook: Sourcebook) => void;
 }
@@ -66,29 +68,23 @@ export const HeroEditPage = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	try {
-		const isChosen = (feature: Feature) => {
-			return FeatureLogic.isChosen(feature, HeroLogic.getFormerAncestries(hero));
-		};
-
 		const getPageState = (page: HeroEditTab) => {
 			switch (page) {
 				case 'start':
 					return PageState.Blank;
 				case 'ancestry':
 					if (hero.ancestry) {
-						return (hero.ancestry.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.ancestry.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case 'culture':
 					if (hero.culture) {
-						if (hero.culture.languages.length === 0) {
-							return PageState.InProgress;
-						}
 						if (!hero.culture.environment || !hero.culture.organization || !hero.culture.upbringing) {
 							return PageState.InProgress;
 						}
 						const features: Feature[] = [];
+						features.push(hero.culture.language);
 						if (hero.culture.environment) {
 							features.push(hero.culture.environment);
 						}
@@ -98,13 +94,13 @@ export const HeroEditPage = (props: Props) => {
 						if (hero.culture.upbringing) {
 							features.push(hero.culture.upbringing);
 						}
-						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case 'career':
 					if (hero.career) {
-						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) || !hero.career.incitingIncidents.selected ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
@@ -128,13 +124,13 @@ export const HeroEditPage = (props: Props) => {
 									.filter(lvl => lvl.level <= level)
 									.forEach(lvl => features.push(...lvl.features));
 							});
-						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
 				case 'complication':
 					if (hero.complication) {
-						return (hero.complication.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !isChosen(f)).length > 0) ? PageState.InProgress : PageState.Completed;
+						return (hero.complication.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.Optional;
 					}
@@ -147,8 +143,27 @@ export const HeroEditPage = (props: Props) => {
 			}
 		};
 
+		const clearRedundantSelections = (hero: Hero, features: Feature[]) => {
+			const sourcebooks = props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
+			const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
+			const knownSkills = HeroLogic.getSkills(hero, sourcebooks).map(skill => skill.name);
+			features.forEach(feature => {
+				switch (feature.type) {
+					case FeatureType.LanguageChoice:
+						feature.data.selected = feature.data.selected.filter(language => !knownLanguages.includes(language));
+						break;
+					case FeatureType.SkillChoice:
+						feature.data.selected = feature.data.selected.filter(skill => !knownSkills.includes(skill));
+						break;
+				};
+			});
+		};
+
 		const setAncestry = (ancestry: Ancestry | null) => {
 			const ancestryCopy = Utils.copy(ancestry) as Ancestry | null;
+			if (ancestryCopy) {
+				clearRedundantSelections(hero, ancestryCopy.features);
+			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.ancestry = ancestryCopy;
 			setHero(heroCopy);
@@ -157,17 +172,21 @@ export const HeroEditPage = (props: Props) => {
 
 		const setCulture = (culture: Culture | null) => {
 			const cultureCopy = Utils.copy(culture) as Culture | null;
+			if (cultureCopy) {
+				const features: Feature[] = [ cultureCopy.language ];
+				if (cultureCopy.environment) {
+					features.push(cultureCopy.environment);
+				}
+				if (cultureCopy.organization) {
+					features.push(cultureCopy.organization);
+				}
+				if (cultureCopy.upbringing) {
+					features.push(cultureCopy.upbringing);
+				}
+				clearRedundantSelections(hero, features);
+			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.culture = cultureCopy;
-			setHero(heroCopy);
-			setDirty(true);
-		};
-
-		const setLanguages = (languages: string[]) => {
-			const heroCopy = Utils.copy(hero);
-			if (heroCopy.culture) {
-				heroCopy.culture.languages = languages;
-			}
 			setHero(heroCopy);
 			setDirty(true);
 		};
@@ -219,16 +238,19 @@ export const HeroEditPage = (props: Props) => {
 
 		const setCareer = (career: Career | null) => {
 			const careerCopy = Utils.copy(career) as Career | null;
+			if (careerCopy) {
+				clearRedundantSelections(hero, careerCopy.features);
+			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.career = careerCopy;
 			setHero(heroCopy);
 			setDirty(true);
 		};
 
-		const setIncitingIncident = (id: string | null) => {
+		const setIncitingIncident = (value: Element | null) => {
 			const heroCopy = Utils.copy(hero);
 			if (heroCopy.career) {
-				heroCopy.career.incitingIncidents.selectedID = id;
+				heroCopy.career.incitingIncidents.selected = value;
 			}
 			setHero(heroCopy);
 			setDirty(true);
@@ -241,6 +263,7 @@ export const HeroEditPage = (props: Props) => {
 					classCopy.primaryCharacteristics = classCopy.primaryCharacteristicsOptions[0];
 				}
 				classCopy.characteristics.forEach(ch => ch.value = 0);
+				clearRedundantSelections(hero, classCopy.featuresByLevel.flatMap(byLevel => byLevel.features));
 			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.class = classCopy;
@@ -287,15 +310,14 @@ export const HeroEditPage = (props: Props) => {
 		const addSubclass = (subclass: SubClass) => {
 			const heroCopy = Utils.copy(hero);
 			if (heroCopy.class) {
-				const selected = heroCopy.class.subclasses.find(sc => sc.id === subclass.id);
-				if (selected) {
-					selected.selected = true;
-				} else {
+				let selected = heroCopy.class.subclasses.find(sc => sc.id === subclass.id);
+				if (!selected) {
 					// This is a subclass from somewhere else
-					const copy = Utils.copy(subclass);
-					copy.selected = true;
-					heroCopy.class.subclasses.push(copy);
+					selected = Utils.copy(subclass);
+					heroCopy.class.subclasses.push(selected);
 				}
+				selected.selected = true;
+				clearRedundantSelections(hero, selected.featuresByLevel.flatMap(byLevel => byLevel.features));
 			}
 			setHero(heroCopy);
 			setDirty(true);
@@ -312,6 +334,9 @@ export const HeroEditPage = (props: Props) => {
 
 		const setComplication = (complication: Complication | null) => {
 			const complicationCopy = Utils.copy(complication) as Complication | null;
+			if (complicationCopy) {
+				clearRedundantSelections(hero, complicationCopy.features);
+			}
 			const heroCopy = Utils.copy(hero);
 			heroCopy.complication = complicationCopy;
 			setHero(heroCopy);
@@ -354,6 +379,13 @@ export const HeroEditPage = (props: Props) => {
 		const setSettingIDs = (settingIDs: string[]) => {
 			const heroCopy = Utils.copy(hero);
 			heroCopy.settingIDs = settingIDs;
+			setHero(heroCopy);
+			setDirty(true);
+		};
+
+		const updateHeroData = () => {
+			const heroCopy = Utils.copy(hero);
+			HeroUpdateLogic.updateHeroData(heroCopy, props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id)));
 			setHero(heroCopy);
 			setDirty(true);
 		};
@@ -511,7 +543,6 @@ export const HeroEditPage = (props: Props) => {
 							options={props.options}
 							searchTerm={searchTerm}
 							selectCulture={setCulture}
-							selectLanguages={setLanguages}
 							selectEnvironment={setEnvironment}
 							selectOrganization={setOrganization}
 							selectUpbringing={setUpbringing}
@@ -568,6 +599,7 @@ export const HeroEditPage = (props: Props) => {
 							setPicture={setPicture}
 							setFolder={setFolder}
 							setFeatureData={setFeatureData}
+							updateHeroData={updateHeroData}
 						/>
 					);
 			}
@@ -598,7 +630,7 @@ export const HeroEditPage = (props: Props) => {
 						{getControls()}
 						{getContent()}
 					</div>
-					<AppFooter page='heroes' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

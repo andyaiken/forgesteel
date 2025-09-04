@@ -48,11 +48,13 @@ As a talent, you are limited only by the strength of your mind. But the ability 
 					name: 'Clarity',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '1d3'
 						},
 						{
-							trigger: 'Additionally, the first time each combat round that a creature is force moved',
+							tag: 'move',
+							trigger: 'The first time each combat round that a creature is force moved',
 							value: '1'
 						}
 					],
@@ -85,7 +87,7 @@ Whenever you have clarity below 0, you are strained. Some psionic abilities have
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a ranged free strike' ] }),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telepathy ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature',
+						target: 'One creature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Reason ],
@@ -316,13 +318,24 @@ Any abilities or features you use originate from your mind. Both your mind and y
 						]
 					})
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'talent-4-3',
 					name: 'Mind Recovery',
-					description: `
-Whenever you spend a Recovery to regain Stamina while strained, you can forgo the Stamina and gain 3 clarity instead.
-
-Additionally, the first time each combat round that a creature is force moved, you gain 2 clarity instead of 1.`
+					features: [
+						FactoryLogic.feature.create({
+							id: 'talent-4-3a',
+							name: 'Mind Recovery',
+							description: 'Whenever you spend a Recovery to regain Stamina while strained, you can forgo the Stamina and gain 3 clarity instead.'
+						}),
+						FactoryLogic.feature.createHeroicResourceGain({
+							id: 'talent-4-3b',
+							name: 'Mind Recovery',
+							tag: 'move 2',
+							trigger: 'The first time each combat round that a creature is force moved',
+							value: '2',
+							replacesTags: [ 'move' ]
+						})
+					]
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'talent-4-4'
@@ -439,10 +452,13 @@ If you are strained while flying and are force moved, the forced movement distan
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'talent-7-4',
 					name: 'Lucid Mind',
-					description: 'At the start of each of your turns during combat, you gain 1d3 + 1 clarity instead of 1d3.'
+					tag: 'start 2',
+					trigger: 'Start of your turn',
+					value: '1d3 + 1',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-7-5',
@@ -510,10 +526,13 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'talent-10-2',
 					name: 'Clear Mind',
-					description: 'The first time each combat round that a creature is force moved, you gain 3 clarity instead of 2.'
+					tag: 'move 3',
+					trigger: 'The first time each combat round that a creature is force moved',
+					value: '3',
+					replacesTags: [ 'move', 'move 2' ]
 				}),
 				FactoryLogic.feature.createMultiple({
 					id: 'talent-10-3',
@@ -535,13 +554,24 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 					id: 'talent-10-4',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'talent-10-5',
 					name: 'Psion',
-					description: `
-At the start of each of your turns during combat, you gain 1d3 + 2 clarity instead of 1d3 + 1.
-
-Additionally, you can choose to not take damage from having negative clarity. You can also choose to take on any ability’s strained effect even if you’re not strained.`
+					features: [
+						FactoryLogic.feature.createHeroicResourceGain({
+							id: 'talent-10-5a',
+							name: 'Psion',
+							tag: 'start 3',
+							trigger: 'Start of your turn',
+							value: '1d3 + 2',
+							replacesTags: [ 'start', 'start 2' ]
+						}),
+						FactoryLogic.feature.create({
+							id: 'talent-10-5b',
+							name: 'Psion',
+							description: 'You can choose to not take damage from having negative clarity. You can also choose to take on any ability’s strained effect even if you’re not strained.'
+						})
+					]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-10-6',
@@ -553,6 +583,7 @@ Additionally, you can choose to not take damage from having negative clarity. Yo
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}
@@ -595,7 +626,7 @@ Additionally, you can choose to not take damage from having negative clarity. Yo
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Cryokinesis, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -650,9 +681,9 @@ Additionally, you can choose to not take damage from having negative clarity. Yo
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Reason ],
-						tier1: 'Slide 2 + Reason',
-						tier2: 'Slide 4 + Reason',
-						tier3: 'Slide 6 + Reason; prone'
+						tier1: 'Slide 2 + R',
+						tier2: 'Slide 4 + R',
+						tier3: 'Slide 6 + R; prone'
 					})
 				),
 				FactoryLogic.createAbilitySectionField({
@@ -788,7 +819,7 @@ Additionally, you can choose to not take damage from having negative clarity. Yo
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telekinesis ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -822,7 +853,7 @@ Additionally, you can choose to not take damage from having negative clarity. Yo
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Pyrokinesis, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 3,
 			sections: [
 				FactoryLogic.createAbilitySectionText('Choose the damage type and the weakness for this ability from one of the following: acid, corruption, or fire. The target takes damage before this ability imposes any weakness.'),
@@ -981,7 +1012,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Animapathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 7,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -1022,7 +1053,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			description: 'You move fast enough to turn around and watch your foes feel the aftermath.',
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Psionic, AbilityKeyword.Telekinesis ],
-			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 1, within: 1 }) ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 2, within: 1 }) ],
 			target: 'Each enemy in the area',
 			cost: 9,
 			sections: [
@@ -1048,7 +1079,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telepathy ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -1098,7 +1129,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Animapathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -1123,7 +1154,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Telepathy ],
 			distance: [ FactoryLogic.distance.createMelee(2) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(
@@ -1148,7 +1179,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Chronopathy, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionText(`
@@ -1171,7 +1202,7 @@ effects on them that are ended by a saving throw or that end at the end of their
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [ AbilityKeyword.Metamorphosis, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: '1 creature',
+			target: 'One creature',
 			cost: 11,
 			sections: [
 				FactoryLogic.createAbilitySectionText('The target has damage immunity 5 and can’t be made slowed or weakened until the start of your next turn. Whenever the target force moves a creature or object while under this effect, the forced movement distance gains a +5 bonus.'),

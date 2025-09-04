@@ -13,12 +13,14 @@ import { Domain } from '../../../models/domain';
 import { DomainPanel } from '../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../models/element';
 import { HeroClass } from '../../../models/class';
+import { Imbuement } from '../../../models/imbuement';
+import { ImbuementPanel } from '../../panels/elements/imbuement-panel/imbuement-panel';
 import { Item } from '../../../models/item';
 import { ItemPanel } from '../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../models/kit';
 import { KitPanel } from '../../panels/elements/kit-panel/kit-panel';
 import { Modal } from '../modal/modal';
-import { MonsterGroup } from '../../../models/monster';
+import { MonsterGroup } from '../../../models/monster-group';
 import { MonsterGroupPanel } from '../../panels/elements/monster-group-panel/monster-group-panel';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
@@ -94,12 +96,19 @@ export const ElementModal = (props: Props) => {
 							mode={PanelMode.Full}
 						/>
 					);
+				case 'imbuement':
+					return (
+						<ImbuementPanel
+							imbuement={props.element as Imbuement}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					);
 				case 'item':
 					return (
 						<ItemPanel
 							item={props.element as Item}
 							options={props.options}
-							showCustomizations={true}
 							mode={PanelMode.Full}
 						/>
 					);

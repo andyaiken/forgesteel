@@ -1,7 +1,7 @@
 import { Button, Flex, Space } from 'antd';
 import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
 import { Encounter, EncounterGroup } from '../../../models/encounter';
-import { HeroInfo, MonsterInfo } from '../../controls/token/token';
+import { HeroInfo, MonsterInfo } from '../../panels/token/token';
 import { Condition } from '../../../models/condition';
 import { EncounterLogic } from '../../../logic/encounter-logic';
 import { Field } from '../../controls/field/field';

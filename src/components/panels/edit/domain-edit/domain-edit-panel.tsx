@@ -168,6 +168,7 @@ export const DomainEditPanel = (props: Props) => {
 				const copy = Utils.copy(domain);
 				copy.resourceGains.push({
 					resource: 'Piety',
+					tag: '',
 					trigger: '',
 					value: '2'
 				});
@@ -178,6 +179,13 @@ export const DomainEditPanel = (props: Props) => {
 			const setResource = (index: number, value: string) => {
 				const copy = Utils.copy(domain);
 				copy.resourceGains[index].resource = value;
+				setDomain(copy);
+				props.onChange(copy);
+			};
+
+			const setTag = (index: number, value: string) => {
+				const copy = Utils.copy(domain);
+				copy.resourceGains[index].tag = value;
 				setDomain(copy);
 				props.onChange(copy);
 			};
@@ -228,6 +236,13 @@ export const DomainEditPanel = (props: Props) => {
 									allowClear={true}
 									value={rg.resource}
 									onChange={e => setResource(n, e.target.value)}
+								/>
+								<HeaderText>Tag</HeaderText>
+								<Input
+									placeholder='Tag'
+									allowClear={true}
+									value={rg.tag}
+									onChange={e => setTag(n, e.target.value)}
 								/>
 								<HeaderText>Trigger</HeaderText>
 								<Input

@@ -1,19 +1,21 @@
 import { Adventure, AdventurePackage } from '../../models/adventure';
-import { Monster, MonsterGroup } from '../../models/monster';
 import { Navigate, Route, Routes } from 'react-router';
 import { Playbook, PlaybookElementKind } from '../../models/playbook';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '../../models/sourcebook';
+import { Spin, notification } from 'antd';
 import { Ability } from '../../models/ability';
 import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
+import { CharacterSheetFormatter } from '../../utils/character-sheet-formatter';
 import { Characteristic } from '../../enums/characteristic';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { Counter } from '../../models/counter';
 import { Culture } from '../../models/culture';
+import { CultureType } from '../../enums/culture-type';
 import { DirectoryModal } from '../modals/directory/directory-modal';
 import { Domain } from '../../models/domain';
 import { Element } from '../../models/element';
@@ -30,12 +32,13 @@ import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { HeroClass } from '../../models/class';
 import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
-import { HeroExportPage } from '../pages/heroes/hero-export/hero-export-page';
 import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
+import { HeroSheetPreviewPage } from '../pages/heroes/hero-sheet/hero-sheet-preview-page';
 import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '../../enums/hero-state-page';
 import { HeroUpdateLogic } from '../../logic/update/hero-update-logic';
 import { HeroViewPage } from '../pages/heroes/hero-view/hero-view-page';
+import { Imbuement } from '../../models/imbuement';
 import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
 import { Kit } from '../../models/kit';
@@ -43,12 +46,15 @@ import { LibraryEditPage } from '../pages/library/library-edit/library-edit-page
 import { LibraryListPage } from '../pages/library/library-list/library-list-page';
 import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
+import { Monster } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterModal } from '../modals/monster/monster-modal';
 import { Montage } from '../../models/montage';
 import { Negotiation } from '../../models/negotiation';
 import { Options } from '../../models/options';
 import { PDFExport } from '../../utils/pdf-export';
 import { PartyModal } from '../modals/party/party-modal';
+import { PdfOptions } from '../../models/pdf-options';
 import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-page';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
@@ -73,7 +79,6 @@ import { Title } from '../../models/title';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
-import { notification } from 'antd';
 import { useMediaQuery } from '../../hooks/use-media-query';
 import { useNavigation } from '../../hooks/use-navigation';
 
@@ -107,6 +112,7 @@ export const Main = (props: Props) => {
 	const [ directory, setDirectory ] = useState<ReactNode>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
+	const [ spinning, setSpinning ] = useState(false);
 
 	// #region Persistence
 
@@ -279,12 +285,37 @@ export const Main = (props: Props) => {
 		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const exportHeroPDF = (hero: Hero, format: 'portrait' | 'landscape') => {
-		PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], format);
+	const exportHeroPdf = (hero: Hero, data: PdfOptions) => {
+		const mode = data.mode;
+		const formFillable = data.formFillable || false;
+		const resolution = data.resolution || 'standard';
+
+		if (mode === 'html') {
+			setSpinning(true);
+			const pageIds: string[] = [];
+			let p = 1;
+			while (document.getElementById(CharacterSheetFormatter.getPageId(hero.id, p)) !== null) {
+				pageIds.push(CharacterSheetFormatter.getPageId(hero.id, p));
+				++p;
+			}
+			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize, resolution)
+				.then(() => {
+					setSpinning(false);
+				});
+		} else {
+			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], mode, !formFillable);
+		}
 	};
 
-	const exportStandardAbilities = (format: 'image' | 'pdf') => {
-		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', format);
+	const exportStandardAbilities = () => {
+		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', 'pdf');
+	};
+
+	const setNotes = (hero: Hero, value: string) => {
+		const copy = Utils.copy(hero);
+		copy.state.notes = value;
+
+		persistHero(copy);
 	};
 
 	// #endregion
@@ -329,6 +360,9 @@ export const Main = (props: Props) => {
 				break;
 			case 'item':
 				createItem(original as Item | null, sourcebook);
+				break;
+			case 'imbuement':
+				createImbuement(original as Imbuement | null, sourcebook);
 				break;
 			case 'monster-group':
 				createMonsterGroup(original as MonsterGroup | null, sourcebook);
@@ -378,6 +412,9 @@ export const Main = (props: Props) => {
 					break;
 				case 'item':
 					sourcebook.items = sourcebook.items.filter(x => x.id !== element.id);
+					break;
+				case 'imbuement':
+					sourcebook.imbuements = sourcebook.imbuements.filter(x => x.id !== element.id);
 					break;
 				case 'monster-group':
 					sourcebook.monsterGroups = sourcebook.monsterGroups.filter(x => x.id !== element.id);
@@ -429,6 +466,9 @@ export const Main = (props: Props) => {
 				case 'item':
 					sourcebook.items = sourcebook.items.map(x => x.id === element.id ? element : x) as Item[];
 					break;
+				case 'imbuement':
+					sourcebook.imbuements = sourcebook.imbuements.map(x => x.id === element.id ? element : x) as Imbuement[];
+					break;
 				case 'monster-group':
 					sourcebook.monsterGroups = sourcebook.monsterGroups.map(x => x.id === element.id ? element : x) as MonsterGroup[];
 					break;
@@ -452,6 +492,7 @@ export const Main = (props: Props) => {
 			...sourcebooks.flatMap(sb => sb.complications),
 			...sourcebooks.flatMap(sb => sb.cultures),
 			...sourcebooks.flatMap(sb => sb.domains),
+			...sourcebooks.flatMap(sb => sb.imbuements),
 			...sourcebooks.flatMap(sb => sb.items),
 			...sourcebooks.flatMap(sb => sb.kits),
 			...sourcebooks.flatMap(sb => sb.monsterGroups),
@@ -522,6 +563,10 @@ export const Main = (props: Props) => {
 			case 'item':
 				sourcebook.items.push(element as Item);
 				sourcebook.items = Collections.sort<Element>(sourcebook.items, item => item.name) as Item[];
+				break;
+			case 'imbuement':
+				sourcebook.imbuements.push(element as Imbuement);
+				sourcebook.imbuements = Collections.sort<Element>(sourcebook.imbuements, imbuement => imbuement.name) as Imbuement[];
 				break;
 			case 'monster-group':
 				sourcebook.monsterGroups.push(element as MonsterGroup);
@@ -626,7 +671,7 @@ export const Main = (props: Props) => {
 			culture = Utils.copy(original);
 			culture.id = Utils.guid();
 		} else {
-			culture = FactoryLogic.createCulture();
+			culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
 		}
 
 		sourcebook.cultures.push(culture);
@@ -867,6 +912,37 @@ export const Main = (props: Props) => {
 
 		sourcebook.items.push(item);
 		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('item', sourcebook.id, item.id));
+	};
+
+	const createImbuement = (original: Imbuement | null, sourcebook: Sourcebook | null) => {
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
+		if (!sourcebook) {
+			sourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(sourcebook);
+		} else {
+			const id = sourcebook.id;
+			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+		}
+
+		let imbuement: Imbuement;
+		if (original) {
+			imbuement = Utils.copy(original);
+			imbuement.id = Utils.guid();
+		} else {
+			imbuement = FactoryLogic.createImbuement({
+				type: ItemType.Consumable,
+				crafting: FactoryLogic.createProject({}),
+				level: 1,
+				feature: FactoryLogic.feature.create({
+					id: Utils.guid(),
+					name: '',
+					description: ''
+				})
+			});
+		}
+
+		sourcebook.imbuements.push(imbuement);
+		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('imbuement', sourcebook.id, imbuement.id));
 	};
 
 	const createMonsterGroup = (original: MonsterGroup | null, sourcebook: Sourcebook | null) => {
@@ -1315,7 +1391,7 @@ export const Main = (props: Props) => {
 	};
 
 	const showReference = () => {
-		onshowReference(null);
+		onShowReference(null);
 	};
 
 	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
@@ -1425,7 +1501,7 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onshowReference = (hero: Hero | null, page?: RulesPage) => {
+	const onShowReference = (hero: Hero | null, page?: RulesPage) => {
 		setDrawer(
 			<ReferenceModal
 				hero={hero}
@@ -1494,12 +1570,10 @@ export const Main = (props: Props) => {
 							index={true}
 							element={
 								<WelcomePage
-									heroes={heroes}
 									showDirectory={showDirectoryPane}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
-									showSourcebooks={showSourcebooks}
 								/>
 							}
 						/>
@@ -1516,7 +1590,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										addHero={createHero}
 										importHero={importHero}
 										showParty={onShowParty}
@@ -1535,7 +1608,7 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										exportHero={exportHero}
-										exportHeroPDF={exportHeroPDF}
+										exportPdf={exportHeroPdf}
 										exportStandardAbilities={exportStandardAbilities}
 										copyHero={copyHero}
 										deleteHero={deleteHero}
@@ -1553,8 +1626,8 @@ export const Main = (props: Props) => {
 										showFeature={onSelectFeature}
 										showAbility={onSelectAbility}
 										showHeroState={onShowHeroState}
-										showReference={onshowReference}
-										showSourcebooks={showSourcebooks}
+										showReference={onShowReference}
+										setNotes={setNotes}
 									/>
 								}
 							/>
@@ -1573,7 +1646,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										saveChanges={saveHero}
 										importSourcebook={sourcebook => {
 											const copy = Utils.copy(homebrewSourcebooks);
@@ -1584,8 +1656,15 @@ export const Main = (props: Props) => {
 								}
 							/>
 							<Route
-								path='export/:heroID'
-								element={<HeroExportPage heroes={heroes} />}
+								path='sheet/:heroID'
+								element={
+									<HeroSheetPreviewPage
+										heroes={heroes}
+										sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+										options={options}
+										setOptions={persistOptions}
+									/>
+								}
 							/>
 						</Route>
 						<Route path='library'>
@@ -1616,7 +1695,6 @@ export const Main = (props: Props) => {
 								path='view/:kind/:elementID/:subElementID?'
 								element={
 									<LibraryViewPage
-										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
 										options={options}
@@ -1624,7 +1702,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										createElement={createLibraryElement}
 										export={exportLibraryElement}
 										copy={copyLibraryElement}
@@ -1644,7 +1721,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showMonster={onSelectMonster}
 										saveChanges={saveLibraryElement}
 										setOptions={persistOptions}
@@ -1669,7 +1745,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										createElement={createPlaybookElement}
 										importElement={importPlaybookElement}
 										importAdventurePackage={importAdventurePackage}
@@ -1689,7 +1764,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showEncounterTools={showEncounterTools}
 										export={exportPlaybookElement}
 										start={startPlaybookElement}
@@ -1711,7 +1785,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showMonster={onSelectMonster}
 										showTerrain={onSelectTerrain}
 										saveChanges={savePlaybookElement}
@@ -1738,7 +1811,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										showPlayerView={showPlayerView}
 										startEncounter={startEncounter}
 										startMontage={startMontage}
@@ -1768,7 +1840,6 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										showSourcebooks={showSourcebooks}
 										setOptions={persistOptions}
 									/>
 								}
@@ -1777,6 +1848,7 @@ export const Main = (props: Props) => {
 					</Route>
 				</Routes>
 				{notifyContext}
+				<Spin spinning={spinning} size='large' fullscreen />
 			</ErrorBoundary>
 		);
 	} catch (ex) {

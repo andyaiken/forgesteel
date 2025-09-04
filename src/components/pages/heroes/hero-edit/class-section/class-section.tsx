@@ -5,6 +5,7 @@ import { Characteristic } from '../../../../../enums/characteristic';
 import { ClassPanel } from '../../../../panels/elements/class-panel/class-panel';
 import { Collections } from '../../../../../utils/collections';
 import { Element } from '../../../../../models/element';
+import { Empty } from '../../../../controls/empty/empty';
 import { EmptyMessage } from '../empty-message/empty-message';
 import { Expander } from '../../../../controls/expander/expander';
 import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
@@ -26,6 +27,7 @@ import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../../models/subclass';
 import { SubClassSelectModal } from '../../../../modals/select/subclass-select/subclass-select-modal';
 import { SubclassPanel } from '../../../../panels/elements/subclass-panel/subclass-panel';
+import { Utils } from '../../../../../utils/utils';
 import { useMediaQuery } from '../../../../../hooks/use-media-query';
 
 import './class-section.scss';
@@ -246,7 +248,7 @@ export const ClassSection = (props: Props) => {
 	};
 
 	try {
-		const classes = SourcebookLogic.getClasses(props.sourcebooks).filter(c => matchElement(c, props.searchTerm));
+		const classes = SourcebookLogic.getClasses(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 		const options = classes.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
 				<ClassPanel heroClass={c} options={props.options} />
@@ -272,7 +274,7 @@ export const ClassSection = (props: Props) => {
 									<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 								</SelectablePanel>
 							)),
-						completed: featuresForLevel.every(f => FeatureLogic.isChosen(f, HeroLogic.getFormerAncestries(props.hero)))
+						completed: featuresForLevel.every(f => FeatureLogic.isChosen(f, props.hero))
 					});
 				}
 			}
@@ -326,6 +328,11 @@ export const ClassSection = (props: Props) => {
 									>
 										<Space direction='vertical' size={20} style={{ width: '100%', paddingTop: '15px' }}>
 											{lvl.choices}
+											{
+												lvl.choices.length === 0 ?
+													<Empty text='Nothing to choose for this level' />
+													: null
+											}
 										</Space>
 									</Expander>
 								))

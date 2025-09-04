@@ -28,7 +28,7 @@ export const panther: Kit = {
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

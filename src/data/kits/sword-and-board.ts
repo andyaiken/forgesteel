@@ -29,7 +29,7 @@ export const swordAndBoard: Kit = {
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
-				target: '1 creature',
+				target: 'One creature',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

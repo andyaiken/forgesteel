@@ -103,7 +103,8 @@ If the surface you are flattened against is destroyed, this ability ends and you
 					value: 2
 				}
 			],
-			count: 4
+			count: 'ancestry'
 		})
-	]
+	],
+	ancestryPoints: 4
 };

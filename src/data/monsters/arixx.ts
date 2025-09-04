@@ -2,7 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
@@ -68,7 +68,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 	monsters: [
 		FactoryLogic.createMonster({
 			id: 'arixx-1',
-			name: 'arixx',
+			name: 'Arixx',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Arixx', 'Beast' ],
@@ -202,7 +202,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 					ability: FactoryLogic.createAbility({
 						id: 'arixx-1-feature-9',
 						name: 'Acid Spew',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 2, value2: 10, within: 1 }) ],
 						target: 'Each creature and object in the area',
@@ -221,7 +221,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 					ability: FactoryLogic.createAbility({
 						id: 'arixx-1-feature-10',
 						name: 'Sinkhole',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 }) ],
 						target: 'Self',
 						sections: [
@@ -233,7 +233,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 					ability: FactoryLogic.createAbility({
 						id: 'arixx-1-feature-11',
 						name: 'Acid and Claws',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each creature in the area',

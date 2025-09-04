@@ -1,9 +1,11 @@
 import { AbilityUpdateLogic } from './ability-update-logic';
-import { FeatureType } from '../../enums/feature-type';
+import { FactoryLogic } from '../factory-logic';
 import { FeatureUpdateLogic } from './feature-update-logic';
+import { ItemUpdateLogic } from './item-update-logic';
 import { LanguageType } from '../../enums/language-type';
 import { MonsterUpdateLogic } from './monster-update-logic';
 import { Sourcebook } from '../../models/sourcebook';
+import { Utils } from '../../utils/utils';
 
 export class SourcebookUpdateLogic {
 	static updateSourcebook = (sourcebook: Sourcebook) => {
@@ -39,23 +41,30 @@ export class SourcebookUpdateLogic {
 
 			c.featuresByLevel.forEach(lvl => {
 				lvl.features.forEach(FeatureUpdateLogic.updateFeature);
-				lvl.features
-					.filter(f => f.type === FeatureType.Ability)
-					.map(f => f.data.ability)
-					.forEach(AbilityUpdateLogic.updateAbility);
 			});
 
 			c.subclasses.forEach(sc => {
 				sc.featuresByLevel.forEach(lvl => {
 					lvl.features.forEach(FeatureUpdateLogic.updateFeature);
-					lvl.features
-						.filter(f => f.type === FeatureType.Ability)
-						.map(f => f.data.ability)
-						.forEach(AbilityUpdateLogic.updateAbility);
 				});
 			});
 
 			c.abilities.forEach(AbilityUpdateLogic.updateAbility);
+		});
+
+		sourcebook.cultures.forEach(culture => {
+			/* eslint-disable @typescript-eslint/no-deprecated */
+
+			if (culture.language === undefined) {
+				culture.language = FactoryLogic.feature.createLanguageChoice({
+					id: Utils.guid(),
+					selected: culture.languages
+				});
+
+				culture.languages = [];
+			}
+
+			/* eslint-enable @typescript-eslint/no-deprecated */
 		});
 
 		sourcebook.monsterGroups.forEach(group => {
@@ -73,62 +82,43 @@ export class SourcebookUpdateLogic {
 		sourcebook.domains.forEach(domain => {
 			domain.featuresByLevel.forEach(lvl => {
 				lvl.features.forEach(FeatureUpdateLogic.updateFeature);
-				lvl.features
-					.filter(f => f.type === FeatureType.Ability)
-					.map(f => f.data.ability)
-					.forEach(AbilityUpdateLogic.updateAbility);
 			});
 		});
 
 		sourcebook.perks.forEach(FeatureUpdateLogic.updateFeature);
-		sourcebook.perks
-			.filter(f => f.type === FeatureType.Ability)
-			.map(f => f.data.ability)
-			.forEach(AbilityUpdateLogic.updateAbility);
 
 		sourcebook.titles.forEach(title => {
 			title.features.forEach(FeatureUpdateLogic.updateFeature);
-			title.features
-				.filter(f => f.type === FeatureType.Ability)
-				.map(f => f.data.ability)
-				.forEach(AbilityUpdateLogic.updateAbility);
 		});
 
+		if (sourcebook.imbuements === undefined) {
+			sourcebook.imbuements = [];
+		}
+
+		/* eslint-disable @typescript-eslint/no-deprecated */
 		sourcebook.items.forEach(item => {
-			item.featuresByLevel.forEach(lvl => {
-				lvl.features.forEach(FeatureUpdateLogic.updateFeature);
-				lvl.features
-					.filter(f => f.type === FeatureType.Ability)
-					.map(f => f.data.ability)
-					.forEach(AbilityUpdateLogic.updateAbility);
-			});
-			if (item.customizationsByLevel === undefined) {
-				item.customizationsByLevel = [
-					{
-						level: 1,
-						features: []
-					},
-					{
-						level: 5,
-						features: []
-					},
-					{
-						level: 9,
-						features: []
-					}
-				];
+			if (item.customizationsByLevel && (item.customizationsByLevel.length > 0)) {
+				item.customizationsByLevel.forEach(level => {
+					level.features.forEach(feature => {
+						if (!sourcebook.imbuements.find(imbuement => imbuement.id === feature.feature.id)) {
+							sourcebook.imbuements.push(FactoryLogic.createImbuement({
+								type: item.type,
+								level: level.level,
+								feature: feature.feature
+							}));
+						};
+					});
+				});
 			}
+			ItemUpdateLogic.updateItem(item);
 		});
+		/* eslint-enable @typescript-eslint/no-deprecated */
 
 		sourcebook.kits.forEach(kit => {
 			if (kit.type === 'Standard') {
 				kit.type = '';
 			}
 			kit.features.forEach(FeatureUpdateLogic.updateFeature);
-			kit.features
-				.filter(f => f.type === FeatureType.Ability)
-				.map(f => f.data.ability)
-				.forEach(AbilityUpdateLogic.updateAbility);
 		});
 
 		sourcebook.terrain.forEach(terrain => {

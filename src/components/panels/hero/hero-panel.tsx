@@ -1,6 +1,6 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Col, Divider, Flex, Row, Segmented, Select, Space, Statistic, Tag } from 'antd';
-import { HeroToken, MonsterInfo } from '../../controls/token/token';
+import { HeroToken, MonsterInfo } from '../token/token';
 import { Pill, ResourcePill } from '../../controls/pill/pill';
 import { Ability } from '../../../models/ability';
 import { AbilityData } from '../../../data/ability-data';
@@ -14,7 +14,6 @@ import { Complication } from '../../../models/complication';
 import { ConditionLogic } from '../../../logic/condition-logic';
 import { ConditionType } from '../../../enums/condition-type';
 import { Culture } from '../../../models/culture';
-import { CultureData } from '../../../data/culture-data';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { Domain } from '../../../models/domain';
 import { Element } from '../../../models/element';
@@ -27,6 +26,7 @@ import { Field } from '../../controls/field/field';
 import { Follower } from '../../../models/follower';
 import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
+import { HealthGauge } from '../health-gauge/health-gauge';
 import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
@@ -129,7 +129,7 @@ export const HeroPanel = (props: Props) => {
 			const damageWeaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
 			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
-			const heroicResources = HeroLogic.getFeatures(props.hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource);
+			const heroicResources = HeroLogic.getHeroicResources(props.hero);
 			const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 			const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
 
@@ -234,34 +234,45 @@ export const HeroPanel = (props: Props) => {
 						)
 					}
 					{
+						useRows ?
+							null
+							:
+							<div className='overview-tile clickable' style={{ display: 'flex', justifyContent: 'center', padding: '0' }} onClick={onShowVitals}>
+								<HealthGauge
+									stamina={{
+										staminaMax: HeroLogic.getStamina(props.hero),
+										staminaDamage: props.hero.state.staminaDamage,
+										state: HeroLogic.getCombatState(props.hero)
+									}}
+									staminaTemp={{
+										staminaTemp: props.hero.state.staminaTemp
+									}}
+									recoveries={{
+										recoveriesMax: HeroLogic.getRecoveries(props.hero),
+										recoveriesUsed: props.hero.state.recoveriesUsed
+									}}
+								/>
+							</div>
+					}
+					{
 						(heroicResources.length > 0) && !props.options.singlePage ?
 							<>
 								{
-									heroicResources.map(f =>
+									heroicResources.map(hr =>
 										useRows ?
-											<div key={f.id} className='selectable-row clickable' onClick={onShowStats}>
-												<div>Resource: <b>{f.name}</b></div>
-												<div>{f.data.value}</div>
+											<div key={hr.id} className={hr.value >= 0 ? 'selectable-row clickable' : 'selectable-row warning clickable'} onClick={onShowStats}>
+												<div>Resource: <b>{hr.name}</b></div>
+												<div>{hr.value}</div>
 											</div>
 											:
-											<div key={f.id} className='overview-tile clickable' onClick={onShowStats}>
+											<div key={hr.id} className={hr.value >= 0 ? 'overview-tile clickable' : 'overview-tile warning clickable'} onClick={onShowStats}>
 												<HeaderText
-													extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{f.data.value}</div>}
+													extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{hr.value}</div>}
 												>
-													{f.name}
+													{hr.name}
 												</HeaderText>
 												{
-													[
-														...f.data.gains,
-														...HeroLogic.getFeatures(props.hero)
-															.map(f => f.feature)
-															.filter(f => f.type === FeatureType.HeroicResourceGain)
-															.map(f => f.data),
-														...HeroLogic.getDomains(props.hero)
-															.flatMap(d => d.resourceGains)
-															.filter(g => g.resource === f.name)
-															.map(g => g)
-													].map((g, n) => (
+													hr.gains.map((g, n) => (
 														<Flex key={n} align='center' justify='space-between' gap={10}>
 															<div className='ds-text compact-text'>{g.trigger}</div>
 															<Pill>+{g.value}</Pill>
@@ -459,8 +470,8 @@ export const HeroPanel = (props: Props) => {
 						</Flex>
 						<div className='selectable-row clickable' onClick={onShowHero}>
 							{
-								HeroLogic.getFeatures(props.hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).map(f => (
-									<div key={f.id}>{f.name}: <b>{f.data.value}</b></div>
+								HeroLogic.getHeroicResources(props.hero).map(hr => (
+									<div key={hr.id}>{hr.name}: <b>{hr.value}</b></div>
 								))
 							}
 							<div>Surges: <b>{props.hero.state.surges}</b></div>
@@ -512,9 +523,9 @@ export const HeroPanel = (props: Props) => {
 						<div className='stats-box clickable' onClick={onShowHero}>
 							<div className='stats'>
 								{
-									HeroLogic.getFeatures(props.hero).map(f => f.feature).filter(f => f.type === FeatureType.HeroicResource).map(f => (
-										<div key={f.id} className='stat'>
-											<Statistic title={f.name} value={f.data.value} />
+									HeroLogic.getHeroicResources(props.hero).map(hr => (
+										<div key={hr.id} className='stat'>
+											<Statistic title={hr.name} value={hr.value} />
 										</div>
 									))
 								}
@@ -638,8 +649,8 @@ export const HeroPanel = (props: Props) => {
 			};
 
 			let incitingIncident: Element | null = null;
-			if (props.hero.career && props.hero.career.incitingIncidents.selectedID) {
-				incitingIncident = props.hero.career.incitingIncidents.options.find(o => o.id === props.hero.career?.incitingIncidents.selectedID) || null;
+			if (props.hero.career) {
+				incitingIncident = props.hero.career.incitingIncidents.selected;
 			}
 
 			const useRows = props.options.compactView;
@@ -673,7 +684,7 @@ export const HeroPanel = (props: Props) => {
 								:
 								<div className='overview-tile clickable' onClick={onSelectCulture}>
 									<HeaderText>Culture</HeaderText>
-									{props.hero.culture.id !== CultureData.bespoke.id ? <Field label='Culture' value={props.hero.culture.name} /> : null}
+									{props.hero.culture ? <Field label='Culture' value={props.hero.culture.name} /> : null}
 									{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
 									{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
 									{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}

@@ -4,7 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
@@ -542,9 +542,9 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '6 psychic damage, R<1 push 2',
-								tier2: '10 psychic damage, R<2 push 3',
-								tier3: '12 psychic damage, R<3 push 4 and prone'
+								tier1: '6 psychic damage; R<1 push 2',
+								tier2: '10 psychic damage; R<2 push 3',
+								tier3: '12 psychic damage; R<3 push 4 and prone'
 							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',

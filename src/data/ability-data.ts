@@ -12,7 +12,7 @@ export class AbilityData {
 		type: FactoryLogic.type.createFreeStrike(),
 		keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 		distance: [ FactoryLogic.distance.createMelee() ],
-		target: '1 creature or object',
+		target: 'One creature or object',
 		sections: [
 			FactoryLogic.createAbilitySectionRoll(
 				FactoryLogic.createPowerRoll({
@@ -32,7 +32,7 @@ export class AbilityData {
 		type: FactoryLogic.type.createFreeStrike(),
 		keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 		distance: [ FactoryLogic.distance.createRanged(5) ],
-		target: '1 creature or object',
+		target: 'One creature or object',
 		sections: [
 			FactoryLogic.createAbilitySectionRoll(
 				FactoryLogic.createPowerRoll({
@@ -99,7 +99,7 @@ export class AbilityData {
 		type: FactoryLogic.type.createManeuver(),
 		keywords: [],
 		distance: [ FactoryLogic.distance.createMelee() ],
-		target: '1 enemy',
+		target: 'One enemy',
 		sections: [
 			FactoryLogic.createAbilitySectionText('A creature who uses the Aid Attack maneuver chooses an enemy adjacent to them. The next ability roll an ally makes against that enemy before the start of the aiding creature’s next turn gains an edge.')
 		]
@@ -118,6 +118,26 @@ export class AbilityData {
 A creature who uses the Catch Breath maneuver spends a Recovery and regains Stamina equal to their recovery value.
 
 A creature who is dying can’t use the Catch Breath maneuver, but other creatures can help them spend Recoveries in other ways.`)
+		]
+	});
+
+	static clawDirt = FactoryLogic.createAbility({
+		id: 'claw-dirt',
+		name: 'Claw Dirt',
+		description: '',
+		type: FactoryLogic.type.createManeuver({ qualifiers: [ 'usable if your speed is at least 2' ] }),
+		keywords: [],
+		distance: [ FactoryLogic.distance.createSelf() ],
+		target: 'Self',
+		sections: [
+			FactoryLogic.createAbilitySectionRoll(
+				FactoryLogic.createPowerRoll({
+					characteristic: Characteristic.Might,
+					tier1: 'You can move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed and weakened (EoT).',
+					tier2: 'You can use your main action this turn to move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed (EoT).',
+					tier3: 'You can move 1 square into, out of, or through ground you are touching that can be burrowed through.'
+				})
+			)
 		]
 	});
 
@@ -163,7 +183,7 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		type: FactoryLogic.type.createManeuver(),
 		keywords: [ AbilityKeyword.Melee ],
 		distance: [ FactoryLogic.distance.createMelee() ],
-		target: '1 creature',
+		target: 'One creature',
 		sections: [
 			FactoryLogic.createAbilitySectionText('A creature seeking to keep a foe close and locked down can attempt to grab a creature using this ability.'),
 			FactoryLogic.createAbilitySectionRoll(
@@ -199,7 +219,7 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		type: FactoryLogic.type.createManeuver(),
 		keywords: [ AbilityKeyword.Melee ],
 		distance: [ FactoryLogic.distance.createMelee() ],
-		target: '1 creature',
+		target: 'One creature',
 		sections: [
 			FactoryLogic.createAbilitySectionText('A creature wanting to push an adjacent creature away from them can attempt to shove that creature using this ability.'),
 			FactoryLogic.createAbilitySectionRoll(
@@ -253,7 +273,7 @@ Complex or time-consuming tests might require a main action if made in combat—
 			FactoryLogic.distance.createSelf(),
 			FactoryLogic.distance.createMelee()
 		],
-		target: 'Self or 1 creature',
+		target: 'Self or one creature',
 		sections: [
 			FactoryLogic.createAbilitySectionText('A creature can use the Stand Up maneuver to stand up if they are prone, ending that condition. Alternatively, they can use this maneuver to make a willing adjacent prone creature stand up.')
 		]
@@ -269,7 +289,7 @@ Complex or time-consuming tests might require a main action if made in combat—
 			FactoryLogic.distance.createSelf(),
 			FactoryLogic.distance.createMelee()
 		],
-		target: 'Self or 1 creature',
+		target: 'Self or one creature',
 		sections: [
 			FactoryLogic.createAbilitySectionText('Unless otherwise noted in its description, a creature can activate a consumable treasure such as a potion with the Use Consumable maneuver. A creature can use this maneuver to administer a consumable treasure that benefits the user either to themself or to a willing adjacent creature.')
 		]
@@ -328,7 +348,7 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		type: FactoryLogic.type.createMain(),
 		keywords: [],
 		distance: [ FactoryLogic.distance.createMelee() ],
-		target: '1 creature',
+		target: 'One creature',
 		sections: [
 			FactoryLogic.createAbilitySectionText('A creature who uses the Heal main action employs medicine or inspiring words to make an adjacent creature feel better and stay in the fight. The target creature can spend a Recovery to regain Stamina, or can make a saving throw against one effect they are suffering that is ended by a saving throw.')
 		]
@@ -358,7 +378,7 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		type: FactoryLogic.type.createTrigger('The target willingly moves to a space that isn’t adjacent to you without shifting.', { free: true }),
 		keywords: [],
 		distance: [ FactoryLogic.distance.createMelee() ],
-		target: '1 creature',
+		target: 'One creature',
 		sections: [
 			FactoryLogic.createAbilitySectionText(`
 You can make a melee free strike against the target.

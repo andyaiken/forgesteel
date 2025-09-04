@@ -9,6 +9,7 @@ export interface AbilityType {
 	trigger: string;
 	time: string;
 	qualifiers: string[];
+	order?: number;
 }
 
 export interface AbilityDistance {

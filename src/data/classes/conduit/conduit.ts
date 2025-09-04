@@ -42,6 +42,7 @@ As a conduit, you heal and buff your allies, and debuff your foes while smiting 
 					name: 'Piety',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '1d3'
 						}
@@ -266,7 +267,7 @@ For each piety spent, you can choose one of the following enhancements:
 							feature: FactoryLogic.feature.create({
 								id: 'conduit-1-9a',
 								name: 'Bastion Ward',
-								description: 'You god grants you a holy countenance that protects you at all times. You gain a +1 bonus to saving throws.'
+								description: 'Your god grants you a holy countenance that protects you at all times. You gain a +1 bonus to saving throws.'
 							}),
 							value: 1
 						},
@@ -490,10 +491,12 @@ You are infused with the power your deity reserves for their most worthy instrum
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'conduit-7-2',
 					name: 'Faithful’s Reward',
-					description: 'When you roll for piety at the start of your turn in combat, you gain 1d3 + 1 piety.'
+					tag: 'start 2',
+					trigger: 'Start of your turn',
+					value: '1d3 + 1'
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'conduit-7-3',
@@ -607,6 +610,7 @@ Additionally, whenever you take a respite, you can open a portal to rest in the 
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}
@@ -1124,9 +1128,9 @@ Divine power remains until you spend it.`
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Intuition ],
-						tier1: '9 + I holy damage, slide 3',
-						tier2: '13 + I holy damage, slide 4',
-						tier3: '17 + I holy damage, slide 6'
+						tier1: '9 + I holy damage; slide 3',
+						tier2: '13 + I holy damage; slide 4',
+						tier3: '17 + I holy damage; slide 6'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('Each ally the target comes adjacent to during the forced movement can spend a Recovery.')

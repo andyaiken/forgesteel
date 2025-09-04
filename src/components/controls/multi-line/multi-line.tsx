@@ -19,6 +19,7 @@ export const MultiLine = (props: Props) => {
 			<div className='multi-line' style={props.style}>
 				<Input.TextArea
 					className='multi-line-input'
+					style={props.inputStyle}
 					placeholder={props.placeholder}
 					value={props.value}
 					onChange={e => props.onChange(e.target.value)}
@@ -27,7 +28,6 @@ export const MultiLine = (props: Props) => {
 					(props.showMarkdownPrompt ?? true) ?
 						<Alert
 							className='multi-line-alert'
-							style={props.inputStyle}
 							type='info'
 							showIcon={true}
 							message='You can use markdown here.'

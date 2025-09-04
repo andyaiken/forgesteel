@@ -1,4 +1,5 @@
 import { PanelWidth } from '../enums/panel-width';
+import { SheetPageSize } from '../enums/sheet-page-size';
 
 export interface Options {
 	// Hero
@@ -8,13 +9,19 @@ export interface Options {
 	showStandardAbilities: boolean;
 	dimUnavailableAbilities: boolean;
 	showSources: boolean;
+	includePlayState: boolean;
 	compactView: boolean;
 	abilityWidth: PanelWidth;
+	classicSheetPageSize: SheetPageSize;
+	colorSheet: boolean;
+	sheetTextColor: 'light' | 'default' | 'dark';
+	featuresInclude: 'minimal' | 'no-basic' | 'all';
+	abilitySort: 'size' | 'type';
+	pageOrientation: 'portrait' | 'landscape';
 	// Library
 	showMonstersInGroups: boolean;
 	showContentInTable: boolean;
 	// Monster Builder
-	showSimilarMonsters: boolean;
 	similarLevel: boolean;
 	similarRole: boolean;
 	similarOrganization: boolean;

@@ -136,6 +136,7 @@ export const war: Domain = {
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that you or a creature within 10 squares takes damage greater than 10 + your level in a single turn.',
 			value: '2'
 		}

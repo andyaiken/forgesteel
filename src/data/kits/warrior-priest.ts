@@ -29,7 +29,7 @@ export const warriorPriest: Kit = {
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
-				target: '1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

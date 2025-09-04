@@ -1,0 +1,10 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.title {
+    h3 {
+        border-bottom: 2px solid common.$color-light;
+    }
+    .title-description {
+        font-style: italic;
+    }
+}

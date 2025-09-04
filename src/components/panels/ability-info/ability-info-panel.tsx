@@ -43,7 +43,7 @@ export const AbilityInfoPanel = (props: Props) => {
 			}
 
 			if (props.ability.keywords.includes(AbilityKeyword.Performance)) {
-				monogram = 'performance';
+				monogram = 'perform';
 			}
 
 			return monogram;

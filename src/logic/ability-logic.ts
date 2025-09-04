@@ -3,6 +3,7 @@ import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
+import { Format } from '../utils/format';
 import { FormatLogic } from './format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from './hero-logic';
@@ -232,8 +233,52 @@ export class AbilityLogic {
 					if (dice.length > 0) {
 						total = `${dice.join(' + ')} + ${total}`;
 					}
+
 					const damage = [ ...types, 'damage' ].join(' ');
+
 					return `${total} ${damage}`;
+				}
+
+				if (hero && (n === 0) && [ 'pull', 'push', 'slide' ].some(s => section.toLowerCase().includes(s))) {
+					let value = 0;
+					let sign = '+';
+					let vertical = false;
+					let type = '';
+					const dice: string[] = [];
+					const characteristics: Characteristic[] = [];
+
+					section.toLowerCase().split(' ').forEach(token => {
+						if ((token === 'pull') || (token === 'push') || (token === 'slide')) {
+							type = token;
+						} else if (token === 'vertical') {
+							vertical = true;
+						} else if (/\d+d\d+/.test(token)) {
+							dice.push(token);
+						} else if (!isNaN(parseInt(token))) {
+							value += parseInt(token);
+						} else if ((token === '+') || (token === '-')) {
+							sign = token;
+						} else if ((token === 'might') || (token === 'might,') || (token === 'm') || (token === 'm,')) {
+							characteristics.push(Characteristic.Might);
+						} else if ((token === 'agility') || (token === 'agility,') || (token === 'a') || (token === 'a,')) {
+							characteristics.push(Characteristic.Agility);
+						} else if ((token === 'reason') || (token === 'reason,') || (token === 'r') || (token === 'r,')) {
+							characteristics.push(Characteristic.Reason);
+						} else if ((token === 'intuition') || (token === 'intuition,') || (token === 'i') || (token === 'i,')) {
+							characteristics.push(Characteristic.Intuition);
+						} else if ((token === 'presence') || (token === 'presence,') || (token === 'p') || (token === 'p,')) {
+							characteristics.push(Characteristic.Presence);
+						}
+					});
+
+					const charValues = characteristics.map(ch => HeroLogic.getCharacteristic(hero, ch));
+					const maxCharValue = Collections.max(charValues, n => n) || 0;
+					let total: number | string = sign === '+' ? value + maxCharValue : value - maxCharValue;
+					if (dice.length > 0) {
+						total = `${dice.join(' + ')} + ${total}`;
+					}
+
+					return Format.capitalize(vertical ? `vertical ${type} ${total}` : `${type} ${total}`);
 				}
 
 				return AbilityLogic.getTextEffect(section, hero);
@@ -245,16 +290,16 @@ export class AbilityLogic {
 		// Potency: [weak | average | strong]
 		if (hero) {
 			text = text
-				.replace(/<\s*[[({]?weak[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'weak')}`)
-				.replace(/<\s*[[({]?average[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
-				.replace(/<\s*[[({]?avg[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'average')}`)
-				.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.calculatePotency(hero, 'strong')}`);
+				.replace(/<\s*[[({]?weak[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'weak')}`)
+				.replace(/<\s*[[({]?average[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'average')}`)
+				.replace(/<\s*[[({]?avg[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'average')}`)
+				.replace(/<\s*[[({]?strong[\])}]?/gi, `< ${HeroLogic.getPotency(hero, 'strong')}`);
 		}
 
 		// Equal to [N times] your [Characteristic(s)] score
 		if (hero) {
-			const charRegex = /equal to[^,.;:]*your[^,.;:]*score/gi;
-			[ ...text.matchAll(charRegex) ].map(r => r[0]).forEach(str => {
+			const charRegex = /(equal to(?: or (?:greater|less) than)?)[^,.;:]* your ([^,.;:]*) score/gi;
+			[ ...text.matchAll(charRegex) ].forEach(match => {
 				const options: number[] = [];
 				[
 					Characteristic.Might,
@@ -263,15 +308,18 @@ export class AbilityLogic {
 					Characteristic.Intuition,
 					Characteristic.Presence
 				].forEach(ch => {
-					if (str.toLowerCase().includes('highest characteristic') || str.toLowerCase().includes(ch.toLowerCase())) {
+					if (match[2].toLowerCase() == 'highest characteristic' || match[2].toLowerCase().includes(ch.toLowerCase())) {
 						options.push(HeroLogic.getCharacteristic(hero, ch));
 					}
 				});
-				const value = Math.max(...options);
+				if (options.length > 0) {
+					const value = Math.max(...options);
 
-				const constant = FormatLogic.getConstant(str);
-				const multiplier = FormatLogic.getMultiplier(str);
-				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+					const constant = FormatLogic.getConstant(match[0]);
+					const multiplier = FormatLogic.getMultiplier(match[0]);
+
+					text = text.replace(match[0], `${match[1]} ${constant + (value * multiplier)}`);
+				}
 			});
 		}
 

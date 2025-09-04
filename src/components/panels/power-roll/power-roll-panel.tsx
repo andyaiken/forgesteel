@@ -127,8 +127,16 @@ export const PowerRollPanel = (props: Props) => {
 			if (!props.autoCalc) {
 				const usesPotency = AbilityLogic.usesPotency(props.powerRoll);
 				if (usesPotency) {
-					const potency = `weak ${HeroLogic.calculatePotency(props.hero, 'weak')}, average ${HeroLogic.calculatePotency(props.hero, 'average')}, strong ${HeroLogic.calculatePotency(props.hero, 'strong')}`;
-					sections.push(<Field key='potency' label='Potency' value={potency} />);
+					const weak = HeroLogic.getPotency(props.hero, 'weak');
+					const avg = HeroLogic.getPotency(props.hero, 'average');
+					const strong = HeroLogic.getPotency(props.hero, 'strong');
+					sections.push(
+						<Field
+							key='potency'
+							label='Potency'
+							value={`weak ${weak}, average ${avg}, strong ${strong}`}
+						/>
+					);
 				}
 			}
 

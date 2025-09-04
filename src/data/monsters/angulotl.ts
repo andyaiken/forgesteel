@@ -4,7 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
@@ -493,7 +493,7 @@ Pinna, Hedge Witch, Gravesford`,
 							),
 							FactoryLogic.createAbilitySectionText('**Effect:** The next time the target makes a strike against the daybringer, the target takes 4 acid damage after the strike is resolved.'),
 							FactoryLogic.createAbilitySectionField({
-								name: 'Malice:',
+								name: 'Malice',
 								value: 1,
 								effect: 'The daybringer jumps up to 3 squares before or after using this ability.'
 							})
@@ -522,7 +522,7 @@ Pinna, Hedge Witch, Gravesford`,
 						sections: [
 							FactoryLogic.createAbilitySectionText('**Effect:** The outcome of the strike’s power roll is reduced by one tier'),
 							FactoryLogic.createAbilitySectionField({
-								name: 'Malice:',
+								name: 'Malice',
 								value: 2,
 								effect: 'The target is pulled up to 4 squares after the strike resolves.'
 							})
@@ -538,7 +538,7 @@ Pinna, Hedge Witch, Gravesford`,
 					ability: FactoryLogic.createAbility({
 						id: 'angulotl-8-feature-5',
 						name: 'New Dawn',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
@@ -551,7 +551,7 @@ Pinna, Hedge Witch, Gravesford`,
 					ability: FactoryLogic.createAbility({
 						id: 'angulotl-8-feature-6',
 						name: 'Plague of Frogs',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [],
 						distance: [
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 8 })
@@ -566,7 +566,7 @@ Pinna, Hedge Witch, Gravesford`,
 					ability: FactoryLogic.createAbility({
 						id: 'angulotl-8-feature-7',
 						name: 'It Is Day',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('') ],
 						target: 'Special',
@@ -608,7 +608,7 @@ Pinna, Hedge Witch, Gravesford`,
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({

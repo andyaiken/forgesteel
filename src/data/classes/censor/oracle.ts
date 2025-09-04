@@ -207,7 +207,7 @@ when you finish a respite.
 									target: 'One ally',
 									cost: 11,
 									sections: [
-										FactoryLogic.createAbilitySectionText('The target takes their turn after the triggering hero, and immediately removes all conditions and negative effects on themself. During their turn, the target has a double edge on poºwer rolls.')
+										FactoryLogic.createAbilitySectionText('The target takes their turn after the triggering hero, and immediately removes all conditions and negative effects on themself. During their turn, the target has a double edge on power rolls.')
 									]
 								})
 							}),

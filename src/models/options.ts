@@ -14,6 +14,7 @@ export interface Options {
 	abilityWidth: PanelWidth;
 	classicSheetPageSize: SheetPageSize;
 	colorSheet: boolean;
+	sheetTextColor: 'light' | 'default' | 'dark';
 	featuresInclude: 'minimal' | 'no-basic' | 'all';
 	abilitySort: 'size' | 'type';
 	pageOrientation: 'portrait' | 'landscape';

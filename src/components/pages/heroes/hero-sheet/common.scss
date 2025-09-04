@@ -3,17 +3,29 @@
 @use 'sass:string';
 
 $color-extra-light: #eee;
-$color-light: #bbb;
-$color-medium: #666;
-$color-dark: #444;
-$color-text: #444;
+$color-light: #bbb;     // 73.3%
+$color-medium: #666;    // 40%
+$color-dark: #444;      // 26.7%
 
-$color-free-strike: #7d7d7d;//#722ed1;//#6c71c4;
-$color-main-action: #268bd2;
-$color-triggered-action: #b0401e;//#dc322f;
-$color-maneuver: #509e2e;//#859900;
-$color-performance: #d33682;
-$color-move: #7d7d7d;//#ad8b00;
+:root {
+    --color-text: #222;
+    --color-text-lighter: #444;
+    --color-text-lightest: #666;
+}
+
+
+// Print-optimized colors
+$color-main-action: #00aeef;
+$color-triggered-action: #ed1c24;
+$color-maneuver: #00a651;
+$color-performance: #92278f;
+
+$color-free-strike: #666;
+// $color-main-action: #268bd2;
+// $color-triggered-action: #b0401e;
+// $color-maneuver: #509e2e;
+// $color-performance: #d33682;
+$color-move: #666;
 
 @mixin font-slab() {
     font-family: 'Roboto Slab', Georgia, serif !important;

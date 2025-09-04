@@ -981,6 +981,7 @@ export class FactoryLogic {
 			classicSheetPageSize: SheetPageSize.Letter,
 			pageOrientation: 'portrait',
 			colorSheet: true,
+			sheetTextColor: 'default',
 			featuresInclude: 'all',
 			abilitySort: 'size',
 			compactView: false,

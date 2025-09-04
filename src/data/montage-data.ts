@@ -290,8 +290,8 @@ The first time any hero fails a test made as part of the montage test while the 
 	static trackTheFugitive: Montage = {
 		id: 'montage-track-the-fugitive',
 		name: 'Track the Fugitive',
-		description: 'The heroes are on the trail of someone — an escaped criminal? A dangerous beast? A lost child? The difficulties of the chase depend on whether the quarry knows they’re being pursued, and if they want to be found.',
-		scene: 'You can see the fugitive’s tracks—but could they be setting a false trail? Did anyone see them pass by, and do you have any idea where they might be headed? The goal is to do whatever you can to find and stay on the fugitive’s trail.',
+		description: 'The heroes are on the trail of someone. An escaped criminal? A dangerous beast? A lost or kidnapped child? The difficulties of the chase depend on whether the quarry knows they’re being pursued and whether they want to be found.',
+		scene: 'The fugitive’s route is easy to follow, but could they be setting a false trail? Did anyone see them pass by, and is there any sense of where they might be headed? The goal is for the characters to do whatever they can to find and stay on the fugitive’s trail.',
 		sections: [
 			{
 				id: 'montage-track-the-fugitive-main',
@@ -301,56 +301,56 @@ The first time any hero fails a test made as part of the montage test while the 
 					FactoryLogic.createMontageChallenge({
 						id: 'ask-around',
 						name: 'Ask Around',
-						description: 'Gather clues from locals or bystanders, if any are present — or, if the heroes have the proper magic, from animals or the dead.',
+						description: 'Characters can gather clues from locals or bystanders — or if they have the proper magic, from animals or the dead.',
 						characteristics: [ Characteristic.Intuition, Characteristic.Presence ],
 						skills: 'Interrogate, Persuade, Rumors'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'follow-the-trail',
 						name: 'Follow the Trail',
-						description: 'Look for tracks or other signs of the fugitive’s passage. Heroes can attempt this test twice during the montage.',
+						description: 'Looking for tracks or other signs of the fugitive’s passage can lead the characters on.',
 						characteristics: [ Characteristic.Intuition ],
 						skills: 'Alertness, Search, Track',
 						uses: 2
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'get-a-good-view',
-						name: 'Get a Good View',
-						description: 'Climb up high to get the big picture.',
+						name: 'Obtain a Good View',
+						description: 'Characters can climb up high to get the big picture of where the fugitive might have gone.',
 						characteristics: [ Characteristic.Agility, Characteristic.Might ],
 						skills: 'Climb, Gymnastics, Jump'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'predict-their-next-move',
-						name: 'Predict their Next Move',
-						description: 'Without needing to find their quarry’s trail, the heroes might have an idea where they’re headed. The hero gains an edge if they know the quarry well',
+						name: 'Predict the Next Move',
+						description: 'The heroes might have an idea where the quarry is headed. A character gains an edge on the test for this challenge if they know the quarry well.',
 						characteristics: [ Characteristic.Intuition, Characteristic.Reason ],
-						skills: 'Navigate, Read Person, an appropriate skill from the Lore group (such as Nature to follow an animal or Criminal Underworld to follow a criminal)'
+						skills: 'Navigate, Read Person, an appropriate skill from the Lore group (Nature to follow an animal or Criminal Underworld to follow a criminal, and so forth)'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'push-ahead',
 						name: 'Push Ahead',
-						description: 'While the quarry is resting, the heroes are closing in. The hero loses a recovery.',
+						description: 'While the quarry is resting, the heroes have a chance to close in. The hero making the test for this challenge loses a Recovery.',
 						characteristics: [ Characteristic.Might ],
 						skills: 'Endurance, Navigate, Ride, Drive'
 					})
 				],
-				twistInfo: 'At the end of the first round of the montage test, the heroes stumble upon a trap set by the quarry, such as a pit trap full of poison spikes, or a problem they left behind, such as angry locals or a forest fire. The heroes must deal with the issue before they begin the test.',
+				twistInfo: 'At the end of the first round of the montage test, the heroes stumble upon a trap set by the quarry or a problem they left behind. This might include such things as a pit trap set with poison spikes, a mob of angry locals who’ve been told the characters are criminals, or an intentionally set fire. The heroes must deal with the trap or problem before they continue the montage test.',
 				twists: []
 			}
 		],
 		outcomes: {
-			totalSuccess: 'The heroes catch their quarry before the fugitive reaches their destination (or before a lost or kidnapped creature comes to harm). The party achieves 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate.',
-			partialSuccess: 'If the quarry was trying to evade capture, the quarry reaches their destination. They find allies and a fortified position to defend themselves, or they may have time to cause more harm. If the quarry was lost, the quarry is injured grievously when they are found. The party achieves 1 Victory if the montage test was moderate or hard.',
-			totalFailure: 'The trail has gone cold. The heroes will need to wait for fresh clues to come along before they can resume the hunt. The party achieves no Victories from the montage test.'
+			totalSuccess: 'The heroes catch their quarry before the fugitive reaches their destination, or before a lost or kidnapped creature comes to harm. Each character earns 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate, in addition to any Victories earned from combat during the montage test.',
+			partialSuccess: 'If the quarry was trying to evade capture, they reach their destination. They find allies and a fortified position from which to defend themselves, or they might have time to cause more harm. If the quarry was lost or kidnapped, they are grievously injured when found. Each character earns 1 Victory if the montage test was moderate or hard, in addition to any Victories earned from combat during the montage test.',
+			totalFailure: 'The trail has gone cold, and the heroes will need to seek fresh clues or a different approach before they can resume the hunt. Characters earn no Victories from the montage test, but might earn Victories from combat undertaken during the montage test.'
 		}
 	};
 
 	static wildernessRace: Montage = {
 		id: 'montage-wilderness-race',
 		name: 'Wilderness Race',
-		description: 'The party needs to reach a besieged city before it falls or traverse a jungle before a curse is activated. In any case, the party needs to cross dangerous wildlands—fast.',
-		scene: 'The wilds ahead hold unknown dangers. Someone will need to figure out the best route, and others can speed the journey by carrying baggage or keeping up spirits. It might be wise if someone kept an eye out for monsters and other hazards, as well.',
+		description: 'The heroes must cross trackless wilderness, perhaps to reach a besieged city before it falls or seek the site where a curse is about to be activated. Getting there fast is a priority—but so is getting there alive.',
+		scene: 'The wilds hold unknown dangers. Characters need to figure out the best route while maintaining a good pace, watching out for hazards, and avoiding predatory monsters.',
 		sections: [
 			{
 				id: 'montage-wilderness-race-main',
@@ -360,61 +360,72 @@ The first time any hero fails a test made as part of the montage test while the 
 					FactoryLogic.createMontageChallenge({
 						id: 'avoid-hazards',
 						name: 'Avoid Hazards',
-						description: 'Determine ways to overcome the area’s natural hazards, such as finding insect-repelling herbs in a swamp or making snowshoes to cross tundra.',
+						description: 'Characters can determine ways to overcome the natural hazards of the wilderness, such as finding insect-repelling herbs in a swamp or making snowshoes to cross tundra.',
 						characteristics: [ Characteristic.Intuition, Characteristic.Reason ],
 						skills: 'Heal, Nature, an appropriate skill from the Crafting skill group (such as Alchemy to make bug repellent)'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'carry-baggage',
 						name: 'Carry Baggage',
-						description: 'By carrying supplies for the weaker party members, you increase the whole party’s speed.',
+						description: 'By carrying supplies for the weaker party members, characters can increase the whole party’s speed.',
 						characteristics: [ Characteristic.Might ],
 						skills: 'Endurance, Lift'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'find-the-path',
 						name: 'Find the Path',
-						description: 'Keep the party from getting lost.',
+						description: 'Avoiding getting lost is a major challenge for the characters.',
 						characteristics: [ Characteristic.Intuition, Characteristic.Reason ],
 						skills: 'Alertness, Nature, Navigation'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'keep-up-spirits',
 						name: 'Keep Up Spirits',
-						description: 'Keep up morale with cheer and marching songs.',
+						description: 'Characters can keep up the party’s morale during a forced march with cheer and song.',
 						characteristics: [ Characteristic.Presence ],
 						skills: 'Lead, Music, Performance'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'keep-watch',
 						name: 'Keep Watch',
-						description: 'Keep an eye out for danger.',
+						description: 'Characters must be on constant guard against danger.',
 						characteristics: [ Characteristic.Intuition ],
 						skills: 'Alertness, Eavesdrop, Track'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'push-on',
 						name: 'Push On',
-						description: 'Pick up the pace and push past the fatigue.',
+						description: 'Characters must be ready to pick up the pace and push past their fatigue.',
 						characteristics: [ Characteristic.Might ],
 						skills: 'Endurance, Lead; Handle Animals, Drive, or Ride if the party has mounts or vehicles'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'scout-ahead',
 						name: 'Scout Ahead',
-						description: 'Investigate the path ahead.',
+						description: 'Investigating the path ahead lets the characters avoid dead-ends and arduous terrain',
 						characteristics: [ Characteristic.Agility, Characteristic.Intuition ],
 						skills: 'Alertness, Navigation, Sneak'
 					})
 				],
-				twistInfo: 'At the end of the first round of the montage test, a natural hazard (such as an avalanche) interrupts the journey. Each hero must make a test of your choice to avoid the hazard, losing a Recovery on a failure.',
-				twists: []
+				twistInfo: '',
+				twists: [
+					FactoryLogic.createMontageChallenge({
+						id: 'predatory-monster',
+						name: 'Predatory Monster',
+						description: 'The characters stumble into or are stalked by a monstrous predator, and must engage in a standard combat encounter to overcome the threat or drive it off. If any character has obtained a success on the Scout Ahead challenge, you can let the characters make a group test to sneak past or set an ambush for the monster.'
+					}),
+					FactoryLogic.createMontageChallenge({
+						id: 'unexpected-hazard',
+						name: 'Unexpected Hazard',
+						description: 'A natural hazard such as an avalanche, rockslide, or wildfire interrupts the journey. Each hero must make a test of your choice to avoid the hazard, losing a Recovery on a failure.'
+					})
+				]
 			}
 		],
 		outcomes: {
-			totalSuccess: 'The heroes reach their goal in time. The party achieves 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate.',
-			partialSuccess: 'In order to reach their goal in time, the heroes must sprint over the last leg of the journey, each hero must spend two Recoveries to do so. The party achieves 1 Victory if the montage test was moderate or hard, in addition to any Victories earned from combat.',
-			totalFailure: 'The heroes don’t arrive in time to avert catastrophe. The party achieves no Victories from the montage test.'
+			totalSuccess: 'The heroes reach their goal in time. Each character earns 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate, in addition to any Victories earned from combat during the montage test.',
+			partialSuccess: 'To reach their goal in time, the heroes must sprint over the last leg of the journey, with each character spending 2 Recoveries to do so. (If even one character doesn’t have 2 Recoveries remaining, the characters instead earn a total failure for the montage test.) Each character earns 1 Victory if the montage test was moderate or hard, in addition to any Victories earned from combat during the montage test.',
+			totalFailure: 'The heroes don’t arrive in time to avert catastrophe. Characters earn no Victories from the montage test, but might earn Victories from combat undertaken during the montage test.'
 		}
 	};
 }

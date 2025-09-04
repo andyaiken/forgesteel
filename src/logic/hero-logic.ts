@@ -1151,7 +1151,7 @@ export class HeroLogic {
 			});
 
 		// Choose career inciting incident
-		hero.career.incitingIncidents.selectedID = Collections.draw(hero.career.incitingIncidents.options.map(ii => ii.id));
+		hero.career.incitingIncidents.selected = Utils.copy(Collections.draw(hero.career.incitingIncidents.options));
 
 		return hero;
 	};

@@ -649,8 +649,8 @@ export const HeroPanel = (props: Props) => {
 			};
 
 			let incitingIncident: Element | null = null;
-			if (props.hero.career && props.hero.career.incitingIncidents.selectedID) {
-				incitingIncident = props.hero.career.incitingIncidents.options.find(o => o.id === props.hero.career?.incitingIncidents.selectedID) || null;
+			if (props.hero.career) {
+				incitingIncident = props.hero.career.incitingIncidents.selected;
 			}
 
 			const useRows = props.options.compactView;

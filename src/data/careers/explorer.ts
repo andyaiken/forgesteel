@@ -60,6 +60,7 @@ export const explorer: Career = {
 				description: 'As a seafaring explorer, you lived to chart unknown courses. Though travel on the high seas was fraught with danger, the destination was always rewarding in riches, knowledge, or some other way that was meaningful to you. Your luck ran out when your ship was destroyed by pirates or other enemy forces. You’ve taken to protecting those who seek safe passage while also hoping to avenge your crew.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

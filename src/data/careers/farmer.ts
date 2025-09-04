@@ -65,6 +65,7 @@ export const farmer: Career = {
 				description: 'Your family bred horses - beautiful creatures that few could rival on the track and in the jousting lists. When a local noble arrived with an offer to buy your prized stallion, your father refused. The noble struck him down where he stood and stole the horse. Without that stallion, the renowned bloodline would end. You intend to get them back - and get revenge.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

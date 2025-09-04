@@ -5613,6 +5613,11 @@ export const humanTalent = {
 					description: 'You spent your life in service of your country or an organization that upheld your values. During your undercover operations, you discovered everything you were told was a lie. Whether you confronted your superiors or were exposed, you were stripped of your service medals before you left to become a true hero.'
 				}
 			],
+			selected: {
+				id: 'career-agent-ii-1',
+				name: 'Disavowed',
+				description: 'While on a dangerous espionage assignment, things went sideways. Although you escaped with your life, the mission was a public failure thanks to bad information your agency gave you. They denied you work for them, and you went on the run. Hero work will let you survive and clear your name.'
+			},
 			selectedID: 'career-agent-ii-1'
 		}
 	},

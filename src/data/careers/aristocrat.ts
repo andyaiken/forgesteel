@@ -68,6 +68,7 @@ export const aristocrat: Career = {
 				description: 'One parent passed away when you were a baby and the other remarried years later. Then that parent died under suspicious circumstances. Their spouse ousted you, and you were banished (and possibly hunted). Rising from tragedy, you now seek to right the wrongs of the world.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

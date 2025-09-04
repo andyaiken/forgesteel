@@ -18,6 +18,7 @@ import { ComplicationSection } from './complication-section/complication-section
 import { Culture } from '../../../../models/culture';
 import { CultureSection } from './culture-section/culture-section';
 import { DetailsSection } from './details-section/details-section';
+import { Element } from '../../../../models/element';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureLogic } from '../../../../logic/feature-logic';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -99,7 +100,7 @@ export const HeroEditPage = (props: Props) => {
 					}
 				case 'career':
 					if (hero.career) {
-						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) || !hero.career.incitingIncidents.selectedID ? PageState.InProgress : PageState.Completed;
+						return (hero.career.features.filter(f => FeatureLogic.isChoice(f)).filter(f => !FeatureLogic.isChosen(f, hero)).length > 0) || !hero.career.incitingIncidents.selected ? PageState.InProgress : PageState.Completed;
 					} else {
 						return PageState.NotStarted;
 					}
@@ -246,10 +247,10 @@ export const HeroEditPage = (props: Props) => {
 			setDirty(true);
 		};
 
-		const setIncitingIncident = (id: string | null) => {
+		const setIncitingIncident = (value: Element | null) => {
 			const heroCopy = Utils.copy(hero);
 			if (heroCopy.career) {
-				heroCopy.career.incitingIncidents.selectedID = id;
+				heroCopy.career.incitingIncidents.selected = value;
 			}
 			setHero(heroCopy);
 			setDirty(true);

@@ -5184,6 +5184,11 @@ export const polderElementalist = {
 					description: 'The mage you worked for was a kindly old soul, but the basic magic they taught you always seemed like a small part of something bigger. It wasn’t until you met an adventuring elementalist that you realized hitting the road as a hero was the only way to truly improve and hone your skills. You resigned your apprenticeship and found yourself walking the path of a hero the next day.'
 				}
 			],
+			selected: {
+				id: 'career-mages-apprentice-ii-1',
+				name: 'Forgotten Memories',
+				description: 'While practicing a spell, your inexperience caused the magic to backfire and your memories were wiped, leaving you with only fragments of who you once were. Determined to recall your past, you now dedicate yourself to helping others, hoping your actions will spark some remembrance or lead you to a way to reverse the magic.'
+			},
 			selectedID: 'career-mages-apprentice-ii-1'
 		}
 	},

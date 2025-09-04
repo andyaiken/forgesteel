@@ -82,9 +82,21 @@ export class HeroUpdateLogic {
 			if (hero.career.incitingIncidents === undefined) {
 				hero.career.incitingIncidents = {
 					options: [],
+					selected: null,
 					selectedID: null
 				};
 			}
+
+			/* eslint-disable @typescript-eslint/no-deprecated */
+
+			if (hero.career.incitingIncidents.selected === undefined) {
+				const current = hero.career.incitingIncidents.options.find(ii => ii.id === hero.career!.incitingIncidents.selectedID);
+				if (current) {
+					hero.career.incitingIncidents.selected = Utils.copy(current);
+				}
+			}
+
+			/* eslint-enable @typescript-eslint/no-deprecated */
 		}
 
 		if (hero.class) {
@@ -242,7 +254,7 @@ export class HeroUpdateLogic {
 				if (career) {
 					hero.career = Utils.copy(career);
 
-					hero.career.incitingIncidents.selectedID = original.career.incitingIncidents.selectedID;
+					hero.career.incitingIncidents.selected = original.career.incitingIncidents.selected;
 				}
 			}
 		} catch (ex) {

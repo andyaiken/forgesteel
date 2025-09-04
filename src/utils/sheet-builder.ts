@@ -534,10 +534,7 @@ export class CharacterSheetBuilder {
 
 		const careerFeatures = career.features;
 		sheet.benefits = CharacterSheetFormatter.convertFeatures(careerFeatures);
-		const incident = career.incitingIncidents.options.find(
-			o => o.id === (career && career.incitingIncidents.selectedID)
-		);
-		sheet.incitingIncident = incident;
+		sheet.incitingIncident = career.incitingIncidents.selected || undefined;
 
 		return sheet;
 	};

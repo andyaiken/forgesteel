@@ -4436,6 +4436,11 @@ export const humanCensor = {
 					description: 'You made it your responsibility to root out and bring down the region’s foremost crime syndicate. They sent goons to burn down your home and teach you a lesson, leaving you bleeding in the street with nothing left except your life. You’ve since taken on the life of a hero to gain the power and influence you need to destroy the syndicate once and for all.'
 				}
 			],
+			selected: {
+				id: 'career-watch-officer-ii-1',
+				name: 'Bigger Fish',
+				description: 'You grew bored and disillusioned with chasing down petty thieves and imprisoning folks just trying to survive. Surely there are greater threats in the world. You will find that evil wherever it may lurk, and you’ll be the one to stop it.'
+			},
 			selectedID: 'career-watch-officer-ii-1'
 		}
 	},

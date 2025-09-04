@@ -153,7 +153,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 				const withIncidents: Career[] = [];
 				c.incitingIncidents.options.forEach(i => {
 					const selected = Utils.copy(c.incitingIncidents);
-					selected.selectedID = i.id;
+					selected.selected = Utils.copy(i);
 					withIncidents.push({
 						...c,
 						incitingIncidents: selected

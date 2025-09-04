@@ -113,7 +113,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 						name: 'Crack the Earth',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 8}) ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 8 }) ],
 						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('**Special:** The griffon must be flying and must have a creature or object grabbed.'),

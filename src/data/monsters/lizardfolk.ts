@@ -11,18 +11,16 @@ export const lizardfolk: MonsterGroup = {
 	id: 'monster-group-lizardfolk',
 	name: 'Lizardfolk',
 	description: `
-Lizardfolk prefer warm, tropical climates, but they’re willing to settle in any humid region—the more moisture in the air, the better. Even in colder climates, lizardfolk can be found in any sufficiently marshy environment. Bogs and wetlands are particularly common nesting grounds.
-
-Their scales protect both against weapons and the moisture in their native environments. Coloring and hue vary wildly with environment and diet.`,
+Lizardfolk prefer warm, tropical climates, but they’re willing to settle in any humid region—the more moisture in the air, the better. Even in colder environs, lizardfolk can be found in any sufficiently marshy environment. Bogs and wetlands are particularly common nesting grounds.`,
 	picture: null,
 	information: [
 		{
 			id: 'lizardfolk-info-1',
 			name: 'Homeland Protectors',
 			description: `
-Lizardfolk aren’t especially hostile unless they feel their territory is threatened—which it often is. However, respectful travelers entering lizardfolk territory find no great hardship. Lizardfolk cultures often take up a specific trade, like boatmaking, fletching, weaving, or navigating, and they sell their services to travelers in need, including lizardfolk from other places.
+Lizardfolk aren’t especially hostile unless they feel their territory is threatened—which it often is. Respectful travelers entering lizardfolk territory, however, find no great hardship. Lizardfolk cultures often focus on a specific trade, such as boat building, fletching, navigating, or weaving, and sell their services to travelers in need, including lizardfolk from other places.
 
-Adventurers cross paths with lizardfolk while trekking through their homelands. The reptilian humanoids watch travelers who skirt too close to sources of food and shelter, attacking those who take more than they need. Many lizardfolk dwell in caverns and abandoned ruins for protection. Treasure-seekers who delve into these places are typically given one warning before the attack begins.`
+Adventurers often cross paths with lizardfolk while trekking through their homelands. The reptilian humanoids watch travelers who skirt too close to sources of food and shelter, attacking those who take more than they need. Many lizardfolk dwell in abandoned ruins and caverns for protection. Treasure seekers who delve into these places are typically given one warning before the attack begins.`
 		},
 		{
 			id: 'lizardfolk-info-2',
@@ -32,35 +30,49 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 		{
 			id: 'lizardfolk-info-3',
 			name: 'Marshland Tyrants',
-			description: 'In times of crisis, such as a food shortage, an evil lizardfolk leader can exploit the emergency, oppressing others in the name of defending their territory. But there are always other local lizardfolk tribes who oppose such aggressive, expansionist posturing; they often seek the aid of others who value freedom from tyranny.'
+			description: 'In times of crisis, such as a food shortage, an evil lizardfolk leader can exploit the emergency, oppressing others in the name of defending their territory. But there are always other local lizardfolk tribes who oppose such aggressive, expansionist posturing, and they often seek the aid of other folk who value freedom from tyranny.'
 		},
 		{
 			id: 'lizardfolk-info-4',
+			name: 'Lizardfolk Tactics',
+			description: `
+Lizardfolk prefer to fight in or near water whenever they can, and if they aren’t on a battlefield with water, they perform delaying actions to buy time while they flood the battlefield with their Malice features before attacking with full force. If water is already present, they focus on positioning in the early battle to surround and split up their opponents.
+
+With a wide array of strong grab and forced movement abilities, lizardfolk tactics are that of divide and conquer, locking down strong defenders while abducting and isolating backline heroes. Lizardfolk also have strong teamwork features and rotate units who have lost their tails to more rear positions in favor of healthier units.
+
+**Lizardfolk Sample Encounters**
+- **Marsh Hunters, 18 EV**: Eight shellguard, eight tonguers, one scaletooth
+- **Ambushers, 24 EV**: Sixteen grunts, two skyterrors
+- **Scalesworn Detachment, 30 EV**: Eight shellguard, sixteen tonguers, one scaletooth, two bloodeyes
+- **War Party, 48 EV**: Eight shellguard, eight grunts, eight tonguers, one scaletooth, one skyterror, one bloodeye, one deathrex`
+		},
+		{
+			id: 'lizardfolk-info-5',
 			name: 'Lizardfolk Languages',
-			description: 'Most lizardfolk speak Caelian and Khamish.'
-		}
+			description: 'Most lizardfolk speak Caelian and their own dialect of Khamish.'
+		},
 	],
 	malice: [
 		FactoryLogic.feature.createAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'lizardfolk-malice-1',
-				name: 'Iron Jaws',
+				name: 'Net Trap',
 				type: FactoryLogic.type.createManeuver(),
-				keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
+				keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 3 }) ],
 				target: 'Special',
 				cost: 3,
 				sections: [
-					FactoryLogic.createAbilitySectionText('A lizardfolk acting this turn drops a net trap on a square during their movement. The first time an enemy steps into an affected square, they make an **Agility test**. If the creature was unaware of the net, they make the roll with a bane.'),
+					FactoryLogic.createAbilitySectionText('A lizardfolk acting this turn sets up a net trap into the area. The first time an enemy steps into a square with a net trap, they make an Agility test. If the creature was unaware of the trap, they take a bane on the test.'),
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Agility ],
-							tier1: 'Restrained (save ends)',
-							tier2: 'Restrained (EoT)',
-							tier3: 'no effect'
+							tier1: 'Restrained (save ends).',
+							tier2: 'Restrained (EoT).',
+							tier3: 'No effect.'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('A creature can use a maneuver to free an adjacent creature restrained by the trap.')
+					FactoryLogic.createAbilitySectionText('Any creature not also restrained by a net trap who is adjacent to a creature restrained by the trap can free them as a maneuver.')
 				]
 			})
 		}),
@@ -69,16 +81,21 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 			name: 'Water Pit',
 			cost: 5,
 			sections: [
-				'A lizardfolk acting this turn unearths a 2 × 2 pit in the ground that fills up with water. A lizardfolk that exits the pit gains 10 temporary Stamina, regrows their tail, and ends one save ends eﬀect aﬀecting them.',
-				'A creature with the Nature skill or the ability to burrow can make a **hard Might or Reason test** when adjacent to a pit to drain it. Success empties the pit of water. Failure with a consequence causes the creature to fall into the pit prone.'
+				'A lizardfolk acting this turn unearths a magical size 2 pit that is 2 squares deep and filled with water. Any lizardfolk who moves into, then exits the pit on their turn gains 10 temporary Stamina, regrows their tail if applicable, and ends one effect on them that can be ended by a saving throw.',
+				'While adjacent to the pit, any creature who can burrow or who has the Nature skill can make a **Might test** or a **Reason test** to drain it.',
+				FactoryLogic.createPowerRoll({
+					tier1: 'The creature falls into the pit and is knocked prone.',
+					tier2: 'The creature fails to empty the pit.',
+					tier3: 'The pit empties of water.'
+				})
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'lizardfolk-malice-3',
 			name: 'Flood the Shores',
-			cost: 10,
+			cost: 7,
 			sections: [
-				'Waist-high water floods the entire battlemap. All lizardfolk submerged in water have their speed doubled while swimming and have an edge on their abilities. The water drains at the end of the round if there are no open water pits on the encounter map.'
+				'Waist-high water floods the entire encounter map. Any lizardfolk submerged in water gains an edge on abilities and doubles their speed while swimming. If there are no open water pits on the encounter map, the water drains away at the end of the round.'
 			]
 		})
 	],
@@ -89,13 +106,13 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Humanoid', 'Lizardfolk' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			speed: FactoryLogic.createSpeed(6, 'swim'),
 			stamina: 4,
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'M'),
 			freeStrikeDamage: 1,
-			withCaptain: 'Speed +2',
+			withCaptain: '+2 bonus to speed',
 			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -112,7 +129,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 								bonus: 2,
 								tier1: '1 damage',
 								tier2: '2 damage; slide 2',
-								tier3: '3 damage; slide 4'
+								tier3: '3 damage; slide 2'
 							}))
 						]
 					})
@@ -120,7 +137,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 				FactoryLogic.feature.create({
 					id: 'lizardfolk-1-feature-2',
 					name: 'Reptilian Escape',
-					description: 'While the grunt still has a tail, whenever the grunt is grabbed, slowed, weakened, or knocked prone, the grunt can lose their tail to immediately end the eﬀect and shift 2.'
+					description: 'While the grunt has a tail, whenever they are grabbed, prone, slowed, or weakened, they can lose their tail to immediately end that condition, then shift up to 2 squares.'
 				})
 			]
 		}),
@@ -130,13 +147,13 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
 			keywords: [ 'Humanoid', 'Lizardfolk' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			speed: FactoryLogic.createSpeed(5, 'swim'),
 			stamina: 6,
 			stability: 1,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 1,
-			withCaptain: '2 temporary Stamina',
+			withCaptain: '+2 bonus to Stamina',
 			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -155,14 +172,14 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 								tier2: '2 damage',
 								tier3: '3 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('The target has a bane on their next strike.')
+							FactoryLogic.createAbilitySectionText('The target takes a bane on their next strike.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'lizardfolk-2-feature-2',
 					name: 'Reptilian Escape',
-					description: 'While the shellguard still has a tail, whenever the shellguard is grabbed, slowed, weakened, or knocked prone, the shellguard can lose their tail to immediately end the eﬀect and shift 2.'
+					description: 'While the shellguard has a tail, whenever they are grabbed, prone, slowed, or weakened, they can lose their tail to immediately end that condition, then shift up to 2 squares.'
 				})
 			]
 		}),
@@ -172,13 +189,13 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Humanoid', 'Lizardfolk' ],
-			encounterValue: 6,
+			encounterValue: 3,
 			speed: FactoryLogic.createSpeed(5, 'swim'),
 			stamina: 3,
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'S'),
 			freeStrikeDamage: 2,
-			withCaptain: 'Strike damage +1 ',
+			withCaptain: '+1 bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -193,18 +210,18 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '2 damage; shift 1 towards target or pull 1',
-								tier2: '4 damage; shift 2 towards target or pull 2',
-								tier3: '5 damage; shift 3 towards target or pull 3'
+								tier1: '2 damage; pull 1, or the tonguer can shift 1 square toward the target',
+								tier2: '4 damage; pull 2, or the tonguer shifts up to 2 squares toward the target',
+								tier3: '5 damage; pull 3, or the tonguer shifts up to 3 squares toward the target'
 							})),
-							FactoryLogic.createAbilitySectionText('If the target ends up in a space adjacent to the tonguer, they are also grabbed.')
+							FactoryLogic.createAbilitySectionText('If the forced movement or the shift leaves the target adjacent to the tonguer, the target is also grabbed.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'lizardfolk-3-feature-2',
 					name: 'Reptilian Escape',
-					description: 'While the tonguer still has a tail, whenever the tonguer is grabbed, slowed, weakened, or knocked prone, the tonguer can lose their tail to immediately end the eﬀect and shift 2.'
+					description: 'While the tonguer has a tail, whenever they are grabbed, prone, slowed, or weakened, they can lose their tail to immediately end that condition, then shift up to 2 squares.'
 				})
 			]
 		}),
@@ -253,9 +270,9 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '5 acid damage; M<0 target can’t establish line of effect beyond 4 squares (save ends)',
-								tier2: '7 acid damage; M<1 target can’t establish line of effect beyond 3 squares (save ends)',
-								tier3: '9 acid damage; M<2 target can’t establish line of effect beyond 2 squares (save ends)'
+								tier1: '5 acid damage; m<0 the target has line of effect only within 4 squares (save ends)',
+								tier2: '7 acid damage; m<1 the target has line of effect only within 3 squares (save ends)',
+								tier3: '9 acid damage; m<2 the target has line of effect only within 2 squares (save ends)'
 							}))
 						]
 					})
@@ -263,7 +280,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 				FactoryLogic.feature.create({
 					id: 'lizardfolk-4-feature-3',
 					name: 'Reptilian Escape',
-					description: 'While the bloodeye still has a tail, whenever the bloodeye is grabbed, slowed, weakened, or knocked prone, the bloodeye can lose their tail to immediately end the eﬀect and shift 2.'
+					description: 'While the bloodeye has a tail, whenever they are grabbed, prone, slowed, or weakened, they can lose their tail to immediately end that condition, then shift up to 2 squares.'
 				})
 			]
 		}),
@@ -297,7 +314,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 								tier2: '9 damage',
 								tier3: '12 damage; A<2 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('The potency of this ability increases by 1 if the target is grabbed by the scaletooth.')
+							FactoryLogic.createAbilitySectionText('If the scaletooth has the target grabbed, the potency of this ability increases by 1.')
 						]
 					})
 				}),
@@ -314,8 +331,8 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
 								tier1: '5 damage; slide 1',
-								tier2: '8 damage; slide 2; M<1 grappled if within 2 of the scaletooth',
-								tier3: '10 damage; slide 3; M<2 grappled if within 2 of the scaletooth'
+								tier2: '8 damage; slide 2; M<1 grappled if within 2 squares of the scaletooth',
+								tier3: '10 damage; slide 3; M<2 grappled if within 2 squares of the scaletooth'
 							})),
 							FactoryLogic.createAbilitySectionText('The scaletooth needs their tail to use this ability. The scaletooth can’t grapple more than one creature or object with this ability.')
 						]
@@ -324,7 +341,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 				FactoryLogic.feature.create({
 					id: 'lizardfolk-5-feature-3',
 					name: 'Reptilian Escape',
-					description: 'While the scaletooth still has a tail, whenever the scaletooth is grabbed, slowed, weakened, or knocked prone, the scaletooth can lose their tail to immediately end the eﬀect and shift 2.'
+					description: 'While the scaletooth has a tail, whenever they are grabbed, prone, slowed, or weakened, they can lose their tail to immediately end that condition, then shift up to 2 squares.'
 				})
 			]
 		}),
@@ -348,7 +365,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						name: 'Glaive Rush',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(8) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
@@ -358,7 +375,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 								tier2: '7 damage',
 								tier3: '9 damage; prone'
 							})),
-							FactoryLogic.createAbilitySectionText('The skyterror can shift 4 after using this ability if they are flying.')
+							FactoryLogic.createAbilitySectionText('If the skyterror is flying, they shift up to 4 squares.')
 						]
 					})
 				}),
@@ -367,7 +384,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						id: 'lizardfolk-6-feature-2',
 						name: 'Poison Blowdart',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike,  AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object',
 						sections: [
@@ -377,19 +394,19 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 								tier2: '5 damage; M<1 weakened (save ends)',
 								tier3: '7 damage; M<2 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A creature that ends their turn adjacent to a creature or object weakened by this ability is weakened (EoT).')
+							FactoryLogic.createAbilitySectionText('Any creature who ends their turn adjacent to a target weakened this way is weakened until the end of their next turn.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'lizardfolk-6-feature-3',
 					name: 'Glider',
-					description: 'The skyterror adds the flying keyword to their movement until the end of their next turn whenever they move at least 2 squares along the ground or fall at least 2 squares.'
+					description: 'Whenever the skyterror moves 2 or more squares along the ground or falls 2 or more squares, they can fly until the end of their next turn.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'lizardfolk-6-feature-4',
 					name: 'Reptilian Escape',
-					description: 'While the skyterror still has a tail, whenever the skyterror is grabbed, slowed, weakened, or knocked prone, the skyterror can lose their tail to immediately end the eﬀect and shift 2.'
+					description: 'While the skyterror has a tail, whenever they are grabbed, prone, slowed, or weakened, they can lose their tail to immediately end that condition, then shift up to 2 squares.'
 				})
 			]
 		}),
@@ -421,12 +438,12 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 								bonus: 3,
 								tier1: '7 damage; pull 1; A<1 bleeding (save ends)',
 								tier2: '10 damage; pull 1; A<2 bleeding (save ends)',
-								tier3: '13 damage; pull 2; A<3 bleeding (save ends)'
+								tier3: '12 damage; pull 2; A<3 bleeding (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'One target that is adjacent to the deathrex is grabbed by the deathrex’s mouth.'
+								effect: 'One target adjacent to the deathrex is grabbed in the deathrex’s mouth.'
 							})
 						]
 					})
@@ -438,7 +455,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 grabbed creature or object',
+						target: 'One grabbed creature or object',
 						cost: 3,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -447,7 +464,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 								tier2: '12 damage; M<2 dazed (save ends)',
 								tier3: '15 damage; M<3 dazed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('The target is released from the grab and slides 5.')
+							FactoryLogic.createAbilitySectionText('The target is no longer grabbed by the deathrex, and the deathrex slides them up to 5 squares.')
 						]
 					})
 				}),
@@ -460,7 +477,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The deathrex moves up to their speed. The deathrex can make a free strike on each creature that makes an opportunity attack against them during this movement.')
+							FactoryLogic.createAbilitySectionText('The deathrex moves up to their speed. They can make a free strike against each creature who makes an opportunity attack against them during this movement.')
 						]
 					})
 				}),
@@ -468,25 +485,25 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-7-feature-4',
 						name: 'Swat the Fly',
-						type: FactoryLogic.type.createTrigger('The target moves or shifts away from the deathrex.'),
-						keywords: [],
+						type: FactoryLogic.type.createTrigger('A creature or object within distance moves or shifts away from the deathrex.'),
+						keywords: [AbilityKeyword.Melee],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 adjacent creature or object',
+						target: 'The triggering creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Slide 5.')
+							FactoryLogic.createAbilitySectionText('The deathrex slides the target up to 5 squares.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-7-feature-5',
-						name: 'Sneak Attack',
+						name: 'Snack Attack',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
-						target: 'Self and all allies in the burst',
+						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target moves up to their speed and makes a free strike. A target receives temporary Stamina equal to the amount of damage they dealt during this action.')
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed and can make a free strike. Each target gains temporary Stamina equal to the damage they deal.')
 						]
 					})
 				}),
@@ -499,7 +516,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The deathrex shifts up to their speed, leaving behind a skin shed duplicate in the space that they started in. The duplicate has 10 Stamina, has no villain actions, shares the rest of the deathrex’s characteristics, and takes their turn at the same time as the deathrex.')
+							FactoryLogic.createAbilitySectionText('The deathrex shifts up to their speed, leaving behind a shed skin duplicate in the space they started in. The duplicate acts on the deathrex’s turn and has the deathrex’s characteristics, but has 10 Stamina and no villain actions.')
 						]
 					})
 				}),
@@ -508,18 +525,18 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						id: 'lizardfolk-7-feature-7',
 						name: 'Thresher Thrasher',
 						type: FactoryLogic.type.createVillainAction(),
-						keywords: [ AbilityKeyword.Area ],
+						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
-						target: 'Self and all allies in the burst',
+						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target moves up to their speed. Until the end of the encounter, when a creature enters or starts their turn adjacent to a target, the target can make a free strike against them.')
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed. Until the end of the encounter, whenever a creature comes adjacent to a target or starts their turn there, the target can make a free strike against them.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'lizardfolk-7-feature-8',
 					name: 'Rex Reptilian Escape',
-					description: 'While the deathrex still has a tail, whenever the deathrex is inflicted with an EoT or save ends eﬀect, the deathrex can lose their tail to immediately end the eﬀect and shift 2.'
+					description: 'While the deathrex has a tail, whenever they are affected by an effect that can be ended by a saving throw or that ends at the end of their turn, they can lose their tail to immediately end that effect, then shift up to 2 squares.'
 				})
 			]
 		})

@@ -118,7 +118,7 @@ when you finish a respite.
 									name: 'Burden of Evil',
 									description: 'You reveal a vision of your enemies’ fate that causes them to scramble as it staggers them.',
 									type: FactoryLogic.type.createManeuver(),
-									keywords: [  AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
 									target: 'Three enemies',
 									cost: 9,
@@ -207,7 +207,7 @@ when you finish a respite.
 									target: 'One ally',
 									cost: 11,
 									sections: [
-										FactoryLogic.createAbilitySectionText('The target takes their turn after the triggering hero, and immediately removes all conditions and negative effects on themself. During their turn, the target has a double edge on poºwer rolls.')
+										FactoryLogic.createAbilitySectionText('The target takes their turn after the triggering hero, and immediately removes all conditions and negative effects on themself. During their turn, the target has a double edge on power rolls.')
 									]
 								})
 							}),

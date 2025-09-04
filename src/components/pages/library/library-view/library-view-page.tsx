@@ -1,6 +1,5 @@
 import { Button, Popover } from 'antd';
 import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, LeftOutlined, UploadOutlined } from '@ant-design/icons';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
@@ -19,12 +18,15 @@ import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel'
 import { Element } from '../../../../models/element';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
-import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
+import { Imbuement } from '../../../../models/imbuement';
+import { ImbuementPanel } from '../../../panels/elements/imbuement-panel/imbuement-panel';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
+import { Monster } from '../../../../models/monster';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
 import { Options } from '../../../../models/options';
@@ -47,7 +49,6 @@ import { useParams } from 'react-router';
 import './library-view-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
 	options: Options;
@@ -55,7 +56,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	showSourcebooks: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	export: (kind: SourcebookElementKind, isSubElement: boolean, element: Element, format: 'image' | 'pdf' | 'json') => void;
 	copy: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -116,6 +116,17 @@ export const LibraryViewPage = (props: Props) => {
 				);
 			}
 			break;
+		case 'subclass':
+			element = props.sourcebooks.flatMap(sb => sb.subclasses).find(x => x.id === elementID) as Element;
+			sourcebook = SourcebookLogic.getSubClassSourcebook(props.sourcebooks, element as SubClass) as Sourcebook;
+			panel = (
+				<SubclassPanel
+					subclass={element as SubClass}
+					options={props.options}
+					mode={PanelMode.Full}
+				/>
+			);
+			break;
 		case 'complication':
 			element = props.sourcebooks.flatMap(sb => sb.complications).find(x => x.id === elementID) as Element;
 			sourcebook = SourcebookLogic.getComplicationSourcebook(props.sourcebooks, element as Complication) as Sourcebook;
@@ -149,6 +160,17 @@ export const LibraryViewPage = (props: Props) => {
 				/>
 			);
 			break;
+		case 'imbuement':
+			element = props.sourcebooks.flatMap(sb => sb.imbuements).find(x => x.id === elementID) as Element;
+			sourcebook = SourcebookLogic.getImbuementSourcebook(props.sourcebooks, element as Imbuement) as Sourcebook;
+			panel = (
+				<ImbuementPanel
+					imbuement={element as Imbuement}
+					options={props.options}
+					mode={PanelMode.Full}
+				/>
+			);
+			break;
 		case 'item':
 			element = props.sourcebooks.flatMap(sb => sb.items).find(x => x.id === elementID) as Element;
 			sourcebook = SourcebookLogic.getItemSourcebook(props.sourcebooks, element as Item) as Sourcebook;
@@ -156,7 +178,6 @@ export const LibraryViewPage = (props: Props) => {
 				<ItemPanel
 					item={element as Item}
 					options={props.options}
-					showCustomizations={true}
 					mode={PanelMode.Full}
 				/>
 			);
@@ -365,7 +386,7 @@ export const LibraryViewPage = (props: Props) => {
 					<div className='library-view-page-content'>
 						{panel}
 					</div>
-					<AppFooter page='library' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

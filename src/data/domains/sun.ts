@@ -144,6 +144,7 @@ export const sun: Domain = {
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that an enemy within 10 squares takes fire or holy damage',
 			value: '2'
 		}

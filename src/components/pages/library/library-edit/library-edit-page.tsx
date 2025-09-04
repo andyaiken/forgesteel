@@ -1,6 +1,5 @@
-import { Button, Drawer, Popover, Select, Space, Tabs } from 'antd';
+import { Button, Drawer, Flex, Popover, Select, Space, Tabs } from 'antd';
 import { CloseOutlined, DownOutlined, LeftOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryEditPanel } from '../../../panels/edit/ancestry-edit/ancestry-edit-panel';
@@ -27,16 +26,23 @@ import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Expander } from '../../../controls/expander/expander';
 import { FeatureEditPanel } from '../../../panels/edit/feature-edit/feature-edit-panel';
+import { Field } from '../../../controls/field/field';
 import { Format } from '../../../../utils/format';
+import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
+import { Imbuement } from '../../../../models/imbuement';
+import { ImbuementEditPanel } from '../../../panels/edit/imbuement-edit/imbuement-edit-panel';
+import { ImbuementPanel } from '../../../panels/elements/imbuement-panel/imbuement-panel';
 import { Item } from '../../../../models/item';
 import { ItemEditPanel } from '../../../panels/edit/item-edit/item-edit-panel';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitEditPanel } from '../../../panels/edit/kit-edit/kit-edit-panel';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
+import { Monster } from '../../../../models/monster';
 import { MonsterEditPanel } from '../../../panels/edit/monster-edit/monster-edit-panel';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterGroupEditPanel } from '../../../panels/edit/monster-group-edit/monster-group-edit-panel';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
@@ -74,8 +80,7 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	showSourcebooks: () => void;
- 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
+	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	setOptions: (options: Options) => void;
 }
@@ -108,6 +113,9 @@ export const LibraryEditPage = (props: Props) => {
 			case 'item':
 				original = sourcebook.items.find(e => e.id === elementID)!;
 				break;
+			case 'imbuement':
+				original = sourcebook.imbuements.find(e => e.id === elementID)!;
+				break;
 			case 'kit':
 				original = sourcebook.kits.find(e => e.id === elementID)!;
 				break;
@@ -116,6 +124,9 @@ export const LibraryEditPage = (props: Props) => {
 				break;
 			case 'perk':
 				original = sourcebook.perks.find(e => e.id === elementID)!;
+				break;
+			case 'subclass':
+				original = sourcebook.subclasses.find(e => e.id === elementID)!;
 				break;
 			case 'terrain':
 				original = sourcebook.terrain.find(e => e.id === elementID)!;
@@ -141,6 +152,29 @@ export const LibraryEditPage = (props: Props) => {
 			.forEach(m => monsters.push(m));
 
 		return Collections.sort(monsters, m => MonsterLogic.getMonsterName(m));
+	};
+
+	const getSuggestedStatsSection = (monster: Monster) => {
+		const stats = MonsterLogic.getSuggestedStats(monster);
+
+		return (
+			<div>
+				<HeaderText>Stats</HeaderText>
+				<Flex align='center' justify='space-around'>
+					<Field orientation='vertical' label='Highest characteristic' value={stats.highestCharacteristic} />
+					<Field orientation='vertical' label='EV' value={stats.ev} />
+					<Field orientation='vertical' label='Stamina' value={stats.stamina} />
+					<Field orientation='vertical' label='Free strike damage' value={stats.freeStrikeDamage} />
+				</Flex>
+				<HeaderText>Ability Damage</HeaderText>
+				<Flex align='center' justify='space-around'>
+					<Field orientation='vertical' label='Fewer targets' value={`${stats.damageMinus1.tier1} / ${stats.damageMinus1.tier2} / ${stats.damageMinus1.tier3}`} />
+					<Field highlight={true} orientation='vertical' label='Typical targets' value={`${stats.damage.tier1} / ${stats.damage.tier2} / ${stats.damage.tier3}`} />
+					<Field orientation='vertical' label='1 extra target' value={`${stats.damagePlus1.tier1} / ${stats.damagePlus1.tier2} / ${stats.damagePlus1.tier3}`} />
+					<Field orientation='vertical' label='2+ extra targets' value={`${stats.damagePlus2.tier1} / ${stats.damagePlus2.tier2} / ${stats.damagePlus2.tier3}`} />
+				</Flex>
+			</div>
+		);
 	};
 
 	const getSimilarMonstersSection = (monster: Monster) => {
@@ -260,6 +294,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'ancestry':
 				return (
 					<AncestryEditPanel
+						key={element.id}
 						ancestry={element as Ancestry}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -272,6 +307,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'culture':
 				return (
 					<CultureEditPanel
+						key={element.id}
 						culture={element as Culture}
 						sourcebooks={props.sourcebooks}
 						onChange={c => {
@@ -283,6 +319,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'career':
 				return (
 					<CareerEditPanel
+						key={element.id}
 						career={element as Career}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -296,6 +333,7 @@ export const LibraryEditPage = (props: Props) => {
 				if (!subElementID) {
 					return (
 						<ClassEditPanel
+							key={element.id}
 							heroClass={element as HeroClass}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
@@ -312,6 +350,7 @@ export const LibraryEditPage = (props: Props) => {
 
 					return (
 						<SubClassEditPanel
+							key={subclass.id}
 							subClass={subclass}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
@@ -327,9 +366,23 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
+			case 'subclass':
+				return (
+					<SubClassEditPanel
+						key={element.id}
+						subClass={element as SubClass}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={c => {
+							setElement(c);
+							setDirty(true);
+						}}
+					/>
+				);
 			case 'complication':
 				return (
 					<ComplicationEditPanel
+						key={element.id}
 						complication={element as Complication}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -342,6 +395,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'domain':
 				return (
 					<DomainEditPanel
+						key={element.id}
 						domain={element as Domain}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -354,6 +408,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'kit':
 				return (
 					<KitEditPanel
+						key={element.id}
 						kit={element as Kit}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -366,6 +421,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'perk':
 				return (
 					<FeatureEditPanel
+						key={element.id}
 						feature={element as Perk}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -379,6 +435,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'terrain':
 				return (
 					<TerrainEditPanel
+						key={element.id}
 						terrain={element as Terrain}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -391,6 +448,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'title':
 				return (
 					<TitleEditPanel
+						key={element.id}
 						title={element as Title}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
@@ -403,7 +461,21 @@ export const LibraryEditPage = (props: Props) => {
 			case 'item':
 				return (
 					<ItemEditPanel
+						key={element.id}
 						item={element as Item}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={i => {
+							setElement(i);
+							setDirty(true);
+						}}
+					/>
+				);
+			case 'imbuement':
+				return (
+					<ImbuementEditPanel
+						key={element.id}
+						imbuement={element as Imbuement}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onChange={i => {
@@ -416,6 +488,7 @@ export const LibraryEditPage = (props: Props) => {
 				if (!subElementID) {
 					return (
 						<MonsterGroupEditPanel
+							key={element.id}
 							monsterGroup={element as MonsterGroup}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
@@ -432,11 +505,12 @@ export const LibraryEditPage = (props: Props) => {
 
 					return (
 						<MonsterEditPanel
+							key={monster.id}
 							monster={monster}
 							monsterGroup={monsterGroup}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
-							similarMonsters={props.options.showSimilarMonsters ? getSimilarMonsters(monster) : []}
+							similarMonsters={getSimilarMonsters(monster)}
 							onChange={monster => {
 								const copy = Utils.copy(monsterGroup);
 								const index = copy.monsters.findIndex(m => m.id === monster.id);
@@ -540,6 +614,12 @@ export const LibraryEditPage = (props: Props) => {
 						<PerkPanel perk={element as Perk} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
+			case 'subclass':
+				return (
+					<SelectablePanel>
+						<SubclassPanel subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
 			case 'terrain':
 				return (
 					<SelectablePanel>
@@ -556,12 +636,27 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<>
 						<SelectablePanel>
-							<ItemPanel item={element as Item} options={props.options} showCustomizations={true} mode={PanelMode.Full} />
+							<ItemPanel item={element as Item} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
 							(element as Item).crafting ?
 								<SelectablePanel>
 									<ProjectPanel project={(element as Item).crafting!} mode={PanelMode.Full} />
+								</SelectablePanel>
+								: null
+						}
+					</>
+				);
+			case 'imbuement':
+				return (
+					<>
+						<SelectablePanel>
+							<ImbuementPanel imbuement={element as Imbuement} options={props.options} mode={PanelMode.Full} />
+						</SelectablePanel>
+						{
+							(element as Imbuement).crafting ?
+								<SelectablePanel>
+									<ProjectPanel project={(element as Imbuement).crafting!} mode={PanelMode.Full} />
 								</SelectablePanel>
 								: null
 						}
@@ -578,34 +673,31 @@ export const LibraryEditPage = (props: Props) => {
 					const monsterGroup = element as MonsterGroup;
 					const monster = monsterGroup.monsters.find(m => m.id === subElementID) as Monster;
 
-					if (props.options.showSimilarMonsters) {
-						return (
-							<Tabs
-								items={[
-									{
-										key: '1',
-										label: 'Preview',
-										children: (
-											<SelectablePanel>
-												<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
-											</SelectablePanel>
-										)
-									},
-									{
-										key: '2',
-										label: 'Similar Monsters',
-										children: getSimilarMonstersSection(monster)
-									}
-								]}
-							/>
-						);
-					} else {
-						return (
-							<SelectablePanel>
-								<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
-							</SelectablePanel>
-						);
-					}
+					return (
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Preview',
+									children: (
+										<SelectablePanel>
+											<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
+										</SelectablePanel>
+									)
+								},
+								{
+									key: '2',
+									label: 'Suggested Statistics',
+									children: getSuggestedStatsSection(monster)
+								},
+								{
+									key: '3',
+									label: 'Similar Monsters',
+									children: getSimilarMonstersSection(monster)
+								}
+							]}
+						/>
+					);
 				}
 		}
 
@@ -675,7 +767,7 @@ export const LibraryEditPage = (props: Props) => {
 							{getPreview()}
 						</div>
 					</div>
-					<AppFooter page='library' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

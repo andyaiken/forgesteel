@@ -43,10 +43,12 @@ As a shadow, you possess abilities that deal significant damage, enable you to m
 					name: 'Insight',
 					gains: [
 						{
+							tag: 'start',
 							trigger: 'Start of your turn',
 							value: '1d3'
 						},
 						{
+							tag: 'deal-damage',
 							trigger: 'The first time each combat round that you deal damage incorporating 1 or more surges',
 							value: '1'
 						}
@@ -138,7 +140,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					id: 'shadow-4-1a',
 					name: 'Characteristic Increase: Agility',
 					description: 'Your Agility score increases to 3',
-					characteristic:Characteristic.Agility,
+					characteristic: Characteristic.Agility,
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({
@@ -212,10 +214,13 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
 					count: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'shadow-4-6',
 					name: 'Surge of Insight',
-					description: 'The first time each combat round that you deal damage incorporating 1 or more surges, you gain 2 insight instead of 1.'
+					tag: 'deal-damage 2',
+					trigger: 'The first time each combat round that you deal damage incorporating 1 or more surges',
+					value: '2',
+					replacesTags: [ 'deal-damage' ]
 				})
 			]
 		},
@@ -285,10 +290,13 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					characteristic: Characteristic.Presence,
 					value: 1
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'shadow-7-2',
 					name: 'Keen Insight',
-					description: 'At the start of each of your turns during combat, you gain 1d3 + 1 insight instead of 1d3.'
+					tag: 'start 2',
+					trigger: 'Start of your turn',
+					value: '1d3 + 1',
+					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-7-3',
@@ -327,10 +335,7 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 					description: `
 At the start of each of your turns, you can forgo gaining insight to create 1d6 clones of yourself in unoccupied adjacent spaces. A clone acts on your turn and uses your statistics, except they have 1 Stamina. They are affected by any conditions and effects on you, and last until the start of your next turn. A clone doesn’t have insight and can’t use the Careful Observation ability, the Umbral Form feature, or any triggered actions. On their turn, a clone has a move action, a maneuver, and a main action that they can use only to make a free strike. While making a free strike, a clone must choose targets that you or another clone aren’t also striking.
 
-Outside of combat, you can have one clone active for every 2 Victories you have. If a clone is destroyed, you must wait 1 hour before creating another one.
-					`
-
-
+Outside of combat, you can have one clone active for every 2 Victories you have. If a clone is destroyed, you must wait 1 hour before creating another one.`
 				})
 			]
 		},
@@ -341,7 +346,7 @@ Outside of combat, you can have one clone active for every 2 Victories you have.
 					id: 'shadow-10-1a',
 					name: 'Characteristic Increase: Agility',
 					description: 'Your Agility score increases to 5',
-					characteristic:Characteristic.Agility,
+					characteristic: Characteristic.Agility,
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({
@@ -383,10 +388,13 @@ Outside of combat, you can have one clone active for every 2 Victories you have.
 						}
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'shadow-10-2',
 					name: 'Death Pool',
-					description: 'The first time each combat round that you deal damage incorporating 1 or more surges, you gain 3 insight instead of 2.'
+					tag: 'deal-damage 2',
+					trigger: 'The first time each combat round that you deal damage incorporating 1 or more surges',
+					value: '3',
+					replacesTags: [ 'deal-damage', 'deal-damage 2' ]
 				}),
 				FactoryLogic.feature.createPerk({
 					id: 'shadow-10-3'
@@ -414,6 +422,7 @@ While you are in your umbral form, you can spend 1 uninterrupted minute concentr
 					type: 'epic',
 					gains: [
 						{
+							tag: '',
 							trigger: 'Finish a respite',
 							value: 'XP gained'
 						}
@@ -469,7 +478,7 @@ Subterfuge remains until you spend it.`
 						tier3: '9 + A damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('If the target has no allies adjacent to them, you gain 1 surge before making the power roll.')
+				FactoryLogic.createAbilitySectionText('If the target has none of your allies adjacent to them, you gain 1 surge before making the power roll.')
 			]
 		}),
 		FactoryLogic.createAbility({
@@ -789,7 +798,7 @@ Subterfuge remains until you spend it.`
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
-			target: 'Each enemy in area',
+			target: 'Each enemy in the area',
 			cost: 9,
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

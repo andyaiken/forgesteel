@@ -40,7 +40,7 @@ export const knowledge: Domain = {
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature',
+						target: 'One creature',
 						cost: 5,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
@@ -152,6 +152,7 @@ export const knowledge: Domain = {
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that the Director spends Malice',
 			value: '2'
 		}

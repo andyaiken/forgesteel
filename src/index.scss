@@ -22,6 +22,34 @@
 	font-weight: 700;
 	font-style: italic;
 }
+@font-face {
+	font-family: 'Merriweather';
+	src: url('../src/assets/fonts/merriweather/Merriweather-Variable.ttf') format('truetype-variations');
+	font-weight: 300 900;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Merriweather';
+	src: url('../src/assets/fonts/merriweather/Merriweather-Italic-Variable.ttf') format('truetype-variations');
+	font-weight: 300 900;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Draw Steel Potencies';
+	src: url('../src/assets/fonts/ds-symbols/DrawSteel-Potencies.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Roboto Slab';
+	src: url('../src/assets/fonts/roboto-slab/RobotoSlab-Variable.ttf') format('truetype-variations');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
 
 * {
 	font-family: 'PT Sans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
@@ -74,6 +102,12 @@ h2 {
 	padding-bottom: 10px;
 }
 
+h3 {
+	font-size: 13px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
 p,
 .ds-text {
 	margin: 10px 0;
@@ -109,10 +143,10 @@ p,
 
 code {
 	padding: 1px 5px;
-    font-size: 85%;
-    background: rgba(150, 150, 150, 0.1);
-    border: 1px solid rgba(100, 100, 100, 0.2);
-    border-radius: 3px;
+	font-size: 85%;
+	background: rgba(150, 150, 150, 0.1);
+	border: 1px solid rgba(100, 100, 100, 0.2);
+	border-radius: 3px;
 }
 
 a {
@@ -194,11 +228,20 @@ td {
 .ant-collapse {
 	>.ant-collapse-item {
 		>.ant-collapse-header {
+			background-color: rgb(255, 255, 255);
+			border-radius: 7px !important;
 			align-items: center;
 			user-select: none;
 
 			>.ant-collapse-extra {
 				display: flex;
+			}
+		}
+
+		&.ant-collapse-item-active {
+			>.ant-collapse-header {
+				border-bottom-left-radius: 0 !important;
+				border-bottom-right-radius: 0 !important;
 			}
 		}
 	}
@@ -208,16 +251,6 @@ td {
 			>.ant-collapse-header {
 				background-color: rgb(230, 244, 255);
 				border-color: rgb(64, 150, 255);
-				border-radius: 6px;
-			}
-
-			&.ant-collapse-item-active {
-				>.ant-collapse-header {
-					border-bottom-left-radius: 0;
-					border-bottom-right-radius: 0;
-					border-top-left-radius: 6px;
-					border-top-right-radius: 6px;
-				}
 			}
 		}
 	}
@@ -272,8 +305,8 @@ td {
 }
 
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child {
-    font-weight: 600;
-    background-color: rgb(230, 244, 255);
+	font-weight: 600;
+	background-color: rgb(230, 244, 255);
 }
 
 .ant-segmented {
@@ -346,6 +379,15 @@ td {
 		background-color: rgb(55, 55, 55);
 	}
 
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
+		border-bottom-color: rgba(250, 250, 250, 0.6);
+		color: rgba(255, 255, 255, 0.88);
+	}
+
 	p,
 	.ds-text,
 	ul {
@@ -368,17 +410,24 @@ td {
 		}
 	}
 
-	.ant-btn.ant-btn-text {
-		color: rgba(255, 255, 255, 0.88);
+	.ant-btn {
+		&.ant-btn-text {
+			color: rgba(255, 255, 255, 0.88);
+		}
+
+		&.status-warning {
+			color: rgba(255, 255, 255, 0.88);
+		}
 	}
 
 	.ant-collapse {
-		.ant-collapse-item {
-			.ant-collapse-header {
+		>.ant-collapse-item {
+			>.ant-collapse-header {
+				background-color: rgb(80, 80, 80);
 				color: rgba(255, 255, 255, 0.88) !important;
 			}
 
-			.ant-collapse-content {
+			>.ant-collapse-content {
 				background-color: unset;
 			}
 		}
@@ -386,7 +435,7 @@ td {
 		&:hover {
 			>.ant-collapse-item {
 				>.ant-collapse-header {
-					color: rgba(0, 0, 0, 0.88) !important;
+					background-color: rgb(64, 150, 255);
 				}
 			}
 		}
@@ -439,6 +488,10 @@ td {
 
 	.ant-slider .ant-slider-rail {
 		background-color: rgba(250, 250, 250, 0.6);
+	}
+
+	.ant-space-item>div:not([class^='ant-']) {
+		color: rgba(255, 255, 255, 0.88);
 	}
 
 	.ant-tabs {

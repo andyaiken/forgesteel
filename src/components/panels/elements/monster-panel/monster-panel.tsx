@@ -1,6 +1,5 @@
 import { Alert, Drawer, Flex, Tag } from 'antd';
 import { CSSProperties, ReactNode, useState } from 'react';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Ability } from '../../../../models/ability';
 import { AbilityModal } from '../../../modals/ability/ability-modal';
 import { AbilityPanel } from '../ability-panel/ability-panel';
@@ -14,10 +13,12 @@ import { Field } from '../../../controls/field/field';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { Monster } from '../../../../models/monster';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterLabel } from '../../monster-label/monster-label';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
-import { MonsterToken } from '../../../controls/token/token';
+import { MonsterToken } from '../../token/token';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
@@ -65,14 +66,14 @@ export const MonsterPanel = (props: Props) => {
 					<Markdown text={props.monster.description} />
 					<Flex align='center' justify='space-between'>
 						<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for ${props.options.minionCount} minions` : ((props.monster.encounterValue === 0) ? '-': props.monster.encounterValue)} />
+						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for ${props.options.minionCount} minions` : ((props.monster.encounterValue === 0) ? '-' : props.monster.encounterValue)} />
 					</Flex>
 					{
 						props.mode === PanelMode.Full ?
 							<>
 								<div className='stats'>
-									<Field orientation='vertical' label='Speed' value={speedStr} />
 									<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
+									<Field orientation='vertical' label='Speed' value={speedStr} />
 									<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
 									<Field orientation='vertical' label='Stability' value={props.monster.stability} />
 									<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />

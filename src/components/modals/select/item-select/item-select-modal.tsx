@@ -79,23 +79,29 @@ export const ItemSelectModal = (props: Props) => {
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Expander title='Filter'>
 								<div className='item-type-filter-panel'>
-									<Toggle label='Show everything' value={props.types.every(t => showTypes[t])} onChange={setShowEverything} />
-									<Divider />
 									{
-										props.types.map(type => (
-											<Toggle
-												key={type}
-												label={type}
-												value={showTypes[type]}
-												onChange={value => {
-													const newTypes = { ...showTypes };
-													newTypes[type] = value;
-													setShowTypes(newTypes);
-												}}
-											/>
-										))
+										props.types.length > 1 ?
+											<>
+												<Toggle label='Show everything' value={props.types.every(t => showTypes[t])} onChange={setShowEverything} />
+												<Divider />
+												{
+													props.types.map(type => (
+														<Toggle
+															key={type}
+															label={type}
+															value={showTypes[type]}
+															onChange={value => {
+																const newTypes = { ...showTypes };
+																newTypes[type] = value;
+																setShowTypes(newTypes);
+															}}
+														/>
+													))
+												}
+												<Divider />
+											</>
+											: null
 									}
-									<Divider />
 									<Toggle label='Only show items you can use' value={showUsableOnly} onChange={setShowUsableOnly} />
 								</div>
 							</Expander>

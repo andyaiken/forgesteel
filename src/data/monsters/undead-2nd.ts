@@ -4,7 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
@@ -12,9 +12,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const undead2nd: MonsterGroup = {
 	id: 'monster-group-undead-2nd',
 	name: 'Undead — 2nd Echelon',
-	description: `
-*When the dead rise, all of hell rises with them.*
-*LADY DEMELZA, COURSER*`,
+	description: 'More powerful and more self-aware forms of undead rise above the undead horde and lay claim to dark, isolated domains all their own. The longer an undead is allowed to thrive, the stronger they become.',
 	picture: null,
 	information: [
 		{
@@ -208,7 +206,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '7 damage; M<3 bleeding (save ends)'
 								})
 							)
-					   ]
+						]
 					})
 				}),
 				FactoryLogic.feature.create({
@@ -338,7 +336,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 									tier3: '17 damage; M<3 grabbed'
 								})
 							)
-					   ]
+						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({

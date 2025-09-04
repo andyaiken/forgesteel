@@ -2,7 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
@@ -168,7 +168,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'ogre-1-feature-4',
 						name: 'Swat the Fly',
 						type: FactoryLogic.type.createTrigger('The target moves or shifts away from the goon.'),
@@ -271,7 +271,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					})
 				}),
 				FactoryLogic.feature.createAbility({
-					ability:FactoryLogic.createAbility({
+					ability: FactoryLogic.createAbility({
 						id: 'ogre-2-feature-4',
 						name: 'Hrraaaaaagh!',
 						type: FactoryLogic.type.createTrigger('The juggernaut takes damage.', { free: true }),

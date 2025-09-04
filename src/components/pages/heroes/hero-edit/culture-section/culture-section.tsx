@@ -1,23 +1,28 @@
+import { Button, Divider, Drawer, Flex, Input, Space } from 'antd';
+import { CloseOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../../data/culture-data';
-import { FeatureData, FeatureLanguageChoiceData } from '../../../../../models/feature';
-import { Select, Space } from 'antd';
-import { Collections } from '../../../../../utils/collections';
+import { ReactNode, useState } from 'react';
 import { Culture } from '../../../../../models/culture';
 import { CulturePanel } from '../../../../panels/elements/culture-panel/culture-panel';
+import { CultureType } from '../../../../../enums/culture-type';
 import { Element } from '../../../../../models/element';
 import { EmptyMessage } from '../empty-message/empty-message';
-import { FactoryLogic } from '../../../../../logic/factory-logic';
+import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
 import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '../../../../../models/feature';
 import { FeatureLogic } from '../../../../../logic/feature-logic';
+import { FeatureSelectModal } from '../../../../modals/select/feature-select/feature-select-modal';
 import { Field } from '../../../../controls/field/field';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
+import { Markdown } from '../../../../controls/markdown/markdown';
+import { NameGenerator } from '../../../../../utils/name-generator';
 import { Options } from '../../../../../models/options';
 import { PanelMode } from '../../../../../enums/panel-mode';
-import { ReactNode } from 'react';
 import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
+import { Utils } from '../../../../../utils/utils';
 import { useMediaQuery } from '../../../../../hooks/use-media-query';
 
 import './culture-section.scss';
@@ -37,7 +42,6 @@ interface CultureSectionProps {
 	options: Options;
 	searchTerm: string;
 	selectCulture: (culture: Culture) => void;
-	selectLanguages: (languages: string[]) => void;
 	selectEnvironment: (id: string | null) => void;
 	selectOrganization: (id: string | null) => void;
 	selectUpbringing: (id: string | null) => void;
@@ -46,10 +50,30 @@ interface CultureSectionProps {
 
 export const CultureSection = (props: CultureSectionProps) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const [ showEnvironment, setShowEnvironment ] = useState<boolean>(false);
+	const [ showOrganization, setShowOrganization ] = useState<boolean>(false);
+	const [ showUpbringing, setShowUpbringing ] = useState<boolean>(false);
+
+	const setName = (value: string) => {
+		const copy = Utils.copy(props.hero.culture)!;
+		copy.name = value;
+		props.hero.culture = copy;
+		props.selectCulture(copy);
+	};
 
 	try {
-		const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].filter(c => matchElement(c, props.searchTerm));
-		const options = cultures.map(c => (
+		const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
+		const optionsAncestral = cultures.filter(c => c.type === CultureType.Ancestral).map(c => (
+			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
+				<CulturePanel culture={c} options={props.options} />
+			</SelectablePanel>
+		));
+		const optionsProfessional = cultures.filter(c => c.type === CultureType.Professional).map(c => (
+			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
+				<CulturePanel culture={c} options={props.options} />
+			</SelectablePanel>
+		));
+		const optionsBespoke = cultures.filter(c => c.type === CultureType.Bespoke).map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
 				<CulturePanel culture={c} options={props.options} />
 			</SelectablePanel>
@@ -70,73 +94,91 @@ export const CultureSection = (props: CultureSectionProps) => {
 				choices.unshift(
 					<SelectablePanel key='bespoke'>
 						<HeaderText>Bespoke Culture</HeaderText>
+						<div className='ds-text'>Choose a name for your culture.</div>
+						<Input
+							status={props.hero.culture.name === '' ? 'warning' : ''}
+							placeholder='Name'
+							allowClear={true}
+							addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+							value={props.hero.culture.name}
+							onChange={e => setName(e.target.value)}
+						/>
+						<Divider />
 						<div className='ds-text'>Choose your Environment, Organization, and Upbringing.</div>
 						<Space direction='vertical' style={{ width: '100%' }}>
-							<Select
-								style={{ width: '100%' }}
-								status={props.hero.culture.environment === null ? 'warning' : ''}
-								allowClear={true}
-								placeholder='Environment'
-								options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
-								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-								showSearch={true}
-								filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
-								value={props.hero.culture.environment ? props.hero.culture.environment.id : null}
-								onChange={props.selectEnvironment}
-							/>
-							<Select
-								style={{ width: '100%' }}
-								status={props.hero.culture.organization === null ? 'warning' : ''}
-								allowClear={true}
-								placeholder='Organization'
-								options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
-								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-								showSearch={true}
-								filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
-								value={props.hero.culture.organization ? props.hero.culture.organization.id : null}
-								onChange={props.selectOrganization}
-							/>
-							<Select
-								style={{ width: '100%' }}
-								status={props.hero.culture.upbringing === null ? 'warning' : ''}
-								allowClear={true}
-								placeholder='Upbringing'
-								options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name, desc: s.description }))}
-								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-								showSearch={true}
-								filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
-								value={props.hero.culture.upbringing ? props.hero.culture.upbringing.id : null}
-								onChange={props.selectUpbringing}
-							/>
+							{
+								props.hero.culture.environment ?
+									<Flex className='selection-box' align='center' gap={10}>
+										<Field
+											style={{ flex: '1 1 0' }}
+											label={props.hero.culture.environment.name}
+											value={<Markdown text={props.hero.culture.environment.description} useSpan={true} />}
+										/>
+										<Flex vertical={true}>
+											<Button
+												style={{ flex: '0 0 auto' }}
+												type='text'
+												title='Remove'
+												icon={<CloseOutlined />}
+												onClick={() => props.selectEnvironment(null)}
+											/>
+										</Flex>
+									</Flex>
+									:
+									<Button block={true} className='status-warning' onClick={() => setShowEnvironment(true)}>
+										Choose environment
+									</Button>
+							}
+							{
+								props.hero.culture.organization ?
+									<Flex className='selection-box' align='center' gap={10}>
+										<Field
+											style={{ flex: '1 1 0' }}
+											label={props.hero.culture.organization.name}
+											value={<Markdown text={props.hero.culture.organization.description} useSpan={true} />}
+										/>
+										<Flex vertical={true}>
+											<Button
+												style={{ flex: '0 0 auto' }}
+												type='text'
+												title='Remove'
+												icon={<CloseOutlined />}
+												onClick={() => props.selectOrganization(null)}
+											/>
+										</Flex>
+									</Flex>
+									:
+									<Button block={true} className='status-warning' onClick={() => setShowOrganization(true)}>
+										Choose organization
+									</Button>
+							}
+							{
+								props.hero.culture.upbringing ?
+									<Flex className='selection-box' align='center' gap={10}>
+										<Field
+											style={{ flex: '1 1 0' }}
+											label={props.hero.culture.upbringing.name}
+											value={<Markdown text={props.hero.culture.upbringing.description} useSpan={true} />}
+										/>
+										<Flex vertical={true}>
+											<Button
+												style={{ flex: '0 0 auto' }}
+												type='text'
+												title='Remove'
+												icon={<CloseOutlined />}
+												onClick={() => props.selectUpbringing(null)}
+											/>
+										</Flex>
+									</Flex>
+									:
+									<Button block={true} className='status-warning' onClick={() => setShowUpbringing(true)}>
+										Choose upbringing
+									</Button>
+							}
 						</Space>
 					</SelectablePanel>
 				);
 			}
-
-			const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
-			const distinctLanguages = Collections.distinct(languages, l => l.name);
-			const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
-
-			choices.unshift(
-				<SelectablePanel key='language'>
-					<FeatureConfigPanel
-						feature={FactoryLogic.feature.createLanguageChoice({
-							id: 'culture-language',
-							name: 'Language',
-							description: 'Choose your language.',
-							options: sortedLanguages.map(l => l.name),
-							selected: props.hero.culture.languages
-						})}
-						options={props.options}
-						hero={props.hero}
-						sourcebooks={props.sourcebooks}
-						setData={(_id, data) => {
-							const d = data as FeatureLanguageChoiceData;
-							props.selectLanguages(d.selected);
-						}}
-					/>
-				</SelectablePanel>
-			);
 		}
 
 		let columnClassName = 'hero-edit-content-column selected';
@@ -145,39 +187,85 @@ export const CultureSection = (props: CultureSectionProps) => {
 		}
 
 		return (
-			<div className='hero-edit-content culture-section'>
-				{
-					props.hero.culture && (!isSmall || (choices.length === 0)) ?
-						<div className={columnClassName} id='culture-selected'>
-							<SelectablePanel showShadow={false}>
-								<CulturePanel culture={props.hero.culture} options={props.options} mode={PanelMode.Full} />
-							</SelectablePanel>
-						</div>
-						: null
-				}
-				{
-					!props.hero.culture && (options.length > 0) ?
-						<div className='hero-edit-content-column grid' id='culture-list'>
-							{options}
-						</div>
-						: null
-				}
-				{
-					!props.hero.culture && (options.length === 0) ?
-						<div className='hero-edit-content-column' id='culture-list'>
-							<EmptyMessage hero={props.hero} />
-						</div>
-						: null
-				}
-				{
-					choices.length > 0 ?
-						<div className='hero-edit-content-column choices' id='culture-choices'>
-							<HeaderText>Choices</HeaderText>
-							{choices}
-						</div>
-						: null
-				}
-			</div>
+			<ErrorBoundary>
+				<div className='hero-edit-content culture-section'>
+					{
+						props.hero.culture && (!isSmall || (choices.length === 0)) ?
+							<div className={columnClassName} id='culture-selected'>
+								<SelectablePanel showShadow={false}>
+									<CulturePanel culture={props.hero.culture} options={props.options} mode={PanelMode.Full} />
+								</SelectablePanel>
+							</div>
+							: null
+					}
+					{
+						!props.hero.culture && ([ ...optionsAncestral, ...optionsProfessional, ...optionsBespoke ].length > 0) ?
+							<div className='hero-edit-content-column list' id='culture-list'>
+								<HeaderText level={1}>Ancestral Cultures</HeaderText>
+								<div className='grid'>
+									{optionsAncestral}
+								</div>
+								<HeaderText level={1}>Professional Cultures</HeaderText>
+								<div className='grid'>
+									{optionsProfessional}
+								</div>
+								<HeaderText level={1}>Bespoke Cultures</HeaderText>
+								<div className='grid'>
+									{optionsBespoke}
+								</div>
+							</div>
+							: null
+					}
+					{
+						!props.hero.culture && ([ ...optionsAncestral, ...optionsProfessional, ...optionsBespoke ].length === 0) ?
+							<div className='hero-edit-content-column' id='culture-list'>
+								<EmptyMessage hero={props.hero} />
+							</div>
+							: null
+					}
+					{
+						choices.length > 0 ?
+							<div className='hero-edit-content-column choices' id='culture-choices'>
+								<HeaderText>Choices</HeaderText>
+								{choices}
+							</div>
+							: null
+					}
+				</div>
+				<Drawer open={showEnvironment} onClose={() => setShowEnvironment(false)} closeIcon={null} width='500px'>
+					<FeatureSelectModal
+						features={EnvironmentData.getEnvironments().map(f => ({ feature: f, value: 1 }))}
+						options={props.options}
+						onSelect={f => {
+							setShowEnvironment(false);
+							props.selectEnvironment(f.id);
+						}}
+						onClose={() => setShowEnvironment(false)}
+					/>
+				</Drawer>
+				<Drawer open={showOrganization} onClose={() => setShowOrganization(false)} closeIcon={null} width='500px'>
+					<FeatureSelectModal
+						features={OrganizationData.getOrganizations().map(f => ({ feature: f, value: 1 }))}
+						options={props.options}
+						onSelect={f => {
+							setShowOrganization(false);
+							props.selectOrganization(f.id);
+						}}
+						onClose={() => setShowOrganization(false)}
+					/>
+				</Drawer>
+				<Drawer open={showUpbringing} onClose={() => setShowUpbringing(false)} closeIcon={null} width='500px'>
+					<FeatureSelectModal
+						features={UpbringingData.getUpbringings().map(f => ({ feature: f, value: 1 }))}
+						options={props.options}
+						onSelect={f => {
+							setShowUpbringing(false);
+							props.selectUpbringing(f.id);
+						}}
+						onClose={() => setShowUpbringing(false)}
+					/>
+				</Drawer>
+			</ErrorBoundary>
 		);
 	} catch (ex) {
 		console.error(ex);

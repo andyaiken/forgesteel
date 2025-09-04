@@ -199,8 +199,6 @@ A creature who drinks the potion receives benefits based on your power roll.`),
 											tier2: 'The creature can fly until the end of the encounter.',
 											tier3: 'The creature turns invisible until the end of their next turn.'
 										}))
-
-
 									]
 								})
 							}),
@@ -231,7 +229,7 @@ A creature who drinks the potion receives benefits based on your power roll.`),
 						type: FactoryLogic.type.createManeuver({ free: true }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
-						target: 'Each enemy in area',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText(`
 Each target takes acid, fire, or poison damage (your choice) equal to your Agility score.
@@ -291,7 +289,7 @@ For each combat round that has passed since this ability was last used in the cu
 									distance: [
 										FactoryLogic.distance.createMelee(),
 										FactoryLogic.distance.createRanged(10)
-									 ],
+									],
 									target: 'One creature or object',
 									cost: 11,
 									sections: [

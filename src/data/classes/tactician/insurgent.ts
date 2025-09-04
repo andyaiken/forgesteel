@@ -32,7 +32,7 @@ At the Director’s discretion, you and your allies can use skills from the intr
 						type: FactoryLogic.type.createTrigger('The target deals damage to another creature.'),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 ally',
+						target: 'One ally',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The target gains 2 surges, which they can use on the triggering damage.'),
 							FactoryLogic.createAbilitySectionField({
@@ -65,7 +65,7 @@ At the Director’s discretion, you and your allies can use skills from the intr
 									type: FactoryLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Ranged ],
 									distance: [ FactoryLogic.distance.createRanged(10) ],
-									target: '2 creatures',
+									target: 'Two creatures',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionText('Each target is marked by you, and must immediately make a free strike against a creature of your choice within 5 squares of them.'),
@@ -87,7 +87,7 @@ At the Director’s discretion, you and your allies can use skills from the intr
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createSelf() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionText('You shift up to your speed directly toward an ally, ending adjacent to them, then swapping locations with that ally as long as you can fit into each other’s spaces. The ally can spend a Recovery, and you can make the following weapon strike with a distance of melee 1 against a creature.'),

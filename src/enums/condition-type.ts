@@ -9,7 +9,7 @@ export enum ConditionType {
 	Restrained = 'Restrained',
 	Slowed = 'Slowed',
 	Taunted = 'Taunted',
-	Weakened = 'Weakened',
+	Weakened = 'Weakened'
 }
 
 export enum ConditionEndType {

@@ -73,11 +73,12 @@
 				gap: 10px;
 				border-radius: 5px;
 				min-height: 40px;
-				padding-left: 8px;
+				padding: 0 4px 0 8px;
 				cursor: pointer;
 
 				&.minion {
 					background-color: rgba(125, 125, 125, 0.3);
+					border: 1px solid rgba(5, 5, 5, 0.06);
 				}
 
 				&.defeated {
@@ -93,7 +94,7 @@
 				}
 
 				.name-column {
-					flex: 0 0 250px;
+					flex: 0 0 200px;
 					display: flex;
 					flex-direction: row;
 					align-items: center;
@@ -107,6 +108,38 @@
 					align-items: center;
 					justify-content: flex-end;
 					gap: 5px;
+				}
+
+				.characteristics-column {
+					flex: 0 0 80px;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-evenly;
+					font-size: 12px;
+
+					.characteristics-column-item {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+					}
+				}
+
+				.stats-column {
+					flex: 0 0 50px;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-evenly;
+					font-size: 12px;
+
+					.stats-column-item {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+					}
 				}
 
 				.conditions-column {

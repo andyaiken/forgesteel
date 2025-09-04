@@ -1,9 +1,10 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAddOnType, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifier } from '../models/damage-modifier';
 import { DamageType } from '../enums/damage-type';
+import { FeatureAddOnType } from '../enums/feature-addon-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
 import { Follower } from '../models/follower';
@@ -161,8 +162,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createChoice = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number }): FeatureChoice => {
-		const count = data.count || 1;
+	createChoice = (data: { id: string, name?: string, description?: string, options: { feature: Feature, value: number }[], count?: number | 'ancestry' }): FeatureChoice => {
 		return {
 			id: data.id,
 			name: data.name || 'Choice',
@@ -170,14 +170,13 @@ export class FactoryFeatureLogic {
 			type: FeatureType.Choice,
 			data: {
 				options: data.options,
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};
 	};
 
 	createClassAbilityChoice = (data: { id: string, name?: string, description?: string, cost: number | 'signature', allowAnySource?: boolean, minLevel?: number, count?: number }): FeatureClassAbility => {
-		const count = data.count || 1;
 		return {
 			id: data.id,
 			name: data.name || 'Ability',
@@ -188,13 +187,13 @@ export class FactoryFeatureLogic {
 				cost: data.cost,
 				allowAnySource: data.allowAnySource ?? false,
 				minLevel: data.minLevel || 1,
-				count: count,
+				count: data.count || 1,
 				selectedIDs: []
 			}
 		};
 	};
 
-	createCompanion = (data: {id: string, name?: string, description?: string, type: 'companion' | 'mount' | 'retainer' }): FeatureCompanion => {
+	createCompanion = (data: { id: string, name?: string, description?: string, type: 'companion' | 'mount' | 'retainer' }): FeatureCompanion => {
 		return {
 			id: data.id,
 			name: data.name || Format.capitalize(data.type),
@@ -211,7 +210,7 @@ export class FactoryFeatureLogic {
 		return {
 			id: data.id,
 			name: data.name || 'Condition Immunity',
-			description: data.description || data.conditions.join(', '),
+			description: data.description || '',
 			type: FeatureType.ConditionImmunity,
 			data: {
 				conditions: data.conditions
@@ -232,21 +231,19 @@ export class FactoryFeatureLogic {
 	};
 
 	createDomainChoice = (data: { id: string, name?: string, description?: string, count?: number }): FeatureDomain => {
-		const count = data.count || 1;
 		return {
 			id: data.id,
 			name: data.name || 'Domain',
 			description: data.description || '',
 			type: FeatureType.Domain,
 			data: {
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};
 	};
 
 	createDomainFeature = (data: { id: string, name?: string, description?: string, level: number, count?: number }): FeatureDomainFeature => {
-		const count = data.count || 1;
 		return {
 			id: data.id,
 			name: data.name || 'Domain Feature Choice',
@@ -254,7 +251,7 @@ export class FactoryFeatureLogic {
 			type: FeatureType.DomainFeature,
 			data: {
 				level: data.level,
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};
@@ -272,7 +269,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createHeroicResource = (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: { trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
+	createHeroicResource = (data: { id: string, name: string, description?: string, type?: 'heroic' | 'epic', gains: { tag: string, trigger: string, value: string }[], details?: string, canBeNegative?: boolean }): FeatureHeroicResource => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -288,21 +285,22 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createHeroicResourceGain = (data: { id: string, name?: string, trigger: string, value: string }): FeatureHeroicResourceGain => {
+	createHeroicResourceGain = (data: { id: string, name: string, tag: string, trigger: string, value: string, replacesTags?: string[] }): FeatureHeroicResourceGain => {
 		return {
 			id: data.id,
-			name: data.name || 'Heroic Resource Gain',
+			name: data.name,
 			description: '',
 			type: FeatureType.HeroicResourceGain,
 			data: {
+				tag: data.tag,
 				trigger: data.trigger,
-				value: data.value
+				value: data.value,
+				replacesTags: data.replacesTags || []
 			}
 		};
 	};
 
 	createItemChoice = (data: { id: string, name?: string, description?: string, types?: ItemType[], count?: number }): FeatureItemChoice => {
-		const count = data.count || 1;
 		const type = data.types && (data.types.length === 1) ? data.types[0] : 'Item';
 		return {
 			id: data.id,
@@ -311,14 +309,13 @@ export class FactoryFeatureLogic {
 			type: FeatureType.ItemChoice,
 			data: {
 				types: data.types || [ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket ],
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};
 	};
 
 	createKitChoice = (data: { id: string, name?: string, description?: string, types?: string[], count?: number }): FeatureKit => {
-		const count = data.count || 1;
 		return {
 			id: data.id,
 			name: data.name || 'Kit',
@@ -326,13 +323,13 @@ export class FactoryFeatureLogic {
 			type: FeatureType.Kit,
 			data: {
 				types: data.types || [ '' ],
-				count: count,
+				count: data.count || 1,
 				selected: []
 			}
 		};
 	};
 
-	static createLanguage = (data: { id: string, name?: string, description?: string, language: string }): FeatureLanguage => {
+	createLanguage = (data: { id: string, name?: string, description?: string, language: string }): FeatureLanguage => {
 		return {
 			id: data.id,
 			name: data.name || data.language,
@@ -483,9 +480,14 @@ export class FactoryFeatureLogic {
 	createSkillChoice = (data: { id: string, name?: string, description?: string, options?: string[], listOptions?: SkillList[], count?: number, selected?: string[] }): FeatureSkillChoice => {
 		const count = data.count || 1;
 		const options = data.options || [];
-		const listOptions = data.listOptions || [];
+		let listOptions = data.listOptions || [];
 
 		const prefix = (listOptions.length < 5) ? ((options.length === 0) && (listOptions.length > 0) ? `${listOptions.join(' / ')} ` : '') : '';
+
+		if ((options.length === 0) && (listOptions.length === 0)) {
+			// No options provided - let the user choose any skill
+			listOptions = [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ];
+		}
 
 		return {
 			id: data.id,
@@ -494,14 +496,14 @@ export class FactoryFeatureLogic {
 			type: FeatureType.SkillChoice,
 			data: {
 				options: data.options || [],
-				listOptions: data.listOptions || [],
+				listOptions: listOptions || [],
 				count: count,
 				selected: data.selected || []
 			}
 		};
 	};
 
-	createSoloMonster = (data: { id: string, name: string, gender?: 'm' | 'f' | 'n' , endEfect?: number }): FeatureText => {
+	createSoloMonster = (data: { id: string, name: string, gender?: 'm' | 'f' | 'n', endEffect?: number }): FeatureText => {
 		const capitalizedName = data.name.split(' ').map((n, i) => i === 0 ? Format.capitalize(n) : n).join(' ');
 		const genderWithDefault = data.gender ?? 'n';
 		const heSheThey = ({ m: 'he', f: 'she', n: 'they' } as const)[ genderWithDefault ];
@@ -511,8 +513,8 @@ export class FactoryFeatureLogic {
 			id: data.id,
 			name: 'Solo Monster',
 			description: `
-* **Solo Turns** ${capitalizedName} takes up to two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively. ${Format.capitalize(heSheThey)} can use two main actions on each of ${hisHerTheir} turns. While dazed, ${data.name} can take one action and one maneuver per turn.
-* **End Effect** At the end of ${hisHerTheir} turn, ${data.name} can take ${data.endEfect || 5} damage to end one *save ends* effect affecting ${himHerThem}. This damage can’t be reduced in any way.`,
+* **End Effect** At the end of each of ${hisHerTheir} turns, ${data.name} can take ${data.endEffect || 5} damage to end one effect on ${himHerThem} that can be ended by a saving throw. This damage can’t be reduced in any way.
+* **Solo Turns** ${capitalizedName} can take two turns each round. ${Format.capitalize(heSheThey)} can’t take turns consecutively.`,
 			type: FeatureType.Text,
 			data: null
 		};

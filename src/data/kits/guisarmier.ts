@@ -29,7 +29,7 @@ export const guisarmier: Kit = {
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createMelee() ],
-				target: '2 creatures or objects',
+				target: 'Two creatures or objects',
 				cost: 'signature',
 				sections: [
 					FactoryLogic.createAbilitySectionRoll(

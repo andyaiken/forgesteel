@@ -61,7 +61,8 @@ export const orc: Ancestry = {
 					value: 2
 				}
 			],
-			count: 3
+			count: 'ancestry'
 		})
-	]
+	],
+	ancestryPoints: 3
 };

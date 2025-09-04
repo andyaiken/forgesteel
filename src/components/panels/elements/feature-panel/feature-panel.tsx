@@ -265,14 +265,10 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<>
 				<div className='ds-text'></div>
-				<ul>
-					<li>
-						<Flex align='center' justify='space-between' gap={10}>
-							<div className='ds-text compact-text'>{data.trigger}</div>
-							<Pill>+{data.value}</Pill>
-						</Flex>
-					</li>
-				</ul>
+				<Flex align='center' justify='space-between' gap={10}>
+					<div className='ds-text compact-text'>{data.trigger}</div>
+					<Pill>+{data.value}</Pill>
+				</Flex>
 			</>
 		);
 	};

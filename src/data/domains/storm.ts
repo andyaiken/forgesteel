@@ -162,6 +162,7 @@ If you are in the same area as a creature using this or a similar feature who ha
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that an enemy within 10 squares is force moved',
 			value: '2'
 		}

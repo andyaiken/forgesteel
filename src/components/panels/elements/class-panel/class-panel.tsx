@@ -50,9 +50,7 @@ export const ClassPanel = (props: Props) => {
 									<div className='features'>
 										{
 											...lvl.features.map(f =>
-												<SelectablePanel key={f.id}>
-													<FeaturePanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-												</SelectablePanel>
+												<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 											)
 										}
 									</div>

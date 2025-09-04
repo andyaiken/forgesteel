@@ -18,7 +18,7 @@ export const trickery: Domain = {
 						FactoryLogic.feature.create({
 							id: 'domain-trickery-1-1',
 							name: 'Inspired Deception',
-							description: 'The gods favor your thievery with magic. Whenever you make a test that uses a skill you have from the intrigue skill group, you can use Intuition on the test instead of another characteristic.'
+							description: 'The gods favor your thievery with magic. Whenever you make a test that uses a skill you have from the intrigue skill group, you can use Presence on the test instead of another characteristic.'
 						}),
 						FactoryLogic.feature.createSkillChoice({
 							id: 'domain-trickery-1-2',
@@ -146,6 +146,7 @@ export const trickery: Domain = {
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that you or a creature within 10 squares takes the Aid Attack or Hide maneuver',
 			value: '2'
 		}

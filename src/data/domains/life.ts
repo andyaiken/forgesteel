@@ -4,7 +4,6 @@ import { Domain } from '../../models/domain';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { SkillList } from '../../enums/skill-list';
 
-
 export const life: Domain = {
 	id: 'domain-life',
 	name: 'Life',
@@ -129,6 +128,7 @@ export const life: Domain = {
 	resourceGains: [
 		{
 			resource: 'Piety',
+			tag: '',
 			trigger: 'The first time in an encounter that a creature within 10 squares regains Stamina',
 			value: '2'
 		}

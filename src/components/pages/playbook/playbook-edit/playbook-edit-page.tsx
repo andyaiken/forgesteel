@@ -1,6 +1,5 @@
 import { Button, Popover } from 'antd';
 import { CloseOutlined, DownOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { Adventure } from '../../../../models/adventure';
 import { AdventureEditPanel } from '../../../panels/edit/adventure-edit/adventure-edit-panel';
@@ -12,6 +11,8 @@ import { EncounterEditPanel } from '../../../panels/edit/encounter-edit/encounte
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
 import { Hero } from '../../../../models/hero';
+import { Monster } from '../../../../models/monster';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { Montage } from '../../../../models/montage';
 import { MontageEditPanel } from '../../../panels/edit/montage-edit/montage-edit-panel';
 import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
@@ -43,7 +44,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	showSourcebooks: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
@@ -76,7 +76,7 @@ export const PlaybookEditPage = (props: Props) => {
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
 
-	//#region Edit
+	// #region Edit
 
 	const getEditHeaderSection = () => {
 		return null;
@@ -153,9 +153,9 @@ export const PlaybookEditPage = (props: Props) => {
 		}
 	};
 
-	//#endregion
+	// #endregion
 
-	//#region Preview
+	// #region Preview
 
 	const getPreviewHeaderSection = () => {
 		return null;
@@ -186,7 +186,7 @@ export const PlaybookEditPage = (props: Props) => {
 		return null;
 	};
 
-	//#endregion
+	// #endregion
 
 	const getSubheader = () => {
 		if (kind === 'tactical-map') {
@@ -240,7 +240,7 @@ export const PlaybookEditPage = (props: Props) => {
 								: null
 						}
 					</div>
-					<AppFooter page='playbook' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

@@ -1,5 +1,6 @@
 import { Alert, Slider } from 'antd';
 import { Encounter } from '../../../models/encounter';
+import { EncounterDifficultyLogic } from '../../../logic/encounter-difficulty-logic';
 import { EncounterLogic } from '../../../logic/encounter-logic';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { Field } from '../../controls/field/field';
@@ -23,10 +24,10 @@ interface Props {
 export const EncounterDifficultyPanel = (props: Props) => {
 	try {
 		const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks, props.options);
-		const budgets = EncounterLogic.getBudgets(props.options, props.heroes);
-		const strength = EncounterLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterLogic.getDifficulty(strength, props.options, props.heroes);
-		const victories = EncounterLogic.getVictories(difficulty);
+		const budgets = EncounterDifficultyLogic.getBudgets(props.options, props.heroes);
+		const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
+		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+		const victories = EncounterDifficultyLogic.getVictories(difficulty);
 
 		const marks: Record<string | number, ReactNode> = {};
 		marks[0] = <div className='ds-text dimmed-text small-text'>Trivial</div>;

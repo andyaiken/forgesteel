@@ -2,7 +2,6 @@ import { Badge, Button, Divider, Input, Popover, Segmented, Select, Space, Table
 import { BarsOutlined, BookOutlined, DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, SettingOutlined, TableOutlined } from '@ant-design/icons';
 import { EnvironmentData, OrganizationData, UpbringingData } from '../../../../data/culture-data';
 import { HistogramPanel, HistogramTextPanel } from '../../../panels/histogram/histogram-panel';
-import { Monster, MonsterGroup } from '../../../../models/monster';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
 import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
@@ -17,6 +16,7 @@ import { Complication } from '../../../../models/complication';
 import { ComplicationPanel } from '../../../panels/elements/complication-panel/complication-panel';
 import { Culture } from '../../../../models/culture';
 import { CulturePanel } from '../../../panels/elements/culture-panel/culture-panel';
+import { CultureType } from '../../../../enums/culture-type';
 import { Domain } from '../../../../models/domain';
 import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
 import { Element } from '../../../../models/element';
@@ -27,14 +27,18 @@ import { FactoryLogic } from '../../../../logic/factory-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
+import { Imbuement } from '../../../../models/imbuement';
+import { ImbuementPanel } from '../../../panels/elements/imbuement-panel/imbuement-panel';
 import { Item } from '../../../../models/item';
 import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
 import { Kit } from '../../../../models/kit';
 import { KitArmor } from '../../../../enums/kit-armor';
 import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
 import { KitWeapon } from '../../../../enums/kit-weapon';
+import { Monster } from '../../../../models/monster';
 import { MonsterFilter } from '../../../../models/filter';
 import { MonsterFilterPanel } from '../../../panels/monster-filter/monster-filter-panel';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
@@ -46,6 +50,8 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { SubClass } from '../../../../models/subclass';
+import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
 import { Terrain } from '../../../../models/terrain';
 import { TerrainCategory } from '../../../../enums/terrain-category';
 import { TerrainPanel } from '../../../panels/elements/terrain-panel/terrain-panel';
@@ -59,7 +65,6 @@ import { useState } from 'react';
 
 import './library-list-page.scss';
 
-
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
@@ -70,7 +75,7 @@ interface Props {
 	showRoll: () => void;
 	showReference: () => void;
 	setOptions: (options: Options) => void;
- 	showSourcebooks: () => void;
+	showSourcebooks: () => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 }
@@ -145,6 +150,21 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
+	const getSubClasses = () => {
+		try {
+			return SourcebookLogic
+				.getSubClasses(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description,
+					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
 	const getComplications = () => {
 		try {
 			return SourcebookLogic
@@ -181,6 +201,20 @@ export const LibraryListPage = (props: Props) => {
 					item.name,
 					item.description,
 					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
+	const getImbuements = () => {
+		try {
+			return SourcebookLogic
+				.getImbuements(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
 				], searchTerm));
 		} catch (ex) {
 			console.error(ex);
@@ -522,7 +556,6 @@ export const LibraryListPage = (props: Props) => {
 				<div className='library-section-grid'>
 					{
 						list.map(c => {
-
 							const item = (
 								<SelectablePanel key={c.id} onSelect={() => navigation.goToLibraryView('class', c.id)}>
 									<ClassPanel heroClass={c} options={props.options} />
@@ -533,6 +566,79 @@ export const LibraryListPage = (props: Props) => {
 							if (sourcebook && sourcebook.id) {
 								return (
 									<Badge.Ribbon key={c.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getSubClassesSection = (list: SubClass[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(sc => ({
+								key: sc.id,
+								name: sc.name,
+								sourcebook: SourcebookLogic.getSubClassSourcebook(props.sourcebooks, sc)!.name
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(c => ({ text: c.name, value: c.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
+			return (
+				<div className='library-section-grid'>
+					{
+						list.map(sc => {
+							const item = (
+								<SelectablePanel key={sc.id} onSelect={() => navigation.goToLibraryView('subclass', sc.id)}>
+									<SubclassPanel subclass={sc} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getSubClassSourcebook(props.sourcebooks, sc);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={sc.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
 										{item}
 									</Badge.Ribbon>
 								);
@@ -647,7 +753,8 @@ export const LibraryListPage = (props: Props) => {
 								key: c.id,
 								name: c.name,
 								sourcebook: SourcebookLogic.getCultureSourcebook(props.sourcebooks, c)!.name,
-								languages: c.languages.join(', '),
+								type: c.type,
+								languages: c.language.data.selected.join(', '),
 								environment: c.environment ? c.environment.name : '',
 								organization: c.organization ? c.organization.name : '',
 								upbringing: c.upbringing ? c.upbringing.name : ''
@@ -673,6 +780,14 @@ export const LibraryListPage = (props: Props) => {
 								},
 								{
 									key: '3',
+									title: 'Type',
+									dataIndex: 'type',
+									filters: [ CultureType.Ancestral, CultureType.Professional ].map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.type.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.type.localeCompare(b.type)
+								},
+								{
+									key: '4',
 									title: 'Languages',
 									dataIndex: 'languages',
 									filters: SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ text: l.name, value: l.name })),
@@ -680,7 +795,7 @@ export const LibraryListPage = (props: Props) => {
 									sorter: (a, b) => a.languages.localeCompare(b.languages)
 								},
 								{
-									key: '4',
+									key: '5',
 									title: 'Environment',
 									dataIndex: 'environment',
 									filters: EnvironmentData.getEnvironments().map(e => ({ text: e.name, value: e.name })),
@@ -688,7 +803,7 @@ export const LibraryListPage = (props: Props) => {
 									sorter: (a, b) => a.environment.localeCompare(b.environment)
 								},
 								{
-									key: '5',
+									key: '6',
 									title: 'Organization',
 									dataIndex: 'organization',
 									filters: OrganizationData.getOrganizations().map(o => ({ text: o.name, value: o.name })),
@@ -696,7 +811,7 @@ export const LibraryListPage = (props: Props) => {
 									sorter: (a, b) => a.organization.localeCompare(b.organization)
 								},
 								{
-									key: '6',
+									key: '7',
 									title: 'Upbringing',
 									dataIndex: 'upbringing',
 									filters: UpbringingData.getUpbringings().map(u => ({ text: u.name, value: u.name })),
@@ -797,6 +912,97 @@ export const LibraryListPage = (props: Props) => {
 							if (sourcebook && sourcebook.id) {
 								return (
 									<Badge.Ribbon key={d.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
+										{item}
+									</Badge.Ribbon>
+								);
+							}
+
+							return item;
+						})
+					}
+				</div>
+			);
+		} catch (ex) {
+			console.error(ex);
+			return null;
+		}
+	};
+
+	const getImbuementsSection = (list: Imbuement[]) => {
+		try {
+			if (list.length === 0) {
+				return (
+					<Empty />
+				);
+			}
+
+			if (props.options.showContentInTable) {
+				return (
+					<div className='library-section-table'>
+						<Table
+							dataSource={list.map(i => ({
+								key: i.id,
+								name: i.name,
+								sourcebook: SourcebookLogic.getImbuementSourcebook(props.sourcebooks, i)!.name,
+								type: i.type,
+								level: i.level
+							}))}
+							columns={[
+								{
+									key: '1',
+									title: 'Name',
+									dataIndex: 'name',
+									filters: list.map(i => ({ text: i.name, value: i.name })),
+									onFilter: (value, record) => record.name.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.name.localeCompare(b.name),
+									sortDirections: [ 'ascend', 'descend', 'ascend' ],
+									defaultSortOrder: 'ascend'
+								},
+								{
+									key: '2',
+									title: 'Sourcebook',
+									dataIndex: 'sourcebook',
+									filters: props.sourcebooks.map(sb => ({ text: sb.name, value: sb.name })),
+									onFilter: (value, record) => record.sourcebook.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.sourcebook.localeCompare(b.sourcebook)
+								},
+								{
+									key: '2',
+									title: 'Type',
+									dataIndex: 'type',
+									filters: Collections.distinct(list.map(i => i.type), t => t).sort().map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.type.toLowerCase().includes((value as string).toLowerCase()),
+									sorter: (a, b) => a.type.localeCompare(b.type)
+								},
+								{
+									key: '3',
+									title: 'Level',
+									dataIndex: 'level',
+									filters: Collections.distinct(list.map(i => i.level), t => t).sort((a, b) => a - b).map(t => ({ text: t, value: t })),
+									onFilter: (value, record) => record.level === value,
+									sorter: (a, b) => a.level - b.level
+								}
+							]}
+							pagination={false}
+						/>
+					</div>
+				);
+			}
+
+			return (
+				<div className='library-section-grid'>
+					{
+						list.map(i => {
+							const item = (
+								<SelectablePanel key={i.id} onSelect={() => navigation.goToLibraryView('imbuement', i.id)}>
+									<ImbuementPanel imbuement={i} options={props.options} />
+								</SelectablePanel>
+							);
+
+							const sourcebook = SourcebookLogic.getImbuementSourcebook(props.sourcebooks, i);
+							if (sourcebook && sourcebook.id) {
+								return (
+									<Badge.Ribbon key={i.id} text={sourcebook.name || 'Unnamed Sourcebook'}>
 										{item}
 									</Badge.Ribbon>
 								);
@@ -1602,11 +1808,13 @@ export const LibraryListPage = (props: Props) => {
 		const complications = getComplications();
 		const cultures = getCultures();
 		const domains = getDomains();
+		const imbuements = getImbuements();
 		const items = getItems();
 		const kits = getKits();
 		const monsterGroups = getMonsterGroups();
 		const monsters = Collections.sort(getMonsters(), m => m.name);
 		const perks = getPerks();
+		const subclasses = getSubClasses();
 		const terrains = getTerrainObjects();
 		const titles = getTitles();
 
@@ -1626,7 +1834,7 @@ export const LibraryListPage = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={(
-								<div style={{ display: 'flex', flexDirection: 'column' }}>
+								<div style={{ display: 'flex', flexDirection: 'column', minWidth: '150px' }}>
 									{
 										sourcebookOptions.length > 1 ?
 											<div>
@@ -1652,9 +1860,8 @@ export const LibraryListPage = (props: Props) => {
 											: null
 									}
 									{sourcebookOptions.length > 1 ? <Divider /> : null}
-									<Space>
+									<Space direction='vertical' style={{ width: '100%' }}>
 										<Button type='primary' block={true} icon={<PlusOutlined />} onClick={createElement}>Create</Button>
-										<div className='ds-text'>or</div>
 										<Upload
 											style={{ width: '100%' }}
 											accept={`.drawsteel-${currentTab.toLowerCase()},.ds-${currentTab.toLowerCase()}`}
@@ -1663,7 +1870,7 @@ export const LibraryListPage = (props: Props) => {
 												file
 													.text()
 													.then(json => {
-														const e = (JSON.parse(json) as Element);
+														const e = JSON.parse(json) as Element;
 														props.importElement(currentTab, sourcebookID, e);
 													});
 												return false;
@@ -1759,6 +1966,16 @@ export const LibraryListPage = (props: Props) => {
 									children: getDomainsSection(domains)
 								},
 								{
+									key: 'imbuement',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Imbuements</div>
+											<div className='section-count'>{imbuements.length}</div>
+										</div>
+									),
+									children: getImbuementsSection(imbuements)
+								},
+								{
 									key: 'item',
 									label: (
 										<div className='section-header'>
@@ -1799,6 +2016,16 @@ export const LibraryListPage = (props: Props) => {
 									children: getPerksSection(perks)
 								},
 								{
+									key: 'subclass',
+									label: (
+										<div className='section-header'>
+											<div className='section-title'>Subclasses</div>
+											<div className='section-count'>{subclasses.length}</div>
+										</div>
+									),
+									children: getSubClassesSection(subclasses)
+								},
+								{
 									key: 'terrain',
 									label: (
 										<div className='section-header'>
@@ -1837,7 +2064,7 @@ export const LibraryListPage = (props: Props) => {
 							}
 						/>
 					</div>
-					<AppFooter page='library' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

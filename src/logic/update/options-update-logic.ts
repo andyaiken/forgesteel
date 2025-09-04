@@ -1,5 +1,6 @@
 import { Options } from '../../models/options';
 import { PanelWidth } from '../../enums/panel-width';
+import { SheetPageSize } from '../../enums/sheet-page-size';
 
 export class OptionsUpdateLogic {
 	static updateOptions = (options: Options) => {
@@ -23,16 +24,32 @@ export class OptionsUpdateLogic {
 			options.abilityWidth = PanelWidth.Medium;
 		}
 
+		if (options.includePlayState === undefined) {
+			options.includePlayState = false;
+		}
+
+		if (options.colorSheet === undefined) {
+			options.colorSheet = true;
+		}
+
+		if (options.featuresInclude === undefined) {
+			options.featuresInclude = 'all';
+		}
+
+		if (options.classicSheetPageSize === undefined) {
+			options.classicSheetPageSize = SheetPageSize.Letter;
+		}
+
+		if (options.pageOrientation === undefined) {
+			options.pageOrientation = 'portrait';
+		}
+
 		if (options.showMonstersInGroups === undefined) {
 			options.showMonstersInGroups = true;
 		}
 
 		if (options.showContentInTable === undefined) {
 			options.showContentInTable = false;
-		}
-
-		if (options.showSimilarMonsters === undefined) {
-			options.showSimilarMonsters = true;
 		}
 
 		if (options.similarLevel === undefined) {

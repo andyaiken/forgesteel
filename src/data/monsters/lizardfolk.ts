@@ -2,7 +2,7 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
@@ -105,7 +105,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -146,7 +146,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -188,7 +188,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(8) ],
-						target: '1 creature or object per minion',
+						target: 'One creature or object per minion',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -229,7 +229,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -248,7 +248,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: '1 creature',
+						target: 'One creature',
 						cost: 2,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -288,7 +288,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -308,7 +308,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						cost: 2,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -349,7 +349,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(8) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -369,7 +369,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: '1 creature or object',
+						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
@@ -414,7 +414,7 @@ Adventurers cross paths with lizardfolk while trekking through their homelands. 
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(3) ],
-						target: '2 creatures or objects',
+						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({

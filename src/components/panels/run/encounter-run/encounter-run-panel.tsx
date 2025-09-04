@@ -1,13 +1,13 @@
-import { Alert, Button, Drawer, Flex, Progress, Space, Tabs } from 'antd';
+import { Alert, Button, Drawer, Flex, Space, Tabs } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { Encounter, EncounterGroup, EncounterSlot } from '../../../../models/encounter';
+import { Encounter, EncounterGroup } from '../../../../models/encounter';
 import { EncounterGroupHero, EncounterGroupMonster, EncounterGroupTerrain } from '../../encounter-group/encounter-group-panel';
-import { FeatureAbility, FeatureMalice } from '../../../../models/feature';
 import { AbilityPanel } from '../../elements/ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Empty } from '../../../controls/empty/empty';
 import { EncounterLogic } from '../../../../logic/encounter-logic';
 import { EncounterObjectivePanel } from '../../elements/encounter-objective/encounter-objective-panel';
+import { EncounterSlot } from '../../../../models/encounter-slot';
 import { EncounterTurnModal } from '../../../modals/encounter-turn/encounter-turn-modal';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FactoryLogic } from '../../../../logic/factory-logic';
@@ -24,7 +24,7 @@ import { Markdown } from '../../../controls/markdown/markdown';
 import { MinionGroupHealthPanel } from '../../health/health-panel';
 import { Modal } from '../../../modals/modal/modal';
 import { Monster } from '../../../../models/monster';
-import { MonsterData } from '../../../../data/monster-data';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterModal } from '../../../modals/monster/monster-modal';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
@@ -33,9 +33,8 @@ import { MonsterSelectModal } from '../../../modals/select/monster-select/monste
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
-import { ResourcePill } from '../../../controls/pill/pill';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Terrain } from '../../../../models/terrain';
 import { TerrainModal } from '../../../modals/terrain/terrain-modal';
 import { Utils } from '../../../../utils/utils';
@@ -43,6 +42,12 @@ import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useState } from 'react';
 
 import './encounter-run-panel.scss';
+
+interface SelectedMonsterInfo {
+	monster: Monster;
+	monsterGroup?: MonsterGroup;
+	isTeamHero: boolean;
+}
 
 interface Props {
 	encounter: Encounter;
@@ -60,7 +65,7 @@ export const EncounterRunPanel = (props: Props) => {
 	const [ addingHeroes, setAddingHeroes ] = useState<boolean>(false);
 	const [ addingMonsters, setAddingMonsters ] = useState<boolean>(false);
 	const [ selectingGroup, setSelectingGroup ] = useState<boolean>(false);
-	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
+	const [ selectedMonster, setSelectedMonster ] = useState<SelectedMonsterInfo | null>(null);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
 	const [ selectedTerrain, setSelectedTerrain ] = useState<Terrain | null>(null);
 	const [ selectedMinionSlot, setSelectedMinionSlot ] = useState<EncounterSlot | null>(null);
@@ -85,7 +90,10 @@ export const EncounterRunPanel = (props: Props) => {
 
 	const addHeroes = (heroes: Hero[]) => {
 		const copy = Utils.copy(encounter);
-		heroes.forEach(h => copy.heroes.push(Utils.copy(h)));
+		heroes.forEach(h => {
+			h.state.controlledSlots = [];
+			copy.heroes.push(h);
+		});
 		setEncounter(copy);
 		props.onChange(copy);
 	};
@@ -209,7 +217,16 @@ export const EncounterRunPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			const setEncounterState = (value: 'ready' | 'current' | 'finished') => {
+			const setGroupName = (value: string) => {
+				const copy = Utils.copy(encounter);
+				copy.groups
+					.filter(g => g.id === group.id)
+					.forEach(g => g.name = value);
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const setGroupEncounterState = (value: 'ready' | 'current' | 'finished') => {
 				const copy = Utils.copy(encounter);
 				copy.groups
 					.filter(g => g.id === group.id)
@@ -224,9 +241,14 @@ export const EncounterRunPanel = (props: Props) => {
 					group={group}
 					index={index}
 					encounter={encounter}
-					onSelectMonster={setSelectedMonster}
+					sourcebooks={props.sourcebooks}
+					onSelectMonster={(monster, monsterGroupID) => {
+						const group = SourcebookLogic.getMonsterGroups(props.sourcebooks).find(g => g.id === monsterGroupID);
+						setSelectedMonster({ monster: monster, monsterGroup: group, isTeamHero: false });
+					}}
 					onSelectMinionSlot={setSelectedMinionSlot}
-					onSetState={(_group, state) => setEncounterState(state)}
+					onSetName={(_group, value) => setGroupName(value)}
+					onSetState={(_group, value) => setGroupEncounterState(value)}
 					onDuplicate={duplicateGroup}
 					onDelete={deleteGroup}
 				/>
@@ -277,7 +299,7 @@ export const EncounterRunPanel = (props: Props) => {
 			};
 
 			const addMonsterToSquad = (hero: Hero, slotID: string) => {
-				const monsters = [ ... HeroLogic.getCompanions(hero), ...HeroLogic.getSummons(hero) ];
+				const monsters = [ ...HeroLogic.getCompanions(hero), ...HeroLogic.getSummons(hero) ];
 
 				const copy = Utils.copy(encounter);
 				copy.heroes
@@ -303,9 +325,13 @@ export const EncounterRunPanel = (props: Props) => {
 					key={hero.id}
 					hero={hero}
 					encounter={encounter}
+					sourcebooks={props.sourcebooks}
 					options={props.options}
 					onSelect={setSelectedHero}
-					onSelectMonster={setSelectedMonster}
+					onSelectMonster={(monster, monsterGroupID) => {
+						const group = SourcebookLogic.getMonsterGroups(props.sourcebooks).find(g => g.id === monsterGroupID);
+						setSelectedMonster({ monster: monster, monsterGroup: group, isTeamHero: true });
+					}}
 					onSelectMinionSlot={setSelectedMinionSlot}
 					onSetState={setEncounterState}
 					onAddSquad={addSquad}
@@ -426,68 +452,22 @@ export const EncounterRunPanel = (props: Props) => {
 		);
 	};
 
-	const getMalice = () => {
-		const monsterGroups = EncounterLogic.getMonsterGroups(encounter, props.sourcebooks);
-		if (monsterGroups.length === 0) {
-			return null;
-		}
-
-		const getMaliceItem = (m: FeatureMalice | FeatureAbility) => {
-			const cost = m.type === FeatureType.Ability ? m.data.ability.cost as number : m.data.cost;
-
-			return (
-				<SelectablePanel key={m.id}>
-					<FeaturePanel
-						feature={m}
-						options={props.options}
-						mode={PanelMode.Full}
-						cost={cost}
-						repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
-					/>
-					{
-						encounter.malice >= cost ?
-							<Button
-								block={true}
-								onClick={() => setMalice(Math.max(encounter.malice - cost, 0))}
-							>
-								Use
-								<ResourcePill value={cost} />
-							</Button>
-							:
-							<div className='malice-progress'>
-								<Progress percent={100 * encounter.malice / cost} steps={cost} showInfo={false} />
-								<ResourcePill value={`${encounter.malice} of ${cost}`} />
-							</div>
-					}
-				</SelectablePanel>
-			);
-		};
-
-		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>Malice</HeaderText>
-				<div className='malice'>
-					{MonsterData.malice.map(getMaliceItem)}
-				</div>
-				{
-					monsterGroups.filter(group => group.malice.length > 0).map(group => (
-						<div key={group.id}>
-							<HeaderText>{group.name} Malice</HeaderText>
-							<div className='ds-text'>
-								At the start of any {group.name}'s turn, you can spend malice to activate one of the following features.
-							</div>
-							<div className='malice'>
-								{group.malice.map(getMaliceItem)}
-							</div>
-						</div>
-					))
-				}
-			</Space>
-		);
-	};
-
 	const getSidebar = () => {
-		const active = getActiveMonsters();
+		const active: SelectedMonsterInfo[] = [];
+		encounter.groups
+			.filter(g => g.encounterState === 'current')
+			.flatMap(g => g.slots)
+			.forEach(s => {
+				const group = SourcebookLogic.getMonsterGroup(props.sourcebooks, s.monsterID);
+				s.monsters
+					.filter(m => !m.state.defeated)
+					.forEach(m => active.push({
+						monster: m,
+						monsterGroup: group || undefined,
+						isTeamHero: false
+					}));
+			});
+
 		if (active.length > 0) {
 			return (
 				<Tabs
@@ -495,7 +475,24 @@ export const EncounterRunPanel = (props: Props) => {
 						{
 							key: 'active',
 							label: active.length > 1 ? 'Active Monsters' : 'Active Monster',
-							children: active
+							children: active.map(m => (
+								<MonsterPanel
+									key={m.monster.id}
+									monster={m.monster}
+									options={props.options}
+									mode={PanelMode.Full}
+									style={{ padding: 0 }}
+									extra={[
+										<Button
+											key='select'
+											type='text'
+											title='Show stat block'
+											icon={<InfoCircleOutlined />}
+											onClick={() => setSelectedMonster(m)}
+										/>
+									]}
+								/>
+							))
 						}
 					]}
 				/>
@@ -518,26 +515,6 @@ export const EncounterRunPanel = (props: Props) => {
 				]}
 			/>
 		);
-	};
-
-	const getActiveMonsters = () => {
-		return encounter.groups
-			.filter(g => g.encounterState === 'current')
-			.flatMap(g => g.slots)
-			.flatMap(s => s.monsters)
-			.filter(m => !m.state.defeated)
-			.map(m => (
-				<MonsterPanel
-					key={m.id}
-					monster={m}
-					options={props.options}
-					mode={PanelMode.Full}
-					style={{ padding: 0 }}
-					extra={[
-						<Button key='select' type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => setSelectedMonster(m)} />
-					]}
-				/>
-			));
 	};
 
 	const getReminders = () => {
@@ -647,8 +624,8 @@ export const EncounterRunPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={className} id={encounter.id}>
-					<Flex align='flex-start' gap={20}>
-						<div style={{ flex: '1 1 0' }}>
+					<Flex align='flex-start' gap={20} style={{ height: '100%' }}>
+						<div style={{ flex: '1 1 0', height: '100%', overflowY: 'auto' }}>
 							<HeaderText
 								level={1}
 								extra={[
@@ -672,11 +649,6 @@ export const EncounterRunPanel = (props: Props) => {
 										key: 'terrain',
 										label: 'Terrain',
 										children: getTerrain()
-									},
-									{
-										key: 'malice',
-										label: 'Malice',
-										children: getMalice()
 									}
 								]}
 								activeKey={tab}
@@ -693,7 +665,7 @@ export const EncounterRunPanel = (props: Props) => {
 						</div>
 						{
 							showSidebar ?
-								<div style={{ flex: '0 0 400px' }}>
+								<div style={{ flex: '0 0 400px', height: '100%', overflowY: 'auto' }}>
 									{getSidebar()}
 								</div>
 								: null
@@ -742,7 +714,9 @@ export const EncounterRunPanel = (props: Props) => {
 					{
 						selectedMonster ?
 							<MonsterModal
-								monster={selectedMonster}
+								monster={selectedMonster.monster}
+								monsterGroup={selectedMonster.monsterGroup}
+								encounter={selectedMonster.isTeamHero ? undefined : encounter}
 								options={props.options}
 								onClose={() => setSelectedMonster(null)}
 								updateMonster={monster => {
@@ -776,6 +750,7 @@ export const EncounterRunPanel = (props: Props) => {
 									setEncounter(copy);
 									props.onChange(copy);
 								}}
+								setMalice={selectedMonster.isTeamHero ? undefined : setMalice}
 							/>
 							: null
 					}

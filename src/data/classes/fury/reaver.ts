@@ -84,7 +84,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 5,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -159,7 +159,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 			]
 		},
 		{
-			level:  6,
+			level: 6,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-2-6-1',
@@ -170,7 +170,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									id: 'fury-sub-2-6-1a',
 									name: 'Death Strike',
 									description: 'Once you taste your foe’s blood, you become more efficient and turn every killing blow into an opportunity.',
-									type: FactoryLogic.type.createTrigger('You reduce a creature to 0 Stamina with a strike.', { free: true } ),
+									type: FactoryLogic.type.createTrigger('You reduce a creature to 0 Stamina with a strike.', { free: true }),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
 									target: 'Self',
@@ -191,7 +191,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(
@@ -233,7 +233,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 			]
 		},
 		{
-			level:  9,
+			level: 9,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-2-9-1',
@@ -247,7 +247,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(
@@ -273,7 +273,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 									type: FactoryLogic.type.createMain(),
 									keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 									distance: [ FactoryLogic.distance.createMelee() ],
-									target: '1 creature',
+									target: 'One creature',
 									cost: 11,
 									sections: [
 										FactoryLogic.createAbilitySectionRoll(

@@ -4,7 +4,6 @@ import { AppFooter } from '../../panels/app-footer/app-footer';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
 import { useMediaQuery } from '../../../hooks/use-media-query';
 import { useNavigation } from '../../../hooks/use-navigation';
 import { useState } from 'react';
@@ -12,12 +11,10 @@ import { useState } from 'react';
 import './welcome-page.scss';
 
 interface Props {
-	heroes: Hero[];
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	showSourcebooks: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
@@ -43,7 +40,7 @@ export const WelcomePage = (props: Props) => {
 						</div>
 						<ul>
 							<li>
-								All the official content is included (for levels 1 to 3), and you can also use any homebrew content your director has created.
+								All the official content is included, and you can also use any homebrew content your director has created.
 							</li>
 							<li>
 								You can use the app to track your hero's stamina, conditions, surges, and so on.
@@ -228,7 +225,7 @@ export const WelcomePage = (props: Props) => {
 							{getContent(page)}
 						</div>
 					</div>
-					<AppFooter page='welcome' heroes={props.heroes} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} showSourcebooks={props.showSourcebooks} />
+					<AppFooter page='welcome' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

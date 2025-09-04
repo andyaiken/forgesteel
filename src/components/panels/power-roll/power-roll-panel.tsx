@@ -69,7 +69,7 @@ export const PowerRollPanel = (props: Props) => {
 		if (props.hero && props.ability) {
 			const sections = [];
 
-			//#region Kits
+			// #region Kits
 
 			let isMelee = props.ability.keywords.includes(AbilityKeyword.Melee) && props.ability.keywords.includes(AbilityKeyword.Weapon);
 			let isRanged = props.ability.keywords.includes(AbilityKeyword.Ranged) && props.ability.keywords.includes(AbilityKeyword.Weapon);
@@ -107,9 +107,9 @@ export const PowerRollPanel = (props: Props) => {
 				});
 			}
 
-			//#endregion
+			// #endregion
 
-			//#region Damage bonuses
+			// #region Damage bonuses
 
 			if (!props.autoCalc) {
 				HeroLogic
@@ -120,19 +120,27 @@ export const PowerRollPanel = (props: Props) => {
 					});
 			}
 
-			//#endregion
+			// #endregion
 
-			//#region Potency
+			// #region Potency
 
 			if (!props.autoCalc) {
 				const usesPotency = AbilityLogic.usesPotency(props.powerRoll);
 				if (usesPotency) {
-					const potency = `weak ${HeroLogic.calculatePotency(props.hero, 'weak')}, average ${HeroLogic.calculatePotency(props.hero, 'average')}, strong ${HeroLogic.calculatePotency(props.hero, 'strong')}`;
-					sections.push(<Field key='potency' label='Potency' value={potency} />);
+					const weak = HeroLogic.getPotency(props.hero, 'weak');
+					const avg = HeroLogic.getPotency(props.hero, 'average');
+					const strong = HeroLogic.getPotency(props.hero, 'strong');
+					sections.push(
+						<Field
+							key='potency'
+							label='Potency'
+							value={`weak ${weak}, average ${avg}, strong ${strong}`}
+						/>
+					);
 				}
 			}
 
-			//#endregion
+			// #endregion
 
 			if (sections.length > 0) {
 				return (
@@ -185,7 +193,7 @@ export const PowerRollPanel = (props: Props) => {
 						</Space>
 					</div>
 					<div className={props.highlightTier === 1 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
-						<div className='tier'>11 -</div>
+						<div className='tier'>≤ 11</div>
 						<div className='effect'><Markdown text={getTier(1, props.powerRoll.tier1)} /></div>
 						{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 1).length}%</div> : null}
 					</div>
@@ -195,7 +203,7 @@ export const PowerRollPanel = (props: Props) => {
 						{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n === 2).length}%</div> : null}
 					</div>
 					<div className={props.highlightTier === 3 ? 'power-roll-row highlight-row' : 'power-roll-row'}>
-						<div className='tier'>17 +</div>
+						<div className='tier'>≥ 17</div>
 						<div className='effect'><Markdown text={getTier(3, props.powerRoll.tier3)} /></div>
 						{showOdds && props.odds ? <div className='odds'>{props.odds.filter(n => n >= 3).length}%</div> : null}
 					</div>

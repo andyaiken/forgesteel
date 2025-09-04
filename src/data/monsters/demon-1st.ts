@@ -9,9 +9,9 @@ import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
-export const demon: MonsterGroup = {
-	id: 'monster-group-demon',
-	name: 'Demon',
+export const demon1st: MonsterGroup = {
+	id: 'monster-group-demon-1st',
+	name: 'Demon - 1st Echelon',
 	description: `
 Creatures of incarnate hate, demons spawn naturally in the Abyssal Wasteland. They crave violence and suffering the way other creatures need food. A demon cares only for themself, and they torture and tear lesser demons apart for fun.
 
@@ -19,22 +19,22 @@ The bestial appearance of each demon is unique, composed of a chaotic arrangemen
 	picture: null,
 	information: [
 		{
-			id: 'demon-info-1',
+			id: 'demon-1st-info-1',
 			name: 'Mortal Alliances',
 			description: 'Demons form temporary alliances with evil mortals in exchange for souls to consume. Such alliances create carnage with alarming efficiency, though they inevitably collapse when the demons decide to devour their foolish partners. The only creature who can truly keep a demon in line is a more powerful demon.'
 		},
 		{
-			id: 'demon-info-2',
+			id: 'demon-1st-info-2',
 			name: 'Soul Reavers',
 			description: 'Demons feast not on food or liquids, but on souls. Souls fuel their anarchic powers, and while a demon is starved for souls, they can scarcely think. Whenever a demon kills a creature who has a soul, they consume that soul and keep its energy within their body. A demon can then burn that soul energy to enact their most devastating abilities.'
 		},
 		{
-			id: 'demon-info-3',
+			id: 'demon-1st-info-3',
 			name: 'Lethe',
 			description: 'When a demon’s soul energy begins to flag, they fall into a state known as lethe—a violent hunger wherein they can only lash out in a desperate search for sustenance. Demons who have fallen into lethe become single-minded and violent, seeking only to consume.'
 		},
 		{
-			id: 'demon-info-4',
+			id: 'demon-1st-info-4',
 			name: 'Demonic Hierarchy',
 			description: `
 Mortal scholars have classified demons into ten categories, each increasingly more powerful. Though demons don’t use these classifications themselves, this system reflects their hierarchy, as stronger demons bully the weak into service.
@@ -42,12 +42,12 @@ Mortal scholars have classified demons into ten categories, each increasingly mo
 Each time a demon consumes a soul, there’s a chance they might evolve into a more powerful demon. The evolution from one category to the next can be instantaneous, or it can take years. This inconsistency has led to much scholarly debate on whether all souls are equal, or whether demonic evolution is aided by the consumption of souls that are especially corrupt—or heroic.`
 		},
 		{
-			id: 'demon-info-5',
+			id: 'demon-1st-info-5',
 			name: 'Demon Languages',
 			description: 'Lower categories of demons speak Proto-Ctholl. As demons evolve and reach category 3 or higher, their speech turns into proper Tholl.'
 		},
 		{
-			id: 'demon-info-6',
+			id: 'demon-1st-info-6',
 			name: 'Demons—1st Echelon',
 			description: `
 A number of lesser demons have been identified across categories 1 to 3:
@@ -74,7 +74,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 	],
 	malice: [
 		FactoryLogic.feature.createMalice({
-			id: 'demon-malice-1',
+			id: 'demon-1st-malice-1',
 			name: 'Soulburn',
 			cost: 3,
 			sections: [
@@ -82,7 +82,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			]
 		}),
 		FactoryLogic.feature.createMalice({
-			id: 'demon-malice-3',
+			id: 'demon-1st-malice-3',
 			name: 'Abyssal Evolution',
 			cost: 7,
 			sections: [
@@ -90,7 +90,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			]
 		}),
 		FactoryLogic.feature.createMalice({
-			id: 'demon-malice-2',
+			id: 'demon-1st-malice-2',
 			name: 'Abyssal Rift',
 			cost: 7,
 			sections: [ 'Two size 2 rifts to the Abyssal Wasteland appear at locations of your choice. Any demon can use an abyssal rift as a portal to another abyssal rift in the encounter, moving into any space in one rift and appearing immediately in any unoccupied space in the other rift. A non-demon who enters a rift for the first time in a round or starts their turn there takes corruption damage equal to the level of the highest-level demon on the encounter map. An abyssal rift is an immovable object that has 25 Stamina, damage immunity 2, and holy weakness 5. The rift closes when there are no demons remaining on the encounter map. Additionally, a creature who has the Magic or Psionics skill can make a **Reason test** or **Intuition test** as a maneuver while adjacent to a rift to destabilize and close it.',
@@ -104,7 +104,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 	],
 	monsters: [
 		FactoryLogic.createMonster({
-			id: 'demon-1',
+			id: 'demon-1st-1',
 			name: 'Ensnarer',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
@@ -120,7 +120,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-1-feature-1',
+						id: 'demon-1st-1-feature-1',
 						name: 'Barbed Tongues',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -139,18 +139,18 @@ A number of lesser demons have been identified across categories 1 to 3:
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-1-feature-2',
+					id: 'demon-1st-1-feature-2',
 					name: 'Soulsight',
 					description: 'Any creature within 2 squares of the ensnarer can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-1-feature-3',
+					id: 'demon-1st-1-feature-3',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'demon-2',
+			id: 'demon-1st-2',
 			name: 'Frenzied',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
@@ -166,7 +166,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-2-feature-1',
+						id: 'demon-1st-2-feature-1',
 						name: 'Rip and Tear',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -184,18 +184,18 @@ A number of lesser demons have been identified across categories 1 to 3:
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-2-feature-2',
+					id: 'demon-1st-2-feature-2',
 					name: 'Soulsight',
 					description: 'Any creature within 2 squares of the ensnarer can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-2-feature-3',
+					id: 'demon-1st-2-feature-3',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'demon-3',
+			id: 'demon-1st-3',
 			name: 'Pitling',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
@@ -211,7 +211,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-3-feature-1',
+						id: 'demon-1st-3-feature-1',
 						name: 'Spit',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -229,23 +229,23 @@ A number of lesser demons have been identified across categories 1 to 3:
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-3-feature-2',
+					id: 'demon-1st-3-feature-2',
 					name: 'Horrid Stench',
 					description: 'Any enemy who has three or more pitlings within 2 squares of them can\'t regain Stamina.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-3-feature-3',
+					id: 'demon-1st-3-feature-3',
 					name: 'Soulsight',
 					description: 'Any creature within 2 squares of the ensnarer can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-3-feature-4',
+					id: 'demon-1st-3-feature-4',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'demon-4',
+			id: 'demon-1st-4',
 			name: 'Bendrak',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Hexer),
@@ -260,7 +260,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-4-feature-1',
+						id: 'demon-1st-4-feature-1',
 						name: 'Warp Perception',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -280,7 +280,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-4-feature-2',
+						id: 'demon-1st-4-feature-2',
 						name: 'Vanish',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 1,
@@ -293,23 +293,23 @@ A number of lesser demons have been identified across categories 1 to 3:
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-4-feature-3',
+					id: 'demon-1st-4-feature-3',
 					name: 'Lethe',
 					description: 'While the bendrak is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-4-feature-4',
+					id: 'demon-1st-4-feature-4',
 					name: 'Soulsight',
 					description: 'Any creature within 2 squares of the bendrak can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-4-feature-5',
+					id: 'demon-1st-4-feature-5',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'demon-5',
+			id: 'demon-1st-5',
 			name: 'Muceron',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Brute),
@@ -324,7 +324,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-5-feature-1',
+						id: 'demon-1st-5-feature-1',
 						name: 'Barbed Tongues',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -344,7 +344,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-5-feature-2',
+						id: 'demon-1st-5-feature-2',
 						name: 'Tongue Pull',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
@@ -357,23 +357,23 @@ A number of lesser demons have been identified across categories 1 to 3:
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-5-feature-3',
+					id: 'demon-1st-5-feature-3',
 					name: 'Lethe',
 					description: 'While the muceron is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-5-feature-4',
+					id: 'demon-1st-5-feature-4',
 					name: 'Soulsight',
 					description: 'Any creature within 2 squares of the bendrak can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-5-feature-5',
+					id: 'demon-1st-5-feature-5',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'demon-6',
+			id: 'demon-1st-6',
 			name: 'Remasch',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
@@ -388,7 +388,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-6-feature-1',
+						id: 'demon-1st-6-feature-1',
 						name: 'Abyssal Strike',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -412,7 +412,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-6-feature-2',
+						id: 'demon-1st-6-feature-2',
 						name: 'Grasping Shadows',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
@@ -425,23 +425,23 @@ A number of lesser demons have been identified across categories 1 to 3:
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-6-feature-3',
+					id: 'demon-1st-6-feature-3',
 					name: 'Lethe',
 					description: 'While the remasch is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-6-feature-4',
+					id: 'demon-1st-6-feature-4',
 					name: 'Soulsight',
 					description: 'Any creature within 2 squares of the remasch can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-6-feature-5',
+					id: 'demon-1st-6-feature-5',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'demon-7',
+			id: 'demon-1st-7',
 			name: 'Ruinant',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Harrier),
@@ -456,7 +456,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-7-feature-1',
+						id: 'demon-1st-7-feature-1',
 						name: 'Bloodletting Claw',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -475,7 +475,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-7-feature-2',
+						id: 'demon-1st-7-feature-2',
 						name: 'Salt Wounds',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
@@ -494,23 +494,23 @@ A number of lesser demons have been identified across categories 1 to 3:
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-7-feature-3',
+					id: 'demon-1st-7-feature-3',
 					name: 'Lethe',
 					description: 'While the ruinant is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-7-feature-4',
+					id: 'demon-1st-7-feature-4',
 					name: 'Soulsight',
 					description: 'Any creature within 2 squares of the ruinant can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-7-feature-5',
+					id: 'demon-1st-7-feature-5',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'demon-8',
+			id: 'demon-1st-8',
 			name: 'Torlas',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Controller),
@@ -525,7 +525,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-8-feature-1',
+						id: 'demon-1st-8-feature-1',
 						name: 'Floor to Flesh',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -545,7 +545,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-8-feature-2',
+						id: 'demon-1st-8-feature-2',
 						name: 'Grasping Tendons',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -557,23 +557,23 @@ A number of lesser demons have been identified across categories 1 to 3:
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-8-feature-3',
+					id: 'demon-1st-8-feature-3',
 					name: 'Lethe',
 					description: 'While the torlas is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-8-feature-4',
+					id: 'demon-1st-8-feature-4',
 					name: 'Soulsight',
 					description: 'Any creature within 2 squares of the torlas can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-8-feature-5',
+					id: 'demon-1st-8-feature-5',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 3 }) ]
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'demon-9',
+			id: 'demon-1st-9',
 			name: 'Chorogaunt',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Leader),
@@ -588,7 +588,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-9-feature-1',
+						id: 'demon-1st-9-feature-1',
 						name: 'Agonizing Harmony',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -608,7 +608,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-9-feature-2',
+						id: 'demon-1st-9-feature-2',
 						name: 'Chaotic Entrancing Harmony',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area ],
@@ -621,7 +621,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-9-feature-3',
+						id: 'demon-1st-9-feature-3',
 						name: 'I Thrive on Pain',
 						cost: 3,
 						type: FactoryLogic.type.createTrigger('The chorogaunt is targeted by a strike.'),
@@ -634,27 +634,27 @@ A number of lesser demons have been identified across categories 1 to 3:
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-9-feature-4',
+					id: 'demon-1st-9-feature-4',
 					name: 'End Effect',
 					description: 'At the end of each of their turns, the chorogaunt can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-9-feature-5',
+					id: 'demon-1st-9-feature-5',
 					name: 'Lethe',
 					description: 'While the chorogaunt is winded, they gain an edge on strikes, and any strike made against them gains an edge.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'demon-9-feature-6',
+					id: 'demon-1st-9-feature-6',
 					name: 'Soulsight',
 					description: 'Any creature within 2 squares of the chorogaunt can’t be hidden from them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'demon-9-feature-7',
+					id: 'demon-1st-9-feature-7',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Holy, modifierType: DamageModifierType.Weakness, value: 5 }) ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-9-feature-8',
+						id: 'demon-1st-9-feature-8',
 						name: 'Frightening Tones',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Ranged ],
@@ -667,7 +667,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-9-feature-9',
+						id: 'demon-1st-9-feature-9',
 						name: 'Bully the Weak',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -680,7 +680,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'demon-9-feature-10',
+						id: 'demon-1st-9-feature-10',
 						name: 'Running Cacophony',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Magic ],

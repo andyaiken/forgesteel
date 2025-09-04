@@ -12,9 +12,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const undead2nd: MonsterGroup = {
 	id: 'monster-group-undead-2nd',
 	name: 'Undead — 2nd Echelon',
-	description: `
-*When the dead rise, all of hell rises with them.*
-*LADY DEMELZA, COURSER*`,
+	description: 'More powerful and more self-aware forms of undead rise above the undead horde and lay claim to dark, isolated domains all their own. The longer an undead is allowed to thrive, the stronger they become.',
 	picture: null,
 	information: [
 		{

@@ -9,7 +9,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const elfShadow: MonsterGroup = {
 	id: 'monster-group-elf-shadow',
-	name: 'Elves, Shadow',
+	name: 'Elf, Shadow',
 	description: `
 Children of the Twilight Celestials, the shadow elves are the native denizens of the parasitic manifold of Equinox, also known as Dusk. Theirs is a world of perpetual twilight, a sun that never rises nor sets, a world that knows neither noon nor midnight.
 

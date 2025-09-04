@@ -10,7 +10,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const demon3rd: MonsterGroup = {
 	id: 'monster-group-demon-3rd',
-	name: 'Demons — 3rd Echelon',
+	name: 'Demon — 3rd Echelon',
 	description: 'Demons of categories 7 to 9 continue to mutate in new and unpredictable ways, or are sometimes corrupted and spawned from other powerful creatures to become part of the demonic hierarchy. Additionally, in a plane of chaos, the soulraker demon is notable for fashioning a facsimile of order within themself. These demonic wasps make up a single, chaotic hive mind. They serve a demonic hivequeen, who relies on cannibalizing her children to ingest any souls they’ve consumed.',
 	picture: null,
 	information: [

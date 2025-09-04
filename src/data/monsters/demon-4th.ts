@@ -11,7 +11,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const demon4th: MonsterGroup = {
 	id: 'monster-group-demon-4th',
-	name: 'Demons — 4th Echelon',
+	name: 'Demon — 4th Echelon',
 	description: 'The more souls a demon consumes, the more they evolve. The more they evolve, the more refined their tastes become, until eventually demons of category 10 can be satisfied only by consuming souls that exemplify particular qualities. Many demons of this category have their tastes honored by their titles, such as Gorgino, the Sensuous Feast; Tyx, the Obliviated Spiral; and Lorikta, the Discarded Dream.',
 	picture: null,
 	information: [

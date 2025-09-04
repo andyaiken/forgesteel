@@ -11,7 +11,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const elfHigh: MonsterGroup = {
 	id: 'monster-group-elf-high',
-	name: 'Elves, High',
+	name: 'Elf, High',
 	description: 'The children of the solar celestials, the high elves were created to tend to the sun elves as librarians and heralds. Now they sequester themselves away from the world amid the fallen cities of the sky elves, remembering a better age, before the arrival of humans and war to the world made the high elves who they are today.',
 	picture: null,
 	information: [

@@ -106,66 +106,66 @@ export class MontageData {
 			{
 				id: 'montage-infiltrate-the-palace-preparation',
 				name: 'Preparation',
-				description: 'Half the work of a successful infiltration is done before setting foot in the target building. If the heroes choose, they can make individual tests as part of the montage test before they enter the site. One round of montage tests can be made in this way. These tests don’t affect the alarm level of the site.',
+				description: 'Half the work of any successful infiltration is done before setting foot in the target site. The players can choose to have the heroes make individual tests as part of the montage test before they attempt to enter the palace. One round of tests can be made this way, and those tests don’t affect the alarm level within the palace (see below).',
 				challenges: [
 					FactoryLogic.createMontageChallenge({
 						id: 'bribe-guards',
 						name: 'Bribe Guards',
-						description: 'The heroes can pay off guards to look the other way. On a success, the active hero’s Wealth is lowered by 1.',
+						description: 'The heroes can pay off guards to look the other way. If successful, one or more heroes’ Wealth is lowered by 1.',
 						characteristics: [ Characteristic.Presence ],
 						skills: 'Criminal Underworld, Flirt, Persuade'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'find-blueprints',
 						name: 'Find Blueprints',
-						description: 'Research secret entrances and little-known passageways in forgotten libraries or well-guarded town halls.',
+						description: 'Researching secret entrances and little-known passageways can be undertaken in forgotten libraries or well-guarded town halls.',
 						characteristics: [ Characteristic.Agility, Characteristic.Reason ],
 						skills: 'Architecture, Sneak, History'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'identify-unguarded-entrance',
-						name: 'Identify Unguarded Entrance',
-						description: 'Find a forgotten back door or climbable window, or learn about one through contacts.',
+						name: 'Identify Unguarded Entrances',
+						description: 'Scouting around or consulting contacts can reveal a forgotten back door or accessible window',
 						characteristics: [ Characteristic.Agility, Characteristic.Intuition ],
 						skills: 'Alertness, Architecture, Criminal Underworld'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'learn-guard-schedules',
 						name: 'Learn Guard Schedules',
-						description: 'Keep ears and eyes open and learn when guards go off duty.',
+						description: 'By keeping their ears and eyes open, characters can learn when guards go off duty.',
 						characteristics: [ Characteristic.Intuition, Characteristic.Reason ],
 						skills: 'Alertness, Eavesdrop, Track'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'make-false-identities',
 						name: 'Make False Identities',
-						description: 'Prepare to walk right into the palace in plain sight.',
+						description: 'By procuring forged documents or badges, characters can prepare to walk into the palace in plain sight.',
 						characteristics: [ Characteristic.Presence, Characteristic.Reason ],
 						skills: 'Disguise, Forgery, Lie'
 					})
 				],
-				twistInfo: '',
+				twistInfo: 'At any time during the infiltration section of the montage test, immediately after one hero’s turn, the characters run into another group breaking into the palace at the same time, and possibly after the same prize. The characters can choose to fight or negotiate with the other party, or simply let them pass — in which case they might meet them again when they reach their final goal.',
 				twists: []
 			},
 			{
 				id: 'montage-infiltrate-the-palace-infiltration',
 				name: 'Infiltration',
 				description: `
-When the heroes begin their infiltration, the alarm level of the site starts at 0. While infiltrating the site, whenever the heroes fail a test that is part of the montage test, the alarm level of the site increases, to a maximum of 2. When the heroes succeed at a test, the alarm level decreases, to a minimum of 0. All of the heroes’ montage tests inside the site gain a number of banes equal to the current alarm level.
+When the heroes start their infiltration, the alarm level of the palace starts at 0. While they infiltrate the site, whenever any hero fails a test as part of the montage test, the alarm level increases by 1, to a maximum of 2. Each time the heroes succeed on such a test, the alarm level decreases, to a minimum of 0. While the alarm level is 1, tests made inside the palace by the characters as part of the montage test take a bane. While the alarm level is 2, such tests have a double bane.
 
-The first time the heroes fail a test while the alarm level is 2, they encounter guards (enough for a hard combat encounter). The second time the heroes fail a test while the alarm level is 2, the montage test fails.`,
+The first time any hero fails a test made as part of the montage test while the alarm level is 2, they encounter guards and must engage in a hard combat encounter. The second time any hero fails such a test while the alarm level is 2, the montage test is a total failure.`,
 				challenges: [
 					FactoryLogic.createMontageChallenge({
 						id: 'aerial-route',
 						name: 'Aerial Route',
-						description: 'Take a path that leads along catwalks or high ledges. ',
+						description: 'Characters can follow a path that leads along catwalks or high ledges.',
 						characteristics: [ Characteristic.Agility, Characteristic.Might ],
 						skills: 'Climb, Gymnastics, Jump'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'avoid-traffic',
 						name: 'Avoid Traffic',
-						description: 'Find the dustiest, least-traveled areas and stick to them.',
+						description: 'By finding the dustiest, least-traveled areas and sticking to them, characters can avoid notice.',
 						characteristics: [ Characteristic.Intuition, Characteristic.Reason ],
 						skills: 'Navigate, Search, Track'
 					}),
@@ -177,14 +177,14 @@ The first time the heroes fail a test while the alarm level is 2, they encounter
 					FactoryLogic.createMontageChallenge({
 						id: 'make-a-diversion',
 						name: 'Make a Diversion',
-						description: 'Cause a ruckus, then go the other way.',
+						description: 'After causing a ruckus, the characters quickly go the other way.',
 						characteristics: [ Characteristic.Might, Characteristic.Presence ],
 						skills: 'Alchemy, Perform, Sabotage'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'skulk-in-the-shadows',
 						name: 'Skulk in the Shadows',
-						description: 'Keep out of sight. Heroes can attempt this task twice during the montage.',
+						description: 'Keeping out of sight is the simplest way for characters to move through the palace.  The heroes can attempt this challenge twice during the montage test.',
 						characteristics: [ Characteristic.Agility ],
 						skills: 'Hide, Sneak',
 						uses: 2
@@ -192,7 +192,7 @@ The first time the heroes fail a test while the alarm level is 2, they encounter
 					FactoryLogic.createMontageChallenge({
 						id: 'pose-as-guards',
 						name: 'Pose as Guards',
-						description: 'Using castoff clothes, disguise as guards or other inhabitants. This test gets an edge if the party prepared disguises in advance or defeated guards while in the site.',
+						description: 'Using stolen or specially prepared uniforms can let the characters move freely through the palace. The test for this challenge gains an edge if the characters prepared disguises in advance (including succeeding on the Use False Identities challenge) or defeated guards during their infiltration',
 						characteristics: [ Characteristic.Intuition, Characteristic.Presence ],
 						skills: 'Disguise, Lie, Search'
 					})
@@ -202,17 +202,17 @@ The first time the heroes fail a test while the alarm level is 2, they encounter
 			}
 		],
 		outcomes: {
-			totalSuccess: 'The party reaches their goal, and they secure an escape route that lets them leave safely. The party achieves 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate.',
-			partialSuccess: 'The heroes reach their goal, but they’ll need to fight a standard difficulty combat encounter to escape. The party achieves 1 Victory if the montage test was moderate or hard, in addition to any Victories earned from combat.',
-			totalFailure: 'The site is locked down, and their goal is out of reach. The party needs to fight a Hard combat encounter to escape. The party achieves no Victories from the montage test, although they may earn Victories from combats undertaken during the montage test.'
+			totalSuccess: 'The heroes reach their goal and secure an escape route that lets them leave the palace safely. Each character earns 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate, in addition to any Victories earned from combat during the montage test.',
+			partialSuccess: 'The heroes reach their goal, but they need to fight a standard combat encounter to escape the palace. Each character earns 1 Victory if the montage test was moderate or hard, in addition to any Victories earned from combat during the montage test.',
+			totalFailure: 'The palace is locked down and the heroes’ goal is out of reach. The characters need to fight a hard combat encounter to escape. Characters earn no Victories from the montage test, but might earn Victories from combat undertaken during the montage test.'
 		}
 	};
 
 	static prepareForBattle: Montage = {
 		id: 'montage-prepare-for-battle',
 		name: 'Prepare for Battle',
-		description: 'Whether it’s a village threatened by bandits or a great city preparing for a siege, enemies are on their way to attack the settlement. The heroes have a limited time to fortify the settlement’s defenses and bolster its troops.',
-		scene: 'The walls or palisades around the settlement (if any) are in poor shape. The roads or rivers leading to the settlement may be convenient for trade, but they won’t slow down the invaders—barricades, traps, or ambushes could be set up. The settlement’s food, weapon, and ammunition supply is too low to survive a long siege. Its experienced fighters are competent but few, and its militia is poorly equipped and virtually untrained.',
+		description: 'Whether it’s a village threatened by bandits or a great city preparing for a siege, enemies are on their way and readyu to attack. The heroes have a limited time to fortify the settlement’s defenses and bolster its troops.',
+		scene: 'The walls or palisades around the settlement (if any) are in poor shape. Roads or rivers through the area give the invaders free access to the settlement unless barricades, traps, or ambushes can be set up. Supplies of food, weapons, and ammunition are too low to survive a long siege. The area is home to few experienced fighters compared to the numbers of the invaders, and the local militia is poorly equipped and untrained.',
 		sections: [
 			{
 				id: 'montage-prepare-for-battle-main',
@@ -220,70 +220,70 @@ The first time the heroes fail a test while the alarm level is 2, they encounter
 				description: '',
 				challenges: [
 					FactoryLogic.createMontageChallenge({
+						id: 'arms-and-armor',
+						name: 'Arms and Armor',
+						description: 'Crafting or repairing weapons and armor of all kinds can help rebuild the defenders’ stores.',
+						characteristics: [ Characteristic.Might, Characteristic.Reason ],
+						skills: 'Alchemy, Blacksmithing, Fletching'
+					}),
+					FactoryLogic.createMontageChallenge({
 						id: 'evacuation',
 						name: 'Evacuation',
-						description: 'Heroes lead noncombatants to safety.',
+						description: 'Heroes can help get noncombatants to safety before the invaders arrive.',
 						characteristics: [ Characteristic.Intuition, Characteristic.Presence ],
 						skills: 'Handle Animal, Lead, Persuade'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'fortification',
 						name: 'Fortification',
-						description: 'Heroes help build or repair walls.',
+						description: 'Characters can help build or repair walls and other defensive structures.',
 						characteristics: [ Characteristic.Might, Characteristic.Reason ],
 						skills: 'Architecture, Endurance, Lift'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'inspiration',
 						name: 'Inspiration',
-						description: 'Heroes improve morale with rousing speeches or performances.',
+						description: 'Improving morale with rousing speeches or performances can help prepare the locals for the fight to come.',
 						characteristics: [ Characteristic.Intuition, Characteristic.Presence ],
 						skills: 'Brag, Lead, Perform'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'propaganda',
 						name: 'Propaganda',
-						description: 'Heroes sow confusion or rebellion in the approaching army.',
+						description: 'Characters can attempt to sow confusion or rebellion in the ranks of the approaching army.',
 						characteristics: [ Characteristic.Agility, Characteristic.Presence ],
 						skills: 'Disguise, Forgery, Lie'
 					}),
 					FactoryLogic.createMontageChallenge({
-						id: 'smithing',
-						name: 'Smithing',
-						description: 'Heroes help craft weapons or invent entirely new ones.',
-						characteristics: [ Characteristic.Might, Characteristic.Reason ],
-						skills: 'Alchemy, Blacksmithing, Fletching'
-					}),
-					FactoryLogic.createMontageChallenge({
 						id: 'stockpiling',
 						name: 'Stockpiling',
-						description: 'Heroes hunt, magically summon food or water, or otherwise increase the settlement’s supplies in case of a protracted siege.',
+						description: 'Characters can hunt, forage, or supernaturally conjure food or water to augment the settlement’s supplies.',
 						characteristics: [ Characteristic.Agility, Characteristic.Reason ],
 						skills: 'Nature, Sneak, Track'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'training',
 						name: 'Training',
-						description: 'Heroes train the settlement’s defenders.',
+						description: 'Heroes can help train the settlement’s defenders.',
 						characteristics: [ Characteristic.Might, Characteristic.Presence ],
 						skills: 'Endurance, Intimidation, Lead'
 					}),
 					FactoryLogic.createMontageChallenge({
 						id: 'trapmaking',
 						name: 'Trapmaking',
-						description: 'Heroes dig concealed pits, lay ambushes, or otherwise make it hard for the invaders to approach the settlement.',
+						description: 'Digging concealed pits, placing hindrances, and setting up ambushes will make it harder for the invaders to approach the settlement.',
 						characteristics: [ Characteristic.Might, Characteristic.Reason ],
 						skills: 'Conceal Object, Endurance, Mechanics'
 					})
 				],
-				twistInfo: 'At the end of the first round of the montage test, fast-moving enemy troops attack before the heroes are ready. The heroes must fight off an easy combat encounter.',
+				twistInfo: 'At the end of the first round of the montage test, a fast-moving enemy vanguard attack before the settlement’s defenders are ready. The heroes must must engage in an easy combat encounter.',
 				twists: []
 			}
 		],
 		outcomes: {
-			totalSuccess: 'The settlement is fully fortified, and even if the heroes don’t fight in the settlement’s defense, it survives. If the heroes wish, they can leave the settlement and fight a standard combat encounter against the invader’s leader and their lackeys. If the heroes succeed, they might kill or capture the leader. The party achieves 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate, in addition to any Victories they may earn in combat during the settlement’s defense.',
-			partialSuccess: 'If the heroes hit the failure limit or time runs out, and if they’ve achieved at least two more successes than failures, they achieve a partial success. The settlement’s fortifications are improved, but the settlement will still fall unless the heroes fight in its defense. To save the settlement, the heroes must triumph in a hard combat encounter against the invader’s leader and lackeys. If the heroes lose the encounter, the settlement falls. The party achieves 1 Victory if the montage test was moderate or hard, in addition to any Victories they may earn in combat during the settlement’s defense.',
-			totalFailure: 'The heroes each lose 1 recovery from their failed efforts in defense of the city. Invaders enter the settlement. If the heroes wish, they can fight two hard combat encounters against waves of invaders to allow some of the settlement’s inhabitants to retreat to safety. The party achieves no Victories from the montage test, although they may earn some Victories from combats undertaken during the settlement’s defense.'
+			totalSuccess: 'The settlement is fully fortified, and even if the heroes don’t fight in its defense, the settlement and its people survive. If the heroes wish, they can leave the settlement and fight a standard combat encounter against the leader of the invaders and their lackeys, possibly killing or capturing the leader. Each character earns 2 Victories if the montage test was hard, or 1 Victory if it was easy or moderate, in addition to any Victories earned from combat during the montage test.',
+			partialSuccess: 'The settlement’s fortifications are improved, but the settlement will still fall unless the heroes fight in its defense. To save the settlement, the heroes must triumph in a hard combat encounter against the leader of the invaders and their lackeys. If the heroes lose the encounter, the settlement falls. Each character earns 1 Victory if the montage test was moderate or hard, in addition to any Victories earned from combat during the montage test.',
+			totalFailure: 'The heroes each lose a Recovery from their failed efforts to defend the settlement, which is taken over by the invaders. If the players wish, the characters can fight two hard combat encounters against waves of invaders to allow some of the settlement’s inhabitants to retreat to safety. Characters earn no Victories from the montage test, but might earn Victories from combat undertaken during the montage test.'
 		}
 	};
 

@@ -520,14 +520,9 @@ export class CharacterSheetBuilder {
 			);
 			sheet.rollPower = `${rollPowerAmount} (${characteristics})`;
 
-			sheet.rollT1Effect = CharacterSheetFormatter.cleanupText(
-				AbilityLogic.getTierEffect(rollSection.roll.tier1, 1, ability, undefined, hero));
-
-			sheet.rollT2Effect = CharacterSheetFormatter.cleanupText(
-				AbilityLogic.getTierEffect(rollSection.roll.tier2, 2, ability, undefined, hero));
-
-			sheet.rollT3Effect = CharacterSheetFormatter.cleanupText(
-				AbilityLogic.getTierEffect(rollSection.roll.tier3, 3, ability, undefined, hero));
+			sheet.rollT1Effect = CharacterSheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, hero);
+			sheet.rollT2Effect = CharacterSheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, hero);
+			sheet.rollT3Effect = CharacterSheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, hero);
 		}
 
 		return sheet;

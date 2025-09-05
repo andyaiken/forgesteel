@@ -1,10 +1,13 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
 
 import { AbilitySheet, ItemSheet } from '../models/character-sheet';
+import { AbilityLogic } from '../logic/ability-logic';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
+import { Format } from './format';
+import { Hero } from '../models/hero';
 import { Utils } from './utils';
 
 import rollT1Icon from '../assets/icons/power-roll-t1.svg';
@@ -367,9 +370,34 @@ export class CharacterSheetFormatter {
 		const match = name.match(/\s\((\w+)\)$/);
 		if (match) {
 			const mod = match[1];
-			result = mod[0].toUpperCase() + mod.slice(1) + ' ' + name.split(' (')[0];
+			result = Format.capitalize(mod) + ' ' + name.split(' (')[0];
 		}
 		return result;
+	};
+
+	static formatAbilityTier = (value: string, tier: number, ability: Ability, hero: Hero) => {
+		if (ability.distance.length > 1) {
+			const distanceTypes = ability.distance.map(d => d.type);
+			const values = distanceTypes.map(d => {
+				return {
+					type: d,
+					effect: CharacterSheetFormatter.cleanupText(AbilityLogic.getTierEffect(value, tier, ability, d, hero)).split('; ')
+				};
+			});
+			const combined: string[] = [];
+			const size = Math.max(...values.map(v => v.effect.length));
+			for (let i = 0; i < size; ++i) {
+				const parts = values.map(v => v.effect[i]);
+				if (parts.every(t => t === parts[0])) {
+					combined.push(parts[0]);
+				} else {
+					combined.push(values.map(v => `${v.effect[i]} (${v.type})`).join(' | '));
+				}
+			}
+			return combined.join('; ');
+		}
+		return CharacterSheetFormatter.cleanupText(
+			AbilityLogic.getTierEffect(value, tier, ability, undefined, hero));
 	};
 
 	static abilitySections = (sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[]): string => {

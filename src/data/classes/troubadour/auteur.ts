@@ -80,6 +80,7 @@ export const auteur: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'NR3KiD1HgYdQ5KHv',
+					name: '2nd-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -140,6 +141,7 @@ export const auteur: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'z5ajGRuxCgWGBqkY',
+					name: '5th-Level Class Act Feature',
 					options: [
 						{
 							feature: FactoryLogic.feature.create({
@@ -175,6 +177,7 @@ export const auteur: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'CwUQTsffxHIfqd1R',
+					name: '6th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -242,6 +245,7 @@ export const auteur: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'gPzNIv7yp4ELiJSz',
+					name: '9th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

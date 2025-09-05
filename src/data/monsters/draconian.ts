@@ -806,9 +806,9 @@ Six individual draconians are presented in this section—not an adventuring par
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '5 corruption damage; I (weak) weakened (save ends)',
-								tier2: '9 corruption damage; I (average) weakened (save ends)',
-								tier3: '12 corruption damage; I (strong) weakened (save ends)'
+								tier1: '5 corruption damage; I < [weak] weakened (save ends)',
+								tier2: '9 corruption damage; I < [average] weakened (save ends)',
+								tier3: '12 corruption damage; I < [strong] weakened (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('If the Nameless’s mentor is in the area, ability rolls against the mentor have a double bane until the start of their next turn.')
 						]

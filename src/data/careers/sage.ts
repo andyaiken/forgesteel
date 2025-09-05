@@ -60,6 +60,7 @@ export const sage: Career = {
 				description: 'At first you thought it was your imagination, and you brushed off the disappearance of random sentences in historical books. Then as the books changed to entirely blank pages, the disappearances became difficult to ignore, particularly those involving ancient or critical text. Driven by the desire to preserve knowledge, you have made it your purpose to restore and reverse those vanishing texts before they forever disappear.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

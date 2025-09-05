@@ -59,6 +59,7 @@ export const vanguard: SubClass = {
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'tactician-sub-3-2-2',
+					name: '2nd-Level Doctrine Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -136,6 +137,7 @@ export const vanguard: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'tactician-sub-3-6-1',
+					name: '6th-Level Doctrine Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -219,6 +221,7 @@ export const vanguard: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'tactician-sub-3-9-1',
+					name: '9th-Level Doctrine Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

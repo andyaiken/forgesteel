@@ -4027,6 +4027,11 @@ export const highElfTactician = {
 					description: 'You promised a fellow soldier that you’d protect his family if he ever fell in battle. When he did, you traveled to his village, but found its people slain or scattered by war. Driven by your vow, you have dedicated your life to finding any survivors and protecting others from a similar fate.'
 				}
 			],
+			selected: {
+				id: 'career-soldier-ii-4',
+				name: 'Sole Survivor',
+				description: 'You were the last surviving member of your unit after an arduous battle or monstrous assault, surviving only through luck. You turned away from the life of a soldier then, seeking to become a hero who could stand against such threats.'
+			},
 			selectedID: 'career-soldier-ii-4'
 		}
 	},

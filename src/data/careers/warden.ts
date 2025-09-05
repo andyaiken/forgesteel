@@ -68,6 +68,7 @@ export const warden: Career = {
 				description: 'You were responsible for guarding something precious, something vital to your region’s survival. But you let someone in, and they betrayed your trust by stealing the thing you were meant to guard. You left your chosen territory to atone for your mistake.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

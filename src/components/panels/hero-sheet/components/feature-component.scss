@@ -80,6 +80,12 @@
         blockquote, blockquote * {
             font-style: italic;
         }
+
+        .potency {
+            @include common.font-potency();
+            display: inline-block;
+            transform: translateY(1px);
+        }
     }
 
     ul.feature-description {
@@ -164,10 +170,12 @@ li .feature ul.feature-description {
         &.main-action {
             color: common.$color-main-action;
         }
-        &.triggered-action {
+        &.triggered-action,
+        &.free-triggered-action {
             color: common.$color-triggered-action;
         }
-        &.maneuver {
+        &.maneuver,
+        &.free-maneuver {
             color: common.$color-maneuver;
         }
         &.performance {

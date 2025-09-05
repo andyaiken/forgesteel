@@ -10,36 +10,34 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const ogre: MonsterGroup = {
 	id: 'monster-group-ogre',
 	name: 'Ogre',
-	description: 'Massive and bull-necked with bulging muscle and flesh, most ogres indulge their every impulse because few can stop them. Though small for giants, ogres still outweigh and tower over humanoids. Most live in the wild where they can create their own rules and ways of life.',
+	description: 'Massive and bull-necked with bulging muscle and flesh, most ogres indulge their every impulse because few can stop them. Though small for giants, ogres outweigh and tower over humanoids. Most live in the wild where they can create their own rules and ways of life.',
 	picture: null,
 	information: [
 		{
 			id: 'ogre-info-1',
 			name: 'Extreme Emotions',
 			description: `
-Most ogres experience emotions at their extremes. Rarely are they simply bemused or cross; you’re more likely to find an ogre leaping with ecstatic joy over a trivial victory or screaming with murderous rage over everyday frustrations. These heightened feelings drive many ogres down selfish paths, and some take whatever they want from anyone too weak to protest. Other ogres can be manipulated into working for evil creatures who promise to meet their heart’s desire, be it food, riches, or friendship.
+Most ogres experience emotions at their extremes. Rarely are they simply bemused or cross, and one is more likely to find an ogre leaping with ecstatic joy over a trivial victory or screaming with murderous rage over everyday frustrations. These heightened feelings drive many ogres down selfish paths, and some take whatever they want from anyone too weak to protest. Other ogres can be manipulated into working for evil creatures who promise to meet their heart’s desire, be it food, riches, or friendship.
 
 Ogres who embrace good often dedicate themselves to inspiring causes, letting their emotions fuel their passion and dedication for protecting their chosen people or place.`
 		},
 		{
 			id: 'ogre-info-2',
 			name: 'Savory Stories',
-			description: 'Some ogres speak of a time when they shared vast wealth and riches, great homes made of hewn stone, and sumptuous feasts. These stories end tragically, each with a different villain — from deceptive mages to talking cats — swindling the ogres of what is rightfully theirs. The truth of such legends remains unknown, but many cruel ogres use them as an excuse for their selfish indulgences.'
+			description: 'Some ogres speak of a time when they shared vast wealth and riches, great homes made of hewn stone, and sumptuous feasts. These stories always end tragically, each with a different villain—from deceptive mages to talking cats—swindling the ogres of what is rightfully theirs. The truth of such legends remains unknown, but many cruel ogres use them as an excuse for their selfish indulgences.'
 		},
 		{
 			id: 'ogre-info-3',
 			name: 'Aristocracy of Bullies',
-			description: 'When wicked ogres gather more food than they can stomach or riches than they can spend, they use the excess to tempt their kin into working for them. These petty rulers make other ogres grovel at their feet for table scraps, then send them out into the world to steal more. Many ogre communities form around these arrogant aristocrats — but few such leaders die of old age, as the ambition and emotions of their subjects bring about violent ends.'
+			description: 'When wicked ogres gather more food than they can stomach or riches than they can spend, they use the excess to tempt their kin into working for them. These petty rulers make other ogres grovel at their feet for table scraps, then send them out into the world to steal more. Many ogre communities form around these arrogant aristocrats—but few such leaders die of old age, as the ambition and emotions of their subjects bring about violent ends.'
 		},
 		{
 			id: 'ogre-info-4',
 			name: 'Cyclops: Ogre Progenitor',
 			description: `
-Ogres originally descended from the cyclops, an old-world giant with a single eye that still roams through canyons and valleys. These behemoths stand heads above the ogres and are twice as destructive once they’ve spotted their prey.
+Ogres originally descended from the cyclops, an old-world giant with a single eye whose kind still roam through remote canyons and valleys. These behemoths stand heads above the ogres and are twice as destructive once they’ve spotted their prey. But while their binocular cousins have gone on to become successful hunters and live for themselves, the cyclops is a scavenger hindered by their poor eyesight. Most cyclopses are eager to work for and defend powerful warlords or wealthy ogres, as long as they have easy access to food and shelter.
 
-But while their binocular cousins have gone on to become successful hunters and live for themselves, the cyclops is a scavenger hindered by their poor eyesight. Most cyclopses are eager to work for and defend powerful warlords or wealthy ogres, so long as they have easy access to food and shelter.
-
-Rumor has it that a cyclops can emit a mile long energy ray from their eye. However, focusing such power is nearly impossible when their vision is usually too irritated and clouded by dirt.`
+Rumor has it that a cyclops can emit a mile-long energy ray from their eye. However, focusing such power is nearly impossible when their vision is usually too irritated and clouded by dirt.`
 		},
 		{
 			id: 'ogre-info-5',
@@ -53,10 +51,10 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 			name: 'Shockwave',
 			cost: 3,
 			sections: [
-				'An ogre acting this turn jumps and lands on their rear, causing a 3 burst shockwave. Each size 1 creature in the aﬀected area must make a **Might or Agility test**.',
+				'One ogre acting this turn jumps and lands on their rear, causing a 3 burst shockwave. Each size 1 creature in the area makes a **Might test** or **Agility test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Might, Characteristic.Agility ],
-					tier1: '5 damage; vertical push 3; prone',
+					tier1: '5 damage; vertical push 3',
 					tier2: '4 damage; vertical push 2',
 					tier3: 'Push 1'
 				})
@@ -67,7 +65,7 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 			name: 'Bully',
 			cost: 5,
 			sections: [
-				'All ogres shift up to their speed and make a free strike. The ogres prefer to gang up on the same target rather than pick diﬀerent targets, if they can.'
+				'Each ogre in the encounter shifts up to their speed and can make a free strike. If they can, they gang up on the same target rather than picking different targets.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -75,7 +73,7 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 			name: 'Rampage',
 			cost: 7,
 			sections: [
-				'Until the end of the round, each ogre has damage immunity 5 and deals an additional 5 damage with their strikes and abilities. While this feature is active, heroic abilities that target an ogre have their costs reduced by 1 (to a minimum of 1).'
+				'Until the end of the round, each ogre has damage immunity 5 and deals an extra 5 damage with abilities, and heroic abilities that target any ogre have their Heroic Resource cost reduced by 1 (to a minimum of 1).'
 			]
 		})
 	],
@@ -87,10 +85,10 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Brute),
 			keywords: [ 'Giant', 'Ogre' ],
 			encounterValue: 16,
+			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 100,
 			stability: 4,
-			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(2, 0, -1, 0, -1),
 			features: [
@@ -112,7 +110,7 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 									tier3: '14 damage; push 6; prone'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('This attack deals an additional 4 damage to each creature and object that takes damage from any force movement it causes.')
+							FactoryLogic.createAbilitySectionText('Any target who takes damage from this forced movement takes an extra 4 damage.')
 						]
 					})
 				}),
@@ -124,6 +122,7 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
+						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -133,12 +132,7 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 									tier3: '14 damage; grabbed'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The goon can only have one target grabbed at a time.'),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 1,
-								effect: 'The target has a bane on escaping the grab while the goon crushes the target in their hand.'
-							})
+							FactoryLogic.createAbilitySectionText('A target grabbed this way takes a bane on the Escape Grab maneuver.')
 						]
 					})
 				}),
@@ -147,15 +141,12 @@ Rumor has it that a cyclops can emit a mile long energy ray from their eye. Howe
 						id: 'ogre-1-feature-3',
 						name: 'People Bowling',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 6, value2: 1, within: 1 }) ],
-						target: 'All creatures and objects',
+						target: 'Each creature and object in the area',
 						cost: 3,
 						sections: [
-							FactoryLogic.createAbilitySectionText(`
-The goon must be grabbing a size-1 creature or object to use this maneuver.
-
-The goon hurls what's in their hand down the line and rolls power. The hurled creature or object counts as a target and lands in the last square of the line (or nearest unoccupied square of the goons choice).`),
+							FactoryLogic.createAbilitySectionText('The goon must have a size 1 creature or object grabbed, which they hurl across the area, ending the grab. The hurled creature or object is targeted by the ability, and lands in the last square of the line or the nearest unoccupied square of the goon’s choice.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 3,
@@ -171,19 +162,19 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 					ability: FactoryLogic.createAbility({
 						id: 'ogre-1-feature-4',
 						name: 'Swat the Fly',
-						type: FactoryLogic.type.createTrigger('The target moves or shifts away from the goon.'),
-						keywords: [],
+						type: FactoryLogic.type.createTrigger('A creature or object within distance moves or shifts away from the goon.'),
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '1 adjacent creature or object',
+						target: 'The triggering creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Slide 5.')
+							FactoryLogic.createAbilitySectionText('The goon slides the target up to 5 squares')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'ogre-1-feature-5',
 					name: 'Defiant Anger',
-					description: 'The goon has damage immunity 2 while they are winded.'
+					description: 'While winded, the goon has damage immunity 2.'
 				})
 			]
 		}),
@@ -194,10 +185,10 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Harrier),
 			keywords: [ 'Giant', 'Ogre' ],
 			encounterValue: 16,
+			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(6),
 			stamina: 80,
 			stability: 2,
-			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 0, -1),
 			features: [
@@ -215,14 +206,14 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 								FactoryLogic.createPowerRoll({
 									bonus: 2,
 									tier1: '7 damage',
-									tier2: '10 damage; A<1 vertical push 3',
-									tier3: '13 damage; A<2 vertical slide 5'
+									tier2: '10 damage; A<1 vertical push 2',
+									tier3: '13 damage; A<2 vertical slide 3'
 								})
 							),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'Each target is M<1 bleeding (save ends).'
+								effect: 'Each target who has M<1 is bleeding (save ends).'
 							})
 						]
 					})
@@ -230,11 +221,11 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'ogre-2-feature-2',
-						name: 'Earth Breaking Jump',
+						name: 'Earth-Breaking Jump',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'All creatures in the burst',
+						target: 'Each creature in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The juggernaut jumps up to 6 squares before using this ability.'),
 							FactoryLogic.createAbilitySectionRoll(
@@ -255,7 +246,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						cost: 2,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
@@ -266,7 +257,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 									tier3: 'I<2 frightened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('All ogres have an edge on strikes against creatures frightened by this ability.')
+							FactoryLogic.createAbilitySectionText('While a target is frightened this way, any ogre gains an edge on strikes against them.')
 						]
 					})
 				}),
@@ -275,18 +266,22 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 						id: 'ogre-2-feature-4',
 						name: 'Hrraaaaaagh!',
 						type: FactoryLogic.type.createTrigger('The juggernaut takes damage.', { free: true }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The juggernaut moves up to their speed and makes a free strike.')
+							FactoryLogic.createAbilitySectionText('The juggernaut moves up to their speed and can make a free strike.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'ogre-2-feature-5',
+					name: 'Destructive Path',
+					description: 'The juggernaut automatically destroys any mundane size 1 objects in their path when they move or are forced moved. They can break through any mundane wall made of wood, stone, or a similarly sturdy material this way as long as the wall is 2 squares thick or less.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'ogre-2-feature-6',
 					name: 'Defiant Anger',
-					description: 'The juggernaut has damage immunity 2 while they are winded.'
+					description: 'While winded, the juggernaut has damage immunity 2.'
 				})
 			]
 		}),
@@ -296,23 +291,23 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 			level: 10,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
 			keywords: [ 'Giant', 'Ogre' ],
-			encounterValue: 24,
+			encounterValue: 12,
+			size: FactoryLogic.createSize(3),
 			speed: FactoryLogic.createSpeed(6),
 			stamina: 14,
 			stability: 5,
-			size: FactoryLogic.createSize(3),
 			freeStrikeDamage: 4,
-			withCaptain: 'Speed +4',
 			characteristics: MonsterLogic.createCharacteristics(5, -1, -1, 3, -1),
+			withCaptain: '+4 bonus to speed',
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'ogre-3-feature-1',
 						name: 'Wild Slam',
 						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-						target: 'All enemies and objects in the burst',
+						target: 'Each enemy and object in the area',
 						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
@@ -320,17 +315,17 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 									bonus: 5,
 									tier1: '3 damage; A<3 3 damage',
 									tier2: '6 damage; push 3; A<4 4 damage',
-									tier3: '7 damage; prone; A<5 5 damage, restrained (save ends)'
+									tier3: '7 damage; prone; A<5 5 damage and restrained (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The cyclops automatically has a 17 on the power roll. They can still roll to see if they get a crit.')
+							FactoryLogic.createAbilitySectionText('The cyclops automatically treats their initial power roll as a 17. They can still roll to determine if they score a critical hit.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'ogre-3-feature-2',
 					name: 'Limited Vision',
-					description: 'The cyclops can’t establish line of effect beyond 3 squares. Whenever the cyclops takes damage from a ranged ability, they can move 3 squares towards the source of the damage.'
+					description: 'The cyclops has line of effect only within 3 squares. Whenever the cyclops takes damage from a ranged ability, they can move up to 3 squares toward the source of the damage.'
 				})
 			]
 		}),
@@ -340,14 +335,14 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 			level: 7,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Giant', 'Ogre' ],
-			encounterValue: 18,
+			encounterValue: 9,
+			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 13,
 			stability: 4,
-			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 4,
-			withCaptain: 'Edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(4, 1, -1, 0, 2),
+			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -367,19 +362,19 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 									tier3: '8 damage; prone'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('An already prone target takes an additional 4 damage.')
+							FactoryLogic.createAbilitySectionText('A target who is already prone takes an extra 4 damage.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'ogre-4-feature-2',
 					name: 'In My Stead',
-					description: 'Whenever the blue blood would make a free strike, an ally within 5 can make a free strike instead.'
+					description: 'Whenever the blue blood would make a free strike, an ally within 5 squares can make a free strike instead.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'ogre-4-feature-3',
 					name: 'Defiant Anger',
-					description: 'The blue blood has damage immunity 2 while they are winded.'
+					description: 'While winded, the blue blood has damage immunity 2.'
 				})
 			]
 		}),
@@ -389,14 +384,14 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 			level: 7,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
 			keywords: [ 'Giant', 'Ogre' ],
-			encounterValue: 18,
+			encounterValue: 9,
+			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 10,
 			stability: 2,
-			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 4,
-			withCaptain: 'Ranged distance +5 ',
 			characteristics: MonsterLogic.createCharacteristics(4, 2, -1, 0, -1),
+			withCaptain: '+5 bonus to ranged distance',
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -408,6 +403,7 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 						target: 'One creature or object per minion',
 						cost: 'signature',
 						sections: [
+							FactoryLogic.createAbilitySectionText('The tantrum unearths a rock or a hunk of terrain and tosses it. If a size 1L, 1M, or 1S creature or object adjacent to the tantrum has A<3 the tantrum can grab them to use as the projectile for this ability.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 4,
@@ -416,14 +412,14 @@ The goon hurls what's in their hand down the line and rolls power. The hurled cr
 									tier3: '8 damage; push 4'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The tantrum unearths a rock or a hunk of terrain and tosses it. The tantrum can A<3 grab an adjacent size-1 or smaller creature or object to use as the projectile for this ability.')
+							FactoryLogic.createAbilitySectionText('A creature or object used as a projectile is vertically pushed 8 (or 13 with a captain), ignoring stability.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'ogre-5-feature-2',
 					name: 'Excessive Anger',
-					description: 'The tantrum has damage immunity 3 and a speed of 8 while they are winded.'
+					description: 'While winded, the tantrum has damage immunity 3 and speed 8.'
 				})
 			]
 		})

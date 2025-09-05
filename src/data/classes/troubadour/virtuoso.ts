@@ -111,6 +111,7 @@ your Routines feature.`,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'DWhLWnP0bwuHQ2qy',
+					name: '2nd-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -209,6 +210,7 @@ your Routines feature.`,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'suMDtEOQggORQzn4',
+					name: '5th-Level Class Act Feature',
 					options: [
 						{
 							feature: FactoryLogic.feature.create({
@@ -235,6 +237,7 @@ your Routines feature.`,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'VD8b06zsDjeJpzlX',
+					name: '6th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -333,6 +336,7 @@ your Routines feature.`,
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'H8CN7zqO4hRni29m',
+					name: '9th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

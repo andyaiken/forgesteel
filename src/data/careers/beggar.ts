@@ -63,6 +63,7 @@ export const beggar: Career = {
 				description: 'You saw something you weren’t meant to see. Others would kill you if they knew, and they might be searching for you even now. You remain on the move, terrified of remaining in one place too long lest it all catch up to you. Perhaps if you make a big enough name for yourself, you can become untouchable and can finally speak of what you saw without fear.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

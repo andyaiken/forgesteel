@@ -65,6 +65,7 @@ export const politician: Career = {
 				description: 'The red tape required to achieve anything through your political position resulted in a crisis being mishandled and countless people harmed or killed. After that unfortunate event, you resolved to be unfettered by bureaucratic interference and sought to do good through action, not paperwork.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

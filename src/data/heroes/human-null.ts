@@ -4498,6 +4498,11 @@ export const humanNull = {
 					description: 'Your family bred horses - beautiful creatures that few could rival on the track and in the jousting lists. When a local noble arrived with an offer to buy your prized stallion, your father refused. The noble struck him down where he stood and stole the horse. Without that stallion, the renowned bloodline would end. You intend to get them back - and get revenge.'
 				}
 			],
+			selected: {
+				id: 'career-farmer-ii-5',
+				name: 'Razed',
+				description: 'Your animals were killed, your crops and home set ablaze. The culprits might have been wandering bandits, raiders from a nearby kingdom, or hired thugs sent by a rival farm. Whoever they were, they left you with nothing. You couldn’t face the thought of starting again from scratch, so you took up a life of heroism to protect others from such villainy.'
+			},
 			selectedID: 'career-farmer-ii-5'
 		}
 	},

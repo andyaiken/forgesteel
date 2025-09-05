@@ -64,6 +64,7 @@ As your discipline grows, you strengthen the psionic power suffusing you, granti
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'null-sub-2-2-2',
+					name: '2nd-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -133,6 +134,7 @@ As your discipline grows, you strengthen the psionic power suffusing you, granti
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'null-sub-2-6-1',
+					name: '6th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -199,6 +201,7 @@ As your discipline grows, you strengthen the psionic power suffusing you, granti
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'null-sub-2-9-1',
+					name: '9th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

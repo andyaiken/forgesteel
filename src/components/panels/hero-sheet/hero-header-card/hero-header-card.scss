@@ -24,7 +24,7 @@
             --top-offset: 5px;
             width: $logo-width;
             height: 50px;
-            object-position: center calc(50% + var(--top-offset));
+            object-position: calc(50% + 2px) calc(50% + var(--top-offset));
             object-fit: cover;
         }
 

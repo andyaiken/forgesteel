@@ -57,6 +57,7 @@ export const chronopathy: SubClass = {
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-1-2-2',
+					name: '2nd-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -146,6 +147,7 @@ export const chronopathy: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-1-6-1',
+					name: '6th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -252,6 +254,7 @@ Make a power roll that targets each enemy in the area.`),
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-1-9-1',
+					name: '9th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

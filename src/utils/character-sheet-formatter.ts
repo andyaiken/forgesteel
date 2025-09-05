@@ -1,10 +1,13 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
 
 import { AbilitySheet, ItemSheet } from '../models/character-sheet';
+import { AbilityLogic } from '../logic/ability-logic';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
 import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
+import { Format } from './format';
+import { Hero } from '../models/hero';
 import { Utils } from './utils';
 
 import rollT1Icon from '../assets/icons/power-roll-t1.svg';
@@ -83,6 +86,16 @@ export class CharacterSheetFormatter {
 
 	static enhanceMarkdown = (text: string) => {
 		text = text
+			.replace(/([MARIP]) < \[?([Ss]trong|[Aa]verage|[Ww]eak)\]?/g, '$1<$2')
+			.replace(/([MARIP])<[Ss]trong/g, '$1<s]')
+			.replace(/([MARIP])<[Aa]verage/g, '$1<v]')
+			.replace(/([MARIP])<[Ww]eak/g, '$1<w]')
+			.replace(/M<([svw])\]/g, 'm<$1]')
+			.replace(/A<([svw])\]/g, 'a<$1]')
+			.replace(/R<([svw])\]/g, 'r<$1]')
+			.replace(/I<([svw])\]/g, 'i<$1]')
+			.replace(/P<([svw])\]/g, 'p<$1]')
+			.replace(/([marip])<([svw]\])/g, '<span class="potency">$1&lt;$2</span>')
 			.replace(/\|\s+≤\s*11\s+\|/g, `|![≤ 11](${rollT1Icon})|`)
 			.replace(/\|\s+12\s*-\s*16\s+\|/g, `|![12 - 16](${rollT2Icon})|`)
 			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17+](${rollT3Icon})|`);
@@ -123,6 +136,7 @@ export class CharacterSheetFormatter {
 				fSize = this.calculateFeatureSize(f, 50);
 				if (this.isLongFeature(f)) {
 					reference.push(f);
+					fSize += 1;
 				}
 				if (size + fSize <= availableSpace) {
 					display = true;
@@ -154,7 +168,7 @@ export class CharacterSheetFormatter {
 			} else {
 				size += this.countLines(f.description, lineWidth);
 			}
-		} else if (f.type === FeatureType.Text) {
+		} else if ([ FeatureType.Text, FeatureType.Package, FeatureType.PackageContent ].includes(f.type)) {
 			size = 2 + this.countLines(f.description, lineWidth);
 		} else if (f.type === FeatureType.Ability) {
 			size = 3;
@@ -286,10 +300,10 @@ export class CharacterSheetFormatter {
 
 	static abilityTypeOrder: string[] = [
 		'Main Action',
-		'Free Triggered Action',
-		'Triggered Action',
 		'Free Maneuver',
 		'Maneuver',
+		'Free Triggered Action',
+		'Triggered Action',
 		'Free Strike',
 		'Move Action'
 	];
@@ -349,6 +363,41 @@ export class CharacterSheetFormatter {
 			const last2 = options.slice(-2).join(' or ');
 			return [ options.slice(0, -2).join(', '), last2 ].join(', ');
 		}
+	};
+
+	static fixAncestryName = (name: string): string => {
+		let result = name;
+		const match = name.match(/\s\((\w+)\)$/);
+		if (match) {
+			const mod = match[1];
+			result = Format.capitalize(mod) + ' ' + name.split(' (')[0];
+		}
+		return result;
+	};
+
+	static formatAbilityTier = (value: string, tier: number, ability: Ability, hero: Hero) => {
+		if (ability.distance.length > 1) {
+			const distanceTypes = ability.distance.map(d => d.type);
+			const values = distanceTypes.map(d => {
+				return {
+					type: d,
+					effect: CharacterSheetFormatter.cleanupText(AbilityLogic.getTierEffect(value, tier, ability, d, hero)).split('; ')
+				};
+			});
+			const combined: string[] = [];
+			const size = Math.max(...values.map(v => v.effect.length));
+			for (let i = 0; i < size; ++i) {
+				const parts = values.map(v => v.effect[i]);
+				if (parts.every(t => t === parts[0])) {
+					combined.push(parts[0]);
+				} else {
+					combined.push(values.map(v => `${v.effect[i]} (${v.type})`).join(' | '));
+				}
+			}
+			return combined.join('; ');
+		}
+		return CharacterSheetFormatter.cleanupText(
+			AbilityLogic.getTierEffect(value, tier, ability, undefined, hero));
 	};
 
 	static abilitySections = (sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[]): string => {

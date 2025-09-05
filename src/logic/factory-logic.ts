@@ -202,6 +202,7 @@ export class FactoryLogic {
 			features: [],
 			incitingIncidents: {
 				options: [],
+				selected: null,
 				selectedID: null
 			}
 		};

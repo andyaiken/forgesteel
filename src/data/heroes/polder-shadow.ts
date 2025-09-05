@@ -4799,6 +4799,11 @@ export const polderShadow = {
 					description: 'When a tyrant rose to power in your homeland, they began cracking down on all criminals with deadly raids and public executions. The nature of the crime didn’t matter - pickpockets and beggars were made to kneel before the axe alongside murderers. After losing enough friends, you stood up and joined the resistance - not just against this tyrant, but against authoritarians anywhere.'
 				}
 			],
+			selected: {
+				id: 'career-criminal-ii-6',
+				name: 'Stand Against Tyranny',
+				description: 'When a tyrant rose to power in your homeland, they began cracking down on all criminals with deadly raids and public executions. The nature of the crime didn’t matter - pickpockets and beggars were made to kneel before the axe alongside murderers. After losing enough friends, you stood up and joined the resistance - not just against this tyrant, but against authoritarians anywhere.'
+			},
 			selectedID: 'career-criminal-ii-6'
 		}
 	},

@@ -239,9 +239,7 @@ export class PDFExport {
 
 			if (hero.career) {
 				texts['CareerName'] = hero.career.name;
-				const incident = hero.career.incitingIncidents.options.find(
-					o => o.id === (hero.career && hero.career.incitingIncidents.selectedID)
-				);
+				const incident = hero.career.incitingIncidents.selected;
 				if (incident) {
 					texts['CareerIncident'] =
 						GetTitle(incident.name) + '\n' + incident.description;

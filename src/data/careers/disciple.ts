@@ -62,6 +62,7 @@ export const disciple: Career = {
 				description: 'The faith-based organization you were once part of became corrupt. It used its status in the community to accumulate wealth through tithes and its leaders sought political appointments. During a season of drought, the institution stockpiled resources and refused to give aid, resulting in the deaths of many. You became a hero to fight against such corruption and to honor your dearly departed.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

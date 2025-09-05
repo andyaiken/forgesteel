@@ -645,9 +645,9 @@ Pinna, Hedge Witch, Gravesford`,
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-									tier1: '5 damage; M (weak) prone',
-									tier2: '9 damage; M (average) prone',
-									tier3: '12 damage; M (strong) prone'
+									tier1: '5 damage; M < [weak] prone',
+									tier2: '9 damage; M < [average] prone',
+									tier3: '12 damage; M < [strong] prone'
 								})
 							),
 							FactoryLogic.createAbilitySectionText('The hopper can jump in a straight line up to their speed before the attack without provoking opportunity attacks. If they jump at least 2 squares this way, they gain a surge.')
@@ -666,9 +666,9 @@ Pinna, Hedge Witch, Gravesford`,
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-									tier1: '5 damage; M (weak) weakened (save ends)',
-									tier2: '9 damage; M (average) slowed and weakened (save ends)',
-									tier3: '12 damage; M (strong) dazed, slowed, and weakened (save ends)'
+									tier1: '5 damage; M < [weak] weakened (save ends)',
+									tier2: '9 damage; M < [average] slowed and weakened (save ends)',
+									tier3: '12 damage; M < [strong] dazed, slowed, and weakened (save ends)'
 								})
 							)
 						]

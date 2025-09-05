@@ -65,6 +65,7 @@ As your ferocity grows, you gain benefits as noted on the Berserker Growing Fero
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-1-2-2',
+					name: '2nd-Level Aspect Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -157,6 +158,7 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-1-6-1',
+					name: '6th-Level Aspect Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -239,6 +241,7 @@ Additionally, you make one power roll that targets each enemy you move adjacent 
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-1-9-1',
+					name: '9th-Level Aspect Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

@@ -346,11 +346,13 @@ Choose one of the following effects:
 			features: [
 				FactoryLogic.feature.createCharacteristicBonus({
 					id: 'elementalist-4-1a',
+					name: 'Characteristic Increase: Reason',
 					characteristic: Characteristic.Reason,
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'elementalist-4-1b',
+					name: 'Characteristic Increase: Additional Choice',
 					options: [
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({
@@ -543,11 +545,13 @@ Breath remains until you convert it to essence.`
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
 					id: 'elementalist-10-2',
+					name: 'Characteristic Increase: Reason',
 					characteristic: Characteristic.Reason,
 					value: 1
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'elementalist-10-3',
+					name: 'Characteristic Increase: Additional Choice',
 					options: [
 						{
 							feature: FactoryLogic.feature.createCharacteristicBonus({

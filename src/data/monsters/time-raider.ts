@@ -867,9 +867,9 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-									tier1: '8 psychic damage; R (weak) frightened (save ends)',
-									tier2: '13 psychic damage; R (average) frightened (save ends)',
-									tier3: '17 psychic damage; R (strong) frightened (save ends)'
+									tier1: '8 psychic damage; R < [weak] frightened (save ends)',
+									tier2: '13 psychic damage; R < [average] frightened (save ends)',
+									tier3: '17 psychic damage; R < [strong] frightened (save ends)'
 								})
 							)
 						]

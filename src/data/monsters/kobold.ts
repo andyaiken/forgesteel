@@ -904,9 +904,9 @@ While the shieldbearer is clinging to their mentor, both the shieldbearer and th
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '6 damage; M (weak) prone',
-								tier2: '10 damage; M (average) prone',
-								tier3: '14 damage; M (strong) prone'
+								tier1: '6 damage; M < [weak] prone',
+								tier2: '10 damage; M < [average] prone',
+								tier3: '14 damage; M < [strong] prone'
 							})),
 							FactoryLogic.createAbilitySectionText('If this ability is used as part of the Charge action, gain 2 surges.')
 						]

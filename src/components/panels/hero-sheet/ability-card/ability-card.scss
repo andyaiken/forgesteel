@@ -27,9 +27,15 @@
     h2 {
         margin-top: -8px;
         @include common.bottom-border-fancy-2(common.$color-medium);
+        display: grid;
+        grid-template-columns: 1fr min-content;
 
+        .ability-name,
         .cost {
             @include common.font-slab;
+        }
+
+        .cost {
             display: block;
             float: right;
             border: 2px solid common.$color-medium;
@@ -96,17 +102,19 @@
             justify-content: space-between;
         }
 
-        .action-type,
-        .target {
+        .action-type {
             text-align: right;
         }
 
         .distance, 
         .target {
+            display: flex;
+            align-items: baseline;
             img {
                 height: 17px;
                 margin-right: 3px;
                 opacity: 0.8;
+                transform: translateY(2px);
             }
 
             img, span {
@@ -114,6 +122,10 @@
                 display: inline-block;
                 vertical-align: middle;
             }
+        }
+
+        .distance span {
+            text-wrap: wrap;
         }
     }
 
@@ -197,6 +209,12 @@
         ul {
             margin-left: 10px;
         }
+
+        .potency {
+            @include common.font-potency();
+            display: inline-block;
+            transform: translateY(2px);
+        }
     }
 }
 
@@ -235,7 +253,8 @@
         }
     }
 
-    &.maneuver {
+    &.maneuver,
+    &.free-maneuver {
         @include color-ability-card(common.$color-maneuver);
         h2 {
             @include common.bottom-border-fancy-4(common.$color-maneuver);

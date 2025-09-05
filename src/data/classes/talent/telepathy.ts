@@ -57,6 +57,7 @@ export const telepathy: SubClass = {
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-3-2-2',
+					name: '2nd-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -156,6 +157,7 @@ export const telepathy: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-3-6-1',
+					name: '6th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -244,6 +246,7 @@ export const telepathy: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-3-9-1',
+					name: '9th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

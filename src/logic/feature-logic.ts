@@ -49,7 +49,7 @@ export class FeatureLogic {
 
 		features.push({
 			feature: FactoryLogic.feature.create({
-				id: Utils.guid(),
+				id: `${culture.name}-culture-lore-influence`,
 				name: `${culture.name} Culture`.trim(),
 				description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
 			}),
@@ -303,7 +303,7 @@ export class FeatureLogic {
 					break;
 				case FeatureType.Domain:
 					feature.data.selected.forEach(d => {
-						d.defaultFeatures.forEach(f => addFeature(f, d.name, level));
+						d.defaultFeatures.forEach(f => addFeature(f, `${d.name} Domain`, level));
 					});
 					break;
 				case FeatureType.DomainFeature:

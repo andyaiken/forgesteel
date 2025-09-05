@@ -56,7 +56,7 @@
 }
 
 .hero-sheet:not(#base-override) {
-    &, li, p {
+    &, li, p, em {
         @include common.font-serif();
         font-weight: 300;
     }
@@ -329,7 +329,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: var(--gap);
-        padding: 10px;
+        padding: 5px;
 
         .card {
             margin: 0;
@@ -358,6 +358,9 @@
 
         .feature-reference {
             flex-basis: calc(2 * ((100% - 3 * var(--gap)) / 4) + var(--gap));
+        }
+        .feature-reference.wide {
+            flex-basis: calc(3 * ((100% - 3 * var(--gap)) / 4) + 2 * var(--gap));
         }
     }
 

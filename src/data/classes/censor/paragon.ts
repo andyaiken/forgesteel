@@ -41,6 +41,7 @@ export const paragon: SubClass = {
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-3-2-3',
+					name: '2nd-Level Paragon Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -111,6 +112,7 @@ export const paragon: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-3-4-1',
+					name: '6th-Level Paragon Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -178,6 +180,7 @@ export const paragon: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-3-6-1',
+					name: '9th-Level Paragon Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

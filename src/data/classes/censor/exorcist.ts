@@ -41,6 +41,7 @@ export const exorcist: SubClass = {
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-1-2-3',
+					name: '2nd-Level Exorcist Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -111,6 +112,7 @@ export const exorcist: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-1-4-1',
+					name: '6th-Level Exorcist Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -177,6 +179,7 @@ export const exorcist: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-1-6-1',
+					name: '9th-Level Exorcist Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

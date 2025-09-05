@@ -46,26 +46,6 @@ export class CharacterSheetBuilder {
 		let coveredFeatureIds: string[] = [];
 		const allFeatures = HeroLogic.getFeatures(hero);
 
-		// #region Ancestry
-		if (hero.ancestry) {
-			sheet.ancestryName = hero.ancestry.name;
-
-			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero);
-
-			const ancestryTraits = ancestryFeatures.filter(f => f.feature.type !== FeatureType.Choice)
-				.map(f => f.feature);
-
-			const ancestrySpace = options.pageOrientation === 'portrait' ? 26 : 33;
-			const dividedAncestry = CharacterSheetFormatter.divideFeatures(ancestryTraits, ancestrySpace);
-			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(dividedAncestry.displayed);
-
-			const refAncestry = ancestryFeatures.filter(f => dividedAncestry.referenceIds.includes(f.feature.id));
-			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(refAncestry);
-
-			coveredFeatureIds = coveredFeatureIds.concat(ancestryFeatures.map(f => f.feature.id));
-		}
-		// #endregion
-
 		sheet.currentVictories = hero.state.victories;
 		sheet.wealth = hero.state.wealth;
 		sheet.renown = HeroLogic.getRenown(hero);
@@ -100,12 +80,38 @@ export class CharacterSheetBuilder {
 			sheet.presence = HeroLogic.getCharacteristic(hero, Characteristic.Presence);
 
 			const heroicResource = HeroLogic.getHeroicResources(hero)[0];
-			sheet.heroicResourceGains = heroicResource.gains;
-			sheet.heroicResourceName = heroicResource?.name;
-			sheet.heroicResourceCurrent = allFeatures
-				.map(f => f.feature)
-				.filter(f => f.type === FeatureType.HeroicResource)
-				.find(f => f.data.type === 'heroic')?.data.value;
+			if (heroicResource) {
+				sheet.heroicResourceGains = heroicResource.gains;
+				sheet.heroicResourceName = heroicResource?.name;
+				sheet.heroicResourceCurrent = allFeatures
+					.map(f => f.feature)
+					.filter(f => f.type === FeatureType.HeroicResource)
+					.find(f => f.data.type === 'heroic')?.data.value;
+			}
+		}
+		// #endregion
+
+		// #region Ancestry
+		if (hero.ancestry) {
+			sheet.ancestryName = CharacterSheetFormatter.fixAncestryName(hero.ancestry.name);
+
+			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero);
+
+			const ancestryTraits = ancestryFeatures.filter(f => f.feature.type !== FeatureType.Choice)
+				.map(f => f.feature);
+
+			let ancestrySpace = options.pageOrientation === 'portrait' ? 26 : 33;
+			if (sheet.heroicResourceGains?.length || 0 > 3) {
+				const extraLines = sheet.heroicResourceGains?.slice(3).reduce((sum, g) => sum + CharacterSheetFormatter.countLines(g.trigger, 40), 0) || 0;
+				ancestrySpace -= extraLines;
+			}
+			const dividedAncestry = CharacterSheetFormatter.divideFeatures(ancestryTraits, ancestrySpace);
+			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(dividedAncestry.displayed);
+
+			const refAncestry = ancestryFeatures.filter(f => dividedAncestry.referenceIds.includes(f.feature.id));
+			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(refAncestry);
+
+			coveredFeatureIds = coveredFeatureIds.concat(ancestryFeatures.map(f => f.feature.id));
 		}
 		// #endregion
 
@@ -212,7 +218,11 @@ export class CharacterSheetBuilder {
 				.flatMap(f => (f.type === FeatureType.Perk) ? f.data.selected.map(p => p.id) : f.id);
 			classFeatures = classFeatures.filter(f => !perkIds.includes(f.feature.id));
 
-			const classFeatureSpace = options.pageOrientation === 'portrait' ? 50 : 47;
+			let classFeatureSpace = 53;
+			if (sheet.heroicResourceGains?.length || 0 > 3) {
+				const extraLines = sheet.heroicResourceGains?.slice(3).reduce((sum, g) => sum + CharacterSheetFormatter.countLines(g.trigger, 40), 0) || 0;
+				classFeatureSpace -= 2 * extraLines;
+			}
 			const dividedClassFeatures = CharacterSheetFormatter.divideFeatures(classFeatures.map(f => f.feature), classFeatureSpace);
 
 			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(dividedClassFeatures.displayed);
@@ -275,7 +285,7 @@ export class CharacterSheetBuilder {
 
 		// Culture
 		if (hero.culture) {
-			const cultureFeatures = allFeatures.filter(f => f.source === hero.culture?.name).map(f => f.feature);
+			const cultureFeatures = FeatureLogic.getFeaturesFromCulture(hero.culture, hero).map(f => f.feature);
 			sheet.culture = hero.culture;
 			sheet.cultureFeatures = cultureFeatures;
 
@@ -510,14 +520,9 @@ export class CharacterSheetBuilder {
 			);
 			sheet.rollPower = `${rollPowerAmount} (${characteristics})`;
 
-			sheet.rollT1Effect = CharacterSheetFormatter.cleanupText(
-				AbilityLogic.getTierEffect(rollSection.roll.tier1, 1, ability, undefined, hero));
-
-			sheet.rollT2Effect = CharacterSheetFormatter.cleanupText(
-				AbilityLogic.getTierEffect(rollSection.roll.tier2, 2, ability, undefined, hero));
-
-			sheet.rollT3Effect = CharacterSheetFormatter.cleanupText(
-				AbilityLogic.getTierEffect(rollSection.roll.tier3, 3, ability, undefined, hero));
+			sheet.rollT1Effect = CharacterSheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, hero);
+			sheet.rollT2Effect = CharacterSheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, hero);
+			sheet.rollT3Effect = CharacterSheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, hero);
 		}
 
 		return sheet;

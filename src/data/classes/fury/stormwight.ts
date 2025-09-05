@@ -77,6 +77,7 @@ export const stormwight: SubClass = {
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-3-2-2',
+					name: '2nd-Level Aspect Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -158,6 +159,7 @@ When you are in a negotiation with an animal or elemental, you treat your Renown
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-3-6-1',
+					name: '6th-Level Aspect Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -223,6 +225,7 @@ When you are in a negotiation with an animal or elemental, you treat your Renown
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-3-9-1',
+					name: '9th-Level Aspect Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

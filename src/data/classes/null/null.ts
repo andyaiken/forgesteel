@@ -122,11 +122,13 @@ This ability remains active even after an encounter ends. It ends only if you ar
 					features: [
 						FactoryLogic.feature.createBonus({
 							id: 'null-1-6a',
+							name: 'Null Speed',
 							field: FeatureField.Speed,
 							valueCharacteristics: [ Characteristic.Agility ]
 						}),
 						FactoryLogic.feature.createBonus({
 							id: 'null-1-6b',
+							name: 'Null Speed',
 							field: FeatureField.Disengage,
 							valueCharacteristics: [ Characteristic.Agility ]
 						})

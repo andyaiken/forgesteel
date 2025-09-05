@@ -67,6 +67,7 @@ export const causticAlchemy: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-sub-2-2-1',
+					name: '2nd-Level College Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -153,6 +154,7 @@ Additionally, your Defensive Roll ability now allows you to shift up to 5 square
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-sub-2-6-1',
+					name: '6th-Level College Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -251,6 +253,7 @@ For each combat round that has passed since this ability was last used in the cu
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-sub-2-9-1',
+					name: '9th-Level College Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

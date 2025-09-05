@@ -65,6 +65,7 @@ export const blackAsh: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-sub-1-2-1',
+					name: '2nd-Level College Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -145,6 +146,7 @@ Additionally, you can now bring an adjacent willing creature along with you when
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-sub-1-6-1',
+					name: '6th-Level College Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -212,6 +214,7 @@ Additionally, you can now bring an adjacent willing creature along with you when
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-sub-1-9-1',
+					name: '9th-Level College Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

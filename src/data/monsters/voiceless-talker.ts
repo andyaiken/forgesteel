@@ -89,11 +89,11 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 							tier2: '10 psychic damage; R<2 target identifies allies as enemies (save ends)',
 							tier3: '13 psychic damage; R<3 target identifies allies as enemies (save ends)'
 						})
-					)
+					),
 					FactoryLogic.createAbilitySectionField({
 						name: 'Special',
 						effect: 'This ability can’t be used by a minion.'
-					}),
+					})
 				]
 			})
 		}),
@@ -297,7 +297,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-3-feature-4',
 						name: 'Brawny Buffer',
-						type: FactoryLogic.type.createTrigger('An ally voiceless talker within 5 squares takes damage from an enemy ability.', { free: true, qualifiers: [  ] }),
+						type: FactoryLogic.type.createTrigger('An ally voiceless talker within 5 squares takes damage from an enemy ability.', { free: true, qualifiers: [ ] }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 1,

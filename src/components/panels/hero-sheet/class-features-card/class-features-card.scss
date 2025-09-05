@@ -1,6 +1,11 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
 .hero-sheet .class-features.card {
+    // background-image: linear-gradient(180deg, transparent 17px, #ccc 17px, #ccc 18px, #eee 18px,#eee 35px, #ccc 35px);
+    // background-size: 100% 36px;
+    // background-position: center top;
+    // background-repeat: repeat-y;
+
     min-width: 0;
     display: grid;
     grid-template-rows: min-content 1fr;

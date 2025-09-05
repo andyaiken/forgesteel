@@ -31,7 +31,7 @@ interface Props {
 }
 
 const BasicFeatureComponent = (feature: Feature) => {
-	console.warn('Default feature display: ', feature);
+	// console.warn('Default feature display: ', feature);
 	return (
 		<>
 			<div className='feature-line'><strong>{`• ${feature.type}: `}</strong>{feature.name}</div>
@@ -112,7 +112,7 @@ const BonusFeatureComponent = (feature: FeatureBonus, hero: Hero) => {
 	const value = hero ? HeroLogic.calculateModifierValue(hero, feature.data) : feature.data.value;
 	return (
 		<>
-			<div className='feature-line'><strong>{`• ${feature.name}: `}</strong>{`${feature.data.field} ${CharacterSheetFormatter.addSign(value)}`}</div>
+			<div className='feature-line'><strong>• {feature.name}: </strong>{CharacterSheetFormatter.addSign(value)} {feature.data.field}</div>
 		</>
 	);
 };
@@ -120,7 +120,7 @@ const BonusFeatureComponent = (feature: FeatureBonus, hero: Hero) => {
 const CharacteristicBonusFeatureComponent = (feature: FeatureCharacteristicBonus) => {
 	return (
 		<>
-			<div className='feature-line'><strong>• Characteristic Bonus: </strong>{`${feature.data.characteristic} ${CharacterSheetFormatter.addSign(feature.data.value)}`}</div>
+			<div className='feature-line'><strong>• Characteristic Bonus: </strong>{CharacterSheetFormatter.addSign(feature.data.value)} {feature.data.characteristic}</div>
 		</>
 	);
 };
@@ -311,7 +311,7 @@ const HeroicResourceComponent = (feature: FeatureHeroicResource) => {
 const KitFeatureComponent = (feature: FeatureKit) => {
 	let displayName = feature.name;
 	if (!feature.description.length) {
-		displayName = 'You can use a Kit.';
+		displayName = 'You can use a Kit';
 	}
 	return (
 		<>

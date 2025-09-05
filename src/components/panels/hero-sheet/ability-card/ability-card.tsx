@@ -93,7 +93,7 @@ export const AbilityCard = (props: Props) => {
 		<div className={getCardClasses(ability)}>
 			<section className='bordered'>
 				<h3>{ability.abilityType}</h3>
-				<h2>{ability.name}{getAbilityCost()}</h2>
+				<h2><span className='ability-name'>{ability.name}</span>{getAbilityCost()}</h2>
 				{ability.description?.length ?
 					<p className='description'>{ability.description}</p>
 					: undefined }

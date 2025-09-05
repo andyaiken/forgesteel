@@ -80,6 +80,12 @@
         blockquote, blockquote * {
             font-style: italic;
         }
+
+        .potency {
+            @include common.font-potency();
+            display: inline-block;
+            transform: translateY(1px);
+        }
     }
 
     ul.feature-description {

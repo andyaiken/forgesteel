@@ -185,11 +185,12 @@ export const HeroSheetPage = (props: Props) => {
 		if (character.featuresReferenceOther?.length) {
 			let h = 4 + CharacterSheetFormatter.calculateFeaturesSize(character.featuresReferenceOther, 2 * layout.lineLen);
 			let w = 2;
-			// console.log('Reference length: ', h);
 			if (h > 60) {
 				w = 3;
 				h = 4 + Math.ceil(CharacterSheetFormatter.calculateFeaturesSize(character.featuresReferenceOther, 1.4 * layout.lineLen) * 0.53);
+				h = Math.min(layout.linesY, h);// Will probably need a better solution at some point
 			}
+			// console.log('Reference length: ', h);
 			required.unshift({
 				element: <FeatureReferenceCard character={character} columns={w > 2} key='feature-reference' />,
 				width: w,
@@ -361,6 +362,27 @@ export const HeroSheetPage = (props: Props) => {
 		return abilityCardPages;
 	};
 
+	const getFinalCards = (extraCards: ExtraCards) => {
+		const pages: JSX.Element[] = [];
+		let i = 0;
+		while (extraCards.required.find(c => !c.shown)) {
+			const cards = getFillerCards(layout.perPage, layout.linesY, 0, extraCards);
+			if (cards.length === 0) {
+				console.warn('No cards added, but required cards still not shown!');
+				break;
+			}
+			pages.push(
+				<Fragment key={`extra-${i++}`}>
+					<hr className='dashed' />
+					<div className='abilities page' id={addPageId(hero)}>
+						{cards}
+					</div>
+				</Fragment>
+			);
+		}
+		return pages;
+	};
+
 	try {
 		const extraCards = populateExtraCards(character);
 		return (
@@ -426,16 +448,7 @@ export const HeroSheetPage = (props: Props) => {
 							/>
 						</div>
 						{addAbilityPages(character, extraCards)}
-						{extraCards.required.find(c => !c.shown)
-							? (
-								<>
-									<hr className='dashed' />
-									<div className='abilities page' id={addPageId(hero)}>
-										{getFillerCards(layout.perPage, layout.linesY, 0, extraCards)}
-									</div>
-								</>
-							)
-							: undefined }
+						{getFinalCards(extraCards)}
 					</div>
 				</main>
 			</ErrorBoundary>

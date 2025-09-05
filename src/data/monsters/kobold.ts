@@ -848,7 +848,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Defender),
 			keywords: [ 'Humanoid', 'Kobold' ],
-			encounterValue: 15,
+			encounterValue: 0,
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 21,
@@ -887,7 +887,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 						id: 'kobold-11-retainer-4',
 						name: 'Shield Block',
 						type: FactoryLogic.type.createTrigger('The mentor takes damage from a strike while within distance.', { qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Ranged],
+						keywords: [ AbilityKeyword.Ranged ],
 						distance: [	FactoryLogic.distance.createRanged(5) ],
 						target: 'The shieldbearer’s mentor',
 						sections: [

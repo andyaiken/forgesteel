@@ -55,6 +55,7 @@ At the Director’s discretion, you and your allies can use skills from the intr
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'tactician-sub-1-2-2',
+					name: '2nd-Level Doctrine Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -136,6 +137,7 @@ At the Director’s discretion, you and your allies can use skills from the intr
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'tactician-sub-1-6-1',
+					name: '6th-Level Doctrine Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -214,6 +216,7 @@ At the Director’s discretion, you and your allies can use skills from the intr
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'tactician-sub-1-9-1',
+					name: '9th-Level Doctrine Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

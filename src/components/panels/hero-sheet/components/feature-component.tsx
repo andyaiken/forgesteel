@@ -42,7 +42,7 @@ const BasicFeatureComponent = (feature: Feature) => {
 	);
 };
 
-const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeaturePerk | FeatureItemChoice, hero: Hero) => {
+const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeatureItemChoice, hero: Hero) => {
 	let selectedOptions;
 	if (feature.data.selected.length > 0) {
 		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : s.name).map(s => {
@@ -74,11 +74,23 @@ const AncestryChoiceFeatureComponent = (feature: FeatureAncestryChoice) => {
 	);
 };
 
-const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice) => {
-	const lists = CharacterSheetFormatter.joinCommasOr(feature.data.listOptions);
+const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice | FeaturePerk) => {
+	let listNames;
+	let choiceType;
+	switch (feature.type) {
+		case FeatureType.SkillChoice:
+			listNames = feature.data.listOptions.map(l => l.toString());
+			choiceType = 'Skill';
+			break;
+		case FeatureType.Perk:
+			listNames = feature.data.lists.map(l => l.toString());
+			choiceType = 'Perk';
+			break;
+	}
+	const lists = CharacterSheetFormatter.joinCommasOr(listNames);
 	let selectedOptions;
 	if (feature.data.selected.length) {
-		selectedOptions = feature.data.selected.map(s => {
+		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : s.name).map(s => {
 			return (<div className='feature-iteration' key={s}>{s}</div>);
 		});
 	} else {
@@ -89,7 +101,7 @@ const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice) => {
 	return (
 		<>
 			<div className='feature-line'>
-				{`• ${feature.data.count} ${lists} ${CharacterSheetFormatter.pluralize('Skill', feature.data.count)}`}
+				• {feature.data.count} {lists} {CharacterSheetFormatter.pluralize(choiceType, feature.data.count)}
 			</div>
 			{selectedOptions}
 		</>
@@ -275,7 +287,7 @@ const DomainFeatureComponent = (feature: FeatureDomain | FeatureDomainFeature) =
 
 const ConditionImmunityFeatureComponent = (feature: FeatureConditionImmunity) => {
 	const immunities = feature.data.conditions.map(c => {
-		return (<div className='feature-iteration'>{c.toString()}</div>);
+		return (<div className='feature-iteration' key={`immunity-${c.toString}`}>{c.toString()}</div>);
 	});
 	return (
 		<>
@@ -318,7 +330,6 @@ export const FeatureComponent = (props: Props) => {
 	let content;
 	switch (feature.type) {
 		case FeatureType.LanguageChoice:
-		case FeatureType.Perk:
 		case FeatureType.Choice:
 		case FeatureType.ItemChoice:
 			content = ChoiceFeatureComponent(feature, hero);
@@ -327,6 +338,7 @@ export const FeatureComponent = (props: Props) => {
 			content = AncestryChoiceFeatureComponent(feature);
 			break;
 		case FeatureType.SkillChoice:
+		case FeatureType.Perk:
 			content = SkillChoiceFeatureComponent(feature);
 			break;
 		case FeatureType.Bonus:

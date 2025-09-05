@@ -55,6 +55,7 @@ As your discipline grows, your psionic mastery of your body intensifies, grantin
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'null-sub-1-2-2',
+					name: '2nd-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -124,6 +125,7 @@ As your discipline grows, your psionic mastery of your body intensifies, grantin
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'null-sub-1-6-1',
+					name: '6th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -190,6 +192,7 @@ As your discipline grows, your psionic mastery of your body intensifies, grantin
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'null-sub-1-9-1',
+					name: '9th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

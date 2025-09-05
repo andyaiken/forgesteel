@@ -119,6 +119,7 @@ You can choose only one free triggered action option at a time, even if multiple
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'censor-1-7',
+					name: '1st-Level Domain Feature',
 					level: 1
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
@@ -189,6 +190,7 @@ You can choose only one free triggered action option at a time, even if multiple
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'censor-4-5',
+					name: '4th-Level Domain Feature',
 					level: 4
 				})
 			]
@@ -251,6 +253,7 @@ You can choose only one free triggered action option at a time, even if multiple
 				}),
 				FactoryLogic.feature.createDomainFeature({
 					id: 'censor-7-2',
+					name: '7th-Level Domain Feature',
 					level: 7
 				}),
 				FactoryLogic.feature.createHeroicResourceGain({

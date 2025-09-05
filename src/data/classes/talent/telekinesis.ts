@@ -71,6 +71,7 @@ export const telekinesis: SubClass = {
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-2-2-2',
+					name: '2nd-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -158,6 +159,7 @@ export const telekinesis: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-2-6-1',
+					name: '6th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -261,6 +263,7 @@ export const telekinesis: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'talent-sub-2-9-1',
+					name: '9th-Level Tradition Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

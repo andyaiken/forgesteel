@@ -62,6 +62,7 @@ The illusion ends when you harm another creature, when you physically interact w
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-sub-3-2-1',
+					name: '2nd-Level College Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -143,6 +144,7 @@ If the creature is the same size as you, you can disguise yourself as them using
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-sub-3-6-1',
+					name: '6th-Level College Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -213,6 +215,7 @@ If the creature is the same size as you, you can disguise yourself as them using
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'shadow-sub-3-9-1',
+					name: '9th-Level College Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

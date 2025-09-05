@@ -29,7 +29,7 @@
     }
 
     p {
-        color: common.$color-medium;
+        color: var(--color-text-lightest);
         margin: 7px 0;
     }
 
@@ -44,7 +44,7 @@
         grid-template-columns: min-content 3fr;
         grid-gap: 3px;
         margin-bottom: 10px;
-        color: common.$color-medium;
+        color: var(--color-text-lightest);
 
         .value {
             text-align: center;

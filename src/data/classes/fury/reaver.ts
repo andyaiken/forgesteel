@@ -74,6 +74,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-2-2-2',
+					name: '2nd-Level Aspect Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -163,6 +164,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-2-6-1',
+					name: '6th-Level Aspect Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -237,6 +239,7 @@ As your ferocity grows, you gain benefits as noted on the Reaver Growing Ferocit
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'fury-sub-2-9-1',
+					name: '9th-Level Aspect Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

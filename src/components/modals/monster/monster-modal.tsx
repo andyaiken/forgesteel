@@ -1,5 +1,8 @@
-import { Button, Divider, Flex, Input, Popover, Segmented } from 'antd';
+import { Button, Divider, Flex, Input, Popover, Progress, Segmented, Space } from 'antd';
 import { DownOutlined, EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { Encounter } from '../../../models/encounter';
+import { FeaturePanel } from '../../panels/elements/feature-panel/feature-panel';
+import { FeatureType } from '../../../enums/feature-type';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { Modal } from '../modal/modal';
 import { Monster } from '../../../models/monster';
@@ -10,6 +13,8 @@ import { MonsterPanel } from '../../panels/elements/monster-panel/monster-panel'
 import { MonsterToken } from '../../panels/token/token';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
+import { ResourcePill } from '../../controls/pill/pill';
+import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -18,14 +23,17 @@ import './monster-modal.scss';
 interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
+	encounter?: Encounter;
 	options: Options;
 	onClose: () => void;
 	export?: (format: 'image' | 'pdf' | 'json') => void;
 	updateMonster?: (monster: Monster) => void;
+	setMalice?: (value: number) => void;
 }
 
 export const MonsterModal = (props: Props) => {
 	const [ monster, setMonster ] = useState<Monster>(Utils.copy(props.monster));
+	const [ encounter, setEncounter ] = useState<Encounter | undefined>(props.encounter ? Utils.copy(props.encounter) : undefined);
 	const [ page, setPage ] = useState<string>(props.updateMonster ? 'Encounter' : 'Stat Block');
 	const [ editingName, setEditingName ] = useState<boolean>(false);
 
@@ -89,6 +97,51 @@ export const MonsterModal = (props: Props) => {
 						mode={PanelMode.Full}
 					/>
 				);
+			case 'Malice':
+				return (
+					<Space direction='vertical' style={{ width: '100%', padding: '20px' }}>
+						{
+							MonsterLogic.getMaliceOptions(props.monsterGroup).map(malice => {
+								const cost = malice.type === FeatureType.Ability ? malice.data.ability.cost as number : malice.data.cost;
+
+								return (
+									<SelectablePanel key={malice.id}>
+										<FeaturePanel
+											feature={malice}
+											options={props.options}
+											cost={cost}
+											repeatable={malice.type === FeatureType.Malice ? malice.data.repeatable : undefined}
+											mode={PanelMode.Full}
+										/>
+										{
+											encounter && props.setMalice ?
+												encounter.malice >= cost ?
+													<Button
+														block={true}
+														onClick={() => {
+															const value = Math.max(encounter!.malice - cost, 0);
+															const copy = Utils.copy(encounter);
+															copy.malice = value;
+															setEncounter(copy);
+															props.setMalice!(value);
+														}}
+													>
+														Use
+														<ResourcePill value={cost} />
+													</Button>
+													:
+													<div className='malice-progress'>
+														<Progress percent={100 * encounter.malice / cost} steps={cost} showInfo={false} />
+														<ResourcePill value={`${encounter.malice} of ${cost}`} />
+													</div>
+												: null
+										}
+									</SelectablePanel>
+								);
+							})
+						}
+					</Space>
+				);
 		}
 
 		return null;
@@ -104,7 +157,7 @@ export const MonsterModal = (props: Props) => {
 								<Flex align='center' justify='center' style={{ width: '100%' }}>
 									<Segmented
 										name='tabs'
-										options={[ 'Encounter', 'Stat Block' ]}
+										options={encounter ? [ 'Encounter', 'Stat Block', 'Malice' ] : [ 'Encounter', 'Stat Block' ]}
 										value={page}
 										onChange={setPage}
 									/>

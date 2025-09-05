@@ -19,7 +19,7 @@
         }
     }
     label {
-        color: common.$color-dark;
+        color: var(--color-text);
         font-size: 1.1rem;
         line-height: 1.1rem;
     }
@@ -39,7 +39,7 @@
         label {
             order: 2;
             text-transform: uppercase;
-            color: common.$color-text;
+            color: var(--color-text);
             font-weight: 450;
         }
         .labeled-field-content {
@@ -71,7 +71,7 @@
             }
 
             label {
-                color: color.adjust(common.$color-medium, $lightness: 10%);
+                color: var(--color-text-lightest);
                 font-weight: 350;
                 padding-top: 3px;
             }
@@ -106,6 +106,7 @@
 .labeled-boolean {
     display: flex;
     align-items: center;
+    color: var(--color-text);
 
     &.label-below {
         flex-direction: column;
@@ -118,7 +119,6 @@
 
     label {
         order: 2;
-        color: common.$color-text;
         font-weight: 450;
         font-size: 1.2rem;
         line-height: 1.8rem;

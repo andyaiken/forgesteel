@@ -1,4 +1,4 @@
-import { Divider, Drawer, FloatButton, Segmented } from 'antd';
+import { Divider, Drawer, FloatButton, Segmented, Space } from 'antd';
 import { useMemo, useState } from 'react';
 import { Career } from '../../../../models/career';
 import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
@@ -35,6 +35,36 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	const [ drawerOpen, setDrawerOpen ] = useState(false);
 	const [ previewOptions, setPreviewOptions ] = useState<'html' | 'canvas'>('html');
 
+	const changeTextColor = (newColor: 'light' | 'default' | 'dark') => {
+		setDrawColor(newColor);
+		setSheetTextColor(newColor);
+	};
+
+	const setDrawColor = (newColor: 'light' | 'default' | 'dark') => {
+		let value = 34;
+		switch (newColor) {
+			case 'light':
+				value = 68;
+				break;
+			case 'dark':
+				value = 0;
+				break;
+		}
+		const base = `rgb(${value}, ${value}, ${value})`;
+		document.documentElement.style.setProperty('--color-text', base);
+		const lighter = `rgb(${value + 34}, ${value + 34}, ${value + 34})`;
+		document.documentElement.style.setProperty('--color-text-lighter', lighter);
+		const lightest = `rgb(${value + 68}, ${value + 68}, ${value + 68})`;
+		document.documentElement.style.setProperty('--color-text-lightest', lightest);
+	};
+	setDrawColor(props.options.sheetTextColor);
+
+	const setSheetTextColor = (value: 'light' | 'default' | 'dark') => {
+		const copy = Utils.copy(props.options);
+		copy.sheetTextColor = value;
+		props.setOptions(copy);
+	};
+
 	const showDrawer = () => {
 		setDrawerOpen(true);
 	};
@@ -49,9 +79,21 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const setColorAbilityCards = (value: boolean) => {
+	const setColorSheet = (value: boolean) => {
 		const copy = Utils.copy(props.options);
-		copy.colorAbilityCards = value;
+		copy.colorSheet = value;
+		props.setOptions(copy);
+	};
+
+	const setFeaturesInclude = (value: 'minimal' | 'no-basic' | 'all') => {
+		const copy = Utils.copy(props.options);
+		copy.featuresInclude = value;
+		props.setOptions(copy);
+	};
+
+	const setAbilitySort = (value: 'size' | 'type') => {
+		const copy = Utils.copy(props.options);
+		copy.abilitySort = value;
 		props.setOptions(copy);
 	};
 
@@ -111,7 +153,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 				const withIncidents: Career[] = [];
 				c.incitingIncidents.options.forEach(i => {
 					const selected = Utils.copy(c.incitingIncidents);
-					selected.selectedID = i.id;
+					selected.selected = Utils.copy(i);
 					withIncidents.push({
 						...c,
 						incitingIncidents: selected
@@ -134,6 +176,10 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					<div className={getPageClasses()}>
 						<h2>All Careers</h2>
 						<div className='all-careers'>
+							<CareerCard
+								career={undefined}
+								hero={fakeHero}
+							/>
 							{getAllCareers().map(c => {
 								return (
 									<CareerCard
@@ -153,6 +199,10 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					<div className={getPageClasses()}>
 						<h2>All Complications</h2>
 						<div className='all-complications'>
+							<ComplicationCard
+								complication={undefined}
+								hero={fakeHero}
+							/>
 							{getAllComplications().map(c => {
 								return (
 									<ComplicationCard
@@ -204,28 +254,66 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					open={drawerOpen}
 					style={{ padding: '10px' }}
 				>
+
 					<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
-					<Toggle label='Color ability cards' value={props.options.colorAbilityCards} onChange={setColorAbilityCards} />
-					<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
-					<Divider>Page Size</Divider>
+					<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+					<Divider size='small'>Text Color:</Divider>
 					<Segmented
-						name='pagesize'
-						block={true}
-						options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
-						value={props.options.classicSheetPageSize}
-						onChange={setClassicSheetPageSize}
-					/>
-					<Divider>Page Orientation</Divider>
-					<Segmented
-						name='orientation'
+						name='textColor'
 						block={true}
 						options={[
-							{ value: 'portrait', label: 'Portrait' },
-							{ value: 'landscape', label: 'Landscape' }
+							{ value: 'dark', label: 'Darker' },
+							{ value: 'default', label: 'Default' },
+							{ value: 'light', label: 'Lighter' }
 						]}
-						value={props.options.pageOrientation}
-						onChange={setPageOrientation}
+						value={props.options.sheetTextColor}
+						onChange={changeTextColor}
 					/>
+					<Divider size='small'>Include Class Features:</Divider>
+					<Segmented
+						name='abilitySort'
+						block={true}
+						options={[
+							{ value: 'minimal', label: 'Minimal' },
+							{ value: 'no-basic', label: 'No Simple' },
+							{ value: 'all', label: 'All' }
+						]}
+						value={props.options.featuresInclude}
+						onChange={setFeaturesInclude}
+					/>
+					<Divider>Abilities</Divider>
+					<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+					<Divider size='small'>Sort Abilities By</Divider>
+					<Segmented
+						name='abilitySort'
+						block={true}
+						options={[
+							{ value: 'size', label: 'Length' },
+							{ value: 'type', label: 'Action Type' }
+						]}
+						value={props.options.abilitySort}
+						onChange={setAbilitySort}
+					/>
+					<Divider>Layout</Divider>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<Segmented
+							name='pagesize'
+							block={true}
+							options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
+							value={props.options.classicSheetPageSize}
+							onChange={setClassicSheetPageSize}
+						/>
+						<Segmented
+							name='orientation'
+							block={true}
+							options={[
+								{ value: 'portrait', label: 'Portrait' },
+								{ value: 'landscape', label: 'Landscape' }
+							]}
+							value={props.options.pageOrientation}
+							onChange={setPageOrientation}
+						/>
+					</Space>
 				</Drawer>
 			</div>
 		);

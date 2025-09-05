@@ -402,9 +402,9 @@ export const troll: MonsterGroup = {
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: 'P (weak) frightened (save ends)',
-								tier2: 'P (average) frightened (save ends)',
-								tier3: 'P (strong) frightened (save ends)'
+								tier1: 'P < [weak] frightened (save ends)',
+								tier2: 'P < [average] frightened (save ends)',
+								tier3: 'P < [strong] frightened (save ends)'
 							}))
 						]
 					})

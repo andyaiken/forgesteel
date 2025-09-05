@@ -8,7 +8,7 @@
         @include common.font-slab();
         text-align: center;
         font-size: 1.1rem;
-        color: common.$color-medium;
+        color: var(--color-text-lightest);
     }
 
     .skills-lists {

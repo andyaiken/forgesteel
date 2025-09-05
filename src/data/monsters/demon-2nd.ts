@@ -10,7 +10,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const demon2nd: MonsterGroup = {
 	id: 'monster-group-demon-2nd',
-	name: 'Demons — 2nd Echelon',
+	name: 'Demon — 2nd Echelon',
 	description: 'As demons consume more souls and their mercurial forms shift into more powerful ones, they begin to evolve more distinct personalities, desires, and intelligence—often based on the souls consumed. Across categories 4 to 6, demons develop a particular taste for certain types of souls, which eventually come to define them should they survive long enough.',
 	picture: null,
 	information: [

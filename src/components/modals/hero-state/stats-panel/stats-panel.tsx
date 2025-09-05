@@ -2,6 +2,7 @@ import { Alert, Button, Divider, Drawer, Flex, Space, notification } from 'antd'
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
@@ -143,10 +144,10 @@ export const StatsPanel = (props: Props) => {
 							type='info'
 							message={
 								<>
-									<div>
+									<div className='alert-text'>
 										Spend <b>1 - 3 surges</b> to add {hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.
 									</div>
-									{hero.state.surges >= 2 ? <div>Spend <b>2 surges</b> to increase an ability’s potency by 1 for a single target.</div> : null}
+									{hero.state.surges >= 2 ? <div className='alert-text'>Spend <b>2 surges</b> to increase an ability’s potency by 1 for a single target.</div> : null}
 								</>
 							}
 						/>
@@ -277,7 +278,7 @@ export const StatsPanel = (props: Props) => {
 					HeroLogic.getHeroicResources(hero)
 						.map(hr => (
 							<Space key={hr.id} direction='vertical' style={{ width: '100%' }}>
-								<HeaderText>Heroic Resource: {hr.name}</HeaderText>
+								<HeaderText>{Format.capitalize(hr.type)} Resource: {hr.name}</HeaderText>
 								<NumberSpin
 									value={hr.value}
 									min={hr.canBeNegative ? undefined : 0}
@@ -451,37 +452,38 @@ export const StatsPanel = (props: Props) => {
 					type='info'
 					message={
 						<Space direction='vertical'>
-							<div>
+							<div className='alert-text'>
 								Hero tokens are a resource shared by your party; they typically refresh at the beginning of each game session.
 							</div>
 							{
 								hero.state.heroTokens > 0 ?
 									<Flex align='center' justify='space-between' gap={10}>
-										<div>Spend a hero token to gain two surges.</div>
+										<div className='alert-text'>Spend a hero token to gain two surges.</div>
 										<Button onClick={gainSurges}>+2 Surges</Button>
 									</Flex>
 									: null
 							}
 							{
 								hero.state.heroTokens > 0 ?
-									<div>
+									<div className='alert-text'>
 										Spend a hero token when you fail a saving throw to succeed on it instead.
 									</div>
 									: null
 							}
 							{
 								hero.state.heroTokens > 0 ?
-									<div>
-										Spend a hero token when you fail a test (or succeed on a test with a consequence) to turn the failure into a success and to lose any consequence suffered.
+									<div className='alert-text'>
+										Spend a hero token to reroll a test. You must use the new roll.
 									</div>
 									: null
 							}
 							{
 								hero.state.heroTokens >= 2 ?
 									<Flex align='center' justify='space-between' gap={10}>
-										<div>Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your Recovery value without spending a Recovery.</div>
+										<div className='alert-text'>Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your Recovery value without spending a Recovery.</div>
 										<div>
 											<Field
+												innerStyle={{ color: 'rgba(0, 0, 0, 0.88)' }}
 												orientation='vertical'
 												label='Stamina'
 												value={`${HeroLogic.getStamina(hero) - hero.state.staminaDamage} / ${HeroLogic.getStamina(hero)}`}

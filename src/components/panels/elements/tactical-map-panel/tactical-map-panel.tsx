@@ -22,6 +22,7 @@ import { MapWallPanel } from './map-wall/map-wall';
 import { MapWallVertexPanel } from './map-wall-vertex/map-wall-vertex';
 import { MapZonePanel } from './map-zone/map-zone';
 import { Monster } from '../../../../models/monster';
+import { MonsterGroup } from '../../../../models/monster-group';
 import { MonsterModal } from '../../../modals/monster/monster-modal';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
@@ -30,6 +31,7 @@ import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { Radial } from '../../../controls/radial/radial';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
 import { TacticalMapEditMode } from '../../../../enums/tactical-map-edit-mode';
 import { TacticalMapLogic } from '../../../../logic/tactical-map-logic';
@@ -45,6 +47,12 @@ export interface MapItemStyle {
 	height: string;
 	borderRadius: string;
 	backgroundSize: string;
+}
+
+interface SelectedMonsterInfo {
+	monster: Monster;
+	monsterGroup?: MonsterGroup;
+	encounter?: Encounter;
 }
 
 interface Props {
@@ -82,7 +90,7 @@ export const TacticalMapPanel = (props: Props) => {
 	});
 	const [ selectedMini, setSelectedMini ] = useState<{ type: 'hero' | 'monster', encounterID: string, id: string } | null>(null);
 	const [ selectedHero, setSelectedHero ] = useState<Hero | null>(null);
-	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
+	const [ selectedMonster, setSelectedMonster ] = useState<SelectedMonsterInfo | null>(null);
 
 	const zLevel = 0;
 	const size = props.display === 'thumbnail' ? 5 : props.options.gridSize;
@@ -813,7 +821,27 @@ export const TacticalMapPanel = (props: Props) => {
 					setSelectedHero(content as Hero);
 				}
 				if (mini.content && mini.content.type === 'monster') {
-					setSelectedMonster(content as Monster);
+					const monster = content as Monster;
+					let encounter: Encounter | undefined = undefined;
+					let monsterGroup: MonsterGroup | undefined = undefined;
+
+					if (props.encounters) {
+						encounter = props.encounters.find(e => e.id === mini.content!.encounterID);
+						if (encounter) {
+							const slot = encounter.groups
+								.flatMap(g => g.slots)
+								.find(s => s.monsters.map(m => m.id).includes(monster.id));
+							if (slot) {
+								monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks || [], slot.monsterID) || undefined;
+							}
+						}
+					}
+
+					setSelectedMonster({
+						monster: monster,
+						monsterGroup: monsterGroup,
+						encounter: encounter
+					});
 				}
 			};
 
@@ -1342,7 +1370,28 @@ export const TacticalMapPanel = (props: Props) => {
 						style={getMapItemStyle(mini.position.x, mini.position.y, mini.dimensions.width, mini.dimensions.height, 'circle', boundaries)}
 						selectMini={mini => setSelectedMapItemID(mini.id)}
 						selectHero={setSelectedHero}
-						selectMonster={setSelectedMonster}
+						selectMonster={monster => {
+							let encounter: Encounter | undefined = undefined;
+							let monsterGroup: MonsterGroup | undefined = undefined;
+
+							if (props.encounters) {
+								encounter = props.encounters.find(e => e.id === mini.content!.encounterID);
+								if (encounter) {
+									const slot = encounter.groups
+										.flatMap(g => g.slots)
+										.find(s => s.monsters.map(m => m.id).includes(monster.id));
+									if (slot) {
+										monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks || [], slot.monsterID) || undefined;
+									}
+								}
+							}
+
+							setSelectedMonster({
+								monster: monster,
+								monsterGroup: monsterGroup,
+								encounter: encounter
+							});
+						}}
 						updateMini={updateMapItem}
 					/>
 				);
@@ -1488,7 +1537,9 @@ export const TacticalMapPanel = (props: Props) => {
 					{
 						selectedMonster ?
 							<MonsterModal
-								monster={selectedMonster}
+								monster={selectedMonster.monster}
+								monsterGroup={selectedMonster.monsterGroup}
+								encounter={selectedMonster.encounter}
 								options={props.options}
 								onClose={() => setSelectedMonster(null)}
 								updateMonster={monster => {
@@ -1527,6 +1578,18 @@ export const TacticalMapPanel = (props: Props) => {
 										}
 									}
 								}}
+								setMalice={
+									selectedMonster.encounter ?
+										value => {
+											const copy = Utils.copy(selectedMonster.encounter as Encounter);
+											copy.malice = value;
+
+											if (props.updateEncounter) {
+												props.updateEncounter(copy);
+											}
+										}
+										: undefined
+								}
 							/>
 							: null
 					}

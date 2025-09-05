@@ -56,7 +56,7 @@
 }
 
 .hero-sheet:not(#base-override) {
-    &, li, p {
+    &, li, p, em {
         @include common.font-serif();
         font-weight: 300;
     }
@@ -257,7 +257,7 @@
 
 .hero-sheet {
     background: common.$color-extra-light;
-    color: #222;
+    color: var(--color-text);
     padding: 5px;
     
     display: flex;
@@ -277,7 +277,7 @@
     table,
     ul {
         background: #fff;
-        color: common.$color-text;
+        color: var(--color-text);
     }
 
     h2, h3, h4 {
@@ -286,7 +286,7 @@
         margin: 0;
         margin-bottom: 10px;
         font-weight: 450;
-        color: common.$color-text;
+        color: var(--color-text);
     }
 
     h2 {
@@ -329,7 +329,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: var(--gap);
-        padding: 10px;
+        padding: 5px;
 
         .card {
             margin: 0;
@@ -345,6 +345,9 @@
         .feature-reference {
             flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
         }
+        .feature-reference.wide {
+            flex-basis: calc(3 * ((100% - 2 * var(--gap)) / 3) + 2 * var(--gap));
+        }
     }
 
     &.landscape .abilities.page {
@@ -355,6 +358,9 @@
 
         .feature-reference {
             flex-basis: calc(2 * ((100% - 3 * var(--gap)) / 4) + var(--gap));
+        }
+        .feature-reference.wide {
+            flex-basis: calc(3 * ((100% - 3 * var(--gap)) / 4) + 2 * var(--gap));
         }
     }
 
@@ -405,6 +411,22 @@
 
         .feature {
             overflow: hidden;
+        }
+
+        .feature:has(.feature-title):has(.feature-iteration) {
+            .feature-title {
+                margin-bottom: 0;
+            }
+            margin-bottom: 10px;
+        }
+
+        li em {
+            @include common.font-serif();
+        }
+
+        li > em {
+            font-weight: 400;
+            font-size: 1.1rem;
         }
     }
 

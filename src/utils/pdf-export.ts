@@ -73,8 +73,8 @@ export class PDFExport {
 			ClassTop: hero.class && hero.class.name,
 			SubclassTop: (hero.class && (hero.class.subclassName !== '') && (hero.class.subclasses.filter(s => s.selected).length > 0) && hero.class.subclassName + ': ' + hero.class.subclasses.filter(s => s.selected)[0].name) || null,
 			Level: hero.class && hero.class.level,
-			Wealth: hero.state.wealth,
-			Renown: hero.state.renown,
+			Wealth: HeroLogic.getWealth(hero),
+			Renown: HeroLogic.getRenown(hero),
 			XP: hero.state.xp,
 			Speed: FormatLogic.getSpeed(HeroLogic.getSpeed(hero)),
 			Stability: HeroLogic.getStability(hero),
@@ -239,9 +239,7 @@ export class PDFExport {
 
 			if (hero.career) {
 				texts['CareerName'] = hero.career.name;
-				const incident = hero.career.incitingIncidents.options.find(
-					o => o.id === (hero.career && hero.career.incitingIncidents.selectedID)
-				);
+				const incident = hero.career.incitingIncidents.selected;
 				if (incident) {
 					texts['CareerIncident'] =
 						GetTitle(incident.name) + '\n' + incident.description;

@@ -1,8 +1,8 @@
-import { Feature, FeatureHeroicResource } from './feature';
 import { Condition } from './condition';
 import { ConditionType } from '../enums/condition-type';
 import { Culture } from './culture';
 import { Element } from './element';
+import { Feature } from './feature';
 import { Hero } from './hero';
 import { Item } from './item';
 import { Perk } from './perk';
@@ -47,7 +47,11 @@ export interface CharacterSheet {
 
 	heroicResourceName?: string;
 	heroicResourceCurrent?: number;
-	heroicResourceFeature?: FeatureHeroicResource;
+	heroicResourceGains?: {
+		tag: string;
+		trigger: string;
+		value: string;
+	}[];
 
 	surgeDamageAmount?: string;
 	surgesCurrent?: number;
@@ -134,6 +138,8 @@ export interface CharacterSheet {
 		feature: Feature,
 		source: string
 	}[];
+
+	notes: string;
 }
 
 export interface CareerSheet {
@@ -163,6 +169,7 @@ export interface ProjectSheet {
 export interface ItemSheet {
 	id: string;
 	item: Item;
+	effect: string;
 	features?: Feature[];
 }
 

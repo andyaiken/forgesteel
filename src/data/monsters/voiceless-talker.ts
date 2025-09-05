@@ -542,9 +542,9 @@ Mindkiller whelps are a lesser form of mindkiller that can be created in a fract
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
-								tier1: '6 psychic damage, R<1 push 2',
-								tier2: '10 psychic damage, R<2 push 3',
-								tier3: '12 psychic damage, R<3 push 4 and prone'
+								tier1: '6 psychic damage; R<1 push 2',
+								tier2: '10 psychic damage; R<2 push 3',
+								tier3: '12 psychic damage; R<3 push 4 and prone'
 							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',

@@ -138,9 +138,18 @@ export const dwarfFury = {
 		name: 'Dwarf',
 		description: 'Secluded, bureaucratic, creative.',
 		type: 'Ancestral',
-		languages: [
-			'Zaliac'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Zaliac' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-secluded',
 			name: 'Secluded',
@@ -4240,6 +4249,11 @@ export const dwarfFury = {
 					description: 'You were responsible for guarding something precious, something vital to your region’s survival. But you let someone in, and they betrayed your trust by stealing the thing you were meant to guard. You left your chosen territory to atone for your mistake.'
 				}
 			],
+			selected: {
+				id: 'career-warden-ii-4',
+				name: 'Honor the Fallen',
+				description: 'A group of heroes arrived in your territory with trouble close on their heels. You fought alongside them to turn back the evil, but it was too much. The heroes fell, and your wilderness was forever altered. Though your lands are beyond saving, there are other lands you can help.'
+			},
 			selectedID: 'career-warden-ii-4'
 		}
 	},

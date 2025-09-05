@@ -41,6 +41,7 @@ export const oracle: SubClass = {
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-2-2-3',
+					name: '2nd-Level Oracle Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -110,6 +111,7 @@ when you finish a respite.
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-2-4-1',
+					name: '6th-Level Oracle Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -176,6 +178,7 @@ when you finish a respite.
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'censor-sub-2-6-1',
+					name: '9th-Level Oracle Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

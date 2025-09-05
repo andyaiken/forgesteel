@@ -719,9 +719,9 @@ When bugbears are compelled to take action, they take to the high ground and use
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '6 damage; M (weak) grabbed',
-								tier2: '9 damage; M (average) grabbed',
-								tier3: '13 damage; M (strong) grabbed'
+								tier1: '6 damage; M < [weak] grabbed',
+								tier2: '9 damage; M < [average] grabbed',
+								tier3: '13 damage; M < [strong] grabbed'
 							})),
 							FactoryLogic.createAbilitySectionText('While the target is grabbed this way, they can’t communicate and all creatures and objects have concealment from them.')
 						]

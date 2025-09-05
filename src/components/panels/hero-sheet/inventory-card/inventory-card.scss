@@ -13,7 +13,7 @@
             text-transform: none;
             padding-bottom: 2px;
             margin-bottom: 3px;
-            color: common.$color-text;
+            color: var(--color-text);
             font-weight: 450;
 
             background-image: linear-gradient(90deg, common.$color-medium, transparent);

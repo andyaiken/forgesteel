@@ -175,13 +175,19 @@ export class FactoryLogic {
 		};
 	};
 
-	static createCulture = (name: string, description: string, type: CultureType, languages?: string[], environment?: Feature, organization?: Feature, upbringing?: Feature): Culture => {
+	static createCulture = (name: string, description: string, type: CultureType, environment?: Feature, organization?: Feature, upbringing?: Feature, language?: string): Culture => {
+		const id = name ? `culture-${name.replace(' ', '-').toLowerCase()}` : Utils.guid();
+
 		return {
-			id: name ? `culture-${name.replace(' ', '-').toLowerCase()}` : Utils.guid(),
+			id: id,
 			name: name,
 			description: description,
 			type: type,
-			languages: languages || [],
+			language: FactoryLogic.feature.createLanguageChoice({
+				id: id,
+				selected: language ? [ language ] : []
+			}),
+			languages: [],
 			environment: environment || null,
 			organization: organization || null,
 			upbringing: upbringing || null
@@ -196,6 +202,7 @@ export class FactoryLogic {
 			features: [],
 			incitingIncidents: {
 				options: [],
+				selected: null,
 				selectedID: null
 			}
 		};
@@ -974,7 +981,10 @@ export class FactoryLogic {
 			abilityWidth: PanelWidth.Medium,
 			classicSheetPageSize: SheetPageSize.Letter,
 			pageOrientation: 'portrait',
-			colorAbilityCards: true,
+			colorSheet: true,
+			sheetTextColor: 'default',
+			featuresInclude: 'all',
+			abilitySort: 'size',
 			compactView: false,
 			showMonstersInGroups: true,
 			showContentInTable: false,

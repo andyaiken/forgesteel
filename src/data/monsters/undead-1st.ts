@@ -9,9 +9,9 @@ import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
-export const undead: MonsterGroup = {
-	id: 'monster-group-undead',
-	name: 'Undead',
+export const undead1st: MonsterGroup = {
+	id: 'monster-group-undead-1st',
+	name: 'Undead - 1st Echelon',
 	description: `
 Some serve as mindless soldiers and workers under the control of a necromancer. Others rise when they die a bitter death in a place infused with cursed magic. For a few, it was a choice to become something beyond mortal. However they arose, all undead were once living creatures who now walk the land after death in defiance of the natural order.
 
@@ -19,17 +19,17 @@ Rotting zombies, seductive vampires, wailing wraiths, and more undead stalk the 
 	picture: null,
 	information: [
 		{
-			id: 'undead-info-1',
+			id: 'undead-1st-info-1',
 			name: 'Dark Places',
 			description: 'For many undead, sunlight is a nuisance that they naturally avoid. While rarely harmful to them, the sun’s golden rays make them uncomfortable and shine far too bright to their dead eyes. Walking in the light of day also makes it easier for undead to be spotted by fearful mortals. Many undead avoid the sun entirely, hiding in tombs or ruins until nightfall when they can freely stalk their victims.'
 		},
 		{
-			id: 'undead-info-2',
+			id: 'undead-1st-info-2',
 			name: 'Encountered Together',
 			description: ' Undead are often encountered in groups that include more than just a single kind of creature. A necromancer might raise zombies, skeletons, and ghouls to protect their mansion, as each serves a different function as a guardian. A lich could have wraiths as messengers and soulwights as laboratory assistants. An ancient tomb might have mummies and vampires within. The undead don’t need to drink, eat, sleep, or breathe, and many share an affinity for lightless places, leading to these congregations.'
 		},
 		{
-			id: 'undead-info-3',
+			id: 'undead-1st-info-3',
 			name: 'Corporeal Undead',
 			description: `
 At their most innocuous, corporeal undead are a mockery of life, a body hoisted and dragged along by unnatural strings. At their worst, they are a violent scourge hungry for slaughter, and a perverse reflection of the mortal desire to exist for eternity. Ghouls, skeletons, soulwights, and zombies number among the lesser corporeal undead. Many lack a soul, and many can’t think beyond the orders of their creators—unlike more powerful corporeal undead such as liches and vampires. Those who aren’t controlled by others typically have a singular focus: the destruction of all living things.
@@ -37,7 +37,7 @@ At their most innocuous, corporeal undead are a mockery of life, a body hoisted 
 The magic that animates a corpse removes the need for air, sleep, and sustenance. This magic also halts decay, preserving the undead at the stage of deterioration before they were animated. While most corporeal undead are brought to unlife by a creator, tales abound of zombies suddenly rising from graveyards during rare astronomical occurrences, skeletal soldiers emerging from mass graves on the anniversary of their death, and other seemingly spontaneous acts of necromancy.`
 		},
 		{
-			id: 'undead-info-4',
+			id: 'undead-1st-info-4',
 			name: 'Spectral Undead',
 			description: `
 Umbral stalkers. Specters. Wraiths. Spectral undead come in many forms. One might be spawned by a person’s vile actions in life, while another could be a soul lost to a necromancer’s fell arts. Powerful undead can even manifest these shadowy beings into existence through sheer will. Regardless of how they come to be, though, all spectral undead are malice incarnate.
@@ -45,14 +45,14 @@ Umbral stalkers. Specters. Wraiths. Spectral undead come in many forms. One migh
 Spectral undead who are formed naturally from the souls of malicious, hate-filled creatures usually haunt the places where they died, while those manifested by another being typically dwell where ordered to by their creator. Left to their own devices, spectral undead stop at nothing to kill the living they encounter, with some stalking their quarry through miles of ruins or wilderness.`
 		},
 		{
-			id: 'undead-info-5',
+			id: 'undead-1st-info-5',
 			name: 'Undead Languages',
 			description: ' Most undead speak (or at least understand) the languages they knew in life.'
 		}
 	],
 	malice: [
 		FactoryLogic.feature.createMalice({
-			id: 'undead-malice-1',
+			id: 'undead-1st-malice-1',
 			name: 'Ravenous Horde',
 			cost: 2,
 			sections: [
@@ -60,7 +60,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			]
 		}),
 		FactoryLogic.feature.createMalice({
-			id: 'undead-malice-2',
+			id: 'undead-1st-malice-2',
 			name: 'Paranormal Fling',
 			cost: 3,
 			sections: [
@@ -68,7 +68,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			]
 		}),
 		FactoryLogic.feature.createMalice({
-			id: 'undead-malice-3',
+			id: 'undead-1st-malice-3',
 			name: 'The Grasping, The Hungry',
 			cost: 5,
 			sections: [
@@ -83,7 +83,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			]
 		}),
 		FactoryLogic.feature.createMalice({
-			id: 'undead-malice-4',
+			id: 'undead-1st-malice-4',
 			name: 'Dread March',
 			cost: 7,
 			sections: [
@@ -93,7 +93,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 	],
 	monsters: [
 		FactoryLogic.createMonster({
-			id: 'undead-1',
+			id: 'undead-1st-1',
 			name: 'Crawling Claw',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
@@ -108,7 +108,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(0, 2, -5, -1, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-1-feature-1',
+					id: 'undead-1st-1-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -116,7 +116,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-1-feature-2',
+						id: 'undead-1st-1-feature-2',
 						name: 'Fingernails',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -135,14 +135,14 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-1-feature-3',
+					id: 'undead-1st-1-feature-3',
 					name: 'Disorganized',
 					description: 'Allies can’t flank with the crawling claw.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-2',
+			id: 'undead-1st-2',
 			name: 'Decrepit Skeleton',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
@@ -157,7 +157,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(0, 2, -2, 0, -2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-2-feature-1',
+					id: 'undead-1st-2-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -165,7 +165,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-2-feature-2',
+						id: 'undead-1st-2-feature-2',
 						name: 'Bone Bow',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -184,14 +184,14 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-2-feature-3',
+					id: 'undead-1st-2-feature-3',
 					name: 'Bonetrops',
 					description: 'When the decrepit skeleton is reduced to 0 Stamina, their space is difficult terrain. The first time any enemy enters this space, they take 1 damage and the effect ends.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-3',
+			id: 'undead-1st-3',
 			name: 'Rotting Zombie',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
@@ -206,7 +206,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(2, -2, -5, -2, -3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-3-feature-1',
+					id: 'undead-1st-3-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -214,7 +214,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-3-feature-2',
+						id: 'undead-1st-3-feature-2',
 						name: 'Rotting Fist',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -232,14 +232,14 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-3-feature-3',
+					id: 'undead-1st-3-feature-3',
 					name: 'Death Grasp',
 					description: 'When the rotting zombie is reduced to 0 Stamina, their space is difficult terrain. The first time any enemy who has m<2] enters this space, they are slowed (save ends) and the effect ends.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-4',
+			id: 'undead-1st-4',
 			name: 'Shade',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
@@ -254,7 +254,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(-5, 1, 0, 0, +2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-4-feature-1',
+					id: 'undead-1st-4-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -262,7 +262,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-4-feature-2',
+						id: 'undead-1st-4-feature-2',
 						name: 'Life Drain',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -280,14 +280,14 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-4-feature-3',
+					id: 'undead-1st-4-feature-3',
 					name: 'Shadow Phasing',
 					description: 'The shade can move through creatures and objects at their usual speed, but can’t end their turn inside a creature or object. The first time in a round that the shade moves through a creature, that creature takes 1 corruption damage. The shade doesn’t take damage from being force moved into objects.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-5',
+			id: 'undead-1st-5',
 			name: 'Ghoul',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Harrier),
@@ -301,7 +301,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(0, 2, -2, 0, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-5-feature-1',
+					id: 'undead-1st-5-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -309,7 +309,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-5-feature-2',
+						id: 'undead-1st-5-feature-2',
 						name: 'Razor Claws',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -328,7 +328,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-5-feature-3',
+						id: 'undead-1st-5-feature-3',
 						name: 'Leap',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
@@ -340,19 +340,19 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-5-feature-4',
+					id: 'undead-1st-5-feature-4',
 					name: 'Hunger',
 					description: 'When the ghoul uses the Charge main action, they gain a +2 bonus to speed until the end of their turn.'
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-5-feature-5',
+					id: 'undead-1st-5-feature-5',
 					name: 'Arise',
 					description: 'The first time the ghoul is reduced to 0 Stamina by damage that isn’t fire damage or holy damage and their body isn’t destroyed, they instead have 1 Stamina and fall prone.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-6',
+			id: 'undead-1st-6',
 			name: 'Skeleton',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Artillery),
@@ -366,7 +366,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-6-feature-1',
+					id: 'undead-1st-6-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -374,7 +374,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-6-feature-2',
+						id: 'undead-1st-6-feature-2',
 						name: 'Bone Shards',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -397,7 +397,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-6-feature-3',
+						id: 'undead-1st-6-feature-3',
 						name: 'Bone Spur',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
@@ -416,14 +416,14 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-6-feature-4',
+					id: 'undead-1st-6-feature-4',
 					name: 'Arise',
 					description: 'The first time the skeleton is reduced to 0 Stamina by damage that isn’t fire damage or holy damage and their body isn’t destroyed, they instead have 1 Stamina and fall prone.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-7',
+			id: 'undead-1st-7',
 			name: 'Specter',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Hexer),
@@ -437,7 +437,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(-5, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-7-feature-1',
+					id: 'undead-1st-7-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -445,7 +445,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-7-feature-2',
+						id: 'undead-1st-7-feature-2',
 						name: 'Decaying Touch',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -469,7 +469,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-7-feature-3',
+						id: 'undead-1st-7-feature-3',
 						name: 'Hidden Movement',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
@@ -481,14 +481,14 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-7-feature-4',
+					id: 'undead-1st-7-feature-4',
 					name: 'Corruptive Phasing',
 					description: 'The specter can move through creatures and objects at their usual speed, but can’t end their turn inside a creature or object. The first time in a round that the specter moves through a creature, that creature takes 2 corruption damage. The specter doesn’t take damage from being force moved into objects.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-8',
+			id: 'undead-1st-8',
 			name: 'Umbral Stalker',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
@@ -502,7 +502,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-8-feature-1',
+					id: 'undead-1st-8-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -510,7 +510,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-8-feature-2',
+						id: 'undead-1st-8-feature-2',
 						name: 'Chilling Grasp',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -529,7 +529,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-8-feature-3',
+						id: 'undead-1st-8-feature-3',
 						name: 'Freezing Dark',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -549,7 +549,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-8-feature-4',
+						id: 'undead-1st-8-feature-4',
 						name: 'Shadow Jump',
 						type: FactoryLogic.type.createManeuver({ free: true }),
 						keywords: [],
@@ -562,14 +562,14 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-8-feature-5',
+					id: 'undead-1st-8-feature-5',
 					name: 'Corruptive Phasing',
 					description: 'The umbral stalker can move through creatures and objects at their usual speed, but can’t end their turn inside a creature or object. The first time in a round that the umbral stalker moves through a creature, that creature takes 2 corruption damage. The umbral stalker doesn’t take damage from being force moved into objects.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-9',
+			id: 'undead-1st-9',
 			name: 'Soulwight',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Hexer),
@@ -583,7 +583,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-9-feature-1',
+					id: 'undead-1st-9-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -591,7 +591,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-9-feature-2',
+						id: 'undead-1st-9-feature-2',
 						name: 'Soulstealer Longsword',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -611,7 +611,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-9-feature-3',
+						id: 'undead-1st-9-feature-3',
 						name: 'Stolen Vitality',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
@@ -624,14 +624,14 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-9-feature-4',
+					id: 'undead-1st-9-feature-4',
 					name: 'Arise',
 					description: 'The first time the soulwight is reduced to 0 Stamina by damage that isn’t fire damage or holy damage and their body isn’t destroyed, they instead have 1 Stamina and fall prone.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-10',
+			id: 'undead-1st-10',
 			name: 'Zombie',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Brute),
@@ -645,7 +645,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(2, 1, -5, -2, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-10-feature-1',
+					id: 'undead-1st-10-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 1 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 1 })
@@ -653,7 +653,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-10-feature-2',
+						id: 'undead-1st-10-feature-2',
 						name: 'Clobber and Clutch',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -673,7 +673,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-10-feature-3',
+						id: 'undead-1st-10-feature-3',
 						name: 'Zombie Dust',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
@@ -692,14 +692,14 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-10-feature-4',
+					id: 'undead-1st-10-feature-4',
 					name: 'Endless Knight',
 					description: 'The first time the zombie is reduced to 0 Stamina by damage that isn’t fire damage or holy damage and their body isn’t destroyed, they instead have 10 Stamina and fall prone. '
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
-			id: 'undead-11',
+			id: 'undead-1st-11',
 			name: 'Ghost',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Leader),
@@ -713,7 +713,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'undead-11-feature-1',
+					id: 'undead-1st-11-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 3 }),
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 3 })
@@ -721,7 +721,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-11-feature-2',
+						id: 'undead-1st-11-feature-2',
 						name: 'Heat Death',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -741,7 +741,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-11-feature-3',
+						id: 'undead-1st-11-feature-3',
 						name: 'Haunt',
 						type: FactoryLogic.type.createManeuver(),
 						distance: [ FactoryLogic.distance.createRanged(8) ],
@@ -758,7 +758,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-11-feature-4',
+						id: 'undead-1st-11-feature-4',
 						name: 'Shriek',
 						type: FactoryLogic.type.createTrigger('A creature within distance targets the ghost with a strike.'),
 						distance: [ FactoryLogic.distance.createMelee() ],
@@ -769,13 +769,13 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-11-feature-5',
+					id: 'undead-1st-11-feature-5',
 					name: 'Phantom Flow',
 					description: 'Each undead with a Phasing trait within 10 squares of the ghost can’t be made slowed or weakened.'
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-11-feature-6',
+						id: 'undead-1st-11-feature-6',
 						name: 'Paranormal Activity',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -788,7 +788,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-11-feature-7',
+						id: 'undead-1st-11-feature-7',
 						name: 'Spirited Away',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -807,7 +807,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'undead-11-feature-8',
+						id: 'undead-1st-11-feature-8',
 						name: 'Awful Wail',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -825,7 +825,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'undead-11-feature-9',
+					id: 'undead-1st-11-feature-9',
 					name: 'Corruptive Phasing',
 					description: 'The ghost can move through creatures and objects at their usual speed, but can’t end their turn inside a creature or object. The first time in a round that the ghost moves through a creature, that creature takes 2 corruption damage. The ghost doesn’t take damage from being force moved into objects.'
 				})

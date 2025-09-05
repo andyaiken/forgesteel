@@ -9,24 +9,24 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const lightbender: MonsterGroup = {
 	id: 'monster-group-lightbender',
-	name: 'Lightbender',
-	description: 'Lightbenders prowl deserts, plains, forests—any sunbathed wilderness. Their adaptations make them skilled daylight predators. This monstrous creature’s fur bends and refracts light from the surrounding environment, producing mirages that distract and confuse their prey—hence their name.',
+	name: 'Lightbenders',
+	description: 'Lightbenders prowl deserts, plains, forests—any sunbathed wilderness where they can take advantage of the adaptations that make them skilled daylight predators. This monstrous creature’s fur bends and refracts light from the surrounding environment, producing mirages that distract and confuse their prey.',
 	picture: null,
 	information: [
 		{
 			id: 'lightbender-info-1',
 			name: 'Hidden Hunters',
-			description: 'At a distance, a lightbender looks akin to a regular lion, but closer inspection reveals their glowing eyes, iridescent mane, and pair of lashing tails spiked with refractive crystals. The lightbender’s pelt magically warps light around them to disguise their movement, allowing them to teleport while leaving behind a past visual imprint. Unsuspecting prey rarely realize they’re staring at an afterimage of the lightbender until the predator pounces.'
+			description: 'At a distance, a lightbender looks akin to a regular lion, but closer inspection reveals their glowing eyes, iridescent mane, and a pair of lashing tails spiked with refractive crystals. The lightbender’s pelt magically warps light around them to disguise their movement, letting them teleport while leaving behind a past visual imprint. Unsuspecting prey rarely realize they’re staring at an afterimage of the lightbender until the predator pounces.'
 		},
 		{
 			id: 'lightbender-info-2',
-			name: 'Prized Manes',
-			description: 'Both male and female lightbenders have the distinctive mane, which is highly prized for its light-displacing qualities and can be fashioned into a mantle of the lightbender, though only a few mages possess the knowledge to do so.'
+			name: 'Ghostly Echoes',
+			description: 'Lightbenders can also bend the sounds they make, enabling them to almost completely disappear during a hunt. Many can delay their footsteps to slip into a silent prowl, while others might throw a guttural trill across a field to lure prey out of hiding. The lightbenders’ illusory mastery was said to inspire several techniques taught to shadows within the College of the Harlequin Mask.'
 		},
 		{
 			id: 'lightbender-info-3',
 			name: 'Protective Companions',
-			description: 'Though lightbenders are typically solitary creatures, they sometimes cross into another lightbender’s territory to help protect a newborn litter of kittens. A few people have succeeded in taming lightbenders as guards or hunting animals, and if treated well, they can make for loyal protectors, often viewing their smaller humanoid companions as surrogate kittens.'
+			description: 'Though lightbenders are typically solitary creatures, they sometimes cross into another lightbender’s territory to help protect a newborn litter of kittens. A few people have succeeded in taming lightbenders as guards or hunting beasts, and if treated well, they can make loyal protectors, often viewing their smaller humanoid companions as surrogate kittens.'
 		}
 	],
 	malice: [
@@ -35,7 +35,7 @@ export const lightbender: MonsterGroup = {
 			name: 'Silent Prowl',
 			cost: 3,
 			sections: [
-				'A lightbender acting this turn adds the teleport keyword to their movement and can hide as a free maneuver until the start of their next turn.'
+				'Each lightbender acting this turn can teleport up to their speed as a move action and attempt to hide as a free maneuver, all until the start of their next turn.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -43,7 +43,7 @@ export const lightbender: MonsterGroup = {
 			name: 'Duplicate',
 			cost: 5,
 			sections: [
-				'A lightbender acting this turn creates a duplicate lightbender in an unoccupied space adjacent to them. The duplicate has 1 Stamina and shares the lightbender’s speed and turn. Once per round, the lightbender can instantly trade places with a duplicate before or after using an ability.'
+				'Each lightbender acting this turn can create a duplicate lightbender in an unoccupied space adjacent to them. The duplicate is indistinguishable from the lightbender except by supernatural means, has 1 Stamina, and has the lightbender’s speed. A duplicate acts on the lightbender’s turn but can take only move actions. Once per round before or after using an ability, a lightbender can trade places with any lightbender duplicate.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -51,12 +51,12 @@ export const lightbender: MonsterGroup = {
 			name: 'Rampage',
 			cost: 7,
 			sections: [
-				'All lightbenders in the encounter shine radiantly and distort the senses of each enemy within 5 of one. Each aﬀected enemy makes a **Reason test**.',
+				'Each lightbender in the encounter shines radiantly, distorting the senses of any enemy within 5 squares of them. Each affected enemy makes a **Reason test.**',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Reason,
-					tier1: 'The target can\'t establish line of effect with any lightbenders (save ends)',
-					tier2: 'The target can\'t establish line of effect with any lightbenders (EoT)',
-					tier3: 'no effect'
+					tier1: 'The target doesn’t have line of effect to any lightbender (save ends).',
+					tier2: 'The target doesn’t have line of effect to any lightbender (EoT).',
+					tier3: 'No effect.'
 				})
 			]
 		})
@@ -86,13 +86,15 @@ export const lightbender: MonsterGroup = {
 						target: 'One creature or object',
 						cost: 'signature',
 						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '9 damage',
-								tier2: '14 damage',
-								tier3: '18 damage'
-							})),
-							FactoryLogic.createAbilitySectionText('The lightbender deals an additional 4 damage if they have an edge.')
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '9 damage',
+									tier2: '14 damage',
+									tier3: '18 damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('If this ability gains an edge or has a double edge, it deals an extra 4 damage.')
 						]
 					})
 				}),
@@ -103,15 +105,17 @@ export const lightbender: MonsterGroup = {
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
-						target: 'Two creatures or objects',
+						target: 'One creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '8 damage',
-								tier2: '12 damage; M<1 bleeding (save ends)',
-								tier3: '15 damage; M<2 bleeding (save ends)'
-							})),
-							FactoryLogic.createAbilitySectionText('A creature who is bleeding from this ability has a bane on tests to search for the lightbender until the condition ends.')
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '8 damage',
+									tier2: '12 damage; M<1 bleeding (save ends)',
+									tier3: '15 damage; M<2 bleeding (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('While bleeding this way, the target takes a bane on tests to search for the lightbender while they are hidden.')
 						]
 					})
 				}),
@@ -122,16 +126,18 @@ export const lightbender: MonsterGroup = {
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
 						cost: 5,
 						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: 'I<0 dazed (save ends)',
-								tier2: 'I<1 dazed (save ends)',
-								tier3: 'I<2 dazed (save ends)'
-							})),
-							FactoryLogic.createAbilitySectionText('Targets dazed by this ability have a speed of 0 while dazed. If a dazed target takes damage or if someone else spends an action to shake the creature out of their stupor, the condition ends.')
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: 'I<0 dazed (save ends)',
+									tier2: 'I<1 dazed (save ends)',
+									tier3: 'I<2 dazed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('While dazed this way, a target has speed 0. If a target takes damage, or if someone else uses a main action to shake the target out of their stupor, the dazed condition ends.')
 						]
 					})
 				}),
@@ -140,18 +146,18 @@ export const lightbender: MonsterGroup = {
 						id: 'lightbender-1-feature-4',
 						name: 'Stalker\'s Afterimage',
 						type: FactoryLogic.type.createTrigger('The lightbender takes damage from a strike.'),
-						keywords: [],
+						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The lightbender halves the damage, doesn\'t suffer any effect associated with it, and teleports 5 squares. The lightbender immediately hides if they teleport into cover or concealment.')
+							FactoryLogic.createAbilitySectionText('The lightbender halves the damage, ignores any nondamaging effects associated with it, and can teleport up to 5 squares. If they teleport into concealment or cover, the lightbender can immediately attempt to hide as a free maneuver.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'lightbender-1-feature-5',
 					name: 'Avoidance',
-					description: 'The lightbender always treats a save ends effect as na EoT effect.'
+					description: 'Any effect on the lightbender that would be ended by a saving throw instead ends automatically at the end of their next turn.'
 				})
 			]
 		}),
@@ -179,13 +185,15 @@ export const lightbender: MonsterGroup = {
 						target: 'Two creatures or objects',
 						cost: 'signature',
 						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '7 damage',
-								tier2: '11 damage; A<1 prone',
-								tier3: '14 damage; A<2 prone'
-							})),
-							FactoryLogic.createAbilitySectionText('The pouncer makes a free strike against each target they have knocked prone.')
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '7 damage',
+									tier2: '11 damage; A<1 prone',
+									tier3: '14 damage; A<2 prone'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The pouncer can make a free strike against each target they knock prone.')
 						]
 					})
 				}),
@@ -196,15 +204,17 @@ export const lightbender: MonsterGroup = {
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-						target: 'All enemies and objects in the burst',
+						target: 'Each enemy and object in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '4 damage',
-								tier2: '7 damage; A<1 dazzled (save ends)',
-								tier3: '10 damage; A<2 dazzled (save ends)'
-							})),
-							FactoryLogic.createAbilitySectionText('A dazzled creature has a bane on strikes and can’t have line of effect to targets who aren’t adjacent to them.')
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '4 damage',
+									tier2: '7 damage; A<1 the target is dazzled (save ends)',
+									tier3: '10 damage; A<2 the target is dazzled (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('A dazzled target takes a bane on strikes and has line of effect only within 1 square.')
 						]
 					})
 				}),
@@ -213,18 +223,20 @@ export const lightbender: MonsterGroup = {
 						id: 'lightbender-2-feature-3',
 						name: 'Illusory Feint',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
 						cost: 5,
 						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: 'R<0 dazed (save ends)',
-								tier2: 'R<1 dazed (save ends)',
-								tier3: 'R<2 dazed (save ends)'
-							})),
-							FactoryLogic.createAbilitySectionText('Targets dazed by this ability have a speed of 0 while dazed. If a dazed target takes damage or if someone else spends an action to shake the creature out of their stupor, the condition ends.')
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: 'I<0 dazed (save ends)',
+									tier2: 'I<1 dazed (save ends)',
+									tier3: 'I<2 dazed (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('While dazed this way, a target has speed 0. If a target takes damage, or if someone else uses a main action to shake the target out of their stupor, the dazed condition ends.')
 						]
 					})
 				}),
@@ -233,21 +245,22 @@ export const lightbender: MonsterGroup = {
 						id: 'lightbender-2-feature-4',
 						name: 'Striking Afterimage',
 						type: FactoryLogic.type.createTrigger('The pouncer takes damage from a strike.'),
-						keywords: [],
+						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The pouncer halves the damage, doesn’t suffer any effect associated with it, and teleports 5 squares. The pouncer makes a free strike if they teleport into a space adjacent to an enemy.')
+							FactoryLogic.createAbilitySectionText('The pouncer halves the damage, ignores any nondamaging effects associated with it, and can teleport up to 5 squares. If they teleport into concealment or cover, the pouncer can immediately attempt to hide as a free maneuver.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'lightbender-2-feature-5',
 					name: 'Avoidance',
-					description: 'The pouncer always treats a save ends effect as na EoT effect.'
+					description: 'Any effect on the pouncer that would be ended by a saving throw instead ends automatically at the end of their next turn.'
 				})
 			]
 		})
 	],
-	addOns: []
+	addOns: [
+	]
 };

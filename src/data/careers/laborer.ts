@@ -65,6 +65,7 @@ export const laborer: Career = {
 				description: 'You labored silently as an uncaring boss drove those around you into the ground, pushing you to work harder to lessen the burden on your companions. But when the boss pushed too far and killed a friend of yours, you led an uprising against them. That was the start of your adventuring life.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

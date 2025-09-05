@@ -175,9 +175,18 @@ export const wodeElfTroubadour = {
 		name: 'Bespoke Culture',
 		description: 'Choose any Environment, Organization, and Upbringing.',
 		type: 'Bespoke',
-		languages: [
-			'Yllyric'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Yllyric' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-wilderness',
 			name: 'Wilderness',
@@ -5162,6 +5171,11 @@ export const wodeElfTroubadour = {
 					description: 'When a producer who once shortchanged you shouted out on the street for you to stop a thief who had picked their pocket, your spite toward the producer inspired you to let the thief run right on by. But that decision led to tragedy when the thief later harmed someone you loved. From that moment on, you made it your responsibility to protect others.'
 				}
 			],
+			selected: {
+				id: 'career-performer-ii-6',
+				name: 'Tragic Lesson',
+				description: 'When a producer who once shortchanged you shouted out on the street for you to stop a thief who had picked their pocket, your spite toward the producer inspired you to let the thief run right on by. But that decision led to tragedy when the thief later harmed someone you loved. From that moment on, you made it your responsibility to protect others.'
+			},
 			selectedID: 'career-performer-ii-6'
 		}
 	},

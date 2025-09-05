@@ -60,6 +60,7 @@ export const sailor: Career = {
 				description: 'A catastrophic storm hit while you were at sea, destroying your ship and leaving you as the only survivor. Once you recovered, you tried to sign on with another ship, but the thought of the open water turned your legs to jelly. Instead, you’ve taken on the role of a traveling hero to make ends meet.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

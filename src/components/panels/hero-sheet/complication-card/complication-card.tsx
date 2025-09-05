@@ -26,7 +26,7 @@ export const ComplicationCard = (props: Props) => {
 
 	const getBenefitSection = () => {
 		let header = 'Benefit';
-		if (!complication?.drawbacks.length) {
+		if (complication && !complication.drawbacks.length) {
 			header = 'Benefit and Drawback';
 		}
 		if (!complication || complication.benefits.length) {
@@ -48,7 +48,7 @@ export const ComplicationCard = (props: Props) => {
 	const getDrawbackSection = () => {
 		if (!complication || complication.drawbacks.length) {
 			let header = 'Drawback';
-			if (!complication?.benefits.length) {
+			if (complication && !complication.benefits.length) {
 				header = 'Benefit and Drawback';
 			}
 			return (

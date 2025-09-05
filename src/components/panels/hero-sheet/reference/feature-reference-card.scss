@@ -16,4 +16,10 @@
     li li {
         list-style-type: disc;
     }
+
+    &.wide {
+        display: grid;
+        grid-template-rows: min-content 1fr;
+        place-items: stretch;
+    }
 }

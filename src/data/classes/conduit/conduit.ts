@@ -371,7 +371,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'conduit-4-1b',
-					name: 'Characteristic Increase: Additional',
+					name: 'Characteristic Increase: Additional Choice',
 					description: 'Additionally, you can increase one of your characteristic scores by 1, to a maximum of 3.',
 					options: [
 						{
@@ -567,7 +567,7 @@ Additionally, whenever you take a respite, you can open a portal to rest in the 
 				}),
 				FactoryLogic.feature.createChoice({
 					id: 'conduit-10-2b',
-					name: 'Characteristic Increase: Additional',
+					name: 'Characteristic Increase: Additional Choice',
 					description: 'Additionally, you can increase one of your characteristic scores by 1, to a maximum of 5.',
 					options: [
 						{
@@ -1128,9 +1128,9 @@ Divine power remains until you spend it.`
 				FactoryLogic.createAbilitySectionRoll(
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Intuition ],
-						tier1: '9 + I holy damage, slide 3',
-						tier2: '13 + I holy damage, slide 4',
-						tier3: '17 + I holy damage, slide 6'
+						tier1: '9 + I holy damage; slide 3',
+						tier2: '13 + I holy damage; slide 4',
+						tier3: '17 + I holy damage; slide 6'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('Each ally the target comes adjacent to during the forced movement can spend a Recovery.')

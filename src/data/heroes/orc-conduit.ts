@@ -128,9 +128,18 @@ export const orcConduit = {
 		name: 'Bespoke Culture',
 		description: 'Choose any Environment, Organization, and Upbringing.',
 		type: 'Bespoke',
-		languages: [
-			'Kalliak'
-		],
+		language: {
+			id: 'culture-language',
+			name: 'Language',
+			description: '',
+			type: 'Language Choice',
+			data: {
+				options: [],
+				count: 1,
+				selected: [ 'Kalliak' ]
+			}
+		},
+		languages: [],
 		environment: {
 			id: 'env-wilderness',
 			name: 'Wilderness',
@@ -3719,6 +3728,11 @@ export const orcConduit = {
 					description: 'The faith-based organization you were once part of became corrupt. It used its status in the community to accumulate wealth through tithes and its leaders sought political appointments. During a season of drought, the institution stockpiled resources and refused to give aid, resulting in the deaths of many. You became a hero to fight against such corruption and to honor your dearly departed.'
 				}
 			],
+			selected: {
+				id: 'career-disciple-ii-5',
+				name: 'Near-Death Experience',
+				description: 'While serving at a religious institution, you almost died in an accident. When you woke, you had lost all memory of ever having worked for the church or temple. Though the clergy encouraged you to stay, you left to forge a new path. Your sense of altruism - whether instilled in you by your past work or a part of who you naturally are - guides you in your life.'
+			},
 			selectedID: 'career-disciple-ii-5'
 		}
 	},

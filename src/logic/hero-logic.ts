@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureClassAbility } from '../models/feature';
+import { Feature, FeatureAbility, FeatureClassAbility, FeatureLanguageChoice } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -257,10 +257,6 @@ export class HeroLogic {
 	static getLanguages = (hero: Hero, sourcebooks: Sourcebook[]) => {
 		const languageNames: string[] = [];
 
-		if (hero.culture) {
-			languageNames.push(...hero.culture.languages);
-		}
-
 		// Collate from features
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
@@ -269,10 +265,14 @@ export class HeroLogic {
 				languageNames.push(f.data.language);
 			});
 		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.LanguageChoice)
+			.filter(f => f.feature.type === FeatureType.LanguageChoice)
 			.forEach(f => {
-				languageNames.push(...f.data.selected);
+				const feature = f.feature as FeatureLanguageChoice;
+				const selected = Utils.copy(feature.data.selected);
+				if (selected.length < feature.data.count) {
+					selected.push(`I Speak Their Language (${f.source})`);
+				}
+				languageNames.push(...selected);
 			});
 
 		const allLanguages = sourcebooks.flatMap(cs => cs.languages);
@@ -894,7 +894,7 @@ export class HeroLogic {
 	};
 
 	static calculateSurgeDamage = (hero: Hero) => {
-		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => c.value)) : 0;
+		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => this.getCharacteristic(hero, c.characteristic))) : 0;
 		return value;
 	};
 
@@ -1154,14 +1154,8 @@ export class HeroLogic {
 				};
 			});
 
-		// Choose culture language
-		const currentLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(l => l.name);
-		const options = SourcebookLogic.getLanguages(sourcebooks)
-			.filter(l => !currentLanguages.includes(l.name));
-		hero.culture.languages.push(Collections.draw(options).name);
-
 		// Choose career inciting incident
-		hero.career.incitingIncidents.selectedID = Collections.draw(hero.career.incitingIncidents.options.map(ii => ii.id));
+		hero.career.incitingIncidents.selected = Utils.copy(Collections.draw(hero.career.incitingIncidents.options));
 
 		return hero;
 	};

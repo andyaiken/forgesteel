@@ -65,6 +65,7 @@ export const magesApprentice: Career = {
 				description: 'The mage you worked for was a kindly old soul, but the basic magic they taught you always seemed like a small part of something bigger. It wasn’t until you met an adventuring elementalist that you realized hitting the road as a hero was the only way to truly improve and hone your skills. You resigned your apprenticeship and found yourself walking the path of a hero the next day.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

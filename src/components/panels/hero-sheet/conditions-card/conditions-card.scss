@@ -53,13 +53,13 @@
 
 .save-ends-description {
     @include common.font-slab();
-    color: common.$color-medium;
+    color: var(--color-text-lightest);
 }
 
 .save-target {
     display: inline-block;
     @include common.font-slab();
-    color: common.$color-text;
+    color: var(--color-text);
     border-bottom: 1.5px solid common.$color-light;
     min-width: 15px;
     text-align: center;

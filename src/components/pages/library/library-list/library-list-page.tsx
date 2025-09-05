@@ -754,7 +754,7 @@ export const LibraryListPage = (props: Props) => {
 								name: c.name,
 								sourcebook: SourcebookLogic.getCultureSourcebook(props.sourcebooks, c)!.name,
 								type: c.type,
-								languages: c.languages.join(', '),
+								languages: c.language.data.selected.join(', '),
 								environment: c.environment ? c.environment.name : '',
 								organization: c.organization ? c.organization.name : '',
 								upbringing: c.upbringing ? c.upbringing.name : ''

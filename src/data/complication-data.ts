@@ -1110,7 +1110,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-masterChef-d',
 				name: 'Master Chef Drawback',
-				description: 'The first time each day that you are forced to eat food you didn’t prepare, you lose 2 Recoveries.'
+				description: 'The first time each day you eat food you didn’t prepare, you lose 2 Recoveries.'
 			})
 		]
 	};

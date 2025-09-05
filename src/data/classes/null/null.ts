@@ -19,7 +19,7 @@ The mind is not separate from the body. Perfection of one requires perfection of
 
 As a null, you resist the supernatural forces of the universe with composure and confidence. As you strive for perfect order, you are an enemy of the ultimate expression of chaos: the supernatural. Those who break the laws of nature using sorcery or psionics should fear you.
 
-"Any weapon can be turned against the hand that wields it." - Ardashir`,
+*"Any weapon can be turned against the hand that wields it."* - Ardashir`,
 	subclassName: 'Tradition',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -122,11 +122,13 @@ This ability remains active even after an encounter ends. It ends only if you ar
 					features: [
 						FactoryLogic.feature.createBonus({
 							id: 'null-1-6a',
+							name: 'Null Speed',
 							field: FeatureField.Speed,
 							valueCharacteristics: [ Characteristic.Agility ]
 						}),
 						FactoryLogic.feature.createBonus({
 							id: 'null-1-6b',
+							name: 'Null Speed',
 							field: FeatureField.Disengage,
 							valueCharacteristics: [ Characteristic.Agility ]
 						})

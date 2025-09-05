@@ -82,7 +82,7 @@
         }
 
         label {
-            color: common.$color-text;
+            color: var(--color-text);
         }
     }
 
@@ -240,7 +240,7 @@
         text-align: center;
         margin-left: -5px;
         margin-right: -5px;
-        color: common.$color-medium;
+        color: var(--color-text-lightest);
 
         div, .data {
             @include common.font-slab();
@@ -248,6 +248,7 @@
         }
         .data {
             border-bottom: 1px solid common.$color-medium;
+            color: var(--color-text);
             min-width: 24px;
             display: inline-block;
             text-align: center;

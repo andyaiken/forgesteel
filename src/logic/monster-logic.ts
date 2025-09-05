@@ -1,3 +1,4 @@
+import { FeatureAbility, FeatureMalice } from '../models/feature';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { ConditionType } from '../enums/condition-type';
@@ -5,6 +6,7 @@ import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FeatureLogic } from './feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { Monster } from '../models/monster';
+import { MonsterData } from '../data/monster-data';
 import { MonsterFeatureCategory } from '../enums/monster-feature-category';
 import { MonsterFilter } from '../models/filter';
 import { MonsterGroup } from '../models/monster-group';
@@ -398,6 +400,21 @@ export class MonsterLogic {
 		state.reactionUsed = false;
 		state.defeated = false;
 		state.captainID = undefined;
+	};
+
+	static getMaliceOptions = (group?: MonsterGroup) => {
+		const options: (FeatureMalice | FeatureAbility)[] = [ ...MonsterData.malice ];
+		if (group) {
+			options.push(...group.malice);
+		}
+
+		return options.sort((a, b) => {
+			const getCost = (malice: FeatureMalice | FeatureAbility) => {
+				return malice.type === FeatureType.Ability ? malice.data.ability.cost as number : malice.data.cost;
+			};
+
+			return getCost(a) - getCost(b);
+		});
 	};
 
 	///////////////////////////////////////////////////////////////////////////

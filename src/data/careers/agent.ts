@@ -63,6 +63,7 @@ export const agent: Career = {
 				description: 'You spent your life in service of your country or an organization that upheld your values. During your undercover operations, you discovered everything you were told was a lie. Whether you confronted your superiors or were exposed, you were stripped of your service medals before you left to become a true hero.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

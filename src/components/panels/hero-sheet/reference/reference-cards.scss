@@ -10,7 +10,7 @@
         grid-template-columns: 1fr 1fr;
 
         * {
-            color: common.$color-medium;
+            color: var(--color-text-lightest);
         }
 
         h5 {
@@ -50,17 +50,30 @@
     // background-repeat: repeat-y;
 
     h2 {
-        color: common.$color-dark;
+        color: var(--color-text);
     }
 
     *:not(h2) {
         @include common.font-serif();
         font-size: 1.1rem;
         line-height: 1.3rem;
-        color: common.$color-medium;
+        color: var(--color-text-lightest);
     }
 
     li {
         margin-bottom: 10px;
+    }
+
+    table.power-roll {
+        td {
+            border: 0;
+        }
+        td:first-child {
+            vertical-align: baseline;
+        }
+        img {
+            width: 50px;
+            height: 18px;
+        }
     }
 }

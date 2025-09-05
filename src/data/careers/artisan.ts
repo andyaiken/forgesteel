@@ -60,6 +60,7 @@ export const artisan: Career = {
 				description: 'You had great success that caused an unscrupulous rival to curse you. For a time, everything you tried to create turned to ruin. You broke the curse through adventuring, and in doing so discovered a new joy and purpose that now defines you.'
 			}
 		],
+		selected: null,
 		selectedID: null
 	}
 };

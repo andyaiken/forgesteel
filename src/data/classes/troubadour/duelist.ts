@@ -72,6 +72,7 @@ export const duelist: SubClass = {
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'lAPeP3iSpt8PqQJI',
+					name: '2nd-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -141,6 +142,7 @@ competition with that creature. The chosen creature also has a double edge on po
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'AYG8ODq4Xvn4vWMr',
+					name: '5th-Level Class Act Feature',
 					options: [
 						{
 							feature: FactoryLogic.feature.create({
@@ -176,6 +178,7 @@ competition with that creature. The chosen creature also has a double edge on po
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'AkvymN5wTwBpvJk6',
+					name: '6th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({
@@ -245,6 +248,7 @@ Additionally, when your named signature ability is the last ability you use in a
 			features: [
 				FactoryLogic.feature.createChoice({
 					id: 'qIMKE6V6R4w2teMf',
+					name: '9th-Level Class Act Ability',
 					options: [
 						{
 							feature: FactoryLogic.feature.createAbility({

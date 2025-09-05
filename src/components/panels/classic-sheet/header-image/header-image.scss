@@ -1,0 +1,84 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .header-image {
+    grid-column-end: span 2;
+    margin: 0;
+    margin-bottom: -5px;
+    padding: 0;
+    text-align: center;
+    opacity: 0.6;
+
+    $logo-width: 225px;
+    $shield-size: 28px;
+    $shield-spacing: 30px;
+
+    img {
+        --top-offset: 5px;
+        width: $logo-width;
+        height: 50px;
+        object-position: calc(50% + 2px) calc(50% + var(--top-offset));
+        object-fit: cover;
+    }
+
+    background-image: common.svg-diamond-color(common.$color-medium),
+    common.svg-diamond-color(#fff),
+    common.svg-diamond-color(common.$color-medium),
+    common.svg-diamond-color(#fff),
+    url('../../../../assets/shield.png'),
+    url('../../../../assets/shield.png'),
+    linear-gradient(180deg, common.$color-medium, common.$color-medium),
+    linear-gradient(180deg, common.$color-medium, common.$color-medium),
+    linear-gradient(180deg, common.$color-medium, common.$color-medium),
+    linear-gradient(180deg, common.$color-medium, common.$color-medium),
+    linear-gradient(180deg, common.$color-medium, common.$color-medium),
+    linear-gradient(180deg, common.$color-medium, common.$color-medium);
+
+    $shield-offset: calc(($logo-width / 2) + $shield-spacing);
+
+    $top-bar-thickness: 2px;
+    $mid-bar-thickness: 1px;
+    $bottom-bar-thickness: 2px;
+
+    $baseline-bar-width: calc(50% - $shield-offset - ($shield-size / 2) - 2px);
+    $top-bar-width: calc($baseline-bar-width);
+    $mid-bar-width: calc($baseline-bar-width - 5px);
+    $bottom-bar-width: calc($baseline-bar-width + 2px);
+
+    $top-space: 5px;
+    $bottom-space: 5px;
+    $bars-dy: 1px;
+
+    $side-sq: calc($top-bar-thickness + $top-space + $mid-bar-thickness + $bottom-space + $bottom-bar-thickness - 4px);
+    $side-cutin-size: calc(($side-sq + 5px) * 2);
+    $half-cutin: calc($side-cutin-size / 2);
+    $cutin-dy: $bars-dy;
+    $side-sq-dy: $bars-dy;
+
+    background-size: $side-sq $side-sq,
+    $side-cutin-size $side-cutin-size,
+    $side-sq $side-sq,
+    $side-cutin-size $side-cutin-size,
+    $shield-size $shield-size,
+    $shield-size $shield-size,
+    $top-bar-width $top-bar-thickness,
+    $top-bar-width $top-bar-thickness,
+    $bottom-bar-width $bottom-bar-thickness,
+    $bottom-bar-width $bottom-bar-thickness,
+    $mid-bar-width $mid-bar-thickness,
+    $mid-bar-width $mid-bar-thickness;
+
+    background-position: left calc(50% - $side-sq-dy),
+    calc(0% - $half-cutin) calc(50% - $cutin-dy),
+    right calc(50% - $side-sq-dy),
+    calc(100% + $half-cutin) calc(50% - $cutin-dy),
+    calc(50% + $shield-offset) center,
+    calc(50% - $shield-offset) center,
+    left calc(50% - ($bars-dy + $top-space + $mid-bar-thickness)),
+    right calc(50% - ($bars-dy + $top-space + $mid-bar-thickness)),
+    left calc(50% + 5px),
+    right calc(50% + 5px),
+    5px calc(50% - 1px),
+    calc(100% - 5px) calc(50% - 1px);
+
+    background-repeat: no-repeat;
+}

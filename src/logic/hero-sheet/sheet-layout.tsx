@@ -1,6 +1,6 @@
-import { AbilitySheet, CharacterSheet } from '../../models/character-sheet';
+import { AbilitySheet, HeroSheet } from '../../models/classic-sheets/hero-sheet';
 import { Fragment, JSX } from 'react';
-import { AbilityCard } from '../../components/panels/hero-sheet/ability-card/ability-card';
+import { AbilityCard } from '../../components/panels/classic-sheet/ability-card/ability-card';
 import { Options } from '../../models/options';
 import { SheetFormatter } from './sheet-formatter';
 import { SheetPageSize } from '../../enums/sheet-page-size';
@@ -160,7 +160,7 @@ export class SheetLayout {
 		return refCards;
 	};
 
-	static getAbilityPages = (character: CharacterSheet, extraCards: ExtraCards, layout: CardPageLayout, options: Options) => {
+	static getAbilityPages = (character: HeroSheet, extraCards: ExtraCards, layout: CardPageLayout, options: Options) => {
 		// future: Allow options to filter abilities displayed?
 		let allAbilities = character.abilities;
 
@@ -262,7 +262,7 @@ export class SheetLayout {
 		return abilityCardPages;
 	};
 
-	static getRequiredCardPages = (extraCards: ExtraCards, character: CharacterSheet, layout: CardPageLayout, idPrefix = 'extra') => {
+	static getRequiredCardPages = (extraCards: ExtraCards, character: HeroSheet, layout: CardPageLayout, idPrefix = 'extra') => {
 		const pages: JSX.Element[] = [];
 		let i = 0;
 		while (extraCards.required.find(c => !c.shown)) {

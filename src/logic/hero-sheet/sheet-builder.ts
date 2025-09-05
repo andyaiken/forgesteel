@@ -1,4 +1,4 @@
-import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet, FollowerSheet, ItemSheet } from '../../models/character-sheet';
+import { AbilitySheet, CareerSheet, ComplicationSheet, FollowerSheet, HeroSheet, ItemSheet } from '../../models/classic-sheets/hero-sheet';
 import { Ability } from '../../models/ability';
 import { AbilityData } from '../../data/ability-data';
 import { AbilityKeyword } from '../../enums/ability-keyword';
@@ -31,8 +31,8 @@ import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookLogic } from '../sourcebook-logic';
 
 export class SheetBuilder {
-	static buildSheetForHero = (hero: Hero, sourcebooks: Sourcebook[], options: Options) => {
-		const sheet: CharacterSheet = {
+	static buildHeroSheet = (hero: Hero, sourcebooks: Sourcebook[], options: Options): HeroSheet => {
+		const sheet: HeroSheet = {
 			hero: hero,
 			name: hero.name,
 
@@ -364,14 +364,14 @@ export class SheetBuilder {
 
 	// #region Helper Methods
 
-	private static modifierFieldMapping: { [key: string]: (s: CharacterSheet, v: string | number | undefined) => void } = {
+	private static modifierFieldMapping: { [key: string]: (s: HeroSheet, v: string | number | undefined) => void } = {
 		Stamina: (s, v) => s.modifierStamina = Number(v),
 		Stability: (s, v) => s.modifierStability = Number(v),
 		Speed: (s, v) => s.modifierSpeed = Number(v),
 		Disengage: (s, v) => s.modifierDisengage = Number(v)
 	};
 
-	static populateModifierAugmentation = (feature: Feature, hero: Hero, sheet: CharacterSheet) => {
+	static populateModifierAugmentation = (feature: Feature, hero: Hero, sheet: HeroSheet) => {
 		let value;
 		switch (feature.type) {
 			case FeatureType.Bonus: {
@@ -444,7 +444,7 @@ export class SheetBuilder {
 	// #endregion
 
 	// #region Ability Sheet
-	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster): AbilitySheet => {
+	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | undefined): AbilitySheet => {
 		const isMonster = CreatureLogic.isMonster(creature);
 		const sheet: AbilitySheet = {
 			id: ability.id,
@@ -513,14 +513,29 @@ export class SheetBuilder {
 				console.warn('More than one roll section!', rollSections);
 			}
 
-			const rollPowerAmount = Math.max(...rollSection.roll.characteristic
-				.map(c => CreatureLogic.getCharacteristic(creature, c)));
+			let rollPowerStr = '';
+			if (rollSection.roll.characteristic.length) {
+				const rollPowerAmount = Math.max(...rollSection.roll.characteristic
+					.map(c => CreatureLogic.getCharacteristic(creature, c)));
 
-			const characteristics = SheetFormatter.joinCommasOr(rollSection.roll.characteristic
-				.sort(SheetFormatter.sortCharacteristics)
-				.map(c => Format.capitalize(c.slice(0, 1)))
-			);
-			sheet.rollPower = isMonster ? rollPowerAmount.toString() : `${rollPowerAmount} (${characteristics})`;
+				const characteristics = SheetFormatter.joinCommasOr(rollSection.roll.characteristic
+					.sort(SheetFormatter.sortCharacteristics)
+					.map(c => Format.capitalize(c.slice(0, 1)))
+				);
+				rollPowerStr = isMonster ? rollPowerAmount.toString() : `${rollPowerAmount} (${characteristics})`;
+			} else {
+				let rollPowerAmount = 2;// echelon 1 always at least 2
+				[ rollSection.roll.tier1, rollSection.roll.tier2, rollSection.roll.tier3 ].forEach(tier => {
+					const potency = tier.match(/[MmAaRrIiPp]<(\d)/);
+					if (potency && potency[1]) {
+						rollPowerAmount = Math.max(rollPowerAmount, Number.parseInt(potency[1]));
+					}
+				});
+
+				rollPowerStr = rollPowerAmount.toString();
+			}
+
+			sheet.rollPower = rollPowerStr;
 
 			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, creature);
 			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, creature);

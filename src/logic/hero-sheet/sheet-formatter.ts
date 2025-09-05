@@ -1,5 +1,5 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../../models/ability';
-import { AbilitySheet, FollowerSheet, ItemSheet } from '../../models/character-sheet';
+import { AbilitySheet, FollowerSheet, ItemSheet } from '../../models/classic-sheets/hero-sheet';
 import { AbilityLogic } from '../ability-logic';
 import { Characteristic } from '../../enums/characteristic';
 import { Collections } from '../../utils/collections';
@@ -492,7 +492,7 @@ export class SheetFormatter {
 		return result;
 	};
 
-	static formatAbilityTier = (value: string, tier: number, ability: Ability, creature: Hero | Monster) => {
+	static formatAbilityTier = (value: string, tier: number, ability: Ability, creature: Hero | Monster | undefined) => {
 		if (ability.distance.length > 1) {
 			const distanceTypes = ability.distance.map(d => d.type);
 			const values = distanceTypes.map(d => {

@@ -1,0 +1,7 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+.hero-sheet .class-features.card {
+    min-width: 0;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}

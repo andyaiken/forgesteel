@@ -1,0 +1,442 @@
+@use './functions' as *;
+
+@mixin plain($border-color, $border-size) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom: 0;
+
+    $point-size: 10px;
+
+    padding-bottom: calc($border-size + $point-size + 2px);
+
+    $top-border-offset: calc($point-size + $border-size);
+
+    $angle: 45deg;
+
+    $point-border-start: calc(($point-size + $border-size / 2) * cos($angle));
+    $point-border-fade-start: calc($point-border-start - 0.1px);
+    $point-border-end: calc($point-border-start + $border-size);
+    $point-border-fade-end: calc($point-border-end + 0.1px);
+
+    $point-border-gradient: transparent $point-border-fade-start,
+        $border-color $point-border-start,
+        $border-color $point-border-end,
+        transparent $point-border-fade-end;
+
+    background-image: linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg + $angle), $point-border-gradient),
+        linear-gradient(calc(180deg - $angle), $point-border-gradient);
+
+    background-size: calc(50% - $top-border-offset + 1px) $border-size,
+        calc(50% - $top-border-offset + 1px) $border-size,
+        50% calc($point-size + ($border-size * 2)),
+        50% calc($point-size + ($border-size * 2));
+
+    background-position: left calc(100% - $top-border-offset),
+        right calc(100% - $top-border-offset),
+        left bottom,
+        right bottom;
+
+    background-repeat: no-repeat;
+}
+
+@mixin fancy($border-color) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom: 0;
+
+    $border-size: 2px;
+    $square-size: 10px;
+    $square-gap: 4px;
+
+    padding-bottom: calc($border-size + $square-size + $square-gap + 2px);
+
+    $top-border-offset: calc($square-gap + ($square-size + $border-size) / 2);
+    $lower-border-offset: calc($top-border-offset - (1.5 * $border-size));
+
+    $angle: 45deg;
+    $point-size: calc($square-size / 2 + $square-gap);
+    $epsilon: calc(($square-gap - ($square-gap * cos($angle))));
+
+    $point-border-start: calc($point-size * cos($angle));
+    $point-border-fade-start: calc($point-border-start - 0.1px);
+    $point-border-end: calc($point-border-start + $border-size);
+    $point-border-fade-end: calc($point-border-end + 0.1px);
+
+    $point-border-gradient: transparent $point-border-fade-start,
+        $border-color $point-border-start,
+        $border-color $point-border-end,
+        transparent $point-border-fade-end;
+
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="#{encodecolor($border-color)}"></path></svg>'),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg + $angle), $point-border-gradient),
+        linear-gradient(calc(180deg - $angle), $point-border-gradient);
+
+    background-size: $square-size $square-size,
+        calc(50% - $top-border-offset) $border-size,
+        calc(50% - $lower-border-offset) calc($border-size / 2),
+        calc(50% - $top-border-offset) $border-size,
+        calc(50% - $lower-border-offset) calc($border-size / 2),
+        50% calc($point-size + ($border-size * 3/2)),
+        50% calc($point-size + ($border-size * 3/2));
+
+    background-position: 50% calc(100% - (($border-size * 3/2) + $square-gap)),
+        left calc(100% - $top-border-offset),
+        left calc(100% - $lower-border-offset),
+        right calc(100% - $top-border-offset),
+        right calc(100% - $lower-border-offset),
+        left bottom,
+        right bottom;
+
+    background-repeat: no-repeat;
+}
+
+@mixin fancy-2($border-color) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom: 0;
+
+    $border-size: 2px;
+    $square-size: 10px;
+    $square-gap: 4px;
+    $angle-2-size: 1.1px;
+    $angle-2-gap: 5px;
+
+    padding-bottom: calc($border-size + $square-size + $square-gap + $angle-2-size + $angle-2-gap);
+
+    $main-border-offset: calc($square-gap + ($square-size + $border-size) / 2);
+    $lower-border-offset: calc($main-border-offset - (1.5 * $border-size));
+
+    $angle: 45deg;
+    $point-size: calc($square-size / 2 + $square-gap);
+    $epsilon: calc(($square-gap - ($square-gap * cos($angle))));
+
+    $point-border-start: calc($point-size * cos($angle));
+    $point-border-fade-start: calc($point-border-start - 0.1px);
+    $point-border-end: calc($point-border-start + $border-size);
+    $point-border-fade-end: calc($point-border-end + 0.1px);
+
+    $point-border-gradient: transparent $point-border-fade-start,
+        $border-color $point-border-start,
+        $border-color $point-border-end,
+        transparent $point-border-fade-end;
+
+    $angle-2-gap-b: 3px;
+    $angle-2-h: calc($point-size + $angle-2-gap + $angle-2-size - $angle-2-gap-b);
+    $angle-2-start: calc(($angle-2-h * cos($angle)) - ($angle-2-size / 2));
+    $angle-2-fade-start: calc($angle-2-start - 0.1px);
+    $angle-2-end: calc($angle-2-start + $angle-2-size);
+    $angle-2-fade-end: calc($angle-2-end + 0.1px);
+
+    $angle-2-w: calc($angle-2-start / sin($angle));
+    $angle-2-w-offset: calc($angle-2-gap-b * cos($angle));
+
+    $angle-2-gradient: transparent $angle-2-fade-start,
+        $border-color $angle-2-start,
+        $border-color $angle-2-end,
+        transparent $angle-2-fade-end;
+
+    $side-sq: calc(($border-size * 3/2) + $angle-2-size + $angle-2-gap - 2px);
+    $side-cutin-size: calc(($side-sq + 3px) * 2);
+    $half-cutin: calc($side-cutin-size / 2);
+    $cutin-dy: calc($main-border-offset - $half-cutin + $border-size / 2);
+    $side-sq-dy: calc($main-border-offset - ($side-sq / 2) + $border-size / 2);
+
+    background-image: svg-diamond-color($border-color),
+        svg-diamond-color(#fff),
+        svg-diamond-color($border-color),
+        svg-diamond-color(#fff),
+        svg-diamond-color($border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg + $angle), $point-border-gradient),
+        linear-gradient(calc(180deg - $angle), $point-border-gradient),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg + $angle), $angle-2-gradient),
+        linear-gradient(calc(180deg - $angle), $angle-2-gradient);
+
+    background-size: $side-sq $side-sq,
+        $side-cutin-size $side-cutin-size,
+        $side-sq $side-sq,
+        $side-cutin-size $side-cutin-size,
+        $square-size $square-size,
+        calc(50% - $main-border-offset) $border-size,
+        calc(50% - $lower-border-offset) calc($border-size / 2),
+        calc(50% - $main-border-offset) $border-size,
+        calc(50% - $lower-border-offset) calc($border-size / 2),
+        50% calc($point-size + ($border-size * 3/2)),
+        50% calc($point-size + ($border-size * 3/2)),
+        calc(50% - $angle-2-gap - $angle-2-w - $angle-2-w-offset) $angle-2-size,
+        calc(50% - $angle-2-gap - $angle-2-w - $angle-2-w-offset) $angle-2-size,
+        calc(50% - $angle-2-gap - $angle-2-w-offset) $angle-2-h,
+        calc(50% - $angle-2-gap - $angle-2-w-offset) $angle-2-h;
+
+    background-position: left calc(100% - $side-sq-dy),
+        calc(0% - $half-cutin) calc(100% - $cutin-dy),
+        right calc(100% - $side-sq-dy),
+        calc(100% + $half-cutin) calc(100% - $cutin-dy),
+        50% calc(100% - (($border-size * 3/2) + $square-gap)),
+        left calc(100% - $main-border-offset),
+        left calc(100% - $lower-border-offset),
+        right calc(100% - $main-border-offset),
+        right calc(100% - $lower-border-offset),
+        left bottom,
+        right bottom,
+        left calc(100% - $angle-2-h - $angle-2-gap-b + $angle-2-size),
+        right calc(100% - $angle-2-h - $angle-2-gap-b + $angle-2-size),
+        left calc(100% - $angle-2-gap-b),
+        right calc(100% - $angle-2-gap-b);
+
+    background-repeat: no-repeat;
+}
+
+// Circle - e.g. free strikes & Move Actions
+@mixin fancy-3($border-color) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom: 0;
+    background-repeat: no-repeat;
+
+    $circle1-d: 8px;
+    $circle1-r: calc($circle1-d / 2);
+    $circle-gap: 3px;
+    $line-thickness: 2px;
+
+    $circle2-r1: calc($circle1-r + $circle-gap);
+    $circle2-r2: calc($circle2-r1 + $line-thickness);
+    $circle2-d: calc(2 * $circle2-r2);
+
+    $line-gap: 3px;
+    $top-line-y: calc(100% - ($line-thickness / 2) - $circle-gap - $circle1-r);
+    $bottom-line-y: calc($top-line-y + $line-gap);
+
+    background-image: radial-gradient(circle, $border-color calc($circle1-r - 0.1px), transparent $circle1-r),
+        radial-gradient(circle at $circle2-r2 0px, transparent $circle2-r1, $border-color $circle2-r1, $border-color calc($circle2-r2 - 0.1px), transparent $circle2-r2),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color);
+
+    background-size: calc($circle1-d) calc($circle1-d),
+        $circle2-d $circle2-r2,
+        calc(50% - $circle2-r1) $line-thickness,
+        calc(50% - $circle2-r1) $line-thickness,
+        calc(50% - $circle2-r1) 1px,
+        calc(50% - $circle2-r1) 1px;
+
+    background-position: center calc(100% - $line-thickness - $circle-gap),
+        center 100%,
+        left $top-line-y,
+        right $top-line-y,
+        left $bottom-line-y,
+        right $bottom-line-y;
+
+    padding-bottom: calc(100% - $top-line-y + $circle1-d);
+}
+
+// Right angles - Maneuvers
+@mixin fancy-4($border-color) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom: 0;
+
+    $line-size: 2px;
+    $centerline-h: 20px;
+    $line-gap: 4px;
+
+    $sq-size: calc(4 * $line-size);
+    $sq-half: calc($sq-size / 2);
+    $side-cutin-size: calc(($sq-size + $line-gap) * 2);
+    $half-cutin: calc($side-cutin-size / 2);
+
+    $v1-h: calc($centerline-h - (3 / 2 * $line-gap));
+    $v1-dx: calc($line-gap + ($line-size / 2));
+    $h1-w: calc(50% - $v1-dx - $sq-half);
+    $h1-dy: calc($v1-h + ($line-gap / 2) - $line-size);
+
+    $v2-h: calc($v1-h - $line-gap - $line-size + 1px);
+    $v2-dx: calc($v1-dx + $line-gap);
+    $h2-w: calc(50% - $v2-dx - $sq-size);
+    $h2-dy: calc($v2-h + ($line-gap / 2) - 1px);
+
+    $h3-w: calc($h1-w - ($line-gap * 2));
+    $h3-dy: calc($h2-dy - $line-gap - 1px);
+    $h3-size: calc($line-size);
+
+    $cutin-dy: calc($h2-dy + 0.5px - $half-cutin);
+    $sq-dy: calc($cutin-dy + $half-cutin - $sq-half);
+
+    padding-bottom: calc($centerline-h + $line-size);
+
+    background-image: svg-diamond-color($border-color),
+        svg-diamond-color($border-color),
+        svg-diamond-color(#fff),
+        svg-diamond-color(#fff),
+
+        linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(90deg, $border-color, $border-color),
+        linear-gradient(90deg, $border-color, $border-color),
+
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color);
+
+    background-size: $sq-size $sq-size,
+        $sq-size $sq-size,
+        $side-cutin-size $side-cutin-size,
+        $side-cutin-size $side-cutin-size,
+
+        $line-size $centerline-h,
+        $line-size $v1-h,
+        $line-size $v1-h,
+        1px $v2-h,
+        1px $v2-h,
+
+        $h1-w $line-size,
+        $h1-w $line-size,
+        $h2-w 1px,
+        $h2-w 1px,
+        $h3-w $h3-size,
+        $h3-w $h3-size ;
+
+    background-position: right calc(100% - $sq-dy),
+        left calc(100% - $sq-dy),
+        calc(0% - $half-cutin) calc(100% - $cutin-dy),
+        calc(100% + $half-cutin) calc(100% - $cutin-dy),
+
+        center bottom,
+        calc(50% - $v1-dx) calc(100% - ($line-gap / 2)),
+        calc(50% + $v1-dx) calc(100% - ($line-gap / 2)),
+        calc(50% - $v2-dx) calc(100% - ($line-gap / 2)),
+        calc(50% + $v2-dx) calc(100% - ($line-gap / 2)),
+
+        $sq-half calc(100% - $h1-dy),
+        calc(100% - $sq-half) calc(100% - $h1-dy),
+        $sq-size calc(100% - $h2-dy),
+        calc(100% - $sq-size) calc(100% - $h2-dy),
+        $sq-half calc(100% - $h3-dy),
+        calc(100% - $sq-half) calc(100% - $h3-dy);
+
+    background-repeat: no-repeat;
+}
+
+// Nested Diamonds - Triggered Actions
+@mixin fancy-5($border-color) {
+    border: 0;
+    background-color: transparent;
+    margin-bottom: 0;
+
+    $line-size: 2px;
+    $line-half: calc($line-size / 2);
+    $line-gap: 4px;
+
+    $sq-size: 8px;
+    $sq-half: calc($sq-size / 2);
+    $sq-dy: calc(2 * $line-gap + 1px);
+
+    $sq-o-size: calc($sq-size + 2 * ($line-gap + 1px));
+    $sq-o-dy: $line-gap;
+
+    $sq-b-size: calc($sq-o-size + 2 * ($line-gap + $line-size));
+    $sq-b-dy: -$line-size;
+
+    $h1-w: calc(50% - ($sq-b-size / 2));
+    $h1-dy: calc($sq-b-size / 2 - (3 / 2 * $line-size));
+
+    $h2-w: calc($h1-w - $sq-half - $line-size - 1px);
+    $ht-dy: calc($h1-dy + 2 * $line-size);
+    $hb-dy: calc($h1-dy - $line-size - 1px);
+
+    $angle: 45deg;
+    $angle-size: calc($sq-size * 0.7);
+    $epsilon: calc(($line-gap - ($line-gap * cos($angle))) / 2);
+
+    $angle-line-start: calc($angle-size * cos($angle) - $epsilon);
+    $angle-line-fade-start: calc($angle-line-start - 0.1px);
+    $angle-line-end: calc($angle-line-start + 1px);
+    $angle-line-fade-end: calc($angle-line-end + 0.1px);
+
+    $angle-line-gradient: transparent $angle-line-fade-start,
+        $border-color $angle-line-start,
+        $border-color $angle-line-end,
+        transparent $angle-line-fade-end;
+
+    $angle-dx: calc($sq-b-size / 2 - $line-gap + 0.5px);
+
+    padding-bottom: calc($sq-b-size - $line-gap);
+
+    background-image: svg-diamond-color($border-color),
+        svg-diamond-color(#fff),
+        svg-diamond-color($border-color),
+        svg-diamond-color(#fff),
+        svg-diamond-color(#fff),
+        svg-diamond-color(#fff),
+        svg-diamond-color($border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        svg-diamond-color($border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        svg-diamond-color($border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg + 45deg), $angle-line-gradient),
+        linear-gradient(calc(0deg - 45deg), $angle-line-gradient),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(180deg, $border-color, $border-color),
+        linear-gradient(calc(180deg - 45deg), $angle-line-gradient),
+        linear-gradient(calc(0deg + 45deg), $angle-line-gradient);
+
+    background-size: $sq-size $sq-size,
+        calc($sq-o-size - 2 * $line-size) calc($sq-o-size - 2 * $line-size),
+        $sq-o-size $sq-o-size,
+        calc(1.5 * $sq-size) calc(1.5 * $sq-size),
+        calc(1.5 * $sq-size) calc(1.5 * $sq-size),
+        calc($sq-b-size - (2 * $line-size / cos(45deg))) calc($sq-b-size - (2 * $line-size / cos(45deg))),
+        $sq-b-size $sq-b-size,
+        $h1-w $line-size,
+        $sq-size $sq-size,
+        $h1-w $line-size,
+        $sq-size $sq-size,
+        $h2-w 1px,
+        $h2-w 1px,
+        $angle-size $angle-size,
+        $angle-size $angle-size,
+        $h2-w 1px,
+        $h2-w 1px,
+        $angle-size $angle-size,
+        $angle-size $angle-size ;
+
+    background-position: center calc(100% - $sq-dy),
+        center calc(100% - $sq-o-dy - $line-size),
+        center calc(100% - $sq-o-dy),
+        center calc(100% + $sq-half),
+        center calc(100% - $sq-dy - $sq-size - 1px),
+        center calc(100% - $sq-b-dy - ($line-size / cos(45deg))),
+        center calc(100% - $sq-b-dy),
+        calc(100% - $line-size) calc(100% - $h1-dy),
+        right calc(100% - $h1-dy + $sq-half - $line-half),
+        $line-size calc(100% - $h1-dy),
+        left calc(100% - $h1-dy + $sq-half - $line-half),
+        calc(100% - $sq-size) calc(100% - $ht-dy),
+        calc(100% - $sq-size) calc(100% - $hb-dy),
+        calc(50% + $angle-dx) calc(100% - $ht-dy),
+        calc(50% + $angle-dx) calc(100% - $hb-dy + $angle-size - 1px),
+        $sq-size calc(100% - $ht-dy),
+        $sq-size calc(100% - $hb-dy),
+        calc(50% - $angle-dx) calc(100% - $ht-dy),
+        calc(50% - $angle-dx) calc(100% - $hb-dy + $angle-size - 1px);
+
+    background-repeat: no-repeat;
+}

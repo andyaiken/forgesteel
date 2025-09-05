@@ -1,8 +1,8 @@
 import { Divider, Drawer, FloatButton, Segmented, Space } from 'antd';
 import { useMemo, useState } from 'react';
 import { Career } from '../../../../models/career';
-import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
-import { ComplicationCard } from '../../../panels/hero-sheet/complication-card/complication-card';
+import { CareerCard } from '../../../panels/classic-sheet/career-card/career-card';
+import { ComplicationCard } from '../../../panels/classic-sheet/complication-card/complication-card';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Hero } from '../../../../models/hero';
 import { HeroSheetPage } from './hero-sheet-page';
@@ -117,7 +117,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 
 	const setDisplay = (type: 'html' | 'canvas') => {
 		setPreviewOptions(type);
-		const element = document.getElementById('hero-sheet-page');
+		const element = document.getElementById('classic-sheet');
 		const canvasElem = document.getElementById('pdf-canvas');
 		const prevDpr = window.devicePixelRatio;
 		if (element && canvasElem) {

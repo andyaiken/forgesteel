@@ -1,0 +1,156 @@
+@use '../../../pages/classic-sheet/common.scss';
+@use 'sass:color';
+
+#classic-sheet .labeled-field {
+    padding: 3px;
+    margin: 3px 5px;
+
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: center;
+
+    .labeled-field-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        span {
+            font-size: round(1.2rem, 1px);
+            font-weight: 400;
+        }
+    }
+    label {
+        color: var(--color-text);
+        font-size: round(1.1rem, 1px);
+        line-height: 1.1rem;
+    }
+
+    &:not(.label-above):not(.box-both):not(.no-box) {
+        .labeled-field-content {
+            @include common.border-beveled(6px, 2px, common.$color-medium);
+            flex-grow: 1;
+            padding: 6px 0;
+        }
+        label {
+            margin-top: 2px;
+        }
+    }
+
+    &.label-above{
+        label {
+            order: 2;
+            text-transform: uppercase;
+            color: var(--color-text);
+            font-weight: 450;
+        }
+        .labeled-field-content {
+            order: 1;
+            align-self: center;
+            span {
+                font-size: round(2.5rem, 1px);
+                line-height: 3rem;
+            }
+        }
+        &:not(.no-box):not(.box-both) {
+            label {
+                margin-bottom: 7px;
+            }
+            .labeled-field-content {
+                @include common.border-beveled(15px, 5px, common.$color-medium);
+            }
+        }
+    }
+
+    &.no-box {
+        .labeled-field-content {
+            border: none;
+            background: none;
+        }
+
+        &:not(.label-above) {
+            .labeled-field-content {
+                border-bottom: 1px solid common.$color-medium;
+            }
+
+            label {
+                color: var(--color-text-lightest);
+                padding-top: 3px;
+            }
+        }
+    }
+
+    &.text-left {
+        text-align: left;
+    }
+
+    &.box-both {
+        @include common.border-beveled(10px, 2px, common.$color-medium);
+        .labeled-field-content{ 
+            border: none;
+            background: none;
+            margin-top: -2px;
+            margin-bottom: 2px;
+            span {
+                font-size: round(2rem, 1px);
+                line-height: 2rem;
+            }
+        }
+
+        label {
+            font-size: round(1.1rem, 1px);
+            line-height: 1.4rem;
+            font-weight: 450;
+        }
+    }
+}
+
+.labeled-boolean {
+    display: flex;
+    align-items: center;
+    color: var(--color-text);
+
+    &.label-below {
+        flex-direction: column;
+        text-align: center;
+
+        label {
+            line-height: 1.4rem;
+        }
+    }
+
+    label {
+        order: 2;
+        font-weight: 450;
+        font-size: round(1.2rem, 1px);
+        line-height: 1.8rem;
+    }
+
+    &>.labeled-boolean-content {
+        order: 1;
+        font-size: round(1.8rem, 1px);
+        line-height: 1.8rem;
+        margin:0;
+        padding:0;
+        margin-right: 4px;
+    }
+
+    &.center {
+        display: flex;
+        justify-content: center;
+        .labeled-boolean-content {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}
+
+.labeled-field,
+.labeled-boolean {
+    &.no-label {
+        label {
+            display: hidden;
+        }
+        .labeled-boolean-content {
+            margin: 0;
+        }
+    }
+}

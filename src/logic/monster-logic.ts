@@ -1,4 +1,5 @@
 import { FeatureMalice, FeatureMaliceAbility } from '../models/feature';
+import { AbilityDistanceType } from '../enums/abiity-distance-type';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { ConditionType } from '../enums/condition-type';
@@ -116,6 +117,21 @@ export class MonsterLogic {
 		}
 
 		return damage;
+	};
+
+	static getFreeStrikeDistance = (monster: Monster) => {
+		const distance = monster.features.filter(f => f.type === FeatureType.Ability)
+			.filter(f => f.data.ability.cost === 'signature')
+			.map(f => f.data.ability)
+			.reduce((distance, a) => {
+				const abilityRangedDistance = a.distance.filter(d => d.type === AbilityDistanceType.Ranged)
+					.reduce((rd, ad) => {
+						return Math.max(rd, ad.value);
+					}, 0);
+				return Math.max(distance, abilityRangedDistance);
+			}, 5);
+
+		return distance;
 	};
 
 	static getFeatures = (monster: Monster) => {

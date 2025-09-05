@@ -1,5 +1,5 @@
 import { Adventure, AdventurePackage } from '../../../../models/adventure';
-import { Button, Input, Popover } from 'antd';
+import { Button, Input, Popover, Segmented } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
@@ -12,6 +12,7 @@ import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
+import { EncounterSheet } from '../../../panels/classic-sheet/encounter-sheet/encounter-sheet';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
 import { Hero } from '../../../../models/hero';
@@ -62,6 +63,7 @@ export const PlaybookListPage = (props: Props) => {
 	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
+	const [ view, setView ] = useState<'modern' | 'classic'>('modern');
 
 	if (kind !== previousCategory) {
 		setCategory(kind || 'adventure');
@@ -202,7 +204,31 @@ export const PlaybookListPage = (props: Props) => {
 				getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} playbook={props.playbook} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'encounter':
-				getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} showTools={() => props.showEncounterTools(element as Encounter)} />;
+				getPanel = (element: Element) => {
+					if (view === 'classic') {
+						return (
+							<EncounterSheet
+								key={element.id}
+								encounter={element as Encounter}
+								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+							/>
+						);
+					} else {
+						return (
+							<EncounterPanel
+								key={element.id}
+								encounter={element as Encounter}
+								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								mode={PanelMode.Full}
+								showTools={() => props.showEncounterTools(element as Encounter)}
+							/>
+						);
+					}
+				};
 				break;
 			case 'montage':
 				getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} mode={PanelMode.Full} />;
@@ -343,6 +369,32 @@ export const PlaybookListPage = (props: Props) => {
 					{
 						(category === 'encounter') || (category === 'tactical-map') ?
 							<div className='divider' />
+							: null
+					}
+					{
+						(category === 'encounter') ?
+							<Popover
+								trigger='click'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<Segmented
+											block={true}
+											vertical={true}
+											options={[
+												{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
+												{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Classic Sheet</div> }
+											]}
+											value={view}
+											onChange={setView}
+										/>
+									</div>
+								)}
+							>
+								<Button>
+									View
+									<DownOutlined />
+								</Button>
+							</Popover>
 							: null
 					}
 					{

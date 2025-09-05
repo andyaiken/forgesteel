@@ -5,8 +5,10 @@ import { Monster } from '../models/monster';
 import { MonsterLogic } from './monster-logic';
 
 export class CreatureLogic {
-	static getCharacteristic = (creature: Hero | Monster, characteristic: Characteristic) => {
-		if (CreatureLogic.isMonster(creature)) {
+	static getCharacteristic = (creature: Hero | Monster | undefined, characteristic: Characteristic) => {
+		if (!creature) {
+			return 0;
+		} else if (CreatureLogic.isMonster(creature)) {
 			return MonsterLogic.getCharacteristic(creature, characteristic);
 		} else {
 			return HeroLogic.getCharacteristic(creature, characteristic);
@@ -15,7 +17,12 @@ export class CreatureLogic {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	static isMonster = (creature: any): creature is Monster => {
-		return 'withCaptain' in creature;
+		return creature && 'withCaptain' in creature;
+	};
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	static isHero = (creature: any): creature is Hero => {
+		return creature && 'complication' in creature;
 	};
 
 	static getEchelon = (level: number) => {

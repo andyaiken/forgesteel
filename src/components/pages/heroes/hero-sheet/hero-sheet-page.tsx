@@ -1,34 +1,34 @@
-import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
+import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard, TurnOptionsReferenceCard } from '../../../panels/classic-sheet/reference/reference-cards';
 import { ExtraCards, SheetLayout } from '../../../../logic/hero-sheet/sheet-layout';
-import { AncestryTraitsCard } from '../../../panels/hero-sheet/ancestry-traits-card/ancestry-traits-card';
-import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
-import { CharacterSheet } from '../../../../models/character-sheet';
-import { ClassFeaturesCard } from '../../../panels/hero-sheet/class-features-card/class-features-card';
-import { ComplicationCard } from '../../../panels/hero-sheet/complication-card/complication-card';
-import { ConditionsCard } from '../../../panels/hero-sheet/conditions-card/conditions-card';
-import { CultureCard } from '../../../panels/hero-sheet/culture-card/culture-card';
+import { AncestryTraitsCard } from '../../../panels/classic-sheet/ancestry-traits-card/ancestry-traits-card';
+import { CareerCard } from '../../../panels/classic-sheet/career-card/career-card';
+import { ClassFeaturesCard } from '../../../panels/classic-sheet/class-features-card/class-features-card';
+import { ComplicationCard } from '../../../panels/classic-sheet/complication-card/complication-card';
+import { ConditionsCard } from '../../../panels/classic-sheet/conditions-card/conditions-card';
+import { CultureCard } from '../../../panels/classic-sheet/culture-card/culture-card';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeatureReferenceCard } from '../../../panels/hero-sheet/reference/feature-reference-card';
-import { FollowersCard } from '../../../panels/hero-sheet/follower-card/followers-card';
+import { FeatureReferenceCard } from '../../../panels/classic-sheet/reference/feature-reference-card';
+import { FollowersCard } from '../../../panels/classic-sheet/follower-card/followers-card';
 import { Hero } from '../../../../models/hero';
-import { HeroHeaderCard } from '../../../panels/hero-sheet/hero-header-card/hero-header-card';
-import { ImmunitiesWeaknessesCard } from '../../../panels/hero-sheet/immunities-weaknesses-card/immunities-weaknesses-card';
-import { InventoryCard } from '../../../panels/hero-sheet/inventory-card/inventory-card';
-import { ModifiersCard } from '../../../panels/hero-sheet/modifiers-card/modifiers-card';
-import { NotesCard } from '../../../panels/hero-sheet/notes-card/notes-card';
+import { HeroHeaderCard } from '../../../panels/classic-sheet/hero-header-card/hero-header-card';
+import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
+import { ImmunitiesWeaknessesCard } from '../../../panels/classic-sheet/immunities-weaknesses-card/immunities-weaknesses-card';
+import { InventoryCard } from '../../../panels/classic-sheet/inventory-card/inventory-card';
+import { ModifiersCard } from '../../../panels/classic-sheet/modifiers-card/modifiers-card';
+import { NotesCard } from '../../../panels/classic-sheet/notes-card/notes-card';
 import { Options } from '../../../../models/options';
-import { PerksCard } from '../../../panels/hero-sheet/perks-card/perks-card';
-import { PotenciesCard } from '../../../panels/hero-sheet/potencies-card/potencies-card';
-import { PrimaryReferenceCard } from '../../../panels/hero-sheet/reference/primary-reference-card';
-import { ProjectsCard } from '../../../panels/hero-sheet/projects-card/projects-card';
-import { RetainerCard } from '../../../panels/hero-sheet/follower-card/retainer-card';
+import { PerksCard } from '../../../panels/classic-sheet/perks-card/perks-card';
+import { PotenciesCard } from '../../../panels/classic-sheet/potencies-card/potencies-card';
+import { PrimaryReferenceCard } from '../../../panels/classic-sheet/reference/primary-reference-card';
+import { ProjectsCard } from '../../../panels/classic-sheet/projects-card/projects-card';
+import { RetainerCard } from '../../../panels/classic-sheet/follower-card/retainer-card';
 import { RulesData } from '../../../../data/rules-data';
 import { SheetBuilder } from '../../../../logic/hero-sheet/sheet-builder';
 import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
-import { SkillsCard } from '../../../panels/hero-sheet/skills-card/skills-card';
+import { SkillsCard } from '../../../panels/classic-sheet/skills-card/skills-card';
 import { Sourcebook } from '../../../../models/sourcebook';
-import { StatsResourcesCard } from '../../../panels/hero-sheet/stats-resources-card/stats-resources-card';
-import { TitlesCard } from '../../../panels/hero-sheet/titles-card/titles-card';
+import { StatsResourcesCard } from '../../../panels/classic-sheet/stats-resources-card/stats-resources-card';
+import { TitlesCard } from '../../../panels/classic-sheet/titles-card/titles-card';
 import { useMemo } from 'react';
 
 import './hero-sheet-page.scss';
@@ -43,7 +43,7 @@ export const HeroSheetPage = (props: Props) => {
 	const hero = useMemo(() => props.hero, [ props.hero ]);
 
 	const character = useMemo(
-		() => SheetBuilder.buildSheetForHero(hero, props.sourcebooks, props.options),
+		() => SheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options),
 		[ hero, props.sourcebooks, props.options ]
 	);
 
@@ -67,7 +67,7 @@ export const HeroSheetPage = (props: Props) => {
 	);
 
 	const numTitlesInSmallCard = props.options.pageOrientation === 'portrait' ? 1 : 2;
-	const populateExtraCards = (character: CharacterSheet): ExtraCards => {
+	const populateExtraCards = (character: HeroSheet): ExtraCards => {
 		const required = [
 			{
 				element: <NotesCard character={character} key='notes' />,
@@ -216,7 +216,7 @@ export const HeroSheetPage = (props: Props) => {
 		};
 	};
 
-	const addAbilityPages = (character: CharacterSheet, extraCards: ExtraCards) => {
+	const addAbilityPages = (character: HeroSheet, extraCards: ExtraCards) => {
 		return SheetLayout.getAbilityPages(character, extraCards, layout, props.options);
 	};
 
@@ -288,7 +288,7 @@ export const HeroSheetPage = (props: Props) => {
 		const extraCards = populateExtraCards(character);
 		return (
 			<ErrorBoundary>
-				<main id='hero-sheet-page' className='classic-sheet'>
+				<main id='classic-sheet'>
 					<div className={sheetClasses.join(' ')} id={hero.id}>
 						<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId(hero.id, 'main')}>
 							<HeroHeaderCard

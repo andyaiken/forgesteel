@@ -9,7 +9,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const lightbender: MonsterGroup = {
 	id: 'monster-group-lightbender',
-	name: 'Lightbenders',
+	name: 'Lightbender',
 	description: 'Lightbenders prowl deserts, plains, forests—any sunbathed wilderness where they can take advantage of the adaptations that make them skilled daylight predators. This monstrous creature’s fur bends and refracts light from the surrounding environment, producing mirages that distract and confuse their prey.',
 	picture: null,
 	information: [

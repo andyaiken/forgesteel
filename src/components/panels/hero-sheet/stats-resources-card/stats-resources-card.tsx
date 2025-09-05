@@ -1,6 +1,7 @@
 import { LabeledBooleanField, LabeledTextField } from '../components/labeled-field';
 import { CharacterSheet } from '../../../../models/character-sheet';
 import { Options } from '../../../../models/options';
+import { Utils } from '../../../../utils/utils';
 
 import './stats-resources-card.scss';
 
@@ -17,31 +18,26 @@ export const StatsResourcesCard = (props: Props) => {
 		<div className='stats-resources card'>
 			<div className='characteristics-measurements'>
 				<div className='characteristics'>
-					<LabeledTextField
-						label='Might'
-						content={character.might}
-						additionalClasses={[ 'label-above', 'fancy' ]}
-					/>
-					<LabeledTextField
-						label='Agility'
-						content={character.agility}
-						additionalClasses={[ 'label-above', 'fancy' ]}
-					/>
-					<LabeledTextField
-						label='Reason'
-						content={character.reason}
-						additionalClasses={[ 'label-above', 'fancy' ]}
-					/>
-					<LabeledTextField
-						label='Intuition'
-						content={character.intuition}
-						additionalClasses={[ 'label-above', 'fancy' ]}
-					/>
-					<LabeledTextField
-						label='Presence'
-						content={character.presence}
-						additionalClasses={[ 'label-above', 'fancy' ]}
-					/>
+					<div className='labeled-field label-above fancy'>
+						<label><span className='symbol'>M</span>ight</label>
+						<div className='labeled-field-content'><span>{Utils.isNullOrEmpty(character.might?.toString()) ? <>&nbsp;</> : character.might}</span></div>
+					</div>
+					<div className='labeled-field label-above fancy'>
+						<label><span className='symbol'>A</span>gility</label>
+						<div className='labeled-field-content'><span>{Utils.isNullOrEmpty(character.agility?.toString()) ? <>&nbsp;</> : character.agility}</span></div>
+					</div>
+					<div className='labeled-field label-above fancy'>
+						<label><span className='symbol'>R</span>eason</label>
+						<div className='labeled-field-content'><span>{Utils.isNullOrEmpty(character.reason?.toString()) ? <>&nbsp;</> : character.reason}</span></div>
+					</div>
+					<div className='labeled-field label-above fancy'>
+						<label><span className='symbol'>I</span>ntuition</label>
+						<div className='labeled-field-content'><span>{Utils.isNullOrEmpty(character.intuition?.toString()) ? <>&nbsp;</> : character.intuition}</span></div>
+					</div>
+					<div className='labeled-field label-above fancy'>
+						<label><span className='symbol'>P</span>resence</label>
+						<div className='labeled-field-content'><span>{Utils.isNullOrEmpty(character.presence?.toString()) ? <>&nbsp;</> : character.presence}</span></div>
+					</div>
 				</div>
 				<div className='measurements'>
 					<LabeledTextField

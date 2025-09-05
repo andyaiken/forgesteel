@@ -253,7 +253,8 @@
         }
     }
 
-    &.maneuver {
+    &.maneuver,
+    &.free-maneuver {
         @include color-ability-card(common.$color-maneuver);
         h2 {
             @include common.bottom-border-fancy-4(common.$color-maneuver);

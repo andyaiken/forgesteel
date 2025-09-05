@@ -169,17 +169,22 @@ const AbilityFeatureComponent = (feature: FeatureAbility) => {
 	}
 
 	const getAbilityType = (ability: Ability) => {
+		let type = '';
 		if (![ AbilityUsage.NoAction, AbilityUsage.Other ].includes(ability.type.usage)) {
-			return ability.type.usage;
+			type = ability.type.usage.toString();
+			if (ability.type.free) {
+				type = 'Free ' + type;
+			}
 		}
 		if (ability.keywords.includes('Performance')) {
-			return 'Performance';
+			type = 'Performance';
 		}
+		return type;
 	};
 
-	const type = getAbilityType(feature.data.ability)?.toString() || '';
+	const type = getAbilityType(feature.data.ability);
 	const typeClasses = [ 'type' ];
-	typeClasses.push(type?.toLocaleLowerCase().split(' ').join('-'));
+	typeClasses.push(type.toLocaleLowerCase().split(' ').join('-'));
 
 	return (
 		<>

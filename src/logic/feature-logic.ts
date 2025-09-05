@@ -49,7 +49,7 @@ export class FeatureLogic {
 
 		features.push({
 			feature: FactoryLogic.feature.create({
-				id: Utils.guid(),
+				id: `${culture.name}-culture-lore-influence`,
 				name: `${culture.name} Culture`.trim(),
 				description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
 			}),

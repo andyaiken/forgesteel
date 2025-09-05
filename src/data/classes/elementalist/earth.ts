@@ -62,7 +62,7 @@ Alternatively, you touch a structure made of mundane dirt, stone, or metal that 
 					name: 'Disciple of Earth',
 					description: 'Your body is strengthened by your mind’s connection to the element of permanence.',
 					field: FeatureField.Stamina,
-					value: 6,
+					value: 3, // RAW is 6 stamina at 2nd level and 3 for each level after that, but the 3 per level will get added at lvl 2 as well here
 					valuePerLevel: 3
 				})
 			]

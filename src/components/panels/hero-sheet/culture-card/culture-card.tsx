@@ -19,6 +19,17 @@ export const CultureCard = (props: Props) => {
 		}
 		return results;
 	};
+
+	const getLanguages = () => {
+		return character.languages?.map(l => {
+			let lang = <li key={l}>{l}</li>;
+			if (l.includes('I Speak')) {
+				lang = <li key={l}><em>{l}</em></li>;
+			}
+			return lang;
+		});
+	};
+
 	return (
 		<div className='culture card'>
 			<h2>Culture</h2>
@@ -69,9 +80,7 @@ export const CultureCard = (props: Props) => {
 			<section className='bordered languages'>
 				<h3>Languages</h3>
 				<ul>
-					{character.languages?.map(l =>
-						<li key={l}>{l}</li>
-					)}
+					{getLanguages()}
 				</ul>
 			</section>
 		</div>

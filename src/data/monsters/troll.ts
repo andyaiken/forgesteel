@@ -12,33 +12,33 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const troll: MonsterGroup = {
 	id: 'monster-group-troll',
 	name: 'Troll',
-	description: 'The embodiment of carnivorous hunger, trolls rampage through the wild, leaving destruction in their wake. Tall and gangly, their mottled green skin is covered by a mane of matted hair that runs around their neck and down their back. In many ways, they resemble massive humanoids, but their exaggerated features belie this comparison; their lower jaw hangs unhinged and distended, and their long arms end in claws which drag along the ground as they walk.',
+	description: 'Ravenous trolls rampage through the wild to quell their fathomless hunger, leaving only destruction in their wake. Tall and gangly, they green skin covered by a mane of matted hair that runs down their neck and back. In many ways, they resemble massive humanoids, but their exaggerated features belie this comparison. A troll’s lower jaw hangs unhinged and distended, and their long arms end in claws that drag along the ground as they walk.',
 	picture: null,
 	information: [
 		{
 			id: 'troll-info-1',
 			name: 'Hypermetabolism',
-			description: 'A troll’s constant hunger and aggression begets a life of violence. Like a grotesque miracle, they quickly assimilate consumed flesh into themselves to regenerate their body. Some scholars think this extreme metabolic process is the source of their hunger, but none know for certain which came first.'
+			description: 'A troll’s constant hunger and aggression beget a life of violence. Like a grotesque miracle, they quickly assimilate consumed flesh into themselves to regenerate their body. Some scholars think this extreme metabolic process is the source of their hunger, but none know for certain which came first.'
 		},
 		{
 			id: 'troll-info-2',
 			name: 'Phases of Destruction',
-			description: 'Fortunately for the ecosystems they inhabit, trolls can’t be active all the time. Their natural behavior is to hunt relentlessly for a few days, then return to their dens to rest for as much as a week. Patient troll hunters can wait for this hibernation and catch the trolls by surprise—though the cost of waiting can be high, thanks to the damage the trolls might do in the meantime'
+			description: 'Fortunately for the ecosystems they inhabit, trolls can’t be active all the time. Their natural behavior is to hunt relentlessly for a few days, then return to their dens to rest for as much as a week. Patient troll hunters can wait for this torpor and catch their quarry by surprise—though the cost of waiting can be high thanks to the damage a troll might do in the meantime.'
 		},
 		{
 			id: 'troll-info-3',
 			name: 'Strange Mutations',
-			description: 'Trolls prefer to prey upon humanoids and animals, but stories have circulated of them feeding on fetid demons and undead, assimilating their flesh to magnificent and horrifying effect. A troll with loose hanging skin, curling nails, or exposed bone might be in better health than their appearance would suggest.'
+			description: 'Trolls prefer to prey upon humanoids and animals, but stories tell of them feeding on fetid demons and undead, assimilating those creatures’ flesh to magnificent and horrifying effect. A troll with loose hanging skin, curling nails, or exposed bone might be in better health than their appearance would suggest.'
 		},
 		{
 			id: 'troll-info-4',
 			name: 'Limbjumbles',
-			description: 'When a suitably large piece of mutated troll is torn off in battle, it does its very best to keep on living. Mutation and deep-seated survival instinct go into overdrive, sprouting unthinkable assortments of malformed arms and legs. Though these limbjumbles are ultimately short-lived, they can often be found tumbling awkwardly behind living trolls.'
+			description: 'When a suitably large piece of a troll is torn off in battle, it does its very best to keep on living. Deep-seated survival instinct goes into overdrive, causing the detached piece to sprout unthinkable assortments of malformed arms and legs. Though these limbjumbles are ultimately short-lived, they can often be found tumbling awkwardly behind living trolls.'
 		},
 		{
 			id: 'troll-info-7',
 			name: 'Troll Languages',
-			description: 'Most trolls speak Variac or High Kuric, while a few also know Caelian. Trolls are difficult to negotiate with unless a hero can provide more appetizing food than themselves.'
+			description: 'Most trolls speak High Kuric or Variac, while a few also know Caelian. Trolls are notably difficult to negotiate with unless heroes can provide more appetizing food than themselves.'
 		}
 	],
 	malice: [
@@ -47,7 +47,7 @@ export const troll: MonsterGroup = {
 			name: 'Foul Spew',
 			cost: 3,
 			sections: [
-				'A troll acting on this turn spews out a half-digested meal in a 1 x 5 line within 1. Each troll in the line regains 3 Stamina. Each enemy in the line must make a **Might test**.',
+				'One troll acting this turn spews out a half-digested meal in a 5 × 1 line within 1 square of them. Each troll in the area regains 3 Stamina. Each enemy in the area makes a **Might test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Might,
 					tier1: '12 acid damage; dazed (EoT)',
@@ -61,15 +61,15 @@ export const troll: MonsterGroup = {
 			name: 'Emergency Meal',
 			cost: 5,
 			sections: [
-				'Each troll in the encounter makes a free strike against an adjacent creature and regains Stamina equal to the damage dealt.'
+				'Each troll in the encounter can make a free strike against a creature adjacent to them, and regains Stamina equal to the damage dealt.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'troll-malice-3',
-			name: 'Blood Banquet',
+			name: 'Bloody Banquet',
 			cost: 7,
 			sections: [
-				'Each winded troll in the encounter disgorges the content of their stomach onto the ground around them in a 1 burst that lingers until the end of the encounter. Each non-troll that enters or starts their turn in an aﬀected square takes 5 acid damage. Each troll has a double edge on power rolls while occupying an aﬀected square.'
+				'Each winded troll in the encounter disgorges the contents of their stomach onto the ground around them, creating a 1 burst of foul vomitus that lasts until the end of the encounter. Each non-troll who enters this area for the first time in a round or starts their turn there takes 5 acid damage. Each troll in the area has a double edge on power rolls.'
 			]
 		})
 	],
@@ -80,24 +80,39 @@ export const troll: MonsterGroup = {
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
 			keywords: [ 'Troll' ],
-			encounterValue: 14,
+			encounterValue: 7,
 			size: FactoryLogic.createSize(1, 'S'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 8,
 			stability: 0,
 			freeStrikeDamage: 3,
-			withCaptain: 'Edge on strikes',
+			withCaptain: 'Gain an edge on strikes',
 			characteristics: MonsterLogic.createCharacteristics(3, 1, -2, -1, -1),
 			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'troll-1-feature-0',
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Acid,
+							modifierType: DamageModifierType.Weakness,
+							value: 8
+						}),
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Weakness,
+							value: 8
+						})
+					]
+				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'troll-1-feature-1',
 						name: 'Arm and a Leg',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -105,14 +120,14 @@ export const troll: MonsterGroup = {
 								tier2: '5 damage; A<3 prone',
 								tier3: '6 damage; prone'
 							})),
-							FactoryLogic.createAbilitySectionText('If the target is already prone, they are grabbed instead.')
+							FactoryLogic.createAbilitySectionText('If a target made prone this way is already prone, they are grabbed instead.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'troll-1-feature-2',
-					name: 'Hyper Regeneration',
-					description: 'The limbjumble regains 2 Stamina at the start of each of their turns. The limbjumble instantly dies if they take acid or fire damage.'
+					name: 'Hyper-Regeneration',
+					description: 'At the start of each of the limbjumble’s squad’s turns, the squad’s Stamina pool increases as if each limbjumble were at full Stamina.'
 				})
 			]
 		}),
@@ -121,25 +136,40 @@ export const troll: MonsterGroup = {
 			name: 'Troll Whelp',
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
-			keywords: [ 'Troll' ],
-			encounterValue: 14,
+			keywords: [ 'Giant', 'Troll' ],
+			encounterValue: 7,
 			size: FactoryLogic.createSize(1, 'L'),
 			speed: FactoryLogic.createSpeed(6),
 			stamina: 10,
 			stability: 3,
 			freeStrikeDamage: 3,
-			withCaptain: 'Strike damage +2',
+			withCaptain: '+2 damage bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 0),
 			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'troll-2-feature-0',
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Acid,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						}),
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						})
+					]
+				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'troll-2-feature-1',
 						name: 'Jaws and Claws',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -153,7 +183,7 @@ export const troll: MonsterGroup = {
 				FactoryLogic.feature.create({
 					id: 'troll-2-feature-2',
 					name: 'Lingering Hunger',
-					description: 'Whenever two or more whelps are simultaneously reduced to 0 Stamina with non-acid or ﬁre damage, half of the killed whelps become troll limbjumbles with 4 Stamina.'
+					description: 'Whenever two or more whelps are simultaneously reduced to 0 Stamina by damage that isn’t acid or fire damage, half of those whelps become **troll limbjumbles** with 4 Stamina.'
 				})
 			]
 		}),
@@ -162,7 +192,7 @@ export const troll: MonsterGroup = {
 			name: 'Troll Butcher',
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Hexer),
-			keywords: [ 'Troll' ],
+			keywords: [ 'Giant', 'Troll' ],
 			encounterValue: 28,
 			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(8),
@@ -171,15 +201,30 @@ export const troll: MonsterGroup = {
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(3, 1, 1, 0, 0),
 			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'troll-3-feature-0',
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Acid,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						}),
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						})
+					]
+				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'troll-3-feature-1',
 						name: 'Savoring Bite',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -190,7 +235,7 @@ export const troll: MonsterGroup = {
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'The butcher regains Stamina equal to the damage.'
+								effect: 'The butcher regains Stamina equal to the damage dealt.'
 							})
 						]
 					})
@@ -202,7 +247,7 @@ export const troll: MonsterGroup = {
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-						target: 'Each enemy in the cube',
+						target: 'Each creature in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
@@ -210,7 +255,7 @@ export const troll: MonsterGroup = {
 								tier2: '9 poison damage; M<2 weakened (save ends)',
 								tier3: '11 poison damage; M<3 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('Each troll in the cube regains 3 Stamina.')
+							FactoryLogic.createAbilitySectionText('Each troll in the area ignores the damage and instead regains 3 Stamina.')
 						]
 					})
 				}),
@@ -219,12 +264,11 @@ export const troll: MonsterGroup = {
 						id: 'troll-3-feature-3',
 						name: 'Gourmet Flesh',
 						type: FactoryLogic.type.createManeuver(),
-						cost: 2,
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
+						cost: 2,
 						sections: [
-							FactoryLogic.createAbilitySectionText('The butcher enhances their next Savoring Bite ability, changing the damage type and inflicted condition to one of the following combinations: corruption and dazed, acid and restrained, or lightning and frightened.')
+							FactoryLogic.createAbilitySectionText('The butcher enhances their next use of Savoring Bite, changing the damage type and condition imposed to one of the following pairs: corruption damage and dazed, acid damage and restrained, or lightning damage and frightened.')
 						]
 					})
 				}),
@@ -232,31 +276,24 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-3-feature-4',
 						name: 'Acquired Taste',
-						type: FactoryLogic.type.createTrigger('A creature deal damage to the butcher with an Edge or a Surge.'),
-						keywords: [],
+						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the butcher with an ability that gains an edge, has a double edge, or uses a surge.'),
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'Triggering creature',
+						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The butcher makes a free strike against the target. The butcher has an edge on power rolls and deals an additional 3 damage on strikes until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('The butcher makes a free strike against the target. Until the end of their next turn, the butcher gains an edge on power rolls and deals an extra 3 damage with strikes.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'troll-3-feature-5',
 					name: 'Bloody Feast',
-					description: 'Each ally within 5 of the gourmand has an edge on power rolls that target an enemy suﬀering from a condition.'
+					description: 'Each ally within 5 squares of the butcher gains an edge on power rolls against any enemy affected by a condition.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'troll-3-feature-6',
 					name: 'Relentless Hunger',
-					description: 'The butcher only dies when they are reduced to 0 Stamina by acid or fire damage, end their turn with 0 Stamina, or take acid or fire damage while at 0 Stamina.'
-				}),
-				FactoryLogic.feature.createDamageModifier({
-					id: 'troll-3-feature-7',
-					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Weakness, value: 5 }),
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
-					]
+					description: 'The butcher dies only if they are reduced to 0 Stamina by acid or fire damage, if they end their turn with 0 Stamina, or if they take acid or fire damage while at 0 Stamina.'
 				})
 			]
 		}),
@@ -265,7 +302,7 @@ export const troll: MonsterGroup = {
 			name: 'Troll Glutton',
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Brute),
-			keywords: [ 'Troll' ],
+			keywords: [ 'Giant', 'Troll' ],
 			encounterValue: 28,
 			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(6),
@@ -274,26 +311,41 @@ export const troll: MonsterGroup = {
 			freeStrikeDamage: 7,
 			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 1),
 			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'troll-4-feature-0',
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Acid,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						}),
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						})
+					]
+				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'troll-4-feature-1',
 						name: 'Voracious Mastication',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'Two creatures or objects',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '10 damage',
-								tier2: '15 damage',
-								tier3: '18 damage'
+								tier2: '15 damage; M<2 slowed (save ends)',
+								tier3: '18 damage; M<3 slowed (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'The glutton regains Stamina equal to the damage.'
+								effect: 'The glutton regains Stamina equal to the damage dealt.'
 							})
 						]
 					})
@@ -302,13 +354,12 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-4-feature-2',
 						name: 'Crash Through',
-						cost: 3,
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
+						cost: 3,
 						sections: [
-							FactoryLogic.createAbilitySectionText('The glutton shifts up to their speed in a straight line, ignoring difficult terrain. A creature can choose to fall prone or take 10 damage the first time the glutton passes through their space during the movement. If the glutton moves into a creature or object larger than them and the glutton doesn’t knock the creature prone or destroy the object, the glutton’s movement stops early and they become dazed until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('The glutton shifts up to their speed in a straight line, ignoring difficult terrain. The first time during this movement that the glutton moves through the space of a creature or object their size or smaller, that creature or object takes 10 damage, or a creature can choose to fall prone instead. If the glutton moves into a creature or object larger than them and doesn’t knock the creature prone or destroy the object, the glutton’s movement ends and they are dazed until the end of their next turn.')
 						]
 					})
 				}),
@@ -317,11 +368,10 @@ export const troll: MonsterGroup = {
 						id: 'troll-4-feature-3',
 						name: 'Food Frenzy',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The glutton has a double edge on strikes and strikes have an edge against them, until the start of their next turn.')
+							FactoryLogic.createAbilitySectionText('Until the start of their next turn, the glutton has a double edge on strikes, and strikes made against them gain an edge')
 						]
 					})
 				}),
@@ -329,57 +379,180 @@ export const troll: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'troll-4-feature-4',
 						name: 'Spiteful Retort',
-						type: FactoryLogic.type.createTrigger('The glutton is reduced to 0 Stamina but doesn\'t die.', { free: true }),
-						keywords: [],
+						type: FactoryLogic.type.createTrigger('The glutton is reduced to 0 Stamina but doesn’t die.', { free: true }),
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'Self',
+						target: 'The triggering creature',
+						cost: 1,
 						sections: [
-							FactoryLogic.createAbilitySectionText('The glutton uses their Voracious Mastication ability against an adjacent creature.')
+							FactoryLogic.createAbilitySectionText('The glutton uses Voracious Mastication against an adjacent creature.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'troll-4-feature-5',
 					name: 'Insatiable Appetite',
-					description: 'Once per turn, the glutton can take the Charge action as a free maneuver if they target a winded creature.'
+					description: 'Once per turn, the glutton can use the Charge main action as a free maneuver if they target a winded creature.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'troll-4-feature-6',
 					name: 'Relentless Hunger',
-					description: 'The glutton only dies when they are reduced to 0 Stamina by acid or fire damage, end their turn with 0 Stamina, or take acid or fire damage while at 0 Stamina.'
-				}),
-				FactoryLogic.feature.createDamageModifier({
-					id: 'troll-4-feature-7',
-					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Weakness, value: 5 }),
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
-					]
+					description: 'The glutton dies only if they are reduced to 0 Stamina by acid or fire damage, if they end their turn with 0 Stamina, or if they take acid or fire damage while at 0 Stamina.'
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'troll-5',
+			name: 'Troll Crack Trooper',
+			level: 9,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
+			keywords: [ 'Giant', 'Troll' ],
+			encounterValue: 11,
+			size: FactoryLogic.createSize(2),
+			speed: FactoryLogic.createSpeed(6),
+			stamina: 15,
+			stability: 4,
+			freeStrikeDamage: 5,
+			characteristics: MonsterLogic.createCharacteristics(4, 1, -1, 0, 2),
+			withCaptain: '+3 bonus to Stamina',
+			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'troll-5-feature-0',
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Acid,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						}),
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						})
+					]
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'troll-5-feature-1',
+						name: 'Charging Chomp',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature or object per minion',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '5 damage; push 2',
+								tier2: '7 damage; push 3; A<3 3 damage',
+								tier3: '9 damage; push 4; A<4 5 damage'
+							})),
+							FactoryLogic.createAbilitySectionText('The crack trooper’s squad’s Stamina pool regains Stamina equal to half the damage dealt.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'troll-5-feature-2',
+					name: 'Group Appetite',
+					description: 'The crack trooper dies only if their squad’s Stamina pool is reduced to 0 Stamina by acid or fire damage, if they end their turn with 0 Stamina in their squad’s Stamina pool, or if they take acid or fire damage while their squad’s Stamina pool is at 0 Stamina.'
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'troll-6',
+			name: 'Troll Ravager',
+			level: 9,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
+			keywords: [ 'Giant', 'Troll' ],
+			encounterValue: 11,
+			size: FactoryLogic.createSize(2),
+			speed: FactoryLogic.createSpeed(8),
+			stamina: 15,
+			stability: 2,
+			freeStrikeDamage: 4,
+			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 1, 1),
+			withCaptain: '+2 bonus to speed',
+			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'troll-6-feature-0',
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Acid,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						}),
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						})
+					]
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'troll-6-feature-1',
+						name: 'Dine and Dash',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature or object per minion',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 3,
+								tier1: '4 damage; the ravager can shift 1 square',
+								tier2: '6 damage; the ravager shifts up to 2 squares',
+								tier3: '8 damage; the ravager shifts up to 3 squares'
+							})),
+							FactoryLogic.createAbilitySectionText('The ravager’s squad’s Stamina pool regains Stamina equal to half the damage dealt.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'troll-6-feature-2',
+					name: 'Group Appetite',
+					description: 'The ravager dies only if their squad’s Stamina pool is reduced to 0 Stamina by acid or fire damage, if they end their turn with 0 Stamina in their squad’s Stamina pool, or if they take acid or fire damage while their squad’s Stamina pool is at 0 Stamina.'
+				})
+			]
+		}),
+		FactoryLogic.createMonster({
+			id: 'troll-7',
 			name: 'Troll Mercenary',
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Brute),
-			keywords: [ 'Troll' ],
-			encounterValue: 28,
+			keywords: [ 'Giant', 'Troll' ],
+			encounterValue: 0,
 			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(6),
-			stamina: 80,
+			stamina: 57,
 			stability: 4,
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 1),
 			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'troll-7-feature-0',
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Acid,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						}),
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Fire,
+							modifierType: DamageModifierType.Weakness,
+							value: 5
+						})
+					]
+				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'troll-5-feature-1',
+						id: 'troll-7-feature-1',
 						name: 'Big Bite',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -393,59 +566,51 @@ export const troll: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'troll-5-feature-2',
+						id: 'troll-7-feature-2',
 						name: 'Troll Roar',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 								tier1: 'P < [weak] frightened (save ends)',
 								tier2: 'P < [average] frightened (save ends)',
-								tier3: 'P < [strong] frightened (save ends)'
+								tier3: 'P < [strong] frightened (save ends); push 3; prone'
 							}))
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'troll-5-feature-3',
+					id: 'troll-7-feature-3',
 					name: 'Relentless Hunger',
-					description: 'The mercenary only dies when they are reduced to 0 Stamina by acid or ﬁre damage, end their turn with 0 Stamina, or take acid or ﬁre damage while at 0 Stamina.'
-				}),
-				FactoryLogic.feature.createDamageModifier({
-					id: 'troll-5-feature-4',
-					modifiers: [
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Weakness, value: 5 }),
-						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Weakness, value: 5 })
-					]
+					description: 'The mercenary dies only if they are reduced to 0 Stamina by acid or fire damage, if they end their turn with 0 Stamina, or if they take acid or fire damage while at 0 Stamina.'
 				})
 			],
 			retainer: {
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'troll-15-retainer-7',
+						id: 'troll-7-retainer-7',
 						name: 'Hangry Frenzy',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [],
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: '3 creatures',
+						target: 'Three creatures',
 						sections: [
-							FactoryLogic.createAbilitySectionText('While winded, the mercenary uses Big Bite against each target.')
+							FactoryLogic.createAbilitySectionText('The mercenary must be winded to use this ability. The mercenary uses Big Bite against each target.')
 						]
 					})
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'troll-15-retainer-10',
+						id: 'troll-7-retainer-10',
 						name: 'Fire Bad',
-						type: FactoryLogic.type.createTrigger('An ability deals fire or acid damage to the mercenary.', { qualifiers: [ 'encounter' ] }),
-						keywords: [],
+						type: FactoryLogic.type.createTrigger('An ability deals acid or fire damage to the mercenary.', { qualifiers: [ 'encounter' ] }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The mercenary moves their speed. If this movement takes them out of range or area of the ability that damaged them, the ability doesn\'t affect them.')
+							FactoryLogic.createAbilitySectionText('The mercenary moves up to their speed. If this movement takes them beyond the distance of the triggering ability, the ability has no effect on them.')
 						]
 					})
 				})

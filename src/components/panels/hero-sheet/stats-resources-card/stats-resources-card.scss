@@ -108,16 +108,23 @@
         .current-stamina {
             float: left;
             width: 7rem;
-            height: 7rem;
+            // height: 7rem;
             position: absolute;
             display: flex;
             flex-flow: column;
             justify-content: flex-end;
             align-items: center;
-            padding-bottom: 8px;
-
-            @include common.beveled-bg(15px, 4px, common.$color-medium, #fff);
+            padding-bottom: 22px;
             margin-left: 8px;
+
+            // @include common.beveled-bg(15px, 4px, common.$color-medium, #fff);
+            aspect-ratio: 615 / 735; // svg view size
+            border: 0;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            background-image: common.svg-shield-color(common.$color-medium);
+            background-size: 100% 100%;
+            background-position: center center;
 
             label {
                 margin-bottom: -8px;

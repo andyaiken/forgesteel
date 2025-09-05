@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -31,7 +31,7 @@ interface Props {
 }
 
 const BasicFeatureComponent = (feature: Feature) => {
-	// console.warn('Default feature display: ', feature);
+	console.warn('Default feature display: ', feature);
 	return (
 		<>
 			<div className='feature-line'><strong>{`• ${feature.type}: `}</strong>{feature.name}</div>
@@ -296,6 +296,21 @@ const HeroicResourceComponent = (feature: FeatureHeroicResource) => {
 	);
 };
 
+const KitFeatureComponent = (feature: FeatureKit) => {
+	let displayName = feature.name;
+	if (!feature.description.length) {
+		displayName = 'You can use a Kit.';
+	}
+	return (
+		<>
+			<div className='feature-line'><strong>{`• ${feature.type}: `}</strong>{displayName}</div>
+			{feature.description ?
+				<div className='feature-description'>{feature.description}</div>
+				: undefined}
+		</>
+	);
+};
+
 export const FeatureComponent = (props: Props) => {
 	const classes = [ 'feature' ].concat(props.additionalClasses || []).join(' ');
 	const feature = props.feature;
@@ -347,6 +362,9 @@ export const FeatureComponent = (props: Props) => {
 			break;
 		case FeatureType.HeroicResource:
 			content = HeroicResourceComponent(feature);
+			break;
+		case FeatureType.Kit:
+			content = KitFeatureComponent(feature);
 			break;
 		case FeatureType.Multiple:
 			// Do nothing for these since the individual sub-features are also iterated over, no need to double up

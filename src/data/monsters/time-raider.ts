@@ -12,19 +12,18 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 export const timeRaider: MonsterGroup = {
 	id: 'monster-group-time-raider',
 	name: 'Time Raider',
-	description: 'The kuran’zoi (coor-AN-zoy), also called time raiders, are humanoids who make the Sea of Stars their home. Many kuran’zoi make their living as guides for travelers from other planes, while others survive on the Sea of Stars through piracy against interplanar vessels.',
+	description: 'Genetic rebels, the space punks known as the time raiders (called the *kuran’zoi* among themselves) scour the Sea of Stars, the Sea Between Worlds, for heavily laden ships of any type. But they prefer the ships of UNISOL and other empires, for they love raiding the frigates of powerful governments who think their money and imperious nature can buy security.',
 	picture: null,
 	information: [
 		{
 			id: 'time-raider-info-1',
 			name: 'Veterans of the Psychic Wars',
-			description: 'Thousands of years ago, the synlirii—a powerful species of evil psionic aberrations—created the kuran’zoi as soldiers. But as the synlirii experimented with and enhanced these warriors’ psionic potential, the kuran’zoi came to understand the true nature of their progenitors. They rebelled against the synlirii and fled to the Sea of Stars, becoming nomads of the timescape.'
+			description: 'Thousands of years ago, the synlirii—those powerful and evil psionic horrors more commonly known as voiceless talkers—created the kuran’zoi as soldiers. But as the synlirii experimented with and enhanced these warriors’ psionic potential, the kuran’zoi came to understand the true nature of their progenitors. They rebelled against the synlirii and fled to the Sea of Stars, becoming nomads of the timescape.'
 		},
 		{
 			id: 'time-raider-info-2',
 			name: 'Hardened-Vision Hexapods',
-			description: `
-Kuran’zoi possess resilient ocular sensors that allow them to see in the dark. Knowing these sensors would also defend them against the hardlight storms of the astral realm, the escaping kuran’zoi chose the Sea of Stars as their home. They thrive where the winds of limbo roar.
+			description: `Kuran’zoi possess resilient ocular sensors that allow them to see in the dark. Knowing these sensors would also defend them against the hardlight storms of the Astral Sea, the escaping kuran’zoi chose the Sea of Stars as their home. They thrive where the winds of limbo roar.
 
 Time raiders also have two sets of arms, allowing them to wield melee weapons at the same time as ranged weapons. A single well-trained kuran’zoi is like a squad unto themself.`
 		},
@@ -36,7 +35,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 		{
 			id: 'time-raider-info-4',
 			name: 'Genre Raiders',
-			description: 'The moniker “time raider” is imprecise. Rather, when kuran’zoi raid a world of the timescape that relies on sorcery instead of kuran’zoi technology—including Orden—it seems to those worlds’ people as though the time raiders have come from the future, wielding marvelous weapons of light that hit as hard as steel.'
+			description: 'The moniker “time raider” is a bit of a misnomer. Because they are pirates of the upper worlds, whenever a time raider hunting party arrives in Orden the locals assume these must be warriors from the future, wielding marvelous weapons of light that hit as hard as steel.'
 		},
 		{
 			id: 'time-raider-info-5',
@@ -46,15 +45,12 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 		{
 			id: 'time-raider-info-6',
 			name: 'Creatures Outside Time',
-			description: `
-While in the Sea of Stars, time raiders and other creatures don’t age. As a result, many living kuran’zoi recall the Psychic Wars. They carry the lessons learned from millennia of conflict with the synlirii into new battles with devastating effect, using mindships to launch attacks on other planes and appearing exactly where they want to. However, this knowledge serves them far beyond war.
-
-Time raiders raise their young in ruined citadels and similar strongholds on obscure worlds, keeping their creches secret and protected.`
+			description: 'While in the Sea of Stars, time raiders and other creatures don’t age. Asa result, many living kuran’zoi recall the Psychic Wars. They carry the lessons learned from millennia of conflict with the synlirii into new battles with devastating effect, using mindships to launch attacks on other planes and appearing exactly where they want to. However, this knowledge serves them far beyond war. Time raiders raise their young in ruined citadels and similar strongholds on obscure worlds, keeping their creches secret and protected.'
 		},
 		{
-			id: 'time-raider-info-6',
+			id: 'time-raider-info-7',
 			name: 'Time Raider Languages',
-			description: 'Most time raiders speak Caelian and Voll. '
+			description: 'Most time raiders speak Caelian and Voll. Because of the number of worlds they’ve visited, many time raiders have their speech peppered with misplaced tenses and strange references.'
 		}
 	],
 	malice: [
@@ -77,7 +73,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 			name: 'Recall Module',
 			cost: 5,
 			sections: [
-				'Until the end of the round, each time raider has the teleport keyword added to their movement and their speed increases by 3.'
+				'Until the end of the round, each time raider gains a +3 bonus to speed, and can teleport up to their speed as a move action.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
@@ -85,12 +81,12 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 			name: 'Psi-Cage',
 			cost: 10,
 			sections: [
-				'All time raiders in the encounter create a psionic ﬁeld over the encounter map, which lasts until the time raider with the highest Stamina maximum drops to Stamina 0 or chooses to end the ﬁeld. While the ﬁeld is up, each non-time raider on the map must make a **Reason test** against this psionic eﬀect at the start of each round.',
+				'All time raiders in the encounter collectively create a psionic field over the encounter map, which lasts until the first time raider with the highest Stamina maximum drops to 0 Stamina or chooses to end the field (no action required). While the field is up, each non-time raider on the map makes a **Reason test** against this psionic effect at the start of each round.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Reason,
 					tier1: '10 psychic damage; slowed (EoT)',
 					tier2: '7 psychic damage; slowed (EoT)',
-					tier3: 'No effect'
+					tier3: 'No effect.'
 				})
 			]
 		})
@@ -102,13 +98,13 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
 			keywords: [ 'Humanoid', 'Time Raider' ],
-			encounterValue: 10,
+			encounterValue: 5,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
 			stamina: 7,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: 'Strike damage +1',
+			withCaptain: '+1 damage bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(2, 2, 2, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -116,17 +112,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-1-feature-1',
 						name: 'Brutal Flail',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
+						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object per minion',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 2,
 									tier1: '2 damage',
 									tier2: '4 damage',
-									tier3: '5 damage; an ally can make a free strike against the target'
+									tier3: '5 damage; one ally can make a free strike against the target'
 								})
 							)
 						]
@@ -135,11 +131,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				FactoryLogic.feature.create({
 					id: 'time-raider-1-feature-2',
 					name: 'Foresight',
-					description: 'The archon doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The archon doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-1-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
 				})
 			]
 		}),
@@ -149,13 +151,13 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
 			keywords: [ 'Humanoid', 'Time Raider' ],
-			encounterValue: 10,
+			encounterValue: 5,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 8,
 			stability: 0,
 			freeStrikeDamage: 3,
-			withCaptain: 'Strike damage +1',
+			withCaptain: '+1 damage bonus to strikes',
 			characteristics: MonsterLogic.createCharacteristics(2, 1, 2, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -163,10 +165,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-2-feature-1',
 						name: 'Fifth Fist',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object per minion',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -182,11 +184,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				FactoryLogic.feature.create({
 					id: 'time-raider-2-feature-2',
 					name: 'Foresight',
-					description: 'The myriad doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The myriad doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-2-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
 				})
 			]
 		}),
@@ -209,10 +217,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-3-feature-1',
 						name: 'Serrated Saber',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature or object',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -225,7 +233,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
-								effect: 'A creature is bleeding while weakened from this ability.'
+								effect: 'A creature weakened this way is also bleeding.'
 							})
 						]
 					})
@@ -234,10 +242,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-3-feature-2',
 						name: 'Shared Sickness',
-						type: FactoryLogic.type.createTrigger('A creature deals damage to any ally of the armiger to whom the armiger has line of effect.'),
+						type: FactoryLogic.type.createTrigger('A creature deals damage to any ally of the armiger who the armiger has line of effect to.'),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
-						target: 'Triggering creature',
+						target: 'The triggering creature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -253,16 +261,22 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				FactoryLogic.feature.create({
 					id: 'time-raider-3-feature-3',
 					name: 'Foresight',
-					description: 'The armiger doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The armiger doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'time-raider-3-feature-4',
 					name: 'Kuran\'zoi Heraldry',
-					description: 'While any time raider starts their turn with line of eﬀect to the armiger, that time raider can end one condition aﬀecting them.'
+					description: 'Any time raider who starts their turn with line of effect to the armiger can end one condition affecting them.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-3-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
 				})
 			]
 		}),
@@ -285,10 +299,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-4-feature-1',
 						name: 'Sunderbuss',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
-						target: 'All enemies in the cube',
+						target: 'Each enemy in the area',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -306,27 +320,30 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-4-feature-2',
 						name: 'Buss Buffer',
-						type: FactoryLogic.type.createTrigger('A creature damages the cannonfall with a ranged or area ability.', { free: true }),
-						cost: 1,
+						type: FactoryLogic.type.createTrigger('A creature damages the cannonfall with a ranged or area ability.', { free: true, qualifiers: [ ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
-						distance: [
-							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
-						],
-						target: 'Self and all allies in the burst',
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
+						target: 'Self and each ally in the area',
+						cost: 1,
 						sections: [
-							FactoryLogic.createAbilitySectionText('The damage is reduced by half for the cannonfall and each target also affected by the triggering ability.')
+							FactoryLogic.createAbilitySectionText('The damage is halved for the cannonfall and each target also affected by the triggering ability.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'time-raider-4-feature-3',
-					name: 'Foresight',
-					description: 'The cannonfall doesn\'t have a bane on strikes against concealed creatures.'
+					name: 'Foresight Squared',
+					description: 'The cannonfall doesn’t take a bane on strikes against creatures with concealment or cover.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-4-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
 				})
 			]
 		}),
@@ -349,10 +366,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-5-feature-1',
 						name: 'Blaster Volley',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'Three creatures',
+						target: 'Two creatures or objects',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -374,7 +391,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 4, value2: 2, within: 10 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The area becomes a psionically charged treadmill that pushes creatures and objects at high speed in one direction of the helix’s choice. Any creature that moves into the area or starts their turn there immediately slides 3 squares toward the square at the end of the area in the chosen direction. Each enemy in the area when it first appears takes 3 damage before they are moved.'),
+							FactoryLogic.createAbilitySectionText('The area is a psionically charged treadmill that pushes creatures and objects at high speed in one direction of the helix’s choice. Any creature who enters the area or starts their turn there slides 3 squares toward the end of the area in the chosen direction. Each ene- my in the area when it first appears takes 3 damage before they slide.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
@@ -386,11 +403,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				FactoryLogic.feature.create({
 					id: 'time-raider-5-feature-3',
 					name: 'Foresight',
-					description: 'The helix doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The helix doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-5-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
 				})
 			]
 		}),
@@ -413,10 +436,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-6-feature-1',
 						name: 'Golden Sickles',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -426,7 +449,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 									tier3: '14 damage; A<2 bleeding (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The hijack is hidden from creatures bleeding form this ability until the condition ends.')
+							FactoryLogic.createAbilitySectionText('The hijack is hidden from any creature who is bleeding from this ability until that condition ends.')
 						]
 					})
 				}),
@@ -439,18 +462,24 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The hijack psychically latches their sickle onto the target and closes the distance between them. If the target is larger than the hijack, the hijack moves adjacent to the target. Otherwise, the target is pulled 4 squares toward the hijack.')
+							FactoryLogic.createAbilitySectionText('The hijack psychically latches their sickle onto the target and closes the distance between them. If the target is larger than the hijack, the hijack moves adjacent to the target. Otherwise, the target is pulled up to 4 squares toward the hijack.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'time-raider-6-feature-3',
 					name: 'Foresight',
-					description: 'The hijack doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The hijack doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-6-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
 				})
 			]
 		}),
@@ -473,10 +502,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-7-feature-1',
 						name: 'Repelling Psihander',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'Two creatures adjacent ot each other',
+						target: 'Two creatures adjacent to each other',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -495,17 +524,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-7-feature-2',
 						name: 'Mindpunk',
 						type: FactoryLogic.type.createMain(),
-						cost: 2,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-						target: 'All enemies in the burst',
+						target: 'Each enemy in the area',
+						cost: 2,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									bonus: 2,
 									tier1: '4 psychic damage; R<0 prone',
-									tier2: '6 psychic damage; push 1; R<1 prone can\'t stand (save ends)',
-									tier3: '9 psychic damage; push 2; R<2 prone can\'t stand (save ends)'
+									tier2: '6 psychic damage; push 1; R<1 prone and can\'t stand (save ends)',
+									tier3: '9 psychic damage; push 2; R<2 prone and can\'t stand (save ends)'
 								})
 							)
 						]
@@ -514,11 +543,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				FactoryLogic.feature.create({
 					id: 'time-raider-7-feature-3',
 					name: 'Foresight',
-					description: 'The mind punk doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The mind punk doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-7-feature-4',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
 				})
 			]
 		}),
@@ -530,7 +565,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 			keywords: [ 'Humanoid', 'Time Raider' ],
 			encounterValue: 10,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(7),
+			speed: FactoryLogic.createSpeed(7, 'fly'),
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 5,
@@ -541,10 +576,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-8-feature-1',
 						name: 'Golden Scythe',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature or object',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -563,10 +598,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-8-feature-2',
 						name: 'Kinetic Crush',
 						type: FactoryLogic.type.createMain(),
-						cost: 2,
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
+						cost: 2,
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -576,24 +611,30 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 									tier3: '13 psychic damage; M<2 slowed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('A creature slowed by this ability takes 2 damage whenever they move into or are force moved into a square until the condition ends.')
+							FactoryLogic.createAbilitySectionText('Any creature slowed this way takes 2 damage for each square they move or are force moved until that condition ends.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'time-raider-1-feature-2',
 					name: 'Foresight',
-					description: 'The nemesis doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The nemesis doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-1-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
 				})
 			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'time-raider-9',
-			name: 'Gnoll Vertex',
+			name: 'Time Raider Vertex',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Support),
 			keywords: [ 'Humanoid', 'Time Raider' ],
@@ -601,7 +642,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 			size: FactoryLogic.createSize(2),
 			speed: FactoryLogic.createSpeed(5, 'fly, hover'),
 			stamina: 50,
-			stability: 3,
+			stability: 2,
 			freeStrikeDamage: 5,
 			characteristics: MonsterLogic.createCharacteristics(1, 1, 2, 1, 0),
 			features: [
@@ -610,18 +651,20 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-9-feature-1',
 						name: 'Psionic Slam',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'One creature',
+						cost: 'signature',
 						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								bonus: 2,
-								tier1: '5 damage; 2 psychic damage',
-								tier2: '7 damage; 3 psychic damage',
-								tier3: '9 damage; 4 psychic damage'
-							})),
-							FactoryLogic.createAbilitySectionText('Power rolls made against the target have an edge until the start of the vertex\'s next turn.')
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									bonus: 2,
+									tier1: '5 damage; 2 psychic damage',
+									tier2: '7 damage; 3 psychic damage',
+									tier3: '9 damage; 4 psychic damage'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Any power roll made against the target gains an edge until the start of the vertex’s next turn.')
 						]
 					})
 				}),
@@ -630,23 +673,23 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-9-feature-2',
 						name: 'Split Space',
 						type: FactoryLogic.type.createMain(),
-						cost: 5,
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 10 }) ],
 						target: 'Special',
+						cost: 5,
 						sections: [
-							FactoryLogic.createAbilitySectionText('A portal fills the area, leading to a location the vertex has experienced (in person or otherwise) on any plane of existence. Each creature who touches the portal is instantly teleported to the nearest unoccupied square at the chosen location. The portal lasts until the vertex dies, uses this ability again, dismisses the portal (no action required), or is transported by the portal.')
+							FactoryLogic.createAbilitySectionText('A portal fills the area, connecting to a location the vertex has experienced on any plane of existence, in person or otherwise. Any creature who enters the portal for the first time in a round or starts their turn there is instantly teleported to any unoccupied space in the portal at the chosen location. The portal lasts until the vertex uses this ability again, dismisses the portal (no action required), or is transported by the portal.')
 						]
 					})
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-9-feature-3',
-						name: 'Split Space',
+						name: 'Invigorated March',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
-						target: 'All allies in the burst',
+						target: 'Each ally in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each target shifts up to half their speed.')
 						]
@@ -655,11 +698,17 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				FactoryLogic.feature.create({
 					id: 'time-raider-9-feature-4',
 					name: 'Foresight',
-					description: 'The vertex doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The nemesis doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-9-feature-5',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 3 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 3
+						})
+					]
 				})
 			]
 		}),
@@ -671,7 +720,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 			keywords: [ 'Humanoid', 'Time Raider' ],
 			encounterValue: 20,
 			size: FactoryLogic.createSize(2),
-			speed: FactoryLogic.createSpeed(10, 'teleport, hover'),
+			speed: FactoryLogic.createSpeed(10, 'hover, teleport'),
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
@@ -682,13 +731,13 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-10-feature-1',
 						name: 'Gatling Blaster',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(2),
 							FactoryLogic.distance.createRanged(10)
 						],
 						target: 'Two creatures or objects',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -698,7 +747,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 									tier3: '15 corruption damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('Each target\'s speed is reduced by 2 until the start of the tyrannis\' next turn.')
+							FactoryLogic.createAbilitySectionText('Each target takes a −2 penalty to speed until the start of the tyrannis’s next turn.')
 						]
 					})
 				}),
@@ -707,12 +756,12 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-10-feature-2',
 						name: 'Air Raid!',
 						type: FactoryLogic.type.createManeuver(),
-						cost: 3,
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three time raiders',
+						cost: 3,
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target is psionically lifted into the air, flies up to their speed and makes a free strike. If a target doesn\'t land in an unoccupied space, they fall.')
+							FactoryLogic.createAbilitySectionText('Each target can fly up to their speed and make a free strike. If a target doesn’t land in an unoccupied space, they fall.')
 						]
 					})
 				}),
@@ -720,12 +769,12 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-10-feature-3',
 						name: 'Precog Reflexes',
-						type: FactoryLogic.type.createTrigger('The target strikes the tyrannis.'),
+						type: FactoryLogic.type.createTrigger('A creature within distance makes a strike against the tyrannis.'),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
-						target: 'One creature',
+						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The strike has a bane. After the strike resolves, the tyrannis makes a free strike against the target.'),
+							FactoryLogic.createAbilitySectionText('The strike takes a bane. After the strike resolves, the tyrannis can make a free strike against the target.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -737,16 +786,22 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 				FactoryLogic.feature.create({
 					id: 'time-raider-10-feature-4',
 					name: 'End Effect',
-					description: 'At the end of their turn, the tyrannis can take 5 damage to end one save ends effect affecting them. This damage can\'t be reduced in any way.'
+					description: 'At the end of each of their turns, the tyrannis can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'time-raider-10-feature-5',
 					name: 'Foresight',
-					description: 'The tyrannis doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The tyrannis doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-10-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						})
+					]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -754,13 +809,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						name: 'We Will Won!',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
-						distance: [
-							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.createRanged(10)
-						],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self and three allies',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target gains 15 temporary Stamina and has their speed doubled until the end of their turn.')
+							FactoryLogic.createAbilitySectionText('Each target gains 15 temporary Stamina, and has their speed doubled until the end of their next turn.')
 						]
 					})
 				}),
@@ -770,13 +822,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						name: 'Stick to the Plan!',
 						type: FactoryLogic.type.createVillainAction(),
 						keywords: [ AbilityKeyword.Area ],
-						distance: [
-							FactoryLogic.distance.createSelf(),
-							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
-						],
-						target: 'Self and all allies in the burst',
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
+						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target can end one effect or condition affecting them or can move up to their speed.')
+							FactoryLogic.createAbilitySectionText('Each target can end one effect on them or can move up to their speed.')
 						]
 					})
 				}),
@@ -789,7 +838,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The tyrannis fires a sensor mine into each unoccupied square in the burst and a gravity well (see Gravity Well) into one of their own squares. Whenever an enemy moves into a square with a sensor mine in it, the mine explodes, dealing 3 damage to the enemy.')
+							FactoryLogic.createAbilitySectionText('The tyrannis fires a sensor mine into each unoccupied square in the area, and creates a gravity well whose area contains one or more squares of the tyrannis’s space (see Gravity Well). Whenever an enemy enters a square with a sensor mine in it, the mine explodes, dealing 3 damage to the enemy.')
 						]
 					})
 				})
@@ -800,11 +849,11 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 			name: 'Time Raider Mind Healer',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Support),
-			keywords: [ 'Humanoid', 'Psionic', 'Time Raider' ],
-			encounterValue: 19,
+			keywords: [ 'Humanoid', 'Time Raider' ],
+			encounterValue: 10,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 50,
+			stamina: 39,
 			stability: 0,
 			freeStrikeDamage: 4,
 			characteristics: MonsterLogic.createCharacteristics(0, 2, 2, 2, 0),
@@ -814,10 +863,10 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-11-feature-1',
 						name: 'Laser Lancet',
 						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature or object',
+						cost: 'signature',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -827,18 +876,24 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 									tier3: '11 fire damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The healer can end on EoT or Save Ends effect on the target.')
+							FactoryLogic.createAbilitySectionText('If the mind healer targets an ally, the ability deals no damage. Additionally, the target can end one effect on them that can be ended by a saving throw or that ends at the end of their turn.')
 						]
 					})
 				}),
 				FactoryLogic.feature.create({
 					id: 'time-raider-11-feature-2',
 					name: 'Foresight',
-					description: 'The healer doesn\'t have a bane on strikes against concealed creatures.'
+					description: 'The mind healer doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'time-raider-11-feature-3',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Psychic, modifierType: DamageModifierType.Immunity, value: 5 }) ]
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Psychic,
+							modifierType: DamageModifierType.Immunity,
+							value: 5
+						})
+					]
 				})
 			],
 			retainer: {
@@ -847,11 +902,11 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						id: 'time-raider-11-feature-4',
 						name: 'Stim Charge',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [],
+						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The target can spend 1 Recovery. Until the end of their next turn, their speed is doubled.')
+							FactoryLogic.createAbilitySectionText('The target can spend 1 Recovery, and has their speed doubled until the end of their next turn.')
 						]
 					})
 				}),
@@ -882,7 +937,7 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
-						target: 'All enemies',
+						target: 'Each enemy in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
@@ -892,12 +947,13 @@ Time raiders raise their young in ruined citadels and similar strongholds on obs
 									tier3: '21 psychic damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('If the healer is dazed, frightened, or taunted, they can end that condition and inflict it on one enemy in the area. Additionally, if the healer’s mentor is in the area and is dazed, frightened, or taunted, the healer can end that condition and inflict it on one enemy in the area.')
+							FactoryLogic.createAbilitySectionText('If the mind healer is dazed, frightened, or taunted, they can end one of those conditions and impose the same condition on one enemy in the area. Additionally, they can do the same for their mentor if the mentor is in the area and is dazed, frightened, or taunted.')
 						]
 					})
 				})
 			}
 		})
 	],
-	addOns: []
+	addOns: [
+	]
 };

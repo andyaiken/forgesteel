@@ -1,6 +1,5 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterLogic } from '../../logic/monster-logic';
@@ -943,109 +942,6 @@ In many shadow elf societies, all people are given basic combat training and are
 					description: 'While they have line of effect to the brush stalker, any animal except another brush stalker is frightened.'
 				})
 			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'elf-shadow-15',
-			name: 'Shadow Elf Shade',
-			level: 4,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Ambusher),
-			keywords: [ 'Fey', 'Humanoid', 'Shadow Elf' ],
-			encounterValue: 0,
-			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5, 'climb'),
-			stamina: 48,
-			stability: 0,
-			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 2, 1),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-15-feature-1',
-						name: 'Gloom Dagger',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [
-							FactoryLogic.distance.createMelee(),
-							FactoryLogic.distance.createRanged(3)
-						],
-						target: 'One creature or object',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(
-								FactoryLogic.createPowerRoll({
-									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-									tier1: '6 damage',
-									tier2: '10 damage',
-									tier3: '13 damage'
-								})
-							),
-							FactoryLogic.createAbilitySectionText('Whenever the shade starts their turn with concealment from the target, they gain 1 surge.')
-						]
-					})
-				}),
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-15-feature-2',
-						name: 'Duskfall',
-						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
-						target: 'Special',
-						sections: [
-							FactoryLogic.createAbilitySectionText('Until the end of the next turn, the area is filled with darkness. The shade’s mentor ignores concealment created by this darkness.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'elf-shadow-15-feature-3',
-					name: 'Of the Umbra',
-					description: 'The shade ignores concealment created by darkness. While the shade is in direct sunlight, they have damage weakness 3. While the shade has concealment, they have damage immunity 3.'
-				})
-			],
-			retainer: {
-				level7: FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-15-retainer-7',
-						name: 'Slow-Poison Needle',
-						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createRanged(5) ],
-						target: 'One creature',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(
-								FactoryLogic.createPowerRoll({
-									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-									tier1: '8 poison damage; weakened (save ends)',
-									tier2: '12 poison damage; weakened (save ends)',
-									tier3: '16 poison damage; weakened (save ends)'
-								})
-							),
-							FactoryLogic.createAbilitySectionText('The slow-poison needle is initially painless, with the damage and effect delayed until the start of the target’s next turn. If the shade is hidden, using this ability doesn’t cause them to be revealed.')
-						]
-					})
-				}),
-				level10: FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-15-retainer-10',
-						name: 'Shadow Dagger',
-						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'One creature',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(
-								FactoryLogic.createPowerRoll({
-									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-									tier1: '12 poison damage; the target has shadowed vision (save ends)',
-									tier2: '17 poison damage; the target has shadowed vision (save ends)',
-									tier3: '23 poison damage; the target has shadowed vision (save ends)'
-								})
-							),
-							FactoryLogic.createAbilitySectionText('While a creature has shadowed vision, all creatures have concealment from them.')
-						]
-					})
-				})
-			}
 		})
 	],
 	addOns: []

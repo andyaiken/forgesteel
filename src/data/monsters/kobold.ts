@@ -11,7 +11,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const kobold: MonsterGroup = {
 	id: 'monster-group-kobold',
-	name: 'Kobolds',
+	name: 'Kobold',
 	description: 'Kobold communities, called legions, are found in every biome and across the timescape. Gravitating toward powerful allies and defensible locations, kobolds are equally common in walled cities, secluded temples, subterranean tunnel-mazes, and dragon lairs. Most legions strive to be good neighbors or to go entirely unnoticed, but when a community falls under the sway of a malevolent wyrm or power-hungry kobold centurion, they can pose a significant threat.',
 	picture: null,
 	information: [

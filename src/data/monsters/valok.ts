@@ -1,11 +1,11 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { FactoryLogic } from '../../logic/factory-logic';
+import { MonsterGroup } from '../../models/monster-group';
+import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterGroup } from '../../models/monster-group';
 
 export const valok: MonsterGroup = {
 	id: 'monster-group-valok',
@@ -57,7 +57,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			id: 'valok-info-7',
 			name: 'Valok Languages',
 			description: 'Most valok communicate exclusively in Rallarian.'
-		},
+		}
 	],
 	malice: [
 		FactoryLogic.feature.createMalice({
@@ -83,7 +83,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			sections: [
 				'Each valok in the encounter can end one effect on them that can be ended by a saving throw, and can move up to their speed (making use of the bonus below). Additionally, until the end of the encounter, all valok deal an extra 5 damage on strikes and gain a +5 bonus to speed. This feature can be activated multiples times, stacking the effects.'
 			]
-		}),
+		})
 	],
 	monsters: [
 		FactoryLogic.createMonster({
@@ -184,7 +184,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 					id: 'valok-1-feature-7',
 					name: 'Valiar Might',
 					description: 'While the bodyguard isn’t bleeding, weakened, or winded, any power roll made against them is automatically a tier 1 outcome. A critical hit still grants its additional main action.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -284,7 +284,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 					id: 'valok-2-feature-7',
 					name: 'Valiar Might',
 					description: 'While the chief isn’t bleeding, weakened, or winded, any power roll made against them is automatically a tier 1 outcome. A critical hit still grants its additional main action.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -412,7 +412,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 					id: 'valok-3-feature-7',
 					name: 'Valiar Might',
 					description: 'While the builder isn’t bleeding, weakened, or winded, any power roll made against them is automatically a tier 1 outcome. A critical hit still grants its additional main action.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -447,7 +447,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier3: '22 damage; prone; M < 4 restrained (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** In suitably soft ground, a target restrained this way is entrenched in a 1-square-deep hole.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** In suitably soft ground, a target restrained this way is entrenched in a 1-square-deep hole.')
 						]
 					})
 				}),
@@ -470,7 +470,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier3: '7 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('The area is difficult terrain.'),
+							FactoryLogic.createAbilitySectionText('The area is difficult terrain.')
 						]
 					})
 				}),
@@ -506,7 +506,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the end of the round, dust and dirt billow in a 2 burst around the miner’s initial space. While the miner is in the area, they ignore the nondamaging effects of any strike made against them, including the triggering strike.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** Until the end of the round, dust and dirt billow in a 2 burst around the miner’s initial space. While the miner is in the area, they ignore the nondamaging effects of any strike made against them, including the triggering strike.')
 						]
 					})
 				}),
@@ -529,7 +529,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 					id: 'valok-4-feature-8',
 					name: 'Valiar Might',
 					description: 'While the miner isn’t bleeding, weakened, or winded, any power roll made against them is automatically a tier 1 outcome. A critical hit still grants its additional main action.'
-				}),
+				})
 			]
 		}),
 		FactoryLogic.createMonster({
@@ -582,9 +582,9 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier1: '22 damage',
 									tier2: '29 damage; I < 4 dazed (save ends)',
 									tier3: '34 damage; I < 5 dazed (save ends)'
-								}),
+								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** This damage can’t be reduced in any way. This ability can’t be used again until the start of the next round.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** This damage can’t be reduced in any way. This ability can’t be used again until the start of the next round.')
 						]
 					})
 				}),
@@ -597,7 +597,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The war engine moves up to their speed in a straight line, automatically destroying mundane size 1 objects or walls in their path. The first time the war engine moves through a creature’s space during this movement, that creature can choose to either fall prone or take 10 damage.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** The war engine moves up to their speed in a straight line, automatically destroying mundane size 1 objects or walls in their path. The first time the war engine moves through a creature’s space during this movement, that creature can choose to either fall prone or take 10 damage.')
 						]
 					})
 				}),
@@ -618,9 +618,9 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier1: '16 fire damage; the target is burning (save ends)',
 									tier2: '12 fire damage; the target is burning (EoT)',
 									tier3: '8 fire damage'
-								}),
+								})
 							),
-							FactoryLogic.createAbilitySectionText('A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round. Additionally, the area is burning until the end of the encounter. While the area is burning, it is difficult terrain and any enemy takes 3 fire damage for each square of the area they enter.'),
+							FactoryLogic.createAbilitySectionText('A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round. Additionally, the area is burning until the end of the encounter. While the area is burning, it is difficult terrain and any enemy takes 3 fire damage for each square of the area they enter.')
 						]
 					})
 				}),
@@ -639,9 +639,9 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier1: '8 damage; push 2',
 									tier2: '12 damage; push 5',
 									tier3: '16 damage; push 8'
-								}),
+								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** This damage can’t be reduced in any way.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** This damage can’t be reduced in any way.')
 						]
 					})
 				}),
@@ -659,9 +659,9 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 					id: 'valok-5-feature-8',
 					name: 'Valiar Might',
 					description: 'While the war engine isn’t bleeding, weakened, or winded, any power roll made against them is automatically a tier 1 outcome. A critical hit still grants its additional main action.'
-				}),
+				})
 			]
-		}),
+		})
 	],
 	addOns: []
 };

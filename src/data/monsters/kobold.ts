@@ -1,6 +1,5 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
@@ -840,94 +839,6 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 					description: 'When the drangolin burrows, each adjacent size 1S or smaller ally can move with them.'
 				})
 			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'kobold-11',
-			name: 'Kobold Shieldbearer',
-			description: '',
-			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Defender),
-			keywords: [ 'Humanoid', 'Kobold' ],
-			encounterValue: 0,
-			size: FactoryLogic.createSize(1, 'S'),
-			speed: FactoryLogic.createSpeed(5),
-			stamina: 21,
-			stability: 0,
-			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'kobold-11-feature-1',
-						name: 'Gladius',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'One creature or object',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '3 damage',
-								tier2: '5 damage',
-								tier3: '7 damage; taunted (EoT)'
-							}))
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'kobold-11-feature-2',
-					name: 'Shield, Boss?',
-					description: 'While the shieldbearer is adjacent to their mentor, both have a +1 bonus to stability, have cover, and grant cover to allies.'
-				})
-			],
-			retainer: {
-				level4: FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'kobold-11-retainer-4',
-						name: 'Shield Block',
-						type: FactoryLogic.type.createTrigger('The mentor takes damage from a strike while within distance.', { qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Ranged ],
-						distance: [	FactoryLogic.distance.createRanged(5) ],
-						target: 'The shieldbearer’s mentor',
-						sections: [
-							FactoryLogic.createAbilitySectionText('The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor’s space. The triggering strike’s damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.')
-						]
-					})
-				}),
-				level7: FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'kobold-11-retainer-7',
-						name: 'Living Backpack',
-						type: FactoryLogic.type.createMain(),
-						keywords: [ AbilityKeyword.Melee ],
-						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'The shieldbearer’s mentor',
-						sections: [
-							FactoryLogic.createAbilitySectionText('The shieldbearer straps their shield on their back and climbs onto their mentor’s back, entering the mentor’s space. While the shieldbearer is on their mentor’s back, each of them gains 10 temporary Stamina and can use Shield Block as a triggered action targeting an ally instead of the shieldbearer’s mentor. Additionally, the shieldbearer moves with the mentor, and they can’t use main actions, maneuvers, or move actions except to end this effect as a maneuver. The effect also ends if the shieldbearer is force moved away from their mentor or knocked prone. If the shieldbearer is still in their mentor’s space when the effect ends, they move into an adjacent unoccupied space of their choice.')
-						]
-					})
-				}),
-				level10: FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'kobold-11-retainer-10',
-						name: 'Let\'s Go Sledding',
-						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee() ],
-						target: 'Three enemies',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '6 damage; M < [weak] prone',
-								tier2: '10 damage; M < [average] prone',
-								tier3: '14 damage; M < [strong] prone'
-							})),
-							FactoryLogic.createAbilitySectionText('If this ability is used as part of the Charge main action, the shieldbearer gains 2 surges that can be used immediately.')
-						]
-					})
-				})
-			}
 		})
 	],
 	addOns: []

@@ -1,6 +1,5 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
@@ -1189,99 +1188,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					description: 'Once per turn when the hawk moves, any creature riding the hawk can make a free strike during or after the movement.'
 				})
 			]
-		}),
-		FactoryLogic.createMonster({
-			id: 'human-16',
-			name: 'Human Warrior',
-			level: 1,
-			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Defender),
-			keywords: [ 'Human', 'Humanoid' ],
-			encounterValue: 15,
-			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5),
-			stamina: 21,
-			stability: 3,
-			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 1),
-			features: [
-				FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'human-16-feature-1',
-						name: 'Chop',
-						type: FactoryLogic.type.createMain(),
-						cost: 'signature',
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
-						target: 'One creature or object',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '3 damage',
-								tier2: '5 damage',
-								tier3: '7 damage'
-							})),
-							FactoryLogic.createAbilitySectionText('If the warrior is adjacent to their mentor, this ability gains an edge.')
-						]
-					})
-				}),
-				FactoryLogic.feature.create({
-					id: 'human-16-feature-2',
-					name: 'Supernatural Insight',
-					description: 'The warrior ignores concealment if it’s granted by a supernatural effect.'
-				})
-			],
-			retainer: {
-				level4: FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'human-16-retainer-4',
-						name: '‘Scuse Me, Boss',
-						type: FactoryLogic.type.createTrigger('The warrior’s mentor is targeted by a strike while within distance.', { qualifiers: [ 'encounter' ] }),
-						keywords: [],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
-						target: 'The warrior’s mentor',
-						sections: [
-							FactoryLogic.createAbilitySectionText('The warrior and the mentor switch places. The warrior is the strike’s new target and the strike has a double bane.')
-						]
-					})
-				}),
-				level7: FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'human-16-retainer-7',
-						name: 'Defensive Fighting',
-						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(1) ],
-						target: 'One creature',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '7 damage',
-								tier2: '11 damage',
-								tier3: '16 damage'
-							})),
-							FactoryLogic.createAbilitySectionText('Until the start of the warrior’s next turn, ability rolls against the warrior or any ally adjacent to the warrior have a double bane.')
-						]
-					})
-				}),
-				level10: FactoryLogic.feature.createAbility({
-					ability: FactoryLogic.createAbility({
-						id: 'human-16-retainer-10',
-						name: 'Whirlwind of Steel',
-						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-						target: 'Each enemy in the area',
-						sections: [
-							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
-								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
-								tier1: '12 damage',
-								tier2: '18 damage',
-								tier3: '24 damage'
-							}))
-						]
-					})
-				})
-			}
 		})
 	],
 	addOns: []

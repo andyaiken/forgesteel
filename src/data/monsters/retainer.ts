@@ -18,7 +18,7 @@ export const retainer: MonsterGroup = {
 	malice: [],
 	monsters: [
 		FactoryLogic.createMonster({
-			id: 'angulotl-9',
+			id: 'retainer-1',
 			name: 'Angulotl Hopper',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Harrier),
@@ -33,7 +33,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'angulotl-9-feature-1',
+						id: 'retainer-1-feature-1',
 						name: 'Leapfrog',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -54,19 +54,19 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'angulotl-9-feature-2',
+					id: 'retainer-1-feature-2',
 					name: 'Toxiferous',
 					description: 'When an adjacent enemy grabs or uses a melee ability against the hopper, they take 3 poison damage.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'angulotl-9-feature-3',
+					id: 'retainer-1-feature-3',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Poison, modifierType: DamageModifierType.Immunity, value: 2 }) ]
 				})
 			],
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'angulotl-9-retainer-4',
+						id: 'retainer-1-retainer-4',
 						name: 'Leaping Attack',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -87,7 +87,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'angulotl-9-retainer-7',
+						id: 'retainer-1-retainer-7',
 						name: 'Three-Poison Dart',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -107,7 +107,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'angulotl-9-retainer-10',
+						id: 'retainer-1-retainer-10',
 						name: 'Trip of the Tongue',
 						type: FactoryLogic.type.createTrigger('A creature moves to a square within range.', { qualifiers: [ 'encounter' ] }),
 						keywords: [],
@@ -121,7 +121,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'bugbear-8',
+			id: 'retainer-2',
 			name: 'Bugbear Commando',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Ambusher),
@@ -136,7 +136,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'bugbear-8-feature-1',
+						id: 'retainer-2-feature-1',
 						name: 'Bear Hug',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -156,7 +156,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'bugbear-8-feature-2',
+						id: 'retainer-2-feature-2',
 						name: 'Throw',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
@@ -170,7 +170,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'bugbear-8-feature-3',
+						id: 'retainer-2-feature-3',
 						name: 'Catcher',
 						type: FactoryLogic.type.createTrigger('A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.', { free: true }),
 						keywords: [],
@@ -185,7 +185,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'bugbear-8-retainer-4',
+						id: 'retainer-2-retainer-4',
 						name: 'Face Grab',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -204,7 +204,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'bugbear-8-retainer-7',
+						id: 'retainer-2-retainer-7',
 						name: 'Shadow Drag',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
@@ -223,7 +223,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'bugbear-8-retainer-10',
+						id: 'retainer-2-retainer-10',
 						name: 'Neck Snap',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -243,7 +243,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'devil-9',
+			id: 'retainer-3',
 			name: 'Devil Defector',
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Hexer),
@@ -258,7 +258,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'devil-9-feature-1',
+						id: 'retainer-3-feature-1',
 						name: 'Corrupting Flame',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -277,7 +277,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'devil-9-retainer-2',
+						id: 'retainer-3-retainer-2',
 						name: 'Tempting Offer',
 						type: FactoryLogic.type.createTrigger('A sapient enemy is reduced to 0 Stamina.', { free: true, qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
@@ -289,7 +289,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'devil-9-feature-3',
+					id: 'retainer-3-feature-3',
 					name: 'True Name',
 					description: 'If a creature within 10 squares of the defector speaks the defector’s true name aloud, the defector loses their immunities, the additional effects on their signature attack, and their Tempting Offer triggered action.'
 				})
@@ -297,7 +297,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'devil-9-retainer-7',
+						id: 'retainer-3-retainer-7',
 						name: 'Flames of Revenge',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -316,7 +316,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'devil-9-retainer-10',
+						id: 'retainer-3-retainer-10',
 						name: 'Hell On Earch',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -330,7 +330,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'draconian-7',
+			id: 'retainer-4',
 			name: 'The Nameless',
 			level: 6,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Defender),
@@ -345,7 +345,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'draconian-7-feature-1',
+						id: 'retainer-4-feature-1',
 						name: 'Baneful Blade',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -364,7 +364,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'draconian-7-retainer-2',
+						id: 'retainer-4-retainer-2',
 						name: 'I\'m Not a Steed, You\'re Equipment',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
@@ -376,19 +376,19 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'draconian-7-feature-3',
+					id: 'retainer-4-feature-3',
 					name: 'Wing Block',
 					description: 'Ranged attacks against the Nameless take a bane.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'draconian-7-feature-4',
+					id: 'retainer-4-feature-4',
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				})
 			],
 			retainer: {
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'draconian-7-retainer-7',
+						id: 'retainer-4-retainer-7',
 						name: 'Looming Wings',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
@@ -407,7 +407,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'draconian-7-retainer-10',
+						id: 'retainer-4-retainer-10',
 						name: 'Spew Death',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -427,7 +427,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'dwarf-14',
+			id: 'retainer-5',
 			name: 'Dwarf Mortar',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Hexer),
@@ -442,7 +442,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-14-feature-1',
+						id: 'retainer-5-feature-1',
 						name: 'Armor-Piercing Shell',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -461,7 +461,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'dwarf-14-feature-2',
+					id: 'retainer-5-feature-2',
 					name: 'Voice Thrower',
 					description: 'The mortar can use a magical rune inscribed on their skin to talk to their mentor over any distance as long as both are in the same world.'
 				})
@@ -469,7 +469,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-14-retainer-4',
+						id: 'retainer-5-retainer-4',
 						name: 'Signal Shell',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
@@ -488,7 +488,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-14-retainer-7',
+						id: 'retainer-5-retainer-7',
 						name: 'Screaming Shell',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
@@ -507,7 +507,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'dwarf-14-retainer-10',
+						id: 'retainer-5-retainer-10',
 						name: 'Pacifier Shell',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
@@ -526,7 +526,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'elf-high-14',
+			id: 'retainer-6',
 			name: 'High Elf Weatherwise',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Controller),
@@ -541,7 +541,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-high-14-feature-1',
+						id: 'retainer-6-feature-1',
 						name: 'Summer\'s Bolt',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -560,7 +560,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'elf-high-14-feature-2',
+					id: 'retainer-6-feature-2',
 					name: 'Otherwordly Grace',
 					description: 'At the start of each of their turns, the weatherwise can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
@@ -568,7 +568,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-high-14-retainer-4',
+						id: 'retainer-6-retainer-4',
 						name: 'Winter\'s Breath',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -587,7 +587,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-high-14-retainer-7',
+						id: 'retainer-6-retainer-7',
 						name: 'Spring’s Rebirth',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -600,7 +600,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-high-14-retainer-10',
+						id: 'retainer-6-retainer-10',
 						name: 'Autumn\'s Decay',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -619,7 +619,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'elf-shadow-15',
+			id: 'retainer-7',
 			name: 'Shadow Elf Shade',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Ambusher),
@@ -634,7 +634,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-15-feature-1',
+						id: 'retainer-7-feature-1',
 						name: 'Gloom Dagger',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -659,7 +659,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-15-feature-2',
+						id: 'retainer-7-feature-2',
 						name: 'Duskfall',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -671,7 +671,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'elf-shadow-15-feature-3',
+					id: 'retainer-7-feature-3',
 					name: 'Of the Umbra',
 					description: 'The shade ignores concealment created by darkness. While the shade is in direct sunlight, they have damage weakness 3. While the shade has concealment, they have damage immunity 3.'
 				})
@@ -679,7 +679,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-15-retainer-7',
+						id: 'retainer-7-retainer-7',
 						name: 'Slow-Poison Needle',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -700,7 +700,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-shadow-15-retainer-10',
+						id: 'retainer-7-retainer-10',
 						name: 'Shadow Dagger',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -722,7 +722,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'elf-wode-14',
+			id: 'retainer-8',
 			name: 'Wode Elf Arrowswift',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Artillery),
@@ -737,7 +737,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-wode-14-feature-1',
+						id: 'retainer-8-feature-1',
 						name: 'Longshot',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -756,7 +756,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'elf-wode-14-feature-2',
+					id: 'retainer-8-feature-2',
 					name: 'Masking Glamor',
 					description: 'Abilities targeting the arrowswift that would take a bane from cover or concealment have a double bane instead.'
 				})
@@ -764,7 +764,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-wode-14-retainer-4',
+						id: 'retainer-8-retainer-4',
 						name: 'Snipe',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -783,7 +783,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-wode-14-retainer-7',
+						id: 'retainer-8-retainer-7',
 						name: 'Magic Arrows',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
@@ -796,7 +796,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'elf-wode-14-retainer-10',
+						id: 'retainer-8-retainer-10',
 						name: 'Double Shot',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -815,7 +815,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'gnoll-12',
+			id: 'retainer-9',
 			name: 'Gnoll Gnasher',
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Harrier),
@@ -830,7 +830,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'gnoll-12-feature-1',
+						id: 'retainer-9-feature-1',
 						name: 'Gnash',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -848,7 +848,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'gnoll-12-feature-2',
+					id: 'retainer-9-feature-2',
 					name: 'Death Frenzy',
 					description: 'Whenever a non-minion ally within 7 squares of the gnasher is reduced to 0 Stamina, the gnasher moves up to their speed and can make a melee free strike.'
 				})
@@ -856,7 +856,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'gnoll-12-retainer-3',
+						id: 'retainer-9-retainer-3',
 						name: 'Frenzied Bite',
 						type: FactoryLogic.type.createTrigger('An enemy within 5 squares is reduced to 0 Stamina.', { qualifiers: [ 'encounter' ] }),
 						keywords: [],
@@ -869,7 +869,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'gnoll-12-retainer-4',
+						id: 'retainer-9-retainer-4',
 						name: 'Flurry of Fangs',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -887,7 +887,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'gnoll-12-retainer-5',
+						id: 'retainer-9-retainer-5',
 						name: 'Horrific Feast',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
@@ -901,7 +901,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'goblin-13',
+			id: 'retainer-10',
 			name: 'Goblin Guide',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Harrier),
@@ -916,7 +916,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'goblin-13-feature-1',
+						id: 'retainer-10-feature-1',
 						name: 'Stabbity Stab',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -935,7 +935,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'goblin-13-feature-2',
+					id: 'retainer-10-feature-2',
 					name: 'Crafty',
 					description: 'The guide doesn’t provoke opportunity attacks by moving.'
 				})
@@ -943,7 +943,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'goblin-13-retainer-4',
+						id: 'retainer-10-retainer-4',
 						name: 'Weaving Knives',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -962,7 +962,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'goblin-13-retainer-7',
+						id: 'retainer-10-retainer-7',
 						name: 'Sneak and Stab',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -981,7 +981,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'goblin-13-retainer-10',
+						id: 'retainer-10-retainer-10',
 						name: 'Poison Blade',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
@@ -995,7 +995,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'hobgoblin-16',
+			id: 'retainer-11',
 			name: 'Hobgoblin Flameslinger',
 			level: 4,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Controller),
@@ -1009,14 +1009,14 @@ export const retainer: MonsterGroup = {
 			characteristics: MonsterLogic.createCharacteristics(1, 0, 2, 1, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'hobgoblin-16-feature-1',
+					id: 'retainer-11-feature-1',
 					modifiers: [
 						FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 4 })
 					]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'hobgoblin-16-feature-2',
+						id: 'retainer-11-feature-2',
 						name: 'Fire Curse',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
@@ -1036,7 +1036,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'hobgoblin-16-feature-3',
+						id: 'retainer-11-feature-3',
 						name: 'Fuel for the Fire',
 						type: FactoryLogic.type.createMain(),
 						keywords: [],
@@ -1048,7 +1048,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'hobgoblin-16-feature-5',
+					id: 'retainer-11-feature-5',
 					name: 'Infernal Ichor',
 					description: 'If the flameslinger’s Stamina drops to 0, they spray burning blood. Each creature within 1 of the flameslinger takes 3 fire damage.'
 				})
@@ -1056,7 +1056,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'hobgoblin-16-retainer-7',
+						id: 'retainer-11-retainer-7',
 						name: 'Unholy Attraction',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
@@ -1075,7 +1075,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'hobgoblin-16-retainer-10',
+						id: 'retainer-11-retainer-10',
 						name: 'Fire Spiral',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
@@ -1095,7 +1095,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'human-16',
+			id: 'retainer-12',
 			name: 'Human Warrior',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Defender),
@@ -1110,7 +1110,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'human-16-feature-1',
+						id: 'retainer-12-feature-1',
 						name: 'Chop',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -1129,7 +1129,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'human-16-feature-2',
+					id: 'retainer-12-feature-2',
 					name: 'Supernatural Insight',
 					description: 'The warrior ignores concealment if it’s granted by a supernatural effect.'
 				})
@@ -1137,7 +1137,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'human-16-retainer-4',
+						id: 'retainer-12-retainer-4',
 						name: '‘Scuse Me, Boss',
 						type: FactoryLogic.type.createTrigger('The warrior’s mentor is targeted by a strike while within distance.', { qualifiers: [ 'encounter' ] }),
 						keywords: [],
@@ -1150,7 +1150,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'human-16-retainer-7',
+						id: 'retainer-12-retainer-7',
 						name: 'Defensive Fighting',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -1169,7 +1169,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'human-16-retainer-10',
+						id: 'retainer-12-retainer-10',
 						name: 'Whirlwind of Steel',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Charge, AbilityKeyword.Weapon ],
@@ -1188,7 +1188,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'kobold-11',
+			id: 'retainer-13',
 			name: 'Kobold Shieldbearer',
 			description: '',
 			level: 1,
@@ -1204,7 +1204,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'kobold-11-feature-1',
+						id: 'retainer-13-feature-1',
 						name: 'Gladius',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -1222,7 +1222,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'kobold-11-feature-2',
+					id: 'retainer-13-feature-2',
 					name: 'Shield, Boss?',
 					description: 'While the shieldbearer is adjacent to their mentor, both have a +1 bonus to stability, have cover, and grant cover to allies.'
 				})
@@ -1230,7 +1230,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'kobold-11-retainer-4',
+						id: 'retainer-13-retainer-4',
 						name: 'Shield Block',
 						type: FactoryLogic.type.createTrigger('The mentor takes damage from a strike while within distance.', { qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged ],
@@ -1243,7 +1243,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'kobold-11-retainer-7',
+						id: 'retainer-13-retainer-7',
 						name: 'Living Backpack',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee ],
@@ -1256,7 +1256,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'kobold-11-retainer-10',
+						id: 'retainer-13-retainer-10',
 						name: 'Let\'s Go Sledding',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -1276,7 +1276,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'minotaur-6',
+			id: 'retainer-14',
 			name: 'Minotaur Gorer',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Brute),
@@ -1291,7 +1291,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'minotaur-6-feature-1',
+						id: 'retainer-14-feature-1',
 						name: 'Gore',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -1310,7 +1310,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'minotaur-6-feature-2',
+						id: 'retainer-14-feature-2',
 						name: 'Retaliatory Strike',
 						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the gorer.'),
 						keywords: [ AbilityKeyword.Ranged ],
@@ -1322,7 +1322,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'minotaur-6-feature-3',
+					id: 'retainer-14-feature-3',
 					name: 'Minotaur Sense',
 					description: 'The gorer can’t obtain less than a tier 2 outcome when making tests to navigate, search, or seek.'
 				})
@@ -1330,7 +1330,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'minotaur-6-retainer-4',
+						id: 'retainer-14-retainer-4',
 						name: 'Horn Toss',
 						type: FactoryLogic.type.createTrigger('The gorer damages a creature within distance using Gore.', { free: true }),
 						keywords: [ AbilityKeyword.Melee ],
@@ -1343,7 +1343,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'minotaur-6-retainer-7',
+						id: 'retainer-14-retainer-7',
 						name: 'Triumphant Bay',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						distance: [ FactoryLogic.distance.createSelf() ],
@@ -1355,7 +1355,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'minotaur-6-retainer-10',
+						id: 'retainer-14-retainer-10',
 						name: 'Horn Rake',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon ],
@@ -1374,7 +1374,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'orc-16',
+			id: 'retainer-15',
 			name: 'Orc Charger',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Harrier),
@@ -1389,7 +1389,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'orc-16-feature-1',
+						id: 'retainer-15-feature-1',
 						name: 'Notched Axe',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
@@ -1410,7 +1410,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'orc-16-feature-2',
+					id: 'retainer-15-feature-2',
 					name: 'Relentless',
 					description: 'If the charger’s Stamina drops to 0, they can make a free strike before dying. If the target is reduced to 0 Stamina or killed by the attack, the charger lives and their Stamina is reduced to 1 instead.'
 				})
@@ -1418,7 +1418,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'orc-16-retainer-4',
+						id: 'retainer-15-retainer-4',
 						name: 'Blood Oath',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						distance: [ FactoryLogic.distance.createSelf() ],
@@ -1430,7 +1430,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'orc-16-retainer-7',
+						id: 'retainer-15-retainer-7',
 						name: 'Mow ’Em Down',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -1443,7 +1443,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'orc-16-retainer-10',
+						id: 'retainer-15-retainer-10',
 						name: 'Vein Burst',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
@@ -1463,7 +1463,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'radenwight-9',
+			id: 'retainer-16',
 			name: 'Radenwight Sidekick',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Support),
@@ -1478,7 +1478,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'radenwight-9-feature-1',
+						id: 'retainer-16-feature-1',
 						name: 'Dagger\'s Bite',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -1500,7 +1500,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'radenwight-9-feature-2',
+						id: 'retainer-16-feature-2',
 						name: 'Ready Rodent',
 						type: FactoryLogic.type.createTrigger('An ally deals damage to the target.'),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
@@ -1515,7 +1515,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'radenwight-9-retainer-4',
+						id: 'retainer-16-retainer-4',
 						name: 'Boost',
 						type: FactoryLogic.type.createManeuver(),
 						keywords: [],
@@ -1528,7 +1528,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'radenwight-9-retainer-7',
+						id: 'retainer-16-retainer-7',
 						name: 'Bug Bag',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Ranged ],
@@ -1546,7 +1546,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'radenwight-9-retainer-10',
+						id: 'retainer-16-retainer-10',
 						name: 'Triumphant Squeak',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						keywords: [],
@@ -1560,7 +1560,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'time-raider-11',
+			id: 'retainer-17',
 			name: 'Time Raider Mind Healer',
 			level: 3,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Support),
@@ -1575,7 +1575,7 @@ export const retainer: MonsterGroup = {
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'time-raider-11-feature-1',
+						id: 'retainer-17-feature-1',
 						name: 'Laser Lancet',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -1596,12 +1596,12 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'time-raider-11-feature-2',
+					id: 'retainer-17-feature-2',
 					name: 'Foresight',
 					description: 'The mind healer doesn’t take a bane on strikes against creatures with concealment.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
-					id: 'time-raider-11-feature-3',
+					id: 'retainer-17-feature-3',
 					modifiers: [
 						FactoryLogic.damageModifier.create({
 							damageType: DamageType.Psychic,
@@ -1614,7 +1614,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level4: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'time-raider-11-feature-4',
+						id: 'retainer-17-feature-4',
 						name: 'Stim Charge',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Ranged ],
@@ -1627,7 +1627,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'time-raider-11-feature-5',
+						id: 'retainer-17-feature-5',
 						name: 'Mind Whelm',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
@@ -1647,7 +1647,7 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'time-raider-11-feature-6',
+						id: 'retainer-17-feature-6',
 						name: 'Psychic Short Circuit',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
@@ -1669,7 +1669,7 @@ export const retainer: MonsterGroup = {
 			}
 		}),
 		FactoryLogic.createMonster({
-			id: 'troll-7',
+			id: 'retainer-18',
 			name: 'Troll Mercenary',
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Brute),
@@ -1683,7 +1683,7 @@ export const retainer: MonsterGroup = {
 			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
-					id: 'troll-7-feature-0',
+					id: 'retainer-18-feature-0',
 					modifiers: [
 						FactoryLogic.damageModifier.create({
 							damageType: DamageType.Acid,
@@ -1699,7 +1699,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'troll-7-feature-1',
+						id: 'retainer-18-feature-1',
 						name: 'Big Bite',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -1719,7 +1719,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'troll-7-feature-2',
+						id: 'retainer-18-feature-2',
 						name: 'Troll Roar',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Area ],
@@ -1736,7 +1736,7 @@ export const retainer: MonsterGroup = {
 					})
 				}),
 				FactoryLogic.feature.create({
-					id: 'troll-7-feature-3',
+					id: 'retainer-18-feature-3',
 					name: 'Relentless Hunger',
 					description: 'The mercenary dies only if they are reduced to 0 Stamina by acid or fire damage, if they end their turn with 0 Stamina, or if they take acid or fire damage while at 0 Stamina.'
 				})
@@ -1744,7 +1744,7 @@ export const retainer: MonsterGroup = {
 			retainer: {
 				level7: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'troll-7-retainer-7',
+						id: 'retainer-18-retainer-7',
 						name: 'Hangry Frenzy',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
 						keywords: [ AbilityKeyword.Melee ],
@@ -1757,13 +1757,334 @@ export const retainer: MonsterGroup = {
 				}),
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'troll-7-retainer-10',
+						id: 'retainer-18-retainer-10',
 						name: 'Fire Bad',
 						type: FactoryLogic.type.createTrigger('An ability deals acid or fire damage to the mercenary.', { qualifiers: [ 'encounter' ] }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The mercenary moves up to their speed. If this movement takes them beyond the distance of the triggering ability, the ability has no effect on them.')
+						]
+					})
+				})
+			}
+		}),
+		FactoryLogic.createMonster({
+			id: 'retainer-19',
+			name: 'Undead Servitor',
+			level: 1,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Brute),
+			keywords: [ 'Undead', 'Soulless' ],
+			encounterValue: 0,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(5),
+			stamina: 21,
+			stability: 0,
+			freeStrikeDamage: 3,
+			characteristics: MonsterLogic.createCharacteristics(2, -1, -3, -1, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-19-feature-1',
+						name: 'Lunching Swipe',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature or object',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '4 damage',
+								tier2: '7 damage',
+								tier3: '10 damage'
+							}))
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'retainer-19-feature-2',
+					name: 'Arise',
+					description: 'The first time in an encounter that the servitor is reduced to 0 Stamina by damage that isn’t fire damage or holy damage and their body isn’t destroyed, they regain half their Stamina maximum and fall prone.'
+				})
+			],
+			retainer: {
+				level4: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-19-retainer-4',
+						name: 'Grab and Bite',
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '7 damage; M<[weak] grabbed',
+									tier2: '11 damage; M<[average] grabbed',
+									tier3: '16 damage; M<[strong] grabbed'
+								})
+							)
+						]
+					})
+				}),
+				level7: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-19-retainer-7',
+						name: 'Death to Death',
+						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'One creature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '8 corruption damage; P<[weak] weakened (save ends)',
+									tier2: '13 corruption damage; P<[average] weakened (save ends)',
+									tier3: '17 corruption damage; P<[strong] weakened (save ends)'
+								})
+							)
+						]
+					})
+				}),
+				level10: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-19-retainer-10',
+						name: 'Death Miasma',
+						type: FactoryLogic.type.createTrigger('The servitor is reduced to 0 Stamina.', { free: true, qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+						target: 'Each enemy in the area',
+						sections: [
+							FactoryLogic.createAbilitySectionText('The servitor explodes'),
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '6 corruption damage',
+									tier2: '10 corruption damage',
+									tier3: '14 corruption damage'
+								})
+							)
+						]
+					})
+				})
+			}
+		}),
+		FactoryLogic.createMonster({
+			id: 'retainer-20',
+			name: 'Unquiet Spirit',
+			level: 1,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Hexer),
+			keywords: [ 'Undead', 'Soulless' ],
+			encounterValue: 0,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(5, 'fly, hover'),
+			stamina: 21,
+			stability: 1,
+			freeStrikeDamage: 2,
+			characteristics: MonsterLogic.createCharacteristics(-4, 1, 0, 0, 2),
+			features: [
+				FactoryLogic.feature.createDamageModifier({
+					id: 'retainer-20-feature-0',
+					modifiers: [
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Corruption,
+							modifierType: DamageModifierType.Weakness,
+							value: 3
+						}),
+						FactoryLogic.damageModifier.create({
+							damageType: DamageType.Poison,
+							modifierType: DamageModifierType.Weakness,
+							value: 3
+						})
+					]
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-20-feature-1',
+						name: 'Chill of Death',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'One creature or object',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '3 cold damage',
+								tier2: '5 cold damage',
+								tier3: '7 cold damage; P < [strong] slowed (EoT)'
+							}))
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-20-feature-2',
+						name: 'Spirit Meld',
+						type: FactoryLogic.type.createMain(),
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						sections: [
+							FactoryLogic.createAbilitySectionText('While adjacent to their mentor, the unquiet spirit enters the mentor’s space. A spirit who enters their mentor’s space this way moves with the mentor, can’t be sensed, and can’t affect or be affected by other creatures or objects. They can’t take main actions, maneuvers, or move actions, except to use this ability to leave their mentor’s space and appear in an adjacent space.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'retainer-20-feature-3',
+					name: 'Corruptive Phasing',
+					description: 'The unquiet spirit can move through creatures and objects at their usual speed, but can’t end their turn inside a creature or object. The first time in a round that the spirit moves through a creature other than their mentor, that creature takes 2 corruption damage.'
+				})
+			],
+			retainer: {
+				level4: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-20-retainer-4',
+						name: 'Enervating Curse',
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'One creature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '6 corruption damage; the target has 1 level of drain',
+									tier2: '10 corruption damage; the target has 2 levels of drain',
+									tier3: '14 corruption damage; the target has 3 levels of drain'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('The next creature to make a strike against the target gains 1 surge for each level of drain, which must be used on that strike.')
+						]
+					})
+				}),
+				level7: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-20-retainer-7',
+						name: 'Ectoplasm',
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'Each enemy in the area',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: 'A < [weak] slowed and weakened (save ends)',
+									tier2: 'A < [average] slowed and weakened (save ends)',
+									tier3: 'A < [strong] slowed and weakened (save ends)'
+								})
+							)
+						]
+					})
+				}),
+				level10: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-20-retainer-10',
+						name: 'Death Phase',
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(5) ],
+						target: 'One creature',
+						sections: [
+							FactoryLogic.createAbilitySectionText('If the target has p<s, they are phased until the end of their next turn. A phased target gains the unquiet spirit’s Corruptive Phasing trait and can fly. They are visible but can’t affect or be affected by other creatures or objects. A willing creature not subject to the ability’s potency can choose to automatically be affected.')
+						]
+					})
+				})
+			}
+		}),
+		FactoryLogic.createMonster({
+			id: 'retainer-21',
+			name: 'Vampire Rebel',
+			level: 4,
+			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Retainer, MonsterRoleType.Harrier),
+			keywords: [ 'Undead', 'Vampire' ],
+			encounterValue: 0,
+			size: FactoryLogic.createSize(1, 'M'),
+			speed: FactoryLogic.createSpeed(5, 'climb'),
+			stamina: 48,
+			stability: 0,
+			freeStrikeDamage: 4,
+			characteristics: MonsterLogic.createCharacteristics(2, 3, 0, 0, 3),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-21-feature-1',
+						name: 'Flashing Fangs',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature or object',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+								tier1: '5 damage',
+								tier2: '5 damage, 3 corruption damage',
+								tier3: '5 damage, 6 corruption damage; m<s bleeding (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('The vampire rebel gains temporary Stamina equal to any corruption damage dealt.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-21-feature-2',
+						name: 'Bat Form',
+						type: FactoryLogic.type.createMove({ qualifiers: [ 'encounter' ] }),
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						sections: [
+							FactoryLogic.createAbilitySectionText('The vampire rebel changes their form into a bat. In bat form, their size is 1T and they can fly. The vampire rebel then shifts up to their speed, then regains their true form. If they can’t fit in their current space when they return to their true form, they take 10 damage and are pushed to the nearest unoccupied space.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'retainer-21-feature-3',
+					name: 'Agonizing Bloodthirst',
+					description: 'The vampire rebel has speed 10 while any creature within 10 squares of them is bleeding. If the vampire rebel is able to deal damage to a bleeding creature on their turn and does not do so, they take 5 corruption damage at the end of their turn.'
+				})
+			],
+			retainer: {
+				level7: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-21-retainer-7',
+						name: 'Blood Surge',
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: 'One creature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '7 damage; M<[weak] bleeding (save ends)',
+									tier2: '11 damage; M<[average] bleeding (save ends)',
+									tier3: '16 damage; M<[strong] bleeding (save ends)'
+								})
+							),
+							FactoryLogic.createAbilitySectionText('Before the strike, the vampire rebel shifts up to their speed. If the vampire rebel has temporary Stamina, they can expend it, dealing an extra 2 corruption damage for each point of temporary Stamina expended this way.')
+						]
+					})
+				}),
+				level10: FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'retainer-21-retainer-10',
+						name: 'Exsanguination',
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'encounter' ] }),
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
+						target: 'Each enemy in the area',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(
+								FactoryLogic.createPowerRoll({
+									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
+									tier1: '7 corruption damage; M<[weak] bleeding (save ends)',
+									tier2: '11 corruption damage; M<[average] bleeding (save ends)',
+									tier3: '16 corruption damage; M<[strong] bleeding (save ends)'
+								})
+							)
 						]
 					})
 				})

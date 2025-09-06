@@ -1,4 +1,5 @@
 import { Characteristic } from '../../enums/characteristic';
+import { FeatureAddOnType } from '../../enums/feature-addon-type';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 import { FactoryLogic } from '../../logic/factory-logic';
@@ -141,7 +142,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			keywords: [ 'Humanoid', 'Rival' ],
 			encounterValue: 40,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5),
+			speed: FactoryLogic.createSpeed(7),
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 6,
@@ -156,7 +157,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			keywords: [ 'Humanoid', 'Rival' ],
 			encounterValue: 40,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5),
+			speed: FactoryLogic.createSpeed(7),
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 6,
@@ -194,5 +195,105 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			features: []
 		})
 	],
-	addOns: []
+	addOns: [
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-1',
+			name: 'Devil',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** 0,
+- **Prehensile Tail:** The rival can't be flanked.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-2',
+			name: 'Draconian (for the dragon knight)',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +1,
+- **Wings:** The rival can fly. While flying, their stability is 0.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-3',
+			name: 'Dwarf',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +2,
+- **Great Fortitude:** The rival can’t be made weakened.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-4',
+			name: 'High Elf / Wode Elf',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** 0,
+- **Otherworldly Grace:** At the start of each of their turns, the rival can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-5',
+			name: 'Hakaan',
+			description: `
+- **Size Adjustment:** 1L
+- **Stability Adjustment:** +2,
+- **Forceful:** When the rival force moves a creature or object, they can force move them an additional 2 squares.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-6',
+			name: 'Human',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +1,
+- **Determination:** As a maneuver, the rival can end the frightened, slowed, or weakened condition on themself.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-7',
+			name: 'Memonek',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** -1 (minimum 0),
+- **Nonstop:** The rival can’t be made slowed.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-8',
+			name: 'Orc',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +2,
+- **Glowing Recovery:** Once per round, the rival can use a maneuver to regain Stamina equal to 5 times their level.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-9',
+			name: 'Polder',
+			description: `
+- **Size Adjustment:** 1S
+- **Stability Adjustment:** 0,
+- **Nimblestep:** The rival ignores difficult terrain and can move at full speed while sneaking.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-10',
+			name: 'Revenant',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +1,
+- **Vengeance Mark:** The rival places a magic sigil on an enemy within 10 squares of them. The rival always knows the direction to that enemy while the sigil is active on them. As a main action, the rival can detonate the sigil, dealing damage to the target equal to the rival’s free strike and sliding the target up to 2 squares.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-11',
+			name: 'Time Raider',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** 0,
+- **Four-Armed Martial Arts:** Whenever the rival uses the Grab or Knockback maneuver, they can target one additional creature.`,
+			category: FeatureAddOnType.Ancestry,
+		})
+	]
 };

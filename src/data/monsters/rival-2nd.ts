@@ -1,4 +1,7 @@
+import { AbilityDistanceType } from '../../enums/abiity-distance-type';
+import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { FeatureAddOnType } from '../../enums/feature-addon-type';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 import { FactoryLogic } from '../../logic/factory-logic';
@@ -97,11 +100,59 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			encounterValue: 28,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 80,
+			stamina: 140,
 			stability: 1,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 3, 1),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-2nd-1-feature-1',
+						name: 'Raging Tempest',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ 
+							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createRanged(10)
+						],
+						target: 'Two creatures or objects',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '9 holy damage; vertical slide 1',
+								tier2: '14 holy damage; vertical slide 2',
+								tier3: '17 holy damage; vertical slide 3'
+							})),
+							FactoryLogic.createAbilitySectionText('**Effect:** The conduit or one ally within distance regains Stamina equal to half the damage dealt.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-2nd-1-feature-2',
+						name: 'Imbue with Might',
+						type: FactoryLogic.type.createManeuver(),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'Self and five allies',
+						cost: 3,
+						sections: [
+							FactoryLogic.createAbilitySectionText('**Effect:** Each target gains an edge on their next strike.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-2nd-1-feature-3',
+					name: 'Stalwart Guardian',
+					description: 'Strikes made against allies adjacent to the conduit take a bane.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-2nd-1-feature-4',
+					name: 'Rivalry',
+					description: 'At the start of an encounter, the conduit chooses one creature within their line of effect. Both the conduit and the creature can add a d3 roll to power rolls they make against each other.'
+				})
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-2nd-2',
@@ -116,7 +167,65 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stability: 1,
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-2nd-2-feature-1',
+						name: 'The Thriving Wilds',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'Two creatures or objects',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '9 damage; slide 1; M < 1 3 acid damage',
+								tier2: '14 damage; slide 2; M < 2 5 acid damage',
+								tier3: '17 damage; slide 3; M < 3 7 acid damage'
+							}))
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-2nd-2-feature-2',
+						name: 'The Depths Hunger',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, value2: 10 }) ],
+						target: 'Each enemy in the area',
+						cost: 4,
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 2,
+								tier1: '5 damage',
+								tier2: '9 damage; restrained (EoT)',
+								tier3: '11 damage; restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain for enemies until the end of the encounter. Any enemy in the area has acid weakness 3.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-2nd-2-feature-3',
+						name: 'Fissures of Darkness',
+						type: FactoryLogic.type.createTrigger('The elementalist takes damage.'),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Void ],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						sections: [
+							FactoryLogic.createAbilitySectionText('**Effect:** The elementalist can teleport up to 3 squares. Each creature adjacent to the space they leave takes 3 corruption damage.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-2nd-2-feature-4',
+					name: 'Rivalry',
+					description: 'At the start of an encounter, the elementalist chooses one creature within their line of effect. Both the elementalist and the creature can add a d3 roll to power rolls they make against each other.'
+				})
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-2nd-3',
@@ -131,7 +240,9 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stability: 1,
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			features: [
+
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-2nd-4',
@@ -141,12 +252,14 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			keywords: [ 'Humanoid', 'Rival' ],
 			encounterValue: 28,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5),
+			speed: FactoryLogic.createSpeed(7),
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			features: [
+
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-2nd-5',
@@ -156,12 +269,14 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			keywords: [ 'Humanoid', 'Rival' ],
 			encounterValue: 28,
 			size: FactoryLogic.createSize(1, 'M'),
-			speed: FactoryLogic.createSpeed(5),
+			speed: FactoryLogic.createSpeed(7),
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			features: [
+
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-2nd-6',
@@ -176,7 +291,9 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stability: 1,
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			features: [
+
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-2nd-7',
@@ -191,8 +308,110 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stability: 1,
 			freeStrikeDamage: 6,
 			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			features: [
+
+			]
 		})
 	],
-	addOns: []
+	addOns: [
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-1',
+			name: 'Devil',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** 0,
+- **Prehensile Tail:** The rival can't be flanked.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-2',
+			name: 'Draconian (for the dragon knight)',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +1,
+- **Wings:** The rival can fly. While flying, their stability is 0.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-3',
+			name: 'Dwarf',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +2,
+- **Great Fortitude:** The rival can’t be made weakened.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-4',
+			name: 'High Elf / Wode Elf',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** 0,
+- **Otherworldly Grace:** At the start of each of their turns, the rival can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-5',
+			name: 'Hakaan',
+			description: `
+- **Size Adjustment:** 1L
+- **Stability Adjustment:** +2,
+- **Forceful:** When the rival force moves a creature or object, they can force move them an additional 2 squares.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-6',
+			name: 'Human',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +1,
+- **Determination:** As a maneuver, the rival can end the frightened, slowed, or weakened condition on themself.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-7',
+			name: 'Memonek',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** -1 (minimum 0),
+- **Nonstop:** The rival can’t be made slowed.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-8',
+			name: 'Orc',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +2,
+- **Glowing Recovery:** Once per round, the rival can use a maneuver to regain Stamina equal to 5 times their level.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-9',
+			name: 'Polder',
+			description: `
+- **Size Adjustment:** 1S
+- **Stability Adjustment:** 0,
+- **Nimblestep:** The rival ignores difficult terrain and can move at full speed while sneaking.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-10',
+			name: 'Revenant',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** +1,
+- **Vengeance Mark:** The rival places a magic sigil on an enemy within 10 squares of them. The rival always knows the direction to that enemy while the sigil is active on them. As a main action, the rival can detonate the sigil, dealing damage to the target equal to the rival’s free strike and sliding the target up to 2 squares.`,
+			category: FeatureAddOnType.Ancestry,
+		}),
+		FactoryLogic.feature.createAddOn({
+			id: 'ancestry-11',
+			name: 'Time Raider',
+			description: `
+- **Size Adjustment:** 1M
+- **Stability Adjustment:** 0,
+- **Four-Armed Martial Arts:** Whenever the rival uses the Grab or Knockback maneuver, they can target one additional creature.`,
+			category: FeatureAddOnType.Ancestry,
+		})
+	]
 };

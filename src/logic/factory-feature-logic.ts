@@ -97,7 +97,7 @@ export class FactoryFeatureLogic {
 			type: FeatureType.AddOn,
 			data: {
 				category: data.category,
-				cost: data.cost || 1
+				cost: data.cost || 0
 			}
 		};
 	};

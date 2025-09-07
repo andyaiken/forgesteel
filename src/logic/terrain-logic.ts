@@ -5,7 +5,7 @@ import { TerrainFilter } from '../models/filter';
 
 export class TerrainLogic {
 	static getTerrainDescription = (terrain: Terrain) => {
-		return `Level ${terrain.level} ${terrain.role.type} ${terrain.role.terrainType}`;
+		return `Level ${terrain.level} ${terrain.role.terrainType} ${terrain.role.type}`;
 	};
 
 	static getDamageModifiers = (terrain: Terrain, type: DamageModifierType) => {
@@ -38,6 +38,10 @@ export class TerrainLogic {
 
 		if (!terrain.stamina.base && terrain.stamina.perSquare) {
 			return `${terrain.stamina.perSquare} per square`;
+		}
+
+		if (terrain.stamina.base === 0 && terrain.stamina.perSquare === 0) {
+			return `—`;
 		}
 
 		return `${terrain.stamina.base} + ${terrain.stamina.perSquare} per square`;

@@ -430,9 +430,13 @@ export class PDFExport {
 		}
 
 		for (const [ key, value ] of Object.entries(texts)) {
-			const field = form.getField(key) as PDFTextField;
-			if (value !== null && value !== undefined) {
-				field.setText(PDFExport.sanitize(value.toString()));
+			try {
+				const field = form.getField(key) as PDFTextField;
+				if (value !== null && value !== undefined) {
+					field.setText(PDFExport.sanitize(value.toString()));
+				}
+			} catch (ex) {
+				console.error(ex);
 			}
 		}
 

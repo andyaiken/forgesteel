@@ -162,8 +162,7 @@ export const paragon: SubClass = {
 		},
 		{
 			level: 7,
-			features: [
-			]
+			features: []
 		},
 		{
 			level: 8,
@@ -230,8 +229,7 @@ export const paragon: SubClass = {
 		},
 		{
 			level: 10,
-			features: [
-			]
+			features: []
 		}
 	],
 	selected: false

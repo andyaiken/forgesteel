@@ -132,6 +132,10 @@ Additionally, an adjacent ally can use a maneuver to pet you. If they do so, you
 			]
 		},
 		{
+			level: 6,
+			features: []
+		},
+		{
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({

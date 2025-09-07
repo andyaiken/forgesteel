@@ -115,6 +115,10 @@ Additionally, whenever you use a void ability, you or one ally within distance o
 			]
 		},
 		{
+			level: 6,
+			features: []
+		},
+		{
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({

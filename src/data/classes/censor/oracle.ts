@@ -160,8 +160,7 @@ when you finish a respite.
 		},
 		{
 			level: 7,
-			features: [
-			]
+			features: []
 		},
 		{
 			level: 8,
@@ -222,8 +221,7 @@ when you finish a respite.
 		},
 		{
 			level: 10,
-			features: [
-			]
+			features: []
 		}
 	],
 	selected: false

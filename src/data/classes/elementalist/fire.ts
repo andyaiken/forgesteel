@@ -114,6 +114,10 @@ Additionally, whenever you use a fire ability or are targeted by an ability that
 			]
 		},
 		{
+			level: 6,
+			features: []
+		},
+		{
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({

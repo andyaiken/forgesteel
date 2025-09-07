@@ -1,14 +1,14 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
-.stats-resources.card {
+.hero-sheet .stats-resources.card {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     align-items: stretch;
     justify-items: stretch;
+    padding: 5px;
 
     .characteristics-measurements {
         grid-column-end: span 3;
-        margin-left: -5px;
     }
 
     .characteristics-measurements, 
@@ -272,6 +272,16 @@
             display: inline-block;
             text-align: center;
             font-size: 1.3rem;
+        }
+    }
+}
+
+.hero-sheet.a4.portrait .stats-resources.card {
+    .characteristics-measurements {
+        margin-left: -5px;
+
+        .labeled-field.fancy label {
+            letter-spacing: -0.03em;
         }
     }
 }

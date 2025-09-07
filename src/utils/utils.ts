@@ -131,9 +131,13 @@ export class Utils {
 		const prevDpr = window.devicePixelRatio;
 		let dpi = 150;
 		if (resolution === 'high') {
+			window.devicePixelRatio = 4;
+			dpi = 600;
+		} else {
 			window.devicePixelRatio = 2;
 			dpi = 300;
 		}
+
 		return Promise.all(elements.map(this.elementToCanvas))
 			.then(canvases => {
 				Utils.savePdfPages(`${filename}.pdf`, canvases, pdfPaperSize, dpi);
@@ -188,7 +192,7 @@ export class Utils {
 		});
 		pageCanvases.forEach((canvas, n) => {
 			const page = (n === 0) ? pdf : pdf.addPage(paperSize, orientation);
-			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
+			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height, undefined, 'FAST');
 		});
 		pdf.save(filename);
 	};

@@ -83,7 +83,7 @@ export const TerrainPanel = (props: Props) => {
 					<TerrainLabel terrain={terrain} />
 					<Flex align='center' justify='space-between'>
 						<Tag>{terrain.category}</Tag>
-						<Field label='EV' value={terrain.area ? `${terrain.encounterValue} / ${terrain.area}` : ((terrain.encounterValue === 0) ? '-' : terrain.encounterValue)} />
+						<Field label='EV' value={terrain.area ? `${terrain.encounterValue} per ${terrain.area}` : ((terrain.encounterValue === 0) ? '-' : terrain.encounterValue)} />
 					</Flex>
 					{
 						props.mode === PanelMode.Full ?

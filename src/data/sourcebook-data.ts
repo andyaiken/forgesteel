@@ -727,7 +727,8 @@ export class SourcebookData {
 			TerrainData.theThroneOfAAn,
 			TerrainData.psionicShard,
 			TerrainData.holyIdol,
-			TerrainData.treeOfMight
+			TerrainData.treeOfMight,
+			TerrainData.toxicPlants
 		]
 	};
 

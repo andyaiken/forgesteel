@@ -1,5 +1,5 @@
 import { angryBeehive, brambles, corrosivePool, frozenPond, lava, quicksand, toxicPlants } from './terrain/environmental-hazards';
-import { archersStakes, bearTrap, flammableOil, hideyHole, paviseShield, snareTrap, spikeTrap } from './terrain/fieldwork';
+import { archersStakes, bearTrap, flammableOil, hideyHole, paviseShield, snareTrap, spikeTrap } from './terrain/fieldworks';
 import { arrowLauncher, boilingOilCauldron, catapult, explodingMillWheel, fieldBallista, ironDragon, watchtower } from './terrain/siege-engines';
 import { columnOfBlades, dartTrap, hiddenPortcullis, pillar, pressurePlate, pulley, ram, switchTerrain } from './terrain/mechanisms';
 import { holyIdol, psionicShard, treeOfMight } from './terrain/power-fixtures';

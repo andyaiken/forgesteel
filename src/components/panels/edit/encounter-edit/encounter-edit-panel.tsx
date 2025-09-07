@@ -556,7 +556,7 @@ export const EncounterEditPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => MonsterLogic.matches(m, monsterFilter))), g => g.name);
+			const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
 
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
@@ -581,7 +581,7 @@ export const EncounterEditPanel = (props: Props) => {
 							<Expander key={g.id} title={g.name}>
 								<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 									{
-										g.monsters.filter(m => MonsterLogic.matches(m, monsterFilter)).map(m => {
+										g.monsters.filter(m => m.role.organization !== MonsterOrganizationType.Retainer).filter(m => MonsterLogic.matches(m, monsterFilter)).map(m => {
 											const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
 
 											let addBtn: ReactNode;

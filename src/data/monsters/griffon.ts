@@ -9,7 +9,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const griffon: MonsterGroup = {
 	id: 'monster-group-griffon',
-	name: 'Griffons',
+	name: 'Griffon',
 	description: 'With the head, front legs, and wings of a bird and the powerful body and haunches of a feline, griffons are the apex predator’s apex predator. Highly territorial with ranges spanning hundreds of leagues, these air-superiority hunters make quick work of any humanoids foolish enough to stumble into griffon lands.',
 	picture: null,
 	information: [

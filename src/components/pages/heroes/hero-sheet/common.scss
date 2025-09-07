@@ -13,7 +13,6 @@ $color-dark: #444;      // 26.7%
     --color-text-lightest: #666;
 }
 
-
 // Print-optimized colors
 $color-main-action: #00aeef;
 $color-triggered-action: #ed1c24;
@@ -357,6 +356,10 @@ $color-move: #666;
 
 @function svg-diamond-color($color) {
     @return url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="#{encodecolor($color)}"></path></svg>');
+}
+
+@function svg-shield-color($color) {
+    @return url('data: image/svg+xml, %3Csvg%20viewBox%3D%220%200%20600%20720%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xml%3Aspace%3D%22preserve%22%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20stroke-linejoin%3D%22round%22%20stroke-miterlimit%3D%222%22%3E%3Cpath%20d%3D%22m300%200%20240%2020%2060%2060v380c0%20167.136-300%20260-300%20260S0%20625.056%200%20460V80l60-60z%22%20fill%3D%22%23fff%22%2F%3E%3Cpath%20d%3D%22m300%200%20240%2020%2060%2060v380c0%20167.136-300%20260-300%20260S0%20625.056%200%20460V80l60-60zm0%2030.104L73.443%2048.984%2030%2092.426V460c0%2056.83%2043.694%20102.433%2093.274%20138.583%2067.994%2049.576%20150.001%2080.448%20176.821%2089.797%2026.813-9.173%20108.734-39.511%20176.658-88.918C526.353%20563.384%20570%20517.568%20570%20460V92.426l-43.443-43.442z%22%20fill%3D%22#{encodecolor($color)}%22%2F%3E%3C%2Fsvg%3E');
 }
 
 @mixin bottom-border-fancy($border-color) {

@@ -1,3 +1,5 @@
+import { AbilityDistanceType } from '../../enums/abiity-distance-type';
+import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FeatureAddOnType } from '../../enums/feature-addon-type';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
@@ -98,11 +100,59 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			encounterValue: 40,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 80,
+			stamina: 200,
 			stability: 1,
-			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			freeStrikeDamage: 8,
+			characteristics: MonsterLogic.createCharacteristics(3, 0, 1, 4, 2),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-1-feature-1',
+						name: 'Celestial Furor',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ 
+							FactoryLogic.distance.createMelee(1),
+							FactoryLogic.distance.createRanged(10)
+						],
+						target: 'Two creatures or objects',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 holy damage; vertical slide 2',
+								tier2: '17 holy damage; vertical slide 3',
+								tier3: '21 holy damage; vertical slide 4'
+							})),
+							FactoryLogic.createAbilitySectionText('**Effect:** The conduit or one ally within distance regains Stamina equal to half the damage dealt.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-1-feature-2',
+						name: 'Imbue with Power',
+						type: FactoryLogic.type.createManeuver(),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'Self and five allies',
+						cost: 3,
+						sections: [
+							FactoryLogic.createAbilitySectionText('**Effect:** Each target has a double-edge on their next strike.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-1-feature-3',
+					name: 'Unwavering Defender',
+					description: 'Damage dealt to any ally adjacent to the conduit is halved.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-1-feature-4',
+					name: 'Rivalry',
+					description: 'At the start of an encounter, the conduit chooses one creature within their line of effect. Both the conduit and the creature can add a d3 roll to power rolls they make against each other.'
+				})
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-3rd-2',
@@ -113,11 +163,69 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			encounterValue: 40,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 80,
+			stamina: 180,
 			stability: 1,
-			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			freeStrikeDamage: 8,
+			characteristics: MonsterLogic.createCharacteristics(0, 2, 4, 3, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-2-feature-1',
+						name: 'Verdant Rains',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'Two creatures or objects',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 damage; slide 2; M < 2 4 acid damage',
+								tier2: '17 damage; slide 3; M < 3 6 acid damage',
+								tier3: '21 damage; slide 4; M < 4 8 acid damage'
+							}))
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-2-feature-2',
+						name: 'The Chasm Engulfs',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, value2: 10 }) ],
+						target: 'Each enemy in the area',
+						cost: 4,
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '6 damage',
+								tier2: '10 damage; restrained (EoT)',
+								tier3: '14 damage; restrained (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain for enemies until the end of the encounter. Any enemy in the area has acid weakness 5.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-2-feature-3',
+						name: 'Maw of the Abyss',
+						type: FactoryLogic.type.createTrigger('The elementalist takes damage.'),
+						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Void ],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						sections: [
+							FactoryLogic.createAbilitySectionText('**Effect:** The elementalist can teleport up to 4 squares. Each creature adjacent to the space they leave takes 4 corruption damage.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-2-feature-4',
+					name: 'Rivalry',
+					description: 'At the start of an encounter, the elementalist chooses one creature within their line of effect. Both the elementalist and the creature can add a d3 roll to power rolls they make against each other.'
+				})
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-3rd-3',
@@ -128,11 +236,66 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			encounterValue: 40,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 80,
-			stability: 1,
-			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			stamina: 220,
+			stability: 3,
+			freeStrikeDamage: 9,
+			characteristics: MonsterLogic.createCharacteristics(4, 3, 0, 1, 2),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-3-feature-1',
+						name: 'Bonebreaker',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee(1) ],
+						target: 'Two creatures or objects',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '13 damage; push 3',
+								tier2: '18 damage; push 4',
+								tier3: '22 damage; push 5'
+							})),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Malice',
+								value: 4,
+								effect: 'Each target who has <code>M < 3</code> is bleeding and slowed (save ends).'
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-3-feature-2',
+						name: 'Steelfist',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee(1) ],
+						target: 'One creature',
+						cost: 3,
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '15 damage; M < 3 grabbed',
+								tier2: '21 damage; M < 4 grabbed',
+								tier3: '26 damage; M < 5 grabbed'
+							})),
+							FactoryLogic.createAbilitySectionText('**Effect:** The target must be the fury’s size or smaller. While the target is grabbed this way, the fury and their allies have a double edge on strikes against them.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-3-feature-3',
+					name: 'Route',
+					description: 'Once per turn, when the fury force moves a creature or object, or shifts adjacent to a creature or object, they can use a signature ability that gains an edge against that creature or object.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-3-feature-4',
+					name: 'Rivalry',
+					description: 'At the start of an encounter, the fury chooses one creature within their line of effect. Both the fury and the creature can add a d3 roll to power rolls they make against each other.'
+				})
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-3rd-4',
@@ -143,11 +306,60 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			encounterValue: 40,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
-			stamina: 80,
-			stability: 1,
-			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			stamina: 200,
+			stability: 3,
+			freeStrikeDamage: 8,
+			characteristics: MonsterLogic.createCharacteristics(2, 4, 3, 4, 0),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-4-feature-1',
+						name: 'Inertial Flow',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee(1) ],
+						target: 'Two creatures or objects',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 damage; the null shifts up to 3 squares; A < 2 6 damage',
+								tier2: '17 damage; the null shifts up to 4 squares; A < 3 11 damage',
+								tier3: '21 damage; the null shifts up to 5 squares; A < 4 11 damage'
+							}))
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-4-feature-2',
+						name: 'Stun',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee(1) ],
+						target: 'One creature or object',
+						cost: 2,
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 damage; R < 2 dazed (save ends)',
+								tier2: '17 damage; R < 3 dazed (save ends)',
+								tier3: '21 damage; R < 4 dazed and restrained (save ends)'
+							}))
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-4-feature-3',
+					name: 'Force Dampener',
+					description: 'The first time each round that the null is targeted by a strike, it takes a bane and the null halves any damage from it.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-4-feature-4',
+					name: 'Rivalry',
+					description: 'At the start of an encounter, the null chooses one creature within their line of effect. Both the null and the creature can add a d3 roll to power rolls they make against each other.'
+				})
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-3rd-5',
@@ -158,11 +370,59 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			encounterValue: 40,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(7),
-			stamina: 80,
+			stamina: 200,
 			stability: 1,
-			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			freeStrikeDamage: 9,
+			characteristics: MonsterLogic.createCharacteristics(0, 4, 2, 0, 3),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-5-feature-1',
+						name: 'Assail and Serrate',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createMelee(1) ],
+						target: 'Two creatures or objects',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '13 damage; A < 2 bleeding (save ends)',
+								tier2: '18 damage; A < 3 bleeding (save ends)',
+								tier3: '22 damage; A < 4 bleeding and weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Malice',
+								value: 1,
+								effect: 'The shadow can teleport up to 7 squares, then can attempt to hide.'
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-5-feature-2',
+						name: 'Poison the Blade',
+						type: FactoryLogic.type.createManeuver(),
+						keywords: [],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						sections: [
+							FactoryLogic.createAbilitySectionText('**Effect:** The shadow coats their weapon with poison. They have a double edge on their next strike, and any potency for that strike increases by 2.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-5-feature-3',
+					name: 'Exploit Weakness',
+					description: 'The shadow deals an extra 9 damage to any target affected by a condition.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-5-feature-4',
+					name: 'Rivalry',
+					description: 'At the start of an encounter, the shadow chooses one creature within their line of effect. Both the shadow and the creature can add a d3 roll to power rolls they make against each other.'
+				})
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-3rd-6',
@@ -173,11 +433,74 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			encounterValue: 40,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 80,
-			stability: 1,
-			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			stamina: 180,
+			stability: 2,
+			freeStrikeDamage: 9,
+			characteristics: MonsterLogic.createCharacteristics(4, 1, 3, 0, 2),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-6-feature-1',
+						name: 'Command From the Back',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'Two creatures or objects',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '13 damage',
+								tier2: '18 damage; A < 3 prone',
+								tier3: '22 damage; A < 4 prone '
+							})),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Malice',
+								value: 4,
+								effect: 'Two allies within distance move up to their speed and can use a signature ability.'
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-6-feature-2',
+						name: 'Safeguard',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'One creature or object',
+						cost: 3,
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '15 damage; M < 2 weakened (save ends)',
+								tier2: '21 damage; M < 3 weakened (save ends)',
+								tier3: '26 damage; M < 4 weakened (save ends)'
+							})),
+							FactoryLogic.createAbilitySectionText('**Effect:** Two allies adjacent to the target each regain 7 Stamina.')
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-6-feature-3',
+						name: 'Quickshot',
+						type: FactoryLogic.type.createTrigger('An enemy within distance willingly moves'),
+						keywords: [ AbilityKeyword.Ranged ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'The triggering enemy',
+						sections: [
+							FactoryLogic.createAbilitySectionText('**Effect:** At any point during the movement, the tactician uses a signature ability against the target.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-6-feature-4',
+					name: 'Rivalry',
+					description: 'At the start of an encounter, the tactician chooses one creature within their line of effect. Both the tactician and the creature can add a d3 roll to power rolls they make against each other.'
+				})
+			]
 		}),
 		FactoryLogic.createMonster({
 			id: 'rival-3rd-7',
@@ -188,11 +511,74 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			encounterValue: 40,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
-			stamina: 80,
-			stability: 1,
-			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
-			features: []
+			stamina: 180,
+			stability: 2,
+			freeStrikeDamage: 8,
+			characteristics: MonsterLogic.createCharacteristics(0, 0, 4, 0, 1),
+			features: [
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-7-feature-1',
+						name: 'Control Synapses',
+						type: FactoryLogic.type.createMain(),
+						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telekinesis ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'Two creatures or objects',
+						cost: 'signature',
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '12 psychic damage',
+								tier2: '17 psychic damage',
+								tier3: '21 psychic damage'
+							})),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Malice',
+								value: 3,
+								effect: 'Each target shifts up to their speed and can make a free strike against one enemy of the talent’s choice. The target can’t be moved in a way that would harm them.'
+							})
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-7-feature-2',
+						name: 'Disorientate',
+						type: FactoryLogic.type.createManeuver(),
+						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Telepathy ],
+						distance: [ FactoryLogic.distance.createRanged(10) ],
+						target: 'One creature or object',
+						cost: 2,
+						sections: [
+							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
+								bonus: 4,
+								tier1: '8 psychic damage; R < 1 dazed (save ends)',
+								tier2: '8 psychic damage; R < 2 dazed and slowed (save ends)',
+								tier3: '8 psychic damage; R < 3 dazed and slowed (save ends)'
+							}))
+						]
+					})
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'rival-3rd-7-feature-3',
+						name: 'Mind Requital',
+						type: FactoryLogic.type.createTrigger('A creature deals damage to the talent.'),
+						keywords: [ AbilityKeyword.Psionic ],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						cost: 2,
+						sections: [
+							FactoryLogic.createAbilitySectionText('**Effect:** The talent halves the damage and shifts up to 2 squares. The triggering creature takes psychic damage equal to half the damage dealt.')
+						]
+					})
+				}),
+				FactoryLogic.feature.create({
+					id: 'rival-3rd-7-feature-4',
+					name: 'Rivalry',
+					description: 'At the start of an encounter, the talent chooses one creature within their line of effect. Both the talent and the creature can add a d3 roll to power rolls they make against each other.'
+				})
+			]
 		})
 	],
 	addOns: [

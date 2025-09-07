@@ -243,7 +243,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'rival-1st-2-feature-1',
+						id: 'rival-1st-3-feature-1',
 						name: 'Brutal Impact',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -267,7 +267,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'rival-1st-2-feature-2',
+						id: 'rival-1st-3-feature-2',
 						name: 'Let’s Tussle',
 						type: FactoryLogic.type.createMain(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
@@ -344,7 +344,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								bonus: 2,
 								tier1: '7 damage; R < 0 slowed (EoT)',
 								tier2: '10 damage; R < 1 slowed (EoT)',
-								tier3: '13 damage; R < 2] dazed and slowed (EoT)'
+								tier3: '13 damage; R < 2 dazed and slowed (EoT)'
 							}))
 						]
 					})

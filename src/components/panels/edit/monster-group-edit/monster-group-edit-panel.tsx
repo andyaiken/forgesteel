@@ -393,7 +393,8 @@ export const MonsterGroupEditPanel = (props: Props) => {
 					id: Utils.guid(),
 					name: '',
 					description: '',
-					category: FeatureAddOnType.Defensive
+					category: FeatureAddOnType.Defensive,
+					cost: 1
 				}));
 				setMonsterGroup(copy);
 				props.onChange(copy);

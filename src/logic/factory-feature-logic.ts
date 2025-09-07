@@ -89,7 +89,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createAddOn = (data: { id: string, name: string, description: string, category: FeatureAddOnType, cost?: number }): FeatureAddOn => {
+	createAddOn = (data: { id: string, name: string, description: string, category: FeatureAddOnType, cost: number }): FeatureAddOn => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -97,7 +97,7 @@ export class FactoryFeatureLogic {
 			type: FeatureType.AddOn,
 			data: {
 				category: data.category,
-				cost: data.cost || 0
+				cost: data.cost
 			}
 		};
 	};

@@ -380,7 +380,7 @@ export const lava: Terrain = {
 					})
 				})
 			]
-		},
+		}
 	],
 	upgrades: [
 		{
@@ -460,7 +460,7 @@ export const quicksand: Terrain = {
 					})
 				})
 			]
-		},
+		}
 	],
 	upgrades: [],
 	state: {

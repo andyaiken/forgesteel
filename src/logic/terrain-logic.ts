@@ -41,7 +41,7 @@ export class TerrainLogic {
 		}
 
 		if (terrain.stamina.base === 0 && terrain.stamina.perSquare === 0) {
-			return `—`;
+			return '—';
 		}
 
 		return `${terrain.stamina.base} + ${terrain.stamina.perSquare} per square`;

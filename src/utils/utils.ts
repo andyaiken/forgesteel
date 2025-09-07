@@ -194,6 +194,11 @@ export class Utils {
 			const page = (n === 0) ? pdf : pdf.addPage(paperSize, orientation);
 			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height, undefined, 'FAST');
 		});
+		pdf.setDocumentProperties({
+			title: filename.slice(0, -4),
+			subject: 'Forge Steel Hero sheet',
+			creator: 'Forge Steel'
+		});
 		pdf.save(filename);
 	};
 

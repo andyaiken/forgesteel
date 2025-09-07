@@ -33,6 +33,22 @@ export class TitleData {
 		],
 		selectedFeatureID: ''
 	};
+	
+	static angler: Title = {
+		id: 'title-angler',
+		name: 'Angler',
+		description: 'You gain the following benefit',
+		echelon: 1,
+		prerequisites: '120 project points spent on the Tackle table while Fishing.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'title-angler-1',
+				name: 'Angler',
+				description: 'You gain an edge on all Fishing project rolls.'
+			})
+		],
+		selectedFeatureID: ''
+	};
 
 	static battleaxeDiplomat: Title = {
 		id: 'title-battleaxe-diplomat',
@@ -237,6 +253,22 @@ You recruit up to three minions with levels no greater than your own, of a type 
 When you’re negotiating with a member of your faction, their starting Patience increases by 2, up to a maximum of 5.
 
 You find an agent who can provide you with three pieces of information about the settlement you’re in, such as the location of a hidden person, a secret entrance into a guarded area, or the negotiation motivation or pitfall of an important person.`
+			})
+		],
+		selectedFeatureID: ''
+	};
+	
+	static goldenrod: Title = {
+		id: 'title-goldenrod',
+		name: 'Goldenrod',
+		description: 'You gain the following benefit',
+		echelon: 1,
+		prerequisites: '300 project points spent on the Tackle table while Fishing.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'title-goldenrod-1',
+				name: 'Goldenrod',
+				description: 'Each time you undertake the Fishing project, you can reroll one project roll.'
 			})
 		],
 		selectedFeatureID: ''

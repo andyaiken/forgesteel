@@ -35,9 +35,9 @@ export const corven: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Agility ],
-							tier1: '3 damage',
-							tier2: '6 damage',
-							tier3: '8 damage'
+							tier1: '1 damage',
+							tier2: '4 damage',
+							tier3: '6 damage'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('You can shift up to 2 squares before or after making the power roll.')

@@ -34,9 +34,9 @@ export const raden: Kit = {
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Agility ],
-							tier1: '4 + A damage',
-							tier2: '7 + A damage; push 1',
-							tier3: '8 + A damage; push 2'
+							tier1: '2 + A damage',
+							tier2: '5 + A damage; push 1',
+							tier3: '7 + A damage; push 2'
 						})
 					),
 					FactoryLogic.createAbilitySectionText('You can shift up to the same number of squares that you pushed the target.')

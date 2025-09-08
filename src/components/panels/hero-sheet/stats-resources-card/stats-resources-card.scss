@@ -1,14 +1,14 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
-.stats-resources.card {
+.hero-sheet .stats-resources.card {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     align-items: stretch;
     justify-items: stretch;
+    padding: 5px;
 
     .characteristics-measurements {
         grid-column-end: span 3;
-        margin-left: -5px;
     }
 
     .characteristics-measurements, 
@@ -107,12 +107,13 @@
         grid-template-rows: min-content min-content min-content 1fr;
         place-items: stretch;
 
-        h4 {
+        h4:not(#take-priority) {
             margin: 5px 3px 0;
             padding: 0;
             text-align:center;
             text-transform: uppercase;
-            font-size: 1.1rem;
+            font-size: 16px;
+            font-weight: 450;
         }
 
         .current-stamina {
@@ -123,10 +124,11 @@
             flex-flow: column;
             justify-content: flex-end;
             align-items: center;
-            padding-bottom: 22px;
+            padding-bottom: 25px;
             margin-left: 8px;
 
-            aspect-ratio: 615 / 735; // svg view size
+            aspect-ratio: 600 / 780; // svg view size
+            transform: translateY(-10px);
             border: 0;
             background-repeat: no-repeat;
             background-color: transparent;
@@ -272,6 +274,16 @@
             display: inline-block;
             text-align: center;
             font-size: 1.3rem;
+        }
+    }
+}
+
+.hero-sheet.a4.portrait .stats-resources.card {
+    .characteristics-measurements {
+        margin-left: -5px;
+
+        .labeled-field.fancy label {
+            letter-spacing: -0.03em;
         }
     }
 }

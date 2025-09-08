@@ -1,12 +1,12 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
+import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureAddOnType } from '../../enums/feature-addon-type';
+import { MonsterGroup } from '../../models/monster-group';
+import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterGroup } from '../../models/monster-group';
 
 export const rival1st: MonsterGroup = {
 	id: 'monster-group-rival-1st',
@@ -584,7 +584,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1M
 - **Stability Adjustment:** 0,
 - **Prehensile Tail:** The rival can't be flanked.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-2',
@@ -593,7 +594,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1M
 - **Stability Adjustment:** +1,
 - **Wings:** The rival can fly. While flying, their stability is 0.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-3',
@@ -602,7 +604,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1M
 - **Stability Adjustment:** +2,
 - **Great Fortitude:** The rival can’t be made weakened.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-4',
@@ -611,7 +614,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1M
 - **Stability Adjustment:** 0,
 - **Otherworldly Grace:** At the start of each of their turns, the rival can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-5',
@@ -620,7 +624,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1L
 - **Stability Adjustment:** +2,
 - **Forceful:** When the rival force moves a creature or object, they can force move them an additional 2 squares.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-6',
@@ -629,7 +634,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1M
 - **Stability Adjustment:** +1,
 - **Determination:** As a maneuver, the rival can end the frightened, slowed, or weakened condition on themself.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-7',
@@ -638,7 +644,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1M
 - **Stability Adjustment:** -1 (minimum 0),
 - **Nonstop:** The rival can’t be made slowed.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-8',
@@ -647,7 +654,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1M
 - **Stability Adjustment:** +2,
 - **Glowing Recovery:** Once per round, the rival can use a maneuver to regain Stamina equal to 5 times their level.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-9',
@@ -656,7 +664,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1S
 - **Stability Adjustment:** 0,
 - **Nimblestep:** The rival ignores difficult terrain and can move at full speed while sneaking.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-10',
@@ -665,7 +674,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1M
 - **Stability Adjustment:** +1,
 - **Vengeance Mark:** The rival places a magic sigil on an enemy within 10 squares of them. The rival always knows the direction to that enemy while the sigil is active on them. As a main action, the rival can detonate the sigil, dealing damage to the target equal to the rival’s free strike and sliding the target up to 2 squares.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		}),
 		FactoryLogic.feature.createAddOn({
 			id: 'ancestry-11',
@@ -674,7 +684,8 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 - **Size Adjustment:** 1M
 - **Stability Adjustment:** 0,
 - **Four-Armed Martial Arts:** Whenever the rival uses the Grab or Knockback maneuver, they can target one additional creature.`,
-			category: FeatureAddOnType.Ancestry
+			category: FeatureAddOnType.Ancestry,
+			cost: 0
 		})
 	]
 };

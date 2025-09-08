@@ -161,8 +161,7 @@ export const exorcist: SubClass = {
 		},
 		{
 			level: 7,
-			features: [
-			]
+			features: []
 		},
 		{
 			level: 8,
@@ -235,8 +234,7 @@ export const exorcist: SubClass = {
 		},
 		{
 			level: 10,
-			features: [
-			]
+			features: []
 		}
 	],
 	selected: false

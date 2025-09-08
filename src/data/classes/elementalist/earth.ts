@@ -134,6 +134,10 @@ Additionally, whenever an ally within distance of your Hurl Element ability is f
 			]
 		},
 		{
+			level: 6,
+			features: []
+		},
+		{
 			level: 7,
 			features: [
 				FactoryLogic.feature.create({

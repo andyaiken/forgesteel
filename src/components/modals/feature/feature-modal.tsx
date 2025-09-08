@@ -1,9 +1,9 @@
+import { AbilityCustomization, Hero } from '../../../models/hero';
 import { Input, Segmented } from 'antd';
 import { Expander } from '../../controls/expander/expander';
 import { Feature } from '../../../models/feature';
 import { FeaturePanel } from '../../panels/elements/feature-panel/feature-panel';
 import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
 import { Modal } from '../modal/modal';
 import { MultiLine } from '../../controls/multi-line/multi-line';
 import { Options } from '../../../models/options';
@@ -35,12 +35,7 @@ export const FeatureModal = (props: Props) => {
 
 			let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.feature.id);
 			if (!ac) {
-				ac = {
-					abilityID: props.feature.id,
-					name: value,
-					description: '',
-					notes: ''
-				};
+				ac = createCustomization();
 				copy.abilityCustomizations.push(ac);
 			} else {
 				ac.name = value;
@@ -57,12 +52,7 @@ export const FeatureModal = (props: Props) => {
 
 			let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.feature.id);
 			if (!ac) {
-				ac = {
-					abilityID: props.feature.id,
-					name: '',
-					description: value,
-					notes: ''
-				};
+				ac = createCustomization();
 				copy.abilityCustomizations.push(ac);
 			} else {
 				ac.description = value;
@@ -79,12 +69,7 @@ export const FeatureModal = (props: Props) => {
 
 			let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.feature.id);
 			if (!ac) {
-				ac = {
-					abilityID: props.feature.id,
-					name: '',
-					description: '',
-					notes: value
-				};
+				ac = createCustomization();
 				copy.abilityCustomizations.push(ac);
 			} else {
 				ac.notes = value;
@@ -94,6 +79,17 @@ export const FeatureModal = (props: Props) => {
 			if (props.updateHero) {
 				props.updateHero(copy);
 			}
+		};
+
+		const createCustomization = (): AbilityCustomization => {
+			return {
+				abilityID: props.feature.id,
+				name: '',
+				description: '',
+				notes: '',
+				distanceBonus: 0,
+				damageBonus: 0
+			};
 		};
 
 		const getContent = () => {

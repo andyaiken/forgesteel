@@ -685,6 +685,16 @@ export class HeroLogic {
 				});
 			});
 
+		hero.abilityCustomizations
+			.filter(ac => ac.abilityID === ability.id)
+			.forEach(ac => {
+				array.push({
+					feature: 'Customization',
+					value: ac.damageBonus,
+					type: DamageType.Damage
+				});
+			});
+
 		return array;
 	};
 
@@ -710,6 +720,10 @@ export class HeroLogic {
 				const mod = HeroLogic.calculateModifierValue(hero, f.data);
 				value += mod;
 			});
+
+		hero.abilityCustomizations
+			.filter(ac => ac.abilityID === ability.id)
+			.forEach(ac => value += ac.distanceBonus);
 
 		return value;
 	};

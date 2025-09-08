@@ -155,7 +155,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 5,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: '+5 bonus to speed2',
+			withCaptain: '+5 bonus to speed',
 			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -322,7 +322,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 3,
 			stability: 0,
 			freeStrikeDamage: 1,
-			withCaptain: 'Ranged Distance +5',
+			withCaptain: '+5 bonus to ranged distance',
 			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({

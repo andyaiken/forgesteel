@@ -348,7 +348,10 @@ export class SourcebookData {
 			TitleData.peaceBringer,
 			TitleData.theoreticalWarrior,
 			TitleData.tireless,
-			TitleData.unchained
+			TitleData.unchained,
+			// Special
+			TitleData.angler,
+			TitleData.goldenrod
 		],
 		items: [
 			ConsumableData.blackAshDart,

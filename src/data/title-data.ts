@@ -33,7 +33,7 @@ export class TitleData {
 		],
 		selectedFeatureID: ''
 	};
-	
+
 	static angler: Title = {
 		id: 'title-angler',
 		name: 'Angler',
@@ -257,7 +257,7 @@ You find an agent who can provide you with three pieces of information about the
 		],
 		selectedFeatureID: ''
 	};
-	
+
 	static goldenrod: Title = {
 		id: 'title-goldenrod',
 		name: 'Goldenrod',

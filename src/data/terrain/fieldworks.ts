@@ -150,9 +150,9 @@ export const bearTrap: Terrain = {
           name: "Deactivate",
           description: `As a maneuver, a creature adjacent to a bear trap can make an *Agility test.*
 
-			* *11 or lower*: The creature triggers the trap and is affected as if in its space.
-			* *12-16: The trap is deactivated but the creature is slowed (EoT).
-			* *17+: The trap is deactivated and doesn’t trigger.`,
+* **11 or lower**: The creature triggers the trap and is affected as if in its space.
+* **12-16**: The trap is deactivated but the creature is slowed (EoT).
+* **17+:** The trap is deactivated and doesn’t trigger.`,
         }),
       ],
     },
@@ -258,10 +258,10 @@ export const flammableOil: Terrain = {
           id: "deactivate",
           name: "Deactivate",
           description: `As a maneuver, a creature adjacent to a patch of flammable oil can make an *Agility test.*
-			
-			* *11 or lower*: The creature ignites the oil and is affected as if in its area.
-			* *12-16*: The oil temporarily ignites before safely burning out, and the creature takes 3 fire damage and is burning (save ends).
-			* *17+*: The oil is rendered safe and can’t be ignited.`,
+
+* **11 or lower**: The creature ignites the oil and is affected as if in its area.
+* **12-16**: The oil temporarily ignites before safely burning out, and the creature takes 3 fire damage and is burning (save ends).
+* * **17+**: The oil is rendered safe and can’t be ignited.`,
         }),
       ],
     },
@@ -338,10 +338,10 @@ export const hideyHole: Terrain = {
           id: "deactivate",
           name: "Deactivate",
           description: `As a maneuver, a creature adjacent to a hidey-hole can make a *Might test.*
-			
-			* *11 or lower*: The creature is restrained (save ends).
-			* *12-16*: The hidey-hole collapses but the creature is slowed (save ends).
-			* *17+*: The hidey-hole collapses and can no longer be used until repaired.`,
+
+* **11 or lower**: The creature is restrained (save ends).
+* **12-16**: The hidey-hole collapses but the creature is slowed (save ends).
+* * **17+**: The hidey-hole collapses and can no longer be used until repaired.`,
         }),
       ],
     },

@@ -11,6 +11,8 @@ export interface AbilityCustomization {
 	name: string;
 	description: string;
 	notes: string;
+	distanceBonus: number;
+	damageBonus: number;
 }
 
 export interface Hero {

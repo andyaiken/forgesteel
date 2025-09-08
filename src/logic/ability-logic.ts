@@ -143,6 +143,13 @@ export class AbilityLogic {
 		return sections.filter(x => !!x).join(' ');
 	};
 
+	static usesDamage = (ability: Ability) => {
+		return ability.sections
+			.filter(s => s.type === 'roll')
+			.flatMap(s => [ s.roll.tier1, s.roll.tier2, s.roll.tier3 ])
+			.some(tier => tier.includes('damage') || tier.includes('dmg'));
+	};
+
 	static usesPotency = (powerRoll: PowerRoll) => {
 		const match = (tier: string) => {
 			return /(<|>|=)\s*(weak|average|avg|strong)/.test(tier);

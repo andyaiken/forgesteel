@@ -1,17 +1,20 @@
-import { Input, Segmented } from 'antd';
+import { AbilityCustomization, Hero } from '../../../models/hero';
+import { Input, Segmented, Space } from 'antd';
 import { Ability } from '../../../models/ability';
+import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
+import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
 import { Characteristic } from '../../../enums/characteristic';
 import { Collections } from '../../../utils/collections';
 import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
 import { Expander } from '../../controls/expander/expander';
 import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { Modal } from '../modal/modal';
 import { Monster } from '../../../models/monster';
 import { MonsterLogic } from '../../../logic/monster-logic';
 import { MultiLine } from '../../controls/multi-line/multi-line';
+import { NumberSpin } from '../../controls/number-spin/number-spin';
 import { PanelMode } from '../../../enums/panel-mode';
 import { RollLogic } from '../../../logic/roll-logic';
 import { RollState } from '../../../enums/roll-state';
@@ -37,6 +40,9 @@ export const AbilityModal = (props: Props) => {
 
 	const customization = hero ? hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id) : undefined;
 
+	const hasRange = props.ability.distance.some(d => ![ AbilityDistanceType.Self, AbilityDistanceType.Special ].includes(d.type));
+	const hasDamage = AbilityLogic.usesDamage(props.ability);
+
 	const getCharacteristic = (ch: Characteristic) => {
 		if (hero) {
 			return HeroLogic.getCharacteristic(hero, ch);
@@ -54,16 +60,10 @@ export const AbilityModal = (props: Props) => {
 
 		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
 		if (!ac) {
-			ac = {
-				abilityID: props.ability.id,
-				name: value,
-				description: '',
-				notes: ''
-			};
+			ac = createCustomization();
 			copy.abilityCustomizations.push(ac);
-		} else {
-			ac.name = value;
 		}
+		ac.name = value;
 
 		setHero(copy);
 		if (props.updateHero) {
@@ -76,16 +76,10 @@ export const AbilityModal = (props: Props) => {
 
 		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
 		if (!ac) {
-			ac = {
-				abilityID: props.ability.id,
-				name: '',
-				description: value,
-				notes: ''
-			};
+			ac = createCustomization();
 			copy.abilityCustomizations.push(ac);
-		} else {
-			ac.description = value;
 		}
+		ac.description = value;
 
 		setHero(copy);
 		if (props.updateHero) {
@@ -98,21 +92,58 @@ export const AbilityModal = (props: Props) => {
 
 		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
 		if (!ac) {
-			ac = {
-				abilityID: props.ability.id,
-				name: '',
-				description: '',
-				notes: value
-			};
+			ac = createCustomization();
 			copy.abilityCustomizations.push(ac);
-		} else {
-			ac.notes = value;
 		}
+		ac.notes = value;
 
 		setHero(copy);
 		if (props.updateHero) {
 			props.updateHero(copy);
 		}
+	};
+
+	const setDistance = (value: number) => {
+		const copy = Utils.copy(hero) as Hero;
+
+		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
+		if (!ac) {
+			ac = createCustomization();
+			copy.abilityCustomizations.push(ac);
+		}
+		ac.distanceBonus = value;
+
+		setHero(copy);
+		if (props.updateHero) {
+			props.updateHero(copy);
+		}
+	};
+
+	const setDamage = (value: number) => {
+		const copy = Utils.copy(hero) as Hero;
+
+		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
+		if (!ac) {
+			ac = createCustomization();
+			copy.abilityCustomizations.push(ac);
+		}
+		ac.damageBonus = value;
+
+		setHero(copy);
+		if (props.updateHero) {
+			props.updateHero(copy);
+		}
+	};
+
+	const createCustomization = (): AbilityCustomization => {
+		return {
+			abilityID: props.ability.id,
+			name: '',
+			description: '',
+			notes: '',
+			distanceBonus: 0,
+			damageBonus: 0
+		};
 	};
 
 	const getContent = () => {
@@ -174,6 +205,24 @@ export const AbilityModal = (props: Props) => {
 						<Expander title='Notes'>
 							<HeaderText>Notes</HeaderText>
 							<MultiLine value={customization?.notes || ''} onChange={setNotes} />
+						</Expander>
+						<Expander title='Modifiers'>
+							<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+								<NumberSpin
+									disabled={!hasRange}
+									label='Distance'
+									min={0}
+									value={customization?.distanceBonus || 0}
+									onChange={setDistance}
+								/>
+								<NumberSpin
+									disabled={!hasDamage}
+									label='Damage'
+									min={0}
+									value={customization?.damageBonus || 0}
+									onChange={setDamage}
+								/>
+							</Space>
 						</Expander>
 					</div>
 				);

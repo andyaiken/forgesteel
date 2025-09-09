@@ -183,7 +183,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-2-feature-2',
-					name: 'Otherwordly Grace',
+					name: 'Otherworldly Grace',
 					description: 'At the start of each of their turns, the dawn mage can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
@@ -225,7 +225,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-3-feature-2',
-					name: 'Otherwordly Grace',
+					name: 'Otherworldly Grace',
 					description: 'At the start of each of their turns, the quiver can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
@@ -370,7 +370,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-6-feature-4',
-					name: 'Otherwordly Grace',
+					name: 'Otherworldly Grace',
 					description: 'At the start of each of their turns, the bloodletter can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
@@ -427,7 +427,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-7-feature-3',
-					name: 'Otherwordly Grace',
+					name: 'Otherworldly Grace',
 					description: 'At the start of each of their turns, the deathtouch can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
@@ -486,7 +486,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-8-feature-3',
-					name: 'Otherwordly Grace',
+					name: 'Otherworldly Grace',
 					description: 'At the start of each of their turns, the orbweaver can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
@@ -544,7 +544,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-9-feature-3',
-					name: 'Otherwordly Grace',
+					name: 'Otherworldly Grace',
 					description: 'At the start of each of their turns, the palinode can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
@@ -617,7 +617,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-10-feature-4',
-					name: 'Otherwordly Grace',
+					name: 'Otherworldly Grace',
 					description: 'At the start of each of their turns, the wyrd can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				}),
 				FactoryLogic.feature.createDamageModifier({
@@ -680,7 +680,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-11-feature-4',
-					name: 'Otherwordly Grace',
+					name: 'Otherworldly Grace',
 					description: 'At the start of each of their turns, the zephyr can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			]
@@ -892,7 +892,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				}),
 				FactoryLogic.feature.create({
 					id: 'elf-high-13-feature-4',
-					name: 'Shared Otherwordly Grace',
+					name: 'Shared Otherworldly Grace',
 					description: 'If the ceramic horse’s rider has the Otherworldly Grace trait, the ceramic horse also has that trait.'
 				})
 			]

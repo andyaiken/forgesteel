@@ -68,7 +68,7 @@ export const highElfTactician = {
 						{
 							feature: {
 								id: 'high-elf-feature-2-4',
-								name: 'Otherwordly Grace',
+								name: 'Otherworldly Grace',
 								description: 'Your elf body and mind can’t be contained for long. Whenever you make a saving throw, you succeed on a roll of 5 or higher.',
 								type: 'Text',
 								data: null
@@ -111,7 +111,7 @@ export const highElfTactician = {
 						},
 						{
 							id: 'high-elf-feature-2-4',
-							name: 'Otherwordly Grace',
+							name: 'Otherworldly Grace',
 							description: 'Your elf body and mind can’t be contained for long. Whenever you make a saving throw, you succeed on a roll of 5 or higher.',
 							type: 'Text',
 							data: null

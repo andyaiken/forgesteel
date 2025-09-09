@@ -561,7 +561,7 @@ export const retainer: MonsterGroup = {
 				}),
 				FactoryLogic.feature.create({
 					id: 'retainer-6-feature-2',
-					name: 'Otherwordly Grace',
+					name: 'Otherworldly Grace',
 					description: 'At the start of each of their turns, the weatherwise can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.'
 				})
 			],

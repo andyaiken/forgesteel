@@ -192,7 +192,7 @@ export const dartTrap: Terrain = {
         FactoryLogic.feature.create({
           id: "deactivate",
           name: "Deactivate",
-          description: `As a maneuver, a creature adjacent to a dart trap can make an **Agility test.**
+          description: `As a maneuver, a creature adjacent to a dart trap can make an **Agility test**.
 			
 * **11 or lower**: The creature triggers the trap and is targeted by it.
 * **12-16**: The trap is deactivated but the creature is slowed (EoT).

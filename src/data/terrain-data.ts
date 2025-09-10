@@ -3,7 +3,7 @@ import { archersStakes, bearTrap, flammableOil, hideyHole, paviseShield, snareTr
 import { arrowLauncher, boilingOilCauldron, catapult, explodingMillWheel, fieldBallista, ironDragon, watchtower } from './terrain/siege-engines';
 import { columnOfBlades, dartTrap, hiddenPortcullis, pillar, pressurePlate, pulley, ram, switchTerrain } from './terrain/mechanisms';
 import { holyIdol, psionicShard, treeOfMight } from './terrain/power-fixtures';
-import { theBlackObelisk, theChronalHypercube, theThroneOfAAn } from './terrain/arcane-objects';
+import { theBlackObelisk, theChronalHypercube, theThroneOfAAn } from './terrain/supernatural-objects';
 
 export class TerrainData {
 	static angryBeehive = angryBeehive;

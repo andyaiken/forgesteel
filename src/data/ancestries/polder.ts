@@ -43,7 +43,7 @@ If the surface you are flattened against is destroyed, this ability ends and you
 					feature: FactoryLogic.feature.createDamageModifier({
 						id: 'polder-feature-3-1',
 						name: 'Corruption Immunity',
-						description: 'Your innate shadow magic grants you resilience against the unnatural.',
+						description: 'Your innate shadow magic grants you resilience against the unnatural. You have corruption immunity equal to your level + 2.',
 						modifiers: [
 							FactoryLogic.damageModifier.createValuePlusPerLevel({ damageType: DamageType.Corruption, modifierType: DamageModifierType.Immunity, value: 2, perLevel: 1 })
 						]

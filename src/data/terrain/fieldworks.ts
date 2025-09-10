@@ -257,7 +257,7 @@ export const flammableOil: Terrain = {
 				FactoryLogic.feature.create({
 					id: 'deactivate',
 					name: 'Deactivate',
-					description: `As a maneuver, a creature adjacent to a patch of flammable oil can make an *Agility test.*
+					description: `As a maneuver, a creature adjacent to a patch of flammable oil can make an **Agility test**.
 
 * **11 or lower**: The creature ignites the oil and is affected as if in its area.
 * **12-16**: The oil temporarily ignites before safely burning out, and the creature takes 3 fire damage and is burning (save ends).
@@ -337,7 +337,7 @@ export const hideyHole: Terrain = {
 				FactoryLogic.feature.create({
 					id: 'deactivate',
 					name: 'Deactivate',
-					description: `As a maneuver, a creature adjacent to a hidey-hole can make a *Might test.*
+					description: `As a maneuver, a creature adjacent to a hidey-hole can make a **Might test**.
 
 * **11 or lower**: The creature is restrained (save ends).
 * **12-16**: The hidey-hole collapses but the creature is slowed (save ends).
@@ -406,11 +406,11 @@ export const paviseShield: Terrain = {
 				FactoryLogic.feature.create({
 					id: 'deactivate',
 					name: 'Deactivate',
-					description: `As a maneuver, a creature adjacent to a pavise shield controlled by another creature can make a *Might test*.
+					description: `As a maneuver, a creature adjacent to a pavise shield controlled by another creature can make a **Might test**.
 			
-			* *11 or lower:* The creature controlling the shield retains control of it and can make an opportunity attack against the creature making the test.
-			* *12-16:* The creature controlling the shield retains control of it.
-			* *17+*: The creature making the test grabs the shield and takes control of it.`
+* **11 or lower:** The creature controlling the shield retains control of it and can make an opportunity attack against the creature making the test.
+* **12-16**: The creature controlling the shield retains control of it.
+* *17+*: The creature making the test grabs the shield and takes control of it.`
 				})
 			]
 		},
@@ -467,11 +467,11 @@ export const snareTrap: Terrain = {
 				FactoryLogic.feature.create({
 					id: 'deactivate',
 					name: 'Deactivate',
-					description: `As a maneuver, a creature adjacent to a snare trap can make an *Agility test.*
+					description: `As a maneuver, a creature adjacent to a snare trap can make an **Agility test**.
 			
-			* *11 or less*: The creature triggers the trap and is affected as if in its space.
-			* *12-16*: The trap is deactivated but the creature is slowed (EoT).
-			* *17+* The trap is deactivated and doesn’t trigger.`
+* **11 or less**: The creature triggers the trap and is affected as if in its space.
+* **12-16**: The trap is deactivated but the creature is slowed (EoT).
+* **17+**: The trap is deactivated and doesn’t trigger.`
 				})
 			]
 		},
@@ -581,11 +581,11 @@ export const spikeTrap: Terrain = {
 				FactoryLogic.feature.create({
 					id: 'deactivate',
 					name: 'Deactivate',
-					description: `As a maneuver, a creature adjacent to a spike trap can make an *Agility test.*
-			
-			* *11 or lower*: The creature triggers the trap and is affected as if in its area.
-			* *12-16*: The trap is deactivated but the creature is slowed (EoT).
-			* *17+:* The trap is deactivated and doesn’t trigger.`
+					description: `As a maneuver, a creature adjacent to a spike trap can make an **Agility test**.
+
+* **11 or lower**: The creature triggers the trap and is affected as if in its area.
+* **12-16**: The trap is deactivated but the creature is slowed (EoT).
+* **17+**: The trap is deactivated and doesn’t trigger.`
 				})
 			]
 		},

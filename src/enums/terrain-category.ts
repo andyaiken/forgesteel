@@ -1,5 +1,5 @@
 export enum TerrainCategory {
-	ArcaneObject = 'Arcane Object',
+	SupernaturalObject = 'Supernatural Object',
 	Environmental = 'Environmental Hazard',
 	Fieldwork = 'Fieldwork',
 	Mechanism = 'Mechanism',

@@ -141,7 +141,7 @@ export const TerrainEditPanel = (props: Props) => {
 					<HeaderText>Category</HeaderText>
 					<Select
 						style={{ width: '100%' }}
-						options={[ TerrainCategory.ArcaneObject, TerrainCategory.Environmental, TerrainCategory.Fieldwork, TerrainCategory.Mechanism, TerrainCategory.PowerFixture, TerrainCategory.SiegeEngine ].map(c => ({ label: c, value: c }))}
+						options={[ TerrainCategory.SupernaturalObject, TerrainCategory.Environmental, TerrainCategory.Fieldwork, TerrainCategory.Mechanism, TerrainCategory.PowerFixture, TerrainCategory.SiegeEngine ].map(c => ({ label: c, value: c }))}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						showSearch={true}
 						filterOption={(input, option) => {

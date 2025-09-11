@@ -73,6 +73,10 @@
 				flex-direction: column;
 				gap: 5px;
 			}
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.05);
+			}
 		}
 	}
 }

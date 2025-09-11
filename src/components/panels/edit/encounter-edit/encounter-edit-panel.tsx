@@ -581,7 +581,7 @@ export const EncounterEditPanel = (props: Props) => {
 							<Expander key={g.id} title={g.name}>
 								<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 									{
-										g.monsters.filter(m => m.role.organization !== MonsterOrganizationType.Retainer).filter(m => MonsterLogic.matches(m, monsterFilter)).map(m => {
+										Collections.sort(g.monsters.filter(m => m.role.organization !== MonsterOrganizationType.Retainer).filter(m => MonsterLogic.matches(m, monsterFilter)), m => m.name).map(m => {
 											const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
 
 											let addBtn: ReactNode;

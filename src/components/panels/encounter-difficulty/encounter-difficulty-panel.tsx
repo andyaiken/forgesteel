@@ -19,6 +19,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
 	options: Options;
+	showHeader?: boolean;
 }
 
 export const EncounterDifficultyPanel = (props: Props) => {
@@ -56,7 +57,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='encounter-difficulty-panel'>
-					<HeaderText level={1}>Encounter Difficulty</HeaderText>
+					{props.showHeader !== false ? <HeaderText level={1}>Encounter Difficulty</HeaderText> : null}
 					<div className='ds-text'>Difficulty for {OptionsLogic.getPartyDescription(props.options)}.</div>
 					<div className='encounter-slider'>
 						<Slider

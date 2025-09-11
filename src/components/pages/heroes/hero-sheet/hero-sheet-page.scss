@@ -1,7 +1,6 @@
 @use './common.scss';
 @use 'sass:color';
 
-
 .hero-view-page .hero-view-page-content:has(.hero-sheet),
 #pdf-preview {
     overflow-y: auto;

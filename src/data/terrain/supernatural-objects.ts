@@ -1,11 +1,11 @@
 import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
+import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 import { Terrain } from '../../models/terrain';
 import { TerrainCategory } from '../../enums/terrain-category';
 import { TerrainRoleType } from '../../enums/terrain-role-type';
-import { Characteristic } from '../../enums/characteristic';
 
 export const theBlackObelisk: Terrain = {
 	id: 'terrain-the-black-obelisk',
@@ -45,7 +45,7 @@ export const theBlackObelisk: Terrain = {
 									tier2: 'The creature must make another test to deactivate the obelisk. If they obtain this outcome a second time, they accidentally activate **Your Fears Become Manifest**.',
 									tier3: 'The obelisk is deactivated until the end of the encounter.'
 								})
-							),
+							)
 						]
 					})
 				}),
@@ -128,7 +128,7 @@ export const theChronalHypercube: Terrain = {
 									tier2: 'The creature fails to deactivate the hypercube.',
 									tier3: 'The hypercube teleports adjacent to the creature at the start of the next round and becomes an ally to the creature and their allies.'
 								})
-							),
+							)
 						]
 					})
 				}),
@@ -143,7 +143,7 @@ export const theChronalHypercube: Terrain = {
 					description: 'Any ally within 10 squares of the hypercube can teleport when they move. An ally who teleports gains an edge on the next power roll they make.'
 				})
 			]
-		},
+		}
 	],
 	upgrades: [],
 	state: {

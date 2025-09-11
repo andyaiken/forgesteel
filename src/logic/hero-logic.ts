@@ -687,6 +687,7 @@ export class HeroLogic {
 
 		hero.abilityCustomizations
 			.filter(ac => ac.abilityID === ability.id)
+			.filter(ac => ac.damageBonus !== 0)
 			.forEach(ac => {
 				array.push({
 					feature: 'Customization',

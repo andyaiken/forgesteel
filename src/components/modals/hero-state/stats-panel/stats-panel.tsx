@@ -159,7 +159,7 @@ export const StatsPanel = (props: Props) => {
 							type='info'
 							showIcon={true}
 							message='You have enough XP to level up.'
-							action={props.onLevelUp ? <Button type='text' title='Level Up' icon={<ArrowUpOutlined />} onClick={levelUp} /> : null}
+							action={props.onLevelUp ? <Button icon={<ArrowUpOutlined />} onClick={levelUp}>Level Up</Button> : null}
 						/>
 						: null
 				}

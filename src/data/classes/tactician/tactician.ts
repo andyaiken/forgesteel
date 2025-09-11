@@ -507,7 +507,7 @@ Command remains until you spend it.`
 		FactoryLogic.createAbility({
 			id: 'tactician-ability-10',
 			name: 'Hit ’Em Hard!',
-			description: '',
+			description: 'Your allies see the advantages in attacking the targets you select.',
 			type: FactoryLogic.type.createManeuver(),
 			keywords: [],
 			distance: [ FactoryLogic.distance.createSelf() ],

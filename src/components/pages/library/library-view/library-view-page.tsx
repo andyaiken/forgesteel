@@ -52,6 +52,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
 	options: Options;
+	highlightAbout: boolean;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -386,7 +387,7 @@ export const LibraryViewPage = (props: Props) => {
 					<div className='library-view-page-content'>
 						{panel}
 					</div>
-					<AppFooter page='library' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

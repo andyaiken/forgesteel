@@ -50,6 +50,7 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	options: Options;
+	highlightAbout: boolean;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -630,7 +631,7 @@ export const HeroEditPage = (props: Props) => {
 						{getControls()}
 						{getContent()}
 					</div>
-					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

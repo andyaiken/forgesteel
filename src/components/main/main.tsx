@@ -79,6 +79,7 @@ import { Title } from '../../models/title';
 import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
+import { useErrorListener } from '../../hooks/use-error-listener';
 import { useMediaQuery } from '../../hooks/use-media-query';
 import { useNavigation } from '../../hooks/use-navigation';
 
@@ -109,10 +110,13 @@ export const Main = (props: Props) => {
 		}
 		return opts;
 	});
+	const [ errors, setErrors ] = useState<ErrorEvent[]>([]);
 	const [ directory, setDirectory ] = useState<ReactNode>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
 	const [ spinning, setSpinning ] = useState(false);
+
+	useErrorListener(event => setErrors([ ...errors, event as ErrorEvent ]));
 
 	// #region Persistence
 
@@ -286,11 +290,10 @@ export const Main = (props: Props) => {
 	};
 
 	const exportHeroPdf = (hero: Hero, data: PdfOptions) => {
-		const mode = data.mode;
 		const formFillable = data.formFillable || false;
 		const resolution = data.resolution || 'standard';
 
-		if (mode === 'html') {
+		if (data.mode === 'html') {
 			setSpinning(true);
 			const pageIds: string[] = [];
 			let p = 1;
@@ -303,7 +306,7 @@ export const Main = (props: Props) => {
 					setSpinning(false);
 				});
 		} else {
-			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], mode, !formFillable);
+			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], data.mode, !formFillable);
 		}
 	};
 
@@ -1377,6 +1380,8 @@ export const Main = (props: Props) => {
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal
+				errors={errors}
+				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1571,6 +1576,7 @@ export const Main = (props: Props) => {
 							element={
 								<WelcomePage
 									showDirectory={showDirectoryPane}
+									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
@@ -1586,6 +1592,7 @@ export const Main = (props: Props) => {
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										options={props.options}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1604,6 +1611,7 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										options={options}
 										setOptions={persistOptions}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1642,6 +1650,7 @@ export const Main = (props: Props) => {
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										options={options}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1680,6 +1689,7 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										options={options}
 										hiddenSourcebookIDs={hiddenSourcebookIDs}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1698,6 +1708,7 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
 										options={options}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1717,6 +1728,7 @@ export const Main = (props: Props) => {
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										options={options}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1741,6 +1753,7 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
 										options={options}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1760,6 +1773,7 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
 										options={options}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1781,6 +1795,7 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										playbook={playbook}
 										options={options}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1807,6 +1822,7 @@ export const Main = (props: Props) => {
 										playbook={playbook}
 										session={session}
 										options={options}
+										highlightAbout={errors.length > 0}
 										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
@@ -1837,6 +1853,7 @@ export const Main = (props: Props) => {
 										playbook={playbook}
 										session={session}
 										options={options}
+										highlightAbout={errors.length > 0}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
@@ -1848,7 +1865,7 @@ export const Main = (props: Props) => {
 					</Route>
 				</Routes>
 				{notifyContext}
-				<Spin spinning={spinning} size='large' fullscreen />
+				<Spin spinning={spinning} size='large' fullscreen={true} />
 			</ErrorBoundary>
 		);
 	} catch (ex) {

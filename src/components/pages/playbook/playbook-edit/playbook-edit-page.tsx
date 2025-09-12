@@ -40,6 +40,7 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
 	options: Options;
+	highlightAbout: boolean;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -240,7 +241,7 @@ export const PlaybookEditPage = (props: Props) => {
 								: null
 						}
 					</div>
-					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

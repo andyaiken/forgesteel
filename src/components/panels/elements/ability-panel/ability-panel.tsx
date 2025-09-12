@@ -98,7 +98,7 @@ export const AbilityPanel = (props: Props) => {
 	);
 
 	const parseText = (text: string) => {
-		if (autoCalc && props.hero) {
+		if (autoCalc) {
 			text = AbilityLogic.getTextEffect(text, props.hero);
 		}
 

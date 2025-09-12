@@ -42,6 +42,7 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	options: Options;
+	highlightAbout: boolean;
 	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -263,7 +264,7 @@ export const HeroViewPage = (props: Props) => {
 					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>
 						{getContent()}
 					</div>
-					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
+					<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
 				</div>
 			</ErrorBoundary>
 		);

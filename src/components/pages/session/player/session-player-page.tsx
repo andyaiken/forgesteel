@@ -25,6 +25,7 @@ interface Props {
 	playbook: Playbook;
 	session: Playbook;
 	options: Options;
+	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -113,7 +114,7 @@ export const SessionPlayerPage = (props: Props) => {
 					<div className='session-player-page-content'>
 						{getContent()}
 					</div>
-					<AppFooter page='player-view' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='player-view' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

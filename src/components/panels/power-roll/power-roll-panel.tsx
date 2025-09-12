@@ -100,7 +100,7 @@ export const PowerRollPanel = (props: Props) => {
 					sections.push(
 						<Field
 							key={`kit-${n}`}
-							label={`${bonus.kit}`}
+							label={`${bonus.name}`}
 							value={`+${bonus.tier1} / +${bonus.tier2} / +${bonus.tier3} ${bonus.type} damage`}
 						/>
 					);

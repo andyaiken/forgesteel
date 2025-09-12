@@ -381,8 +381,8 @@ export class PDFExport {
 								// ... because otherwise it should have already been applied
 								const showKitBonuses = (dmgKits.length > 1) || (hasMelee && hasRanged);
 								if (showKitBonuses) {
-									dmgKits.forEach(bonus => {
-										powerRollText = powerRollText + '\n   ' + bonus.kit + ': ' + AddSign(bonus.tier1) + ' / ' + AddSign(bonus.tier2) + ' / ' + AddSign(bonus.tier3) + ' ' + bonus.type + ' damage';
+									dmgKits.forEach(kit => {
+										powerRollText = powerRollText + '\n   ' + kit.name + ': ' + AddSign(kit.tier1) + ' / ' + AddSign(kit.tier2) + ' / ' + AddSign(kit.tier3) + ' ' + kit.type + ' damage';
 									});
 								}
 

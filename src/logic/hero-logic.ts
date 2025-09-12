@@ -604,13 +604,13 @@ export class HeroLogic {
 	///////////////////////////////////////////////////////////////////////////
 
 	static getKitDamageBonuses = (hero: Hero) => {
-		const kits: { kit: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }[] = [];
+		const kits: { name: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }[] = [];
 
 		HeroLogic.getKits(hero)
 			.forEach(kit => {
 				if (kit.meleeDamage) {
 					kits.push({
-						kit: kit.name,
+						name: kit.name,
 						type: 'melee',
 						tier1: kit.meleeDamage.tier1,
 						tier2: kit.meleeDamage.tier2,
@@ -619,7 +619,7 @@ export class HeroLogic {
 				}
 				if (kit.rangedDamage) {
 					kits.push({
-						kit: kit.name,
+						name: kit.name,
 						type: 'ranged',
 						tier1: kit.rangedDamage.tier1,
 						tier2: kit.rangedDamage.tier2,
@@ -628,7 +628,7 @@ export class HeroLogic {
 				}
 			});
 
-		const kitToString = (info: { kit: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }) => {
+		const kitToString = (info: { name: string, type: 'melee' | 'ranged', tier1: number, tier2: number, tier3: number }) => {
 			return `${info.type} ${info.tier1} ${info.tier2} ${info.tier3}`;
 		};
 
@@ -638,7 +638,7 @@ export class HeroLogic {
 			.map(str => {
 				const toCombine = kits.filter(k => kitToString(k) === str);
 				return {
-					kit: toCombine.map(k => k.kit).join(' / '),
+					name: toCombine.map(k => k.name).join(' / '),
 					type: toCombine[0].type,
 					tier1: toCombine[0].tier1,
 					tier2: toCombine[0].tier2,
@@ -647,17 +647,17 @@ export class HeroLogic {
 			});
 
 		// Remove any kit that's strictly worse than another
-		const worse: string[] = [];
+		const worse: { name: string, type: string }[] = [];
 		uniqueKits.forEach(k => {
 			const isWorse = uniqueKits
-				.filter(k2 => k.kit !== k2.kit)
+				.filter(k2 => k.name !== k2.name)
 				.filter(k2 => k.type === k2.type)
 				.some(k2 => (k.tier1 < k2.tier1) && (k.tier2 < k2.tier2) && (k.tier3 < k2.tier3));
 			if (isWorse) {
-				worse.push(k.kit);
+				worse.push({ name: k.name, type: k.type });
 			}
 		});
-		const reducedKits = uniqueKits.filter(k => !worse.includes(k.kit));
+		const reducedKits = uniqueKits.filter(k => !worse.some(wk => (k.name === wk.name) && (k.type === wk.type)));
 
 		return reducedKits;
 	};

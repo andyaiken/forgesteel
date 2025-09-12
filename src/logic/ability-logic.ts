@@ -332,7 +332,7 @@ export class AbilityLogic {
 
 		// Equal to [N times] your level
 		if (hero) {
-			const lvlRegex = /equal to[^,.;:]your level/gi;
+			const lvlRegex = /equal to[^,.;:]*your level/gi;
 			[ ...text.matchAll(lvlRegex) ].map(r => r[0]).forEach(str => {
 				const constant = FormatLogic.getConstant(str);
 				const value = hero.class ? hero.class.level : 1;
@@ -343,7 +343,7 @@ export class AbilityLogic {
 
 		// Equal to [N times] your recovery value
 		if (hero) {
-			const recRegex = /equal to[^,.;:]your recovery value/gi;
+			const recRegex = /equal to[^,.;:]*your recovery value/gi;
 			[ ...text.matchAll(recRegex) ].map(r => r[0]).forEach(str => {
 				const constant = FormatLogic.getConstant(str);
 				const value = HeroLogic.getRecoveryValue(hero);
@@ -356,7 +356,7 @@ export class AbilityLogic {
 		if (hero) {
 			text = text.replace('a number of squares equal to your speed', 'up to your speed');
 			text = text.replace('a number of squares up to your speed', 'up to your speed');
-			const speedRegex = /up to[^,.;:]your speed/gi;
+			const speedRegex = /up to[^,.;:]*your speed/gi;
 			[ ...text.matchAll(speedRegex) ].map(r => r[0]).forEach(str => {
 				const constant = FormatLogic.getConstant(str);
 				const value = HeroLogic.getSpeed(hero).value;

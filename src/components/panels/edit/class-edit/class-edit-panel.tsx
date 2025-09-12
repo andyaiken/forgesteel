@@ -133,7 +133,7 @@ export const ClassEditPanel = (props: Props) => {
 					/>
 					<HeaderText>Subclass Count</HeaderText>
 					<NumberSpin
-						min={1}
+						min={0}
 						value={heroClass.subclassCount}
 						onChange={setSubclassCount}
 					/>

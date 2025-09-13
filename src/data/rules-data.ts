@@ -293,7 +293,7 @@ You can also use your main action to help another creature regain Stamina, charg
 
 You can convert your main action into a maneuver or a move action, allowing you to take two maneuvers or move actions on your turn.
 		`
-	}
+	};
 
 	static mountedCombat: RulesItem = {
 		label: 'Mounted Combat',
@@ -321,7 +321,7 @@ At the Director’s discretion, you can be forced into the same space as another
 **Can’t Exceed Speed:** A single move or other effect can never allow a creature to move more squares than their speed, unless the effect states otherwise. For example, a creature with speed 5 might have that speed reduced to 2 by the slowed condition (see Conditions in Chapter 5: Classes). If an ally then targets them with an effect that allows them to move up to 3 squares, the creature can move only 2 squares because that’s their current speed.
 
 **Can’t Cut Corners:** A creature can’t move diagonally when doing so would involve passing through the corner of a wall or some other object that completely fills the corner between the creature’s space and the space they are moving to. This rule applies only to moving past objects, not moving past other creatures.`
-	}
+	};
 
 	static naturalRoll: RulesItem = {
 		label: 'Natural Roll',
@@ -329,7 +329,7 @@ At the Director’s discretion, you can be forced into the same space as another
 The total of your power roll before your characteristic or any other modifiers are added is called the natural roll. The rules often refer to this as “rolling a natural X,” where X is the total of the roll. For example, if you get a 20 on a power roll before adding your characteristic, this is called rolling a natural 20.
 
 When you roll a natural 19 or 20 on a power roll, it is always a tier 3 result regardless of any modifiers, and on certain types of power rolls, this is a critical hit (see Critical Hit in Classes).`
-	}
+	};
 
 	static opportunityAttack: RulesItem = {
 		label: 'Opportunity Attack',
@@ -441,5 +441,5 @@ Some treasures are wielded in the form of weapons or implements. A weapon might 
 
 A hero can wield as many weapons, implements, suits of armor, or shields as they can feasibly hold or wear. However, an ability can benefit only from one weapon or implement at a time.
 		`
-	}
+	};
 }

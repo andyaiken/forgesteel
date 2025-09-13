@@ -103,13 +103,19 @@ export const HeroSheetPage = (props: Props) => {
 	);
 
 	const populateExtraCards = (character: CharacterSheet): ExtraCards => {
-		const invH = 4 + CharacterSheetFormatter.calculateInventorySize(character.inventory, layout.lineLen);
+		let invH = Math.max(20, 4 + CharacterSheetFormatter.calculateInventorySize(character.inventory, layout.lineLen));
+		let invW = 1;
+		if (invH > 60) {
+			invW = 2;
+			invH = 4 + Math.ceil(CharacterSheetFormatter.calculateInventorySize(character.inventory, layout.lineLen * 2));
+			invH = Math.min(layout.linesY, invH);// Will probably need a better solution at some point
+		}
 		// console.log('Inventory length:', invH);
 		const required = [
 			{
-				element: <InventoryCard character={character} key='inventory' />,
-				width: 1,
-				height: Math.max(invH, 20),
+				element: <InventoryCard character={character} wide={invW > 1} key='inventory' />,
+				width: invW,
+				height: invH,
 				shown: false
 			},
 			{
@@ -368,7 +374,7 @@ export const HeroSheetPage = (props: Props) => {
 		while (extraCards.required.find(c => !c.shown)) {
 			const cards = getFillerCards(layout.perPage, layout.linesY, 0, extraCards);
 			if (cards.length === 0) {
-				console.warn('No cards added, but required cards still not shown!');
+				console.warn('No cards added, but required cards still not shown!', extraCards.required);
 				break;
 			}
 			pages.push(

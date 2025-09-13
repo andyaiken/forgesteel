@@ -59,26 +59,6 @@ export const FeatureReferenceCard = (props: Props) => {
 					{sections}
 				</ul>
 			);
-
-			// bySource.forEach((features, source) => {
-			// 	features.sort(CharacterSheetFormatter.sortFeatures);
-			// 	sections.push(
-			// 		<Fragment key={source}>
-			// 			<h3>{source}</h3>
-			// 			<ul className={containerClasses.join(' ')}>
-			// 				{features.map(f =>
-			// 					<li key={f.id}>
-			// 						<FeatureComponent
-			// 							feature={CharacterSheetFormatter.enhanceFeature(f)}
-			// 							hero={character.hero}
-			// 						/>
-			// 					</li>
-			// 				)}
-			// 			</ul>
-			// 		</Fragment>
-			// 	);
-			// });
-			// return sections;
 		}
 	};
 

@@ -39,15 +39,53 @@ export const undead3rd: MonsterGroup = {
 	malice: [
 		FactoryLogic.feature.createMalice({
 			id: 'undead-3rd-malice-1',
-			name: 'Prior Malice Features',
+			name: 'Ravenous Horde',
 			cost: 2,
-			repeatable: true,
 			sections: [
-				'The undead activates a Malice feature available to undead of level 6 or lower.'
+				'At the end of this round, each hero not already adjacent to one or more undead is beset by two **rotting zombies** who burst up from the ground to appear in adjacent unoccupied spaces. Each zombie is winded. This feature can’t be used two rounds in a row.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'undead-3rd-malice-2',
+			name: 'Paranormal Fling',
+			cost: 3,
+			sections: [
+				'Up to three unattended objects on the encounter map rise to float 1 square off the ground. Each object is then pulled 5 squares toward the nearest enemy within 3 squares of the object.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'undead-3rd-malice-3',
+			name: 'The Grasping, The Hungry',
+			cost: 5,
+			sections: [
+				'Ravenous and rotting undead arms burst forth from 9 connected squares of a vertical or horizontal surface. Any creature who ends their turn adjacent to an affected square makes an **Agility test**.',
+				FactoryLogic.createPowerRoll({
+					characteristic: Characteristic.Agility,
+					tier1: '5 damage; restrained (save ends)',
+					tier2: '5 damage; restrained (EoT)',
+					tier3: '5 damage'
+				}),
+				'While restrained this way, a creature takes 1d6 damage at the start of each of their turns.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'undead-3rd-malice-4',
+			name: 'Dread March',
+			cost: 7,
+			sections: [
+				'Up to four undead in the encounter move up to their speed and can make a free strike. The number of undead affected increases by 1 for each additional Malice spent on this feature. If an undead is reduced to 0 Stamina during this dread march, they don’t die until the march is resolved.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'undead-3rd-malice-5',
+			name: 'Blood Hunger',
+			cost: 5,
+			sections: [
+				'One undead acting this turn uses a signature ability against a creature who is bleeding. As a free triggered action, each undead within 5 squares of the first undead moves up to their speed and can make a free strike against the same target.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'undead-3rd-malice-6',
 			name: 'Necrotic Rupture',
 			cost: 5,
 			sections: [
@@ -594,7 +632,7 @@ export const undead3rd: MonsterGroup = {
 			name: 'Vampire Lord',
 			level: 7,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Leader),
-			keywords: [ 'Undead' ],
+			keywords: [ 'Undead', 'Vampire' ],
 			encounterValue: 36,
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(12, 'climb, hover, teleport'),

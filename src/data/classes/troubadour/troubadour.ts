@@ -916,7 +916,7 @@ Additionally, once on each of your turns, you can use a free maneuver to communi
 			target: 'Self',
 			cost: 11,
 			sections: [
-				FactoryLogic.createAbilitySectionText(`Until the end of the encounter, whenever you deal rolled damage to a creature or object, or enable a creature to spend a Recovery, you can use a free triggered action to give that creature or object one of the following effects until the start of your next turn. If this ability is triggered by multiple targets taking damage or multiple creatures spending Recoveries simultaneously, each target receives the same effect:
+				FactoryLogic.createAbilitySectionText(`**Effect** Until the end of the encounter, whenever you deal rolled damage to a creature or object, or enable a creature to spend a Recovery, you can use a free triggered action to give that creature or object one of the following effects until the start of your next turn. If this ability is triggered by multiple targets taking damage or multiple creatures spending Recoveries simultaneously, each target receives the same effect:
 * The target has damage weakness equal to your Presence score against any magic, psionic, or weapon ability.
 * The target has damage immunity equal to your Presence score.
 * The target has a bonus to stability and a penalty to speed equal to your Presence score.

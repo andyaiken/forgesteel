@@ -698,7 +698,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-11-feature-6',
 						name: 'Call Up from The Abyss',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
@@ -711,7 +711,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-11-feature-7',
 						name: 'Edacity',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [
 							FactoryLogic.distance.createSelf(),
@@ -727,7 +727,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 					ability: FactoryLogic.createAbility({
 						id: 'gnoll-11-feature-8',
 						name: 'Deepest Wounds',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each winded enemy in the area',

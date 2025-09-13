@@ -268,6 +268,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 						type: FactoryLogic.type.createTrigger('The juggernaut takes damage.', { free: true }),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
+						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The juggernaut moves up to their speed and can make a free strike.')
 						]
@@ -276,7 +277,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 				FactoryLogic.feature.create({
 					id: 'ogre-2-feature-5',
 					name: 'Destructive Path',
-					description: 'The juggernaut automatically destroys any mundane size 1 objects in their path when they move or are forced moved. They can break through any mundane wall made of wood, stone, or a similarly sturdy material this way as long as the wall is 2 squares thick or less.'
+					description: 'The juggernaut automatically destroys any mundane size 1 objects in their path when they move or are force moved. They can break through any mundane wall made of wood, stone, or a similarly sturdy material this way as long as the wall is 2 squares thick or less.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'ogre-2-feature-6',
@@ -373,8 +374,8 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 				}),
 				FactoryLogic.feature.create({
 					id: 'ogre-4-feature-3',
-					name: 'Defiant Anger',
-					description: 'While winded, the blue blood has damage immunity 2.'
+					name: 'Royal Anger',
+					description: 'The blue blood has damage immunity 2 while their squad has three or fewer minions in it.'
 				})
 			]
 		}),
@@ -419,7 +420,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 				FactoryLogic.feature.create({
 					id: 'ogre-5-feature-2',
 					name: 'Excessive Anger',
-					description: 'While winded, the tantrum has damage immunity 3 and speed 8.'
+					description: 'The tantrum has damage immunity 3 and speed 8 while their squad has two or fewer minions in it.'
 				})
 			]
 		})

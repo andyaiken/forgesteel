@@ -656,7 +656,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-1st-9-feature-8',
 						name: 'Frightening Tones',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three enemies',
@@ -669,7 +669,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-1st-9-feature-9',
 						name: 'Bully the Weak',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
@@ -682,7 +682,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 					ability: FactoryLogic.createAbility({
 						id: 'demon-1st-9-feature-10',
 						name: 'Running Cacophony',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',

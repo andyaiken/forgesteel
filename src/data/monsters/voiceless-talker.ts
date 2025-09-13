@@ -740,7 +740,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-7-feature-8',
 						name: 'Show Me Who You Are',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
@@ -761,7 +761,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-7-feature-9',
 						name: 'Release the Thralls',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Special',
@@ -774,7 +774,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 					ability: FactoryLogic.createAbility({
 						id: 'voiceless-talker-7-feature-10',
 						name: 'Brainstorm',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',

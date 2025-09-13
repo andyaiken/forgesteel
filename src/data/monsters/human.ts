@@ -155,7 +155,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 5,
 			stability: 0,
 			freeStrikeDamage: 2,
-			withCaptain: '+5 bonus to speed',
+			withCaptain: '+2 bonus to speed',
 			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -950,7 +950,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-13-feature-8',
 						name: 'Advance!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
@@ -963,7 +963,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-13-feature-9',
 						name: 'Back!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
@@ -976,7 +976,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-13-feature-10',
 						name: 'I Can Throw My Blade and So Should You!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'Each enemy in the area',
@@ -1092,7 +1092,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-14-feature-8',
 						name: 'Shoot!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each artillery ally in the area',
@@ -1105,7 +1105,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-14-feature-9',
 						name: 'Form Up!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each ally in the area',
@@ -1118,12 +1118,12 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 					ability: FactoryLogic.createAbility({
 						id: 'human-14-feature-10',
 						name: 'Lead From the Front',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('The bandit chief shifts up to 10 squares. During or after this movement, they can use their Whip and Magic Longsword against up to four targets. Additionally, one ally adjacent to each target can make a free strike against that target.')
+							FactoryLogic.createAbilitySectionText('The bandit chief shifts up to 10 squares regardless of their speed. During or after this movement, they can use their Whip and Magic Longsword against up to four targets. Additionally, one ally adjacent to each target can make a free strike against that target.')
 						]
 					})
 				})

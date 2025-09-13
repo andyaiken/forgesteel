@@ -360,7 +360,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 				FactoryLogic.feature.create({
 					id: 'conduit-4-1',
 					name: 'Blessed Domain',
-					description: 'Whenever you gain piety from a domain feature, you gain 1 additional piety.'
+					description: 'Whenever you gain piety from a domain effect, you gain 1 additional piety.'
 				}),
 				FactoryLogic.feature.createCharacteristicBonus({
 					id: 'conduit-4-1a',

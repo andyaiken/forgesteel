@@ -1790,10 +1790,8 @@ Note: Stormwight furies can’t take this complication.`,
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: 'One ally',
 					sections: [
-						FactoryLogic.createAbilitySectionText(`
-The target can use a triggered action to take a main action, a move action, or a maneuver.
-
-Note: If you have the Strike Now tactician ability, the target can use a free triggered action instead of a triggered action to gain the benefit of this ability.`)
+						FactoryLogic.createAbilitySectionText('**Effect** The target can use a triggered action to take a main action, a maneuver, or a move action.'),
+						FactoryLogic.createAbilitySectionText('**Special** If you have the Strike Now tactician ability, the target can use a free triggered action instead of a triggered action to gain the benefit of this ability.')
 					]
 				})
 			}),

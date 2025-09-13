@@ -196,7 +196,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 					ability: FactoryLogic.createAbility({
 						id: 'werewolf-feature-10',
 						name: 'Howl',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
@@ -216,7 +216,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 					ability: FactoryLogic.createAbility({
 						id: 'werewolf-feature-11',
 						name: 'Full Wolf',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -228,7 +228,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 					ability: FactoryLogic.createAbility({
 						id: 'werewolf-feature-12',
 						name: 'Rampage',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each creature in the area',

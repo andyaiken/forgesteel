@@ -799,7 +799,7 @@ export class SourcebookData {
 			},
 			{
 				name: 'Khoursirian',
-				description: 'Spoken in Koursir; a distant offshoot of Khamish.',
+				description: 'Spoken in Khoursir; a distant offshoot of Khamish.',
 				type: LanguageType.Regional,
 				related: [ 'Khamish' ]
 			},

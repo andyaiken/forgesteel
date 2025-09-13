@@ -1269,7 +1269,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 					ability: FactoryLogic.createAbility({
 						id: 'giant-13-feature-6',
 						name: 'Forward!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })
@@ -1284,7 +1284,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 					ability: FactoryLogic.createAbility({
 						id: 'giant-13-feature-7',
 						name: 'Burning Legion',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
@@ -1297,7 +1297,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 					ability: FactoryLogic.createAbility({
 						id: 'giant-13-feature-8',
 						name: 'All to Cinders',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })

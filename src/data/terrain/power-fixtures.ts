@@ -100,9 +100,9 @@ export const psionicShard: Terrain = {
 							FactoryLogic.createAbilitySectionText('**Effect:** The shard releases a shockwave channeled through each creature affected by Psionic Barrier. Each ally in the encounter is dazed until the end of their next turn.')
 						]
 					})
-				}),
+				})
 			]
-		},
+		}
 	],
 	upgrades: [],
 	state: {

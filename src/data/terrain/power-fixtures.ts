@@ -76,38 +76,30 @@ export const psionicShard: Terrain = {
 	damageMods: [],
 	sections: [
 		{
-			id: 'deactivate',
+			id: 'psionic-shard-details',
 			content: [
 				FactoryLogic.feature.create({
 					id: 'deactivate',
 					name: 'Deactivate',
 					description: 'The psionic shard must be completely destroyed.'
-				})
-			]
-		},
-		{
-			id: 'trigger-effect',
-			content: [
-				FactoryLogic.feature.create({
-					id: 'trigger',
-					name: 'Trigger',
-					description: 'The shard is destroyed.'
 				}),
-				FactoryLogic.feature.create({
-					id: 'effect',
-					name: 'Effect',
-					description:
-            'The shard releases a shockwave that briefly tightens the barrier around each creature affected by Psionic Barrier, inflicting dazed (EoT). '
-				})
-			]
-		},
-		{
-			id: 'psionic-barrier',
-			content: [
 				FactoryLogic.feature.create({
 					id: 'psionic-barrier',
 					name: 'Psionic Barrier',
 					description: 'A psionic shard is attuned to one side in an encounter. While a psionic shard is intact, any damage dealt to each ally of the shard in the encounter is halved.'
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'psionic-pulse',
+						name: 'Psionic Pulse',
+						type: FactoryLogic.type.createTrigger('The shard is destroyed', { free: true }),
+						keywords: [],
+						distance: [],
+						target: '',
+						sections: [
+							FactoryLogic.createAbilitySectionText('**Effect:** The shard releases a shockwave channeled through each creature affected by Psionic Barrier. Each ally in the encounter is dazed until the end of their next turn.')
+						]
+					})
 				})
 			]
 		}

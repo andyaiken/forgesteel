@@ -807,7 +807,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-10-feature-7',
 						name: 'We Will Won!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self and three allies',
@@ -820,7 +820,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-10-feature-8',
 						name: 'Stick to the Plan!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Self and each ally in the area',
@@ -833,7 +833,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 					ability: FactoryLogic.createAbility({
 						id: 'time-raider-10-feature-9',
 						name: 'Armageddon',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Special',

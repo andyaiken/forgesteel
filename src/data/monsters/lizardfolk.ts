@@ -498,7 +498,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-7-feature-5',
 						name: 'Snack Attack',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Self and each ally in the area',
@@ -511,7 +511,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-7-feature-6',
 						name: 'Shed Some Skin',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
@@ -524,7 +524,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 					ability: FactoryLogic.createAbility({
 						id: 'lizardfolk-7-feature-7',
 						name: 'Thresher Thrasher',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Self and each ally in the area',

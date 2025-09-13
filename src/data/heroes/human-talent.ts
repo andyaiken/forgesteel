@@ -2808,7 +2808,7 @@ export const humanTalent = {
 				sections: [
 					{
 						type: 'text',
-						text: 'Until the start of your next turn, the target has cold immunity 10 and fire immunity 10, and their strikes deal extra fire damage equal to twice your Reason score. Additionally, whenever an enemy attempts uses a melee ability against the target while they are under this effect, the enemy takes 5 fire damage.'
+						text: 'Until the start of your next turn, the target has cold immunity 10 and fire immunity 10, and their strikes deal extra fire damage equal to twice your Reason score. Additionally, whenever an enemy uses a melee ability against the target while they are under this effect, the enemy takes 5 fire damage.'
 					},
 					{
 						type: 'field',

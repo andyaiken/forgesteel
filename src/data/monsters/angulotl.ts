@@ -63,7 +63,7 @@ Pinna, Hedge Witch, Gravesford`,
 			name: 'Resonating Croak',
 			cost: 5,
 			sections: [
-				'Each angulotl in the encounter puffs out their throat and starts loudly droning Any non-angulotl adjacent to an angulotl makes an **Intuition test**.',
+				'Each angulotl in the encounter puffs out their throat and starts loudly droning. Any non-angulotl adjacent to an angulotl makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
 					characteristic: Characteristic.Intuition,
 					tier1: '5 sonic damage; slowed (EoT)',

@@ -60,7 +60,10 @@ export const ReferenceModal = (props: Props) => {
 				RulesData.highGround,
 				RulesData.invisibility,
 				RulesData.jumping,
+				RulesData.mainAction,
 				RulesData.mountedCombat,
+				RulesData.movement,
+				RulesData.naturalRoll,
 				RulesData.opportunityAttack,
 				RulesData.rollVsMultipleCreatures,
 				RulesData.shifting,
@@ -71,7 +74,8 @@ export const ReferenceModal = (props: Props) => {
 				RulesData.surprise,
 				RulesData.takingATurn,
 				RulesData.teleporting,
-				RulesData.underwaterCombat
+				RulesData.underwaterCombat,
+				RulesData.wieldingTreasures
 			];
 
 			const filteredRules = rules

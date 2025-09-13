@@ -228,6 +228,7 @@ How his return might be possible is not clear, but it would surely involve the R
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createSpecial('Two 3 cubes within 5') ],
 						target: 'Special',
+						cost: 2,
 						sections: [
 							FactoryLogic.createAbilitySectionText('Each area is saturated with vengeful spirits until the end of the round. Any enemy who enters the area for the first time in a round or starts their turn there takes 5 corruption damage. At the end of the round, the spirits violently disperse. Each enemy within 2 squares of an area and has P<5 is weakened (save ends).')
 						]

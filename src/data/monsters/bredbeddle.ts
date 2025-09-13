@@ -186,7 +186,7 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 					ability: FactoryLogic.createAbility({
 						id: 'bredbeddle-feature-9',
 						name: 'Turn Green',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the burst',
@@ -205,7 +205,7 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 					ability: FactoryLogic.createAbility({
 						id: 'bredbeddle-feature-10',
 						name: 'Challenge',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
@@ -220,7 +220,7 @@ If the target accepts, the bredbeddle shifts to a space adjacent to the target, 
 					ability: FactoryLogic.createAbility({
 						id: 'bredbeddle-feature-11',
 						name: 'Headlam Rampage',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Four creatures',

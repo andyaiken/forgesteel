@@ -603,7 +603,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 					ability: FactoryLogic.createAbility({
 						id: 'demon-3rd-9-feature-7',
 						name: 'Kicking the Nest',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each soulraker minion in the area',
@@ -616,7 +616,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 					ability: FactoryLogic.createAbility({
 						id: 'demon-3rd-9-feature-8',
 						name: 'Buzz Off!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
@@ -635,7 +635,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 					ability: FactoryLogic.createAbility({
 						id: 'demon-3rd-9-feature-9',
 						name: 'Bomber Wasp Warfare',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createSpecial('Four 2 cubes within 10') ],
 						target: 'Each enemy in the area',

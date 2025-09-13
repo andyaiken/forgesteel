@@ -815,7 +815,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-12-feature-7',
 						name: 'You Will All Witness My Blade',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
@@ -828,7 +828,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-12-feature-8',
 						name: 'Suppressing Volley',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each ally in the area',
@@ -841,7 +841,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 					ability: FactoryLogic.createAbility({
 						id: 'elf-wode-12-feature-9',
 						name: 'Is It Now or Is It Then?',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })

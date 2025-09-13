@@ -657,7 +657,7 @@ You have an epic resource called order. Each time you finish a respite, you gain
 						tier3: '12 + A damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('Until the start of your next turn, whenever the target moves or is force moved, you can use a free triggered action to shift up to your speed. You must end this shift adjacent to the target.')
+				FactoryLogic.createAbilitySectionText('**Effect:** Until the start of your next turn, whenever the target finishes moving or being force moved, you can use a free triggered action to shift up to your speed. You must end this shift adjacent to the target.')
 			]
 		}),
 		FactoryLogic.createAbility({

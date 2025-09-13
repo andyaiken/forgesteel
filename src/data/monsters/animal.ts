@@ -698,6 +698,7 @@ The animal gains the following ability.
 **Keywords** Area, Weapon
 **Distance** 3 cube within 1
 **Target** Each creature in the area
+**Power Roll** 2d10 + highest characteristic
 **11-** <code>A < 0</code> restrained (save ends)
 **12–16** <code>A < 1</code> restrained (save ends)
 **17+** <code>A < 2</code> restrained (save ends)

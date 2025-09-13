@@ -403,7 +403,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
-						distance: [ FactoryLogic.distance.createMelee(5) ],
+						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -595,11 +595,11 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '7 acid damage; A<0 dazed (save ends)',
-								tier2: '10 acid damage; A<1 dazed (save ends)',
-								tier3: '14 acid damage; A<2 restrained (save ends)'
+								tier1: '7 acid damage; A < 0 dazed (save ends)',
+								tier2: '10 acid damage; A < 1 dazed (save ends)',
+								tier3: '14 acid damage; A < 2 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('A size 2 or smaller creature restrained this way is pulled into the brick’s space, moves with the brick, and takes 4 acid damage at the start of each of their turns. An engulfed creature who is no longer restrained moves to the nearest unoccupied space adtjacent to the brick. The brick can have as many creatures or objects engulfed as will fit within their space.'),
+							FactoryLogic.createAbilitySectionText('**Effect:** A size 2 or smaller creature restrained this way is pulled into the brick’s space, moves with the brick, and takes 4 acid damage at the start of each of their turns. An engulfed creature who is no longer restrained moves to the nearest unoccupied space adjacent to the brick. The brick can have as many creatures or objects engulfed as will fit within their space.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,
@@ -686,11 +686,6 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 3,
-								effect: 'While weakened this way, a target is also restrained.'
-							}),
-							FactoryLogic.createAbilitySectionField({
-								name: 'Spend',
-								value: 3,
 								repeatable: true,
 								effect: 'This ability targets one additional target for each 3 Malice spent.'
 							})
@@ -718,7 +713,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-10-feature-5',
 						name: 'Firetail Pilum',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('Special') ],
 						target: 'Special',
@@ -731,7 +726,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-10-feature-6',
 						name: 'Boom Pilum!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Weapon, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'Each enemy in the area',
@@ -744,7 +739,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 					ability: FactoryLogic.createAbility({
 						id: 'kobold-10-feature-7',
 						name: 'Are You Not Entertained?',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each enemy in the area',
@@ -756,7 +751,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 				FactoryLogic.feature.create({
 					id: 'kobold-10-feature-8',
 					name: 'Shield? Shield!',
-					description: 'While adjacent to an ally who also has this trait, the centurion has stability 3, has cover, and grants cover to allies'
+					description: 'While adjacent to an ally who also has this trait, the centurion has stability 3, has cover, and grants cover to allies.'
 				})
 			]
 		}),

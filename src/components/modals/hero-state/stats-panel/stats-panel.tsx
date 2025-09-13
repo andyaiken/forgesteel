@@ -480,7 +480,7 @@ export const StatsPanel = (props: Props) => {
 							{
 								hero.state.heroTokens >= 2 ?
 									<Flex align='center' justify='space-between' gap={10}>
-										<div className='alert-text'>Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your Recovery value without spending a Recovery.</div>
+										<div className='alert-text'>Spend 2 hero tokens on your turn or whenever you take damage (no action required) to regain Stamina equal to your recovery value before taking the damage.</div>
 										<div>
 											<Field
 												innerStyle={{ color: 'rgba(0, 0, 0, 0.88)' }}

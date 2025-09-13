@@ -446,7 +446,7 @@ export const demon4th: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'demon-4th-6-feature-8',
 						name: 'Time Is Money',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 20 }) ],
 						target: 'Self and each ally in the area',
@@ -459,7 +459,7 @@ export const demon4th: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'demon-4th-6-feature-9',
 						name: 'Hostile Acquisition',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
@@ -472,7 +472,7 @@ export const demon4th: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'demon-4th-6-feature-10',
 						name: 'No Matter the Cost',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createSpecial('Four 3 cubes within 10') ],
 						target: 'Each creature in the area',

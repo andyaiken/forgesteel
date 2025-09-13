@@ -40,7 +40,7 @@ export const corven: Kit = {
 							tier3: '6 damage'
 						})
 					),
-					FactoryLogic.createAbilitySectionText('You can shift up to 2 squares before or after making the power roll.')
+					FactoryLogic.createAbilitySectionText('**Effect:** You can shift up to 2 squares before or after making the power roll.')
 				]
 			})
 		}),

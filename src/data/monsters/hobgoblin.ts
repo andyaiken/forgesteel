@@ -558,7 +558,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 								tier2: '11 damage',
 								tier3: '14 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target is pushed up to 10 squares within the area, and the grandguard shifts into the area behind by the targets.')
+							FactoryLogic.createAbilitySectionText('**Effect:** Each target is pushed up to 10 squares in the same direction, and the grandguard shifts into the area left behind by the targets.')
 						]
 					})
 				}),

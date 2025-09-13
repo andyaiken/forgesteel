@@ -66,7 +66,7 @@ export const wodeElf: Ancestry = {
 										characteristic: [ Characteristic.Might, Characteristic.Agility ],
 										tier1: '2 + M or A damage; A < [weak] slowed (save ends)',
 										tier2: '3 + M or A damage; A < [average] slowed (save ends)',
-										tier3: '5 + M or A damage; A < [strong] slowed (save ends)'
+										tier3: '5 + M or A damage; A < [strong] restrained (save ends)'
 									})
 								)
 							]

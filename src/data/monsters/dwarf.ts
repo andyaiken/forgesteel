@@ -760,7 +760,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-12-feature-5',
 						name: 'Ajax Will Pay Well for These Specimens',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'Each enemy in the area',
@@ -773,7 +773,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-12-feature-6',
 						name: 'Don’t Let Them Escape!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each ally in the area',
@@ -786,7 +786,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 					ability: FactoryLogic.createAbility({
 						id: 'dwarf-12-feature-7',
 						name: 'Test Your Metal!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',

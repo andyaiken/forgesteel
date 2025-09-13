@@ -836,7 +836,7 @@ In many shadow elf societies, all people are given basic combat training and are
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-13-feature-6',
 						name: 'From the Shadows',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Special',
@@ -849,7 +849,7 @@ In many shadow elf societies, all people are given basic combat training and are
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-13-feature-7',
 						name: 'Cast Away All Hope',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',
@@ -862,7 +862,7 @@ In many shadow elf societies, all people are given basic combat training and are
 					ability: FactoryLogic.createAbility({
 						id: 'elf-shadow-13-feature-8',
 						name: 'Umbral Hunger',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
 						target: 'Each enemy in the area',

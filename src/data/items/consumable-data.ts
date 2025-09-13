@@ -395,7 +395,7 @@ A creature with a willing soul returns to life at the end of the respite with fu
 			goal: 90
 		}),
 		effect: `
-As a maneuver, you snap this wand in half, letting you vertically pull one object or creature of size 3 or less a number of squares based on that target’s size:
+As a maneuver, you snap this wand in half, letting you vertically pull any object or creature within line of effect of size 3 or less a number of squares based on that target’s size:
 
 * **Size 1L or smaller:** vertical pull 6
 * **Size 2:** vertical pull 3

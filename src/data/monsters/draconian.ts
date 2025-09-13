@@ -60,7 +60,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			name: 'Guarding Gale',
 			cost: 3,
 			sections: [
-				'A draconian acting this turn flaps their wings and creates a mighty gale. Each creature adjacent to the draconian is pushed up to 4 squares, and if they have M<2, they are knocked prone.'
+				'A draconian acting this turn flaps their wings and creates a mighty gale. Each creature adjacent to the draconian is pushed up to 4 squares, and if they have <code>M < 2</code>, they are knocked prone.'
 			]
 		}),
 		FactoryLogic.feature.createAbility({
@@ -397,7 +397,7 @@ Six individual draconians are presented in this section—not an adventuring par
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'draconian-3-feature-6',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 6 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Cold, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				})
 			]
 		}),
@@ -594,7 +594,7 @@ Six individual draconians are presented in this section—not an adventuring par
 				}),
 				FactoryLogic.feature.createDamageModifier({
 					id: 'draconian-5-feature-7',
-					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Acid, modifierType: DamageModifierType.Immunity, value: 6 }) ]
+					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				})
 			]
 		}),
@@ -691,7 +691,7 @@ Six individual draconians are presented in this section—not an adventuring par
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-6-feature-8',
 						name: 'Roaring Gambit',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
@@ -703,7 +703,7 @@ Six individual draconians are presented in this section—not an adventuring par
 								tier2: 'Frightened (EoT)',
 								tier3: 'No effect'
 							})),
-							FactoryLogic.createAbilitySectionText('Each ally in the area gains an edge on their next strike.')
+							FactoryLogic.createAbilitySectionText('**Effect:** Each ally in the area gains an edge on their next strike.')
 						]
 					})
 				}),
@@ -711,7 +711,7 @@ Six individual draconians are presented in this section—not an adventuring par
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-6-feature-9',
 						name: 'Wings of Second Wind',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf(),
@@ -719,7 +719,7 @@ Six individual draconians are presented in this section—not an adventuring par
 						],
 						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Each target shifts or flies up to their speed and regains 10 Stamina.')
+							FactoryLogic.createAbilitySectionText('**Effect:** Each target shifts or flies up to their speed and regains 10 Stamina.')
 						]
 					})
 				}),
@@ -727,12 +727,12 @@ Six individual draconians are presented in this section—not an adventuring par
 					ability: FactoryLogic.createAbility({
 						id: 'draconian-6-feature-10',
 						name: 'Snap, Crackle, Pop',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
 						sections: [
-							FactoryLogic.createAbilitySectionText('Dorzinuuth covers the targets in an electrifying mesh. Whenever a target takes damage from a melee ability, the attacker takes 6 lightning damage.')
+							FactoryLogic.createAbilitySectionText('**Effect:** Dorzinuuth covers the targets in an electrifying mesh. Whenever a target takes damage from a melee ability, the attacker takes 6 lightning damage.')
 						]
 					})
 				})

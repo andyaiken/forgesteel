@@ -777,7 +777,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					ability: FactoryLogic.createAbility({
 						id: 'undead-1st-11-feature-6',
 						name: 'Paranormal Activity',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each size 3 or smaller object in the area',
@@ -790,7 +790,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					ability: FactoryLogic.createAbility({
 						id: 'undead-1st-11-feature-7',
 						name: 'Spirited Away',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
@@ -809,7 +809,7 @@ Spectral undead who are formed naturally from the souls of malicious, hate-fille
 					ability: FactoryLogic.createAbility({
 						id: 'undead-1st-11-feature-8',
 						name: 'Awful Wail',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',

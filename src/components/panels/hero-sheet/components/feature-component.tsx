@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 
 import { Ability } from '../../../../models/ability';
 import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
@@ -31,7 +31,6 @@ interface Props {
 }
 
 const BasicFeatureComponent = (feature: Feature) => {
-	// console.warn('Default feature display: ', feature);
 	return (
 		<>
 			<div className='feature-line'><strong>{`• ${feature.type}: `}</strong>{feature.name}</div>
@@ -328,6 +327,21 @@ const KitFeatureComponent = (feature: FeatureKit) => {
 	);
 };
 
+const FollowerFeatureComponent = (feature: FeatureFollower) => {
+	const follower = feature.data.follower;
+	return (
+		<>
+			<div className='feature-line'>
+				<strong>Follower: </strong>
+				{follower.name}
+				{follower.type ?
+					<em> ({follower.type})</em>
+					: undefined}
+			</div>
+		</>
+	);
+};
+
 export const FeatureComponent = (props: Props) => {
 	const classes = [ 'feature' ].concat(props.additionalClasses || []).join(' ');
 	const feature = props.feature;
@@ -382,6 +396,9 @@ export const FeatureComponent = (props: Props) => {
 			break;
 		case FeatureType.Kit:
 			content = KitFeatureComponent(feature);
+			break;
+		case FeatureType.Follower:
+			content = FollowerFeatureComponent(feature);
 			break;
 		case FeatureType.Multiple:
 			// Do nothing for these since the individual sub-features are also iterated over, no need to double up

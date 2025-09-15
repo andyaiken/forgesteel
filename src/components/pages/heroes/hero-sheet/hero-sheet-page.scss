@@ -13,10 +13,10 @@
 
 #pdf-preview {
     .menu {
-        float: left;
+        float: right;
         position: fixed;
         top: 10px;
-        left: 10px;
+        right: 10px;
         display: flex;
         padding: 5px;
         border-radius: 5px;
@@ -342,7 +342,8 @@
             flex-basis: calc((100% - 2 * var(--gap)) / 3);
         }
 
-        .feature-reference {
+        .feature-reference,
+        .inventory.wide {
             flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
         }
         .feature-reference.wide {
@@ -356,7 +357,8 @@
             flex-basis: calc((100% - 3 * var(--gap)) / 4);
         }
 
-        .feature-reference {
+        .feature-reference,
+        .inventory.wide {
             flex-basis: calc(2 * ((100% - 3 * var(--gap)) / 4) + var(--gap));
         }
         .feature-reference.wide {

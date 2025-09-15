@@ -507,12 +507,7 @@ export class CharacterSheetBuilder {
 			}
 
 			const rollPowerAmount = Math.max(...rollSection.roll.characteristic
-				.map(
-					c =>
-						hero.class &&
-                        hero.class.characteristics.find(d => d.characteristic === c)
-				)
-				.map(c => (c && c.value) || 0));
+				.map(c => HeroLogic.getCharacteristic(hero, c)));
 
 			const characteristics = CharacterSheetFormatter.joinCommasOr(rollSection.roll.characteristic
 				.sort(CharacterSheetFormatter.sortCharacteristics)

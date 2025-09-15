@@ -4,6 +4,31 @@ import { Markdown } from '../../../controls/markdown/markdown';
 
 import './inventory-card.scss';
 
+interface InventoryProps {
+	character: CharacterSheet;
+	wide?: boolean;
+}
+
+export const InventoryCard = (props: InventoryProps) => {
+	const character = props.character;
+
+	const columns = props.wide || false;
+
+	const cardClasses = [ 'inventory', 'card' ];
+	if (columns) {
+		cardClasses.push('wide');
+	}
+
+	return (
+		<div className={cardClasses.join(' ')}>
+			<h2>Inventory</h2>
+			{character.inventory?.map(item => (
+				<ItemComponent item={item} character={character} key={item.id} />
+			))}
+		</div>
+	);
+};
+
 interface ItemProps {
 	item: ItemSheet;
 	character: CharacterSheet;
@@ -43,22 +68,6 @@ export const ItemComponent = (props: ItemProps) => {
 					/>
 				)}
 			</div>
-		</div>
-	);
-};
-
-interface InventoryProps {
-	character: CharacterSheet;
-}
-
-export const InventoryCard = (props: InventoryProps) => {
-	const character = props.character;
-	return (
-		<div className='inventory card'>
-			<h2>Inventory</h2>
-			{character.inventory?.map(item => (
-				<ItemComponent item={item} character={character} key={item.id} />
-			))}
 		</div>
 	);
 };

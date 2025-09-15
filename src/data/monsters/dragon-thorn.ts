@@ -215,7 +215,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-thorn-feature-12',
 						name: 'Briar Bindings',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 4 }) ],
 						target: 'All enemies',
@@ -233,7 +233,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-thorn-feature-13',
 						name: 'Thorned Armor',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -245,7 +245,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 					ability: FactoryLogic.createAbility({
 						id: 'dragon-thorn-feature-14',
 						name: 'Malign Thicket',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

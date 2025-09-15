@@ -266,7 +266,8 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 								tier1: '2 damage',
 								tier2: '4 damage',
 								tier3: '5 damage'
-							}))
+							})),
+							FactoryLogic.createAbilitySectionText('**Effect:** One ally of the redeye within 2 squares of the target shifts up to 2 squares.')
 						]
 					})
 				}),
@@ -582,7 +583,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-5',
 						name: 'Overture',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each ally in the area',
@@ -595,7 +596,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-6',
 						name: 'Solo Act',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature',
@@ -608,7 +609,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 					ability: FactoryLogic.createAbility({
 						id: 'radenwight-8-feature-7',
 						name: 'Rondo of Rat',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each dead ally in the area',

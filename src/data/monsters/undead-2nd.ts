@@ -40,15 +40,45 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 	malice: [
 		FactoryLogic.feature.createMalice({
 			id: 'undead-2nd-malice-1',
-			name: 'Prior Malice Features',
+			name: 'Ravenous Horde',
 			cost: 2,
-			repeatable: true,
 			sections: [
-				'The undead activates a Malice feature available to undead of level 3 or lower.'
+				'At the end of this round, each hero not already adjacent to one or more undead is beset by two **rotting zombies** who burst up from the ground to appear in adjacent unoccupied spaces. Each zombie is winded. This feature can’t be used two rounds in a row.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'undead-2nd-malice-2',
+			name: 'Paranormal Fling',
+			cost: 3,
+			sections: [
+				'Up to three unattended objects on the encounter map rise to float 1 square off the ground. Each object is then pulled 5 squares toward the nearest enemy within 3 squares of the object.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'undead-2nd-malice-3',
+			name: 'The Grasping, The Hungry',
+			cost: 5,
+			sections: [
+				'Ravenous and rotting undead arms burst forth from 9 connected squares of a vertical or horizontal surface. Any creature who ends their turn adjacent to an affected square makes an **Agility test**.',
+				FactoryLogic.createPowerRoll({
+					characteristic: Characteristic.Agility,
+					tier1: '5 damage; restrained (save ends)',
+					tier2: '5 damage; restrained (EoT)',
+					tier3: '5 damage'
+				}),
+				'While restrained this way, a creature takes 1d6 damage at the start of each of their turns.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'undead-2nd-malice-4',
+			name: 'Dread March',
+			cost: 7,
+			sections: [
+				'Up to four undead in the encounter move up to their speed and can make a free strike. The number of undead affected increases by 1 for each additional Malice spent on this feature. If an undead is reduced to 0 Stamina during this dread march, they don’t die until the march is resolved.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'undead-2nd-malice-5',
 			name: 'Blood Hunger',
 			cost: 5,
 			sections: [

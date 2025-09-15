@@ -61,7 +61,9 @@ As a talent, you are limited only by the strength of your mind. But the ability 
 					details: `
 You can spend clarity you don’t have, pushing that Heroic Resource into negative numbers to a maximum negative value equal to 1 + your Reason score. At the end of each of your turns, you take 1 damage for each negative point of clarity.
 
-Whenever you have clarity below 0, you are strained. Some psionic abilities have additional effects if you are already strained or become strained when you use them. Strained effects can still impact you even after you are no longer strained.`,
+Whenever you have clarity below 0, you are strained. Some psionic abilities have additional effects if you are already strained or become strained when you use them. Strained effects can still impact you even after you are no longer strained.
+
+Whenever you use an ability with a strain effect outside of combat, you can take 1d6 damage and incur the effect if you don't incur it for other reasons.`,
 					canBeNegative: true
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -419,8 +421,8 @@ If you are strained while flying and are force moved, the forced movement distan
 			features: [
 				FactoryLogic.feature.create({
 					id: 'talent-7-1',
-					name: 'Ancestry Memory',
-					description: 'Each time you finish a respite, you can choose a number of skills you have up to your Reason score and replace them with an equal number of skills from the interpersonal and lore skill groups. These replacements last unil the end of your next respite.'
+					name: 'Ancestral Memory',
+					description: 'Each time you finish a respite, you can choose a number of skills you have up to your Reason score and replace them with an equal number of skills from the interpersonal and lore skill groups. These replacements last until the end of your next respite.'
 				}),
 				FactoryLogic.feature.create({
 					id: 'talent-7-2',
@@ -1040,7 +1042,7 @@ Once on each of your turns, you can use a free maneuver to fire an orb at a crea
 			target: 'Self or one ally',
 			cost: 9,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Until the start of your next turn, the target has cold immunity 10 and fire immunity 10, and their strikes deal extra fire damage equal to twice your Reason score. Additionally, whenever an enemy attempts uses a melee ability against the target while they are under this effect, the enemy takes 5 fire damage.'),
+				FactoryLogic.createAbilitySectionText('**Effect** Until the start of your next turn, the target has cold immunity 10 and fire immunity 10, and their strikes deal extra fire damage equal to twice your Reason score. Additionally, whenever an enemy uses a melee ability against the target while they are under this effect, the enemy takes 5 fire damage.'),
 				FactoryLogic.createAbilitySectionField({
 					name: 'Strained',
 					effect: 'The target gains 2 surges. You are weakened and slowed (save ends).'

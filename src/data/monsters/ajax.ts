@@ -307,7 +307,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						id: 'ajax-1-feature-14',
 						name: 'I’ve Learned Their Tricks ',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
+						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',
 						sections: [

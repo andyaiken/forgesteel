@@ -104,7 +104,7 @@ export const telepathy: SubClass = {
 											tier2: 'The target shifts up to their speed and uses their signature ability against any enemies of your choice.',
 											tier3: 'The target moves up to their speed and uses their signature ability against any enemies of your choice.'
 										})),
-										FactoryLogic.createAbilitySectionText('You control the target’s movement. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect. However, you can move them to provoke opportunity attacks.'),
+										FactoryLogic.createAbilitySectionText('**Effect** You control the target’s movement. The target can’t be moved in a way that would harm them (such as over a cliff), leave them dying, or result in them suffering a condition or other negative effect. However, you can move them to provoke opportunity attacks.'),
 										FactoryLogic.createAbilitySectionField({
 											name: 'Strained',
 											effect: 'You take 1d6 damage and are weakened until the end of your turn.'

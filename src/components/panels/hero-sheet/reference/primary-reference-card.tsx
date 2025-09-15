@@ -42,7 +42,7 @@ export const PrimaryReferenceCard = (props: Props) => {
 				<p><strong>1 Token:</strong> Gain 2 Surges.</p>
 				<p><strong>1 Token:</strong> Succeed on a saving throw instead of failing.</p>
 				<p><strong>1 Token:</strong> Reroll a test.</p>
-				<p><strong>2 Tokens:</strong> On your turn or when you take damage, regain Stamina equal to your Recovery value without spending a Recovery.</p>
+				<p><strong>2 Tokens:</strong> On your turn or when you take damage, regain Stamina equal to your recovery value before taking the damage.</p>
 			</div>
 		</div>
 	);

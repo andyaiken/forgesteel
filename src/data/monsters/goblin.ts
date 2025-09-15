@@ -623,7 +623,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 					ability: FactoryLogic.createAbility({
 						id: 'goblin-10-feature-6',
 						name: 'What Are You Waiting For?',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each ally in the area',
@@ -636,7 +636,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 					ability: FactoryLogic.createAbility({
 						id: 'goblin-10-feature-7',
 						name: 'Focus Fire',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy or object',
 						sections: [
@@ -648,7 +648,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 					ability: FactoryLogic.createAbility({
 						id: 'goblin-10-feature-8',
 						name: 'Kill!',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area ],
 						distance: [ FactoryLogic.distance.createSpecial('Special') ],
 						target: 'Special',

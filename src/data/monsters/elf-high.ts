@@ -780,7 +780,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-12-feature-7',
 						name: 'Fountains Roar, Now Free From the Earth',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each ally in the area',
@@ -793,7 +793,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-12-feature-8',
 						name: 'And the Sun Forsook Her Children',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: 'Each enemy in the area',
@@ -813,7 +813,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 					ability: FactoryLogic.createAbility({
 						id: 'elf-high-12-feature-9',
 						name: 'But We Will Change Her Mind.',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [	FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Self and each ally in the area',

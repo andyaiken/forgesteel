@@ -629,7 +629,7 @@ export const demon2nd: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-9-feature-8',
 						name: 'Frenzied Deluge',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(1),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three enemies',
@@ -647,7 +647,7 @@ export const demon2nd: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-9-feature-9',
 						name: 'Fold Space',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'Self',
@@ -660,16 +660,16 @@ export const demon2nd: MonsterGroup = {
 					ability: FactoryLogic.createAbility({
 						id: 'demon-2nd-9-feature-10',
 						name: 'Blood of the Abyss',
-						type: FactoryLogic.type.createVillainAction(),
+						type: FactoryLogic.type.createVillainAction(3),
 						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 3, within: 1 }) ],
 						target: 'Each enemy and object in the area',
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 4,
-								tier1: '6 corruption damage; R<2 weakened (save ends)',
-								tier2: '11 corruption damage; R<3 weakened (save ends)',
-								tier3: '14 corruption damage; R<4 weakened (save ends)'
+								tier1: '6 corruption damage; R < 2 weakened (save ends)',
+								tier2: '11 corruption damage; R < 3 weakened (save ends)',
+								tier3: '14 corruption damage; R < 4 weakened (save ends)'
 							})),
 							FactoryLogic.createAbilitySectionText('The egress recalls and instantly destroys any minion allies on the encounter map. A torrent of churned-up minion bodies, blood, and ichor erupts from the egress, dealing an extra 1 damage for each minion destroyed this way.')
 						]

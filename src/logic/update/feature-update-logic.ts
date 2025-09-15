@@ -18,6 +18,9 @@ export class FeatureUpdateLogic {
 				}
 				break;
 			case FeatureType.Choice:
+				if (feature.data.options === undefined) {
+					feature.data.options = [];
+				}
 				feature.data.options.map(f => f.feature).forEach(FeatureUpdateLogic.updateFeature);
 				break;
 			case FeatureType.ClassAbility:

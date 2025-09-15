@@ -1530,7 +1530,7 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 	static planarVoyager: Title = {
 		id: 'title-planar-voyager',
 		name: 'Planar Voyager',
-		description: '“Technically, I’m called Lord Morninghill these days. I did a little favor for Duke Kenway at the Battle of Black Forest.I’ve seen skywhales floating above the seas of Primordius. I’ve seen star freighters dancing around the moons of Axiom. So I guess you’re right, I’m not from around these parts.”',
+		description: '“I’ve seen skywhales floating above the seas of Primordius. I’ve seen star freighters dancing around the moons of Axiom. So I guess you’re right, I’m not from around these parts.”',
 		echelon: 3,
 		prerequisites: 'You voyage in strange vehicles on different worlds.',
 		features: [

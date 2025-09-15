@@ -3891,7 +3891,7 @@ export const dwarfFury = {
 																qualifier: ''
 															}
 														],
-														target: 'One creature',
+														target: 'Each creature in the area',
 														cost: 9,
 														repeatable: false,
 														minLevel: 1,

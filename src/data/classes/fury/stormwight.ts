@@ -196,7 +196,7 @@ When you are in a negotiation with an animal or elemental, you treat your Renown
 									type: FactoryLogic.type.createManeuver(),
 									keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
 									distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 3 }) ],
-									target: 'One creature',
+									target: 'Each creature in the area',
 									cost: 9,
 									sections: [
 										FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, each enemy target takes damage of your primordial damage type equal to twice your Might score at the end of each of your turns. Additionally, you can fly while the aura is active. Each ally target who starts or ends their turn in the area can also fly until the start of their next turn or until the effect ends.'),

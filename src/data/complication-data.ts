@@ -913,7 +913,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static infernalContractButLikeBad: Complication = {
 		id: 'comp-infernalContractButLikeBad',
 		name: 'Infernal Contract … But, Like, Bad',
-		description: 'You made a deal with a devil. Not a very good deal, because it wasn’t a very good devil. It’s too late for regrets, thought, because your soul is forfeit unless you find a loophole or convince the devil to void the deal.',
+		description: 'You made a deal with a devil. Not a very good deal, because it wasn’t a very good devil. It’s too late for regrets, though, because your soul is forfeit unless you find a loophole or convince the devil to void the deal.',
 		features: [
 			FactoryLogic.feature.createChoice({
 				id: 'comp-infernalContractButLikeBad-b',

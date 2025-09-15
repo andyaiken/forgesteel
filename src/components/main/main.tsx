@@ -110,13 +110,13 @@ export const Main = (props: Props) => {
 		}
 		return opts;
 	});
-	const [ errors, setErrors ] = useState<ErrorEvent[]>([]);
+	const [ errors, setErrors ] = useState<Event[]>([]);
 	const [ directory, setDirectory ] = useState<ReactNode>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
 	const [ spinning, setSpinning ] = useState(false);
 
-	useErrorListener(event => setErrors([ ...errors, event as ErrorEvent ]));
+	useErrorListener(event => setErrors([ ...errors, event ]));
 
 	// #region Persistence
 

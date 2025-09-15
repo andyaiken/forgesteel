@@ -14,18 +14,60 @@ import pkg from '../../../../package.json';
 import './about-modal.scss';
 
 interface Props {
-	errors: ErrorEvent[];
+	errors: Event[];
 	clearErrors: () => void;
 	onClose: () => void;
 }
 
 export const AboutModal = (props: Props) => {
-	const clearErrors = () => {
-		props.clearErrors();
-		props.onClose();
-	};
-
 	try {
+		const clearErrors = () => {
+			props.clearErrors();
+			props.onClose();
+		};
+
+		const getError = (event: Event, index: number) => {
+			let message = '';
+			let output = '';
+			const fields: { label: string, value: string }[] = [
+				{ label: 'Type', value: `${event.type}` }
+			];
+
+			if (event.type === 'error') {
+				const error = event as ErrorEvent;
+
+				message = error.message;
+				output = `title ${error.message}, file ${error.filename}, line ${error.lineno}, col ${error.colno}, data ${error.error}`;
+
+				fields.push({ label: 'Location', value: `${error.filename}, line ${error.lineno}, column ${error.colno}` });
+				fields.push({ label: 'Data', value: error.error });
+			}
+
+			if (event.type === 'unhandledrejection') {
+				const error = event as PromiseRejectionEvent;
+
+				message = error.reason;
+				output = `reason ${error.reason}`;
+			}
+
+			return (
+				<SelectablePanel key={index}>
+					<HeaderText
+						extra={
+							<Button
+								type='text'
+								icon={<CopyOutlined />}
+								onClick={() => navigator.clipboard.writeText(output)}
+							/>
+						}
+					>
+						{message}
+					</HeaderText>
+					{fields.map((field, n) => <Field key={n} label={field.label} value={field.value} />)}
+				</SelectablePanel>
+			);
+		};
+
 		return (
 			<Modal
 				content={
@@ -77,28 +119,7 @@ export const AboutModal = (props: Props) => {
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-										{
-											props.errors.map((err, n) => (
-												<SelectablePanel key={n}>
-													<HeaderText
-														extra={
-															<Button
-																type='text'
-																icon={<CopyOutlined />}
-																onClick={() => {
-																	const str = `title ${err.message}, file ${err.filename}, line ${err.lineno}, col ${err.colno}, data ${err.error}`;
-																	navigator.clipboard.writeText(str);
-																}}
-															/>
-														}
-													>
-														{err.message}
-													</HeaderText>
-													<Field label='Location' value={`${err.filename}, line ${err.lineno}, column ${err.colno}`} />
-													<Field label='Data' value={err.error} />
-												</SelectablePanel>
-											))
-										}
+										{props.errors.map(getError)}
 									</Space>
 								</Expander>
 								: null

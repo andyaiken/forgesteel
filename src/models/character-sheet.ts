@@ -125,12 +125,7 @@ export interface CharacterSheet {
 	projects?: ProjectSheet[];
 
 	// Abilities
-	freeStrikes: AbilitySheet[];
-	signatureAbilities: AbilitySheet[];
-	heroicAbilities: AbilitySheet[];
-	triggeredActions: AbilitySheet[];
-	otherRollAbilities: AbilitySheet[];
-	otherAbilities: AbilitySheet[];
+	abilities: AbilitySheet[];
 	standardAbilities: AbilitySheet[];
 
 	// Other Features and Reference

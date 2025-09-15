@@ -274,11 +274,7 @@ export const HeroSheetPage = (props: Props) => {
 
 	const addAbilityPages = (character: CharacterSheet, extraCards: ExtraCards) => {
 		// future: Allow options to filter abilities displayed?
-		let allAbilities = character.freeStrikes.concat(character.signatureAbilities,
-			character.heroicAbilities,
-			character.triggeredActions,
-			character.otherRollAbilities,
-			character.otherAbilities);
+		let allAbilities = character.abilities;
 
 		// future: Allow filtering *these* separately?
 		if (props.options.showStandardAbilities) {

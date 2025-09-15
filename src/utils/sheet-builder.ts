@@ -30,12 +30,7 @@ export class CharacterSheetBuilder {
 			hero: hero,
 			name: hero.name,
 
-			freeStrikes: [],
-			signatureAbilities: [],
-			heroicAbilities: [],
-			triggeredActions: [],
-			otherRollAbilities: [],
-			otherAbilities: [],
+			abilities: [],
 			standardAbilities: [],
 
 			featuresReferenceOther: [],
@@ -322,25 +317,11 @@ export class CharacterSheetBuilder {
 		// #region Abilities
 		const abilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 
-		sheet.freeStrikes = [ AbilityData.freeStrikeMelee, AbilityData.freeStrikeRanged ].map(a => this.buildAbilitySheet(a, hero));
-		sheet.signatureAbilities = abilities.filter(a => a.cost === 'signature').map(a => this.buildAbilitySheet(a, hero));
-		sheet.heroicAbilities = abilities.filter(a => 0 < Number(a.cost)).map(a => this.buildAbilitySheet(a, hero));
-		sheet.triggeredActions = abilities.filter(a => 0 === a.cost).filter(a => a.type.usage === AbilityUsage.Trigger).map(a => this.buildAbilitySheet(a, hero));
-
-		let coveredAbilityIds = sheet.freeStrikes.map(a => a.id)
-			.concat(sheet.signatureAbilities.map(a => a.id))
-			.concat(sheet.heroicAbilities.map(a => a.id))
-			.concat(sheet.triggeredActions.map(a => a.id));
-		const otherAbilities = abilities.filter(a => !coveredAbilityIds.includes(a.id));
-		sheet.otherRollAbilities = otherAbilities.filter(a => a.sections.some(s => s.type === 'roll')).map(a => this.buildAbilitySheet(a, hero));
-		sheet.otherAbilities = otherAbilities.filter(a => !a.sections.some(s => s.type === 'roll')).map(a => this.buildAbilitySheet(a, hero));
+		const freeStrikes = [ AbilityData.freeStrikeMelee, AbilityData.freeStrikeRanged ].map(a => this.buildAbilitySheet(a, hero));
+		sheet.abilities = abilities.map(a => this.buildAbilitySheet(a, hero)).concat(freeStrikes);
 
 		const standard = HeroLogic.getAbilities(FactoryLogic.createHero([]), sourcebooks, true).map(a => a.ability);
 		sheet.standardAbilities = standard.map(a => this.buildAbilitySheet(a, hero));
-
-		coveredAbilityIds = coveredAbilityIds
-			.concat(sheet.otherRollAbilities.map(a => a.id))
-			.concat(sheet.otherAbilities.map(a => a.id));
 
 		coveredFeatureIds = coveredFeatureIds.concat(
 			allFeatures.filter(f => [ FeatureType.ClassAbility, FeatureType.Ability ].includes(f.feature.type))
@@ -354,13 +335,6 @@ export class CharacterSheetBuilder {
 			console.warn('Missed features! - adding to "other"', missedFeatures);
 			sheet.featuresReferenceOther = (sheet.featuresReferenceOther || []).concat(missedFeatures);
 		}
-		// Ability coverage check
-		const missedAbilities: Ability[] = [];
-		abilities.filter(a => !coveredAbilityIds.includes(a.id)).forEach(a => missedAbilities.push(a));
-		if (missedAbilities.length) {
-			console.warn('Missed Abilities!', missedAbilities);
-		}
-
 		return sheet;
 	};
 

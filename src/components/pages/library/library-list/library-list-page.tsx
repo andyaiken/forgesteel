@@ -1,5 +1,5 @@
 import { BookOutlined, CopyOutlined, DownOutlined, DownloadOutlined, EditOutlined, PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
-import { Button, Divider, Flex, Input, Popover, Select, Space, Upload } from 'antd';
+import { Button, Divider, Input, Popover, Select, Space, Upload } from 'antd';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -480,7 +480,7 @@ export const LibraryListPage = (props: Props) => {
 		}
 
 		return (
-			<Flex align='center' justify='flex-end' gap={5}>
+			<>
 				{
 					!sourcebook.isHomebrew && (props.sourcebooks.filter(sb => sb.isHomebrew).length === 0) ?
 						<Button icon={<CopyOutlined />} onClick={() => props.createElement(category, null, element)}>
@@ -566,7 +566,7 @@ export const LibraryListPage = (props: Props) => {
 						/>
 						: null
 				}
-			</Flex>
+			</>
 		);
 	};
 
@@ -648,6 +648,7 @@ export const LibraryListPage = (props: Props) => {
 								<DownOutlined />
 							</Button>
 						</Popover>
+						{getElementToolbar()}
 						<div className='divider' />
 						<Button icon={<BookOutlined />} onClick={props.showSourcebooks}>
 							Sourcebooks
@@ -685,10 +686,7 @@ export const LibraryListPage = (props: Props) => {
 						<div className='element-selected'>
 							{
 								selected ?
-									<>
-										{getElementToolbar()}
-										{getPanel(selected)}
-									</>
+									getPanel(selected)
 									:
 									<Empty text='Nothing selected' />
 							}

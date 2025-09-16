@@ -1,3 +1,4 @@
+import { Button, Space } from 'antd';
 import { MonsterInfo, TerrainInfo } from '../../token/token';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
@@ -11,6 +12,7 @@ import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Hero } from '../../../../models/hero';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterPanel } from '../monster-panel/monster-panel';
@@ -20,7 +22,6 @@ import { Pill } from '../../../controls/pill/pill';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { Space } from 'antd';
 import { TerrainPanel } from '../terrain-panel/terrain-panel';
 
 import './encounter-panel.scss';
@@ -31,6 +32,7 @@ interface Props {
 	heroes: Hero[];
 	options: Options;
 	mode?: PanelMode;
+	showTools?: () => void;
 }
 
 export const EncounterPanel = (props: Props) => {
@@ -224,7 +226,17 @@ export const EncounterPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
-					<HeaderText level={1} tags={[ difficulty ]}>{props.encounter.name || 'Unnamed Encounter'}</HeaderText>
+					<HeaderText
+						level={1}
+						tags={[ difficulty ]}
+						extra={
+							props.showTools ?
+								<Button type='text' icon={<InfoCircleOutlined />} onClick={props.showTools} />
+								: null
+						}
+					>
+						{props.encounter.name || 'Unnamed Encounter'}
+					</HeaderText>
 					<Markdown text={props.encounter.description} />
 					{getEncounterGroups()}
 					{getMeta()}

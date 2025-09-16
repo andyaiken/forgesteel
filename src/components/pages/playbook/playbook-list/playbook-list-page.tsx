@@ -1,6 +1,6 @@
 import { Adventure, AdventurePackage } from '../../../../models/adventure';
-import { Button, Flex, Input, Popover } from 'antd';
-import { DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Input, Popover } from 'antd';
+import { DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
@@ -201,7 +201,7 @@ export const PlaybookListPage = (props: Props) => {
 				getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} playbook={props.playbook} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'encounter':
-				getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} showTools={() => props.showEncounterTools(element as Encounter)} />;
 				break;
 			case 'montage':
 				getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} mode={PanelMode.Full} />;
@@ -226,7 +226,7 @@ export const PlaybookListPage = (props: Props) => {
 		}
 
 		return (
-			<Flex align='center' justify='flex-end' gap={5}>
+			<>
 				<Button icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit(category, element.id)}>
 					Edit
 				</Button>
@@ -257,19 +257,12 @@ export const PlaybookListPage = (props: Props) => {
 						</Button>
 						: null
 				}
-				{
-					(category === 'encounter') ?
-						<Button icon={<ToolOutlined />} onClick={() => props.showEncounterTools(element as Encounter)}>
-							Tools
-						</Button>
-						: null
-				}
 				<DangerButton
 					mode='block'
 					disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
 					onConfirm={() => props.deleteElement(category, element)}
 				/>
-			</Flex>
+			</>
 		);
 	};
 
@@ -307,6 +300,7 @@ export const PlaybookListPage = (props: Props) => {
 								<DownOutlined />
 							</Button>
 						</Popover>
+						{getElementToolbar()}
 						{
 							(category === 'encounter') || (category === 'tactical-map') ?
 								<div className='divider' />
@@ -349,10 +343,7 @@ export const PlaybookListPage = (props: Props) => {
 						<div className='element-selected'>
 							{
 								selected ?
-									<>
-										{getElementToolbar()}
-										{getPanel(selected)}
-									</>
+									getPanel(selected)
 									:
 									<Empty text='Nothing selected' />
 							}

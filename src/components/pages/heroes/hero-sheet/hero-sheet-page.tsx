@@ -71,7 +71,7 @@ export const HeroSheetPage = (props: Props) => {
 			{
 				element: <NotesCard character={character} key='notes' />,
 				width: 1,
-				height: Math.min(20, SheetFormatter.countLines(character.notes, layout.cardLineLen)),
+				height: Math.max(20, SheetFormatter.countLines(character.notes, layout.cardLineLen)),
 				shown: false
 			}
 		];
@@ -103,7 +103,7 @@ export const HeroSheetPage = (props: Props) => {
 			if (refH > 60) {
 				refW = 3;
 				lineWidth = (2 * layout.cardGap) + (3 * layout.cardLineLen) * 0.49;
-				refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, lineWidth) * 0.50;
+				refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, lineWidth) * 0.52;
 				refH = Math.min(layout.linesY, refH);// Will probably need a better solution at some point
 			}
 			// console.log('###### Reference size: ', refH);

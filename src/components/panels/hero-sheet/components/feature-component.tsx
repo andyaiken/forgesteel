@@ -11,7 +11,9 @@ import { Fragment } from 'react';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { PerkList } from '../../../../enums/perk-list';
 import { SheetFormatter } from '../../../../utils/sheet-formatter';
+import { SkillList } from '../../../../enums/skill-list';
 
 import './feature-component.scss';
 
@@ -73,16 +75,28 @@ const AncestryChoiceFeatureComponent = (feature: FeatureAncestryChoice) => {
 	);
 };
 
+const isAllSkillLists = (lists: SkillList[]): boolean => {
+	return Object.values(SkillList)
+		.filter(l => l !== SkillList.Custom)
+		.every(l => lists.includes(l));
+};
+
+const isAllPerkLists = (lists: PerkList[]): boolean => {
+	return Object.values(PerkList).every(l => lists.includes(l));
+};
+
 const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice | FeaturePerk) => {
 	let listNames;
 	let choiceType;
 	switch (feature.type) {
 		case FeatureType.SkillChoice:
-			listNames = feature.data.listOptions.map(l => l.toString());
+			if (!isAllSkillLists(feature.data.listOptions))
+				listNames = feature.data.listOptions.map(l => l.toString());
 			choiceType = 'Skill';
 			break;
 		case FeatureType.Perk:
-			listNames = feature.data.lists.map(l => l.toString());
+			if (!isAllPerkLists(feature.data.lists))
+				listNames = feature.data.lists.map(l => l.toString());
 			choiceType = 'Perk';
 			break;
 	}

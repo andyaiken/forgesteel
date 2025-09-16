@@ -176,6 +176,7 @@ export class SheetFormatter {
 			size += bottomMargin;
 		} else if (f.type === FeatureType.Ability) {
 			size = headerSize + this.countLines(f.data.ability.description, lineWidth);
+			size += bottomMargin;
 		} else if (f.type === FeatureType.DamageModifier) {
 			size = headerSize + (Collections.distinct(f.data.modifiers, m => m.type).length);
 			size += bottomMargin + 0.3;
@@ -194,7 +195,7 @@ export class SheetFormatter {
 			}
 		}
 		size = +size.toFixed(1);
-
+		// console.log('###### Feature', f.name, f.id, size);
 		return size;
 	};
 
@@ -401,12 +402,16 @@ export class SheetFormatter {
 		return result;
 	};
 
-	static joinCommasOr = (options: string[]): string => {
-		if (options.length <= 2) {
-			return options.slice(-2).join(' or ');
+	static joinCommasOr = (options: string[] | undefined): string => {
+		if (options?.length) {
+			if (options.length <= 2) {
+				return options.slice(-2).join(' or ');
+			} else {
+				const last2 = options.slice(-2).join(' or ');
+				return [ options.slice(0, -2).join(', '), last2 ].join(', ');
+			}
 		} else {
-			const last2 = options.slice(-2).join(' or ');
-			return [ options.slice(0, -2).join(', '), last2 ].join(', ');
+			return '';
 		}
 	};
 

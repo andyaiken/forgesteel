@@ -22,14 +22,14 @@ export const useNavigation = () => {
 		goToHeroEdit: (heroID: string, page: HeroEditTab) => {
 			return navigate(`/hero/edit/${heroID}/${page}`);
 		},
-		goToLibraryList: (kind: SourcebookElementKind) => {
-			return navigate(`/library/${kind}`);
-		},
-		goToLibraryView: (kind: SourcebookElementKind, elementID: string, subElementID?: string) => {
-			if (subElementID) {
-				return navigate(`/library/view/${kind}/${elementID}/${subElementID}`);
+		goToLibrary: (kind?: SourcebookElementKind, elementID?: string) => {
+			if (kind && elementID) {
+				return navigate(`/library/${kind}/${elementID}`);
 			}
-			return navigate(`/library/view/${kind}/${elementID}`);
+			if (kind) {
+				return navigate(`/library/${kind}`);
+			}
+			return navigate('/library');
 		},
 		goToLibraryEdit: (kind: SourcebookElementKind, sourcebookID: string, elementID: string, subElementID?: string) => {
 			if (subElementID) {

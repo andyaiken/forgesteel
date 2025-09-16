@@ -736,7 +736,7 @@ export const LibraryEditPage = (props: Props) => {
 						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 							Save Changes
 						</Button>
-						<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibraryView(kind!, elementID!)}>
+						<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibrary(kind!, elementID!)}>
 							Cancel
 						</Button>
 						{

@@ -35,7 +35,7 @@ export const AppFooter = (props: Props) => {
 									Heroes
 								</Button>
 								<Divider type='vertical' />
-								<Button type='text' className={props.page === 'library' ? 'selected' : ''} icon={<BookOutlined />} onClick={() => navigation.goToLibraryList('ancestry')}>
+								<Button type='text' className={props.page === 'library' ? 'selected' : ''} icon={<BookOutlined />} onClick={() => navigation.goToLibrary()}>
 									Library
 								</Button>
 								<Divider type='vertical' />

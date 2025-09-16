@@ -40,19 +40,19 @@ export const DirectoryModal = (props: Props) => {
 							)
 						}
 						<div className='directory-header'>Library</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('ancestry'); props.onClose(); }}>Ancestries</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('career'); props.onClose(); }}>Careers</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('class'); props.onClose(); }}>Classes</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('complication'); props.onClose(); }}>Complications</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('culture'); props.onClose(); }}>Cultures</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('domain'); props.onClose(); }}>Domains</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('imbuement'); props.onClose(); }}>Imbuements</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('item'); props.onClose(); }}>Items</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('kit'); props.onClose(); }}>Kits</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('monster-group'); props.onClose(); }}>Monsters</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('perk'); props.onClose(); }}>Perks</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('terrain'); props.onClose(); }}>Terrain</div>
-						<div className='directory-btn' onClick={() => { navigation.goToLibraryList('title'); props.onClose(); }}>Titles</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('ancestry'); props.onClose(); }}>Ancestries</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('career'); props.onClose(); }}>Careers</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('class'); props.onClose(); }}>Classes</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('complication'); props.onClose(); }}>Complications</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('culture'); props.onClose(); }}>Cultures</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('domain'); props.onClose(); }}>Domains</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('imbuement'); props.onClose(); }}>Imbuements</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('item'); props.onClose(); }}>Items</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('kit'); props.onClose(); }}>Kits</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('monster-group'); props.onClose(); }}>Monsters</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('perk'); props.onClose(); }}>Perks</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('terrain'); props.onClose(); }}>Terrain</div>
+						<div className='directory-btn' onClick={() => { navigation.goToLibrary('title'); props.onClose(); }}>Titles</div>
 						<div className='directory-header'>Playbook</div>
 						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('adventure'); props.onClose(); }}>Adventures</div>
 						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('encounter'); props.onClose(); }}>Encounters</div>

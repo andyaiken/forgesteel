@@ -46,6 +46,7 @@ import { Title } from '../../../../models/title';
 import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
 import { Utils } from '../../../../utils/utils';
 import { useNavigation } from '../../../../hooks/use-navigation';
+import { useParams } from 'react-router';
 
 import './library-list-page.scss';
 
@@ -72,15 +73,23 @@ interface Props {
 
 export const LibraryListPage = (props: Props) => {
 	const navigation = useNavigation();
-	const [ category, setCategory ] = useState<SourcebookElementKind>('ancestry');
-	const [ selectedID, setSelectedID ] = useState<string | null>(null);
+	const { kind, elementID } = useParams<{ kind: SourcebookElementKind, elementID: string }>();
+	const [ category, setCategory ] = useState<SourcebookElementKind>(kind || 'ancestry');
+	const [ selectedID, setSelectedID ] = useState<string | null>(elementID || null);
+	const [ previousCategory, setPreviousCategory ] = useState<SourcebookElementKind | undefined>(kind);
+	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 
-	const changeCategory = (cat: SourcebookElementKind) => {
-		setCategory(cat);
-		setSelectedID(null);
-	};
+	if (kind !== previousCategory) {
+		setCategory(kind || 'ancestry');
+		setPreviousCategory(kind);
+	}
+
+	if (elementID !== previousSelectedID) {
+		setSelectedID(elementID || null);
+		setPreviousSelectedID(elementID);
+	}
 
 	const getSourcebooks = () => {
 		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
@@ -468,25 +477,25 @@ export const LibraryListPage = (props: Props) => {
 		return (
 			<div className='library-list-page-content'>
 				<div className='selection-list categories'>
-					<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => changeCategory('ancestry')} />
-					<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => changeCategory('career')} />
-					<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => changeCategory('class')} />
-					<SelectorRow selected={category === 'complication'} content='Complications' info={getComplications().length} onSelect={() => changeCategory('complication')} />
-					<SelectorRow selected={category === 'culture'} content='Cultures' info={getCultures().length} onSelect={() => changeCategory('culture')} />
-					<SelectorRow selected={category === 'domain'} content='Domains' info={getDomains().length} onSelect={() => changeCategory('domain')} />
-					<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => changeCategory('imbuement')} />
-					<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => changeCategory('item')} />
-					<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => changeCategory('kit')} />
-					<SelectorRow selected={category === 'monster-group'} content='Monster Groups' info={getMonsterGroups().length} onSelect={() => changeCategory('monster-group')} />
-					<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => changeCategory('perk')} />
-					<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => changeCategory('subclass')} />
-					<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => changeCategory('terrain')} />
-					<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => changeCategory('title')} />
+					<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => navigation.goToLibrary('ancestry')} />
+					<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => navigation.goToLibrary('career')} />
+					<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => navigation.goToLibrary('class')} />
+					<SelectorRow selected={category === 'complication'} content='Complications' info={getComplications().length} onSelect={() => navigation.goToLibrary('complication')} />
+					<SelectorRow selected={category === 'culture'} content='Cultures' info={getCultures().length} onSelect={() => navigation.goToLibrary('culture')} />
+					<SelectorRow selected={category === 'domain'} content='Domains' info={getDomains().length} onSelect={() => navigation.goToLibrary('domain')} />
+					<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
+					<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
+					<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
+					<SelectorRow selected={category === 'monster-group'} content='Monster Groups' info={getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
+					<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
+					<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
+					<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
+					<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
 				</div>
 				<div className='selection-list elements'>
 					{
 						list.map(a => (
-							<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} info={getInfo(a.id)} onSelect={() => setSelectedID(a.id)} />
+							<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} info={getInfo(a.id)} onSelect={() => navigation.goToLibrary(category, a.id)} />
 						))
 					}
 					{

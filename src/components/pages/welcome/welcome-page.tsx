@@ -133,7 +133,7 @@ export const WelcomePage = (props: Props) => {
 				return (
 					<div className='welcome-section'>
 						<HeaderText
-							extra={<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibraryList('ancestry')}>Library</Button>}
+							extra={<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary()}>Library</Button>}
 						>
 							For Content Creators
 						</HeaderText>

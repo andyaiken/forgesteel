@@ -373,7 +373,7 @@ export const Main = (props: Props) => {
 	};
 
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
-		navigation.goToLibraryList(kind);
+		navigation.goToLibrary(kind);
 
 		const copy = Utils.copy(homebrewSourcebooks);
 		const sourcebook = copy.find(cs => cs.id === sourcebookID);
@@ -477,7 +477,7 @@ export const Main = (props: Props) => {
 			}
 		}
 
-		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryView(kind, element.id));
+		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibrary(kind, element.id));
 	};
 
 	const importLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
@@ -575,9 +575,7 @@ export const Main = (props: Props) => {
 		SourcebookUpdateLogic.updateSourcebook(sourcebook);
 
 		setDrawer(null);
-		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryList(kind));
-
-		return element;
+		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibrary(kind));
 	};
 
 	const exportLibraryElement = (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {

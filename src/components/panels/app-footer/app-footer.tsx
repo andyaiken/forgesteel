@@ -1,6 +1,7 @@
 import { Badge, Button, Divider, Flex } from 'antd';
 import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
+import { SyncStatus } from '../sync-status/sync-status';
 import { useMediaQuery } from '../../../hooks/use-media-query';
 import { useNavigation } from '../../../hooks/use-navigation';
 
@@ -49,6 +50,7 @@ export const AppFooter = (props: Props) => {
 							</Flex>
 					}
 					<div className='action-buttons-panel'>
+						<SyncStatus />
 						<Button onClick={props.showReference}>Reference</Button>
 						<Button onClick={props.showRoll}>Roll</Button>
 						<Badge dot={props.highlightAbout}>

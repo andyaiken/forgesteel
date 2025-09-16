@@ -10,7 +10,7 @@
         grid-template-columns: 1fr 1fr;
 
         * {
-            color: var(--color-text-lightest);
+            color: var(--color-text-lighter);
         }
 
         h5 {
@@ -57,7 +57,7 @@
         @include common.font-serif();
         font-size: 1.1rem;
         line-height: 1.3rem;
-        color: var(--color-text-lightest);
+        color: var(--color-text-lighter);
     }
 
     li {

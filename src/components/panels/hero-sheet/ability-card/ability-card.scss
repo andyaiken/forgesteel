@@ -243,6 +243,9 @@
             .action-type {
                 color: $color;
             }
+            h3 {
+                font-weight: 450 !important;
+            }
         }
     }
 
@@ -269,12 +272,13 @@
         }
     }
 
-    // &.free-strike {
-    //     @include color-ability-card(common.$color-free-strike);
-    //     h2 {
-    //         @include common.bottom-border-fancy-3(common.$color-free-strike);
-    //     }
-    // }
+    &.free-strike {
+        // Fix for the gray not looking right in the border label
+        section.bordered h3 {
+            color: var(--color-text-lighter);
+        }
+    }
+
     &.performance {
         @include color-ability-card(common.$color-performance);
         h2 {

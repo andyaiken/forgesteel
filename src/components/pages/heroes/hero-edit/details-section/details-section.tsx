@@ -1,5 +1,5 @@
-import { Alert, AutoComplete, Button, Divider, Flex, Input, Tag, Upload } from 'antd';
-import { DownloadOutlined, SyncOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, AutoComplete, Button, Divider, Flex, Input, Upload } from 'antd';
+import { DownloadOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Collections } from '../../../../../utils/collections';
 import { DangerButton } from '../../../../controls/danger-button/danger-button';
 import { Expander } from '../../../../controls/expander/expander';
@@ -10,7 +10,6 @@ import { FeatureType } from '../../../../../enums/feature-type';
 import { HeaderText } from '../../../../controls/header-text/header-text';
 import { Hero } from '../../../../../models/hero';
 import { HeroLogic } from '../../../../../logic/hero-logic';
-import { Markdown } from '../../../../controls/markdown/markdown';
 import { NameGenerator } from '../../../../../utils/name-generator';
 import { Options } from '../../../../../models/options';
 import { Sourcebook } from '../../../../../models/sourcebook';
@@ -26,7 +25,6 @@ interface DetailsSectionProps {
 	setPicture: (value: string | null) => void;
 	setFolder: (value: string) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
-	updateHeroData: () => void;
 }
 
 export const DetailsSection = (props: DetailsSectionProps) => {
@@ -150,35 +148,6 @@ ${f.data.listOptions.length > 0 ? `**Lists**: ${f.data.listOptions.map(s => `${s
 									/>
 								))
 						}
-					</Expander>
-					<Expander
-						title={
-							<>
-								<Tag color='red'>BETA</Tag>
-								Update
-							</>
-						}
-					>
-						<HeaderText>Update</HeaderText>
-						<div className='ds-text'>
-							To ensure that your hero is using the most up-to-date version of the Draw Steel rules, press the button below.
-						</div>
-						<DangerButton
-							mode='block'
-							label='Update Hero Data'
-							icon={<SyncOutlined />}
-							message={
-								<Markdown
-									text={`
-This feature **has not been fully tested** and **could cause data loss**.
-
-Please create a data backup of your hero before proceeding.
-
-If you discover any problems, please raise an issue in GitHub or on Discord.`}
-								/>
-							}
-							onConfirm={props.updateHeroData}
-						/>
 					</Expander>
 				</div>
 			</div>

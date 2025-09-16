@@ -48,14 +48,6 @@ export class OptionsUpdateLogic {
 			options.pageOrientation = 'portrait';
 		}
 
-		if (options.showMonstersInGroups === undefined) {
-			options.showMonstersInGroups = true;
-		}
-
-		if (options.showContentInTable === undefined) {
-			options.showContentInTable = false;
-		}
-
 		if (options.similarLevel === undefined) {
 			options.similarLevel = true;
 		}

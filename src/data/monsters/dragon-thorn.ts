@@ -102,15 +102,8 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 				}),
 				FactoryLogic.feature.createSoloMonster({
 					id: 'dragon-thorn-feature-2',
-					name: 'thorn dragon',
+					name: 'the thorn dragon',
 					endEffect: 10
-				}),
-				FactoryLogic.feature.create({
-					id: 'dragon-thorn-feature-3',
-					name: 'Solo Monster',
-					description: `*End Effect*: At the end of each of their turns, the dragon can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.
-	 
-  *Solo Turns*: The dragon can take two turns each round. They can’t take turns consecutively.`
 				}),
 				FactoryLogic.feature.create({
 					id: 'dragon-thorn-feature-4',

@@ -90,13 +90,6 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 					modifiers: [ FactoryLogic.damageModifier.create({ damageType: DamageType.Fire, modifierType: DamageModifierType.Immunity, value: 6 }) ]
 				}),
 				FactoryLogic.feature.create({
-					id: 'chimera-feature-3',
-					name: 'Solo Monster',
-					description: `*End Effect*: At the end of each of their turns, the chimera can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.
-
-					*Solo Turns*: The chimera can take two turns each round. They can’t take turns consecutively.`
-				}),
-				FactoryLogic.feature.create({
 					id: 'chimera-feature-4',
 					name: 'Volant',
 					description: 'When the chimera makes a creature winded or reduces them to 0 Stamina, they can move their speed toward an enemy.'

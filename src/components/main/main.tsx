@@ -44,7 +44,6 @@ import { ItemType } from '../../enums/item-type';
 import { Kit } from '../../models/kit';
 import { LibraryEditPage } from '../pages/library/library-edit/library-edit-page';
 import { LibraryListPage } from '../pages/library/library-list/library-list-page';
-import { LibraryViewPage } from '../pages/library/library-view/library-view-page';
 import { MainLayout } from './main-layout';
 import { Monster } from '../../models/monster';
 import { MonsterGroup } from '../../models/monster-group';
@@ -481,11 +480,7 @@ export const Main = (props: Props) => {
 		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibraryView(kind, element.id));
 	};
 
-	const importLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element, createCopy: boolean = false) => {
-		if (createCopy) {
-			element = Utils.copy(element);
-			element.name = `Copy of ${element.name}`;
-		}
+	const importLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
 		const sourcebooks = [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ];
 		const elements = [
 			...sourcebooks.flatMap(sb => sb.ancestries),
@@ -585,52 +580,14 @@ export const Main = (props: Props) => {
 		return element;
 	};
 
-	const copyLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
-		importLibraryElement(kind, sourcebookID, element, true);
-	};
-
-	const copyLibrarySubElement = (kind: SourcebookElementKind, sourcebookID: string, parentElementID: string, subElement: Element) => {
-		if (kind === 'class') {
-			const parent = homebrewSourcebooks.flatMap(sb => sb.classes).find(x => x.id === parentElementID);
-			if (parent) {
-				const copy = Utils.copy(subElement as SubClass);
-				copy.id = Utils.guid();
-				parent.subclasses.push(copy);
-				parent.subclasses = Collections.sort(parent.subclasses, sc => sc.name);
-				saveLibraryElement(kind, sourcebookID, parent);
-			}
-		}
-
-		if (kind === 'monster-group') {
-			const parent = homebrewSourcebooks.flatMap(sb => sb.monsterGroups).find(x => x.id === parentElementID);
-			if (parent) {
-				const copy = Utils.copy(subElement as Monster);
-				copy.id = Utils.guid();
-				parent.monsters.push(copy);
-				parent.monsters = Collections.sort(parent.monsters, m => m.name);
-				saveLibraryElement(kind, sourcebookID, parent);
-			}
-		}
-	};
-
-	const exportLibraryElement = (kind: SourcebookElementKind, isSubElement: boolean, element: Element, format: 'image' | 'pdf' | 'json') => {
+	const exportLibraryElement = (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
 		let name = Format.capitalize(kind);
 		let extension = kind.toString();
 
 		switch (kind) {
-			case 'class':
-				if (isSubElement) {
-					name = 'Subclass';
-					extension = 'subclass';
-				}
-				break;
 			case 'monster-group':
 				name = 'Monster Group';
 				extension = 'monster-group';
-				if (isSubElement) {
-					name = 'Monster';
-					extension = 'monster';
-				}
 				break;
 		};
 
@@ -1406,7 +1363,7 @@ export const Main = (props: Props) => {
 				element={element}
 				options={options}
 				onClose={() => setDrawer(null)}
-				export={format => exportLibraryElement(kind, false, element, format)}
+				export={format => exportLibraryElement(kind, element, format)}
 			/>
 		);
 	};
@@ -1682,11 +1639,12 @@ export const Main = (props: Props) => {
 								element={<Navigate to='ancestry' replace={true} />}
 							/>
 							<Route
-								path=':kind'
+								path=':kind/:elementID?/:subElementID?'
 								element={
 									<LibraryListPage
 										heroes={heroes}
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+										playbook={playbook}
 										options={options}
 										hiddenSourcebookIDs={hiddenSourcebookIDs}
 										highlightAbout={errors.length > 0}
@@ -1698,26 +1656,10 @@ export const Main = (props: Props) => {
 										setOptions={persistOptions}
 										createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
 										importElement={importLibraryElement}
-									/>
-								}
-							/>
-							<Route
-								path='view/:kind/:elementID/:subElementID?'
-								element={
-									<LibraryViewPage
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										playbook={playbook}
-										options={options}
-										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
-										createElement={createLibraryElement}
-										export={exportLibraryElement}
-										copy={copyLibraryElement}
-										copySubElement={copyLibrarySubElement}
-										delete={deleteLibraryElement}
+										deleteElement={deleteLibraryElement}
+										exportElement={exportLibraryElement}
+										selectSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
+										selectMonster={onSelectMonster}
 									/>
 								}
 							/>

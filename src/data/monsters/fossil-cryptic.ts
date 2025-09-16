@@ -93,13 +93,6 @@ export const fossilCryptic: MonsterGroup = {
 					name: 'the fossil cryptic'
 				}),
 				FactoryLogic.feature.create({
-					id: 'fossil-cryptic-feature-2',
-					name: 'Solo Monster',
-					description: `**End Effect**: At the end of each of their turns, the cryptic can take 5 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.
-	 
-  **Solo Turns**: The cryptic can take two turns each round. They can’t take turns consecutively.`
-				}),
-				FactoryLogic.feature.create({
 					id: 'fossil-cryptic-feature-3',
 					name: 'Churning Trunk',
 					description: 'The cryptic is constantly surrounded by a 1 aura of swirling debris that obscures their form. Ranged abilities that target the cryptic take a bane. Additionally, any enemy who enters the aura for the first time in a round or starts their turn there takes 5 damage.'

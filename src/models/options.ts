@@ -18,9 +18,6 @@ export interface Options {
 	featuresInclude: 'minimal' | 'no-basic' | 'all';
 	abilitySort: 'size' | 'type';
 	pageOrientation: 'portrait' | 'landscape';
-	// Library
-	showMonstersInGroups: boolean;
-	showContentInTable: boolean;
 	// Monster Builder
 	similarLevel: boolean;
 	similarRole: boolean;

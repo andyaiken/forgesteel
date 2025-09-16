@@ -986,8 +986,6 @@ export class FactoryLogic {
 			featuresInclude: 'all',
 			abilitySort: 'size',
 			compactView: false,
-			showMonstersInGroups: true,
-			showContentInTable: false,
 			similarLevel: true,
 			similarRole: true,
 			similarOrganization: true,

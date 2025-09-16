@@ -18,7 +18,7 @@ import { Utils } from '../../utils/utils';
 export class HeroUpdateLogic {
 	static updateHero = (hero: Hero, sourcebooks: Sourcebook[]) => {
 		HeroUpdateLogic.updateHeroStructure(hero, sourcebooks);
-		// HeroUpdateLogic.updateHeroData(hero, sourcebooks);
+		HeroUpdateLogic.updateHeroData(hero, sourcebooks);
 	};
 
 	static updateHeroStructure = (hero: Hero, sourcebooks: Sourcebook[]) => {

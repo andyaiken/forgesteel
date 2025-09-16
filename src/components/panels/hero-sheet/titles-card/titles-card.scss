@@ -1,7 +1,33 @@
-.titles.card {
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.hero-sheet .titles.card {
+    // --l1: round(up, calc(1rem + 4px), 1px);
+    // --ld: calc(var(--l1) + 1px);
+    // --l2: round(up, calc(2 * var(--l1)), 1px);
+    // background-image: linear-gradient(180deg, transparent var(--l1), #ccc var(--l1), #ccc var(--ld), #eee var(--ld), #eee var(--l2), #ccc var(--l2));
+    // background-size: 100% calc(var(--l2) + 1px);
+    // background-position: center top;
+    // background-repeat: repeat-y;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    place-items: stretch;
+
     ul {
         list-style: none;
         margin:0;
         padding:0;
+
+        li {
+            break-inside: avoid-column;
+        }
+    }
+
+    &.wide ul {
+        column-count: 2;
+
+        background-image: linear-gradient(0deg, common.$color-light, common.$color-light);
+        background-size: 2px 100%;
+        background-position: 50% 4px;
+        background-repeat: no-repeat;
     }
 }

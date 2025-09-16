@@ -17,8 +17,16 @@ export interface ExtraCards {
 	optional: FillerCard[];
 };
 
+interface CardPageLayout {
+	perPage: number;
+	perRow: number;
+	linesY: number;
+	cardLineLen: number;
+	cardGap: number;
+};
+
 export class SheetLayout {
-	static getAbilityLayout = (options: Options) => {
+	static getAbilityLayout = (options: Options): CardPageLayout => {
 		// Get root font size (1rem)
 		const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 		const charWidth = rootFontSize * 0.553;
@@ -45,8 +53,7 @@ export class SheetLayout {
 		};
 	};
 
-	static getFillerCards = (spacesToFill: number, availableLinesY: number, rowH: number, extraCards: ExtraCards, options: Options): JSX.Element[] => {
-		const layout = SheetLayout.getAbilityLayout(options);
+	static getFillerCards = (spacesToFill: number, availableLinesY: number, rowH: number, extraCards: ExtraCards, layout: CardPageLayout): JSX.Element[] => {
 		let refCards = [];
 		let availableRowH = rowH;
 		let spaceInRow = (spacesToFill % layout.perRow) || layout.perRow;
@@ -62,7 +69,7 @@ export class SheetLayout {
 				// new row
 				availableLinesY -= rowH;
 				if (rowH > 0)
-					availableLinesY -= 2; // For vertical card gap between rows
+					availableLinesY -= 2.5; // For vertical card gap between rows
 				availableRowH = availableLinesY;
 				rowH = 0;
 			}
@@ -107,8 +114,7 @@ export class SheetLayout {
 		return refCards;
 	};
 
-	static getAbilityPages = (character: CharacterSheet, extraCards: ExtraCards, options: Options) => {
-		const layout = SheetLayout.getAbilityLayout(options);
+	static getAbilityPages = (character: CharacterSheet, extraCards: ExtraCards, layout: CardPageLayout, options: Options) => {
 		// future: Allow options to filter abilities displayed?
 		let allAbilities = character.abilities;
 
@@ -178,7 +184,7 @@ export class SheetLayout {
 					spaceY -= rowY;
 				}
 				// console.log('overall spaceY:', spaceY, '/', layout.linesY, ' current rowY:', rowY);
-				refCards = SheetLayout.getFillerCards(spacesToFill, spaceY, rowY, extraCards, options);
+				refCards = SheetLayout.getFillerCards(spacesToFill, spaceY, rowY, extraCards, layout);
 			}
 			const abilityPageClasses = [ 'abilities', 'page' ];
 			return (
@@ -199,12 +205,11 @@ export class SheetLayout {
 		return abilityCardPages;
 	};
 
-	static getRequiredCardPages = (extraCards: ExtraCards, character: CharacterSheet, options: Options) => {
-		const layout = SheetLayout.getAbilityLayout(options);
+	static getRequiredCardPages = (extraCards: ExtraCards, character: CharacterSheet, layout: CardPageLayout) => {
 		const pages: JSX.Element[] = [];
 		let i = 0;
 		while (extraCards.required.find(c => !c.shown)) {
-			const cards = SheetLayout.getFillerCards(layout.perPage, layout.linesY, 0, extraCards, options);
+			const cards = SheetLayout.getFillerCards(layout.perPage, layout.linesY, 0, extraCards, layout);
 			if (cards.length === 0) {
 				console.warn('No cards added, but required cards still not shown!', extraCards.required);
 				break;

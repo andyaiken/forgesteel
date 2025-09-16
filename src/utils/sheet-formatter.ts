@@ -8,6 +8,7 @@ import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Format } from './format';
 import { Hero } from '../models/hero';
+import { Title } from '../models/title';
 import { Utils } from './utils';
 
 import rollT1Icon from '../assets/icons/power-roll-t1.svg';
@@ -224,6 +225,20 @@ export class SheetFormatter {
 				}
 			});
 		}
+		return +size.toFixed(1);
+	};
+
+	static calculateTitlesSize = (titles: Title[] | undefined, lineWidth: number): number => {
+		let size = 2.5; // Card header
+		titles?.forEach(title => {
+			let tSize = 1.7 + this.countLines(title.description, lineWidth);
+			if (title.features) {
+				title.features.filter(f => f.id === title.selectedFeatureID).forEach(f => {
+					tSize += this.calculateFeatureSize(f, lineWidth, false);
+				});
+			}
+			size += tSize;
+		});
 		return +size.toFixed(1);
 	};
 

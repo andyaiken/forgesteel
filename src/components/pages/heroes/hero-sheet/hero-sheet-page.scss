@@ -343,7 +343,8 @@
         }
 
         .feature-reference,
-        .inventory.wide {
+        .inventory.wide,
+        .titles.wide {
             flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
         }
         .feature-reference.wide {
@@ -358,7 +359,8 @@
         }
 
         .feature-reference,
-        .inventory.wide {
+        .inventory.wide,
+        .titles.wide {
             flex-basis: calc(2 * ((100% - 3 * var(--gap)) / 4) + var(--gap));
         }
         .feature-reference.wide {
@@ -409,6 +411,10 @@
             background-size: 2px 100%;
             background-position: 50% 4px;
             background-repeat: no-repeat;
+        }
+
+        li {
+            break-inside: avoid-column;
         }
 
         .feature {

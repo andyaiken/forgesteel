@@ -1,9 +1,9 @@
 import { Fragment, JSX } from 'react';
 
 import { CharacterSheet } from '../../../../models/character-sheet';
-import { SheetFormatter } from '../../../../utils/sheet-formatter';
 import { Feature } from '../../../../models/feature';
 import { FeatureComponent } from '../components/feature-component';
+import { SheetFormatter } from '../../../../utils/sheet-formatter';
 
 import './feature-reference-card.scss';
 

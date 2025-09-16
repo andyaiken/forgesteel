@@ -65,6 +65,7 @@ export const HeroSheetPage = (props: Props) => {
 		[ props.options ]
 	);
 
+	const numTitlesInSmallCard = props.options.pageOrientation === 'portrait' ? 1 : 2;
 	const populateExtraCards = (character: CharacterSheet): ExtraCards => {
 		const required = [
 			{
@@ -123,6 +124,22 @@ export const HeroSheetPage = (props: Props) => {
 					height: 10,
 					shown: false
 				});
+			});
+		}
+
+		// Titles
+		if (character.titles?.length || 0 > numTitlesInSmallCard) {
+			let titleH = SheetFormatter.calculateTitlesSize(character.titles, layout.cardLineLen);
+			let titleW = 1;
+			if (titleH > 60) {
+				titleW = 2;
+				titleH = titleH * 0.5;
+			}
+			required.push({
+				element: <TitlesCard character={character} showLong='all' wide={titleW > 1} key='titles-long' />,
+				width: titleW,
+				height: titleH,
+				shown: false
 			});
 		}
 
@@ -196,11 +213,11 @@ export const HeroSheetPage = (props: Props) => {
 	};
 
 	const addAbilityPages = (character: CharacterSheet, extraCards: ExtraCards) => {
-		return SheetLayout.getAbilityPages(character, extraCards, props.options);
+		return SheetLayout.getAbilityPages(character, extraCards, layout, props.options);
 	};
 
 	const getFinalCards = (extraCards: ExtraCards) => {
-		return SheetLayout.getRequiredCardPages(extraCards, character, props.options);
+		return SheetLayout.getRequiredCardPages(extraCards, character, layout);
 	};
 
 	try {
@@ -262,6 +279,7 @@ export const HeroSheetPage = (props: Props) => {
 							/>
 							<TitlesCard
 								character={character}
+								showLong={numTitlesInSmallCard}
 							/>
 							<ProjectsCard
 								character={character}

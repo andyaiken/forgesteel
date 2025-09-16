@@ -51,6 +51,7 @@
 
     h2 {
         color: var(--color-text);
+        @include common.bottom-border-plain(common.$color-medium);
     }
 
     *:not(h2) {

@@ -1,0 +1,30 @@
+.selector-row {
+	background-color: white;
+	border-radius: 5px;
+	padding: 4px 8px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: rgba(5, 5, 5, 0.06);
+	}
+
+	&.selected {
+		background-color: rgb(230, 244, 255);
+
+		.content {
+			font-weight: 600;
+		}
+	}
+
+	.info {
+		text-align: right;
+		font-size: 12px;
+		opacity: 0.5;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.selector-row {
+		color: rgba(0, 0, 0, 0.88);
+	}
+}

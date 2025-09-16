@@ -54,11 +54,11 @@ export const DirectoryModal = (props: Props) => {
 						<div className='directory-btn' onClick={() => { navigation.goToLibrary('terrain'); props.onClose(); }}>Terrain</div>
 						<div className='directory-btn' onClick={() => { navigation.goToLibrary('title'); props.onClose(); }}>Titles</div>
 						<div className='directory-header'>Playbook</div>
-						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('adventure'); props.onClose(); }}>Adventures</div>
-						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('encounter'); props.onClose(); }}>Encounters</div>
-						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('montage'); props.onClose(); }}>Montages</div>
-						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('negotiation'); props.onClose(); }}>Negotiations</div>
-						<div className='directory-btn' onClick={() => { navigation.goToPlaybookList('tactical-map'); props.onClose(); }}>Tactical Maps</div>
+						<div className='directory-btn' onClick={() => { navigation.goToPlaybook('adventure'); props.onClose(); }}>Adventures</div>
+						<div className='directory-btn' onClick={() => { navigation.goToPlaybook('encounter'); props.onClose(); }}>Encounters</div>
+						<div className='directory-btn' onClick={() => { navigation.goToPlaybook('montage'); props.onClose(); }}>Montages</div>
+						<div className='directory-btn' onClick={() => { navigation.goToPlaybook('negotiation'); props.onClose(); }}>Negotiations</div>
+						<div className='directory-btn' onClick={() => { navigation.goToPlaybook('tactical-map'); props.onClose(); }}>Tactical Maps</div>
 						<div className='directory-header'>Session</div>
 						<div className='directory-btn' onClick={() => { navigation.goToSession(); props.onClose(); }}>Session</div>
 					</div>

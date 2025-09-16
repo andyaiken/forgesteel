@@ -18,7 +18,7 @@ import './create-panel.scss';
 interface Props {
 	currentTab: PlaybookElementKind;
 	createElement: (kind: PlaybookElementKind, original: Element | null) => void;
-	importElement: (list: { kind: PlaybookElementKind, element: Element }[]) => void;
+	importElement: (kind: PlaybookElementKind, element: Element) => void;
 	importAdventurePackage: (ap: AdventurePackage) => void;
 }
 
@@ -108,7 +108,7 @@ export const CreatePanel = (props: Props) => {
 										props.importAdventurePackage(ap);
 									} else {
 										const e = JSON.parse(json) as Element;
-										props.importElement([ { kind: props.currentTab, element: e } ]);
+										props.importElement(props.currentTab, e);
 									}
 								});
 							return false;

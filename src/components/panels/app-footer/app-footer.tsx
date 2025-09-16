@@ -35,11 +35,11 @@ export const AppFooter = (props: Props) => {
 									Heroes
 								</Button>
 								<Divider type='vertical' />
-								<Button type='text' className={props.page === 'library' ? 'selected' : ''} icon={<BookOutlined />} onClick={() => navigation.goToLibrary()}>
+								<Button type='text' className={props.page === 'library' ? 'selected' : ''} icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>
 									Library
 								</Button>
 								<Divider type='vertical' />
-								<Button type='text' className={props.page === 'playbook' ? 'selected' : ''} icon={<ReadOutlined />} onClick={() => navigation.goToPlaybookList('adventure')}>
+								<Button type='text' className={props.page === 'playbook' ? 'selected' : ''} icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('adventure')}>
 									Playbook
 								</Button>
 								<Divider type='vertical' />

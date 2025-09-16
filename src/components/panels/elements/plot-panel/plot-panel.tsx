@@ -84,7 +84,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						const encounter = props.playbook.encounters.find(e => e.id === content.contentID);
 						if (encounter) {
 							return (
-								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybookView('encounter', encounter.id)}>
+								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('encounter', encounter.id)}>
 									<EncounterPanel
 										encounter={encounter}
 										sourcebooks={props.sourcebooks}
@@ -101,7 +101,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						const montage = props.playbook.montages.find(m => m.id === content.contentID);
 						if (montage) {
 							return (
-								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybookView('montage', montage.id)}>
+								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('montage', montage.id)}>
 									<MontagePanel
 										montage={montage}
 									/>
@@ -115,7 +115,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						const negotiation = props.playbook.negotiations.find(n => n.id === content.contentID);
 						if (negotiation) {
 							return (
-								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybookView('negotiation', negotiation.id)}>
+								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('negotiation', negotiation.id)}>
 									<NegotiationPanel
 										negotiation={negotiation}
 									/>
@@ -129,7 +129,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						const map = props.playbook.tacticalMaps.find(tm => tm.id === content.contentID);
 						if (map) {
 							return (
-								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybookView('tactical-map', map.id)}>
+								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('tactical-map', map.id)}>
 									<HeaderText level={1}>{map.name || 'Unnamed Map'}</HeaderText>
 									<div className='tactical-map-container'>
 										<TacticalMapPanel

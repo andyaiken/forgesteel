@@ -65,7 +65,7 @@ export const WelcomePage = (props: Props) => {
 				return (
 					<div className='welcome-section'>
 						<HeaderText
-							extra={<Button type='primary' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybookList('adventure')}>Playbook</Button>}
+							extra={<Button type='primary' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('adventure')}>Playbook</Button>}
 						>
 							For Directors: Prep Time
 						</HeaderText>
@@ -133,7 +133,7 @@ export const WelcomePage = (props: Props) => {
 				return (
 					<div className='welcome-section'>
 						<HeaderText
-							extra={<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary()}>Library</Button>}
+							extra={<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>Library</Button>}
 						>
 							For Content Creators
 						</HeaderText>

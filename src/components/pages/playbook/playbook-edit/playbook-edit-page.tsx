@@ -205,7 +205,7 @@ export const PlaybookEditPage = (props: Props) => {
 						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 							Save Changes
 						</Button>
-						<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybookView(kind!, element.id)}>
+						<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybook(kind!, element.id)}>
 							Cancel
 						</Button>
 						{

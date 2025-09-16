@@ -37,17 +37,17 @@ export const AboutModal = (props: Props) => {
 				const error = event as ErrorEvent;
 
 				message = error.message;
-				output = `title ${error.message}, file ${error.filename}, line ${error.lineno}, col ${error.colno}, data ${error.error}`;
+				output = `title ${error.message}, file ${error.filename}, line ${error.lineno}, col ${error.colno}, data ${JSON.stringify(error.error)}`;
 
 				fields.push({ label: 'Location', value: `${error.filename}, line ${error.lineno}, column ${error.colno}` });
-				fields.push({ label: 'Data', value: error.error });
+				fields.push({ label: 'Data', value: JSON.stringify(error.error) });
 			}
 
 			if (event.type === 'unhandledrejection') {
 				const error = event as PromiseRejectionEvent;
 
-				message = error.reason;
-				output = `reason ${error.reason}`;
+				message = JSON.stringify(error.reason);
+				output = `reason ${JSON.stringify(error.reason)}`;
 			}
 
 			return (

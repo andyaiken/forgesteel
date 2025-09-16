@@ -36,6 +36,7 @@ import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
 import { Playbook } from '../../../../models/playbook';
 import { PlaybookLogic } from '../../../../logic/playbook-logic';
+import { SelectorRow } from '../../../panels/selector-row/selector-row';
 import { SourcebookData } from '../../../../data/sourcebook-data';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { SubClass } from '../../../../models/subclass';
@@ -61,14 +62,14 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	setOptions: (options: Options) => void;
 	showSourcebooks: () => void;
+	showSubclass: (subclass: SubClass) => void;
+	showMonster: (monster: Monster) => void;
+	setOptions: (options: Options) => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	deleteElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	exportElement: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
-	selectSubclass: (subclass: SubClass) => void;
-	selectMonster: (monster: Monster) => void;
 }
 
 export const LibraryListPage = (props: Props) => {
@@ -369,7 +370,7 @@ export const LibraryListPage = (props: Props) => {
 				getPanel = (element: Element) => <CareerPanel key={element.id} career={element as Career} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'class':
-				getPanel = (element: Element) => <ClassPanel key={element.id} heroClass={element as HeroClass} options={props.options} mode={PanelMode.Full} onSelectSubclass={props.selectSubclass} />;
+				getPanel = (element: Element) => <ClassPanel key={element.id} heroClass={element as HeroClass} options={props.options} mode={PanelMode.Full} onSelectSubclass={props.showSubclass} />;
 				break;
 			case 'complication':
 				getPanel = (element: Element) => <ComplicationPanel key={element.id} complication={element as Complication} options={props.options} mode={PanelMode.Full} />;
@@ -390,7 +391,7 @@ export const LibraryListPage = (props: Props) => {
 				getPanel = (element: Element) => <KitPanel key={element.id} kit={element as Kit} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'monster-group':
-				getPanel = (element: Element) => <MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} options={props.options} mode={PanelMode.Full} onSelectMonster={props.selectMonster} />;
+				getPanel = (element: Element) => <MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} options={props.options} mode={PanelMode.Full} onSelectMonster={props.showMonster} />;
 				break;
 			case 'perk':
 				getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} options={props.options} mode={PanelMode.Full} />;
@@ -469,53 +470,6 @@ export const LibraryListPage = (props: Props) => {
 		return null;
 	};
 
-	const getContent = () => {
-		const list = getList();
-		const selected = list.find(item => item.id == selectedID);
-		const getPanel = getElementPanel();
-
-		return (
-			<div className='library-list-page-content'>
-				<div className='selection-list categories'>
-					<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => navigation.goToLibrary('ancestry')} />
-					<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => navigation.goToLibrary('career')} />
-					<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => navigation.goToLibrary('class')} />
-					<SelectorRow selected={category === 'complication'} content='Complications' info={getComplications().length} onSelect={() => navigation.goToLibrary('complication')} />
-					<SelectorRow selected={category === 'culture'} content='Cultures' info={getCultures().length} onSelect={() => navigation.goToLibrary('culture')} />
-					<SelectorRow selected={category === 'domain'} content='Domains' info={getDomains().length} onSelect={() => navigation.goToLibrary('domain')} />
-					<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
-					<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
-					<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
-					<SelectorRow selected={category === 'monster-group'} content='Monster Groups' info={getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
-					<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
-					<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
-					<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
-					<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
-				</div>
-				<div className='selection-list elements'>
-					{
-						list.map(a => (
-							<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} info={getInfo(a.id)} onSelect={() => navigation.goToLibrary(category, a.id)} />
-						))
-					}
-					{
-						list.length === 0 ?
-							<Empty />
-							: null
-					}
-				</div>
-				<div className='element-selected'>
-					{
-						selected ?
-							getPanel(selected)
-							:
-							<Empty text='Nothing selected' />
-					}
-				</div>
-			</div>
-		);
-	};
-
 	const getElementToolbar = () => {
 		const list = getList();
 		const element = list.find(item => item.id == selectedID);
@@ -526,7 +480,7 @@ export const LibraryListPage = (props: Props) => {
 		}
 
 		return (
-			<>
+			<Flex align='center' justify='flex-end' gap={5}>
 				{
 					!sourcebook.isHomebrew && (props.sourcebooks.filter(sb => sb.isHomebrew).length === 0) ?
 						<Button icon={<CopyOutlined />} onClick={() => props.createElement(category, null, element)}>
@@ -612,11 +566,15 @@ export const LibraryListPage = (props: Props) => {
 						/>
 						: null
 				}
-			</>
+			</Flex>
 		);
 	};
 
 	try {
+		const list = getList();
+		const selected = list.find(item => item.id == selectedID);
+		const getPanel = getElementPanel();
+
 		const sourcebookOptions = props.sourcebooks
 			.filter(cs => cs.isHomebrew)
 			.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
@@ -690,13 +648,52 @@ export const LibraryListPage = (props: Props) => {
 								<DownOutlined />
 							</Button>
 						</Popover>
-						{getElementToolbar()}
 						<div className='divider' />
 						<Button icon={<BookOutlined />} onClick={props.showSourcebooks}>
 							Sourcebooks
 						</Button>
 					</AppHeader>
-					{getContent()}
+					<div className='library-list-page-content'>
+						<div className='selection-list categories'>
+							<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => navigation.goToLibrary('ancestry')} />
+							<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => navigation.goToLibrary('career')} />
+							<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => navigation.goToLibrary('class')} />
+							<SelectorRow selected={category === 'complication'} content='Complications' info={getComplications().length} onSelect={() => navigation.goToLibrary('complication')} />
+							<SelectorRow selected={category === 'culture'} content='Cultures' info={getCultures().length} onSelect={() => navigation.goToLibrary('culture')} />
+							<SelectorRow selected={category === 'domain'} content='Domains' info={getDomains().length} onSelect={() => navigation.goToLibrary('domain')} />
+							<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
+							<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
+							<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
+							<SelectorRow selected={category === 'monster-group'} content='Monster Groups' info={getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
+							<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
+							<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
+							<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
+							<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
+						</div>
+						<div className='selection-list elements'>
+							{
+								list.map(a => (
+									<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} info={getInfo(a.id)} onSelect={() => navigation.goToLibrary(category, a.id)} />
+								))
+							}
+							{
+								list.length === 0 ?
+									<Empty />
+									: null
+							}
+						</div>
+						<div className='element-selected'>
+							{
+								selected ?
+									<>
+										{getElementToolbar()}
+										{getPanel(selected)}
+									</>
+									:
+									<Empty text='Nothing selected' />
+							}
+						</div>
+					</div>
 					<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
@@ -705,22 +702,4 @@ export const LibraryListPage = (props: Props) => {
 		console.error(ex);
 		return null;
 	}
-};
-
-interface SelectorRowProps {
-	content: ReactNode;
-	info?: ReactNode;
-	selected: boolean;
-	onSelect: () => void;
-}
-
-const SelectorRow = (props: SelectorRowProps) => {
-	return (
-		<div className={props.selected ? 'selector-row selected' : 'selector-row'} onClick={() => props.onSelect()}>
-			<Flex align='center' justify='space-between' gap={5}>
-				<div className='content'>{props.content}</div>
-				{props.info ? <div className='info'>{props.info}</div> : null}
-			</Flex>
-		</div>
-	);
 };

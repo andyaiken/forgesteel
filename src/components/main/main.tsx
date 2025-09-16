@@ -59,7 +59,6 @@ import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
 import { PlaybookLogic } from '../../logic/playbook-logic';
 import { PlaybookUpdateLogic } from '../../logic/update/playbook-update-logic';
-import { PlaybookViewPage } from '../pages/playbook/playbook-view/playbook-view-page';
 import { PlayerViewModal } from '../modals/player-view/player-view-modal';
 import { ReferenceModal } from '../modals/reference/reference-modal';
 import { RollModal } from '../modals/roll/roll-modal';
@@ -1006,11 +1005,11 @@ export const Main = (props: Props) => {
 				break;
 		}
 
-		persistPlaybook(copy).then(() => navigation.goToPlaybookView(kind, element.id));
+		persistPlaybook(copy).then(() => navigation.goToPlaybook(kind, element.id));
 	};
 
 	const deletePlaybookElement = (kind: PlaybookElementKind, element: Element) => {
-		navigation.goToPlaybookList(kind);
+		navigation.goToPlaybook(kind);
 
 		const copy = Utils.copy(playbook);
 		switch (kind) {
@@ -1055,19 +1054,15 @@ export const Main = (props: Props) => {
 				break;
 		}
 
-		persistPlaybook(copy).then(() => navigation.goToPlaybookView(kind, element.id));
+		persistPlaybook(copy).then(() => navigation.goToPlaybook(kind, element.id));
 	};
 
-	const importPlaybookElement = (list: { kind: PlaybookElementKind, element: Element }[], createCopy: boolean = false) => {
+	const importPlaybookElement = (list: { kind: PlaybookElementKind, element: Element }[]) => {
 		const copy = Utils.copy(playbook);
 
 		const changedIDs: { fromID: string, toID: string }[] = [];
 
 		list.forEach(item => {
-			if (createCopy) {
-				item.element = Utils.copy(item.element);
-				item.element.name = `Copy of ${item.element.name}`;
-			}
 			const elements = [
 				...playbook.adventures,
 				...playbook.encounters,
@@ -1117,7 +1112,7 @@ export const Main = (props: Props) => {
 		PlaybookUpdateLogic.updatePlaybook(copy);
 
 		setDrawer(null);
-		persistPlaybook(copy).then(() => navigation.goToPlaybookList(list[list.length - 1].kind));
+		persistPlaybook(copy).then(() => navigation.goToPlaybook(list[list.length - 1].kind));
 
 		return list[list.length - 1].element;
 	};
@@ -1143,11 +1138,7 @@ export const Main = (props: Props) => {
 				return { kind: kind, element: e.data };
 			}),
 			{ kind: 'adventure', element: ap.adventure }
-		], false);
-	};
-
-	const copyPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
-		importPlaybookElement([ { kind: kind, element: element } ], true);
+		]);
 	};
 
 	const exportPlaybookElement = (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
@@ -1637,7 +1628,7 @@ export const Main = (props: Props) => {
 								element={<Navigate to='ancestry' replace={true} />}
 							/>
 							<Route
-								path=':kind/:elementID?/:subElementID?'
+								path=':kind/:elementID?'
 								element={
 									<LibraryListPage
 										heroes={heroes}
@@ -1651,13 +1642,13 @@ export const Main = (props: Props) => {
 										showRoll={showRoll}
 										showReference={showReference}
 										showSourcebooks={showSourcebooks}
+										showSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
+										showMonster={onSelectMonster}
 										setOptions={persistOptions}
 										createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
 										importElement={importLibraryElement}
 										deleteElement={deleteLibraryElement}
 										exportElement={exportLibraryElement}
-										selectSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
-										selectMonster={onSelectMonster}
 									/>
 								}
 							/>
@@ -1686,7 +1677,7 @@ export const Main = (props: Props) => {
 								element={<Navigate to='adventure' replace={true} />}
 							/>
 							<Route
-								path=':kind'
+								path=':kind/:elementID?'
 								element={
 									<PlaybookListPage
 										heroes={heroes}
@@ -1698,32 +1689,14 @@ export const Main = (props: Props) => {
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
-										createElement={createPlaybookElement}
-										importElement={importPlaybookElement}
-										importAdventurePackage={importAdventurePackage}
-										setOptions={persistOptions}
-									/>
-								}
-							/>
-							<Route
-								path='view/:kind/:elementID'
-								element={
-									<PlaybookViewPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										playbook={playbook}
-										options={options}
-										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
 										showEncounterTools={showEncounterTools}
-										export={exportPlaybookElement}
-										start={startPlaybookElement}
-										copy={copyPlaybookElement}
-										delete={deletePlaybookElement}
 										setOptions={persistOptions}
+										createElement={createPlaybookElement}
+										importElement={(kind, element) => importPlaybookElement([ { kind: kind, element: element } ])}
+										importAdventurePackage={importAdventurePackage}
+										deleteElement={deletePlaybookElement}
+										exportElement={exportPlaybookElement}
+										startElement={startPlaybookElement}
 									/>
 								}
 							/>

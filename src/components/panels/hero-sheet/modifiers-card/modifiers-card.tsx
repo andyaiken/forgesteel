@@ -1,7 +1,7 @@
 import { LabeledBooleanField, LabeledTextField } from '../components/labeled-field';
 import { CharacterSheet } from '../../../../models/character-sheet';
-import { CharacterSheetFormatter } from '../../../../utils/character-sheet-formatter';
 import { FeatureComponent } from '../components/feature-component';
+import { SheetFormatter } from '../../../../utils/sheet-formatter';
 
 import './modifiers-card.scss';
 
@@ -40,15 +40,15 @@ export const ModifiersCard = (props: Props) => {
 						<h4>Ranged Weapon Damage</h4>
 						<div className='roll-tiers'>
 							<div className='tier t1'>
-								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierRangedDamageT1)}</div>
+								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT1)}</div>
 								<img src={rollT1} alt='≤ 11' className='range' />
 							</div>
 							<div className='tier t2'>
-								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierRangedDamageT2)}</div>
+								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT2)}</div>
 								<img src={rollT2} alt='12 - 16' className='range' />
 							</div>
 							<div className='tier t3'>
-								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierRangedDamageT3)}</div>
+								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT3)}</div>
 								<img src={rollT3} alt='17 +' className='range' />
 							</div>
 						</div>
@@ -57,15 +57,15 @@ export const ModifiersCard = (props: Props) => {
 						<h4>Melee Weapon Damage</h4>
 						<div className='roll-tiers'>
 							<div className='tier t1'>
-								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierMeleeDamageT1)}</div>
+								<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT1)}</div>
 								<img src={rollT1} alt='≤ 11' className='range' />
 							</div>
 							<div className='tier t2'>
-								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierMeleeDamageT2)}</div>
+								<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT2)}</div>
 								<img src={rollT2} alt='12 - 16' className='range' />
 							</div>
 							<div className='tier t3'>
-								<div className='effect'>{CharacterSheetFormatter.addSign(character.modifierMeleeDamageT3)}</div>
+								<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT3)}</div>
 								<img src={rollT3} alt='17 +' className='range' />
 							</div>
 						</div>
@@ -109,27 +109,27 @@ export const ModifiersCard = (props: Props) => {
 				<div className='stats'>
 					<LabeledTextField
 						label='Speed'
-						content={CharacterSheetFormatter.addSign(character.modifierSpeed)}
+						content={SheetFormatter.addSign(character.modifierSpeed)}
 					/>
 					<LabeledTextField
 						label='Melee'
-						content={CharacterSheetFormatter.addSign(character.modifierMeleeDistance)}
+						content={SheetFormatter.addSign(character.modifierMeleeDistance)}
 					/>
 					<LabeledTextField
 						label='Ranged'
-						content={CharacterSheetFormatter.addSign(character.modifierRangedDistance)}
+						content={SheetFormatter.addSign(character.modifierRangedDistance)}
 					/>
 					<LabeledTextField
 						label='Disengage'
-						content={CharacterSheetFormatter.addSign(character.modifierDisengage)}
+						content={SheetFormatter.addSign(character.modifierDisengage)}
 					/>
 					<LabeledTextField
 						label='Stability'
-						content={CharacterSheetFormatter.addSign(character.modifierStability)}
+						content={SheetFormatter.addSign(character.modifierStability)}
 					/>
 					<LabeledTextField
 						label='Stamina'
-						content={CharacterSheetFormatter.addSign(character.modifierStamina)}
+						content={SheetFormatter.addSign(character.modifierStamina)}
 					/>
 				</div>
 			</div>

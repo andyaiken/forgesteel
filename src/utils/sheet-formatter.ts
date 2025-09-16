@@ -14,14 +14,14 @@ import rollT1Icon from '../assets/icons/power-roll-t1.svg';
 import rollT2Icon from '../assets/icons/power-roll-t2.svg';
 import rollT3Icon from '../assets/icons/power-roll-t3.svg';
 
-export class CharacterSheetFormatter {
-	static getPageId = (heroId: string, pageNum: number) => {
-		return `hero-sheet-${heroId}-page-${pageNum}`;
+export class SheetFormatter {
+	static getPageId = (heroId: string, key: string) => {
+		return `hero-sheet-${heroId}-page-${key}`;
 	};
 
 	static addSign = (n: number | undefined) => {
 		if (n !== undefined) {
-			return n >= 0 ? '+' + n : n.toString();
+			return n > 0 ? '+' + n : n.toString();
 		}
 	};
 
@@ -159,30 +159,46 @@ export class CharacterSheetFormatter {
 
 	static calculateFeatureSize = (f: Feature, lineWidth: number, countShortenedText: boolean = true): number => {
 		let size = 1;
-		if ([ FeatureType.Multiple, FeatureType.DomainFeature ].includes(f.type)) {
+		const headerSize = 1.5;
+		const bottomMargin = 0.3;
+		if ([ FeatureType.Multiple ].includes(f.type)) {
 			size = 0;
 		} else if (this.isLongFeature(f)) {
-			size = 2;
 			if (countShortenedText) {
-				size += this.countLines(f.description.trim().split('\n')[0], lineWidth);
+				size = headerSize + this.countLines(f.description.trim().split('\n')[0], lineWidth);
 			} else {
-				size += this.countLines(f.description, lineWidth);
+				size = headerSize + this.countLines(f.description, lineWidth);
 			}
+			size += bottomMargin;
 		} else if ([ FeatureType.Text, FeatureType.Package, FeatureType.PackageContent ].includes(f.type)) {
-			size = 2 + this.countLines(f.description, lineWidth);
+			size = headerSize + this.countLines(f.description, lineWidth);
+			size += bottomMargin;
 		} else if (f.type === FeatureType.Ability) {
-			size = 3;
+			size = headerSize + this.countLines(f.data.ability.description, lineWidth);
 		} else if (f.type === FeatureType.DamageModifier) {
-			size = 3 + (2 * Collections.distinct(f.data.modifiers, m => m.type).length);
+			size = headerSize + (Collections.distinct(f.data.modifiers, m => m.type).length);
+			size += bottomMargin + 0.3;
 		} else if (f.type === FeatureType.HeroicResource) {
-			size = 2 + (2 * this.countLines(f.data.details, lineWidth));
+			size = headerSize + (2 * this.countLines(f.data.details, lineWidth));
+		} else if ([ FeatureType.Choice,
+			FeatureType.ItemChoice,
+			FeatureType.SkillChoice,
+			FeatureType.LanguageChoice,
+			FeatureType.Perk,
+			FeatureType.Domain,
+			FeatureType.DomainFeature,
+			FeatureType.ClassAbility ].includes(f.type)) {
+			if (f.data && (Object.hasOwn(f.data, 'selected') || Object.hasOwn(f.data, 'selectedIds'))) {
+				size += 0.2; // choices with selections are sliiightly taller than a single line
+			}
 		}
+		size = +size.toFixed(1);
 
 		return size;
 	};
 
-	static calculateFeaturesSize = (features: { feature: Feature, source: string }[] | undefined, lineWidth: number): number => {
-		let size = 0;
+	static calculateFeatureReferenceSize = (features: { feature: Feature, source: string }[] | undefined, lineWidth: number): number => {
+		let size = 2.5; // Card header
 		if (features) {
 			features.forEach(f => {
 				size += this.calculateFeatureSize(f.feature, lineWidth, false);
@@ -190,19 +206,25 @@ export class CharacterSheetFormatter {
 
 			size += 2 * Collections.distinct(features, f => f.source).length;
 		}
-		return size;
+		return +size.toFixed(1);
 	};
 
 	static calculateInventorySize = (items: ItemSheet[] | undefined, lineWidth: number): number => {
-		let size = 0;
+		let size = 2.5; // Card header
 		if (items) {
+			let itemSize;
 			items.forEach(i => {
-				if (i.features)
-					size += i.features.reduce((s, f) => s += this.calculateFeatureSize(f, lineWidth, false), 0);
-				size += 2;
+				itemSize = 1.4; // account for item display differences from plain features
+				if (i.features) {
+					itemSize += i.features.reduce((s, f) => {
+						s += this.calculateFeatureSize(f, lineWidth, false);
+						return s;
+					}, 0);
+					size += itemSize;
+				}
 			});
 		}
-		return size;
+		return +size.toFixed(1);
 	};
 
 	static featureTypeOrder: FeatureType[] = [
@@ -266,7 +288,7 @@ export class CharacterSheetFormatter {
 		if (ability) {
 			size += 4; // title
 			size += this.countLines(ability.description, lineWidth);
-			size += 4; // keywords, distance, etc
+			size += 2.5; // keywords, distance, etc
 			size += ability.hasPowerRoll ? 2 : 0;
 			size += 2 * this.countLines(ability.rollT1Effect, rollLineLen);
 			size += 2 * this.countLines(ability.rollT2Effect, rollLineLen);
@@ -275,7 +297,6 @@ export class CharacterSheetFormatter {
 				size += 1 + this.countLines(ability.trigger, lineWidth);
 			if (ability.effect) {
 				const effectSize = this.countLines(ability.effect, lineWidth, 1);
-				// console.log('Effect size: ', effectSize);
 				size += 2 + effectSize;
 			}
 		}
@@ -285,9 +306,18 @@ export class CharacterSheetFormatter {
 	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0) => {
 		return text?.trim().split('\n').reduce((n, l) => {
 			let len = Math.max(emptyLineSize, Math.ceil(l.length / lineWidth));
-			if (l.startsWith('*'))// list item, will be indented
-				len = Math.ceil(l.length / (lineWidth - 5));
-			return n + len;
+			if (l.startsWith('|:---')) { // table divider
+				len = 0;
+			} else if (l.startsWith('|') && l.endsWith('|')) { // table row
+				len = Math.ceil(l.replaceAll('|', '').trim().length / (lineWidth - 3));
+				len += 0.4;// additional row spacing
+			} else if (l.startsWith('**')) { // bolded label - will have extra bottom margin
+				len += 0.5;
+			} else if (l.startsWith('* ')) { // list item, will be indented
+				len = Math.ceil(l.length / (lineWidth - 3));
+			}
+
+			return n + len + 0.2;
 		}, 0) || 0;
 	};
 
@@ -381,7 +411,7 @@ export class CharacterSheetFormatter {
 			const values = distanceTypes.map(d => {
 				return {
 					type: d,
-					effect: CharacterSheetFormatter.cleanupText(AbilityLogic.getTierEffect(value, tier, ability, d, hero)).split('; ')
+					effect: SheetFormatter.cleanupText(AbilityLogic.getTierEffect(value, tier, ability, d, hero)).split('; ')
 				};
 			});
 			const combined: string[] = [];
@@ -396,15 +426,15 @@ export class CharacterSheetFormatter {
 			}
 			return combined.join('; ');
 		}
-		return CharacterSheetFormatter.cleanupText(
+		return SheetFormatter.cleanupText(
 			AbilityLogic.getTierEffect(value, tier, ability, undefined, hero));
 	};
 
 	static abilitySections = (sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[]): string => {
 		const lines: string[] = [];
 		for (const section of sections) {
-			let text = CharacterSheetFormatter.abilitySection(section);
-			text = CharacterSheetFormatter.enhanceMarkdown(text);
+			let text = SheetFormatter.abilitySection(section);
+			text = SheetFormatter.enhanceMarkdown(text);
 			lines.push(text);
 		}
 		return lines.join('\n');

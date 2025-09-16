@@ -9,7 +9,6 @@ import { AbilityModal } from '../modals/ability/ability-modal';
 import { AboutModal } from '../modals/about/about-modal';
 import { Ancestry } from '../../models/ancestry';
 import { Career } from '../../models/career';
-import { CharacterSheetFormatter } from '../../utils/character-sheet-formatter';
 import { Characteristic } from '../../enums/characteristic';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
@@ -304,11 +303,7 @@ export const Main = (props: Props) => {
 		if (data.mode === 'html') {
 			setSpinning(true);
 			const pageIds: string[] = [];
-			let p = 1;
-			while (document.getElementById(CharacterSheetFormatter.getPageId(hero.id, p)) !== null) {
-				pageIds.push(CharacterSheetFormatter.getPageId(hero.id, p));
-				++p;
-			}
+			document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
 			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize, resolution)
 				.then(() => {
 					setSpinning(false);

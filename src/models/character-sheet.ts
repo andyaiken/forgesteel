@@ -128,6 +128,9 @@ export interface CharacterSheet {
 	abilities: AbilitySheet[];
 	standardAbilities: AbilitySheet[];
 
+	// Followers
+	followers: FollowerSheet[];
+
 	// Other Features and Reference
 	featuresReferenceOther?: {
 		feature: Feature,
@@ -189,3 +192,15 @@ export interface AbilitySheet {
 	rollT2Effect?: string;
 	rollT3Effect?: string;
 }
+
+export interface FollowerSheet {
+	id: string;
+	name: string;
+	type: string;
+
+	might: number;
+	agility: number;
+	reason: number;
+	intuition: number;
+	presence: number;
+};

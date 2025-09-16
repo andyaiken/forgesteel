@@ -1,0 +1,89 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+.hero-sheet .follower.card {
+    // background-image: linear-gradient(180deg, transparent 17px, #ccc 17px, #ccc 18px, #eee 18px,#eee 35px, #ccc 35px);
+    // background-size: 100% 36px;
+    // background-position: center top;
+    // background-repeat: repeat-y;
+    padding: 10px;
+    display: grid;
+    justify-self: stretch;
+
+    p strong,
+    li strong {
+        @include common.font-slab;
+        font-weight: 450;
+    }
+
+    section.bordered {
+        @include common.beveled-fancy-notch(10px, 2px, common.$color-medium);
+        margin-bottom: 0;
+
+        :last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    h2 {
+        margin-top: -8px;
+        padding-left: 10px;
+        padding-right: 10px;
+        display: grid;
+        grid-template-columns: 1fr min-content;
+    
+        .name,
+        .type {
+            @include common.font-slab;
+        }
+
+        .name {
+            text-align: left;
+            font-weight: 450;
+        }
+
+        .type {
+            text-transform: none;
+            text-wrap: nowrap;
+            font-size: 16px;
+        }
+    }
+
+    .characteristics {
+        margin-top: 5px;
+        margin-left: -5px;
+        margin-right: -5px;
+        background-color: common.$color-extra-light;
+        padding: 2px 5px;
+
+        display: grid;
+        grid-template-columns: repeat(5, auto);
+        justify-content: stretch;
+
+        .characteristic {
+            display: grid;
+            grid-template-columns: min-content 1fr;
+
+            label {
+                text-wrap: nowrap;
+                align-self: baseline;
+                font-weight: 400;
+            }
+
+            .symbol {
+                @include common.font-potency;
+                display: inline-block;
+                transform: translateY(2px);
+                margin-right: 1px;
+            }
+
+            .value {
+                justify-self: center;
+                align-self: baseline;
+                padding-right: 5px;
+            }
+
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+}

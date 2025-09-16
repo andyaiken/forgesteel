@@ -1,26 +1,27 @@
-import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet, ItemSheet } from '../models/character-sheet';
+import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet, FollowerSheet, ItemSheet } from '../models/character-sheet';
+import { Feature, FeatureFollower } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityLogic } from '../logic/ability-logic';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Career } from '../models/career';
-import { CharacterSheetFormatter } from './character-sheet-formatter';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
 import { Complication } from '../models/complication';
 import { ConditionType } from '../enums/condition-type';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FactoryLogic } from '../logic/factory-logic';
-import { Feature } from '../models/feature';
 import { FeatureLogic } from '../logic/feature-logic';
 import { FeatureType } from '../enums/feature-type';
+import { Follower } from '../models/follower';
 import { Format } from './format';
 import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from '../logic/hero-logic';
 import { Item } from '../models/item';
 import { Options } from '../models/options';
+import { SheetFormatter } from './sheet-formatter';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookLogic } from '../logic/sourcebook-logic';
 
@@ -32,7 +33,7 @@ export class CharacterSheetBuilder {
 
 			abilities: [],
 			standardAbilities: [],
-
+			followers: [],
 			featuresReferenceOther: [],
 
 			notes: hero.state.notes
@@ -88,7 +89,7 @@ export class CharacterSheetBuilder {
 
 		// #region Ancestry
 		if (hero.ancestry) {
-			sheet.ancestryName = CharacterSheetFormatter.fixAncestryName(hero.ancestry.name);
+			sheet.ancestryName = SheetFormatter.fixAncestryName(hero.ancestry.name);
 
 			const ancestryFeatures = FeatureLogic.getFeaturesFromAncestry(hero.ancestry, hero);
 
@@ -97,11 +98,11 @@ export class CharacterSheetBuilder {
 
 			let ancestrySpace = options.pageOrientation === 'portrait' ? 26 : 33;
 			if (sheet.heroicResourceGains?.length || 0 > 3) {
-				const extraLines = sheet.heroicResourceGains?.slice(3).reduce((sum, g) => sum + CharacterSheetFormatter.countLines(g.trigger, 40), 0) || 0;
+				const extraLines = sheet.heroicResourceGains?.slice(3).reduce((sum, g) => sum + SheetFormatter.countLines(g.trigger, 40), 0) || 0;
 				ancestrySpace -= extraLines;
 			}
-			const dividedAncestry = CharacterSheetFormatter.divideFeatures(ancestryTraits, ancestrySpace);
-			sheet.ancestryTraits = CharacterSheetFormatter.convertFeatures(dividedAncestry.displayed);
+			const dividedAncestry = SheetFormatter.divideFeatures(ancestryTraits, ancestrySpace);
+			sheet.ancestryTraits = SheetFormatter.convertFeatures(dividedAncestry.displayed);
 
 			const refAncestry = ancestryFeatures.filter(f => dividedAncestry.referenceIds.includes(f.feature.id));
 			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(refAncestry);
@@ -125,7 +126,7 @@ export class CharacterSheetBuilder {
 		sheet.recoveryValue = HeroLogic.getRecoveryValue(hero);
 		sheet.recoveriesCurrent = sheet.recoveriesMax - hero.state.recoveriesUsed;
 
-		sheet.surgeDamageAmount = CharacterSheetFormatter.addSign(HeroLogic.calculateSurgeDamage(hero));
+		sheet.surgeDamageAmount = SheetFormatter.addSign(HeroLogic.calculateSurgeDamage(hero));
 		sheet.surgesCurrent = hero.state.surges;
 
 		// #region Kits / Modifiers
@@ -161,7 +162,7 @@ export class CharacterSheetBuilder {
 
 			const kitFeatures = kits.flatMap(k => k.features)
 				.filter(f => !this.isClassFeatureInKit(f));
-			sheet.modifierBenefits = CharacterSheetFormatter.convertFeatures(kitFeatures);
+			sheet.modifierBenefits = SheetFormatter.convertFeatures(kitFeatures);
 
 			coveredFeatureIds = coveredFeatureIds.concat(kitFeatures.map(f => f.id));
 		} else if (modifiers) {
@@ -191,7 +192,7 @@ export class CharacterSheetBuilder {
 						break;
 				}
 			});
-			sheet.modifierBenefits = CharacterSheetFormatter.convertFeatures(modifiers);
+			sheet.modifierBenefits = SheetFormatter.convertFeatures(modifiers);
 		}
 		// #endregion
 
@@ -201,7 +202,7 @@ export class CharacterSheetBuilder {
 			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
 				.map(f => {
-					f.feature = CharacterSheetFormatter.fixClassAbilityNames(f.feature, refAbilities);
+					f.feature = SheetFormatter.fixClassAbilityNames(f.feature, refAbilities);
 					return f;
 				});
 
@@ -215,12 +216,12 @@ export class CharacterSheetBuilder {
 
 			let classFeatureSpace = 53;
 			if (sheet.heroicResourceGains?.length || 0 > 3) {
-				const extraLines = sheet.heroicResourceGains?.slice(3).reduce((sum, g) => sum + CharacterSheetFormatter.countLines(g.trigger, 40), 0) || 0;
+				const extraLines = sheet.heroicResourceGains?.slice(3).reduce((sum, g) => sum + SheetFormatter.countLines(g.trigger, 40), 0) || 0;
 				classFeatureSpace -= 2 * extraLines;
 			}
-			const dividedClassFeatures = CharacterSheetFormatter.divideFeatures(classFeatures.map(f => f.feature), classFeatureSpace);
+			const dividedClassFeatures = SheetFormatter.divideFeatures(classFeatures.map(f => f.feature), classFeatureSpace);
 
-			sheet.classFeatures = CharacterSheetFormatter.convertFeatures(dividedClassFeatures.displayed);
+			sheet.classFeatures = SheetFormatter.convertFeatures(dividedClassFeatures.displayed);
 
 			const referenceFeatures = classFeatures.filter(f => dividedClassFeatures.referenceIds.includes(f.feature.id));
 			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(referenceFeatures);
@@ -306,8 +307,8 @@ export class CharacterSheetBuilder {
 		sheet.projects = hero.state.projects.map(p => ({
 			id: p.id,
 			name: p.name,
-			characteristic: CharacterSheetFormatter.joinCommasOr(p.characteristic
-				.sort(CharacterSheetFormatter.sortCharacteristics)
+			characteristic: SheetFormatter.joinCommasOr(p.characteristic
+				.sort(SheetFormatter.sortCharacteristics)
 				.map(c => Format.capitalize(c.slice(0, 1)))
 			),
 			pointsGoal: p.goal,
@@ -327,6 +328,12 @@ export class CharacterSheetBuilder {
 			allFeatures.filter(f => [ FeatureType.ClassAbility, FeatureType.Ability ].includes(f.feature.type))
 				.map(f => f.feature.id));
 		// #endregion
+
+		const followers = allFeatures.filter(f => f.feature.type === FeatureType.Follower)
+			.map(f => f.feature as FeatureFollower);
+		sheet.followers = followers.map(f => this.buildFollowerSheet(f.data.follower));
+
+		coveredFeatureIds = coveredFeatureIds.concat(followers.map(f => f.id));
 
 		// Feature coverage check
 		const missedFeatures: { feature: Feature; source: string; }[] = [];
@@ -470,7 +477,7 @@ export class CharacterSheetBuilder {
 		}
 
 		const effectSections = ability.sections.filter(s => s.type !== 'roll');
-		sheet.effect = CharacterSheetFormatter.abilitySections(effectSections).trim();
+		sheet.effect = SheetFormatter.abilitySections(effectSections).trim();
 
 		const rollSections = ability.sections.filter(s => s.type === 'roll');
 		if (rollSections.length) {
@@ -483,15 +490,15 @@ export class CharacterSheetBuilder {
 			const rollPowerAmount = Math.max(...rollSection.roll.characteristic
 				.map(c => HeroLogic.getCharacteristic(hero, c)));
 
-			const characteristics = CharacterSheetFormatter.joinCommasOr(rollSection.roll.characteristic
-				.sort(CharacterSheetFormatter.sortCharacteristics)
+			const characteristics = SheetFormatter.joinCommasOr(rollSection.roll.characteristic
+				.sort(SheetFormatter.sortCharacteristics)
 				.map(c => Format.capitalize(c.slice(0, 1)))
 			);
 			sheet.rollPower = `${rollPowerAmount} (${characteristics})`;
 
-			sheet.rollT1Effect = CharacterSheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, hero);
-			sheet.rollT2Effect = CharacterSheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, hero);
-			sheet.rollT3Effect = CharacterSheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, hero);
+			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, hero);
+			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, hero);
+			sheet.rollT3Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, hero);
 		}
 
 		return sheet;
@@ -507,7 +514,7 @@ export class CharacterSheetBuilder {
 		};
 
 		const careerFeatures = career.features;
-		sheet.benefits = CharacterSheetFormatter.convertFeatures(careerFeatures);
+		sheet.benefits = SheetFormatter.convertFeatures(careerFeatures);
 		sheet.incitingIncident = career.incitingIncidents.selected || undefined;
 
 		return sheet;
@@ -562,6 +569,26 @@ export class CharacterSheetBuilder {
 			f.name = f.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
 		}
 		return f;
+	};
+	// #endregion
+
+	// #region Follower Sheet
+	static buildFollowerSheet = (follower: Follower) => {
+		// console.log(follower);
+		const followerType = `${follower.type} Follower`;
+		const sheet: FollowerSheet = {
+			id: follower.id,
+			name: follower.name,
+			type: followerType,
+
+			might: follower.characteristics.find(c => c.characteristic === Characteristic.Might)?.value || 0,
+			agility: follower.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value || 0,
+			reason: follower.characteristics.find(c => c.characteristic === Characteristic.Reason)?.value || 0,
+			intuition: follower.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value || 0,
+			presence: follower.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value || 0
+		};
+
+		return sheet;
 	};
 	// #endregion
 }

@@ -41,7 +41,6 @@ interface Props {
 	session: Playbook;
 	options: Options;
 	highlightAbout: boolean;
-	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -373,7 +372,7 @@ export const SessionDirectorPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='session-director-page'>
-					<AppHeader subheader='Session' showDirectory={props.showDirectory}>
+					<AppHeader subheader='Session'>
 						<Popover
 							trigger='click'
 							content={(

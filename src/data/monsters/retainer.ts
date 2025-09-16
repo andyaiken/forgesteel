@@ -14,135 +14,7 @@ export const retainer: MonsterGroup = {
 	name: 'Retainer',
 	description: 'A retainer is a type of NPC follower who fights alongside the heroes. Retainer creatures can gain levels just as heroes do, so their battlefield contributions remain relevant as the heroes grow in status and power. A lowly level 1 goblin guide can advance up to level 10 if they adventure with a heroic party for long enough!',
 	picture: null,
-	information: [
-		{
-			id: 'retainer-info-1',
-			name: 'Sidekicks, Not Stars',
-			description: `
-Retainers are useful allies, but the heroes are always the stars of the show! Retainers are simply there to pitch in and make the heroes look good.
-
-Retainers are simpler to run than heroes. They have fewer abilities and fewer resources to manage. Usually, a retainer makes one power roll per turn and then gets out of the way. But while a retainer’s turn is quick, it can be tactically interesting! Besides dealing damage, a retainer’s abilities often benefit their mentor or allow the mentor to do interesting things.
-
-Because a retainer acts on their mentor’s turn, they allow the heroes’ side of an encounter to have two characters act in sequence without having to use any special abilities, providing a significant tactical advantage.`
-		},
-		{
-			id: 'retainer-info-2',
-			name: 'Gaining Retainers',
-			description: `
-In many cases, heroes gain retainers as they acquire character features. For instance, a hero might gain a retainer from a title, a complication, or some other element of the game. When a player earns Renown, they might be able to choose a retainer as a new follower.
-
-At other times, the events of the story can dictate that a retainer joins the party. When the heroes rescue a prisoner or befriend a former rival, you might decide that the NPC joins the party, becoming a retainer of one of the characters.
-
-Any hero gaining a retainer is always at your discretion. If something in the rules grants a specific retainer, you can always substitute another retainer who works better for your campaign.`
-		},
-		{
-			id: 'retainer-info-3',
-			name: 'Retainers Leaving the Party',
-			description: `
-A retainer doesn’t need to always travel with the heroes. When they’re not called on to adventure, they can remain behind at the party’s stronghold or otherwise live their own life. Even when they’re not present, they’re still considered to be a retainer and a member of the party.
-
-However, there might be cases when a retainer leaves the party permanently. Retainers aren’t invulnerable, so they can be killed in battle. But they can leave under less extreme circumstances as well. If the events of an adventure set a retainer against their mentor, or if the retainer’s story naturally comes to an end, you and the players can decide it’s time for the retainer to ride off into the sunset. The characters might meet their former adventuring buddy again as a friendly NPC, though—or perhaps as a foe!`
-		},
-		{
-			id: 'retainer-info-4',
-			name: 'Retainers in Combat',
-			description: `
-When using retainers in combat, a number of special rules should be kept in mind.
-
-* **Another Hero:** A retainer counts as an additional hero of their current level for the purpose of encounter building (see Step-by-Step Encounter Building).
-
-* **Part of a Mentor’s Turn:** A retainer takes their turn as part of their mentor’s turn. For the purpose of effects that end at the end of the retainer’s turn, or any other rules elements that depend on the start or end of a creature’s turn, the start and end of the mentor’s turn is also the start and end of the retainer’s turn.
-
-* **Hero Can’t Act:** If a hero can’t act on their turn (because they are unconscious, for example), their player can still control the hero’s retainer.
-
-* **Retainer Action Economy:** On their turn, a retainer can take a move action, a maneuver, and a main action, just like a hero.
-
-* **Recoveries:** A retainer has 6 Recoveries.
-
-* **Death:** A retainer can become dying at 0 Stamina and die at negative half their Stamina, just like a hero.
-
-* **Surges:** Whenever a retainer gains surges, those surges are gained by their mentor, with the mentor and retainer sharing surges. The retainer spends surges the same way a hero can, but the extra damage granted to them by spending a surge is equal to their mentor’s highest characteristic score.`
-		},
-		{
-			id: 'retainer-info-5',
-			name: 'Retainer Advancement',
-			description: `
-A retainer doesn’t need to always travel with the heroes. When they’re not called on to adventure, they can remain behind at the party’s stronghold or otherwise live their own life. Even when they’re not present, they’re still considered to be a retainer and a member of the party.
-
-However, there might be cases when a retainer leaves the party permanently. Retainers aren’t invulnerable, so they can be killed in battle. But they can leave under less extreme circumstances as well. If the events of an adventure set a retainer against their mentor, or if the retainer’s story naturally comes to an end, you and the players can decide it’s time for the retainer to ride off into the sunset. The characters might meet their former adventuring buddy again as a friendly NPC, though—or perhaps as a foe!`
-		},
-		{
-			id: 'retainer-info-6',
-			name: 'Advancement Features',
-			description: `
-A retainer creature’s stat block includes characteristics, a level, a role, one or more abilities including a signature ability, and other standard monster features. This stat block represents the retainer’s statistics at their lowest level. The retainer’s statistics improve as they gain levels, as shown on the Retainer Advancement table.
-
-The number of levels a retainer can gain depends on their starting level. For instance, a devil defector starts at level 5, and so can gain only 5 levels before reaching level 10. If the level noted in a retainer’s stat block is higher than 1, they don’t gain advancement benefits for any levels up to and including their starting level. As a higher-level creature, similar bonuses are already baked into their statistics.
-
-Retainer advancement benefits are broken out as follows:
-
-* **Characteristic Increase:** At level 2, a retainer increases one of their characteristic scores by 1 (to a maximum of 2). At level 5, they increase each of their characteristic scores by 1 (to a maximum of 3), and at level 8, they increase one characteristic score by 1 (to a maximum of 4). For each single-characteristic increase, the player of the retainer’s mentor chooses which characteristic to use.
-
-* **Free Strike Damage Bonus:** The retainer gains a +2 damage bonus to free strikes at level 3, at level 6, and at level 9. 
-
-* **Advancement Abilities:** A retainer gains new abilities at levels 4, 7, and 10 (unless the retainer’s starting level is that level or higher). Each retainer stat block is accompanied by retainer advancement abilities specific to that retainer. Whenever a retainer would gain a new advancement ability, instead of choosing their retainer ability, the player of their mentor can instead choose a role advancement ability that matches their role and level. (Advancement abilities for each type of creature role are detailed in the next section.)
-
-* **Stamina Bonus:** At each level, a retainer gains a +9 bonus to Stamina.
-
-* **Signature Ability Damage Increase:** A retainer’s signature ability is unique in that it grows stronger as the retainer advances in level. Only the retainer’s signature ability improves this way! The table features two columns for a retainer’s signature ability damage bonus—one for a tier 1 power roll outcome and one for a tier 2 or tier 3 outcome. A retainer’s signature ability gains a +1 damage bonus every second level for a tier 1 outcome, and every level for a tier 2 or tier 3 outcome.
-
-**Advancement Example**
-A 4th-level hero convinces a goblin guide, a level 1 harrier retainer, to join the party. The goblin guide immediately jumps to level 4. For level 2, the guide increases their Agility by 1. For level 3, the guide gains a +2 damage bonus to their free strikes. For level 4, the guide chooses between the level 4 retainer advancement ability Weaving Knives or the level 4 harrier advancement ability Tackle (see below).
-
-Additionally, for jumping from level 1 to level 4, the guide gains a +27 bonus to Stamina, giving them Stamina 48. Their signature ability gains a +2 damage bonus on a tier 1 outcome (for a total of 5 damage), and a +3 bonus on a tier 2 outcome (8 damage) or a tier 3 outcome (10 damage).`
-		},
-		{
-			id: 'retainer-info-7',
-			name: 'Encounter Abilities',
-			description: `
-Some retainer abilities have the Encounter keyword. Once a retainer uses an encounter ability, they can’t use that ability again until their mentor earns a Victory.`
-		},
-		{
-			id: 'retainer-info-8',
-			name: 'Custom Retainers',
-			description: `
-This book includes more than a dozen retainer stat blocks with advancement information. But most creature stat blocks can be turned into retainers, provided a creature isn’t a minion, a leader, or a solo. You have the final say over whether a player can choose a specific creature as a custom retainer.
-
-To turn a creature into a custom retainer, start with the creature’s stat block. Instead of the Stamina noted in the stat block, a custom retainer has 21 Stamina at level 1. Then use the Retainer Advancement table as a guide to adjusting the creature’s statistics as they increase in level, including starting at higher than level 1.
-
-If the creature’s signature ability affects an area or targets more than one creature or object, the ability now only affects one target within distance. A custom retainer has no retainer advancement abilities, so they must take the role advancement ability specific to their level and role. Custom retainers can’t use any abilities or effects that require Malice.
-
-**Advancement Example**
-A 4th-level hero trains a striped condor griffon, a level 2 elite brute, gaining that noble creature as a retainer. The griffon starts as a level 2 retainer. They have Stamina 30 (21 for level 1 and a +9 bonus for being level 2). Because they started at level 2, they don’t gain any level 2 benefits or advancement features from the Retainer Advancement table.
-
-At level 3, the griffon gains a +2 damage bonus to their free strikes, a +9 bonus to Stamina (giving them Stamina 39), and a +1 damage bonus to their signature ability for a tier 2 or tier 3 outcome. At level 4, the griffon gains the level 4 brute ability Big Windup (see Big Windup), another + 9 bonus to Stamina (for Stamina 48), and a +1 damage bonus to their signature ability for all tier outcomes. This gives them a total damage bonus to their signature ability of +1 for tier 1 outcomes and +2 for tier 2 and tier 3 outcomes.`
-		},
-		{
-			id: 'retainer-info-9',
-			name: 'Role Advancement Abilities',
-			description: `
-When a retainer reaches level 4, 7, or 10, they can gain one of the following abilities based on their role, rather than gaining the retainer advancement ability presented alongside their stat block. A retainer qualifies only for the role advancement ability that matches their role and level.
-
-If a role advancement ability has the Magic or Psionic keyword, a retainer can swap the Magic keyword for Psionic or vice versa. They can also lose the keyword if they can achieve the ability’s effects through gadgetry, martial prowess, or other nonsupernatural means.`
-		},
-		{
-			id: 'retainer-info-10',
-			name: 'Retainer Advancement',
-			description: `
-| Level | Advancement Feature                                                        | Stamina Bonus | Signature Damage (Tier 1) | Signature Damage (Tier 2) |
-|:------|:---------------------------------------------------------------------------|:----------------------------------------------------------------------|
-| 2     | Increase one characteristic score by 1                                     | +9            | +1                        | +1                        |
-| 3     | +2 damage bonus to free strikes                                            | +9            | -                         | +1                        |
-| 4     | Level 4 retainer advancement ability or level 4 role advancement ability   | +9            | +1                        | +1                        |
-| 5     | Increase each characteristic score by 1                                    | +9            | -                         | +1                        |
-| 6     | +2 damage bonus to free strikes                                            | +9            | +1                        | +1                        |
-| 7     | Level 7 retainer advancement ability or level 7 role advancement ability   | +9            | -                         | +1                        |
-| 8     | Increase one characteristic score by 1                                     | +9            | +1                        | +1                        |
-| 9     | +2 damage bonus to free strikes                                            | +9            | -                         | +1                        |
-| 10    | Level 10 retainer advancement ability or level 10 role advancement ability | +9            | +1                        | +1                        |
-`
-		}
-	],
+	information: [],
 	malice: [],
 	monsters: [
 		FactoryLogic.createMonster({
@@ -177,7 +49,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '7 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** Before or after making this strike, the hopper jumps up to 2 squares, or up to 4 squares if they jump over their mentor’s space.')
+							FactoryLogic.createAbilitySectionText('Before or after making this strike, the hopper jumps up to 2 squares, or up to 4 squares if they jump over their mentor’s space.')
 						]
 					})
 				}),
@@ -209,7 +81,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '12 damage; M < [strong] prone'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** The hopper can jump in a straight line up to their speed before the attack without provoking opportunity attacks. If they jump at least 2 squares this way, they gain a surge.')
+							FactoryLogic.createAbilitySectionText('The hopper can jump in a straight line up to their speed before the attack without provoking opportunity attacks. If they jump at least 2 squares this way, they gain a surge.')
 						]
 					})
 				}),
@@ -242,7 +114,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createMelee(5) ],
 						target: 'One creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has M < [average], their movement ends, they are knocked prone, and one ally within distance gains 2 surges.')
+							FactoryLogic.createAbilitySectionText('If the target has M < [average], their movement ends, they are knocked prone, and one ally within distance gains 2 surges.')
 						]
 					})
 				})
@@ -278,7 +150,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '6 damage',
 								tier3: '11 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the commando started their turn with concealment from the target or hidden from them, they gain 1 surge that can be used immediately.')
+							FactoryLogic.createAbilitySectionText('If the commando started their turn with concealment from the target or hidden from them, they gain 1 surge that can be used immediately.')
 						]
 					})
 				}),
@@ -292,7 +164,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionText('**Special**: The target must be grabbed by the commando.'),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target is vertical pushed up to 5 squares. An ally doesn’t take damage from being force moved this way.')
+							FactoryLogic.createAbilitySectionText('The target is vertical pushed up to 5 squares. An ally doesn’t take damage from being force moved this way.')
 						]
 					})
 				}),
@@ -305,7 +177,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The triggering creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target is grabbed by the commando.')
+							FactoryLogic.createAbilitySectionText('The target is grabbed by the commando.')
 						]
 					})
 				})
@@ -326,7 +198,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '9 damage; M < [average] grabbed',
 								tier3: '13 damage; M < [strong] grabbed'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** While the target is grabbed this way, they can’t communicate and all creatures and objects have concealment from them.')
+							FactoryLogic.createAbilitySectionText('While the target is grabbed this way, they can’t communicate and all creatures and objects have concealment from them.')
 						]
 					})
 				}),
@@ -345,7 +217,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: 'pulled 10',
 								tier3: 'pulled 12'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target takes 1 damage for each square they are pulled.')
+							FactoryLogic.createAbilitySectionText('The target takes 1 damage for each square they are pulled.')
 						]
 					})
 				}),
@@ -364,7 +236,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '18 damage',
 								tier3: '24 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target takes 15 damage, they are no longer grabbed, and they fall prone.')
+							FactoryLogic.createAbilitySectionText('The target takes 15 damage, they are no longer grabbed, and they fall prone.')
 						]
 					})
 				})
@@ -412,7 +284,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the creature takes the defector’s offer, the creature is reduced to 1 Stamina instead of 0. If they do so, on their next turn the defector controls the creature’s move action, and the creature must use a Signature Action against a creature of the defector’s choice or immediately die. The Director must spend 3 Malice to have the creature turn down this offer.')
+							FactoryLogic.createAbilitySectionText('If the creature takes the defector’s offer, the creature is reduced to 1 Stamina instead of 0. If they do so, on their next turn the defector controls the creature’s move action, and the creature must use a Signature Action against a creature of the defector’s choice or immediately die. The Director must spend 3 Malice to have the creature turn down this offer.')
 						]
 					})
 				}),
@@ -438,7 +310,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '10 corruption damage',
 								tier3: '14 corruption damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the defector’s mentor is in the area, they burn with harmless flame until the end of the defector’s next turn. While this fire burns, the mentor has fire immunity 10 and any creature that hits the mentor takes 10 fire damage.')
+							FactoryLogic.createAbilitySectionText('If the defector’s mentor is in the area, they burn with harmless flame until the end of the defector’s next turn. While this fire burns, the mentor has fire immunity 10 and any creature that hits the mentor takes 10 fire damage.')
 						]
 					})
 				}),
@@ -451,7 +323,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: '-',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The area burns with infernal fire until the end of the devil’s next turn. An enemy of the defector that ends their turn in the area takes 10 fire damage and is P (medium) frightened (save ends).')
+							FactoryLogic.createAbilitySectionText('The area burns with infernal fire until the end of the devil’s next turn. An enemy of the defector that ends their turn in the area takes 10 fire damage and is P (medium) frightened (save ends).')
 						]
 					})
 				})
@@ -499,7 +371,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The Nameless\'s mentor',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The Nameless’s mentor enters the Nameless’s space and rides on their back. The Nameless or the mentor can move the mentor to an adjacent space as a free maneuver. While in the Nameless’s space, the mentor moves with them and can’t use their move action, and ability rolls against the mentor take a bane.')
+							FactoryLogic.createAbilitySectionText('The Nameless’s mentor enters the Nameless’s space and rides on their back. The Nameless or the mentor can move the mentor to an adjacent space as a free maneuver. While in the Nameless’s space, the mentor moves with them and can’t use their move action, and ability rolls against the mentor take a bane.')
 						]
 					})
 				}),
@@ -529,7 +401,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '9 corruption damage; I < [average] weakened (save ends)',
 								tier3: '12 corruption damage; I < [strong] weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the Nameless’s mentor is in the area, ability rolls against the mentor have a double bane until the start of their next turn.')
+							FactoryLogic.createAbilitySectionText('If the Nameless’s mentor is in the area, ability rolls against the mentor have a double bane until the start of their next turn.')
 						]
 					})
 				}),
@@ -548,7 +420,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '16 corruption damage',
 								tier3: '21 corruption damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Any living minions reduced to 0 Stamina by this ability regain all their Stamina and become corporeal undead under the Nameless’s control until the end of the Nameless’s next turn, after which they are destroyed.')
+							FactoryLogic.createAbilitySectionText('Any living minions reduced to 0 Stamina by this ability regain all their Stamina and become corporeal undead under the Nameless’s control until the end of the Nameless’s next turn, after which they are destroyed.')
 						]
 					})
 				})
@@ -584,7 +456,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '5 damage',
 								tier3: '7 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability ignores cover and bypasses temporary Stamina.')
+							FactoryLogic.createAbilitySectionText('This ability ignores cover and bypasses temporary Stamina.')
 						]
 					})
 				}),
@@ -604,7 +476,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSpecial('See below') ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The mortar fires a shell straight upward, which hovers 3 squares up in the air and sheds light below it in a 3 cube. Enemies illuminated by this light can’t hide or turn invisible and can’t benefit from concealment or cover. At the start of the mortar’s next turn, the shell explodes to deal damage to enemies in the area.'),
+							FactoryLogic.createAbilitySectionText('The mortar fires a shell straight upward, which hovers 3 squares up in the air and sheds light below it in a 3 cube. Enemies illuminated by this light can’t hide or turn invisible and can’t benefit from concealment or cover. At the start of the mortar’s next turn, the shell explodes to deal damage to enemies in the area.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
 								tier1: '5 fire damage',
@@ -629,7 +501,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '9 damage; P < [average] frightened',
 								tier3: '13 damage; P < [strong] frightened'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of the mortar’s next turn, strikes made against the mortar or any ally adjacent to them take a bane.')
+							FactoryLogic.createAbilitySectionText('Until the start of the mortar’s next turn, strikes made against the mortar or any ally adjacent to them take a bane.')
 						]
 					})
 				}),
@@ -683,7 +555,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '5 fire damage',
 								tier3: '7 fire damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the weatherwise targets their mentor, the mentor ignores the damage and instead gains temporary Stamina equal to the damage dealt.')
+							FactoryLogic.createAbilitySectionText('If the weatherwise targets their mentor, the mentor ignores the damage and instead gains temporary Stamina equal to the damage dealt.')
 						]
 					})
 				}),
@@ -709,7 +581,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '5 cold damage; push 3',
 								tier3: '8 cold damage; push 5'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The weatherwise can teleport up to 5 squares before or after using this ability.')
+							FactoryLogic.createAbilitySectionText('The weatherwise can teleport up to 5 squares before or after using this ability.')
 						]
 					})
 				}),
@@ -722,7 +594,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target can spend a Recovery, and can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.')
+							FactoryLogic.createAbilitySectionText('Each target can spend a Recovery, and can choose one effect on them that can be ended by a saving throw. That effect instead ends at the end of their turn.')
 						]
 					})
 				}),
@@ -781,7 +653,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '13 damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** Whenever the shade starts their turn with concealment from the target, they gain 1 surge.')
+							FactoryLogic.createAbilitySectionText('Whenever the shade starts their turn with concealment from the target, they gain 1 surge.')
 						]
 					})
 				}),
@@ -794,7 +666,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 1 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the end of the next turn, the area is filled with darkness. The shade’s mentor ignores concealment created by this darkness.')
+							FactoryLogic.createAbilitySectionText('Until the end of the next turn, the area is filled with darkness. The shade’s mentor ignores concealment created by this darkness.')
 						]
 					})
 				}),
@@ -822,7 +694,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '16 poison damage; weakened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** The slow-poison needle is initially painless, with the damage and effect delayed until the start of the target’s next turn. If the shade is hidden, using this ability doesn’t cause them to be revealed.')
+							FactoryLogic.createAbilitySectionText('The slow-poison needle is initially painless, with the damage and effect delayed until the start of the target’s next turn. If the shade is hidden, using this ability doesn’t cause them to be revealed.')
 						]
 					})
 				}),
@@ -843,7 +715,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '23 poison damage; the target has shadowed vision (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** While a creature has shadowed vision, all creatures have concealment from them.')
+							FactoryLogic.createAbilitySectionText('While a creature has shadowed vision, all creatures have concealment from them.')
 						]
 					})
 				})
@@ -879,7 +751,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '7 damage',
 								tier3: '10 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The arrowswift can take a bane on this ability to gain a +5 bonus to ranged distance.')
+							FactoryLogic.createAbilitySectionText('The arrowswift can take a bane on this ability to gain a +5 bonus to ranged distance.')
 						]
 					})
 				}),
@@ -905,7 +777,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '11 damage',
 								tier3: '16 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the arrowswift is hidden when they use this ability, they gain 2 surges that can be used immediately.')
+							FactoryLogic.createAbilitySectionText('If the arrowswift is hidden when they use this ability, they gain 2 surges that can be used immediately.')
 						]
 					})
 				}),
@@ -918,7 +790,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the end of the encounter, whenever the arrowswift makes a ranged strike, the strike gains an edge and the arrowswift gains 1 surge that must be used immediately. While the arrowswift’s mentor is adjacent to them, the mentor also gains this benefit.')
+							FactoryLogic.createAbilitySectionText('Until the end of the encounter, whenever the arrowswift makes a ranged strike, the strike gains an edge and the arrowswift gains 1 surge that must be used immediately. While the arrowswift’s mentor is adjacent to them, the mentor also gains this benefit.')
 						]
 					})
 				}),
@@ -991,7 +863,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The gnasher moves up to their speed and can use their signature ability.')
+							FactoryLogic.createAbilitySectionText('The gnasher moves up to their speed and can use their signature ability.')
 						]
 					})
 				}),
@@ -1022,7 +894,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The gnasher consumes part of the target’s body. The gnasher can spend a Recovery, and each enemy within 5 squares of the gnasher who has I < [average] is frightened (save ends).')
+							FactoryLogic.createAbilitySectionText('The gnasher consumes part of the target’s body. The gnasher can spend a Recovery, and each enemy within 5 squares of the gnasher who has I < [average] is frightened (save ends).')
 						]
 					})
 				})
@@ -1058,7 +930,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '5 damage',
 								tier3: '7 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target can’t make opportunity attacks until the end of the guide’s turn.')
+							FactoryLogic.createAbilitySectionText('The target can’t make opportunity attacks until the end of the guide’s turn.')
 						]
 					})
 				}),
@@ -1084,7 +956,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '9 damage',
 								tier3: '12 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The guide shifts up to their speed before and after the strike.')
+							FactoryLogic.createAbilitySectionText('The guide shifts up to their speed before and after the strike.')
 						]
 					})
 				}),
@@ -1103,7 +975,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '12 damage; the guide and their mentor can each move up to their speed',
 								tier3: '16 damage; the guide and their mentor can each move up to their speed, then attempt to hide'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the guide is hidden from the target, this ability has a double edge.')
+							FactoryLogic.createAbilitySectionText('If the guide is hidden from the target, this ability has a double edge.')
 						]
 					})
 				}),
@@ -1116,7 +988,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSpecial('Special') ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The guide applies poison to their weapon. The next time the guide obtains a tier 2 or tier 3 outcome on a weapon strike, the strike deals an extra 10 poison damage, and if the target has M < [average], they are weakened (save ends). If the guide is adjacent to their mentor when they use Poison Blade, they apply poison to the mentor’s weapon in the same way.')
+							FactoryLogic.createAbilitySectionText('The guide applies poison to their weapon. The next time the guide obtains a tier 2 or tier 3 outcome on a weapon strike, the strike deals an extra 10 poison damage, and if the target has M < [average], they are weakened (save ends). If the guide is adjacent to their mentor when they use Poison Blade, they apply poison to the mentor’s weapon in the same way.')
 						]
 					})
 				})
@@ -1158,7 +1030,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '9 fire damage',
 								tier3: '12 fire damage; A < [strong] the target is burning (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round.')
+							FactoryLogic.createAbilitySectionText('A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round.')
 						]
 					})
 				}),
@@ -1171,7 +1043,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the end of the flameslinger’s next turn, the target has fire weakness equal to the flameslinger’s level. If the target is the flameslinger’s mentor, they instead have fire immunity equal to the flameslinger’s level.')
+							FactoryLogic.createAbilitySectionText('Until the end of the flameslinger’s next turn, the target has fire weakness equal to the flameslinger’s level. If the target is the flameslinger’s mentor, they instead have fire immunity equal to the flameslinger’s level.')
 						]
 					})
 				}),
@@ -1197,7 +1069,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '12 damage; pull 2',
 								tier3: '16 damage; pull 4'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A target who is pulled adjacent to the flameslinger and who has P < [average] is knocked prone.')
+							FactoryLogic.createAbilitySectionText('A target who is pulled adjacent to the flameslinger and who has P < [average] is knocked prone.')
 						]
 					})
 				}),
@@ -1216,7 +1088,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '12 fire damage; push 3',
 								tier3: '16 fire damage; push 5'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the fireslinger’s mentor is within 10, the mentor can be the source of the burst instead of the fireslinger.')
+							FactoryLogic.createAbilitySectionText('If the fireslinger’s mentor is within 10, the mentor can be the source of the burst instead of the fireslinger.')
 						]
 					})
 				})
@@ -1252,7 +1124,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '5 damage',
 								tier3: '7 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the warrior is adjacent to their mentor, this ability gains an edge.')
+							FactoryLogic.createAbilitySectionText('If the warrior is adjacent to their mentor, this ability gains an edge.')
 						]
 					})
 				}),
@@ -1272,7 +1144,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The warrior’s mentor',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The warrior and the mentor switch places. The warrior is the strike’s new target and the strike has a double bane.')
+							FactoryLogic.createAbilitySectionText('The warrior and the mentor switch places. The warrior is the strike’s new target and the strike has a double bane.')
 						]
 					})
 				}),
@@ -1291,7 +1163,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '11 damage',
 								tier3: '16 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of the warrior’s next turn, ability rolls against the warrior or any ally adjacent to the warrior have a double bane.')
+							FactoryLogic.createAbilitySectionText('Until the start of the warrior’s next turn, ability rolls against the warrior or any ally adjacent to the warrior have a double bane.')
 						]
 					})
 				}),
@@ -1365,7 +1237,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [	FactoryLogic.distance.createRanged(5) ],
 						target: 'The shieldbearer’s mentor',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor’s space. The triggering strike’s damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.')
+							FactoryLogic.createAbilitySectionText('The shieldbearer blocks the strike (if adjacent to the mentor) or throws their shield into the mentor’s space. The triggering strike’s damage is halved and the potency of any potency effects is reduced by 1. If the shieldbearer threw their shield, it bounces back to their hand.')
 						]
 					})
 				}),
@@ -1378,7 +1250,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The shieldbearer’s mentor',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The shieldbearer straps their shield on their back and climbs onto their mentor’s back, entering the mentor’s space. While the shieldbearer is on their mentor’s back, each of them gains 10 temporary Stamina and can use Shield Block as a triggered action targeting an ally instead of the shieldbearer’s mentor. Additionally, the shieldbearer moves with the mentor, and they can’t use main actions, maneuvers, or move actions except to end this effect as a maneuver. The effect also ends if the shieldbearer is force moved away from their mentor or knocked prone. If the shieldbearer is still in their mentor’s space when the effect ends, they move into an adjacent unoccupied space of their choice.')
+							FactoryLogic.createAbilitySectionText('The shieldbearer straps their shield on their back and climbs onto their mentor’s back, entering the mentor’s space. While the shieldbearer is on their mentor’s back, each of them gains 10 temporary Stamina and can use Shield Block as a triggered action targeting an ally instead of the shieldbearer’s mentor. Additionally, the shieldbearer moves with the mentor, and they can’t use main actions, maneuvers, or move actions except to end this effect as a maneuver. The effect also ends if the shieldbearer is force moved away from their mentor or knocked prone. If the shieldbearer is still in their mentor’s space when the effect ends, they move into an adjacent unoccupied space of their choice.')
 						]
 					})
 				}),
@@ -1397,7 +1269,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '10 damage; M < [average] prone',
 								tier3: '14 damage; M < [strong] prone'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If this ability is used as part of the Charge main action, the shieldbearer gains 2 surges that can be used immediately.')
+							FactoryLogic.createAbilitySectionText('If this ability is used as part of the Charge main action, the shieldbearer gains 2 surges that can be used immediately.')
 						]
 					})
 				})
@@ -1445,7 +1317,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createRanged(6) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The gorer uses the Charge main action and Gore against the target.')
+							FactoryLogic.createAbilitySectionText('The gorer uses the Charge main action and Gore against the target.')
 						]
 					})
 				}),
@@ -1465,7 +1337,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target is pushed up to 3 squares. If the target has stability 0, they are also knocked prone.')
+							FactoryLogic.createAbilitySectionText('The target is pushed up to 3 squares. If the target has stability 0, they are also knocked prone.')
 						]
 					})
 				}),
@@ -1477,7 +1349,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The gorer gains 3 surges, and until the start of the gorer’s next turn, strikes made against them and their mentor take a bane.')
+							FactoryLogic.createAbilitySectionText('The gorer gains 3 surges, and until the start of the gorer’s next turn, strikes made against them and their mentor take a bane.')
 						]
 					})
 				}),
@@ -1552,7 +1424,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of the charger’s next turn, the charger and their mentor each have temporary Stamina equal to their Recovery value and a +2 bonus to speed, and they each gain an edge on reactive tests.')
+							FactoryLogic.createAbilitySectionText('Until the start of the charger’s next turn, the charger and their mentor each have temporary Stamina equal to their Recovery value and a +2 bonus to speed, and they each gain an edge on reactive tests.')
 						]
 					})
 				}),
@@ -1565,7 +1437,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The charger moves in a straight line up to their speed. During this move, they ignore enemy free strikes, and they can make a melee free strike against any creature they move adjacent to.')
+							FactoryLogic.createAbilitySectionText('The charger moves in a straight line up to their speed. During this move, they ignore enemy free strikes, and they can make a melee free strike against any creature they move adjacent to.')
 						]
 					})
 				}),
@@ -1584,7 +1456,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '18 damage',
 								tier3: '24 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The charger takes psychic damage equal to the number of enemies affected. This damage can’t be reducetd in any way.')
+							FactoryLogic.createAbilitySectionText('The charger takes psychic damage equal to the number of enemies affected. This damage can’t be reducetd in any way.')
 						]
 					})
 				})
@@ -1635,7 +1507,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The sidekick makes a free strike against the target.')
+							FactoryLogic.createAbilitySectionText('The sidekick makes a free strike against the target.')
 						]
 					})
 				})
@@ -1650,7 +1522,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the sidekick’s mentor moves adjacent to the sidekick at any point during the mentor’s turn, the mentor gains a +1 bonus to speed and can automatically climb at full speed while moving until the end of their turn.')
+							FactoryLogic.createAbilitySectionText('If the sidekick’s mentor moves adjacent to the sidekick at any point during the mentor’s turn, the mentor gains a +1 bonus to speed and can automatically climb at full speed while moving until the end of their turn.')
 						]
 					})
 				}),
@@ -1681,7 +1553,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self and each ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target can spend a Recovery, and ends the dazed, frightened, and weakened conditions on themself.')
+							FactoryLogic.createAbilitySectionText('Each target can spend a Recovery, and ends the dazed, frightened, and weakened conditions on themself.')
 						]
 					})
 				})
@@ -1719,7 +1591,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '11 fire damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the mind healer targets an ally, the ability deals no damage. Additionally, the target can end one effect on them that can be ended by a saving throw or that ends at the end of their turn.')
+							FactoryLogic.createAbilitySectionText('If the mind healer targets an ally, the ability deals no damage. Additionally, the target can end one effect on them that can be ended by a saving throw or that ends at the end of their turn.')
 						]
 					})
 				}),
@@ -1749,7 +1621,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target can spend 1 Recovery, and has their speed doubled until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('The target can spend 1 Recovery, and has their speed doubled until the end of their next turn.')
 						]
 					})
 				}),
@@ -1790,7 +1662,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '21 psychic damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the mind healer is dazed, frightened, or taunted, they can end one of those conditions and impose the same condition on one enemy in the area. Additionally, they can do the same for their mentor if the mentor is in the area and is dazed, frightened, or taunted.')
+							FactoryLogic.createAbilitySectionText('If the mind healer is dazed, frightened, or taunted, they can end one of those conditions and impose the same condition on one enemy in the area. Additionally, they can do the same for their mentor if the mentor is in the area and is dazed, frightened, or taunted.')
 						]
 					})
 				})
@@ -1841,7 +1713,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '11 damage',
 								tier3: '14 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The mercenary regains Stamina equal to half the damage dealt.')
+							FactoryLogic.createAbilitySectionText('The mercenary regains Stamina equal to half the damage dealt.')
 						]
 					})
 				}),
@@ -1879,7 +1751,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'Three creatures',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The mercenary must be winded to use this ability. The mercenary uses Big Bite against each target.')
+							FactoryLogic.createAbilitySectionText('The mercenary must be winded to use this ability. The mercenary uses Big Bite against each target.')
 						]
 					})
 				}),
@@ -1891,7 +1763,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The mercenary moves up to their speed. If this movement takes them beyond the distance of the triggering ability, the ability has no effect on them.')
+							FactoryLogic.createAbilitySectionText('The mercenary moves up to their speed. If this movement takes them beyond the distance of the triggering ability, the ability has no effect on them.')
 						]
 					})
 				})
@@ -1974,7 +1846,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '17 corruption damage; P < [strong] weakened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** Before making the strike, the servitor can teleport up to 10 squares to a space containing a dead creature, then burst out of the creature’s body.')
+							FactoryLogic.createAbilitySectionText('Before making the strike, the servitor can teleport up to 10 squares to a space containing a dead creature, then burst out of the creature’s body.')
 						]
 					})
 				}),
@@ -1987,7 +1859,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The servitor explodes'),
+							FactoryLogic.createAbilitySectionText('The servitor explodes'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -2057,7 +1929,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** While adjacent to their mentor, the unquiet spirit enters the mentor’s space. A spirit who enters their mentor’s space this way moves with the mentor, can’t be sensed, and can’t affect or be affected by other creatures or objects. They can’t take main actions, maneuvers, or move actions, except to use this ability to leave their mentor’s space and appear in an adjacent space.')
+							FactoryLogic.createAbilitySectionText('While adjacent to their mentor, the unquiet spirit enters the mentor’s space. A spirit who enters their mentor’s space this way moves with the mentor, can’t be sensed, and can’t affect or be affected by other creatures or objects. They can’t take main actions, maneuvers, or move actions, except to use this ability to leave their mentor’s space and appear in an adjacent space.')
 						]
 					})
 				}),
@@ -2085,7 +1957,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '14 corruption damage; the target has 3 levels of drain'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** The next creature to make a strike against the target gains 1 surge for each level of drain, which must be used on that strike.')
+							FactoryLogic.createAbilitySectionText('The next creature to make a strike against the target gains 1 surge for each level of drain, which must be used on that strike.')
 						]
 					})
 				}),
@@ -2118,7 +1990,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has P < [strong], they are phased until the end of their next turn. A phased target gains the unquiet spirit’s Corruptive Phasing trait and can fly. They are visible but can’t affect or be affected by other creatures or objects. A willing creature not subject to the ability’s potency can choose to automatically be affected.')
+							FactoryLogic.createAbilitySectionText('If the target has P < [strong], they are phased until the end of their next turn. A phased target gains the unquiet spirit’s Corruptive Phasing trait and can fly. They are visible but can’t affect or be affected by other creatures or objects. A willing creature not subject to the ability’s potency can choose to automatically be affected.')
 						]
 					})
 				})
@@ -2154,7 +2026,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 								tier2: '5 damage, 3 corruption damage',
 								tier3: '5 damage, 6 corruption damage; M < [strong] bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The vampire rebel gains temporary Stamina equal to any corruption damage dealt.')
+							FactoryLogic.createAbilitySectionText('The vampire rebel gains temporary Stamina equal to any corruption damage dealt.')
 						]
 					})
 				}),
@@ -2166,7 +2038,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The vampire rebel changes their form into a bat. In bat form, their size is 1T and they can fly. The vampire rebel then shifts up to their speed, then regains their true form. If they can’t fit in their current space when they return to their true form, they take 10 damage and are pushed to the nearest unoccupied space.')
+							FactoryLogic.createAbilitySectionText('The vampire rebel changes their form into a bat. In bat form, their size is 1T and they can fly. The vampire rebel then shifts up to their speed, then regains their true form. If they can’t fit in their current space when they return to their true form, they take 10 damage and are pushed to the nearest unoccupied space.')
 						]
 					})
 				}),
@@ -2194,7 +2066,7 @@ If a role advancement ability has the Magic or Psionic keyword, a retainer can s
 									tier3: '16 damage; M < [strong] bleeding (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** Before the strike, the vampire rebel shifts up to their speed. If the vampire rebel has temporary Stamina, they can expend it, dealing an extra 2 corruption damage for each point of temporary Stamina expended this way.')
+							FactoryLogic.createAbilitySectionText('Before the strike, the vampire rebel shifts up to their speed. If the vampire rebel has temporary Stamina, they can expend it, dealing an extra 2 corruption damage for each point of temporary Stamina expended this way.')
 						]
 					})
 				}),

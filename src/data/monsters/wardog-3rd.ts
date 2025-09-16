@@ -52,7 +52,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'Each creature in the area',
 				sections: [
-					FactoryLogic.createAbilitySectionText('**Effect:** Each target makes an **Agility test**. The same condition is imposed on each affected target'),
+					FactoryLogic.createAbilitySectionText('Each target makes an **Agility test**. The same condition is imposed on each affected target'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility ],
 						tier1: '5 fire damage; slowed or weakened (save ends)',
@@ -80,7 +80,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: 'Two war dogs',
 				sections: [
-					FactoryLogic.createAbilitySectionText('**Effect:** Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target’s Loyalty Collar trait is resolved, each enemy adjacent to either target makes a **Presence test**.'),
+					FactoryLogic.createAbilitySectionText('Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target’s Loyalty Collar trait is resolved, each enemy adjacent to either target makes a **Presence test**.'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Presence ],
 						tier1: 'Push 4; the enemy is frightened of the nearest non-minion war dog (save end)',
@@ -143,7 +143,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '4 damage; 3 psychic damage',
 								tier3: '4 damage; 3 psychic damage; the target must move their speed in a straight line away from the draconite'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If this damage leaves the target winded, they are frightened of the draconite until the end of the target’s next turn.')
+							FactoryLogic.createAbilitySectionText('If this damage leaves the target winded, they are frightened of the draconite until the end of the target’s next turn.')
 						]
 					})
 				}),
@@ -185,7 +185,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '7 fire damage; push 1',
 								tier3: '8 fire damage; push 3'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The space the target occupies fills with dark smoke and blocks line of effect until the start of the saboteur’s next turn.')
+							FactoryLogic.createAbilitySectionText('The space the target occupies fills with dark smoke and blocks line of effect until the start of the saboteur’s next turn.')
 						]
 					})
 				}),
@@ -227,7 +227,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '7 damage',
 								tier3: '8 damage; I < 3 the target is frightened of all shrikestroops (EoT)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target must move their speed in a straight line away from the shriketroop.')
+							FactoryLogic.createAbilitySectionText('The target must move their speed in a straight line away from the shriketroop.')
 						]
 					})
 				}),
@@ -292,7 +292,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '4 acid damage; M < 3 slowed (save ends)',
 								tier3: '6 acid damage; M < 4 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain.')
+							FactoryLogic.createAbilitySectionText('The area is difficult terrain.')
 						]
 					})
 				}),
@@ -338,7 +338,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '10 damage; push 3',
 								tier3: '11 damage; push 5'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Any target pushed into an obstacle is knocked prone, and if they have <code>M < 3</code> they are restrained (save ends).')
+							FactoryLogic.createAbilitySectionText('Any target pushed into an obstacle is knocked prone, and if they have <code>M < 3</code> they are restrained (save ends).')
 						]
 					})
 				}),
@@ -352,7 +352,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, value2: 12 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of the ballistite’s next turn, the area is difficult terrain, and any ranged ability targeting an enemy in the area deals an extra 8 damage.')
+							FactoryLogic.createAbilitySectionText('Until the start of the ballistite’s next turn, the area is difficult terrain, and any ranged ability targeting an enemy in the area deals an extra 8 damage.')
 						]
 					})
 				}),
@@ -401,7 +401,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '11 damage',
 								tier3: '12 damage; M < 4 bleeding and weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The blackcap can teleport up to their speed before using this ability, creating an ash clone (see below) in their original square.')
+							FactoryLogic.createAbilitySectionText('The blackcap can teleport up to their speed before using this ability, creating an ash clone (see below) in their original square.')
 						]
 					})
 				}),
@@ -414,7 +414,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'Up to three ash clones',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target makes a free strike.')
+							FactoryLogic.createAbilitySectionText('Each target makes a free strike.')
 						]
 					})
 				}),
@@ -472,7 +472,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of their next turn, the breaker has a double edge on abilities and is automatically affected by all potency effects.')
+							FactoryLogic.createAbilitySectionText('Until the start of their next turn, the breaker has a double edge on abilities and is automatically affected by all potency effects.')
 						]
 					})
 				}),
@@ -518,7 +518,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '6 fire damage; A < 3 the target is seared (save ends)',
 								tier3: '8 fire damage; A < 4 the target is seared (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A seared creature takes a bane on strikes and has damage weakness 5. If this ability obtains a tier 3 outcome against one or more creatures who are already seared, the firestarter can use Enflame as a free triggered action.')
+							FactoryLogic.createAbilitySectionText('A seared creature takes a bane on strikes and has damage weakness 5. If this ability obtains a tier 3 outcome against one or more creatures who are already seared, the firestarter can use Enflame as a free triggered action.')
 						]
 					})
 				}),
@@ -531,7 +531,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability targets each enemy within 2 squares of any seared creature within distance.'),
+							FactoryLogic.createAbilitySectionText('This ability targets each enemy within 2 squares of any seared creature within distance.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								tier1: '2 fire damage',
 								tier2: '4 fire damage; A < 3 the target is seared (save ends)',
@@ -582,7 +582,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '6 damage; M < 3 push',
 								tier3: '8 damage; M < 4 push, prone'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability ignores stability. The geomancer declares a direction for the area, and any creature pushed by this ability is pushed to the last space in the area in the chosen direction.'),
+							FactoryLogic.createAbilitySectionText('This ability ignores stability. The geomancer declares a direction for the area, and any creature pushed by this ability is pushed to the last space in the area in the chosen direction.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 2,
@@ -600,7 +600,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 10 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The geomancer raises a wall of stone set with viewing gaps. Creatures have line of effect through the wall while adjacent to it.')
+							FactoryLogic.createAbilitySectionText('The geomancer raises a wall of stone set with viewing gaps. Creatures have line of effect through the wall while adjacent to it.')
 						]
 					})
 				}),
@@ -645,7 +645,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '6 damage; P < 3 bleeding (save ends)',
 								tier3: '8 damage; P < 4 the target loses 1 Recovery and is bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Any ally within 2 squares of the iron priest gains an edge on their next strike. If any target lost a Recovery, any affected ally has a double edge instead.')
+							FactoryLogic.createAbilitySectionText('Any ally within 2 squares of the iron priest gains an edge on their next strike. If any target lost a Recovery, any affected ally has a double edge instead.')
 						]
 					})
 				}),
@@ -660,7 +660,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 4 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText(`**Effect:**  For every 2 Malice spent, each target gains one of the following effects until the start of the iron priest’s next turn.
+							FactoryLogic.createAbilitySectionText(` For every 2 Malice spent, each target gains one of the following effects until the start of the iron priest’s next turn.
 - The target has damage immunity 2.
 - The target’s strikes deal an extra 3 holy damage.
 - The target has a +3 bonus to speed.`)
@@ -715,7 +715,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, value2: 10 }) ],
 						target: 'Each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of the prismite’s next turn, each target has cover and gains a +2 bonus to stability.')
+							FactoryLogic.createAbilitySectionText('Until the start of the prismite’s next turn, each target has cover and gains a +2 bonus to stability.')
 						]
 					})
 				}),
@@ -729,7 +729,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target is pulled up to 5 squares toward the prismite and any damage from the triggering ability is halved.')
+							FactoryLogic.createAbilitySectionText('The target is pulled up to 5 squares toward the prismite and any damage from the triggering ability is halved.')
 						]
 					})
 				}),
@@ -770,7 +770,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 								tier2: '19 lightning damage; the lightning spreads 2 square; I < 4 dazed (save ends)',
 								tier3: '23 lightning damage; the lightning spreads 3 square; I < 5 dazed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The spread is the distance the charge arcs from a target to nearby enemies. Each enemy within spread takes 5 lightning damage.'),
+							FactoryLogic.createAbilitySectionText('The spread is the distance the charge arcs from a target to nearby enemies. Each enemy within spread takes 5 lightning damage.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 2,
@@ -789,7 +789,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, value2: 10 }) ],
 						target: 'Each war dog in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target shifts up to their speed and can make a free strike that deals an extra 5 lightning damage.')
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed and can make a free strike that deals an extra 5 lightning damage.')
 						]
 					})
 				}),
@@ -802,7 +802,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The triggering enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** After the ability is resolved, the target is teleported up to 5 squares and is thunderstruck (save ends). A thunderstruck creature has lightning weakness 5, and the taxiarch gains an edge on power rolls against them.')
+							FactoryLogic.createAbilitySectionText('After the ability is resolved, the target is teleported up to 5 squares and is thunderstruck (save ends). A thunderstruck creature has lightning weakness 5, and the taxiarch gains an edge on power rolls against them.')
 						]
 					})
 				}),
@@ -820,7 +820,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Slide 5, and if the the target has <code>M < 4</code>, they fall prone.')
+							FactoryLogic.createAbilitySectionText('Slide 5, and if the the target has <code>M < 4</code>, they fall prone.')
 						]
 					})
 				}),
@@ -833,7 +833,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each war dog in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target shifts up to their speed, then can make a free strike or use a maneuver.')
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed, then can make a free strike or use a maneuver.')
 						]
 					})
 				}),

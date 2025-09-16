@@ -25,7 +25,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	highlightAbout: boolean;
-	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -100,7 +99,7 @@ export const HeroListPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='hero-list-page'>
-					<AppHeader subheader='Heroes' showDirectory={props.showDirectory}>
+					<AppHeader subheader='Heroes'>
 						<Input
 							name='search'
 							placeholder='Search'

@@ -196,7 +196,7 @@ export const bearTrap: Terrain = {
 								})
 							),
 							FactoryLogic.createAbilitySectionText(
-								'**Effect:** The bear trap must be manually reset.'
+								'The bear trap must be manually reset.'
 							)
 						]
 					})

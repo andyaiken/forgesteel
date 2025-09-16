@@ -111,7 +111,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 								tier2: '15 damage; if one target has M < 3 they are bleeding (save ends); if the other target has A < 3 they are grabbed',
 								tier3: '18 damage; M < 4 bleeding (save ends); A < 2 grabbed'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The ashen hoarder can have up to two size 1 creatures grabbed at a time.')
+							FactoryLogic.createAbilitySectionText('The ashen hoarder can have up to two size 1 creatures grabbed at a time.')
 						]
 					})
 				}),
@@ -159,7 +159,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 								tier2: '11 corruption damage; M < 3 the target is impaled (save ends)',
 								tier3: '14 corruption damage; M < 4 the target is impaled (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** An impaled creature is restrained and bleeding, and moves with the ashen hoarder. The ashen hoarder can have three creatures impaled with this ability at a time.')
+							FactoryLogic.createAbilitySectionText('An impaled creature is restrained and bleeding, and moves with the ashen hoarder. The ashen hoarder can have three creatures impaled with this ability at a time.')
 						]
 					})
 				}),
@@ -186,7 +186,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 						target: 'Self',
 						cost: 2,
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The ashen hoarder halves the damage. If the ashen hoarder has one or more creatures impaled, the Malice cost of this feature is reduced by 1 and one impaled creature takes the other half of the damage.')
+							FactoryLogic.createAbilitySectionText('The ashen hoarder halves the damage. If the ashen hoarder has one or more creatures impaled, the Malice cost of this feature is reduced by 1 and one impaled creature takes the other half of the damage.')
 						]
 					})
 				}),
@@ -216,7 +216,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 								tier2: '11 damage, vertical push 3',
 								tier3: '14 damage, vertical push 4'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target is force moved straight up, then falls. A target who would normally land prone after falling is instead restrained (save ends).')
+							FactoryLogic.createAbilitySectionText('Each target is force moved straight up, then falls. A target who would normally land prone after falling is instead restrained (save ends).')
 						]
 					})
 				}),
@@ -229,7 +229,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 10, within: 20 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The ashen hoarder sprays out six size 1M zombie mines that appear in unoccupied squares within distance. Any enemy who moves adjacent to a zombie mine for the first time in a round or starts their turn there causes the mine to explode, dealing 4 corruption damage to each creature adjacent to the mine. Any other zombie mines adjacent to the exploding mine also explode. At the start of each of the ashen hoarder’s turns, each unexploded zombie mine can be moved up to 2 squares.')
+							FactoryLogic.createAbilitySectionText('The ashen hoarder sprays out six size 1M zombie mines that appear in unoccupied squares within distance. Any enemy who moves adjacent to a zombie mine for the first time in a round or starts their turn there causes the mine to explode, dealing 4 corruption damage to each creature adjacent to the mine. Any other zombie mines adjacent to the exploding mine also explode. At the start of each of the ashen hoarder’s turns, each unexploded zombie mine can be moved up to 2 squares.')
 						]
 					})
 				}),
@@ -242,7 +242,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The ashen hoarder moves up to their speed and uses Claw and Blade with a double edge against one target. On a tier 3 outcome, the ashen hoarder can use Impale without spending Malice.')
+							FactoryLogic.createAbilitySectionText('The ashen hoarder moves up to their speed and uses Claw and Blade with a double edge against one target. On a tier 3 outcome, the ashen hoarder can use Impale without spending Malice.')
 						]
 					})
 				})

@@ -12,7 +12,6 @@ import './welcome-page.scss';
 
 interface Props {
 	highlightAbout: boolean;
-	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -174,7 +173,7 @@ export const WelcomePage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={isSmall ? 'welcome-page compact' : 'welcome-page full'}>
-					<AppHeader showDirectory={props.showDirectory} />
+					<AppHeader />
 					<div className='welcome-page-content'>
 						<div className='welcome-column'>
 							<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>

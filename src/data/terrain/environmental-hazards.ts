@@ -189,7 +189,7 @@ export const corrosivePool: Terrain = {
 									tier3: '9 fire damage; M < 3 burning (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** The liquid in the pool is consumed. This ability has a double edge against any target in the pool. A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round. Any target with acid weakness takes extra damage from this ability and while burning as if the fire damage were acid damage. ')
+							FactoryLogic.createAbilitySectionText('The liquid in the pool is consumed. This ability has a double edge against any target in the pool. A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round. Any target with acid weakness takes extra damage from this ability and while burning as if the fire damage were acid damage. ')
 						]
 					})
 				})
@@ -266,7 +266,7 @@ export const frozenPond: Terrain = {
 									tier3: 'Push 3 in the direction the target was moving; A < 2 prone and can’t stand (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** The triggering creature’s movement ends, then they are force moved. If the target triggered this ability by being force moved, this ability gains an edge and any remaining forced movement distance is added to the ability’s forced movement. The ability’s forced movement doesn’t trigger the ability again.')
+							FactoryLogic.createAbilitySectionText('The triggering creature’s movement ends, then they are force moved. If the target triggered this ability by being force moved, this ability gains an edge and any remaining forced movement distance is added to the ability’s forced movement. The ability’s forced movement doesn’t trigger the ability again.')
 						]
 					})
 				}),
@@ -287,7 +287,7 @@ export const frozenPond: Terrain = {
 									tier3: '3 cold damage; M < 2 restrained (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** The triggering creature’s movement ends, then they are force moved if applicable.')
+							FactoryLogic.createAbilitySectionText('The triggering creature’s movement ends, then they are force moved if applicable.')
 						]
 					})
 				})
@@ -375,7 +375,7 @@ export const lava: Terrain = {
 									tier3: '12 fire damage; M < 3 the target is burning (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target is adjacent to lava but not in it, this ability takes a bane. A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round. ')
+							FactoryLogic.createAbilitySectionText('If the target is adjacent to lava but not in it, this ability takes a bane. A burning creature takes 1d6 fire damage at the start of each of their turns. A burning object takes 1d6 fire damage at the end of each round. ')
 						]
 					})
 				})
@@ -455,7 +455,7 @@ export const quicksand: Terrain = {
 									tier3: 'M < 2 restrained (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability takes a bane if a triggering creature shifted into the quicksand. A character who starts their turn restrained this way is suffocating.')
+							FactoryLogic.createAbilitySectionText('This ability takes a bane if a triggering creature shifted into the quicksand. A character who starts their turn restrained this way is suffocating.')
 						]
 					})
 				})
@@ -522,7 +522,7 @@ export const toxicPlants: Terrain = {
 									tier3: 'M < 2 dazed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** While dazed this way, a target who starts their turn in the area of the toxic plants falls prone and can’t stand.')
+							FactoryLogic.createAbilitySectionText('While dazed this way, a target who starts their turn in the area of the toxic plants falls prone and can’t stand.')
 						]
 					})
 				})

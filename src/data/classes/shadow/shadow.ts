@@ -523,7 +523,7 @@ Subterfuge remains until you spend it.`
 						tier3: '8 + A damage'
 					})
 				),
-				FactoryLogic.createAbilitySectionText('**Effect:** As long as you have one or more allies within 5 squares of the target, you gain 1 surge. If you are flanking the target when you use this ability, choose one ally who is flanking with you. That ally also gains 1 surge.')
+				FactoryLogic.createAbilitySectionText('As long as you have one or more allies within 5 squares of the target, you gain 1 surge. If you are flanking the target when you use this ability, choose one ally who is flanking with you. That ally also gains 1 surge.')
 			]
 		}),
 		FactoryLogic.createAbility({

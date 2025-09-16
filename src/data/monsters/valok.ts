@@ -139,7 +139,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier3: '26 damage; M < 4 weakened (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** The bodyguard has a double edge on this ability if it was previously used against the same target in this encounter.')
+							FactoryLogic.createAbilitySectionText('The bodyguard has a double edge on this ability if it was previously used against the same target in this encounter.')
 						]
 					})
 				}),
@@ -153,7 +153,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						target: 'Two creatures or objects',
 						sections: [
 							FactoryLogic.createAbilitySectionText('**Special:** This ability targets only metal-clad enemies and metal objects of size 3 or smaller.'),
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target is pulled up to 8 squares, or if they have <code>M < 3</code>, they are pulled up to 15 squares. The bodyguard can make a free strike against each target who ends this forced movement adjacent to them.')
+							FactoryLogic.createAbilitySectionText('Each target is pulled up to 8 squares, or if they have <code>M < 3</code>, they are pulled up to 15 squares. The bodyguard can make a free strike against each target who ends this forced movement adjacent to them.')
 						]
 					})
 				}),
@@ -166,7 +166,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The bodyguard becomes the triggering ability’s target instead.')
+							FactoryLogic.createAbilitySectionText('The bodyguard becomes the triggering ability’s target instead.')
 						]
 					})
 				}),
@@ -240,7 +240,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier3: '26 damage; A < 4 slowed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** This damage can’t be reduced in any way. While a target is slowed this way, any strike against them has a double edge.')
+							FactoryLogic.createAbilitySectionText('This damage can’t be reduced in any way. While a target is slowed this way, any strike against them has a double edge.')
 						]
 					})
 				}),
@@ -253,7 +253,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Two creatures or objects',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target shifts up to their speed and can use a main action.')
+							FactoryLogic.createAbilitySectionText('The target shifts up to their speed and can use a main action.')
 						]
 					})
 				}),
@@ -266,7 +266,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target gains 15 temporary Stamina. Each time this triggered action is used, the amount of temporary Stamina received decreases by 3 (to a minimum of 0).')
+							FactoryLogic.createAbilitySectionText('The target gains 15 temporary Stamina. Each time this triggered action is used, the amount of temporary Stamina received decreases by 3 (to a minimum of 0).')
 						]
 					})
 				}),
@@ -311,7 +311,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, value2: 5 }) ],
 						target: 'Each enemy and the object in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target must make either an **Agility test** or an **Intuition test**.'),
+							FactoryLogic.createAbilitySectionText('Each target must make either an **Agility test** or an **Intuition test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Agility, Characteristic.Intuition ],
@@ -353,7 +353,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						cost: 3,
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is covered in wet concrete and is difficult terrain. Any enemy who starts their turn in the concrete makes a **Might test**.'),
+							FactoryLogic.createAbilitySectionText('The area is covered in wet concrete and is difficult terrain. Any enemy who starts their turn in the concrete makes a **Might test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									tier1: 'Restrained (EoT)',
@@ -373,7 +373,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 6, value2: 3 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The builder creates a concrete wall. They can also remove any unoccupied squares of wet concrete within 3 squares of them, creating two additional squares of wall for each square of concrete removed.')
+							FactoryLogic.createAbilitySectionText('The builder creates a concrete wall. They can also remove any unoccupied squares of wet concrete within 3 squares of them, creating two additional squares of wall for each square of concrete removed.')
 						]
 					})
 				}),
@@ -394,7 +394,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier3: 'A < 4 restrained (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** While a creature is restrained this way, or if the target is an object, the target and their space are encased in wet concrete. A creature no longer restrained leaves squares of wet concrete behind.')
+							FactoryLogic.createAbilitySectionText('While a creature is restrained this way, or if the target is an object, the target and their space are encased in wet concrete. A creature no longer restrained leaves squares of wet concrete behind.')
 						]
 					})
 				}),
@@ -447,7 +447,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier3: '22 damage; prone; M < 4 restrained (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** In suitably soft ground, a target restrained this way is entrenched in a 1-square-deep hole.')
+							FactoryLogic.createAbilitySectionText('In suitably soft ground, a target restrained this way is entrenched in a 1-square-deep hole.')
 						]
 					})
 				}),
@@ -461,7 +461,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, value2: 1 }) ],
 						target: 'Each enemy and the object in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target makes an **Agility test**.'),
+							FactoryLogic.createAbilitySectionText('Each target makes an **Agility test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Agility, Characteristic.Intuition ],
@@ -484,7 +484,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 20, value2: 1, within: 1 }) ],
 						target: 'Each enemy and the object in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** A 5-square-deep fissure opens along the ground in the area. Each ally in the area can shift into the nearest unoccupied space outside the fissure. Each target makes an **Agility test**.'),
+							FactoryLogic.createAbilitySectionText('A 5-square-deep fissure opens along the ground in the area. Each ally in the area can shift into the nearest unoccupied space outside the fissure. Each target makes an **Agility test**.'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: [ Characteristic.Agility ],
@@ -506,7 +506,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the end of the round, dust and dirt billow in a 2 burst around the miner’s initial space. While the miner is in the area, they ignore the nondamaging effects of any strike made against them, including the triggering strike.')
+							FactoryLogic.createAbilitySectionText('Until the end of the round, dust and dirt billow in a 2 burst around the miner’s initial space. While the miner is in the area, they ignore the nondamaging effects of any strike made against them, including the triggering strike.')
 						]
 					})
 				}),
@@ -584,7 +584,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier3: '34 damage; I < 5 dazed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** This damage can’t be reduced in any way. This ability can’t be used again until the start of the next round.')
+							FactoryLogic.createAbilitySectionText('This damage can’t be reduced in any way. This ability can’t be used again until the start of the next round.')
 						]
 					})
 				}),
@@ -597,7 +597,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The war engine moves up to their speed in a straight line, automatically destroying mundane size 1 objects or walls in their path. The first time the war engine moves through a creature’s space during this movement, that creature can choose to either fall prone or take 10 damage.')
+							FactoryLogic.createAbilitySectionText('The war engine moves up to their speed in a straight line, automatically destroying mundane size 1 objects or walls in their path. The first time the war engine moves through a creature’s space during this movement, that creature can choose to either fall prone or take 10 damage.')
 						]
 					})
 				}),
@@ -611,7 +611,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						target: 'Each enemy and object in the area',
 						cost: 3,
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target makes an **Agility test.**'),
+							FactoryLogic.createAbilitySectionText('Each target makes an **Agility test.**'),
 							FactoryLogic.createAbilitySectionRoll(
 								FactoryLogic.createPowerRoll({
 									characteristic: Characteristic.Agility,
@@ -641,7 +641,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 									tier3: '16 damage; push 8'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** This damage can’t be reduced in any way.')
+							FactoryLogic.createAbilitySectionText('This damage can’t be reduced in any way.')
 						]
 					})
 				}),

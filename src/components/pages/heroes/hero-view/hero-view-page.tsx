@@ -43,7 +43,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	highlightAbout: boolean;
-	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: (hero: Hero, page?: RulesPage) => void;
@@ -158,7 +157,7 @@ export const HeroViewPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='hero-view-page'>
-					<AppHeader subheader='Hero' showDirectory={props.showDirectory}>
+					<AppHeader subheader='Hero'>
 						<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
 							Close
 						</Button>

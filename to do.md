@@ -1,7 +1,5 @@
 # Development Plans
 
-Refactor retainers so they're in a separate bucket
-
 ### Heroes
 
 (nothing)

@@ -61,7 +61,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 				target: 'Each enemy in the area',
 				cost: 5,
 				sections: [
-					FactoryLogic.createAbilitySectionText('**Effect:** The basilisk spits up a chuck of a past petrified victim.'),
+					FactoryLogic.createAbilitySectionText('The basilisk spits up a chuck of a past petrified victim.'),
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							bonus: 2,
@@ -115,7 +115,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 									tier3: '13 poison damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability gains an edge against targets the basilisk has previously dealt poison damage to')
+							FactoryLogic.createAbilitySectionText('This ability gains an edge against targets the basilisk has previously dealt poison damage to')
 						]
 					})
 				}),
@@ -137,7 +137,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 									tier3: 'Slowed (save ends) or M < 2 Restrained (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** If a target is already slowed, the potency increases by 1 for that target. A target restrained this way magically begins to turn to stone, and a target who ends two consecutive turns restrained this way is petrified. A target restrained this way or a creature adjacent to them can use a main action to cut encroaching stone from the target’s body, dealing 8 damage to the target that can’t be reduced in any way and ending this effect.')
+							FactoryLogic.createAbilitySectionText('If a target is already slowed, the potency increases by 1 for that target. A target restrained this way magically begins to turn to stone, and a target who ends two consecutive turns restrained this way is petrified. A target restrained this way or a creature adjacent to them can use a main action to cut encroaching stone from the target’s body, dealing 8 damage to the target that can’t be reduced in any way and ending this effect.')
 						]
 					})
 				}),
@@ -171,7 +171,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target takes 5 damage. Any target who has <code>A < 2</code> is also bleeding (save ends).')
+							FactoryLogic.createAbilitySectionText('Each target takes 5 damage. Any target who has <code>A < 2</code> is also bleeding (save ends).')
 						]
 					})
 				}),
@@ -218,7 +218,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 									tier3: '14 acid damage; pull 3'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability can pull targets restrained by Petrifying Eye Beams, and ignores stability if it does so.'),
+							FactoryLogic.createAbilitySectionText('This ability can pull targets restrained by Petrifying Eye Beams, and ignores stability if it does so.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 3,
@@ -245,7 +245,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 									tier3: 'Slowed (save ends) or A < 2 Restrained (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** If a target is already slowed, the potency increases by 1 for that target. A target restrained this way magically begins to turn to stone, and a target who ends two consecutive turns restrained this way is petrified. A target restrained this way or a creature adjacent to them can use a main action to cut encroaching stone from the target’s body, dealing 8 damage to the target that can’t be reduced in any way and ending this effect.')
+							FactoryLogic.createAbilitySectionText('If a target is already slowed, the potency increases by 1 for that target. A target restrained this way magically begins to turn to stone, and a target who ends two consecutive turns restrained this way is petrified. A target restrained this way or a creature adjacent to them can use a main action to cut encroaching stone from the target’s body, dealing 8 damage to the target that can’t be reduced in any way and ending this effect.')
 						]
 					})
 				}),
@@ -270,7 +270,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 									tier3: '14 corruption damage; R < 2 dazed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** A creature dazed this way can’t benefit from edges or double edges and can’t gain or use surges.')
+							FactoryLogic.createAbilitySectionText('A creature dazed this way can’t benefit from edges or double edges and can’t gain or use surges.')
 						]
 					})
 				}),
@@ -283,7 +283,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target takes 4 acid damage. Any target who has <code>M < 2</code> is also slowed (save ends).')
+							FactoryLogic.createAbilitySectionText('Each target takes 4 acid damage. Any target who has <code>M < 2</code> is also slowed (save ends).')
 						]
 					})
 				}),

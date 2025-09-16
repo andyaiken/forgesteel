@@ -58,7 +58,7 @@ export const life: Domain = {
 				FactoryLogic.feature.create({
 					id: 'domain-life-4',
 					name: 'Blessing of Life',
-					description: 'Your divine presence causes those you deem worthy to recover quickly from a fight. Whenever an ally within distance of your Healing Grace ability regains Stamina, they regain additional Stamina equal to your Intuition score.'
+					description: 'Your divine presence causes those you deem worthy to recover quickly from a fight. Whenever an ally within distance of your Healing Grace ability regains Stamina, they regain additional Stamina equal to your Presence (censor) or Intuition (conduit) score.'
 				})
 			]
 		},

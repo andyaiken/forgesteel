@@ -97,7 +97,7 @@ export const psionicShard: Terrain = {
 						distance: [],
 						target: '',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The shard releases a shockwave channeled through each creature affected by Psionic Barrier. Each ally in the encounter is dazed until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('The shard releases a shockwave channeled through each creature affected by Psionic Barrier. Each ally in the encounter is dazed until the end of their next turn.')
 						]
 					})
 				})

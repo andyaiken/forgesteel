@@ -1,5 +1,5 @@
-import { BookOutlined, CopyOutlined, DownOutlined, DownloadOutlined, EditOutlined, PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { Button, Divider, Input, Popover, Select, Space, Upload } from 'antd';
+import { CopyOutlined, DownOutlined, DownloadOutlined, EditOutlined, PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -58,7 +58,6 @@ interface Props {
 	options: Options;
 	hiddenSourcebookIDs: string[];
 	highlightAbout: boolean;
-	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -461,13 +460,13 @@ export const LibraryListPage = (props: Props) => {
 		return sourcebook || null;
 	};
 
-	const getInfo = (id: string) => {
+	const getTags = (id: string) => {
 		const sb = getSourcebook(id);
 		if (sb && sb.id !== SourcebookData.core.id) {
-			return sb.name;
+			return [ sb.name ];
 		}
 
-		return null;
+		return undefined;
 	};
 
 	const getElementToolbar = () => {
@@ -582,16 +581,7 @@ export const LibraryListPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='library-list-page'>
-					<AppHeader subheader='Library' showDirectory={props.showDirectory}>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-						<div className='divider' />
+					<AppHeader subheader='Library'>
 						<Popover
 							trigger='click'
 							content={(
@@ -649,39 +639,52 @@ export const LibraryListPage = (props: Props) => {
 							</Button>
 						</Popover>
 						{getElementToolbar()}
-						<div className='divider' />
-						<Button icon={<BookOutlined />} onClick={props.showSourcebooks}>
-							Sourcebooks
-						</Button>
 					</AppHeader>
 					<div className='library-list-page-content'>
-						<div className='selection-list categories'>
-							<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => navigation.goToLibrary('ancestry')} />
-							<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => navigation.goToLibrary('career')} />
-							<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => navigation.goToLibrary('class')} />
-							<SelectorRow selected={category === 'complication'} content='Complications' info={getComplications().length} onSelect={() => navigation.goToLibrary('complication')} />
-							<SelectorRow selected={category === 'culture'} content='Cultures' info={getCultures().length} onSelect={() => navigation.goToLibrary('culture')} />
-							<SelectorRow selected={category === 'domain'} content='Domains' info={getDomains().length} onSelect={() => navigation.goToLibrary('domain')} />
-							<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
-							<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
-							<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
-							<SelectorRow selected={category === 'monster-group'} content='Monster Groups' info={getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
-							<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
-							<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
-							<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
-							<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
-						</div>
-						<div className='selection-list elements'>
-							{
-								list.map(a => (
-									<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} info={getInfo(a.id)} onSelect={() => navigation.goToLibrary(category, a.id)} />
-								))
-							}
-							{
-								list.length === 0 ?
-									<Empty />
-									: null
-							}
+						<div className='selection-sidebar'>
+							<div className='selection-toolbar'>
+								<Input
+									name='search'
+									placeholder='Search'
+									allowClear={true}
+									value={searchTerm}
+									suffix={<SearchOutlined />}
+									onChange={e => setSearchTerm(e.target.value)}
+								/>
+								<Button onClick={props.showSourcebooks}>
+									Sourcebooks
+								</Button>
+							</div>
+							<div className='selection-content'>
+								<div className='selection-list categories'>
+									<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => navigation.goToLibrary('ancestry')} />
+									<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => navigation.goToLibrary('career')} />
+									<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => navigation.goToLibrary('class')} />
+									<SelectorRow selected={category === 'complication'} content='Complications' info={getComplications().length} onSelect={() => navigation.goToLibrary('complication')} />
+									<SelectorRow selected={category === 'culture'} content='Cultures' info={getCultures().length} onSelect={() => navigation.goToLibrary('culture')} />
+									<SelectorRow selected={category === 'domain'} content='Domains' info={getDomains().length} onSelect={() => navigation.goToLibrary('domain')} />
+									<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
+									<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
+									<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
+									<SelectorRow selected={category === 'monster-group'} content='Monster Groups' info={getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
+									<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
+									<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
+									<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
+									<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
+								</div>
+								<div className='selection-list elements'>
+									{
+										list.map(a => (
+											<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} tags={getTags(a.id)} onSelect={() => navigation.goToLibrary(category, a.id)} />
+										))
+									}
+									{
+										list.length === 0 ?
+											<Empty />
+											: null
+									}
+								</div>
+							</div>
 						</div>
 						<div className='element-selected'>
 							{

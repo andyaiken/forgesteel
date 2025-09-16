@@ -55,7 +55,7 @@ export const warDog2nd: MonsterGroup = {
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'Each creature in the area',
 				sections: [
-					FactoryLogic.createAbilitySectionText('**Effect:** Each target makes an **Agility test**. The same condition is imposed on each affected target'),
+					FactoryLogic.createAbilitySectionText('Each target makes an **Agility test**. The same condition is imposed on each affected target'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility ],
 						tier1: '5 fire damage; slowed or weakened (save ends)',
@@ -83,7 +83,7 @@ export const warDog2nd: MonsterGroup = {
 				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: 'Two war dogs',
 				sections: [
-					FactoryLogic.createAbilitySectionText('**Effect:** Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target’s Loyalty Collar trait is resolved, each enemy adjacent to either target makes a **Presence test**.'),
+					FactoryLogic.createAbilitySectionText('Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target’s Loyalty Collar trait is resolved, each enemy adjacent to either target makes a **Presence test**.'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Presence ],
 						tier1: 'Push 4; the enemy is frightened of the nearest non-minion war dog (save end)',
@@ -126,7 +126,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '5 lightning damage; the lightning spreads 1 square',
 								tier3: '7 lightning damage; the lightning spreads 2 squares'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The lightning’s spread is the distance it arcs from a target to nearby enemies. Each enemy within that distance takes 2 lightning damage.')
+							FactoryLogic.createAbilitySectionText('The lightning’s spread is the distance it arcs from a target to nearby enemies. Each enemy within that distance takes 2 lightning damage.')
 						]
 					})
 				}),
@@ -177,7 +177,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '4 damage; push 1',
 								tier3: '6 damage; push 3'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Any target within 2 squares of the sweeper takes an extra 3 damage.')
+							FactoryLogic.createAbilitySectionText('Any target within 2 squares of the sweeper takes an extra 3 damage.')
 						]
 					})
 				}),
@@ -222,7 +222,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '5 poison damage',
 								tier3: '7 poison damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The war frog can jump 3 squares before or after making the strike. If they end this jump in cover or concealment, they can attempt to hide.')
+							FactoryLogic.createAbilitySectionText('The war frog can jump 3 squares before or after making the strike. If they end this jump in cover or concealment, they can attempt to hide.')
 						]
 					})
 				}),
@@ -269,7 +269,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '4 damage; push 1',
 								tier3: '6 damage; push 3'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability ignores cover and concealment. The arachnite chooses one of the following damage types when making the strike: acid, cold, fire, lightning, poison, psychic, or sonic.'),
+							FactoryLogic.createAbilitySectionText('This ability ignores cover and concealment. The arachnite chooses one of the following damage types when making the strike: acid, cold, fire, lightning, poison, psychic, or sonic.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 2,
@@ -287,7 +287,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, value2: 10 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain until the end of the encounter.')
+							FactoryLogic.createAbilitySectionText('The area is difficult terrain until the end of the encounter.')
 						]
 					})
 				}),
@@ -349,7 +349,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '5 damage; push 3',
 								tier3: '6 damage; push 5; A < 3 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The doomthief can’t willingly move on the same turn they use this ability.')
+							FactoryLogic.createAbilitySectionText('The doomthief can’t willingly move on the same turn they use this ability.')
 						]
 					})
 				}),
@@ -363,7 +363,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The doomthief has damage immunity 4 and the size of the aura from their Doom Magnet trait increases by 3, both until the start of their next turn.')
+							FactoryLogic.createAbilitySectionText('The doomthief has damage immunity 4 and the size of the aura from their Doom Magnet trait increases by 3, both until the start of their next turn.')
 						]
 					})
 				})
@@ -404,7 +404,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '8 damage',
 								tier3: '10 damage; I < 3 frightened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability gains an edge while charging.'),
+							FactoryLogic.createAbilitySectionText('This ability gains an edge while charging.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 2,
@@ -422,7 +422,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The equivite moves up to their speed and ignores difficult terrain. Any mundane size 1 object whose space they move through is destroyed. The equivite makes one power roll against each enemy whose space they move through for the first time.'),
+							FactoryLogic.createAbilitySectionText('The equivite moves up to their speed and ignores difficult terrain. Any mundane size 1 object whose space they move through is destroyed. The equivite makes one power roll against each enemy whose space they move through for the first time.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								tier1: '2 damage; push 1',
 								tier2: '4 damage; push 2',
@@ -468,7 +468,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '8 damage; A < 2 bleeding (save ends)',
 								tier3: '10 damage; A < 3 bleeding and weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability deals an extra 6 damage if the hypokrite is hidden or disguised.')
+							FactoryLogic.createAbilitySectionText('This ability deals an extra 6 damage if the hypokrite is hidden or disguised.')
 						]
 					})
 				}),
@@ -482,7 +482,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The hypokrite detonates their loyalty collar to deal 2d6 damage to each adjacent enemy, but teleports to an unoccupied space adjacent to an ally within distance and remains alive.')
+							FactoryLogic.createAbilitySectionText('The hypokrite detonates their loyalty collar to deal 2d6 damage to each adjacent enemy, but teleports to an unoccupied space adjacent to an ally within distance and remains alive.')
 						]
 					})
 				}),
@@ -531,7 +531,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '7 damage',
 								tier3: '8 damage; R < 3 the target is dazzled (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A dazzled target takes a bane on strikes and has line of effect only within 1 square.')
+							FactoryLogic.createAbilitySectionText('A dazzled target takes a bane on strikes and has line of effect only within 1 square.')
 						]
 					})
 				}),
@@ -544,7 +544,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One ally or dazzled creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The mischievite swaps positions with the target. An ally targeted by this ability can make a free strike before or after being swapped.'),
+							FactoryLogic.createAbilitySectionText('The mischievite swaps positions with the target. An ally targeted by this ability can make a free strike before or after being swapped.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 2,
@@ -589,7 +589,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target dies and the thanatite makes one power roll against each enemy within 2 squares of the target.'),
+							FactoryLogic.createAbilitySectionText('The target dies and the thanatite makes one power roll against each enemy within 2 squares of the target.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 3,
 								tier1: '3 corruption damage; A < 1 slowed (save ends)',
@@ -613,7 +613,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 10, within: 10 }) ],
 						target: 'One corpse',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target spawns a wall of bloody muscle and pulsing viscera that must share one or more squares with the target. Each enemy in the area when the wall is created vertically slides up to 2 squares and is knocked prone. Each square of the wall has 3 Stamina.')
+							FactoryLogic.createAbilitySectionText('The target spawns a wall of bloody muscle and pulsing viscera that must share one or more squares with the target. Each enemy in the area when the wall is created vertically slides up to 2 squares and is knocked prone. Each square of the wall has 3 Stamina.')
 						]
 					})
 				})
@@ -654,7 +654,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '8 corruption damage; the target is marked (save ends)',
 								tier3: '9 corruption damage; the target is marked (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Strikes made against a target marked this way gain an edge. Additionally, whenever the tormentite takes damage, each target marked by them takes 3 damage.')
+							FactoryLogic.createAbilitySectionText('Strikes made against a target marked this way gain an edge. Additionally, whenever the tormentite takes damage, each target marked by them takes 3 damage.')
 						]
 					})
 				}),
@@ -674,7 +674,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '4 corruption damage',
 								tier3: '5 corruption damage; one ally in the area can end one effect on them that can be ended by a saving throw, and can give that effect to one target'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The tormentite regains 2 Stamina for each creature targeted by this ability.')
+							FactoryLogic.createAbilitySectionText('The tormentite regains 2 Stamina for each creature targeted by this ability.')
 						]
 					})
 				}),
@@ -715,7 +715,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '8 poison damage',
 								tier3: '9 poison damage; M < 3 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A target enemy is subject to this ability’s power roll. A target ally instead gains 5 temporary Stamina and can make a free strike.')
+							FactoryLogic.createAbilitySectionText('A target enemy is subject to this ability’s power roll. A target ally instead gains 5 temporary Stamina and can make a free strike.')
 						]
 					})
 				}),
@@ -728,7 +728,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has a loyalty collar, they are reduced to 0 Stamina.')
+							FactoryLogic.createAbilitySectionText('If the target has a loyalty collar, they are reduced to 0 Stamina.')
 						]
 					})
 				}),
@@ -742,7 +742,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each ally adjacent to the dead ally deals an extra 6 damage on their next strike.')
+							FactoryLogic.createAbilitySectionText('Each ally adjacent to the dead ally deals an extra 6 damage on their next strike.')
 						]
 					})
 				}),
@@ -791,7 +791,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '16 damage; taunted (EoT)',
 								tier3: '19 damage; taunted (EoT)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A creature taunted this way takes a bane on strikes.'),
+							FactoryLogic.createAbilitySectionText('A creature taunted this way takes a bane on strikes.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 3,
@@ -811,7 +811,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Three creatures (1 Malice per target)',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target shifts up to their speed and can make a free strike. If the free strike targets an enemy taunted by the tetrarch, it deals an extra 4 damage.')
+							FactoryLogic.createAbilitySectionText('Each target shifts up to their speed and can make a free strike. If the free strike targets an enemy taunted by the tetrarch, it deals an extra 4 damage.')
 						]
 					})
 				}),
@@ -824,7 +824,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The power roll has a double bane. If the target obtains a tier 1 outcome, the tetrarch ignores any of the power roll’s effects other than damage and the target is frightened of the tetrarch (save ends).')
+							FactoryLogic.createAbilitySectionText('The power roll has a double bane. If the target obtains a tier 1 outcome, the tetrarch ignores any of the power roll’s effects other than damage and the target is frightened of the tetrarch (save ends).')
 						]
 					})
 				}),
@@ -837,7 +837,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The tetrarch can jump up to 7 squares before using this ability.'),
+							FactoryLogic.createAbilitySectionText('The tetrarch can jump up to 7 squares before using this ability.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								tier1: 'Push 2; I < 2 frightened (save ends)',
 								tier2: 'Push 4; I < 3 frightened (save ends)',
@@ -860,7 +860,7 @@ export const warDog2nd: MonsterGroup = {
 								tier2: '13 fire damage; A < 3 slowed (save ends)',
 								tier3: '16 fire damage; A < 4 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is set ablaze until the end of the encounter. While ablaze, the area is difficult terrain, and any creature takes 2 fire damage for each square in the area they enter for the first time in a round.')
+							FactoryLogic.createAbilitySectionText('The area is set ablaze until the end of the encounter. While ablaze, the area is difficult terrain, and any creature takes 2 fire damage for each square in the area they enter for the first time in a round.')
 						]
 					})
 				}),
@@ -873,7 +873,7 @@ export const warDog2nd: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the end of the encounter, the tetrarch has damage immunity 2, and their Houndblade ability targets three creatures or objects.')
+							FactoryLogic.createAbilitySectionText('Until the end of the encounter, the tetrarch has damage immunity 2, and their Houndblade ability targets three creatures or objects.')
 						]
 					})
 				})

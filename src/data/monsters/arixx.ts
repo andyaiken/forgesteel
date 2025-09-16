@@ -110,7 +110,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 								tier2: '13 damage; grabbed',
 								tier3: '16 damage; grabbed'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A size 1 target grabbed this way takes 3 acid damage at the start of each of their turns.')
+							FactoryLogic.createAbilitySectionText('A size 1 target grabbed this way takes 3 acid damage at the start of each of their turns.')
 						]
 					})
 				}),
@@ -129,7 +129,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 								tier2: '8 damage; A < 2 grabbed',
 								tier3: '11 damage; A < 3 grabbed'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The arixx can vertically slide each grabbed target up to 3 squares.')
+							FactoryLogic.createAbilitySectionText('The arixx can vertically slide each grabbed target up to 3 squares.')
 						]
 					})
 				}),
@@ -148,7 +148,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 								tier2: '6 acid damage',
 								tier3: '7 acid damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The ground beneath each target is covered in burning acid until the end of the encounter. Any enemy who enters an affected space for the first time in a round or starts their turn there takes 2 acid damage.')
+							FactoryLogic.createAbilitySectionText('The ground beneath each target is covered in burning acid until the end of the encounter. Any enemy who enters an affected space for the first time in a round or starts their turn there takes 2 acid damage.')
 						]
 					})
 				}),
@@ -168,7 +168,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 								tier2: '6 damage; push 2',
 								tier3: '7 damage; push 4'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The arixx flings rocks and debris to fill the area, and has a double edge on the power roll if they started their turn underground. The area is difficult terrain.')
+							FactoryLogic.createAbilitySectionText('The arixx flings rocks and debris to fill the area, and has a double edge on the power roll if they started their turn underground. The area is difficult terrain.')
 						]
 					})
 				}),
@@ -181,7 +181,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The arixx kicks up dust to fill the area until the start of their next turn, then moves up to their speed. Any enemy in the area or who targets a creature in the area takes a bane on power rolls.')
+							FactoryLogic.createAbilitySectionText('The arixx kicks up dust to fill the area until the start of their next turn, then moves up to their speed. Any enemy in the area or who targets a creature in the area takes a bane on power rolls.')
 						]
 					})
 				}),
@@ -213,7 +213,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 								tier2: '8 acid damage',
 								tier3: '11 acid damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The ground in the area is covered in a puddle of acid until the end of the encounter. Any enemy who enters the area for the first time in a round or starts their turn there takes 2 acid damage.')
+							FactoryLogic.createAbilitySectionText('The ground in the area is covered in a puddle of acid until the end of the encounter. Any enemy who enters the area for the first time in a round or starts their turn there takes 2 acid damage.')
 						]
 					})
 				}),
@@ -225,7 +225,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Self, value: 0 }) ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The arixx shifts up to their speed. If they end this shift above ground and within 2 squares of a creature, they use Bite against the creature and can then use the Dig maneuver.')
+							FactoryLogic.createAbilitySectionText('The arixx shifts up to their speed. If they end this shift above ground and within 2 squares of a creature, they use Bite against the creature and can then use the Dig maneuver.')
 						]
 					})
 				}),

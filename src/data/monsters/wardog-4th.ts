@@ -65,7 +65,7 @@ export const warDog4th: MonsterGroup = {
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'Each creature in the area',
 				sections: [
-					FactoryLogic.createAbilitySectionText('**Effect:** Each target makes an **Agility test**. The same condition is imposed on each affected target'),
+					FactoryLogic.createAbilitySectionText('Each target makes an **Agility test**. The same condition is imposed on each affected target'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility ],
 						tier1: '5 fire damage; slowed or weakened (save ends)',
@@ -93,7 +93,7 @@ export const warDog4th: MonsterGroup = {
 				distance: [ FactoryLogic.distance.createRanged(10) ],
 				target: 'Two war dogs',
 				sections: [
-					FactoryLogic.createAbilitySectionText('**Effect:** Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target’s Loyalty Collar trait is resolved, each enemy adjacent to either target makes a **Presence test**.'),
+					FactoryLogic.createAbilitySectionText('Each target who has a loyalty collar shifts up to their speed, then is reduced to 0 Stamina. After each target’s Loyalty Collar trait is resolved, each enemy adjacent to either target makes a **Presence test**.'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Presence ],
 						tier1: 'Push 4; the enemy is frightened of the nearest non-minion war dog (save end)',
@@ -139,7 +139,7 @@ export const warDog4th: MonsterGroup = {
 						tier2: '11 psychic damage; P < 4 frightened (save ends)',
 						tier3: '14 psychic damage; P < 5 frightened (save ends)'
 					})),
-					FactoryLogic.createAbilitySectionText('**Effect:** Each war dog within distance deals an extra 15 damage with strikes until the end of their next turn. Additionally, they end any effect on them that can be ended by a saving throw or that ends at the end of their turn, then shift up to their speed and can make a free strike.'),
+					FactoryLogic.createAbilitySectionText('Each war dog within distance deals an extra 15 damage with strikes until the end of their next turn. Additionally, they end any effect on them that can be ended by a saving throw or that ends at the end of their turn, then shift up to their speed and can make a free strike.'),
 					FactoryLogic.createAbilitySectionText('**Special:** This ability can’t be used by a minion.')
 				]
 			})
@@ -177,7 +177,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '7 damage',
 								tier3: '9 damage; A < 4 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If this damage leaves the target winded, they are frightened of the draconite until the end of the target’s next turn.')
+							FactoryLogic.createAbilitySectionText('If this damage leaves the target winded, they are frightened of the draconite until the end of the target’s next turn.')
 						]
 					})
 				}),
@@ -224,7 +224,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '8 damage; push 3',
 								tier3: '10 damage; push 4'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Each enemy adjacent to the target before the forced movement takes 5 fire damage.')
+							FactoryLogic.createAbilitySectionText('Each enemy adjacent to the target before the forced movement takes 5 fire damage.')
 						]
 					})
 				}),
@@ -266,7 +266,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: 'The target makes a free strike (tier 2 result) against themself',
 								tier3: 'The target makes a free strike (tier 3 result) against themself'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Each enemy adjacent to the target before the forced movement takes 5 fire damage.')
+							FactoryLogic.createAbilitySectionText('Each enemy adjacent to the target before the forced movement takes 5 fire damage.')
 						]
 					})
 				}),
@@ -307,7 +307,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '20 damage; push 3',
 								tier3: '24 damage; push 5'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Two allies within 10 squares of Hoplon each shift up to their speed, then can take the Defend main action or make a free strike.')
+							FactoryLogic.createAbilitySectionText('Two allies within 10 squares of Hoplon each shift up to their speed, then can take the Defend main action or make a free strike.')
 						]
 					})
 				}),
@@ -321,7 +321,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** A 10-square-tall tower made of black stone shimmers into being in an unoccupied space that is 5 squares on a side. The tower has three floors, an entrance in the middle of each side on the ground floor, and a crenelated rooftop. Any war dog inside or adjacent to the tower has damage immunity 2 and regains 5 Stamina at the start of each of their turns, and war dogs inside the tower can observe through and have line of effect through its walls. This ability can be used only once per encounter.')
+							FactoryLogic.createAbilitySectionText('A 10-square-tall tower made of black stone shimmers into being in an unoccupied space that is 5 squares on a side. The tower has three floors, an entrance in the middle of each side on the ground floor, and a crenelated rooftop. Any war dog inside or adjacent to the tower has damage immunity 2 and regains 5 Stamina at the start of each of their turns, and war dogs inside the tower can observe through and have line of effect through its walls. This ability can be used only once per encounter.')
 						]
 					})
 				}),
@@ -341,7 +341,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: 'R < 4 taunted (EoT)',
 								tier3: 'R < 5 taunted (EoT)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of Hoplon’s next turn, any enemy ability that includes him as a target takes a bane.')
+							FactoryLogic.createAbilitySectionText('Until the start of Hoplon’s next turn, any enemy ability that includes him as a target takes a bane.')
 						]
 					})
 				}),
@@ -354,7 +354,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Hoplon teleports to an unoccupied space adjacent to the enemy and becomes the new target of the ability. He can then make a free strike against the enemy, and if that enemy has <code>R < 4</code> they are taunted until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('Hoplon teleports to an unoccupied space adjacent to the enemy and becomes the new target of the ability. He can then make a free strike against the enemy, and if that enemy has <code>R < 4</code> they are taunted until the end of their next turn.')
 						]
 					})
 				}),
@@ -406,7 +406,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '21 damage; Doru gains an edge on his next power rolls; M < 4 slide 3',
 								tier3: '25 damage; Doru has a double edge on his next power roll; M < 5 slide 5'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The damage from this ability can’t be reduced in any way.'),
+							FactoryLogic.createAbilitySectionText('The damage from this ability can’t be reduced in any way.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 3,
@@ -431,7 +431,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '11 damage; A < 4 bleeding (save ends)',
 								tier3: '15 damage; A < 5 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability deals an extra 5 damage for each winded target in the area.')
+							FactoryLogic.createAbilitySectionText('This ability deals an extra 5 damage for each winded target in the area.')
 						]
 					})
 				}),
@@ -444,7 +444,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One creature of object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Doru jumps to an unoccupied space adjacent to the target, then can make a free strike against them. If the target is bleeding or winded, the distance of the ability becomes Ranged 10 and the free strike deals an extra 5 damage.')
+							FactoryLogic.createAbilitySectionText('Doru jumps to an unoccupied space adjacent to the target, then can make a free strike against them. If the target is bleeding or winded, the distance of the ability becomes Ranged 10 and the free strike deals an extra 5 damage.')
 						]
 					})
 				}),
@@ -457,7 +457,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The triggering strike takes a bane and Doru gains an edge on his next power roll.')
+							FactoryLogic.createAbilitySectionText('The triggering strike takes a bane and Doru gains an edge on his next power roll.')
 						]
 					})
 				}),
@@ -509,7 +509,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '12 damage; I < 4 slowed (save ends)',
 								tier3: '15 damage; I < 5 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A target creature can choose to drop prone, in which case the ability takes a bane against them.'),
+							FactoryLogic.createAbilitySectionText('A target creature can choose to drop prone, in which case the ability takes a bane against them.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 2,
@@ -534,7 +534,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '12 fire damage',
 								tier3: '15 fire damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain. Any creature who enters the area for the first time in a round or starts their turn there takes 10 fire damage. Until the end of the encounter, the size of the area increases by 1 at the start of each round.')
+							FactoryLogic.createAbilitySectionText('The area is difficult terrain. Any creature who enters the area for the first time in a round or starts their turn there takes 10 fire damage. Until the end of the encounter, the size of the area increases by 1 at the start of each round.')
 						]
 					})
 				}),
@@ -552,7 +552,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: 'A < 5 pull 3 toward the center of the area',
 								tier3: 'Pull 3 toward the center of the area'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A portal appears at the center of the area. Any creature at the center of the area when this ability is used or who is pulled into the center for the first time in a round takes 10 sonic damage.'),
+							FactoryLogic.createAbilitySectionText('A portal appears at the center of the area. Any creature at the center of the area when this ability is used or who is pulled into the center for the first time in a round takes 10 sonic damage.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 2,
@@ -570,7 +570,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target is dropped through a portal, which teleports them up to 7 squares above a space within 15 squares.')
+							FactoryLogic.createAbilitySectionText('The target is dropped through a portal, which teleports them up to 7 squares above a space within 15 squares.')
 						]
 					})
 				}),
@@ -616,7 +616,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '20 holy damage; R < 4 the target is soulbound (save ends)',
 								tier3: '24 holy damage; R < 5 the target is soulbound (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A soulbound creature can’t benefit from edges or double edges, and can’t gain or use surges.')
+							FactoryLogic.createAbilitySectionText('A soulbound creature can’t benefit from edges or double edges, and can’t gain or use surges.')
 						]
 					})
 				}),
@@ -636,7 +636,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '12 corruption damage; P < 4 weakened (EoT)',
 								tier3: '15 corruption damage; P < 5 weakened (EoT)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain until the start of Psyche’s next turn. At the start of each of her turns, Psyche can use a maneuver to maintain this effect, move the area up to 5 squares, and make the power roll against each creature in the area’s new location.'),
+							FactoryLogic.createAbilitySectionText('The area is difficult terrain until the start of Psyche’s next turn. At the start of each of her turns, Psyche can use a maneuver to maintain this effect, move the area up to 5 squares, and make the power roll against each creature in the area’s new location.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 1,
@@ -654,7 +654,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each soulbound enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target takes 5 damage from a self-inflicted wound, and if they have <code>M < 4</code> Psyche slides them up to 5 squares.')
+							FactoryLogic.createAbilitySectionText('Each target takes 5 damage from a self-inflicted wound, and if they have <code>M < 4</code> Psyche slides them up to 5 squares.')
 						]
 					})
 				}),
@@ -667,7 +667,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Psyche moves up to 5 squares, and has damage immunity 5 and ignores difficult terrain during this movement. The first time she moves through any creature during this movement, that creature takes 5 corruption damage.')
+							FactoryLogic.createAbilitySectionText('Psyche moves up to 5 squares, and has damage immunity 5 and ignores difficult terrain during this movement. The first time she moves through any creature during this movement, that creature takes 5 corruption damage.')
 						]
 					})
 				}),
@@ -680,7 +680,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target loses all their surges and takes 5 corruption damage.'),
+							FactoryLogic.createAbilitySectionText('The target loses all their surges and takes 5 corruption damage.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 1,
@@ -703,7 +703,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target takes 10 psychic damage.')
+							FactoryLogic.createAbilitySectionText('The target takes 10 psychic damage.')
 						]
 					})
 				})
@@ -742,7 +742,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '21 damage; M < 5 bleeding (save ends)',
 								tier3: '25 damage; M < 6 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target loses 1d3 Recoveries.'),
+							FactoryLogic.createAbilitySectionText('Each target loses 1d3 Recoveries.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 2,
@@ -760,7 +760,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'One creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of Alkestis’s next turn, any effect that reduces the damage taken by the target has no effect.')
+							FactoryLogic.createAbilitySectionText('Until the start of Alkestis’s next turn, any effect that reduces the damage taken by the target has no effect.')
 						]
 					})
 				}),
@@ -780,7 +780,7 @@ export const warDog4th: MonsterGroup = {
 								tier2: '13 damage; A < 5 slowed (save ends)',
 								tier3: '16 damage; A < 6 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain until the start of the next round.')
+							FactoryLogic.createAbilitySectionText('The area is difficult terrain until the start of the next round.')
 						]
 					})
 				}),
@@ -803,7 +803,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createSpecial('') ],
 						target: 'Each ally in the encounter',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target can disappear, then reappear anywhere on the encounter map 3 or more squares away from any enemy. Additionally, each target has a double edge on their next power roll.')
+							FactoryLogic.createAbilitySectionText('Each target can disappear, then reappear anywhere on the encounter map 3 or more squares away from any enemy. Additionally, each target has a double edge on their next power roll.')
 						]
 					})
 				}),
@@ -816,7 +816,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** For each war dog reduced to 0 Stamina in the encounter, a war dog shriketrooper appears in an unoccupied space within distance.')
+							FactoryLogic.createAbilitySectionText('For each war dog reduced to 0 Stamina in the encounter, a war dog shriketrooper appears in an unoccupied space within distance.')
 						]
 					})
 				}),
@@ -829,7 +829,7 @@ export const warDog4th: MonsterGroup = {
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each creature in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Until the start of the next round, each target enemy who has <code>I < 4</code> is dazed, each target enemy who has <code>M < 4</code> is restrained, and each target enemy who has <code>A < 4</code> can’t use triggered actions. Additionally, until the end of the encounter, Alkestis and each target ally have damage immunity 3 and deal an extra 5 damage with strikes.')
+							FactoryLogic.createAbilitySectionText('Until the start of the next round, each target enemy who has <code>I < 4</code> is dazed, each target enemy who has <code>M < 4</code> is restrained, and each target enemy who has <code>A < 4</code> can’t use triggered actions. Additionally, until the end of the encounter, Alkestis and each target ally have damage immunity 3 and deal an extra 5 damage with strikes.')
 						]
 					})
 				})

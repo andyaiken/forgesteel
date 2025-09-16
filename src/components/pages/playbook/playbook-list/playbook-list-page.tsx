@@ -39,7 +39,6 @@ interface Props {
 	playbook: Playbook;
 	options: Options;
 	highlightAbout: boolean;
-	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -274,16 +273,7 @@ export const PlaybookListPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='playbook-list-page'>
-					<AppHeader subheader='Playbook' showDirectory={props.showDirectory}>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-						<div className='divider' />
+					<AppHeader subheader='Playbook'>
 						<Popover
 							trigger='click'
 							content={
@@ -321,24 +311,38 @@ export const PlaybookListPage = (props: Props) => {
 						}
 					</AppHeader>
 					<div className='playbook-list-page-content'>
-						<div className='selection-list categories'>
-							<SelectorRow selected={category === 'adventure'} content='Adventures' info={getAdventures().length} onSelect={() => navigation.goToPlaybook('adventure')} />
-							<SelectorRow selected={category === 'encounter'} content='Encounters' info={getEncounters(true).length} onSelect={() => navigation.goToPlaybook('encounter')} />
-							<SelectorRow selected={category === 'montage'} content='Montage' info={getMontages(true).length} onSelect={() => navigation.goToPlaybook('montage')} />
-							<SelectorRow selected={category === 'negotiation'} content='Negotiations' info={getNegotiations(true).length} onSelect={() => navigation.goToPlaybook('negotiation')} />
-							<SelectorRow selected={category === 'tactical-map'} content='Tactical Maps' info={getTacticalMaps(true).length} onSelect={() => navigation.goToPlaybook('tactical-map')} />
-						</div>
-						<div className='selection-list elements'>
-							{
-								list.map(a => (
-									<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} onSelect={() => navigation.goToPlaybook(category, a.id)} />
-								))
-							}
-							{
-								list.length === 0 ?
-									<Empty />
-									: null
-							}
+						<div className='selection-sidebar'>
+							<div className='selection-toolbar'>
+								<Input
+									name='search'
+									placeholder='Search'
+									allowClear={true}
+									value={searchTerm}
+									suffix={<SearchOutlined />}
+									onChange={e => setSearchTerm(e.target.value)}
+								/>
+							</div>
+							<div className='selection-content'>
+								<div className='selection-list categories'>
+									<SelectorRow selected={category === 'adventure'} content='Adventures' info={getAdventures().length} onSelect={() => navigation.goToPlaybook('adventure')} />
+									<SelectorRow selected={category === 'encounter'} content='Encounters' info={getEncounters(true).length} onSelect={() => navigation.goToPlaybook('encounter')} />
+									<SelectorRow selected={category === 'montage'} content='Montage' info={getMontages(true).length} onSelect={() => navigation.goToPlaybook('montage')} />
+									<SelectorRow selected={category === 'negotiation'} content='Negotiations' info={getNegotiations(true).length} onSelect={() => navigation.goToPlaybook('negotiation')} />
+									<SelectorRow selected={category === 'tactical-map'} content='Tactical Maps' info={getTacticalMaps(true).length} onSelect={() => navigation.goToPlaybook('tactical-map')} />
+								</div>
+								<div className='selection-list elements'>
+									{
+										list.map(a => (
+											<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} onSelect={() => navigation.goToPlaybook(category, a.id)} />
+										))
+									}
+									{
+										list.length === 0 ?
+											<Empty />
+											: null
+									}
+								</div>
+							</div>
 						</div>
 						<div className='element-selected'>
 							{

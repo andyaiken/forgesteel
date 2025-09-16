@@ -77,7 +77,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	highlightAbout: boolean;
-	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -732,7 +731,7 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='library-edit-page'>
-					<AppHeader subheader={getSubheader()} showDirectory={props.showDirectory}>
+					<AppHeader subheader={getSubheader()}>
 						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 							Save Changes
 						</Button>

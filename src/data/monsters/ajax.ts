@@ -139,7 +139,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 									tier3: '26 damage; M < 6 prone and the target loses 1d3 recoveries'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax shifts up to 2 squares between striking each target.'),
+							FactoryLogic.createAbilitySectionText('Ajax shifts up to 2 squares between striking each target.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 1,
@@ -166,7 +166,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 									tier3: '21 holy damage; P < 6 the target is hexed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
+							FactoryLogic.createAbilitySectionText('A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 3,
@@ -192,7 +192,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 									tier3: '11 damage; the target is grabbed.'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target is grabbed, Ajax can choose to keep the vine extended, pull the target adjacent to him, or pull himself adjacent to the target. The vine stays attached to a grabbed target until it takes damage from a strike, the target escapes the grab, or Ajax causes the vine to release the target (no action required).'),
+							FactoryLogic.createAbilitySectionText('If the target is grabbed, Ajax can choose to keep the vine extended, pull the target adjacent to him, or pull himself adjacent to the target. The vine stays attached to a grabbed target until it takes damage from a strike, the target escapes the grab, or Ajax causes the vine to release the target (no action required).'),
 							FactoryLogic.createAbilitySectionText('**Special:** This ability can be replaced with the features of a different treasure Ajax has acquired.')
 						]
 					})
@@ -207,7 +207,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 20 }) ],
 						target: '',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax throws a glowing bead to a square within distance, which ignites at the start of Ajax’s next turn and creates an area around it that lasts until the start of Ajax’s following turn. Each enemy in the area when the bead ignites takes 20 fire damage, and if they have <code>A < 5</code>, they are dazed (save ends). Any enemy who starts their turn in the area takes 10 fire damage.')
+							FactoryLogic.createAbilitySectionText('Ajax throws a glowing bead to a square within distance, which ignites at the start of Ajax’s next turn and creates an area around it that lasts until the start of Ajax’s following turn. Each enemy in the area when the bead ignites takes 20 fire damage, and if they have <code>A < 5</code>, they are dazed (save ends). Any enemy who starts their turn in the area takes 10 fire damage.')
 						]
 					})
 				}),
@@ -225,7 +225,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target is marked while Ajax is marked. While the target is marked this way, Ajax gains an edge on power rolls against them, and whenever the target uses a triggered action involving their mark on Ajax, he can make a free strike against them.')
+							FactoryLogic.createAbilitySectionText('The target is marked while Ajax is marked. While the target is marked this way, Ajax gains an edge on power rolls against them, and whenever the target uses a triggered action involving their mark on Ajax, he can make a free strike against them.')
 						]
 					})
 				}),
@@ -238,7 +238,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createMelee(5) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax makes a free strike against the target, dealing extra damage equal to twice the amount that was reduced. This extra damage can’t be reduced in any way.')
+							FactoryLogic.createAbilitySectionText('Ajax makes a free strike against the target, dealing extra damage equal to twice the amount that was reduced. This extra damage can’t be reduced in any way.')
 						]
 					})
 				}),
@@ -251,7 +251,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax shifts up to his speed and can make a free strike. If the target has <code>R < 4</code>, this free strike also makes them weakened until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('Ajax shifts up to his speed and can make a free strike. If the target has <code>R < 4</code>, this free strike also makes them weakened until the end of their next turn.')
 						]
 					})
 				}),
@@ -264,7 +264,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has <code>I < 4</code>, they use a signature ability against a target of Ajax’s choice.')
+							FactoryLogic.createAbilitySectionText('If the target has <code>I < 4</code>, they use a signature ability against a target of Ajax’s choice.')
 						]
 					})
 				}),
@@ -277,7 +277,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax regains the same amount of Stamina.')
+							FactoryLogic.createAbilitySectionText('Ajax regains the same amount of Stamina.')
 						]
 					})
 				}),
@@ -298,7 +298,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 									tier3: '21 fire damage; A < 6 weakended (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax flies at high speed to cut through each target, then appears in an unoccupied space within distance.')
+							FactoryLogic.createAbilitySectionText('Ajax flies at high speed to cut through each target, then appears in an unoccupied space within distance.')
 						]
 					})
 				}),
@@ -311,7 +311,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax uses the shadow elf eclipse’s technique to reduce each target’s surges to 0. Additionally, until the end of the round, Ajax ignores edges and double edges on any target’s abilities, and ignores any nondamaging effects of any target’s damage-dealing abilities.'),
+							FactoryLogic.createAbilitySectionText('Ajax uses the shadow elf eclipse’s technique to reduce each target’s surges to 0. Additionally, until the end of the round, Ajax ignores edges and double edges on any target’s abilities, and ignores any nondamaging effects of any target’s damage-dealing abilities.'),
 							FactoryLogic.createAbilitySectionText('**Special:** This villain action can be replaced with a villain action from a creature any target has previously encountered.')
 						]
 					})
@@ -325,7 +325,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 7 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target who has <code>I < 5</code> is knocked prone and can’t stand until Ajax deals damage to them. For each target not knocked prone, Ajax can move up to his speed toward that target and use Blade of the Gol King against them.')
+							FactoryLogic.createAbilitySectionText('Each target who has <code>I < 5</code> is knocked prone and can’t stand until Ajax deals damage to them. For each target not knocked prone, Ajax can move up to his speed toward that target and use Blade of the Gol King against them.')
 						]
 					})
 				})
@@ -371,7 +371,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 									tier3: '26 damage; M < 6 prone and the target loses 1d3 recoveries'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax shifts up to 2 squares between striking each target.'),
+							FactoryLogic.createAbilitySectionText('Ajax shifts up to 2 squares between striking each target.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 1,
@@ -398,7 +398,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 									tier3: '21 holy damage; P < 6 the target is hexed (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
+							FactoryLogic.createAbilitySectionText('A hexed target glows green, and each of their heroic abilities has its cost increased by 2.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 3,
@@ -416,7 +416,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two allies',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each ally can move up to their speed and can use a signature ability.')
+							FactoryLogic.createAbilitySectionText('Each ally can move up to their speed and can use a signature ability.')
 						]
 					})
 				}),
@@ -434,7 +434,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target is marked while Ajax is marked. While the target is marked this way, Ajax gains an edge on power rolls against them, and whenever the target uses a triggered action involving their mark on Ajax, he can make a free strike against them.')
+							FactoryLogic.createAbilitySectionText('The target is marked while Ajax is marked. While the target is marked this way, Ajax gains an edge on power rolls against them, and whenever the target uses a triggered action involving their mark on Ajax, he can make a free strike against them.')
 						]
 					})
 				}),
@@ -447,7 +447,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createMelee(5) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax makes a free strike against the target, dealing extra damage equal to twice the amount that was reduced. This extra damage can’t be reduced in any way.')
+							FactoryLogic.createAbilitySectionText('Ajax makes a free strike against the target, dealing extra damage equal to twice the amount that was reduced. This extra damage can’t be reduced in any way.')
 						]
 					})
 				}),
@@ -460,7 +460,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax shifts up to his speed and can make a free strike. If the target has <code>R < 4</code>, this free strike also makes them weakened until the end of their next turn.')
+							FactoryLogic.createAbilitySectionText('Ajax shifts up to his speed and can make a free strike. If the target has <code>R < 4</code>, this free strike also makes them weakened until the end of their next turn.')
 						]
 					})
 				}),
@@ -473,7 +473,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has <code>I < 4</code>, they use a signature ability against a target of Ajax’s choice.')
+							FactoryLogic.createAbilitySectionText('If the target has <code>I < 4</code>, they use a signature ability against a target of Ajax’s choice.')
 						]
 					})
 				}),
@@ -486,7 +486,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax regains the same amount of Stamina.')
+							FactoryLogic.createAbilitySectionText('Ajax regains the same amount of Stamina.')
 						]
 					})
 				}),
@@ -507,7 +507,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 									tier3: '21 fire damage; A < 6 weakended (save ends)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax flies at high speed to cut through each target, then appears in an unoccupied space within distance.')
+							FactoryLogic.createAbilitySectionText('Ajax flies at high speed to cut through each target, then appears in an unoccupied space within distance.')
 						]
 					})
 				}),
@@ -520,7 +520,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Ajax uses the shadow elf eclipse’s technique to reduce each target’s surges to 0. Additionally, until the end of the round, Ajax ignores edges and double edges on any target’s abilities, and ignores any nondamaging effects of any target’s damage-dealing abilities.'),
+							FactoryLogic.createAbilitySectionText('Ajax uses the shadow elf eclipse’s technique to reduce each target’s surges to 0. Additionally, until the end of the round, Ajax ignores edges and double edges on any target’s abilities, and ignores any nondamaging effects of any target’s damage-dealing abilities.'),
 							FactoryLogic.createAbilitySectionText('**Special:** This villain action can be replaced with a villain action from a creature any target has previously encountered.')
 						]
 					})
@@ -534,7 +534,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 7 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target who has <code>I < 5</code> is knocked prone and can’t stand until Ajax deals damage to them. For each target not knocked prone, Ajax can move up to his speed toward that target and use Blade of the Gol King against them.')
+							FactoryLogic.createAbilitySectionText('Each target who has <code>I < 5</code> is knocked prone and can’t stand until Ajax deals damage to them. For each target not knocked prone, Ajax can move up to his speed toward that target and use Blade of the Gol King against them.')
 						]
 					})
 				})

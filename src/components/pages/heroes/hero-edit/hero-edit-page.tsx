@@ -50,7 +50,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	highlightAbout: boolean;
-	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -600,7 +599,7 @@ export const HeroEditPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='hero-edit-page'>
-					<AppHeader subheader='Hero Builder' showDirectory={props.showDirectory}>
+					<AppHeader subheader='Hero Builder'>
 						<Input
 							name='search'
 							placeholder='Search'

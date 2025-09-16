@@ -267,7 +267,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 								tier2: '4 damage',
 								tier3: '5 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** One ally of the redeye within 2 squares of the target shifts up to 2 squares.')
+							FactoryLogic.createAbilitySectionText('One ally of the redeye within 2 squares of the target shifts up to 2 squares.')
 						]
 					})
 				}),

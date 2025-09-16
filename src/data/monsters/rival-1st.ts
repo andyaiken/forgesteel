@@ -124,7 +124,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '10 holy damage',
 								tier3: '13 holy damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The conduit or one ally within distance regains Stamina equal to half the damage dealt.')
+							FactoryLogic.createAbilitySectionText('The conduit or one ally within distance regains Stamina equal to half the damage dealt.')
 						]
 					})
 				}),
@@ -138,7 +138,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						target: 'Self and five allies',
 						cost: 2,
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target gains an edge on their next strike.')
+							FactoryLogic.createAbilitySectionText('Each target gains an edge on their next strike.')
 						]
 					})
 				}),
@@ -203,7 +203,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '5 damage; restrained (EoT)',
 								tier3: '8 damage; restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain for enemies until the end of the encounter. Any enemy in the area has acid weakness 2.')
+							FactoryLogic.createAbilitySectionText('The area is difficult terrain for enemies until the end of the encounter. Any enemy in the area has acid weakness 2.')
 						]
 					})
 				}),
@@ -216,7 +216,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The elementalist can teleport up to 2 squares. Each creature adjacent to the space they leave takes 2 corruption damage.')
+							FactoryLogic.createAbilitySectionText('The elementalist can teleport up to 2 squares. Each creature adjacent to the space they leave takes 2 corruption damage.')
 						]
 					})
 				}),
@@ -281,7 +281,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '13 damage; m < 1 grabbed',
 								tier3: '16 damage; m < 2 grabbed'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target must be the fury’s size or smaller. While the target is grabbed this way, the fury gains an edge on strikes against them.')
+							FactoryLogic.createAbilitySectionText('The target must be the fury’s size or smaller. While the target is grabbed this way, the fury gains an edge on strikes against them.')
 						]
 					})
 				}),
@@ -408,7 +408,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The shadow coats their weapon with poison. They gain an edge on their next strike, and any potency for that strike increases by 1.')
+							FactoryLogic.createAbilitySectionText('The shadow coats their weapon with poison. They gain an edge on their next strike, and any potency for that strike increases by 1.')
 						]
 					})
 				}),
@@ -478,7 +478,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 								tier2: '13 damage; M < 1 weakened (save ends)',
 								tier3: '16 damage; M < 2 weakened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** One ally adjacent to the target regains 5 Stamina.')
+							FactoryLogic.createAbilitySectionText('One ally adjacent to the target regains 5 Stamina.')
 						]
 					})
 				}),
@@ -491,7 +491,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'The triggering enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** At any point during the movement, the tactician makes a free strike against the target.')
+							FactoryLogic.createAbilitySectionText('At any point during the movement, the tactician makes a free strike against the target.')
 						]
 					})
 				}),
@@ -564,7 +564,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						target: 'Self',
 						cost: 1,
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The talent halves the damage and shifts up to 2 squares.')
+							FactoryLogic.createAbilitySectionText('The talent halves the damage and shifts up to 2 squares.')
 						]
 					})
 				}),

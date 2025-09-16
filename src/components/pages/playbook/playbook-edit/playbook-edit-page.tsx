@@ -41,7 +41,6 @@ interface Props {
 	playbook: Playbook;
 	options: Options;
 	highlightAbout: boolean;
-	showDirectory: () => void;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -201,7 +200,7 @@ export const PlaybookEditPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='playbook-edit-page'>
-					<AppHeader subheader={`${getSubheader()} Builder`} showDirectory={props.showDirectory}>
+					<AppHeader subheader={`${getSubheader()} Builder`}>
 						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 							Save Changes
 						</Button>

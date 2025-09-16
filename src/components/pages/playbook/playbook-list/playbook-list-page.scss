@@ -8,26 +8,49 @@
 		flex: 1 1 0;
 		display: flex;
 		flex-direction: row;
-		gap: 10px;
-		padding: 20px;
 		overflow: hidden;
 
-		.selection-list {
-			flex: 0 0 150px;
+		.selection-sidebar {
+			flex: 0 0 auto;
 			display: flex;
 			flex-direction: column;
-			gap: 3px;
-			background-color: white;
-			border-radius: 10px;
-			padding: 5px;
-			overflow-y: auto;
+			gap: 10px;
+			padding: 20px 0 20px 20px;
 
-			&.categories {
-				flex: 0 0 150px;
+			.selection-toolbar {
+				flex: 0 0 auto;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: flex-start;
+				gap: 5px;
 			}
 
-			&.elements {
-				flex: 0 0 200px;
+			.selection-content {
+				flex: 1 1 0;
+				display: flex;
+				flex-direction: row;
+				gap: 10px;
+				overflow: hidden;
+
+				.selection-list {
+					flex: 0 0 150px;
+					display: flex;
+					flex-direction: column;
+					gap: 5px;
+					background-color: white;
+					border-radius: 10px;
+					padding: 5px;
+					overflow-y: auto;
+
+					&.categories {
+						flex: 0 0 150px;
+					}
+
+					&.elements {
+						flex: 0 0 200px;
+					}
+				}
 			}
 		}
 

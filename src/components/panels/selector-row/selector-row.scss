@@ -1,4 +1,7 @@
 .selector-row {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
 	background-color: white;
 	border-radius: 5px;
 	padding: 4px 8px;

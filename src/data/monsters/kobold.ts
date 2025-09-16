@@ -599,7 +599,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 								tier2: '10 acid damage; A < 1 dazed (save ends)',
 								tier3: '14 acid damage; A < 2 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A size 2 or smaller creature restrained this way is pulled into the brick’s space, moves with the brick, and takes 4 acid damage at the start of each of their turns. An engulfed creature who is no longer restrained moves to the nearest unoccupied space adjacent to the brick. The brick can have as many creatures or objects engulfed as will fit within their space.'),
+							FactoryLogic.createAbilitySectionText('A size 2 or smaller creature restrained this way is pulled into the brick’s space, moves with the brick, and takes 4 acid damage at the start of each of their turns. An engulfed creature who is no longer restrained moves to the nearest unoccupied space adjacent to the brick. The brick can have as many creatures or objects engulfed as will fit within their space.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 2,

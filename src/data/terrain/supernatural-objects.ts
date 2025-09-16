@@ -76,7 +76,7 @@ export const theBlackObelisk: Terrain = {
 									tier3: 'P < 3 frightened, slowed, and weakened (EoT)'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target is pushed 2.')
+							FactoryLogic.createAbilitySectionText('The target is pushed 2.')
 						]
 					})
 				})
@@ -256,7 +256,7 @@ A creature seated on the throne becomes the hierophant of A’An and gains the f
 									tier3: '14 fire damage'
 								})
 							),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target has fire weakness 10 until the start of the hierophant’s next turn.')
+							FactoryLogic.createAbilitySectionText('The target has fire weakness 10 until the start of the hierophant’s next turn.')
 						]
 					})
 				}),
@@ -269,7 +269,7 @@ A creature seated on the throne becomes the hierophant of A’An and gains the f
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the hierophant is a hero, they gain 3 of their Heroic Resource. If the hierophant is a Director-controlled creature, the Director gains 3 Malice.')
+							FactoryLogic.createAbilitySectionText('If the hierophant is a hero, they gain 3 of their Heroic Resource. If the hierophant is a Director-controlled creature, the Director gains 3 Malice.')
 						]
 					})
 				}),
@@ -282,7 +282,7 @@ A creature seated on the throne becomes the hierophant of A’An and gains the f
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each creature and object in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target takes 14 fire damage and the Hierophant gains the Incubator of A’An complication (see the sidebar). If there is no hierophant, one creature within 10 squares of the throne chosen by the Director gains this complication.')
+							FactoryLogic.createAbilitySectionText('Each target takes 14 fire damage and the Hierophant gains the Incubator of A’An complication (see the sidebar). If there is no hierophant, one creature within 10 squares of the throne chosen by the Director gains this complication.')
 						]
 					})
 				})

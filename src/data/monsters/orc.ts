@@ -120,7 +120,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '4 damage',
 								tier3: '5 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The distance increases to melee 2. If the mohler is 1 or more squares beneath the target before they use this ability, a target who has <code>M < 1</code> is also knocked prone.')
+							FactoryLogic.createAbilitySectionText('The distance increases to melee 2. If the mohler is 1 or more squares beneath the target before they use this ability, a target who has <code>M < 1</code> is also knocked prone.')
 						]
 					})
 				}),
@@ -167,7 +167,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '2 damage',
 								tier3: '3 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A target who starts their next turn adjacent to three or more blitzers takes 3 damage.')
+							FactoryLogic.createAbilitySectionText('A target who starts their next turn adjacent to three or more blitzers takes 3 damage.')
 						]
 					})
 				}),
@@ -253,7 +253,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '2 sonic damage; P < 1 slowed (save ends)',
 								tier3: '3 sonic damage; P < 2 slowed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Allies gain an edge on melee strikes against the target until the glorifier and each other glorifier in their squad are killed.')
+							FactoryLogic.createAbilitySectionText('Allies gain an edge on melee strikes against the target until the glorifier and each other glorifier in their squad are killed.')
 						]
 					})
 				}),
@@ -295,7 +295,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '4 damage; push 3',
 								tier3: '5 damage; push 3 or prone'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The razor gains an edge against any target affected by a condition.')
+							FactoryLogic.createAbilitySectionText('The razor gains an edge against any target affected by a condition.')
 						]
 					})
 				}),
@@ -336,7 +336,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '10 damage; push special',
 								tier3: '13 damage; push special or prone'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The forced movement distance is equal to the number of squares the bloodrunner moved on their turn before using this ability. An ally targeted by this ability ignores the damage and can move up to that same distance.'),
+							FactoryLogic.createAbilitySectionText('The forced movement distance is equal to the number of squares the bloodrunner moved on their turn before using this ability. An ally targeted by this ability ignores the damage and can move up to that same distance.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 2,
@@ -387,7 +387,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '7 damage; pull 2; M < 1 the target is hooked (save ends)',
 								tier3: '9 damage; pull 3; M < 2 the target is hooked (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A hooked target can’t move more than 3 squares away from the chainlock’s position when this ability is used.')
+							FactoryLogic.createAbilitySectionText('A hooked target can’t move more than 3 squares away from the chainlock’s position when this ability is used.')
 						]
 					})
 				}),
@@ -457,7 +457,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '9 damage; slide 4, or the eye shifts up to 4 squares away from the target',
 								tier3: '12 damage; slide 6, or the eye shifts up to 6 squares away from the target'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability deals cold, fire, or lightning damage.')
+							FactoryLogic.createAbilitySectionText('This ability deals cold, fire, or lightning damage.')
 						]
 					})
 				}),
@@ -476,7 +476,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '5 damage; push 3',
 								tier3: '3 damage; push 4, prone'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability deals cold, fire, or lightning damage, and any enemy targeted by the ability has damage weakness 3 to the same damage type (save ends). ')
+							FactoryLogic.createAbilitySectionText('This ability deals cold, fire, or lightning damage, and any enemy targeted by the ability has damage weakness 3 to the same damage type (save ends). ')
 						]
 					})
 				}),
@@ -525,7 +525,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '9 damage; the garroter can shift 2',
 								tier3: '12 damage; the garroter can shift 3'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If this ability gains an edge or has a double edge, it deals an extra 4 damage.')
+							FactoryLogic.createAbilitySectionText('If this ability gains an edge or has a double edge, it deals an extra 4 damage.')
 						]
 					})
 				}),
@@ -544,7 +544,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '9 damage; I < 1 dazed (save ends)',
 								tier3: '12 damage; grabbed; I < 2 dazed (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** While grabbed this way, a target can’t communicate or use magic abilities.')
+							FactoryLogic.createAbilitySectionText('While grabbed this way, a target can’t communicate or use magic abilities.')
 						]
 					})
 				}),
@@ -614,7 +614,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target moves up to their speed and can use a main action'),
+							FactoryLogic.createAbilitySectionText('The target moves up to their speed and can use a main action'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 3,
@@ -633,7 +633,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self and three allies',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target regains 15 Stamina and ignores difficult terrain until the end of the encounter.')
+							FactoryLogic.createAbilitySectionText('Each target regains 15 Stamina and ignores difficult terrain until the end of the encounter.')
 						]
 					})
 				}),
@@ -674,7 +674,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '11 damage; prone',
 								tier3: '14 damage; prone; M < 2 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** A target who is already prone takes an extra 6 damage.')
+							FactoryLogic.createAbilitySectionText('A target who is already prone takes an extra 6 damage.')
 						]
 					})
 				}),
@@ -687,7 +687,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The juggernaut moves up to their speed and can make a free strike.')
+							FactoryLogic.createAbilitySectionText('The juggernaut moves up to their speed and can make a free strike.')
 						]
 					})
 				}),
@@ -733,7 +733,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '9 damage; taunted (EoT)',
 								tier3: '12 damage; taunted (EoT)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability has a double edge against any target who dealt damage to the rampart this round.')
+							FactoryLogic.createAbilitySectionText('This ability has a double edge against any target who dealt damage to the rampart this round.')
 						]
 					})
 				}),
@@ -745,7 +745,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'One ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The rampart moves or shifts up to their speed adjacent to the target, then can swap places with the target.')
+							FactoryLogic.createAbilitySectionText('The rampart moves or shifts up to their speed adjacent to the target, then can swap places with the target.')
 						]
 					})
 				}),
@@ -757,7 +757,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The rampart becomes the target of the triggering ability instead.')
+							FactoryLogic.createAbilitySectionText('The rampart becomes the target of the triggering ability instead.')
 						]
 					})
 				}),
@@ -798,7 +798,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '9 damage; A < 1 prone and can’t stand (save ends)',
 								tier3: '12 damage; A < 2 prone and can’t stand (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target must be on the ground, and the ground in each target’s space rises 1 square.')
+							FactoryLogic.createAbilitySectionText('Each target must be on the ground, and the ground in each target’s space rises 1 square.')
 						]
 					})
 				}),
@@ -818,7 +818,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '7 damage; M < 1 restrained (save ends)',
 								tier3: '10 damage; M < 2 restrained (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is difficult terrain.')
+							FactoryLogic.createAbilitySectionText('The area is difficult terrain.')
 						]
 					})
 				}),
@@ -857,7 +857,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target moves up to their speed and can use a main action.'),
+							FactoryLogic.createAbilitySectionText('The target moves up to their speed and can use a main action.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 1,
@@ -900,7 +900,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						],
 						target: 'Self and three allies',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target moves up to their speed and can use the Grab maneuver, which gains an edge.')
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed and can use the Grab maneuver, which gains an edge.')
 						]
 					})
 				}),
@@ -912,7 +912,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target has a double edge on their next power roll before the end of the encounter')
+							FactoryLogic.createAbilitySectionText('The target has a double edge on their next power roll before the end of the encounter')
 						]
 					})
 				}),
@@ -925,7 +925,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'All allies',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target moves up to their speed. Each enemy adjacent to a target after this move makes an **Intuition test.**'),
+							FactoryLogic.createAbilitySectionText('Each target moves up to their speed. Each enemy adjacent to a target after this move makes an **Intuition test.**'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: Characteristic.Intuition,
 								tier1: 'Frightened of the warleader (save ends)',
@@ -944,7 +944,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The warleader shifts up to their speed, and four orc blitzers appear in unoccupied spaces within distance.')
+							FactoryLogic.createAbilitySectionText('The warleader shifts up to their speed, and four orc blitzers appear in unoccupied spaces within distance.')
 						]
 					})
 				}),
@@ -957,7 +957,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Three times in succession, the warleader shifts up to their speed and can use Mace Lariat.')
+							FactoryLogic.createAbilitySectionText('Three times in succession, the warleader shifts up to their speed and can use Mace Lariat.')
 						]
 					})
 				}),
@@ -1003,7 +1003,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '11 damage; prone',
 								tier3: '14 damage; prone'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The scyza roars, and if the target has <code>I < 2</code>, they are frightened (save ends).')
+							FactoryLogic.createAbilitySectionText('The scyza roars, and if the target has <code>I < 2</code>, they are frightened (save ends).')
 						]
 					})
 				}),
@@ -1022,7 +1022,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 								tier2: '13 damage; prone',
 								tier3: '16 damage; A < 2 bleeding (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Against a target on top of the scyza, this ability gains an edge, and the target is pushed into an unoccupied adjacent square and knocked prone.')
+							FactoryLogic.createAbilitySectionText('Against a target on top of the scyza, this ability gains an edge, and the target is pushed into an unoccupied adjacent square and knocked prone.')
 						]
 					})
 				}),
@@ -1053,7 +1053,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The scyza kicks up a sandstorm, granting concealment to themself and any ally in the area until the end of the scyza’s next turn. Each enemy in the area makes an **Intuition test**.'),
+							FactoryLogic.createAbilitySectionText('The scyza kicks up a sandstorm, granting concealment to themself and any ally in the area until the end of the scyza’s next turn. Each enemy in the area makes an **Intuition test**.'),
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								characteristic: Characteristic.Intuition,
 								tier1: '10 damage; prone; slowed (EoT)',
@@ -1071,7 +1071,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Any damage dealt by the triggering ability is halved. If the creature or object who used the ability is within 3 squares of the scyza, the scyza can make a free strike against them.')
+							FactoryLogic.createAbilitySectionText('Any damage dealt by the triggering ability is halved. If the creature or object who used the ability is within 3 squares of the scyza, the scyza can make a free strike against them.')
 						]
 					})
 				}),

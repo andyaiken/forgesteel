@@ -703,7 +703,7 @@ Six individual draconians are presented in this section—not an adventuring par
 								tier2: 'Frightened (EoT)',
 								tier3: 'No effect'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** Each ally in the area gains an edge on their next strike.')
+							FactoryLogic.createAbilitySectionText('Each ally in the area gains an edge on their next strike.')
 						]
 					})
 				}),
@@ -719,7 +719,7 @@ Six individual draconians are presented in this section—not an adventuring par
 						],
 						target: 'Self and each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target shifts or flies up to their speed and regains 10 Stamina.')
+							FactoryLogic.createAbilitySectionText('Each target shifts or flies up to their speed and regains 10 Stamina.')
 						]
 					})
 				}),
@@ -732,7 +732,7 @@ Six individual draconians are presented in this section—not an adventuring par
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'All allies in the burst',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Dorzinuuth covers the targets in an electrifying mesh. Whenever a target takes damage from a melee ability, the attacker takes 6 lightning damage.')
+							FactoryLogic.createAbilitySectionText('Dorzinuuth covers the targets in an electrifying mesh. Whenever a target takes damage from a melee ability, the attacker takes 6 lightning damage.')
 						]
 					})
 				})

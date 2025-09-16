@@ -86,7 +86,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 4, within: 10 }) ],
 				target: 'Each creature in the area',
 				sections: [
-					FactoryLogic.createAbilitySectionText('**Effect:** Each target makes an **Agility test**. The same condition is imposed on each affected target'),
+					FactoryLogic.createAbilitySectionText('Each target makes an **Agility test**. The same condition is imposed on each affected target'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility ],
 						tier1: '5 fire damage; slowed or weakened (save ends)',
@@ -140,7 +140,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '4 damage',
 								tier3: '5 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** After using this ability, the commando can attempt to hide even if observed.')
+							FactoryLogic.createAbilitySectionText('After using this ability, the commando can attempt to hide even if observed.')
 						]
 					})
 				}),
@@ -185,7 +185,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '2 damage',
 								tier3: '3 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** If used with the Charge main action, this ability gains an edge.')
+							FactoryLogic.createAbilitySectionText('If used with the Charge main action, this ability gains an edge.')
 						]
 					})
 				}),
@@ -227,7 +227,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '4 damage',
 								tier3: '5 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** This ability ignores cover and concealment. ')
+							FactoryLogic.createAbilitySectionText('This ability ignores cover and concealment. ')
 						]
 					})
 				}),
@@ -314,7 +314,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '5 damage; A < 1 grabbed',
 								tier3: '6 damage; A < 2 grabbed'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The amalgamite can have up to four targets grabbed at once.'),
+							FactoryLogic.createAbilitySectionText('The amalgamite can have up to four targets grabbed at once.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 3,
@@ -379,7 +379,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '4 fire damage',
 								tier3: '5 fire damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is covered in sticky fire until the start of the crucibite’s next turn. Any creature who enters the area for the first time in a round or starts their turn there takes 2 fire damage.'),
+							FactoryLogic.createAbilitySectionText('The area is covered in sticky fire until the start of the crucibite’s next turn. Any creature who enters the area for the first time in a round or starts their turn there takes 2 fire damage.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 3,
@@ -397,7 +397,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has a loyalty collar, they are reduced to 0 Stamina.')
+							FactoryLogic.createAbilitySectionText('If the target has a loyalty collar, they are reduced to 0 Stamina.')
 						]
 					})
 				}),
@@ -438,7 +438,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '4 damage; pull 1',
 								tier3: '5 damage; pull 2'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The eviscerite can automatically grab a target pulled adjacent to them this way.')
+							FactoryLogic.createAbilitySectionText('The eviscerite can automatically grab a target pulled adjacent to them this way.')
 						]
 					})
 				}),
@@ -451,7 +451,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has a loyalty collar, they are reduced to 0 Stamina.')
+							FactoryLogic.createAbilitySectionText('If the target has a loyalty collar, they are reduced to 0 Stamina.')
 						]
 					})
 				}),
@@ -510,7 +510,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has a loyalty collar, they are reduced to 0 Stamina.')
+							FactoryLogic.createAbilitySectionText('If the target has a loyalty collar, they are reduced to 0 Stamina.')
 						]
 					})
 				}),
@@ -524,7 +524,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The neuronite chooses one ally within 10 squares. Each target is either taunted by the ally, or the ally has damage immunity 3 whenever any target makes a strike against them (the neuronite’s choice). Either effect lasts until the start of the neuronite’s next turn.')
+							FactoryLogic.createAbilitySectionText('The neuronite chooses one ally within 10 squares. Each target is either taunted by the ally, or the ally has damage immunity 3 whenever any target makes a strike against them (the neuronite’s choice). Either effect lasts until the start of the neuronite’s next turn.')
 						]
 					})
 				}),
@@ -571,7 +571,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '4 poison damage; I < 1 frightened (save ends)',
 								tier3: '5 poison damage; I < 2 frightened (save ends)'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The area is filled with a cloud of pestilence that lasts until the start of the pestilite’s next turn. Any creature who enters the area for the first time in a round or starts their turn there takes 2 poison damage.')
+							FactoryLogic.createAbilitySectionText('The area is filled with a cloud of pestilence that lasts until the start of the pestilite’s next turn. Any creature who enters the area for the first time in a round or starts their turn there takes 2 poison damage.')
 						]
 					})
 				}),
@@ -584,7 +584,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has a loyalty collar, they are reduced to 0 Stamina.')
+							FactoryLogic.createAbilitySectionText('If the target has a loyalty collar, they are reduced to 0 Stamina.')
 						]
 					})
 				}),
@@ -645,7 +645,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has a loyalty collar, they are reduced to 0 Stamina.')
+							FactoryLogic.createAbilitySectionText('If the target has a loyalty collar, they are reduced to 0 Stamina.')
 						]
 					})
 				}),
@@ -689,7 +689,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '6 damage; slide 2',
 								tier3: '7 damage; slide 3'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The teletalite gains an edge on this ability if any ally is adjacent to the target.'),
+							FactoryLogic.createAbilitySectionText('The teletalite gains an edge on this ability if any ally is adjacent to the target.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 1,
@@ -707,7 +707,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has a loyalty collar, they are reduced to 0 Stamina.')
+							FactoryLogic.createAbilitySectionText('If the target has a loyalty collar, they are reduced to 0 Stamina.')
 						]
 					})
 				}),
@@ -721,7 +721,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The teletalite can teleport up to 5 squares and gains an edge on strikes until the end of their turn.')
+							FactoryLogic.createAbilitySectionText('The teletalite can teleport up to 5 squares and gains an edge on strikes until the end of their turn.')
 						]
 					})
 				}),
@@ -762,7 +762,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '5 damage',
 								tier3: '7 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** One ally within 5 squares of the subcommander can make a free strike against the target.')
+							FactoryLogic.createAbilitySectionText('One ally within 5 squares of the subcommander can make a free strike against the target.')
 						]
 					})
 				}),
@@ -775,7 +775,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One war dog',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** If the target has a loyalty collar, they are reduced to 0 Stamina.')
+							FactoryLogic.createAbilitySectionText('If the target has a loyalty collar, they are reduced to 0 Stamina.')
 						]
 					})
 				}),
@@ -824,7 +824,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 								tier2: '12 damage; pull 2',
 								tier3: '15 damage; pull 3'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** One ally within 10 squares of the ground commander can make a free strike.'),
+							FactoryLogic.createAbilitySectionText('One ally within 10 squares of the ground commander can make a free strike.'),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Malice',
 								value: 1,
@@ -842,7 +842,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each war dog in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Any target who has a loyalty collar is reduced to 0 Stamina')
+							FactoryLogic.createAbilitySectionText('Any target who has a loyalty collar is reduced to 0 Stamina')
 						]
 					})
 				}),
@@ -855,7 +855,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Even if reduced to 0 Stamina, the target moves up to their speed and can make a free strike after the triggering effect is resolved. The target then immediately dies.')
+							FactoryLogic.createAbilitySectionText('Even if reduced to 0 Stamina, the target moves up to their speed and can make a free strike after the triggering effect is resolved. The target then immediately dies.')
 						]
 					})
 				}),
@@ -878,7 +878,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each ally in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target can make a ranged free strike, then immediately use the Charge main action.')
+							FactoryLogic.createAbilitySectionText('Each target can make a ranged free strike, then immediately use the Charge main action.')
 						]
 					})
 				}),
@@ -891,7 +891,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each ally within 5 squares of the target moves up to their speed and can make a free strike against the target. If the target has <code>I < 2</code>, they are frightened of the ground commander (save ends).')
+							FactoryLogic.createAbilitySectionText('Each ally within 5 squares of the target moves up to their speed and can make a free strike against the target. If the target has <code>I < 2</code>, they are frightened of the ground commander (save ends).')
 						]
 					})
 				}),
@@ -904,7 +904,7 @@ War dog captains are intelligent, well trained, and focused on prioritizing thre
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Each creature in the area',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** Each target ally shifts up to 2 squares and can use the Grab maneuver. Until the end of the encounter, each target enemy takes a bane on the Escape Grab maneuver.')
+							FactoryLogic.createAbilitySectionText('Each target ally shifts up to 2 squares and can use the Grab maneuver. Until the end of the encounter, each target enemy takes a bane on the Escape Grab maneuver.')
 						]
 					})
 				})

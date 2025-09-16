@@ -25,26 +25,26 @@ export const AppFooter = (props: Props) => {
 			<ErrorBoundary>
 				<div className='app-footer'>
 					{
-						isSmall || (props.page === 'player-view') ?
+						(props.page === 'player-view') ?
 							<div />
 							:
 							<Flex className='navigation-buttons-panel' align='center'>
 								<Button type='text' className={props.page === 'welcome' ? 'selected' : ''} icon={<img className='logo-icon' src={shield} />} onClick={() => navigation.goToWelcome()} />
 								<Divider type='vertical' />
 								<Button type='text' className={props.page === 'heroes' ? 'selected' : ''} icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>
-									Heroes
+									{isSmall ? null : 'Heroes'}
 								</Button>
 								<Divider type='vertical' />
 								<Button type='text' className={props.page === 'library' ? 'selected' : ''} icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>
-									Library
+									{isSmall ? null : 'Library'}
 								</Button>
 								<Divider type='vertical' />
 								<Button type='text' className={props.page === 'playbook' ? 'selected' : ''} icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('adventure')}>
-									Playbook
+									{isSmall ? null : 'Playbook'}
 								</Button>
 								<Divider type='vertical' />
 								<Button type='text' className={props.page === 'session' ? 'selected' : ''} icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>
-									Session
+									{isSmall ? null : 'Session'}
 								</Button>
 							</Flex>
 					}

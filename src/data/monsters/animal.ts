@@ -66,7 +66,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 								tier2: '9 damage',
 								tier3: '12 damage'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The animal can shift 2 between striking the first and second target.')
+							FactoryLogic.createAbilitySectionText('The animal can shift 2 between striking the first and second target.')
 						]
 					})
 				}),
@@ -79,7 +79,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The animal moves up to their speed.')
+							FactoryLogic.createAbilitySectionText('The animal moves up to their speed.')
 						]
 					})
 				}),
@@ -120,7 +120,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 								tier2: '9 damage; pull 1',
 								tier3: '12 damage; pull 2'
 							})),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target can be pulled into the swarm without inflicting damage.')
+							FactoryLogic.createAbilitySectionText('The target can be pulled into the swarm without inflicting damage.')
 						]
 					})
 				}),
@@ -133,7 +133,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 1 }) ],
 						target: 'Special',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The swarm forces themselves in the way of their foes. The affected area is considered difficult terrain for enemies until the start of the swarm’s next turn.')
+							FactoryLogic.createAbilitySectionText('The swarm forces themselves in the way of their foes. The affected area is considered difficult terrain for enemies until the start of the swarm’s next turn.')
 						]
 					})
 				}),
@@ -192,7 +192,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						target: 'One creature or object',
 						sections: [
 							FactoryLogic.createAbilitySectionText('**Special:** The target must be the animal’s size or smaller.'),
-							FactoryLogic.createAbilitySectionText('**Effect:** The target vertical slides up to 3 squares. If the target is an ally, they can make a free strike at the end of the forced movement, then fall without taking damage.')
+							FactoryLogic.createAbilitySectionText('The target vertical slides up to 3 squares. If the target is an ally, they can make a free strike at the end of the forced movement, then fall without taking damage.')
 						]
 					})
 				}),
@@ -205,7 +205,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The animal shifts up to 2 squares before the ability resolves.')
+							FactoryLogic.createAbilitySectionText('The animal shifts up to 2 squares before the ability resolves.')
 						]
 					})
 				}),
@@ -258,7 +258,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The animal moves up to their speed. They can make a free strike against each creature who makes an opportunity attack against them during this movement.')
+							FactoryLogic.createAbilitySectionText('The animal moves up to their speed. They can make a free strike against each creature who makes an opportunity attack against them during this movement.')
 						]
 					})
 				}),
@@ -271,7 +271,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'One ally',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The animal moves up to their speed. If they end their turn adjacent to the target, they can use the Stand Up maneuver to let the target stand, then get on to ride them.')
+							FactoryLogic.createAbilitySectionText('The animal moves up to their speed. If they end their turn adjacent to the target, they can use the Stand Up maneuver to let the target stand, then get on to ride them.')
 						]
 					})
 				}),
@@ -329,7 +329,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The predator assesses their environment or lets loose a threatening roar and gains an edge on their next strike.')
+							FactoryLogic.createAbilitySectionText('The predator assesses their environment or lets loose a threatening roar and gains an edge on their next strike.')
 						]
 					})
 				}),
@@ -342,7 +342,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The triggering creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The predator makes a free strike against the target. If the predator was hidden from the target, the strike deals an extra 3 damage.')
+							FactoryLogic.createAbilitySectionText('The predator makes a free strike against the target. If the predator was hidden from the target, the strike deals an extra 3 damage.')
 						]
 					})
 				}),
@@ -413,7 +413,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The triggering creature or object',
 						sections: [
-							FactoryLogic.createAbilitySectionText('**Effect:** The target is pushed up to 5 squares.')
+							FactoryLogic.createAbilitySectionText('The target is pushed up to 5 squares.')
 						]
 					})
 				}),

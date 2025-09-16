@@ -16,7 +16,6 @@ import { Complication } from '../../models/complication';
 import { Counter } from '../../models/counter';
 import { Culture } from '../../models/culture';
 import { CultureType } from '../../enums/culture-type';
-import { DirectoryModal } from '../modals/directory/directory-modal';
 import { Domain } from '../../models/domain';
 import { Element } from '../../models/element';
 import { ElementModal } from '../modals/element/element-modal';
@@ -109,7 +108,6 @@ export const Main = (props: Props) => {
 		return opts;
 	});
 	const [ errors, setErrors ] = useState<Event[]>([]);
-	const [ directory, setDirectory ] = useState<ReactNode>(null);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
 	const [ spinning, setSpinning ] = useState(false);
@@ -1312,17 +1310,6 @@ export const Main = (props: Props) => {
 
 	// #region Modals
 
-	const showDirectoryPane = () => {
-		setDirectory(
-			<DirectoryModal
-				heroes={heroes}
-				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-				playbook={playbook}
-				onClose={() => setDirectory(null)}
-			/>
-		);
-	};
-
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal
@@ -1509,10 +1496,7 @@ export const Main = (props: Props) => {
 						path='/'
 						element={
 							<MainLayout
-								section='hero'
-								directory={directory}
 								drawer={drawer}
-								setDirectory={setDirectory}
 								setDrawer={setDrawer}
 							/>
 						}
@@ -1521,7 +1505,6 @@ export const Main = (props: Props) => {
 							index={true}
 							element={
 								<WelcomePage
-									showDirectory={showDirectoryPane}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
@@ -1539,7 +1522,6 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										options={props.options}
 										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
@@ -1558,7 +1540,6 @@ export const Main = (props: Props) => {
 										options={options}
 										setOptions={persistOptions}
 										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										exportHero={exportHero}
@@ -1597,7 +1578,6 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										options={options}
 										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
@@ -1637,7 +1617,6 @@ export const Main = (props: Props) => {
 										options={options}
 										hiddenSourcebookIDs={hiddenSourcebookIDs}
 										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
@@ -1660,7 +1639,6 @@ export const Main = (props: Props) => {
 										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 										options={options}
 										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
@@ -1685,7 +1663,6 @@ export const Main = (props: Props) => {
 										playbook={playbook}
 										options={options}
 										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
@@ -1709,7 +1686,6 @@ export const Main = (props: Props) => {
 										playbook={playbook}
 										options={options}
 										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}
@@ -1736,7 +1712,6 @@ export const Main = (props: Props) => {
 										session={session}
 										options={options}
 										highlightAbout={errors.length > 0}
-										showDirectory={showDirectoryPane}
 										showAbout={showAbout}
 										showRoll={showRoll}
 										showReference={showReference}

@@ -308,7 +308,7 @@ export class FactoryFeatureLogic {
 			description: data.description || '',
 			type: FeatureType.ItemChoice,
 			data: {
-				types: data.types || [ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket ],
+				types: data.types || [ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ],
 				count: data.count || 1,
 				selected: []
 			}

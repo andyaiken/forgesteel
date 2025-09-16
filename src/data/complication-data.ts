@@ -49,7 +49,7 @@ export class ComplicationData {
 				id: 'comp-amnesia-b',
 				name: 'Amnesia Benefit',
 				description: 'You have a supernatural possession - a 1st echelon trinket. It might have some connection with your former life.',
-				types: [ ItemType.Trinket ]
+				types: [ ItemType.Trinket1st ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-amnesia-d',
@@ -145,7 +145,7 @@ export class ComplicationData {
 				id: 'comp-betrothed-b',
 				name: 'Betrothed Benefit',
 				description: 'You escaped with a dowry present — a 1st echelon trinket of your choice.',
-				types: [ ItemType.Trinket ]
+				types: [ ItemType.Trinket1st ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-betrothed-d',
@@ -1546,7 +1546,7 @@ You can’t take this complication if you can’t be made dazed.`,
 				id: 'comp-secretTwin-b',
 				name: 'Secret Twin Benefit',
 				description: 'You have a 1st-echelon trinket of your choice. This was a signature treasure of your twin, and has their name or sigil written, sewn, or emblazoned on it somewhere.',
-				types: [ ItemType.Trinket ]
+				types: [ ItemType.Trinket1st ]
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-secretTwin-d',

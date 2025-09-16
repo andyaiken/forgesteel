@@ -1,9 +1,14 @@
 import { FactoryLogic } from '../factory-logic';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { Item } from '../../models/item';
+import { ItemType } from '../../enums/item-type';
 
 export class ItemUpdateLogic {
 	static updateItem = (item: Item) => {
+		if (item.type.toString() === 'Trinket') {
+			item.type = ItemType.Trinket1st;
+		}
+
 		item.featuresByLevel.flatMap(lvl => lvl.features).forEach(FeatureUpdateLogic.updateFeature);
 		if (item.imbuements === undefined) {
 			item.imbuements = [];

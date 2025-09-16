@@ -8,11 +8,13 @@ import { Item } from '../../models/item';
 import { ItemType } from '../../enums/item-type';
 
 export class TrinketData {
+	// Echelon 1
+
 	static colorCloakBlue: Item = FactoryLogic.createItem({
 		id: 'item-color-cloak-blue',
 		name: 'Color Cloak (blue)',
 		description: 'This silky-blue hooded cloak is emblazoned with a golden Anjali sigil meaning "ice."',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Neck ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A pint of blue ichor, soul chalk',
@@ -55,7 +57,7 @@ export class TrinketData {
 		id: 'item-color-cloak-red',
 		name: 'Color Cloak (red)',
 		description: 'This woolen red hooded cloak is emblazoned with a golden Anjali sigil meaning "fire."',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Neck ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A pint of red ichor, soul chalk',
@@ -98,7 +100,7 @@ export class TrinketData {
 		id: 'item-color-cloak-yellow',
 		name: 'Color Cloak (yellow)',
 		description: 'This rubbery, yellow hooded cloak is emblazoned with a golden Anjali sigil meaning "lightning."',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Magic, AbilityKeyword.Neck ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A pint of yellow ichor, soul chalk',
@@ -141,7 +143,7 @@ export class TrinketData {
 		id: 'item-deadweight',
 		name: 'Deadweight',
 		description: 'Though this humanoid femur is coated in lead, it feels impossibly heavy for its size.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One humanoid femur, one bar of lead laced with starmetal',
@@ -175,7 +177,7 @@ export class TrinketData {
 		id: 'item-displacing-replacement-bracer',
 		name: 'Displacing Replacement Bracer',
 		description: 'A wooden bangle is etched with an ambigram sigil of the Zaliac word for "transfer."',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Arms, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Petrified wood from a tree that has not been observed since falling',
@@ -208,7 +210,7 @@ export class TrinketData {
 		id: 'item-divine-vine',
 		name: 'Divine Vine',
 		description: 'A coil of emerald-green vines is topped with the jaws of an enormous Venus flytrap.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Three withered mundane vines, a tree\'s blessing',
@@ -241,7 +243,7 @@ export class TrinketData {
 		id: 'item-flameshade-gloves',
 		name: 'Flameshade Gloves',
 		description: 'These finely stitched gloves appear to flicker in and out of reality when first handled.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Hands, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A humanoid\'s shadow disconnected from its source',
@@ -259,7 +261,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-gecko-gloves',
 		name: 'Gecko Gloves',
 		description: 'These scaled gloves have palms and fingers covered in nearinvisible sticky hairs.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Hands, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Ten gecko tails',
@@ -274,7 +276,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-hellcharger-helm',
 		name: 'Hellcharger Helm',
 		description: 'A steel helm is set with two curved ebony horns, a crackling plume of fire floating between them.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Head, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One broken contract, one ingot of steel',
@@ -308,7 +310,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-mask-of-the-many',
 		name: 'Mask of the Many',
 		description: 'A plain white mask is lined with soft black velvet - which smells faintly of blood.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Head, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One used death shroud',
@@ -341,7 +343,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-quantum-satchel',
 		name: 'Quantum Satchel',
 		description: 'A woven metal drawstring seals this plain-looking leather bag, which is affixed with an opal brooch.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One uncut opal',
@@ -356,7 +358,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-unbinder-boots',
 		name: 'Unbinder Boots',
 		description: 'A pair of ornately embroidered leather boots are covered in images of broken chains.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket1st,
 		keywords: [ AbilityKeyword.Feet, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One battered gold chain of at least fifty links',
@@ -367,11 +369,13 @@ If the object is too thick or has no open space on the other side, your hand bec
 		effect: 'These boots can temporarily unbind themselves from the chains of the earth, letting you move through the air as high as 3 squares above the ground from where you started. If you end your turn while you are still airborne, you fall.'
 	});
 
+	// Echelon 2
+
 	static bastionBelt: Item = FactoryLogic.createItem({
 		id: 'item-bastion-belt',
 		name: 'Bastion Belt',
 		description: 'This thick leather belt features a bone clasp and feels unusually heavy when handled.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket2nd,
 		keywords: [ AbilityKeyword.Waist, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A giant’s tooth',
@@ -402,7 +406,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-evilest-eye',
 		name: 'Evilest Eye',
 		description: 'A perfectly preserved eyeball hangs unnervingly from a gold chain.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket2nd,
 		keywords: [ AbilityKeyword.Neck, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An eyeball from a pirate captain who drowned at sea',
@@ -435,7 +439,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-insightful-crown',
 		name: 'Insightful Crown',
 		description: 'Shaped of polished crystal, this shimmering circlet shifts through myriad colors in the presence of strong emotions.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket2nd,
 		keywords: [ AbilityKeyword.Head, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: ' One measure of pure crystal, a jarred memory of true joy',
@@ -450,7 +454,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-key-of-inquiry',
 		name: 'Key of Inquiry',
 		description: 'A foot-long platinum key is set with three opals',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket2nd,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The finger bone of a creature with telepathy, three black opals',
@@ -483,7 +487,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-mediators-charm',
 		name: 'Mediator\'s Charm',
 		description: 'A fancy gold earring is set with a small ruby.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket2nd,
 		keywords: [ AbilityKeyword.Head, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The gold nib of a fountain pen used to sign a major treaty or compact, a ruby once worn by a devil',
@@ -498,7 +502,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-necklack-of-the-bayou',
 		name: 'Necklace of the Bayou',
 		description: 'A worn leather circlet bears a lizard-shaped pendant of rotting wood.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket2nd,
 		keywords: [ AbilityKeyword.Neck, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A gallon of swamp water, the limbs of four different newts',
@@ -513,7 +517,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-scannerstone',
 		name: 'Scannerstone',
 		description: 'This flat, palm-sized triangular stone is decorated with a starfield of tiny gems.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket2nd,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: ': A piece of polished obsidian, seven flawless pea-sized diamonds',
@@ -528,7 +532,7 @@ If the object is too thick or has no open space on the other side, your hand bec
 		id: 'item-stop-n-go-coin',
 		name: 'Stop-’n-Go Coin',
 		description: 'This small, featureless coin is solid green on one side and solid red on the other.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket2nd,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A coin minted during an earthquake',
@@ -564,11 +568,13 @@ The coin must be picked up before it can be used again. If any creature picks up
 		]
 	});
 
+	// Echelon 3
+
 	static bracersOfStrife: Item = FactoryLogic.createItem({
 		id: 'item-bracers-of-strife',
 		name: 'Bracers of Strife',
 		description: 'Each of these metallic blue bracers is oversized',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket3rd,
 		keywords: [ AbilityKeyword.Arms, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The severed hand of a giant',
@@ -596,7 +602,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		id: 'item-mask-of-oversight',
 		name: 'Mask of Oversight',
 		description: 'This angular electrum mask is set with an excess of eye holes and a horrifying maw.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket3rd,
 		keywords: [ AbilityKeyword.Head, AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'An overmind egg, the skin of any shapeshifter',
@@ -629,7 +635,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		id: 'item-mirage-band',
 		name: 'Mirage Band',
 		description: 'A sable blue circlet shimmers with finely woven threads of sparkling white.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket3rd,
 		keywords: [ AbilityKeyword.Head, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A spool of mindspider silk, an ingot of white gold',
@@ -665,7 +671,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		id: 'item-nullfield-resonator-ring',
 		name: 'Nullfield Resonator Ring',
 		description: 'This simple band of copper vibrates slightly when handled.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket3rd,
 		keywords: [ AbilityKeyword.Ring, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'A wafer of gallium arsenide',
@@ -708,7 +714,7 @@ The coin must be picked up before it can be used again. If any creature picks up
 		id: 'item-shifting-ring',
 		name: 'Shifting Ring',
 		description: 'This silvery metal ring seems to momentarily vanish when observed from certain angles.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket3rd,
 		keywords: [ AbilityKeyword.Ring, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'One-third of a pound of diamond dust, one nugget of pure silver',
@@ -738,11 +744,13 @@ The coin must be picked up before it can be used again. If any creature picks up
 		]
 	});
 
+	// Echelon 4
+
 	static gravekeepersLantern: Item = FactoryLogic.createItem({
 		id: 'item- gravekeepers-lantern',
 		name: 'Gravekeeper’s Lantern',
 		description: 'This ancient wooden lantern is inscribed with eldritch runes and stained with dark blood.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket4th,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'The powdered jawbone of a powerful spellcaster, wood from a tree marking multiple graves',
@@ -766,7 +774,7 @@ A trapped spirit remains in the lantern for 10 minutes. They remember being trap
 		id: 'item-psi-blade',
 		name: 'Psi Blade',
 		description: 'This wide metal bracer is set with a glowing gemstone.',
-		type: ItemType.Trinket,
+		type: ItemType.Trinket4th,
 		keywords: [ AbilityKeyword.Arms, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
 			prerequisites: 'Steel alloy, one fine-cut topaz',

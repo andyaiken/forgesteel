@@ -1228,7 +1228,7 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Item types'
 							mode='multiple'
 							allowClear={true}
-							options={[ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket ].map(option => ({ value: option }))}
+							options={[ ItemType.Artifact, ItemType.Consumable, ItemType.Leveled, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ].map(option => ({ value: option }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 							showSearch={true}
 							filterOption={(input, option) => {

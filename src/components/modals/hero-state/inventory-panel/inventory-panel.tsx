@@ -143,7 +143,7 @@ export const InventoryPanel = (props: Props) => {
 			}
 			<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} width='500px'>
 				<ItemSelectModal
-					types={[ ItemType.Artifact, ItemType.Consumable, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket ]}
+					types={[ ItemType.Artifact, ItemType.Consumable, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ]}
 					sourcebooks={props.sourcebooks}
 					options={props.options}
 					hero={hero}

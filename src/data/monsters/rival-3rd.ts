@@ -10,7 +10,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const rival3rd: MonsterGroup = {
 	id: 'monster-group-rival-3rd',
-	name: 'Rival - 3rd Echelon',
+	name: 'Rival — 3rd Echelon',
 	description: 'Rivals at the 3rd Echelon have been through quite a few adventures the heroes might not know anything about. Even if they’ve clashed with the heroes a few times in the past, there’s something different about the rivals now.',
 	picture: null,
 	information: [

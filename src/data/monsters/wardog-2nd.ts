@@ -11,7 +11,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const warDog2nd: MonsterGroup = {
 	id: 'monster-group-wardog-2nd',
-	name: 'War Dog - 2nd Echelon',
+	name: 'War Dog — 2nd Echelon',
 	description: 'War dogs, like any soldiers, are outfitted to carry out warfare with weapons, armor, and no end of ghastly tools. But Ajax’s war dog forces are no ordinary army, and they bear extraordinary equipment.',
 	picture: null,
 	information: [

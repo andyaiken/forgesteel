@@ -10,7 +10,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const rival4th: MonsterGroup = {
 	id: 'monster-group-rival-4th',
-	name: 'Rival - 4th Echelon',
+	name: 'Rival — 4th Echelon',
 	description: 'This is what peak performance looks like. Few bands of monsters can put up a fight with the heroes like the rivals can. Even if they somehow lose, the rivals will always find a way back to the heroes for a rematch.',
 	picture: null,
 	information: [

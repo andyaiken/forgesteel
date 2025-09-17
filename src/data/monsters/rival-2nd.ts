@@ -10,7 +10,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const rival2nd: MonsterGroup = {
 	id: 'monster-group-rival-2nd',
-	name: 'Rival - 2nd Echelon',
+	name: 'Rival — 2nd Echelon',
 	description: 'The rivals have learned a few new tricks since they last encountered the heroes. Rivalry is a two way street, however, and they’ll be sorely disappointed if the heroes can’t keep up.',
 	picture: null,
 	information: [

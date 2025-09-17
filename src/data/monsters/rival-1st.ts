@@ -10,7 +10,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const rival1st: MonsterGroup = {
 	id: 'monster-group-rival-1st',
-	name: 'Rival - 1st Echelon',
+	name: 'Rival — 1st Echelon',
 	description: 'It’s possible that these rivals gained a head start on their adventures and will pose a significant challenge to the heroes if they weren’t expecting them.',
 	picture: null,
 	information: [

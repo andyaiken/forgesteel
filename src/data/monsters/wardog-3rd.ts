@@ -11,7 +11,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const warDog3rd: MonsterGroup = {
 	id: 'monster-group-wardog-3rd',
-	name: 'War Dog - 3rd Echelon',
+	name: 'War Dog — 3rd Echelon',
 	description: 'As a war dog proves their loyalty and gains the favor of their superiors, they might be rewarded with special attention from the flesh sculptors of the Body Banks, smoothing out their construction and supplying them with higher-quality parts. War dogs who have risen through the ranks this way pride themselves on their nearly ordinary appearances.',
 	picture: null,
 	information: [

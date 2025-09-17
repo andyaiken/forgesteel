@@ -11,7 +11,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const undead1st: MonsterGroup = {
 	id: 'monster-group-undead-1st',
-	name: 'Undead - 1st Echelon',
+	name: 'Undead — 1st Echelon',
 	description: `
 Some serve as mindless soldiers and workers under the control of a necromancer. Others rise when they die a bitter death in a place infused with cursed magic. For a few, it was a choice to become something beyond mortal. However they arose, all undead were once living creatures who now walk the land after death in defiance of the natural order.
 

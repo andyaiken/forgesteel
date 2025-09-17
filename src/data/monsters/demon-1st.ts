@@ -11,7 +11,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const demon1st: MonsterGroup = {
 	id: 'monster-group-demon-1st',
-	name: 'Demon - 1st Echelon',
+	name: 'Demon — 1st Echelon',
 	description: `
 Creatures of incarnate hate, demons spawn naturally in the Abyssal Wasteland. They crave violence and suffering the way other creatures need food. A demon cares only for themself, and they torture and tear lesser demons apart for fun.
 
@@ -48,7 +48,7 @@ Each time a demon consumes a soul, there’s a chance they might evolve into a m
 		},
 		{
 			id: 'demon-1st-info-6',
-			name: 'Demons—1st Echelon',
+			name: 'Demons — 1st Echelon',
 			description: `
 A number of lesser demons have been identified across categories 1 to 3:
 

@@ -28,7 +28,7 @@ export const AppFooter = (props: Props) => {
 						(props.page === 'player-view') ?
 							<div />
 							:
-							<Flex className='navigation-buttons-panel' align='center'>
+							<Flex className='navigation-buttons-panel' align='center' gap={2}>
 								<Button type='text' className={props.page === 'welcome' ? 'selected' : ''} icon={<img className='logo-icon' src={shield} />} onClick={() => navigation.goToWelcome()} />
 								<Divider type='vertical' />
 								<Button type='text' className={props.page === 'heroes' ? 'selected' : ''} icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>

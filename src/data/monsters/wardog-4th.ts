@@ -11,7 +11,7 @@ import { MonsterRoleType } from '../../enums/monster-role-type';
 
 export const warDog4th: MonsterGroup = {
 	id: 'monster-group-wardog-4th',
-	name: 'War Dog - 4th Echelon',
+	name: 'War Dog — 4th Echelon',
 	description: 'At the apex of the war dog command structure, a number of infamous figures are known for their brutal tactics, legendary battle prowess, and unbreakable loyalty to Ajax.',
 	picture: null,
 	information: [

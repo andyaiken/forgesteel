@@ -277,9 +277,9 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						sections: [
 							FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
 								bonus: 2,
-								tier1: '8 damage; m < 0 grabbed',
-								tier2: '13 damage; m < 1 grabbed',
-								tier3: '16 damage; m < 2 grabbed'
+								tier1: '8 damage; M < 0 grabbed',
+								tier2: '13 damage; M < 1 grabbed',
+								tier3: '16 damage; M < 2 grabbed'
 							})),
 							FactoryLogic.createAbilitySectionText('The target must be the fury’s size or smaller. While the target is grabbed this way, the fury gains an edge on strikes against them.')
 						]

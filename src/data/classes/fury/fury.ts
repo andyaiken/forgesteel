@@ -564,7 +564,7 @@ Primordial power remains until you spend it.`
 			target: 'Self',
 			cost: 7,
 			sections: [
-				FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, each enemy who starts their turn adjacent to you and has p < [strong] is frightened until the end of their turn.')
+				FactoryLogic.createAbilitySectionText('Until the end of the encounter or until you are dying, each enemy who starts their turn adjacent to you and has P < [strong] is frightened until the end of their turn.')
 			]
 		}),
 		FactoryLogic.createAbility({

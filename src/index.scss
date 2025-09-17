@@ -207,6 +207,8 @@ td {
 
 		.subtext {
 			margin-top: 5px;
+			border-top: 1px solid rgba(5, 5, 5, 0.06);
+			padding-top: 5px;
 			font-size: 10px;
 			opacity: 0.7;
 		}
@@ -226,6 +228,8 @@ td {
 }
 
 .ant-collapse {
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+
 	>.ant-collapse-item {
 		>.ant-collapse-header {
 			background-color: rgb(255, 255, 255);
@@ -270,6 +274,8 @@ td {
 
 .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
 	padding: 5px 20px 20px 20px;
+	background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
+    border-radius: 0 0 6px 6px;
 }
 
 .ant-divider {

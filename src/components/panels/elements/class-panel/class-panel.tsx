@@ -80,11 +80,13 @@ export const ClassPanel = (props: Props) => {
 								<HeaderText level={1}>Subclasses</HeaderText>
 								<div className='subclasses'>
 									{
-										...props.heroClass.subclasses.map(sc =>
-											<SelectablePanel key={sc.id} onSelect={props.onSelectSubclass ? () => props.onSelectSubclass!(sc) : undefined}>
-												<SubclassPanel subclass={sc} options={props.options} hero={props.hero} mode={sc.selected ? PanelMode.Full : PanelMode.Compact} />
-											</SelectablePanel>
-										)
+										...props.heroClass.subclasses
+											.filter(sc => (props.heroClass.subclasses.filter(x => x.selected).length === 0) || sc.selected)
+											.map(sc =>
+												<SelectablePanel key={sc.id} onSelect={props.onSelectSubclass ? () => props.onSelectSubclass!(sc) : undefined}>
+													<SubclassPanel subclass={sc} options={props.options} hero={props.hero} mode={sc.selected ? PanelMode.Full : PanelMode.Compact} />
+												</SelectablePanel>
+											)
 									}
 								</div>
 							</Space>

@@ -29,7 +29,7 @@ export const SelectablePanel = (props: Props) => {
 		if (props.disabled) {
 			className += ' disabled';
 		}
-		if (props.showShadow !== false) {
+		if ((props.showShadow !== false) && !props.disabled) {
 			className += ' shadow';
 		}
 

@@ -1470,7 +1470,7 @@ export const dwarfFury = {
 				sections: [
 					{
 						type: 'text',
-						text: 'Until the end of the encounter or until you are dying, each enemy who starts their turn adjacent to you and has p < [strong] is frightened until the end of their turn.'
+						text: 'Until the end of the encounter or until you are dying, each enemy who starts their turn adjacent to you and has P < [strong] is frightened until the end of their turn.'
 					}
 				],
 				preEffect: '',

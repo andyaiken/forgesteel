@@ -3620,7 +3620,7 @@ export const polderShadow = {
 															},
 															{
 																type: 'text',
-																text: 'The gas remains in the area until the end of the encounter. Any creature who starts their turn in the area and has M < average is weakened (save ends).'
+																text: 'The gas remains in the area until the end of the encounter. Any creature who starts their turn in the area and has M < [average] is weakened (save ends).'
 															}
 														],
 														preEffect: '',

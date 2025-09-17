@@ -391,7 +391,7 @@ Outside of combat, you can have one clone active for every 2 Victories you have.
 				FactoryLogic.feature.createHeroicResourceGain({
 					id: 'shadow-10-2',
 					name: 'Death Pool',
-					tag: 'deal-damage 2',
+					tag: 'deal-damage 3',
 					trigger: 'The first time each combat round that you deal damage incorporating 1 or more surges',
 					value: '3',
 					replacesTags: [ 'deal-damage', 'deal-damage 2' ]

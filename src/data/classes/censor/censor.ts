@@ -151,7 +151,7 @@ You can choose only one free triggered action option at a time, even if multiple
 				FactoryLogic.feature.create({
 					id: 'censor-3-1',
 					name: 'Look On My Work and Despair',
-					description: 'Your judgment has grown in divine power, instilling fear in those you condemn. Whenever you use your Judgment ability, you can spend 1 wrath, and if the target has P < Average , they are frightened of you (save ends). Additionally, whenever a creature judged by you is reduced to 0 Stamina and you use Judgment as a free triggered action, if the new target has P < Strong , they are frightened of you (save ends). If the target is already frightened of you, they instead take holy damage equal to twice your Presence score.'
+					description: 'Your judgment has grown in divine power, instilling fear in those you condemn. Whenever you use your Judgment ability, you can spend 1 wrath, and if the target has P < [average], they are frightened of you (save ends). Additionally, whenever a creature judged by you is reduced to 0 Stamina and you use Judgment as a free triggered action, if the new target has P < [strong], they are frightened of you (save ends). If the target is already frightened of you, they instead take holy damage equal to twice your Presence score.'
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'censor-3-2',
@@ -213,7 +213,7 @@ You can choose only one free triggered action option at a time, even if multiple
 					description: `Each time you finish a respite, you can choose one hero’s weapon, including your own, to channel supernatural power as an implement of your god’s wrath. The weapon becomes magic and gains the following benefits until your next respite:
 
 * Strikes with the weapon deal extra holy damage equal to the wielder’s highest characteristic score.
-* Any creature struck by the weapon who has holy weakness and has P < Strong is frightened and weakened (save ends).
+* Any creature struck by the weapon who has holy weakness and has P < [strong] is frightened and weakened (save ends).
 * Any minion targeted by a strike using the weapon dies. That minion’s Stamina maximum is removed from the minion Stamina pool before any damage is applied to the rest of the squad.
 * The weapon’s wielder can’t be made frightened.`
 				}),

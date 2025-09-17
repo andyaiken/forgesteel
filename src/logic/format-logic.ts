@@ -84,10 +84,25 @@ export class FormatLogic {
 		return link.label ? `${link.label}: ${plotPointName}` : plotPointName;
 	};
 
+	static getDice = (text: string) => {
+		const diceMatch = text.match(/(?<throws>\d+)d(?<sides>\d+)\s*(\+|plus)/);
+		if (diceMatch && diceMatch.groups) {
+			let throws = 0;
+			let sides = 0;
+
+			throws = parseInt(diceMatch.groups['throws']);
+			sides = parseInt(diceMatch.groups['sides']);
+
+			return `${throws}d${sides}`;
+		}
+
+		return null;
+	};
+
 	static getConstant = (text: string) => {
 		let constant = 0;
 
-		const constantMatch = text.match(/(?<c>\d+)\s*(\+|plus)/);
+		const constantMatch = text.match(/(?<c>^d*\d+^d*)\s*(\+|plus)/);
 		if (constantMatch && constantMatch.groups) {
 			constant = parseInt(constantMatch.groups['c']);
 		}

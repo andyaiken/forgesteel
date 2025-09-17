@@ -113,7 +113,7 @@ export const causticAlchemy: SubClass = {
 											tier2: '5 poison damage',
 											tier3: '7 poison damage'
 										})),
-										FactoryLogic.createAbilitySectionText('The gas remains in the area until the end of the encounter. Any creature who starts their turn in the area and has M < average is weakened (save ends).')
+										FactoryLogic.createAbilitySectionText('The gas remains in the area until the end of the encounter. Any creature who starts their turn in the area and has M < [average] is weakened (save ends).')
 									]
 								})
 							}),

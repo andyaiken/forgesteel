@@ -322,10 +322,15 @@ export class AbilityLogic {
 				if (options.length > 0) {
 					const value = Math.max(...options);
 
+					const dice = FormatLogic.getDice(match[0]);
 					const constant = FormatLogic.getConstant(match[0]);
 					const multiplier = FormatLogic.getMultiplier(match[0]);
 
-					text = text.replace(match[0], `${match[1]} ${constant + (value * multiplier)}`);
+					if (dice) {
+						text = text.replace(match[0], `${match[1]} ${dice} + ${constant + (value * multiplier)}`);
+					} else {
+						text = text.replace(match[0], `${match[1]} ${constant + (value * multiplier)}`);
+					}
 				}
 			});
 		}
@@ -334,10 +339,15 @@ export class AbilityLogic {
 		if (hero) {
 			const lvlRegex = /equal to[^,.;:]*your level/gi;
 			[ ...text.matchAll(lvlRegex) ].map(r => r[0]).forEach(str => {
+				const dice = FormatLogic.getDice(str);
 				const constant = FormatLogic.getConstant(str);
 				const value = hero.class ? hero.class.level : 1;
 				const multiplier = FormatLogic.getMultiplier(str);
-				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+				if (dice) {
+					text = text.replace(str, `equal to ${dice} + ${constant + (value * multiplier)}`);
+				} else {
+					text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+				}
 			});
 		}
 
@@ -345,10 +355,15 @@ export class AbilityLogic {
 		if (hero) {
 			const recRegex = /equal to[^,.;:]*your recovery value/gi;
 			[ ...text.matchAll(recRegex) ].map(r => r[0]).forEach(str => {
+				const dice = FormatLogic.getDice(str);
 				const constant = FormatLogic.getConstant(str);
 				const value = HeroLogic.getRecoveryValue(hero);
 				const multiplier = FormatLogic.getMultiplier(str);
-				text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+				if (dice) {
+					text = text.replace(str, `equal to ${dice} + ${constant + (value * multiplier)}`);
+				} else {
+					text = text.replace(str, `equal to ${constant + (value * multiplier)}`);
+				}
 			});
 		}
 
@@ -358,10 +373,15 @@ export class AbilityLogic {
 			text = text.replace('a number of squares up to your speed', 'up to your speed');
 			const speedRegex = /up to[^,.;:]*your speed/gi;
 			[ ...text.matchAll(speedRegex) ].map(r => r[0]).forEach(str => {
+				const dice = FormatLogic.getDice(str);
 				const constant = FormatLogic.getConstant(str);
 				const value = HeroLogic.getSpeed(hero).value;
 				const multiplier = FormatLogic.getMultiplier(str);
-				text = text.replace(str, `up to ${constant + (Math.floor(value * multiplier))} squares`);
+				if (dice) {
+					text = text.replace(str, `up to ${dice} + ${constant + (Math.floor(value * multiplier))} squares`);
+				} else {
+					text = text.replace(str, `up to ${constant + (Math.floor(value * multiplier))} squares`);
+				}
 			});
 		}
 

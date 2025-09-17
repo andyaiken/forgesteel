@@ -1,41 +1,30 @@
-import {
-	CheckCircleOutlined,
-	CloudDownloadOutlined,
-	SyncOutlined,
-	WifiOutlined
-} from '@ant-design/icons';
+import { SyncOutlined, WifiOutlined } from '@ant-design/icons';
 import { useSyncStatus } from '../../../hooks/use-sync-status';
+
 import './sync-status.scss';
 
-interface Props {
-	className?: string;
-}
-
-export const SyncStatus = ({ className }: Props) => {
+export const SyncStatus = () => {
 	const {
-		isSynced,
 		isSyncing,
 		isOnline,
 		statusMessage
 	} = useSyncStatus();
 
-	const getIcon = () => {
-		if (!isOnline) {
-			return <WifiOutlined style={{ color: '#ff4d4f' }} />;
-		}
-		if (isSyncing) {
-			return <SyncOutlined spin style={{ color: '#1890ff' }} />;
-		}
-		if (isSynced) {
-			return <CheckCircleOutlined style={{ color: '#52c41a' }} />;
-		}
-		return <CloudDownloadOutlined style={{ color: '#faad14' }} />;
-	};
+	if (!isOnline) {
+		return (
+			<div className='sync-status offline'>
+				<WifiOutlined title={statusMessage} />;
+			</div>
+		);
+	}
 
-	return (
-		<div className={`sync-status-text ${className || ''}`}>
-			{getIcon()}
-			<span>{statusMessage}</span>
-		</div>
-	);
+	if (isSyncing) {
+		return (
+			<div className='sync-status syncing'>
+				<SyncOutlined title={statusMessage} spin={true} />
+			</div>
+		);
+	}
+
+	return null;
 };

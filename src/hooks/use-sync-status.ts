@@ -9,10 +9,10 @@ export interface SyncStatus {
 }
 
 enum Messages {
-	OnlineNotSynced = 'Online - Not synced',
-	OnlineSyncing = 'Online - Syncing data',
-	OnlineSynced = 'Online - Data available for offline use',
-	Offline = 'Offline - Using cached data'
+	OnlineNotSynced = 'Online - not synced',
+	OnlineSyncing = 'Online - syncing data',
+	OnlineSynced = 'Online',
+	Offline = 'Offline - using cached data'
 }
 
 export const useSyncStatus = () => {

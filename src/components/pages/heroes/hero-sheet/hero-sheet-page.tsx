@@ -84,7 +84,7 @@ export const HeroSheetPage = (props: Props) => {
 		if (invH > 60) {
 			lineWidth = layout.cardGap + 2 * layout.cardLineLen;
 			invW = 2;
-			invH = Math.ceil(SheetFormatter.calculateInventorySize(character.inventory, lineWidth));
+			invH = Math.ceil(SheetFormatter.calculateInventorySize(character.inventory, lineWidth / 2) * 0.53);
 			invH = Math.min(layout.linesY, invH);// Will probably need a better solution at some point
 		}
 		// console.log('###### Inventory size: ', invH);
@@ -112,18 +112,6 @@ export const HeroSheetPage = (props: Props) => {
 				width: refW,
 				height: refH,
 				shown: false
-			});
-		}
-
-		// Folowers
-		if (character.followers.length) {
-			character.followers.forEach(fs => {
-				required.push({
-					element: <FollowerCard follower={fs} key={fs.id} />,
-					width: 1,
-					height: 10,
-					shown: false
-				});
 			});
 		}
 
@@ -217,7 +205,46 @@ export const HeroSheetPage = (props: Props) => {
 	};
 
 	const getFinalCards = (extraCards: ExtraCards) => {
-		return SheetLayout.getRequiredCardPages(extraCards, character, layout);
+		const layoutEnd = SheetLayout.getFinalCardsLayout(props.options);
+
+		// Recalculate card heights
+		extraCards.required.filter(card => !card.shown).forEach(card => {
+			switch (card.element.key) {
+				case 'notes':
+					break;
+				case 'inventory':
+					if (card.width === 1) {
+						card.height = Math.max(20, SheetFormatter.calculateInventorySize(character.inventory, layoutEnd.cardLineLen));
+					} else {
+						card.height = Math.ceil(SheetFormatter.calculateInventorySize(character.inventory, layoutEnd.cardLineLen) * 0.5);
+					}
+					break;
+				case 'feature-reference':
+					card.width = Math.min(2, card.width);
+					if (card.width === 1) {
+						card.height = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, layoutEnd.cardLineLen);
+					} else {
+						card.height = Math.ceil(SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, layoutEnd.cardLineLen) * 0.5);
+					}
+					break;
+			}
+		});
+
+		extraCards.optional.filter(card => !card.shown).forEach(card => card.height *= 0.8);
+
+		// Folowers only go here
+		if (character.followers.length) {
+			character.followers.forEach(fs => {
+				extraCards.required.push({
+					element: <FollowerCard follower={fs} key={fs.id} />,
+					width: 1,
+					height: 10,
+					shown: false
+				});
+			});
+		}
+
+		return SheetLayout.getRequiredCardPages(extraCards, character, layoutEnd);
 	};
 
 	try {

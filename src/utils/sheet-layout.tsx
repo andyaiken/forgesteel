@@ -50,6 +50,31 @@ export class SheetLayout {
 		};
 	};
 
+	static getFinalCardsLayout = (options: Options): CardPageLayout => {
+		// Get root font size (1rem)
+		const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+		const charWidth = rootFontSize * 0.553;
+
+		// gap between cards
+		const gapPx = 10; // px
+
+		const cardsPerRow = options.pageOrientation === 'portrait' ? 2 : 3;
+
+		let lineLenPx = options.pageOrientation === 'portrait' ? 627.5 : 540;
+		let linesY = options.pageOrientation === 'portrait' ? 88 : 68;
+		if (options.classicSheetPageSize === SheetPageSize.A4) {
+			linesY = options.pageOrientation === 'portrait' ? 94 : 66;
+			lineLenPx = options.pageOrientation === 'portrait' ? 610 : 575;
+		}
+
+		return {
+			perRow: cardsPerRow,
+			linesY: linesY,
+			cardLineLen: Math.round(lineLenPx / charWidth),
+			cardGap: Math.round(gapPx / charWidth)
+		};
+	};
+
 	static getFillerCards = (slotsToFillInRow: number, availableLinesY: number, rowH: number, extraCards: ExtraCards, layout: CardPageLayout): JSX.Element[] => {
 		let refCards = [];
 		let spaceInRow = (slotsToFillInRow % layout.perRow) || layout.perRow;
@@ -218,7 +243,7 @@ export class SheetLayout {
 			pages.push(
 				<Fragment key={`extra-${++i}`}>
 					<hr className='dashed' />
-					<div className='abilities page' id={SheetFormatter.getPageId(character.hero.id, `extra-${i}`)}>
+					<div className='extra-cards page' id={SheetFormatter.getPageId(character.hero.id, `extra-${i}`)}>
 						{cards}
 					</div>
 				</Fragment>

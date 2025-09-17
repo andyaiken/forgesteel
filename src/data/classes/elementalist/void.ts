@@ -95,7 +95,7 @@ At the start of each of your turns while the portals are active, you can open a 
 					id: 'elementalist-sub-4-4-1',
 					name: 'Mantle of Essence: Veiling Bed',
 					description: `
-While you have 3 or more essence and are not dying, you exude an aura of magic whose distance is equal to your Reason score. The effects within the area of the aura are based on your specialization, as shown on the Mantle of Essence Specialization Effects table. You can activate and deactivate the aura at will (no action required).
+While you have 3 or more essence and are not dying, you exude an aura of magic whose distance is equal to your Reason score. You can activate and deactivate the aura at will (no action required).
 
 The area provides concealment for you and your allies.`
 				})

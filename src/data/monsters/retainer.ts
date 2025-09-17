@@ -280,7 +280,7 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-3-retainer-2',
 						name: 'Tempting Offer',
 						type: FactoryLogic.type.createTrigger('A sapient enemy is reduced to 0 Stamina.', { free: true, qualifiers: [ 'Encounter' ] }),
-						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike ],
+						keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Triggering creature',
 						sections: [
@@ -300,7 +300,7 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-3-retainer-7',
 						name: 'Flames of Revenge',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'Encounter' ] }),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 10 }) ],
 						target: 'Each enemy in the area',
 						sections: [
@@ -317,9 +317,9 @@ export const retainer: MonsterGroup = {
 				level10: FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'retainer-3-retainer-10',
-						name: 'Hell On Earch',
+						name: 'Hell On Earth',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'Encounter' ] }),
-						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 5, within: 10 }) ],
 						target: '-',
 						sections: [
@@ -367,7 +367,7 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-4-retainer-2',
 						name: 'I\'m Not a Steed, You\'re Equipment',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'Encounter' ] }),
-						keywords: [],
+						keywords: [ AbilityKeyword.Melee ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The Nameless\'s mentor',
 						sections: [

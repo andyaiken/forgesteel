@@ -93,7 +93,7 @@ Alternatively, you touch a structure made of mundane dirt, stone, or metal that 
 					id: 'elementalist-sub-1-4-1',
 					name: 'Mantle of Essence: Quaking Earth',
 					description: `
-While you have 3 or more essence and are not dying, you exude an aura of magic whose distance is equal to your Reason score. The effects within the area of the aura are based on your specialization, as shown on the Mantle of Essence Specialization Effects table. You can activate and deactivate the aura at will (no action required).
+While you have 3 or more essence and are not dying, you exude an aura of magic whose distance is equal to your Reason score. You can activate and deactivate the aura at will (no action required).
 
 At the end of each of your turns, you can push each enemy in the area up to a number of squares equal to your Reason score.`
 				})

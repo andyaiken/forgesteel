@@ -1,0 +1,16 @@
+// Sync status text display styling
+.sync-status-text {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: inherit;
+	font-size: 14px;
+	
+	.anticon {
+		font-size: 16px;
+	}
+	
+	span {
+		color: inherit;
+	}
+}

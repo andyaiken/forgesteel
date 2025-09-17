@@ -17,6 +17,16 @@ import localforage from 'localforage';
 
 import './index.scss';
 
+// Register Service Worker for PWA functionality
+if ('serviceWorker' in navigator) {
+	window.addEventListener('load', () => {
+		navigator.serviceWorker.register('/forgesteel/sw.js')
+			.catch(registrationError => {
+				console.error('SW registration failed: ', registrationError);
+			});
+	});
+}
+
 const promises = [
 	localforage.getItem<Hero[]>('forgesteel-heroes'),
 	localforage.getItem<Sourcebook[]>('forgesteel-homebrew-settings'),

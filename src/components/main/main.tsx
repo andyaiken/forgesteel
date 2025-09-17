@@ -79,6 +79,7 @@ import localforage from 'localforage';
 import { useErrorListener } from '../../hooks/use-error-listener';
 import { useMediaQuery } from '../../hooks/use-media-query';
 import { useNavigation } from '../../hooks/use-navigation';
+import { useSyncStatus } from '../../hooks/use-sync-status';
 
 import './main.scss';
 
@@ -95,6 +96,7 @@ export const Main = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
+	const { triggerSyncOnChange } = useSyncStatus();
 	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
 	const [ playbook, setPlaybook ] = useState<Playbook>(props.playbook);
 	const [ session, setSession ] = useState<Playbook>(props.session);
@@ -145,7 +147,11 @@ export const Main = (props: Props) => {
 						placement: 'top'
 					});
 				}
-			);
+			)
+			.then(() => {
+				// Trigger sync when data changes
+				triggerSyncOnChange();
+			});
 	};
 
 	const persistPlaybook = (playbook: Playbook) => {
@@ -161,7 +167,11 @@ export const Main = (props: Props) => {
 						placement: 'top'
 					});
 				}
-			);
+			)
+			.then(() => {
+				// Trigger sync when data changes
+				triggerSyncOnChange();
+			});
 	};
 
 	const persistSession = (session: Playbook) => {
@@ -182,6 +192,8 @@ export const Main = (props: Props) => {
 				if (playerView) {
 					playerView.location.reload();
 				}
+				// Trigger sync when data changes
+				triggerSyncOnChange();
 			});
 	};
 

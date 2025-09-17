@@ -1,0 +1,32 @@
+{
+  "name": "Forge Steel",
+  "short_name": "Forge Steel",
+  "description": "Heroes, monsters, encounters ... everything you need for Draw Steel.",
+  "start_url": "/forgesteel/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1890ff",
+  "orientation": "any",
+  "scope": "/forgesteel/",
+  "icons": [
+    {
+      "src": "/forgesteel/assets/shield-DSm7ywft.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/forgesteel/assets/shield-DSm7ywft.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "games",
+    "entertainment",
+    "utilities"
+  ],
+  "lang": "en",
+  "dir": "ltr"
+}

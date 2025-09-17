@@ -1,6 +1,0 @@
-{
-  "js/ts.implicitProjectConfig.target": "ES2024",
-  "js/ts.implicitProjectConfig.module": "ES2022",
-  "editor.formatOnSave": false,
-  "typescript.tsdk": "node_modules/typescript/lib"
-}

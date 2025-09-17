@@ -158,8 +158,6 @@ export const useSyncStatus = () => {
 				};
 			});
 			checkSyncStatus();
-			// Auto-sync when coming back online
-			syncForOffline();
 		};
 
 		const handleOffline = () => {

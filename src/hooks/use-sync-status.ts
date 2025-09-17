@@ -8,13 +8,21 @@ export interface SyncStatus {
 	statusMessage: string;
 }
 
+enum Messages {
+	OnlineNotSynced = 'Online - Not synced',
+	OnlineSyncing = 'Online - Syncing data',
+	OnlineSynced = 'Online - Data available for offline use',
+	OfflineSyncing = 'Offline - Caching data',
+	OfflineSynced = 'Offline - Using cached data'
+}
+
 export const useSyncStatus = () => {
 	const [ syncStatus, setSyncStatus ] = useState<SyncStatus>({
 		isSynced: false,
 		isSyncing: false,
 		isOnline: navigator.onLine,
 		lastSyncTime: null,
-		statusMessage: 'Online - Not synced'
+		statusMessage: Messages.OnlineNotSynced
 	});
 
 	const updateStatusMessage = (
@@ -24,13 +32,13 @@ export const useSyncStatus = () => {
 	) => {
 		if (!isOnline) {
 			return isSyncing
-				? 'Offline - Caching data'
-				: 'Offline - Using cached data';
+				? Messages.OfflineSyncing
+				: Messages.OfflineSynced;
 		}
 		if (isSyncing) {
-			return 'Online - Syncing data';
+			return Messages.OnlineSyncing;
 		}
-		return isSynced ? 'Online - Data synced' : 'Online - Not synced';
+		return isSynced ? Messages.OnlineSynced : Messages.OnlineNotSynced;
 	};
 
 	const checkSyncStatus = useCallback(async () => {
@@ -73,7 +81,7 @@ export const useSyncStatus = () => {
 		}
 	}, []);
 
-	const syncForOffline = async () => {
+	const syncForOffline = useCallback(async () => {
 		if ('serviceWorker' in navigator && 'caches' in window) {
 			setSyncStatus(prev => ({
 				...prev,
@@ -126,10 +134,15 @@ export const useSyncStatus = () => {
 				}));
 			}
 		}
-	};
+	}, []);
 
 	useEffect(() => {
 		checkSyncStatus();
+
+		// Auto-sync on load if online
+		if (navigator.onLine) {
+			syncForOffline();
+		}
 
 		// Handle online/offline events
 		const handleOnline = () => {
@@ -145,6 +158,8 @@ export const useSyncStatus = () => {
 				};
 			});
 			checkSyncStatus();
+			// Auto-sync when coming back online
+			syncForOffline();
 		};
 
 		const handleOffline = () => {
@@ -188,11 +203,19 @@ export const useSyncStatus = () => {
 				);
 			}
 		};
-	}, [ checkSyncStatus ]);
+	}, [ checkSyncStatus, syncForOffline ]);
+
+	// Function to trigger sync when data changes
+	const triggerSyncOnChange = useCallback(() => {
+		if (navigator.onLine && !syncStatus.isSyncing) {
+			syncForOffline();
+		}
+	}, [ syncStatus.isSyncing, syncForOffline ]);
 
 	return {
 		...syncStatus,
 		syncForOffline,
-		checkSyncStatus
+		checkSyncStatus,
+		triggerSyncOnChange
 	};
 };

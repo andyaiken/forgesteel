@@ -12,8 +12,7 @@ enum Messages {
 	OnlineNotSynced = 'Online - Not synced',
 	OnlineSyncing = 'Online - Syncing data',
 	OnlineSynced = 'Online - Data available for offline use',
-	OfflineSyncing = 'Offline - Caching data',
-	OfflineSynced = 'Offline - Using cached data'
+	Offline = 'Offline - Using cached data'
 }
 
 export const useSyncStatus = () => {
@@ -31,9 +30,7 @@ export const useSyncStatus = () => {
 		isSyncing: boolean
 	) => {
 		if (!isOnline) {
-			return isSyncing
-				? Messages.OfflineSyncing
-				: Messages.OfflineSynced;
+			return Messages.Offline;
 		}
 		if (isSyncing) {
 			return Messages.OnlineSyncing;

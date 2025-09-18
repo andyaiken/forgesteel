@@ -233,7 +233,7 @@ export class SheetLayout {
 		return abilityCardPages;
 	};
 
-	static getRequiredCardPages = (extraCards: ExtraCards, character: CharacterSheet, layout: CardPageLayout) => {
+	static getRequiredCardPages = (extraCards: ExtraCards, character: CharacterSheet, layout: CardPageLayout, idPrefix = 'extra') => {
 		const pages: JSX.Element[] = [];
 		let i = 0;
 		while (extraCards.required.find(c => !c.shown)) {
@@ -243,9 +243,9 @@ export class SheetLayout {
 				break;
 			}
 			pages.push(
-				<Fragment key={`extra-${++i}`}>
+				<Fragment key={`${idPrefix}-${++i}`}>
 					<hr className='dashed' />
-					<div className={`extra-cards page row-cards-${layout.perRow}`} id={SheetFormatter.getPageId(character.hero.id, `extra-${i}`)}>
+					<div className={`extra-cards page row-cards-${layout.perRow}`} id={SheetFormatter.getPageId(character.hero.id, `${idPrefix}-${i}`)}>
 						{cards}
 					</div>
 				</Fragment>

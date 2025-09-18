@@ -259,7 +259,7 @@ export const retainer: MonsterGroup = {
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'retainer-3-feature-1',
-						name: 'Corrupting Flame',
+						name: 'Black Flame',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],

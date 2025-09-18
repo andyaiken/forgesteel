@@ -260,7 +260,7 @@ export class SheetFormatter {
 			size += this.countLines(`Languages: ${follower.languages?.join(', ')}`, lineWidth);
 			size += 0.5;
 		} else {
-			size = 23; // name, stats, characteristics, stamina
+			size = 22; // name, stats, characteristics, stamina
 			follower.abilities?.forEach(ability => {
 				size += this.calculateAbilityComponentSize(ability, lineWidth);
 			});
@@ -268,9 +268,17 @@ export class SheetFormatter {
 				size += this.calculateFeatureSize(f, lineWidth, false);
 			});
 			follower.advancement?.forEach(advancement => {
-				size += 1 + this.calculateAbilityComponentSize(advancement.ability, lineWidth);
+				size += 1.5 + this.calculateAbilityComponentSize(advancement.ability, lineWidth);
 			});
 		}
+		return size;
+	};
+
+	static calculateFollowersSize = (followers: FollowerSheet[], lineWidth: number): number => {
+		let size = 2.5; // card header
+		followers.forEach(f => {
+			size += 0.8 + this.calculateFollowerSize(f, lineWidth);
+		});
 		return size;
 	};
 

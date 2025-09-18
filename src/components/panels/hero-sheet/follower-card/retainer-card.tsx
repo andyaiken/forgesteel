@@ -17,7 +17,7 @@ interface Props {
 	options: Options;
 }
 
-export const FollowerCard = (props: Props) => {
+export const RetainerCard = (props: Props) => {
 	const follower = useMemo(() => props.follower, [ props.follower ]);
 
 	const getSkillsLanguages = () => {

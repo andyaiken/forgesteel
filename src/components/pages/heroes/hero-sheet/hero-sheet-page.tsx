@@ -10,7 +10,7 @@ import { ConditionsCard } from '../../../panels/hero-sheet/conditions-card/condi
 import { CultureCard } from '../../../panels/hero-sheet/culture-card/culture-card';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureReferenceCard } from '../../../panels/hero-sheet/reference/feature-reference-card';
-import { FollowerCard } from '../../../panels/hero-sheet/follower-card/follower-card';
+import { FollowersCard } from '../../../panels/hero-sheet/follower-card/followers-card';
 import { Hero } from '../../../../models/hero';
 import { HeroHeaderCard } from '../../../panels/hero-sheet/hero-header-card/hero-header-card';
 import { ImmunitiesWeaknessesCard } from '../../../panels/hero-sheet/immunities-weaknesses-card/immunities-weaknesses-card';
@@ -22,6 +22,7 @@ import { PerksCard } from '../../../panels/hero-sheet/perks-card/perks-card';
 import { PotenciesCard } from '../../../panels/hero-sheet/potencies-card/potencies-card';
 import { PrimaryReferenceCard } from '../../../panels/hero-sheet/reference/primary-reference-card';
 import { ProjectsCard } from '../../../panels/hero-sheet/projects-card/projects-card';
+import { RetainerCard } from '../../../panels/hero-sheet/follower-card/retainer-card';
 import { SheetFormatter } from '../../../../utils/sheet-formatter';
 import { SkillsCard } from '../../../panels/hero-sheet/skills-card/skills-card';
 import { Sourcebook } from '../../../../models/sourcebook';
@@ -210,11 +211,13 @@ export const HeroSheetPage = (props: Props) => {
 
 	const getFollowerCards = (extraCards: ExtraCards) => {
 		const layoutEnd = SheetLayout.getFollowerCardsLayout(props.options);
+		const heightRatio = 0.83;
 
 		// Recalculate card heights
 		extraCards.required.filter(card => !card.shown).forEach(card => {
 			switch (card.element.key) {
 				case 'notes':
+					card.height = Math.max(20, card.height * heightRatio);
 					break;
 				case 'inventory':
 					if (card.width === 1) {
@@ -231,24 +234,38 @@ export const HeroSheetPage = (props: Props) => {
 						card.height = Math.ceil(SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, layoutEnd.cardLineLen) * 0.5);
 					}
 					break;
+				default:
+					card.height *= heightRatio;
+					break;
 			}
 		});
 
-		extraCards.optional.filter(card => !card.shown).forEach(card => card.height *= 0.8);
+		extraCards.optional.filter(card => !card.shown).forEach(card => card.height *= heightRatio);
 
 		// Folowers only go here
 		if (character.followers.length) {
-			character.followers.forEach(fs => {
+			character.followers.filter(f => f.classification === 'Retainer').forEach(fs => {
 				extraCards.required.push({
-					element: <FollowerCard follower={fs} options={props.options} key={fs.id} />,
+					element: <RetainerCard follower={fs} options={props.options} key={fs.id} />,
 					width: 1,
 					height: SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen),
 					shown: false
 				});
 			});
+			const followers = character.followers.filter(f => f.classification === 'Follower');
+			if (followers.length) {
+				extraCards.required.push({
+					element: <FollowersCard followers={followers} options={props.options} key='followers' />,
+					width: 1,
+					height: SheetFormatter.calculateFollowersSize(followers, layoutEnd.cardLineLen),
+					shown: false
+				});
+			}
 		}
 
-		return SheetLayout.getRequiredCardPages(extraCards, character, layoutEnd);
+		extraCards.required.sort((a, b) => a.height - b.height);
+
+		return SheetLayout.getRequiredCardPages(extraCards, character, layoutEnd, 'followers');
 	};
 
 	try {

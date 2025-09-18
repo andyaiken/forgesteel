@@ -1,6 +1,6 @@
 import { Button, Drawer, Flex, Input, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { FeatureAbility, FeatureAddOn, FeatureMalice } from '../../../../models/feature';
+import { FeatureAddOn, FeatureMalice, FeatureMaliceAbility } from '../../../../models/feature';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Element } from '../../../../models/element';
@@ -205,7 +205,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			const changeMaliceFeature = (feature: FeatureMalice | FeatureAbility) => {
+			const changeMaliceFeature = (feature: FeatureMalice | FeatureMaliceAbility) => {
 				const copy = Utils.copy(monsterGroup);
 				const index = copy.malice.findIndex(f => f.id === feature.id);
 				if (index !== -1) {
@@ -215,7 +215,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			const moveMaliceFeature = (feature: FeatureMalice | FeatureAbility, direction: 'up' | 'down') => {
+			const moveMaliceFeature = (feature: FeatureMalice | FeatureMaliceAbility, direction: 'up' | 'down') => {
 				const copy = Utils.copy(monsterGroup);
 				const index = copy.malice.findIndex(f => f.id === feature.id);
 				copy.malice = Collections.move(copy.malice, index, direction);
@@ -223,7 +223,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 				props.onChange(copy);
 			};
 
-			const deleteMaliceFeature = (feature: FeatureMalice | FeatureAbility) => {
+			const deleteMaliceFeature = (feature: FeatureMalice | FeatureMaliceAbility) => {
 				const copy = Utils.copy(monsterGroup);
 				copy.malice = copy.malice.filter(f => f.id !== feature.id);
 				setMonsterGroup(copy);
@@ -252,10 +252,10 @@ export const MonsterGroupEditPanel = (props: Props) => {
 							>
 								<FeatureEditPanel
 									feature={f}
-									allowedTypes={[ FeatureType.Ability, FeatureType.Malice ]}
+									allowedTypes={[ FeatureType.Malice, FeatureType.MaliceAbility ]}
 									sourcebooks={props.sourcebooks}
 									options={props.options}
-									onChange={f => changeMaliceFeature(f as FeatureMalice | FeatureAbility)}
+									onChange={f => changeMaliceFeature(f as FeatureMalice | FeatureMaliceAbility)}
 								/>
 							</Expander>
 						))

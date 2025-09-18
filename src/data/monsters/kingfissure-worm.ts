@@ -44,7 +44,7 @@ export const kingfissureWorm: MonsterGroup = {
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'kingfissure-worm-malice-1',
 				name: 'Aftershock',
@@ -73,7 +73,7 @@ export const kingfissureWorm: MonsterGroup = {
 				'The kingfissure worm loses 35 Stamina and regrows one tongue, to a maximum of three tongues. The worm is then dazed until the end of their turn.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'kingfissure-worm-malice-4',
 				name: 'Megaquake',

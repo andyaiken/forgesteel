@@ -779,6 +779,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a language.';
 			case FeatureType.Malice:
 				return 'This feature grants you a malice effect.';
+			case FeatureType.MaliceAbility:
+				return 'This feature grants you a malice ability.';
 			case FeatureType.MovementMode:
 				return 'This feature grants you an additional movement mode.';
 			case FeatureType.Multiple:

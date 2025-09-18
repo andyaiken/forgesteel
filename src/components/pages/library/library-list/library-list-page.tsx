@@ -19,6 +19,7 @@ import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel'
 import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { Format } from '../../../../utils/format';
 import { Hero } from '../../../../models/hero';
 import { HeroClass } from '../../../../models/class';
 import { Imbuement } from '../../../../models/imbuement';
@@ -675,7 +676,7 @@ export const LibraryListPage = (props: Props) => {
 								<div className='selection-list elements'>
 									{
 										list.map(a => (
-											<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} tags={getTags(a.id)} onSelect={() => navigation.goToLibrary(category, a.id)} />
+											<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name || `Unnamed ${Format.capitalize(category)}`} tags={getTags(a.id)} onSelect={() => navigation.goToLibrary(category, a.id)} />
 										))
 									}
 									{

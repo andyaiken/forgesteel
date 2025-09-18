@@ -51,7 +51,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 				'A basilisk acting this turn can burrow until the start of their next turn, and moves up to their speed. They have damage immunity 2 while underground. The basilisk can burrow through stone, but can’t drag other creatures underground when they do so. At the start of each of the basilisk’s turns, the Director can spend 1 Malice to let the basilisk continue burrowing.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'baslisk-malice-2',
 				name: 'Upchuck',

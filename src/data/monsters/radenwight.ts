@@ -41,7 +41,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'radenwight-malice-1',
 				name: 'Trouser Cut',

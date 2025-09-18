@@ -74,7 +74,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 				'Until the end of the round, whenever a high elf uses a magic ability, they can use it as if they were occupying the square of another high elf on the encounter map to whom they have line of effect.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'elf-high-malice-2',
 				name: 'Gift From an Accursed Tome',

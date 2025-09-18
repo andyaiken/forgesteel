@@ -33,7 +33,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'griffon-malice-1',
 				name: 'Swoop',

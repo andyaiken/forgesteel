@@ -101,8 +101,8 @@ export const MonsterModal = (props: Props) => {
 				return (
 					<Space direction='vertical' style={{ width: '100%', padding: '20px' }}>
 						{
-							MonsterLogic.getMaliceOptions(props.monsterGroup).map(malice => {
-								const cost = malice.type === FeatureType.Ability ? malice.data.ability.cost as number : malice.data.cost;
+							MonsterLogic.getMaliceOptions(monster, props.monsterGroup).map(malice => {
+								const cost = malice.type === FeatureType.MaliceAbility ? malice.data.ability.cost as number : malice.data.cost;
 
 								return (
 									<SelectablePanel key={malice.id}>

@@ -51,7 +51,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'human-malice-1',
 				name: 'Alchemical Device',

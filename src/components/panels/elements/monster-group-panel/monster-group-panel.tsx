@@ -49,7 +49,7 @@ export const MonsterGroupPanel = (props: Props) => {
 												feature={m}
 												options={props.options}
 												mode={PanelMode.Full}
-												cost={m.type === FeatureType.Ability ? m.data.ability.cost : m.data.cost}
+												cost={m.type === FeatureType.MaliceAbility ? m.data.ability.cost : m.data.cost}
 												repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
 											/>
 										</SelectablePanel>

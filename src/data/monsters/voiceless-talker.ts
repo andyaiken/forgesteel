@@ -72,7 +72,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 				'One non-minion voiceless talker projects a psionic screen over their body, preventing other creatures from treating them as an enemy until the end of the voiceless talker’s next turn.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'voiceless-talker-malice-2',
 				name: 'Memory Thief',

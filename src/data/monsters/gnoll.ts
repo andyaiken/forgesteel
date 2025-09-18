@@ -48,7 +48,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'gnoll-malice-1',
 				name: 'Iron Jaws',

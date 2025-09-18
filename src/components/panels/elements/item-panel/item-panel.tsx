@@ -1,7 +1,6 @@
-import { Alert, Button, Divider, Space, Tag } from 'antd';
+import { Alert, Button, Divider, Drawer, Space, Tag } from 'antd';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Expander } from '../../../controls/expander/expander';
 import { FeatureConfigPanel } from '../../feature-config-panel/feature-config-panel';
 import { FeatureData } from '../../../../models/feature';
 import { FeaturePanel } from '../feature-panel/feature-panel';
@@ -13,9 +12,12 @@ import { Imbuement } from '../../../../models/imbuement';
 import { Item } from '../../../../models/item';
 import { ItemType } from '../../../../enums/item-type';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { Modal } from '../../../modals/modal/modal';
 import { NumberSpin } from '../../../controls/number-spin/number-spin';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
+import { PlusOutlined } from '@ant-design/icons';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Utils } from '../../../../utils/utils';
@@ -34,6 +36,7 @@ interface Props {
 
 export const ItemPanel = (props: Props) => {
 	const [ item, setItem ] = useState<Item>(Utils.copy(props.item));
+	const [ imbuementsOpen, setImbuementsOpen ] = useState<boolean>(false);
 
 	const addImbuement = (imbuement: Imbuement) => {
 		const copy = Utils.copy(item);
@@ -122,10 +125,9 @@ export const ItemPanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					options.map(f => (
-						<div key={f.feature.id}>
+						<SelectablePanel key={f.feature.id} onSelect={() => addImbuement(f)}>
 							<FeaturePanel feature={f.feature} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-							<Button block={true} onClick={() => addImbuement(f)}>Select</Button>
-						</div>
+						</SelectablePanel>
 					))
 				}
 				{
@@ -143,7 +145,12 @@ export const ItemPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? item.id : undefined}>
-					<HeaderText level={1} tags={[ item.type ]}>{item.name || 'Unnamed Item'}</HeaderText>
+					<HeaderText
+						level={1}
+						tags={[ item.type ]}
+					>
+						{item.name || 'Unnamed Item'}
+					</HeaderText>
 					{
 						props.hero && !HeroLogic.canUseItem(props.hero, item) ?
 							<Alert
@@ -155,18 +162,38 @@ export const ItemPanel = (props: Props) => {
 					}
 					<Markdown text={item.description} />
 					{
+						imbueable ?
+							<HeaderText
+								level={1}
+								extra={
+									props.onChange ?
+										<Button type='text' icon={<PlusOutlined />} onClick={() => setImbuementsOpen(true)} />
+										: null
+								}
+							>
+								Imbuements
+							</HeaderText>
+							: null
+					}
+					{
 						item.imbuements
 							.map(f => f.feature)
 							.map(f => (
-								<div key={f.id} style={{ margin: '10px 0' }}>
-									<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={setFeatureData} />
-									{
-										props.onChange ?
-											<Button block={true} onClick={() => removeImbuement(f.id)}>Unselect</Button>
-											: null
-									}
-								</div>
+								<FeatureConfigPanel
+									key={f.id}
+									feature={f}
+									options={props.options}
+									hero={props.hero}
+									sourcebooks={props.sourcebooks}
+									setData={setFeatureData}
+									onDelete={props.onChange ? () => removeImbuement(f.id) : undefined}
+								/>
 							))
+					}
+					{
+						props.onChange && imbueable && (item.imbuements.length === 0) ?
+							<Empty />
+							: null
 					}
 					{
 						props.mode === PanelMode.Full ?
@@ -185,13 +212,6 @@ export const ItemPanel = (props: Props) => {
 							: null
 					}
 					{
-						props.onChange && imbueable ?
-							<Expander title='Imbue'>
-								{getAvailableImbuements()}
-							</Expander>
-							: null
-					}
-					{
 						props.onChange && (item.type !== ItemType.Artifact) ?
 							<>
 								<Divider />
@@ -200,6 +220,16 @@ export const ItemPanel = (props: Props) => {
 							: null
 					}
 				</div>
+				<Drawer open={imbuementsOpen} onClose={() => setImbuementsOpen(false)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							<div style={{ padding: '20px' }}>
+								{getAvailableImbuements()}
+							</div>
+						}
+						onClose={() => setImbuementsOpen(false)}
+					/>
+				</Drawer>
 			</ErrorBoundary>
 		);
 	} catch (ex) {

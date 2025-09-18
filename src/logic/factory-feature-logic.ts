@@ -1,4 +1,5 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
 import { ConditionType } from '../enums/condition-type';
@@ -356,7 +357,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createMalice = (data: { id: string, name: string, cost: number, repeatable?: boolean, sections: (string | PowerRoll)[] }): FeatureMalice => {
+	createMalice = (data: { id: string, name: string, cost: number, repeatable?: boolean, sections: (string | PowerRoll)[], echelon?: number }): FeatureMalice => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -365,7 +366,21 @@ export class FactoryFeatureLogic {
 			data: {
 				cost: data.cost,
 				repeatable: data.repeatable || false,
-				sections: data.sections
+				sections: data.sections,
+				echelon: data.echelon || 1
+			}
+		};
+	};
+
+	createMaliceAbility = (data: { ability: Ability, echelon?: number }): FeatureMaliceAbility => {
+		return {
+			id: data.ability.id,
+			name: data.ability.name,
+			description: data.ability.description,
+			type: FeatureType.MaliceAbility,
+			data: {
+				ability: data.ability,
+				echelon: data.echelon || 1
 			}
 		};
 	};

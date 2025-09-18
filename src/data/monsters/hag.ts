@@ -50,7 +50,7 @@ Adding insult to injury, those who deal with hags almost always discover the pro
 				'The hag utters terrible words that push each enemy within 2 squares of them up to 3 squares.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'hag-malice-2',
 				name: 'Hag Wyrd',
@@ -78,7 +78,7 @@ Adding insult to injury, those who deal with hags almost always discover the pro
 				'The hag takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'hag-malice-4',
 				name: 'House Call',

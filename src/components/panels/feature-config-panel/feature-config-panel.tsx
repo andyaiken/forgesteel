@@ -8,6 +8,7 @@ import { AbilitySelectModal } from '../../modals/select/ability-select/ability-s
 import { Ancestry } from '../../../models/ancestry';
 import { AncestryPanel } from '../elements/ancestry-panel/ancestry-panel';
 import { Collections } from '../../../utils/collections';
+import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Domain } from '../../../models/domain';
 import { DomainPanel } from '../elements/domain-panel/domain-panel';
 import { Empty } from '../../controls/empty/empty';
@@ -61,6 +62,7 @@ interface Props {
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	setData: (featureID: string, data: FeatureData) => void;
+	onDelete?: () => void;
 }
 
 export const FeatureConfigPanel = (props: Props) => {
@@ -1476,25 +1478,59 @@ export const FeatureConfigPanel = (props: Props) => {
 		return (props.feature.type === FeatureType.Text) && (AbilityLogic.getTextEffect(props.feature.description, props.hero) !== props.feature.description);
 	};
 
+	const getDescription = () => {
+		let desc = '';
+
+		if (props.feature.type === FeatureType.Ability) {
+			desc = props.feature.data.ability.description;
+		} else {
+			desc = props.feature.description;
+		}
+
+		if (!desc) {
+			desc = FeatureLogic.getFeatureTypeDescription(props.feature.type);
+		}
+
+		if (autoCalc) {
+			desc = AbilityLogic.getTextEffect(desc, props.hero);
+		}
+
+		return desc;
+	};
+
 	try {
 		return (
 			<ErrorBoundary>
 				<div className='feature-config-panel'>
 					<HeaderText
 						extra={
-							autoCalcAvailable() ?
-								<Button
-									type='text'
-									title='Auto-calculate damage, potency, etc'
-									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-								/>
-								: null
+							<>
+								{
+									autoCalcAvailable() ?
+										<Button
+											key='autocalc'
+											type='text'
+											title='Auto-calculate damage, potency, etc'
+											icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+											onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
+										/>
+										: null
+								}
+								{
+									props.onDelete ?
+										<DangerButton
+											key='delete'
+											mode='clear'
+											onConfirm={() => props.onDelete!()}
+										/>
+										: null
+								}
+							</>
 						}
 					>
 						{props.feature.name || 'Unnamed Feature'}
 					</HeaderText>
-					<Markdown text={autoCalc ? AbilityLogic.getTextEffect(props.feature.description, props.hero) : props.feature.description} />
+					<Markdown text={getDescription()} />
 					{getSelection()}
 				</div>
 			</ErrorBoundary>

@@ -657,6 +657,12 @@ export const FeaturePanel = (props: Props) => {
 			}
 		}
 
+		if ((props.feature.type === FeatureType.Malice) || (props.feature.type === FeatureType.MaliceAbility)) {
+			if (props.feature.data.echelon > 1) {
+				tags.push(`Echelon ${props.feature.data.echelon}`);
+			}
+		}
+
 		if (props.feature.type === FeatureType.TaggedFeature) {
 			tags.push(props.feature.data.tag);
 		}
@@ -671,7 +677,7 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	try {
-		if (props.feature.type === FeatureType.Ability) {
+		if ((props.feature.type === FeatureType.Ability) || (props.feature.type === FeatureType.MaliceAbility)) {
 			return (
 				<AbilityPanel
 					ability={props.feature.data.ability}

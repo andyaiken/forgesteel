@@ -24,6 +24,7 @@ export enum FeatureType {
 	Language = 'Language',
 	LanguageChoice = 'Language Choice',
 	Malice = 'Malice',
+	MaliceAbility = 'Malice Ability',
 	MovementMode = 'Movement Mode',
 	Multiple = 'Multiple Features',
 	Package = 'Package',

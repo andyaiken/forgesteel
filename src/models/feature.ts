@@ -182,8 +182,15 @@ export interface FeatureMaliceData extends _FeatureData {
 	cost: number;
 	repeatable?: boolean;
 	sections: (string | PowerRoll)[];
+	echelon: number;
 };
 export type FeatureMalice = FeatureOf<FeatureType.Malice, FeatureMaliceData>;
+
+export interface FeatureMaliceAbilityData extends _FeatureData {
+	ability: Ability;
+	echelon: number;
+};
+export type FeatureMaliceAbility = FeatureOf<FeatureType.MaliceAbility, FeatureMaliceAbilityData>;
 
 export interface FeatureMovementModeData extends _FeatureData {
 	mode: string;
@@ -295,6 +302,7 @@ export type Feature =
 	| FeatureLanguage
 	| FeatureLanguageChoice
 	| FeatureMalice
+	| FeatureMaliceAbility
 	| FeatureMovementMode
 	| FeatureMultiple
 	| FeaturePackage

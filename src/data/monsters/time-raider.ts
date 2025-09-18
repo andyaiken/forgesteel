@@ -54,7 +54,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'time-raider-malice-1',
 				name: 'Gravity Well',

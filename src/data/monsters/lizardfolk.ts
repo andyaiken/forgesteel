@@ -53,7 +53,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'lizardfolk-malice-1',
 				name: 'Net Trap',

@@ -81,7 +81,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 				'Each dwarf acting this turn can automatically climb at full speed while moving. At any point during this movement, they can make a free strike.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'dwarf-malice-3',
 				name: 'Snaring Line',

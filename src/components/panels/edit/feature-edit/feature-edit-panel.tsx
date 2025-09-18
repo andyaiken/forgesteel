@@ -1,6 +1,6 @@
 import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -158,6 +158,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setMinLevel = (value: number) => {
 			const copy = Utils.copy(feature.data) as FeatureClassAbilityData;
 			copy.minLevel = value;
+			setData(copy);
+		};
+
+		const setEchelon = (value: number) => {
+			const copy = Utils.copy(feature.data) as FeatureMaliceData | FeatureMaliceAbilityData;
+			copy.echelon = value;
 			setData(copy);
 		};
 
@@ -1365,6 +1371,8 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureMaliceData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Echelon</HeaderText>
+						<NumberSpin min={1} max={4} value={data.echelon} onChange={setEchelon} />
 						<HeaderText>Cost</HeaderText>
 						<NumberSpin min={1} value={data.cost} onChange={setCost} />
 						<Toggle label='Allow extra' value={data.repeatable === true} onChange={setRepeatable} />
@@ -1448,6 +1456,21 @@ export const FeatureEditPanel = (props: Props) => {
 							</Flex>
 						</Space>
 					</Space>
+				);
+			}
+			case FeatureType.MaliceAbility: {
+				const data = feature.data as FeatureMaliceAbilityData;
+				return (
+					<div style={{ margin: '10px 0' }}>
+						<HeaderText>Echelon</HeaderText>
+						<NumberSpin min={1} max={4} value={data.echelon} onChange={setEchelon} />
+						<Expander title={data.ability.name || 'Unnamed Ability'}>
+							<AbilityEditPanel
+								ability={data.ability}
+								onChange={setAbility}
+							/>
+						</Expander>
+					</div>
 				);
 			}
 			case FeatureType.MovementMode: {
@@ -1774,7 +1797,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>
 				);
-			};
+			}
 			case FeatureType.TaggedFeature: {
 				const data = feature.data as FeatureTaggedFeatureData;
 				return (

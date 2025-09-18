@@ -13,6 +13,7 @@ import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { Format } from '../../../../utils/format';
 import { Hero } from '../../../../models/hero';
 import { Montage } from '../../../../models/montage';
 import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
@@ -333,7 +334,7 @@ export const PlaybookListPage = (props: Props) => {
 								<div className='selection-list elements'>
 									{
 										list.map(a => (
-											<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name} onSelect={() => navigation.goToPlaybook(category, a.id)} />
+											<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name || `Unnamed ${Format.capitalize(category)}`} onSelect={() => navigation.goToPlaybook(category, a.id)} />
 										))
 									}
 									{

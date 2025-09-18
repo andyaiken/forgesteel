@@ -63,7 +63,7 @@ Six individual draconians are presented in this section—not an adventuring par
 				'A draconian acting this turn flaps their wings and creates a mighty gale. Each creature adjacent to the draconian is pushed up to 4 squares, and if they have <code>M < 2</code>, they are knocked prone.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'draconian-malice-2',
 				name: 'Breath Weapon',
@@ -83,7 +83,7 @@ Six individual draconians are presented in this section—not an adventuring par
 				]
 			})
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'draconian-malice-3',
 				name: 'Scaleshatter Burst',

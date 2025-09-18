@@ -2,9 +2,26 @@ import { AbilityUpdateLogic } from './ability-update-logic';
 import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { Monster } from '../../models/monster';
+import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export class MonsterUpdateLogic {
+	static updateMonsterGroup = (monsterGroup: MonsterGroup) => {
+		if (monsterGroup.picture === undefined) {
+			monsterGroup.picture = null;
+		}
+
+		monsterGroup.malice.forEach(f => {
+			if (f.data.echelon === undefined) {
+				f.data.echelon = 1;
+			}
+		});
+
+		if (monsterGroup.addOns === undefined) {
+			monsterGroup.addOns = [];
+		}
+	};
+
 	static updateMonster = (monster: Monster) => {
 		if (monster.picture === undefined) {
 			monster.picture = null;

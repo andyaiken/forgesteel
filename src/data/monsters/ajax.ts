@@ -68,7 +68,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 				'Ajax takes an additional main action on his turn. He can use this feature even if he is dazed.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'ajax-malice-4',
 				name: 'Draw Steel',

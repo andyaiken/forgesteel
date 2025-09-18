@@ -47,7 +47,7 @@ Followers of the gods who impose this punishment spread terrifying myths about m
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'medusa-malice-1',
 				name: 'Weakening Glare',
@@ -74,7 +74,7 @@ Followers of the gods who impose this punishment spread terrifying myths about m
 				'The medusa takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'medusa-malice-3',
 				name: 'Ssstop and Lisssten',

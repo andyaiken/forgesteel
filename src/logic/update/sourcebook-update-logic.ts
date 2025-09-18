@@ -68,14 +68,7 @@ export class SourcebookUpdateLogic {
 		});
 
 		sourcebook.monsterGroups.forEach(group => {
-			if (group.picture === undefined) {
-				group.picture = null;
-			}
-
-			if (group.addOns === undefined) {
-				group.addOns = [];
-			}
-
+			MonsterUpdateLogic.updateMonsterGroup(group);
 			group.monsters.forEach(MonsterUpdateLogic.updateMonster);
 		});
 

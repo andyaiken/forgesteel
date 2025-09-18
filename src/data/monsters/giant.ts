@@ -72,7 +72,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 		}
 	],
 	malice: [
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'giant-malice-1',
 				name: 'Hurl Landscape',

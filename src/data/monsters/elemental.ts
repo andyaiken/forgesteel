@@ -85,7 +85,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 				'An elemental acting this turn cleaves themself into two separate elementals. Each elemental has the same statistics as the original, except that each has half the original’s current Stamina and is one size smaller. Both elementals can then shift up to their speed.'
 			]
 		}),
-		FactoryLogic.feature.createAbility({
+		FactoryLogic.feature.createMaliceAbility({
 			ability: FactoryLogic.createAbility({
 				id: 'elemental-malice-3',
 				name: 'Convocation of Chaos',

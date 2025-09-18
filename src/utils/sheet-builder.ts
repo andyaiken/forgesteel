@@ -1,5 +1,4 @@
 import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet, FollowerSheet, ItemSheet } from '../models/character-sheet';
-import { Feature, FeatureFollower } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityData } from '../data/ability-data';
 import { AbilityKeyword } from '../enums/ability-keyword';
@@ -10,8 +9,10 @@ import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
 import { Complication } from '../models/complication';
 import { ConditionType } from '../enums/condition-type';
+import { CreatureLogic } from '../logic/creature-logic';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { FactoryLogic } from '../logic/factory-logic';
+import { Feature } from '../models/feature';
 import { FeatureLogic } from '../logic/feature-logic';
 import { FeatureType } from '../enums/feature-type';
 import { Follower } from '../models/follower';
@@ -20,6 +21,8 @@ import { FormatLogic } from '../logic/format-logic';
 import { Hero } from '../models/hero';
 import { HeroLogic } from '../logic/hero-logic';
 import { Item } from '../models/item';
+import { Monster } from '../models/monster';
+import { MonsterLogic } from '../logic/monster-logic';
 import { Options } from '../models/options';
 import { SheetFormatter } from './sheet-formatter';
 import { Sourcebook } from '../models/sourcebook';
@@ -30,6 +33,9 @@ export class CharacterSheetBuilder {
 		const sheet: CharacterSheet = {
 			hero: hero,
 			name: hero.name,
+
+			stamina: {},
+			recoveries: {},
 
 			abilities: [],
 			standardAbilities: [],
@@ -116,15 +122,19 @@ export class CharacterSheetBuilder {
 		sheet.disengage = HeroLogic.getDisengage(hero);
 		sheet.stability = HeroLogic.getStability(hero);
 
-		sheet.staminaMax = HeroLogic.getStamina(hero);
-		sheet.staminaCurrent = sheet.staminaMax - hero.state.staminaDamage;
-		sheet.staminaTemp = hero.state.staminaTemp;
-		sheet.windedAt = HeroLogic.getWindedThreshold(hero);
-		sheet.deadAt = HeroLogic.getDeadThreshold(hero);
+		sheet.stamina = {
+			max: HeroLogic.getStamina(hero),
+			current: HeroLogic.getStamina(hero) - hero.state.staminaDamage,
+			temp: hero.state.staminaTemp,
+			windedAt: HeroLogic.getWindedThreshold(hero),
+			deadAt: HeroLogic.getDeadThreshold(hero)
+		};
 
-		sheet.recoveriesMax = HeroLogic.getRecoveries(hero);
-		sheet.recoveryValue = HeroLogic.getRecoveryValue(hero);
-		sheet.recoveriesCurrent = sheet.recoveriesMax - hero.state.recoveriesUsed;
+		sheet.recoveries = {
+			max: HeroLogic.getRecoveries(hero),
+			value: HeroLogic.getRecoveryValue(hero),
+			current: HeroLogic.getRecoveries(hero) - hero.state.recoveriesUsed
+		};
 
 		sheet.surgeDamageAmount = SheetFormatter.addSign(HeroLogic.calculateSurgeDamage(hero));
 		sheet.surgesCurrent = hero.state.surges;
@@ -329,9 +339,9 @@ export class CharacterSheetBuilder {
 				.map(f => f.feature.id));
 		// #endregion
 
-		const followers = allFeatures.filter(f => f.feature.type === FeatureType.Follower)
-			.map(f => f.feature as FeatureFollower);
-		sheet.followers = followers.map(f => this.buildFollowerSheet(f.data.follower));
+		const followers = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Companion ].includes(f.feature.type))
+			.map(f => f.feature);
+		sheet.followers = followers.map(f => this.buildFollowerCompanionSheet(f)).filter(s => !!s);
 
 		coveredFeatureIds = coveredFeatureIds.concat(followers.map(f => f.id));
 
@@ -427,7 +437,8 @@ export class CharacterSheetBuilder {
 	// #endregion
 
 	// #region Ability Sheet
-	static buildAbilitySheet = (ability: Ability, hero: Hero): AbilitySheet => {
+	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster): AbilitySheet => {
+		const isMonster = CreatureLogic.isMonster(creature);
 		const sheet: AbilitySheet = {
 			id: ability.id,
 			abilityType: 'Ability',
@@ -466,6 +477,14 @@ export class CharacterSheetBuilder {
 			sheet.abilityType = 'Performance';
 		}
 
+		if (isMonster) {
+			if (sheet.isSignature) {
+				sheet.abilityType = 'Signature Ability';
+			} else {
+				sheet.abilityType = 'Encounter';
+			}
+		}
+
 		if (sheet.actionType && ability.type.free) {
 			sheet.actionType = `Free ${sheet.actionType}`;
 		}
@@ -473,7 +492,7 @@ export class CharacterSheetBuilder {
 		sheet.qualifiers = ability.type.qualifiers;
 
 		if (ability.distance.length) {
-			sheet.distance = ability.distance.map(d => AbilityLogic.getDistance(d, ability, hero)).join(' | ');
+			sheet.distance = ability.distance.map(d => AbilityLogic.getDistanceCreature(d, ability, creature)).join(', ');
 		}
 
 		const effectSections = ability.sections.filter(s => s.type !== 'roll');
@@ -488,17 +507,17 @@ export class CharacterSheetBuilder {
 			}
 
 			const rollPowerAmount = Math.max(...rollSection.roll.characteristic
-				.map(c => HeroLogic.getCharacteristic(hero, c)));
+				.map(c => CreatureLogic.getCharacteristic(creature, c)));
 
 			const characteristics = SheetFormatter.joinCommasOr(rollSection.roll.characteristic
 				.sort(SheetFormatter.sortCharacteristics)
 				.map(c => Format.capitalize(c.slice(0, 1)))
 			);
-			sheet.rollPower = `${rollPowerAmount} (${characteristics})`;
+			sheet.rollPower = isMonster ? rollPowerAmount.toString() : `${rollPowerAmount} (${characteristics})`;
 
-			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, hero);
-			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, hero);
-			sheet.rollT3Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, hero);
+			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, creature);
+			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, creature);
+			sheet.rollT3Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, creature);
 		}
 
 		return sheet;
@@ -573,13 +592,23 @@ export class CharacterSheetBuilder {
 	// #endregion
 
 	// #region Follower Sheet
-	static buildFollowerSheet = (follower: Follower) => {
+	static buildFollowerCompanionSheet = (feature: Feature) => {
+		if (feature.type === FeatureType.Follower) {
+			return this.buildFollowerSheet(feature.data.follower);
+		} else if (feature.type === FeatureType.Companion && feature.data.selected) {
+			return this.buildRetainerSheet(feature.data.selected);
+		}
+	};
+
+	static buildFollowerSheet = (follower: Follower): FollowerSheet => {
 		// console.log(follower);
-		const followerType = `${follower.type} Follower`;
+		const followerType = `${follower.type}`;
 		const sheet: FollowerSheet = {
 			id: follower.id,
 			name: follower.name,
+			classification: 'Follower',
 			type: followerType,
+			role: followerType,
 
 			might: follower.characteristics.find(c => c.characteristic === Characteristic.Might)?.value || 0,
 			agility: follower.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value || 0,
@@ -587,6 +616,86 @@ export class CharacterSheetBuilder {
 			intuition: follower.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value || 0,
 			presence: follower.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value || 0
 		};
+
+		sheet.skills = follower.skills;
+		sheet.languages = follower.languages;
+
+		return sheet;
+	};
+
+	static buildRetainerSheet = (follower: Monster): FollowerSheet => {
+		const level = MonsterLogic.getMonsterLevel(follower);
+		const retainerType = `Lvl ${level} ${follower.role.type}`;
+		const sheet: FollowerSheet = {
+			id: follower.id,
+			name: MonsterLogic.getMonsterName(follower),
+			classification: 'Retainer',
+			type: retainerType,
+			role: follower.role.type,
+
+			might: follower.characteristics.find(c => c.characteristic === Characteristic.Might)?.value || 0,
+			agility: follower.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value || 0,
+			reason: follower.characteristics.find(c => c.characteristic === Characteristic.Reason)?.value || 0,
+			intuition: follower.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value || 0,
+			presence: follower.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value || 0
+		};
+
+		sheet.keywords = follower.keywords.join(', ');
+
+		const speed = MonsterLogic.getSpeed(follower);
+		sheet.size = FormatLogic.getSize(follower.size);
+		sheet.speed = speed.value;
+		sheet.stability = follower.stability;
+		sheet.freeStrike = MonsterLogic.getFreeStrikeDamage(follower);
+
+		const immunities = MonsterLogic.getDamageModifiers(follower, DamageModifierType.Immunity);
+		sheet.immunity = immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
+		const weaknesses = MonsterLogic.getDamageModifiers(follower, DamageModifierType.Weakness);
+		sheet.weakness = weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
+		sheet.movement = speed.modes.map(m => Format.capitalize(m)).join(', ');
+
+		sheet.stamina = {
+			max: MonsterLogic.getStamina(follower),
+			current: Math.max(MonsterLogic.getStamina(follower) - follower.state.staminaDamage, 0),
+			temp: follower.state.staminaTemp,
+			windedAt: MonsterLogic.getWindedThreshold(follower),
+			deadAt: MonsterLogic.getDeadThreshold(follower)
+		};
+
+		sheet.recoveries = {
+			max: MonsterLogic.getRecoveries(follower),
+			value: MonsterLogic.getRecoveryValue(follower),
+			current: MonsterLogic.getRecoveries(follower) - follower.state.recoveriesUsed
+		};
+
+		sheet.features = MonsterLogic.getFeatures(follower)
+			.filter(f => [ FeatureType.Text, FeatureType.AddOn ].includes(f.type));
+
+		const abilities = MonsterLogic.getFeatures(follower)
+			.filter(f => f.type === FeatureType.Ability)
+			.map(f => f.data.ability);
+		sheet.abilities = abilities.map(a => this.buildAbilitySheet(a, follower));
+
+		const advancement = [];
+		if (level < 4 && follower.retainer?.level4?.type === FeatureType.Ability) {
+			advancement.push({
+				level: 4,
+				ability: this.buildAbilitySheet(follower.retainer.level4.data.ability, follower)
+			});
+		}
+		if (level < 7 && follower.retainer?.level7?.type === FeatureType.Ability) {
+			advancement.push({
+				level: 7,
+				ability: this.buildAbilitySheet(follower.retainer.level7.data.ability, follower)
+			});
+		}
+		if (level < 10 && follower.retainer?.level10?.type === FeatureType.Ability) {
+			advancement.push({
+				level: 10,
+				ability: this.buildAbilitySheet(follower.retainer.level10.data.ability, follower)
+			});
+		}
+		sheet.advancement = advancement;
 
 		return sheet;
 	};

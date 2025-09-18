@@ -205,4 +205,14 @@ export class Utils {
 	static isNullOrEmpty = (str: string | undefined) => {
 		return (str === null || str === undefined || str.trim() === '');
 	};
+
+	static valueOrDefault = (value: string | number | undefined, defaultValue: string): string => {
+		let result = defaultValue;
+
+		if (value && !Utils.isNullOrEmpty(value.toString())) {
+			result = value.toString();
+		}
+
+		return result;
+	};
 }

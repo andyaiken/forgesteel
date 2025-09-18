@@ -1,7 +1,6 @@
 import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
 
 import { Ability } from '../../../../models/ability';
-import { AbilityDistanceType } from '../../../../enums/abiity-distance-type';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { DamageModifier } from '../../../../models/damage-modifier';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
@@ -17,18 +16,9 @@ import { SkillList } from '../../../../enums/skill-list';
 
 import './feature-component.scss';
 
-import areaIcon from '../../../../assets/icons/area-icon.svg';
-import burstIcon from '../../../../assets/icons/burst-icon.svg';
-import meleeIcon from '../../../../assets/icons/sword.svg';
-import meleeRangedIcon from '../../../../assets/icons/melee ranged.svg';
-import rangedIcon from '../../../../assets/icons/ranged.svg';
-import selfIcon from '../../../../assets/icons/self.svg';
-import starIcon from '../../../../assets/icons/star.svg';
-import triggerIcon from '../../../../assets/icons/trigger-solid.svg';
-
 interface Props {
 	feature: Feature;
-	hero: Hero,
+	hero?: Hero,
 	additionalClasses?: string[];
 }
 
@@ -43,7 +33,7 @@ const BasicFeatureComponent = (feature: Feature) => {
 	);
 };
 
-const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeatureItemChoice, hero: Hero) => {
+const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice | FeatureItemChoice, hero?: Hero) => {
 	let selectedOptions;
 	if (feature.data.selected.length > 0) {
 		selectedOptions = feature.data.selected.map(s => typeof s === 'string' ? s : s.name).map(s => {
@@ -54,7 +44,11 @@ const ChoiceFeatureComponent = (feature: FeatureChoice | FeatureLanguageChoice |
 			<div className='feature-iteration no-selection' key='unselected'>Unselected</div>
 		];
 	}
-	const count = feature.data.count === 'ancestry' ? HeroLogic.getAncestryPoints(hero) : feature.data.count;
+	let ancestryPts = 0;
+	if (hero) {
+		ancestryPts = HeroLogic.getAncestryPoints(hero);
+	}
+	const count = feature.data.count === 'ancestry' ? ancestryPts : feature.data.count;
 	return (
 		<>
 			<div className='feature-line'>
@@ -121,7 +115,7 @@ const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice | FeaturePerk) 
 	);
 };
 
-const BonusFeatureComponent = (feature: FeatureBonus, hero: Hero) => {
+const BonusFeatureComponent = (feature: FeatureBonus, hero?: Hero) => {
 	const value = hero ? HeroLogic.calculateModifierValue(hero, feature.data) : feature.data.value;
 	return (
 		<>
@@ -151,35 +145,7 @@ const TextFeatureComponent = (feature: FeatureText | FeaturePackage | FeaturePac
 };
 
 const AbilityFeatureComponent = (feature: FeatureAbility) => {
-	let abilityIcon = starIcon;
-	// Melee / Ranged
-	if (feature.data.ability.keywords.includes('Melee')) {
-		if (feature.data.ability.keywords.includes('Ranged')) {
-			abilityIcon = meleeRangedIcon;
-		} else {
-			abilityIcon = meleeIcon;
-		}
-	} else if (feature.data.ability.keywords.includes('Ranged')) {
-		abilityIcon = rangedIcon;
-	}
-
-	// Targets
-	if (feature.data.ability.target.toLowerCase() === 'self') {
-		abilityIcon = selfIcon;
-	}
-
-	// Other Distances
-	if (feature.data.ability.distance.find(d => [ AbilityDistanceType.Aura, AbilityDistanceType.Burst ].includes(d.type))) {
-		abilityIcon = burstIcon;
-	} else if (feature.data.ability.distance.find(d => [ AbilityDistanceType.Line, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].includes(d.type))) {
-		abilityIcon = areaIcon;
-	}
-
-	// Ability Type
-	const usage = feature.data.ability.type.usage;
-	if (usage === AbilityUsage.Trigger) {
-		abilityIcon = triggerIcon;
-	}
+	const abilityIcon = SheetFormatter.getAbilityIcon(feature.data.ability);
 
 	const getAbilityType = (ability: Ability) => {
 		let type = '';
@@ -240,8 +206,8 @@ const ClassAbilityFeatureComponent = (feature: FeatureClassAbility) => {
 	);
 };
 
-const AbilityModifierComponent = (feature: FeatureAbilityDamage | FeatureAbilityDistance, hero: Hero) => {
-	const value = HeroLogic.calculateModifierValue(hero, feature.data);
+const AbilityModifierComponent = (feature: FeatureAbilityDamage | FeatureAbilityDistance, hero?: Hero) => {
+	const value = hero ? HeroLogic.calculateModifierValue(hero, feature.data) : feature.data.value;
 	const type = feature.type === FeatureType.AbilityDistance ? 'distance' : 'damage';
 	return (
 		<div className='feature-line'>
@@ -250,7 +216,7 @@ const AbilityModifierComponent = (feature: FeatureAbilityDamage | FeatureAbility
 	);
 };
 
-const DamageModifierComponent = (feature: FeatureDamageModifier, hero: Hero) => {
+const DamageModifierComponent = (feature: FeatureDamageModifier, hero?: Hero) => {
 	const modifiersMap = feature.data.modifiers.reduce((map, m) => {
 		const modifiers = map.get(m.type) || [];
 		modifiers.push(m);
@@ -262,7 +228,7 @@ const DamageModifierComponent = (feature: FeatureDamageModifier, hero: Hero) => 
 		const typeMods = modifiersMap.get(type)?.map(m => {
 			return (
 				<div className={`feature-iteration damage-type ${m.damageType.toLocaleLowerCase()}`} key={`${m.type}-${m.damageType}`}>
-					{m.damageType} {HeroLogic.calculateModifierValue(hero, m)}
+					{m.damageType} {hero ? HeroLogic.calculateModifierValue(hero, m) : m.value}
 				</div>
 			);
 		});

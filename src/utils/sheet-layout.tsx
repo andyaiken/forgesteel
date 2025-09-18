@@ -50,7 +50,7 @@ export class SheetLayout {
 		};
 	};
 
-	static getFinalCardsLayout = (options: Options): CardPageLayout => {
+	static getFollowerCardsLayout = (options: Options): CardPageLayout => {
 		// Get root font size (1rem)
 		const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 		const charWidth = rootFontSize * 0.553;
@@ -135,6 +135,8 @@ export class SheetLayout {
 			}
 			return refCards;
 		}
+		if (availableLinesY > 0)
+			console.warn('Got through all cards?', extraCards);
 		return refCards;
 	};
 
@@ -212,7 +214,7 @@ export class SheetLayout {
 				// console.log('overall spaceY:', spaceY, '/', layout.linesY, ' current rowY:', rowY);
 				refCards = SheetLayout.getFillerCards(spacesToFill, spaceY, rowY, extraCards, layout);
 			}
-			const abilityPageClasses = [ 'abilities', 'page' ];
+			const abilityPageClasses = [ 'abilities', 'page', `row-cards-${layout.perRow}` ];
 			return (
 				<Fragment key={`abilities-${i}`}>
 					<hr className='dashed' />
@@ -243,7 +245,7 @@ export class SheetLayout {
 			pages.push(
 				<Fragment key={`extra-${++i}`}>
 					<hr className='dashed' />
-					<div className='extra-cards page' id={SheetFormatter.getPageId(character.hero.id, `extra-${i}`)}>
+					<div className={`extra-cards page row-cards-${layout.perRow}`} id={SheetFormatter.getPageId(character.hero.id, `extra-${i}`)}>
 						{cards}
 					</div>
 				</Fragment>

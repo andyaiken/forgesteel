@@ -393,6 +393,23 @@ export class MonsterLogic {
 		return str;
 	};
 
+	static getWindedThreshold = (monster: Monster) => {
+		return Math.floor(MonsterLogic.getStamina(monster) / 2);
+	};
+
+	static getDeadThreshold = (monster: Monster) => {
+		return -MonsterLogic.getWindedThreshold(monster);
+	};
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	static getRecoveries = (_monster: Monster) => {
+		return 6; // Monsters, p. 351
+	};
+
+	static getRecoveryValue = (monster: Monster) => {
+		return Math.floor(MonsterLogic.getStamina(monster) / 3);
+	};
+
 	static resetState = (state: MonsterState) => {
 		state.staminaDamage = 0;
 		state.staminaTemp = 0;

@@ -205,7 +205,11 @@ export const HeroSheetPage = (props: Props) => {
 	};
 
 	const getFinalCards = (extraCards: ExtraCards) => {
-		const layoutEnd = SheetLayout.getFinalCardsLayout(props.options);
+		return SheetLayout.getRequiredCardPages(extraCards, character, layout);
+	};
+
+	const getFollowerCards = (extraCards: ExtraCards) => {
+		const layoutEnd = SheetLayout.getFollowerCardsLayout(props.options);
 
 		// Recalculate card heights
 		extraCards.required.filter(card => !card.shown).forEach(card => {
@@ -236,9 +240,9 @@ export const HeroSheetPage = (props: Props) => {
 		if (character.followers.length) {
 			character.followers.forEach(fs => {
 				extraCards.required.push({
-					element: <FollowerCard follower={fs} key={fs.id} />,
+					element: <FollowerCard follower={fs} options={props.options} key={fs.id} />,
 					width: 1,
-					height: 10,
+					height: SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen),
 					shown: false
 				});
 			});
@@ -251,7 +255,7 @@ export const HeroSheetPage = (props: Props) => {
 		const extraCards = populateExtraCards(character);
 		return (
 			<ErrorBoundary>
-				<main id='hero-sheet-page'>
+				<main id='hero-sheet-page' className='classic-sheet'>
 					<div className={sheetClasses.join(' ')} id={hero.id}>
 						<div className='page page-1' id={SheetFormatter.getPageId(hero.id, 'main')}>
 							<HeroHeaderCard
@@ -314,6 +318,7 @@ export const HeroSheetPage = (props: Props) => {
 						</div>
 						{addAbilityPages(character, extraCards)}
 						{getFinalCards(extraCards)}
+						{getFollowerCards(extraCards)}
 					</div>
 				</main>
 			</ErrorBoundary>

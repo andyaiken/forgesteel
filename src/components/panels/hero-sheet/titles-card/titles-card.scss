@@ -1,13 +1,8 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
-.hero-sheet .titles.card {
-    // --l1: round(up, calc(1rem + 4px), 1px);
-    // --ld: calc(var(--l1) + 1px);
-    // --l2: round(up, calc(2 * var(--l1)), 1px);
-    // background-image: linear-gradient(180deg, transparent var(--l1), #ccc var(--l1), #ccc var(--ld), #eee var(--ld), #eee var(--l2), #ccc var(--l2));
-    // background-size: 100% calc(var(--l2) + 1px);
-    // background-position: center top;
-    // background-repeat: repeat-y;
+#hero-sheet-page .hero-sheet .titles.card {
+    // @include common.striped-card;
+
     display: grid;
     grid-template-rows: min-content 1fr;
     place-items: stretch;

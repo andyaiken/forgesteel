@@ -1,13 +1,7 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
-.hero-sheet .ability.card {
-    // --l1: round(up, calc(1rem + 4px), 1px);
-    // --ld: calc(var(--l1) + 1px);
-    // --l2: round(up, calc(2 * var(--l1)), 1px);
-    // background-image: linear-gradient(180deg, transparent var(--l1), #ccc var(--l1), #ccc var(--ld), #eee var(--ld), #eee var(--l2), #ccc var(--l2));
-    // background-size: 100% calc(var(--l2) + 1px);
-    // background-position: center top;
-    // background-repeat: repeat-y;
+#hero-sheet-page .hero-sheet .ability.card {
+    // @include common.striped-card;
 
     padding: 10px;
     display:grid;
@@ -23,7 +17,7 @@
         @include common.beveled-fancy-curve(10px, 2px, common.$color-light);
         margin-bottom: 0;
 
-        :last-child {
+        &:last-child {
             margin-bottom: 0;
         }
     }
@@ -221,7 +215,7 @@
     }
 }
 
-.hero-sheet .ability.card {
+#hero-sheet-page .hero-sheet .ability.card {
     &.no-action h2 {
         @include common.bottom-border-fancy(common.$color-medium);
     }
@@ -237,7 +231,7 @@
     }
 }
 
-.hero-sheet.color .ability.card {
+#hero-sheet-page .hero-sheet.color .ability.card {
     @mixin color-ability-card($color) {
         section.bordered {
             @include common.beveled(10px, 2px, $color);
@@ -247,7 +241,7 @@
                 color: $color;
             }
             h3 {
-                font-weight: 450 !important;
+                font-weight: 450;
             }
         }
     }

@@ -1,6 +1,6 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
 
-import { AbilitySheet, ItemSheet } from '../models/character-sheet';
+import { AbilitySheet, FollowerSheet, ItemSheet } from '../models/character-sheet';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
@@ -8,12 +8,21 @@ import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Format } from './format';
 import { Hero } from '../models/hero';
+import { Monster } from '../models/monster';
 import { Title } from '../models/title';
 import { Utils } from './utils';
 
+import areaIcon from '../assets/icons/area-icon.svg';
+import burstIcon from '../assets/icons/burst-icon.svg';
+import meleeIcon from '../assets/icons/sword.svg';
+import meleeRangedIcon from '../assets/icons/melee ranged.svg';
+import rangedIcon from '../assets/icons/ranged.svg';
 import rollT1Icon from '../assets/icons/power-roll-t1.svg';
 import rollT2Icon from '../assets/icons/power-roll-t2.svg';
 import rollT3Icon from '../assets/icons/power-roll-t3.svg';
+import selfIcon from '../assets/icons/self.svg';
+import starIcon from '../assets/icons/star.svg';
+import triggerIcon from '../assets/icons/trigger-solid.svg';
 
 export class SheetFormatter {
 	static getPageId = (heroId: string, key: string) => {
@@ -243,6 +252,50 @@ export class SheetFormatter {
 		return +size.toFixed(1);
 	};
 
+	static calculateFollowerSize = (follower: FollowerSheet, lineWidth: number): number => {
+		let size = 0;
+		if (follower.classification === 'Follower') {
+			size = 6; // name, characteristics
+			size += this.countLines(`Skills: ${follower.skills?.join(', ')}`, lineWidth);
+			size += this.countLines(`Languages: ${follower.languages?.join(', ')}`, lineWidth);
+			size += 0.5;
+		} else {
+			size = 23; // name, stats, characteristics, stamina
+			follower.abilities?.forEach(ability => {
+				size += this.calculateAbilityComponentSize(ability, lineWidth);
+			});
+			follower.features?.forEach(f => {
+				size += this.calculateFeatureSize(f, lineWidth, false);
+			});
+			follower.advancement?.forEach(advancement => {
+				size += 1 + this.calculateAbilityComponentSize(advancement.ability, lineWidth);
+			});
+		}
+		return size;
+	};
+
+	// COMPACT Ability display - e.g. for Retainers & Monsters
+	static calculateAbilityComponentSize = (ability: AbilitySheet, lineWidth: number): number => {
+		let size = 2; // name, usage
+		size += this.countLines(`${ability.keywords} ${ability.actionType}`, lineWidth);
+		size += this.countLines(`${ability.distance} ${ability.target}`, lineWidth);
+
+		const rollLineLen = Math.ceil(lineWidth - 10); // account for icons
+		size += this.countLines(ability.rollT1Effect, rollLineLen);
+		size += this.countLines(ability.rollT2Effect, rollLineLen);
+		size += this.countLines(ability.rollT3Effect, rollLineLen);
+
+		if (ability.trigger)
+			size += this.countLines(ability.trigger, lineWidth);
+
+		if (ability.effect) {
+			const effectSize = this.countLines(ability.effect, lineWidth);
+			size += effectSize;
+		}
+
+		return size;
+	};
+
 	static featureTypeOrder: FeatureType[] = [
 		FeatureType.Text,
 		FeatureType.Package,
@@ -425,13 +478,13 @@ export class SheetFormatter {
 		return result;
 	};
 
-	static formatAbilityTier = (value: string, tier: number, ability: Ability, hero: Hero) => {
+	static formatAbilityTier = (value: string, tier: number, ability: Ability, creature: Hero | Monster) => {
 		if (ability.distance.length > 1) {
 			const distanceTypes = ability.distance.map(d => d.type);
 			const values = distanceTypes.map(d => {
 				return {
 					type: d,
-					effect: SheetFormatter.cleanupText(AbilityLogic.getTierEffect(value, tier, ability, d, hero)).split('; ')
+					effect: SheetFormatter.cleanupText(AbilityLogic.getTierEffectCreature(value, tier, ability, d, creature)).split('; ')
 				};
 			});
 			const combined: string[] = [];
@@ -446,8 +499,7 @@ export class SheetFormatter {
 			}
 			return combined.join('; ');
 		}
-		return SheetFormatter.cleanupText(
-			AbilityLogic.getTierEffect(value, tier, ability, undefined, hero));
+		return SheetFormatter.cleanupText(AbilityLogic.getTierEffectCreature(value, tier, ability, undefined, creature));
 	};
 
 	static abilitySections = (sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[]): string => {
@@ -475,5 +527,47 @@ export class SheetFormatter {
 				break;
 		}
 		return text;
+	};
+
+	static getAbilityIcon = (ability: Ability | AbilitySheet) => {
+		let abilityIcon = starIcon;
+		// Melee / Ranged
+		if (ability.keywords?.includes('Melee')) {
+			if (ability.keywords.includes('Ranged')) {
+				abilityIcon = meleeRangedIcon;
+			} else {
+				abilityIcon = meleeIcon;
+			}
+		} else if (ability.keywords?.includes('Ranged')) {
+			abilityIcon = rangedIcon;
+		}
+
+		// Targets
+		if (ability.target?.toLowerCase() === 'self') {
+			abilityIcon = selfIcon;
+		}
+
+		// Other Distances
+		let distance, type;
+		if ('repeatable' in ability) { // Ability
+			distance = ability.distance.map(ad => ad.type.toString()).join(' ');
+			type = ability.type.usage.toString();
+		} else {
+			distance = ability.distance;
+			type = ability.actionType;
+		}
+
+		if (distance?.includes('Aura') || distance?.includes('Burst')) {
+			abilityIcon = burstIcon;
+		} else if (distance?.includes('Line') || distance?.includes('Cube') || distance?.includes('Wall')) {
+			abilityIcon = areaIcon;
+		}
+
+		// Ability Type
+		if (type?.includes('Trigger')) {
+			abilityIcon = triggerIcon;
+		}
+
+		return abilityIcon;
 	};
 }

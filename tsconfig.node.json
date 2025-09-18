@@ -19,7 +19,5 @@
   "include": [
     "vite.config.ts",
     "vite-plugin-manifest.ts",
-    "public/sw.ts",
-    "public/sw.d.ts"
   ]
 }

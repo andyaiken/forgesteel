@@ -1233,7 +1233,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 		}),
 		FactoryLogic.createMonster({
 			id: 'wardog-2nd-5',
-			name: 'War Dog Doomtheif',
+			name: 'War Dog Doomthief',
 			level: 5,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Defender),
 			keywords: [ 'Humanoid', 'Soulless', 'War Dog' ],

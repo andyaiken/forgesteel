@@ -12,6 +12,10 @@ export class MonsterUpdateLogic {
 		}
 
 		monsterGroup.malice.forEach(f => {
+			if (f.type.toString() === 'Ability') {
+				f.type = FeatureType.MaliceAbility;
+			}
+
 			if (f.data.echelon === undefined) {
 				f.data.echelon = 1;
 			}

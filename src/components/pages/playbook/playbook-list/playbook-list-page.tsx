@@ -1,6 +1,6 @@
 import { Adventure, AdventurePackage } from '../../../../models/adventure';
 import { Button, Input, Popover } from 'antd';
-import { DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
+import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
 import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
@@ -61,6 +61,7 @@ export const PlaybookListPage = (props: Props) => {
 	const [ previousCategory, setPreviousCategory ] = useState<PlaybookElementKind | undefined>(kind);
 	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 
 	if (kind !== previousCategory) {
 		setCategory(kind || 'adventure');
@@ -266,8 +267,56 @@ export const PlaybookListPage = (props: Props) => {
 		);
 	};
 
-	try {
+	const getSidebar = () => {
 		const list = getList(true);
+
+		return (
+			<div className={showSidebar ? 'selection-sidebar' : 'selection-sidebar closed'}>
+				<div className='selection-toolbar'>
+					{
+						showSidebar ?
+							<Input
+								name='search'
+								placeholder='Search'
+								allowClear={true}
+								value={searchTerm}
+								suffix={<SearchOutlined />}
+								onChange={e => setSearchTerm(e.target.value)}
+							/>
+							: null
+					}
+					<Button icon={showSidebar ? <DoubleLeftOutlined /> : <DoubleRightOutlined />} style={{ flex: '0 0 auto' }} onClick={() => setShowSidebar(!showSidebar)} />
+				</div>
+				{
+					showSidebar ?
+						<div className='selection-content'>
+							<div className='selection-list categories'>
+								<SelectorRow selected={category === 'adventure'} content='Adventures' info={getAdventures().length} onSelect={() => navigation.goToPlaybook('adventure')} />
+								<SelectorRow selected={category === 'encounter'} content='Encounters' info={getEncounters(true).length} onSelect={() => navigation.goToPlaybook('encounter')} />
+								<SelectorRow selected={category === 'montage'} content='Montage' info={getMontages(true).length} onSelect={() => navigation.goToPlaybook('montage')} />
+								<SelectorRow selected={category === 'negotiation'} content='Negotiations' info={getNegotiations(true).length} onSelect={() => navigation.goToPlaybook('negotiation')} />
+								<SelectorRow selected={category === 'tactical-map'} content='Tactical Maps' info={getTacticalMaps(true).length} onSelect={() => navigation.goToPlaybook('tactical-map')} />
+							</div>
+							<div className='selection-list elements'>
+								{
+									list.map(a => (
+										<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name || `Unnamed ${Format.capitalize(category)}`} onSelect={() => navigation.goToPlaybook(category, a.id)} />
+									))
+								}
+								{
+									list.length === 0 ?
+										<Empty />
+										: null
+								}
+							</div>
+						</div>
+						: null
+				}
+			</div>
+		);
+	};
+
+	try {
 		const selected = getList(false).find(item => item.id == selectedID);
 		const getPanel = getElementPanel();
 
@@ -312,39 +361,7 @@ export const PlaybookListPage = (props: Props) => {
 						}
 					</AppHeader>
 					<div className='playbook-list-page-content'>
-						<div className='selection-sidebar'>
-							<div className='selection-toolbar'>
-								<Input
-									name='search'
-									placeholder='Search'
-									allowClear={true}
-									value={searchTerm}
-									suffix={<SearchOutlined />}
-									onChange={e => setSearchTerm(e.target.value)}
-								/>
-							</div>
-							<div className='selection-content'>
-								<div className='selection-list categories'>
-									<SelectorRow selected={category === 'adventure'} content='Adventures' info={getAdventures().length} onSelect={() => navigation.goToPlaybook('adventure')} />
-									<SelectorRow selected={category === 'encounter'} content='Encounters' info={getEncounters(true).length} onSelect={() => navigation.goToPlaybook('encounter')} />
-									<SelectorRow selected={category === 'montage'} content='Montage' info={getMontages(true).length} onSelect={() => navigation.goToPlaybook('montage')} />
-									<SelectorRow selected={category === 'negotiation'} content='Negotiations' info={getNegotiations(true).length} onSelect={() => navigation.goToPlaybook('negotiation')} />
-									<SelectorRow selected={category === 'tactical-map'} content='Tactical Maps' info={getTacticalMaps(true).length} onSelect={() => navigation.goToPlaybook('tactical-map')} />
-								</div>
-								<div className='selection-list elements'>
-									{
-										list.map(a => (
-											<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name || `Unnamed ${Format.capitalize(category)}`} onSelect={() => navigation.goToPlaybook(category, a.id)} />
-										))
-									}
-									{
-										list.length === 0 ?
-											<Empty />
-											: null
-									}
-								</div>
-							</div>
-						</div>
+						{getSidebar()}
 						<div className='element-selected'>
 							{
 								selected ?

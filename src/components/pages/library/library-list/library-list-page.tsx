@@ -1,5 +1,5 @@
 import { Button, Divider, Input, Popover, Select, Space, Upload } from 'antd';
-import { CopyOutlined, DownOutlined, DownloadOutlined, EditOutlined, PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
+import { CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, DownloadOutlined, EditOutlined, PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
 import { Ancestry } from '../../../../models/ancestry';
@@ -80,6 +80,7 @@ export const LibraryListPage = (props: Props) => {
 	const [ previousCategory, setPreviousCategory ] = useState<SourcebookElementKind | undefined>(kind);
 	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 
 	if (kind !== previousCategory) {
@@ -410,59 +411,67 @@ export const LibraryListPage = (props: Props) => {
 		return getPanel;
 	};
 
-	const getSourcebook = (id: string) => {
+	const getSourcebook = (element: Element) => {
 		let sourcebook: Sourcebook | undefined;
 
 		switch (category) {
 			case 'ancestry':
-				sourcebook = props.sourcebooks.find(sb => sb.ancestries.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.ancestries.some(a => a.id === element.id));
 				break;
 			case 'career':
-				sourcebook = props.sourcebooks.find(sb => sb.careers.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.careers.some(a => a.id === element.id));
 				break;
 			case 'class':
-				sourcebook = props.sourcebooks.find(sb => sb.classes.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.classes.some(a => a.id === element.id));
 				break;
 			case 'complication':
-				sourcebook = props.sourcebooks.find(sb => sb.complications.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.complications.some(a => a.id === element.id));
 				break;
 			case 'culture':
-				sourcebook = props.sourcebooks.find(sb => sb.cultures.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.cultures.some(a => a.id === element.id));
 				break;
 			case 'domain':
-				sourcebook = props.sourcebooks.find(sb => sb.domains.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.domains.some(a => a.id === element.id));
 				break;
 			case 'imbuement':
-				sourcebook = props.sourcebooks.find(sb => sb.imbuements.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.imbuements.some(a => a.id === element.id));
 				break;
 			case 'item':
-				sourcebook = props.sourcebooks.find(sb => sb.items.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.items.some(a => a.id === element.id));
 				break;
 			case 'kit':
-				sourcebook = props.sourcebooks.find(sb => sb.kits.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.kits.some(a => a.id === element.id));
 				break;
 			case 'monster-group':
-				sourcebook = props.sourcebooks.find(sb => sb.monsterGroups.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.monsterGroups.some(a => a.id === element.id));
 				break;
 			case 'perk':
-				sourcebook = props.sourcebooks.find(sb => sb.perks.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.perks.some(a => a.id === element.id));
 				break;
 			case 'subclass':
-				sourcebook = props.sourcebooks.find(sb => sb.subclasses.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.subclasses.some(a => a.id === element.id));
 				break;
 			case 'terrain':
-				sourcebook = props.sourcebooks.find(sb => sb.terrain.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.terrain.some(a => a.id === element.id));
 				break;
 			case 'title':
-				sourcebook = props.sourcebooks.find(sb => sb.titles.some(a => a.id === id));
+				sourcebook = props.sourcebooks.find(sb => sb.titles.some(a => a.id === element.id));
 				break;
 		}
 
 		return sourcebook || null;
 	};
 
-	const getTags = (id: string) => {
-		const sb = getSourcebook(id);
+	const getInfo = (element: Element) => {
+		if (category === 'monster-group') {
+			return (element as MonsterGroup).monsters.length;
+		}
+
+		return undefined;
+	};
+
+	const getTags = (element: Element) => {
+		const sb = getSourcebook(element);
 		if (sb && sb.id !== SourcebookData.core.id) {
 			return [ sb.name ];
 		}
@@ -473,9 +482,12 @@ export const LibraryListPage = (props: Props) => {
 	const getElementToolbar = () => {
 		const list = getList();
 		const element = list.find(item => item.id == selectedID);
-		const sourcebook = getSourcebook(selectedID || '');
+		if (!element) {
+			return null;
+		}
 
-		if (!element || !sourcebook) {
+		const sourcebook = getSourcebook(element);
+		if (!sourcebook) {
 			return null;
 		}
 
@@ -570,9 +582,73 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
-	try {
+	const getSidebar = () => {
 		const list = getList();
-		const selected = list.find(item => item.id == selectedID);
+
+		return (
+			<div className={showSidebar ? 'selection-sidebar' : 'selection-sidebar closed'}>
+				<div className='selection-toolbar'>
+					{
+						showSidebar ?
+							<Input
+								name='search'
+								placeholder='Search'
+								allowClear={true}
+								value={searchTerm}
+								suffix={<SearchOutlined />}
+								onChange={e => setSearchTerm(e.target.value)}
+							/>
+							: null
+					}
+					{
+						showSidebar ?
+							<Button onClick={props.showSourcebooks}>
+								Sourcebooks
+							</Button>
+							: null
+					}
+					<Button icon={showSidebar ? <DoubleLeftOutlined /> : <DoubleRightOutlined />} style={{ flex: '0 0 auto' }} onClick={() => setShowSidebar(!showSidebar)} />
+				</div>
+				{
+					showSidebar ?
+						<div className='selection-content'>
+							<div className='selection-list categories'>
+								<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => navigation.goToLibrary('ancestry')} />
+								<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => navigation.goToLibrary('career')} />
+								<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => navigation.goToLibrary('class')} />
+								<SelectorRow selected={category === 'complication'} content='Complications' info={getComplications().length} onSelect={() => navigation.goToLibrary('complication')} />
+								<SelectorRow selected={category === 'culture'} content='Cultures' info={getCultures().length} onSelect={() => navigation.goToLibrary('culture')} />
+								<SelectorRow selected={category === 'domain'} content='Domains' info={getDomains().length} onSelect={() => navigation.goToLibrary('domain')} />
+								<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
+								<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
+								<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
+								<SelectorRow selected={category === 'monster-group'} content='Monster Groups' info={getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
+								<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
+								<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
+								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
+								<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
+							</div>
+							<div className='selection-list elements'>
+								{
+									list.map(a => (
+										<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name || `Unnamed ${Format.capitalize(category)}`} info={getInfo(a)} tags={getTags(a)} onSelect={() => navigation.goToLibrary(category, a.id)} />
+									))
+								}
+								{
+									list.length === 0 ?
+										<Empty />
+										: null
+								}
+							</div>
+						</div>
+						: null
+				}
+			</div>
+		);
+	};
+
+	try {
+		const selected = getList().find(item => item.id == selectedID);
 		const getPanel = getElementPanel();
 
 		const sourcebookOptions = props.sourcebooks
@@ -642,51 +718,7 @@ export const LibraryListPage = (props: Props) => {
 						{getElementToolbar()}
 					</AppHeader>
 					<div className='library-list-page-content'>
-						<div className='selection-sidebar'>
-							<div className='selection-toolbar'>
-								<Input
-									name='search'
-									placeholder='Search'
-									allowClear={true}
-									value={searchTerm}
-									suffix={<SearchOutlined />}
-									onChange={e => setSearchTerm(e.target.value)}
-								/>
-								<Button onClick={props.showSourcebooks}>
-									Sourcebooks
-								</Button>
-							</div>
-							<div className='selection-content'>
-								<div className='selection-list categories'>
-									<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => navigation.goToLibrary('ancestry')} />
-									<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => navigation.goToLibrary('career')} />
-									<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => navigation.goToLibrary('class')} />
-									<SelectorRow selected={category === 'complication'} content='Complications' info={getComplications().length} onSelect={() => navigation.goToLibrary('complication')} />
-									<SelectorRow selected={category === 'culture'} content='Cultures' info={getCultures().length} onSelect={() => navigation.goToLibrary('culture')} />
-									<SelectorRow selected={category === 'domain'} content='Domains' info={getDomains().length} onSelect={() => navigation.goToLibrary('domain')} />
-									<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
-									<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
-									<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
-									<SelectorRow selected={category === 'monster-group'} content='Monster Groups' info={getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
-									<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
-									<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
-									<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
-									<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
-								</div>
-								<div className='selection-list elements'>
-									{
-										list.map(a => (
-											<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name || `Unnamed ${Format.capitalize(category)}`} tags={getTags(a.id)} onSelect={() => navigation.goToLibrary(category, a.id)} />
-										))
-									}
-									{
-										list.length === 0 ?
-											<Empty />
-											: null
-									}
-								</div>
-							</div>
-						</div>
+						{getSidebar()}
 						<div className='element-selected'>
 							{
 								selected ?

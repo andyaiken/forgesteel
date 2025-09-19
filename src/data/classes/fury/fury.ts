@@ -437,7 +437,7 @@ Primordial power remains until you spend it.`
 			name: 'Tide of Death',
 			description: 'Teach them the folly of lining up for you.',
 			type: FactoryLogic.type.createMain(),
-			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self; see below',
 			cost: 3,

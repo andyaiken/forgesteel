@@ -1119,7 +1119,6 @@ export const dwarfFury = {
 				},
 				keywords: [
 					'Melee',
-					'Strike',
 					'Weapon'
 				],
 				distance: [

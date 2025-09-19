@@ -462,6 +462,10 @@ export class HeroUpdateLogic {
 
 					const selectedIDs = oFeature.data.selected.map(p => p.id);
 					feature.data.selected = SourcebookLogic.getTitles(sourcebooks).filter(t => selectedIDs.includes(t.id));
+					feature.data.selected.forEach(title => {
+						const originalTitle = oFeature.data.selected.find(t => t.id === title.id);
+						title.selectedFeatureID = originalTitle ? originalTitle.selectedFeatureID : '';
+					});
 					break;
 				}
 			};

@@ -50,15 +50,14 @@ export const HeroSheetPage = (props: Props) => {
 		() => {
 			const classes = [
 				'hero-sheet',
-				props.options.classicSheetPageSize.toLowerCase(),
-				props.options.pageOrientation
+				props.options.classicSheetPageSize.toLowerCase()
 			];
 			if (props.options.colorSheet) {
 				classes.push('color');
 			}
 			return classes;
 		},
-		[ props.options.classicSheetPageSize, props.options.pageOrientation, props.options.colorSheet ]
+		[ props.options.classicSheetPageSize, props.options.colorSheet ]
 	);
 
 	const layout = useMemo(
@@ -274,7 +273,7 @@ export const HeroSheetPage = (props: Props) => {
 			<ErrorBoundary>
 				<main id='hero-sheet-page' className='classic-sheet'>
 					<div className={sheetClasses.join(' ')} id={hero.id}>
-						<div className='page page-1' id={SheetFormatter.getPageId(hero.id, 'main')}>
+						<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId(hero.id, 'main')}>
 							<HeroHeaderCard
 								character={character}
 								options={props.options}
@@ -307,7 +306,7 @@ export const HeroSheetPage = (props: Props) => {
 							/>
 						</div>
 						<hr className='dashed' />
-						<div className='page page-2' id={SheetFormatter.getPageId(hero.id, '2')}>
+						<div className={`page page-2 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId(hero.id, '2')}>
 							<CareerCard
 								career={character.career}
 								hero={hero}

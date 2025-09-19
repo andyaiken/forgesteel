@@ -18,6 +18,7 @@ export interface ExtraCards {
 };
 
 interface CardPageLayout {
+	orientation: 'portrait' | 'landscape';
 	perRow: number;
 	linesY: number;
 	cardLineLen: number;
@@ -43,6 +44,7 @@ export class SheetLayout {
 		}
 
 		return {
+			orientation: options.pageOrientation,
 			perRow: abilitiesPerRow,
 			linesY: linesY,
 			cardLineLen: Math.round(lineLenPx / charWidth),
@@ -57,17 +59,17 @@ export class SheetLayout {
 
 		// gap between cards
 		const gapPx = 10; // px
-
-		const cardsPerRow = options.pageOrientation === 'portrait' ? 2 : 3;
-
-		let lineLenPx = options.pageOrientation === 'portrait' ? 627.5 : 540;
-		let linesY = options.pageOrientation === 'portrait' ? 88 : 68;
+		const cardsPerRow = 2;
+		// FORCE portrait for Followers
+		let lineLenPx = 627.5;
+		let linesY = 88;
 		if (options.classicSheetPageSize === SheetPageSize.A4) {
-			linesY = options.pageOrientation === 'portrait' ? 94 : 66;
-			lineLenPx = options.pageOrientation === 'portrait' ? 610 : 575;
+			linesY = 94;
+			lineLenPx = 610;
 		}
 
 		return {
+			orientation: 'portrait',
 			perRow: cardsPerRow,
 			linesY: linesY,
 			cardLineLen: Math.round(lineLenPx / charWidth),
@@ -214,11 +216,11 @@ export class SheetLayout {
 				// console.log('overall spaceY:', spaceY, '/', layout.linesY, ' current rowY:', rowY);
 				refCards = SheetLayout.getFillerCards(spacesToFill, spaceY, rowY, extraCards, layout);
 			}
-			const abilityPageClasses = [ 'abilities', 'page', `row-cards-${layout.perRow}` ];
+			const pageClasses = [ 'abilities', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
 			return (
 				<Fragment key={`abilities-${i}`}>
 					<hr className='dashed' />
-					<div className={abilityPageClasses.join(' ')} id={SheetFormatter.getPageId(character.hero.id, `abilities-${i}`)}>
+					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId(character.hero.id, `abilities-${i}`)}>
 						{pageAbilities.map(a =>
 							<AbilityCard
 								key={a.id}
@@ -242,10 +244,11 @@ export class SheetLayout {
 				console.warn('No cards added, but required cards still not shown!', extraCards.required);
 				break;
 			}
+			const pageClasses = [ 'extra-cards', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
 			pages.push(
 				<Fragment key={`${idPrefix}-${++i}`}>
 					<hr className='dashed' />
-					<div className={`extra-cards page row-cards-${layout.perRow}`} id={SheetFormatter.getPageId(character.hero.id, `${idPrefix}-${i}`)}>
+					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId(character.hero.id, `${idPrefix}-${i}`)}>
 						{cards}
 					</div>
 				</Fragment>

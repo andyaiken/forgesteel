@@ -645,7 +645,7 @@ export const EncounterRunPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className={className} id={encounter.id}>
 					<Flex align='flex-start' gap={20} style={{ height: '100%' }}>
-						<div style={{ flex: '1 1 0', height: '100%', overflowY: 'auto' }}>
+						<div style={{ flex: '1 1 0', height: '100%', padding: '0 5px', overflowY: 'auto' }}>
 							<HeaderText
 								level={1}
 								extra={[

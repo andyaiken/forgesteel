@@ -20,7 +20,9 @@ interface ServiceWorkerGlobalScope extends EventTarget {
 // Cast self to the service worker global scope
 const swSelf = self as unknown as ServiceWorkerGlobalScope;
 
-const CACHE_NAME = 'forgesteel-v1';
+// Cache version - will be unique for each build
+const CACHE_VERSION = new Date().toISOString().replace(/[:.]/g, '-');
+const CACHE_NAME = `forgesteel-${CACHE_VERSION}`;
 const STATIC_CACHE_URLS = [
 	'/forgesteel/',
 	'/forgesteel/index.html',
@@ -83,44 +85,24 @@ self.addEventListener('fetch', (event: Event) => {
 	fetchEvent.respondWith(
 		(async () => {
 			try {
-				// Try to get from cache first
+				// Online: Just fetch from network (transparent)
+				const response = await fetch(fetchEvent.request);
+
+				// Cache for offline use only
+				if (response && response.status === 200 && fetchEvent.request.url.includes('/forgesteel/')) {
+					const cache = await caches.open(CACHE_NAME);
+					await cache.put(fetchEvent.request, response.clone());
+				}
+
+				return response;
+			} catch {
+				// Offline: Try cache
 				const cachedResponse = await caches.match(fetchEvent.request);
 				if (cachedResponse) {
 					return cachedResponse;
 				}
 
-				// If not in cache, fetch from network
-				const response = await fetch(fetchEvent.request);
-
-				// Don't cache non-successful responses
-				if (!response || response.status !== 200 || response.type !== 'basic') {
-					return response;
-				}
-
-				// Clone the response for caching
-				const responseToCache = response.clone();
-
-				// Cache successful responses for future offline use
-				// Only cache assets from our domain
-				if (fetchEvent.request.url.includes('/forgesteel/')) {
-					const cache = await caches.open(CACHE_NAME);
-					await cache.put(fetchEvent.request, responseToCache);
-
-					// Notify clients that cache was updated
-					const clients = await swSelf.clients.matchAll();
-					clients.forEach((client: Client) => {
-						client.postMessage({
-							type: 'CACHE_UPDATED',
-							url: fetchEvent.request.url
-						});
-					});
-				}
-
-				return response;
-			} catch (error) {
-				console.error('Network request failed:', error);
-
-				// Return offline fallback for navigation requests
+				// Fallback to main page for navigation
 				if (fetchEvent.request.destination === 'document') {
 					const fallback = await caches.match('/forgesteel/index.html');
 					if (fallback) {
@@ -128,8 +110,7 @@ self.addEventListener('fetch', (event: Event) => {
 					}
 				}
 
-				// Return a basic error response
-				return new Response('Network error', { status: 500 });
+				return new Response('Offline - content not available', { status: 503 });
 			}
 		})()
 	);

@@ -15,7 +15,6 @@ export const TitleComponent = (props: Props) => {
 	return (
 		<div className='title'>
 			<h3>{title.name}</h3>
-			<p className='title-description'>{title.description}</p>
 			{titleFeature ?
 				<FeatureComponent
 					feature={titleFeature}

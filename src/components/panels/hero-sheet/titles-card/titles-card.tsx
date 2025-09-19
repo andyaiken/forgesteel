@@ -17,7 +17,7 @@ export const TitlesCard = (props: Props) => {
 		if (size === 'short') {
 			return (
 				<li key={title.id}>
-					<h4>{title.name}{titleFeature ? `: ${titleFeature.name}` : null}</h4>
+					<h4>{title.name}{(titleFeature && titleFeature.name !== title.name) ? `: ${titleFeature.name}` : null}</h4>
 				</li>
 			);
 		} else {

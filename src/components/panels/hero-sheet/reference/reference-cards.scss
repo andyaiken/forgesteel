@@ -45,10 +45,6 @@
 
 #hero-sheet-page .hero-sheet .extra-reference.card {
     // @include common.striped-card;
-    h2 {
-        color: var(--color-text);
-        @include common.bottom-border-plain(common.$color-medium, 2px);
-    }
 
     *:not(h2) {
         @include common.font-serif();

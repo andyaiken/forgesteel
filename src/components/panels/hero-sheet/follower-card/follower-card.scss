@@ -144,13 +144,13 @@
         margin: 5px 0;
         border-top: 1px solid common.$color-medium;
         border-bottom: 1px solid common.$color-medium;
-        padding: 5px 10px;
+        padding: 5px 0;
 
         font-size: 17px;
 
         display: grid;
         grid-template-columns: repeat(5, auto);
-        justify-content: space-between;
+        justify-content: space-around;
 
         .characteristic {
             display: grid;
@@ -278,6 +278,7 @@
         }
     }
 
+
     .advancement-abilities {
         display: flex;
         flex-direction: column;
@@ -289,6 +290,10 @@
             background-color: common.$color-general-monster;
             border-radius: 8px 8px 0 0;
             border-bottom: 1px solid common.$color-medium;
+        }
+
+        &:last-child .ability {
+            margin-bottom: 0;
         }
     }
 }

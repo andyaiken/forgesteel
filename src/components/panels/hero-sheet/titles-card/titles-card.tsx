@@ -13,10 +13,11 @@ export const TitlesCard = (props: Props) => {
 	const character = props.character;
 
 	const getTitleFragment = (title: Title, size: 'short' | 'long') => {
+		const titleFeature = title.features.find(f => f.id === title.selectedFeatureID);
 		if (size === 'short') {
 			return (
 				<li key={title.id}>
-					<h4>{title.name}</h4>
+					<h4>{title.name}{titleFeature ? `: ${titleFeature.name}` : null}</h4>
 				</li>
 			);
 		} else {
@@ -38,9 +39,11 @@ export const TitlesCard = (props: Props) => {
 	if (props.wide)
 		cardClasses.push('wide');
 
+	const headerText = (props.showLong === 'all') ? 'Titles (Full)' : 'Titles';
+
 	return (
 		<div className={cardClasses.join(' ')}>
-			<h2>Titles</h2>
+			<h2>{headerText}</h2>
 			<ul className='titles-container'>
 				{character.titles?.map(t => getTitleFragment(t, fragmentSize))}
 			</ul>

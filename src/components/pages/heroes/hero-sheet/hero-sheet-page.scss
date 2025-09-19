@@ -217,6 +217,7 @@
     }
 
     &.landscape .page-2 {
+        grid-template-rows: min-content 1fr 1fr min-content 315px;
         .career {
             grid-row-end: span 2;
             grid-column-start: 1;

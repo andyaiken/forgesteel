@@ -57,10 +57,20 @@ export const AbilityComponent = (props: Props) => {
 
 	const getEffectSection = () => {
 		if (ability.effect) {
+			// A small number of ability effects start with a 'Special' section, so we want to make sure we don't prepend 'Effect' to that
+			let addedLabel = false;
+			const effectText = ability.effect.split('\n').map(l => {
+				let newLine = l;
+				if (!addedLabel && !l.startsWith('**')) {
+					addedLabel = true;
+					newLine = '**Effect**: ' + l;
+				}
+				return newLine;
+			}).join('\n');
 			return (
 				<div className='effect'>
 					<Markdown
-						text={ability.effect}
+						text={effectText}
 						className='ability-effect'
 					/>
 				</div>

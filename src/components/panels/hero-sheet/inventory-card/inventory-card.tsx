@@ -24,7 +24,9 @@ export const InventoryCard = (props: InventoryProps) => {
 			<h2>Inventory</h2>
 			<ul>
 				{character.inventory?.map(item => (
-					<ItemComponent item={item} character={character} key={item.id} />
+					<li key={item.id}>
+						<ItemComponent item={item} character={character} />
+					</li>
 				))}
 			</ul>
 		</div>

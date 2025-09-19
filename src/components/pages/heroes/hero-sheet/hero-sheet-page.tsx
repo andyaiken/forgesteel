@@ -248,7 +248,7 @@ export const HeroSheetPage = (props: Props) => {
 				extraCards.required.push({
 					element: <RetainerCard follower={fs} options={props.options} key={fs.id} />,
 					width: 1,
-					height: SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen),
+					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen)),
 					shown: false
 				});
 			});
@@ -257,7 +257,7 @@ export const HeroSheetPage = (props: Props) => {
 				extraCards.required.push({
 					element: <FollowersCard followers={followers} options={props.options} key='followers' />,
 					width: 1,
-					height: SheetFormatter.calculateFollowersSize(followers, layoutEnd.cardLineLen),
+					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowersSize(followers, layoutEnd.cardLineLen)),
 					shown: false
 				});
 			}
@@ -328,6 +328,7 @@ export const HeroSheetPage = (props: Props) => {
 							<TitlesCard
 								character={character}
 								showLong={numTitlesInSmallCard}
+								wide={props.options.pageOrientation === 'landscape'}
 							/>
 							<ProjectsCard
 								character={character}

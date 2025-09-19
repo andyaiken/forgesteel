@@ -52,24 +52,27 @@ export class SheetLayout {
 		};
 	};
 
-	static getFollowerCardsLayout = (options: Options): CardPageLayout => {
+	static getFollowerCardsLayout = (options: Options, hasRetainers: boolean): CardPageLayout => {
 		// Get root font size (1rem)
 		const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 		const charWidth = rootFontSize * 0.553;
 
+		// FORCE portrait if there are any retainers
+		const orientation = hasRetainers ? 'portrait' : options.pageOrientation;
+
 		// gap between cards
 		const gapPx = 10; // px
-		const cardsPerRow = 2;
-		// FORCE portrait for Followers
-		let lineLenPx = 627.5;
-		let linesY = 88;
+		const cardsPerRow = orientation === 'portrait' ? 2 : 3;
+
+		let lineLenPx = orientation === 'portrait' ? 627.5 : 540;
+		let linesY = orientation === 'portrait' ? 88 : 68;
 		if (options.classicSheetPageSize === SheetPageSize.A4) {
-			linesY = 94;
-			lineLenPx = 610;
+			linesY = orientation === 'portrait' ? 94 : 66;
+			lineLenPx = orientation === 'portrait' ? 610 : 575;
 		}
 
 		return {
-			orientation: 'portrait',
+			orientation: orientation,
 			perRow: cardsPerRow,
 			linesY: linesY,
 			cardLineLen: Math.round(lineLenPx / charWidth),

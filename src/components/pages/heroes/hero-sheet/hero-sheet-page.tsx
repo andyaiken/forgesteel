@@ -209,7 +209,8 @@ export const HeroSheetPage = (props: Props) => {
 	};
 
 	const getFollowerCards = (extraCards: ExtraCards) => {
-		const layoutEnd = SheetLayout.getFollowerCardsLayout(props.options);
+		const hasRetainers = character.followers.some(f => f.classification === 'Retainer');
+		const layoutEnd = SheetLayout.getFollowerCardsLayout(props.options, hasRetainers);
 		const heightRatio = 0.83;
 
 		// Recalculate card heights

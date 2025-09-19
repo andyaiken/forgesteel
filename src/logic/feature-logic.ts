@@ -102,7 +102,19 @@ export class FeatureLogic {
 	static getFeaturesFromCustomization = (hero: Hero) => {
 		const features: { feature: Feature, source: string }[] = [];
 
-		features.push(...hero.features.map(f => ({ feature: f, source: 'Customization' })));
+		features.push(...hero.features.map(f => {
+			let source = 'Customization';
+			switch (f.type) {
+				case FeatureType.TitleChoice:
+					source = f.data.selected.length === 1 ? f.data.selected[0].name : 'Title';
+					break;
+				case FeatureType.Companion:
+				case FeatureType.Follower:
+					source = 'Follower';
+					break;
+			}
+			return ({ feature: f, source: source });
+		}));
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};

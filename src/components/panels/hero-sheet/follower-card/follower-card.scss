@@ -1,0 +1,400 @@
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+@mixin retainer-header-gradient($color) {
+    --cutout-size: calc(var(--notch-size) - var(--border-size));
+    background-image: linear-gradient(180deg, common.$color-medium, common.$color-medium),
+        linear-gradient(180deg, common.$color-medium, common.$color-medium),
+        linear-gradient(180deg, common.$color-medium, common.$color-medium),
+        linear-gradient(180deg, common.$color-medium, common.$color-medium),
+        linear-gradient(180deg, #fff, #fff),
+        linear-gradient(180deg, #fff, #fff),
+        linear-gradient(180deg, $color, transparent);
+
+    background-size: var(--notch-size) var(--border-size),
+        var(--notch-size) var(--border-size),
+        var(--border-size) var(--notch-size),
+        var(--border-size) var(--notch-size),
+        var(--cutout-size) var(--cutout-size),
+        var(--cutout-size) var(--cutout-size),
+        100% 100%;
+
+    background-position: right var(--cutout-size),
+        left var(--cutout-size),
+        calc(0% + var(--cutout-size)) top,
+        calc(100% - var(--cutout-size)) top,
+        top right,
+        top left,
+        center center;
+}
+
+#hero-sheet-page .hero-sheet .follower {
+    padding: 10px;
+    display: grid;
+    justify-self: stretch;
+
+    &.card {
+        // @include common.striped-card;
+        padding: 10px;
+        section.bordered {
+            --notch-size: 10px;
+            --border-size: 2px;
+            @include common.beveled-fancy-notch(var(--notch-size), var(--border-size), common.$color-medium);
+            margin-bottom: 0;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .name-wrapper {
+                background-repeat: no-repeat;
+
+                margin: 2px calc(0px - var(--cutout-size)) 0;
+                padding: 16px var(--cutout-size) 0;
+                @include retainer-header-gradient(common.$color-general-monster);
+            }
+        }
+    }
+
+    h2 {
+        margin-top: -8px;
+        padding-left: 10px;
+        padding-right: 10px;
+        display: grid;
+        grid-template-columns: 1fr min-content;
+        color: #000;
+        @include common.bottom-border-fancy(common.$color-dark);
+    
+        .type,
+        .keywords {
+            @include common.font-slab;
+        }
+
+        .name {
+            @include common.font-serif;
+            text-align: left;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: none;
+        }
+
+        .type {
+            text-transform: none;
+            text-wrap: nowrap;
+            font-size: 16px;
+        }
+
+        .keywords {
+            font-size: 14px;
+            font-weight: 350;
+            text-align: left;
+            text-transform: none;
+        }
+    }
+
+    p strong,
+    li strong,
+    label {
+        @include common.font-slab;
+        font-weight: 450;
+    }
+
+    .details {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+        padding-bottom: 4px;
+
+        .field {
+            display: grid;
+            grid-template-rows: 1fr min-content;
+            align-self: baseline;
+            margin: 0;
+
+            label,
+            .value {
+                text-align: center;
+                text-wrap: nowrap;
+            }
+
+            label {
+                grid-row-start: 2;
+                font-size: 15px;
+            }
+
+            .value {
+                font-size: 20px;
+            }
+        }
+
+        .stats {
+            flex-grow: 1;
+            flex-basis: 100%;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+
+            .weakness {
+                text-align: right;
+            }
+        }
+    }
+
+    .characteristics {
+        margin: 5px 0;
+        border-top: 1px solid common.$color-medium;
+        border-bottom: 1px solid common.$color-medium;
+        padding: 5px 0;
+
+        font-size: 17px;
+
+        display: grid;
+        grid-template-columns: repeat(5, auto);
+        justify-content: space-around;
+
+        .characteristic {
+            display: grid;
+            grid-template-columns: min-content 1fr;
+
+            label {
+                text-wrap: nowrap;
+                align-self: baseline;
+            }
+
+            .symbol {
+                @include common.font-potency;
+                display: inline-block;
+                transform: translateY(2px);
+                margin-right: 1px;
+            }
+
+            .value {
+                justify-self: center;
+                align-self: baseline;
+                margin-left: 8px;
+                font-size: 20px;
+            }
+
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    .stat {
+        font-size: 16px;
+        line-height: 24px;
+
+        &, & span {
+            @include common.font-slab;
+        }
+
+        label {
+            margin-right: 5px;
+        }
+        span {
+            color: var(--color-text-lighter);
+            font-weight: 380;
+        }
+    }
+
+    .stamina-recoveries {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        padding: 0 30px;
+
+        border-bottom: 1px solid common.$color-medium;
+        margin-bottom: 5px;
+
+        .stamina {
+            border-right: 2px solid;
+            border-image: linear-gradient(180deg, common.$color-light, common.$color-light calc(100% - 5px), transparent calc(100% - 5px)) 1 100%;
+            
+            h4 {
+                margin-top: 0;
+            }
+            .current-stamina {
+                width: 6.5rem;
+            }
+
+            .current-state {
+                margin-top: 8px;
+                grid-template-columns: 6rem 1fr 1fr;
+            }
+
+            .reference {
+                padding-left: 30px;
+            }
+        }
+
+        .reference {
+            .labeled-field {
+                margin-top: -10px;
+            }
+        }
+
+        .recoveries {
+            .labeled-field.fancy {
+                margin-top: 0;
+                label {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
+    .features-abilities {
+        display: flex;
+        flex-direction: column;
+
+        .feature .feature-description p {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .wrapper {
+            &:not(:last-of-type) {
+                @include common.bottom-border-plain(common.$color-medium, 1px);
+            }
+        }
+    }
+
+    .features-abilities .wrapper,
+    .advancement {
+        display: grid;
+        grid-template-columns: min-content 1fr;
+        grid-template-rows: min-content 1fr;
+        margin-top: 5px;
+
+        img.icon {
+            width: 17px;
+            height: 17px;
+            opacity: 0.8;
+            margin-right: 5px;
+            margin-top: 2px;
+        }
+
+        .ability {
+            margin-bottom: 10px;
+        }
+    }
+
+
+    .advancement-abilities {
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid common.$color-medium;
+
+        .advancement h4 {
+            grid-column-end: span 2;
+            color: #000;
+            background-color: common.$color-general-monster;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid common.$color-medium;
+        }
+
+        &:last-child .ability {
+            margin-bottom: 0;
+        }
+    }
+}
+
+#hero-sheet-page .hero-sheet.color .follower.card {
+    &.ambusher {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-ambusher);
+        }
+        .advancement h4 {
+            background-color: common.$color-ambusher;
+        }
+    }
+    &.artillery {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-artillery);
+        }
+        .advancement h4 {
+            background-color: common.$color-artillery;
+        }
+    }
+    &.brute {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-brute);
+        }
+        .advancement h4 {
+            background-color: common.$color-brute;
+        }
+    }
+    &.controller {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-controller);
+        }
+        .advancement h4 {
+            background-color: common.$color-controller;
+        }
+    }
+    &.defender {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-defender);
+        }
+        .advancement h4 {
+            background-color: common.$color-defender;
+        }
+    }
+    &.harrier {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-harrier);
+        }
+        .advancement h4 {
+            background-color: common.$color-harrier;
+        }
+    }
+    &.hexer {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-hexer);
+        }
+        .advancement h4 {
+            background-color: common.$color-hexer;
+        }
+    }
+    &.mount {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-mount);
+        }
+        .advancement h4 {
+            background-color: common.$color-mount;
+        }
+    }
+    &.support {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-support);
+        }
+        .advancement h4 {
+            background-color: common.$color-support;
+        }
+    }
+}
+
+#hero-sheet-page .hero-sheet .followers.card {
+    // @include common.striped-card;
+    .follower {
+        padding: 10px 0;
+        border-bottom: 1px solid common.$color-medium;
+
+        &:first-of-type {
+            padding-top: 0;
+        }
+
+        .name-wrapper {
+            margin: 2px 0;
+            padding: 10px 0;
+
+            h2 {
+                background-image: linear-gradient(180deg, common.$color-general-monster, transparent);
+                background-size: 100% 100%;
+                background-position: center center;
+                background-repeat: no-repeat;
+
+                border-radius: 10px 10px 0 0;
+            }
+        }
+    }
+}

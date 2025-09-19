@@ -1,10 +1,32 @@
 @use '../../../pages/heroes/hero-sheet/common.scss';
 
-.hero-sheet .inventory.card {
-    // background-image: linear-gradient(180deg, transparent 17px, #ccc 17px, #ccc 18px, #eee 18px, #eee 35px, #ccc 35px);
-    // background-size: 100% 36px;
-    // background-position: center top;
-    // background-repeat: repeat-y;
+#hero-sheet-page .hero-sheet .inventory.card {
+    // @include common.striped-card;
+
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    place-items: stretch;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            break-inside: avoid-column;
+        }
+    }
+
+    &.wide ul {
+        column-count: 2;
+        column-gap: 25px;
+
+        background-image: linear-gradient(0deg, common.$color-light, common.$color-light);
+        background-size: 2px 100%;
+        background-position: 50% 4px;
+        background-repeat: no-repeat;
+    }
+
     .item {
         margin-bottom: 15px;
 
@@ -16,15 +38,17 @@
             color: var(--color-text);
             font-weight: 450;
 
-            background-image: linear-gradient(90deg, common.$color-medium, transparent);
-            background-size: 80% 1px;
+            background-image: linear-gradient(90deg, common.$color-medium 50%, transparent);
+            background-size: 100% 1px;
             background-position: left bottom;
             background-repeat: no-repeat;
         }
 
         .item-effect * {
-            line-height: 19px;
+            line-height: 18px;
             font-size: 15px;
+            margin-bottom: 10px;
+            margin-top: 5px;
         }
 
         .keywords-item-type {
@@ -33,9 +57,14 @@
         }
 
         .keywords,
-        .item-type {
+        .item-type,
+        .item-effect strong {
             @include common.font-slab;
             font-weight: 400;
+
+            & strong {
+                font-weight: 450;
+            }
         }
 
         .item-features .feature-line {

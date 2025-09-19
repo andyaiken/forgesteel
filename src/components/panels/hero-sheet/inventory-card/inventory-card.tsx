@@ -22,9 +22,13 @@ export const InventoryCard = (props: InventoryProps) => {
 	return (
 		<div className={cardClasses.join(' ')}>
 			<h2>Inventory</h2>
-			{character.inventory?.map(item => (
-				<ItemComponent item={item} character={character} key={item.id} />
-			))}
+			<ul>
+				{character.inventory?.map(item => (
+					<li key={item.id}>
+						<ItemComponent item={item} character={character} />
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 };

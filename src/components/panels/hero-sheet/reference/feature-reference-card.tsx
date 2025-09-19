@@ -1,9 +1,9 @@
 import { Fragment, JSX } from 'react';
 
 import { CharacterSheet } from '../../../../models/character-sheet';
-import { CharacterSheetFormatter } from '../../../../utils/character-sheet-formatter';
 import { Feature } from '../../../../models/feature';
 import { FeatureComponent } from '../components/feature-component';
+import { SheetFormatter } from '../../../../utils/sheet-formatter';
 
 import './feature-reference-card.scss';
 
@@ -38,14 +38,14 @@ export const FeatureReferenceCard = (props: Props) => {
 
 			const sections: JSX.Element[] = [];
 			bySource.forEach((features, source) => {
-				features.sort(CharacterSheetFormatter.sortFeatures);
+				features.sort(SheetFormatter.sortFeatures);
 				sections.push(
 					<Fragment key={source}>
 						<li><h3>{source}</h3></li>
 						{features.map(f =>
 							<li key={f.id}>
 								<FeatureComponent
-									feature={CharacterSheetFormatter.enhanceFeature(f)}
+									feature={SheetFormatter.enhanceFeature(f)}
 									hero={character.hero}
 								/>
 							</li>

@@ -10,7 +10,7 @@
         grid-template-columns: 1fr 1fr;
 
         * {
-            color: var(--color-text-lightest);
+            color: var(--color-text-lighter);
         }
 
         h5 {
@@ -43,21 +43,14 @@
     }
 }
 
-.hero-sheet .extra-reference.card {
-    // background-image: linear-gradient(180deg, transparent 17px, #ccc 17px, #ccc 18px, #eee 18px, #eee 35px, #ccc 35px);
-    // background-size: 100% 36px;
-    // background-position: center top;
-    // background-repeat: repeat-y;
-
-    h2 {
-        color: var(--color-text);
-    }
+#hero-sheet-page .hero-sheet .extra-reference.card {
+    // @include common.striped-card;
 
     *:not(h2) {
         @include common.font-serif();
         font-size: 1.1rem;
         line-height: 1.3rem;
-        color: var(--color-text-lightest);
+        color: var(--color-text-lighter);
     }
 
     li {

@@ -178,19 +178,20 @@ export class Utils {
 	};
 
 	static savePdfPages = async (filename: string, pageCanvases: HTMLCanvasElement[], pdfPaperSize: SheetPageSize, dpi: number) => {
-		const width = Collections.max(pageCanvases.map(c => c.width), c => c) || 0;
-		const height = Collections.max(pageCanvases.map(c => c.height), c => c) || 0;
-		const orientation = (height >= width) ? 'portrait' : 'landscape';
+		const width1 = pageCanvases[0].width || 0;
+		const height1 = pageCanvases[0].height || 0;
+		const documentOrientation = (height1 >= width1) ? 'portrait' : 'landscape';
 		const paperSize = pdfPaperSize.toString().toLowerCase();
 
 		// @ts-expect-error Undocumented
 		const pdf = new jspdf({
-			orientation: orientation,
+			orientation: documentOrientation,
 			unit: (72 / dpi), // undocumented feature to set arbitrary dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
 			format: paperSize,
 			hotfixes: [ 'px_scaling' ]
 		});
 		pageCanvases.forEach((canvas, n) => {
+			const orientation = (canvas.height >= canvas.width) ? 'portrait' : 'landscape';
 			const page = (n === 0) ? pdf : pdf.addPage(paperSize, orientation);
 			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height, undefined, 'FAST');
 		});
@@ -204,5 +205,15 @@ export class Utils {
 
 	static isNullOrEmpty = (str: string | undefined) => {
 		return (str === null || str === undefined || str.trim() === '');
+	};
+
+	static valueOrDefault = (value: string | number | undefined, defaultValue: string): string => {
+		let result = defaultValue;
+
+		if (value && !Utils.isNullOrEmpty(value.toString())) {
+			result = value.toString();
+		}
+
+		return result;
 	};
 }

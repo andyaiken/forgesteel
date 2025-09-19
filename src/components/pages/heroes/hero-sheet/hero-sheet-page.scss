@@ -46,52 +46,60 @@
     background: common.$color-extra-light;
 }
 
-.hero-sheet:not(#base-override) {
+#hero-sheet-page .hero-sheet {
+    background: common.$color-extra-light;
+    color: var(--color-text);
+    padding: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: auto;
+
     label,
     h2, h3, h4, h5, h6 {
         @include common.font-slab();
         font-weight: 400;
     }
-}
-
-.hero-sheet:not(#base-override) {
     &, li, p, em {
         @include common.font-serif();
         font-weight: 300;
     }
-}
 
-.hero-sheet {
-    &.letter.portrait .page {
-        aspect-ratio: 8.5 / 11;
-        width: 1275px; // ~150dpi
-        height: 1650px;
-        max-width: 1275px;
-        max-height: 1650px;
+    &.letter {
+        .page.portrait {
+            aspect-ratio: 8.5 / 11;
+            width: 1275px; // ~150dpi
+            height: 1650px;
+            max-width: 1275px;
+            max-height: 1650px;
+        }
+
+        .page.landscape {
+            aspect-ratio: 11 / 8.5;
+            width: 1650px; // ~150dpi
+            height: 1275px;
+            max-width: 1650px;
+            max-height: 1275px;
+        }
     }
 
-    &.letter.landscape .page {
-        aspect-ratio: 11 / 8.5;
-        width: 1650px; // ~150dpi
-        height: 1275px;
-        max-width: 1650px;
-        max-height: 1275px;
-    }
+    &.a4 {
+        .page.portrait {
+            aspect-ratio: 1 / 1.41;
+            width: 1240px; // ~150dpi
+            height: 1754px;
+            max-width: 1240px;
+            max-height: 1754px;
+        }
 
-    &.a4.portrait .page {
-        aspect-ratio: 1 / 1.41;
-        width: 1240px; // ~150dpi
-        height: 1754px;
-        max-width: 1240px;
-        max-height: 1754px;
-    }
-    
-    &.a4.landscape .page {
-        aspect-ratio: 1.41 / 1;
-        width: 1754px; // ~150dpi
-        height: 1240px;
-        max-width: 1754px;
-        max-height: 1240px;
+        .page.landscape {
+            aspect-ratio: 1.41 / 1;
+            width: 1754px; // ~150dpi
+            height: 1240px;
+            max-width: 1754px;
+            max-height: 1240px;
+        }
     }
 
     .page-1 {
@@ -104,7 +112,7 @@
         grid-template-columns: 6fr 1fr calc(($last-col + 395px) - (100% / 3)) calc((100% / 3) - $last-col) $last-col;
     }
 
-    &.landscape .page-1 {
+    .page-1.landscape {
         grid-template-rows: 248px 213px 102px min-content min-content 1fr;
         $last-col: 350px;
         grid-template-columns: 1fr min-content $last-col;
@@ -152,12 +160,12 @@
     
     }
 
-    &.a4.landscape .page-1 {
+    &.a4 .page-1.landscape {
         $last-col: 430px;
         grid-template-columns: 1fr min-content $last-col;
     }
 
-    &.portrait .page-1 {
+    .page-1.portrait {
         .hero-header.card,
         .stats-resources.card {
             grid-column-end: span 5;
@@ -198,7 +206,7 @@
         grid-template-rows: min-content 1fr 1fr 2fr 315px;
     }
 
-    &.portrait .page-2 {
+    .page-2.portrait {
         .skills {
             grid-row-end: span 4;
         }
@@ -221,7 +229,8 @@
         }
     }
 
-    &.landscape .page-2 {
+    .page-2.landscape {
+        grid-template-rows: min-content 1fr 1fr min-content 315px;
         .career {
             grid-row-end: span 2;
             grid-column-start: 1;
@@ -252,17 +261,6 @@
             grid-row-start: 5;
         }
     }
-}
-
-.hero-sheet {
-    background: common.$color-extra-light;
-    color: var(--color-text);
-    padding: 5px;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    overflow: auto;
 
     .page {
         overflow: hidden;
@@ -276,7 +274,7 @@
     p,
     table,
     ul {
-        background: #fff;
+        background-color: transparent;
         color: var(--color-text);
     }
 
@@ -293,7 +291,6 @@
         line-height: 20px;
         font-size: 18px;
         padding: 5px 0;
-        border-bottom: 2px solid common.$color-medium;
 
         @include common.bottom-border-fancy(common.$color-medium);
     }
@@ -324,7 +321,8 @@
         padding: 0.5rem;
     }
     
-    .abilities.page {
+    .abilities.page,
+    .extra-cards.page {
         --gap: 10px;
         display: flex;
         flex-wrap: wrap;
@@ -336,31 +334,42 @@
         }
     }
 
-    &.portrait .abilities.page {
-        .card,
-        .feature-reference.single {
-            flex-basis: calc((100% - 2 * var(--gap)) / 3);
+    .page.row-cards-2 {
+        .card {
+            flex-basis: calc((100% - var(--gap)) / 2);
         }
-
-        .feature-reference,
-        .inventory.wide {
-            flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
-        }
-        .feature-reference.wide {
-            flex-basis: calc(3 * ((100% - 2 * var(--gap)) / 3) + 2 * var(--gap));
+    
+        .card.wide {
+            flex-basis: 100%;
         }
     }
 
-    &.landscape .abilities.page {
+    .page.row-cards-3 {
+        .card {
+            flex-basis: calc((100% - 2 * var(--gap)) / 3);
+        }
+
+        .card.wide,
+        .feature-reference {
+            flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
+        }
+
+        .feature-reference.wide {
+            flex-basis: 100%;
+        }
+    }
+
+    .page.row-cards-4 {
         .card,
         .feature-reference.single {
             flex-basis: calc((100% - 3 * var(--gap)) / 4);
         }
-
-        .feature-reference,
-        .inventory.wide {
+    
+        .card.wide,
+        .feature-reference {
             flex-basis: calc(2 * ((100% - 3 * var(--gap)) / 4) + var(--gap));
         }
+    
         .feature-reference.wide {
             flex-basis: calc(3 * ((100% - 3 * var(--gap)) / 4) + 2 * var(--gap));
         }
@@ -404,11 +413,21 @@
 
         &.two-column {
             column-count: 2;
+            column-gap: 25px;
 
             background-image: linear-gradient(0deg, common.$color-light, common.$color-light);
             background-size: 2px 100%;
             background-position: 50% 4px;
             background-repeat: no-repeat;
+        }
+
+        li {
+            break-inside: avoid-column;
+
+            .feature-description p {
+                margin-left: 0;
+                margin-right: 0;
+            }
         }
 
         .feature {
@@ -429,14 +448,6 @@
         li > em {
             font-weight: 400;
             font-size: 1.1rem;
-        }
-    }
-
-    .colorful {
-        .damage-type.acid,
-        .damage-type.poison {
-            background-color: #aeef97;
-            border-color: color.adjust(#aeef97, $blackness: 20%)
         }
     }
 }

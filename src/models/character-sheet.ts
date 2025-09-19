@@ -8,6 +8,7 @@ import { Item } from './item';
 import { Perk } from './perk';
 import { Title } from './title';
 
+// #region Character
 export interface CharacterSheet {
 	hero: Hero,
 	name?: string;
@@ -35,15 +36,8 @@ export interface CharacterSheet {
 	disengage?: number;
 	stability?: number;
 
-	staminaMax?: number;
-	staminaCurrent?: number;
-	staminaTemp?: number;
-	windedAt?: number;
-	deadAt?: number;
-
-	recoveriesMax?: number;
-	recoveryValue?: number;
-	recoveriesCurrent?: number;
+	stamina: StaminaSheet;
+	recoveries: RecoveriesSheet;
 
 	heroicResourceName?: string;
 	heroicResourceCurrent?: number;
@@ -125,13 +119,11 @@ export interface CharacterSheet {
 	projects?: ProjectSheet[];
 
 	// Abilities
-	freeStrikes: AbilitySheet[];
-	signatureAbilities: AbilitySheet[];
-	heroicAbilities: AbilitySheet[];
-	triggeredActions: AbilitySheet[];
-	otherRollAbilities: AbilitySheet[];
-	otherAbilities: AbilitySheet[];
+	abilities: AbilitySheet[];
 	standardAbilities: AbilitySheet[];
+
+	// Followers
+	followers: FollowerSheet[];
 
 	// Other Features and Reference
 	featuresReferenceOther?: {
@@ -140,6 +132,22 @@ export interface CharacterSheet {
 	}[];
 
 	notes: string;
+}
+// #endregion
+
+// #region Sub-sheets
+export interface StaminaSheet {
+	max?: number;
+	current?: number;
+	temp?: number;
+	windedAt?: number;
+	deadAt?: number;
+}
+
+export interface RecoveriesSheet {
+	max?: number;
+	value?: number;
+	current?: number;
 }
 
 export interface CareerSheet {
@@ -172,7 +180,9 @@ export interface ItemSheet {
 	effect: string;
 	features?: Feature[];
 }
+// #endregion
 
+// #region Ability
 export interface AbilitySheet {
 	id: string;
 	name: string;
@@ -194,3 +204,44 @@ export interface AbilitySheet {
 	rollT2Effect?: string;
 	rollT3Effect?: string;
 }
+// #endregion
+
+// #region Follower
+export interface FollowerSheet {
+	id: string;
+	name: string;
+	classification: string;
+	type: string;
+	role: string;
+
+	might: number;
+	agility: number;
+	reason: number;
+	intuition: number;
+	presence: number;
+
+	skills?: string[];
+	languages?: string[];
+
+	keywords?: string;
+
+	size?: string;
+	speed?: number;
+	stability?: number;
+	freeStrike?: number;
+
+	immunity?: string;
+	weakness?: string;
+	movement?: string;
+
+	stamina?: StaminaSheet;
+	recoveries?: RecoveriesSheet;
+
+	features?: Feature[];
+	abilities?: AbilitySheet[];
+
+	advancement?: {
+		level: number,
+		ability: AbilitySheet
+	}[];
+};

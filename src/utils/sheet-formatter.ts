@@ -1,6 +1,6 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
 
-import { AbilitySheet, ItemSheet } from '../models/character-sheet';
+import { AbilitySheet, FollowerSheet, ItemSheet } from '../models/character-sheet';
 import { AbilityLogic } from '../logic/ability-logic';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from './collections';
@@ -8,20 +8,30 @@ import { Feature } from '../models/feature';
 import { FeatureType } from '../enums/feature-type';
 import { Format } from './format';
 import { Hero } from '../models/hero';
+import { Monster } from '../models/monster';
+import { Title } from '../models/title';
 import { Utils } from './utils';
 
+import areaIcon from '../assets/icons/area-icon.svg';
+import burstIcon from '../assets/icons/burst-icon.svg';
+import meleeIcon from '../assets/icons/sword.svg';
+import meleeRangedIcon from '../assets/icons/melee ranged.svg';
+import rangedIcon from '../assets/icons/ranged.svg';
 import rollT1Icon from '../assets/icons/power-roll-t1.svg';
 import rollT2Icon from '../assets/icons/power-roll-t2.svg';
 import rollT3Icon from '../assets/icons/power-roll-t3.svg';
+import selfIcon from '../assets/icons/self.svg';
+import starIcon from '../assets/icons/star.svg';
+import triggerIcon from '../assets/icons/trigger-solid.svg';
 
-export class CharacterSheetFormatter {
-	static getPageId = (heroId: string, pageNum: number) => {
-		return `hero-sheet-${heroId}-page-${pageNum}`;
+export class SheetFormatter {
+	static getPageId = (heroId: string, key: string) => {
+		return `hero-sheet-${heroId}-page-${key}`;
 	};
 
 	static addSign = (n: number | undefined) => {
 		if (n !== undefined) {
-			return n >= 0 ? '+' + n : n.toString();
+			return n > 0 ? '+' + n : n.toString();
 		}
 	};
 
@@ -159,30 +169,47 @@ export class CharacterSheetFormatter {
 
 	static calculateFeatureSize = (f: Feature, lineWidth: number, countShortenedText: boolean = true): number => {
 		let size = 1;
-		if ([ FeatureType.Multiple, FeatureType.DomainFeature ].includes(f.type)) {
+		const headerSize = 1.5;
+		const bottomMargin = 0.3;
+		if ([ FeatureType.Multiple ].includes(f.type)) {
 			size = 0;
 		} else if (this.isLongFeature(f)) {
-			size = 2;
 			if (countShortenedText) {
-				size += this.countLines(f.description.trim().split('\n')[0], lineWidth);
+				size = headerSize + this.countLines(f.description.trim().split('\n')[0], lineWidth);
 			} else {
-				size += this.countLines(f.description, lineWidth);
+				size = headerSize + this.countLines(f.description, lineWidth);
 			}
+			size += bottomMargin;
 		} else if ([ FeatureType.Text, FeatureType.Package, FeatureType.PackageContent ].includes(f.type)) {
-			size = 2 + this.countLines(f.description, lineWidth);
+			size = headerSize + this.countLines(f.description, lineWidth);
+			size += bottomMargin;
 		} else if (f.type === FeatureType.Ability) {
-			size = 3;
+			size = headerSize + this.countLines(f.data.ability.description, lineWidth);
+			size += bottomMargin;
 		} else if (f.type === FeatureType.DamageModifier) {
-			size = 3 + (2 * Collections.distinct(f.data.modifiers, m => m.type).length);
+			size = headerSize + (Collections.distinct(f.data.modifiers, m => m.type).length);
+			size += bottomMargin + 0.3;
 		} else if (f.type === FeatureType.HeroicResource) {
-			size = 2 + (2 * this.countLines(f.data.details, lineWidth));
+			size = headerSize + (2 * this.countLines(f.data.details, lineWidth));
+		} else if ([ FeatureType.Choice,
+			FeatureType.ItemChoice,
+			FeatureType.SkillChoice,
+			FeatureType.LanguageChoice,
+			FeatureType.Perk,
+			FeatureType.Domain,
+			FeatureType.DomainFeature,
+			FeatureType.ClassAbility ].includes(f.type)) {
+			if (f.data && (Object.hasOwn(f.data, 'selected') || Object.hasOwn(f.data, 'selectedIds'))) {
+				size += 0.2; // choices with selections are sliiightly taller than a single line
+			}
 		}
-
+		size = +size.toFixed(1);
+		// console.log('###### Feature', f.name, f.id, size);
 		return size;
 	};
 
-	static calculateFeaturesSize = (features: { feature: Feature, source: string }[] | undefined, lineWidth: number): number => {
-		let size = 0;
+	static calculateFeatureReferenceSize = (features: { feature: Feature, source: string }[] | undefined, lineWidth: number): number => {
+		let size = 2.5; // Card header
 		if (features) {
 			features.forEach(f => {
 				size += this.calculateFeatureSize(f.feature, lineWidth, false);
@@ -190,18 +217,90 @@ export class CharacterSheetFormatter {
 
 			size += 2 * Collections.distinct(features, f => f.source).length;
 		}
-		return size;
+		return +size.toFixed(1);
 	};
 
 	static calculateInventorySize = (items: ItemSheet[] | undefined, lineWidth: number): number => {
-		let size = 0;
+		let size = 2.5; // Card header
 		if (items) {
+			let itemSize;
 			items.forEach(i => {
-				if (i.features)
-					size += i.features.reduce((s, f) => s += this.calculateFeatureSize(f, lineWidth, false), 0);
-				size += 2;
+				itemSize = 1.4; // account for item display differences from plain features
+				if (i.features) {
+					itemSize += i.features.reduce((s, f) => {
+						s += this.calculateFeatureSize(f, lineWidth, false);
+						return s;
+					}, 0);
+					size += itemSize;
+				}
 			});
 		}
+		return +size.toFixed(1);
+	};
+
+	static calculateTitlesSize = (titles: Title[] | undefined, lineWidth: number): number => {
+		let size = 2.5; // Card header
+		titles?.forEach(title => {
+			let tSize = 1.7 + this.countLines(title.description, lineWidth);
+			if (title.features) {
+				title.features.filter(f => f.id === title.selectedFeatureID).forEach(f => {
+					tSize += this.calculateFeatureSize(f, lineWidth, false);
+				});
+			}
+			size += tSize;
+		});
+		return +size.toFixed(1);
+	};
+
+	static calculateFollowerSize = (follower: FollowerSheet, lineWidth: number): number => {
+		let size = 0;
+		if (follower.classification === 'Follower') {
+			size = 6; // name, characteristics
+			size += this.countLines(`Skills: ${follower.skills?.join(', ')}`, lineWidth);
+			size += this.countLines(`Languages: ${follower.languages?.join(', ')}`, lineWidth);
+			size += 0.5;
+		} else {
+			size = 22; // name, stats, characteristics, stamina
+			follower.abilities?.forEach(ability => {
+				size += this.calculateAbilityComponentSize(ability, lineWidth);
+			});
+			follower.features?.forEach(f => {
+				size += this.calculateFeatureSize(f, lineWidth, false);
+			});
+			follower.advancement?.forEach(advancement => {
+				size += 1.5 + this.calculateAbilityComponentSize(advancement.ability, lineWidth);
+			});
+		}
+		return size;
+	};
+
+	static calculateFollowersSize = (followers: FollowerSheet[], lineWidth: number): number => {
+		let size = 2.5; // card header
+		followers.forEach(f => {
+			size += 0.8 + this.calculateFollowerSize(f, lineWidth);
+		});
+		return size;
+	};
+
+	// COMPACT Ability display - e.g. for Retainers & Monsters
+	static calculateAbilityComponentSize = (ability: AbilitySheet, lineWidth: number): number => {
+		let size = 2; // name, usage
+		size += this.countLines(`${ability.keywords} ${ability.actionType}`, lineWidth);
+		size += this.countLines(`${ability.distance} ${ability.target}`, lineWidth);
+
+		const rollLineLen = Math.ceil(lineWidth - 10); // account for icons
+		size += this.countLines(ability.rollT1Effect, rollLineLen);
+		size += this.countLines(ability.rollT2Effect, rollLineLen);
+		size += this.countLines(ability.rollT3Effect, rollLineLen);
+
+		if (ability.trigger)
+			size += this.countLines(ability.trigger, lineWidth);
+
+		if (ability.effect) {
+			const effectSize = this.countLines(ability.effect, lineWidth);
+			size += effectSize;
+		}
+
 		return size;
 	};
 
@@ -266,7 +365,7 @@ export class CharacterSheetFormatter {
 		if (ability) {
 			size += 4; // title
 			size += this.countLines(ability.description, lineWidth);
-			size += 4; // keywords, distance, etc
+			size += 2.5; // keywords, distance, etc
 			size += ability.hasPowerRoll ? 2 : 0;
 			size += 2 * this.countLines(ability.rollT1Effect, rollLineLen);
 			size += 2 * this.countLines(ability.rollT2Effect, rollLineLen);
@@ -275,7 +374,6 @@ export class CharacterSheetFormatter {
 				size += 1 + this.countLines(ability.trigger, lineWidth);
 			if (ability.effect) {
 				const effectSize = this.countLines(ability.effect, lineWidth, 1);
-				// console.log('Effect size: ', effectSize);
 				size += 2 + effectSize;
 			}
 		}
@@ -285,9 +383,18 @@ export class CharacterSheetFormatter {
 	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0) => {
 		return text?.trim().split('\n').reduce((n, l) => {
 			let len = Math.max(emptyLineSize, Math.ceil(l.length / lineWidth));
-			if (l.startsWith('*'))// list item, will be indented
-				len = Math.ceil(l.length / (lineWidth - 5));
-			return n + len;
+			if (l.startsWith('|:---')) { // table divider
+				len = 0;
+			} else if (l.startsWith('|') && l.endsWith('|')) { // table row
+				len = Math.ceil(l.replaceAll('|', '').trim().length / (lineWidth - 3));
+				len += 0.4;// additional row spacing
+			} else if (l.startsWith('**')) { // bolded label - will have extra bottom margin
+				len += 0.5;
+			} else if (l.startsWith('* ')) { // list item, will be indented
+				len = Math.ceil(l.length / (lineWidth - 3));
+			}
+
+			return n + len + 0.2;
 		}, 0) || 0;
 	};
 
@@ -356,12 +463,16 @@ export class CharacterSheetFormatter {
 		return result;
 	};
 
-	static joinCommasOr = (options: string[]): string => {
-		if (options.length <= 2) {
-			return options.slice(-2).join(' or ');
+	static joinCommasOr = (options: string[] | undefined): string => {
+		if (options?.length) {
+			if (options.length <= 2) {
+				return options.slice(-2).join(' or ');
+			} else {
+				const last2 = options.slice(-2).join(' or ');
+				return [ options.slice(0, -2).join(', '), last2 ].join(', ');
+			}
 		} else {
-			const last2 = options.slice(-2).join(' or ');
-			return [ options.slice(0, -2).join(', '), last2 ].join(', ');
+			return '';
 		}
 	};
 
@@ -375,13 +486,13 @@ export class CharacterSheetFormatter {
 		return result;
 	};
 
-	static formatAbilityTier = (value: string, tier: number, ability: Ability, hero: Hero) => {
+	static formatAbilityTier = (value: string, tier: number, ability: Ability, creature: Hero | Monster) => {
 		if (ability.distance.length > 1) {
 			const distanceTypes = ability.distance.map(d => d.type);
 			const values = distanceTypes.map(d => {
 				return {
 					type: d,
-					effect: CharacterSheetFormatter.cleanupText(AbilityLogic.getTierEffect(value, tier, ability, d, hero)).split('; ')
+					effect: SheetFormatter.cleanupText(AbilityLogic.getTierEffectCreature(value, tier, ability, d, creature)).split('; ')
 				};
 			});
 			const combined: string[] = [];
@@ -396,15 +507,14 @@ export class CharacterSheetFormatter {
 			}
 			return combined.join('; ');
 		}
-		return CharacterSheetFormatter.cleanupText(
-			AbilityLogic.getTierEffect(value, tier, ability, undefined, hero));
+		return SheetFormatter.cleanupText(AbilityLogic.getTierEffectCreature(value, tier, ability, undefined, creature));
 	};
 
 	static abilitySections = (sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[]): string => {
 		const lines: string[] = [];
 		for (const section of sections) {
-			let text = CharacterSheetFormatter.abilitySection(section);
-			text = CharacterSheetFormatter.enhanceMarkdown(text);
+			let text = SheetFormatter.abilitySection(section);
+			text = SheetFormatter.enhanceMarkdown(text);
 			lines.push(text);
 		}
 		return lines.join('\n');
@@ -425,5 +535,47 @@ export class CharacterSheetFormatter {
 				break;
 		}
 		return text;
+	};
+
+	static getAbilityIcon = (ability: Ability | AbilitySheet) => {
+		let abilityIcon = starIcon;
+		// Melee / Ranged
+		if (ability.keywords?.includes('Melee')) {
+			if (ability.keywords.includes('Ranged')) {
+				abilityIcon = meleeRangedIcon;
+			} else {
+				abilityIcon = meleeIcon;
+			}
+		} else if (ability.keywords?.includes('Ranged')) {
+			abilityIcon = rangedIcon;
+		}
+
+		// Targets
+		if (ability.target?.toLowerCase() === 'self') {
+			abilityIcon = selfIcon;
+		}
+
+		// Other Distances
+		let distance, type;
+		if ('repeatable' in ability) { // Ability
+			distance = ability.distance.map(ad => ad.type.toString()).join(' ');
+			type = ability.type.usage.toString();
+		} else {
+			distance = ability.distance;
+			type = ability.actionType;
+		}
+
+		if (distance?.includes('Aura') || distance?.includes('Burst')) {
+			abilityIcon = burstIcon;
+		} else if (distance?.includes('Line') || distance?.includes('Cube') || distance?.includes('Wall')) {
+			abilityIcon = areaIcon;
+		}
+
+		// Ability Type
+		if (type?.includes('Trigger')) {
+			abilityIcon = triggerIcon;
+		}
+
+		return abilityIcon;
 	};
 }

@@ -1,8 +1,7 @@
-.hero-sheet .feature-reference.card {
-    // background-image: linear-gradient(180deg, transparent 17px, #ccc 17px, #ccc 18px, #eee 18px, #eee 35px, #ccc 35px);
-    // background-size: 100% 36px;
-    // background-position: center top;
-    // background-repeat: repeat-y;
+@use '../../../pages/heroes/hero-sheet/common.scss';
+
+#hero-sheet-page .hero-sheet .feature-reference.card {
+    // @include common.striped-card;
 
     h3 {
         text-align: left;

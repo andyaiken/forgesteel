@@ -177,7 +177,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	const getPreviewPage = () => {
 		if (heroID === 'careers') {
 			return (
-				<main id='hero-sheet-page'>
+				<main id='hero-sheet-page' className='classic-sheet'>
 					<div className={getPageClasses()}>
 						<h2>All Careers</h2>
 						<div className='all-careers'>
@@ -200,7 +200,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 			);
 		} else if (heroID === 'complications') {
 			return (
-				<main id='hero-sheet-page'>
+				<main id='hero-sheet-page' className='classic-sheet'>
 					<div className={getPageClasses()}>
 						<h2>All Complications</h2>
 						<div className='all-complications'>

@@ -1,6 +1,8 @@
-import { LabeledBooleanField, LabeledTextField } from '../components/labeled-field';
 import { CharacterSheet } from '../../../../models/character-sheet';
+import { LabeledTextField } from '../components/labeled-field';
 import { Options } from '../../../../models/options';
+import { RecoveriesComponent } from '../components/recoveries-component';
+import { StaminaComponent } from '../components/stamina-component';
 import { Utils } from '../../../../utils/utils';
 
 import './stats-resources-card.scss';
@@ -58,67 +60,14 @@ export const StatsResourcesCard = (props: Props) => {
 					/>
 				</div>
 			</div>
-			<div className='stamina'>
-				<h4>Stamina</h4>
-				<div className='wrapper'>
-					<div className='current-stamina'>
-						<LabeledTextField
-							label='Current'
-							content={(showState && character.staminaCurrent?.toString()) || ''}
-							additionalClasses={[ 'no-box' ]}
-						/>
-					</div>
-				</div>
-				<div className='current-state'>
-					<div className='winded'>
-						<LabeledBooleanField
-							label='Winded'
-							value={showState && (character.staminaCurrent || 1) <= (character.windedAt || 0)}
-							additionalClasses={[ 'label-below' ]}
-						/>
-						<div className='ref'>≤ <span className='data'>{character.windedAt}</span></div>
-					</div>
-					<div className='dying'>
-						<LabeledBooleanField
-							label='Dying'
-							value={showState && (character.staminaCurrent || 1) <= 0}
-							additionalClasses={[ 'label-below' ]}
-						/>
-						<div className='ref'>0 to <span className='data'>{character.deadAt}</span></div>
-					</div>
-				</div>
-				<div className='reference'>
-					<LabeledTextField
-						label='Temporary'
-						content={(showState && character.staminaTemp?.toString()) || ''}
-						additionalClasses={[ 'no-box' ]}
-					/>
-					<LabeledTextField
-						label='Max'
-						content={character.staminaMax}
-						additionalClasses={[ 'no-box' ]}
-					/>
-				</div>
-			</div>
-			<div className='recoveries'>
-				<LabeledTextField
-					label='Recoveries'
-					content={(showState && character.recoveriesCurrent?.toString()) || ''}
-					additionalClasses={[ 'label-above', 'fancy' ]}
-				/>
-				<div className='reference'>
-					<LabeledTextField
-						label='Stamina'
-						content={character.recoveryValue}
-						additionalClasses={[ 'no-box' ]}
-					/>
-					<LabeledTextField
-						label='Max'
-						content={character.recoveriesMax}
-						additionalClasses={[ 'no-box' ]}
-					/>
-				</div>
-			</div>
+			<StaminaComponent
+				stamina={character.stamina}
+				options={props.options}
+			/>
+			<RecoveriesComponent
+				recoveries={character.recoveries}
+				options={props.options}
+			/>
 			<div className='heroic-resource'>
 				<LabeledTextField
 					label='Heroic Resource'

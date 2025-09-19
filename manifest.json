@@ -8,6 +8,13 @@
   "theme_color": "#1890ff",
   "orientation": "any",
   "scope": "/forgesteel/",
+  "categories": [
+    "games",
+    "entertainment",
+    "utilities"
+  ],
+  "lang": "en",
+  "dir": "ltr",
   "icons": [
     {
       "src": "/forgesteel/assets/shield-DSm7ywft.png",
@@ -21,12 +28,5 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "categories": [
-    "games",
-    "entertainment",
-    "utilities"
-  ],
-  "lang": "en",
-  "dir": "ltr"
+  ]
 }

@@ -10,6 +10,7 @@ import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
 import { HeaderText } from '../../../controls/header-text/header-text';
 import { Markdown } from '../../../controls/markdown/markdown';
@@ -38,9 +39,10 @@ export const MonsterPanel = (props: Props) => {
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
 
 	try {
+		const speed = MonsterLogic.getSpeed(props.monster);
 		const signatureBonus = MonsterLogic.getSignatureDamageBonus(props.monster);
 
-		let speedStr = FormatLogic.getSpeed(MonsterLogic.getSpeed(props.monster));
+		let speedStr = speed.value.toString();
 		if (MonsterLogic.getSpeedModified(props.monster)) {
 			speedStr += '*';
 		}
@@ -97,6 +99,26 @@ export const MonsterPanel = (props: Props) => {
 									signatureBonus || props.monster.withCaptain || (conditions.length > 0) || (immunities.length > 0) || (weaknesses.length > 0) || (features.length > 0) ?
 										<div className='features'>
 											{
+												speed.modes.length > 0 ?
+													<Field label='Movement' value={Format.capitalize(speed.modes.join(', '))} />
+													: null
+											}
+											{
+												immunities.length > 0 ?
+													<Field label='Immunities' value={immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
+													: null
+											}
+											{
+												weaknesses.length > 0 ?
+													<Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
+													: null
+											}
+											{
+												conditions.length > 0 ?
+													<Field label='Cannot Be' value={conditions.join(', ')} />
+													: null
+											}
+											{
 												props.monster.role.organization === MonsterOrganizationType.Minion ?
 													<Field label='Minion' value='On their turn, each minion can take only a move action and a main action, a move action and a maneuver, or two move actions.' />
 													: null
@@ -117,21 +139,6 @@ export const MonsterPanel = (props: Props) => {
 											{
 												props.monster.withCaptain ?
 													<Field label='With Captain' value={props.monster.withCaptain} />
-													: null
-											}
-											{
-												conditions.length > 0 ?
-													<Field label='Cannot Be' value={conditions.join(', ')} />
-													: null
-											}
-											{
-												immunities.length > 0 ?
-													<Field label='Immunities' value={immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
-													: null
-											}
-											{
-												weaknesses.length > 0 ?
-													<Field label='Weaknesses' value={weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ')} />
 													: null
 											}
 											{features.map(f => <Field key={f.id} label={f.name} value={<Markdown text={f.description} useSpan={true} />} />)}

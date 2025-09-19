@@ -1631,7 +1631,7 @@ export const Main = (props: Props) => {
 										showSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
 										showMonster={onSelectMonster}
 										setOptions={persistOptions}
-										createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
+										createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}
 										importElement={importLibraryElement}
 										deleteElement={deleteLibraryElement}
 										exportElement={exportLibraryElement}

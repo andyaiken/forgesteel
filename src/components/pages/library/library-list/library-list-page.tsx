@@ -473,7 +473,7 @@ export const LibraryListPage = (props: Props) => {
 	const getTags = (element: Element) => {
 		const sb = getSourcebook(element);
 		if (sb && sb.id !== SourcebookData.core.id) {
-			return [ sb.name ];
+			return [ sb.name || 'Unnamed Sourcebook' ];
 		}
 
 		return undefined;

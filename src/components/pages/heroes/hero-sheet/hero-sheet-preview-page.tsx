@@ -262,7 +262,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 
 					<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
 					<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
-					<Divider size='small'>Text Color:</Divider>
+					<Divider size='small'>Text Color</Divider>
 					<Segmented
 						name='textColor'
 						block={true}
@@ -274,7 +274,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 						value={props.options.sheetTextColor}
 						onChange={changeTextColor}
 					/>
-					<Divider size='small'>Include Class Features:</Divider>
+					<Divider size='small'>Include Class Features</Divider>
 					<Segmented
 						name='abilitySort'
 						block={true}

@@ -1649,35 +1649,56 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 		echelon: 4,
 		prerequisites: 'You have the Godsworn title, and hundreds of worshipful mortals complete a divine ritual in your name.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-demigod-1',
-				name: 'Immortal Excellence',
-				description: 'A characteristic of your choice increases by 1 (to a maximum of 6).'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-2',
-				name: 'Longevity',
-				description: 'Your natural lifespan doubles and you can appear to be any age.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-3',
-				name: 'Worshippers',
-				description: 'You magically hear prayers directed to you.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-4',
-				name: 'Acolytes',
-				description: 'The number of followers you can recruit increases by two.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-5',
-				name: 'Divine Weapons',
-				description: 'Whenever you use a damage-dealing weapon ability, that ability can deal corruption or holy damage instead of its usual damage type.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-6',
-				name: 'Missionaries',
-				description: 'You earn 2 Renown.'
+				name: 'Demigod',
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-demigod-1a',
+						name: 'Immortal Excellence',
+						description: 'A characteristic of your choice increases by 1 (to a maximum of 6).'
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-demigod-1b',
+						name: 'Longevity',
+						description: 'Your natural lifespan doubles and you can appear to be any age.'
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-demigod-1c',
+						name: 'Worshippers',
+						description: 'You magically hear prayers directed to you.'
+					}),
+					FactoryLogic.feature.createChoice({
+						id: 'title-demigod-1d',
+						name: 'Option',
+						options: [
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-demigod-1da',
+									name: 'Acolytes',
+									description: 'The number of followers you can recruit increases by two.'
+								}),
+								value: 1
+							},
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-demigod-1db',
+									name: 'Divine Weapons',
+									description: 'Whenever you use a damage-dealing weapon ability, that ability can deal corruption or holy damage instead of its usual damage type.'
+								}),
+								value: 1
+							},
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-demigod-1dc',
+									name: 'Missionaries',
+									description: 'You earn 2 Renown.'
+								}),
+								value: 1
+							}
+						]
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''

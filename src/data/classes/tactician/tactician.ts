@@ -332,6 +332,31 @@ You can’t gain more than one benefit from the same trigger.`),
 Whenever you or any ally uses an ability to deal rolled damage to a creature marked by you, you can spend 1 command as a free triggered action to increase the power roll outcome for that target by one tier. Whenever an enemy marked by you makes an ability roll, you can spend 1 command as a free triggered action to decrease the power roll outcome by one tier.
 
 Command remains until you spend it.`
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'tactician-10-3',
+					name: 'Perk',
+					lists: [ PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue ]
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'tactician-10-4',
+					name: 'Skill'
+				}),
+				FactoryLogic.feature.createHeroicResourceGain({
+					id: 'tactician-10-5',
+					name: 'True Focus',
+					tag: 'start 3',
+					trigger: 'Start of your turn',
+					value: '4',
+					replacesTags: [ 'start', 'start 2' ]
+				}),
+				FactoryLogic.feature.create({
+					id: 'tactician-10-6',
+					name: 'Warmaster',
+					description: `
+You have mastered the entirety of possible strategies and tactics. Whenever you or any ally makes an ability roll against a target marked by you, the character making the roll can roll three dice and choose which two to use.
+
+Additionally, whenever an ally uses a heroic ability that targets one or more creatures marked by you, they spend 2 fewer of their Heroic Resource on that ability (minimum 1).`
 				})
 			]
 		}

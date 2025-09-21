@@ -1151,6 +1151,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				<Drawer open={skillSelectorOpen} onClose={() => setSkillSelectorOpen(false)} closeIcon={null} width='500px'>
 					<SkillSelectModal
 						skills={sortedSkills}
+						sourcebooks={props.sourcebooks}
 						onSelect={s => {
 							setSkillSelectorOpen(false);
 

@@ -9,6 +9,7 @@ export interface AbilityType {
 	trigger: string;
 	time: string;
 	qualifiers: string[];
+	freeStrike: boolean;
 	order?: number;
 }
 

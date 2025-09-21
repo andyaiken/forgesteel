@@ -29,7 +29,8 @@ export const humanTalent = {
 							free: false,
 							trigger: '',
 							time: '',
-							qualifiers: []
+							qualifiers: [],
+							freeStrike: false
 						},
 						keywords: [],
 						distance: [
@@ -106,7 +107,8 @@ export const humanTalent = {
 											free: false,
 											trigger: 'You take damage that isn’t untyped',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -158,7 +160,8 @@ export const humanTalent = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -229,7 +232,8 @@ export const humanTalent = {
 										free: false,
 										trigger: 'You take damage that isn’t untyped',
 										time: '',
-										qualifiers: []
+										qualifiers: [],
+										freeStrike: false
 									},
 									keywords: [],
 									distance: [
@@ -797,7 +801,8 @@ export const humanTalent = {
 													free: true,
 													trigger: 'An adjacent creature deals damage to you.',
 													time: '',
-													qualifiers: []
+													qualifiers: [],
+													freeStrike: false
 												},
 												keywords: [],
 												distance: [
@@ -871,7 +876,8 @@ export const humanTalent = {
 												free: true,
 												trigger: 'An adjacent creature deals damage to you.',
 												time: '',
-												qualifiers: []
+												qualifiers: [],
+												freeStrike: false
 											},
 											keywords: [],
 											distance: [
@@ -1039,7 +1045,8 @@ export const humanTalent = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [],
 								distance: [
@@ -1603,7 +1610,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Chronopathy',
@@ -1668,7 +1676,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Cryokinesis',
@@ -1729,7 +1738,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1795,7 +1805,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic',
@@ -1855,7 +1866,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1915,7 +1927,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic',
@@ -1980,7 +1993,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Metamorphosis',
@@ -2045,7 +2059,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Animapathy',
@@ -2110,7 +2125,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic',
@@ -2168,7 +2184,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic',
@@ -2226,7 +2243,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Chronopathy',
@@ -2271,7 +2289,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic',
@@ -2329,7 +2348,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Chronopathy',
@@ -2381,7 +2401,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic',
@@ -2433,7 +2454,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Metamorphosis',
@@ -2485,7 +2507,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic',
@@ -2537,7 +2560,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Chronopathy',
@@ -2602,7 +2626,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic',
@@ -2667,7 +2692,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2719,7 +2745,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Animapathy',
@@ -2784,7 +2811,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Pyrokinesis',
@@ -2836,7 +2864,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2901,7 +2930,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic',
@@ -2966,7 +2996,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Animapathy',
@@ -3031,7 +3062,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Animapathy',
@@ -3096,7 +3128,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -3161,7 +3194,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Chronopathy',
@@ -3213,7 +3247,8 @@ export const humanTalent = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Metamorphosis',
@@ -3281,7 +3316,8 @@ export const humanTalent = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Psionic',
@@ -3340,7 +3376,8 @@ export const humanTalent = {
 											free: false,
 											trigger: 'The target makes an ability roll.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Psionic',
@@ -3412,7 +3449,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Chronopathy',
@@ -3487,7 +3525,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Chronopathy',
@@ -3606,7 +3645,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Chronopathy',
@@ -3681,7 +3721,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3777,7 +3818,8 @@ export const humanTalent = {
 											free: false,
 											trigger: 'The target takes damage.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Psionic',
@@ -3849,7 +3891,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Chronopathy',
@@ -3924,7 +3967,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4001,7 +4045,8 @@ export const humanTalent = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Psionic',
@@ -4067,7 +4112,8 @@ export const humanTalent = {
 											free: false,
 											trigger: 'The target takes damage or is force moved.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Psionic',
@@ -4124,7 +4170,8 @@ export const humanTalent = {
 											free: true,
 											trigger: 'You land after a fall, or any falling creature lands within 2 squares of you.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -4181,7 +4228,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4252,7 +4300,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic',
@@ -4368,7 +4417,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4444,7 +4494,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic',
@@ -4529,7 +4580,8 @@ export const humanTalent = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Area',
@@ -4608,7 +4660,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4683,7 +4736,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4779,7 +4833,8 @@ export const humanTalent = {
 											free: false,
 											trigger: 'The target deals damage to an ally.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Psionic',
@@ -4831,7 +4886,8 @@ export const humanTalent = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Psionic',
@@ -4910,7 +4966,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic',
@@ -4982,7 +5039,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic',
@@ -5128,7 +5186,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic',
@@ -5200,7 +5259,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic',
@@ -5316,7 +5376,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic',
@@ -5392,7 +5453,8 @@ export const humanTalent = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',

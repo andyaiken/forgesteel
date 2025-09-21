@@ -56,6 +56,27 @@ export const AbilityEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const setTypeFreeStrike = (value: boolean) => {
+		const copy = Utils.copy(ability);
+		copy.type.freeStrike = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setTypeQualifiers = (value: string) => {
+		const copy = Utils.copy(ability);
+		copy.type.qualifiers = [ value ];
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
+	const setTypeOrder = (value: number) => {
+		const copy = Utils.copy(ability);
+		copy.type.order = value;
+		setAbility(copy);
+		props.onChange(copy);
+	};
+
 	const setTypeTrigger = (value: string) => {
 		const copy = Utils.copy(ability);
 		copy.type.trigger = value;
@@ -409,6 +430,19 @@ export const AbilityEditPanel = (props: Props) => {
 													/>
 													: null
 											}
+											{
+												ability.type.usage === AbilityUsage.VillainAction ?
+													<NumberSpin label='Villain Action Order' min={1} max={3} value={ability.type.order || 1} onChange={setTypeOrder} />
+													: null
+											}
+											<HeaderText>Qualifiers</HeaderText>
+											<Input
+												placeholder='Qualifiers'
+												allowClear={true}
+												value={ability.type.qualifiers}
+												onChange={e => setTypeQualifiers(e.target.value)}
+											/>
+											<Toggle label='Can be used as a free strike' value={ability.type.freeStrike} onChange={setTypeFreeStrike} />
 										</Space>
 										<HeaderText>Keywords</HeaderText>
 										<Select

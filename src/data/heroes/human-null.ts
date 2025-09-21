@@ -29,7 +29,8 @@ export const humanNull = {
 							free: false,
 							trigger: '',
 							time: '',
-							qualifiers: []
+							qualifiers: [],
+							freeStrike: false
 						},
 						keywords: [],
 						distance: [
@@ -106,7 +107,8 @@ export const humanNull = {
 											free: false,
 											trigger: 'You take damage that isn’t untyped',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -158,7 +160,8 @@ export const humanNull = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -438,7 +441,8 @@ export const humanNull = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Psionic'
@@ -493,7 +497,8 @@ export const humanNull = {
 									free: false,
 									trigger: 'You take damage.',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Psionic'
@@ -835,7 +840,8 @@ export const humanNull = {
 									free: true,
 									trigger: 'You start your turn.',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [],
 								distance: [
@@ -1295,7 +1301,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1352,7 +1359,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1410,7 +1418,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1468,7 +1477,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1522,7 +1532,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1576,7 +1587,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1630,7 +1642,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1688,7 +1701,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1742,7 +1756,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1800,7 +1815,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1844,7 +1860,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1902,7 +1919,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1956,7 +1974,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2014,7 +2033,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2072,7 +2092,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2130,7 +2151,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2187,7 +2209,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic'
@@ -2230,7 +2253,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic'
@@ -2273,7 +2297,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic'
@@ -2316,7 +2341,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic'
@@ -2359,7 +2385,8 @@ export const humanNull = {
 					free: true,
 					trigger: 'The target moves or uses a main action',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2417,7 +2444,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2475,7 +2503,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic'
@@ -2518,7 +2547,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2562,7 +2592,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2620,7 +2651,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2678,7 +2710,8 @@ export const humanNull = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2730,7 +2763,8 @@ export const humanNull = {
 					free: true,
 					trigger: 'The target takes damage from another creature’s ability while in the area of your Null Field ability',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Psionic'
@@ -2849,7 +2883,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -2903,7 +2938,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3005,7 +3041,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -3059,7 +3096,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3160,7 +3198,8 @@ export const humanNull = {
 															free: true,
 															trigger: 'The triggering creature starts their turn.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic',
@@ -3227,7 +3266,8 @@ export const humanNull = {
 															free: true,
 															trigger: 'Another creature on the encounter map ends their turn.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -3383,7 +3423,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3447,7 +3488,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -3538,7 +3580,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -3604,7 +3647,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3693,7 +3737,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -3759,7 +3804,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3910,7 +3956,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3975,7 +4022,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -4078,7 +4126,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -4144,7 +4193,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -4231,7 +4281,8 @@ export const humanNull = {
 															free: true,
 															trigger: 'Another creature damages you using an ability.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Psionic'
@@ -4285,7 +4336,8 @@ export const humanNull = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',

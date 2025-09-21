@@ -785,7 +785,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -838,7 +839,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -895,7 +897,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -948,7 +951,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1005,7 +1009,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1058,7 +1063,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1115,7 +1121,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1175,7 +1182,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1232,7 +1240,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1289,7 +1298,8 @@ export const dwarfFury = {
 					free: true,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [],
 				distance: [
@@ -1330,7 +1340,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1387,7 +1398,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1447,7 +1459,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic'
@@ -1490,7 +1503,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic'
@@ -1533,7 +1547,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic'
@@ -1576,7 +1591,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1621,7 +1637,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1678,7 +1695,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: 'A creature causes you to be winded or dying, or damages you while you are winded or dying.',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1735,7 +1753,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1792,7 +1811,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1850,7 +1870,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic'
@@ -1893,7 +1914,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1951,7 +1973,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic'
@@ -1994,7 +2017,8 @@ export const dwarfFury = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2117,7 +2141,8 @@ export const dwarfFury = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Melee',
@@ -2195,7 +2220,8 @@ export const dwarfFury = {
 											free: false,
 											trigger: 'The target would be force moved.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic',
@@ -2274,7 +2300,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -2329,7 +2356,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -2465,7 +2493,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic'
@@ -2531,7 +2560,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -2640,7 +2670,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -2709,7 +2740,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -2842,7 +2874,8 @@ export const dwarfFury = {
 											free: false,
 											trigger: 'You take damage.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -2944,7 +2977,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3008,7 +3042,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3128,7 +3163,8 @@ export const dwarfFury = {
 															free: true,
 															trigger: 'You reduce a creature to 0 Stamina with a strike.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3184,7 +3220,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3293,7 +3330,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3362,7 +3400,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3495,7 +3534,8 @@ export const dwarfFury = {
 											free: false,
 											trigger: 'You lose Stamina and are not dying.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -3551,7 +3591,8 @@ export const dwarfFury = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic'
@@ -3629,7 +3670,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3697,7 +3739,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3805,7 +3848,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3874,7 +3918,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3962,7 +4007,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4025,7 +4071,8 @@ export const dwarfFury = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',

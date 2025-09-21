@@ -372,7 +372,8 @@ export const highElfTactician = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Melee',
@@ -464,7 +465,8 @@ export const highElfTactician = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Ranged',
@@ -538,7 +540,8 @@ export const highElfTactician = {
 												free: false,
 												trigger: '',
 												time: '',
-												qualifiers: []
+												qualifiers: [],
+												freeStrike: false
 											},
 											keywords: [
 												'Ranged'
@@ -593,7 +596,8 @@ export const highElfTactician = {
 												free: true,
 												trigger: 'You or any ally uses an ability to deal rolled damage to a creature marked by you',
 												time: '',
-												qualifiers: []
+												qualifiers: [],
+												freeStrike: false
 											},
 											keywords: [],
 											distance: [
@@ -649,7 +653,8 @@ export const highElfTactician = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Ranged'
@@ -1093,7 +1098,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged'
@@ -1144,7 +1150,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1206,7 +1213,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1268,7 +1276,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged'
@@ -1311,7 +1320,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1377,7 +1387,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1447,7 +1458,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged',
@@ -1491,7 +1503,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged'
@@ -1534,7 +1547,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [],
 				distance: [
@@ -1575,7 +1589,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [],
 				distance: [
@@ -1616,7 +1631,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [],
 				distance: [
@@ -1657,7 +1673,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [],
 				distance: [
@@ -1698,7 +1715,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1743,7 +1761,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged'
@@ -1786,7 +1805,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area'
@@ -1829,7 +1849,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged'
@@ -1872,7 +1893,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged'
@@ -1915,7 +1937,8 @@ export const highElfTactician = {
 					free: true,
 					trigger: 'The target is not a leader or solo creature, and becomes winded.',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged'
@@ -1958,7 +1981,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged'
@@ -2001,7 +2025,8 @@ export const highElfTactician = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2104,7 +2129,8 @@ export const highElfTactician = {
 											free: false,
 											trigger: 'The target deals damage to another creature.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Ranged'
@@ -2182,7 +2208,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged'
@@ -2243,7 +2270,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -2355,7 +2383,8 @@ export const highElfTactician = {
 															free: true,
 															trigger: 'The target uses an ability to deal rolled damage to a creature while hidden.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged'
@@ -2409,7 +2438,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -2529,7 +2559,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged'
@@ -2583,7 +2614,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -2693,7 +2725,8 @@ export const highElfTactician = {
 											free: false,
 											trigger: 'The target moves.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Ranged'
@@ -2756,7 +2789,8 @@ export const highElfTactician = {
 											free: true,
 											trigger: 'A creature marked by you uses a strike that targets you or any ally within your line of effect.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -2813,7 +2847,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged',
@@ -2881,7 +2916,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged'
@@ -2988,7 +3024,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged'
@@ -3049,7 +3086,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area'
@@ -3146,7 +3184,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area'
@@ -3200,7 +3239,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [],
 														distance: [
@@ -3296,7 +3336,8 @@ export const highElfTactician = {
 											free: false,
 											trigger: 'A creature deals damage to the target.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Melee',
@@ -3384,7 +3425,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: 'The target deals damage to an ally.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged',
@@ -3452,7 +3494,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area'
@@ -3550,7 +3593,8 @@ export const highElfTactician = {
 															free: true,
 															trigger: 'A creature deals damage to the target.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3617,7 +3661,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Charge',
@@ -3729,7 +3774,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Charge',
@@ -3802,7 +3848,8 @@ export const highElfTactician = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',

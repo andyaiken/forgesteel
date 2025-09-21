@@ -2,43 +2,47 @@ import { AbilityType } from '../models/ability';
 import { AbilityUsage } from '../enums/ability-usage';
 
 export class FactoryAbilityTypeLogic {
-	createMain = (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
+	createMain = (options?: { free?: boolean, qualifiers?: string[], freeStrike?: boolean }): AbilityType => {
 		return {
 			usage: AbilityUsage.MainAction,
 			free: options?.free ?? false,
 			trigger: '',
 			time: '',
-			qualifiers: options?.qualifiers || []
+			qualifiers: options?.qualifiers || [],
+			freeStrike: options?.freeStrike ?? false
 		};
 	};
 
-	createManeuver = (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
+	createManeuver = (options?: { free?: boolean, qualifiers?: string[], freeStrike?: boolean }): AbilityType => {
 		return {
 			usage: AbilityUsage.Maneuver,
 			free: options?.free ?? false,
 			trigger: '',
 			time: '',
-			qualifiers: options?.qualifiers || []
+			qualifiers: options?.qualifiers || [],
+			freeStrike: options?.freeStrike ?? false
 		};
 	};
 
-	createMove = (options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
+	createMove = (options?: { free?: boolean, qualifiers?: string[], freeStrike?: boolean }): AbilityType => {
 		return {
 			usage: AbilityUsage.Move,
 			free: options?.free ?? false,
 			trigger: '',
 			time: '',
-			qualifiers: options?.qualifiers || []
+			qualifiers: options?.qualifiers || [],
+			freeStrike: options?.freeStrike ?? false
 		};
 	};
 
-	createTrigger = (trigger: string, options?: { free?: boolean, qualifiers?: string[] }): AbilityType => {
+	createTrigger = (trigger: string, options?: { free?: boolean, qualifiers?: string[], freeStrike?: boolean }): AbilityType => {
 		return {
 			usage: AbilityUsage.Trigger,
 			free: options?.free ?? false,
 			trigger: trigger,
 			time: '',
-			qualifiers: options?.qualifiers || []
+			qualifiers: options?.qualifiers || [],
+			freeStrike: options?.freeStrike ?? false
 		};
 	};
 
@@ -48,7 +52,8 @@ export class FactoryAbilityTypeLogic {
 			free: false,
 			trigger: '',
 			time: time,
-			qualifiers: []
+			qualifiers: [],
+			freeStrike: false
 		};
 	};
 
@@ -59,7 +64,8 @@ export class FactoryAbilityTypeLogic {
 			trigger: '',
 			time: '',
 			qualifiers: [],
-			order: order
+			order: order,
+			freeStrike: false
 		};
 	};
 
@@ -69,7 +75,8 @@ export class FactoryAbilityTypeLogic {
 			free: false,
 			trigger: '',
 			time: '',
-			qualifiers: []
+			qualifiers: [],
+			freeStrike: false
 		};
 	};
 
@@ -79,7 +86,8 @@ export class FactoryAbilityTypeLogic {
 			free: false,
 			trigger: '',
 			time: '',
-			qualifiers: []
+			qualifiers: [],
+			freeStrike: false
 		};
 	};
 }

@@ -29,7 +29,8 @@ export const polderElementalist = {
 							free: false,
 							trigger: '',
 							time: '',
-							qualifiers: []
+							qualifiers: [],
+							freeStrike: false
 						},
 						keywords: [
 							'Magic'
@@ -149,7 +150,8 @@ export const polderElementalist = {
 											free: true,
 											trigger: 'Whenever you are force moved',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -527,7 +529,8 @@ export const polderElementalist = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Magic',
@@ -887,7 +890,8 @@ export const polderElementalist = {
 													free: true,
 													trigger: 'A creature within a number of squares equal to your Reason score deals damage to you,',
 													time: '',
-													qualifiers: []
+													qualifiers: [],
+													freeStrike: false
 												},
 												keywords: [],
 												distance: [
@@ -939,7 +943,8 @@ export const polderElementalist = {
 													free: true,
 													trigger: 'An adjacent creature deals damage to you.',
 													time: '',
-													qualifiers: []
+													qualifiers: [],
+													freeStrike: false
 												},
 												keywords: [],
 												distance: [
@@ -1592,7 +1597,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Green',
@@ -1651,7 +1657,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Fire',
@@ -1705,7 +1712,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1763,7 +1771,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Green',
@@ -1821,7 +1830,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Earth',
@@ -1875,7 +1885,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1929,7 +1940,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1987,7 +1999,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Fire',
@@ -2041,7 +2054,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2102,7 +2116,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Fire',
@@ -2163,7 +2178,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Green',
@@ -2221,7 +2237,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2278,7 +2295,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2339,7 +2357,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Earth',
@@ -2403,7 +2422,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2455,7 +2475,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2513,7 +2534,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2567,7 +2589,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Green',
@@ -2626,7 +2649,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Fire',
@@ -2684,7 +2708,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Earth',
@@ -2739,7 +2764,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2801,7 +2827,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2859,7 +2886,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2923,7 +2951,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2976,7 +3005,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Fire',
@@ -3034,7 +3064,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3099,7 +3130,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Void',
@@ -3160,7 +3192,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3225,7 +3258,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Fire',
@@ -3279,7 +3313,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Fire',
@@ -3333,7 +3368,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Earth',
@@ -3392,7 +3428,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3446,7 +3483,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Green',
@@ -3491,7 +3529,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Earth',
@@ -3550,7 +3589,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3596,7 +3636,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3653,7 +3694,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3714,7 +3756,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Green',
@@ -3766,7 +3809,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -3810,7 +3854,8 @@ export const polderElementalist = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Fire',
@@ -3891,7 +3936,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Earth',
@@ -3944,7 +3990,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: 'The target takes damage.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Earth',
@@ -4028,7 +4075,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Earth',
@@ -4118,7 +4166,8 @@ export const polderElementalist = {
 														free: true,
 														trigger: 'The target is force moved',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [],
 													distance: [
@@ -4187,7 +4236,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Earth',
@@ -4290,7 +4340,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Fire',
@@ -4343,7 +4394,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: 'The target force moves a creature or object.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Fire',
@@ -4533,7 +4585,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: 'The target starts their turn or takes damage.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Green',
@@ -4610,7 +4663,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Green',
@@ -4761,7 +4815,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic',
@@ -4814,7 +4869,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: 'The target starts their turn, moves, or is force moved.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic',
@@ -4879,7 +4935,8 @@ export const polderElementalist = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic',
@@ -5110,7 +5167,8 @@ export const polderElementalist = {
 										free: false,
 										trigger: '',
 										time: '',
-										qualifiers: []
+										qualifiers: [],
+										freeStrike: false
 									},
 									keywords: [
 										'Magic'

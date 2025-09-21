@@ -123,6 +123,10 @@ export class PlaybookUpdateLogic {
 			if (e.malice === undefined) {
 				e.malice = 0;
 			}
+
+			if (e.additionalTurnsTaken === undefined) {
+				e.additionalTurnsTaken = [];
+			}
 		});
 
 		if (playbook.montages === undefined) {

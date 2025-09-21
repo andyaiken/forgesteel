@@ -86,7 +86,8 @@ export const wodeElfTroubadour = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic',
@@ -428,7 +429,8 @@ export const wodeElfTroubadour = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Melee',
@@ -513,7 +515,8 @@ export const wodeElfTroubadour = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Area',
@@ -566,7 +569,8 @@ export const wodeElfTroubadour = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Area',
@@ -684,7 +688,8 @@ export const wodeElfTroubadour = {
 													free: false,
 													trigger: '',
 													time: '',
-													qualifiers: []
+													qualifiers: [],
+													freeStrike: false
 												},
 												keywords: [],
 												distance: [
@@ -996,7 +1001,8 @@ export const wodeElfTroubadour = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Area',
@@ -1280,7 +1286,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1344,7 +1351,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1398,7 +1406,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1455,7 +1464,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1528,7 +1538,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1594,7 +1605,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1653,7 +1665,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1710,7 +1723,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1768,7 +1782,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1820,7 +1835,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic'
@@ -1863,7 +1879,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1907,7 +1924,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1964,7 +1982,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2020,7 +2039,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2078,7 +2098,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2145,7 +2166,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2189,7 +2211,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2246,7 +2269,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2290,7 +2314,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2334,7 +2359,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2386,7 +2412,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic'
@@ -2429,7 +2456,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2473,7 +2501,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic'
@@ -2516,7 +2545,8 @@ export const wodeElfTroubadour = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2605,7 +2635,8 @@ export const wodeElfTroubadour = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Area',
@@ -2658,7 +2689,8 @@ export const wodeElfTroubadour = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic',
@@ -2717,7 +2749,8 @@ export const wodeElfTroubadour = {
 											free: false,
 											trigger: 'The target makes an ability roll that has an edge, a double edge, a bane, or a double bane.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Ranged'
@@ -2788,7 +2821,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -2843,7 +2877,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -2941,7 +2976,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3014,7 +3050,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3077,7 +3114,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3165,7 +3203,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3241,7 +3280,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3333,7 +3373,8 @@ export const wodeElfTroubadour = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Area',
@@ -3386,7 +3427,8 @@ export const wodeElfTroubadour = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -3442,7 +3484,8 @@ export const wodeElfTroubadour = {
 											free: false,
 											trigger: 'The target takes damage from a melee strike.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Melee'
@@ -3506,7 +3549,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3562,7 +3606,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3673,7 +3718,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3746,7 +3792,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3810,7 +3857,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3899,7 +3947,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Charge',
@@ -3964,7 +4013,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -4069,7 +4119,8 @@ export const wodeElfTroubadour = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Area',
@@ -4136,7 +4187,8 @@ export const wodeElfTroubadour = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Magic',
@@ -4202,7 +4254,8 @@ export const wodeElfTroubadour = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Area',
@@ -4258,7 +4311,8 @@ export const wodeElfTroubadour = {
 											free: false,
 											trigger: 'The target uses an ability that targets only one enemy and costs 3 or fewer of their Heroic Resource.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Ranged'
@@ -4329,7 +4383,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -4384,7 +4439,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4468,7 +4524,8 @@ export const wodeElfTroubadour = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Area',
@@ -4521,7 +4578,8 @@ export const wodeElfTroubadour = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Area',
@@ -4631,7 +4689,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4698,7 +4757,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4773,7 +4833,8 @@ export const wodeElfTroubadour = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Area',
@@ -4826,7 +4887,8 @@ export const wodeElfTroubadour = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Area',
@@ -4895,7 +4957,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4962,7 +5025,8 @@ export const wodeElfTroubadour = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',

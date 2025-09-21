@@ -74,7 +74,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 						id: 'elementalist-1-4',
 						name: 'Hurl Element',
 						description: 'You hurl a ball of elemental energy at an unsuspecting foe.',
-						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a ranged free strike' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a ranged free strike' ], freeStrike: true }),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',

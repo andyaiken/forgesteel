@@ -10,6 +10,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { Markdown } from '../../controls/markdown/markdown';
 import { Modal } from '../modal/modal';
+import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { Random } from '../../../utils/random';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
@@ -88,6 +89,7 @@ export const EncounterTurnModal = (props: Props) => {
 				copy.round += 1;
 				copy.groups.forEach(g => g.encounterState = (g.id === combatantID) ? 'current' : 'ready');
 				copy.heroes.forEach(h => h.state.encounterState = (h.id === combatantID) ? 'current' : 'ready');
+				copy.additionalTurnsTaken = [];
 
 				setEncounter(copy);
 				props.updateEncounter(copy);
@@ -103,7 +105,17 @@ export const EncounterTurnModal = (props: Props) => {
 				if (nextID) {
 					copy.groups
 						.filter(g => g.id === currentID)
-						.forEach(g => g.encounterState = 'finished');
+						.forEach(g => {
+							const isSolo = g.slots.some(slot => slot.monsters.some(m => m.role.organization === MonsterOrganizationType.Solo));
+
+							// Allow for multiple turns
+							if (isSolo && !copy.additionalTurnsTaken.includes(g.id)) {
+								g.encounterState = 'ready';
+								copy.additionalTurnsTaken.push(g.id);
+							} else {
+								g.encounterState = 'finished';
+							}
+						});
 					copy.heroes
 						.filter(h => h.id === currentID)
 						.forEach(h => h.state.encounterState = 'finished');
@@ -114,7 +126,9 @@ export const EncounterTurnModal = (props: Props) => {
 						.filter(h => h.id === nextID)
 						.forEach(h => h.state.encounterState = 'current');
 				} else {
-					copy.groups.forEach(g => g.encounterState = 'ready');
+					copy.groups.forEach(g => {
+						g.encounterState = 'ready';
+					});
 					copy.heroes.forEach(h => h.state.encounterState = 'ready');
 				}
 

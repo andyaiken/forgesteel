@@ -34,4 +34,5 @@ export interface Encounter extends Element {
 	initiative: 'heroes' | 'monsters' | undefined;
 	round: number;
 	malice: number;
+	additionalTurnsTaken: string[];
 }

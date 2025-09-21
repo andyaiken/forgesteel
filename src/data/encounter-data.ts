@@ -147,7 +147,8 @@ export class EncounterData {
 		notes: [],
 		initiative: undefined,
 		round: 1,
-		malice: 0
+		malice: 0,
+		additionalTurnsTaken: []
 	};
 
 	static dragonAttack: Encounter = {
@@ -191,6 +192,7 @@ export class EncounterData {
 		notes: [],
 		initiative: undefined,
 		round: 1,
-		malice: 0
+		malice: 0,
+		additionalTurnsTaken: []
 	};
 }

@@ -344,7 +344,8 @@ export const orcConduit = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Area',
@@ -421,7 +422,8 @@ export const orcConduit = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Area',
@@ -494,7 +496,8 @@ export const orcConduit = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Magic',
@@ -617,7 +620,8 @@ export const orcConduit = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Area',
@@ -706,7 +710,8 @@ export const orcConduit = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Area',
@@ -779,7 +784,8 @@ export const orcConduit = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Area',
@@ -924,7 +930,8 @@ export const orcConduit = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Magic',
@@ -1058,7 +1065,8 @@ export const orcConduit = {
 													free: false,
 													trigger: 'The target makes an ability roll for a damage-dealing ability.',
 													time: '',
-													qualifiers: []
+													qualifiers: [],
+													freeStrike: false
 												},
 												keywords: [
 													'Magic',
@@ -1120,7 +1128,8 @@ export const orcConduit = {
 													free: false,
 													trigger: 'The target would take damage from an ability that uses a power roll.',
 													time: '',
-													qualifiers: []
+													qualifiers: [],
+													freeStrike: false
 												},
 												keywords: [
 													'Magic',
@@ -1184,7 +1193,8 @@ export const orcConduit = {
 												free: false,
 												trigger: 'The target makes an ability roll for a damage-dealing ability.',
 												time: '',
-												qualifiers: []
+												qualifiers: [],
+												freeStrike: false
 											},
 											keywords: [
 												'Magic',
@@ -2142,7 +2152,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2199,7 +2210,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2256,7 +2268,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2309,7 +2322,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2365,7 +2379,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2422,7 +2437,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2475,7 +2491,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2532,7 +2549,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2585,7 +2603,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2642,7 +2661,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2686,7 +2706,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2739,7 +2760,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2796,7 +2818,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2849,7 +2872,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2902,7 +2926,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2958,7 +2983,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3002,7 +3028,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3059,7 +3086,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -3103,7 +3131,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -3160,7 +3189,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3216,7 +3246,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -3273,7 +3304,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3326,7 +3358,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -3370,7 +3403,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -3414,7 +3448,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -3458,7 +3493,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3502,7 +3538,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -3546,7 +3583,8 @@ export const orcConduit = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',

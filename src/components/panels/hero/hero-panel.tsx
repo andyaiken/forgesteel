@@ -1109,7 +1109,8 @@ export const HeroPanel = (props: Props) => {
 				case 'Free Strikes':
 					return getAbilitiesSection('Free Strikes', [
 						{ ability: AbilityData.freeStrikeMelee, source: 'Standard' },
-						{ ability: AbilityData.freeStrikeRanged, source: 'Standard' }
+						{ ability: AbilityData.freeStrikeRanged, source: 'Standard' },
+						...abilities.filter(a => a.ability.type.freeStrike)
 					]);
 			}
 

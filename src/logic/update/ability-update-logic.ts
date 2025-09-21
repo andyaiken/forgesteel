@@ -8,6 +8,10 @@ export class AbilityUpdateLogic {
 			ability.type.usage = AbilityUsage.MainAction;
 		}
 
+		if (ability.type.freeStrike === undefined) {
+			ability.type.freeStrike = false;
+		}
+
 		if (ability.sections === undefined) {
 			ability.sections = [];
 		}

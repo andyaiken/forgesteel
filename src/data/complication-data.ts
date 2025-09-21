@@ -628,7 +628,7 @@ You have a piece of magic jewelry, such as a signet ring. As a maneuver, you can
 	static followingInTheFootsteps: Complication = {
 		id: 'comp-followingInTheFootsteps',
 		name: 'Following in the Footsteps',
-		description: 'Your personal idol was a mighty hero, and you have modeled yourself after them. YFrom studying the many heroic tales told of them, you hope to someday learn their most famous battle technique.',
+		description: 'Your personal idol was a mighty hero, and you have modeled yourself after them. From studying the many heroic tales told of them, you hope to someday learn their most famous battle technique.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-followingInTheFootsteps-b',

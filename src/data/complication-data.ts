@@ -1032,7 +1032,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static lostInTime: Complication = {
 		id: 'comp-lostInTime',
 		name: 'Lost in Time',
-		description: 'In a long-ago age, a cataclysm overtook your city. You weren’t killed, but some arcane accident caused you to be suspended in time until now. Alone, you must navigate the world around you with a head full of outdated memories - and a few ancient secrets — and a few ancient secrets.',
+		description: 'In a long-ago age, a cataclysm overtook your city. You weren’t killed, but some arcane accident caused you to be suspended in time until now. Alone, you must navigate the world around you with a head full of outdated memories - and a few ancient secrets.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lostInTime-b',

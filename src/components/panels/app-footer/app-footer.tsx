@@ -1,5 +1,5 @@
-import { Badge, Button, Divider, Flex, Switch, Tooltip } from 'antd';
-import { BookOutlined, MoonOutlined, PlayCircleOutlined, ReadOutlined, SunOutlined, TeamOutlined } from '@ant-design/icons';
+import { Badge, Button, Divider, Flex, Segmented, Tooltip } from 'antd';
+import { BookOutlined, MoonOutlined, PlayCircleOutlined, ReadOutlined, SunOutlined, TeamOutlined, SettingOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { SyncStatus } from '../sync-status/sync-status';
 import { useMediaQuery } from '../../../hooks/use-media-query';
@@ -21,7 +21,7 @@ interface Props {
 export const AppFooter = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
-	const { isDark, toggleTheme } = useTheme();
+	const { themeMode, setTheme } = useTheme();
 
 	try {
 		return (
@@ -53,8 +53,17 @@ export const AppFooter = (props: Props) => {
 					}
 					<div className='action-buttons-panel'>
 						<SyncStatus />
-						<Tooltip title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}>
-							<Switch checked={isDark} checkedChildren={<MoonOutlined />} unCheckedChildren={<SunOutlined />} onChange={toggleTheme} className='theme-toggle' />
+						<Tooltip title='Theme mode'>
+							<Segmented
+								value={themeMode}
+								onChange={setTheme}
+								options={[
+									{ label: 'Light', value: 'light', icon: <SunOutlined /> },
+									{ label: 'System', value: 'system', icon: <SettingOutlined /> },
+									{ label: 'Dark', value: 'dark', icon: <MoonOutlined /> },
+								]}
+								className='theme-toggle'
+							/>
 						</Tooltip>
 						<Button onClick={props.showReference}>Reference</Button>
 						<Button onClick={props.showRoll}>Roll</Button>

@@ -105,7 +105,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-blade-of-quintessence-1a',
 						name: '',
-						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Weapon ],
 						value: 1
 					})
 				]
@@ -120,12 +120,6 @@ export class LeveledWeaponData {
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-blade-of-quintessence-5a',
-						name: '',
-						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Ranged ],
-						value: 1
-					}),
-					FactoryLogic.feature.createAbilityDamage({
-						id: 'item-blade-of-quintessence-5b',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon ],
 						value: 1

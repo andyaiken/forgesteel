@@ -11,7 +11,7 @@ import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { PerkList } from '../../../../enums/perk-list';
-import { SheetFormatter } from '../../../../utils/sheet-formatter';
+import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 import { SkillList } from '../../../../enums/skill-list';
 
 import './feature-component.scss';

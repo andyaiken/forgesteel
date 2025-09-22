@@ -2,13 +2,13 @@ import { Divider, Drawer, FloatButton, Segmented, Space } from 'antd';
 import { useMemo, useState } from 'react';
 import { Career } from '../../../../models/career';
 import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
-import { CharacterSheetBuilder } from '../../../../utils/sheet-builder';
 import { ComplicationCard } from '../../../panels/hero-sheet/complication-card/complication-card';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Hero } from '../../../../models/hero';
 import { HeroSheetPage } from './hero-sheet-page';
 import { Options } from '../../../../models/options';
 import { SettingFilled } from '@ant-design/icons';
+import { SheetBuilder } from '../../../../logic/hero-sheet/sheet-builder';
 import { SheetPageSize } from '../../../../enums/sheet-page-size';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -166,12 +166,12 @@ export const HeroSheetPreviewPage = (props: Props) => {
 				});
 				return withIncidents;
 			})
-			.map(CharacterSheetBuilder.buildCareerSheet);
+			.map(SheetBuilder.buildCareerSheet);
 	};
 
 	const getAllComplications = () => {
 		return SourcebookLogic.getComplications(props.sourcebooks)
-			.map(CharacterSheetBuilder.buildComplicationSheet);
+			.map(SheetBuilder.buildComplicationSheet);
 	};
 
 	const getPreviewPage = () => {

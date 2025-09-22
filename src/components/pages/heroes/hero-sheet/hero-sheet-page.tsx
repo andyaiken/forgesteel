@@ -1,9 +1,8 @@
 import { ClimbCreaturesCard, ClimbSwimReferenceCard, EdgesBanesReferenceCard, FallingReferenceCard, JumpReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
-import { ExtraCards, SheetLayout } from '../../../../utils/sheet-layout';
+import { ExtraCards, SheetLayout } from '../../../../logic/hero-sheet/sheet-layout';
 import { AncestryTraitsCard } from '../../../panels/hero-sheet/ancestry-traits-card/ancestry-traits-card';
 import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
 import { CharacterSheet } from '../../../../models/character-sheet';
-import { CharacterSheetBuilder } from '../../../../utils/sheet-builder';
 import { ClassFeaturesCard } from '../../../panels/hero-sheet/class-features-card/class-features-card';
 import { ComplicationCard } from '../../../panels/hero-sheet/complication-card/complication-card';
 import { ConditionsCard } from '../../../panels/hero-sheet/conditions-card/conditions-card';
@@ -23,7 +22,8 @@ import { PotenciesCard } from '../../../panels/hero-sheet/potencies-card/potenci
 import { PrimaryReferenceCard } from '../../../panels/hero-sheet/reference/primary-reference-card';
 import { ProjectsCard } from '../../../panels/hero-sheet/projects-card/projects-card';
 import { RetainerCard } from '../../../panels/hero-sheet/follower-card/retainer-card';
-import { SheetFormatter } from '../../../../utils/sheet-formatter';
+import { SheetBuilder } from '../../../../logic/hero-sheet/sheet-builder';
+import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 import { SkillsCard } from '../../../panels/hero-sheet/skills-card/skills-card';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StatsResourcesCard } from '../../../panels/hero-sheet/stats-resources-card/stats-resources-card';
@@ -42,7 +42,7 @@ export const HeroSheetPage = (props: Props) => {
 	const hero = useMemo(() => props.hero, [ props.hero ]);
 
 	const character = useMemo(
-		() => CharacterSheetBuilder.buildSheetForHero(hero, props.sourcebooks, props.options),
+		() => SheetBuilder.buildSheetForHero(hero, props.sourcebooks, props.options),
 		[ hero, props.sourcebooks, props.options ]
 	);
 

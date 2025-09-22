@@ -1,9 +1,9 @@
-import { AbilitySheet, CharacterSheet } from '../models/character-sheet';
+import { AbilitySheet, CharacterSheet } from '../../models/character-sheet';
 import { Fragment, JSX } from 'react';
-import { AbilityCard } from '../components/panels/hero-sheet/ability-card/ability-card';
-import { Options } from '../models/options';
+import { AbilityCard } from '../../components/panels/hero-sheet/ability-card/ability-card';
+import { Options } from '../../models/options';
 import { SheetFormatter } from './sheet-formatter';
-import { SheetPageSize } from '../enums/sheet-page-size';
+import { SheetPageSize } from '../../enums/sheet-page-size';
 
 export interface FillerCard {
 	element: JSX.Element;

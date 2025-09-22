@@ -1,34 +1,34 @@
-import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet, FollowerSheet, ItemSheet } from '../models/character-sheet';
-import { Ability } from '../models/ability';
-import { AbilityData } from '../data/ability-data';
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { AbilityLogic } from '../logic/ability-logic';
-import { AbilityUsage } from '../enums/ability-usage';
-import { Career } from '../models/career';
-import { Characteristic } from '../enums/characteristic';
-import { Collections } from './collections';
-import { Complication } from '../models/complication';
-import { ConditionType } from '../enums/condition-type';
-import { CreatureLogic } from '../logic/creature-logic';
-import { DamageModifierType } from '../enums/damage-modifier-type';
-import { FactoryLogic } from '../logic/factory-logic';
-import { Feature } from '../models/feature';
-import { FeatureLogic } from '../logic/feature-logic';
-import { FeatureType } from '../enums/feature-type';
-import { Follower } from '../models/follower';
-import { Format } from './format';
-import { FormatLogic } from '../logic/format-logic';
-import { Hero } from '../models/hero';
-import { HeroLogic } from '../logic/hero-logic';
-import { Item } from '../models/item';
-import { Monster } from '../models/monster';
-import { MonsterLogic } from '../logic/monster-logic';
-import { Options } from '../models/options';
+import { AbilitySheet, CareerSheet, CharacterSheet, ComplicationSheet, FollowerSheet, ItemSheet } from '../../models/character-sheet';
+import { Ability } from '../../models/ability';
+import { AbilityData } from '../../data/ability-data';
+import { AbilityKeyword } from '../../enums/ability-keyword';
+import { AbilityLogic } from '../ability-logic';
+import { AbilityUsage } from '../../enums/ability-usage';
+import { Career } from '../../models/career';
+import { Characteristic } from '../../enums/characteristic';
+import { Collections } from '../../utils/collections';
+import { Complication } from '../../models/complication';
+import { ConditionType } from '../../enums/condition-type';
+import { CreatureLogic } from '../creature-logic';
+import { DamageModifierType } from '../../enums/damage-modifier-type';
+import { FactoryLogic } from '../factory-logic';
+import { Feature } from '../../models/feature';
+import { FeatureLogic } from '../feature-logic';
+import { FeatureType } from '../../enums/feature-type';
+import { Follower } from '../../models/follower';
+import { Format } from '../../utils/format';
+import { FormatLogic } from '../format-logic';
+import { Hero } from '../../models/hero';
+import { HeroLogic } from '../hero-logic';
+import { Item } from '../../models/item';
+import { Monster } from '../../models/monster';
+import { MonsterLogic } from '../monster-logic';
+import { Options } from '../../models/options';
 import { SheetFormatter } from './sheet-formatter';
-import { Sourcebook } from '../models/sourcebook';
-import { SourcebookLogic } from '../logic/sourcebook-logic';
+import { Sourcebook } from '../../models/sourcebook';
+import { SourcebookLogic } from '../sourcebook-logic';
 
-export class CharacterSheetBuilder {
+export class SheetBuilder {
 	static buildSheetForHero = (hero: Hero, sourcebooks: Sourcebook[], options: Options) => {
 		const sheet: CharacterSheet = {
 			hero: hero,
@@ -192,12 +192,12 @@ export class CharacterSheetBuilder {
 				switch (modifier.type) {
 					case FeatureType.Multiple:
 						modifier.data.features.forEach(f => {
-							CharacterSheetBuilder.populateModifierAugmentation(f, hero, sheet);
+							SheetBuilder.populateModifierAugmentation(f, hero, sheet);
 							coveredFeatureIds.push(f.id);
 						});
 						break;
 					default:
-						CharacterSheetBuilder.populateModifierAugmentation(modifier, hero, sheet);
+						SheetBuilder.populateModifierAugmentation(modifier, hero, sheet);
 						coveredFeatureIds.push(modifier.id);
 						break;
 				}
@@ -370,7 +370,7 @@ export class CharacterSheetBuilder {
 			case FeatureType.Bonus: {
 				value = HeroLogic.calculateModifierValue(hero, feature.data);
 				const field = feature.data.field.toString();
-				CharacterSheetBuilder.modifierFieldMapping[field](sheet, value);
+				SheetBuilder.modifierFieldMapping[field](sheet, value);
 				break;
 			}
 			case FeatureType.AbilityDistance:

@@ -1,7 +1,7 @@
 import { LabeledBooleanField, LabeledTextField } from '../components/labeled-field';
 import { CharacterSheet } from '../../../../models/character-sheet';
 import { FeatureComponent } from '../components/feature-component';
-import { SheetFormatter } from '../../../../utils/sheet-formatter';
+import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 
 import './modifiers-card.scss';
 

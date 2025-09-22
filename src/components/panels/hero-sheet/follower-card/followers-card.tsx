@@ -1,6 +1,6 @@
 import { FollowerSheet } from '../../../../models/character-sheet';
 import { Options } from '../../../../models/options';
-import { SheetFormatter } from '../../../../utils/sheet-formatter';
+import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 import { useMemo } from 'react';
 
 import './follower-card.scss';

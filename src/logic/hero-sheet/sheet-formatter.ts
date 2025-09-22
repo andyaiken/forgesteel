@@ -1,28 +1,27 @@
-import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../models/ability';
+import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../../models/ability';
+import { AbilitySheet, FollowerSheet, ItemSheet } from '../../models/character-sheet';
+import { AbilityLogic } from '../ability-logic';
+import { Characteristic } from '../../enums/characteristic';
+import { Collections } from '../../utils/collections';
+import { Feature } from '../../models/feature';
+import { FeatureType } from '../../enums/feature-type';
+import { Format } from '../../utils/format';
+import { Hero } from '../../models/hero';
+import { Monster } from '../../models/monster';
+import { Title } from '../../models/title';
+import { Utils } from '../../utils/utils';
 
-import { AbilitySheet, FollowerSheet, ItemSheet } from '../models/character-sheet';
-import { AbilityLogic } from '../logic/ability-logic';
-import { Characteristic } from '../enums/characteristic';
-import { Collections } from './collections';
-import { Feature } from '../models/feature';
-import { FeatureType } from '../enums/feature-type';
-import { Format } from './format';
-import { Hero } from '../models/hero';
-import { Monster } from '../models/monster';
-import { Title } from '../models/title';
-import { Utils } from './utils';
-
-import areaIcon from '../assets/icons/area-icon.svg';
-import burstIcon from '../assets/icons/burst-icon.svg';
-import meleeIcon from '../assets/icons/sword.svg';
-import meleeRangedIcon from '../assets/icons/melee ranged.svg';
-import rangedIcon from '../assets/icons/ranged.svg';
-import rollT1Icon from '../assets/icons/power-roll-t1.svg';
-import rollT2Icon from '../assets/icons/power-roll-t2.svg';
-import rollT3Icon from '../assets/icons/power-roll-t3.svg';
-import selfIcon from '../assets/icons/self.svg';
-import starIcon from '../assets/icons/star.svg';
-import triggerIcon from '../assets/icons/trigger-solid.svg';
+import areaIcon from '../../assets/icons/area-icon.svg';
+import burstIcon from '../../assets/icons/burst-icon.svg';
+import meleeIcon from '../../assets/icons/sword.svg';
+import meleeRangedIcon from '../../assets/icons/melee ranged.svg';
+import rangedIcon from '../../assets/icons/ranged.svg';
+import rollT1Icon from '../../assets/icons/power-roll-t1.svg';
+import rollT2Icon from '../../assets/icons/power-roll-t2.svg';
+import rollT3Icon from '../../assets/icons/power-roll-t3.svg';
+import selfIcon from '../../assets/icons/self.svg';
+import starIcon from '../../assets/icons/star.svg';
+import triggerIcon from '../../assets/icons/trigger-solid.svg';
 
 export class SheetFormatter {
 	static getPageId = (heroId: string, key: string) => {

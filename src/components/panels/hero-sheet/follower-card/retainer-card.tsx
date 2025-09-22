@@ -3,7 +3,7 @@ import { AbilityComponent } from '../components/ability-component';
 import { FeatureComponent } from '../components/feature-component';
 import { Options } from '../../../../models/options';
 import { RecoveriesComponent } from '../components/recoveries-component';
-import { SheetFormatter } from '../../../../utils/sheet-formatter';
+import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 import { StaminaComponent } from '../components/stamina-component';
 import { Utils } from '../../../../utils/utils';
 import { useMemo } from 'react';

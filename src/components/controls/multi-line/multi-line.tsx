@@ -1,5 +1,5 @@
 import { Alert, Button, Input } from 'antd';
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
 import './multi-line.scss';
@@ -14,6 +14,13 @@ interface Props {
 }
 
 export const MultiLine = (props: Props) => {
+	const [ value, setValue ] = useState<string>(props.value);
+
+	const onChange = (text: string) => {
+		setValue(text);
+		props.onChange(text);
+	};
+
 	try {
 		return (
 			<div className='multi-line' style={props.style}>
@@ -21,8 +28,8 @@ export const MultiLine = (props: Props) => {
 					className='multi-line-input'
 					style={props.inputStyle}
 					placeholder={props.placeholder}
-					value={props.value}
-					onChange={e => props.onChange(e.target.value)}
+					value={value}
+					onChange={e => onChange(e.target.value)}
 				/>
 				{
 					(props.showMarkdownPrompt ?? true) ?

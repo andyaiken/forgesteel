@@ -58,15 +58,6 @@ export const AbilityInfoPanel = (props: Props) => {
 				<div className='ability-info-panel'>
 					<div className='ds-text compact-text bold-text'>{type}</div>
 					{
-						props.ability.type.trigger ?
-							<Field
-								compact={true}
-								label='Trigger'
-								value={props.ability.type.trigger}
-							/>
-							: null
-					}
-					{
 						distance ?
 							<Field
 								compact={true}
@@ -81,6 +72,15 @@ export const AbilityInfoPanel = (props: Props) => {
 								compact={true}
 								label='Target'
 								value={props.ability.target}
+							/>
+							: null
+					}
+					{
+						props.ability.type.trigger ?
+							<Field
+								compact={true}
+								label='Trigger'
+								value={props.ability.type.trigger}
 							/>
 							: null
 					}

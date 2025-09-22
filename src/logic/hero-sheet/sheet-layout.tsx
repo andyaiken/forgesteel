@@ -89,7 +89,7 @@ export class SheetLayout {
 		} else {
 			availableLinesY += rowH;
 		}
-		// console.log(`Filling ${spaceInRow} spaces in current row, with ${rowH} (& total ${availableLinesY}) available Y lines`);
+		// console.log(`Filling ${spaceInRow} spaces in current row, with currentH=${rowH} (& total ${availableLinesY}) available Y lines`);
 		nextCard: while (availableLinesY > 0 && (extraCards.required.find(c => !c.shown) || extraCards.optional.find(c => !c.shown))) {
 			spaceInRow = (slotsToFillInRow % layout.perRow) || layout.perRow;
 			if (spaceInRow === layout.perRow) {
@@ -100,27 +100,44 @@ export class SheetLayout {
 					availableLinesY -= 2.5; // For vertical card gap between rows
 				rowH = 0;
 			}
-			// console.log('Available space in current row: ', spaceInRow, ' H:', availableLinesY);
-			for (const card of extraCards.required) {
-				if (!card.shown && card.width <= spaceInRow && card.height <= availableLinesY) {
-					// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
-					refCards.push(card.element);
-					slotsToFillInRow -= card.width;
-					card.shown = true;
-					rowH = Math.max(rowH, card.height);
-					continue nextCard;
-				}
+			// console.log('Available space in current row:', spaceInRow, 'current rowH:', rowH, 'overall H:', availableLinesY);
+
+			// Space filling precedence:
+			//	1. Largest required card under rowH
+			let card = extraCards.required.filter(c => !c.shown && c.width <= spaceInRow)
+				.sort((a, b) => b.height - a.height)
+				.find(c => c.height <= rowH);
+
+			//	2. Smallest required card under availableLinesY
+			if (!card) {
+				card = extraCards.required.filter(c => !c.shown && c.width <= spaceInRow)
+					.sort((a, b) => a.height - b.height)
+					.find(c => c.height <= availableLinesY);
 			}
-			for (const card of extraCards.optional) {
-				if (!card.shown && card.width <= spaceInRow && card.height <= availableLinesY) {
-					// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
-					refCards.push(card.element);
-					slotsToFillInRow -= card.width;
-					card.shown = true;
-					rowH = Math.max(rowH, card.height);
-					continue nextCard;
-				}
+
+			//  3. Largest optional card under rowH
+			if (!card) {
+				card = extraCards.optional.filter(c => !c.shown && c.width <= spaceInRow)
+					.sort((a, b) => b.height - a.height)
+					.find(c => c.height <= rowH);
 			}
+
+			//	4. Smallest under availableLinesY
+			if (!card) {
+				card = extraCards.optional.filter(c => !c.shown && c.width <= spaceInRow)
+					.sort((a, b) => a.height - b.height)
+					.find(c => c.height <= availableLinesY);
+			}
+
+			if (card) {
+				// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
+				refCards.push(card.element);
+				slotsToFillInRow -= card.width;
+				card.shown = true;
+				rowH = Math.max(rowH, card.height);
+				continue nextCard;
+			}
+
 			// no cards found to fill the spot, clean up and break out
 			if (spaceInRow !== layout.perRow) {
 				// console.log('Need to cleanup partial row!');
@@ -167,7 +184,7 @@ export class SheetLayout {
 			// build a single page
 			const pageStart = n;
 			let pageH = 0;
-			const pageAbilities: AbilitySheet[] = [];
+			let pageAbilities: AbilitySheet[] = [];
 			while (n < allAbilities.length && pageH < layout.linesY) {
 				// get a row, calculate height
 				const rowStart = n;
@@ -190,6 +207,15 @@ export class SheetLayout {
 				pageH += rowH;
 				// console.log(`Row (${rowStart}, ${rowEnd}):`, rowAbilities.map(a => a.name), 'Height', rowH);
 			}
+			const cardsInLastRow = (pageAbilities.length % layout.perRow) || layout.perRow;
+			if (cardsInLastRow !== layout.perRow) {
+				// console.log('Need to cleanup partial abilities row!');
+				// Incomplete row, remove partial row
+				const newEnd = pageAbilities.length - cardsInLastRow;
+				n -= cardsInLastRow;
+				pageAbilities = pageAbilities.slice(0, newEnd);
+			}
+
 			if (n === pageStart) {
 				console.warn('Didn\'t add any abilities to this page!');
 				n = allAbilities.length;

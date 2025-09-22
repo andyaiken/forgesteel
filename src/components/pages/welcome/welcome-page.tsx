@@ -9,6 +9,7 @@ import { useNavigation } from '../../../hooks/use-navigation';
 import { useState } from 'react';
 
 import './welcome-page.scss';
+import { Trans, useTranslation } from 'react-i18next';
 
 interface Props {
 	highlightAbout: boolean;
@@ -20,6 +21,7 @@ interface Props {
 export const WelcomePage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
+	const { t, i18n } = useTranslation([ 'common', 'welcomePage' ]);
 	const [ page, setPage ] = useState<'player' | 'director-prep' | 'director-run' | 'creator'>('player');
 
 	const getContent = (type: 'player' | 'director-prep' | 'director-run' | 'creator') => {
@@ -28,15 +30,27 @@ export const WelcomePage = (props: Props) => {
 				return (
 					<div className='welcome-section'>
 						<HeaderText
-							extra={<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>}
+							extra={<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>{t('Heroes')}</Button>}
 						>
-							For Players
+							{t('For Players', { ns: 'welcomePage' })}
 						</HeaderText>
 						<div className='ds-text'>
-							If you're a <b>DRAW STEEL</b> player, you've come to the right place.
+							<Trans
+								i18n={i18n}
+								ns='welcomePage'
+								i18nKey='theRightPlace'
+								components={{ bold: <b /> }}
+								defaults="If you're a <bold>DRAW STEEL</bold> player, you've come to the right place."
+							/>
 						</div>
 						<div className='ds-text'>
-							In the <b>HEROES</b> screen you can easily create your characters; the hero builder leads you through the process step-by-step.
+							<Trans
+								i18n={i18n}
+								ns='welcomePage'
+								i18nKey='heroScreenDescription'
+								components={{ bold: <b /> }}
+								defaults='In the <bold>HEROES</bold> screen you can easily create your characters; the hero builder leads you through the process step-by-step.'
+							/>
 						</div>
 						<ul>
 							<li>

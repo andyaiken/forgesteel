@@ -16,7 +16,8 @@ import { createRoot } from 'react-dom/client';
 import localforage from 'localforage';
 
 import './index.scss';
-
+import './i18n/config.ts';
+// import './i18n.tsx';
 // Register Service Worker for PWA functionality
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', () => {

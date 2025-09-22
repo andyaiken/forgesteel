@@ -177,22 +177,27 @@ export class SheetLayout {
 			allAbilities.sort(SheetFormatter.sortAbilitiesByLength);
 		}
 
-		const abilitiesSplit: { abilities: AbilitySheet[], height: number }[] = [];
+		const pageClasses = [ 'abilities', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
+		let p = 1;
+		const abilityCardPages: JSX.Element[] = [];
 		// console.log('Layout:', layout);
 		let n = 0;
 		while (n < allAbilities.length) {
 			// build a single page
 			const pageStart = n;
 			let pageH = 0;
+			let rowH = 0;
 			let pageAbilities: AbilitySheet[] = [];
+			let refCards: JSX.Element[] = [];
+
 			while (n < allAbilities.length && pageH < layout.linesY) {
 				// get a row, calculate height
 				const rowStart = n;
 				const rowEnd = Math.min(n + layout.perRow, allAbilities.length);
 				const rowAbilities = allAbilities.slice(rowStart, rowEnd);
 
-				let rowH = 0;
-				rowAbilities.every(a => {
+				rowH = 0;
+				const allAdded = rowAbilities.every(a => {
 					const aH = SheetFormatter.calculateAbilitySize(a, layout.cardLineLen);
 					if (pageH + aH <= layout.linesY) {
 						pageAbilities.push(a);
@@ -200,56 +205,48 @@ export class SheetLayout {
 						n += 1;
 						return true;
 					} else {
-						pageH = layout.linesY;
+						// pageH = layout.linesY;
 						return false;
 					}
 				});
 				pageH += rowH;
-				// console.log(`Row (${rowStart}, ${rowEnd}):`, rowAbilities.map(a => a.name), 'Height', rowH);
+				// console.log(`Row (${rowStart + 1}, ${n}):`, pageAbilities.slice(rowStart, n).map(a => a.name), 'Height', rowH);
+				if (!allAdded)
+					break;
 			}
-			const cardsInLastRow = (pageAbilities.length % layout.perRow) || layout.perRow;
-			if (cardsInLastRow !== layout.perRow) {
-				// console.log('Need to cleanup partial abilities row!');
-				// Incomplete row, remove partial row
-				const newEnd = pageAbilities.length - cardsInLastRow;
-				n -= cardsInLastRow;
-				pageAbilities = pageAbilities.slice(0, newEnd);
+			const abilitiesInLastRow = (pageAbilities.length % layout.perRow) || layout.perRow;
+			if (pageH < layout.linesY) {
+				// try to find filler cards that will fit
+				const spacesToFill = layout.perRow - abilitiesInLastRow;
+				// console.log(`Need more cards, with ${pageAbilities.length} existing cards to fill out rows of ${layout.perRow}`);
+				let spaceY = layout.linesY - pageH + rowH;
+				if (spacesToFill === 0) {
+					// new row, so remove prev rowH
+					spaceY -= rowH;
+					rowH = 0;
+				}
+				// console.log('overall spaceY:', spaceY, '/', layout.linesY, ' current rowH:', rowH);
+				refCards = SheetLayout.getFillerCards(spacesToFill, spaceY, rowH, extraCards, layout);
+				// console.log('reference cards:', refCards);
+
+				if (refCards.length < spacesToFill && abilitiesInLastRow < layout.perRow) {
+					// console.log('Need to cleanup partial abilities row!');
+					// Incomplete row, remove partial row
+					const newEnd = pageAbilities.length - abilitiesInLastRow;
+					n -= abilitiesInLastRow;
+					pageAbilities = pageAbilities.slice(0, newEnd);
+				}
 			}
 
 			if (n === pageStart) {
-				console.warn('Didn\'t add any abilities to this page!');
+				console.warn(`Didn't add any abilities to this page! (pg ${abilityCardPages.length}), n=${n}/${allAbilities.length}`);
 				n = allAbilities.length;
 			}
 			// console.log(`page abilities (${pageStart}, ${n}):`, pageAbilities);
-			abilitiesSplit.push({ abilities: pageAbilities, height: pageH });
-		}
-		// console.log('Abilities split: ', abilitiesSplit);
-
-		const abilityCardPages = abilitiesSplit.map((page, i) => {
-			const pageAbilities = page.abilities;
-			let refCards: JSX.Element[] = [];
-			const needMoreCards = ((pageAbilities.length % layout.perRow) !== 0) || page.height < layout.linesY;
-			if (needMoreCards) {
-				const spacesToFill = layout.perRow - (pageAbilities.length % layout.perRow);
-				// console.log(`Need more cards, with ${pageAbilities.length} existing cards to fill out rows of ${layout.perRow}`);
-				const numRows = Math.ceil(pageAbilities.length / layout.perRow);
-				let spaceY = layout.linesY;
-				let rowY = spaceY;
-				for (let r = 0; r < numRows; ++r) {
-					const iRowStart = r * layout.perRow;
-					const iRowEnd = Math.min(pageAbilities.length, (r + 1) * layout.perRow);
-					rowY = SheetFormatter.getLargestSize(pageAbilities.slice(iRowStart, iRowEnd), layout.cardLineLen);
-					// console.log(`row ${r} (${iRowStart}, ${iRowEnd}) H: `, rowY);
-					spaceY -= rowY;
-				}
-				// console.log('overall spaceY:', spaceY, '/', layout.linesY, ' current rowY:', rowY);
-				refCards = SheetLayout.getFillerCards(spacesToFill, spaceY, rowY, extraCards, layout);
-			}
-			const pageClasses = [ 'abilities', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
-			return (
-				<Fragment key={`abilities-${i}`}>
+			abilityCardPages.push(
+				<Fragment key={`abilities-${p++}`}>
 					<hr className='dashed' />
-					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId(character.hero.id, `abilities-${i}`)}>
+					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId(character.hero.id, `abilities-${p}`)}>
 						{pageAbilities.map(a =>
 							<AbilityCard
 								key={a.id}
@@ -260,7 +257,7 @@ export class SheetLayout {
 					</div>
 				</Fragment>
 			);
-		});
+		}
 		return abilityCardPages;
 	};
 

@@ -203,18 +203,20 @@ export class SheetLayout {
 						n += 1;
 						return true;
 					} else {
-						// pageH = layout.linesY;
 						return false;
 					}
 				});
 				pageH += rowH;
-				pageH += 2.5; // For vertical card gap between rows
-				// console.log(`Row (${rowStart + 1}, ${n}):`, pageAbilities.slice(rowStart, n).map(a => a.name), 'Height', rowH);
+				if (rowH > 0) {
+					pageH += 2.5; // For vertical card gap between rows
+					// console.log(`Row (${rowStart + 1}, ${n}):`, allAbilities.slice(rowStart, n).map(a => a.name), 'Height', rowH);
+				}
 				if (!allAdded)
 					break;
 			}
 			const abilitiesInLastRow = (pageAbilities.length % layout.perRow) || layout.perRow;
-			if (pageH < layout.linesY) {
+			// console.log('last row:', abilitiesInLastRow, 'pageH', pageH, 'lines', layout.linesY);
+			if (abilitiesInLastRow < layout.perRow || pageH < layout.linesY) {
 				// try to find filler cards that will fit
 				const spacesToFill = layout.perRow - abilitiesInLastRow;
 				let spaceY = layout.linesY - pageH + rowH;

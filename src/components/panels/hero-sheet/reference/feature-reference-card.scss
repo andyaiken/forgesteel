@@ -16,7 +16,7 @@
         list-style-type: disc;
     }
 
-    &.wide {
+    &.wide, &.extra-wide {
         display: grid;
         grid-template-rows: min-content 1fr;
         place-items: stretch;

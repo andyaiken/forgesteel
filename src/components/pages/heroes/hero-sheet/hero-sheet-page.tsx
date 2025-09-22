@@ -86,7 +86,10 @@ export const HeroSheetPage = (props: Props) => {
 			lineWidth = layout.cardGap + 2 * layout.cardLineLen;
 			invW = 2;
 			invH = Math.ceil(SheetFormatter.calculateInventorySize(character.inventory, lineWidth / 2) * 0.53);
-			invH = Math.min(layout.linesY, invH);// Will probably need a better solution at some point
+			if (invH > layout.linesY) {
+				console.warn('Inventory is still too long!');
+				invH = Math.min(layout.linesY, invH);// Will need a better solution at some point
+			}
 		}
 		// console.log('###### Inventory size: ', invH);
 		required.unshift({
@@ -105,11 +108,19 @@ export const HeroSheetPage = (props: Props) => {
 				refW = 3;
 				lineWidth = (2 * layout.cardGap) + (3 * layout.cardLineLen) * 0.49;
 				refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, lineWidth) * 0.52;
-				refH = Math.min(layout.linesY, refH);// Will probably need a better solution at some point
+				if (refH > layout.linesY && layout.perRow === 4) {
+					refW = 4;
+					lineWidth = (3 * layout.cardGap) + (4 * layout.cardLineLen) * 0.33;
+					refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, lineWidth) * 0.34;
+				}
+				if (refH > layout.linesY) {
+					console.warn('Features reference is still too long!');
+					refH = Math.min(layout.linesY, refH);// Will need a better solution at some point
+				}
 			}
 			// console.log('###### Reference size: ', refH);
 			required.unshift({
-				element: <FeatureReferenceCard character={character} columns={refW > 2} key='feature-reference' />,
+				element: <FeatureReferenceCard character={character} columns={refW - 1} key='feature-reference' />,
 				width: refW,
 				height: refH,
 				shown: false

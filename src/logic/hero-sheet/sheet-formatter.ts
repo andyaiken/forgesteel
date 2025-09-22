@@ -8,7 +8,7 @@ import { FeatureType } from '../../enums/feature-type';
 import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { Monster } from '../../models/monster';
-import { RulesItem } from '../models/rules-item';
+import { RulesItem } from '../../models/rules-item';
 import { Title } from '../../models/title';
 import { Utils } from '../../utils/utils';
 
@@ -112,7 +112,7 @@ export class SheetFormatter {
 		return text;
 	};
 
-	static shortenText = (text: string, splitAt: number = 2) => {
+	static shortenText = (text: string, splitAt: number = 1) => {
 		const split = text.trim().split('\n');
 		if (split.length > splitAt) {
 			text = split.slice(0, splitAt).join('\n') + '\n*…(continued in reference)…*';

@@ -32,6 +32,12 @@
 		display: flex;
 		align-items: center;
 		gap: 5px;
+
+		.theme-toggle {
+			&.ant-switch-checked {
+				background-color: #1677ff;
+			}
+		}
 	}
 }
 

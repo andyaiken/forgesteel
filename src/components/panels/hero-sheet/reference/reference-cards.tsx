@@ -1,8 +1,23 @@
-import rollT1Icon from '../../../../assets/icons/power-roll-t1.svg';
-import rollT2Icon from '../../../../assets/icons/power-roll-t2.svg';
-import rollT3Icon from '../../../../assets/icons/power-roll-t3.svg';
+import { Markdown } from '../../../controls/markdown/markdown';
+import { RulesItem } from '../../../../models/rules-item';
+import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 
 import './reference-cards.scss';
+
+interface Props {
+	rule: RulesItem;
+}
+
+export const RulesReferenceCard = (props: Props) => {
+	const rule = props.rule;
+	const c = rule.label.toLocaleLowerCase().split(' ').join('-');
+	return (
+		<div className={`${c} extra-reference card`} key={c}>
+			<h2>{rule.label}</h2>
+			<Markdown text={SheetFormatter.enhanceMarkdown(rule.content)} />
+		</div>
+	);
+};
 
 export const TurnOptionsReferenceCard = () => {
 	return (
@@ -185,137 +200,6 @@ export const EdgesBanesReferenceCard = () => {
 	);
 };
 
-export const ClimbSwimReferenceCard = () => {
-	return (
-		<div className='extra-reference card'>
-			<h2>Climbing and Swimming</h2>
-			<p>
-				A creature who has “climb” in their speed entry, or who gains the temporary
-				ability to automatically climb, can climb across vertical and horizontal surfaces
-				at full speed. Likewise, a creature who has “swim” in their speed entry, or who
-				gains the temporary ability to automatically swim, can swim in liquid at full speed.
-			</p>
-			<p>
-				Creatures without those types of movement can still climb or swim when a rule
-				allows them to move, but each square of climbing or swimming costs 2 squares
-				of movement. If a surface is difficult to climb (for instance, a sheer cliff or
-				ice-covered wall) or a liquid is hard to swim through (a raging river or whirlpool),
-				the Director can call for a Might test. On a failure, a creature can’t climb or swim
-				but wastes no movement in the attempt. The Director can also impose other consequences
-				to failure, such as being caught in the spinning current of a whirlpool.
-			</p>
-		</div>
-	);
-};
-
-export const JumpReferenceCard = () => {
-	return (
-		<div className='extra-reference card'>
-			<h2>Jump</h2>
-			<p>
-				Whenever an effect allows you to move (including using the Advance move action), you
-				can automatically long jump a number of squares up to your Might or Agility score
-				(your choice; minimum 1 square) as part of that movement. The height of your jump
-				is automatically 1 square as part of that movement.
-			</p>
-			<p>If you want to jump even longer or higher than your baseline jump allows, make a Might or Agility test:</p>
-			<p><strong>Power Roll + Might or Agility</strong>:</p>
-			<table className='power-roll'>
-				<tbody>
-					<tr>
-						<td>
-							<img src={rollT1Icon} alt='≤ 11' />
-						</td>
-						<td>You don’t jump any farther than your baseline jump allows.</td>
-					</tr>
-					<tr>
-						<td><img src={rollT2Icon} alt='12 - 16' /></td>
-						<td>You jump 1 square longer and higher than your baseline jump allows.</td>
-					</tr>
-					<tr>
-						<td>
-							<img src={rollT3Icon} alt='17+' />
-						</td>
-						<td>You jump 2 squares longer and higher than your baselinejump allows.</td>
-					</tr>
-				</tbody>
-			</table>
-			<p>
-				You can’t jump farther or higher than the distance of the effect that allows you to move. You can’t
-				jump out of difficult terrain or damaging terrain.
-			</p>
-		</div>
-	);
-};
-
-export const ClimbCreaturesCard = () => {
-	return (
-		<div className='extra-reference card'>
-			<h2>Climbing Other Creatures</h2>
-			<p>
-				You can attempt to climb a creature whose size is greater than yours. If
-				the creature is willing, you can climb them without any trouble. If the
-				creature is unwilling, you make the following test:
-			</p>
-			<p><strong>Power Roll + Might or Agility</strong>:</p>
-			<table className='power-roll'>
-				<tbody>
-					<tr>
-						<td>
-							<img src={rollT1Icon} alt='≤ 11' />
-						</td>
-						<td>
-							You fail to climb the creature, and they can make a free strike
-							against you.
-						</td>
-					</tr>
-					<tr>
-						<td><img src={rollT2Icon} alt='12 - 16' /></td>
-						<td>You fail to climb the creature.</td>
-					</tr>
-					<tr>
-						<td>
-							<img src={rollT3Icon} alt='17+' />
-						</td>
-						<td>You climb the creature.</td>
-					</tr>
-				</tbody>
-			</table>
-			<p>
-				While you climb or ride a creature, you gain an edge on melee abilities
-				used against them. The creature can use a maneuver to attempt to
-				knock you off, forcing you to make the following test:
-			</p>
-			<table className='power-roll'>
-				<tbody>
-					<tr>
-						<td>
-							<img src={rollT1Icon} alt='≤ 11' />
-						</td>
-						<td>
-							You fall off the creature into an unoccupied adjacent space of
-							your choice, taking falling damage and landing prone as usual.
-						</td>
-					</tr>
-					<tr>
-						<td><img src={rollT2Icon} alt='12 - 16' /></td>
-						<td>
-							You slide down the creature into an unoccupied adjacent
-							space of your choice and don’t land prone.
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<img src={rollT3Icon} alt='17+' />
-						</td>
-						<td>You continue to hold on to the creature.</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	);
-};
-
 export const MovementReferenceCard = () => {
 	return (
 		<div className='extra-reference card'>
@@ -338,6 +222,21 @@ export const MovementReferenceCard = () => {
 				a narrow shaft with such a creature already at the bottom. When you are
 				squeezed into the same space as another creature whose size is within 1 of
 				yours, your ability rolls and tests take a bane.
+			</p>
+			<p>
+				<strong>Can’t Exceed Speed</strong>: A single move or other effect can never
+				allow a creature to move more squares than their speed, unless the effect states
+				otherwise. For example, a creature with speed 5 might have that speed reduced to
+				2 by the slowed condition (see Conditions in Chapter 5: Classes). If an ally
+				then targets them with an effect that allows them to move up to 3 squares, the
+				creature can move only 2 squares because that’s their current speed.
+			</p>
+			<p>
+				<strong>Can’t Cut Corners</strong>: A creature can’t move diagonally when
+				doing so would involve passing through the corner of a wall or some other
+				object that completely fills the corner between the creature’s space and
+				the space they are moving to. This rule applies only to moving past objects,
+				not moving past other creatures.
 			</p>
 		</div>
 	);

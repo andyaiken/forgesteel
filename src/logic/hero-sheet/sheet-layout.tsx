@@ -86,8 +86,6 @@ export class SheetLayout {
 		if (spaceInRow === layout.perRow) {
 			rowH = 0;
 			slotsToFillInRow = layout.perRow;
-		} else {
-			availableLinesY += rowH;
 		}
 		// console.log(`Filling ${spaceInRow} spaces in current row, with currentH=${rowH} (& total ${availableLinesY}) available Y lines`);
 		nextCard: while (availableLinesY > 0 && (extraCards.required.find(c => !c.shown) || extraCards.optional.find(c => !c.shown))) {
@@ -210,6 +208,7 @@ export class SheetLayout {
 					}
 				});
 				pageH += rowH;
+				pageH += 2.5; // For vertical card gap between rows
 				// console.log(`Row (${rowStart + 1}, ${n}):`, pageAbilities.slice(rowStart, n).map(a => a.name), 'Height', rowH);
 				if (!allAdded)
 					break;
@@ -218,8 +217,8 @@ export class SheetLayout {
 			if (pageH < layout.linesY) {
 				// try to find filler cards that will fit
 				const spacesToFill = layout.perRow - abilitiesInLastRow;
-				// console.log(`Need more cards, with ${pageAbilities.length} existing cards to fill out rows of ${layout.perRow}`);
 				let spaceY = layout.linesY - pageH + rowH;
+				// console.log(`Need more cards, with ${pageAbilities.length} existing cards to fill out ${spaceY} lines in rows of ${layout.perRow} cards`);
 				if (spacesToFill === 0) {
 					// new row, so remove prev rowH
 					spaceY -= rowH;

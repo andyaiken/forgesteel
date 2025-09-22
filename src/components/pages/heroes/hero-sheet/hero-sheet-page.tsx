@@ -1,4 +1,4 @@
-import { ClimbCreaturesCard, ClimbSwimReferenceCard, EdgesBanesReferenceCard, FallingReferenceCard, JumpReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
+import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
 import { ExtraCards, SheetLayout } from '../../../../logic/hero-sheet/sheet-layout';
 import { AncestryTraitsCard } from '../../../panels/hero-sheet/ancestry-traits-card/ancestry-traits-card';
 import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
@@ -22,6 +22,7 @@ import { PotenciesCard } from '../../../panels/hero-sheet/potencies-card/potenci
 import { PrimaryReferenceCard } from '../../../panels/hero-sheet/reference/primary-reference-card';
 import { ProjectsCard } from '../../../panels/hero-sheet/projects-card/projects-card';
 import { RetainerCard } from '../../../panels/hero-sheet/follower-card/retainer-card';
+import { RulesData } from '../../../../data/rules-data';
 import { SheetBuilder } from '../../../../logic/hero-sheet/sheet-builder';
 import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 import { SkillsCard } from '../../../panels/hero-sheet/skills-card/skills-card';
@@ -153,7 +154,7 @@ export const HeroSheetPage = (props: Props) => {
 			{
 				element: <ManeuversReferenceCard key='maneuvers-reference' />,
 				width: 1,
-				height: 38,
+				height: 39,
 				shown: false
 			},
 			{
@@ -163,27 +164,9 @@ export const HeroSheetPage = (props: Props) => {
 				shown: false
 			},
 			{
-				element: <ClimbSwimReferenceCard key='climb-swim' />,
-				width: 1,
-				height: 23,
-				shown: false
-			},
-			{
-				element: <JumpReferenceCard key='jump' />,
-				width: 1,
-				height: 26,
-				shown: false
-			},
-			{
-				element: <ClimbCreaturesCard key='climbing-creatures-reference' />,
-				width: 1,
-				height: 31,
-				shown: false
-			},
-			{
 				element: <MovementReferenceCard key='movement-reference' />,
 				width: 1,
-				height: 23,
+				height: 39,
 				shown: false
 			},
 			{
@@ -193,6 +176,28 @@ export const HeroSheetPage = (props: Props) => {
 				shown: false
 			}
 		];
+
+		const addlRules = [ RulesData.concealment,
+			RulesData.criticalHit,
+			RulesData.climbingAndSwimming,
+			RulesData.jumping,
+			RulesData.concealment,
+			RulesData.cover,
+			RulesData.difficultTerrain,
+			RulesData.dyingAndDeath,
+			RulesData.flanking,
+			RulesData.hiding,
+			RulesData.highGround,
+			RulesData.shifting ];
+
+		addlRules.forEach(rule => {
+			optional.push({
+				element: <RulesReferenceCard rule={rule} />,
+				width: 1,
+				height: SheetFormatter.calculateRuleReferenceCardSize(rule, layout.cardLineLen),
+				shown: false
+			});
+		});
 
 		return {
 			required: required,

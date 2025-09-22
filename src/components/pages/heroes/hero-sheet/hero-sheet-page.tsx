@@ -116,7 +116,7 @@ export const HeroSheetPage = (props: Props) => {
 		}
 
 		// Titles
-		if (character.titles?.length || 0 > numTitlesInSmallCard) {
+		if (character.titles?.length && character.titles?.length > numTitlesInSmallCard) {
 			let titleH = SheetFormatter.calculateTitlesSize(character.titles, layout.cardLineLen);
 			let titleW = 1;
 			if (titleH > 60) {

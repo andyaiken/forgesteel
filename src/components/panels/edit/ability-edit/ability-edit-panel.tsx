@@ -435,7 +435,6 @@ export const AbilityEditPanel = (props: Props) => {
 													<NumberSpin label='Villain Action Order' min={1} max={3} value={ability.type.order || 1} onChange={setTypeOrder} />
 													: null
 											}
-											<HeaderText>Qualifiers</HeaderText>
 											<Input
 												placeholder='Qualifiers'
 												allowClear={true}

@@ -49,9 +49,7 @@ import { MonsterModal } from '../modals/monster/monster-modal';
 import { Montage } from '../../models/montage';
 import { Negotiation } from '../../models/negotiation';
 import { Options } from '../../models/options';
-import { PDFExport } from '../../utils/pdf-export';
 import { PartyModal } from '../modals/party/party-modal';
-import { PdfOptions } from '../../models/pdf-options';
 import { Perk } from '../../models/perk';
 import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-page';
 import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
@@ -296,21 +294,14 @@ export const Main = (props: Props) => {
 		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const exportHeroPdf = (hero: Hero, data: PdfOptions) => {
-		const formFillable = data.formFillable || false;
-		const resolution = data.resolution || 'standard';
-
-		if (data.mode === 'html') {
-			setSpinning(true);
-			const pageIds: string[] = [];
-			document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
-			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize, resolution)
-				.then(() => {
-					setSpinning(false);
-				});
-		} else {
-			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], data.mode, !formFillable);
-		}
+	const exportHeroPdf = (hero: Hero, resolution: 'standard' | 'high') => {
+		setSpinning(true);
+		const pageIds: string[] = [];
+		document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
+		Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize, resolution)
+			.then(() => {
+				setSpinning(false);
+			});
 	};
 
 	const exportStandardAbilities = () => {

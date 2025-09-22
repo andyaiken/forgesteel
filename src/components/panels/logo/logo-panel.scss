@@ -16,7 +16,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.logo-panel {
 		.logo-panel-image {
 			filter: invert(1);

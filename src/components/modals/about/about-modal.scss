@@ -12,7 +12,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.about-modal {
 		.logo-container {
 			>img {

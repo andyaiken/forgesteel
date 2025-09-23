@@ -373,6 +373,10 @@
         .feature-reference.wide {
             flex-basis: calc(3 * ((100% - 3 * var(--gap)) / 4) + 2 * var(--gap));
         }
+
+        .feature-reference.extra-wide {
+            flex-basis: 100%;
+        }
     }
 
     hr.dashed {
@@ -418,6 +422,24 @@
             background-image: linear-gradient(0deg, common.$color-light, common.$color-light);
             background-size: 2px 100%;
             background-position: 50% 4px;
+            background-repeat: no-repeat;
+        }
+
+        &.three-column {
+            column-count: 3;
+            column-gap: 25px;
+
+            $l1-s: calc((100% / 3) - 1px);
+            $l1-e: calc($l1-s + 2px);
+            $l2-s: calc((200% / 3) - 1px);
+            $l2-e: calc($l2-s + 2px);
+            background-image: linear-gradient(90deg, transparent $l1-s, 
+                common.$color-light $l1-s, common.$color-light $l1-e, 
+                transparent $l1-e, transparent $l2-s,
+                common.$color-light $l2-s, common.$color-light $l2-e,
+                transparent $l2-e);
+            background-size: 100% 100%;
+            background-position: center 4px;
             background-repeat: no-repeat;
         }
 

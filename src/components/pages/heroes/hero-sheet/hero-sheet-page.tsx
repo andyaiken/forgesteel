@@ -1,4 +1,4 @@
-import { ClimbCreaturesCard, ClimbSwimReferenceCard, EdgesBanesReferenceCard, FallingReferenceCard, JumpReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
+import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard, TurnOptionsReferenceCard } from '../../../panels/hero-sheet/reference/reference-cards';
 import { ExtraCards, SheetLayout } from '../../../../logic/hero-sheet/sheet-layout';
 import { AncestryTraitsCard } from '../../../panels/hero-sheet/ancestry-traits-card/ancestry-traits-card';
 import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
@@ -22,6 +22,7 @@ import { PotenciesCard } from '../../../panels/hero-sheet/potencies-card/potenci
 import { PrimaryReferenceCard } from '../../../panels/hero-sheet/reference/primary-reference-card';
 import { ProjectsCard } from '../../../panels/hero-sheet/projects-card/projects-card';
 import { RetainerCard } from '../../../panels/hero-sheet/follower-card/retainer-card';
+import { RulesData } from '../../../../data/rules-data';
 import { SheetBuilder } from '../../../../logic/hero-sheet/sheet-builder';
 import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 import { SkillsCard } from '../../../panels/hero-sheet/skills-card/skills-card';
@@ -85,7 +86,10 @@ export const HeroSheetPage = (props: Props) => {
 			lineWidth = layout.cardGap + 2 * layout.cardLineLen;
 			invW = 2;
 			invH = Math.ceil(SheetFormatter.calculateInventorySize(character.inventory, lineWidth / 2) * 0.53);
-			invH = Math.min(layout.linesY, invH);// Will probably need a better solution at some point
+			if (invH > layout.linesY) {
+				console.warn('Inventory is still too long!');
+				invH = Math.min(layout.linesY, invH);// Will need a better solution at some point
+			}
 		}
 		// console.log('###### Inventory size: ', invH);
 		required.unshift({
@@ -104,11 +108,19 @@ export const HeroSheetPage = (props: Props) => {
 				refW = 3;
 				lineWidth = (2 * layout.cardGap) + (3 * layout.cardLineLen) * 0.49;
 				refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, lineWidth) * 0.52;
-				refH = Math.min(layout.linesY, refH);// Will probably need a better solution at some point
+				if (refH > layout.linesY && layout.perRow === 4) {
+					refW = 4;
+					lineWidth = (3 * layout.cardGap) + (4 * layout.cardLineLen) * 0.33;
+					refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, lineWidth) * 0.34;
+				}
+				if (refH > layout.linesY) {
+					console.warn('Features reference is still too long!');
+					refH = Math.min(layout.linesY, refH);// Will need a better solution at some point
+				}
 			}
 			// console.log('###### Reference size: ', refH);
 			required.unshift({
-				element: <FeatureReferenceCard character={character} columns={refW > 2} key='feature-reference' />,
+				element: <FeatureReferenceCard character={character} columns={refW - 1} key='feature-reference' />,
 				width: refW,
 				height: refH,
 				shown: false
@@ -116,7 +128,7 @@ export const HeroSheetPage = (props: Props) => {
 		}
 
 		// Titles
-		if (character.titles?.length || 0 > numTitlesInSmallCard) {
+		if (character.titles?.length && character.titles?.length > numTitlesInSmallCard) {
 			let titleH = SheetFormatter.calculateTitlesSize(character.titles, layout.cardLineLen);
 			let titleW = 1;
 			if (titleH > 60) {
@@ -153,7 +165,7 @@ export const HeroSheetPage = (props: Props) => {
 			{
 				element: <ManeuversReferenceCard key='maneuvers-reference' />,
 				width: 1,
-				height: 38,
+				height: 39,
 				shown: false
 			},
 			{
@@ -163,27 +175,9 @@ export const HeroSheetPage = (props: Props) => {
 				shown: false
 			},
 			{
-				element: <ClimbSwimReferenceCard key='climb-swim' />,
-				width: 1,
-				height: 23,
-				shown: false
-			},
-			{
-				element: <JumpReferenceCard key='jump' />,
-				width: 1,
-				height: 26,
-				shown: false
-			},
-			{
-				element: <ClimbCreaturesCard key='climbing-creatures-reference' />,
-				width: 1,
-				height: 31,
-				shown: false
-			},
-			{
 				element: <MovementReferenceCard key='movement-reference' />,
 				width: 1,
-				height: 23,
+				height: 39,
 				shown: false
 			},
 			{
@@ -193,6 +187,28 @@ export const HeroSheetPage = (props: Props) => {
 				shown: false
 			}
 		];
+
+		const addlRules = [ RulesData.concealment,
+			RulesData.criticalHit,
+			RulesData.climbingAndSwimming,
+			RulesData.jumping,
+			RulesData.concealment,
+			RulesData.cover,
+			RulesData.difficultTerrain,
+			RulesData.dyingAndDeath,
+			RulesData.flanking,
+			RulesData.hiding,
+			RulesData.highGround,
+			RulesData.shifting ];
+
+		addlRules.forEach(rule => {
+			optional.push({
+				element: <RulesReferenceCard rule={rule} />,
+				width: 1,
+				height: SheetFormatter.calculateRuleReferenceCardSize(rule, layout.cardLineLen),
+				shown: false
+			});
+		});
 
 		return {
 			required: required,

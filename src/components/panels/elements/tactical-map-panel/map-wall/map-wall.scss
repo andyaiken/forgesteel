@@ -36,7 +36,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.map-wall-panel {
 		.wall-content {
 			background-color: rgb(240, 240, 240);

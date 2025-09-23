@@ -14,7 +14,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.session-player-page {
 		.session-player-page-content {
 			background-color: rgb(55, 55, 55);

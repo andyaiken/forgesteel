@@ -30,7 +30,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.hero-list-page {
 		.hero-list-page-content {
 			background-color: rgb(55, 55, 55);

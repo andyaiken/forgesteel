@@ -379,11 +379,9 @@ td {
 	}
 }
 
-@media (prefers-color-scheme: dark) {
-	html {
-		color: rgba(255, 255, 255, 0.88);
-		background-color: rgb(55, 55, 55);
-	}
+html[data-theme="dark"] {
+	color: rgba(255, 255, 255, 0.88);
+	background-color: rgb(55, 55, 55);
 
 	h1,
 	h2,

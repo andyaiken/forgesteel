@@ -81,7 +81,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.encounter-edit-panel {
 		.encounter-workspace-column {
 			.group-row,

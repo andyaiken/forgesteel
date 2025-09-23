@@ -12,7 +12,7 @@
 	text-overflow: ellipsis;
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.pill {
 		background-color: rgb(230, 244, 255);
 		color: rgba(0, 0, 0, 0.88);

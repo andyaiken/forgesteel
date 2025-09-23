@@ -43,7 +43,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.plot-panel {
 		.plot-content-row {
 			.content-text {

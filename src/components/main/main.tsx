@@ -66,6 +66,7 @@ import { SourcebookLogic } from '../../logic/sourcebook-logic';
 import { SourcebookUpdateLogic } from '../../logic/update/sourcebook-update-logic';
 import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
 import { SubClass } from '../../models/subclass';
+import { SummoningInfo } from '../../models/summon';
 import { TacticalMap } from '../../models/tactical-map';
 import { Terrain } from '../../models/terrain';
 import { TerrainModal } from '../modals/terrain/terrain-modal';
@@ -1342,11 +1343,12 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onSelectMonster = (monster: Monster, monsterGroup?: MonsterGroup) => {
+	const onSelectMonster = (monster: Monster, monsterGroup?: MonsterGroup, summon?: SummoningInfo) => {
 		setDrawer(
 			<MonsterModal
 				monster={monster}
 				monsterGroup={monsterGroup}
+				summon={summon}
 				options={options}
 				onClose={() => setDrawer(null)}
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
@@ -1553,7 +1555,7 @@ export const Main = (props: Props) => {
 										showDomain={domain => onSelectLibraryElement(domain, 'domain')}
 										showKit={kit => onSelectLibraryElement(kit, 'kit')}
 										showTitle={title => onSelectLibraryElement(title, 'title')}
-										showMonster={onSelectMonster}
+										showMonster={(monster, summon) => onSelectMonster(monster, undefined, summon)}
 										showFollower={onSelectFollower}
 										showCharacteristic={onSelectCharacteristic}
 										showFeature={onSelectFeature}

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
@@ -595,10 +595,15 @@ export class FeatureLogic {
 				break;
 			case FeatureType.Summon:
 				data = {
+					summons: []
+				} as FeatureSummonData;
+				break;
+			case FeatureType.SummonChoice:
+				data = {
 					options: [],
 					count: 1,
 					selected: []
-				} as FeatureSummonData;
+				} as FeatureSummonChoiceData;
 				break;
 			case FeatureType.TaggedFeature:
 				data = {
@@ -645,7 +650,7 @@ export class FeatureLogic {
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:
 			case FeatureType.SkillChoice:
-			case FeatureType.Summon:
+			case FeatureType.SummonChoice:
 			case FeatureType.TaggedFeatureChoice:
 			case FeatureType.TitleChoice:
 				return true;
@@ -694,6 +699,8 @@ export class FeatureLogic {
 			case FeatureType.Perk:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.SkillChoice:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.SummonChoice:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.TaggedFeatureChoice:
 				return feature.data.selected.length >= feature.data.count;
@@ -814,6 +821,8 @@ export class FeatureLogic {
 			case FeatureType.Speed:
 				return 'This feature sets your base speed.';
 			case FeatureType.Summon:
+				return 'This feature specifies monsters you can summon.';
+			case FeatureType.SummonChoice:
 				return 'This feature allows you to choose monsters you can summon.';
 			case FeatureType.TaggedFeature:
 				return 'This feature describes a tagged feature.';

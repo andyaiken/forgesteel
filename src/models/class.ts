@@ -5,6 +5,7 @@ import { Feature } from './feature';
 import { SubClass } from './subclass';
 
 export interface HeroClass extends Element {
+	type: 'standard' | 'master';
 	subclassName: string;
 	subclassCount: number;
 

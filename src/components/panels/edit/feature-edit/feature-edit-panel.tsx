@@ -1,6 +1,6 @@
 import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '../../../../enums/ability-keyword';
@@ -96,7 +96,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureSummonData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureSummonChoiceData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -595,46 +595,147 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const addSummon = (data: FeatureSummonData) => {
 			const copy = Utils.copy(data);
-			copy.options.push(FactoryLogic.createMonster({
-				id: Utils.guid(),
+			copy.summons.push({
+				id: '',
 				name: '',
 				description: '',
-				level: 1,
-				role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
-				keywords: [],
-				encounterValue: 0,
-				size: FactoryLogic.createSize(1),
-				speed: FactoryLogic.createSpeed(5),
-				stamina: 8,
-				stability: 0,
-				freeStrikeDamage: 1,
-				characteristics: [
-					{ characteristic: Characteristic.Might, value: 0 },
-					{ characteristic: Characteristic.Agility, value: 0 },
-					{ characteristic: Characteristic.Reason, value: 0 },
-					{ characteristic: Characteristic.Intuition, value: 0 },
-					{ characteristic: Characteristic.Presence, value: 0 }
-				],
-				features: []
-			}));
+				monster: FactoryLogic.createMonster({
+					id: Utils.guid(),
+					name: '',
+					description: '',
+					level: 1,
+					role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
+					keywords: [],
+					encounterValue: 0,
+					size: FactoryLogic.createSize(1),
+					speed: FactoryLogic.createSpeed(5),
+					stamina: 8,
+					stability: 0,
+					freeStrikeDamage: 1,
+					characteristics: [
+						{ characteristic: Characteristic.Might, value: 0 },
+						{ characteristic: Characteristic.Agility, value: 0 },
+						{ characteristic: Characteristic.Reason, value: 0 },
+						{ characteristic: Characteristic.Intuition, value: 0 },
+						{ characteristic: Characteristic.Presence, value: 0 }
+					],
+					features: []
+				}),
+				info: {
+					isSignature: true,
+					cost: 1,
+					count: 1
+				}
+			});
 			setData(copy);
 		};
 
 		const moveSummon = (data: FeatureSummonData, index: number, direction: 'up' | 'down') => {
 			const copy = Utils.copy(data);
-			copy.options = Collections.move(copy.options, index, direction);
+			copy.summons = Collections.move(copy.summons, index, direction);
 			setData(copy);
 		};
 
 		const deleteSummon = (data: FeatureSummonData, index: number) => {
 			const copy = Utils.copy(data);
+			copy.summons.splice(index, 1);
+			setData(copy);
+		};
+
+		const setSummonIsSignature = (data: FeatureSummonData, index: number, value: boolean) => {
+			const copy = Utils.copy(data);
+			copy.summons[index].info.isSignature = value;
+			setData(copy);
+		};
+
+		const setSummonCost = (data: FeatureSummonData, index: number, value: number) => {
+			const copy = Utils.copy(data);
+			copy.summons[index].info.cost = value;
+			setData(copy);
+		};
+
+		const setSummonCount = (data: FeatureSummonData, index: number, value: number) => {
+			const copy = Utils.copy(data);
+			copy.summons[index].info.count = value;
+			setData(copy);
+		};
+
+		const setSummonMonster = (data: FeatureSummonData, index: number, value: Monster) => {
+			const copy = Utils.copy(data);
+			copy.summons[index].monster = value;
+			setData(copy);
+		};
+
+		const addSummonChoice = (data: FeatureSummonChoiceData) => {
+			const copy = Utils.copy(data);
+			copy.options.push({
+				id: '',
+				name: '',
+				description: '',
+				monster: FactoryLogic.createMonster({
+					id: Utils.guid(),
+					name: '',
+					description: '',
+					level: 1,
+					role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
+					keywords: [],
+					encounterValue: 0,
+					size: FactoryLogic.createSize(1),
+					speed: FactoryLogic.createSpeed(5),
+					stamina: 8,
+					stability: 0,
+					freeStrikeDamage: 1,
+					characteristics: [
+						{ characteristic: Characteristic.Might, value: 0 },
+						{ characteristic: Characteristic.Agility, value: 0 },
+						{ characteristic: Characteristic.Reason, value: 0 },
+						{ characteristic: Characteristic.Intuition, value: 0 },
+						{ characteristic: Characteristic.Presence, value: 0 }
+					],
+					features: []
+				}),
+				info: {
+					isSignature: true,
+					cost: 1,
+					count: 1
+				}
+			});
+			setData(copy);
+		};
+
+		const moveSummonChoice = (data: FeatureSummonChoiceData, index: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(data);
+			copy.options = Collections.move(copy.options, index, direction);
+			setData(copy);
+		};
+
+		const deleteSummonChoice = (data: FeatureSummonChoiceData, index: number) => {
+			const copy = Utils.copy(data);
 			copy.options.splice(index, 1);
 			setData(copy);
 		};
 
-		const setSummon = (data: FeatureSummonData, index: number, value: Monster) => {
+		const setSummonChoiceIsSignature = (data: FeatureSummonChoiceData, index: number, value: boolean) => {
 			const copy = Utils.copy(data);
-			copy.options[index] = value;
+			copy.options[index].info.isSignature = value;
+			setData(copy);
+		};
+
+		const setSummonChoiceCost = (data: FeatureSummonChoiceData, index: number, value: number) => {
+			const copy = Utils.copy(data);
+			copy.options[index].info.cost = value;
+			setData(copy);
+		};
+
+		const setSummonChoiceCount = (data: FeatureSummonChoiceData, index: number, value: number) => {
+			const copy = Utils.copy(data);
+			copy.options[index].info.count = value;
+			setData(copy);
+		};
+
+		const setSummonChoiceMonster = (data: FeatureSummonChoiceData, index: number, value: Monster) => {
+			const copy = Utils.copy(data);
+			copy.options[index].monster = value;
 			setData(copy);
 		};
 
@@ -954,7 +1055,7 @@ export const FeatureEditPanel = (props: Props) => {
 							value={data.classID || ''}
 							onChange={setAbilityClassID}
 						/>
-						<HeaderText>Signature</HeaderText>
+						<HeaderText>Signature / Cost</HeaderText>
 						<Flex align='center' justify='center'>
 							<Segmented<'signature' | number>
 								options={[
@@ -1768,22 +1869,70 @@ export const FeatureEditPanel = (props: Props) => {
 							Options
 						</HeaderText>
 						{
-							data.options.map((monster, n) => (
+							data.summons.map((summon, n) => (
 								<Expander
-									key={monster.id}
-									title={monster.name || 'Unnamed Monster'}
+									key={summon.monster.id}
+									title={summon.monster.name || 'Unnamed Monster'}
 									extra={[
 										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSummon(data, n, 'up'); }} />,
 										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSummon(data, n, 'down'); }} />,
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSummon(data, n); }} />
 									]}
 								>
+									<HeaderText>Summoning</HeaderText>
+									<Toggle label='Is signature' value={summon.info.isSignature} onChange={value => setSummonIsSignature(data, n, value)} />
+									<NumberSpin min={1} label='Cost' value={summon.info.cost} onChange={value => setSummonCost(data, n, value)} />
+									<NumberSpin min={1} label='Count' value={summon.info.count} onChange={value => setSummonCount(data, n, value)} />
 									<MonsterEditPanel
-										monster={monster}
+										monster={summon.monster}
 										sourcebooks={props.sourcebooks}
 										options={props.options}
 										similarMonsters={[]}
-										onChange={m => setSummon(data, n, m)}
+										onChange={m => setSummonMonster(data, n, m)}
+									/>
+								</Expander>
+							))
+						}
+						{
+							data.summons.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
+				);
+			}
+			case FeatureType.SummonChoice: {
+				const data = feature.data as FeatureSummonChoiceData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText
+							extra={
+								<Button type='text' icon={<PlusOutlined />} onClick={() => addSummonChoice(data)} />
+							}
+						>
+							Options
+						</HeaderText>
+						{
+							data.options.map((summon, n) => (
+								<Expander
+									key={summon.monster.id}
+									title={summon.monster.name || 'Unnamed Monster'}
+									extra={[
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSummonChoice(data, n, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSummonChoice(data, n, 'down'); }} />,
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSummonChoice(data, n); }} />
+									]}
+								>
+									<HeaderText>Summoning</HeaderText>
+									<Toggle label='Is signature' value={summon.info.isSignature} onChange={value => setSummonChoiceIsSignature(data, n, value)} />
+									<NumberSpin min={1} label='Cost' value={summon.info.cost} onChange={value => setSummonChoiceCost(data, n, value)} />
+									<NumberSpin min={1} label='Count' value={summon.info.count} onChange={value => setSummonChoiceCount(data, n, value)} />
+									<MonsterEditPanel
+										monster={summon.monster}
+										sourcebooks={props.sourcebooks}
+										options={props.options}
+										similarMonsters={[]}
+										onChange={m => setSummonChoiceMonster(data, n, m)}
 									/>
 								</Expander>
 							))

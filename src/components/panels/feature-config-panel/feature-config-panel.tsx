@@ -1,6 +1,6 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
-import { Feature, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeaturePerkData, FeatureSkillChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTitleChoiceData } from '../../../models/feature';
+import { Feature, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeaturePerkData, FeatureSkillChoiceData, FeatureSummonChoiceData, FeatureTaggedFeatureChoiceData, FeatureTitleChoiceData } from '../../../models/feature';
 import { Ability } from '../../../models/ability';
 import { AbilityLogic } from '../../../logic/ability-logic';
 import { AbilityModal } from '../../modals/ability/ability-modal';
@@ -48,6 +48,8 @@ import { PerkSelectModal } from '../../modals/select/perk-select/perk-select-mod
 import { SkillSelectModal } from '../../modals/select/skill-select/skill-select-modal';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SourcebookLogic } from '../../../logic/sourcebook-logic';
+import { Summon } from '../../../models/summon';
+import { SummonSelectModal } from '../../modals/select/summon-select/summon-select-modal';
 import { Title } from '../../../models/title';
 import { TitlePanel } from '../elements/title-panel/title-panel';
 import { TitleSelectModal } from '../../modals/select/title-select/title-select-modal';
@@ -84,6 +86,7 @@ export const FeatureConfigPanel = (props: Props) => {
 	const [ selectedKit, setSelectedKit ] = useState<Kit | null>(null);
 	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
 	const [ selectedPerk, setSelectedPerk ] = useState<Perk | null>(null);
+	const [ selectedSummon, setSelectedSummon ] = useState<Summon | null>(null);
 	const [ selectedTitle, setSelectedTitle ] = useState<Title | null>(null);
 
 	// #region Selection
@@ -1168,7 +1171,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		);
 	};
 
-	const getSelectionSummon = (data: FeatureSummonData) => {
+	const getSelectionSummonChoice = (data: FeatureSummonChoiceData) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
@@ -1177,18 +1180,18 @@ export const FeatureConfigPanel = (props: Props) => {
 						: null
 				}
 				{
-					data.selected.map(monster => (
+					data.selected.map(summon => (
 						<Flex className='selection-box' align='center' gap={10}>
 							<MonsterInfo
 								style={{ flex: '1 1 0' }}
-								monster={monster}
+								monster={summon.monster}
 							/>
 							<div style={{ flex: '0 0 auto' }}>
 								<Button
 									type='text'
 									title='Show details'
 									icon={<InfoCircleOutlined />}
-									onClick={() => setSelectedMonster(monster)}
+									onClick={() => setSelectedSummon(summon)}
 								/>
 								<Button
 									type='text'
@@ -1196,7 +1199,7 @@ export const FeatureConfigPanel = (props: Props) => {
 									icon={<CloseOutlined />}
 									onClick={() => {
 										const dataCopy = Utils.copy(data);
-										dataCopy.selected = dataCopy.selected.filter(m => m.id !== monster.id);
+										dataCopy.selected = dataCopy.selected.filter(m => m.id !== summon.id);
 										if (props.setData) {
 											props.setData(props.feature.id, dataCopy);
 										}
@@ -1214,19 +1217,14 @@ export const FeatureConfigPanel = (props: Props) => {
 						: null
 				}
 				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
-					<MonsterSelectModal
-						monsters={
-							data.options.length > 0 ?
-								data.options
-								:
-								props.sourcebooks ? props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters) : []
-						}
+					<SummonSelectModal
+						summons={data.options}
 						options={props.options}
-						onSelect={monster => {
+						onSelect={summon => {
 							setMonsterSelectorOpen(false);
 
 							const dataCopy = Utils.copy(data);
-							dataCopy.selected.push(Utils.copy(monster));
+							dataCopy.selected.push(Utils.copy(summon));
 							if (props.setData) {
 								props.setData(props.feature.id, dataCopy);
 							}
@@ -1234,8 +1232,8 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setMonsterSelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
-					{selectedMonster ? <MonsterModal monster={selectedMonster} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
+				<Drawer open={!!selectedSummon} onClose={() => setSelectedSummon(null)} closeIcon={null} width='500px'>
+					{selectedSummon ? <MonsterModal monster={selectedSummon.monster} summon={selectedSummon.info} options={props.options} onClose={() => setSelectedSummon(null)} /> : null}
 				</Drawer>
 			</Space>
 		);
@@ -1462,8 +1460,8 @@ export const FeatureConfigPanel = (props: Props) => {
 				return getSelectionPerk(props.feature.data);
 			case FeatureType.SkillChoice:
 				return getSelectionSkillChoice(props.feature.data);
-			case FeatureType.Summon:
-				return getSelectionSummon(props.feature.data);
+			case FeatureType.SummonChoice:
+				return getSelectionSummonChoice(props.feature.data);
 			case FeatureType.TaggedFeatureChoice:
 				return getSelectionTaggedFeatureChoice(props.feature.data);
 			case FeatureType.TitleChoice:

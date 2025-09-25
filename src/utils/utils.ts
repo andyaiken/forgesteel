@@ -9,7 +9,11 @@ import jspdf from 'jspdf';
 export class Utils {
 	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
 
-	static guid = (): string => {
+	static isDev = () => {
+		return window.location.hostname === 'localhost';
+	};
+
+	static guid = () => {
 		const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
 		let id = '';
 		while (id.length < 16) {

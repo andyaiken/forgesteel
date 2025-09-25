@@ -1,4 +1,4 @@
-import { Alert, Button, Drawer, Flex, Input, Space, Tabs, Upload } from 'antd';
+import { Alert, Button, Drawer, Input, Popover, Segmented, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CopyOutlined, DownloadOutlined, EditOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
 import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
@@ -75,6 +75,13 @@ export const ClassEditPanel = (props: Props) => {
 		};
 
 		const getClassEditSection = () => {
+			const setType = (value: 'standard' | 'master') => {
+				const copy = Utils.copy(heroClass);
+				copy.type = value;
+				setHeroClass(copy);
+				props.onChange(copy);
+			};
+
 			const setSubclassName = (value: string) => {
 				const copy = Utils.copy(heroClass);
 				copy.subclassName = value;
@@ -123,6 +130,20 @@ export const ClassEditPanel = (props: Props) => {
 
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
+					<HeaderText>Type</HeaderText>
+					<Segmented
+						block={true}
+						options={[
+							{
+								value: 'standard', label: 'Class'
+							},
+							{
+								value: 'master', label: 'Master Class'
+							}
+						]}
+						value={heroClass.type}
+						onChange={setType}
+					/>
 					<HeaderText>Subclass Name</HeaderText>
 					<Input
 						status={heroClass.subclassName === '' ? 'warning' : ''}
@@ -241,7 +262,7 @@ export const ClassEditPanel = (props: Props) => {
 			};
 
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<>
 					{
 						heroClass.featuresByLevel.map(lvl => (
 							<div key={lvl.level}>
@@ -283,7 +304,7 @@ export const ClassEditPanel = (props: Props) => {
 							</div>
 						))
 					}
-				</Space>
+				</>
 			);
 		};
 
@@ -330,7 +351,7 @@ export const ClassEditPanel = (props: Props) => {
 			};
 
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<>
 					<HeaderText
 						extra={
 							<Button type='text' icon={<PlusOutlined />} onClick={addAbility} />
@@ -338,31 +359,33 @@ export const ClassEditPanel = (props: Props) => {
 					>
 						Abilities
 					</HeaderText>
-					{
-						heroClass.abilities.map(a => (
-							<Expander
-								key={a.id}
-								title={a.name || 'Unnamed Ability'}
-								tags={[ a.type.usage ]}
-								extra={[
-									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'up'); }} />,
-									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'down'); }} />,
-									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteAbility(a); }} />
-								]}
-							>
-								<AbilityEditPanel
-									ability={a}
-									onChange={changeAbility}
-								/>
-							</Expander>
-						))
-					}
-					{
-						heroClass.abilities.length === 0 ?
-							<Empty />
-							: null
-					}
-				</Space>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							heroClass.abilities.map(a => (
+								<Expander
+									key={a.id}
+									title={a.name || 'Unnamed Ability'}
+									tags={[ a.type.usage ]}
+									extra={[
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveAbility(a, 'down'); }} />,
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteAbility(a); }} />
+									]}
+								>
+									<AbilityEditPanel
+										ability={a}
+										onChange={changeAbility}
+									/>
+								</Expander>
+							))
+						}
+						{
+							heroClass.abilities.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
+				</>
 			);
 		};
 
@@ -400,81 +423,96 @@ export const ClassEditPanel = (props: Props) => {
 			};
 
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{
-						heroClass.subclasses.map(sc => (
-							<Expander
-								key={sc.id}
-								title={sc.name || 'Unnamed Subclass'}
-								extra={[
-									<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); props.onEditSubClass(sc); }} />,
-									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'up'); }} />,
-									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'down'); }} />,
-									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
-								]}
+				<>
+					<HeaderText
+						extra={
+							<Popover
+								trigger='click'
+								content={
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<Button block={true} icon={<PlusOutlined />} onClick={addSubclass}>
+											Add a new subclass
+										</Button>
+										<Upload
+											accept='.drawsteel-subclass,.ds-subclass'
+											showUploadList={false}
+											beforeUpload={file => {
+												file
+													.text()
+													.then(json => {
+														const sc = JSON.parse(json) as SubClass;
+														copySubclass(sc);
+													});
+												return false;
+											}}
+										>
+											<Button block={true} onClick={() => null}>
+												<DownloadOutlined />
+												Import a subclass
+											</Button>
+										</Upload>
+										<Button block={true} onClick={() => setDrawerOpen(true)}>
+											<CopyOutlined />
+											Copy an existing subclass
+										</Button>
+									</Space>
+								}
 							>
-								<SubclassPanel subclass={sc} options={props.options} />
-							</Expander>
-						))
-					}
-					{
-						heroClass.subclasses.length === 0 ?
-							<Empty />
-							: null
-					}
-					<Flex gap={10}>
-						<Button block={true} icon={<PlusOutlined />} onClick={addSubclass}>
-							Add a new subclass
-						</Button>
-						<Upload
-							accept='.drawsteel-subclass,.ds-subclass'
-							showUploadList={false}
-							beforeUpload={file => {
-								file
-									.text()
-									.then(json => {
-										const sc = JSON.parse(json) as SubClass;
-										copySubclass(sc);
-									});
-								return false;
-							}}
-						>
-							<Button block={true} onClick={() => null}>
-								<DownloadOutlined />
-								Import a subclass
-							</Button>
-						</Upload>
-						<Button block={true} onClick={() => setDrawerOpen(true)}>
-							<CopyOutlined />
-							Copy an existing subclass
-						</Button>
-					</Flex>
-					<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
-						<Modal
-							content={
-								<Space direction='vertical' style={{ width: '100%', padding: '20px' }}>
-									{
-										[
-											...props.sourcebooks.flatMap(sb => sb.classes).flatMap(c => c.subclasses),
-											...props.sourcebooks.flatMap(sb => sb.subclasses)
-										].map((sc, n) => (
-											<SelectablePanel
-												key={n}
-												onSelect={() => {
-													copySubclass(sc);
-													setDrawerOpen(false);
-												}}
-											>
-												<SubclassPanel subclass={sc} options={props.options} />
-											</SelectablePanel>
-										))
-									}
-								</Space>
-							}
-							onClose={() => setDrawerOpen(false)}
-						/>
-					</Drawer>
-				</Space>
+								<Button type='text' icon={<PlusOutlined />} onClick={() => null} />
+							</Popover>
+						}
+					>
+						Subclasses
+					</HeaderText>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							heroClass.subclasses.map(sc => (
+								<Expander
+									key={sc.id}
+									title={sc.name || 'Unnamed Subclass'}
+									extra={[
+										<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={e => { e.stopPropagation(); props.onEditSubClass(sc); }} />,
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSubclass(sc, 'down'); }} />,
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
+									]}
+								>
+									<SubclassPanel subclass={sc} options={props.options} />
+								</Expander>
+							))
+						}
+						{
+							heroClass.subclasses.length === 0 ?
+								<Empty />
+								: null
+						}
+						<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
+							<Modal
+								content={
+									<Space direction='vertical' style={{ width: '100%', padding: '20px' }}>
+										{
+											[
+												...props.sourcebooks.flatMap(sb => sb.classes).flatMap(c => c.subclasses),
+												...props.sourcebooks.flatMap(sb => sb.subclasses)
+											].map((sc, n) => (
+												<SelectablePanel
+													key={n}
+													onSelect={() => {
+														copySubclass(sc);
+														setDrawerOpen(false);
+													}}
+												>
+													<SubclassPanel subclass={sc} options={props.options} />
+												</SelectablePanel>
+											))
+										}
+									</Space>
+								}
+								onClose={() => setDrawerOpen(false)}
+							/>
+						</Drawer>
+					</Space>
+				</>
 			);
 		};
 

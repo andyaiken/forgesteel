@@ -201,9 +201,9 @@ export const HeroSheetPage = (props: Props) => {
 			RulesData.highGround,
 			RulesData.shifting ];
 
-		addlRules.forEach(rule => {
+		addlRules.forEach((rule, n) => {
 			optional.push({
-				element: <RulesReferenceCard rule={rule} />,
+				element: <RulesReferenceCard key={n} rule={rule} />,
 				width: 1,
 				height: SheetFormatter.calculateRuleReferenceCardSize(rule, layout.cardLineLen),
 				shown: false

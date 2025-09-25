@@ -28,6 +28,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { RulesPage } from '../../../../enums/rules-page';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
+import { SummoningInfo } from '../../../../models/summon';
 import { Title } from '../../../../models/title';
 import { useMediaQuery } from '../../../../hooks/use-media-query';
 import { useNavigation } from '../../../../hooks/use-navigation';
@@ -57,7 +58,7 @@ interface Props {
 	showDomain: (domain: Domain) => void;
 	showKit: (kit: Kit) => void;
 	showTitle: (title: Title) => void;
-	showMonster: (monster: Monster) => void;
+	showMonster: (monster: Monster, summon?: SummoningInfo) => void;
 	showFollower: (follower: Follower) => void;
 	showCharacteristic: (characteristic: Characteristic, hero: Hero) => void;
 	showFeature: (feature: Feature, hero: Hero) => void;

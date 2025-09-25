@@ -1,5 +1,6 @@
-import { Button, Input, Segmented, Select, Space } from 'antd';
+import { Button, Flex, Input, Segmented, Select, Space } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, CheckCircleOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, PlusOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
+import { ReactNode, useState } from 'react';
 import { Collections } from '../../../../utils/collections';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
@@ -12,11 +13,11 @@ import { LanguageType } from '../../../../enums/language-type';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { MultiLine } from '../../../controls/multi-line/multi-line';
 import { NameGenerator } from '../../../../utils/name-generator';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { SkillList } from '../../../../enums/skill-list';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Utils } from '../../../../utils/utils';
-import { useState } from 'react';
 
 import './sourcebook-panel.scss';
 
@@ -152,8 +153,8 @@ export const SourcebookPanel = (props: Props) => {
 	};
 
 	try {
-		let content = null;
-		let buttons = null;
+		let content: ReactNode = null;
+		const buttons: ReactNode[] = [];
 
 		if (isEditing) {
 			const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
@@ -288,11 +289,10 @@ export const SourcebookPanel = (props: Props) => {
 					</Expander>
 				</Space>
 			);
+
 			if (sourcebook.isHomebrew) {
-				buttons = (
-					<>
-						<Button type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
-					</>
+				buttons.push(
+					<Button key='save' type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
 				);
 			}
 		} else {
@@ -302,27 +302,36 @@ export const SourcebookPanel = (props: Props) => {
 					<div className='ds-text'>{SourcebookLogic.getElementCount(sourcebook)} elements</div>
 				</>
 			);
-			buttons = (
-				<>
-					<Button type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
-					{sourcebook.isHomebrew ? <Button type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} /> : null}
-					{sourcebook.isHomebrew ? <Button type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} /> : null}
-					{sourcebook.isHomebrew ? <DangerButton disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={onDelete} /> : null}
-				</>
+
+			buttons.push(
+				<Button key='show-hide' type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
 			);
+			if (sourcebook.isHomebrew) {
+				buttons.push(
+					<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} />
+				);
+				buttons.push(
+					<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} />
+				);
+				buttons.push(
+					<DangerButton key='delete' disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={onDelete} />
+				);
+			}
 		}
 
 		return (
 			<ErrorBoundary>
-				<div className='sourcebook-panel' id={sourcebook.id}>
-					<div className='content'>
-						<HeaderText tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}>{sourcebook.name || 'Unnamed Sourcebook'}</HeaderText>
+				<SelectablePanel>
+					<div className='sourcebook-panel' id={sourcebook.id}>
+						<HeaderText
+							tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}
+							extra={<Flex>{buttons}</Flex>}
+						>
+							{sourcebook.name || 'Unnamed Sourcebook'}
+						</HeaderText>
 						{content}
 					</div>
-					<div className='action-buttons'>
-						{buttons}
-					</div>
-				</div>
+				</SelectablePanel>
 			</ErrorBoundary>
 		);
 	} catch (ex) {

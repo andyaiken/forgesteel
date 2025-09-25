@@ -14,6 +14,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { CultureType } from '../enums/culture-type';
+import { DamageType } from '../enums/damage-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
 import { EncounterSlot } from '../models/encounter-slot';
@@ -54,6 +55,7 @@ import { Size } from '../models/size';
 import { Sourcebook } from '../models/sourcebook';
 import { Speed } from '../models/speed';
 import { SubClass } from '../models/subclass';
+import { Summon } from '../models/summon';
 import { TerrainCategory } from '../enums/terrain-category';
 import { TerrainRoleType } from '../enums/terrain-role-type';
 import { Title } from '../models/title';
@@ -213,6 +215,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			type: 'standard',
 			subclassName: '',
 			subclassCount: 1,
 			primaryCharacteristicsOptions: [],
@@ -511,6 +514,7 @@ export class FactoryLogic {
 		stamina: number,
 		stability: number,
 		freeStrikeDamage: number,
+		freeStrikeType?: DamageType,
 		characteristics: { characteristic: Characteristic, value: number }[],
 		features: Feature[],
 		withCaptain?: string,
@@ -539,11 +543,26 @@ export class FactoryLogic {
 			stamina: data.stamina || 5,
 			stability: data.stability || 0,
 			freeStrikeDamage: data.freeStrikeDamage || 2,
+			freeStrikeType: data.freeStrikeType || DamageType.Damage,
 			characteristics: data.characteristics || FactoryLogic.defaultMonsterChatacteristics,
 			withCaptain: data.withCaptain || '',
 			features: data.features || [],
 			retainer: retainer,
 			state: FactoryLogic.createMonsterState()
+		};
+	};
+
+	static createSummon = (data: { monster: Monster, isSignature: boolean, cost: number, count: number }): Summon => {
+		return {
+			id: data.monster.id,
+			name: data.monster.name,
+			description: data.monster.description,
+			monster: data.monster,
+			info: {
+				isSignature: data.isSignature,
+				cost: data.cost,
+				count: data.count
+			}
 		};
 	};
 
@@ -862,14 +881,16 @@ export class FactoryLogic {
 		bonus?: number,
 		tier1: string,
 		tier2: string,
-		tier3: string
+		tier3: string,
+		crit?: string
 	}): PowerRoll => {
 		return {
 			characteristic: data.characteristic ? Array.isArray(data.characteristic) ? data.characteristic : [ data.characteristic ] : [],
 			bonus: data.bonus ?? 0,
 			tier1: data.tier1,
 			tier2: data.tier2,
-			tier3: data.tier3
+			tier3: data.tier3,
+			crit: data.crit || ''
 		};
 	};
 

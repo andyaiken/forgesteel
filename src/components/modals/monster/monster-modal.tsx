@@ -15,6 +15,7 @@ import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { ResourcePill } from '../../controls/pill/pill';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { SummoningInfo } from '../../../models/summon';
 import { Utils } from '../../../utils/utils';
 import { useState } from 'react';
 
@@ -24,6 +25,7 @@ interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
 	encounter?: Encounter;
+	summon?: SummoningInfo;
 	options: Options;
 	onClose: () => void;
 	export?: (format: 'image' | 'pdf' | 'json') => void;
@@ -93,6 +95,7 @@ export const MonsterModal = (props: Props) => {
 					<MonsterPanel
 						monster={monster}
 						monsterGroup={props.monsterGroup}
+						summon={props.summon}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>

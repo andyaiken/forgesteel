@@ -27,10 +27,20 @@ interface Props {
 
 export const ClassPanel = (props: Props) => {
 	try {
+		const getTags = () => {
+			if (props.heroClass.type === 'master') {
+				return [ 'Master Class' ];
+			}
+
+			return [];
+		};
+
 		return (
 			<ErrorBoundary>
 				<div className={props.mode === PanelMode.Full ? 'class-panel' : 'class-panel compact'} id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
-					<HeaderText level={1}>{props.heroClass.name || 'Unnamed Class'}</HeaderText>
+					<HeaderText level={1} tags={getTags()}>
+						{props.heroClass.name || 'Unnamed Class'}
+					</HeaderText>
 					<Markdown text={props.heroClass.description} />
 					{
 						(props.mode === PanelMode.Full) && (props.heroClass.subclasses.length > 0) ?
@@ -82,11 +92,7 @@ export const ClassPanel = (props: Props) => {
 									{
 										...props.heroClass.subclasses
 											.filter(sc => (props.heroClass.subclasses.filter(x => x.selected).length === 0) || sc.selected)
-											.map(sc =>
-												<SelectablePanel key={sc.id} onSelect={props.onSelectSubclass ? () => props.onSelectSubclass!(sc) : undefined}>
-													<SubclassPanel subclass={sc} options={props.options} hero={props.hero} mode={sc.selected ? PanelMode.Full : PanelMode.Compact} />
-												</SelectablePanel>
-											)
+											.map(sc => <SubclassPanel key={sc.id} subclass={sc} options={props.options} hero={props.hero} mode={PanelMode.Full} />)
 									}
 								</div>
 							</Space>

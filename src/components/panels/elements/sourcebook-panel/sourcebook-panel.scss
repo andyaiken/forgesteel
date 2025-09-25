@@ -1,36 +1,3 @@
 .sourcebook-panel {
-	border-radius: 5px;
-	padding: 0 10px 10px 10px;
-	display: flex;
-	gap: 10px;
-
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.06);
-	}
-
-	.content {
-		flex: 1 1 0;
-	}
-
-	.action-buttons {
-		padding-top: 10px;
-		display: flex;
-		flex-direction: column;
-		border-left: 1px solid rgba(5, 5, 5, 0.06);
-		padding-left: 10px;
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	.sourcebook-panel {
-		&:hover {
-			background-color: rgba(255, 255, 255, 0.1);
-		}
-
-		.action-buttons {
-			button {
-				color: rgb(255, 255, 255);
-			}
-		}
-	}	
+	display: block;
 }

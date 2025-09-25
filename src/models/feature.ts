@@ -22,6 +22,7 @@ import { PerkList } from '../enums/perk-list';
 import { PowerRoll } from './power-roll';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
+import { Summon } from './summon';
 import { Title } from './title';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -249,11 +250,16 @@ export interface FeatureSpeedData extends _FeatureData {
 export type FeatureSpeed = FeatureOf<FeatureType.Speed, FeatureSpeedData>;
 
 export interface FeatureSummonData extends _FeatureData {
-	options: Monster[];
-	count: number;
-	selected: Monster[];
+	summons: Summon[];
 };
 export type FeatureSummon = FeatureOf<FeatureType.Summon, FeatureSummonData>;
+
+export interface FeatureSummonChoiceData extends _FeatureData {
+	options: Summon[];
+	count: number;
+	selected: Summon[];
+};
+export type FeatureSummonChoice = FeatureOf<FeatureType.SummonChoice, FeatureSummonChoiceData>;
 
 export interface FeatureTaggedFeatureData extends _FeatureData {
 	tag: string;
@@ -314,6 +320,7 @@ export type Feature =
 	| FeatureSkillChoice
 	| FeatureSpeed
 	| FeatureSummon
+	| FeatureSummonChoice
 	| FeatureText
 	| FeatureTaggedFeature
 	| FeatureTaggedFeatureChoice

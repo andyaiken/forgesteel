@@ -41,6 +41,7 @@ import { SelectablePanel } from '../../controls/selectable-panel/selectable-pane
 import { Skill } from '../../../models/skill';
 import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
+import { SummoningInfo } from '../../../models/summon';
 import { Title } from '../../../models/title';
 import { useMediaQuery } from '../../../hooks/use-media-query';
 import { useState } from 'react';
@@ -60,7 +61,7 @@ interface Props {
 	onSelectDomain?: (domain: Domain) => void;
 	onSelectKit?: (kit: Kit) => void;
 	onSelectTitle?: (title: Title) => void;
-	onSelectMonster?: (monster: Monster) => void;
+	onSelectMonster?: (monster: Monster, summon?: SummoningInfo) => void;
 	onSelectFollower?: (follower: Follower) => void;
 	onSelectCharacteristic?: (characteristic: Characteristic) => void;
 	onSelectFeature?: (feature: Feature) => void;
@@ -636,9 +637,9 @@ export const HeroPanel = (props: Props) => {
 				}
 			};
 
-			const onSelectMonster = (monster: Monster) => {
+			const onSelectMonster = (monster: Monster, summon?: SummoningInfo) => {
 				if (props.onSelectMonster) {
-					props.onSelectMonster(monster);
+					props.onSelectMonster(monster, summon);
 				}
 			};
 
@@ -840,15 +841,15 @@ export const HeroPanel = (props: Props) => {
 					}
 					{
 						HeroLogic.getSummons(props.hero).length > 0 ?
-							HeroLogic.getSummons(props.hero).map(monster =>
+							HeroLogic.getSummons(props.hero).map(summon =>
 								useRows ?
-									<div key={monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(monster)}>
-										<div>Can Summon: <b>{monster.name}</b></div>
+									<div key={summon.monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(summon.monster, summon.info)}>
+										<div>Can Summon: <b>{summon.monster.name}</b></div>
 									</div>
 									:
-									<div key={monster.id} className='overview-tile clickable' onClick={() => onSelectMonster(monster)}>
+									<div key={summon.monster.id} className='overview-tile clickable' onClick={() => onSelectMonster(summon.monster, summon.info)}>
 										<HeaderText>Can Summon</HeaderText>
-										<MonsterInfo monster={monster} style={{ marginBottom: '10px' }} />
+										<MonsterInfo monster={summon.monster} style={{ marginBottom: '10px' }} />
 									</div>
 							)
 							:

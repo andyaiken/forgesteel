@@ -24,6 +24,7 @@ import { SourcebookData } from '../data/sourcebook-data';
 import { SubClass } from '../models/subclass';
 import { Terrain } from '../models/terrain';
 import { Title } from '../models/title';
+import { Utils } from '../utils/utils';
 
 export class SourcebookLogic {
 	static getElementCount = (sourcebook: Sourcebook) => {
@@ -112,6 +113,10 @@ export class SourcebookLogic {
 			SourcebookData.core,
 			SourcebookData.orden
 		];
+
+		if (Utils.isDev()) {
+			list.push(SourcebookData.summoner);
+		}
 
 		list.push(...Collections.sort(homebrew, cs => cs.name));
 

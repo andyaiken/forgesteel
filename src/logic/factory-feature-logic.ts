@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
 import { Ability } from '../models/ability';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { Characteristic } from '../enums/characteristic';
@@ -14,10 +14,10 @@ import { FormatLogic } from './format-logic';
 import { ItemType } from '../enums/item-type';
 import { KitArmor } from '../enums/kit-armor';
 import { KitWeapon } from '../enums/kit-weapon';
-import { Monster } from '../models/monster';
 import { PerkList } from '../enums/perk-list';
 import { PowerRoll } from '../models/power-roll';
 import { SkillList } from '../enums/skill-list';
+import { Summon } from '../models/summon';
 
 export class FactoryFeatureLogic {
 	create = (data: { id: string, name: string, description: string }): FeatureText => {
@@ -547,12 +547,24 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createSummon = (data: { id: string, name?: string, description?: string, options: Monster[], count?: number }): FeatureSummon => {
+	createSummon = (data: { id: string, name?: string, description?: string, summons: Summon[] }): FeatureSummon => {
 		return {
 			id: data.id,
-			name: data.name || 'Summon',
+			name: data.name || 'Summon Choice',
 			description: data.description || '',
 			type: FeatureType.Summon,
+			data: {
+				summons: data.summons
+			}
+		};
+	};
+
+	createSummonChoice = (data: { id: string, name?: string, description?: string, options: Summon[], count?: number }): FeatureSummonChoice => {
+		return {
+			id: data.id,
+			name: data.name || 'Summon Choice',
+			description: data.description || '',
+			type: FeatureType.SummonChoice,
 			data: {
 				options: data.options,
 				count: data.count || 1,

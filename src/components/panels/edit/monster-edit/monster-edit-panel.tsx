@@ -2,6 +2,7 @@ import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs, Upload } 
 import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Characteristic } from '../../../../enums/characteristic';
 import { Collections } from '../../../../utils/collections';
+import { DamageType } from '../../../../enums/damage-type';
 import { DangerButton } from '../../../controls/danger-button/danger-button';
 import { Empty } from '../../../controls/empty/empty';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
@@ -331,6 +332,13 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setFreeStrikeType = (value: DamageType) => {
+			const copy = Utils.copy(monster);
+			copy.freeStrikeType = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
 		const selectRandomEncounterValue = () => {
 			const values = props.similarMonsters.map(m => m.encounterValue);
 			setEncounterValue(Collections.draw(values));
@@ -443,8 +451,16 @@ export const MonsterEditPanel = (props: Props) => {
 						</Expander>
 						: null
 				}
-				<HeaderText>Free Strike Damage</HeaderText>
-				<NumberSpin min={0} value={monster.freeStrikeDamage} steps={[ 1, 10 ]} onChange={setFreeStrikeDamage} />
+				<HeaderText>Free Strike</HeaderText>
+				<NumberSpin label='Damage' min={0} value={monster.freeStrikeDamage} steps={[ 1, 10 ]} onChange={setFreeStrikeDamage} />
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Damage type'
+					options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ].map(option => ({ value: option }))}
+					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+					value={monster.freeStrikeType}
+					onChange={setFreeStrikeType}
+				/>
 				{
 					props.similarMonsters.length > 0 ?
 						<Expander

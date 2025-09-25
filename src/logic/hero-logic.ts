@@ -231,8 +231,15 @@ export class HeroLogic {
 	static getSummons = (hero: Hero) => {
 		return HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Summon)
-			.flatMap(f => f.data.selected);
+			.flatMap(f => {
+				switch (f.type) {
+					case FeatureType.Summon:
+						return f.data.summons;
+					case FeatureType.SummonChoice:
+						return f.data.selected;
+				}
+				return [];
+			});
 	};
 
 	static getCharacteristic = (hero: Hero, characteristic: Characteristic) => {

@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const shamblingMound: MonsterGroup = {
@@ -90,7 +89,7 @@ One must also be wary of the area around a shambling mound. Their vines reach ou
 			stamina: 400,
 			stability: 5,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, -1, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'shambling-mound-feature-1',

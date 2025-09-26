@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -117,7 +116,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			stamina: 140,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(-1, 2, 2, 3, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 2, 2, 3, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -224,7 +223,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			stamina: 160,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 1, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 1, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -325,7 +324,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			stamina: 140,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(-1, 3, 3, 3, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 3, 3, 3, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -413,7 +412,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			stamina: 140,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(-1, 3, 2, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 3, 2, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -507,7 +506,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			stamina: 180,
 			stability: 3,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 0, 3),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 0, 0, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -610,7 +609,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			stamina: 180,
 			stability: 3,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, 1, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, 1, 2, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

@@ -17,6 +17,10 @@ interface Props {
 
 export const AbilityInfoPanel = (props: Props) => {
 	try {
+		if ((props.ability.type.usage === AbilityUsage.NoAction) && (props.ability.distance.length === 0) && (props.ability.target === '') && (props.ability.type.trigger === '')) {
+			return null;
+		}
+
 		const getMonogram = () => {
 			let monogram = '';
 

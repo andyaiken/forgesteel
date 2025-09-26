@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const medusa: MonsterGroup = {
@@ -122,7 +121,7 @@ Followers of the gods who impose this punishment spread terrifying myths about m
 			stamina: 420,
 			stability: 5,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(2, 4, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 4, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'medusa-feature-2',

@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -118,7 +117,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -159,7 +158,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 2, -1, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 2, -1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -201,7 +200,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 1, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -243,7 +242,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -279,7 +278,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stamina: 59,
 			stability: 3,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -332,7 +331,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -387,7 +386,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 1, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 1, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -444,7 +443,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 2, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -503,7 +502,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -565,7 +564,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 2, -1, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 2, -1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -638,7 +637,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -697,7 +696,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stamina: 120,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 3, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 3, 2, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -836,7 +835,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			stamina: 30,
 			stability: 2,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

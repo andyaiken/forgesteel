@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const ashenHoarder: MonsterGroup = {
@@ -85,7 +84,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 			stamina: 350,
 			stability: 3,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(4, -2, -2, 0, -5),
+			characteristics: FactoryLogic.createCharacteristics(4, -2, -2, 0, -5),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'ashen-hoarder-feature-1',

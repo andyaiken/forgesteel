@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -90,7 +89,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 			stamina: 100,
 			stability: 4,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, -1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, -1, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -190,7 +189,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 			stamina: 80,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -298,7 +297,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 			stamina: 14,
 			stability: 5,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(5, -1, -1, 3, -1),
+			characteristics: FactoryLogic.createCharacteristics(5, -1, -1, 3, -1),
 			withCaptain: '+4 bonus to speed',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -342,7 +341,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 			stamina: 13,
 			stability: 4,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, -1, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, -1, 0, 2),
 			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -391,7 +390,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 			stamina: 10,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, -1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, -1, 0, -1),
 			withCaptain: '+5 bonus to ranged distance',
 			features: [
 				FactoryLogic.feature.createAbility({

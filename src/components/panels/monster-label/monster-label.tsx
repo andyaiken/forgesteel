@@ -11,10 +11,15 @@ interface MonsterLabelProps {
 }
 
 export const MonsterLabel = (props: MonsterLabelProps) => {
+	const desc = MonsterLogic.getMonsterDescription(props.monster);
+	if (!desc) {
+		return null;
+	}
+
 	const type = props.monster.role.type.toLowerCase().replace(' ', '');
 	return (
 		<div className={`monster-label ${type}`}>
-			{MonsterLogic.getMonsterDescription(props.monster)}
+			{desc}
 		</div>
 	);
 };
@@ -24,11 +29,16 @@ interface TerrainLabelProps {
 }
 
 export const TerrainLabel = (props: TerrainLabelProps) => {
+	const desc = TerrainLogic.getTerrainDescription(props.terrain);
+	if (!desc) {
+		return null;
+	}
+
 	const type = props.terrain.role.type.toLowerCase().replace(' ', '');
 	return (
 		<ErrorBoundary>
 			<div className={`terrain-label ${type}`}>
-				{TerrainLogic.getTerrainDescription(props.terrain)}
+				{desc}
 			</div>
 		</ErrorBoundary>
 	);

@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -102,7 +101,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stability: 1,
 			freeStrikeDamage: 3,
 			withCaptain: 'Speed +2',
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -3, 0, -2),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -3, 0, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -143,7 +142,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stability: 1,
 			freeStrikeDamage: 3,
 			withCaptain: 'Strike damage +1',
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 1, 0, -2),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 1, 0, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -184,7 +183,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stability: 1,
 			freeStrikeDamage: 2,
 			withCaptain: 'Melee distance +2',
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -225,7 +224,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stamina: 5,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, -2),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -265,7 +264,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stamina: 15,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 1, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -328,7 +327,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stamina: 20,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 0, 0, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -397,7 +396,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stamina: 25,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -455,7 +454,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stamina: 15,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 2, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -519,7 +518,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stamina: 20,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -582,7 +581,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stamina: 100,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, -1, -3, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, -1, -3, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -641,7 +640,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			stamina: 100,
 			stability: 1,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 3, 0, 0, 3),
+			characteristics: FactoryLogic.createCharacteristics(3, 3, 0, 0, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

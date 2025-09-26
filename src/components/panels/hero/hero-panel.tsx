@@ -849,6 +849,21 @@ export const HeroPanel = (props: Props) => {
 									:
 									<div key={summon.monster.id} className='overview-tile clickable' onClick={() => onSelectMonster(summon.monster, summon.info)}>
 										<HeaderText>Can Summon</HeaderText>
+										{
+											summon.info.cost > 0 ?
+												<div className='ds-text' style={{ height: '22px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+													{
+														summon.info.isSignature ?
+															<Tag>Signature</Tag>
+															:
+															<>
+																<ResourcePill value={summon.info.cost} />
+																Summon {summon.info.count}
+															</>
+													}
+												</div>
+												: null
+										}
 										<MonsterInfo monster={summon.monster} style={{ marginBottom: '10px' }} />
 									</div>
 							)

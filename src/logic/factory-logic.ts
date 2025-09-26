@@ -493,13 +493,15 @@ export class FactoryLogic {
 		};
 	};
 
-	static defaultMonsterChatacteristics = [
-		{ characteristic: Characteristic.Might, value: 0 },
-		{ characteristic: Characteristic.Agility, value: 0 },
-		{ characteristic: Characteristic.Reason, value: 0 },
-		{ characteristic: Characteristic.Intuition, value: 0 },
-		{ characteristic: Characteristic.Presence, value: 0 }
-	];
+	static createCharacteristics = (might: number, agility: number, reason: number, intuition: number, presence: number) => {
+		return [
+			{ characteristic: Characteristic.Might, value: might },
+			{ characteristic: Characteristic.Agility, value: agility },
+			{ characteristic: Characteristic.Reason, value: reason },
+			{ characteristic: Characteristic.Intuition, value: intuition },
+			{ characteristic: Characteristic.Presence, value: presence }
+		];
+	};
 
 	static createMonster = (data: {
 		id: string,
@@ -530,23 +532,23 @@ export class FactoryLogic {
 			}
 			: null;
 		return {
-			id: data.id || Utils.guid(),
-			name: data.name || '',
+			id: data.id,
+			name: data.name,
 			description: data.description || '',
 			picture: null,
-			level: data.level || 1,
-			role: data.role || FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Ambusher),
-			keywords: data.keywords || [],
-			encounterValue: data.encounterValue || 0,
-			size: data.size || FactoryLogic.createSize(1, 'M'),
-			speed: data.speed || FactoryLogic.createSpeed(5),
-			stamina: data.stamina || 5,
-			stability: data.stability || 0,
-			freeStrikeDamage: data.freeStrikeDamage || 2,
+			level: data.level,
+			role: data.role,
+			keywords: data.keywords,
+			encounterValue: data.encounterValue,
+			size: data.size,
+			speed: data.speed,
+			stamina: data.stamina,
+			stability: data.stability,
+			freeStrikeDamage: data.freeStrikeDamage,
 			freeStrikeType: data.freeStrikeType || DamageType.Damage,
-			characteristics: data.characteristics || FactoryLogic.defaultMonsterChatacteristics,
+			characteristics: data.characteristics,
+			features: data.features,
 			withCaptain: data.withCaptain || '',
-			features: data.features || [],
 			retainer: retainer,
 			state: FactoryLogic.createMonsterState()
 		};

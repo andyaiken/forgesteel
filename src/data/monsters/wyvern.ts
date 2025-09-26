@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -84,7 +83,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, -1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, -1, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -190,7 +189,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			stability: 3,
 			size: FactoryLogic.createSize(3),
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, -1, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

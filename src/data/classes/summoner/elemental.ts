@@ -3,7 +3,7 @@ import { Characteristic } from '../../../enums/characteristic';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { DamageType } from '../../../enums/damage-type';
 import { FactoryLogic } from '../../../logic/factory-logic';
-import { MonsterLogic } from '../../../logic/monster-logic';
+import { FeatureField } from '../../../enums/feature-field';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { SubClass } from '../../../models/subclass';
@@ -49,7 +49,7 @@ export const elemental: SubClass = {
 								stamina: 1,
 								stability: 0,
 								freeStrikeDamage: 1,
-								characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 0, 2),
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 2),
 								features: [
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-4a-1',
@@ -59,7 +59,7 @@ export const elemental: SubClass = {
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-4a-2',
 										name: 'Catalyst',
-										description: 'Once per turn, the mote can transform into an adjacent allied signature minion, maintaining their current Stamina. Instead, you can spend 1 essence to transform the mote into any signature minion in the elemental por olio you don’t have. The minion must be reassigned to a new squad if their new name diﬀers from the other squad members.'
+										description: 'Once per turn, the mote can transform into an adjacent allied signature minion, maintaining their current Stamina. Instead, you can spend 1 essence to transform the mote into any signature minion in the elemental portfolio you don’t have. The minion must be reassigned to a new squad if their new name diﬀers from the other squad members.'
 									})
 								]
 							}),
@@ -88,7 +88,7 @@ export const elemental: SubClass = {
 								stability: 0,
 								freeStrikeDamage: 1,
 								freeStrikeType: DamageType.Sonic,
-								characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 1),
+								characteristics: FactoryLogic.createCharacteristics(-2, 2, 0, 0, 1),
 								features: [
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-5a-1',
@@ -121,7 +121,7 @@ export const elemental: SubClass = {
 								stability: 0,
 								freeStrikeDamage: 2,
 								freeStrikeType: DamageType.Fire,
-								characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 2),
+								characteristics: FactoryLogic.createCharacteristics(-2, 2, 0, 0, 2),
 								features: [
 									FactoryLogic.feature.create({
 										id: 'summoner-2-1-5b-1',
@@ -153,15 +153,20 @@ export const elemental: SubClass = {
 								stamina: 3,
 								stability: 0,
 								freeStrikeDamage: 1,
-								characteristics: MonsterLogic.createCharacteristics(2, -2, 0, 0, 2),
+								characteristics: FactoryLogic.createCharacteristics(2, -2, 0, 0, 2),
 								features: [
-									FactoryLogic.feature.create({
+									FactoryLogic.feature.createBonus({
 										id: 'summoner-2-1-5c-1',
+										field: FeatureField.Stability,
+										valueCharacteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-1-5c-2',
 										name: 'Obstruct',
 										description: 'The boulder obstructs line of eﬀect for enemies.'
 									}),
 									FactoryLogic.feature.create({
-										id: 'summoner-2-1-5c-2',
+										id: 'summoner-2-1-5c-3',
 										name: 'Pile Up',
 										description: 'When the boulder is reduced to 0 Stamina, they leave behind a stone Wall equal to their size in their space until the end of the encounter.'
 									})
@@ -170,7 +175,6 @@ export const elemental: SubClass = {
 							isSignature: true,
 							cost: 1,
 							count: 1
-							// TODO: Stability R
 						})
 					]
 				}),
@@ -192,20 +196,20 @@ export const elemental: SubClass = {
 								stamina: 6,
 								stability: 0,
 								freeStrikeDamage: 5,
-								characteristics: MonsterLogic.createCharacteristics(-2, -2, 0, 0, 1),
+								characteristics: FactoryLogic.createCharacteristics(-2, -2, 0, 0, 1),
 								features: [
 									FactoryLogic.feature.createDamageModifier({
 										id: 'summoner-2-1-6a-1',
 										modifiers: [
-											FactoryLogic.damageModifier.create({
+											FactoryLogic.damageModifier.createCharacteristic({
 												damageType: DamageType.Sonic,
 												modifierType: DamageModifierType.Immunity,
-												value: 0
+												characteristics: [ Characteristic.Reason ]
 											}),
-											FactoryLogic.damageModifier.create({
+											FactoryLogic.damageModifier.createCharacteristic({
 												damageType: DamageType.Fire,
 												modifierType: DamageModifierType.Immunity,
-												value: 0
+												characteristics: [ Characteristic.Reason ]
 											})
 										]
 									}),
@@ -232,7 +236,6 @@ export const elemental: SubClass = {
 							isSignature: false,
 							cost: 3,
 							count: 2
-							// TODO: Sonic immunity R, fire immunity R
 						}),
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
@@ -249,15 +252,15 @@ export const elemental: SubClass = {
 								stability: 2,
 								freeStrikeDamage: 4,
 								freeStrikeType: DamageType.Fire,
-								characteristics: MonsterLogic.createCharacteristics(2, -2, 0, 0, 1),
+								characteristics: FactoryLogic.createCharacteristics(2, -2, 0, 0, 1),
 								features: [
 									FactoryLogic.feature.createDamageModifier({
 										id: 'summoner-2-1-6b-1',
 										modifiers: [
-											FactoryLogic.damageModifier.create({
+											FactoryLogic.damageModifier.createCharacteristic({
 												damageType: DamageType.Fire,
 												modifierType: DamageModifierType.Immunity,
-												value: 0
+												characteristics: [ Characteristic.Reason ]
 											})
 										]
 									}),
@@ -300,7 +303,6 @@ export const elemental: SubClass = {
 							isSignature: false,
 							cost: 3,
 							count: 2
-							// TODO: Fire immunity R
 						}),
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
@@ -316,15 +318,15 @@ export const elemental: SubClass = {
 								stamina: 5,
 								stability: 1,
 								freeStrikeDamage: 4,
-								characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, -2),
+								characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, -2),
 								features: [
 									FactoryLogic.feature.createDamageModifier({
 										id: 'summoner-2-1-6c-1',
 										modifiers: [
-											FactoryLogic.damageModifier.create({
+											FactoryLogic.damageModifier.createCharacteristic({
 												damageType: DamageType.Sonic,
 												modifierType: DamageModifierType.Immunity,
-												value: 0
+												characteristics: [ Characteristic.Reason ]
 											})
 										]
 									}),
@@ -356,7 +358,6 @@ export const elemental: SubClass = {
 							isSignature: false,
 							cost: 3,
 							count: 2
-							// TODO: Sonic immunity R
 						})
 					],
 					count: 2

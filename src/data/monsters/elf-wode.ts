@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -107,7 +106,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -153,7 +152,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -198,7 +197,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -247,7 +246,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+1 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -287,7 +286,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -350,7 +349,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -412,7 +411,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stamina: 20,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -486,7 +485,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -546,7 +545,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -617,7 +616,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -683,7 +682,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -743,7 +742,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 2, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -866,7 +865,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			stamina: 30,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

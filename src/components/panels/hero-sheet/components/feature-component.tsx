@@ -1,5 +1,4 @@
 import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
-
 import { Ability } from '../../../../models/ability';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { DamageModifier } from '../../../../models/damage-modifier';
@@ -10,6 +9,7 @@ import { Fragment } from 'react';
 import { Hero } from '../../../../models/hero';
 import { HeroLogic } from '../../../../logic/hero-logic';
 import { Markdown } from '../../../controls/markdown/markdown';
+import { ModifierLogic } from '../../../../logic/modifier-logic';
 import { PerkList } from '../../../../enums/perk-list';
 import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 import { SkillList } from '../../../../enums/skill-list';
@@ -116,7 +116,7 @@ const SkillChoiceFeatureComponent = (feature: FeatureSkillChoice | FeaturePerk) 
 };
 
 const BonusFeatureComponent = (feature: FeatureBonus, hero?: Hero) => {
-	const value = hero ? HeroLogic.calculateModifierValue(hero, feature.data) : feature.data.value;
+	const value = hero ? ModifierLogic.calculateModifierValue(feature.data, hero) : feature.data.value;
 	return (
 		<>
 			<div className='feature-line'><strong>• {feature.name}: </strong>{SheetFormatter.addSign(value)} {feature.data.field}</div>
@@ -207,7 +207,7 @@ const ClassAbilityFeatureComponent = (feature: FeatureClassAbility) => {
 };
 
 const AbilityModifierComponent = (feature: FeatureAbilityDamage | FeatureAbilityDistance, hero?: Hero) => {
-	const value = hero ? HeroLogic.calculateModifierValue(hero, feature.data) : feature.data.value;
+	const value = hero ? ModifierLogic.calculateModifierValue(feature.data, hero) : feature.data.value;
 	const type = feature.type === FeatureType.AbilityDistance ? 'distance' : 'damage';
 	return (
 		<div className='feature-line'>
@@ -228,7 +228,7 @@ const DamageModifierComponent = (feature: FeatureDamageModifier, hero?: Hero) =>
 		const typeMods = modifiersMap.get(type)?.map(m => {
 			return (
 				<div className={`feature-iteration damage-type ${m.damageType.toLocaleLowerCase()}`} key={`${m.type}-${m.damageType}`}>
-					{m.damageType} {hero ? HeroLogic.calculateModifierValue(hero, m) : m.value}
+					{m.damageType} {hero ? ModifierLogic.calculateModifierValue(m, hero) : m.value}
 				</div>
 			);
 		});

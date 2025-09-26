@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const dragonGloom: MonsterGroup = {
@@ -94,7 +93,7 @@ When a gloom dragon slays a victim, they take not just their valuables, but also
 			stamina: 350,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 4, 1, 3, 4),
+			characteristics: FactoryLogic.createCharacteristics(2, 4, 1, 3, 4),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'dragon-gloom-feature-1',

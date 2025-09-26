@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const dragonCrucible: MonsterGroup = {
@@ -94,7 +93,7 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 			stamina: 450,
 			stability: 6,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, -1, 3, 3, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, 3, 3, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'dragon-crucible-feature-1',

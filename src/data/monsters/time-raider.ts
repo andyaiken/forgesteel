@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -105,7 +104,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+1 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 2, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 2, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -158,7 +157,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+1 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 2, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 2, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -210,7 +209,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 2, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 2, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -292,7 +291,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stamina: 40,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 2, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 2, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -359,7 +358,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 2, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -429,7 +428,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 2, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 2, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -495,7 +494,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stamina: 40,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 2, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 2, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -569,7 +568,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 2, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 2, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -644,7 +643,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stamina: 50,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 2, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 2, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -724,7 +723,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 3, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 3, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

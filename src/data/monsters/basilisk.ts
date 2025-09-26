@@ -4,7 +4,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -95,7 +94,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, -3, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, -3, -1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -198,7 +197,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, -3, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, -3, -1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

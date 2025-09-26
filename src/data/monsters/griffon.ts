@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -83,7 +82,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, -1, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -188,7 +187,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 			stability: 3,
 			size: FactoryLogic.createSize(3),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, -1, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

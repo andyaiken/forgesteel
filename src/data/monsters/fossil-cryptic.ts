@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const fossilCryptic: MonsterGroup = {
@@ -86,7 +85,7 @@ export const fossilCryptic: MonsterGroup = {
 			stamina: 250,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 1, 1, 0),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'fossil-cryptic-feature-1',

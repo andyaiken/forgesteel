@@ -7,6 +7,7 @@ import { AncestryData } from '../data/ancestry-data';
 import { Characteristic } from '../enums/characteristic';
 import { Collections } from '../utils/collections';
 import { ConditionType } from '../enums/condition-type';
+import { CreatureLogic } from './creature-logic';
 import { DamageModifierType } from '../enums/damage-modifier-type';
 import { DamageType } from '../enums/damage-type';
 import { FactoryLogic } from './factory-logic';
@@ -19,7 +20,7 @@ import { ItemType } from '../enums/item-type';
 import { Kit } from '../models/kit';
 import { Language } from '../models/language';
 import { LanguageType } from '../enums/language-type';
-import { Modifier } from '../models/damage-modifier';
+import { ModifierLogic } from './modifier-logic';
 import { MonsterOrganizationType } from '../enums/monster-organization-type';
 import { MonsterRoleType } from '../enums/monster-role-type';
 import { NameGenerator } from '../utils/name-generator';
@@ -29,6 +30,7 @@ import { SkillList } from '../enums/skill-list';
 import { Sourcebook } from '../models/sourcebook';
 import { SourcebookData } from '../data/sourcebook-data';
 import { SourcebookLogic } from './sourcebook-logic';
+import { SummonLogic } from './summon-logic';
 import { Utils } from '../utils/utils';
 
 export class HeroLogic {
@@ -217,7 +219,8 @@ export class HeroLogic {
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Companion)
 			.map(f => f.data.selected)
-			.filter(a => !!a);
+			.filter(a => !!a)
+			.sort((a, b) => a.name.localeCompare(b.name));
 	};
 
 	static getFollowers = (hero: Hero) => {
@@ -225,7 +228,8 @@ export class HeroLogic {
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Follower)
 			.map(f => f.data.follower)
-			.filter(a => !!a);
+			.filter(a => !!a)
+			.sort((a, b) => a.name.localeCompare(b.name));
 	};
 
 	static getSummons = (hero: Hero) => {
@@ -239,6 +243,18 @@ export class HeroLogic {
 						return f.data.selected;
 				}
 				return [];
+			})
+			.map(s => {
+				const copy = Utils.copy(s);
+				copy.monster = SummonLogic.getSummonedMonster(copy.monster, hero);
+				return copy;
+			})
+			.sort((a, b) => {
+				let result = a.info.cost - b.info.cost;
+				if (result === 0) {
+					result = a.name.localeCompare(b.name);
+				}
+				return result;
 			});
 	};
 
@@ -358,7 +374,7 @@ export class HeroLogic {
 				f.data.modifiers
 					.filter(dm => dm.type === type)
 					.forEach(dm => {
-						const value = HeroLogic.calculateModifierValue(hero, dm);
+						const value = ModifierLogic.calculateModifierValue(dm, hero);
 
 						const existing = modifiers.find(x => x.damageType === dm.damageType);
 						if (existing) {
@@ -375,23 +391,6 @@ export class HeroLogic {
 		return Collections.sort(modifiers, dm => dm.damageType);
 	};
 
-	static calculateModifierValue = (hero: Hero, mod: Modifier) => {
-		let value = mod.value;
-
-		if (mod.valueCharacteristics.length > 0) {
-			const characteristicValue = Collections.max(mod.valueCharacteristics.map(ch => HeroLogic.getCharacteristic(hero, ch)), v => v) || 0;
-			const multiplier = mod.valueCharacteristicMultiplier || 1;
-			value += characteristicValue * multiplier;
-		}
-
-		if (hero.class) {
-			value += mod.valuePerLevel * (hero.class.level - 1);
-			value += mod.valuePerEchelon * HeroLogic.getEchelon(hero.class.level);
-		}
-
-		return value;
-	};
-
 	///////////////////////////////////////////////////////////////////////////
 
 	static getStamina = (hero: Hero) => {
@@ -401,7 +400,7 @@ export class HeroLogic {
 		const kits = HeroLogic.getKits(hero);
 		const v = Collections.max(kits.map(kit => kit.stamina), value => value) || 0;
 		if (hero.class) {
-			value += v * HeroLogic.getEchelon(hero.class.level);
+			value += v * CreatureLogic.getEchelon(hero.class.level);
 		}
 
 		HeroLogic.getFeatures(hero)
@@ -409,7 +408,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Stamina)
-			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 		return value;
 	};
@@ -430,7 +429,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.RecoveryValue)
-			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 		return value;
 	};
@@ -443,7 +442,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Recoveries)
-			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 		return value;
 	};
@@ -501,7 +500,7 @@ export class HeroLogic {
 				.filter(f => f.type === FeatureType.Bonus)
 				.map(f => f.data)
 				.filter(data => data.field === FeatureField.Speed)
-				.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+				.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 			if (hero.state.conditions.some(c => [ ConditionType.Grabbed, ConditionType.Restrained ].includes(c.type))) {
 				value = 0;
@@ -547,7 +546,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Stability)
-			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 		return value;
 	};
@@ -564,7 +563,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Disengage)
-			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 		return value;
 	};
@@ -577,7 +576,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Renown)
-			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 		return value;
 	};
@@ -590,7 +589,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.ProjectPoints)
-			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 		return value;
 	};
@@ -603,7 +602,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.Bonus)
 			.map(f => f.data)
 			.filter(data => data.field === FeatureField.Wealth)
-			.forEach(data => value += HeroLogic.calculateModifierValue(hero, data));
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
 
 		return value;
 	};
@@ -684,7 +683,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.AbilityDamage)
 			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
 			.forEach(f => {
-				const mod = HeroLogic.calculateModifierValue(hero, f.data);
+				const mod = ModifierLogic.calculateModifierValue(f.data, hero);
 				array.push({
 					feature: f.name,
 					value: mod,
@@ -725,7 +724,7 @@ export class HeroLogic {
 			.filter(f => f.type === FeatureType.AbilityDistance)
 			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
 			.forEach(f => {
-				const mod = HeroLogic.calculateModifierValue(hero, f.data);
+				const mod = ModifierLogic.calculateModifierValue(f.data, hero);
 				value += mod;
 			});
 
@@ -817,27 +816,6 @@ export class HeroLogic {
 		}
 
 		return true;
-	};
-
-	static getEchelon = (level: number) => {
-		switch (level) {
-			case 1:
-			case 2:
-			case 3:
-				return 1;
-			case 4:
-			case 5:
-			case 6:
-				return 2;
-			case 7:
-			case 8:
-			case 9:
-				return 3;
-			case 10:
-				return 4;
-		}
-
-		return 1;
 	};
 
 	static getCharacteristicArrays = (primaryCount: number) => {

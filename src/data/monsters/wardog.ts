@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -226,7 +225,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+1 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -271,7 +270,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+1 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -316,7 +315,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -358,7 +357,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 1,
 			freeStrikeDamage: 2,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -403,7 +402,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 25,
 			stability: 2,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -462,7 +461,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wardog-1st-6-feature-1',
@@ -527,7 +526,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -581,7 +580,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 20,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wardog-1st-8-feature-1',
@@ -654,7 +653,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 20,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wardog-1st-9-feature-1',
@@ -714,7 +713,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'wardog-1st-10-feature-1',
@@ -775,7 +774,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -851,7 +850,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 20,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -910,7 +909,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 3, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 3, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1030,7 +1029,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: 'Lightning Spread increases by 1 square',
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 3, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 3, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1078,7 +1077,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1123,7 +1122,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(-1, 3, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(-1, 3, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1173,7 +1172,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 35,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 2, 2, -1),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 2, 2, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1243,7 +1242,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(3, -1, 0, 3, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, -1, 0, 3, 1),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'wardog-2nd-5-feature-1',
@@ -1303,7 +1302,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 53,
 			stability: 2,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(3, 3, -1, -2, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 3, -1, -2, 0),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'wardog-2nd-6-feature-1',
@@ -1367,7 +1366,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'wardog-2nd-7-feature-1',
@@ -1427,7 +1426,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 35,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'wardog-2nd-8-feature-1',
@@ -1494,7 +1493,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 35,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 2, 3, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 2, 3, 1),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'wardog-2nd-9-feature-1',
@@ -1553,7 +1552,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 2, 3, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 2, 3, 0),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'wardog-2nd-10-feature-1',
@@ -1619,7 +1618,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 35,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 3, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 3, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1687,7 +1686,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 180,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, 3, 2, 3, 4),
+			characteristics: FactoryLogic.createCharacteristics(4, 3, 2, 3, 4),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'wardog-2nd-12-feature-1',
@@ -1814,7 +1813,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 2,
 			freeStrikeDamage: 4,
 			withCaptain: '+3 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(4, 1, -2, -1, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, -2, -1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1856,7 +1855,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 4,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(-1, 2, 4, 3, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 2, 4, 3, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1898,7 +1897,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 4,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(1, 4, 3, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 4, 3, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1939,7 +1938,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 4, 1, 3, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 4, 1, 3, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2009,7 +2008,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 72,
 			stability: 5,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(4, -2, 2, 3, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, -2, 2, 3, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2069,7 +2068,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 45,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 4, 4, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 4, 4, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2131,7 +2130,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 200,
 			stability: 4,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 1, 1, 3),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 1, 1, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2189,7 +2188,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 45,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 3, 4, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 3, 4, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2254,7 +2253,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 45,
 			stability: 3,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 4, 4, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 4, 4, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2317,7 +2316,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 1, 4, 4),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 1, 4, 4),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2375,7 +2374,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 82,
 			stability: 2,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(4, 0, 4, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(4, 0, 4, 2, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2441,7 +2440,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 240,
 			stability: 1,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 5, 4, 3),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 5, 4, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2560,7 +2559,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 2,
 			freeStrikeDamage: 4,
 			withCaptain: '+3 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(5, 4, 2, 3, 2),
+			characteristics: FactoryLogic.createCharacteristics(5, 4, 2, 3, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2607,7 +2606,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 5,
 			withCaptain: '+4 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(1, 5, 3, 5, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 5, 3, 5, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2649,7 +2648,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stability: 0,
 			freeStrikeDamage: 4,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 4, 3, 5),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 4, 3, 5),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2690,7 +2689,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 260,
 			stability: 3,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(5, 2, 4, 3, 4),
+			characteristics: FactoryLogic.createCharacteristics(5, 2, 4, 3, 4),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2789,7 +2788,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 260,
 			stability: 2,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(5, 4, 1, 4, 2),
+			characteristics: FactoryLogic.createCharacteristics(5, 4, 1, 4, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2891,7 +2890,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 253,
 			stability: 3,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 5, 4, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 5, 4, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2999,7 +2998,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 220,
 			stability: 1,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 3, 4, 5),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 3, 4, 5),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -3122,7 +3121,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			stamina: 260,
 			stability: 2,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(4, 4, 5, 5, 5),
+			characteristics: FactoryLogic.createCharacteristics(4, 4, 5, 5, 5),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

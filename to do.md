@@ -2,7 +2,7 @@
 
 ### Heroes
 
-(nothing)
+Add retinue tab for companions, followers, summons
 
 ### Library
 

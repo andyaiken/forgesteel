@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -209,7 +208,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to melee distance',
-			characteristics: MonsterLogic.createCharacteristics(2, 0, -1, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -255,7 +254,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -1, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -300,7 +299,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(-2, 2, -2, -2, -2),
+			characteristics: FactoryLogic.createCharacteristics(-2, 2, -2, -2, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -349,7 +348,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -413,7 +412,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -477,7 +476,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 20,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -545,7 +544,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -614,7 +613,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -677,7 +676,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 2, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -799,7 +798,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stability: 1,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -845,7 +844,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(-1, 3, 1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 3, 1, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -895,7 +894,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 1, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 1, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -935,7 +934,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 30,
 			stability: 2,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 3, 3, 3),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 3, 3, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1011,7 +1010,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1085,7 +1084,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 35,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 2, 1, 3),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 2, 1, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1149,7 +1148,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 25,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 1, 2, -1),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 1, 2, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1216,7 +1215,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 45,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(3, 0, 2, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 0, 2, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1286,7 +1285,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 180,
 			stability: 3,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, -1, 1, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, 1, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1419,7 +1418,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 4, 1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 4, 1, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1464,7 +1463,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stability: 2,
 			freeStrikeDamage: 4,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(4, 2, -1, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1509,7 +1508,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stability: 0,
 			freeStrikeDamage: 4,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, -1, 4, 4, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, -1, 4, 4, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1554,7 +1553,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 4, 3, 4),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 4, 3, 4),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1624,7 +1623,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 90,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(4, 0, 2, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, 0, 2, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1688,7 +1687,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 45,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 4, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 4, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1757,7 +1756,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 45,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 4, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 4, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1821,7 +1820,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(3, 0, 2, 2, 4),
+			characteristics: FactoryLogic.createCharacteristics(3, 0, 2, 2, 4),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'demon-3rd-8-feature-1',
@@ -1878,7 +1877,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 			stamina: 240,
 			stability: 2,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(5, -1, 3, 3, 2),
+			characteristics: FactoryLogic.createCharacteristics(5, -1, 3, 3, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2013,7 +2012,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 			stability: 0,
 			freeStrikeDamage: 5,
 			withCaptain: '+4 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 1, 5, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 1, 5, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2054,7 +2053,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 			stability: 0,
 			freeStrikeDamage: 4,
 			withCaptain: '+4 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 5, 0, 3, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 5, 0, 3, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2105,7 +2104,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 			stability: 3,
 			freeStrikeDamage: 5,
 			withCaptain: 'Have a double edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(5, 5, -1, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(5, 5, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2150,7 +2149,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 			stamina: 55,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 5, 2, 4),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 5, 2, 4),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2230,7 +2229,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(4, 5, -1, -2, -3),
+			characteristics: FactoryLogic.createCharacteristics(4, 5, -1, -2, -3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -2300,7 +2299,7 @@ The Find a Cure downtime project in *Draw Steel: Heroes* can be used to find a c
 			stamina: 260,
 			stability: 2,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(5, 2, 5, 3, 5),
+			characteristics: FactoryLogic.createCharacteristics(5, 2, 5, 3, 5),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'demon-4th-6-feature-1',

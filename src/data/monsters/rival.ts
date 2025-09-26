@@ -4,7 +4,6 @@ import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureAddOnType } from '../../enums/feature-addon-type';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -103,7 +102,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 0, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -166,7 +165,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 60,
 			stability: 1,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 0, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -239,7 +238,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 100,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -309,7 +308,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 80,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 1, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -373,7 +372,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -436,7 +435,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 60,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 1, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -514,7 +513,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 60,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 2, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 2, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -587,7 +586,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 140,
 			stability: 1,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 3, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 3, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -650,7 +649,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 120,
 			stability: 1,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 3, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 3, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -723,7 +722,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 160,
 			stability: 3,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -793,7 +792,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 140,
 			stability: 3,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 2, 3, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 2, 3, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -857,7 +856,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 140,
 			stability: 1,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 1, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 1, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -920,7 +919,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(3, 0, 2, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 0, 2, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -998,7 +997,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 3, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 3, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1071,7 +1070,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 200,
 			stability: 1,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(3, 0, 1, 4, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 0, 1, 4, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1134,7 +1133,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 180,
 			stability: 1,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 4, 3, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 4, 3, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1207,7 +1206,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 220,
 			stability: 3,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, 3, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, 3, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1277,7 +1276,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 200,
 			stability: 3,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(2, 4, 3, 4, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 4, 3, 4, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1341,7 +1340,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 200,
 			stability: 1,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(0, 4, 2, 0, 3),
+			characteristics: FactoryLogic.createCharacteristics(0, 4, 2, 0, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1404,7 +1403,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 180,
 			stability: 2,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, 3, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, 3, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1482,7 +1481,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 180,
 			stability: 2,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 4, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 4, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1560,7 +1559,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 240,
 			stability: 1,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, 1, 5, 3),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, 1, 5, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1628,7 +1627,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 220,
 			stability: 1,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 5, 4, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 5, 4, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1696,7 +1695,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 260,
 			stability: 3,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(5, 4, 0, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(5, 4, 0, 2, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1766,7 +1765,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 240,
 			stability: 3,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(3, 5, 4, 5, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 5, 4, 5, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1830,7 +1829,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 240,
 			stability: 1,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(0, 5, 3, 2, 4),
+			characteristics: FactoryLogic.createCharacteristics(0, 5, 3, 2, 4),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1893,7 +1892,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 220,
 			stability: 2,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(5, 2, 4, 0, 3),
+			characteristics: FactoryLogic.createCharacteristics(5, 2, 4, 0, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1971,7 +1970,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			stamina: 220,
 			stability: 2,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 5, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 5, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

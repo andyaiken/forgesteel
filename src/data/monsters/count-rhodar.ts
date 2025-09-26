@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const countRhodar: MonsterGroup = {
@@ -104,7 +103,7 @@ How his return might be possible is not clear, but it would surely involve the R
 			stamina: 650,
 			stability: 3,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(3, 5, 2, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(3, 5, 2, 2, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'count-rhodar-1-1',

@@ -4,7 +4,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const olothec: MonsterGroup = {
@@ -90,7 +89,7 @@ export const olothec: MonsterGroup = {
 			stamina: 450,
 			stability: 0,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, -1, 4, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, 4, 2, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'olothec-feature-1',

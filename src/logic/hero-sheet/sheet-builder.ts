@@ -21,6 +21,7 @@ import { FormatLogic } from '../format-logic';
 import { Hero } from '../../models/hero';
 import { HeroLogic } from '../hero-logic';
 import { Item } from '../../models/item';
+import { ModifierLogic } from '../modifier-logic';
 import { Monster } from '../../models/monster';
 import { MonsterLogic } from '../monster-logic';
 import { Options } from '../../models/options';
@@ -374,13 +375,13 @@ export class SheetBuilder {
 		let value;
 		switch (feature.type) {
 			case FeatureType.Bonus: {
-				value = HeroLogic.calculateModifierValue(hero, feature.data);
+				value = ModifierLogic.calculateModifierValue(feature.data, hero);
 				const field = feature.data.field.toString();
 				SheetBuilder.modifierFieldMapping[field](sheet, value);
 				break;
 			}
 			case FeatureType.AbilityDistance:
-				value = HeroLogic.calculateModifierValue(hero, feature.data);
+				value = ModifierLogic.calculateModifierValue(feature.data, hero);
 				if (feature.data.keywords.includes(AbilityKeyword.Melee))
 					sheet.modifierMeleeDistance = value;
 				if (feature.data.keywords.includes(AbilityKeyword.Ranged))

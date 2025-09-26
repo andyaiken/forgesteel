@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const werewolf: MonsterGroup = {
@@ -83,7 +82,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 			stamina: 200,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, -1, 1, 1),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'werewolf-feature-1',

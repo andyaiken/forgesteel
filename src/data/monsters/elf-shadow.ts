@@ -2,7 +2,6 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -100,7 +99,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(3, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -142,7 +141,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 2, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 2, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -183,7 +182,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -227,7 +226,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -270,7 +269,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 2, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 2, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -340,7 +339,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 3, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 3, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -400,7 +399,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 3, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 3, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -453,7 +452,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 1, 3, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 1, 3, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -518,7 +517,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 1, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 1, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -574,7 +573,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 80,
 			stability: 0,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 1, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 1, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -630,7 +629,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 3, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 3, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -699,7 +698,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, -1, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -764,7 +763,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 180,
 			stability: 1,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, 3, 2, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, 3, 2, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -891,7 +890,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			stamina: 60,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, -1, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

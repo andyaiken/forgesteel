@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const hag: MonsterGroup = {
@@ -115,7 +114,7 @@ The hag’s hut springs to life. It enters the encounter map within 10 squares o
 			stamina: 300,
 			stability: 1,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 1, 3, 3),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 1, 3, 3),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'hag-feature-1',

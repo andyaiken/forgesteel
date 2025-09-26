@@ -2,7 +2,6 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -89,7 +88,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 2, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -205,7 +204,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 2, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 2, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -300,7 +299,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -414,7 +413,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -530,7 +529,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 2,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(4, 3, 1, 1, 4),
+			characteristics: FactoryLogic.createCharacteristics(4, 3, 1, 1, 4),
 			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -577,7 +576,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 2,
 			size: FactoryLogic.createSize(3),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(3, -1, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, -1, 0, 1, 0),
 			withCaptain: '+2 damage bonus to strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -619,7 +618,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 2,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 0, 0, 1),
 			withCaptain: '+3 bonus to speed',
 			features: [
 				FactoryLogic.feature.createAbility({

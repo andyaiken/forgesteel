@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const lich: MonsterGroup = {
@@ -102,7 +101,7 @@ This effect lasts until an affected creature takes damage or an ally uses a main
 			stamina: 650,
 			stability: 1,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 5, 5, 5),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 5, 5, 5),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'lich-1-1',

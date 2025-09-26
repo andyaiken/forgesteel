@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const dragonOmen: MonsterGroup = {
@@ -94,7 +93,7 @@ The effects that surround an omen dragon also mean that new life cannot begin. C
 			stamina: 550,
 			stability: 6,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(3, 4, 2, 3, 5),
+			characteristics: FactoryLogic.createCharacteristics(3, 4, 2, 3, 5),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'dragon-omen-feature-1',

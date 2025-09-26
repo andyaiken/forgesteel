@@ -284,7 +284,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 					stamina: 5,
 					stability: 0,
 					freeStrikeDamage: 2,
-					characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 0, 0),
+					characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
 					features: []
 				}));
 				setMonsterGroup(copy);

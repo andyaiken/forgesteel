@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -98,7 +97,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 240,
 			stability: 5,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, 0, -2, 1, -4),
+			characteristics: FactoryLogic.createCharacteristics(4, 0, -2, 1, -4),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -199,7 +198,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 220,
 			stability: 3,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, -2, 1, -3),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, -2, 1, -3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -299,7 +298,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 240,
 			stability: 8,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(4, -2, -4, -1, -5),
+			characteristics: FactoryLogic.createCharacteristics(4, -2, -4, -1, -5),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -427,7 +426,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 200,
 			stability: 6,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, -2, -4, -1, -5),
+			characteristics: FactoryLogic.createCharacteristics(4, -2, -4, -1, -5),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -544,7 +543,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 260,
 			stability: 8,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(5, -2, -4, -1, -5),
+			characteristics: FactoryLogic.createCharacteristics(5, -2, -4, -1, -5),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

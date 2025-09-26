@@ -3,7 +3,6 @@ import { Characteristic } from '../../../enums/characteristic';
 import { DamageModifierType } from '../../../enums/damage-modifier-type';
 import { DamageType } from '../../../enums/damage-type';
 import { FactoryLogic } from '../../../logic/factory-logic';
-import { MonsterLogic } from '../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { SubClass } from '../../../models/subclass';
@@ -52,7 +51,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 								stamina: 2,
 								stability: 0,
 								freeStrikeDamage: 2,
-								characteristics: MonsterLogic.createCharacteristics(2, 0, -1, -1, -1),
+								characteristics: FactoryLogic.createCharacteristics(2, 0, -1, -1, -1),
 								features: [
 									FactoryLogic.feature.createDamageModifier({
 										id: 'summoner-1-1-4a-1',
@@ -94,7 +93,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 								stamina: 2,
 								stability: 0,
 								freeStrikeDamage: 2,
-								characteristics: MonsterLogic.createCharacteristics(-1, 0, -1, -1, 2),
+								characteristics: FactoryLogic.createCharacteristics(-1, 0, -1, -1, 2),
 								features: [
 									FactoryLogic.feature.createDamageModifier({
 										id: 'summoner-1-1-4b-1',
@@ -136,7 +135,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 								stamina: 2,
 								stability: 0,
 								freeStrikeDamage: 1,
-								characteristics: MonsterLogic.createCharacteristics(0, 2, -1, -1, -1),
+								characteristics: FactoryLogic.createCharacteristics(0, 2, -1, -1, -1),
 								features: [
 									FactoryLogic.feature.createDamageModifier({
 										id: 'summoner-1-1-4c-1',
@@ -186,7 +185,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 								stability: 2,
 								freeStrikeDamage: 5,
 								freeStrikeType: DamageType.Poison,
-								characteristics: MonsterLogic.createCharacteristics(0, 2, -1, -1, 0),
+								characteristics: FactoryLogic.createCharacteristics(0, 2, -1, -1, 0),
 								features: [
 									FactoryLogic.feature.createDamageModifier({
 										id: 'summoner-1-1-5a-1',
@@ -228,7 +227,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 								stamina: 6,
 								stability: 1,
 								freeStrikeDamage: 5,
-								characteristics: MonsterLogic.createCharacteristics(2, 1, -1, -1, 0),
+								characteristics: FactoryLogic.createCharacteristics(2, 1, -1, -1, 0),
 								features: [
 									FactoryLogic.feature.createDamageModifier({
 										id: 'summoner-1-1-5b-1',
@@ -271,7 +270,7 @@ When you finish a respite, the soul trails of each creature that took the respit
 								stability: 1,
 								freeStrikeDamage: 4,
 								freeStrikeType: DamageType.Psychic,
-								characteristics: MonsterLogic.createCharacteristics(2, 1, -1, -1, 0),
+								characteristics: FactoryLogic.createCharacteristics(2, 1, -1, -1, 0),
 								features: [
 									FactoryLogic.feature.createDamageModifier({
 										id: 'summoner-1-1-5c-1',

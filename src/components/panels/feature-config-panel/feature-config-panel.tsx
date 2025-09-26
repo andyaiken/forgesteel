@@ -61,7 +61,7 @@ import './feature-config-panel.scss';
 interface Props {
 	feature: Feature | Perk;
 	options: Options;
-	hero?: Hero;
+	hero: Hero;
 	sourcebooks?: Sourcebook[];
 	setData: (featureID: string, data: FeatureData) => void;
 	onDelete?: () => void;

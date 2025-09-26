@@ -2,7 +2,6 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -111,7 +110,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			stamina: 450,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 4, 3, 3),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 4, 3, 3),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'xorannox-feature-1',
@@ -268,7 +267,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 4, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 4, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -309,7 +308,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 4, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 4, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -349,7 +348,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 4, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 4, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -389,7 +388,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 4, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 4, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -430,7 +429,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 4, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 4, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -470,7 +469,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 4, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 4, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

@@ -63,6 +63,7 @@ export const MonsterPanel = (props: Props) => {
 					<HeaderText
 						level={1}
 						ribbon={<MonsterToken monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}
+						tags={props.summon && props.summon.isSignature ? [ 'Signature' ] : []}
 						extra={props.extra}
 					>
 						{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}

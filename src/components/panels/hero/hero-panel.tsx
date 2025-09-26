@@ -1,6 +1,5 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Col, Divider, Flex, Row, Segmented, Select, Space, Statistic, Tag } from 'antd';
-import { HeroToken, MonsterInfo } from '../token/token';
 import { Pill, ResourcePill } from '../../controls/pill/pill';
 import { Ability } from '../../../models/ability';
 import { AbilityData } from '../../../data/ability-data';
@@ -24,6 +23,7 @@ import { FeaturePanel } from '../elements/feature-panel/feature-panel';
 import { FeatureType } from '../../../enums/feature-type';
 import { Field } from '../../controls/field/field';
 import { Follower } from '../../../models/follower';
+import { FollowerPanel } from '../elements/follower-panel/follower-panel';
 import { FormatLogic } from '../../../logic/format-logic';
 import { HeaderText } from '../../controls/header-text/header-text';
 import { HealthGauge } from '../health-gauge/health-gauge';
@@ -31,9 +31,11 @@ import { Hero } from '../../../models/hero';
 import { HeroClass } from '../../../models/class';
 import { HeroLogic } from '../../../logic/hero-logic';
 import { HeroStatePage } from '../../../enums/hero-state-page';
+import { HeroToken } from '../token/token';
 import { Kit } from '../../../models/kit';
 import { Markdown } from '../../controls/markdown/markdown';
 import { Monster } from '../../../models/monster';
+import { MonsterPanel } from '../elements/monster-panel/monster-panel';
 import { Options } from '../../../models/options';
 import { PanelMode } from '../../../enums/panel-mode';
 import { RulesPage } from '../../../enums/rules-page';
@@ -637,18 +639,6 @@ export const HeroPanel = (props: Props) => {
 				}
 			};
 
-			const onSelectMonster = (monster: Monster, summon?: SummoningInfo) => {
-				if (props.onSelectMonster) {
-					props.onSelectMonster(monster, summon);
-				}
-			};
-
-			const onSelectFollower = (follower: Follower) => {
-				if (props.onSelectFollower) {
-					props.onSelectFollower(follower);
-				}
-			};
-
 			let incitingIncident: Element | null = null;
 			if (props.hero.career) {
 				incitingIncident = props.hero.career.incitingIncidents.selected;
@@ -803,70 +793,6 @@ export const HeroPanel = (props: Props) => {
 									<HeaderText>Complication</HeaderText>
 									<Field label='Complication' value={props.hero.complication.name} />
 								</div>
-							:
-							null
-					}
-					{
-						HeroLogic.getCompanions(props.hero).length > 0 ?
-							HeroLogic.getCompanions(props.hero).map(monster =>
-								useRows ?
-									<div key={monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(monster)}>
-										<div>Companion: <b>{monster.name}</b></div>
-									</div>
-									:
-									<div key={monster.id} className='overview-tile clickable' onClick={() => onSelectMonster(monster)}>
-										<HeaderText>Companion</HeaderText>
-										<MonsterInfo monster={monster} style={{ marginBottom: '10px' }} />
-									</div>
-							)
-							:
-							null
-					}
-					{
-						HeroLogic.getFollowers(props.hero).length > 0 ?
-							HeroLogic.getFollowers(props.hero).map(follower =>
-								useRows ?
-									<div key={follower.id} className='selectable-row clickable' onClick={() => onSelectFollower(follower)}>
-										<div>Follower: <b>{follower.name}</b></div>
-									</div>
-									:
-									<div key={follower.id} className='overview-tile clickable' onClick={() => onSelectFollower(follower)}>
-										<HeaderText>Follower</HeaderText>
-										<Field label='Name' value={follower.name || 'Follower'} />
-										<Field label='Type' value={follower.type} />
-									</div>
-							)
-							:
-							null
-					}
-					{
-						HeroLogic.getSummons(props.hero).length > 0 ?
-							HeroLogic.getSummons(props.hero).map(summon =>
-								useRows ?
-									<div key={summon.monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(summon.monster, summon.info)}>
-										<div>Can Summon: <b>{summon.monster.name}</b></div>
-									</div>
-									:
-									<div key={summon.monster.id} className='overview-tile clickable' onClick={() => onSelectMonster(summon.monster, summon.info)}>
-										<HeaderText>Can Summon</HeaderText>
-										{
-											summon.info.cost > 0 ?
-												<div className='ds-text' style={{ height: '22px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-													{
-														summon.info.isSignature ?
-															<Tag>Signature</Tag>
-															:
-															<>
-																<ResourcePill value={summon.info.cost} />
-																Summon {summon.info.count}
-															</>
-													}
-												</div>
-												: null
-										}
-										<MonsterInfo monster={summon.monster} style={{ marginBottom: '10px' }} />
-									</div>
-							)
 							:
 							null
 					}
@@ -1041,22 +967,112 @@ export const HeroPanel = (props: Props) => {
 			);
 		};
 
-		const getTabs = () => {
-			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
-			const mains = abilities.filter(a => a.ability.type.usage === AbilityUsage.MainAction);
-			const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
-			const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);
-			const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
-			const others = abilities.filter(a => (a.ability.type.usage === AbilityUsage.Other) || (a.ability.type.usage === AbilityUsage.NoAction));
+		const getRetinueSection = () => {
+			const onSelectMonster = (monster: Monster, summon?: SummoningInfo) => {
+				if (props.onSelectMonster) {
+					props.onSelectMonster(monster, summon);
+				}
+			};
 
+			const onSelectFollower = (follower: Follower) => {
+				if (props.onSelectFollower) {
+					props.onSelectFollower(follower);
+				}
+			};
+
+			const useRows = props.options.compactView;
+
+			const companions = HeroLogic.getCompanions(props.hero);
+			const followers = HeroLogic.getFollowers(props.hero);
+			const summons = HeroLogic.getSummons(props.hero);
+
+			return (
+				<div className='retinue-section'>
+					{
+						companions.length > 0 ?
+							<>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Companions</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+									{
+										companions.map(monster =>
+											useRows ?
+												<div key={monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(monster)}>
+													<div>Companion: <b>{monster.name}</b></div>
+												</div>
+												:
+												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
+													<MonsterPanel monster={monster} options={props.options} />
+												</SelectablePanel>
+										)
+									}
+								</div>
+							</>
+							: null
+					}
+					{
+						followers.length > 0 ?
+							<>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Followers</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+									{
+										followers.map(follower =>
+											useRows ?
+												<div key={follower.id} className='selectable-row clickable' onClick={() => onSelectFollower(follower)}>
+													<div>Follower: <b>{follower.name}</b></div>
+												</div>
+												:
+												<SelectablePanel key={follower.id} onSelect={() => onSelectFollower(follower)}>
+													<FollowerPanel follower={follower} />
+												</SelectablePanel>
+										)
+									}
+								</div>
+							</>
+							: null
+					}
+					{
+						summons.length > 0 ?
+							<>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Summons</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+									{
+										summons.map(summon =>
+											useRows ?
+												<div key={summon.id} className='selectable-row clickable' onClick={() => onSelectMonster(summon.monster)}>
+													<div>Summon: <b>{summon.monster.name}</b></div>
+												</div>
+												:
+												<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster)}>
+													<MonsterPanel monster={summon.monster} summon={summon.info} options={props.options} />
+												</SelectablePanel>
+										)
+									}
+								</div>
+							</>
+							: null
+					}
+				</div>
+			);
+		};
+
+		const getTabs = () => {
 			const tabs: string[] = [];
+
 			tabs.push('Hero');
 			tabs.push('Features');
+
+			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
 			if (props.options.compactView) {
 				if (abilities.length > 0) {
 					tabs.push('Abilities');
 				}
 			} else {
+				const mains = abilities.filter(a => a.ability.type.usage === AbilityUsage.MainAction);
+				const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
+				const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);
+				const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
+				const others = abilities.filter(a => (a.ability.type.usage === AbilityUsage.Other) || (a.ability.type.usage === AbilityUsage.NoAction));
+
 				if (mains.length > 0) {
 					tabs.push('Mains');
 				}
@@ -1073,6 +1089,11 @@ export const HeroPanel = (props: Props) => {
 					tabs.push('Others');
 				}
 				tabs.push('Free Strikes');
+			}
+
+			const retinue = HeroLogic.getCompanions(props.hero).length + HeroLogic.getFollowers(props.hero).length + HeroLogic.getSummons(props.hero).length;
+			if (retinue > 0) {
+				tabs.push('Retinue');
 			}
 
 			return tabs;
@@ -1128,6 +1149,8 @@ export const HeroPanel = (props: Props) => {
 						{ ability: AbilityData.freeStrikeRanged, source: 'Standard' },
 						...abilities.filter(a => a.ability.type.freeStrike)
 					]);
+				case 'Retinue':
+					return getRetinueSection();
 			}
 
 			return null;

@@ -85,7 +85,45 @@ You can manage up to two squads of minions. Newly summoned minions can either be
 
 You have a Summoner’s Range that defines the maximum distance you can summon minions and use specific conjuring abilities. Your Summoner’s Range is equal to 5 + your Reason score. You can summon and give commands to minions while they are within line of effect. Commanding a minion to take a main action or a maneuver reveals yourself if you are hidden.
 
-You have special minions at your disposal called signature minions, low cost creatures that you’ve become accustomed to summoning frequently.`
+You have special minions at your disposal called signature minions, low cost creatures that you’ve become accustomed to summoning frequently.
+
+### Minions in Combat
+
+**Start of Combat**: At the start of a combat encounter or some other stressful situation tracked in combat rounds (as determined by the Director), you summon two of your signature minions at no cost into unoccupied spaces within your Summoner’s Range (no action required).
+
+**Summoning**: At the start of each of your turns during combat, you summon up to three of your signature minions at no cost into unoccupied spaces within your Summoner’s Range (no action required). Unless an ability specifies, you can’t summon any number of new minions beyond your minion maximum until the same number of your existing minions are dismissed or destroyed.
+
+**Stamina**: Minions in a squad pool their Stamina together. Whenever a minion in a squad takes damage, the squad’s Stamina pool is reduced by a number equal to the damage taken. Each time the pool is reduced by an amount equal to a single squad member’s Stamina, one minion dies (starting with the minion that took damage, followed by the next nearest minion). If there is any excess damage after all minions in the squad are dead, you take 1d6 damage. Minions can’t be winded, can’t regain Stamina, and can’t gain temporary Stamina.
+
+**Area Effects**: The damage from an area effect dealt to a squad’s Stamina pool can only kill up to the minions in its area. Any excess damage is ignored.
+
+**Strikes with Multiple Targets**: A squad’s Stamina pool only takes the largest single instance of damage from a strike that targets two or more minions in that squad. Any additional effects still affect the minions targeted by the strike.
+
+**Conditions**: You resolve any saving throws on conditions affecting one or more of your minions. Treat saving throws as if you had one instance of each condition.
+
+**Immunity and Weakness**: If a minion has either a damage immunity or a damage weakness for a source of damage, apply the effects to the minion’s squad once, even if multiple minions share the same immunity or weakness.
+
+**Actions**: Minions in a squad act together on your turn in any order, before, in-between, and/or after any of your actions. They can either take a move action and a main action (excluding Heal and Defend), a move action and a maneuver, or two move actions. Individual minions can also take opportunity attacks.
+
+**Free Strikes**: Unless otherwise specified, a minion’s free strike has a distance of Melee 1 or Ranged 5 and deals the damage value listed on the stat block. The minion can choose to deal untyped damage or the damage type next to the damage value.
+
+**Damage**: Whenever multiple minions strike the same target simultaneously, the damage is added together and treated as a single strike. Minions in a squad targeting the same target with a signature action only apply one instance of the signature action while each additional minion increases the damage by their free strike value.
+
+**Surges**: Your minions use your pool of Surges and can apply them to their strikes. Whenever one or more of your minions would gain a Surge during a turn, you gain one Surge instead.
+
+**Maneuvers**: Unless otherwise specified on the minion’s stat block, a squad uses their maneuver together as a unit. If a maneuver targets a single creature, all minions in the squad target the same creature. If a maneuver requires a power roll, the result is equal to 8 + the minion’s characteristic + the number of squad members within distance of the maneuver.
+
+**Unconscious**: If you are unconscious or unable to act on your turn, you can’t summon new minions. Additionally, your remaining minions can’t deal damage; they can only act to bring you to safety.
+
+**End of Combat**: At the end of combat, your minions finish their tasks (such as carrying someone to safety) and are then dismissed.
+
+### Minions Outside of Combat
+
+You can have up to 4 minions summoned outside of combat. You can summon your signature minions at no cost. Other minions with an essence cost can be summoned as if you had spent an amount of essence on them equal to your Victories.
+
+Each of your minions can be given a simple task and a destination you’ve previously been to and they’ll fulfill it to the best of their ability. Example tasks include sending messages, scouting, and carrying supplies. Your minions aren’t followers and can’t make project rolls until you can summon specialists.
+
+When combat begins, any of your minions who were summoned outside of combat finish their tasks and are then dismissed.`
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

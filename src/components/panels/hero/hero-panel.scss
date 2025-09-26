@@ -162,10 +162,12 @@
 				}
 			}
 
-			.abilities-section {
+			.abilities-section,
+			.retinue-section {
 				padding: 5px;
 
-				.abilities-grid {
+				.abilities-grid,
+				.retinue-grid {
 					display: grid;
 					gap: 10px;
 

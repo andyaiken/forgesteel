@@ -1,7 +1,7 @@
-import { Element } from './element';
-import { Feature } from './feature';
-import { KitArmor } from '../enums/kit-armor';
-import { KitWeapon } from '../enums/kit-weapon';
+import { Element } from '@/models/element';
+import { Feature } from '@/models/feature';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
 
 export interface KitDamageBonus {
 	tier1: number;

@@ -1,18 +1,18 @@
 import { Alert, AutoComplete, Button, Divider, Flex, Input, Upload } from 'antd';
 import { DownloadOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { Collections } from '../../../../../utils/collections';
-import { DangerButton } from '../../../../controls/danger-button/danger-button';
-import { Expander } from '../../../../controls/expander/expander';
-import { FactoryLogic } from '../../../../../logic/factory-logic';
-import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
-import { FeatureData } from '../../../../../models/feature';
-import { FeatureType } from '../../../../../enums/feature-type';
-import { HeaderText } from '../../../../controls/header-text/header-text';
-import { Hero } from '../../../../../models/hero';
-import { HeroLogic } from '../../../../../logic/hero-logic';
-import { NameGenerator } from '../../../../../utils/name-generator';
-import { Options } from '../../../../../models/options';
-import { Sourcebook } from '../../../../../models/sourcebook';
+import { Collections } from '@/utils/collections';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Expander } from '@/components/controls/expander/expander';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '@/models/feature';
+import { FeatureType } from '@/enums/feature-type';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { NameGenerator } from '@/utils/name-generator';
+import { Options } from '@/models/options';
+import { Sourcebook } from '@/models/sourcebook';
 
 import './details-section.scss';
 

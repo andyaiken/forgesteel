@@ -1,14 +1,14 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { berserker } from './berserker';
-import { reaver } from './reaver';
-import { stormwight } from './stormwight';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { berserker } from '@/data/classes/fury/berserker';
+import { reaver } from '@/data/classes/fury/reaver';
+import { stormwight } from '@/data/classes/fury/stormwight';
 
 export const fury: HeroClass = {
 	id: 'class-fury',

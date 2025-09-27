@@ -1,8 +1,8 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Domain } from '../../models/domain';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { SkillList } from '../../enums/skill-list';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Domain } from '@/models/domain';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SkillList } from '@/enums/skill-list';
 
 export const death: Domain = {
 	id: 'domain-death',

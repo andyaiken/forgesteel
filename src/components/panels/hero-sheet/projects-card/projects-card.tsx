@@ -1,5 +1,5 @@
-import { CharacterSheet } from '../../../../models/character-sheet';
-import { DrawSteelSymbolText } from '../components/ds-symbol-text-component';
+import { CharacterSheet } from '@/models/character-sheet';
+import { DrawSteelSymbolText } from '@/components/panels/hero-sheet/components/ds-symbol-text-component';
 import './projects-card.scss';
 
 interface Props {

@@ -1,4 +1,4 @@
-import { CharacterSheet } from '../../../../models/character-sheet';
+import { CharacterSheet } from '@/models/character-sheet';
 import { JSX } from 'react';
 
 import './notes-card.scss';

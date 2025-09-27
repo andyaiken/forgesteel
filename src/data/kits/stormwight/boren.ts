@@ -1,8 +1,8 @@
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { Kit } from '../../../models/kit';
-import { KitWeapon } from '../../../enums/kit-weapon';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Kit } from '@/models/kit';
+import { KitWeapon } from '@/enums/kit-weapon';
 
 export const boren: Kit = {
 	id: 'kit-boren',

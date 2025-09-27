@@ -1,7 +1,7 @@
-import { Condition } from './condition';
-import { EncounterSlot } from './encounter-slot';
-import { Item } from './item';
-import { Project } from './project';
+import { Condition } from '@/models/condition';
+import { EncounterSlot } from '@/models/encounter-slot';
+import { Item } from '@/models/item';
+import { Project } from '@/models/project';
 
 export interface HeroState {
 	staminaDamage: number;

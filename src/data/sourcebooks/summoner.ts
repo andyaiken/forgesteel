@@ -1,5 +1,5 @@
-import { Sourcebook } from '../../models/sourcebook';
-import { summoner } from '../classes/summoner/summoner';
+import { Sourcebook } from '@/models/sourcebook';
+import { summoner } from '@/data/classes/summoner/summoner';
 
 export const summonerSourcebook: Sourcebook = {
 	id: 'summoner',

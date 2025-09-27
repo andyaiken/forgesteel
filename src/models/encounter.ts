@@ -1,7 +1,7 @@
-import { Element } from './element';
-import { EncounterSlot } from './encounter-slot';
-import { Hero } from './hero';
-import { Terrain } from './terrain';
+import { Element } from '@/models/element';
+import { EncounterSlot } from '@/models/encounter-slot';
+import { Hero } from '@/models/hero';
+import { Terrain } from '@/models/terrain';
 
 export interface EncounterGroup {
 	id: string;

@@ -1,6 +1,6 @@
-import { LabeledBooleanField, LabeledTextField } from './labeled-field';
-import { Options } from '../../../../models/options';
-import { StaminaSheet } from '../../../../models/character-sheet';
+import { LabeledBooleanField, LabeledTextField } from '@/components/panels/hero-sheet/components/labeled-field';
+import { Options } from '@/models/options';
+import { StaminaSheet } from '@/models/character-sheet';
 
 import './stamina-component.scss';
 

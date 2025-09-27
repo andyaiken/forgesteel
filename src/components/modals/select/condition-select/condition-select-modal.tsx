@@ -1,8 +1,8 @@
-import { ConditionLogic } from '../../../../logic/condition-logic';
-import { ConditionType } from '../../../../enums/condition-type';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Modal } from '../../modal/modal';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { ConditionLogic } from '@/logic/condition-logic';
+import { ConditionType } from '@/enums/condition-type';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Modal } from '@/components/modals/modal/modal';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Space } from 'antd';
 
 import './condition-select-modal.scss';

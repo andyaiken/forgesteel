@@ -1,16 +1,16 @@
-import { AbilitySheet, FollowerSheet } from '../../../../models/character-sheet';
-import { AbilityComponent } from '../components/ability-component';
-import { FeatureComponent } from '../components/feature-component';
-import { Options } from '../../../../models/options';
-import { RecoveriesComponent } from '../components/recoveries-component';
-import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
-import { StaminaComponent } from '../components/stamina-component';
-import { Utils } from '../../../../utils/utils';
+import { AbilitySheet, FollowerSheet } from '@/models/character-sheet';
+import { AbilityComponent } from '@/components/panels/hero-sheet/components/ability-component';
+import { FeatureComponent } from '@/components/panels/hero-sheet/components/feature-component';
+import { Options } from '@/models/options';
+import { RecoveriesComponent } from '@/components/panels/hero-sheet/components/recoveries-component';
+import { SheetFormatter } from '@/logic/hero-sheet/sheet-formatter';
+import { StaminaComponent } from '@/components/panels/hero-sheet/components/stamina-component';
+import { Utils } from '@/utils/utils';
 import { useMemo } from 'react';
 
 import './follower-card.scss';
 
-import starIcon from '../../../../assets/icons/star.svg';
+import starIcon from '@/assets/icons/star.svg';
 
 interface Props {
 	follower: FollowerSheet;

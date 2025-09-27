@@ -1,18 +1,18 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
-import { Ability } from '../../../../models/ability';
-import { AbilityUsage } from '../../../../enums/ability-usage';
-import { DamageModifier } from '../../../../models/damage-modifier';
-import { DamageModifierType } from '../../../../enums/damage-modifier-type';
-import { FeatureType } from '../../../../enums/feature-type';
-import { Format } from '../../../../utils/format';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '@/models/feature';
+import { Ability } from '@/models/ability';
+import { AbilityUsage } from '@/enums/ability-usage';
+import { DamageModifier } from '@/models/damage-modifier';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { FeatureType } from '@/enums/feature-type';
+import { Format } from '@/utils/format';
 import { Fragment } from 'react';
-import { Hero } from '../../../../models/hero';
-import { HeroLogic } from '../../../../logic/hero-logic';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { ModifierLogic } from '../../../../logic/modifier-logic';
-import { PerkList } from '../../../../enums/perk-list';
-import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
-import { SkillList } from '../../../../enums/skill-list';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { ModifierLogic } from '@/logic/modifier-logic';
+import { PerkList } from '@/enums/perk-list';
+import { SheetFormatter } from '@/logic/hero-sheet/sheet-formatter';
+import { SkillList } from '@/enums/skill-list';
 
 import './feature-component.scss';
 

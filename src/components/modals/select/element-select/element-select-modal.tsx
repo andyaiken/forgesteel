@@ -1,13 +1,13 @@
 import { Button, Divider, Input, Space } from 'antd';
-import { Element } from '../../../../models/element';
-import { Expander } from '../../../controls/expander/expander';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { Modal } from '../../modal/modal';
-import { MultiLine } from '../../../controls/multi-line/multi-line';
+import { Element } from '@/models/element';
+import { Expander } from '@/components/controls/expander/expander';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Modal } from '@/components/modals/modal/modal';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { SearchOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Utils } from '../../../../utils/utils';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './element-select-modal.scss';

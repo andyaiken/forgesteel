@@ -1,11 +1,11 @@
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
-import { FeatureType } from '../../enums/feature-type';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
-import { Perk } from '../../models/perk';
-import { PerkList } from '../../enums/perk-list';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { FeatureType } from '@/enums/feature-type';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Perk } from '@/models/perk';
+import { PerkList } from '@/enums/perk-list';
 
 export class SupernaturalPerkData {
 	static arcaneTrick: Perk = {

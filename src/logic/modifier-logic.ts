@@ -1,9 +1,9 @@
-import { Collections } from '../utils/collections';
-import { CreatureLogic } from './creature-logic';
-import { Hero } from '../models/hero';
-import { Modifier } from '../models/damage-modifier';
-import { Monster } from '../models/monster';
-import { MonsterLogic } from './monster-logic';
+import { Collections } from '@/utils/collections';
+import { CreatureLogic } from '@/logic/creature-logic';
+import { Hero } from '@/models/hero';
+import { Modifier } from '@/models/damage-modifier';
+import { Monster } from '@/models/monster';
+import { MonsterLogic } from '@/logic/monster-logic';
 
 export class ModifierLogic {
 	static calculateModifierValue = (modifier: Modifier, creature: Hero | Monster) => {

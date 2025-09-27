@@ -1,6 +1,6 @@
-import { Options } from '../../models/options';
-import { PanelWidth } from '../../enums/panel-width';
-import { SheetPageSize } from '../../enums/sheet-page-size';
+import { Options } from '@/models/options';
+import { PanelWidth } from '@/enums/panel-width';
+import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export class OptionsUpdateLogic {
 	static updateOptions = (options: Options) => {

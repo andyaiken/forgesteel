@@ -1,17 +1,17 @@
-import { AbilityKeyword } from '../../../enums/ability-keyword';
+import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Alert } from 'antd';
-import { Collections } from '../../../utils/collections';
-import { Encounter } from '../../../models/encounter';
-import { FeatureType } from '../../../enums/feature-type';
-import { Field } from '../../controls/field/field';
-import { FormatLogic } from '../../../logic/format-logic';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Modal } from '../modal/modal';
-import { Monster } from '../../../models/monster';
-import { MonsterLogic } from '../../../logic/monster-logic';
-import { Options } from '../../../models/options';
-import { Sourcebook } from '../../../models/sourcebook';
-import { SourcebookLogic } from '../../../logic/sourcebook-logic';
+import { Collections } from '@/utils/collections';
+import { Encounter } from '@/models/encounter';
+import { FeatureType } from '@/enums/feature-type';
+import { Field } from '@/components/controls/field/field';
+import { FormatLogic } from '@/logic/format-logic';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Modal } from '@/components/modals/modal/modal';
+import { Monster } from '@/models/monster';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { Options } from '@/models/options';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 
 import './encounter-tools-modal.scss';
 

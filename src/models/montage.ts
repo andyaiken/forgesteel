@@ -1,5 +1,5 @@
-import { Characteristic } from '../enums/characteristic';
-import { Element } from './element';
+import { Characteristic } from '@/enums/characteristic';
+import { Element } from '@/models/element';
 
 export interface MontageChallenge extends Element {
 	characteristics: Characteristic[];

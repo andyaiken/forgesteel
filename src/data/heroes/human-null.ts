@@ -1,4 +1,4 @@
-import { Hero } from '../../models/hero';
+import { Hero } from '@/models/hero';
 
 export const humanNull = {
 	id: '75cnGojH6jMwHJQq',

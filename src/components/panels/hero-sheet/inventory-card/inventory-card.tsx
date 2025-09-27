@@ -1,6 +1,6 @@
-import { CharacterSheet, ItemSheet } from '../../../../models/character-sheet';
-import { FeatureComponent } from '../components/feature-component';
-import { Markdown } from '../../../controls/markdown/markdown';
+import { CharacterSheet, ItemSheet } from '@/models/character-sheet';
+import { FeatureComponent } from '@/components/panels/hero-sheet/components/feature-component';
+import { Markdown } from '@/components/controls/markdown/markdown';
 
 import './inventory-card.scss';
 

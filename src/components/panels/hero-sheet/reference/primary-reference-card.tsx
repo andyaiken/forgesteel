@@ -1,6 +1,6 @@
 import { Fragment, useMemo } from 'react';
 
-import { CharacterSheet } from '../../../../models/character-sheet';
+import { CharacterSheet } from '@/models/character-sheet';
 
 import './primary-reference-card.scss';
 

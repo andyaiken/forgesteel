@@ -1,7 +1,7 @@
 import { CSSProperties, ReactNode } from 'react';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Statistic } from 'antd';
-import { Utils } from '../../../utils/utils';
+import { Utils } from '@/utils/utils';
 
 import './number-spin.scss';
 

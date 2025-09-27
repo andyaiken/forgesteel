@@ -1,6 +1,6 @@
-import { FeatureType } from '../../enums/feature-type';
-import { Perk } from '../../models/perk';
-import { PerkList } from '../../enums/perk-list';
+import { FeatureType } from '@/enums/feature-type';
+import { Perk } from '@/models/perk';
+import { PerkList } from '@/enums/perk-list';
 
 export class InterpersonalPerkData {
 	static charmingLiar: Perk = {

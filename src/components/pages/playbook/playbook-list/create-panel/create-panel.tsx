@@ -1,16 +1,16 @@
 import { Button, Divider, Flex, Segmented, Space, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { AdventurePackage } from '../../../../../models/adventure';
-import { Element } from '../../../../../models/element';
-import { EncounterData } from '../../../../../data/encounter-data';
-import { Expander } from '../../../../controls/expander/expander';
-import { FactoryLogic } from '../../../../../logic/factory-logic';
-import { Field } from '../../../../controls/field/field';
-import { MontageData } from '../../../../../data/montage-data';
-import { NegotiationData } from '../../../../../data/negotiation-data';
-import { NumberSpin } from '../../../../controls/number-spin/number-spin';
-import { PlaybookElementKind } from '../../../../../models/playbook';
-import { TacticalMapLogic } from '../../../../../logic/tactical-map-logic';
+import { AdventurePackage } from '@/models/adventure';
+import { Element } from '@/models/element';
+import { EncounterData } from '@/data/encounter-data';
+import { Expander } from '@/components/controls/expander/expander';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Field } from '@/components/controls/field/field';
+import { MontageData } from '@/data/montage-data';
+import { NegotiationData } from '@/data/negotiation-data';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { PlaybookElementKind } from '@/models/playbook';
+import { TacticalMapLogic } from '@/logic/tactical-map-logic';
 import { useState } from 'react';
 
 import './create-panel.scss';

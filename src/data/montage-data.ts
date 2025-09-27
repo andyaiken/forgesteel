@@ -1,6 +1,6 @@
-import { Characteristic } from '../enums/characteristic';
-import { FactoryLogic } from '../logic/factory-logic';
-import { Montage } from '../models/montage';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Montage } from '@/models/montage';
 
 export class MontageData {
 	static fightFire: Montage = {

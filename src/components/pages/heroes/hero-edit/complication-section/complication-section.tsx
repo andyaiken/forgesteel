@@ -1,20 +1,20 @@
 import { ReactNode, useLayoutEffect, useRef } from 'react';
-import { Complication } from '../../../../../models/complication';
-import { ComplicationPanel } from '../../../../panels/elements/complication-panel/complication-panel';
-import { Element } from '../../../../../models/element';
-import { EmptyMessage } from '../empty-message/empty-message';
-import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
-import { FeatureData } from '../../../../../models/feature';
-import { FeatureLogic } from '../../../../../logic/feature-logic';
-import { HeaderText } from '../../../../controls/header-text/header-text';
-import { Hero } from '../../../../../models/hero';
-import { Options } from '../../../../../models/options';
-import { PanelMode } from '../../../../../enums/panel-mode';
-import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
-import { Utils } from '../../../../../utils/utils';
-import { useIsSmall } from '../../../../../hooks/use-is-small';
+import { Complication } from '@/models/complication';
+import { ComplicationPanel } from '@/components/panels/elements/complication-panel/complication-panel';
+import { Element } from '@/models/element';
+import { EmptyMessage } from '@/components/pages/heroes/hero-edit/empty-message/empty-message';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '@/models/feature';
+import { FeatureLogic } from '@/logic/feature-logic';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Utils } from '@/utils/utils';
+import { useIsSmall } from '@/hooks/use-is-small';
 
 import './complication-section.scss';
 

@@ -1,19 +1,19 @@
-import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '../../models/feature';
-import { AbilityUpdateLogic } from './ability-update-logic';
-import { Ancestry } from '../../models/ancestry';
-import { AncestryData } from '../../data/ancestry-data';
-import { CultureData } from '../../data/culture-data';
-import { CultureType } from '../../enums/culture-type';
-import { FactoryLogic } from '../factory-logic';
-import { FeatureType } from '../../enums/feature-type';
-import { FeatureUpdateLogic } from './feature-update-logic';
-import { Hero } from '../../models/hero';
-import { HeroLogic } from '../hero-logic';
-import { ItemUpdateLogic } from './item-update-logic';
-import { Sourcebook } from '../../models/sourcebook';
-import { SourcebookData } from '../../data/sourcebook-data';
-import { SourcebookLogic } from '../sourcebook-logic';
-import { Utils } from '../../utils/utils';
+import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
+import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
+import { Ancestry } from '@/models/ancestry';
+import { AncestryData } from '@/data/ancestry-data';
+import { CultureData } from '@/data/culture-data';
+import { CultureType } from '@/enums/culture-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureType } from '@/enums/feature-type';
+import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookData } from '@/data/sourcebook-data';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Utils } from '@/utils/utils';
 
 export class HeroUpdateLogic {
 	static updateHero = (hero: Hero, sourcebooks: Sourcebook[]) => {

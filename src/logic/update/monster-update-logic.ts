@@ -1,10 +1,10 @@
-import { AbilityUpdateLogic } from './ability-update-logic';
-import { DamageType } from '../../enums/damage-type';
-import { FeatureType } from '../../enums/feature-type';
-import { FeatureUpdateLogic } from './feature-update-logic';
-import { Monster } from '../../models/monster';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
+import { DamageType } from '@/enums/damage-type';
+import { FeatureType } from '@/enums/feature-type';
+import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
+import { Monster } from '@/models/monster';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 
 export class MonsterUpdateLogic {
 	static updateMonsterGroup = (monsterGroup: MonsterGroup) => {

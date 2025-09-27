@@ -1,16 +1,16 @@
 import { Input, Space } from 'antd';
-import { Empty } from '../../../controls/empty/empty';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
-import { Modal } from '../../modal/modal';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { Perk } from '../../../../models/perk';
-import { PerkList } from '../../../../enums/perk-list';
-import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
+import { Empty } from '@/components/controls/empty/empty';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Modal } from '@/components/modals/modal/modal';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { Perk } from '@/models/perk';
+import { PerkList } from '@/enums/perk-list';
+import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { SearchOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Utils } from '../../../../utils/utils';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './perk-select-modal.scss';

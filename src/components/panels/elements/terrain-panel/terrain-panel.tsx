@@ -1,19 +1,19 @@
 import { CSSProperties, ReactNode, useState } from 'react';
 import { Divider, Flex, Tag } from 'antd';
-import { Terrain, TerrainSection } from '../../../../models/terrain';
-import { AbilityPanel } from '../ability-panel/ability-panel';
-import { DamageModifierType } from '../../../../enums/damage-modifier-type';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeatureType } from '../../../../enums/feature-type';
-import { Field } from '../../../controls/field/field';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { Pill } from '../../../controls/pill/pill';
-import { TerrainLabel } from '../../monster-label/monster-label';
-import { TerrainLogic } from '../../../../logic/terrain-logic';
-import { Utils } from '../../../../utils/utils';
+import { Terrain, TerrainSection } from '@/models/terrain';
+import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeatureType } from '@/enums/feature-type';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { PanelMode } from '@/enums/panel-mode';
+import { Pill } from '@/components/controls/pill/pill';
+import { TerrainLabel } from '@/components/panels/monster-label/monster-label';
+import { TerrainLogic } from '@/logic/terrain-logic';
+import { Utils } from '@/utils/utils';
 
 import './terrain-panel.scss';
 

@@ -1,6 +1,6 @@
-import { Ancestry } from '../../models/ancestry';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
+import { Ancestry } from '@/models/ancestry';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 
 export const human: Ancestry = {
 	id: 'ancestry-human',

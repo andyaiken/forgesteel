@@ -1,15 +1,15 @@
-import { AbilityCustomization, Hero } from '../../../models/hero';
+import { AbilityCustomization, Hero } from '@/models/hero';
 import { Input, Segmented } from 'antd';
-import { Expander } from '../../controls/expander/expander';
-import { Feature } from '../../../models/feature';
-import { FeaturePanel } from '../../panels/elements/feature-panel/feature-panel';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Modal } from '../modal/modal';
-import { MultiLine } from '../../controls/multi-line/multi-line';
-import { Options } from '../../../models/options';
-import { PanelMode } from '../../../enums/panel-mode';
-import { Sourcebook } from '../../../models/sourcebook';
-import { Utils } from '../../../utils/utils';
+import { Expander } from '@/components/controls/expander/expander';
+import { Feature } from '@/models/feature';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Modal } from '@/components/modals/modal/modal';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { Sourcebook } from '@/models/sourcebook';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './feature-modal.scss';

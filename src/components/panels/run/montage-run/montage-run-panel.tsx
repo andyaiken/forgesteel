@@ -1,13 +1,13 @@
 import { Button, Flex, Space } from 'antd';
 import { CheckCircleFilled, CheckOutlined, CloseCircleFilled, CloseOutlined, EllipsisOutlined, SyncOutlined } from '@ant-design/icons';
-import { Montage, MontageChallenge, MontageSection } from '../../../../models/montage';
-import { Collections } from '../../../../utils/collections';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Field } from '../../../controls/field/field';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { Pill } from '../../../controls/pill/pill';
-import { Utils } from '../../../../utils/utils';
+import { Montage, MontageChallenge, MontageSection } from '@/models/montage';
+import { Collections } from '@/utils/collections';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Pill } from '@/components/controls/pill/pill';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './montage-run-panel.scss';

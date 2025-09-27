@@ -1,9 +1,9 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
-import { Imbuement } from '../../models/imbuement';
-import { ItemType } from '../../enums/item-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { Imbuement } from '@/models/imbuement';
+import { ItemType } from '@/enums/item-type';
 
 export class ImbuedImplementData {
 	static berserking: Imbuement = FactoryLogic.createImbuement({

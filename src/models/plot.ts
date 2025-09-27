@@ -1,5 +1,5 @@
-import { Element } from './element';
-import { PowerRoll } from './power-roll';
+import { Element } from '@/models/element';
+import { PowerRoll } from '@/models/power-roll';
 
 export interface PlotContentText {
 	id: string;

@@ -1,10 +1,10 @@
 import { Button, Divider, Select, Upload } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
-import { HeaderText } from '../../../../controls/header-text/header-text';
-import { Hero } from '../../../../../models/hero';
-import { Sourcebook } from '../../../../../models/sourcebook';
-import { SourcebookUpdateLogic } from '../../../../../logic/update/sourcebook-update-logic';
-import { Utils } from '../../../../../utils/utils';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
+import { Utils } from '@/utils/utils';
 
 import './start-section.scss';
 

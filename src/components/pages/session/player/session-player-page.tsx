@@ -1,21 +1,21 @@
 import { Button, Popover } from 'antd';
 import { DownOutlined, SettingOutlined } from '@ant-design/icons';
-import { AppFooter } from '../../../panels/app-footer/app-footer';
-import { AppHeader } from '../../../panels/app-header/app-header';
-import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
-import { Empty } from '../../../controls/empty/empty';
-import { EncounterRunPanel } from '../../../panels/run/encounter-run/encounter-run-panel';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Hero } from '../../../../models/hero';
-import { MontageRunPanel } from '../../../panels/run/montage-run/montage-run-panel';
-import { NegotiationRunPanel } from '../../../panels/run/negotiation-run/negotiation-run-panel';
-import { Options } from '../../../../models/options';
-import { OptionsPanel } from '../../../panels/options/options-panel';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { Playbook } from '../../../../models/playbook';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
-import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
+import { AppFooter } from '@/components/panels/app-footer/app-footer';
+import { AppHeader } from '@/components/panels/app-header/app-header';
+import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run-panel';
+import { Empty } from '@/components/controls/empty/empty';
+import { EncounterRunPanel } from '@/components/panels/run/encounter-run/encounter-run-panel';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Hero } from '@/models/hero';
+import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run-panel';
+import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
+import { Options } from '@/models/options';
+import { OptionsPanel } from '@/components/panels/options/options-panel';
+import { PanelMode } from '@/enums/panel-mode';
+import { Playbook } from '@/models/playbook';
+import { Sourcebook } from '@/models/sourcebook';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
+import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
 
 import './session-player-page.scss';
 

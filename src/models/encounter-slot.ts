@@ -1,5 +1,5 @@
-import { Monster } from './monster';
-import { MonsterState } from './monster-state';
+import { Monster } from '@/models/monster';
+import { MonsterState } from '@/models/monster-state';
 
 export interface EncounterSlotCustomization {
 	addOnIDs: string[];

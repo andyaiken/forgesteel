@@ -1,4 +1,4 @@
-import { CharacterSheet } from '../../../../models/character-sheet';
+import { CharacterSheet } from '@/models/character-sheet';
 
 import { useMemo } from 'react';
 

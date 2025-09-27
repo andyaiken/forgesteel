@@ -1,7 +1,7 @@
-import { AbilityUpdateLogic } from './ability-update-logic';
-import { Feature } from '../../models/feature';
-import { FeatureType } from '../../enums/feature-type';
-import { ItemUpdateLogic } from './item-update-logic';
+import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
+import { Feature } from '@/models/feature';
+import { FeatureType } from '@/enums/feature-type';
+import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
 
 export class FeatureUpdateLogic {
 	static updateFeature = (feature: Feature) => {

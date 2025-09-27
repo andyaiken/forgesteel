@@ -1,6 +1,6 @@
-import { CharacterSheet } from '../../../../models/character-sheet';
-import { Feature } from '../../../../models/feature';
-import { FeatureComponent } from '../components/feature-component';
+import { CharacterSheet } from '@/models/character-sheet';
+import { Feature } from '@/models/feature';
+import { FeatureComponent } from '@/components/panels/hero-sheet/components/feature-component';
 import './culture-card.scss';
 
 interface Props {

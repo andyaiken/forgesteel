@@ -1,8 +1,8 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { SubClass } from '../../../models/subclass';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SubClass } from '@/models/subclass';
 
 export const telekinesis: SubClass = {
 	id: 'talent-sub-2',

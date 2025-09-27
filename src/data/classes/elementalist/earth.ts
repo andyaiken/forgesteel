@@ -1,7 +1,7 @@
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { SubClass } from '../../../models/subclass';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { SubClass } from '@/models/subclass';
 
 export const earth: SubClass = {
 	id: 'elementalist-sub-1',

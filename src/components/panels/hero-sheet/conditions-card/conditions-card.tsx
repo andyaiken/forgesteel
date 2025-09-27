@@ -1,8 +1,8 @@
-import { ConditionEndType, ConditionType } from '../../../../enums/condition-type';
-import { CharacterSheet } from '../../../../models/character-sheet';
-import { Condition } from '../../../../models/condition';
-import { LabeledBooleanField } from '../components/labeled-field';
-import { Options } from '../../../../models/options';
+import { ConditionEndType, ConditionType } from '@/enums/condition-type';
+import { CharacterSheet } from '@/models/character-sheet';
+import { Condition } from '@/models/condition';
+import { LabeledBooleanField } from '@/components/panels/hero-sheet/components/labeled-field';
+import { Options } from '@/models/options';
 
 import './conditions-card.scss';
 

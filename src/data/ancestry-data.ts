@@ -1,15 +1,15 @@
-import { devil } from './ancestries/devil';
-import { dragonKnight } from './ancestries/dragon-knight';
-import { dwarf } from './ancestries/dwarf';
-import { hakaan } from './ancestries/hakaan';
-import { highElf } from './ancestries/elf-high';
-import { human } from './ancestries/human';
-import { memonek } from './ancestries/memonek';
-import { orc } from './ancestries/orc';
-import { polder } from './ancestries/polder';
-import { revenant } from './ancestries/revenant';
-import { timeRaider } from './ancestries/time-raider';
-import { wodeElf } from './ancestries/elf-wode';
+import { devil } from '@/data/ancestries/devil';
+import { dragonKnight } from '@/data/ancestries/dragon-knight';
+import { dwarf } from '@/data/ancestries/dwarf';
+import { hakaan } from '@/data/ancestries/hakaan';
+import { highElf } from '@/data/ancestries/elf-high';
+import { human } from '@/data/ancestries/human';
+import { memonek } from '@/data/ancestries/memonek';
+import { orc } from '@/data/ancestries/orc';
+import { polder } from '@/data/ancestries/polder';
+import { revenant } from '@/data/ancestries/revenant';
+import { timeRaider } from '@/data/ancestries/time-raider';
+import { wodeElf } from '@/data/ancestries/elf-wode';
 
 export class AncestryData {
 	static devil = devil;

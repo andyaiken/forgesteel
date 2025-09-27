@@ -1,10 +1,10 @@
 import { Alert, Button, Space } from 'antd';
-import { Empty } from '../../controls/empty/empty';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Modal } from '../modal/modal';
-import { Playbook } from '../../../models/playbook';
-import { Toggle } from '../../controls/toggle/toggle';
-import { Utils } from '../../../utils/utils';
+import { Empty } from '@/components/controls/empty/empty';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Modal } from '@/components/modals/modal/modal';
+import { Playbook } from '@/models/playbook';
+import { Toggle } from '@/components/controls/toggle/toggle';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './player-view-modal.scss';

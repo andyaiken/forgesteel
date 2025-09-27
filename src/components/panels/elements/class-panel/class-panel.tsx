@@ -1,18 +1,18 @@
-import { AbilityPanel } from '../ability-panel/ability-panel';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeaturePanel } from '../feature-panel/feature-panel';
-import { Field } from '../../../controls/field/field';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
-import { HeroClass } from '../../../../models/class';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
+import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroClass } from '@/models/class';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { Space } from 'antd';
-import { SubClass } from '../../../../models/subclass';
-import { SubclassPanel } from '../subclass-panel/subclass-panel';
+import { SubClass } from '@/models/subclass';
+import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 
 import './class-panel.scss';
 

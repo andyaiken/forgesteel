@@ -1,5 +1,5 @@
-import { Element } from './element';
-import { Plot } from './plot';
+import { Element } from '@/models/element';
+import { Plot } from '@/models/plot';
 
 export interface Adventure extends Element {
 	party: {

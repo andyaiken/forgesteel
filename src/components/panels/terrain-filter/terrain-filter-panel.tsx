@@ -1,13 +1,13 @@
 import { Flex, Input, Select, Slider, Space } from 'antd';
-import { Collections } from '../../../utils/collections';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Field } from '../../controls/field/field';
-import { MonsterRoleType } from '../../../enums/monster-role-type';
-import { Terrain } from '../../../models/terrain';
-import { TerrainFilter } from '../../../models/filter';
-import { TerrainRoleType } from '../../../enums/terrain-role-type';
-import { Toggle } from '../../controls/toggle/toggle';
-import { Utils } from '../../../utils/utils';
+import { Collections } from '@/utils/collections';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Field } from '@/components/controls/field/field';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Terrain } from '@/models/terrain';
+import { TerrainFilter } from '@/models/filter';
+import { TerrainRoleType } from '@/enums/terrain-role-type';
+import { Toggle } from '@/components/controls/toggle/toggle';
+import { Utils } from '@/utils/utils';
 
 import './terrain-filter-panel.scss';
 

@@ -1,7 +1,7 @@
-import { FactoryLogic } from '../factory-logic';
-import { FeatureUpdateLogic } from './feature-update-logic';
-import { Item } from '../../models/item';
-import { ItemType } from '../../enums/item-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
 
 export class ItemUpdateLogic {
 	static updateItem = (item: Item) => {

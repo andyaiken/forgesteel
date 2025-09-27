@@ -1,9 +1,9 @@
-import { Element } from '../../../../models/element';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { HeaderText } from '../../../controls/header-text/header-text';
+import { Element } from '@/models/element';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Input } from 'antd';
-import { MultiLine } from '../../../controls/multi-line/multi-line';
-import { Utils } from '../../../../utils/utils';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './element-edit-panel.scss';

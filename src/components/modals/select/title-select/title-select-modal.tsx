@@ -1,16 +1,16 @@
 import { Alert, Input, Space } from 'antd';
-import { Empty } from '../../../controls/empty/empty';
-import { Feature } from '../../../../models/feature';
-import { FeaturePanel } from '../../../panels/elements/feature-panel/feature-panel';
-import { Hero } from '../../../../models/hero';
-import { Modal } from '../../modal/modal';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
+import { Empty } from '@/components/controls/empty/empty';
+import { Feature } from '@/models/feature';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { Hero } from '@/models/hero';
+import { Modal } from '@/components/modals/modal/modal';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Title } from '../../../../models/title';
-import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
-import { Utils } from '../../../../utils/utils';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Title } from '@/models/title';
+import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './title-select-modal.scss';

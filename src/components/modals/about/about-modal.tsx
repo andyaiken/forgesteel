@@ -1,14 +1,14 @@
 import { Button, Divider, Space } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
-import { DangerButton } from '../../controls/danger-button/danger-button';
-import { Expander } from '../../controls/expander/expander';
-import { Field } from '../../controls/field/field';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { LogoPanel } from '../../panels/logo/logo-panel';
-import { Modal } from '../modal/modal';
-import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Expander } from '@/components/controls/expander/expander';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { LogoPanel } from '@/components/panels/logo/logo-panel';
+import { Modal } from '@/components/modals/modal/modal';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 
-import pbds from '../../../assets/powered-by-draw-steel.png';
+import pbds from '@/assets/powered-by-draw-steel.png';
 import pkg from '../../../../package.json';
 
 import './about-modal.scss';

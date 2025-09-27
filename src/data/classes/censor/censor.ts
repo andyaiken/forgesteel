@@ -1,14 +1,14 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { exorcist } from './exorcist';
-import { oracle } from './oracle';
-import { paragon } from './paragon';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { exorcist } from '@/data/classes/censor/exorcist';
+import { oracle } from '@/data/classes/censor/oracle';
+import { paragon } from '@/data/classes/censor/paragon';
 
 export const censor: HeroClass = {
 	id: 'class-censor',

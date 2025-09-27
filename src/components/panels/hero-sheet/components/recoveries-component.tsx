@@ -1,6 +1,6 @@
-import { LabeledTextField } from './labeled-field';
-import { Options } from '../../../../models/options';
-import { RecoveriesSheet } from '../../../../models/character-sheet';
+import { LabeledTextField } from '@/components/panels/hero-sheet/components/labeled-field';
+import { Options } from '@/models/options';
+import { RecoveriesSheet } from '@/models/character-sheet';
 
 import './recoveries-component.scss';
 

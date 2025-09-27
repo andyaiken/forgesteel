@@ -1,10 +1,10 @@
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Ancestry } from '../../models/ancestry';
-import { ConditionType } from '../../enums/condition-type';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Ancestry } from '@/models/ancestry';
+import { ConditionType } from '@/enums/condition-type';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 
 export const polder: Ancestry = {
 	id: 'ancestry-polder',

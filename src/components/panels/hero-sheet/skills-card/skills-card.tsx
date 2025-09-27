@@ -1,5 +1,5 @@
-import { CharacterSheet } from '../../../../models/character-sheet';
-import { LabeledBooleanField } from '../components/labeled-field';
+import { CharacterSheet } from '@/models/character-sheet';
+import { LabeledBooleanField } from '@/components/panels/hero-sheet/components/labeled-field';
 import './skills-card.scss';
 
 interface Props {

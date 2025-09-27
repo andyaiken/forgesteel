@@ -1,11 +1,11 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { DamageModifierType } from '../../../enums/damage-modifier-type';
-import { DamageType } from '../../../enums/damage-type';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { SkillList } from '../../../enums/skill-list';
-import { SubClass } from '../../../models/subclass';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SkillList } from '@/enums/skill-list';
+import { SubClass } from '@/models/subclass';
 
 export const cryokinetic: SubClass = {
 	id: 'null-sub-2',

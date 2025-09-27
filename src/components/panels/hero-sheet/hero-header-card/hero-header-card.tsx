@@ -1,10 +1,10 @@
-import { CharacterSheet } from '../../../../models/character-sheet';
-import { LabeledTextField } from '../components/labeled-field';
-import { Options } from '../../../../models/options';
+import { CharacterSheet } from '@/models/character-sheet';
+import { LabeledTextField } from '@/components/panels/hero-sheet/components/labeled-field';
+import { Options } from '@/models/options';
 
 import './hero-header-card.scss';
 
-import pbds from '../../../../assets/powered-by-draw-steel.png';
+import pbds from '@/assets/powered-by-draw-steel.png';
 
 interface Props {
 	character: CharacterSheet;

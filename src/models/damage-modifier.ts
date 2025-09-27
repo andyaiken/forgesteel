@@ -1,6 +1,6 @@
-import { Characteristic } from '../enums/characteristic';
-import { DamageModifierType } from '../enums/damage-modifier-type';
-import { DamageType } from '../enums/damage-type';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
 
 export interface Modifier {
 	value: number,

@@ -1,8 +1,8 @@
-import { FeatureLogic } from '../../../../logic/feature-logic';
-import { FeatureType } from '../../../../enums/feature-type';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Modal } from '../../modal/modal';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { FeatureLogic } from '@/logic/feature-logic';
+import { FeatureType } from '@/enums/feature-type';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Modal } from '@/components/modals/modal/modal';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Space } from 'antd';
 
 import './feature-type-select-modal.scss';

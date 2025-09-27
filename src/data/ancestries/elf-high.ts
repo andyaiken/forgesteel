@@ -1,7 +1,7 @@
-import { Ancestry } from '../../models/ancestry';
-import { ConditionType } from '../../enums/condition-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
+import { Ancestry } from '@/models/ancestry';
+import { ConditionType } from '@/enums/condition-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 
 export const highElf: Ancestry = {
 	id: 'ancestry-high-elf',

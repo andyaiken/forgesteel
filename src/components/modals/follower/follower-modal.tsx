@@ -1,7 +1,7 @@
-import { Follower } from '../../../models/follower';
-import { FollowerPanel } from '../../panels/elements/follower-panel/follower-panel';
-import { Modal } from '../modal/modal';
-import { PanelMode } from '../../../enums/panel-mode';
+import { Follower } from '@/models/follower';
+import { FollowerPanel } from '@/components/panels/elements/follower-panel/follower-panel';
+import { Modal } from '@/components/modals/modal/modal';
+import { PanelMode } from '@/enums/panel-mode';
 
 import './follower-modal.scss';
 

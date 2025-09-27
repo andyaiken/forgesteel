@@ -1,5 +1,5 @@
-import { Characteristic } from '../enums/characteristic';
-import { FactoryLogic } from '../logic/factory-logic';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
 
 export class ProjectData {
 	static buildAirship = FactoryLogic.createProject({

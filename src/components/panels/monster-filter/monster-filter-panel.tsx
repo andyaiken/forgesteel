@@ -1,13 +1,13 @@
 import { Flex, Input, Select, Slider, Space } from 'antd';
-import { Collections } from '../../../utils/collections';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Field } from '../../controls/field/field';
-import { Monster } from '../../../models/monster';
-import { MonsterFilter } from '../../../models/filter';
-import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../../enums/monster-role-type';
-import { Toggle } from '../../controls/toggle/toggle';
-import { Utils } from '../../../utils/utils';
+import { Collections } from '@/utils/collections';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Field } from '@/components/controls/field/field';
+import { Monster } from '@/models/monster';
+import { MonsterFilter } from '@/models/filter';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Toggle } from '@/components/controls/toggle/toggle';
+import { Utils } from '@/utils/utils';
 
 import './monster-filter-panel.scss';
 

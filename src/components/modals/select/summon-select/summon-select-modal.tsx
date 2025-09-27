@@ -1,14 +1,14 @@
 import { Input, Space } from 'antd';
-import { Collections } from '../../../../utils/collections';
-import { Empty } from '../../../controls/empty/empty';
-import { Modal } from '../../modal/modal';
-import { MonsterLogic } from '../../../../logic/monster-logic';
-import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
-import { Options } from '../../../../models/options';
+import { Collections } from '@/utils/collections';
+import { Empty } from '@/components/controls/empty/empty';
+import { Modal } from '@/components/modals/modal/modal';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
+import { Options } from '@/models/options';
 import { SearchOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Summon } from '../../../../models/summon';
-import { Utils } from '../../../../utils/utils';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Summon } from '@/models/summon';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './summon-select-modal.scss';

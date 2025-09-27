@@ -1,6 +1,6 @@
-import { Feature, FeatureLanguageChoice } from './feature';
-import { CultureType } from '../enums/culture-type';
-import { Element } from './element';
+import { Feature, FeatureLanguageChoice } from '@/models/feature';
+import { CultureType } from '@/enums/culture-type';
+import { Element } from '@/models/element';
 
 export interface Culture extends Element {
 	type: CultureType;

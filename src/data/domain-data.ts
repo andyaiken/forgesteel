@@ -1,15 +1,15 @@
-import { creation } from './domains/creation';
-import { death } from './domains/death';
-import { fate } from './domains/fate';
-import { knowledge } from './domains/knowledge';
-import { life } from './domains/life';
-import { love } from './domains/love';
-import { nature } from './domains/nature';
-import { protection } from './domains/protection';
-import { storm } from './domains/storm';
-import { sun } from './domains/sun';
-import { trickery } from './domains/trickery';
-import { war } from './domains/war';
+import { creation } from '@/data/domains/creation';
+import { death } from '@/data/domains/death';
+import { fate } from '@/data/domains/fate';
+import { knowledge } from '@/data/domains/knowledge';
+import { life } from '@/data/domains/life';
+import { love } from '@/data/domains/love';
+import { nature } from '@/data/domains/nature';
+import { protection } from '@/data/domains/protection';
+import { storm } from '@/data/domains/storm';
+import { sun } from '@/data/domains/sun';
+import { trickery } from '@/data/domains/trickery';
+import { war } from '@/data/domains/war';
 
 export class DomainData {
 	static creation = creation;

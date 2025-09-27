@@ -1,4 +1,4 @@
-import { Hero } from '../../models/hero';
+import { Hero } from '@/models/hero';
 
 export const polderElementalist = {
 	id: 'mr3vxPGN0NkoVsZe',

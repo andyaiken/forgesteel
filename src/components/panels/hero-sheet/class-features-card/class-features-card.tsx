@@ -1,5 +1,5 @@
-import { CharacterSheet } from '../../../../models/character-sheet';
-import { FeatureComponent } from '../components/feature-component';
+import { CharacterSheet } from '@/models/character-sheet';
+import { FeatureComponent } from '@/components/panels/hero-sheet/components/feature-component';
 import './class-features-card.scss';
 
 interface Props {

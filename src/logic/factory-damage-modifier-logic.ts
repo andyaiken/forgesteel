@@ -1,7 +1,7 @@
-import { Characteristic } from '../enums/characteristic';
-import { DamageModifier } from '../models/damage-modifier';
-import { DamageModifierType } from '../enums/damage-modifier-type';
-import { DamageType } from '../enums/damage-type';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifier } from '@/models/damage-modifier';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
 
 export class FactoryDamageModifierLogic {
 	create = (data: { damageType: DamageType, modifierType: DamageModifierType, value: number }): DamageModifier => {

@@ -1,5 +1,5 @@
-import { CharacterSheet } from '../../../../models/character-sheet';
-import { LabeledTextField } from '../components/labeled-field';
+import { CharacterSheet } from '@/models/character-sheet';
+import { LabeledTextField } from '@/components/panels/hero-sheet/components/labeled-field';
 import './potencies-card.scss';
 
 interface Props {

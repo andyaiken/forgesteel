@@ -1,15 +1,15 @@
-import { CustomizePanel } from './customize-panel/customize-panel';
-import { Hero } from '../../../models/hero';
-import { HeroHealthPanel } from '../../panels/health/health-panel';
-import { HeroLogic } from '../../../logic/hero-logic';
-import { HeroStatePage } from '../../../enums/hero-state-page';
-import { InventoryPanel } from './inventory-panel/inventory-panel';
-import { Modal } from '../modal/modal';
-import { Options } from '../../../models/options';
-import { ProjectsPanel } from './projects-panel/projects-panel';
+import { CustomizePanel } from '@/components/modals/hero-state/customize-panel/customize-panel';
+import { Hero } from '@/models/hero';
+import { HeroHealthPanel } from '@/components/panels/health/health-panel';
+import { HeroLogic } from '@/logic/hero-logic';
+import { HeroStatePage } from '@/enums/hero-state-page';
+import { InventoryPanel } from '@/components/modals/hero-state/inventory-panel/inventory-panel';
+import { Modal } from '@/components/modals/modal/modal';
+import { Options } from '@/models/options';
+import { ProjectsPanel } from '@/components/modals/hero-state/projects-panel/projects-panel';
 import { Segmented } from 'antd';
-import { Sourcebook } from '../../../models/sourcebook';
-import { StatsPanel } from './stats-panel/stats-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { StatsPanel } from '@/components/modals/hero-state/stats-panel/stats-panel';
 import { useState } from 'react';
 
 import './hero-state-modal.scss';

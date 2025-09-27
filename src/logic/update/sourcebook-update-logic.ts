@@ -1,11 +1,11 @@
-import { AbilityUpdateLogic } from './ability-update-logic';
-import { FactoryLogic } from '../factory-logic';
-import { FeatureUpdateLogic } from './feature-update-logic';
-import { ItemUpdateLogic } from './item-update-logic';
-import { LanguageType } from '../../enums/language-type';
-import { MonsterUpdateLogic } from './monster-update-logic';
-import { Sourcebook } from '../../models/sourcebook';
-import { Utils } from '../../utils/utils';
+import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
+import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
+import { LanguageType } from '@/enums/language-type';
+import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
+import { Sourcebook } from '@/models/sourcebook';
+import { Utils } from '@/utils/utils';
 
 export class SourcebookUpdateLogic {
 	static updateSourcebook = (sourcebook: Sourcebook) => {

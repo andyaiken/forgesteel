@@ -1,15 +1,15 @@
 import { Button, Divider, Input, Space } from 'antd';
-import { Expander } from '../../../controls/expander/expander';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { Modal } from '../../modal/modal';
+import { Expander } from '@/components/controls/expander/expander';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Modal } from '@/components/modals/modal/modal';
 import { SearchOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Skill } from '../../../../models/skill';
-import { SkillList } from '../../../../enums/skill-list';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { Utils } from '../../../../utils/utils';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Skill } from '@/models/skill';
+import { SkillList } from '@/enums/skill-list';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './skill-select-modal.scss';

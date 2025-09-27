@@ -316,67 +316,62 @@ export const PlaybookListPage = (props: Props) => {
 		);
 	};
 
-	try {
-		const selected = getList(false).find(item => item.id == selectedID);
-		const getPanel = getElementPanel();
+	const selected = getList(false).find(item => item.id == selectedID);
+	const getPanel = getElementPanel();
 
-		return (
-			<ErrorBoundary>
-				<div className='playbook-list-page'>
-					<AppHeader subheader='Playbook'>
-						<Popover
-							trigger='click'
-							content={
-								<CreatePanel
-									currentTab={category}
-									createElement={props.createElement}
-									importElement={props.importElement}
-									importAdventurePackage={props.importAdventurePackage}
-								/>
-							}
-						>
-							<Button type='primary'>
-								Add
-								<DownOutlined />
-							</Button>
-						</Popover>
-						{getElementToolbar()}
-						{
-							(category === 'encounter') || (category === 'tactical-map') ?
-								<div className='divider' />
-								: null
+	return (
+		<ErrorBoundary>
+			<div className='playbook-list-page'>
+				<AppHeader subheader='Playbook'>
+					<Popover
+						trigger='click'
+						content={
+							<CreatePanel
+								currentTab={category}
+								createElement={props.createElement}
+								importElement={props.importElement}
+								importAdventurePackage={props.importAdventurePackage}
+							/>
 						}
+					>
+						<Button type='primary'>
+							Add
+							<DownOutlined />
+						</Button>
+					</Popover>
+					{getElementToolbar()}
+					{
+						(category === 'encounter') || (category === 'tactical-map') ?
+							<div className='divider' />
+							: null
+					}
+					{
+						(category === 'encounter') || (category === 'tactical-map') ?
+							<Popover
+								trigger='click'
+								content={<OptionsPanel mode={category} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+									<DownOutlined />
+								</Button>
+							</Popover>
+							: null
+					}
+				</AppHeader>
+				<div className='playbook-list-page-content'>
+					{getSidebar()}
+					<div className='element-selected'>
 						{
-							(category === 'encounter') || (category === 'tactical-map') ?
-								<Popover
-									trigger='click'
-									content={<OptionsPanel mode={category} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-								>
-									<Button icon={<SettingOutlined />}>
-										Options
-										<DownOutlined />
-									</Button>
-								</Popover>
-								: null
+							selected ?
+								getPanel(selected)
+								:
+								<Empty text='Nothing selected' />
 						}
-					</AppHeader>
-					<div className='playbook-list-page-content'>
-						{getSidebar()}
-						<div className='element-selected'>
-							{
-								selected ?
-									getPanel(selected)
-									:
-									<Empty text='Nothing selected' />
-							}
-						</div>
 					</div>
-					<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+			</div>
+		</ErrorBoundary>
+	);
 };

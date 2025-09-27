@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Component, ReactNode } from 'react';
+import { Alert } from 'antd';
 
 interface Props {
 	children: ReactNode;
@@ -8,6 +7,16 @@ interface Props {
 
 interface State {
 	error: unknown;
+}
+
+function getErrorMessage(error: unknown) {
+	if (error instanceof Error) {
+		return error.message;
+	}
+	if (typeof error === 'string') {
+		return error;
+	}
+	return JSON.stringify(error);
 }
 
 export class ErrorBoundary extends Component<Props, State> {
@@ -18,13 +27,13 @@ export class ErrorBoundary extends Component<Props, State> {
 		};
 	}
 
-	static getDerivedStateFromError(error: any) {
+	static getDerivedStateFromError(error: unknown) {
 		return {
 			error: error
 		};
 	}
 
-	componentDidCatch(error: any, errorInfo: any) {
+	componentDidCatch(error: unknown, errorInfo: unknown) {
 		console.error(error);
 		console.error(errorInfo);
 
@@ -35,10 +44,9 @@ export class ErrorBoundary extends Component<Props, State> {
 
 	render() {
 		if (this.state.error) {
+			const msg = getErrorMessage(this.state.error);
 			return (
-				<div>
-					{JSON.stringify(this.state.error)}
-				</div>
+				<Alert message={msg} type='error' showIcon />
 			);
 		}
 

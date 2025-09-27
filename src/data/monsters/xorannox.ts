@@ -4,6 +4,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const xorannox: MonsterGroup = {
 	id: 'monster-group-xorannox',
@@ -68,6 +69,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			id: 'xorannox-malice-1',
 			name: 'Gas Belch',
 			cost: 3,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Xorannox lets out a noxious belch. Each enemy within 2 squares of him who has M<3 is weakened (save ends).'
 			]
@@ -76,14 +78,16 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			id: 'xorannox-malice-2',
 			name: 'Slime Trail',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of Xorannox’s next turn, whenever he or any of his eyes leave their space, they secrete a viscous slime onto the ground in that area. Any enemy who enters an affected square has lightning weakness 5 and fire weakness 5 until the end of the encounter.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'xorannox-malice-3',
-			name: '',
+			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'Xorannox takes an additional main action on his turn. He can use this feature even if he is dazed.'
 			]
@@ -92,6 +96,7 @@ Unfortunately, no matter how useful or dependable a party of heroes might be, Xo
 			id: 'xorannox-malice-4',
 			name: 'Mind Over Matter',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Xorannox fills the encounter map with a powerful telekinetic field. The Director chooses a cardinal direction (north, south, east, or west). Whenever a creature in the encounter willingly moves or is force moved, they are pulled 2 squares in the chosen direction, ignoring stability. Each time this feature is used, its previous effect ends.'
 			]

@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const gnoll: MonsterGroup = {
 	id: 'monster-group-gnoll',
@@ -74,6 +75,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			id: 'gnoll-malice-2',
 			name: 'Bloodpool',
 			cost: 5,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'One gnoll minion suddenly explodes into a pool of blood, splattering the area within 3 squares of them. Any gnoll who starts their turn in this area deals an extra 5 damage on their next strike before the end of their turn. Once per round, an abyssal hyena who starts their turn in the area turns into a **gnoll marauder**, keeping their current Stamina.'
 			]
@@ -82,6 +84,7 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 			id: 'gnoll-malice-3',
 			name: 'Echoes of Laughter',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				' Until the end of the encounter, the encounter map is encased in a soundscape of laughter and howling. Each enemy takes a bane on the first power roll they make each round. Whenever a gnoll is killed, this effect is suppressed until the start of the next round.'
 			]

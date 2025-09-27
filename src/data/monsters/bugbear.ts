@@ -4,6 +4,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const bugbear: MonsterGroup = {
 	id: 'monster-group-bugbear',
@@ -43,6 +44,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			id: 'bugbear-malice-1',
 			name: 'Goblin Malice Features',
 			cost: 1,
+			icon: StatBlockIcon.Trait,
 			repeatable: true,
 			sections: [
 				'The bugbear activates a Malice Feature available to goblins.'
@@ -52,6 +54,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			id: 'bugbear-malice-2',
 			name: 'Grab Iron Ball',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			repeatable: true,
 			sections: [
 				'For every 3 Malice spent, one non-minion bugbear acting this turn grabs an iron ball and can use a maneuver to throw it at a creature within 5 squares of them. The creature takes damage equal to  8 – the number of squares the iron ball was thrown, and if they have M<1, they are slowed (save ends).'
@@ -61,6 +64,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			id: 'bugbear-malice-3',
 			name: 'Grab Javelin',
 			cost: 5,
+			icon: StatBlockIcon.Self,
 			repeatable: true,
 			sections: [
 				' For every 5 Malice spent, one non-minion bugbear acting this turn grabs a javelin and can use a maneuver to throw it at a creature within 5 squares of them. The creature takes damage equal to  12 – the number of squares the javelin was thrown, and if they have M<1, they are bleeding (save ends). While a creature is bleeding this way, any ally of the bugbear within 2 squares of them can use a free maneuver to pull the bleeding creature up to 2 squares.'
@@ -70,6 +74,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			id: 'bugbear-malice-4',
 			name: 'Show Them the Great Fear',
 			cost: 10,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				' A bugbear infuses the encounter map with bu’gathic magic. Until the end of the encounter, all bugbears and allies have their speed doubled and can automatically climb at full speed while moving. Additionally, if the target of any bugbear or ally’s strike has I<1, the target is also frightened (save ends) and must move their speed in a straight line away from the creature who made the strike.'
 			]

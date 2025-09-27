@@ -382,15 +382,17 @@ const MaliceFeatureComponent = (feature: FeatureMalice) => {
 			</div>
 		</div>
 	);
-	const iconSrc = SheetFormatter.getAbilityIcon(feature);
+	const iconSrc = SheetFormatter.getIconSrc(feature.data.icon);
 
 	return (
 		<div className='feature feature-malice ability' key={feature.id}>
 			<div className='cost'>{feature.data.cost}</div>
 			<div className='details'>
 				<div className='header'>
-					<img src={iconSrc} className='icon' />
 					<label className='name'>{feature.name}</label>
+					<div className='ability-type'>
+						<img src={iconSrc} className='icon' />
+					</div>
 				</div>
 				{sections}
 			</div>

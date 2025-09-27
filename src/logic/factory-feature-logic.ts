@@ -18,6 +18,7 @@ import { KitWeapon } from '../enums/kit-weapon';
 import { PerkList } from '../enums/perk-list';
 import { PowerRoll } from '../models/power-roll';
 import { SkillList } from '../enums/skill-list';
+import { StatBlockIcon } from '../enums/stat-block-icon';
 import { Summon } from '../models/summon';
 
 export class FactoryFeatureLogic {
@@ -370,7 +371,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createMalice = (data: { id: string, name: string, cost: number, repeatable?: boolean, sections: (string | PowerRoll)[], echelon?: number }): FeatureMalice => {
+	createMalice = (data: { id: string, name: string, cost: number, repeatable?: boolean, sections: (string | PowerRoll)[], echelon?: number, icon?: StatBlockIcon }): FeatureMalice => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -380,7 +381,8 @@ export class FactoryFeatureLogic {
 				cost: data.cost,
 				repeatable: data.repeatable || false,
 				sections: data.sections,
-				echelon: data.echelon || 1
+				echelon: data.echelon || 1,
+				icon: data.icon
 			}
 		};
 	};

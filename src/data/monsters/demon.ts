@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const demon: MonsterGroup = {
 	id: 'monster-group-demon',
@@ -135,6 +136,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			id: 'demon-1st-malice-1',
 			name: 'Soulburn',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each demon acting this turn has a double edge on their abilities.'
 			]
@@ -143,6 +145,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			id: 'demon-1st-malice-3',
 			name: 'Abyssal Evolution',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'A demon minion of your choice transforms into a non-minion horde demon of the same level.'
 			]
@@ -151,6 +154,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			id: 'demon-1st-malice-2',
 			name: 'Abyssal Rift',
 			cost: 7,
+			icon: StatBlockIcon.Area,
 			sections: [ 'Two size 2 rifts to the Abyssal Wasteland appear at locations of your choice. Any demon can use an abyssal rift as a portal to another abyssal rift in the encounter, moving into any space in one rift and appearing immediately in any unoccupied space in the other rift. A non-demon who enters a rift for the first time in a round or starts their turn there takes corruption damage equal to the level of the highest-level demon on the encounter map. An abyssal rift is an immovable object that has 25 Stamina, damage immunity 2, and holy weakness 5. The rift closes when there are no demons remaining on the encounter map. Additionally, a creature who has the Magic or Psionics skill can make a **Reason test** or **Intuition test** as a maneuver while adjacent to a rift to destabilize and close it.',
 				FactoryLogic.createPowerRoll({
 					characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
@@ -163,6 +167,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			id: 'demon-2nd-malice-2',
 			name: 'Abyssal Jaunt',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'One demon acting this turn folds space around them, temporarily slipping in and out of the Abyssal Wasteland. Until the start of the demon’s next turn, they ignore difficult terrain, can move through solid matter, and don’t provoke opportunity attacks by moving. If the demon ends their turn inside solid matter, they are shunted out into the space from which they entered it.'
 			],
@@ -172,6 +177,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			id: 'demon-3rd-malice-2',
 			name: 'Seeping Blight',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'One demon acting this turn expels blight—digested soul juice—onto the ground around them in a 3 burst that lingers until the start of their next turn. Any enemy who enters the area or starts their turn there takes 6 corruption damage, and has a double bane on power rolls until the start of their next turn.'
 			],
@@ -181,6 +187,7 @@ A number of lesser demons have been identified across categories 1 to 3:
 			id: 'demon-4th-malice-2',
 			name: 'Soul Flense',
 			cost: 7,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'One demon acting this turn unleashes their pent-up agony and pain on every non-demon in a 5 burst. Each target makes a **Presence test**.',
 				FactoryLogic.createPowerRoll({

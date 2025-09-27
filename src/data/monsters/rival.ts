@@ -6,6 +6,7 @@ import { FeatureAddOnType } from '../../enums/feature-addon-type';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const rival: MonsterGroup = {
 	id: 'monster-group-rival',
@@ -46,6 +47,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			id: 'rival-1st-malice-1',
 			name: 'Work as One',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, each rival can impose a bane on a strike made against an adjacent rival as a free triggered action.'
 			]
@@ -54,6 +56,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			id: 'rival-1st-malice-2',
 			name: 'We Just Do It Better',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, whenever any rival makes a power roll against the target of their Rivalry trait, they roll a d3 and add it to the power roll.'
 			]
@@ -62,6 +65,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			id: 'rival-1st-malice-3',
 			name: 'Check Out Our Loot',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'One rival pulls out a magic consumable and hurls it, targeting a 5 × 1 line within 1 square of them or a 3 cube within 10 squares of them. Each enemy in the area makes an Agility test. The rival chooses a damage type and a condition for the outcome of the test from one of the following pairs: sonic damage and dazed, poison damange and weakened, or fire damage and frightened.',
 				FactoryLogic.createPowerRoll({
@@ -76,6 +80,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			id: 'rival-1st-malice-4',
 			name: 'Calling the Shots',
 			cost: 7,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each rival regains 10 Stamina. Until the end of the round, whenever a rival uses an ability against an enemy, each other rival adjacent to that enemy can make a free strike against them.'
 			]
@@ -84,6 +89,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 			id: 'rival-1st-malice-5',
 			name: 'Coordinated Takedown',
 			cost: 10,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each rival moves up to their speed and uses a main action or maneuver that doesn’t cost Malice.'
 			]

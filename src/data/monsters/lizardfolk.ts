@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const lizardfolk: MonsterGroup = {
 	id: 'monster-group-lizardfolk',
@@ -79,6 +80,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			id: 'lizardfolk-malice-2',
 			name: 'Water Pit',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'A lizardfolk acting this turn unearths a magical size 2 pit that is 2 squares deep and filled with water. Any lizardfolk who moves into, then exits the pit on their turn gains 10 temporary Stamina, regrows their tail if applicable, and ends one effect on them that can be ended by a saving throw.',
 				'While adjacent to the pit, any creature who can burrow or who has the Nature skill can make a **Might test** or a **Reason test** to drain it.',
@@ -93,6 +95,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			id: 'lizardfolk-malice-3',
 			name: 'Flood the Shores',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Waist-high water floods the entire encounter map. Any lizardfolk submerged in water gains an edge on abilities and doubles their speed while swimming. If there are no open water pits on the encounter map, the water drains away at the end of the round.'
 			]

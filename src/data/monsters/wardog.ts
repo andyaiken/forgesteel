@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const warDog: MonsterGroup = {
 	id: 'monster-group-wardog',
@@ -114,6 +115,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-1st-malice-1',
 			name: 'Reconstitute',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'One war dog acting this turn tears apart a nearby corpse of a humanoid and incorporates its body parts into their own. The war dog regains Stamina equal to 5 times their level.'
 			]
@@ -142,6 +144,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			id: 'wardog-1st-malice-3',
 			name: 'Fodder Run',
 			cost: 7,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each war dog minion in the encounter shifts up to their speed and can make a free strike. A minion who does so is then reduced to 0 Stamina.'
 			]

@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const draconian: MonsterGroup = {
 	id: 'monster-group-draconian',
@@ -58,6 +59,7 @@ Six individual draconians are presented in this section—not an adventuring par
 			id: 'draconian-malice-1',
 			name: 'Guarding Gale',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'A draconian acting this turn flaps their wings and creates a mighty gale. Each creature adjacent to the draconian is pushed up to 4 squares, and if they have <code>M < 2</code>, they are knocked prone.'
 			]

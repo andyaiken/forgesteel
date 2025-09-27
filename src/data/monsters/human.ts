@@ -6,6 +6,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const human: MonsterGroup = {
 	id: 'monster-group-human',
@@ -72,6 +73,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			id: 'human-malice-2',
 			name: 'Exploit Opening',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each human acting this turn gains an edge on abilities until the end of their turn, or has a double edge on any ability that targets an enemy affected by a condition.'
 			]
@@ -80,6 +82,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			id: 'human-malice-3',
 			name: 'Staying Power',
 			cost: 7,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				' Each non-minion human in the encounter regains Stamina equal to 5 times their level.'
 			]

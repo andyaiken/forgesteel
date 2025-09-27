@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const timeRaider: MonsterGroup = {
 	id: 'monster-group-time-raider',
@@ -71,6 +72,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			id: 'time-raider-malice-2',
 			name: 'Recall Module',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, each time raider gains a +3 bonus to speed, and can teleport up to their speed as a move action.'
 			]
@@ -79,6 +81,7 @@ Time raiders also have two sets of arms, allowing them to wield melee weapons at
 			id: 'time-raider-malice-3',
 			name: 'Psi-Cage',
 			cost: 10,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'All time raiders in the encounter collectively create a psionic field over the encounter map, which lasts until the first time raider with the highest Stamina maximum drops to 0 Stamina or chooses to end the field (no action required). While the field is up, each non-time raider on the map makes a **Reason test** against this psionic effect at the start of each round.',
 				FactoryLogic.createPowerRoll({

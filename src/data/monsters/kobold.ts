@@ -6,6 +6,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const kobold: MonsterGroup = {
 	id: 'monster-group-kobold',
@@ -62,6 +63,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 			id: 'kobold-malice-1',
 			name: 'Maniple Tactics',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Up to 3 kobolds make a free strike, swaps positions with an adjacent kobold, and then that kobold makes a free strike.'
 			]
@@ -70,6 +72,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 			id: 'kobold-malice-2',
 			name: 'Set the Initiative',
 			cost: 5,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Two kobolds take their turns in a row.'
 			]
@@ -78,6 +81,7 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 			id: 'kobold-malice-3',
 			name: 'Shield Wall',
 			cost: 7,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, all kobolds with Shield? Shield! Impose an additional bane on incoming strikes and abilities.'
 			]

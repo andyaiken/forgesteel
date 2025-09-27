@@ -4,6 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const manticore: MonsterGroup = {
 	id: 'monster-group-manticore',
@@ -37,6 +38,7 @@ export const manticore: MonsterGroup = {
 			id: 'manticore-malice-1',
 			name: 'Uncanny Mimicry',
 			cost: 3,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'The manticore uses their mimicry in an attempt to unnerve one creature within their line of effect. If the target has R<4, they take a bane on power rolls against the manticore (save ends). Each time this feature is used against the same target during the encounter, its potency decreases by 2.'
 			]
@@ -45,6 +47,7 @@ export const manticore: MonsterGroup = {
 			id: 'manticore-malice-2',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The manticore takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -53,6 +56,7 @@ export const manticore: MonsterGroup = {
 			id: 'manticore-malice-3',
 			name: 'Desperate Howl',
 			cost: 5,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'The manticore lets out an unnerving cry. Each enemy within the manticore’s line of effect makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
@@ -67,6 +71,7 @@ export const manticore: MonsterGroup = {
 			id: 'manticore-malice-4',
 			name: 'Barrage of Barbs',
 			cost: 7,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'The manticore sprays tail spikes across the ground within 5 squares of them. Each enemy in that area who has A<3 is bleeding (save ends). Additionally, the area is difficult terrain, and any enemy takes 3 poison damage for each square of the area they enter. An enemy who takes 9 poison damage this way on one turn is weakened until the end of the encounter.'
 			]

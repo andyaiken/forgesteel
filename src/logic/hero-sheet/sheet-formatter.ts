@@ -9,6 +9,7 @@ import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { Monster } from '../../models/monster';
 import { RulesItem } from '../../models/rules-item';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 import { Title } from '../../models/title';
 import { Utils } from '../../utils/utils';
 
@@ -21,6 +22,8 @@ import rollT1Icon from '../../assets/icons/power-roll-t1.svg';
 import rollT2Icon from '../../assets/icons/power-roll-t2.svg';
 import rollT3Icon from '../../assets/icons/power-roll-t3.svg';
 import selfIcon from '../../assets/icons/self.svg';
+import skullIcon from '../../assets/icons/skull.svg';
+import specialAreaIcon from '../../assets/icons/special-area.svg';
 import starIcon from '../../assets/icons/star.svg';
 import triggerIcon from '../../assets/icons/trigger-solid.svg';
 
@@ -583,5 +586,42 @@ export class SheetFormatter {
 		}
 
 		return abilityIcon;
+	};
+
+	static getIconSrc = (icon: StatBlockIcon | undefined) => {
+		let src = starIcon;
+		switch (icon) {
+			case StatBlockIcon.Area:
+				src = areaIcon;
+				break;
+			case StatBlockIcon.AuraBurst:
+				src = burstIcon;
+				break;
+			case StatBlockIcon.Melee:
+				src = meleeIcon;
+				break;
+			case StatBlockIcon.MeleeRanged:
+				src = meleeRangedIcon;
+				break;
+			case StatBlockIcon.Ranged:
+				src = rangedIcon;
+				break;
+			case StatBlockIcon.Self:
+				src = selfIcon;
+				break;
+			case StatBlockIcon.SpecialArea:
+				src = specialAreaIcon;
+				break;
+			case StatBlockIcon.Trait:
+				src = starIcon;
+				break;
+			case StatBlockIcon.Trigger:
+				src = triggerIcon;
+				break;
+			case StatBlockIcon.Villain:
+				src = skullIcon;
+				break;
+		}
+		return src;
 	};
 }

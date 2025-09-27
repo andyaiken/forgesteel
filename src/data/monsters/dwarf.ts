@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const dwarf: MonsterGroup = {
 	id: 'monster-group-dwarf',
@@ -67,6 +68,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			id: 'dwarf-malice-1',
 			name: 'Breaching Charge',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			repeatable: true,
 			sections: [
 				'A dwarf can destroy one adjacent object or square of wall for each 3 Malice spent. Each enemy adjacent to the destroyed object or square takes the object’s Stamina in damage (3 for wood, 6 for stone, or 9 for metal).'
@@ -76,6 +78,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 			id: 'dwarf-malice-2',
 			name: 'Rappelling Barrage',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each dwarf acting this turn can automatically climb at full speed while moving. At any point during this movement, they can make a free strike.'
 			]

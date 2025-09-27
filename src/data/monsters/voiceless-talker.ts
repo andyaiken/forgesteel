@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const voicelessTalker: MonsterGroup = {
 	id: 'monster-group-voiceless-talker',
@@ -67,6 +68,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			id: 'voiceless-talker-malice-1',
 			name: 'Guise',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'One non-minion voiceless talker projects a psionic screen over their body, preventing other creatures from treating them as an enemy until the end of the voiceless talker’s next turn.'
 			]
@@ -100,6 +102,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			id: 'voiceless-talker-malice-3',
 			name: 'Evolutionary Circuit',
 			cost: 10,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'All voiceless talkers link their minds, creating a circuit that empowers them while two or more voiceless talkers remain in the encounter. While this circuit is active, any psionic strike made by a voiceless talker deals an extra 5 damage. Additionally, when a non-minion voiceless talker takes damage, they can use a free triggered action to swap places with any voiceless talker minion on the encounter map. The minion takes the damage instead.'
 			]

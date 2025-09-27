@@ -90,12 +90,14 @@ export const AbilityComponent = (props: Props) => {
 	return (
 		<div className='ability'>
 			<div className='header'>
-				{icon}
 				<div className='name'>{ability.name}</div>
 				{ability.hasPowerRoll ?
 					<div className='power-roll'>2d10 + {ability.rollPower}</div>
 					: undefined}
-				<div className='ability-type'>{ability.abilityType}</div>
+				<div className='ability-type'>
+					{ability.abilityType}
+					{icon}
+				</div>
 			</div>
 			<div className='stats'>
 				<div className='keywords-action-type'>

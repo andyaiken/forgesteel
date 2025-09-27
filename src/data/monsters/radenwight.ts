@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const radenwight: MonsterGroup = {
 	id: 'monster-group-radenwight',
@@ -64,6 +65,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			id: 'radenwight-malice-2',
 			name: 'Rat Race',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each radenwight in the encounter shifts up to their speed. If a radenwight ends this shift adjacent to one or more radenwights, they can make a melee free strike against each enemy adjacent to them.'
 			]
@@ -72,6 +74,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			id: 'radenwight-malice-3',
 			name: 'Rally the Rodents',
 			cost: 7,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'A radenwight uses music to coordinate living rats, forming a 10 wall of rats scurrying atop one another into unoccupied spaces anywhere on the encounter map. The wall doesn’t block line of effect for radenwights and their allies, but it does for other creatures as the rats coordinate their movements with the radenwights. Each square of the wall has 10 Stamina. If the last radenwight in the encounter dies and the wall is still standing, the rats let out a hideous screech as they disperse. Each enemy on the encounter map makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({

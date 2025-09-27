@@ -6,6 +6,7 @@ import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const dragonGloom: MonsterGroup = {
 	id: 'monster-group-dragon-gloom',
@@ -45,6 +46,7 @@ When a gloom dragon slays a victim, they take not just their valuables, but also
 			id: 'dragon-gloom-malice-1',
 			name: 'Dread and Terror',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'The dragon thickens the fog of their Gloaming Wyrmscale Aura trait and the horrors within it. Each creature in the area takes a bane on strikes made against the dragon until the start of the dragon’s next turn.'
 			]
@@ -53,6 +55,7 @@ When a gloom dragon slays a victim, they take not just their valuables, but also
 			id: 'dragon-gloom-malice-2',
 			name: 'Doleful Visions',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The dragon manifests four 2 cubes of nightmarish apparitions anywhere on the encounter map. Each creature in the area when it appears makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
@@ -67,6 +70,7 @@ When a gloom dragon slays a victim, they take not just their valuables, but also
 			id: 'dragon-gloom-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The dragon takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -75,6 +79,7 @@ When a gloom dragon slays a victim, they take not just their valuables, but also
 			id: 'dragon-gloom-malice-4',
 			name: 'Phantasmagoria!',
 			cost: 7,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The dragon summons macabre, disquieting phantasms in a 10 cube within 1 square that lasts until the end of the encounter. Any enemy who enters the area for the first time in a round or starts their turn there takes 6 psychic damage, or 8 psychic damage if they are dragonsealed by the gloom dragon. Additionally, the enemy’s Intuition score is treated as 1 lower for the purpose of resisting potencies until the end of the encounter.'
 			]

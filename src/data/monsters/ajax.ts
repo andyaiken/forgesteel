@@ -4,6 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const ajax: MonsterGroup = {
 	id: 'monster-group-ajax',
@@ -42,6 +43,7 @@ His arsenal is vast and strategically picked to round out his strength. There ar
 			id: 'ajax-malice-1',
 			name: 'Reason',
 			cost: 2,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'Ajax attempts to instill doubt into a creature within line of effect through logic and reason. The creature and Ajax make an opposed **Reason test**. If Ajax wins, he chooses to either deal 11 extra damage to one target on his next strike or to gain an additional triggered action during the current round. Ajax can’t use this feature against the same creature during the same encounter.'
 			]
@@ -50,6 +52,7 @@ His arsenal is vast and strategically picked to round out his strength. There ar
 			id: 'ajax-malice-2',
 			name: 'Nexus Jewel',
 			cost: 5,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [ `
 Until the end of the round, Ajax chooses one of the following environments he has previously visited and overlays that environment on top of the encounter map, temporarily merging multiple realities.
 
@@ -63,6 +66,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 			id: 'ajax-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'Ajax takes an additional main action on his turn. He can use this feature even if he is dazed.'
 			]

@@ -39,7 +39,7 @@ import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { Terrain } from '../../../../models/terrain';
 import { TerrainModal } from '../../../modals/terrain/terrain-modal';
 import { Utils } from '../../../../utils/utils';
-import { useMediaQuery } from '../../../../hooks/use-media-query';
+import { useIsSmall } from '../../../../hooks/use-is-small';
 import { useState } from 'react';
 
 import './encounter-run-panel.scss';
@@ -59,7 +59,7 @@ interface Props {
 }
 
 export const EncounterRunPanel = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const [ encounter, setEncounter ] = useState<Encounter>(Utils.copy(props.encounter));
 	const [ tab, setTab ] = useState<string>('combatants');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);

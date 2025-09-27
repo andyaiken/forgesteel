@@ -75,7 +75,7 @@ import { Utils } from '../../utils/utils';
 import { WelcomePage } from '../pages/welcome/welcome-page';
 import localforage from 'localforage';
 import { useErrorListener } from '../../hooks/use-error-listener';
-import { useMediaQuery } from '../../hooks/use-media-query';
+import { useIsSmall } from '../../hooks/use-is-small';
 import { useNavigation } from '../../hooks/use-navigation';
 import { useSyncStatus } from '../../hooks/use-sync-status';
 
@@ -91,7 +91,7 @@ interface Props {
 }
 
 export const Main = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();

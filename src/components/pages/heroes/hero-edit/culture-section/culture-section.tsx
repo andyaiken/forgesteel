@@ -23,7 +23,7 @@ import { SelectablePanel } from '../../../../controls/selectable-panel/selectabl
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
 import { Utils } from '../../../../../utils/utils';
-import { useMediaQuery } from '../../../../../hooks/use-media-query';
+import { useIsSmall } from '../../../../../hooks/use-is-small';
 
 import './culture-section.scss';
 
@@ -49,7 +49,7 @@ interface CultureSectionProps {
 }
 
 export const CultureSection = (props: CultureSectionProps) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const [ showEnvironment, setShowEnvironment ] = useState<boolean>(false);
 	const [ showOrganization, setShowOrganization ] = useState<boolean>(false);
 	const [ showUpbringing, setShowUpbringing ] = useState<boolean>(false);

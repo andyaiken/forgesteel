@@ -20,7 +20,7 @@ import { SelectablePanel } from '../../../../controls/selectable-panel/selectabl
 import { Sourcebook } from '../../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
 import { Utils } from '../../../../../utils/utils';
-import { useMediaQuery } from '../../../../../hooks/use-media-query';
+import { useIsSmall } from '../../../../../hooks/use-is-small';
 
 import './career-section.scss';
 
@@ -44,7 +44,7 @@ interface Props {
 }
 
 export const CareerSection = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const [ showIncitingIncidents, setShowIncitingIncidents ] = useState<boolean>(false);
 
 	try {

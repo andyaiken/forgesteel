@@ -31,7 +31,7 @@ import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
 import { StartSection } from './start-section/start-section';
 import { SubClass } from '../../../../models/subclass';
 import { Utils } from '../../../../utils/utils';
-import { useMediaQuery } from '../../../../hooks/use-media-query';
+import { useIsSmall } from '../../../../hooks/use-is-small';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -58,7 +58,7 @@ interface Props {
 }
 
 export const HeroEditPage = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const { heroID, page } = useParams<{ heroID: string; page: HeroEditTab }>();
 	const originalHero = useMemo(() => props.heroes.find(h => h.id === heroID)!, [ heroID, props.heroes ]);

@@ -30,7 +30,7 @@ import { Sourcebook } from '../../../../models/sourcebook';
 import { StandardAbilitiesPanel } from '../../../panels/standard-abilities/standard-abilities-panel';
 import { SummoningInfo } from '../../../../models/summon';
 import { Title } from '../../../../models/title';
-import { useMediaQuery } from '../../../../hooks/use-media-query';
+import { useIsSmall } from '../../../../hooks/use-is-small';
 import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
@@ -68,7 +68,7 @@ interface Props {
 }
 
 export const HeroViewPage = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
 	const [ view, setView ] = useState<'modern' | 'classic' | 'abilities' | 'notes'>('modern');

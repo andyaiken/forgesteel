@@ -4,7 +4,7 @@ import { AppFooter } from '../../panels/app-footer/app-footer';
 import { AppHeader } from '../../panels/app-header/app-header';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { HeaderText } from '../../controls/header-text/header-text';
-import { useMediaQuery } from '../../../hooks/use-media-query';
+import { useIsSmall } from '../../../hooks/use-is-small';
 import { useNavigation } from '../../../hooks/use-navigation';
 import { useState } from 'react';
 
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const WelcomePage = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const [ page, setPage ] = useState<'player' | 'director-prep' | 'director-run' | 'creator'>('player');
 

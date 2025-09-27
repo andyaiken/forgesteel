@@ -28,7 +28,7 @@ import { SubClass } from '../../../../../models/subclass';
 import { SubClassSelectModal } from '../../../../modals/select/subclass-select/subclass-select-modal';
 import { SubclassPanel } from '../../../../panels/elements/subclass-panel/subclass-panel';
 import { Utils } from '../../../../../utils/utils';
-import { useMediaQuery } from '../../../../../hooks/use-media-query';
+import { useIsSmall } from '../../../../../hooks/use-is-small';
 
 import './class-section.scss';
 
@@ -56,7 +56,7 @@ interface Props {
 }
 
 export const ClassSection = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const [ array, setArray ] = useState<number[] | null>(() => {
 		let currentArray = null;
 

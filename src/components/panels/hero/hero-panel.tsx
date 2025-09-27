@@ -45,7 +45,7 @@ import { SkillList } from '../../../enums/skill-list';
 import { Sourcebook } from '../../../models/sourcebook';
 import { SummoningInfo } from '../../../models/summon';
 import { Title } from '../../../models/title';
-import { useMediaQuery } from '../../../hooks/use-media-query';
+import { useIsSmall } from '../../../hooks/use-is-small';
 import { useState } from 'react';
 
 import './hero-panel.scss';
@@ -73,7 +73,7 @@ interface Props {
 }
 
 export const HeroPanel = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const [ tab, setTab ] = useState<string>('Hero');
 
 	try {

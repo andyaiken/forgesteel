@@ -10,7 +10,7 @@ interface Props {
 
 export const MainLayout = (props: Props) => {
 	return (
-		<ErrorBoundary>
+		<ErrorBoundary name='main-layout'>
 			<div className='main'>
 				<Outlet />
 			</div>

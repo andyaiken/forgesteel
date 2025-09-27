@@ -1489,7 +1489,7 @@ export const Main = (props: Props) => {
 	// #endregion
 
 	return (
-		<ErrorBoundary>
+		<ErrorBoundary name='main'>
 			<Routes>
 				<Route
 					path='/'

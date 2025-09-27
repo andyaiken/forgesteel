@@ -3,6 +3,8 @@ import { Alert } from 'antd';
 
 interface Props {
 	children: ReactNode;
+	hideAllErrors?: boolean;
+	name?: string;
 }
 
 interface State {
@@ -18,7 +20,6 @@ function getErrorMessage(error: unknown) {
 	}
 	return JSON.stringify(error);
 }
-
 export class ErrorBoundary extends Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
@@ -34,6 +35,7 @@ export class ErrorBoundary extends Component<Props, State> {
 	}
 
 	componentDidCatch(error: unknown, errorInfo: unknown) {
+		console.warn('caught error in', this.props.name ? this.props.name : 'unknown ErrorBoundary');
 		console.error(error);
 		console.error(errorInfo);
 
@@ -44,9 +46,13 @@ export class ErrorBoundary extends Component<Props, State> {
 
 	render() {
 		if (this.state.error) {
+			if (this.props.hideAllErrors) {
+				return null;
+			}
+
 			const msg = getErrorMessage(this.state.error);
 			return (
-				<Alert message={msg} type='error' showIcon />
+				<Alert data-name={this.props.name || 'unknown'} message={msg} type='error' showIcon />
 			);
 		}
 

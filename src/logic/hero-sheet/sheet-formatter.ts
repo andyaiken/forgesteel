@@ -3,10 +3,12 @@ import { AbilitySheet, FollowerSheet, ItemSheet } from '../../models/classic-she
 import { AbilityLogic } from '../ability-logic';
 import { Characteristic } from '../../enums/characteristic';
 import { Collections } from '../../utils/collections';
+import { CreatureLogic } from '../creature-logic';
 import { Feature } from '../../models/feature';
 import { FeatureType } from '../../enums/feature-type';
 import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
+import { HeroLogic } from '../hero-logic';
 import { Monster } from '../../models/monster';
 import { RulesItem } from '../../models/rules-item';
 import { StatBlockIcon } from '../../enums/stat-block-icon';
@@ -519,17 +521,17 @@ export class SheetFormatter {
 		return SheetFormatter.cleanupText(AbilityLogic.getTierEffectCreature(value, tier, ability, undefined, creature));
 	};
 
-	static abilitySections = (sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[]): string => {
+	static abilitySections = (sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[], creature: Hero | Monster | undefined): string => {
 		const lines: string[] = [];
 		for (const section of sections) {
-			let text = SheetFormatter.abilitySection(section);
+			let text = SheetFormatter.abilitySection(section, creature);
 			text = SheetFormatter.enhanceMarkdown(text);
 			lines.push(text);
 		}
 		return lines.join('\n');
 	};
 
-	static abilitySection = (section: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)): string => {
+	static abilitySection = (section: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage), creature: Hero | Monster | undefined): string => {
 		let text = '';
 		switch (section.type) {
 			case 'text':
@@ -540,6 +542,19 @@ export class SheetFormatter {
 					text = `\n#### ${section.name} ${section.value}${section.repeatable ? '+' : ''}:\n${section.effect}`;
 				} else {
 					text = `\n#### ${section.name}:\n${section.effect}`;
+				}
+				break;
+			case 'package':
+				if (CreatureLogic.isHero(creature)) {
+					text = HeroLogic.getFeatures(creature)
+						.map(f => f.feature)
+						.filter(f => f.type === FeatureType.PackageContent)
+						.filter(f => f.data.tag === section.tag)
+						.map(f => (
+							`\n#### ${f.name}:\n${f.description}`
+						)).join('\n');
+				} else {
+					console.warn('Ability package in NON-HERO!', section, creature);
 				}
 				break;
 		}

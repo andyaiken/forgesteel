@@ -50,6 +50,10 @@ export class SheetBuilder {
 		let coveredFeatureIds: string[] = [];
 		const allFeatures = HeroLogic.getFeatures(hero);
 
+		// Package Contents handled within packages
+		const packageContents = allFeatures.filter(f => f.feature.type == FeatureType.PackageContent);
+		coveredFeatureIds = coveredFeatureIds.concat(packageContents.map(p => p.feature.id));
+
 		sheet.currentVictories = hero.state.victories;
 		sheet.wealth = hero.state.wealth;
 		sheet.renown = HeroLogic.getRenown(hero);
@@ -503,7 +507,7 @@ export class SheetBuilder {
 		}
 
 		const effectSections = ability.sections.filter(s => s.type !== 'roll');
-		sheet.effect = SheetFormatter.abilitySections(effectSections).trim();
+		sheet.effect = SheetFormatter.abilitySections(effectSections, creature).trim();
 
 		const rollSections = ability.sections.filter(s => s.type === 'roll');
 		if (rollSections.length) {

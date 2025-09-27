@@ -141,7 +141,7 @@ const CharacteristicBonusFeatureComponent = (feature: FeatureCharacteristicBonus
 	);
 };
 
-const TextFeatureComponent = (feature: FeatureText | FeaturePackage | FeaturePackageContent) => {
+const TextFeatureComponent = (feature: FeatureText) => {
 	return (
 		<>
 			<div className='feature-title'>{feature.name}</div>
@@ -149,6 +149,31 @@ const TextFeatureComponent = (feature: FeatureText | FeaturePackage | FeaturePac
 				text={feature.description}
 				className='feature-description'
 			/>
+		</>
+	);
+};
+
+const PackageFeatureComponent = (feature: FeaturePackage | FeaturePackageContent, hero: Hero | undefined) => {
+	const packageContent = hero ?
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.PackageContent)
+			.filter(f => f.data.tag === feature.data.tag)
+			.map(f => (
+				<div className='feature-description' key={f.id}>
+					<div className='package-content-name'>{f.name}</div>
+					<Markdown text={f.description} />
+				</div>
+			))
+		: null;
+	return (
+		<>
+			<div className='feature-title'>{feature.name}</div>
+			<Markdown
+				text={feature.description}
+				className='feature-description'
+			/>
+			{packageContent}
 		</>
 	);
 };
@@ -441,9 +466,11 @@ export const FeatureComponent = (props: Props) => {
 			content = CharacteristicBonusFeatureComponent(feature);
 			break;
 		case FeatureType.Text:
+			content = TextFeatureComponent(feature);
+			break;
 		case FeatureType.Package:
 		case FeatureType.PackageContent:
-			content = TextFeatureComponent(feature);
+			content = PackageFeatureComponent(feature, hero);
 			break;
 		case FeatureType.Ability:
 			content = AbilityFeatureComponent(feature);

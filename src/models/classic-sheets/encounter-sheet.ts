@@ -1,5 +1,6 @@
 import { FeatureMalice, FeatureMaliceAbility } from '../feature';
 import { EncounterGroup } from '../encounter';
+import { Terrain } from '../terrain';
 
 export interface EncounterSheet {
 	id: string;
@@ -19,4 +20,6 @@ export interface EncounterSheet {
 
 	malice?: { monster: string, malice: (FeatureMalice | FeatureMaliceAbility)[] }[];
 	groups?: EncounterGroup[];
+
+	terrain?: Terrain[];
 }

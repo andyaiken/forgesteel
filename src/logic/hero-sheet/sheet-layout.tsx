@@ -247,7 +247,7 @@ export class SheetLayout {
 			abilityCardPages.push(
 				<Fragment key={`abilities-${p++}`}>
 					<hr className='dashed' />
-					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId(character.hero.id, `abilities-${p}`)}>
+					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId('hero-sheet', character.hero.id, `abilities-${p}`)}>
 						{pageAbilities.map(a =>
 							<AbilityCard
 								key={a.id}
@@ -275,7 +275,7 @@ export class SheetLayout {
 			pages.push(
 				<Fragment key={`${idPrefix}-${++i}`}>
 					<hr className='dashed' />
-					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId(character.hero.id, `${idPrefix}-${i}`)}>
+					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId('hero-sheet', character.hero.id, `${idPrefix}-${i}`)}>
 						{cards}
 					</div>
 				</Fragment>

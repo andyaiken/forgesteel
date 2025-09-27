@@ -5,6 +5,7 @@ import { EncounterSheetBuilder } from '../../../../logic/playbook-sheets/encount
 import { Hero } from '../../../../models/hero';
 import { MaliceCard } from '../malice-card/malice-card';
 import { Options } from '../../../../models/options';
+import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { useMemo } from 'react';
 
@@ -39,7 +40,7 @@ export const EncounterSheet = (props: Props) => {
 
 	return (
 		<main id='classic-sheet'>
-			<div className={sheetClasses.join(' ')} id={encounter.id}>
+			<div className={sheetClasses.join(' ')} id={SheetFormatter.getPageId('encounter', encounter.id, 'main')}>
 				<div className={`page page-1 ${props.options.pageOrientation}`}>
 					<EncounterHeaderCard encounter={encounter} options={props.options} />
 					<MaliceCard encounter={encounter} options={props.options} />

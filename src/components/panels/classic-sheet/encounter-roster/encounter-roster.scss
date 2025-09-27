@@ -24,6 +24,11 @@
         width: 20%;
     }
 
+    th.terrain,
+    th.stamina-tracker-header {
+        text-align: left;
+    }
+
     th, 
     th * {
         @include common.font-slab;
@@ -125,7 +130,8 @@
         }
     }
 
-    .group-creatures .wrapper {
+    .group-creatures .wrapper,
+    .terrain-object .stamina-tracker .wrapper {
         border-width: 1px;
         border-style: solid;
         border-image: linear-gradient(180deg,

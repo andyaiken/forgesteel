@@ -1,5 +1,5 @@
 import { Adventure, AdventurePackage } from '../../../../models/adventure';
-import { Button, Input, Popover, Segmented } from 'antd';
+import { Alert, Button, Input, Popover, Segmented, Tag } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
@@ -51,6 +51,7 @@ interface Props {
 	importAdventurePackage: (ap: AdventurePackage) => void;
 	deleteElement: (kind: PlaybookElementKind, element: Element) => void;
 	exportElement: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
+	exportElementPdf: (kind: PlaybookElementKind, element: Element, resolution: 'standard' | 'high') => void;
 	startElement: (kind: PlaybookElementKind, element: Element) => void;
 }
 
@@ -265,9 +266,35 @@ export const PlaybookListPage = (props: Props) => {
 								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
 							</div>
 							:
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
-								<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
+							<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								{
+									category === 'encounter' && view !== 'classic' ?
+										<Alert
+											type='info'
+											showIcon={true}
+											message='To export your encounter as a PDF, switch to Classic view.'
+											action={<Button onClick={() => setView('classic')}>Classic</Button>}
+										/>
+										: null
+								}
+								{
+									category === 'encounter' && view === 'classic' ?
+										<>
+											<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export as PDF</Button>
+											<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export as PDF (high res)</Button>
+										</>
+										: null
+								}
+								{
+									category !== 'encounter' ?
+										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
+										: null
+								}
+								{
+									category === 'encounter' && view !== 'classic' ?
+										<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
+										: null
+								}
 								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
 							</div>
 					}
@@ -382,7 +409,7 @@ export const PlaybookListPage = (props: Props) => {
 											vertical={true}
 											options={[
 												{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
-												{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Classic Sheet</div> }
+												{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Tag color='red'>BETA</Tag>Classic Sheet</div> }
 											]}
 											value={view}
 											onChange={setView}
@@ -398,10 +425,24 @@ export const PlaybookListPage = (props: Props) => {
 							: null
 					}
 					{
-						(category === 'encounter') || (category === 'tactical-map') ?
+						(category === 'tactical-map') ?
 							<Popover
 								trigger='click'
 								content={<OptionsPanel mode={category} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+									<DownOutlined />
+								</Button>
+							</Popover>
+							: null
+					}
+
+					{
+						(category === 'encounter') ?
+							<Popover
+								trigger='click'
+								content={<OptionsPanel mode={view === 'classic' ? 'encounter-classic' : 'encounter-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

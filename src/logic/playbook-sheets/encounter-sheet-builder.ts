@@ -5,6 +5,7 @@ import { EncounterSheet } from '../../models/classic-sheets/encounter-sheet';
 import { Hero } from '../../models/hero';
 import { Options } from '../../models/options';
 import { Sourcebook } from '../../models/sourcebook';
+import { SourcebookLogic } from '../sourcebook-logic';
 
 export class EncounterSheetBuilder {
 	static buildEncounterSheet = (encounter: Encounter, sourcebooks: Sourcebook[], heroes: Hero[], options: Options): EncounterSheet => {
@@ -32,6 +33,9 @@ export class EncounterSheetBuilder {
 		sheet.malice = monsterGroups.filter(group => group.malice.length > 0).map(group => ({ monster: group.name, malice: group.malice }));
 
 		sheet.groups = encounter.groups;
+
+		const terrain = encounter.terrain.map(slot => SourcebookLogic.getTerrains(sourcebooks).find(t => t.id === slot.terrainID)).filter(t => !!t);
+		sheet.terrain = terrain;
 
 		return sheet;
 	};

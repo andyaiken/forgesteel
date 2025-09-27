@@ -192,7 +192,6 @@ export const HeroSheetPage = (props: Props) => {
 			RulesData.criticalHit,
 			RulesData.climbingAndSwimming,
 			RulesData.jumping,
-			RulesData.concealment,
 			RulesData.cover,
 			RulesData.difficultTerrain,
 			RulesData.dyingAndDeath,
@@ -290,7 +289,7 @@ export const HeroSheetPage = (props: Props) => {
 			<ErrorBoundary>
 				<main id='classic-sheet'>
 					<div className={sheetClasses.join(' ')} id={hero.id}>
-						<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId(hero.id, 'main')}>
+						<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, 'main')}>
 							<HeroHeaderCard
 								character={character}
 								options={props.options}
@@ -323,7 +322,7 @@ export const HeroSheetPage = (props: Props) => {
 							/>
 						</div>
 						<hr className='dashed' />
-						<div className={`page page-2 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId(hero.id, '2')}>
+						<div className={`page page-2 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, '2')}>
 							<CareerCard
 								career={character.career}
 								hero={hero}

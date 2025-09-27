@@ -28,8 +28,8 @@ import starIcon from '../../assets/icons/star.svg';
 import triggerIcon from '../../assets/icons/trigger-solid.svg';
 
 export class SheetFormatter {
-	static getPageId = (heroId: string, key: string) => {
-		return `hero-sheet-${heroId}-page-${key}`;
+	static getPageId = (kind: string, id: string, key: string) => {
+		return `${kind}-${id}-page-${key}`;
 	};
 
 	static addSign = (n: number | undefined) => {

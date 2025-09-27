@@ -5,6 +5,7 @@ import { MonsterLogic } from '../../../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
 import { Options } from '../../../../models/options';
 import { Sourcebook } from '../../../../models/sourcebook';
+import { TerrainLogic } from '../../../../logic/terrain-logic';
 
 import './encounter-roster.scss';
 
@@ -28,7 +29,7 @@ export const EncounterRosterCard = (props: Props) => {
 							<div className='left'>Creatures</div>
 							<div className='right'>Total EV:<span className='ev-value'>{encounter.encounterEv}</span></div>
 						</th>
-						<th>Stamina Tracker</th>
+						<th className='stamina-tracker-header'>Stamina Tracker</th>
 						<th className='stats'>Stats</th>
 						<th className='notes'>Notes/Temporary Effects</th>
 					</tr>
@@ -149,6 +150,29 @@ export const EncounterRosterCard = (props: Props) => {
 											<span>Free Strike</span>
 											<span>Distance</span>
 										</div>
+									</div>
+								</td>
+								<td></td>
+							</tr>
+						);
+					})}
+					<tr>
+						<th className='terrain' colSpan={2}>Dynamic Terrain Objects</th>
+						<th className='stamina-tracker-header' colSpan={2}>Stamina Tracker</th>
+						<th className='notes'>Notes/Temporary Effects</th>
+					</tr>
+					{encounter.terrain?.map(terrain => {
+						return (
+							<tr className='terrain-object'>
+								<td colSpan={2}>
+									<div className='wrapper'>
+										<div className='encounter-slot'>{terrain.name}</div>
+										<div className='ev'>EV:<span className='ev-value'>{terrain.encounterValue}</span></div>
+									</div>
+								</td>
+								<td className='stamina-tracker' colSpan={2}>
+									<div className='wrapper'>
+										<div className='encounter-slot'>{TerrainLogic.getStaminaValue(terrain)}</div>
 									</div>
 								</td>
 								<td></td>

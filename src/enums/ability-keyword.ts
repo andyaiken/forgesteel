@@ -3,6 +3,7 @@ export enum AbilityKeyword {
 	Animapathy = 'Animapathy',
 	Area = 'Area',
 	Arms = 'Arms',
+	Champion = 'Champion',
 	Charge = 'Charge',
 	Chronopathy = 'Chronopathy',
 	Cryokinesis = 'Cryokinesis',

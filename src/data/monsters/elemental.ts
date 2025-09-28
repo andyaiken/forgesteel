@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -115,7 +114,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 			stamina: 80,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(-1, 2, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -196,7 +195,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 			stamina: 100,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, -1, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, -1, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -279,7 +278,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 1, -1, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 1, -1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -365,7 +364,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -451,7 +450,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 			stamina: 132,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, -1, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, -1, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

@@ -10,7 +10,6 @@
 * It should be possible to create a homebrew class ability / monster individually
 * Monster Builder:
   * Auto-create monsters
-  * Allow users to adjust monster level (monsters book pg 26)
 
 ### Playbook
 
@@ -32,7 +31,6 @@
   * Ability to set 'used reaction' flag on heroes / monsters / minions
   * Monsters:
     * Ability to duplicate / delete monsters in a slot
-    * Solo monsters have double turns
   * Terrain:
     * Show number of squares on terrain encounter row
     * Show 'should be N squares' for terrain

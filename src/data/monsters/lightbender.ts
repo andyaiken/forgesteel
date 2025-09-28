@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -74,7 +73,7 @@ export const lightbender: MonsterGroup = {
 			stability: 1,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -3, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -3, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -173,7 +172,7 @@ export const lightbender: MonsterGroup = {
 			stability: 1,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, -3, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, -3, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

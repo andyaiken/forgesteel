@@ -14,6 +14,7 @@ import { Characteristic } from '../enums/characteristic';
 import { Complication } from '../models/complication';
 import { Culture } from '../models/culture';
 import { CultureType } from '../enums/culture-type';
+import { DamageType } from '../enums/damage-type';
 import { Domain } from '../models/domain';
 import { Element } from '../models/element';
 import { EncounterSlot } from '../models/encounter-slot';
@@ -54,6 +55,7 @@ import { Size } from '../models/size';
 import { Sourcebook } from '../models/sourcebook';
 import { Speed } from '../models/speed';
 import { SubClass } from '../models/subclass';
+import { Summon } from '../models/summon';
 import { TerrainCategory } from '../enums/terrain-category';
 import { TerrainRoleType } from '../enums/terrain-role-type';
 import { Title } from '../models/title';
@@ -213,6 +215,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			type: 'standard',
 			subclassName: '',
 			subclassCount: 1,
 			primaryCharacteristicsOptions: [],
@@ -459,17 +462,17 @@ export class FactoryLogic {
 		};
 	};
 
-	static createFollower = (): Follower => {
+	static createFollower = (type: FollowerType): Follower => {
 		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			type: FollowerType.Artisan,
+			type: type,
 			characteristics: [
-				{ characteristic: Characteristic.Might, value: 1 },
+				{ characteristic: Characteristic.Might, value: type === FollowerType.Artisan ? 1 : 0 },
 				{ characteristic: Characteristic.Agility, value: 0 },
 				{ characteristic: Characteristic.Reason, value: 1 },
-				{ characteristic: Characteristic.Intuition, value: 0 },
+				{ characteristic: Characteristic.Intuition, value: type === FollowerType.Sage ? 1 : 0 },
 				{ characteristic: Characteristic.Presence, value: 0 }
 			],
 			skills: [],
@@ -490,13 +493,15 @@ export class FactoryLogic {
 		};
 	};
 
-	static defaultMonsterChatacteristics = [
-		{ characteristic: Characteristic.Might, value: 0 },
-		{ characteristic: Characteristic.Agility, value: 0 },
-		{ characteristic: Characteristic.Reason, value: 0 },
-		{ characteristic: Characteristic.Intuition, value: 0 },
-		{ characteristic: Characteristic.Presence, value: 0 }
-	];
+	static createCharacteristics = (might: number, agility: number, reason: number, intuition: number, presence: number) => {
+		return [
+			{ characteristic: Characteristic.Might, value: might },
+			{ characteristic: Characteristic.Agility, value: agility },
+			{ characteristic: Characteristic.Reason, value: reason },
+			{ characteristic: Characteristic.Intuition, value: intuition },
+			{ characteristic: Characteristic.Presence, value: presence }
+		];
+	};
 
 	static createMonster = (data: {
 		id: string,
@@ -511,6 +516,7 @@ export class FactoryLogic {
 		stamina: number,
 		stability: number,
 		freeStrikeDamage: number,
+		freeStrikeType?: DamageType,
 		characteristics: { characteristic: Characteristic, value: number }[],
 		features: Feature[],
 		withCaptain?: string,
@@ -526,24 +532,39 @@ export class FactoryLogic {
 			}
 			: null;
 		return {
-			id: data.id || Utils.guid(),
-			name: data.name || '',
+			id: data.id,
+			name: data.name,
 			description: data.description || '',
 			picture: null,
-			level: data.level || 1,
-			role: data.role || FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Ambusher),
-			keywords: data.keywords || [],
-			encounterValue: data.encounterValue || 0,
-			size: data.size || FactoryLogic.createSize(1, 'M'),
-			speed: data.speed || FactoryLogic.createSpeed(5),
-			stamina: data.stamina || 5,
-			stability: data.stability || 0,
-			freeStrikeDamage: data.freeStrikeDamage || 2,
-			characteristics: data.characteristics || FactoryLogic.defaultMonsterChatacteristics,
+			level: data.level,
+			role: data.role,
+			keywords: data.keywords,
+			encounterValue: data.encounterValue,
+			size: data.size,
+			speed: data.speed,
+			stamina: data.stamina,
+			stability: data.stability,
+			freeStrikeDamage: data.freeStrikeDamage,
+			freeStrikeType: data.freeStrikeType || DamageType.Damage,
+			characteristics: data.characteristics,
+			features: data.features,
 			withCaptain: data.withCaptain || '',
-			features: data.features || [],
 			retainer: retainer,
 			state: FactoryLogic.createMonsterState()
+		};
+	};
+
+	static createSummon = (data: { monster: Monster, isSignature: boolean, cost: number, count: number }): Summon => {
+		return {
+			id: data.monster.id,
+			name: data.monster.name,
+			description: data.monster.description,
+			monster: data.monster,
+			info: {
+				isSignature: data.isSignature,
+				cost: data.cost,
+				count: data.count
+			}
 		};
 	};
 
@@ -862,14 +883,16 @@ export class FactoryLogic {
 		bonus?: number,
 		tier1: string,
 		tier2: string,
-		tier3: string
+		tier3: string,
+		crit?: string
 	}): PowerRoll => {
 		return {
 			characteristic: data.characteristic ? Array.isArray(data.characteristic) ? data.characteristic : [ data.characteristic ] : [],
 			bonus: data.bonus ?? 0,
 			tier1: data.tier1,
 			tier2: data.tier2,
-			tier3: data.tier3
+			tier3: data.tier3,
+			crit: data.crit || ''
 		};
 	};
 

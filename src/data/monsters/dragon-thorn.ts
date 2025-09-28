@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const dragonThorn: MonsterGroup = {
@@ -94,7 +93,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 			stamina: 250,
 			stability: 6,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, -1, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, -1, 1, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'dragon-thorn-feature-1',

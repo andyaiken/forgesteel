@@ -21,9 +21,11 @@ import { FormatLogic } from '../format-logic';
 import { Hero } from '../../models/hero';
 import { HeroLogic } from '../hero-logic';
 import { Item } from '../../models/item';
+import { ModifierLogic } from '../modifier-logic';
 import { Monster } from '../../models/monster';
 import { MonsterLogic } from '../monster-logic';
 import { Options } from '../../models/options';
+import { Perk } from '../../models/perk';
 import { SheetFormatter } from './sheet-formatter';
 import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookLogic } from '../sourcebook-logic';
@@ -304,7 +306,12 @@ export class SheetBuilder {
 				.map(f => f.feature.id));
 
 		const perks = HeroLogic.getPerks(hero);
-		sheet.perks = perks;
+		const perksSize = options.pageOrientation == 'portrait' ? 28.3 : 16.2;
+		const dividedPerks = SheetFormatter.divideFeatures(perks, perksSize * 1.9);
+		sheet.perks = SheetFormatter.convertFeatures(dividedPerks.displayed).map(f => f as Perk);
+
+		const addlPerks = perks.filter(p => dividedPerks.referenceIds.includes(p.id)).map(p => { return ({ feature: p as Feature, source: 'Perks' }); });
+		sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(addlPerks);
 		coveredFeatureIds = coveredFeatureIds.concat(perks.map(p => p.id));
 
 		const titles = HeroLogic.getTitles(hero);
@@ -368,13 +375,13 @@ export class SheetBuilder {
 		let value;
 		switch (feature.type) {
 			case FeatureType.Bonus: {
-				value = HeroLogic.calculateModifierValue(hero, feature.data);
+				value = ModifierLogic.calculateModifierValue(feature.data, hero);
 				const field = feature.data.field.toString();
 				SheetBuilder.modifierFieldMapping[field](sheet, value);
 				break;
 			}
 			case FeatureType.AbilityDistance:
-				value = HeroLogic.calculateModifierValue(hero, feature.data);
+				value = ModifierLogic.calculateModifierValue(feature.data, hero);
 				if (feature.data.keywords.includes(AbilityKeyword.Melee))
 					sheet.modifierMeleeDistance = value;
 				if (feature.data.keywords.includes(AbilityKeyword.Ranged))

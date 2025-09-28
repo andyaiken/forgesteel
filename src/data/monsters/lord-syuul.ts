@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const lordSyuul: MonsterGroup = {
@@ -119,7 +118,7 @@ In his mind, everything that is not Lord Syuul is flawed. When his new device is
 			stamina: 450,
 			stability: 3,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 4, 4, 3),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 4, 4, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'lord-syull-feature-0',

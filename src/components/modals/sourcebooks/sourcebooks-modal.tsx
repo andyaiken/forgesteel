@@ -1,6 +1,7 @@
-import { Button, Divider, Space, Upload } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
+import { Button, Flex, Space, Upload } from 'antd';
+import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { FactoryLogic } from '../../../logic/factory-logic';
+import { HeaderText } from '../../controls/header-text/header-text';
 import { Hero } from '../../../models/hero';
 import { Modal } from '../modal/modal';
 import { Sourcebook } from '../../../models/sourcebook';
@@ -74,41 +75,49 @@ export const SourcebooksModal = (props: Props) => {
 			<Modal
 				content={
 					<div className='sourcebooks-modal'>
-						{
-							[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
-								<SourcebookPanel
-									key={s.id}
-									sourcebook={s}
-									sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
-									visible={!hiddenSourcebookIDs.includes(s.id)}
-									heroes={props.heroes}
-									onSetVisible={setVisibility}
-									onChange={changeSourcebook}
-									onDelete={deleteSourcebook}
-								/>
-							))
-						}
-						<Divider />
+						<HeaderText
+							level={1}
+							extra={
+								<Flex>
+									<Button type='text' title='Create a new sourcebook' icon={<PlusOutlined />} onClick={createSourcebook} />
+									<Upload
+										style={{ width: '100%' }}
+										accept='.drawsteel-sourcebook,.ds-sourcebook'
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const sourcebook = JSON.parse(json) as Sourcebook;
+													sourcebook.id = Utils.guid();
+													SourcebookUpdateLogic.updateSourcebook(sourcebook);
+													importSourcebook(sourcebook);
+												});
+											return false;
+										}}
+									>
+										<Button type='text' title='Import a sourcebook' icon={<DownloadOutlined />} />
+									</Upload>
+								</Flex>
+							}
+						>
+							Sourcebooks
+						</HeaderText>
 						<Space direction='vertical' style={{ width: '100%' }}>
-							<Button block={true} onClick={createSourcebook}>Create a new sourcebook</Button>
-							<Upload
-								style={{ width: '100%' }}
-								accept='.drawsteel-sourcebook,.ds-sourcebook'
-								showUploadList={false}
-								beforeUpload={file => {
-									file
-										.text()
-										.then(json => {
-											const sourcebook = JSON.parse(json) as Sourcebook;
-											sourcebook.id = Utils.guid();
-											SourcebookUpdateLogic.updateSourcebook(sourcebook);
-											importSourcebook(sourcebook);
-										});
-									return false;
-								}}
-							>
-								<Button block={true} icon={<DownloadOutlined />}>Import a sourcebook</Button>
-							</Upload>
+							{
+								[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
+									<SourcebookPanel
+										key={s.id}
+										sourcebook={s}
+										sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
+										visible={!hiddenSourcebookIDs.includes(s.id)}
+										heroes={props.heroes}
+										onSetVisible={setVisibility}
+										onChange={changeSourcebook}
+										onDelete={deleteSourcebook}
+									/>
+								))
+							}
 						</Space>
 					</div>
 				}

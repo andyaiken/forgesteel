@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const arixx: MonsterGroup = {
@@ -78,7 +77,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -3, 1, -4),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -3, 1, -4),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'arixx-1-feature-0',

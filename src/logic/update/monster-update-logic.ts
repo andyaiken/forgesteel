@@ -1,4 +1,5 @@
 import { AbilityUpdateLogic } from './ability-update-logic';
+import { DamageType } from '../../enums/damage-type';
 import { FeatureType } from '../../enums/feature-type';
 import { FeatureUpdateLogic } from './feature-update-logic';
 import { Monster } from '../../models/monster';
@@ -39,6 +40,10 @@ export class MonsterUpdateLogic {
 		}
 		if (monster.role.organization.toString() === 'Troop') {
 			monster.role.organization = MonsterOrganizationType.Elite;
+		}
+
+		if (monster.freeStrikeType === undefined) {
+			monster.freeStrikeType = DamageType.Damage;
 		}
 
 		if (monster.state === undefined) {

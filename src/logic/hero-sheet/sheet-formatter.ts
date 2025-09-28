@@ -8,6 +8,7 @@ import { FeatureType } from '../../enums/feature-type';
 import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { Monster } from '../../models/monster';
+import { RulesItem } from '../../models/rules-item';
 import { Title } from '../../models/title';
 import { Utils } from '../../utils/utils';
 
@@ -106,12 +107,12 @@ export class SheetFormatter {
 			.replace(/P<([svw])\]/g, 'p<$1]')
 			.replace(/([marip])<([svw]\])/g, '<span class="potency">$1&lt;$2</span>')
 			.replace(/\|\s+≤\s*11\s+\|/g, `|![≤ 11](${rollT1Icon})|`)
-			.replace(/\|\s+12\s*-\s*16\s+\|/g, `|![12 - 16](${rollT2Icon})|`)
+			.replace(/\|\s+12\s*[-–]\s*16\s+\|/g, `|![12 - 16](${rollT2Icon})|`)
 			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17+](${rollT3Icon})|`);
 		return text;
 	};
 
-	static shortenText = (text: string, splitAt: number = 2) => {
+	static shortenText = (text: string, splitAt: number = 1) => {
 		const split = text.trim().split('\n');
 		if (split.length > splitAt) {
 			text = split.slice(0, splitAt).join('\n') + '\n*…(continued in reference)…*';
@@ -300,6 +301,12 @@ export class SheetFormatter {
 			size += effectSize;
 		}
 
+		return size;
+	};
+
+	static calculateRuleReferenceCardSize = (rule: RulesItem, lineWidth: number): number => {
+		let size = 3;
+		size += this.countLines(rule.content, lineWidth - 4); // account for padding
 		return size;
 	};
 

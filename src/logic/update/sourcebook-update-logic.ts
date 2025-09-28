@@ -35,6 +35,10 @@ export class SourcebookUpdateLogic {
 		}
 
 		sourcebook.classes.forEach(c => {
+			if (c.type === undefined) {
+				c.type = 'standard';
+			}
+
 			if (c.primaryCharacteristicsOptions === undefined) {
 				c.primaryCharacteristicsOptions = [];
 			}

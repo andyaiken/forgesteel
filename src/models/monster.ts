@@ -1,4 +1,5 @@
 import { Characteristic } from '../enums/characteristic';
+import { DamageType } from '../enums/damage-type';
 import { Element } from './element';
 import { Feature } from './feature';
 import { MonsterRole } from './monster-roll';
@@ -17,6 +18,7 @@ export interface Monster extends Element {
 	stamina: number;
 	stability: number;
 	freeStrikeDamage: number;
+	freeStrikeType: DamageType;
 	characteristics: {
 		characteristic: Characteristic;
 		value: number;

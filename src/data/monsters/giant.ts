@@ -4,7 +4,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -127,7 +126,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stability: 5,
 			freeStrikeDamage: 3,
 			withCaptain: '+3 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-1-1',
@@ -177,7 +176,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stability: 10,
 			freeStrikeDamage: 3,
 			withCaptain: '+6 bonus to Stamina',
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 3, 0),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 3, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -230,7 +229,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stability: 5,
 			freeStrikeDamage: 4,
 			withCaptain: '+3 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, -1, -1, 4, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, -1, -1, 4, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-3-1',
@@ -279,7 +278,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stability: 5,
 			freeStrikeDamage: 4,
 			withCaptain: '+3 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(4, -1, -1, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-4-1',
@@ -328,7 +327,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 207,
 			stability: 10,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 1, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 1, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -432,7 +431,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 200,
 			stability: 5,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, 3, 0, 4, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 3, 0, 4, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-6-1',
@@ -537,7 +536,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 240,
 			stability: 5,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-7-1',
@@ -654,7 +653,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 180,
 			stability: 5,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, -1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-8-1',
@@ -753,7 +752,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 200,
 			stability: 5,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, 4, -1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(4, 4, -1, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-9-1',
@@ -852,7 +851,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 247,
 			stability: 10,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, 1, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, 1, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -956,7 +955,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 200,
 			stability: 5,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, -1, -1, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-11-1',
@@ -1076,7 +1075,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 207,
 			stability: 10,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, 3, 0, 3, 0),
+			characteristics: FactoryLogic.createCharacteristics(4, 3, 0, 3, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1180,7 +1179,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 240,
 			stability: 10,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(5, 3, 0, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(5, 3, 0, 2, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-13-1',

@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -102,7 +101,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 1,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -4, 1, -3),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -4, 1, -3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -149,7 +148,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -191,7 +190,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to forced movement distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -232,7 +231,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -277,7 +276,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+1 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -318,7 +317,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -369,7 +368,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 20,
 			stability: 2,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 1, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -434,7 +433,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 20,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'orc-8-feature-1',
@@ -507,7 +506,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -581,7 +580,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 0, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -656,7 +655,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, -1, -1, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, -1, -1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -715,7 +714,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 59,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 2, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -780,7 +779,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 30,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -846,7 +845,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 1, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 1, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -985,7 +984,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 100,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, -1, -4, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, -1, -4, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

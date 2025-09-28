@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -83,7 +82,7 @@ New minotaurs were born, and decades later, hundreds charged out of the maze tog
 			stamina: 100,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -170,7 +169,7 @@ New minotaurs were born, and decades later, hundreds charged out of the maze tog
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 2, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 2, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -269,7 +268,7 @@ New minotaurs were born, and decades later, hundreds charged out of the maze tog
 			stability: 2,
 			freeStrikeDamage: 4,
 			withCaptain: '+3 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 3, -1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 3, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -313,7 +312,7 @@ New minotaurs were born, and decades later, hundreds charged out of the maze tog
 			stability: 2,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(3, 4, 0, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(3, 4, 0, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -355,7 +354,7 @@ New minotaurs were born, and decades later, hundreds charged out of the maze tog
 			stability: 2,
 			freeStrikeDamage: 4,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(5, 5, 0, 2, -1),
+			characteristics: FactoryLogic.createCharacteristics(5, 5, 0, 2, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

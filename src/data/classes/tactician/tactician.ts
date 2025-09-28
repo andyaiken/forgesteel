@@ -17,6 +17,7 @@ export const tactician: HeroClass = {
 Strategist. Defender. Leader. With sword in hand, you lead allies into the maw of battle, barking out commands that inspire your fellow heroes to move faster and strike more precisely. All the while, you stand between your compatriots and death, taunting the followers of evil to best you if they can.
 
 As a tactician, you have abilities that heal your allies and grant them increased damage, movement, and attacks.`,
+	type: 'standard',
 	subclassName: 'Tactical Doctrine',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -207,8 +208,7 @@ You can’t gain more than one benefit from the same trigger.`),
 					id: 'tactician-4-4'
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'tactician-4-5',
-					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+					id: 'tactician-4-5'
 				})
 			]
 		},
@@ -277,8 +277,7 @@ You can’t gain more than one benefit from the same trigger.`),
 					description: 'If you are not surprised when combat begins, your side gets to go first. If an enemy has an ability that allows their side to go first, you roll as usual to determine who goes first.'
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'tactician-7-4',
-					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+					id: 'tactician-7-4'
 				})
 			]
 		},

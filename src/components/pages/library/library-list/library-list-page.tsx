@@ -473,7 +473,12 @@ export const LibraryListPage = (props: Props) => {
 	const getTags = (element: Element) => {
 		const sb = getSourcebook(element);
 		if (sb && sb.id !== SourcebookData.core.id) {
-			return [ sb.name || 'Unnamed Sourcebook' ];
+			const tags = [];
+			tags.push(sb.name || 'Unnamed Sourcebook');
+			if (sb.isHomebrew) {
+				tags.push('Homebrew');
+			}
+			return tags;
 		}
 
 		return undefined;

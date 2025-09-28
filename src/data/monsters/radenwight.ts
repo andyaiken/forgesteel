@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -97,7 +96,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stamina: 4,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(-1, 2, 0, 1, 0),
 			withCaptain: '+1 damage bonus to strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -150,7 +149,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stamina: 5,
 			stability: 1,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 0, 0, 2),
 			withCaptain: '+2 bonus to melee distance',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -199,7 +198,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stamina: 4,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 1, 0, -1),
 			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -248,7 +247,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stamina: 3,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, -1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, -1, 0, 0),
 			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -298,7 +297,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stamina: 40,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -371,7 +370,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -447,7 +446,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -515,7 +514,7 @@ In truth, the Great Maclette finds beauty in the thrill of the heist. Robbery is
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 3),
+			characteristics: FactoryLogic.createCharacteristics(-2, 2, 0, 0, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

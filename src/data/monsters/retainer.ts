@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -29,7 +28,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -132,7 +131,7 @@ export const retainer: MonsterGroup = {
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -254,7 +253,7 @@ export const retainer: MonsterGroup = {
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 3, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 3, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -341,7 +340,7 @@ export const retainer: MonsterGroup = {
 			stamina: 66,
 			stability: 4,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 1, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 1, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -438,7 +437,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 3,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -537,7 +536,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 2, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 2, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -630,7 +629,7 @@ export const retainer: MonsterGroup = {
 			stamina: 48,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -733,7 +732,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -826,7 +825,7 @@ export const retainer: MonsterGroup = {
 			stamina: 30,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -912,7 +911,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1006,7 +1005,7 @@ export const retainer: MonsterGroup = {
 			stamina: 48,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 2, 1, 3),
+			characteristics: FactoryLogic.createCharacteristics(1, 0, 2, 1, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'retainer-11-feature-1',
@@ -1106,7 +1105,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 3,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1200,7 +1199,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1287,7 +1286,7 @@ export const retainer: MonsterGroup = {
 			stamina: 39,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1385,7 +1384,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1474,7 +1473,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1571,7 +1570,7 @@ export const retainer: MonsterGroup = {
 			stamina: 39,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 2, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 2, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1680,7 +1679,7 @@ export const retainer: MonsterGroup = {
 			stamina: 57,
 			stability: 4,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -1, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'retainer-18-feature-0',
@@ -1781,7 +1780,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, -1, -3, -1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, -1, -3, -1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1885,7 +1884,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-4, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(-4, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'retainer-20-feature-0',
@@ -2008,7 +2007,7 @@ export const retainer: MonsterGroup = {
 			stamina: 48,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 0, 0, 3),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 0, 0, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

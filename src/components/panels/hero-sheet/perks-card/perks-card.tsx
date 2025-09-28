@@ -8,6 +8,11 @@ interface Props {
 
 export const PerksCard = (props: Props) => {
 	const character = props.character;
+
+	let moreInRef;
+	if (character.featuresReferenceOther?.find(r => r.source === 'Perks')) {
+		moreInRef = (<li key='more'><em>Remaining perks in Reference…</em></li>);
+	}
 	return (
 		<div className='perks card'>
 			<h2>Perks</h2>
@@ -20,6 +25,7 @@ export const PerksCard = (props: Props) => {
 						/>
 					</li>
 				)}
+				{moreInRef}
 			</ul>
 		</div>
 	);

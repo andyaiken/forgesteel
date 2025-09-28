@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -120,7 +119,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 bonus to Stamina',
-			characteristics: MonsterLogic.createCharacteristics(-1, 0, 3, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 0, 3, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -163,7 +162,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(-1, 3, 1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(-1, 3, 1, 1, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'voiceless-talker-2-feature-3',
@@ -228,7 +227,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			stamina: 180,
 			stability: 4,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -2, -2, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -2, -2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -330,7 +329,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			stamina: 140,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(-1, 3, 3, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(-1, 3, 3, 2, 0),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'qqRknE96pIBK9FRK',
@@ -443,7 +442,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			stamina: 140,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 3, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 3, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -552,7 +551,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			stamina: 140,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 3, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 3, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -664,7 +663,7 @@ Mindkiller whelps are a lesser form of mindkiller who can be created in a fracti
 			stamina: 180,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 4, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 4, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

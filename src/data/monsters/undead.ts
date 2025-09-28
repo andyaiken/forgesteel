@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -191,7 +190,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -5, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -5, -1, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-1-feature-1',
@@ -240,7 +239,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -2, 0, -2),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -2, 0, -2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-2-feature-1',
@@ -289,7 +288,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Strike damage +1',
-			characteristics: MonsterLogic.createCharacteristics(2, -2, -5, -2, -3),
+			characteristics: FactoryLogic.createCharacteristics(2, -2, -5, -2, -3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-3-feature-1',
@@ -337,7 +336,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stability: 1,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(-5, 1, 0, 0, +2),
+			characteristics: FactoryLogic.createCharacteristics(-5, 1, 0, 0, +2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-4-feature-1',
@@ -384,7 +383,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -2, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -2, 0, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-5-feature-1',
@@ -449,7 +448,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 1, 0, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-6-feature-1',
@@ -520,7 +519,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 10,
 			stability: 1,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(-5, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(-5, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-7-feature-1',
@@ -585,7 +584,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 15,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-8-feature-1',
@@ -666,7 +665,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-9-feature-1',
@@ -728,7 +727,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 20,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -5, -2, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -5, -2, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-10-feature-1',
@@ -796,7 +795,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, 3),
+			characteristics: FactoryLogic.createCharacteristics(-2, 2, 0, 0, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-1st-11-feature-1',
@@ -930,7 +929,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, -1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, -1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-1-feature-1',
@@ -981,7 +980,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-2-feature-1',
@@ -1037,7 +1036,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(-2, 3, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(-2, 3, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-3-feature-1',
@@ -1087,7 +1086,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 35,
 			stability: 2,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, 0, 2, -1),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, 0, 2, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-4-feature-1',
@@ -1168,7 +1167,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 140,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, -1, -2, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, -1, -2, 1, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-5-feature-1',
@@ -1235,7 +1234,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 50,
 			stability: 2,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(3, -1, 1, 3, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, -1, 1, 3, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-6-feature-1',
@@ -1317,7 +1316,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, -1, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, -1, 1, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-7-feature-1',
@@ -1384,7 +1383,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 25,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-2, 2, 1, 1, 3),
+			characteristics: FactoryLogic.createCharacteristics(-2, 2, 1, 1, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-8-feature-1',
@@ -1460,7 +1459,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 155,
 			stability: 4,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(4, 0, 2, 4, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, 0, 2, 4, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-2nd-9-feature-1',
@@ -1626,7 +1625,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 12,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, -3, 1, -3),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, -3, 1, -3),
 			withCaptain: '+3 bonus to speed',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -1677,7 +1676,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 10,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-3, 4, -5, 1, -3),
+			characteristics: FactoryLogic.createCharacteristics(-3, 4, -5, 1, -3),
 			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -1728,7 +1727,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 15,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(4, -2, -2, 1, -2),
+			characteristics: FactoryLogic.createCharacteristics(4, -2, -2, 1, -2),
 			withCaptain: '+3 bonus to melee distance',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -1774,7 +1773,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 64,
 			stability: 3,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, -2, 1, -3),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, -2, 1, -3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-3rd-4-feature-1',
@@ -1856,7 +1855,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 40,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-2, 4, -1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(-2, 4, -1, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-3rd-5-feature-1',
@@ -1928,7 +1927,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 40,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 1, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-3rd-6-feature-1',
@@ -2000,7 +1999,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 40,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(4, -2, -4, 1, -2),
+			characteristics: FactoryLogic.createCharacteristics(4, -2, -4, 1, -2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-3rd-7-feature-1',
@@ -2073,7 +2072,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 40,
 			stability: 3,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 1, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 1, 1, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-3rd-8-feature-1',
@@ -2159,7 +2158,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			stamina: 200,
 			stability: 3,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(2, 5, 1, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 5, 1, 1, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-3rd-9-feature-1',
@@ -2300,7 +2299,7 @@ Each target makes a **Might test**. This ability deals an extra 5 damage for eac
 			stamina: 17,
 			stability: 5,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(5, -3, -3, 1, -2),
+			characteristics: FactoryLogic.createCharacteristics(5, -3, -3, 1, -2),
 			withCaptain: '+4 damage bonus to strikes',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -2350,7 +2349,7 @@ Each target makes a **Might test**. This ability deals an extra 5 damage for eac
 			stamina: 17,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(3, 5, -2, 4, -2),
+			characteristics: FactoryLogic.createCharacteristics(3, 5, -2, 4, -2),
 			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -2405,7 +2404,7 @@ Each target makes a **Might test**. This ability deals an extra 5 damage for eac
 			stamina: 15,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(-2, 3, 1, 1, 5),
+			characteristics: FactoryLogic.createCharacteristics(-2, 3, 1, 1, 5),
 			withCaptain: '+3 bonus to speed',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -2456,7 +2455,7 @@ Each target makes a **Might test**. This ability deals an extra 5 damage for eac
 			stamina: 55,
 			stability: 5,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(5, -2, -2, 3, -1),
+			characteristics: FactoryLogic.createCharacteristics(5, -2, -2, 3, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-4th-4-feature-1',
@@ -2529,7 +2528,7 @@ Each target makes a **Might test**. This ability deals an extra 5 damage for eac
 			stamina: 55,
 			stability: 1,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 5, 3, -1),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 5, 3, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'undead-4th-5-feature-1',

@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { FeatureAddOnType } from '../../enums/feature-addon-type';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -48,7 +47,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -2, 1, -2),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -2, 1, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -102,7 +101,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 40,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(-2, 1, -3, 2, -3),
+			characteristics: FactoryLogic.createCharacteristics(-2, 1, -3, 2, -3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -161,7 +160,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 60,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, -2, 1, -2),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, -2, 1, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -228,7 +227,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 80,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -299,7 +298,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 80,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, -2, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, -2, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -365,7 +364,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 100,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

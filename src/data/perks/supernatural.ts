@@ -1,6 +1,9 @@
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { FactoryLogic } from '../../logic/factory-logic';
+import { FeatureField } from '../../enums/feature-field';
 import { FeatureType } from '../../enums/feature-type';
+import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { MonsterRoleType } from '../../enums/monster-role-type';
 import { Perk } from '../../models/perk';
 import { PerkList } from '../../enums/perk-list';
 
@@ -61,19 +64,57 @@ Choose one of the following effects:
 	static familiar: Perk = {
 		id: 'perk-familiar',
 		name: 'Familiar',
-		description: `
+		description: '',
+		type: FeatureType.Summon,
+		data: {
+			summons: [
+				{
+					id: 'familiar',
+					name: 'Familiar',
+					description: '',
+					monster: FactoryLogic.createMonster({
+						id: 'familiar',
+						name: 'Familiar',
+						description: `
 A supernatural spirit who has taken the form of a specific small animal or animated object has chosen to be your familiar—or to adopt you as their familiar.
-The familiar can hold small objects in their mouth or claws, but can’t perform activities that would typically require hands (opening a door, unrolling a scroll, and so forth).
-They can’t harm other creatures or objects. They can flank in combat, but only with you.
-If your familiar is destroyed, you can restore them as a respite activity, or by spending a Recovery as a main action to bring them back into existence in an unoccupied space adjacent to you.
 
-The spirit uses the familiar stat block.
-### Familiar
-**Stamina**: 2 × your level, **Speed**: 5, **Size**: 1T, **Stability**: 0
-**Might**: -3, **Agility**: +2, **Reason**: +0, **Intuition**: +0, **Presence**: +1
-**Telepathic**: While you and your familiar are within 10 squares of each other, you can communicate telepathically and share each other’s senses. While sharing senses, each of you also benefits from your own senses at the same time.`,
-		type: FeatureType.Text,
-		data: null,
+The familiar can hold small objects in their mouth or claws, but can’t perform activities that would typically require hands (opening a door, unrolling a scroll, and so forth).
+
+They can’t harm other creatures or objects. They can flank in combat, but only with you.
+
+If your familiar is destroyed, you can restore them as a respite activity, or by spending a Recovery as a main action to bring them back into existence in an unoccupied space adjacent to you.`,
+						level: 0,
+						role: FactoryLogic.createMonsterRole(MonsterOrganizationType.NoOrganization, MonsterRoleType.NoRole),
+						keywords: [],
+						encounterValue: 0,
+						size: FactoryLogic.createSize(1, 'T'),
+						speed: FactoryLogic.createSpeed(5),
+						stamina: 0,
+						stability: 0,
+						freeStrikeDamage: 0,
+						characteristics: FactoryLogic.createCharacteristics(-3, 2, 0, 0, 1),
+						features: [
+							FactoryLogic.feature.createBonus({
+								id: 'familiar-1',
+								field: FeatureField.Stamina,
+								value: 2,
+								valuePerLevel: 2
+							}),
+							FactoryLogic.feature.create({
+								id: 'familiar-2',
+								name: 'Telepathic',
+								description: 'While you and your familiar are within 10 squares of each other, you can communicate telepathically and share each other’s senses. While sharing senses, each of you also benefits from your own senses at the same time.'
+							})
+						]
+					}),
+					info: {
+						isSignature: false,
+						cost: 0,
+						count: 1
+					}
+				}
+			]
+		},
 		list: PerkList.Supernatural
 	};
 

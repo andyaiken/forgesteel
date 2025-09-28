@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -87,7 +86,7 @@ export const troll: MonsterGroup = {
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -2, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -2, -1, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-1-feature-0',
@@ -144,7 +143,7 @@ export const troll: MonsterGroup = {
 			stability: 3,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -1, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-2-feature-0',
@@ -199,7 +198,7 @@ export const troll: MonsterGroup = {
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, 1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, 1, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-3-feature-0',
@@ -309,7 +308,7 @@ export const troll: MonsterGroup = {
 			stamina: 160,
 			stability: 4,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -1, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-4-feature-0',
@@ -413,7 +412,7 @@ export const troll: MonsterGroup = {
 			stamina: 15,
 			stability: 4,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, -1, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, -1, 0, 2),
 			withCaptain: '+3 bonus to Stamina',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -470,7 +469,7 @@ export const troll: MonsterGroup = {
 			stamina: 15,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 1, 1),
 			withCaptain: '+2 bonus to speed',
 			features: [
 				FactoryLogic.feature.createDamageModifier({

@@ -1,4 +1,7 @@
-.perks {
+@use '../../../pages/heroes/hero-sheet/common.scss';
+#hero-sheet-page .hero-sheet .perks.card {
+    // @include common.striped-card;
+
     display: grid;
     grid-template-rows: min-content 1fr;
 }

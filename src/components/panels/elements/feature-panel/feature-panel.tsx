@@ -1,7 +1,7 @@
 import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Button, Flex, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
@@ -13,6 +13,7 @@ import { DomainPanel } from '../domain-panel/domain-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { FixturePanel } from '../fixture-panel/fixture-panel';
 import { FollowerPanel } from '../follower-panel/follower-panel';
 import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
@@ -27,6 +28,7 @@ import { PanelMode } from '../../../../enums/panel-mode';
 import { Perk } from '../../../../models/perk';
 import { PerkPanel } from '../perk-panel/perk-panel';
 import { PowerRollPanel } from '../../power-roll/power-roll-panel';
+import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { TitlePanel } from '../title-panel/title-panel';
 
@@ -227,6 +229,12 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return null;
+	};
+
+	const getInformationFixture = (data: FeatureFixtureData) => {
+		return (
+			<FixturePanel key={data.fixture.id} fixture={data.fixture} sourcebooks={props.sourcebooks} hero={props.hero} options={props.options} />
+		);
 	};
 
 	const getInformationHeroicResourceFeature = (data: FeatureHeroicResourceData) => {
@@ -494,19 +502,34 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getInformationSummon = (data: FeatureSummonData) => {
+		if (data.summons.length > 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+				</Space>
+			);
+		}
+
+		return null;
+	};
+
+	const getInformationSummonChoice = (data: FeatureSummonChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
-					{
-						data.selected.map(m => <MonsterPanel key={m.id} monster={m} options={props.options} />)
-					}
+					{data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
 				</Space>
 			);
 		}
 
 		if (!props.feature.description) {
 			return (
-				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'monsters' : 'monster'}.</div>
+				<>
+					<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'monsters' : 'monster'}.</div>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+					</Space>
+				</>
 			);
 		}
 
@@ -589,6 +612,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationDomain(props.feature.data);
 			case FeatureType.DomainFeature:
 				return getInformationDomainFeature(props.feature.data);
+			case FeatureType.Fixture:
+				return getInformationFixture(props.feature.data);
 			case FeatureType.HeroicResource:
 				return getInformationHeroicResourceFeature(props.feature.data);
 			case FeatureType.HeroicResourceGain:
@@ -623,6 +648,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationSpeed(props.feature.data);
 			case FeatureType.Summon:
 				return getInformationSummon(props.feature.data);
+			case FeatureType.SummonChoice:
+				return getInformationSummonChoice(props.feature.data);
 			case FeatureType.TaggedFeature:
 				return getInformationTaggedFeature(props.feature.data);
 			case FeatureType.TaggedFeatureChoice:

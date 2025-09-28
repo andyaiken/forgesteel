@@ -183,7 +183,7 @@ export const ItemPanel = (props: Props) => {
 									key={f.id}
 									feature={f}
 									options={props.options}
-									hero={props.hero}
+									hero={props.hero!}
 									sourcebooks={props.sourcebooks}
 									setData={setFeatureData}
 									onDelete={props.onChange ? () => removeImbuement(f.id) : undefined}

@@ -9,16 +9,18 @@ import './feature-reference-card.scss';
 
 interface Props {
 	character: CharacterSheet;
-	columns?: boolean;
+	columns?: number;
 }
 
 export const FeatureReferenceCard = (props: Props) => {
 	const character = props.character;
 
-	const columns = props.columns || false;
+	const columns = props.columns || 1;
 
 	const cardClasses = [ 'feature-reference', 'card' ];
-	if (columns) {
+	if (columns > 2) {
+		cardClasses.push('extra-wide');
+	} else if (columns > 1) {
 		cardClasses.push('wide');
 	}
 
@@ -32,8 +34,10 @@ export const FeatureReferenceCard = (props: Props) => {
 			}, new Map<string, Feature[]>());
 
 			const containerClasses = [ 'features-container' ];
-			if (columns) {
+			if (columns === 2) {
 				containerClasses.push('two-column');
+			} else if (columns === 3) {
+				containerClasses.push('three-column');
 			}
 
 			const sections: JSX.Element[] = [];

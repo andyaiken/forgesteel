@@ -200,7 +200,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 											}
 											{
 												HeroLogic.getSummons(props.hero).map(m => (
-													<Button type='text' onClick={() => props.onAddSquad(props.hero, m, 1)}>
+													<Button type='text' onClick={() => props.onAddSquad(props.hero, m.monster, 1)}>
 														Summon: {m.name}
 													</Button>
 												))

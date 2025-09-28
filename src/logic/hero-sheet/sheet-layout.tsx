@@ -86,10 +86,8 @@ export class SheetLayout {
 		if (spaceInRow === layout.perRow) {
 			rowH = 0;
 			slotsToFillInRow = layout.perRow;
-		} else {
-			availableLinesY += rowH;
 		}
-		// console.log(`Filling ${spaceInRow} spaces in current row, with ${rowH} (& total ${availableLinesY}) available Y lines`);
+		// console.log(`Filling ${spaceInRow} spaces in current row, with currentH=${rowH} (& total ${availableLinesY}) available Y lines`);
 		nextCard: while (availableLinesY > 0 && (extraCards.required.find(c => !c.shown) || extraCards.optional.find(c => !c.shown))) {
 			spaceInRow = (slotsToFillInRow % layout.perRow) || layout.perRow;
 			if (spaceInRow === layout.perRow) {
@@ -100,27 +98,44 @@ export class SheetLayout {
 					availableLinesY -= 2.5; // For vertical card gap between rows
 				rowH = 0;
 			}
-			// console.log('Available space in current row: ', spaceInRow, ' H:', availableLinesY);
-			for (const card of extraCards.required) {
-				if (!card.shown && card.width <= spaceInRow && card.height <= availableLinesY) {
-					// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
-					refCards.push(card.element);
-					slotsToFillInRow -= card.width;
-					card.shown = true;
-					rowH = Math.max(rowH, card.height);
-					continue nextCard;
-				}
+			// console.log('Available space in current row:', spaceInRow, 'current rowH:', rowH, 'overall H:', availableLinesY);
+
+			// Space filling precedence:
+			//	1. Largest required card under rowH
+			let card = extraCards.required.filter(c => !c.shown && c.width <= spaceInRow)
+				.sort((a, b) => b.height - a.height)
+				.find(c => c.height <= rowH);
+
+			//	2. Smallest required card under availableLinesY
+			if (!card) {
+				card = extraCards.required.filter(c => !c.shown && c.width <= spaceInRow)
+					.sort((a, b) => a.height - b.height)
+					.find(c => c.height <= availableLinesY);
 			}
-			for (const card of extraCards.optional) {
-				if (!card.shown && card.width <= spaceInRow && card.height <= availableLinesY) {
-					// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
-					refCards.push(card.element);
-					slotsToFillInRow -= card.width;
-					card.shown = true;
-					rowH = Math.max(rowH, card.height);
-					continue nextCard;
-				}
+
+			//  3. Largest optional card under rowH
+			if (!card) {
+				card = extraCards.optional.filter(c => !c.shown && c.width <= spaceInRow)
+					.sort((a, b) => b.height - a.height)
+					.find(c => c.height <= rowH);
 			}
+
+			//	4. Smallest under availableLinesY
+			if (!card) {
+				card = extraCards.optional.filter(c => !c.shown && c.width <= spaceInRow)
+					.sort((a, b) => a.height - b.height)
+					.find(c => c.height <= availableLinesY);
+			}
+
+			if (card) {
+				// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
+				refCards.push(card.element);
+				slotsToFillInRow -= card.width;
+				card.shown = true;
+				rowH = Math.max(rowH, card.height);
+				continue nextCard;
+			}
+
 			// no cards found to fill the spot, clean up and break out
 			if (spaceInRow !== layout.perRow) {
 				// console.log('Need to cleanup partial row!');
@@ -160,22 +175,27 @@ export class SheetLayout {
 			allAbilities.sort(SheetFormatter.sortAbilitiesByLength);
 		}
 
-		const abilitiesSplit: { abilities: AbilitySheet[], height: number }[] = [];
+		const pageClasses = [ 'abilities', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
+		let p = 1;
+		const abilityCardPages: JSX.Element[] = [];
 		// console.log('Layout:', layout);
 		let n = 0;
 		while (n < allAbilities.length) {
 			// build a single page
 			const pageStart = n;
 			let pageH = 0;
-			const pageAbilities: AbilitySheet[] = [];
+			let rowH = 0;
+			let pageAbilities: AbilitySheet[] = [];
+			let refCards: JSX.Element[] = [];
+
 			while (n < allAbilities.length && pageH < layout.linesY) {
 				// get a row, calculate height
 				const rowStart = n;
 				const rowEnd = Math.min(n + layout.perRow, allAbilities.length);
 				const rowAbilities = allAbilities.slice(rowStart, rowEnd);
 
-				let rowH = 0;
-				rowAbilities.every(a => {
+				rowH = 0;
+				const allAdded = rowAbilities.every(a => {
 					const aH = SheetFormatter.calculateAbilitySize(a, layout.cardLineLen);
 					if (pageH + aH <= layout.linesY) {
 						pageAbilities.push(a);
@@ -183,47 +203,51 @@ export class SheetLayout {
 						n += 1;
 						return true;
 					} else {
-						pageH = layout.linesY;
 						return false;
 					}
 				});
 				pageH += rowH;
-				// console.log(`Row (${rowStart}, ${rowEnd}):`, rowAbilities.map(a => a.name), 'Height', rowH);
+				if (rowH > 0) {
+					pageH += 2.5; // For vertical card gap between rows
+					// console.log(`Row (${rowStart + 1}, ${n}):`, allAbilities.slice(rowStart, n).map(a => a.name), 'Height', rowH);
+				}
+				if (!allAdded)
+					break;
 			}
+			const abilitiesInLastRow = (pageAbilities.length % layout.perRow) || layout.perRow;
+			// console.log('last row:', abilitiesInLastRow, 'pageH', pageH, 'lines', layout.linesY);
+			if (abilitiesInLastRow < layout.perRow || pageH < layout.linesY) {
+				// try to find filler cards that will fit
+				const spacesToFill = layout.perRow - abilitiesInLastRow;
+				let spaceY = layout.linesY - pageH + rowH;
+				// console.log(`Need more cards, with ${pageAbilities.length} existing cards to fill out ${spaceY} lines in rows of ${layout.perRow} cards`);
+				if (spacesToFill === 0) {
+					// new row, so remove prev rowH
+					spaceY -= rowH;
+					rowH = 0;
+				}
+				// console.log('overall spaceY:', spaceY, '/', layout.linesY, ' current rowH:', rowH);
+				refCards = SheetLayout.getFillerCards(spacesToFill, spaceY, rowH, extraCards, layout);
+				// console.log('reference cards:', refCards);
+
+				if (refCards.length < spacesToFill && abilitiesInLastRow < layout.perRow) {
+					// console.log('Need to cleanup partial abilities row!');
+					// Incomplete row, remove partial row
+					const newEnd = pageAbilities.length - abilitiesInLastRow;
+					n -= abilitiesInLastRow;
+					pageAbilities = pageAbilities.slice(0, newEnd);
+				}
+			}
+
 			if (n === pageStart) {
-				console.warn('Didn\'t add any abilities to this page!');
+				console.warn(`Didn't add any abilities to this page! (pg ${abilityCardPages.length}), n=${n}/${allAbilities.length}`);
 				n = allAbilities.length;
 			}
 			// console.log(`page abilities (${pageStart}, ${n}):`, pageAbilities);
-			abilitiesSplit.push({ abilities: pageAbilities, height: pageH });
-		}
-		// console.log('Abilities split: ', abilitiesSplit);
-
-		const abilityCardPages = abilitiesSplit.map((page, i) => {
-			const pageAbilities = page.abilities;
-			let refCards: JSX.Element[] = [];
-			const needMoreCards = ((pageAbilities.length % layout.perRow) !== 0) || page.height < layout.linesY;
-			if (needMoreCards) {
-				const spacesToFill = layout.perRow - (pageAbilities.length % layout.perRow);
-				// console.log(`Need more cards, with ${pageAbilities.length} existing cards to fill out rows of ${layout.perRow}`);
-				const numRows = Math.ceil(pageAbilities.length / layout.perRow);
-				let spaceY = layout.linesY;
-				let rowY = spaceY;
-				for (let r = 0; r < numRows; ++r) {
-					const iRowStart = r * layout.perRow;
-					const iRowEnd = Math.min(pageAbilities.length, (r + 1) * layout.perRow);
-					rowY = SheetFormatter.getLargestSize(pageAbilities.slice(iRowStart, iRowEnd), layout.cardLineLen);
-					// console.log(`row ${r} (${iRowStart}, ${iRowEnd}) H: `, rowY);
-					spaceY -= rowY;
-				}
-				// console.log('overall spaceY:', spaceY, '/', layout.linesY, ' current rowY:', rowY);
-				refCards = SheetLayout.getFillerCards(spacesToFill, spaceY, rowY, extraCards, layout);
-			}
-			const pageClasses = [ 'abilities', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
-			return (
-				<Fragment key={`abilities-${i}`}>
+			abilityCardPages.push(
+				<Fragment key={`abilities-${p++}`}>
 					<hr className='dashed' />
-					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId(character.hero.id, `abilities-${i}`)}>
+					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId(character.hero.id, `abilities-${p}`)}>
 						{pageAbilities.map(a =>
 							<AbilityCard
 								key={a.id}
@@ -234,7 +258,7 @@ export class SheetLayout {
 					</div>
 				</Fragment>
 			);
-		});
+		}
 		return abilityCardPages;
 	};
 

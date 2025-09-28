@@ -5,7 +5,6 @@ import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -108,7 +107,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, 0, 1, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 0, 1, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -154,7 +153,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 3, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 3, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -200,7 +199,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: '+3 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(0, 3, 1, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 3, 1, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -245,7 +244,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			stamina: 140,
 			stability: 1,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 2, 1, 3),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 2, 1, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -347,7 +346,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			stamina: 120,
 			stability: 0,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 1, 3),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 1, 1, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -455,7 +454,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			stamina: 160,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -557,7 +556,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			stamina: 160,
 			stability: 0,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -659,7 +658,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			stamina: 181,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 2, 1, 4),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 2, 1, 4),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

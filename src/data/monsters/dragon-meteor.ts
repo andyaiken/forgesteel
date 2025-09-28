@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const dragonMeteor: MonsterGroup = {
@@ -94,7 +93,7 @@ A meteor dragon’s body is infused with crystalline starlight, which they can c
 			stamina: 650,
 			stability: 6,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(5, 5, 3, 3, 5),
+			characteristics: FactoryLogic.createCharacteristics(5, 5, 3, 3, 5),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'dragon-meteor-feature-2',

@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
 
@@ -113,7 +112,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			size: FactoryLogic.createSize(1, 'M'),
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -154,7 +153,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to Stamina',
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -196,7 +195,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			size: FactoryLogic.createSize(1, 'S'),
 			freeStrikeDamage: 2,
 			withCaptain: '+1 bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -237,7 +236,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'M'),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -296,7 +295,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'M'),
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -357,7 +356,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'S'),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -422,7 +421,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

@@ -19,6 +19,7 @@ As a troubadour, you chase drama. The insurmountable dangers of the world might 
 
 “History is a tale. Each of us is just a story we tell ourselves. Change the story, and you change the world.”
 Jackson Bootblack`,
+	type: 'standard',
 	subclassName: 'Class Act',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [

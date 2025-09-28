@@ -2,7 +2,6 @@ import { AbilityDistanceType } from '../../enums/abiity-distance-type';
 import { AbilityKeyword } from '../../enums/ability-keyword';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const bredbeddle: MonsterGroup = {
@@ -72,7 +71,7 @@ Travelers warn one another of roads rumored to be haunted by “wild green knigh
 			stamina: 300,
 			stability: 4,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 0, -3, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 0, -3, 1, 2),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'bredbeddle-feature-1',

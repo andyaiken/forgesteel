@@ -16,6 +16,7 @@ export enum FeatureType {
 	DamageModifier = 'Damage Modifier',
 	Domain = 'Domain',
 	DomainFeature = 'Domain Feature',
+	Fixture = 'Fixture',
 	Follower = 'Follower',
 	HeroicResource = 'Heroic Resource',
 	HeroicResourceGain = 'Heroic Resource Gain',
@@ -36,6 +37,7 @@ export enum FeatureType {
 	SkillChoice = 'Skill Choice',
 	Speed = 'Speed',
 	Summon = 'Summon',
+	SummonChoice = 'Summon Choice',
 	TaggedFeature = 'Tagged Feature',
 	TaggedFeatureChoice = 'Tagged Feature Choice',
 	TitleChoice = 'Title'

@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const ajax: MonsterGroup = {
@@ -104,7 +103,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 			stamina: 700,
 			stability: 2,
 			freeStrikeDamage: 11,
-			characteristics: MonsterLogic.createCharacteristics(5, 4, 5, 5, 4),
+			characteristics: FactoryLogic.createCharacteristics(5, 4, 5, 5, 4),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'ajax-1-feature-1',
@@ -343,7 +342,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 			stamina: 280,
 			stability: 2,
 			freeStrikeDamage: 11,
-			characteristics: MonsterLogic.createCharacteristics(5, 4, 5, 5, 4),
+			characteristics: FactoryLogic.createCharacteristics(5, 4, 5, 5, 4),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'ajax-2-feature-1',

@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '../../models/feature';
+import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '../../models/feature';
 import { AbilityUpdateLogic } from './ability-update-logic';
 import { Ancestry } from '../../models/ancestry';
 import { AncestryData } from '../../data/ancestry-data';
@@ -443,6 +443,11 @@ export class HeroUpdateLogic {
 				}
 				case FeatureType.Summon: {
 					const oFeature = originalFeature as FeatureSummon;
+					feature.data.summons = oFeature.data.summons;
+					break;
+				}
+				case FeatureType.SummonChoice: {
+					const oFeature = originalFeature as FeatureSummonChoice;
 					feature.data.selected = oFeature.data.selected;
 					break;
 				}

@@ -6,6 +6,7 @@ import { AbilityPanel } from '../ability-panel/ability-panel';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Characteristic } from '../../../../enums/characteristic';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
+import { DamageType } from '../../../../enums/damage-type';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeaturePanel } from '../feature-panel/feature-panel';
 import { FeatureType } from '../../../../enums/feature-type';
@@ -23,12 +24,14 @@ import { MonsterToken } from '../../token/token';
 import { Options } from '../../../../models/options';
 import { PanelMode } from '../../../../enums/panel-mode';
 import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { SummoningInfo } from '../../../../models/summon';
 
 import './monster-panel.scss';
 
 interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
+	summon?: SummoningInfo;
 	options: Options;
 	mode?: PanelMode;
 	style?: CSSProperties;
@@ -60,6 +63,7 @@ export const MonsterPanel = (props: Props) => {
 					<HeaderText
 						level={1}
 						ribbon={<MonsterToken monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}
+						tags={props.summon && props.summon.isSignature ? [ 'Signature' ] : []}
 						extra={props.extra}
 					>
 						{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
@@ -68,7 +72,31 @@ export const MonsterPanel = (props: Props) => {
 					<Markdown text={props.monster.description} />
 					<Flex align='center' justify='space-between'>
 						<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-						<Field label='EV' value={(props.monster.role.organization === MonsterOrganizationType.Minion) ? `${props.monster.encounterValue} for ${props.options.minionCount} minions` : ((props.monster.encounterValue === 0) ? '-' : props.monster.encounterValue)} />
+						{
+							!props.summon ?
+								<Field
+									label='EV'
+									value={
+										props.monster.role.organization === MonsterOrganizationType.Minion ?
+											`${props.monster.encounterValue} for ${props.options.minionCount} minions`
+											:
+											((props.monster.encounterValue === 0) ? '-' : props.monster.encounterValue)
+									}
+								/>
+								: null
+						}
+						{
+							props.summon && (props.summon.cost > 0) ?
+								<div className='ds-text'>
+									{
+										props.summon.count === 1 ?
+											`${props.summon.cost} essence per minion summoned`
+											:
+											`${props.summon.cost} essence for ${props.summon.count} minions`
+									}
+								</div>
+								: null
+						}
 					</Flex>
 					{
 						props.mode === PanelMode.Full ?
@@ -77,7 +105,7 @@ export const MonsterPanel = (props: Props) => {
 									<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
 									<Field orientation='vertical' label='Speed' value={speedStr} />
 									<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
-									<Field orientation='vertical' label='Stability' value={props.monster.stability} />
+									<Field orientation='vertical' label='Stability' value={MonsterLogic.getStability(props.monster)} />
 									<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
 								</div>
 								{
@@ -116,6 +144,11 @@ export const MonsterPanel = (props: Props) => {
 											{
 												conditions.length > 0 ?
 													<Field label='Cannot Be' value={conditions.join(', ')} />
+													: null
+											}
+											{
+												props.monster.freeStrikeType !== DamageType.Damage ?
+													<Field label='Free Strike Type' value={props.monster.freeStrikeType} />
 													: null
 											}
 											{

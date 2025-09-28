@@ -3,7 +3,6 @@ import { AbilityKeyword } from '../../enums/ability-keyword';
 import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 
 export const kingfissureWorm: MonsterGroup = {
@@ -109,7 +108,7 @@ export const kingfissureWorm: MonsterGroup = {
 			stamina: 420,
 			stability: 5,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(5, 1, -5, 2, -3),
+			characteristics: FactoryLogic.createCharacteristics(5, 1, -5, 2, -3),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'kingfissure-worm-1-feature-1',

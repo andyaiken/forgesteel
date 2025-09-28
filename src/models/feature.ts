@@ -10,6 +10,7 @@ import { Element } from './element';
 import { FeatureAddOnType } from '../enums/feature-addon-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { Fixture } from './fixture';
 import { Follower } from './follower';
 import { Item } from './item';
 import { ItemType } from '../enums/item-type';
@@ -22,6 +23,7 @@ import { PerkList } from '../enums/perk-list';
 import { PowerRoll } from './power-roll';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
+import { Summon } from './summon';
 import { Title } from './title';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -129,6 +131,11 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 	selected: Feature[];
 };
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
+
+export interface FeatureFixtureData extends _FeatureData {
+	fixture: Fixture;
+};
+export type FeatureFixture = FeatureOf<FeatureType.Fixture, FeatureFixtureData>;
 
 export interface FeatureFollowerData extends _FeatureData {
 	follower: Follower;
@@ -249,11 +256,16 @@ export interface FeatureSpeedData extends _FeatureData {
 export type FeatureSpeed = FeatureOf<FeatureType.Speed, FeatureSpeedData>;
 
 export interface FeatureSummonData extends _FeatureData {
-	options: Monster[];
-	count: number;
-	selected: Monster[];
+	summons: Summon[];
 };
 export type FeatureSummon = FeatureOf<FeatureType.Summon, FeatureSummonData>;
+
+export interface FeatureSummonChoiceData extends _FeatureData {
+	options: Summon[];
+	count: number;
+	selected: Summon[];
+};
+export type FeatureSummonChoice = FeatureOf<FeatureType.SummonChoice, FeatureSummonChoiceData>;
 
 export interface FeatureTaggedFeatureData extends _FeatureData {
 	tag: string;
@@ -294,6 +306,7 @@ export type Feature =
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature
+	| FeatureFixture
 	| FeatureFollower
 	| FeatureHeroicResource
 	| FeatureHeroicResourceGain
@@ -314,6 +327,7 @@ export type Feature =
 	| FeatureSkillChoice
 	| FeatureSpeed
 	| FeatureSummon
+	| FeatureSummonChoice
 	| FeatureText
 	| FeatureTaggedFeature
 	| FeatureTaggedFeatureChoice

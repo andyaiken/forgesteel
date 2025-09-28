@@ -4,6 +4,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const elfShadow: MonsterGroup = {
 	id: 'monster-group-elf-shadow',
@@ -64,6 +65,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			id: 'elf-shadow-malice-1',
 			name: 'Watch Me Disappear',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each shadow elf acting this turn can attempt to hide as a free maneuver if they have concealment.'
 			]
@@ -72,6 +74,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			id: 'elf-shadow-malice-2',
 			name: 'Extra Dimension',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'When any shadow elf acting this turn makes a strike against a target who has I<2 in addition to the strike’s regular effects, the target is bleeding (save ends) or slowed (save ends).'
 			]
@@ -80,6 +83,7 @@ In many shadow elf societies, all people are given basic combat training and are
 			id: 'elf-shadow-malice-3',
 			name: 'Home Is Where the Hurt Is',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'The shadow elves synthesize a concentrated pocket manifold reminiscent of Equinox and graft it onto the encounter map. Until the end of the encounter, all creatures can see shadow elves in full color, and shadow elves no longer benefit from their Of the Umbra trait. Additionally, the potency of all shadow elf abilities increases by 2, and any enemy making a saving throw against an effect imposed by a shadow elf ability must roll an 8 or higher as they feel the effect across two worlds.'
 			]

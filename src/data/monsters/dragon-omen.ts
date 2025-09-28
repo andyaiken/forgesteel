@@ -6,6 +6,7 @@ import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const dragonOmen: MonsterGroup = {
 	id: 'monster-group-dragon-omen',
@@ -45,6 +46,7 @@ The effects that surround an omen dragon also mean that new life cannot begin. C
 			id: 'dragon-omen-malice-1',
 			name: 'Black Skies',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'The dragon expands their wings to create a shroud of shadow. Until the start of the dragon’s next turn, any strike made against them takes a bane.'
 			]
@@ -53,6 +55,7 @@ The effects that surround an omen dragon also mean that new life cannot begin. C
 			id: 'dragon-omen-malice-2',
 			name: 'Rise and Fall',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'The dragon flies up to 10 squares and carries fated souls with them. Each creature in the area of the dragon’s Stagnant Wyrmscale Aura trait makes a **Presence test**.',
 				FactoryLogic.createPowerRoll({
@@ -67,6 +70,7 @@ The effects that surround an omen dragon also mean that new life cannot begin. C
 			id: 'dragon-omen-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The dragon takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -75,6 +79,7 @@ The effects that surround an omen dragon also mean that new life cannot begin. C
 			id: 'dragon-omen-malice-4',
 			name: 'Burn It Right Down',
 			cost: 10,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Each edge of the encounter map burns with intangible purple flames until the end of the encounter. The flames expand by 1 square at the end of every turn. Any enemy takes 5 corruption damage for each square of flames they enter.'
 			]

@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const angulotl: MonsterGroup = {
 	id: 'monster-group-angulotl',
@@ -53,6 +54,7 @@ Pinna, Hedge Witch, Gravesford`,
 			id: 'angulotl-malice-1',
 			name: 'Leapfrog',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, when an angulotl moves through an inactive angulotl’s space, the inactive angulotl can use a free triggered action to jump 3 squares.'
 			]
@@ -61,6 +63,7 @@ Pinna, Hedge Witch, Gravesford`,
 			id: 'angulotl-malice-2',
 			name: 'Resonating Croak',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Each angulotl in the encounter puffs out their throat and starts loudly droning. Any non-angulotl adjacent to an angulotl makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
@@ -75,6 +78,7 @@ Pinna, Hedge Witch, Gravesford`,
 			id: 'angulotl-malice-3',
 			name: 'Rainfall',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'An angulotl calls clouds to cover the encounter map and unleash rain until the end of the round. Any creature or object that is exposed to the sky is wet until the end of the encounter.'
 			]

@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const hobgoblin: MonsterGroup = {
 	id: 'monster-group-hobgoblin',
@@ -61,6 +62,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			id: 'hobgoblin-malice-1',
 			name: 'Operation Goblin Mode',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each goblin in the encounter gains a +3 bonus to speed until the end of the round.'
 			]
@@ -69,6 +71,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			id: 'hobgoblin-malice-2',
 			name: 'Operation Tactical Swarm',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each hobgoblin in the encounter shifts up to their speed and can take the Defend main action.'
 			]
@@ -77,6 +80,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			id: 'hobgoblin-malice-3',
 			name: 'Operation Earthsear',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Until the end of the round, the ground throughout the encounter map becomes blazing hot. Any enemy takes 1 fire damage for each square of the ground they enter. Any enemy who ends their turn on the ground has fire weakness 2 until the start of their next turn.'
 			]

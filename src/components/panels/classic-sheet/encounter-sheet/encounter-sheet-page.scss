@@ -1,0 +1,11 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+.playbook-list-page #classic-sheet {
+    margin-left: 10px;
+}
+
+#classic-sheet .page-1 {
+    display: grid;
+    place-items: stretch;
+    grid-template-rows: min-content min-content 1fr;
+}

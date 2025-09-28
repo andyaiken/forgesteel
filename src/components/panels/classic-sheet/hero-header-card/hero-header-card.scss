@@ -1,0 +1,111 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .hero-header.card {
+    display: grid;
+    grid-template-rows: min-content min-content;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    grid-gap: 8px;
+    padding: 7px;
+
+    section.container {
+        padding: 4px;
+    }
+
+    .hero-overview {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1.3fr 1fr 1fr;
+        place-items: stretch;
+
+        .labeled-field {
+            margin: 0 5px;
+
+            label {
+                padding-top: 0;
+            }
+            .labeled-field-content span {
+                font-size: round(1.3rem, 1px);
+            }
+        }
+
+        .name {
+            grid-column-end: span 2;
+            align-self: end;
+            .labeled-field-content span {
+                font-size: round(1.9rem, 1px);
+            }
+        }
+    }
+
+    .hero-advancement {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr min-content;
+
+        .victories-level {
+            grid-column-end: span 3;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+
+            border-bottom: 2px solid common.$color-light;
+            margin: 5px;
+            padding: 7px 0;
+
+            .level {
+                label {
+                    font-size: round(1.2rem, 1px);
+                    margin-bottom: 5px;
+                }
+
+                .labeled-field-content span {
+                    font-size: round(3rem, 1px);
+                }
+            }
+
+            > div:first-child {
+                border-right: 2px solid common.$color-light;
+                margin-right:2px;
+            }
+            > div:last-child {
+                border-left: 2px solid common.$color-light;
+                margin: 0 0 0 2px;
+            }
+        }
+
+        .victories {
+            grid-column-end: span 5;
+
+            h3 {
+                text-align: left;
+                font-weight: 450;
+                font-size: round(1.2rem, 1px);
+            }
+
+            h3, .victories-boxes {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+
+            ol {
+                @include common.border-beveled(7px, 2px, common.$color-medium);
+                list-style-type: none;
+                display: grid;
+                grid-template-columns: repeat(15, 1fr);
+                margin: 4px 0;
+                padding: 5px;
+
+                li {
+                    text-align: center;
+                    font-weight: 900;
+                    border-right: 2px solid common.$color-light;
+                    height: 22px;
+
+                    &:last-of-type {
+                        border-right: none;
+                    }
+                }
+            }
+        }
+    }
+}

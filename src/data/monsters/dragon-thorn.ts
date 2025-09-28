@@ -6,6 +6,7 @@ import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const dragonThorn: MonsterGroup = {
 	id: 'monster-group-dragon-thorn',
@@ -45,6 +46,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 			id: 'dragon-thorn-malice-1',
 			name: 'Cage of Thorns',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'A cage of thorns grows around one dragonsealed enemy on the encounter map, making that enemy restrained until the end of their next turn.'
 			]
@@ -53,6 +55,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 			id: 'dragon-thorn-malice-2',
 			name: 'Bramble Barricade',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The dragon grows a 10 wall of briars in unoccupied spaces on the encounter map. The wall blocks line of effect for all creatures except the dragon. Each square of the wall has 5 Stamina and fire weakness 5. The area can be moved through but is difficult terrain. Any creature who is force moved into or within the area takes 1 damage for each square of the area entered and is bleeding until the end of their next turn.'
 			]
@@ -61,6 +64,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 			id: 'dragon-thorn-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The dragon takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -69,6 +73,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 			id: 'dragon-thorn-malice-4',
 			name: 'Afflictive Overgrowth',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'The dragon summons poisonous, biting thorns around their foes. Each enemy on the encounter map makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({

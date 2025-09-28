@@ -5,6 +5,7 @@ import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const chimera: MonsterGroup = {
 	id: 'monster-group-chimera',
@@ -36,6 +37,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 			id: 'chimera-malice-1',
 			name: 'Defensive Snapping',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'The chimera takes up a defensive stance. Until the start of their next turn, the chimera can make a free strike against each enemy who comes within 2 squares of them.'
 			]
@@ -44,6 +46,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 			id: 'chimera-malice-2',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The chimera takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -52,6 +55,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 			id: 'chimera-malice-3',
 			name: 'Unstable Terrain',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The chimera shakes the ground, causing an eruption of loose rocks and debris that creates three size 2 stone objects anywhere on the encounter map. Each creature adjacent to one or more objects when they appear who has A<2 takes 5 damage.'
 			]
@@ -60,6 +64,7 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 			id: 'chimera-malice-4',
 			name: 'Ashen Clouds',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				' Until the start of the chimera’s next turn, all areas of the encounter map are shrouded in a thick cloud of ash. All creatures and objects on the map have concealment that the chimera ignores. Additionally, each enemy in the cloud who has I<1 has line of effect only within 3 squares. The potency of this feature increases by 1 each time it’s used.'
 			]

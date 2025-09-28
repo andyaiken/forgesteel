@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const wyvern: MonsterGroup = {
 	id: 'monster-group-wyvern',
@@ -43,6 +44,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			id: 'wyvern-malice-1',
 			name: 'Simmering Anger',
 			cost: 3,
+			icon: StatBlockIcon.Melee,
 			sections: [
 				'One wyvern in the encounter can make a free strike against each enemy adjacent to them.'
 			]
@@ -51,6 +53,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			id: 'wyvern-malice-2',
 			name: 'Boiling Fury',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, each wyvern in the encounter has a double edge on strikes and they can use their signature action instead of a free strike whenever they would make an opportunity attack.'
 			]
@@ -59,6 +62,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			id: 'wyvern-malice-3',
 			name: 'Overflowing Rage',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Each wyvern’s anger ﬁlls the encounter map with a thick miasma of hated. Each enemy in the encounter makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({

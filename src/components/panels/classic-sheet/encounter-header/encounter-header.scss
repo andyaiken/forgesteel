@@ -1,0 +1,66 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .encounter-header.card {
+    display: grid;
+    grid-template-rows: min-content min-content;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: stretch;
+    grid-gap: 8px;
+    padding: 7px;
+
+    .header-image {
+        grid-column-end: span 3;
+    }
+
+    section.container {
+        padding: 4px;
+
+        &.success,
+        &.failure {
+            padding: 5px 10px;
+            margin-bottom: 0;
+        
+            h3 {
+                font-size: 16px;
+            }
+        }
+    }
+
+    .overview {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr) min-content 1fr 1fr;
+        place-items: stretch;
+
+        .labeled-field.difficulty {
+            span {
+                padding: 0 10px;
+                min-width: 75px;
+            }
+        }
+
+        .labeled-field:not(.name) {
+            margin: 0 5px;
+            align-self: baseline;
+
+            label {
+                padding-top: 0;
+            }
+
+            .labeled-field-content {
+                span {
+                    font-size: round(1.4rem, 1px);
+                }
+            }
+        }
+
+        .name {
+            grid-column-end: span 6;
+            align-self: end;
+
+            .labeled-field-content span {
+                font-size: round(1.9rem, 1px);
+            }
+        }
+    }
+}

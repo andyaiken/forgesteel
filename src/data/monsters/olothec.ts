@@ -5,6 +5,7 @@ import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const olothec: MonsterGroup = {
 	id: 'monster-group-olothec',
@@ -71,6 +72,7 @@ export const olothec: MonsterGroup = {
 			id: 'olothec-malice-3',
 			name: 'Memory of Chaos',
 			cost: 6,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'The olothec broadcasts their memory of the universe in its primordial state—a sweeping cacophony of transcendental irrationality and unceasing change. Until the end of the encounter, any creature who starts their turn within 3 squares of the olothec and has R<3 is dazed and slowed until the end of their next turn).'
 			]

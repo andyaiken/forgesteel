@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const ogre: MonsterGroup = {
 	id: 'monster-group-ogre',
@@ -49,6 +50,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 			id: 'ogre-malice-1',
 			name: 'Shockwave',
 			cost: 3,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'One ogre acting this turn jumps and lands on their rear, causing a 3 burst shockwave. Each size 1 creature in the area makes a **Might test** or **Agility test**.',
 				FactoryLogic.createPowerRoll({
@@ -63,6 +65,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 			id: 'ogre-malice-2',
 			name: 'Bully',
 			cost: 5,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Each ogre in the encounter shifts up to their speed and can make a free strike. If they can, they gang up on the same target rather than picking different targets.'
 			]
@@ -71,6 +74,7 @@ Rumor has it that a cyclops can emit a mile-long energy ray from their eye. Howe
 			id: 'ogre-malice-3',
 			name: 'Rampage',
 			cost: 7,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, each ogre has damage immunity 5 and deals an extra 5 damage with abilities, and heroic abilities that target any ogre have their Heroic Resource cost reduced by 1 (to a minimum of 1).'
 			]

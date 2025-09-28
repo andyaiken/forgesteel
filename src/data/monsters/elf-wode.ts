@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const elfWode: MonsterGroup = {
 	id: 'monster-group-elf-wode',
@@ -65,6 +66,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			id: 'elf-wode-malice-1',
 			name: 'Forest Network',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each wode elf who ends this turn hidden can shift up to their speed while remaining hidden.'
 			]
@@ -73,6 +75,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			id: 'elf-wode-malice-2',
 			name: 'Punishing Regrowth',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, each wode elf gains an edge on abilities, and their strikes can slide a target up to 2 squares in addition to their usual effects. If a strike already imposes forced movement, this slide happens after that forced movement. A creature force moved by a wode elf’s strike who ends this forced movement in difficult terrain is restrained until the end of their next turn.'
 			]
@@ -81,6 +84,7 @@ The wode elves send their warleaders into battle only if the situation is dire. 
 			id: 'elf-wode-malice-3',
 			name: 'Vines Everywhere',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Vines rapidly grow across the entire encounter map. Each enemy in the encounter makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({

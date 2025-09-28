@@ -12,7 +12,7 @@ import { Utils } from '../../../utils/utils';
 import './options-panel.scss';
 
 interface Props {
-	mode: 'hero-modern' | 'hero-classic' | 'monster' | 'encounter' | 'tactical-map' | 'session' | 'player';
+	mode: 'hero-modern' | 'hero-classic' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'tactical-map' | 'session' | 'player';
 	options: Options;
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
@@ -353,7 +353,7 @@ export const OptionsPanel = (props: Props) => {
 						<Toggle label='Monster size' value={props.options.similarSize} onChange={setSimilarSize} />
 					</>
 				);
-			case 'encounter':
+			case 'encounter-modern':
 				return (
 					<>
 						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
@@ -388,6 +388,34 @@ export const OptionsPanel = (props: Props) => {
 								</>
 								: null
 						}
+					</>
+				);
+			case 'encounter-classic':
+				return (
+					<>
+						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+						<Divider size='small'>Text Color</Divider>
+						<Segmented
+							name='textColor'
+							block={true}
+							options={[
+								{ value: 'dark', label: 'Darker' },
+								{ value: 'default', label: 'Default' },
+								{ value: 'light', label: 'Lighter' }
+							]}
+							value={props.options.sheetTextColor}
+							onChange={changeTextColor}
+						/>
+						<Divider>Layout</Divider>
+						<Space direction='vertical' style={{ width: '100%' }}>
+							<Segmented
+								name='pagesize'
+								block={true}
+								options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
+								value={props.options.classicSheetPageSize}
+								onChange={setClassicSheetPageSize}
+							/>
+						</Space>
 					</>
 				);
 			case 'tactical-map':

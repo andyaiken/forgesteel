@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const griffon: MonsterGroup = {
 	id: 'monster-group-griffon',
@@ -50,6 +51,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 			id: 'griffon-malice-2',
 			name: 'Piercing Cry',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'A griffon acting this turn unleashes a hideous screech at one enemy within 5 squares of them, forcing that creature to make an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
@@ -64,6 +66,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 			id: 'griffon-malice-3',
 			name: 'Wildwinds',
 			cost: 10,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Winds bluster and blow across the encounter map. Until the end of the encounter, each creature who can’t fly or isn’t mounted on a flying creature takes a −3 penalty to stability, and any forced movement effect targeting such a creature moves them an additional 5 squares.'
 			]

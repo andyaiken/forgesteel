@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const undead: MonsterGroup = {
 	id: 'monster-group-undead',
@@ -105,6 +106,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			id: 'undead-1st-malice-1',
 			name: 'Ravenous Horde',
 			cost: 2,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'At the end of this round, each hero not already adjacent to one or more undead is beset by two **rotting zombies** who burst up from the ground to appear in adjacent unoccupied spaces. Each zombie is winded. This feature can’t be used two rounds in a row.'
 			]
@@ -113,6 +115,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			id: 'undead-1st-malice-2',
 			name: 'Paranormal Fling',
 			cost: 3,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Up to three unattended objects on the encounter map rise to float 1 square off the ground. Each object is then pulled 5 squares toward the nearest enemy within 3 squares of the object.'
 			]
@@ -121,6 +124,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			id: 'undead-1st-malice-3',
 			name: 'The Grasping, The Hungry',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'Ravenous and rotting undead arms burst forth from 9 connected squares of a vertical or horizontal surface. Any creature who ends their turn adjacent to an affected square makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({
@@ -136,6 +140,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			id: 'undead-1st-malice-4',
 			name: 'Dread March',
 			cost: 7,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Up to four undead in the encounter move up to their speed and can make a free strike. The number of undead affected increases by 1 for each additional Malice spent on this feature. If an undead is reduced to 0 Stamina during this dread march, they don’t die until the march is resolved.'
 			]
@@ -144,6 +149,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			id: 'undead-2nd-malice-5',
 			name: 'Blood Hunger',
 			cost: 5,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'One undead acting this turn uses a signature ability against a creature who is bleeding. As a free triggered action, each undead within 5 squares of the first undead moves up to their speed and can make a free strike against the same target.'
 			],
@@ -153,6 +159,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			id: 'undead-3rd-malice-6',
 			name: 'Necrotic Rupture',
 			cost: 5,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Until the end of the round, whenever an undead is reduced to 0 Stamina, they deal 8 corruption damage to each enemy within 3 squares of them.'
 			],
@@ -162,6 +169,7 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 			id: 'undead-4th-malice-7',
 			name: 'Death Tax',
 			cost: 7,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'The undead attempts to rend the vitality of their foes. Each enemy within 5 squares of the undead makes a **Might test**.',
 				FactoryLogic.createPowerRoll({

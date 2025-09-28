@@ -1,0 +1,242 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .encounter-roster.card {
+    table,
+    th,
+    td {
+        border: 0;
+        @include common.font-serif;
+    }
+
+    table {
+        table-layout: fixed;
+        height: fit-content;
+    }
+
+    .group-id {
+        width: 4rem;
+    }
+
+    .stats {
+        width: 20rem;
+    }
+
+    .notes {
+        width: 20%;
+    }
+
+    td.notes {
+        vertical-align: top;
+    }
+
+    th.terrain,
+    th.stamina-tracker-header {
+        text-align: left;
+    }
+
+    th, 
+    th * {
+        @include common.font-slab;
+        font-size: round(1.1rem, 1px);
+        font-weight: 500;
+
+        .left {
+            float: left;
+        }
+        .right {
+            float: right;
+        }
+    }
+
+    tr {
+        border-bottom: 1px solid common.$color-medium;
+        height: 100%;
+
+        &:last-of-type {
+            border-width: 2px;
+        }
+    }
+    tbody tr:nth-child(odd) {
+        background-color: common.$color-extra-light;
+    }
+
+    .ev-value {
+        @include common.font-slab;
+        display: inline-block;
+        width: 2rem;
+        text-align: center;
+        border-bottom: 1px solid common.$color-medium;
+    }
+
+    .encounter-group {
+        display: grid;
+        grid-template-rows: 1fr min-content;
+        place-content: stretch;
+        text-align: center;
+        border-radius: 0;
+        padding: 5px 0 10px;
+        margin: 0;
+        height: 100%;
+
+        .group-number,
+        .turn-tracker {
+            @include common.font-slab;
+            font-size: round(1.1rem, 1px);
+            font-weight: 500;
+            align-self: center;
+
+            .checkbox {
+                font-size: round(2rem, 1px);
+                line-height: 1.1rem;
+            }
+        }
+
+        .group-name {
+            @include common.font-serif;
+            font-size: round(0.8rem, 1px);
+            overflow-x: hidden;
+        }
+    }
+
+    .wrapper {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: stretch;
+        justify-items: flex-start;
+        height: 100%;
+        padding: 5px 5px 0;
+
+        .encounter-slot {
+            @include common.font-serif;
+            font-size: round(1.4rem, 1px);
+            line-height: round(2.2rem, 1px);
+        }
+
+        .ev,
+        .stat-labels {
+            @include common.font-slab;
+            font-weight: 500;
+            font-size: round(1rem, 1px);
+            flex-grow: 1;
+            display: flex;
+            align-items: end;
+        }
+
+        .ev {
+            text-align: right;
+            align-self: flex-end;
+        }
+        .stat-labels {
+            align-self: stretch;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            text-align: center;
+            text-wrap: nowrap;
+
+            span {
+                @include common.font-slab;
+                font-weight: 500;
+                font-size: round(0.9rem, 1px);
+            }
+        }
+    }
+
+    .group-creatures .wrapper,
+    .terrain-object .stamina-tracker .wrapper {
+        border-width: 1px;
+        border-style: solid;
+        border-image: linear-gradient(180deg,
+                transparent 7px, common.$color-light 7px,
+                common.$color-light calc(100% - 7px), transparent calc(100% - 7px)) 1 100%;
+    }
+
+    .stamina-tracker {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .monster-stats .wrapper {
+        padding-left: 0;
+        padding-right: 0;
+        .encounter-slot {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            font-size: round(1rem, 1px);
+            text-align: center;
+        }
+    }
+}
+
+#classic-sheet .encounter-sheet.color .encounter-roster.card .group-creatures .encounter-slot {
+    &.ambusher {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-ambusher;
+            margin-right: 5px;
+        }
+    }
+
+    &.artillery {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-artillery;
+            margin-right: 5px;
+        }
+    }
+
+    &.brute {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-brute;
+            margin-right: 5px;
+        }
+    }
+
+    &.controller {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-controller;
+            margin-right: 5px;
+        }
+    }
+
+    &.defender {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-defender;
+            margin-right: 5px;
+        }
+    }
+
+    &.harrier {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-harrier;
+            margin-right: 5px;
+        }
+    }
+
+    &.hexer {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-hexer;
+            margin-right: 5px;
+        }
+    }
+
+    &.mount {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-mount;
+            margin-right: 5px;
+        }
+    }
+
+    &.support {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-support;
+            margin-right: 5px;
+        }
+    }
+}

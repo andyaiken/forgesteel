@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const lightbender: MonsterGroup = {
 	id: 'monster-group-lightbender',
@@ -33,6 +34,7 @@ export const lightbender: MonsterGroup = {
 			id: 'lightbender-malice-1',
 			name: 'Silent Prowl',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each lightbender acting this turn can teleport up to their speed as a move action and attempt to hide as a free maneuver, all until the start of their next turn.'
 			]
@@ -41,14 +43,16 @@ export const lightbender: MonsterGroup = {
 			id: 'lightbender-malice-2',
 			name: 'Duplicate',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each lightbender acting this turn can create a duplicate lightbender in an unoccupied space adjacent to them. The duplicate is indistinguishable from the lightbender except by supernatural means, has 1 Stamina, and has the lightbender’s speed. A duplicate acts on the lightbender’s turn but can take only move actions. Once per round before or after using an ability, a lightbender can trade places with any lightbender duplicate.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'lightbender-malice-3',
-			name: 'Rampage',
+			name: 'Everything the Light Touches',
 			cost: 7,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Each lightbender in the encounter shines radiantly, distorting the senses of any enemy within 5 squares of them. Each affected enemy makes a **Reason test.**',
 				FactoryLogic.createPowerRoll({

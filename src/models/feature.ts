@@ -23,6 +23,7 @@ import { PerkList } from '../enums/perk-list';
 import { PowerRoll } from './power-roll';
 import { Size } from './size';
 import { SkillList } from '../enums/skill-list';
+import { StatBlockIcon } from '../enums/stat-block-icon';
 import { Summon } from './summon';
 import { Title } from './title';
 
@@ -190,6 +191,7 @@ export interface FeatureMaliceData extends _FeatureData {
 	repeatable?: boolean;
 	sections: (string | PowerRoll)[];
 	echelon: number;
+	icon?: StatBlockIcon;
 };
 export type FeatureMalice = FeatureOf<FeatureType.Malice, FeatureMaliceData>;
 

@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const elemental: MonsterGroup = {
 	id: 'monster-group-elemental',
@@ -72,6 +73,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 			id: 'elemental-malice-1',
 			name: 'Elemental Swap',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Two elementals on the encounter map teleport to swap places, and each has damage immunity 2 until the end of the round.'
 			]
@@ -80,6 +82,7 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 			id: 'elemental-malice-2',
 			name: 'Split',
 			cost: 5,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'An elemental acting this turn cleaves themself into two separate elementals. Each elemental has the same statistics as the original, except that each has half the original’s current Stamina and is one size smaller. Both elementals can then shift up to their speed.'
 			]

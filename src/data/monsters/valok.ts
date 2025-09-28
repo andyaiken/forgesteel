@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const valok: MonsterGroup = {
 	id: 'monster-group-valok',
@@ -63,6 +64,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			id: 'valok-malice-1',
 			name: 'Repeater',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'One valok acting this turn takes an additional main action.'
 			]
@@ -71,6 +73,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			id: 'valok-malice-2',
 			name: 'I Was Not Commanded to Wait ',
 			cost: 5,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'At the end of each turn until the end of the round, one valok can either shift up to 2 squares or make a free strike.'
 			]
@@ -79,6 +82,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			id: 'valok-malice-3',
 			name: 'Rapid Logic Overdrive',
 			cost: 7,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each valok in the encounter can end one effect on them that can be ended by a saving throw, and can move up to their speed (making use of the bonus below). Additionally, until the end of the encounter, all valok deal an extra 5 damage on strikes and gain a +5 bonus to speed. This feature can be activated multiples times, stacking the effects.'
 			]

@@ -10,6 +10,7 @@ import { Element } from './element';
 import { FeatureAddOnType } from '../enums/feature-addon-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { Fixture } from './fixture';
 import { Follower } from './follower';
 import { Item } from './item';
 import { ItemType } from '../enums/item-type';
@@ -130,6 +131,11 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 	selected: Feature[];
 };
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
+
+export interface FeatureFixtureData extends _FeatureData {
+	fixture: Fixture;
+};
+export type FeatureFixture = FeatureOf<FeatureType.Fixture, FeatureFixtureData>;
 
 export interface FeatureFollowerData extends _FeatureData {
 	follower: Follower;
@@ -300,6 +306,7 @@ export type Feature =
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature
+	| FeatureFixture
 	| FeatureFollower
 	| FeatureHeroicResource
 	| FeatureHeroicResourceGain

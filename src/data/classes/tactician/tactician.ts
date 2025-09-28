@@ -208,8 +208,7 @@ You can’t gain more than one benefit from the same trigger.`),
 					id: 'tactician-4-4'
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'tactician-4-5',
-					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+					id: 'tactician-4-5'
 				})
 			]
 		},
@@ -278,8 +277,7 @@ You can’t gain more than one benefit from the same trigger.`),
 					description: 'If you are not surprised when combat begins, your side gets to go first. If an enemy has an ability that allows their side to go first, you roll as usual to determine who goes first.'
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'tactician-7-4',
-					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+					id: 'tactician-7-4'
 				})
 			]
 		},

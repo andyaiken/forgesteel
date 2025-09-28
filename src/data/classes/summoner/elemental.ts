@@ -7,6 +7,7 @@ import { FeatureField } from '../../../enums/feature-field';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { SubClass } from '../../../models/subclass';
+import { TerrainRoleType } from '../../../enums/terrain-role-type';
 
 export const elemental: SubClass = {
 	id: 'summoner-sub-2',
@@ -366,7 +367,97 @@ export const elemental: SubClass = {
 		},
 		{
 			level: 2,
-			features: []
+			features: [
+				FactoryLogic.feature.createFixture({
+					fixture: {
+						id: 'summoner-2-fixture',
+						name: 'Primordial Crystal',
+						description: 'The storm of elements from Quintessence coalesce into a hardened, crystalline structure. It magnifies the elemental composition of any matter that passes through it, and emits supernatural colors while doing so.',
+						role: FactoryLogic.createTerrainRole(MonsterRoleType.Artillery, TerrainRoleType.Relic),
+						baseStamina: 20,
+						size: FactoryLogic.createSize(2),
+						featuresByLevel: [
+							{
+								level: 1,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-2-fixture-1-1',
+										name: 'Magnetic Pull',
+										description: 'Each enemy that starts their turn within 3 squares of the crystal is vertically pulled 3.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-fixture-1-2',
+										name: 'Elemental Boost',
+										description: 'When you or any ally use a ranged ability that draws a line through the crystal, the distance increases by 5.'
+									})
+								]
+							},
+							{
+								level: 2,
+								features: []
+							},
+							{
+								level: 3,
+								features: []
+							},
+							{
+								level: 4,
+								features: []
+							},
+							{
+								level: 5,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-2-fixture-5-1',
+										name: 'Terra Resonance',
+										description: 'You gain a surge the first time in a round an area of terrain gains a supernatural eﬀect (excluding auras) while you have line of eﬀect to the crystal. You can choose to give the surge to an ally who also has line of eﬀect to the crystal.'
+									})
+								]
+							},
+							{
+								level: 6,
+								features: []
+							},
+							{
+								level: 7,
+								features: []
+							},
+							{
+								level: 8,
+								features: []
+							},
+							{
+								level: 9,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-2-fixture-9-1',
+										name: 'Size Increase',
+										description: 'The crystal is now Size 3.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-fixture-9-2',
+										name: 'Magnified Strike',
+										description: 'When you or any ally make a ranged strike that draws a line through the crystal, the user gains a surge which they can use on the ability.'
+									})
+								]
+							},
+							{
+								level: 10,
+								features: []
+							}
+						]
+					}
+				}),
+				FactoryLogic.feature.createSummonChoice({
+					id: 'summoner-2-2-2',
+					name: '5-Essence Minion',
+					options: [
+						// TODO: Dancing Silk
+						// TODO: Principle of the Swamp
+						// TODO: Quiet of Snow
+					]
+				})
+			]
 		},
 		{
 			level: 3,
@@ -378,7 +469,27 @@ export const elemental: SubClass = {
 		},
 		{
 			level: 5,
-			features: []
+			features: [
+				FactoryLogic.feature.create({
+					id: 'summoner-2-5-1',
+					name: 'Nature Watch',
+					description: 'You can spend 1 uninterrupted minute each day to perform a ritual and summon a special elemental mote called a beacon to patrol the area. This mote telepathically communicates any hostile creatures, hazards, or traps within 20 squares of them to you no matter how far away you are. You know the number of nearby hazards and which direction they’re in relative to where the beacon is, but not their exact position. You can have a number of beacons active equal to your level.'
+				}),
+				FactoryLogic.feature.create({
+					id: 'summoner-2-5-2',
+					name: 'Split',
+					description: 'Once during your turn, you can use a free maneuver to deal damage to one of your elemental minions equal to half their maximum Stamina in order to create one additional copy of that minion in an adjacent unoccupied space and add them to their squad, even if you’re at your minion maximum. You can’t use this feature if it would kill one or more of the minions in the squad.'
+				}),
+				FactoryLogic.feature.createSummonChoice({
+					id: 'summoner-2-5-3',
+					name: '7-Essence Minion',
+					options: [
+						// TODO: Iron Reaver
+						// TODO: Knight of Blood
+						// TODO: Light of the Sun
+					]
+				})
+			]
 		},
 		{
 			level: 6,
@@ -390,7 +501,23 @@ export const elemental: SubClass = {
 		},
 		{
 			level: 8,
-			features: []
+			features: [
+				FactoryLogic.feature.create({
+					id: 'summoner-2-8-1',
+					name: 'Control the Elements',
+					description: `
+Whenever you use Call Forth, you can spend essence to increase the size of one elemental minion you summon as shown on the following table.
+
+| Essence Cost | Size Change               |
+|:=============|===========================|
+| 1            | The minion becomes size 2 |
+| 3            | The minion becomes size 3 |
+| 5            | The minion becomes size 4 |
+
+Enlarged minions have their melee distance increased by 1 and inherent damage immunities doubled.`
+				})
+				// TODO: Portfolio Champion
+			]
 		},
 		{
 			level: 9,

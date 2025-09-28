@@ -11,7 +11,7 @@ interface State {
 	error: unknown;
 }
 
-function getErrorMessage(error: unknown) {
+const getErrorMessage = (error: unknown) => {
 	if (error instanceof Error) {
 		return error.message;
 	}
@@ -19,7 +19,8 @@ function getErrorMessage(error: unknown) {
 		return error;
 	}
 	return JSON.stringify(error);
-}
+};
+
 export class ErrorBoundary extends Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
@@ -52,7 +53,12 @@ export class ErrorBoundary extends Component<Props, State> {
 
 			const msg = getErrorMessage(this.state.error);
 			return (
-				<Alert data-name={this.props.name || 'unknown'} message={msg} type='error' showIcon />
+				<Alert
+					data-name={this.props.name || 'unknown'}
+					message={msg}
+					type='error'
+					showIcon={true}
+				/>
 			);
 		}
 

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
 import { AbilityKeyword } from '../enums/ability-keyword';
 import { AbilityUsage } from '../enums/ability-usage';
 import { Ancestry } from '../models/ancestry';
@@ -12,12 +12,15 @@ import { FactoryLogic } from './factory-logic';
 import { FeatureAddOnType } from '../enums/feature-addon-type';
 import { FeatureField } from '../enums/feature-field';
 import { FeatureType } from '../enums/feature-type';
+import { FollowerType } from '../enums/follower-type';
 import { Hero } from '../models/hero';
 import { HeroClass } from '../models/class';
 import { HeroLogic } from './hero-logic';
 import { Item } from '../models/item';
 import { ItemType } from '../enums/item-type';
 import { MonsterFeatureCategory } from '../enums/monster-feature-category';
+import { MonsterRoleType } from '../enums/monster-role-type';
+import { TerrainRoleType } from '../enums/terrain-role-type';
 import { Utils } from '../utils/utils';
 
 export class FeatureLogic {
@@ -479,9 +482,63 @@ export class FeatureLogic {
 				} as FeatureCompanionData;
 				break;
 			}
+			case FeatureType.Fixture:
+				data = {
+					fixture: {
+						id: Utils.guid(),
+						name: '',
+						description: '',
+						role: FactoryLogic.createTerrainRole(MonsterRoleType.NoRole, TerrainRoleType.Hazard),
+						baseStamina: 20,
+						size: FactoryLogic.createSize(2),
+						featuresByLevel: [
+							{
+								level: 1,
+								features: []
+							},
+							{
+								level: 2,
+								features: []
+							},
+							{
+								level: 3,
+								features: []
+							},
+							{
+								level: 4,
+								features: []
+							},
+							{
+								level: 5,
+								features: []
+							},
+							{
+								level: 6,
+								features: []
+							},
+							{
+								level: 7,
+								features: []
+							},
+							{
+								level: 8,
+								features: []
+							},
+							{
+								level: 9,
+								features: []
+							},
+							{
+								level: 10,
+								features: []
+							}
+						]
+					}
+				} as FeatureFixtureData;
+				break;
 			case FeatureType.Follower:
 				data = {
-					follower: FactoryLogic.createFollower()
+					follower: FactoryLogic.createFollower(FollowerType.Artisan)
 				} as FeatureFollowerData;
 				break;
 			case FeatureType.HeroicResource:
@@ -782,6 +839,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a domain.';
 			case FeatureType.DomainFeature:
 				return 'This feature allows you to choose a feature from your domain.';
+			case FeatureType.Fixture:
+				return 'This feature allows you to summon a fixture.';
 			case FeatureType.Follower:
 				return 'This feature grants you a follower.';
 			case FeatureType.HeroicResource:

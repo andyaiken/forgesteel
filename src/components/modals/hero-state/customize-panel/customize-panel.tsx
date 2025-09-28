@@ -263,7 +263,7 @@ export const CustomizePanel = (props: Props) => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createFollower({
 										id: Utils.guid(),
-										follower: FactoryLogic.createFollower()
+										follower: FactoryLogic.createFollower(FollowerType.Artisan)
 									}));
 								}}
 							>

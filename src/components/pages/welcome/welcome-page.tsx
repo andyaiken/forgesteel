@@ -84,9 +84,10 @@ export const WelcomePage = (props: Props) => {
 	);
 };
 
-type ContentProps = {
+interface ContentProps {
 	type: WelcomeType;
-};
+}
+
 const Content = (props: ContentProps) => {
 	const navigation = useNavigation();
 

@@ -1,7 +1,7 @@
 import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Button, Flex, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
@@ -13,6 +13,7 @@ import { DomainPanel } from '../domain-panel/domain-panel';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { FeatureType } from '../../../../enums/feature-type';
 import { Field } from '../../../controls/field/field';
+import { FixturePanel } from '../fixture-panel/fixture-panel';
 import { FollowerPanel } from '../follower-panel/follower-panel';
 import { Format } from '../../../../utils/format';
 import { FormatLogic } from '../../../../logic/format-logic';
@@ -228,6 +229,12 @@ export const FeaturePanel = (props: Props) => {
 		}
 
 		return null;
+	};
+
+	const getInformationFixture = (data: FeatureFixtureData) => {
+		return (
+			<FixturePanel key={data.fixture.id} fixture={data.fixture} sourcebooks={props.sourcebooks} hero={props.hero} options={props.options} />
+		);
 	};
 
 	const getInformationHeroicResourceFeature = (data: FeatureHeroicResourceData) => {
@@ -605,6 +612,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationDomain(props.feature.data);
 			case FeatureType.DomainFeature:
 				return getInformationDomainFeature(props.feature.data);
+			case FeatureType.Fixture:
+				return getInformationFixture(props.feature.data);
 			case FeatureType.HeroicResource:
 				return getInformationHeroicResourceFeature(props.feature.data);
 			case FeatureType.HeroicResourceGain:

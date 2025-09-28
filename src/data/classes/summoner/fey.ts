@@ -7,6 +7,7 @@ import { FeatureField } from '../../../enums/feature-field';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { SubClass } from '../../../models/subclass';
+import { TerrainRoleType } from '../../../enums/terrain-role-type';
 
 export const fey: SubClass = {
 	id: 'summoner-sub-3',
@@ -313,7 +314,97 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 		},
 		{
 			level: 2,
-			features: []
+			features: [
+				FactoryLogic.feature.createFixture({
+					fixture: {
+						id: 'summoner-3-fixture',
+						name: 'Glade Pond',
+						description: 'The vibrant waters of Arcadia pour through a hole in reality and pool into a verdant cup of paradise. As the pond babbles, it causes the surrounding flora to grow and provides the fey places to hide.',
+						role: FactoryLogic.createTerrainRole(MonsterRoleType.Ambusher, TerrainRoleType.Hazard),
+						baseStamina: 20,
+						size: FactoryLogic.createSize(2),
+						featuresByLevel: [
+							{
+								level: 1,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-3-fixture-1-1',
+										name: 'Bubbling Boost',
+										description: 'You and each non-minion ally that enters one or more squares within 3 squares of the pond or starts their turn there has their speed increased by 2 until the end of their turn.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-fixture-1-2',
+										name: 'Overgrowth',
+										description: 'Each of your fey minions that ends their turn within 3 squares of the pond is hidden until the start of their next turn.'
+									})
+								]
+							},
+							{
+								level: 2,
+								features: []
+							},
+							{
+								level: 3,
+								features: []
+							},
+							{
+								level: 4,
+								features: []
+							},
+							{
+								level: 5,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-3-fixture-5-1',
+										name: 'Garden of Jest',
+										description: 'You can spend a recovery the first me in a round a creature gains or starts their turn with a condition while you have line of eﬀect to the pond. You can choose to enable an ally who also has line of eﬀect to the boil to spend a recovery instead.'
+									})
+								]
+							},
+							{
+								level: 6,
+								features: []
+							},
+							{
+								level: 7,
+								features: []
+							},
+							{
+								level: 8,
+								features: []
+							},
+							{
+								level: 9,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-3-fixture-9-1',
+										name: 'Size Increase',
+										description: 'The pond is now Size 3.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-fixture-9-2',
+										name: 'Folly Field',
+										description: 'Each non-fey enemy that starts their turn within 3 squares of the pond has a -1 penalty to saving throws and resis ng potent eﬀects until the start of their next turn.'
+									})
+								]
+							},
+							{
+								level: 10,
+								features: []
+							}
+						]
+					}
+				}),
+				FactoryLogic.feature.createSummonChoice({
+					id: 'summoner-3-2-2',
+					name: '5-Essence Minion',
+					options: [
+						// TODO: Nixie Hemloche
+						// TODO: Sprite Foxglow
+						// TODO: Pixie Rosenthall
+					]
+				})
+			]
 		},
 		{
 			level: 3,
@@ -325,7 +416,38 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 		},
 		{
 			level: 5,
-			features: []
+			features: [
+				FactoryLogic.feature.create({
+					id: 'summoner-3-5-1',
+					name: 'Flash Powder',
+					description: `
+Your number of Recoveries further increases by 2.
+
+Each ally that gains temporary Stamina from your Pixie Dust feature also gains one of the following effects until the end of their next turn (or for 10 minutes if used outside of combat):
+
+* **Flight**: Their speed gains the Fly keyword.
+* **Vanish**: They become invisible.
+* **Water Weird**: As a free action, they can teleport to a body of water within 5 once during their turn.
+* **Panacea**: They can end one condition affecting them or stand up.`
+				}),
+				FactoryLogic.feature.create({
+					id: 'summoner-3-5-2',
+					name: 'Pixie Lift',
+					description: `
+Your speed gains the Fly and Hover keywords. You lose the Hover keyword from this feature while you are dazed, dying, or you fly more than 1 square above the surface of the ground.
+
+If your speed previously had the Fly keyword, you can now fly while sneaking an additional number of squares equal to your Reason.`
+				}),
+				FactoryLogic.feature.createSummonChoice({
+					id: 'summoner-3-5-3',
+					name: '7-Essence Minion',
+					options: [
+						// TODO: Nixie Corallia
+						// TODO: Pixie Belladonix
+						// TODO: Sprite Oleandercules
+					]
+				})
+			]
 		},
 		{
 			level: 6,
@@ -337,7 +459,17 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 		},
 		{
 			level: 8,
-			features: []
+			features: [
+				FactoryLogic.feature.create({
+					id: 'summoner-3-8-1',
+					name: 'The Archfey\'s Will',
+					description: `
+The characteristic scores of you and each of your fey minions are considered 1 higher for the purposes of resisting potencies. If a characteristic would hit a maximum value this way, that maximum value also increases by 1.
+
+Additionally, any of your fey minions’ traits that affect adjacent creatures and/or the area within 1 or more squares of them have that distance increased by 1 square.`
+				})
+				// TODO: Portfolio Champion
+			]
 		},
 		{
 			level: 9,

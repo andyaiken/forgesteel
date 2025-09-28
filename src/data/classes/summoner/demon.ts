@@ -6,6 +6,7 @@ import { FactoryLogic } from '../../../logic/factory-logic';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { SubClass } from '../../../models/subclass';
+import { TerrainRoleType } from '../../../enums/terrain-role-type';
 
 export const demon: SubClass = {
 	id: 'summoner-sub-1',
@@ -322,7 +323,97 @@ When you finish a respite, the soul trails of each creature that took the respit
 		},
 		{
 			level: 2,
-			features: []
+			features: [
+				FactoryLogic.feature.createFixture({
+					fixture: {
+						id: 'summoner-1-fixture',
+						name: 'The Boil',
+						description: 'The boil arises from the chaotic depths of the Abyssal Waste, concentrated into a heaving mass by the pressure of a coherent reality. As it slushes and threatens to burst, the noises drive nearby demons into a frenzy.',
+						role: FactoryLogic.createTerrainRole(MonsterRoleType.Support, TerrainRoleType.Hazard),
+						baseStamina: 20,
+						size: FactoryLogic.createSize(2),
+						featuresByLevel: [
+							{
+								level: 1,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-1-fixture-1-1',
+										name: 'Hunger Thrush',
+										description: 'Each enemy that starts their turn within 3 squares of the boil is I < [average] taunted (EoT) by the boil, or I < [weak] taunted (EoT) by the boil and can’t move further from it.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-fixture-1-2',
+										name: 'Oh, It Pops',
+										description: 'When the boil is destroyed, each enemy within 3 squares of the boil takes acid damage equal to your level and is A < [strong] weakened (save ends).'
+									})
+								]
+							},
+							{
+								level: 2,
+								features: []
+							},
+							{
+								level: 3,
+								features: []
+							},
+							{
+								level: 4,
+								features: []
+							},
+							{
+								level: 5,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-1-fixture-5-1',
+										name: 'Soul Rancor',
+										description: 'You gain a surge the first time in a round that your demon minions deal 3 or more damage to a creature while you have line of eﬀect to the boil. You can choose to give the surge to an ally who also has line of eﬀect to the boil.'
+									})
+								]
+							},
+							{
+								level: 6,
+								features: []
+							},
+							{
+								level: 7,
+								features: []
+							},
+							{
+								level: 8,
+								features: []
+							},
+							{
+								level: 9,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-1-fixture-9-1',
+										name: 'Size Increase',
+										description: 'The boil is now Size 3.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-fixture-9-2',
+										name: 'Fester Field',
+										description: 'Each non-abyssal enemy that starts their turn within 3 squares of the boil takes 5 corruption damage.'
+									})
+								]
+							},
+							{
+								level: 10,
+								features: []
+							}
+						]
+					}
+				}),
+				FactoryLogic.feature.createSummonChoice({
+					id: 'summoner-1-2-2',
+					name: '5-Essence Minion',
+					options: [
+						// TODO: Gushing Spewler
+						// TODO: Hulking Chimor
+						// TODO: Violence
+					]
+				})
+			]
 		},
 		{
 			level: 3,
@@ -334,7 +425,30 @@ When you finish a respite, the soul trails of each creature that took the respit
 		},
 		{
 			level: 5,
-			features: []
+			features: [
+				FactoryLogic.feature.create({
+					id: 'summoner-1-5-1',
+					name: 'Soul Flense',
+					description: `
+As a maneuver, you can command one or more of your demon minions to each deal damage equal to their free strike value to an adjacent ally. This damage can’t be reduced. The ally then ends a condition affecting them and confers it to the demon that attacked them.
+
+Additionally, whenever one of your demon minions Death Snaps, their target is P < [weak] affected by a condition the minion was suffering from. The potency increases by 1 on each subsequent Death Snap the target takes damage from in the same turn (maximum +2).`
+				}),
+				FactoryLogic.feature.create({
+					id: 'summoner-1-5-2',
+					name: 'Take Face',
+					description: 'You can spend 1 uninterrupted minute to perform a ritual that causes one of your minions to fold their shape and disguise themself to look like a duplicate of you, including speaking basic Caelian, allowing them to (potentially) freely move through civilization while completing their tasks. You can have a number of minions disguised at the same time equal to your Reason score.'
+				}),
+				FactoryLogic.feature.createSummonChoice({
+					id: 'summoner-1-5-3',
+					name: '7-Essence Minion',
+					options: [
+						// TODO: Faded Blightling
+						// TODO: Gorrre
+						// TODO: Vicisittante
+					]
+				})
+			]
 		},
 		{
 			level: 6,
@@ -346,7 +460,14 @@ When you finish a respite, the soul trails of each creature that took the respit
 		},
 		{
 			level: 8,
-			features: []
+			features: [
+				FactoryLogic.feature.create({
+					id: 'summoner-1-8-1',
+					name: 'Abyssal Evolution',
+					description: 'At the start of each of your turns, you can transform one of your demon minions within your Summoner’s Range into a different demon minion within your Summoner’s Range, maintaining their current Stamina. Starting from round 2, you can choose to transform the demon into any demon minion you can call forth for half the essence cost. The minion must be reassigned to a new squad if their new name differs from the other squad members.'
+				})
+				// TODO: Portfolio Champion
+			]
 		},
 		{
 			level: 9,

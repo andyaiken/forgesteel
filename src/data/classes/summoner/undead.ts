@@ -7,6 +7,7 @@ import { FeatureField } from '../../../enums/feature-field';
 import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../../enums/monster-role-type';
 import { SubClass } from '../../../models/subclass';
+import { TerrainRoleType } from '../../../enums/terrain-role-type';
 
 export const undead: SubClass = {
 	id: 'summoner-sub-4',
@@ -356,7 +357,97 @@ This ability becomes a free triggered action if the target was a minion (either 
 		},
 		{
 			level: 2,
-			features: []
+			features: [
+				FactoryLogic.feature.createFixture({
+					fixture: {
+						id: 'summoner-4-fixture',
+						name: 'Barrow Gates',
+						description: 'Tall iron gates from the Necropolitan Ruins arise from the earth as wailing spirits swirl around its bars. The undead refuse to stop moving while near the threshold of oblivion.',
+						role: FactoryLogic.createTerrainRole(MonsterRoleType.Defender, TerrainRoleType.Fortification),
+						baseStamina: 20,
+						size: FactoryLogic.createSize(2),
+						featuresByLevel: [
+							{
+								level: 1,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-4-fixture-1-1',
+										name: 'The Bell Tolls',
+										description: 'Each enemy that starts their turn within 3 squares of the gates is I < [average] frightened (EoT) by the gates. The potency increases by 1 for winded enemies.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-fixture-1-2',
+										name: 'Undead Dominion',
+										description: 'Each of your undead minions has damage immunity 2 while occupying a space within 3 squares of the gates.'
+									})
+								]
+							},
+							{
+								level: 2,
+								features: []
+							},
+							{
+								level: 3,
+								features: []
+							},
+							{
+								level: 4,
+								features: []
+							},
+							{
+								level: 5,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-4-fixture-5-1',
+										name: 'Memento Mori',
+										description: 'You gain a surge the first me in a round one of your undead minions unwillingly dies while you have line of eﬀect to the gates. You can choose to give the surge to an ally who also has line of eﬀect to the gates.'
+									})
+								]
+							},
+							{
+								level: 6,
+								features: []
+							},
+							{
+								level: 7,
+								features: []
+							},
+							{
+								level: 8,
+								features: []
+							},
+							{
+								level: 9,
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-4-fixture-9-1',
+										name: 'Size Increase',
+										description: 'The gates are now Size 3.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-fixture-9-2',
+										name: 'Open the Gates',
+										description: 'You can use Rise! As a free triggered action each me an enemy dies within 3 squares of the gates while you have line of eﬀect to the gates.'
+									})
+								]
+							},
+							{
+								level: 10,
+								features: []
+							}
+						]
+					}
+				}),
+				FactoryLogic.feature.createSummonChoice({
+					id: 'summoner-4-2-2',
+					name: '5-Essence Minion',
+					options: [
+						// TODO: Assursed Mummy
+						// TODO: Ceaseless Mournling
+						// TODO: Phase Ghoul
+					]
+				})
+			]
 		},
 		{
 			level: 3,
@@ -368,7 +459,32 @@ This ability becomes a free triggered action if the target was a minion (either 
 		},
 		{
 			level: 5,
-			features: []
+			features: [
+				FactoryLogic.feature.create({
+					id: 'summoner-4-5-1',
+					name: 'Channel',
+					description: `
+You can spend 1 uninterrupted minute to perform a ritual and use your body as a host for a willing spirit of a creature who died in the area. While hosting the spirit, you have access to their memories of the 24 hours leading up to their death and any skills they knew in life. You can also magically change your appearance to look like them while they were alive.
+
+You can attempt to stop channeling the spirit at any time. If the spirit is hostile to you or you’ve hosted them for at least 1 hour, you must make a medium Presence test. On success, the spirit leaves your body. On failure, you become fully possessed by a haunt; you have no access to your skills and you can’t get above a tier 2 result on power rolls until you exorcise the haunt either by completing the Find a Cure project or taking a respite with an exorcist.
+
+After you stop channeling their spirit, you can’t use this feature to channel the same creature again.`
+				}),
+				FactoryLogic.feature.create({
+					id: 'summoner-4-5-2',
+					name: 'Dread March',
+					description: 'You and your undead minions don’t spend additional speed to move through difficult terrain. If any of your undead minions would die while using their move action, they can choose to not die until the end of your turn.'
+				}),
+				FactoryLogic.feature.createSummonChoice({
+					id: 'summoner-4-5-3',
+					name: '7-Essence Minion',
+					options: [
+						// TODO: False Vampire
+						// TODO: Phantom of the Ripper
+						// TODO: Zombie Titan
+					]
+				})
+			]
 		},
 		{
 			level: 6,
@@ -380,7 +496,14 @@ This ability becomes a free triggered action if the target was a minion (either 
 		},
 		{
 			level: 8,
-			features: []
+			features: [
+				FactoryLogic.feature.create({
+					id: 'summoner-4-8-1',
+					name: 'Kill the Pain',
+					description: 'You and each of your undead minions ignore damage rolled as a d3 or a d6 and damage from environmental effects while you are not winded.'
+				})
+				// TODO: Portfolio Champion
+			]
 		},
 		{
 			level: 9,

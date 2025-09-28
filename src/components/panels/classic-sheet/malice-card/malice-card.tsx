@@ -75,9 +75,9 @@ export const MaliceCard = (props: Props) => {
 					{encounter.malice?.map(m => {
 						return (
 							<Fragment key={`malice-group-${m.monster}`}>
-								<li><h3>{m.monster} Malice</h3></li>
-								{m.malice.map(malice =>
+								{m.malice.map((malice, i) =>
 									<li key={malice.id}>
+										{i === 0 ? <h3>{m.monster} Malice</h3> : null}
 										<FeatureComponent feature={malice} />
 									</li>
 								)}

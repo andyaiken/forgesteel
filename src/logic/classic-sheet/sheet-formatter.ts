@@ -1,6 +1,7 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../../models/ability';
-import { AbilitySheet, FollowerSheet, ItemSheet } from '../../models/classic-sheets/hero-sheet';
+import { FollowerSheet, ItemSheet } from '../../models/classic-sheets/hero-sheet';
 import { AbilityLogic } from '../ability-logic';
+import { AbilitySheet } from '../../models/classic-sheets/ability-sheet';
 import { Characteristic } from '../../enums/characteristic';
 import { Collections } from '../../utils/collections';
 import { CreatureLogic } from '../creature-logic';
@@ -10,6 +11,7 @@ import { Format } from '../../utils/format';
 import { Hero } from '../../models/hero';
 import { HeroLogic } from '../hero-logic';
 import { Monster } from '../../models/monster';
+import { MonsterSheet } from '../../models/classic-sheets/encounter-sheet';
 import { RulesItem } from '../../models/rules-item';
 import { StatBlockIcon } from '../../enums/stat-block-icon';
 import { Title } from '../../models/title';
@@ -120,7 +122,7 @@ export class SheetFormatter {
 	static shortenText = (text: string, splitAt: number = 1) => {
 		const split = text.trim().split('\n');
 		if (split.length > splitAt) {
-			text = split.slice(0, splitAt).join('\n') + '\n*…(continued in reference)…*';
+			text = split.slice(0, splitAt).join('\n') + '\n<em class="continued-in-reference">…(continued in reference)…</em>';
 		}
 		return this.cleanupText(text);
 	};
@@ -279,6 +281,20 @@ export class SheetFormatter {
 		return size;
 	};
 
+	static calculateMonsterSize = (monster: MonsterSheet, lineWidth: number): number => {
+		let size = 0;
+		size = 12; // name, stats, characteristics
+		monster.abilities?.forEach(ability => {
+			size += this.calculateAbilityComponentSize(ability, lineWidth - 5);
+		});
+		monster.features?.forEach(f => {
+			size += this.calculateFeatureSize(f, lineWidth, false);
+		});
+		// ability/feature dividers
+		size += 0.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
+		return size;
+	};
+
 	static calculateFollowersSize = (followers: FollowerSheet[], lineWidth: number): number => {
 		let size = 2.5; // card header
 		followers.forEach(f => {
@@ -305,7 +321,6 @@ export class SheetFormatter {
 			const effectSize = this.countLines(ability.effect, lineWidth);
 			size += effectSize;
 		}
-
 		return size;
 	};
 

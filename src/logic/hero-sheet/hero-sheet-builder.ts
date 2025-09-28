@@ -1,15 +1,12 @@
-import { AbilitySheet, CareerSheet, ComplicationSheet, FollowerSheet, HeroSheet, ItemSheet } from '../../models/classic-sheets/hero-sheet';
-import { Ability } from '../../models/ability';
+import { CareerSheet, ComplicationSheet, FollowerSheet, HeroSheet, ItemSheet } from '../../models/classic-sheets/hero-sheet';
 import { AbilityData } from '../../data/ability-data';
 import { AbilityKeyword } from '../../enums/ability-keyword';
-import { AbilityLogic } from '../ability-logic';
-import { AbilityUsage } from '../../enums/ability-usage';
 import { Career } from '../../models/career';
 import { Characteristic } from '../../enums/characteristic';
+import { ClassicSheetBuilder } from '../classic-sheet/classic-sheet-builder';
 import { Collections } from '../../utils/collections';
 import { Complication } from '../../models/complication';
 import { ConditionType } from '../../enums/condition-type';
-import { CreatureLogic } from '../creature-logic';
 import { DamageModifierType } from '../../enums/damage-modifier-type';
 import { FactoryLogic } from '../factory-logic';
 import { Feature } from '../../models/feature';
@@ -26,11 +23,11 @@ import { Monster } from '../../models/monster';
 import { MonsterLogic } from '../monster-logic';
 import { Options } from '../../models/options';
 import { Perk } from '../../models/perk';
-import { SheetFormatter } from './sheet-formatter';
+import { SheetFormatter } from '../classic-sheet/sheet-formatter';
 import { Sourcebook } from '../../models/sourcebook';
 import { SourcebookLogic } from '../sourcebook-logic';
 
-export class SheetBuilder {
+export class HeroSheetBuilder {
 	static buildHeroSheet = (hero: Hero, sourcebooks: Sourcebook[], options: Options): HeroSheet => {
 		const sheet: HeroSheet = {
 			hero: hero,
@@ -198,12 +195,12 @@ export class SheetBuilder {
 				switch (modifier.type) {
 					case FeatureType.Multiple:
 						modifier.data.features.forEach(f => {
-							SheetBuilder.populateModifierAugmentation(f, hero, sheet);
+							HeroSheetBuilder.populateModifierAugmentation(f, hero, sheet);
 							coveredFeatureIds.push(f.id);
 						});
 						break;
 					default:
-						SheetBuilder.populateModifierAugmentation(modifier, hero, sheet);
+						HeroSheetBuilder.populateModifierAugmentation(modifier, hero, sheet);
 						coveredFeatureIds.push(modifier.id);
 						break;
 				}
@@ -339,11 +336,12 @@ export class SheetBuilder {
 		// #region Abilities
 		const abilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
 
-		const freeStrikes = [ AbilityData.freeStrikeMelee, AbilityData.freeStrikeRanged ].map(a => this.buildAbilitySheet(a, hero));
-		sheet.abilities = abilities.map(a => this.buildAbilitySheet(a, hero)).concat(freeStrikes);
+		const freeStrikes = [ AbilityData.freeStrikeMelee, AbilityData.freeStrikeRanged ]
+			.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero));
+		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero)).concat(freeStrikes);
 
 		const standard = HeroLogic.getAbilities(FactoryLogic.createHero([]), sourcebooks, true).map(a => a.ability);
-		sheet.standardAbilities = standard.map(a => this.buildAbilitySheet(a, hero));
+		sheet.standardAbilities = standard.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero));
 
 		coveredFeatureIds = coveredFeatureIds.concat(
 			allFeatures.filter(f => [ FeatureType.ClassAbility, FeatureType.Ability ].includes(f.feature.type))
@@ -381,7 +379,7 @@ export class SheetBuilder {
 			case FeatureType.Bonus: {
 				value = ModifierLogic.calculateModifierValue(feature.data, hero);
 				const field = feature.data.field.toString();
-				SheetBuilder.modifierFieldMapping[field](sheet, value);
+				HeroSheetBuilder.modifierFieldMapping[field](sheet, value);
 				break;
 			}
 			case FeatureType.AbilityDistance:
@@ -445,109 +443,6 @@ export class SheetBuilder {
 
 		return notBasic;
 	}
-	// #endregion
-
-	// #region Ability Sheet
-	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | undefined): AbilitySheet => {
-		const isMonster = CreatureLogic.isMonster(creature);
-		const sheet: AbilitySheet = {
-			id: ability.id,
-			abilityType: 'Ability',
-			name: ability.name,
-			description: ability.description,
-			isSignature: false,
-			cost: Number(ability.cost) || 0,
-			actionType: ability.type.usage.toString(),
-			keywords: ability.keywords.join(', '),
-			target: ability.target,
-			trigger: ability.type.trigger,
-			hasPowerRoll: false
-		};
-
-		sheet.name = sheet.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
-
-		if (ability.cost === 'signature') {
-			sheet.isSignature = true;
-			sheet.abilityType = 'Signature Ability';
-		} else if (ability.cost > 0) {
-			sheet.abilityType = 'Heroic Ability';
-		} else if (ability.type.usage === AbilityUsage.Trigger) {
-			sheet.abilityType = 'Triggered Action';
-		} else if (ability.type.usage === AbilityUsage.FreeStrike) {
-			sheet.abilityType = 'Free Strike';
-			if (ability.name.toLowerCase().includes('melee')) {
-				sheet.name = 'Melee Free Strike';
-			} else if (ability.name.toLowerCase().includes('ranged')) {
-				sheet.name = 'Ranged Free Strike';
-			}
-		} else if (ability.type.usage === AbilityUsage.Maneuver) {
-			sheet.abilityType = 'Maneuver';
-		} else if (ability.type.usage === AbilityUsage.Move) {
-			sheet.abilityType = 'Move Action';
-		} else if (ability.keywords.includes('Performance')) {
-			sheet.abilityType = 'Performance';
-		}
-
-		if (isMonster) {
-			if (sheet.isSignature) {
-				sheet.abilityType = 'Signature Ability';
-			} else {
-				sheet.abilityType = 'Encounter';
-			}
-		}
-
-		if (sheet.actionType && ability.type.free) {
-			sheet.actionType = `Free ${sheet.actionType}`;
-		}
-
-		sheet.qualifiers = ability.type.qualifiers;
-
-		if (ability.distance.length) {
-			sheet.distance = ability.distance.map(d => AbilityLogic.getDistanceCreature(d, ability, creature)).join(', ');
-		}
-
-		const effectSections = ability.sections.filter(s => s.type !== 'roll');
-		sheet.effect = SheetFormatter.abilitySections(effectSections, creature).trim();
-
-		const rollSections = ability.sections.filter(s => s.type === 'roll');
-		if (rollSections.length) {
-			sheet.hasPowerRoll = true;
-			const rollSection = rollSections[0];
-			if (rollSections.length > 1) {
-				console.warn('More than one roll section!', rollSections);
-			}
-
-			let rollPowerStr = '';
-			if (rollSection.roll.characteristic.length) {
-				const rollPowerAmount = Math.max(...rollSection.roll.characteristic
-					.map(c => CreatureLogic.getCharacteristic(creature, c)));
-
-				const characteristics = SheetFormatter.joinCommasOr(rollSection.roll.characteristic
-					.sort(SheetFormatter.sortCharacteristics)
-					.map(c => Format.capitalize(c.slice(0, 1)))
-				);
-				rollPowerStr = isMonster ? rollPowerAmount.toString() : `${rollPowerAmount} (${characteristics})`;
-			} else {
-				let rollPowerAmount = 2;// echelon 1 always at least 2
-				[ rollSection.roll.tier1, rollSection.roll.tier2, rollSection.roll.tier3 ].forEach(tier => {
-					const potency = tier.match(/[MmAaRrIiPp]<(\d)/);
-					if (potency && potency[1]) {
-						rollPowerAmount = Math.max(rollPowerAmount, Number.parseInt(potency[1]));
-					}
-				});
-
-				rollPowerStr = rollPowerAmount.toString();
-			}
-
-			sheet.rollPower = rollPowerStr;
-
-			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, creature);
-			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, creature);
-			sheet.rollT3Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, creature);
-		}
-
-		return sheet;
-	};
 	// #endregion
 
 	// #region Career Sheet
@@ -700,25 +595,25 @@ export class SheetBuilder {
 		const abilities = MonsterLogic.getFeatures(follower)
 			.filter(f => f.type === FeatureType.Ability)
 			.map(f => f.data.ability);
-		sheet.abilities = abilities.map(a => this.buildAbilitySheet(a, follower));
+		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, follower));
 
 		const advancement = [];
 		if (level < 4 && follower.retainer?.level4?.type === FeatureType.Ability) {
 			advancement.push({
 				level: 4,
-				ability: this.buildAbilitySheet(follower.retainer.level4.data.ability, follower)
+				ability: ClassicSheetBuilder.buildAbilitySheet(follower.retainer.level4.data.ability, follower)
 			});
 		}
 		if (level < 7 && follower.retainer?.level7?.type === FeatureType.Ability) {
 			advancement.push({
 				level: 7,
-				ability: this.buildAbilitySheet(follower.retainer.level7.data.ability, follower)
+				ability: ClassicSheetBuilder.buildAbilitySheet(follower.retainer.level7.data.ability, follower)
 			});
 		}
 		if (level < 10 && follower.retainer?.level10?.type === FeatureType.Ability) {
 			advancement.push({
 				level: 10,
-				ability: this.buildAbilitySheet(follower.retainer.level10.data.ability, follower)
+				ability: ClassicSheetBuilder.buildAbilitySheet(follower.retainer.level10.data.ability, follower)
 			});
 		}
 		sheet.advancement = advancement;

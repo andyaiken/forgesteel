@@ -5,10 +5,10 @@ import { CareerCard } from '../../../panels/classic-sheet/career-card/career-car
 import { ComplicationCard } from '../../../panels/classic-sheet/complication-card/complication-card';
 import { FactoryLogic } from '../../../../logic/factory-logic';
 import { Hero } from '../../../../models/hero';
+import { HeroSheetBuilder } from '../../../../logic/hero-sheet/hero-sheet-builder';
 import { HeroSheetPage } from './hero-sheet-page';
 import { Options } from '../../../../models/options';
 import { SettingFilled } from '@ant-design/icons';
-import { SheetBuilder } from '../../../../logic/hero-sheet/sheet-builder';
 import { SheetPageSize } from '../../../../enums/sheet-page-size';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
@@ -166,12 +166,12 @@ export const HeroSheetPreviewPage = (props: Props) => {
 				});
 				return withIncidents;
 			})
-			.map(SheetBuilder.buildCareerSheet);
+			.map(HeroSheetBuilder.buildCareerSheet);
 	};
 
 	const getAllComplications = () => {
 		return SourcebookLogic.getComplications(props.sourcebooks)
-			.map(SheetBuilder.buildComplicationSheet);
+			.map(HeroSheetBuilder.buildComplicationSheet);
 	};
 
 	const getPreviewPage = () => {

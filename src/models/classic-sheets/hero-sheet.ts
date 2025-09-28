@@ -1,3 +1,4 @@
+import { AbilitySheet } from './ability-sheet';
 import { Condition } from '../condition';
 import { ConditionType } from '../../enums/condition-type';
 import { Culture } from '../culture';
@@ -179,30 +180,6 @@ export interface ItemSheet {
 	item: Item;
 	effect: string;
 	features?: Feature[];
-}
-// #endregion
-
-// #region Ability
-export interface AbilitySheet {
-	id: string;
-	name: string;
-	cost: number;
-	isSignature: boolean;
-	abilityType?: string;
-	actionType?: string;
-	description?: string;
-	keywords?: string;
-	distance?: string;
-	target?: string;
-	trigger?: string;
-	qualifiers?: string[];
-	effect?: string;
-
-	hasPowerRoll: boolean;
-	rollPower?: string;
-	rollT1Effect?: string;
-	rollT2Effect?: string;
-	rollT3Effect?: string;
 }
 // #endregion
 

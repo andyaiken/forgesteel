@@ -12,7 +12,7 @@ import { Element } from '../../../../models/element';
 import { Empty } from '../../../controls/empty/empty';
 import { Encounter } from '../../../../models/encounter';
 import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
-import { EncounterSheet } from '../../../panels/classic-sheet/encounter-sheet/encounter-sheet';
+import { EncounterSheetPage } from '../../../panels/classic-sheet/encounter-sheet/encounter-sheet-page';
 import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
 import { Format } from '../../../../utils/format';
 import { Hero } from '../../../../models/hero';
@@ -208,7 +208,7 @@ export const PlaybookListPage = (props: Props) => {
 				getPanel = (element: Element) => {
 					if (view === 'classic') {
 						return (
-							<EncounterSheet
+							<EncounterSheetPage
 								key={element.id}
 								encounter={element as Encounter}
 								heroes={props.heroes}

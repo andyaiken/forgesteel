@@ -5,6 +5,7 @@
     th,
     td {
         border: 0;
+        @include common.font-serif;
     }
 
     table {
@@ -22,6 +23,10 @@
 
     .notes {
         width: 20%;
+    }
+
+    td.notes {
+        vertical-align: top;
     }
 
     th.terrain,
@@ -84,6 +89,12 @@
                 font-size: round(2rem, 1px);
                 line-height: 1.1rem;
             }
+        }
+
+        .group-name {
+            @include common.font-serif;
+            font-size: round(0.8rem, 1px);
+            overflow-x: hidden;
         }
     }
 
@@ -152,6 +163,80 @@
             grid-template-columns: 1fr 1fr 1fr 1fr;
             font-size: round(1rem, 1px);
             text-align: center;
+        }
+    }
+}
+
+#classic-sheet .encounter-sheet.color .encounter-roster.card .group-creatures .encounter-slot {
+    &.ambusher {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-ambusher;
+            margin-right: 5px;
+        }
+    }
+
+    &.artillery {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-artillery;
+            margin-right: 5px;
+        }
+    }
+
+    &.brute {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-brute;
+            margin-right: 5px;
+        }
+    }
+
+    &.controller {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-controller;
+            margin-right: 5px;
+        }
+    }
+
+    &.defender {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-defender;
+            margin-right: 5px;
+        }
+    }
+
+    &.harrier {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-harrier;
+            margin-right: 5px;
+        }
+    }
+
+    &.hexer {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-hexer;
+            margin-right: 5px;
+        }
+    }
+
+    &.mount {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-mount;
+            margin-right: 5px;
+        }
+    }
+
+    &.support {
+        &::before {
+            content: '';
+            border-left: 8px solid common.$color-support;
+            margin-right: 5px;
         }
     }
 }

@@ -1,9 +1,10 @@
-import { AbilitySheet, FollowerSheet } from '../../../../models/classic-sheets/hero-sheet';
 import { AbilityComponent } from '../components/ability-component';
+import { AbilitySheet } from '../../../../models/classic-sheets/ability-sheet';
 import { FeatureComponent } from '../components/feature-component';
+import { FollowerSheet } from '../../../../models/classic-sheets/hero-sheet';
 import { Options } from '../../../../models/options';
 import { RecoveriesComponent } from '../components/recoveries-component';
-import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
+import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
 import { StaminaComponent } from '../components/stamina-component';
 import { Utils } from '../../../../utils/utils';
 import { useMemo } from 'react';

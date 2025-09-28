@@ -4,6 +4,7 @@ import { Ability } from '../../../../models/ability';
 import { AbilityComponent } from './ability-component';
 import { AbilityUsage } from '../../../../enums/ability-usage';
 import { Characteristic } from '../../../../enums/characteristic';
+import { ClassicSheetBuilder } from '../../../../logic/classic-sheet/classic-sheet-builder';
 import { DamageModifier } from '../../../../models/damage-modifier';
 import { DamageModifierType } from '../../../../enums/damage-modifier-type';
 import { DrawSteelSymbolText } from './ds-symbol-text-component';
@@ -15,8 +16,7 @@ import { HeroLogic } from '../../../../logic/hero-logic';
 import { Markdown } from '../../../controls/markdown/markdown';
 import { ModifierLogic } from '../../../../logic/modifier-logic';
 import { PerkList } from '../../../../enums/perk-list';
-import { SheetBuilder } from '../../../../logic/hero-sheet/sheet-builder';
-import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
+import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
 import { SkillList } from '../../../../enums/skill-list';
 
 import rollT1 from '../../../../assets/icons/power-roll-t1.svg';
@@ -426,7 +426,7 @@ const MaliceFeatureComponent = (feature: FeatureMalice) => {
 };
 
 const MaliceAbilityFeatureComponent = (feature: FeatureMaliceAbility) => {
-	const abilitySheet = SheetBuilder.buildAbilitySheet(feature.data.ability, undefined);
+	const abilitySheet = ClassicSheetBuilder.buildAbilitySheet(feature.data.ability, undefined);
 	abilitySheet.abilityType = undefined;
 	return (
 		<div className='feature feature-malice' key={feature.id}>

@@ -20,8 +20,8 @@ export const EncounterHeaderCard = (props: Props) => {
 			<HeaderImage />
 			<section className='container overview'>
 				<LabeledTextField
-					label='Encounter Name'
-					content={encounter.name}
+					label='Encounter Objective'
+					content={encounter.objective}
 					additionalClasses={[ 'name', 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField

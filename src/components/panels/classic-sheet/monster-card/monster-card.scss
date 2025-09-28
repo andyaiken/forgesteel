@@ -1,6 +1,6 @@
 @use '../../../pages/classic-sheet/common.scss';
 
-@mixin retainer-header-gradient($color) {
+@mixin monster-header-gradient($color) {
     --cutout-size: calc(var(--notch-size) - var(--border-size));
     background-image: linear-gradient(180deg, common.$color-medium, common.$color-medium),
         linear-gradient(180deg, common.$color-medium, common.$color-medium),
@@ -27,7 +27,7 @@
         center center;
 }
 
-#classic-sheet .hero-sheet .follower {
+main#classic-sheet .encounter-sheet .monster {
     padding: 10px;
     display: grid;
     justify-self: stretch;
@@ -50,7 +50,7 @@
 
                 margin: 2px calc(0px - var(--cutout-size)) 0;
                 padding: 16px var(--cutout-size) 0;
-                @include retainer-header-gradient(common.$color-general-monster);
+                @include monster-header-gradient(common.$color-general-monster);
             }
         }
     }
@@ -109,6 +109,7 @@
             grid-template-rows: 1fr min-content;
             align-self: baseline;
             margin: 0;
+            flex-basis: calc(100% / 5);
 
             label,
             .value {
@@ -258,8 +259,7 @@
         }
     }
 
-    .features-abilities .wrapper,
-    .advancement {
+    .features-abilities .wrapper {
         display: grid;
         grid-template-columns: min-content 1fr;
         grid-template-rows: min-content 1fr;
@@ -269,124 +269,52 @@
             margin-bottom: 10px;
         }
     }
-
-
-    .advancement-abilities {
-        display: flex;
-        flex-direction: column;
-        border-top: 1px solid common.$color-medium;
-
-        .advancement h4 {
-            grid-column-end: span 2;
-            color: #000;
-            background-color: common.$color-general-monster;
-            border-radius: 8px 8px 0 0;
-            border-bottom: 1px solid common.$color-medium;
-        }
-
-        &:last-child .ability {
-            margin-bottom: 0;
-        }
-    }
 }
 
-#classic-sheet .hero-sheet.color .follower.card {
+#classic-sheet .encounter-sheet.color .monster.card {
     &.ambusher {
         .name-wrapper {
-            @include retainer-header-gradient(common.$color-ambusher);
-        }
-        .advancement h4 {
-            background-color: common.$color-ambusher;
+            @include monster-header-gradient(common.$color-ambusher);
         }
     }
     &.artillery {
         .name-wrapper {
-            @include retainer-header-gradient(common.$color-artillery);
-        }
-        .advancement h4 {
-            background-color: common.$color-artillery;
+            @include monster-header-gradient(common.$color-artillery);
         }
     }
     &.brute {
         .name-wrapper {
-            @include retainer-header-gradient(common.$color-brute);
-        }
-        .advancement h4 {
-            background-color: common.$color-brute;
+            @include monster-header-gradient(common.$color-brute);
         }
     }
     &.controller {
         .name-wrapper {
-            @include retainer-header-gradient(common.$color-controller);
-        }
-        .advancement h4 {
-            background-color: common.$color-controller;
+            @include monster-header-gradient(common.$color-controller);
         }
     }
     &.defender {
         .name-wrapper {
-            @include retainer-header-gradient(common.$color-defender);
-        }
-        .advancement h4 {
-            background-color: common.$color-defender;
+            @include monster-header-gradient(common.$color-defender);
         }
     }
     &.harrier {
         .name-wrapper {
-            @include retainer-header-gradient(common.$color-harrier);
-        }
-        .advancement h4 {
-            background-color: common.$color-harrier;
+            @include monster-header-gradient(common.$color-harrier);
         }
     }
     &.hexer {
         .name-wrapper {
-            @include retainer-header-gradient(common.$color-hexer);
-        }
-        .advancement h4 {
-            background-color: common.$color-hexer;
+            @include monster-header-gradient(common.$color-hexer);
         }
     }
     &.mount {
         .name-wrapper {
-            @include retainer-header-gradient(common.$color-mount);
-        }
-        .advancement h4 {
-            background-color: common.$color-mount;
+            @include monster-header-gradient(common.$color-mount);
         }
     }
     &.support {
         .name-wrapper {
-            @include retainer-header-gradient(common.$color-support);
-        }
-        .advancement h4 {
-            background-color: common.$color-support;
-        }
-    }
-}
-
-#classic-sheet .hero-sheet .followers.card {
-    // @include common.striped-card;
-    .follower {
-        padding: 10px 0;
-        border-bottom: 1px solid common.$color-medium;
-
-        &:first-of-type {
-            padding-top: 0;
-        }
-
-        .name-wrapper {
-            margin: 2px 0;
-            padding: 10px 0;
-
-            h2 {
-                background-image: linear-gradient(180deg, common.$color-general-monster, transparent);
-                background-size: 100% 100%;
-                background-position: center center;
-                background-repeat: no-repeat;
-
-                border-radius: 10px 10px 0 0;
-            }
+            @include monster-header-gradient(common.$color-support);
         }
     }
 }

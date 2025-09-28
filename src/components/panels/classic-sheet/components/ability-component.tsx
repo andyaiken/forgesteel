@@ -1,7 +1,7 @@
-import { AbilitySheet } from '../../../../models/classic-sheets/hero-sheet';
+import { AbilitySheet } from '../../../../models/classic-sheets/ability-sheet';
 import { DrawSteelSymbolText } from './ds-symbol-text-component';
 import { Markdown } from '../../../controls/markdown/markdown';
-import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
+import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
 import { useMemo } from 'react';
 
 import './ability-component.scss';

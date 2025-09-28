@@ -76,6 +76,10 @@
             margin-top: -5px;
             font-size: round(1rem, 1px);
             font-weight: 350;
+
+            &.continued-in-reference {
+                margin-top: -10px;
+            }
         }
 
         blockquote, blockquote * {

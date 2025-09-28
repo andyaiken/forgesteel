@@ -1,5 +1,5 @@
 import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard, TurnOptionsReferenceCard } from '../../../panels/classic-sheet/reference/reference-cards';
-import { ExtraCards, SheetLayout } from '../../../../logic/hero-sheet/sheet-layout';
+import { ExtraCards, SheetLayout } from '../../../../logic/classic-sheet/sheet-layout';
 import { AncestryTraitsCard } from '../../../panels/classic-sheet/ancestry-traits-card/ancestry-traits-card';
 import { CareerCard } from '../../../panels/classic-sheet/career-card/career-card';
 import { ClassFeaturesCard } from '../../../panels/classic-sheet/class-features-card/class-features-card';
@@ -12,6 +12,7 @@ import { FollowersCard } from '../../../panels/classic-sheet/follower-card/follo
 import { Hero } from '../../../../models/hero';
 import { HeroHeaderCard } from '../../../panels/classic-sheet/hero-header-card/hero-header-card';
 import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
+import { HeroSheetBuilder } from '../../../../logic/hero-sheet/hero-sheet-builder';
 import { ImmunitiesWeaknessesCard } from '../../../panels/classic-sheet/immunities-weaknesses-card/immunities-weaknesses-card';
 import { InventoryCard } from '../../../panels/classic-sheet/inventory-card/inventory-card';
 import { ModifiersCard } from '../../../panels/classic-sheet/modifiers-card/modifiers-card';
@@ -23,8 +24,7 @@ import { PrimaryReferenceCard } from '../../../panels/classic-sheet/reference/pr
 import { ProjectsCard } from '../../../panels/classic-sheet/projects-card/projects-card';
 import { RetainerCard } from '../../../panels/classic-sheet/follower-card/retainer-card';
 import { RulesData } from '../../../../data/rules-data';
-import { SheetBuilder } from '../../../../logic/hero-sheet/sheet-builder';
-import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
+import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
 import { SkillsCard } from '../../../panels/classic-sheet/skills-card/skills-card';
 import { Sourcebook } from '../../../../models/sourcebook';
 import { StatsResourcesCard } from '../../../panels/classic-sheet/stats-resources-card/stats-resources-card';
@@ -43,7 +43,7 @@ export const HeroSheetPage = (props: Props) => {
 	const hero = useMemo(() => props.hero, [ props.hero ]);
 
 	const character = useMemo(
-		() => SheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options),
+		() => HeroSheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options),
 		[ hero, props.sourcebooks, props.options ]
 	);
 
@@ -70,7 +70,7 @@ export const HeroSheetPage = (props: Props) => {
 	const populateExtraCards = (character: HeroSheet): ExtraCards => {
 		const required = [
 			{
-				element: <NotesCard character={character} key='notes' />,
+				element: <NotesCard notes={character.notes} key='notes' />,
 				width: 1,
 				height: Math.max(20, SheetFormatter.countLines(character.notes, layout.cardLineLen)),
 				shown: false

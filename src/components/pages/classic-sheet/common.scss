@@ -76,6 +76,7 @@ main#classic-sheet {
         overflow: auto;
 
         label,
+        h1,
         h2,
         h3,
         h4,
@@ -85,6 +86,7 @@ main#classic-sheet {
             color: var(--color-text);
         }
 
+        h1,
         h2,
         h3,
         h4 {
@@ -271,6 +273,69 @@ main#classic-sheet {
             width: 100%;
         }
 
+        .abilities.page,
+        .extra-cards.page {
+            --gap: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--gap);
+            padding: 5px;
+
+            .card {
+                margin: 0;
+            }
+        }
+
+        .page {
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .page.row-cards-2 {
+            .card {
+                flex-basis: calc((100% - var(--gap)) / 2);
+            }
+
+            .card.wide {
+                flex-basis: 100%;
+            }
+        }
+
+        .page.row-cards-3 {
+            .card {
+                flex-basis: calc((100% - 2 * var(--gap)) / 3);
+            }
+
+            .card.wide,
+            .feature-reference {
+                flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
+            }
+
+            .feature-reference.wide {
+                flex-basis: 100%;
+            }
+        }
+
+        .page.row-cards-4 {
+
+            .card,
+            .feature-reference.single {
+                flex-basis: calc((100% - 3 * var(--gap)) / 4);
+            }
+
+            .card.wide,
+            .feature-reference {
+                flex-basis: calc(2 * ((100% - 3 * var(--gap)) / 4) + var(--gap));
+            }
+
+            .feature-reference.wide {
+                flex-basis: calc(3 * ((100% - 3 * var(--gap)) / 4) + 2 * var(--gap));
+            }
+
+            .feature-reference.extra-wide {
+                flex-basis: 100%;
+            }
+        }
         &.letter {
             .page.portrait {
                 aspect-ratio: 8.5 / 11;

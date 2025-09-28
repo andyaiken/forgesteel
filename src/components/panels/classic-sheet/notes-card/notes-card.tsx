@@ -1,27 +1,20 @@
-import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
-import { JSX } from 'react';
+import { Markdown } from '../../../controls/markdown/markdown';
 
 import './notes-card.scss';
 
 interface Props {
-	character: HeroSheet;
+	notes: string;
 }
 
 export const NotesCard = (props: Props) => {
-	const character = props.character;
-
-	const displayNotes = (notes: string): JSX.Element[] => {
-		return notes.split('\n').map((t, i) => {
-			return (
-				<p key={i}>{t}</p>
-			);
-		});
-	};
+	const notes = props.notes;
 
 	return (
 		<div className='notes card'>
 			<h2>Notes</h2>
-			{displayNotes(character.notes)}
+			<div className='content'>
+				<Markdown text={notes} />
+			</div>
 		</div>
 	);
 };

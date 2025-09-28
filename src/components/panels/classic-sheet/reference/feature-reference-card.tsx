@@ -3,7 +3,7 @@ import { Fragment, JSX } from 'react';
 import { Feature } from '../../../../models/feature';
 import { FeatureComponent } from '../components/feature-component';
 import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
-import { SheetFormatter } from '../../../../logic/hero-sheet/sheet-formatter';
+import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
 
 import './feature-reference-card.scss';
 
@@ -45,9 +45,13 @@ export const FeatureReferenceCard = (props: Props) => {
 				features.sort(SheetFormatter.sortFeatures);
 				sections.push(
 					<Fragment key={source}>
-						<li><h3>{source}</h3></li>
-						{features.map(f =>
+						{features.map((f, i) =>
 							<li key={f.id}>
+								{
+									i === 0 ?
+										<h3>{source}</h3>
+										: null
+								}
 								<FeatureComponent
 									feature={SheetFormatter.enhanceFeature(f)}
 									hero={character.hero}

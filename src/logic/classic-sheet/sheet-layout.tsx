@@ -1,6 +1,8 @@
-import { AbilitySheet, HeroSheet } from '../../models/classic-sheets/hero-sheet';
 import { Fragment, JSX } from 'react';
 import { AbilityCard } from '../../components/panels/classic-sheet/ability-card/ability-card';
+import { AbilitySheet } from '../../models/classic-sheets/ability-sheet';
+import { EncounterSheet } from '../../models/classic-sheets/encounter-sheet';
+import { HeroSheet } from '../../models/classic-sheets/hero-sheet';
 import { Options } from '../../models/options';
 import { SheetFormatter } from './sheet-formatter';
 import { SheetPageSize } from '../../enums/sheet-page-size';
@@ -276,6 +278,33 @@ export class SheetLayout {
 				<Fragment key={`${idPrefix}-${++i}`}>
 					<hr className='dashed' />
 					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId('hero-sheet', character.hero.id, `${idPrefix}-${i}`)}>
+						{cards}
+					</div>
+				</Fragment>
+			);
+		}
+		return pages;
+	};
+
+	static getMonsterCardPages = (monsterCards: FillerCard[], encounter: EncounterSheet, layout: CardPageLayout, idPrefix = 'extra') => {
+		const pages: JSX.Element[] = [];
+		let i = 0;
+		const extraCards: ExtraCards = {
+			required: monsterCards,
+			optional: []
+		};
+
+		while (extraCards.required.find(c => !c.shown)) {
+			const cards = SheetLayout.getFillerCards(layout.perRow, layout.linesY, 0, extraCards, layout);
+			if (cards.length === 0) {
+				console.warn('No cards added, but required cards still not shown!', extraCards.required);
+				break;
+			}
+			const pageClasses = [ 'extra-cards', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
+			pages.push(
+				<Fragment key={`${idPrefix}-${++i}`}>
+					<hr className='dashed' />
+					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId('encounter', encounter.id, `${idPrefix}-${i}`)}>
 						{cards}
 					</div>
 				</Fragment>

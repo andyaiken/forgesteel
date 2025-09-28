@@ -1,4 +1,4 @@
-import { AbilitySheet } from '../../../../models/classic-sheets/hero-sheet';
+import { AbilitySheet } from '../../../../models/classic-sheets/ability-sheet';
 import { Collections } from '../../../../utils/collections';
 import { DrawSteelSymbolText } from '../components/ds-symbol-text-component';
 import { Markdown } from '../../../controls/markdown/markdown';

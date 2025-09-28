@@ -1,5 +1,5 @@
-import { Button, Divider, Space } from 'antd';
-import { CopyOutlined } from '@ant-design/icons';
+import { Button, Divider, Segmented, Space } from 'antd';
+import { CopyOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { DangerButton } from '../../controls/danger-button/danger-button';
 import { Expander } from '../../controls/expander/expander';
 import { Field } from '../../controls/field/field';
@@ -7,6 +7,7 @@ import { HeaderText } from '../../controls/header-text/header-text';
 import { LogoPanel } from '../../panels/logo/logo-panel';
 import { Modal } from '../modal/modal';
 import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
+import { useTheme } from '../../../hooks/use-theme';
 
 import pbds from '../../../assets/powered-by-draw-steel.png';
 import pkg from '../../../../package.json';
@@ -20,6 +21,8 @@ interface Props {
 }
 
 export const AboutModal = (props: Props) => {
+	const { themeMode, setTheme } = useTheme();
+
 	try {
 		const clearErrors = () => {
 			props.clearErrors();
@@ -105,6 +108,17 @@ export const AboutModal = (props: Props) => {
 						<p>
 							<b>DRAW STEEL</b> © 2024 <a href='https://mcdmproductions.com/' target='_blank'>MCDM Productions, LLC.</a>
 						</p>
+						<Divider />
+						<Segmented
+							block={true}
+							value={themeMode}
+							onChange={setTheme}
+							options={[
+								{ label: 'Light', value: 'light', icon: <SunOutlined /> },
+								{ label: 'System', value: 'system', icon: <SettingOutlined /> },
+								{ label: 'Dark', value: 'dark', icon: <MoonOutlined /> }
+							]}
+						/>
 						{
 							props.errors.length > 0 ?
 								<Divider />

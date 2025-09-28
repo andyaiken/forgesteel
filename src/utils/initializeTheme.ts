@@ -5,12 +5,12 @@ export const initializeTheme = () => {
 	};
 
 	const savedThemePreference = localStorage.getItem('theme');
-	
+
 	if (savedThemePreference === 'dark' || savedThemePreference === 'light') {
 		setTheme(savedThemePreference);
 		return;
 	}
-	
+
 	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 	setTheme(prefersDark ? 'dark' : 'light');
 };

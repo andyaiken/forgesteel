@@ -32,13 +32,6 @@
 		display: flex;
 		align-items: center;
 		gap: 5px;
-
-		.theme-toggle {
-			&.ant-segmented {
-				background-color: rgba(0, 0, 0, 0.05);
-				border: 1px solid rgba(0, 0, 0, 0.1);
-			}
-		}
 	}
 }
 
@@ -49,32 +42,6 @@ html[data-theme="dark"] {
 		.navigation-buttons-panel {
 			.ant-btn-text {
 				color: rgba(0, 0, 0, 0.88);
-			}
-		}
-
-		.action-buttons-panel {
-			.theme-toggle {
-				&.ant-segmented {
-					background-color: rgba(255, 255, 255, 0.880);
-					border: 1px solid rgba(255, 255, 255, 0.2);
-					
-					.ant-segmented-item {
-						color: rgba(0, 0, 0, 0.88);
-						
-						&:hover {
-							color: rgba(0, 0, 0, 0.88);
-						}
-					}
-					
-					.ant-segmented-item-selected {
-						background-color: white;
-						color: rgba(0, 0, 0, 0.88);
-
-						&:hover {
-							color: rgba(0, 0, 0, 0.88);
-						}
-					}
-				}
 			}
 		}
 	}

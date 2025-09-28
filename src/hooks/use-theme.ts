@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type ThemeMode = 'light' | 'dark' | 'system';
 
 export const useTheme = () => {
-	const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
+	const [ themeMode, setThemeMode ] = useState<ThemeMode>(() => {
 		const saved = localStorage.getItem('theme');
 		return (saved as ThemeMode) || 'system';
 	});
@@ -20,11 +20,11 @@ export const useTheme = () => {
 		apply();
 		media.addEventListener('change', apply);
 		return () => media.removeEventListener('change', apply);
-	}, [themeMode]);
+	}, [ themeMode ]);
 
 	const setTheme = (mode: ThemeMode) => {
 		let actualTheme: 'dark' | 'light';
-		
+
 		if (mode === 'system') {
 			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 			actualTheme = prefersDark ? 'dark' : 'light';
@@ -40,6 +40,6 @@ export const useTheme = () => {
 
 	return {
 		themeMode,
-		setTheme,
+		setTheme
 	};
 };

@@ -1,10 +1,9 @@
-import { Badge, Button, Divider, Dropdown, Flex, MenuProps, Segmented, Tooltip } from 'antd';
-import { BookOutlined, MoonOutlined, PlayCircleOutlined, ReadOutlined, SunOutlined, TeamOutlined, FormatPainterOutlined, SettingOutlined } from '@ant-design/icons';
+import { Badge, Button, Divider, Flex } from 'antd';
+import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
 import { SyncStatus } from '../sync-status/sync-status';
 import { useMediaQuery } from '../../../hooks/use-media-query';
 import { useNavigation } from '../../../hooks/use-navigation';
-import { useTheme } from '../../../hooks/use-theme';
 
 import './app-footer.scss';
 
@@ -21,28 +20,6 @@ interface Props {
 export const AppFooter = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const navigation = useNavigation();
-	const { themeMode, setTheme } = useTheme();
-
-	const themeMenuItems: MenuProps['items'] = [
-		{
-			key: 'light',
-			label: 'Light',
-			icon: <SunOutlined />,
-			onClick: () => setTheme('light'),
-		},
-		{
-			key: 'system',
-			label: 'System',
-			icon: <SettingOutlined />,
-			onClick: () => setTheme('system'),
-		},
-		{
-			key: 'dark',
-			label: 'Dark',
-			icon: <MoonOutlined />,
-			onClick: () => setTheme('dark'),
-		},
-	];
 
 	try {
 		return (
@@ -74,24 +51,6 @@ export const AppFooter = (props: Props) => {
 					}
 					<div className='action-buttons-panel'>
 						<SyncStatus />
-						{isSmall ? (
-							<Dropdown menu={{ items: themeMenuItems, selectedKeys: [themeMode] }} placement='topRight'>
-								<Button icon={<FormatPainterOutlined />} />
-							</Dropdown>
-						) : (
-							<Tooltip title='Theme mode'>
-								<Segmented
-									value={themeMode}
-									onChange={setTheme}
-									options={[
-										{ label: 'Light', value: 'light', icon: <SunOutlined /> },
-										{ label: 'System', value: 'system', icon: <SettingOutlined /> },
-										{ label: 'Dark', value: 'dark', icon: <MoonOutlined /> },
-									]}
-									className='theme-toggle'
-								/>
-							</Tooltip>
-						)}
 						<Button onClick={props.showReference}>Reference</Button>
 						<Button onClick={props.showRoll}>Roll</Button>
 						<Badge dot={props.highlightAbout}>

@@ -4,6 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const werewolf: MonsterGroup = {
 	id: 'monster-group-werewolf',
@@ -48,6 +49,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 			id: 'werewolf-malice-1',
 			name: 'Blood in their Eyes',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'The werewolf gains 10 temporary Stamina and a +3 bonus to speed until the end of their turn. The werewolf can’t use this feature if they took any holy damage since ending their last turn.'
 			]
@@ -56,6 +58,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 			id: 'werewolf-malice-2',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The werewolf takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -64,6 +67,7 @@ Laypeople don’t have the luxury of a legacy, nor do they have councils that ca
 			id: 'werewolf-malice-3',
 			name: 'Moonfall',
 			cost: 10,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Until the end of the encounter, the encounter map turns to night and the moon appears impossibly huge in the sky. The werewolf can take an additional move action or maneuver on each of their turns while they have line of effect to the moon. Any creature who ends their turn with line of effect to the moon with 1 or more rage gains 2 rage'
 			]

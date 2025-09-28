@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const troll: MonsterGroup = {
 	id: 'monster-group-troll',
@@ -45,6 +46,7 @@ export const troll: MonsterGroup = {
 			id: 'troll-malice-1',
 			name: 'Foul Spew',
 			cost: 3,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'One troll acting this turn spews out a half-digested meal in a 5 × 1 line within 1 square of them. Each troll in the area regains 3 Stamina. Each enemy in the area makes a **Might test**.',
 				FactoryLogic.createPowerRoll({
@@ -59,6 +61,7 @@ export const troll: MonsterGroup = {
 			id: 'troll-malice-2',
 			name: 'Emergency Meal',
 			cost: 5,
+			icon: StatBlockIcon.Melee,
 			sections: [
 				'Each troll in the encounter can make a free strike against a creature adjacent to them, and regains Stamina equal to the damage dealt.'
 			]
@@ -67,6 +70,7 @@ export const troll: MonsterGroup = {
 			id: 'troll-malice-3',
 			name: 'Bloody Banquet',
 			cost: 7,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Each winded troll in the encounter disgorges the contents of their stomach onto the ground around them, creating a 1 burst of foul vomitus that lasts until the end of the encounter. Each non-troll who enters this area for the first time in a round or starts their turn there takes 5 acid damage. Each troll in the area has a double edge on power rolls.'
 			]

@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const goblin: MonsterGroup = {
 	id: 'monster-group-goblin',
@@ -58,7 +59,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			cost: 3,
 			sections: [
 				'Each goblin in the encounter gains a +2 bonus to speed until the end of the round.'
-			]
+			],
+			icon: StatBlockIcon.Trait
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'goblin-malice-2',
@@ -66,7 +68,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			cost: 5,
 			sections: [
 				'Each enemy in the encounter takes 1 damage for each goblin adjacent to them.'
-			]
+			],
+			icon: StatBlockIcon.AuraBurst
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'goblin-malice-3',
@@ -80,7 +83,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 					tier2: 'The creature is weakened until the mist disappears.',
 					tier3: 'No effect.'
 				})
-			]
+			],
+			icon: StatBlockIcon.SpecialArea
 		})
 	],
 	monsters: [

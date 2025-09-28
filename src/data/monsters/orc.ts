@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const orc: MonsterGroup = {
 	id: 'monster-group-orc',
@@ -54,6 +55,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			id: 'orc-malice-1',
 			name: 'Overwhelming March',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each orc shifts up to their speed, moving through enemy spaces if they can. Each enemy passed through during this movement makes a **Might test**.',
 				FactoryLogic.createPowerRoll({
@@ -68,6 +70,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			id: 'orc-malice-2',
 			name: 'Mohler Trench',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'An orc acting this turn summons 2 **mohlers** out of the ground, who dig a trench that is a 10 × 1 line within 10 squares when they appear. The trench is 2 squares deep and is difficult terrain. The trench can’t be created directly underneath creatures.'
 			]
@@ -76,6 +79,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			id: 'orc-malice-3',
 			name: 'Mohler Cavity',
 			cost: 7,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The ground shakes as a group of mohlers dig a 5 cube pit beneath an area where at least one creature is on the ground. The area is difficult terrain. Each orc in the area can shift into the nearest unoccupied space outside the pit before it is completed. Each nonorc in the area makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({

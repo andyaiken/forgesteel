@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const elfHigh: MonsterGroup = {
 	id: 'monster-group-elf-high',
@@ -69,6 +70,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			id: 'elf-high-malice-1',
 			name: 'Chaincast',
 			cost: 3,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Until the end of the round, whenever a high elf uses a magic ability, they can use it as if they were occupying the square of another high elf on the encounter map to whom they have line of effect.'
 			]
@@ -98,6 +100,7 @@ Many high elves have also collected extensive libraries of tomes over the centur
 			id: 'elf-high-malice-3',
 			name: 'In Defiance of Time',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Until the end of the round, each high elf in the encounter gains a +4 bonus to speed, and whenever a high elf uses an ability against an enemy, each high elf adjacent to that enemy can make a free strike against them.'
 			]

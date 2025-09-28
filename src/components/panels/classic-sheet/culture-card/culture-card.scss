@@ -1,0 +1,62 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+.culture.card {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: min-content min-content 1fr 1fr;
+    grid-gap: 8px 15px;
+
+    h2 {
+        grid-column-end: span 3;
+    }
+
+    .name {
+        grid-column-start: 1;
+        grid-column-end: span 3;
+        grid-row-start: 2;
+
+        @include common.border-beveled(8px, 2px, common.$color-medium);
+        @include common.font-serif;
+        text-align: center;
+        font-size: round(1.3rem, 1px);
+        line-height: 1.6rem;
+        padding: 7px 0;
+        margin: 0 50px 10px;
+        min-height: 36px;
+    }
+
+    section {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    section h4 {
+        border-bottom: 2px solid common.$color-medium;
+        font-size: round(1.2rem, 1px);
+        line-height: 1.5rem;
+    }
+
+    section.features {
+        grid-column-end: span 3;
+    }
+
+    section.languages {
+        grid-column-start: 4;
+        grid-row-start: 1;
+        grid-row-end: span 4;
+
+        margin-top: 10px;
+
+        &.bordered h3 {
+            font-size: round(1.1rem, 1px);
+            line-height: 1.1rem;
+            height: 1.1rem;
+            top: 0;
+            font-weight: 450;
+        }
+
+        ul {
+            font-size: round(1.2rem, 1px);
+        }
+    }
+}

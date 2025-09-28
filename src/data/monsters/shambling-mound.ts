@@ -4,6 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const shamblingMound: MonsterGroup = {
 	id: 'monster-group-shambling-mound',
@@ -41,14 +42,16 @@ One must also be wary of the area around a shambling mound. Their vines reach ou
 			id: 'shambling-mound-malice-1',
 			name: 'Poisoned Vines',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'The shambling mound seeps noxious residue from their vines. The next time they use their Vine Lash ability before the end of their next turn, they deal an extra 12 poison damage to each target.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'shambling-mound-malice-2',
-			name: 'Grasp and Squeeze',
+			name: 'Frenzy Lash',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'The shambling mound lashes out at each enemy within 10 squares of them, driving them back or into the air. Each target makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({
@@ -63,6 +66,7 @@ One must also be wary of the area around a shambling mound. Their vines reach ou
 			id: 'shambling-mound-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The shambling mound takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -71,6 +75,7 @@ One must also be wary of the area around a shambling mound. Their vines reach ou
 			id: 'shambling-mound-malice-4',
 			name: 'Leeching Wilds',
 			cost: 7,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Until the end of the shambling mound’s next turn, the area within 10 squares of them is difficult terrain for enemies, and any enemy in the area takes a bane on power rolls. Any enemy who starts their turn in the area takes 4 acid damage, and the shambling mound regains an equal amount of Stamina.'
 			]

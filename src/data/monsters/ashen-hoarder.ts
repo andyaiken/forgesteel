@@ -6,6 +6,7 @@ import { DamageType } from '../../enums/damage-type';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const ashenHoarder: MonsterGroup = {
 	id: 'monster-group-ashen-hoarder',
@@ -36,6 +37,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 			id: 'ashen-hoarder-malice-1',
 			name: 'Relentless Strikes',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'The ashen hoarder moves up to their speed and can make a free strike against two targets.'
 			]
@@ -44,6 +46,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 			id: 'ashen-hoarder-malice-2',
 			name: 'Blade Wall',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The ashen hoarder summons a 10 wall of bones and blades into unoccupied squares within 5 squares of them. Each square of the wall has 5 Stamina. An enemy who comes adjacent to the wall for the first time in a round or starts their turn there takes 3 damage.'
 			]
@@ -52,6 +55,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 			id: 'ashen-hoarder-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The ashen hoarder takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -60,6 +64,7 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 			id: 'ashen-hoarder-malice-4',
 			name: 'Bone Storm',
 			cost: 7,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The ashen hoarder launches bone lances into the air, raining them down on enemies and impaling those unlucky enough to be on the receiving end. Each enemy within 20 squares of the ashen hoarder makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({

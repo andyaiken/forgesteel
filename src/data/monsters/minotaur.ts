@@ -5,6 +5,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const minotaur: MonsterGroup = {
 	id: 'monster-group-minotaur',
@@ -41,6 +42,7 @@ New minotaurs were born, and decades later, hundreds charged out of the maze tog
 			id: 'minotaur-malice-1',
 			name: 'Bull Rush',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			repeatable: true,
 			sections: [
 				'For each 3 Malice spent, one minotaur acting this turn gains a +4 bonus to speed and ignores difficult terrain until the start of their next turn.'
@@ -50,6 +52,7 @@ New minotaurs were born, and decades later, hundreds charged out of the maze tog
 			id: 'minotaur-malice-2',
 			name: 'Cut the… Nonsense!',
 			cost: 5,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'One minotaur acting this turn halves any damage they take, and can use the Knockback maneuver as a free triggered action whenever an enemy comes adjacent to them, all until the start of their next turn.'
 			]
@@ -58,6 +61,7 @@ New minotaurs were born, and decades later, hundreds charged out of the maze tog
 			id: 'minotaur-malice-3',
 			name: 'Bullseye',
 			cost: 7,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'All minotaurs in the encounter fill the area around them with psychic impressions of feeling lost and isolated. Each enemy within 5 squares of a minotaur is teleported up to 5 squares and makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({

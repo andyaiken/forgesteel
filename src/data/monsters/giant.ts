@@ -6,6 +6,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const giant: MonsterGroup = {
 	id: 'monster-group-giant',
@@ -94,6 +95,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			id: 'giant-malice-2',
 			name: 'Bellow',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Each giant in the encounter takes a deep breath and yells, pushing each creature within 3 squares of them up to 10 squares. A creature who can be pushed by more than one giant is pushed by one giant of your choice.'
 			]
@@ -102,6 +104,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			id: 'giant-malice-3',
 			name: 'Titanic Tear',
 			cost: 7,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'A giant creates a fissure along the ground, either in a 15 × 2 line within 1 or a 10 × 3 line within 2, and that opens up to a depth of 6 squares. Each giant in the area can shift into the nearest unoccupied space outside the fissure. Each non-giant in the area makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({

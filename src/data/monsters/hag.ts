@@ -4,6 +4,7 @@ import { Characteristic } from '../../enums/characteristic';
 import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const hag: MonsterGroup = {
 	id: 'monster-group-hag',
@@ -45,6 +46,7 @@ Adding insult to injury, those who deal with hags almost always discover the pro
 			id: 'hag-malice-1',
 			name: 'Casting Curses and Bodies',
 			cost: 3,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'The hag utters terrible words that push each enemy within 2 squares of them up to 3 squares.'
 			]
@@ -73,6 +75,7 @@ Adding insult to injury, those who deal with hags almost always discover the pro
 			id: 'hag-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The hag takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]

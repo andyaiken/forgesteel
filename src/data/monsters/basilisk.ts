@@ -6,6 +6,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const basilisk: MonsterGroup = {
 	id: 'monster-group-basilisk',
@@ -45,6 +46,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 			id: 'basilisk-malice-1',
 			name: 'Stone Swim',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			repeatable: true,
 			sections: [
 				'A basilisk acting this turn can burrow until the start of their next turn, and moves up to their speed. They have damage immunity 2 while underground. The basilisk can burrow through stone, but can’t drag other creatures underground when they do so. At the start of each of the basilisk’s turns, the Director can spend 1 Malice to let the basilisk continue burrowing.'
@@ -76,6 +78,7 @@ Some creatures keep basilisks not for their terrifying abilities, but for their 
 			id: 'basilisk-malice-3',
 			name: 'Walleye',
 			cost: 7,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'A basilisk spews reflective spittle across an adjacent vertical surface in a 3-square-by-3-square area. The basilisk can use their Petrifying Eye Beams ability to target a square in the area, causing the area and distance of that ability to become a 20 × 3 line within 1 square of the wall.'
 			]

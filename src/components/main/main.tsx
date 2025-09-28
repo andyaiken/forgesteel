@@ -1147,6 +1147,17 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const exportPlaybookElementPdf = (kind: PlaybookElementKind, element: Element, resolution: 'standard' | 'high') => {
+		setSpinning(true);
+		const pdfTitle = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+		const pageIds: string[] = [];
+		document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+		Utils.elementsToPdf(pageIds, pdfTitle, options.classicSheetPageSize, resolution)
+			.then(() => {
+				setSpinning(false);
+			});
+	};
+
 	const startPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
 		const sessionCopy = Utils.copy(session);
 		let e: Element;
@@ -1672,6 +1683,7 @@ export const Main = (props: Props) => {
 									importAdventurePackage={importAdventurePackage}
 									deleteElement={deletePlaybookElement}
 									exportElement={exportPlaybookElement}
+									exportElementPdf={exportPlaybookElementPdf}
 									startElement={startPlaybookElement}
 								/>
 							}

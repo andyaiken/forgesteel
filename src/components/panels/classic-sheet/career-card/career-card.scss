@@ -1,0 +1,43 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+.hero-sheet:not(#force) {
+    .career.card,
+    .complication.card {
+        display: grid;
+        grid-template-rows: min-content min-content 1fr 1fr;
+
+        .name {
+            @include common.border-beveled(8px, 2px, common.$color-medium);
+            @include common.font-serif;
+            text-align: center;
+            font-size: round(1.3rem, 1px);
+            line-height: 1.6rem;
+            padding: 7px 0;
+            margin: 10px 25px 20px;
+            min-height: 36px;
+        }
+
+        p {
+            font-size: round(1.1rem, 1px);
+            margin: 2px;
+        }
+
+        .benefit, 
+        .drawback {
+            p:first-of-type {
+                margin-top: -7px;
+            }
+        }
+
+        .inciting-incident {
+            h4 {
+                font-weight: 450;
+                margin-top: -5px;
+                margin-left: 25px;
+                margin-right: 25px;
+                padding-bottom: 1px;
+                border-bottom: 1px solid common.$color-light;
+            }
+        }
+    }
+}

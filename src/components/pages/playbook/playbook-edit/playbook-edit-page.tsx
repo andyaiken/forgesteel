@@ -213,10 +213,23 @@ export const PlaybookEditPage = (props: Props) => {
 								: null
 						}
 						{
-							(kind === 'encounter') || (kind === 'tactical-map') ?
+							(kind === 'encounter') ?
 								<Popover
 									trigger='click'
-									content={<OptionsPanel mode={kind} options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+									content={<OptionsPanel mode='encounter-modern' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+								>
+									<Button icon={<SettingOutlined />}>
+										Options
+										<DownOutlined />
+									</Button>
+								</Popover>
+								: null
+						}
+						{
+							(kind === 'tactical-map') ?
+								<Popover
+									trigger='click'
+									content={<OptionsPanel mode={kind} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 								>
 									<Button icon={<SettingOutlined />}>
 										Options

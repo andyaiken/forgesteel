@@ -7,6 +7,7 @@ import { FactoryLogic } from '../../logic/factory-logic';
 import { MonsterGroup } from '../../models/monster-group';
 import { MonsterOrganizationType } from '../../enums/monster-organization-type';
 import { MonsterRoleType } from '../../enums/monster-role-type';
+import { StatBlockIcon } from '../../enums/stat-block-icon';
 
 export const devil: MonsterGroup = {
 	id: 'monster-group-devil',
@@ -72,6 +73,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			id: 'devil-malice-1',
 			name: 'Bureucratic Tape',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'One devil acting this turn uses a signature ability against an adjacent creature. On a tier 3 outcome, the target of the ability has a double bane on strikes (save ends).'
 			]
@@ -80,6 +82,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			id: 'devil-malice-2',
 			name: 'Underhanded Tactics',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'One or two devils can teleport to a space adjacent to one or more creatures who aren’t hidden and make a free strike. For each 2 additional Malice spent on this feature, one additional devil can teleport.'
 			]
@@ -88,6 +91,7 @@ The following are samples of the wonders that a devil can offer—to only the mo
 			id: 'devil-malice-3',
 			name: 'Read the Small Print',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Each enemy in the encounter is subject to a bad deal proposed by the devils. An enemy must choose between having damage weakness 5 or taking a bane on power rolls. The bad deal lasts until the end of the encounter.'
 			]

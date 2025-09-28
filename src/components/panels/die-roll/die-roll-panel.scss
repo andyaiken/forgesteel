@@ -35,7 +35,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.die-roll-panel {
 		.result-row {
 			.ant-statistic {

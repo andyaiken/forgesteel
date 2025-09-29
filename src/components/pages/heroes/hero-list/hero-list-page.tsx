@@ -83,114 +83,109 @@ export const HeroListPage = (props: Props) => {
 		);
 	};
 
-	try {
-		const exampleHeroes = [
-			HeroData.dwarfFury,
-			HeroData.highElfTactician,
-			HeroData.humanCensor,
-			HeroData.humanNull,
-			HeroData.humanTalent,
-			HeroData.orcConduit,
-			HeroData.polderElementalist,
-			HeroData.polderShadow,
-			HeroData.wodeElfTroubadour
-		];
+	const exampleHeroes = [
+		HeroData.dwarfFury,
+		HeroData.highElfTactician,
+		HeroData.humanCensor,
+		HeroData.humanNull,
+		HeroData.humanTalent,
+		HeroData.orcConduit,
+		HeroData.polderElementalist,
+		HeroData.polderShadow,
+		HeroData.wodeElfTroubadour
+	];
 
-		return (
-			<ErrorBoundary>
-				<div className='hero-list-page'>
-					<AppHeader subheader='Heroes'>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-						<div className='divider' />
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ width: '500px' }}>
-									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
-										Create a New Hero
+	return (
+		<ErrorBoundary>
+			<div className='hero-list-page'>
+				<AppHeader subheader='Heroes'>
+					<Input
+						name='search'
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
+					<div className='divider' />
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ width: '500px' }}>
+								<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
+									Create a New Hero
+								</Button>
+								<div className='ds-text centered-text'>or</div>
+								<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
+									<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
+										Generate a Random Hero
 									</Button>
-									<div className='ds-text centered-text'>or</div>
-									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
-										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
-											Generate a Random Hero
+									<Upload
+										style={{ width: '100%' }}
+										accept='.drawsteel-hero,.ds-hero'
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const hero = JSON.parse(json) as Hero;
+													props.importHero(hero, currentTab);
+												});
+											return false;
+										}}
+									>
+										<Button block={true} icon={<DownloadOutlined />}>
+											Import a Hero File
 										</Button>
-										<Upload
-											style={{ width: '100%' }}
-											accept='.drawsteel-hero,.ds-hero'
-											showUploadList={false}
-											beforeUpload={file => {
-												file
-													.text()
-													.then(json => {
-														const hero = JSON.parse(json) as Hero;
-														props.importHero(hero, currentTab);
-													});
-												return false;
-											}}
-										>
-											<Button block={true} icon={<DownloadOutlined />}>
-												Import a Hero File
-											</Button>
-										</Upload>
-									</div>
-									<div className='ds-text centered-text'>or start with a premade example:</div>
-									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
-										{
-											exampleHeroes.map(h => (
-												<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
-													<HeroInfo hero={h} />
-												</Button>
-											))
-										}
-									</div>
+									</Upload>
 								</div>
-							)}
-						>
-							<Button type='primary'>
-								Add
-								<DownOutlined />
-							</Button>
-						</Popover>
-						{
-							getHeroes(currentTab).length > 1 ?
-								<>
-									<div className='divider' />
-									<Button onClick={() => props.showParty(currentTab)}>
-										Party Overview
-									</Button>
-								</>
-								: null
-						}
-					</AppHeader>
-					<div className='hero-list-page-content'>
-						<Tabs
-							activeKey={currentTab}
-							items={folders.map(f => ({
-								key: f,
-								label: (
-									<div className='section-header'>
-										<div className='section-title'>{f || 'Heroes'}</div>
-										<div className='section-count'>{getHeroes(f).length}</div>
-									</div>
-								),
-								children: getHeroesSection(getHeroes(f))
-							}))}
-							onChange={navigation.goToHeroList}
-						/>
-					</div>
-					<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+								<div className='ds-text centered-text'>or start with a premade example:</div>
+								<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
+									{
+										exampleHeroes.map(h => (
+											<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
+												<HeroInfo hero={h} />
+											</Button>
+										))
+									}
+								</div>
+							</div>
+						)}
+					>
+						<Button type='primary'>
+							Add
+							<DownOutlined />
+						</Button>
+					</Popover>
+					{
+						getHeroes(currentTab).length > 1 ?
+							<>
+								<div className='divider' />
+								<Button onClick={() => props.showParty(currentTab)}>
+									Party Overview
+								</Button>
+							</>
+							: null
+					}
+				</AppHeader>
+				<div className='hero-list-page-content'>
+					<Tabs
+						activeKey={currentTab}
+						items={folders.map(f => ({
+							key: f,
+							label: (
+								<div className='section-header'>
+									<div className='section-title'>{f || 'Heroes'}</div>
+									<div className='section-count'>{getHeroes(f).length}</div>
+								</div>
+							),
+							children: getHeroesSection(getHeroes(f))
+						}))}
+						onChange={navigation.goToHeroList}
+					/>
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+			</div>
+		</ErrorBoundary>
+	);
 };

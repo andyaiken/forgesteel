@@ -1,0 +1,291 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .hero-sheet .ability.card {
+    // @include common.striped-card;
+
+    padding: 10px;
+    display:grid;
+    justify-self: stretch;
+
+    p strong,
+    li strong {
+        @include common.font-slab;
+        font-weight: 450;
+    }
+
+    section.bordered {
+        @include common.border-beveled-fancy-curve(10px, 2px, common.$color-light);
+        margin-bottom: 0;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    h2 {
+        margin-top: -8px;
+        @include common.divider-fancy-2(common.$color-medium);
+        display: grid;
+        grid-template-columns: 1fr min-content;
+
+        .ability-name,
+        .cost {
+            @include common.font-slab;
+        }
+
+        .cost {
+            display: block;
+            float: right;
+            border: 2px solid common.$color-medium;
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            margin-top: -10px;
+            text-align: center;
+            font-size: 22px;
+            padding-top: 2px;
+
+            &::after {
+                content: "Cost";
+                display: inline-block;
+                position: relative;
+                font-size: 9px;
+                line-height: 9px;
+                height: 9px;
+                font-weight: 450;
+                bottom: 9px;
+                background: #fff;
+                padding: 1px 2px;
+                border-radius: 6px;
+                border-bottom: 1px solid #fff;
+            }
+        }
+    }
+
+    p.description {
+        font-style: italic;
+        margin: 0 0 3px;
+        padding-bottom: 2px;
+
+        background-image: linear-gradient(90deg, common.$color-medium 50%, transparent);
+        background-size: 100% 1px;
+        background-position: left bottom;
+        background-repeat: no-repeat;
+    }
+
+    .stats {
+        display: grid;
+        place-content: stretch;
+        grid-template-rows: min-content min-content;
+        margin-bottom: 15px;
+
+        * {
+            @include common.font-slab;
+            font-size: 16px;
+            line-height: 20px;
+            text-wrap: nowrap;
+        }
+
+        .keywords-action-type * {
+            font-weight: 450;
+        }
+
+        .keywords-action-type .keywords {
+            text-wrap: wrap;
+        }
+
+        .keywords-action-type,
+        .distance-target {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .action-type {
+            text-align: right;
+        }
+
+        .distance, 
+        .target {
+            display: flex;
+            align-items: baseline;
+            img {
+                height: 17px;
+                margin-right: 3px;
+                opacity: 0.8;
+                transform: translateY(2px);
+            }
+
+            img, span {
+                font-weight: 350;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+
+        .distance span {
+            text-wrap: wrap;
+        }
+    }
+
+    .action-qualifier {
+        text-align: right;
+        @include common.font-serif;
+        font-style: italic;
+        font-size: 13px;
+        font-weight: 300;
+        margin-top: -8px;
+    }
+
+    .power-roll {
+        display: grid;
+        grid-template-rows: min-content 1fr;
+
+        font-size: 15px;
+
+        .power, .symbol-text {
+            @include common.font-slab;
+        }
+        .power  {
+            font-weight: 600;
+            margin: 0 10px 10px;
+            > span {
+                display: inline-block;
+                font-size: 17px;
+
+                border-bottom: 1px solid common.$color-medium;
+                min-width: 50%;
+
+                .characteristic {
+                    transform: translateY(2.5px);
+                    font-size: 15px;
+                    color: var(--color-text-lightest);
+                }
+            }
+        }
+
+        .roll-tiers {
+            display: grid;
+            grid-template-rows: min-content min-content min-content;
+            margin: 0 10px 10px;
+
+            .tier {
+                display: grid;
+                grid-template-columns: min-content 1fr;
+                margin: 5px 0;
+
+                .range {
+                    margin-top: 2px;
+                    width: 50px;
+                    height: 18px;
+                }
+
+                .effect {
+                    border-bottom: 2px solid common.$color-light;
+                    padding-bottom: 5px;
+                }
+            }
+
+        }
+    }
+
+    .trigger {
+        font-size: 15px;
+        label {
+            font-weight: 450;
+        }
+    }
+    .effect {
+        h4 {
+            text-align: left;
+            font-weight: 450;
+            margin:0 10px 5px;
+        }
+    }
+    .ability-effect {
+        font-size: 15px;
+
+        ul {
+            margin-left: 10px;
+        }
+
+        .potency {
+            @include common.font-potency();
+            display: inline-block;
+            transform: translateY(2px);
+        }
+    }
+}
+
+#classic-sheet .hero-sheet .ability.card {
+    &.no-action h2 {
+        @include common.divider-fancy(common.$color-medium);
+    }
+    &.maneuver h2 {
+        @include common.divider-fancy-4(common.$color-medium);
+    }
+    &.triggered-action h2,
+    &.free-triggered-action h2 {
+        @include common.divider-fancy-5(common.$color-medium);
+    }
+    &.free-strike h2 {
+        @include common.divider-fancy-3(common.$color-medium);
+    }
+}
+
+#classic-sheet .hero-sheet.color .ability.card {
+    @mixin color-ability-card($color) {
+        section.bordered {
+            @include common.border-beveled(10px, 2px, $color);
+
+            h3,
+            .action-type {
+                color: $color;
+            }
+            h3 {
+                font-weight: 450;
+            }
+        }
+    }
+
+    &.main-action {
+        @include color-ability-card(common.$color-main-action);
+        h2 {
+            @include common.divider-fancy-2(common.$color-main-action);
+        }
+    }
+
+    &.maneuver,
+    &.free-maneuver {
+        @include color-ability-card(common.$color-maneuver);
+        h2 {
+            @include common.divider-fancy-4(common.$color-maneuver);
+        }
+    }
+
+    &.triggered-action,
+    &.free-triggered-action {
+        @include color-ability-card(common.$color-triggered-action);
+        h2 {
+            @include common.divider-fancy-5(common.$color-triggered-action);
+        }
+    }
+
+    &.free-strike {
+        // Fix for the gray not looking right in the border label
+        section.bordered h3 {
+            color: var(--color-text-lighter);
+        }
+    }
+
+    &.performance {
+        @include color-ability-card(common.$color-performance);
+        h2 {
+            @include common.divider-fancy-2(common.$color-performance);
+        }
+    }
+    &.move-action {
+        @include color-ability-card(common.$color-move);
+        h2 {
+            @include common.divider-fancy-3(common.$color-move);
+        }
+    }
+}

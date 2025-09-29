@@ -1,0 +1,253 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .feature {
+    background: transparent;
+
+    .feature-line,
+    .feature-title,
+    .feature-iteration {
+        &, & * {
+            @include common.font-slab();
+
+            strong {
+                font-weight: 500;
+            }
+        }
+    }
+
+    .feature-line,
+    .feature-title,
+    .feature-title span {
+        color: var(--color-text);
+        line-height: 19px;
+        font-size: 17px;
+        margin-bottom: 2px;
+        font-weight: 500;
+
+        img {
+            width: 15px;
+            height: 15px;
+            opacity: 0.85;
+            margin-right: 5px;
+        }
+    }
+
+    .feature-title {
+        span, img {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .type {
+            float: right;
+            font-weight: 350;
+        }
+    }
+
+    .feature-title {
+        span, img {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .type {
+            float: right;
+            font-weight: 350;
+        }
+    }
+
+    .feature-line {
+        line-height: 16px;
+        font-size: 15px;
+    }
+
+    .feature-description,
+    .feature-description * {
+        @include common.font-serif;
+        color: var(--color-text-lighter);
+        font-size: 15px;
+        line-height: 18px;
+        font-weight: 400;
+        margin-bottom: 10px;
+        margin-top: 5px;
+
+        p > em {
+            display: block;
+            margin-top: -5px;
+            font-size: round(1rem, 1px);
+            font-weight: 350;
+
+            &.continued-in-reference {
+                margin-top: -10px;
+            }
+        }
+
+        blockquote, blockquote * {
+            font-style: italic;
+        }
+
+        .potency {
+            @include common.font-potency();
+            display: inline-block;
+            transform: translateY(1px);
+        }
+    }
+
+    .feature-description .package-content-name {
+        @include common.font-slab();
+        font-weight: 500;
+    }
+
+    ul.feature-description {
+        margin-left: 20px;
+        padding-top: 3px;
+        li {
+            margin-bottom: 3px;
+        }
+    }
+
+    &:has(.feature-iteration) {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 3px 0;
+        margin-top: 2px;
+        margin-bottom: 2px;
+
+        .feature-title {
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .flex-break {
+            flex-basis: 100%;
+            width: 0;
+        }
+        .feature-description {
+            margin-bottom: 0;
+        }
+
+        // .feature-line,
+        .feature-iteration {
+            text-wrap: nowrap;
+        }
+    }
+
+    .feature-iteration {
+        margin-left: 10px;
+        border: 1px solid common.$color-light;
+        background: common.$color-extra-light;
+        border-radius: 3px;
+        padding: 0 3px 1px;
+        opacity: 0.8;
+        
+        line-height: 17px;
+        font-size: 14px;
+
+        &.no-selection {
+            @include common.font-serif;
+            font-style: italic;
+        }
+    }
+
+    table, th, td {
+        border: 0;
+    }
+    th {
+        font-weight: 450;
+        border-bottom: 1px solid common.$color-light;
+    }
+}
+
+#classic-sheet .feature-malice {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    margin-bottom: 10px;
+
+    .cost {
+        display: block;
+        @include common.font-slab;
+        border: 2px solid common.$color-medium;
+        height: 36px;
+        width: 36px;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 22px;
+        margin-right: 5px;
+
+        &::after {
+            content: "Cost";
+            display: inline-block;
+            position: relative;
+            font-size: 10px;
+            line-height: 10px;
+            height: 10px;
+            font-weight: 450;
+            bottom: 18px;
+            background: #fff;
+            padding: 1px 4px;
+            border-radius: 6px;
+            border-bottom: 1px solid #fff;
+        }
+    }
+    .header img.icon {
+        transform: translateY(2px);
+    }
+
+    label {
+        font-size: round(1.1rem, 1px);
+        font-weight: 450;
+    }
+
+    p:first-of-type {
+        margin-top: 2px;
+    }
+
+    p:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .power-roll .header {
+        @include common.font-slab;
+        font-weight: 600;
+        margin: 5px 10px;
+    }
+}
+
+li .feature ul.feature-description {
+    margin-left: 5px;
+}
+
+.feature-reference .feature .feature-description table td:first-child {
+    text-wrap: nowrap;
+    vertical-align: text-top;
+
+    img {
+        width: 50px;
+        height: 18px;
+        margin: 1px 0;
+    }
+}
+
+#classic-sheet .color .feature {
+    .type {
+        font-weight: 380;
+        &.main-action {
+            color: common.$color-main-action;
+        }
+        &.triggered-action,
+        &.free-triggered-action {
+            color: common.$color-triggered-action;
+        }
+        &.maneuver,
+        &.free-maneuver {
+            color: common.$color-maneuver;
+        }
+        &.performance {
+            color: common.$color-performance;
+        }
+        &.move {
+            color: common.$color-move;
+        }
+    }
+}

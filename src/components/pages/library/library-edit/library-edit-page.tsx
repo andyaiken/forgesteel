@@ -142,6 +142,12 @@ export const LibraryEditPage = (props: Props) => {
 	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
 
+	const applyChanges = (element: Element) => {
+		const copy = Utils.copy(element);
+		setElement(copy);
+		setDirty(true);
+	};
+
 	const getSimilarMonsters = (monster: Monster) => {
 		const monsters = SourcebookLogic
 			.getSimilarMonsters(props.sourcebooks, monster, props.options)
@@ -298,10 +304,7 @@ export const LibraryEditPage = (props: Props) => {
 						ancestry={element as Ancestry}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={a => {
-							setElement(a);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'culture':
@@ -310,10 +313,7 @@ export const LibraryEditPage = (props: Props) => {
 						key={element.id}
 						culture={element as Culture}
 						sourcebooks={props.sourcebooks}
-						onChange={c => {
-							setElement(c);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'career':
@@ -323,10 +323,7 @@ export const LibraryEditPage = (props: Props) => {
 						career={element as Career}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={c => {
-							setElement(c);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'class':
@@ -337,10 +334,7 @@ export const LibraryEditPage = (props: Props) => {
 							heroClass={element as HeroClass}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
-							onChange={c => {
-								setElement(c);
-								setDirty(true);
-							}}
+							onChange={applyChanges}
 							onEditSubClass={sc => navigation.goToLibraryEdit(kind!, sourcebookID!, element.id, sc.id)}
 						/>
 					);
@@ -360,8 +354,7 @@ export const LibraryEditPage = (props: Props) => {
 								if (index !== -1) {
 									copy.subclasses[index] = sc;
 								}
-								setElement(copy);
-								setDirty(true);
+								applyChanges(copy);
 							}}
 						/>
 					);
@@ -373,10 +366,7 @@ export const LibraryEditPage = (props: Props) => {
 						subClass={element as SubClass}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={c => {
-							setElement(c);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'complication':
@@ -386,10 +376,7 @@ export const LibraryEditPage = (props: Props) => {
 						complication={element as Complication}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={c => {
-							setElement(c);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'domain':
@@ -399,10 +386,7 @@ export const LibraryEditPage = (props: Props) => {
 						domain={element as Domain}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={d => {
-							setElement(d);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'kit':
@@ -412,10 +396,7 @@ export const LibraryEditPage = (props: Props) => {
 						kit={element as Kit}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={k => {
-							setElement(k);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'perk':
@@ -425,11 +406,7 @@ export const LibraryEditPage = (props: Props) => {
 						feature={element as Perk}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={perk => {
-							const copy = Utils.copy(perk) as Perk;
-							setElement(copy);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'terrain':
@@ -439,10 +416,7 @@ export const LibraryEditPage = (props: Props) => {
 						terrain={element as Terrain}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={t => {
-							setElement(t);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'title':
@@ -452,10 +426,7 @@ export const LibraryEditPage = (props: Props) => {
 						title={element as Title}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={t => {
-							setElement(t);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'item':
@@ -465,10 +436,7 @@ export const LibraryEditPage = (props: Props) => {
 						item={element as Item}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={i => {
-							setElement(i);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'imbuement':
@@ -478,10 +446,7 @@ export const LibraryEditPage = (props: Props) => {
 						imbuement={element as Imbuement}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={i => {
-							setElement(i);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'monster-group':
@@ -492,10 +457,7 @@ export const LibraryEditPage = (props: Props) => {
 							monsterGroup={element as MonsterGroup}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
-							onChange={mg => {
-								setElement(mg);
-								setDirty(true);
-							}}
+							onChange={applyChanges}
 							onEditMonster={m => navigation.goToLibraryEdit(kind!, sourcebookID!, element.id, m.id)}
 						/>
 					);
@@ -517,8 +479,7 @@ export const LibraryEditPage = (props: Props) => {
 								if (index !== -1) {
 									copy.monsters[index] = monster;
 								}
-								setElement(copy);
-								setDirty(true);
+								applyChanges(copy);
 							}}
 						/>
 					);
@@ -557,26 +518,26 @@ export const LibraryEditPage = (props: Props) => {
 		switch (kind) {
 			case 'ancestry':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<AncestryPanel ancestry={element as Ancestry} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'culture':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<CulturePanel culture={element as Culture} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'career':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<CareerPanel career={element as Career} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'class':
 				if (!subElementID) {
 					return (
-						<SelectablePanel>
+						<SelectablePanel key={JSON.stringify(element)}>
 							<ClassPanel heroClass={element as HeroClass} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
@@ -585,57 +546,57 @@ export const LibraryEditPage = (props: Props) => {
 					const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
 
 					return (
-						<SelectablePanel>
+						<SelectablePanel key={JSON.stringify(subclass)}>
 							<SubclassPanel subclass={subclass} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				}
 			case 'complication':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<ComplicationPanel complication={element as Complication} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'domain':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<DomainPanel domain={element as Domain} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'kit':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<KitPanel kit={element as Kit} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'perk':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<PerkPanel perk={element as Perk} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'subclass':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<SubclassPanel subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'terrain':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<TerrainPanel terrain={element as Terrain} showCustomizations={true} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'title':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<TitlePanel title={element as Title} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'item':
 				return (
 					<>
-						<SelectablePanel>
+						<SelectablePanel key={JSON.stringify(element)}>
 							<ItemPanel item={element as Item} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
@@ -650,7 +611,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'imbuement':
 				return (
 					<>
-						<SelectablePanel>
+						<SelectablePanel key={JSON.stringify(element)}>
 							<ImbuementPanel imbuement={element as Imbuement} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
@@ -665,7 +626,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'monster-group':
 				if (!subElementID) {
 					return (
-						<SelectablePanel>
+						<SelectablePanel key={JSON.stringify(element)}>
 							<MonsterGroupPanel monsterGroup={element as MonsterGroup} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
@@ -680,8 +641,8 @@ export const LibraryEditPage = (props: Props) => {
 									key: '1',
 									label: 'Preview',
 									children: (
-										<SelectablePanel>
-											<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
+										<SelectablePanel key={JSON.stringify(monster)}>
+											<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
 										</SelectablePanel>
 									)
 								},

@@ -462,17 +462,17 @@ export class FactoryLogic {
 		};
 	};
 
-	static createFollower = (): Follower => {
+	static createFollower = (type: FollowerType): Follower => {
 		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			type: FollowerType.Artisan,
+			type: type,
 			characteristics: [
-				{ characteristic: Characteristic.Might, value: 1 },
+				{ characteristic: Characteristic.Might, value: type === FollowerType.Artisan ? 1 : 0 },
 				{ characteristic: Characteristic.Agility, value: 0 },
 				{ characteristic: Characteristic.Reason, value: 1 },
-				{ characteristic: Characteristic.Intuition, value: 0 },
+				{ characteristic: Characteristic.Intuition, value: type === FollowerType.Sage ? 1 : 0 },
 				{ characteristic: Characteristic.Presence, value: 0 }
 			],
 			skills: [],

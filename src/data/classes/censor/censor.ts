@@ -262,7 +262,7 @@ You can choose only one free triggered action option at a time, even if multiple
 					name: 'Focused Wrath',
 					tag: 'start 2',
 					trigger: 'Start of your turn',
-					value: '2',
+					value: '3',
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

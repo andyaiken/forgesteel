@@ -24,7 +24,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.health-panel {
 		.toggle-button {
 			background-color: rgb(0, 0, 0);

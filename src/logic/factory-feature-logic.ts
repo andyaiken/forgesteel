@@ -1,23 +1,25 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '@/models/feature';
-import { Ability } from '@/models/ability';
-import { AbilityKeyword } from '@/enums/ability-keyword';
-import { Characteristic } from '@/enums/characteristic';
-import { ConditionType } from '@/enums/condition-type';
-import { DamageModifier } from '@/models/damage-modifier';
-import { DamageType } from '@/enums/damage-type';
-import { FeatureAddOnType } from '@/enums/feature-addon-type';
-import { FeatureField } from '@/enums/feature-field';
-import { FeatureType } from '@/enums/feature-type';
-import { Follower } from '@/models/follower';
-import { Format } from '@/utils/format';
-import { FormatLogic } from '@/logic/format-logic';
-import { ItemType } from '@/enums/item-type';
-import { KitArmor } from '@/enums/kit-armor';
-import { KitWeapon } from '@/enums/kit-weapon';
-import { PerkList } from '@/enums/perk-list';
-import { PowerRoll } from '@/models/power-roll';
-import { SkillList } from '@/enums/skill-list';
-import { Summon } from '@/models/summon';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSize, FeatureSkill, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '../models/feature';
+import { Ability } from '../models/ability';
+import { AbilityKeyword } from '../enums/ability-keyword';
+import { Characteristic } from '../enums/characteristic';
+import { ConditionType } from '../enums/condition-type';
+import { DamageModifier } from '../models/damage-modifier';
+import { DamageType } from '../enums/damage-type';
+import { FeatureAddOnType } from '../enums/feature-addon-type';
+import { FeatureField } from '../enums/feature-field';
+import { FeatureType } from '../enums/feature-type';
+import { Fixture } from '../models/fixture';
+import { Follower } from '../models/follower';
+import { Format } from '../utils/format';
+import { FormatLogic } from './format-logic';
+import { ItemType } from '../enums/item-type';
+import { KitArmor } from '../enums/kit-armor';
+import { KitWeapon } from '../enums/kit-weapon';
+import { PerkList } from '../enums/perk-list';
+import { PowerRoll } from '../models/power-roll';
+import { SkillList } from '../enums/skill-list';
+import { StatBlockIcon } from '../enums/stat-block-icon';
+import { Summon } from '../models/summon';
 
 export class FactoryFeatureLogic {
 	create = (data: { id: string, name: string, description: string }): FeatureText => {
@@ -258,6 +260,18 @@ export class FactoryFeatureLogic {
 		};
 	};
 
+	createFixture = (data: { fixture: Fixture }): FeatureFixture => {
+		return {
+			id: data.fixture.id,
+			name: data.fixture.name,
+			description: data.fixture.description,
+			type: FeatureType.Fixture,
+			data: {
+				fixture: data.fixture
+			}
+		};
+	};
+
 	createFollower = (data: { id: string, name?: string, description?: string, follower: Follower }): FeatureFollower => {
 		return {
 			id: data.id,
@@ -357,7 +371,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createMalice = (data: { id: string, name: string, cost: number, repeatable?: boolean, sections: (string | PowerRoll)[], echelon?: number }): FeatureMalice => {
+	createMalice = (data: { id: string, name: string, cost: number, repeatable?: boolean, sections: (string | PowerRoll)[], echelon?: number, icon?: StatBlockIcon }): FeatureMalice => {
 		return {
 			id: data.id,
 			name: data.name,
@@ -367,7 +381,8 @@ export class FactoryFeatureLogic {
 				cost: data.cost,
 				repeatable: data.repeatable || false,
 				sections: data.sections,
-				echelon: data.echelon || 1
+				echelon: data.echelon || 1,
+				icon: data.icon
 			}
 		};
 	};

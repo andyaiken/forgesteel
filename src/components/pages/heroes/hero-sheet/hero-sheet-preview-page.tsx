@@ -1,19 +1,19 @@
 import { Divider, Drawer, FloatButton, Segmented, Space } from 'antd';
 import { useMemo, useState } from 'react';
-import { Career } from '@/models/career';
-import { CareerCard } from '@/components/panels/hero-sheet/career-card/career-card';
-import { ComplicationCard } from '@/components/panels/hero-sheet/complication-card/complication-card';
-import { FactoryLogic } from '@/logic/factory-logic';
-import { Hero } from '@/models/hero';
-import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-page';
-import { Options } from '@/models/options';
+import { Career } from '../../../../models/career';
+import { CareerCard } from '../../../panels/classic-sheet/career-card/career-card';
+import { ComplicationCard } from '../../../panels/classic-sheet/complication-card/complication-card';
+import { FactoryLogic } from '../../../../logic/factory-logic';
+import { Hero } from '../../../../models/hero';
+import { HeroSheetBuilder } from '../../../../logic/hero-sheet/hero-sheet-builder';
+import { HeroSheetPage } from './hero-sheet-page';
+import { Options } from '../../../../models/options';
 import { SettingFilled } from '@ant-design/icons';
-import { SheetBuilder } from '@/logic/hero-sheet/sheet-builder';
-import { SheetPageSize } from '@/enums/sheet-page-size';
-import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookLogic } from '@/logic/sourcebook-logic';
-import { Toggle } from '@/components/controls/toggle/toggle';
-import { Utils } from '@/utils/utils';
+import { SheetPageSize } from '../../../../enums/sheet-page-size';
+import { Sourcebook } from '../../../../models/sourcebook';
+import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
+import { Toggle } from '../../../controls/toggle/toggle';
+import { Utils } from '../../../../utils/utils';
 import { useParams } from 'react-router';
 
 import './hero-sheet-page.scss';
@@ -117,7 +117,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 
 	const setDisplay = (type: 'html' | 'canvas') => {
 		setPreviewOptions(type);
-		const element = document.getElementById('hero-sheet-page');
+		const element = document.getElementById('classic-sheet');
 		const canvasElem = document.getElementById('pdf-canvas');
 		const prevDpr = window.devicePixelRatio;
 		if (element && canvasElem) {
@@ -166,12 +166,12 @@ export const HeroSheetPreviewPage = (props: Props) => {
 				});
 				return withIncidents;
 			})
-			.map(SheetBuilder.buildCareerSheet);
+			.map(HeroSheetBuilder.buildCareerSheet);
 	};
 
 	const getAllComplications = () => {
 		return SourcebookLogic.getComplications(props.sourcebooks)
-			.map(SheetBuilder.buildComplicationSheet);
+			.map(HeroSheetBuilder.buildComplicationSheet);
 	};
 
 	const getPreviewPage = () => {

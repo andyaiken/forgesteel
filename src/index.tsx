@@ -13,9 +13,12 @@ import { SourcebookData } from '@/data/sourcebook-data.ts';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { initializeTheme } from './utils/initializeTheme.ts';
 import localforage from 'localforage';
 
 import './index.scss';
+
+initializeTheme();
 
 // Register Service Worker for PWA functionality
 if ('serviceWorker' in navigator) {

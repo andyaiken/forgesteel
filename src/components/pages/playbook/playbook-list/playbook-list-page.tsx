@@ -1,35 +1,36 @@
-import { Adventure, AdventurePackage } from '@/models/adventure';
-import { Button, Input, Popover } from 'antd';
+import { Adventure, AdventurePackage } from '../../../../models/adventure';
+import { Alert, Button, Input, Popover, Segmented, Tag } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
-import { Playbook, PlaybookElementKind } from '@/models/playbook';
+import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
 import { ReactNode, useState } from 'react';
-import { AdventurePanel } from '@/components/panels/elements/adventure-panel/adventure-panel';
-import { AppFooter } from '@/components/panels/app-footer/app-footer';
-import { AppHeader } from '@/components/panels/app-header/app-header';
-import { CreatePanel } from '@/components/pages/playbook/playbook-list/create-panel/create-panel';
-import { DangerButton } from '@/components/controls/danger-button/danger-button';
-import { Element } from '@/models/element';
-import { Empty } from '@/components/controls/empty/empty';
-import { Encounter } from '@/models/encounter';
-import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
-import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Format } from '@/utils/format';
-import { Hero } from '@/models/hero';
-import { Montage } from '@/models/montage';
-import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
-import { Negotiation } from '@/models/negotiation';
-import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '@/models/options';
-import { OptionsPanel } from '@/components/panels/options/options-panel';
-import { PanelMode } from '@/enums/panel-mode';
-import { PlaybookLogic } from '@/logic/playbook-logic';
-import { SelectorRow } from '@/components/panels/selector-row/selector-row';
-import { Sourcebook } from '@/models/sourcebook';
-import { TacticalMap } from '@/models/tactical-map';
-import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
-import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
-import { Utils } from '@/utils/utils';
-import { useNavigation } from '@/hooks/use-navigation';
+import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
+import { AppFooter } from '../../../panels/app-footer/app-footer';
+import { AppHeader } from '../../../panels/app-header/app-header';
+import { CreatePanel } from './create-panel/create-panel';
+import { DangerButton } from '../../../controls/danger-button/danger-button';
+import { Element } from '../../../../models/element';
+import { Empty } from '../../../controls/empty/empty';
+import { Encounter } from '../../../../models/encounter';
+import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
+import { EncounterSheetPage } from '../../../panels/classic-sheet/encounter-sheet/encounter-sheet-page';
+import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
+import { Format } from '../../../../utils/format';
+import { Hero } from '../../../../models/hero';
+import { Montage } from '../../../../models/montage';
+import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
+import { Negotiation } from '../../../../models/negotiation';
+import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
+import { Options } from '../../../../models/options';
+import { OptionsPanel } from '../../../panels/options/options-panel';
+import { PanelMode } from '../../../../enums/panel-mode';
+import { PlaybookLogic } from '../../../../logic/playbook-logic';
+import { SelectorRow } from '../../../panels/selector-row/selector-row';
+import { Sourcebook } from '../../../../models/sourcebook';
+import { TacticalMap } from '../../../../models/tactical-map';
+import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
+import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
+import { Utils } from '../../../../utils/utils';
+import { useNavigation } from '../../../../hooks/use-navigation';
 import { useParams } from 'react-router';
 
 import './playbook-list-page.scss';
@@ -50,6 +51,7 @@ interface Props {
 	importAdventurePackage: (ap: AdventurePackage) => void;
 	deleteElement: (kind: PlaybookElementKind, element: Element) => void;
 	exportElement: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
+	exportElementPdf: (kind: PlaybookElementKind, element: Element, resolution: 'standard' | 'high') => void;
 	startElement: (kind: PlaybookElementKind, element: Element) => void;
 }
 
@@ -62,6 +64,7 @@ export const PlaybookListPage = (props: Props) => {
 	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
+	const [ view, setView ] = useState<'modern' | 'classic'>('modern');
 
 	if (kind !== previousCategory) {
 		setCategory(kind || 'adventure');
@@ -202,7 +205,31 @@ export const PlaybookListPage = (props: Props) => {
 				getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} playbook={props.playbook} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'encounter':
-				getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} showTools={() => props.showEncounterTools(element as Encounter)} />;
+				getPanel = (element: Element) => {
+					if (view === 'classic') {
+						return (
+							<EncounterSheetPage
+								key={element.id}
+								encounter={element as Encounter}
+								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+							/>
+						);
+					} else {
+						return (
+							<EncounterPanel
+								key={element.id}
+								encounter={element as Encounter}
+								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								mode={PanelMode.Full}
+								showTools={() => props.showEncounterTools(element as Encounter)}
+							/>
+						);
+					}
+				};
 				break;
 			case 'montage':
 				getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} mode={PanelMode.Full} />;
@@ -239,9 +266,35 @@ export const PlaybookListPage = (props: Props) => {
 								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
 							</div>
 							:
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
-								<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
+							<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								{
+									category === 'encounter' && view !== 'classic' ?
+										<Alert
+											type='info'
+											showIcon={true}
+											message='To export your encounter as a PDF, switch to Classic view.'
+											action={<Button onClick={() => setView('classic')}>Classic</Button>}
+										/>
+										: null
+								}
+								{
+									category === 'encounter' && view === 'classic' ?
+										<>
+											<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export as PDF</Button>
+											<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export as PDF (high res)</Button>
+										</>
+										: null
+								}
+								{
+									category !== 'encounter' ?
+										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
+										: null
+								}
+								{
+									category === 'encounter' && view !== 'classic' ?
+										<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
+										: null
+								}
 								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
 							</div>
 					}
@@ -316,67 +369,102 @@ export const PlaybookListPage = (props: Props) => {
 		);
 	};
 
-	try {
-		const selected = getList(false).find(item => item.id == selectedID);
-		const getPanel = getElementPanel();
+	const selected = getList(false).find(item => item.id == selectedID);
+	const getPanel = getElementPanel();
 
-		return (
-			<ErrorBoundary>
-				<div className='playbook-list-page'>
-					<AppHeader subheader='Playbook'>
-						<Popover
-							trigger='click'
-							content={
-								<CreatePanel
-									currentTab={category}
-									createElement={props.createElement}
-									importElement={props.importElement}
-									importAdventurePackage={props.importAdventurePackage}
-								/>
-							}
-						>
-							<Button type='primary'>
-								Add
-								<DownOutlined />
-							</Button>
-						</Popover>
-						{getElementToolbar()}
-						{
-							(category === 'encounter') || (category === 'tactical-map') ?
-								<div className='divider' />
-								: null
+	return (
+		<ErrorBoundary>
+			<div className='playbook-list-page'>
+				<AppHeader subheader='Playbook'>
+					<Popover
+						trigger='click'
+						content={
+							<CreatePanel
+								currentTab={category}
+								createElement={props.createElement}
+								importElement={props.importElement}
+								importAdventurePackage={props.importAdventurePackage}
+							/>
 						}
+					>
+						<Button type='primary'>
+							Add
+							<DownOutlined />
+						</Button>
+					</Popover>
+					{getElementToolbar()}
+					{
+						(category === 'encounter') || (category === 'tactical-map') ?
+							<div className='divider' />
+							: null
+					}
+					{
+						(category === 'encounter') ?
+							<Popover
+								trigger='click'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<Segmented
+											block={true}
+											vertical={true}
+											options={[
+												{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
+												{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Tag color='red'>BETA</Tag>Classic Sheet</div> }
+											]}
+											value={view}
+											onChange={setView}
+										/>
+									</div>
+								)}
+							>
+								<Button>
+									View
+									<DownOutlined />
+								</Button>
+							</Popover>
+							: null
+					}
+					{
+						(category === 'tactical-map') ?
+							<Popover
+								trigger='click'
+								content={<OptionsPanel mode={category} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+									<DownOutlined />
+								</Button>
+							</Popover>
+							: null
+					}
+
+					{
+						(category === 'encounter') ?
+							<Popover
+								trigger='click'
+								content={<OptionsPanel mode={view === 'classic' ? 'encounter-classic' : 'encounter-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+									<DownOutlined />
+								</Button>
+							</Popover>
+							: null
+					}
+				</AppHeader>
+				<div className='playbook-list-page-content'>
+					{getSidebar()}
+					<div className='element-selected'>
 						{
-							(category === 'encounter') || (category === 'tactical-map') ?
-								<Popover
-									trigger='click'
-									content={<OptionsPanel mode={category} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-								>
-									<Button icon={<SettingOutlined />}>
-										Options
-										<DownOutlined />
-									</Button>
-								</Popover>
-								: null
+							selected ?
+								getPanel(selected)
+								:
+								<Empty text='Nothing selected' />
 						}
-					</AppHeader>
-					<div className='playbook-list-page-content'>
-						{getSidebar()}
-						<div className='element-selected'>
-							{
-								selected ?
-									getPanel(selected)
-									:
-									<Empty text='Nothing selected' />
-							}
-						</div>
 					</div>
-					<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+			</div>
+		</ErrorBoundary>
+	);
 };

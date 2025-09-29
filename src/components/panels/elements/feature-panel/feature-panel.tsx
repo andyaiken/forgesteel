@@ -1,7 +1,7 @@
 import { AbilityCustomization, Hero } from '../../../../models/hero';
 import { Button, Flex, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResource, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
 import { Pill, ResourcePill } from '../../../controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '../../../../models/ability';
@@ -237,36 +237,31 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getInformationHeroicResourceFeature = (data: FeatureHeroicResourceData) => {
-		const gains = [ ...data.gains ];
+	const getInformationHeroicResourceFeature = (feature: FeatureHeroicResource) => {
 		if (props.hero) {
-			HeroLogic.getFeatures(props.hero)
-				.map(f => f.feature)
-				.filter(f => f.type === FeatureType.HeroicResourceGain)
-				.forEach(f => gains.push(f.data));
-			HeroLogic.getDomains(props.hero)
-				.flatMap(d => d.resourceGains)
-				.filter(g => g.resource === props.feature.name)
-				.forEach(g => gains.push(g));
+			const resource = HeroLogic.getHeroicResources(props.hero).find(hr => hr.name === feature.name);
+			if (resource) {
+				return (
+					<>
+						<ul>
+							{
+								resource.gains.map((g, n) => (
+									<li key={n}>
+										<Flex align='center' justify='space-between' gap={10}>
+											<div className='ds-text compact-text'>{g.trigger}</div>
+											<Pill>+{g.value}</Pill>
+										</Flex>
+									</li>
+								))
+							}
+						</ul>
+						<Markdown text={resource.details} />
+					</>
+				);
+			}
 		}
 
-		return (
-			<>
-				<ul>
-					{
-						gains.map((g, n) => (
-							<li key={n}>
-								<Flex align='center' justify='space-between' gap={10}>
-									<div className='ds-text compact-text'>{g.trigger}</div>
-									<Pill>+{g.value}</Pill>
-								</Flex>
-							</li>
-						))
-					}
-				</ul>
-				<Markdown text={data.details} />
-			</>
-		);
+		return null;
 	};
 
 	const getInformationHeroicResourceGainFeature = (data: FeatureHeroicResourceGainData) => {
@@ -615,7 +610,7 @@ export const FeaturePanel = (props: Props) => {
 			case FeatureType.Fixture:
 				return getInformationFixture(props.feature.data);
 			case FeatureType.HeroicResource:
-				return getInformationHeroicResourceFeature(props.feature.data);
+				return getInformationHeroicResourceFeature(props.feature);
 			case FeatureType.HeroicResourceGain:
 				return getInformationHeroicResourceGainFeature(props.feature.data);
 			case FeatureType.ItemChoice:

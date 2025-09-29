@@ -562,11 +562,44 @@ You can “unsummon” yourself and your allies into the space that your minions
 						})
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createChoice({
 					id: 'summoner-6-4a',
 					name: 'Kit Improvement',
-					description: 'You can choose one additional ward from your Summoner’s Kit.'
-					// TODO: another Ward
+					description: 'You can choose one additional ward from your Summoner’s Kit.',
+					options: [
+						{
+							feature: FactoryLogic.feature.create({
+								id: 'summoner-3-2a',
+								name: 'Conjured Ward',
+								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh). You gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels.'
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.create({
+								id: 'summoner-3-2b',
+								name: 'Emergency Ward',
+								description: 'Whenever you take damage, you can use a free triggered action to shift 1 after the triggering effect resolves and summon a signature minion into the square you left (as long as there is enough space).'
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.create({
+								id: 'summoner-3-2c',
+								name: 'Howling Ward',
+								description: 'You enter combat surrounded by a 1 Aura of defensive forces. An enemy that starts their turn adjacent to you takes damage equal to your Reason.'
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.create({
+								id: 'summoner-3-2d',
+								name: 'Swap Ward',
+								description: 'Whenever you take damage, you can use a free triggered action to swap places with one of your minions within distance. That minion suffers any additional effects instead of you.'
+							}),
+							value: 1
+						}
+					]
 				}),
 				FactoryLogic.feature.createPackageContent({
 					id: 'summoner-6-4b',
@@ -674,11 +707,44 @@ Your champion gains additional features at 10th level. This includes a special C
 		{
 			level: 9,
 			features: [
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createChoice({
 					id: 'summoner-10-1a',
 					name: 'Kit Improvement',
-					description: 'You can choose one additional ward from your Summoner’s Kit.'
-					// TODO: another Ward
+					description: 'You can choose one additional ward from your Summoner’s Kit.',
+					options: [
+						{
+							feature: FactoryLogic.feature.create({
+								id: 'summoner-3-2a',
+								name: 'Conjured Ward',
+								description: 'You are clad in the natural defenses of your portfolio (bones, fairy wood, stone, writhing flesh). You gain a +3 bonus to Stamina and that bonus increases by 3 at 4th, 7th, and 10th levels.'
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.create({
+								id: 'summoner-3-2b',
+								name: 'Emergency Ward',
+								description: 'Whenever you take damage, you can use a free triggered action to shift 1 after the triggering effect resolves and summon a signature minion into the square you left (as long as there is enough space).'
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.create({
+								id: 'summoner-3-2c',
+								name: 'Howling Ward',
+								description: 'You enter combat surrounded by a 1 Aura of defensive forces. An enemy that starts their turn adjacent to you takes damage equal to your Reason.'
+							}),
+							value: 1
+						},
+						{
+							feature: FactoryLogic.feature.create({
+								id: 'summoner-3-2d',
+								name: 'Swap Ward',
+								description: 'Whenever you take damage, you can use a free triggered action to swap places with one of your minions within distance. That minion suffers any additional effects instead of you.'
+							}),
+							value: 1
+						}
+					]
 				}),
 				FactoryLogic.feature.createPackageContent({
 					id: 'summoner-9-1b',

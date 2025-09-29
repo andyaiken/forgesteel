@@ -76,6 +76,12 @@ export const PlaybookEditPage = (props: Props) => {
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
 
+	const applyChanges = (element: Element) => {
+		const copy = Utils.copy(element);
+		setElement(copy);
+		setDirty(true);
+	};
+
 	// #region Edit
 
 	const getEditHeaderSection = () => {
@@ -93,10 +99,7 @@ export const PlaybookEditPage = (props: Props) => {
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
 							options={props.options}
-							onChange={adventure => {
-								setElement(adventure);
-								setDirty(true);
-							}}
+							onChange={applyChanges}
 						/>
 					</div>
 				);
@@ -107,10 +110,7 @@ export const PlaybookEditPage = (props: Props) => {
 						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={encounter => {
-							setElement(encounter);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 						showMonster={props.showMonster}
 						showTerrain={props.showTerrain}
 					/>
@@ -119,20 +119,14 @@ export const PlaybookEditPage = (props: Props) => {
 				return (
 					<NegotiationEditPanel
 						negotiation={element as Negotiation}
-						onChange={negotiation => {
-							setElement(negotiation);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'montage':
 				return (
 					<MontageEditPanel
 						montage={element as Montage}
-						onChange={montage => {
-							setElement(montage);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'tactical-map':
@@ -143,10 +137,7 @@ export const PlaybookEditPage = (props: Props) => {
 							display={TacticalMapDisplayType.DirectorEdit}
 							options={props.options}
 							mode={PanelMode.Full}
-							updateMap={map => {
-								setElement(map);
-								setDirty(true);
-							}}
+							updateMap={applyChanges}
 						/>
 					</div>
 				);
@@ -165,7 +156,7 @@ export const PlaybookEditPage = (props: Props) => {
 		switch (kind!) {
 			case 'montage':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<MontagePanel
 							montage={element as Montage}
 							mode={PanelMode.Full}
@@ -174,7 +165,7 @@ export const PlaybookEditPage = (props: Props) => {
 				);
 			case 'negotiation':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={JSON.stringify(element)}>
 						<NegotiationPanel
 							negotiation={element as Negotiation}
 							mode={PanelMode.Full}

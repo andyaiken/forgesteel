@@ -37,7 +37,7 @@ export const AncestryTraitsCard = (props: Props) => {
 		<div className='ancestry-traits card'>
 			<h2>Ancestry Traits</h2>
 			<ul className='features-container'>
-				{getTraits()}
+				<GetTraits />
 			</ul>
 		</div>
 	);

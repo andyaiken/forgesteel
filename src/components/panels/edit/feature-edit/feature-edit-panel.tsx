@@ -2129,7 +2129,7 @@ export const FeatureEditPanel = (props: Props) => {
 												</div>
 												: null
 										}
-										{getDataSection()}
+										<GetDataSection />
 									</div>
 								)
 							}

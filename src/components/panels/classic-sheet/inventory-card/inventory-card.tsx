@@ -54,7 +54,7 @@ export const ItemComponent = (props: ItemProps) => {
 
 	return (
 		<div className='item'>
-			<h3>{getItemName()}</h3>
+			<h3><GetItemName /></h3>
 			<div className='keywords-item-type'>
 				<div className='keywords'>{item.keywords.join(', ')}</div>
 				<div className='item-type'>{item.type}</div>

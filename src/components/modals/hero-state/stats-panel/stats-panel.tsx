@@ -502,9 +502,9 @@ export const StatsPanel = (props: Props) => {
 
 	return (
 		<div className='stats-panel'>
-			{getStatsSection()}
-			{getHeroicResourceSection()}
-			{getHeroTokenSection()}
+			<GetStatsSection />
+			<GetHeroicResourceSection />
+			<GetHeroTokenSection />
 			{notifyContext}
 		</div>
 	);

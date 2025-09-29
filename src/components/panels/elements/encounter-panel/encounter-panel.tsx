@@ -238,10 +238,10 @@ export const EncounterPanel = (props: Props) => {
 						{props.encounter.name || 'Unnamed Encounter'}
 					</HeaderText>
 					<Markdown text={props.encounter.description} />
-					{getEncounterGroups()}
-					{getMeta()}
-					{getStatBlocks()}
-					{getMaliceDetails()}
+					<GetEncounterGroups />
+					<GetMeta />
+					<GetStatBlocks />
+					<GetMaliceDetails />
 				</div>
 			</ErrorBoundary>
 		);

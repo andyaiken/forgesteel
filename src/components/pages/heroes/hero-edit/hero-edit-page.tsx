@@ -618,8 +618,8 @@ export const HeroEditPage = (props: Props) => {
 						</Button>
 					</AppHeader>
 					<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
-						{getControls()}
-						{getContent()}
+						<GetControls />
+						<GetContent />
 					</div>
 					<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>

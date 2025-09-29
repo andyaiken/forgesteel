@@ -713,7 +713,7 @@ export const FeaturePanel = (props: Props) => {
 					cost={props.cost}
 					repeatable={props.repeatable}
 					mode={props.mode}
-					tags={getTags()}
+					tags=<GetTags />
 				/>
 			);
 		}
@@ -749,7 +749,7 @@ export const FeaturePanel = (props: Props) => {
 									<ResourcePill value={props.cost} repeatable={props.repeatable} />
 									: null
 						}
-						tags={getTags()}
+						tags=<GetTags />
 						extra={
 							autoCalcAvailable() ?
 								<Button

@@ -135,7 +135,7 @@ export const RollModal = (props: Props) => {
 				}
 				content={
 					<div className='roll-modal'>
-						{getContent()}
+						<GetContent />
 					</div>
 				}
 				onClose={props.onClose}

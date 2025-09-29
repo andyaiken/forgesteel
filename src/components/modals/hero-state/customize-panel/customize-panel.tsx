@@ -951,7 +951,7 @@ export const CustomizePanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='customize-panel'>
-					<HeaderText extra={getMenu()}>
+					<HeaderText extra=<GetMenu />>
 						Customize
 					</HeaderText>
 					{

@@ -141,7 +141,7 @@ export const HeroSelectModal = (props: Props) => {
 				content={
 					<div className='hero-select-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
-							{getContent()}
+							<GetContent />
 						</Space>
 					</div>
 				}

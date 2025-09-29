@@ -226,7 +226,7 @@ export const HeroViewPage = (props: Props) => {
 						</Popover>
 					</AppHeader>
 					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>
-						{getContent()}
+						<GetContent />
 					</div>
 					<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
 				</div>

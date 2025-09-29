@@ -224,7 +224,7 @@ export const ItemPanel = (props: Props) => {
 					<Modal
 						content={
 							<div style={{ padding: '20px' }}>
-								{getAvailableImbuements()}
+								<GetAvailableImbuements />
 							</div>
 						}
 						onClose={() => setImbuementsOpen(false)}

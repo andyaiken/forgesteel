@@ -174,10 +174,10 @@ export const EncounterRunPanel = (props: Props) => {
 						<Button className='initiative-button' type='primary' disabled={encounter.heroes.length === 0} onClick={nextTurn}>
 							<Space direction='vertical'>
 								<div className='maintext'>
-									{getMainText()}
+									<GetMainText />
 								</div>
 								<div className='subtext'>
-									{getSubText()}
+									<GetSubText />
 								</div>
 							</Space>
 						</Button>
@@ -660,7 +660,7 @@ export const EncounterRunPanel = (props: Props) => {
 							>
 								{encounter.name || 'Unnamed Encounter'}
 							</HeaderText>
-							{getControlSection()}
+							<GetControlSection />
 							<Tabs
 								items={[
 									{
@@ -689,7 +689,7 @@ export const EncounterRunPanel = (props: Props) => {
 						{
 							showSidebar ?
 								<div style={{ flex: '0 0 400px', height: '100%', overflowY: 'auto' }}>
-									{getSidebar()}
+									<GetSidebar />
 								</div>
 								: null
 						}

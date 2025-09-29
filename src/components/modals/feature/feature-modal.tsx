@@ -146,7 +146,7 @@ export const FeatureModal = (props: Props) => {
 				}
 				content={
 					<div className='feature-modal'>
-						{getContent()}
+						<GetContent />
 					</div>
 				}
 				onClose={props.onClose}

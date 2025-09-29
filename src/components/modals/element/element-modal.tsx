@@ -186,7 +186,7 @@ export const ElementModal = (props: Props) => {
 				}
 				content={
 					<div className='element-modal'>
-						{getPanel()}
+						<GetPanel />
 					</div>
 				}
 				onClose={props.onClose}

@@ -113,7 +113,7 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 										<div className='stamina-column' />
 										:
 										<div className='stamina-column'>
-											{getStaminaDescription()}
+											<GetStaminaDescription />
 											<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
 										</div>
 									: null
@@ -398,7 +398,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 						{
 							showStamina ?
 								<div className='stamina-column'>
-									{getStaminaDescription()}
+									<GetStaminaDescription />
 									<HeartFilled style={{ color: 'rgb(200, 0, 0)' }} />
 								</div>
 								: null
@@ -444,7 +444,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 								: null
 						}
 						<div className='conditions-column'>
-							{getMinionCaptainTag()}
+							<GetMinionCaptainTag />
 							{props.slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 						</div>
 						<Button

@@ -178,7 +178,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		if (heroID === 'careers') {
 			return (
 				<main id='hero-sheet-page' className='classic-sheet'>
-					<div className={getPageClasses()}>
+					<div className=<GetPageClasses />>
 						<h2>All Careers</h2>
 						<div className='all-careers'>
 							<CareerCard
@@ -201,7 +201,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		} else if (heroID === 'complications') {
 			return (
 				<main id='hero-sheet-page' className='classic-sheet'>
-					<div className={getPageClasses()}>
+					<div className=<GetPageClasses />>
 						<h2>All Complications</h2>
 						<div className='all-complications'>
 							<ComplicationCard
@@ -245,7 +245,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 						onChange={setDisplay}
 					/>
 				</div>
-				{getPreviewPage()}
+				<GetPreviewPage />
 				<div id='pdf-canvas'></div>
 				<FloatButton
 					icon={<SettingFilled />}

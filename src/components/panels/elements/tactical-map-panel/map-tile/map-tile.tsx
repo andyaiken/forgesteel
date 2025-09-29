@@ -104,7 +104,7 @@ export const MapTilePanel = (props: Props) => {
 							}
 						}}
 					>
-						{getContent()}
+						<GetContent />
 					</div>
 				</Popover>
 			</ErrorBoundary>

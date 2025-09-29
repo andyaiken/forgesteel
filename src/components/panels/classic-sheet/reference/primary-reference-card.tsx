@@ -36,7 +36,7 @@ export const PrimaryReferenceCard = (props: Props) => {
 
 	return (
 		<div className='primary-reference card'>
-			{getResourceSection()}
+			<GetResourceSection />
 			<div className='hero-tokens'>
 				<h3>Spending Hero Tokens</h3>
 				<p><strong>1 Token:</strong> Gain 2 Surges.</p>

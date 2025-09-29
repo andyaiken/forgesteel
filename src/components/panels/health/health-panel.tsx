@@ -747,7 +747,7 @@ const HealthPanel = (props: Props) => {
 					props.stamina ?
 						<div className='health-panel-stamina'>
 							<HealthGauge stamina={props.stamina} staminaTemp={props.staminaTemp} recoveries={props.recoveries} />
-							{getHealthControls()}
+							<GetHealthControls />
 						</div>
 						: null
 				}

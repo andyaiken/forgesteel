@@ -191,7 +191,7 @@ export const PlaybookEditPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='playbook-edit-page'>
-					<AppHeader subheader={`${getSubheader()} Builder`}>
+					<AppHeader subheader={`$<GetSubheader /> Builder`}>
 						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
 							Save Changes
 						</Button>
@@ -232,14 +232,14 @@ export const PlaybookEditPage = (props: Props) => {
 					</AppHeader>
 					<div className='playbook-edit-page-content'>
 						<div className='edit-column'>
-							{getEditHeaderSection()}
-							{getEditSection()}
+							<GetEditHeaderSection />
+							<GetEditSection />
 						</div>
 						{
 							(kind !== 'adventure') && (kind !== 'encounter') && (kind !== 'tactical-map') ?
 								<div className='preview-column'>
-									{getPreviewHeaderSection()}
-									{getPreview()}
+									<GetPreviewHeaderSection />
+									<GetPreview />
 								</div>
 								: null
 						}

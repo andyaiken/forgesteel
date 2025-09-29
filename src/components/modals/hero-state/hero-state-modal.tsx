@@ -105,7 +105,7 @@ export const HeroStateModal = (props: Props) => {
 				}
 				content={
 					<div className='hero-state-modal'>
-						{getContent()}
+						<GetContent />
 					</div>
 				}
 				onClose={props.onClose}

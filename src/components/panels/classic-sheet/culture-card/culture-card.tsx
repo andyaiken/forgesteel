@@ -80,7 +80,7 @@ export const CultureCard = (props: Props) => {
 			<section className='bordered languages'>
 				<h3>Languages</h3>
 				<ul>
-					{getLanguages()}
+					<GetLanguages />
 				</ul>
 			</section>
 		</div>

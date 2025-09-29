@@ -752,7 +752,7 @@ export const EncounterEditPanel = (props: Props) => {
 						/>
 					</div>
 					<div className='encounter-list-column'>
-						{getDifficultySection()}
+						<GetDifficultySection />
 						<Tabs
 							items={[
 								{

@@ -169,7 +169,7 @@ export const PowerRollPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className='power-roll-panel'>
 					<div className='power-roll-row power-roll-header'>
-						{getHeader()}
+						<GetHeader />
 						<Space onClick={e => e.stopPropagation()}>
 							{
 								props.autoCalc && props.ability && (props.ability.distance.length > 1) ?

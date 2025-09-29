@@ -112,7 +112,7 @@ export const SessionPlayerPage = (props: Props) => {
 						</Popover>
 					</AppHeader>
 					<div className='session-player-page-content'>
-						{getContent()}
+						<GetContent />
 					</div>
 					<AppFooter page='player-view' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>

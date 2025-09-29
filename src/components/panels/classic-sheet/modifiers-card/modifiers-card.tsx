@@ -136,7 +136,7 @@ export const ModifiersCard = (props: Props) => {
 
 			<div className={[ 'effects' ].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
 				<div className='damage-modifiers'>
-					{getKitDamageModificationSection()}
+					<GetKitDamageModificationSection />
 				</div>
 
 				<div className='benefits'>

@@ -137,7 +137,7 @@ export const MapMiniPanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				<Popover content={getInfo()}>
+				<Popover content=<GetInfo />>
 					<div
 						className={className}
 						style={props.style}
@@ -164,7 +164,7 @@ export const MapMiniPanel = (props: Props) => {
 						}}
 					>
 						<div className='mini-content'>
-							{getContent()}
+							<GetContent />
 						</div>
 					</div>
 				</Popover>

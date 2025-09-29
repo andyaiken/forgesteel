@@ -49,7 +49,7 @@ export const CareerPanel = (props: Props) => {
 						props.mode === PanelMode.Full ?
 							<div>
 								{props.career.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
-								{getIncitingIncidents()}
+								<GetIncitingIncidents />
 							</div>
 							: null
 					}

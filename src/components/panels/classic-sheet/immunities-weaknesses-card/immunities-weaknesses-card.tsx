@@ -53,9 +53,9 @@ export const ImmunitiesWeaknessesCard = (props: Props) => {
 	return (
 		<div className='immunities-weaknesses card'>
 			<h4>Immunities</h4>
-			{getImmunities()}
+			<GetImmunities />
 			<h4>Weaknesses</h4>
-			{getWeaknesses()}
+			<GetWeaknesses />
 		</div>
 	);
 };

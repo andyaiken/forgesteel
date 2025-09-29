@@ -73,7 +73,7 @@ export const FeatureReferenceCard = (props: Props) => {
 	return (
 		<div className={cardClasses.join(' ')}>
 			<h2>Other Features & Reference</h2>
-			{getFeatureSections()}
+			<GetFeatureSections />
 		</div>
 	);
 };

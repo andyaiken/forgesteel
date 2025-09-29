@@ -369,7 +369,7 @@ export const AdventureEditPanel = (props: Props) => {
 						/>
 					</div>
 					<div className='plot-editor'>
-						{getEditor()}
+						<GetEditor />
 					</div>
 				</div>
 			</ErrorBoundary>

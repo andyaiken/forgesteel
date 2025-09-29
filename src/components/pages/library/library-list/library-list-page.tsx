@@ -720,10 +720,10 @@ export const LibraryListPage = (props: Props) => {
 								<DownOutlined />
 							</Button>
 						</Popover>
-						{getElementToolbar()}
+						<GetElementToolbar />
 					</AppHeader>
 					<div className='library-list-page-content'>
-						{getSidebar()}
+						<GetSidebar />
 						<div className='element-selected'>
 							{
 								selected ?

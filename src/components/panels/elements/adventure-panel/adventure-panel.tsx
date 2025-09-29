@@ -114,7 +114,7 @@ export const AdventurePanel = (props: Props) => {
 							}}
 						/>
 					</div>
-					{getPreview()}
+					<GetPreview />
 				</div>
 			</ErrorBoundary>
 		);

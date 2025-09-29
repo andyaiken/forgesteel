@@ -88,7 +88,7 @@ export const MonsterCard = (props: Props) => {
 			<>
 				{monster.features?.map(f =>
 					<div className='wrapper' key={f.id}>
-						{getFeatureIcon()}
+						<GetFeatureIcon />
 						<FeatureComponent
 							feature={SheetFormatter.enhanceFeature(f)}
 						/>
@@ -119,7 +119,7 @@ export const MonsterCard = (props: Props) => {
 						<span className='keywords'>{monster.keywords}</span>
 					</h2>
 				</div>
-				{getDetails()}
+				<GetDetails />
 				<div className='characteristics'>
 					<div className='characteristic'>
 						<label><span className='symbol'>M</span>ight</label>
@@ -143,8 +143,8 @@ export const MonsterCard = (props: Props) => {
 					</div>
 				</div>
 				<div className='features-abilities'>
-					{getAbilities()}
-					{getFeatures()}
+					<GetAbilities />
+					<GetFeatures />
 				</div>
 			</section>
 		</div>

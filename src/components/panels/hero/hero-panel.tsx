@@ -1111,9 +1111,9 @@ export const HeroPanel = (props: Props) => {
 				case 'Hero':
 					return (
 						<>
-							{getNameSection()}
-							{getStatsSection()}
-							{getChoicesSection()}
+							<GetNameSection />
+							<GetStatsSection />
+							<GetChoicesSection />
 							{isSmall || props.options.singlePage ? getSidebarSection() : null}
 						</>
 					);

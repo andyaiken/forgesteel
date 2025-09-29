@@ -61,7 +61,7 @@ export const DangerButton = (props: Props) => {
 				)}
 			>
 				<div onClick={e => e.stopPropagation()}>
-					{getContent()}
+					<GetContent />
 				</div>
 			</Popover>
 		);

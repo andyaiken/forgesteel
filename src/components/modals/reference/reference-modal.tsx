@@ -359,7 +359,7 @@ export const ReferenceModal = (props: Props) => {
 				}
 				content={
 					<div className='reference-modal'>
-						{getContent()}
+						<GetContent />
 					</div>
 				}
 				onClose={props.onClose}

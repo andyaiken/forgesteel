@@ -446,7 +446,7 @@ export const OptionsPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='options-panel'>
-					{getContent()}
+					<GetContent />
 				</div>
 			</ErrorBoundary>
 		);

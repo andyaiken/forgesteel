@@ -77,7 +77,7 @@ export const MontageRunPanel = (props: Props) => {
 			<div key={challenge.id} className='montage-challenge'>
 				<Flex align='center' justify='space-between' gap={10}>
 					<div className='status'>
-						{getIcons()}
+						<GetIcons />
 					</div>
 					{challenge.uses > 1 ? <Pill>x{challenge.uses}</Pill> : null}
 					<Field

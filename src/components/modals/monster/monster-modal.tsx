@@ -190,7 +190,7 @@ export const MonsterModal = (props: Props) => {
 				}
 				content={
 					<div className='monster-modal'>
-						{getContent()}
+						<GetContent />
 					</div>
 				}
 				onClose={props.onClose}

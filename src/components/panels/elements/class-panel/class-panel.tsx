@@ -38,7 +38,7 @@ export const ClassPanel = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className={props.mode === PanelMode.Full ? 'class-panel' : 'class-panel compact'} id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
-					<HeaderText level={1} tags={getTags()}>
+					<HeaderText level={1} tags=<GetTags />>
 						{props.heroClass.name || 'Unnamed Class'}
 					</HeaderText>
 					<Markdown text={props.heroClass.description} />

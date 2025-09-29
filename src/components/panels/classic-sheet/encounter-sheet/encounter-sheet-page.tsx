@@ -79,7 +79,7 @@ export const EncounterSheetPage = (props: Props) => {
 					<MaliceCard encounter={encounter} options={props.options} />
 					<EncounterRosterCard encounter={encounter} sourcebooks={props.sourcebooks} options={props.options} />
 				</div>
-				{getMonsterCards()}
+				<GetMonsterCards />
 			</div>
 		</main>
 	);

@@ -384,7 +384,7 @@ export const SessionDirectorPage = (props: Props) => {
 										value={startElement}
 										onChange={setStartElement}
 									/>
-									{getStartContent()}
+									<GetStartContent />
 								</div>
 							)}
 						>
@@ -414,8 +414,8 @@ export const SessionDirectorPage = (props: Props) => {
 						</Popover>
 					</AppHeader>
 					<div className='session-director-page-content'>
-						{getSelector()}
-						{getSelectedContent()}
+						<GetSelector />
+						<GetSelectedContent />
 					</div>
 					<AppFooter page='session' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>

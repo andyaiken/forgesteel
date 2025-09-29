@@ -1516,7 +1516,7 @@ export const TacticalMapPanel = (props: Props) => {
 
 		return (
 			<ErrorBoundary>
-				{getTopToolbar()}
+				<GetTopToolbar />
 				<div
 					id={map.id}
 					className={'tactical-map-panel ' + props.display}
@@ -1532,7 +1532,7 @@ export const TacticalMapPanel = (props: Props) => {
 						{getWallVertices(boundaries)}
 					</div>
 				</div>
-				{getBottomToolbar()}
+				<GetBottomToolbar />
 				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
 					{
 						selectedMonster ?

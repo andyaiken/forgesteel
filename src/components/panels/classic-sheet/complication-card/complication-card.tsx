@@ -70,9 +70,9 @@ export const ComplicationCard = (props: Props) => {
 		<div className='complication card'>
 			<h2>Complication</h2>
 			<div className='name'>{complication?.name}</div>
-			{getDescriptionSection()}
-			{getBenefitSection()}
-			{getDrawbackSection()}
+			<GetDescriptionSection />
+			<GetBenefitSection />
+			<GetDrawbackSection />
 		</div>
 	);
 };

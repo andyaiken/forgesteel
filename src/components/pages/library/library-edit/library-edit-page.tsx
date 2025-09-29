@@ -692,7 +692,7 @@ export const LibraryEditPage = (props: Props) => {
 		return (
 			<ErrorBoundary>
 				<div className='library-edit-page'>
-					<AppHeader subheader={getSubheader()}>
+					<AppHeader subheader=<GetSubheader />>
 						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
 							Save Changes
 						</Button>
@@ -720,12 +720,12 @@ export const LibraryEditPage = (props: Props) => {
 					</AppHeader>
 					<div className='library-edit-page-content'>
 						<div className='edit-column'>
-							{getEditHeaderSection()}
-							{getEditSection()}
+							<GetEditHeaderSection />
+							<GetEditSection />
 						</div>
 						<div className='preview-column'>
-							{getPreviewHeaderSection()}
-							{getPreview()}
+							<GetPreviewHeaderSection />
+							<GetPreview />
 						</div>
 					</div>
 					<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />

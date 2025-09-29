@@ -392,7 +392,7 @@ export const PlaybookListPage = (props: Props) => {
 							<DownOutlined />
 						</Button>
 					</Popover>
-					{getElementToolbar()}
+					<GetElementToolbar />
 					{
 						(category === 'encounter') || (category === 'tactical-map') ?
 							<div className='divider' />
@@ -453,7 +453,7 @@ export const PlaybookListPage = (props: Props) => {
 					}
 				</AppHeader>
 				<div className='playbook-list-page-content'>
-					{getSidebar()}
+					<GetSidebar />
 					<div className='element-selected'>
 						{
 							selected ?

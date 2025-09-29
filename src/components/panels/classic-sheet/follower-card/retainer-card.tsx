@@ -138,7 +138,7 @@ export const RetainerCard = (props: Props) => {
 			<>
 				{follower.features?.map(f =>
 					<div className='wrapper' key={f.id}>
-						{getFeatureIcon()}
+						<GetFeatureIcon />
 						<FeatureComponent
 							feature={SheetFormatter.enhanceFeature(f)}
 						/>
@@ -169,7 +169,7 @@ export const RetainerCard = (props: Props) => {
 						<span className='keywords'>{follower.keywords}</span>
 					</h2>
 				</div>
-				{getDetails()}
+				<GetDetails />
 				<div className='characteristics'>
 					<div className='characteristic'>
 						<label><span className='symbol'>M</span>ight</label>
@@ -192,13 +192,13 @@ export const RetainerCard = (props: Props) => {
 						<div className='value'><span>{SheetFormatter.addSign(follower.presence)}</span></div>
 					</div>
 				</div>
-				{getSkillsLanguages()}
-				{getStamina()}
+				<GetSkillsLanguages />
+				<GetStamina />
 				<div className='features-abilities'>
-					{getAbilities()}
-					{getFeatures()}
+					<GetAbilities />
+					<GetFeatures />
 				</div>
-				{getAdvancement()}
+				<GetAdvancement />
 			</section>
 		</div>
 	);

@@ -1529,8 +1529,8 @@ export const FeatureConfigPanel = (props: Props) => {
 					>
 						{props.feature.name || 'Unnamed Feature'}
 					</HeaderText>
-					<Markdown text={getDescription()} />
-					{getSelection()}
+					<Markdown text=<GetDescription /> />
+					<GetSelection />
 				</div>
 			</ErrorBoundary>
 		);

@@ -246,7 +246,7 @@ export const AbilityModal = (props: Props) => {
 				}
 				content={
 					<div className='ability-modal'>
-						{getContent()}
+						<GetContent />
 					</div>
 				}
 				onClose={props.onClose}

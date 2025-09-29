@@ -359,7 +359,7 @@ export const EncounterTurnModal = (props: Props) => {
 				content={
 					<div className='encounter-turn-modal'>
 						<Space direction='vertical' style={{ width: '100%' }}>
-							{getContent()}
+							<GetContent />
 						</Space>
 					</div>
 				}

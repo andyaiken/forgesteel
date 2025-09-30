@@ -5,7 +5,7 @@ import { Terrain } from '@/models/terrain';
 
 export interface EncounterSheet {
 	id: string;
-	objective: string;
+	name: string;
 	description: string;
 
 	notes?: string;
@@ -18,6 +18,7 @@ export interface EncounterSheet {
 	encounterVictories: number;
 	encounterEv: number;
 
+	objective?: string;
 	successCondition?: string;
 	failureCondition?: string;
 

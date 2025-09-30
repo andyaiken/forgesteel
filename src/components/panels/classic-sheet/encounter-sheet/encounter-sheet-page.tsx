@@ -73,8 +73,8 @@ export const EncounterSheetPage = (props: Props) => {
 
 	return (
 		<main id='classic-sheet'>
-			<div className={sheetClasses.join(' ')} id={SheetFormatter.getPageId('encounter', encounter.id, 'main')}>
-				<div className={`page page-1 ${props.options.pageOrientation}`}>
+			<div className={sheetClasses.join(' ')}>
+				<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('encounter', encounter.id, 'main')}>
 					<EncounterHeaderCard encounter={encounter} options={props.options} />
 					<MaliceCard encounter={encounter} options={props.options} />
 					<EncounterRosterCard encounter={encounter} sourcebooks={props.sourcebooks} options={props.options} />

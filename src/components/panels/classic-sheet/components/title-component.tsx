@@ -1,4 +1,4 @@
-import { FeatureComponent } from '@/components/panels/hero-sheet/components/feature-component';
+import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { Hero } from '@/models/hero';
 import { Title } from '@/models/title';
 

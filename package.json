@@ -10,6 +10,7 @@
 		"update": "npx npm-check-updates --interactive --format group",
 		"lint": "tsc -p tsconfig.node.json && tsc -p tsconfig.app.json && eslint . && npm audit",
 		"fix": "eslint . --fix",
+		"build": "vite build",
 		"predeploy": "npm run lint && vite build",
 		"deploy": "gh-pages -d dist"
 	},

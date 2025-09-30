@@ -1,10 +1,10 @@
-import { CharacterSheet } from '@/models/character-sheet';
+import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { JSX } from 'react';
 
 import './notes-card.scss';
 
 interface Props {
-	character: CharacterSheet;
+	character: HeroSheet;
 }
 
 export const NotesCard = (props: Props) => {

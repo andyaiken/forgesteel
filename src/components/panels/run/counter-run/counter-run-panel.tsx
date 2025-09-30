@@ -1,8 +1,8 @@
-import { Counter } from '../../../../models/counter';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Utils } from '../../../../utils/utils';
+import { Counter } from '@/models/counter';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './counter-run-panel.scss';

@@ -1,9 +1,9 @@
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Field } from '../../../controls/field/field';
-import { Follower } from '../../../../models/follower';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { PanelMode } from '../../../../enums/panel-mode';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Field } from '@/components/controls/field/field';
+import { Follower } from '@/models/follower';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { PanelMode } from '@/enums/panel-mode';
 
 import './follower-panel.scss';
 

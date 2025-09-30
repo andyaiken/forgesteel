@@ -1,15 +1,15 @@
-import { FillerCard, SheetLayout } from '../../../../logic/classic-sheet/sheet-layout';
-import { Encounter } from '../../../../models/encounter';
-import { EncounterHeaderCard } from '../encounter-header/encounter-header';
-import { EncounterRosterCard } from '../encounter-roster/encounter-roster';
-import { EncounterSheetBuilder } from '../../../../logic/playbook-sheets/encounter-sheet-builder';
-import { Hero } from '../../../../models/hero';
-import { MaliceCard } from '../malice-card/malice-card';
-import { MonsterCard } from '../monster-card/monster-card';
-import { NotesCard } from '../notes-card/notes-card';
-import { Options } from '../../../../models/options';
-import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
-import { Sourcebook } from '../../../../models/sourcebook';
+import { FillerCard, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
+import { Encounter } from '@/models/encounter';
+import { EncounterHeaderCard } from '@/components/panels/classic-sheet/encounter-header/encounter-header';
+import { EncounterRosterCard } from '@/components/panels/classic-sheet/encounter-roster/encounter-roster';
+import { EncounterSheetBuilder } from '@/logic/playbook-sheets/encounter-sheet-builder';
+import { Hero } from '@/models/hero';
+import { MaliceCard } from '@/components/panels/classic-sheet/malice-card/malice-card';
+import { MonsterCard } from '@/components/panels/classic-sheet/monster-card/monster-card';
+import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
+import { Options } from '@/models/options';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { Sourcebook } from '@/models/sourcebook';
 import { useMemo } from 'react';
 
 import './encounter-sheet-page.scss';

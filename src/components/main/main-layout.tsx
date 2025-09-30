@@ -1,5 +1,5 @@
 import { Drawer } from 'antd';
-import { ErrorBoundary } from '../controls/error-boundary/error-boundary';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Outlet } from 'react-router';
 import { ReactNode } from 'react';
 

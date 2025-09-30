@@ -1,15 +1,15 @@
-import { HeroHealthPanel, MonsterHealthPanel } from '../../../health/health-panel';
-import { HeroInfo, HeroToken, MonsterInfo, MonsterToken } from '../../../token/token';
-import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
-import { FactoryLogic } from '../../../../../logic/factory-logic';
-import { Hero } from '../../../../../models/hero';
-import { HeroLogic } from '../../../../../logic/hero-logic';
-import { MapItemStyle } from '../tactical-map-panel';
-import { MapMini } from '../../../../../models/tactical-map';
-import { Markdown } from '../../../../controls/markdown/markdown';
-import { Monster } from '../../../../../models/monster';
+import { HeroHealthPanel, MonsterHealthPanel } from '@/components/panels/health/health-panel';
+import { HeroInfo, HeroToken, MonsterInfo, MonsterToken } from '@/components/panels/token/token';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { MapItemStyle } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { MapMini } from '@/models/tactical-map';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Monster } from '@/models/monster';
 import { Popover } from 'antd';
-import { TacticalMapDisplayType } from '../../../../../enums/tactical-map-display-type';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 
 import './map-mini.scss';
 

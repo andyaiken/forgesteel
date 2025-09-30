@@ -1,9 +1,9 @@
-import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
-import { LabeledTextField } from '../components/labeled-field';
-import { Options } from '../../../../models/options';
-import { RecoveriesComponent } from '../components/recoveries-component';
-import { StaminaComponent } from '../components/stamina-component';
-import { Utils } from '../../../../utils/utils';
+import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
+import { Options } from '@/models/options';
+import { RecoveriesComponent } from '@/components/panels/classic-sheet/components/recoveries-component';
+import { StaminaComponent } from '@/components/panels/classic-sheet/components/stamina-component';
+import { Utils } from '@/utils/utils';
 
 import './stats-resources-card.scss';
 

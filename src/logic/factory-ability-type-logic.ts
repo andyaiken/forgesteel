@@ -1,5 +1,5 @@
-import { AbilityType } from '../models/ability';
-import { AbilityUsage } from '../enums/ability-usage';
+import { AbilityType } from '@/models/ability';
+import { AbilityUsage } from '@/enums/ability-usage';
 
 export class FactoryAbilityTypeLogic {
 	createMain = (options?: { free?: boolean, qualifiers?: string[], freeStrike?: boolean }): AbilityType => {

@@ -1,6 +1,6 @@
-import { core } from './sourcebooks/core';
-import { orden } from './sourcebooks/orden';
-import { summonerSourcebook } from './sourcebooks/summoner';
+import { core } from '@/data/sourcebooks/core';
+import { orden } from '@/data/sourcebooks/orden';
+import { summonerSourcebook } from '@/data/sourcebooks/summoner';
 
 export class SourcebookData {
 	static core = core;

@@ -1,4 +1,4 @@
-import type { Characteristic } from '../enums/characteristic';
+import type { Characteristic } from '@/enums/characteristic';
 
 export interface PowerRoll {
 	characteristic: Characteristic[];

@@ -1,5 +1,5 @@
-import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
-import { LabeledTextField } from '../components/labeled-field';
+import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import './potencies-card.scss';
 
 interface Props {

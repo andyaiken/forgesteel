@@ -1,13 +1,13 @@
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeaturePanel } from '../feature-panel/feature-panel';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { Sourcebook } from '../../../../models/sourcebook';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { Sourcebook } from '@/models/sourcebook';
 import { Space } from 'antd';
-import { SubClass } from '../../../../models/subclass';
+import { SubClass } from '@/models/subclass';
 
 import './subclass-panel.scss';
 

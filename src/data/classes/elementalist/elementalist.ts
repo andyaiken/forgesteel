@@ -1,19 +1,19 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { DamageModifierType } from '../../../enums/damage-modifier-type';
-import { DamageType } from '../../../enums/damage-type';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { KitArmor } from '../../../enums/kit-armor';
-import { KitWeapon } from '../../../enums/kit-weapon';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { earth } from './earth';
-import { fire } from './fire';
-import { green } from './green';
-import { voidSubclass } from './void';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { earth } from '@/data/classes/elementalist/earth';
+import { fire } from '@/data/classes/elementalist/fire';
+import { green } from '@/data/classes/elementalist/green';
+import { voidSubclass } from '@/data/classes/elementalist/void';
 
 export const elementalist: HeroClass = {
 	id: 'class-elementalist',

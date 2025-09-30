@@ -1,16 +1,16 @@
 import { Button, Segmented, Space } from 'antd';
-import { Ability } from '../../../models/ability';
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { AbilityLogic } from '../../../logic/ability-logic';
+import { Ability } from '@/models/ability';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityLogic } from '@/logic/ability-logic';
 import { BarChartOutlined } from '@ant-design/icons';
-import { Collections } from '../../../utils/collections';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Field } from '../../controls/field/field';
-import { Hero } from '../../../models/hero';
-import { HeroLogic } from '../../../logic/hero-logic';
-import { Markdown } from '../../controls/markdown/markdown';
-import { PowerRoll } from '../../../models/power-roll';
+import { Collections } from '@/utils/collections';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Field } from '@/components/controls/field/field';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { PowerRoll } from '@/models/power-roll';
 import { useState } from 'react';
 
 import './power-roll-panel.scss';

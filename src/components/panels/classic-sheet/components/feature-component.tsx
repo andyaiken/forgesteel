@@ -1,27 +1,27 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '../../../../models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '@/models/feature';
 
-import { Ability } from '../../../../models/ability';
-import { AbilityComponent } from './ability-component';
-import { AbilityUsage } from '../../../../enums/ability-usage';
-import { Characteristic } from '../../../../enums/characteristic';
-import { ClassicSheetBuilder } from '../../../../logic/classic-sheet/classic-sheet-builder';
-import { DamageModifier } from '../../../../models/damage-modifier';
-import { DamageModifierType } from '../../../../enums/damage-modifier-type';
-import { DrawSteelSymbolText } from './ds-symbol-text-component';
-import { FeatureType } from '../../../../enums/feature-type';
-import { Format } from '../../../../utils/format';
+import { Ability } from '@/models/ability';
+import { AbilityComponent } from '@/components/panels/classic-sheet/components/ability-component';
+import { AbilityUsage } from '@/enums/ability-usage';
+import { Characteristic } from '@/enums/characteristic';
+import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
+import { DamageModifier } from '@/models/damage-modifier';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DrawSteelSymbolText } from '@/components/panels/classic-sheet/components/ds-symbol-text-component';
+import { FeatureType } from '@/enums/feature-type';
+import { Format } from '@/utils/format';
 import { Fragment } from 'react';
-import { Hero } from '../../../../models/hero';
-import { HeroLogic } from '../../../../logic/hero-logic';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { ModifierLogic } from '../../../../logic/modifier-logic';
-import { PerkList } from '../../../../enums/perk-list';
-import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
-import { SkillList } from '../../../../enums/skill-list';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { ModifierLogic } from '@/logic/modifier-logic';
+import { PerkList } from '@/enums/perk-list';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { SkillList } from '@/enums/skill-list';
 
-import rollT1 from '../../../../assets/icons/power-roll-t1.svg';
-import rollT2 from '../../../../assets/icons/power-roll-t2.svg';
-import rollT3 from '../../../../assets/icons/power-roll-t3.svg';
+import rollT1 from '@/assets/icons/power-roll-t1.svg';
+import rollT2 from '@/assets/icons/power-roll-t2.svg';
+import rollT3 from '@/assets/icons/power-roll-t3.svg';
 
 import './feature-component.scss';
 

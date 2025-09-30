@@ -1,9 +1,9 @@
-import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
-import { MapItemStyle } from '../tactical-map-panel';
-import { MapWall } from '../../../../../models/tactical-map';
-import { Markdown } from '../../../../controls/markdown/markdown';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { MapItemStyle } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { MapWall } from '@/models/tactical-map';
+import { Markdown } from '@/components/controls/markdown/markdown';
 import { Popover } from 'antd';
-import { TacticalMapDisplayType } from '../../../../../enums/tactical-map-display-type';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 
 import './map-wall.scss';
 

@@ -1,13 +1,13 @@
 import { Button, Flex, Space, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
-import { Modal } from '../modal/modal';
-import { Sourcebook } from '../../../models/sourcebook';
-import { SourcebookPanel } from '../../panels/elements/sourcebook-panel/sourcebook-panel';
-import { SourcebookUpdateLogic } from '../../../logic/update/sourcebook-update-logic';
-import { Utils } from '../../../utils/utils';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Modal } from '@/components/modals/modal/modal';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
+import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './sourcebooks-modal.scss';

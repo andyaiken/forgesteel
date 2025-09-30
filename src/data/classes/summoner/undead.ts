@@ -1,13 +1,13 @@
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { DamageModifierType } from '../../../enums/damage-modifier-type';
-import { DamageType } from '../../../enums/damage-type';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../../enums/monster-role-type';
-import { SubClass } from '../../../models/subclass';
-import { TerrainRoleType } from '../../../enums/terrain-role-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { SubClass } from '@/models/subclass';
+import { TerrainRoleType } from '@/enums/terrain-role-type';
 
 export const undead: SubClass = {
 	id: 'summoner-sub-4',

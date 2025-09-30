@@ -1,14 +1,14 @@
-import { Encounter, EncounterGroup } from '../models/encounter';
-import { EncounterSlot, EncounterSlotCustomization } from '../models/encounter-slot';
-import { Collections } from '../utils/collections';
-import { FactoryLogic } from './factory-logic';
-import { FeatureType } from '../enums/feature-type';
-import { MonsterLogic } from './monster-logic';
-import { MonsterOrganizationType } from '../enums/monster-organization-type';
-import { Options } from '../models/options';
-import { Sourcebook } from '../models/sourcebook';
-import { SourcebookLogic } from './sourcebook-logic';
-import { Utils } from '../utils/utils';
+import { Encounter, EncounterGroup } from '@/models/encounter';
+import { EncounterSlot, EncounterSlotCustomization } from '@/models/encounter-slot';
+import { Collections } from '@/utils/collections';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureType } from '@/enums/feature-type';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { Options } from '@/models/options';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Utils } from '@/utils/utils';
 
 export class EncounterLogic {
 	static getMonsterCount = (encounter: Encounter, sourcebooks: Sourcebook[], options: Options) => {

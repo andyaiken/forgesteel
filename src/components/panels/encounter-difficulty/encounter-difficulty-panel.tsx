@@ -1,16 +1,16 @@
 import { Alert, Slider } from 'antd';
-import { Encounter } from '../../../models/encounter';
-import { EncounterDifficultyLogic } from '../../../logic/encounter-difficulty-logic';
-import { EncounterLogic } from '../../../logic/encounter-logic';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Field } from '../../controls/field/field';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
-import { Options } from '../../../models/options';
-import { OptionsLogic } from '../../../logic/options-logic';
+import { Encounter } from '@/models/encounter';
+import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
+import { EncounterLogic } from '@/logic/encounter-logic';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Options } from '@/models/options';
+import { OptionsLogic } from '@/logic/options-logic';
 import { ReactNode } from 'react';
-import { Sourcebook } from '../../../models/sourcebook';
-import { SourcebookLogic } from '../../../logic/sourcebook-logic';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 
 import './encounter-difficulty-panel.scss';
 

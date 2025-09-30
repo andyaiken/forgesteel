@@ -1,8 +1,8 @@
-import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
-import { MapItemStyle } from '../tactical-map-panel';
-import { MapPosition } from '../../../../../models/tactical-map';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { MapItemStyle } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { MapPosition } from '@/models/tactical-map';
 import { MouseEvent } from 'react';
-import { TacticalMapDisplayType } from '../../../../../enums/tactical-map-display-type';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 
 import './grid-square.scss';
 

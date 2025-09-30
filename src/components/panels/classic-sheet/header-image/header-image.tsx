@@ -1,4 +1,4 @@
-import pbds from '../../../../assets/powered-by-draw-steel.png';
+import pbds from '@/assets/powered-by-draw-steel.png';
 
 import './header-image.scss';
 

@@ -1,8 +1,8 @@
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Monster } from '../../../models/monster';
-import { MonsterLogic } from '../../../logic/monster-logic';
-import { Terrain } from '../../../models/terrain';
-import { TerrainLogic } from '../../../logic/terrain-logic';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Monster } from '@/models/monster';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { Terrain } from '@/models/terrain';
+import { TerrainLogic } from '@/logic/terrain-logic';
 
 import './monster-label.scss';
 

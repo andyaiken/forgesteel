@@ -1,6 +1,6 @@
-import { Collections } from '../utils/collections';
-import { Format } from '../utils/format';
-import { Random } from '../utils/random';
+import { Collections } from '@/utils/collections';
+import { Format } from '@/utils/format';
+import { Random } from '@/utils/random';
 
 export class NameGenerator {
 	static generateName = (rng: () => number = Math.random) => {

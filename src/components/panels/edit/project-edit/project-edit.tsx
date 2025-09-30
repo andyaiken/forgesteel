@@ -1,11 +1,11 @@
 import { Input, Select } from 'antd';
-import { Characteristic } from '../../../../enums/characteristic';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { MultiLine } from '../../../controls/multi-line/multi-line';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Project } from '../../../../models/project';
-import { Utils } from '../../../../utils/utils';
+import { Characteristic } from '@/enums/characteristic';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Project } from '@/models/project';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './project-edit.scss';

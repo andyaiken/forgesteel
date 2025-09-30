@@ -1,6 +1,6 @@
-import { ComplicationSheet } from '../../../../models/classic-sheets/hero-sheet';
-import { FeatureComponent } from '../components/feature-component';
-import { Hero } from '../../../../models/hero';
+import { ComplicationSheet } from '@/models/classic-sheets/hero-sheet';
+import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
+import { Hero } from '@/models/hero';
 
 import '../career-card/career-card.scss';
 

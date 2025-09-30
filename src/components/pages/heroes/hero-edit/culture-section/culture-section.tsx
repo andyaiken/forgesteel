@@ -1,29 +1,29 @@
 import { Button, Divider, Drawer, Flex, Input, Space } from 'antd';
 import { CloseOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '../../../../../data/culture-data';
+import { CultureData, EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { ReactNode, useState } from 'react';
-import { Culture } from '../../../../../models/culture';
-import { CulturePanel } from '../../../../panels/elements/culture-panel/culture-panel';
-import { CultureType } from '../../../../../enums/culture-type';
-import { Element } from '../../../../../models/element';
-import { EmptyMessage } from '../empty-message/empty-message';
-import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
-import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
-import { FeatureData } from '../../../../../models/feature';
-import { FeatureLogic } from '../../../../../logic/feature-logic';
-import { FeatureSelectModal } from '../../../../modals/select/feature-select/feature-select-modal';
-import { Field } from '../../../../controls/field/field';
-import { HeaderText } from '../../../../controls/header-text/header-text';
-import { Hero } from '../../../../../models/hero';
-import { Markdown } from '../../../../controls/markdown/markdown';
-import { NameGenerator } from '../../../../../utils/name-generator';
-import { Options } from '../../../../../models/options';
-import { PanelMode } from '../../../../../enums/panel-mode';
-import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
-import { Utils } from '../../../../../utils/utils';
-import { useMediaQuery } from '../../../../../hooks/use-media-query';
+import { Culture } from '@/models/culture';
+import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
+import { CultureType } from '@/enums/culture-type';
+import { Element } from '@/models/element';
+import { EmptyMessage } from '@/components/pages/heroes/hero-edit/empty-message/empty-message';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '@/models/feature';
+import { FeatureLogic } from '@/logic/feature-logic';
+import { FeatureSelectModal } from '@/components/modals/select/feature-select/feature-select-modal';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { NameGenerator } from '@/utils/name-generator';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Utils } from '@/utils/utils';
+import { useIsSmall } from '@/hooks/use-is-small';
 
 import './culture-section.scss';
 
@@ -49,7 +49,7 @@ interface CultureSectionProps {
 }
 
 export const CultureSection = (props: CultureSectionProps) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const [ showEnvironment, setShowEnvironment ] = useState<boolean>(false);
 	const [ showOrganization, setShowOrganization ] = useState<boolean>(false);
 	const [ showUpbringing, setShowUpbringing ] = useState<boolean>(false);

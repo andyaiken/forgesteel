@@ -1,5 +1,5 @@
-import { Negotiation } from '../models/negotiation';
-import { NegotiationTrait } from '../enums/negotiation-trait';
+import { Negotiation } from '@/models/negotiation';
+import { NegotiationTrait } from '@/enums/negotiation-trait';
 
 export class NegotiationData {
 	static banditChief: Negotiation = {

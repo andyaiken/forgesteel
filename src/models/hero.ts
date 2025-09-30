@@ -1,10 +1,10 @@
-import { Ancestry } from './ancestry';
-import { Career } from './career';
-import { Complication } from './complication';
-import { Culture } from './culture';
-import { Feature } from './feature';
-import { HeroClass } from './class';
-import { HeroState } from './hero-state';
+import { Ancestry } from '@/models/ancestry';
+import { Career } from '@/models/career';
+import { Complication } from '@/models/complication';
+import { Culture } from '@/models/culture';
+import { Feature } from '@/models/feature';
+import { HeroClass } from '@/models/class';
+import { HeroState } from '@/models/hero-state';
 
 export interface AbilityCustomization {
 	abilityID: string;

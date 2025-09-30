@@ -1,7 +1,7 @@
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureType } from '../../enums/feature-type';
-import { Perk } from '../../models/perk';
-import { PerkList } from '../../enums/perk-list';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureType } from '@/enums/feature-type';
+import { Perk } from '@/models/perk';
+import { PerkList } from '@/enums/perk-list';
 
 export class ExplorationPerkData {
 	static brawny: Perk = {

@@ -1,15 +1,15 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { ConditionType } from '../../../enums/condition-type';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { chronokinetic } from './chronokinetic';
-import { cryokinetic } from './cryokinetic';
-import { metakinetic } from './metakinetic';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { ConditionType } from '@/enums/condition-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { chronokinetic } from '@/data/classes/null/chronokinetic';
+import { cryokinetic } from '@/data/classes/null/cryokinetic';
+import { metakinetic } from '@/data/classes/null/metakinetic';
 
 export const nullClass: HeroClass = {
 	id: 'class-null',

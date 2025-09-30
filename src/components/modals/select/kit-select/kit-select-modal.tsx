@@ -1,14 +1,14 @@
 import { Input, Space } from 'antd';
-import { Empty } from '../../../controls/empty/empty';
-import { Hero } from '../../../../models/hero';
-import { Kit } from '../../../../models/kit';
-import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
-import { Modal } from '../../modal/modal';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
+import { Empty } from '@/components/controls/empty/empty';
+import { Hero } from '@/models/hero';
+import { Kit } from '@/models/kit';
+import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
+import { Modal } from '@/components/modals/modal/modal';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Utils } from '../../../../utils/utils';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './kit-select-modal.scss';

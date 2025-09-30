@@ -1,22 +1,22 @@
-import { Encounter, EncounterGroup } from '../../models/encounter';
-import { EncounterGroupSheet, EncounterSheet, EncounterSlotSheet, MonsterSheet } from '../../models/classic-sheets/encounter-sheet';
-import { Characteristic } from '../../enums/characteristic';
-import { ClassicSheetBuilder } from '../classic-sheet/classic-sheet-builder';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { EncounterDifficultyLogic } from '../encounter-difficulty-logic';
-import { EncounterLogic } from '../encounter-logic';
-import { EncounterSlot } from '../../models/encounter-slot';
-import { FeatureType } from '../../enums/feature-type';
-import { Format } from '../../utils/format';
-import { FormatLogic } from '../format-logic';
-import { Hero } from '../../models/hero';
-import { Monster } from '../../models/monster';
-import { MonsterLogic } from '../monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { Options } from '../../models/options';
-import { Sourcebook } from '../../models/sourcebook';
-import { SourcebookLogic } from '../sourcebook-logic';
-import { Utils } from '../../utils/utils';
+import { Encounter, EncounterGroup } from '@/models/encounter';
+import { EncounterGroupSheet, EncounterSheet, EncounterSlotSheet, MonsterSheet } from '@/models/classic-sheets/encounter-sheet';
+import { Characteristic } from '@/enums/characteristic';
+import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
+import { EncounterLogic } from '@/logic/encounter-logic';
+import { EncounterSlot } from '@/models/encounter-slot';
+import { FeatureType } from '@/enums/feature-type';
+import { Format } from '@/utils/format';
+import { FormatLogic } from '@/logic/format-logic';
+import { Hero } from '@/models/hero';
+import { Monster } from '@/models/monster';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { Options } from '@/models/options';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Utils } from '@/utils/utils';
 
 export class EncounterSheetBuilder {
 	static buildEncounterSheet = (encounter: Encounter, sourcebooks: Sourcebook[], heroes: Hero[], options: Options): EncounterSheet => {

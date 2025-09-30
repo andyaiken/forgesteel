@@ -1,13 +1,13 @@
 import { Badge, Button, Divider, Flex } from 'antd';
 import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { SyncStatus } from '../sync-status/sync-status';
-import { useMediaQuery } from '../../../hooks/use-media-query';
-import { useNavigation } from '../../../hooks/use-navigation';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { SyncStatus } from '@/components/panels/sync-status/sync-status';
+import { useIsSmall } from '@/hooks/use-is-small';
+import { useNavigation } from '@/hooks/use-navigation';
 
 import './app-footer.scss';
 
-import shield from './../../../assets/shield.png';
+import shield from '@/assets/shield.png';
 
 interface Props {
 	page: 'welcome' | 'heroes' | 'library' | 'playbook' | 'session' | 'player-view';
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const AppFooter = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 
 	try {

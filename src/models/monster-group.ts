@@ -1,6 +1,6 @@
-import { FeatureAddOn, FeatureMalice, FeatureMaliceAbility } from './feature';
-import { Element } from './element';
-import { Monster } from './monster';
+import { FeatureAddOn, FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
+import { Element } from '@/models/element';
+import { Monster } from '@/models/monster';
 
 export interface MonsterGroup extends Element {
 	picture: string | null;

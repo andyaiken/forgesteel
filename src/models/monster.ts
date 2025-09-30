@@ -1,11 +1,11 @@
-import { Characteristic } from '../enums/characteristic';
-import { DamageType } from '../enums/damage-type';
-import { Element } from './element';
-import { Feature } from './feature';
-import { MonsterRole } from './monster-roll';
-import { MonsterState } from './monster-state';
-import { Size } from './size';
-import { Speed } from './speed';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageType } from '@/enums/damage-type';
+import { Element } from '@/models/element';
+import { Feature } from '@/models/feature';
+import { MonsterRole } from '@/models/monster-roll';
+import { MonsterState } from '@/models/monster-state';
+import { Size } from '@/models/size';
+import { Speed } from '@/models/speed';
 
 export interface Monster extends Element {
 	picture: string | null;

@@ -1,11 +1,11 @@
 import { Button, Flex } from 'antd';
 import { LoginOutlined, LogoutOutlined, PartitionOutlined } from '@ant-design/icons';
-import { Adventure } from '../../../models/adventure';
-import { Empty } from '../../controls/empty/empty';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { PlaybookLogic } from '../../../logic/playbook-logic';
-import { Plot } from '../../../models/plot';
+import { Adventure } from '@/models/adventure';
+import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { PlaybookLogic } from '@/logic/playbook-logic';
+import { Plot } from '@/models/plot';
 import { ReactNode } from 'react';
 
 import './plot-graph-panel.scss';

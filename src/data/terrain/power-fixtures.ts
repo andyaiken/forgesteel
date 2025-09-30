@@ -1,8 +1,8 @@
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterRoleType } from '../../enums/monster-role-type';
-import { Terrain } from '../../models/terrain';
-import { TerrainCategory } from '../../enums/terrain-category';
-import { TerrainRoleType } from '../../enums/terrain-role-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Terrain } from '@/models/terrain';
+import { TerrainCategory } from '@/enums/terrain-category';
+import { TerrainRoleType } from '@/enums/terrain-role-type';
 
 export const holyIdol: Terrain = {
 	id: 'holy-idol',

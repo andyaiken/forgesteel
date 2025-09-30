@@ -1,12 +1,12 @@
-import { Ability } from '../../../models/ability';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { AbilityLogic } from '../../../logic/ability-logic';
-import { AbilityUsage } from '../../../enums/ability-usage';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Field } from '../../controls/field/field';
-import { FormatLogic } from '../../../logic/format-logic';
-import { Hero } from '../../../models/hero';
-import { SashPanel } from '../sash/sash-panel';
+import { Ability } from '@/models/ability';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityLogic } from '@/logic/ability-logic';
+import { AbilityUsage } from '@/enums/ability-usage';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Field } from '@/components/controls/field/field';
+import { FormatLogic } from '@/logic/format-logic';
+import { Hero } from '@/models/hero';
+import { SashPanel } from '@/components/panels/sash/sash-panel';
 
 import './ability-info-panel.scss';
 

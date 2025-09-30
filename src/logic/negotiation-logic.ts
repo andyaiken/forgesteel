@@ -1,4 +1,4 @@
-import { NegotiationTrait } from '../enums/negotiation-trait';
+import { NegotiationTrait } from '@/enums/negotiation-trait';
 
 export class NegotiationLogic {
 	static getMotivationDescription = (trait: NegotiationTrait) => {

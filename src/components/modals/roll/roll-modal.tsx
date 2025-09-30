@@ -1,14 +1,14 @@
 import { Alert, Flex, Segmented, Statistic } from 'antd';
-import { Characteristic } from '../../../enums/characteristic';
-import { ConditionType } from '../../../enums/condition-type';
-import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
-import { Expander } from '../../controls/expander/expander';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
-import { HeroLogic } from '../../../logic/hero-logic';
-import { Modal } from '../modal/modal';
-import { NumberSpin } from '../../controls/number-spin/number-spin';
-import { RollState } from '../../../enums/roll-state';
+import { Characteristic } from '@/enums/characteristic';
+import { ConditionType } from '@/enums/condition-type';
+import { DieRollPanel } from '@/components/panels/die-roll/die-roll-panel';
+import { Expander } from '@/components/controls/expander/expander';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Modal } from '@/components/modals/modal/modal';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { RollState } from '@/enums/roll-state';
 import { useState } from 'react';
 
 import './roll-modal.scss';

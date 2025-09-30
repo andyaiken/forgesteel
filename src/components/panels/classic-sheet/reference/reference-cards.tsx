@@ -1,6 +1,6 @@
-import { Markdown } from '../../../controls/markdown/markdown';
-import { RulesItem } from '../../../../models/rules-item';
-import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { RulesItem } from '@/models/rules-item';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
 import './reference-cards.scss';
 

@@ -1,6 +1,6 @@
-import { HeroEditTab } from '../models/hero';
-import { PlaybookElementKind } from '../models/playbook';
-import { SourcebookElementKind } from '../models/sourcebook';
+import { HeroEditTab } from '@/models/hero';
+import { PlaybookElementKind } from '@/models/playbook';
+import { SourcebookElementKind } from '@/models/sourcebook';
 import { useNavigate } from 'react-router';
 
 export const useNavigation = () => {

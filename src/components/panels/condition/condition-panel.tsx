@@ -1,13 +1,13 @@
-import { ConditionEndType, ConditionType } from '../../../enums/condition-type';
+import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { Segmented, Space } from 'antd';
-import { Condition } from '../../../models/condition';
-import { ConditionLogic } from '../../../logic/condition-logic';
-import { DangerButton } from '../../controls/danger-button/danger-button';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Field } from '../../controls/field/field';
-import { Markdown } from '../../controls/markdown/markdown';
-import { MultiLine } from '../../controls/multi-line/multi-line';
-import { Utils } from '../../../utils/utils';
+import { Condition } from '@/models/condition';
+import { ConditionLogic } from '@/logic/condition-logic';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Field } from '@/components/controls/field/field';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './condition-panel.scss';

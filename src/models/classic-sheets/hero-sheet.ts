@@ -1,13 +1,13 @@
-import { AbilitySheet } from './ability-sheet';
-import { Condition } from '../condition';
-import { ConditionType } from '../../enums/condition-type';
-import { Culture } from '../culture';
-import { Element } from '../element';
-import { Feature } from '../feature';
-import { Hero } from '../hero';
-import { Item } from '../item';
-import { Perk } from '../perk';
-import { Title } from '../title';
+import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { Condition } from '@/models/condition';
+import { ConditionType } from '@/enums/condition-type';
+import { Culture } from '@/models/culture';
+import { Element } from '@/models/element';
+import { Feature } from '@/models/feature';
+import { Hero } from '@/models/hero';
+import { Item } from '@/models/item';
+import { Perk } from '@/models/perk';
+import { Title } from '@/models/title';
 
 // #region Character
 export interface HeroSheet {

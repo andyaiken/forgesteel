@@ -1,5 +1,5 @@
 import { SyncOutlined, WifiOutlined } from '@ant-design/icons';
-import { useSyncStatus } from '../../../hooks/use-sync-status';
+import { useSyncStatus } from '@/hooks/use-sync-status';
 
 import './sync-status.scss';
 

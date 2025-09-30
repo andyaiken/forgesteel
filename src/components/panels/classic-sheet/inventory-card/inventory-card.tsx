@@ -1,6 +1,6 @@
-import { HeroSheet, ItemSheet } from '../../../../models/classic-sheets/hero-sheet';
-import { FeatureComponent } from '../components/feature-component';
-import { Markdown } from '../../../controls/markdown/markdown';
+import { HeroSheet, ItemSheet } from '@/models/classic-sheets/hero-sheet';
+import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
+import { Markdown } from '@/components/controls/markdown/markdown';
 
 import './inventory-card.scss';
 

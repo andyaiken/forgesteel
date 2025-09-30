@@ -1,8 +1,8 @@
-import { AbilityData } from '../../../data/ability-data';
-import { AbilityPanel } from '../elements/ability-panel/ability-panel';
+import { AbilityData } from '@/data/ability-data';
+import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { Divider } from 'antd';
-import { Hero } from '../../../models/hero';
-import { PanelMode } from '../../../enums/panel-mode';
+import { Hero } from '@/models/hero';
+import { PanelMode } from '@/enums/panel-mode';
 
 import './standard-abilities-panel.scss';
 

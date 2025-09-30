@@ -1,4 +1,4 @@
-import { Hero } from '../../models/hero';
+import { Hero } from '@/models/hero';
 
 export const humanTalent = {
 	id: 'utdBEimMHFG2Em3P',

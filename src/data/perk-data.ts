@@ -1,9 +1,9 @@
-import { CraftingPerkData } from './perks/crafting';
-import { ExplorationPerkData } from './perks/exploration';
-import { InterpersonalPerkData } from './perks/interpersonal';
-import { IntriguePerkData } from './perks/intrigue';
-import { LorePerkData } from './perks/lore';
-import { SupernaturalPerkData } from './perks/supernatural';
+import { CraftingPerkData } from '@/data/perks/crafting';
+import { ExplorationPerkData } from '@/data/perks/exploration';
+import { InterpersonalPerkData } from '@/data/perks/interpersonal';
+import { IntriguePerkData } from '@/data/perks/intrigue';
+import { LorePerkData } from '@/data/perks/lore';
+import { SupernaturalPerkData } from '@/data/perks/supernatural';
 
 export class PerkData {
 	static areaOfExpertise = CraftingPerkData.areaOfExpertise;

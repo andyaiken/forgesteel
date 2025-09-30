@@ -1,34 +1,34 @@
 import { Button, Drawer, Flex, Radio, Select, Space } from 'antd';
 import { CheckCircleFilled, CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
-import { Characteristic } from '../../../../../enums/characteristic';
-import { ClassPanel } from '../../../../panels/elements/class-panel/class-panel';
-import { Collections } from '../../../../../utils/collections';
-import { Element } from '../../../../../models/element';
-import { Empty } from '../../../../controls/empty/empty';
-import { EmptyMessage } from '../empty-message/empty-message';
-import { Expander } from '../../../../controls/expander/expander';
-import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
-import { FeatureData } from '../../../../../models/feature';
-import { FeatureLogic } from '../../../../../logic/feature-logic';
-import { Field } from '../../../../controls/field/field';
-import { Format } from '../../../../../utils/format';
-import { HeaderText } from '../../../../controls/header-text/header-text';
-import { Hero } from '../../../../../models/hero';
-import { HeroClass } from '../../../../../models/class';
-import { HeroLogic } from '../../../../../logic/hero-logic';
-import { Modal } from '../../../../modals/modal/modal';
-import { NumberSpin } from '../../../../controls/number-spin/number-spin';
-import { Options } from '../../../../../models/options';
-import { PanelMode } from '../../../../../enums/panel-mode';
-import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
-import { SubClass } from '../../../../../models/subclass';
-import { SubClassSelectModal } from '../../../../modals/select/subclass-select/subclass-select-modal';
-import { SubclassPanel } from '../../../../panels/elements/subclass-panel/subclass-panel';
-import { Utils } from '../../../../../utils/utils';
-import { useMediaQuery } from '../../../../../hooks/use-media-query';
+import { Characteristic } from '@/enums/characteristic';
+import { ClassPanel } from '@/components/panels/elements/class-panel/class-panel';
+import { Collections } from '@/utils/collections';
+import { Element } from '@/models/element';
+import { Empty } from '@/components/controls/empty/empty';
+import { EmptyMessage } from '@/components/pages/heroes/hero-edit/empty-message/empty-message';
+import { Expander } from '@/components/controls/expander/expander';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '@/models/feature';
+import { FeatureLogic } from '@/logic/feature-logic';
+import { Field } from '@/components/controls/field/field';
+import { Format } from '@/utils/format';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroClass } from '@/models/class';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Modal } from '@/components/modals/modal/modal';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SubClass } from '@/models/subclass';
+import { SubClassSelectModal } from '@/components/modals/select/subclass-select/subclass-select-modal';
+import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
+import { Utils } from '@/utils/utils';
+import { useIsSmall } from '@/hooks/use-is-small';
 
 import './class-section.scss';
 
@@ -56,7 +56,7 @@ interface Props {
 }
 
 export const ClassSection = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const [ array, setArray ] = useState<number[] | null>(() => {
 		let currentArray = null;
 

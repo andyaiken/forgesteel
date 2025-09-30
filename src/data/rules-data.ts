@@ -1,4 +1,4 @@
-import { RulesItem } from '../models/rules-item';
+import { RulesItem } from '@/models/rules-item';
 
 export class RulesData {
 	static abilityDistance: RulesItem = {

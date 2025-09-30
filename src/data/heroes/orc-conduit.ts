@@ -1,4 +1,4 @@
-import { Hero } from '../../models/hero';
+import { Hero } from '@/models/hero';
 
 export const orcConduit = {
 	id: 'peDWE02tDZH9CK2P',

@@ -1,14 +1,14 @@
 import { Alert, Button, Drawer, Flex, Segmented, Slider, Statistic } from 'antd';
 import { ReactNode, useState } from 'react';
 import { BarChartOutlined } from '@ant-design/icons';
-import { Collections } from '../../../utils/collections';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { HistogramPanel } from '../histogram/histogram-panel';
-import { Modal } from '../../modals/modal/modal';
-import { Random } from '../../../utils/random';
-import { RollLogic } from '../../../logic/roll-logic';
-import { RollState } from '../../../enums/roll-state';
+import { Collections } from '@/utils/collections';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { HistogramPanel } from '@/components/panels/histogram/histogram-panel';
+import { Modal } from '@/components/modals/modal/modal';
+import { Random } from '@/utils/random';
+import { RollLogic } from '@/logic/roll-logic';
+import { RollState } from '@/enums/roll-state';
 
 import './die-roll-panel.scss';
 

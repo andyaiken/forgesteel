@@ -1,15 +1,15 @@
-import { AbilitySheet } from '../../../../models/classic-sheets/ability-sheet';
-import { Collections } from '../../../../utils/collections';
-import { DrawSteelSymbolText } from '../components/ds-symbol-text-component';
-import { Markdown } from '../../../controls/markdown/markdown';
+import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { Collections } from '@/utils/collections';
+import { DrawSteelSymbolText } from '@/components/panels/classic-sheet/components/ds-symbol-text-component';
+import { Markdown } from '@/components/controls/markdown/markdown';
 
 import './ability-card.scss';
 
-import distanceIcon from '../../../../assets/icons/distance.svg';
-import rollT1 from '../../../../assets/icons/power-roll-t1.svg';
-import rollT2 from '../../../../assets/icons/power-roll-t2.svg';
-import rollT3 from '../../../../assets/icons/power-roll-t3.svg';
-import targetIcon from '../../../../assets/icons/target.svg';
+import distanceIcon from '@/assets/icons/distance.svg';
+import rollT1 from '@/assets/icons/power-roll-t1.svg';
+import rollT2 from '@/assets/icons/power-roll-t2.svg';
+import rollT3 from '@/assets/icons/power-roll-t3.svg';
+import targetIcon from '@/assets/icons/target.svg';
 
 interface Props {
 	ability: AbilitySheet;

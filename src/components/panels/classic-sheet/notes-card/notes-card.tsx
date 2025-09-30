@@ -1,4 +1,4 @@
-import { Markdown } from '../../../controls/markdown/markdown';
+import { Markdown } from '@/components/controls/markdown/markdown';
 
 import './notes-card.scss';
 

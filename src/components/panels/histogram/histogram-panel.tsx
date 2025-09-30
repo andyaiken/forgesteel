@@ -1,5 +1,5 @@
-import { Collections } from '../../../utils/collections';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
+import { Collections } from '@/utils/collections';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './histogram-panel.scss';
 

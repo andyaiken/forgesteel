@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureSkillChoice, FeatureText } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityDamage, FeatureAbilityDistance, FeatureAncestryChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFollower, FeatureHeroicResource, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeaturePackage, FeaturePerk, FeatureSkillChoice, FeatureText } from '@/models/feature';
 
 import { Ability } from '@/models/ability';
 import { AbilityComponent } from '@/components/panels/classic-sheet/components/ability-component';
@@ -153,7 +153,7 @@ const TextFeatureComponent = (feature: FeatureText) => {
 	);
 };
 
-const PackageFeatureComponent = (feature: FeaturePackage | FeaturePackageContent, hero: Hero | undefined) => {
+const PackageFeatureComponent = (feature: FeaturePackage, hero: Hero | undefined) => {
 	const packageContent = hero ?
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
@@ -166,6 +166,8 @@ const PackageFeatureComponent = (feature: FeaturePackage | FeaturePackageContent
 				</div>
 			))
 		: null;
+
+	const showPackageContent = !feature.description.includes('class="continued-in-reference"');
 	return (
 		<>
 			<div className='feature-title'>{feature.name}</div>
@@ -173,7 +175,7 @@ const PackageFeatureComponent = (feature: FeaturePackage | FeaturePackageContent
 				text={feature.description}
 				className='feature-description'
 			/>
-			{packageContent}
+			{showPackageContent ? packageContent : null}
 		</>
 	);
 };
@@ -469,7 +471,6 @@ export const FeatureComponent = (props: Props) => {
 			content = TextFeatureComponent(feature);
 			break;
 		case FeatureType.Package:
-		case FeatureType.PackageContent:
 			content = PackageFeatureComponent(feature, hero);
 			break;
 		case FeatureType.Ability:
@@ -510,8 +511,8 @@ export const FeatureComponent = (props: Props) => {
 		case FeatureType.MaliceAbility:
 			content = MaliceAbilityFeatureComponent(feature);
 			break;
-		case FeatureType.Multiple:
-			// Do nothing for these since the individual sub-features are also iterated over, no need to double up
+		case FeatureType.Multiple:// Do nothing for these since the individual sub-features are also iterated over, no need to double up
+		case FeatureType.PackageContent: // These are brought in as part of the Package
 			break;
 		default:
 			content = BasicFeatureComponent(feature);

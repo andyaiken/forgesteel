@@ -64,6 +64,16 @@
             }
         }
 
+        section.bordered {
+            padding-bottom: 2px;
+
+            div {
+                margin-top: -5px;
+                max-height: 80px;
+                overflow: hidden;
+            }
+        }
+
         section.bordered:last-of-type {
             margin-bottom: 5px;
         }

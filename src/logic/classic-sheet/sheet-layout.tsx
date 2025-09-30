@@ -157,7 +157,7 @@ export class SheetLayout {
 			}
 			return refCards;
 		}
-		if (availableLinesY > 0)
+		if (availableLinesY > 0 && extraCards.optional.length > 0)
 			console.warn('Got through all cards?', extraCards);
 		return refCards;
 	};

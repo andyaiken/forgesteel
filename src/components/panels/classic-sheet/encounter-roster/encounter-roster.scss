@@ -9,7 +9,7 @@
     }
 
     table {
-        table-layout: fixed;
+        // table-layout: fixed;
         height: fit-content;
     }
 
@@ -18,7 +18,7 @@
     }
 
     .stats {
-        width: 20rem;
+        width: 17rem;
     }
 
     .notes {
@@ -52,11 +52,13 @@
         border-bottom: 1px solid common.$color-medium;
         height: 100%;
 
-        &:last-of-type {
+        &:last-of-type,
+        &.terrain-header {
             border-width: 2px;
         }
     }
-    tbody tr:nth-child(odd) {
+    tr.creature-group:nth-child(odd),
+    tr.terrain-object:nth-child(even) {
         background-color: common.$color-extra-light;
     }
 
@@ -110,6 +112,7 @@
             @include common.font-serif;
             font-size: round(1.4rem, 1px);
             line-height: round(2.2rem, 1px);
+            text-wrap: nowrap;
         }
 
         .ev,
@@ -129,7 +132,7 @@
         .stat-labels {
             align-self: stretch;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1.5fr 1fr;
             text-align: center;
             text-wrap: nowrap;
 
@@ -160,7 +163,7 @@
         padding-right: 0;
         .encounter-slot {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1.5fr 1fr;
             font-size: round(1rem, 1px);
             text-align: center;
         }

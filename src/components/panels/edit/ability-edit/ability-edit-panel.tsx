@@ -65,7 +65,7 @@ export const AbilityEditPanel = (props: Props) => {
 
 	const setTypeQualifiers = (value: string) => {
 		const copy = Utils.copy(ability);
-		copy.type.qualifiers = [ value ];
+		copy.type.qualifiers = value ? [ value ] : [];
 		setAbility(copy);
 		props.onChange(copy);
 	};

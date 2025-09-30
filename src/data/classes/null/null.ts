@@ -79,7 +79,7 @@ As a null, you resist the supernatural forces of the universe with composure and
 						name: 'Null Field',
 						description: 'You project an aura that dampens the power of your foes.',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [ AbilityKeyword.Psionic ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 1 }) ],
 						target: 'All enemies',
 						sections: [

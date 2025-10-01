@@ -6,5 +6,6 @@ export enum MonsterOrganizationType {
 	Leader = 'Leader',
 	Solo = 'Solo',
 	Retainer = 'Retainer',
+	Champion = 'Champion',
 	NoOrganization = 'No Organization'
 };

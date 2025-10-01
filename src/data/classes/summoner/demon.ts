@@ -1,8 +1,10 @@
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { SubClass } from '@/models/subclass';
@@ -210,7 +212,6 @@ When you finish a respite, the soul trails of each creature that took the respit
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						}),
@@ -252,7 +253,6 @@ When you finish a respite, the soul trails of each creature that took the respit
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						}),
@@ -312,7 +312,6 @@ When you finish a respite, the soul trails of each creature that took the respit
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						})
@@ -452,7 +451,6 @@ When you finish a respite, the soul trails of each creature that took the respit
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						}),
@@ -499,7 +497,6 @@ When you finish a respite, the soul trails of each creature that took the respit
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						}),
@@ -547,7 +544,6 @@ When you finish a respite, the soul trails of each creature that took the respit
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						})
@@ -583,69 +579,172 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 					id: 'summoner-1-5-3',
 					name: '7-Essence Minion',
 					options: [
-						// TODO: Faded Blightling
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-5-3a',
 								name: 'Faded Blightling',
-								description: '',
+								description: 'A cherubin creature bloated and warped by demonic energy. The lights from their myriad of eyes have all but gone out and now resemble blisters across their body.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Support),
+								keywords: [ 'Abyssal', 'Demon' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								size: FactoryLogic.createSize(1, 'L'),
+								speed: FactoryLogic.createSpeed(5, 'fly'),
+								stamina: 17,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 7,
+								freeStrikeType: DamageType.Corruption,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, -1, 4, 3),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-1-5-3a-1',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Holy,
+												modifierType: DamageModifierType.Weakness,
+												value: 1
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-1-5-3a-2',
+											name: 'Blighted Strike',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+											distance: [ FactoryLogic.distance.createRanged(5) ],
+											target: 'One creature or object per minion',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: Characteristic.Reason,
+														tier1: '7 corruption damage; P < [weak] bleeding (EoT)',
+														tier2: '11 corruption damage; P < [average] bleeding (EoT)',
+														tier3: '16 corruption damage; P < [strong] bleeding (EoT)'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('Instead of taking damage, you or any ally targeted by this ability impose a double bane on the next strike that targets them.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-5-3a-3',
+										name: 'Wilted Wings',
+										description: 'The blightling must land on the ground at the end of their turn or fall prone.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-5-3a-4',
+										name: 'Soulsight',
+										description: 'Each creature adjacent to the blightling can’t be hidden from them.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						}),
-						// TODO: Gorrre
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-5-3b',
 								name: 'Gorrre',
-								description: '',
+								description: 'The gorrre demons bear a resemblance to half rhino, half orangutan clad in heavy armor. They’ve been utilized as jail guards by devils, as few prisoners can ever hope to outrun a monster with unlimited endurance.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
+								keywords: [ 'Abyssal', 'Demon' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
+								size: FactoryLogic.createSize(2),
 								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
-								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								stamina: 17,
+								stability: 2,
+								freeStrikeDamage: 8,
+								characteristics: FactoryLogic.createCharacteristics(4, 3, 0, -1, 0),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-1-5-3b-1',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Holy,
+												modifierType: DamageModifierType.Weakness,
+												value: 1
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-5-3b-2',
+										name: 'Goring Strike',
+										description: 'The gorrre must charge before making a strike. The target takes an additional 3 damage if the gorre passed through one or more enemies or objects during the charge.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-5-3b-3',
+										name: 'Devastating Charge',
+										description: 'The gorrre ignores diﬃcult terrain while charging and destroys unattended, size 1 objects in their path. Each enemy they pass through during a charge takes 3 damage.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-5-3b-4',
+										name: 'Soulsight',
+										description: 'Each creature adjacent to the gorrre can’t be hidden from them.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						}),
-						// TODO: Vicisittante
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-5-3c',
 								name: 'Vicisittante',
-								description: '',
+								description: 'It’s difficult to identify the base nature of a vicisittante apart from an ever-changing mass of burning flesh. Any surface they touch immediately scars as the demon leaves parts of themselves behind.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
+								keywords: [ 'Abyssal', 'Demon' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(10),
+								stamina: 17,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 7,
+								freeStrikeType: DamageType.Psychic,
+								characteristics: FactoryLogic.createCharacteristics(3, 4, 0, 0, -1),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-1-5-3c-1',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Holy,
+												modifierType: DamageModifierType.Weakness,
+												value: 1
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-1-5-3c-2',
+											name: 'Cerebral Flay',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike ],
+											distance: [ FactoryLogic.distance.createMelee() ],
+											target: 'One creature or object per minion',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: Characteristic.Reason,
+														tier1: '7 psychic damage; P < [weak] weakened (save ends)',
+														tier2: '11 psychic damage; P < [average] weakened (save ends)',
+														tier3: '16 psychic damage; P < [strong] weakened (save ends)'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('A target weakened by this ability is always considered flanked by the vicisittante regardless of position until the condition ends.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-5-3c-3',
+										name: 'Soulsight',
+										description: 'Each creature adjacent to the vicisittante can’t be hidden from them.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						})
@@ -673,27 +772,113 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 					id: 'summoner-1-8-2',
 					name: 'Portfolio Champion',
 					summons: [
-						// TODO: Portfolio Champion
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-1-8-2a',
-								name: '',
-								description: '',
+								name: 'Demon Lord’s Aspect',
+								description: `
+Your champion is an Aspect of a demon lord. They have bore witness to your exploits and struck a deal with you: allow their children to feed and you can call forth a modicum of their power. Morality is none of their concern, but certainly a hero is enough of an arbiter of whose souls deserve to be fed to demons, right?
+
+The Demon Lord’s Aspect enjoys bringing the enemies in close with their appendages or flinging victims and throwing them to the gnashing horde. They’re willing to put your connection to this world at risk if it means taking one more bite.`,
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Champion),
+								keywords: [ 'Abyssal', 'Demon' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(5, 'teleport'),
 								stamina: 0,
-								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								stability: 2,
+								freeStrikeDamage: 9,
+								freeStrikeType: DamageType.Corruption,
+								characteristics: FactoryLogic.createCharacteristics(2, 5, 5, 2, 2),
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-1-8-2a-1',
+										field: FeatureField.Stamina,
+										valueFromController: FeatureField.Stamina
+									}),
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-1-8-2a-2',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												value: 5
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-1-8-2a-3',
+											name: 'Grasping Appendages',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+											distance: [ FactoryLogic.distance.createMelee(5) ],
+											target: 'Two creatures or objects',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														bonus: 5,
+														tier1: '9 corruption damage; pull 2',
+														tier2: '12 corruption damage; pull 4',
+														tier3: '14 corruption damage; pull 5'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('A target pulled adjacent to the aspect is grabbed.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-8-2a-4',
+										name: 'Warping Strike',
+										description: 'The Aspect’s free strikes teleport the target 5 squares.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-8-2a-5',
+										name: 'Champion’s Ire',
+										description: 'If the Aspect only targets one creature or object with a strike, they deal additional damage to the target equal to your Reason.'
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-1-8-2a-6',
+											name: 'I Like Your Taste',
+											type: FactoryLogic.type.createTrigger('The Aspect takes damage from an enemy.', { free: true }),
+											distance: [ FactoryLogic.distance.createSelf() ],
+											target: 'Self',
+											sections: [
+												FactoryLogic.createAbilitySectionText('The Aspect has a double edge on their next power roll. They can give this benefit to an ally within your Summoner’s Range.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-8-2a-7',
+										name: 'Frenzy',
+										description: 'When the Aspect is reduced to 0 Stamina, they make a free strike against each adjacent enemy before dying.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 9,
-							count: 1
+							count: 1,
+							level10: [
+								FactoryLogic.feature.createSize({
+									id: 'summoner-1-8-2a-10-1',
+									sizeValue: 3
+								}),
+								FactoryLogic.feature.createAbility({
+									ability: FactoryLogic.createAbility({
+										id: 'summoner-1-8-2a-10-2',
+										name: 'Flensing Reality',
+										type: FactoryLogic.type.createChampionAction(),
+										distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 20 }) ],
+										target: 'Self and all non-minion allies',
+										cost: 1,
+										sections: [
+											FactoryLogic.createAbilitySectionText('Each target teleports up to their speed and makes a free strike. If a target has a Save Ends condition, they can inflict it on their target and remove it from themself.')
+										]
+									})
+								})
+							]
 						})
 					]
 				})

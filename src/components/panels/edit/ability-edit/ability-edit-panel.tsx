@@ -398,7 +398,7 @@ export const AbilityEditPanel = (props: Props) => {
 											<Select
 												style={{ width: '100%' }}
 												placeholder='Select usage type'
-												options={[ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.NoAction, AbilityUsage.Other ].map(option => ({ value: option }))}
+												options={[ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.ChampionAction, AbilityUsage.NoAction, AbilityUsage.Other ].map(option => ({ value: option }))}
 												optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 												value={ability.type.usage}
 												onChange={setTypeUsage}

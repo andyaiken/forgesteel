@@ -603,38 +603,29 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const addSummon = (data: FeatureSummonData) => {
 			const copy = Utils.copy(data);
-			copy.summons.push({
-				id: '',
-				name: '',
-				description: '',
-				monster: FactoryLogic.createMonster({
-					id: Utils.guid(),
-					name: '',
-					description: '',
-					level: 1,
-					role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
-					keywords: [],
-					encounterValue: 0,
-					size: FactoryLogic.createSize(1),
-					speed: FactoryLogic.createSpeed(5),
-					stamina: 8,
-					stability: 0,
-					freeStrikeDamage: 1,
-					characteristics: [
-						{ characteristic: Characteristic.Might, value: 0 },
-						{ characteristic: Characteristic.Agility, value: 0 },
-						{ characteristic: Characteristic.Reason, value: 0 },
-						{ characteristic: Characteristic.Intuition, value: 0 },
-						{ characteristic: Characteristic.Presence, value: 0 }
-					],
-					features: []
-				}),
-				info: {
+			copy.summons.push(
+				FactoryLogic.createSummon({
+					monster: FactoryLogic.createMonster({
+						id: Utils.guid(),
+						name: '',
+						description: '',
+						level: 1,
+						role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
+						keywords: [],
+						encounterValue: 0,
+						size: FactoryLogic.createSize(1),
+						speed: FactoryLogic.createSpeed(5),
+						stamina: 8,
+						stability: 0,
+						freeStrikeDamage: 1,
+						characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+						features: []
+					}),
 					isSignature: true,
 					cost: 1,
 					count: 1
-				}
-			});
+				})
+			);
 			setData(copy);
 		};
 
@@ -676,10 +667,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const addSummonChoice = (data: FeatureSummonChoiceData) => {
 			const copy = Utils.copy(data);
-			copy.options.push({
-				id: '',
-				name: '',
-				description: '',
+			copy.options.push(FactoryLogic.createSummon({
 				monster: FactoryLogic.createMonster({
 					id: Utils.guid(),
 					name: '',
@@ -693,21 +681,13 @@ export const FeatureEditPanel = (props: Props) => {
 					stamina: 8,
 					stability: 0,
 					freeStrikeDamage: 1,
-					characteristics: [
-						{ characteristic: Characteristic.Might, value: 0 },
-						{ characteristic: Characteristic.Agility, value: 0 },
-						{ characteristic: Characteristic.Reason, value: 0 },
-						{ characteristic: Characteristic.Intuition, value: 0 },
-						{ characteristic: Characteristic.Presence, value: 0 }
-					],
+					characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
 					features: []
 				}),
-				info: {
-					isSignature: true,
-					cost: 1,
-					count: 1
-				}
-			});
+				isSignature: true,
+				cost: 1,
+				count: 1
+			}));
 			setData(copy);
 		};
 

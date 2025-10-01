@@ -69,6 +69,17 @@ export class FactoryAbilityTypeLogic {
 		};
 	};
 
+	createChampionAction = (): AbilityType => {
+		return {
+			usage: AbilityUsage.ChampionAction,
+			free: false,
+			trigger: '',
+			time: '',
+			qualifiers: [],
+			freeStrike: false
+		};
+	};
+
 	createNoAction = (): AbilityType => {
 		return {
 			usage: AbilityUsage.NoAction,

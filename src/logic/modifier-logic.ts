@@ -7,7 +7,13 @@ import { MonsterLogic } from '@/logic/monster-logic';
 
 export class ModifierLogic {
 	static calculateModifierValue = (modifier: Modifier, creature: Hero | Monster) => {
-		let value = modifier.value;
+		let value = 0;
+
+		if (modifier.valueFromController) {
+			value = CreatureLogic.getField(creature, modifier.valueFromController);
+		} else {
+			value = modifier.value;
+		}
 
 		if (modifier.valueCharacteristics.length > 0) {
 			const characteristicValue = Collections.max(modifier.valueCharacteristics.map(ch => CreatureLogic.getCharacteristic(creature, ch)), v => v) || 0;

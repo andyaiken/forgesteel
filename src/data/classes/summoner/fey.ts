@@ -1,3 +1,4 @@
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -228,7 +229,6 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						}),
@@ -271,7 +271,6 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						}),
@@ -303,7 +302,6 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						})
@@ -433,7 +431,6 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						}),
@@ -481,7 +478,6 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						}),
@@ -530,7 +526,6 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						})
@@ -574,69 +569,150 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 					id: 'summoner-3-5-3',
 					name: '7-Essence Minion',
 					options: [
-						// TODO: Nixie Corallia
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-5-3a',
 								name: 'Nixie Corallia',
-								description: '',
+								description: 'Corallias are saltwater nixies with coarse, coral-like skin and curly hair with sharp hook ends. The salt that comes off of their bodies has been used to hallow places of worship and ward off demons.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Support),
+								keywords: [ 'Fey' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								size: FactoryLogic.createSize(1, 'T'),
+								speed: FactoryLogic.createSpeed(6, 'swim'),
+								stamina: 17,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 7,
+								freeStrikeType: DamageType.Lightning,
+								characteristics: FactoryLogic.createCharacteristics(-2, 3, 3, 4, 1),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-3-5-3a-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Lightning,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-5-3a-2',
+										name: 'Water Weird',
+										description: 'Once per turn, each coralia in a squad can teleport to a body of water within 6. The coralia can’t teleport into water their own pooling magic is currently creating.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-5-3a-3',
+										name: 'Seafoam Pool',
+										description: 'The area within 2 squares of the coralia is filled with purifying saltwater that disables the eﬀects of diﬃcult terrain created by enemies. At the end of the coralia’s turn, the coralia can scrub you or an ally in the aﬀected area and end one condition.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-5-3a-4',
+										name: 'Minuscule',
+										description: 'The coralia has cover while occupying a larger creature’s space.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						}),
-						// TODO: Pixie Belladonix
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-5-3b',
 								name: 'Pixie Belladonix',
-								description: '',
+								description: 'The belladonix are among an archfey’s elite guard and carry themselves like royalty. Their moth-like wings ooze with vibrant colors and are barbed; the poison within threatening to completely shift the reality of their victims.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
+								keywords: [ 'Fey' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								size: FactoryLogic.createSize(1, 'T'),
+								speed: FactoryLogic.createSpeed(6, 'fly, hover'),
+								stamina: 16,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 8,
+								freeStrikeType: DamageType.Poison,
+								characteristics: FactoryLogic.createCharacteristics(-2, 2, 4, 0, 4),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-3-5-3b-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-3-5-3b-2',
+											name: 'A Thorn, Woe to the Pricked ',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+											distance: [ FactoryLogic.distance.createRanged(15) ],
+											target: 'One creature or object per minion',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: Characteristic.Reason,
+														tier1: '8 poison damage; M < [weak] restrained (save ends)',
+														tier2: '12 poison damage; M < [average] restrained (save ends)',
+														tier3: '17 poison damage; M < [strong] restrained (save ends)'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('A target restrained by this ability is trapped in a poison fueled haze and considers each creature within 1 square of them to be an enemy until the condition ends.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-5-3b-3',
+										name: 'Minuscule',
+										description: 'The belladonix has cover while occupying a larger creature’s space.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						}),
-						// TODO: Sprite Oleandercules
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-5-3c',
 								name: 'Sprite Oleandercules',
-								description: '',
+								description: 'These sprites wear heavy beetle armor and have a halo hovering away from their backs where their wings used to be. The faster the halo spins, the more power the oleandercules generates, enabling them to stand toe to toe with giants.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
+								keywords: [ 'Fey' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								size: FactoryLogic.createSize(1, 'T'),
+								speed: FactoryLogic.createSpeed(6, 'fly'),
+								stamina: 17,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 8,
+								characteristics: FactoryLogic.createCharacteristics(4, 3, 0, 1, 2),
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-3-5-3c-1',
+										field: FeatureField.Stability,
+										valueCharacteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-5-3c-2',
+										name: 'Warrior’s Toss',
+										description: 'The oleandercules’ melee strikes inflict push 4. If the target is force moved into an object, they are M < [average] knocked prone and can’t stand (save ends).'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-5-3c-3',
+										name: 'Use Their Might',
+										description: 'When targeting a creature with a grab or forced movement, the oleandercules’ size is considered one larger than the target.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-5-3c-4',
+										name: 'Minuscule',
+										description: 'The oleandercules has cover while occupying a larger creature’s space.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						})
@@ -667,27 +743,113 @@ Additionally, any of your fey minions’ traits that affect adjacent creatures a
 					id: 'summoner-3-8-2',
 					name: 'Portfolio Champion',
 					summons: [
-						// TODO: Portfolio Champion
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-3-8-2a',
-								name: '',
-								description: '',
+								name: 'Celestial Attendant',
+								description: `
+Your champion is an Attendant of a celestial. Whenever you call on their assistance, you must formally welcome and introduce them to the occasion. You can’t be certain if this is truly the blessing of a celestial you’ve previously allied yourself with, or if you’ve received someone else’s power—neither circumstance puts you in any less danger.
+
+The Celestial Attendant wants to swarm the map with pixies while limiting their foes’ ability to do anything about it. A single neurotoxic strike is all it takes to move everyone into position.`,
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Champion),
+								keywords: [ 'Fey' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(7, 'fly, hover'),
 								stamina: 0,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 9,
+								freeStrikeType: DamageType.Poison,
+								characteristics: FactoryLogic.createCharacteristics(2, 2, 5, 2, 5),
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-3-8-2a-1',
+										field: FeatureField.Stamina,
+										valueFromController: FeatureField.Stamina
+									}),
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-3-8-2a-2',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Damage,
+												modifierType: DamageModifierType.Immunity,
+												value: 2
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-3-8-2a-3',
+											name: 'Pixie Swarm',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+											distance: [ FactoryLogic.distance.createRanged(10) ],
+											target: 'Two creatures or objects',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														bonus: 5,
+														tier1: '9 damage; slide 3',
+														tier2: '12 damage; slide 5',
+														tier3: '14 damage; slide 6'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('An ally targeted by this ability can, instead, spend a recovery and shift the slide amount.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-8-2a-4',
+										name: 'Neurotoxic Strike',
+										description: 'The Attendant’s free strikes inflict the target with I < [average] being unable to establish line of eﬀect beyond 3 squares (EoT).'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-8-2a-5',
+										name: 'Champion’s Ire',
+										description: 'If the Attendant only targets one creature or object with a strike, they deal additional damage to the target equal to your Reason.'
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-3-8-2a-6',
+											name: 'Celestial Bell',
+											type: FactoryLogic.type.createTrigger('The Attendant takes damage from an enemy.', { free: true }),
+											distance: [ FactoryLogic.distance.createSelf() ],
+											target: 'Self',
+											sections: [
+												FactoryLogic.createAbilitySectionText('The Attendant rings a bell, and you summon a signature minion into an unoccupied space adjacent to the Attendant.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-8-2a-7',
+										name: 'Pixie Bouquet',
+										description: 'The Attendant starts their turn with temporary Stamina equal to 2 x the number of fey minions within 1 square of them. This temporary Stamina lasts until the start of their next turn.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 9,
-							count: 1
+							count: 1,
+							level10: [
+								FactoryLogic.feature.createSize({
+									id: 'summoner-3-8-2a-10-1',
+									sizeValue: 3
+								}),
+								FactoryLogic.feature.createAbility({
+									ability: FactoryLogic.createAbility({
+										id: 'summoner-3-8-2a-10-2',
+										name: 'A Shower of Dust ',
+										type: FactoryLogic.type.createChampionAction(),
+										distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 20 }) ],
+										target: 'Self and all non-minion allies in the area',
+										cost: 1,
+										sections: [
+											FactoryLogic.createAbilitySectionText('Each target gains 20 temporary Stamina and receives the benefits of one of your Flash Powder effects until the end of their next turn.')
+										]
+									})
+								})
+							]
 						})
 					]
 				})

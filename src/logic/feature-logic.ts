@@ -379,6 +379,7 @@ export class FeatureLogic {
 				data = {
 					keywords: [],
 					value: 0,
+					valueFromController: null,
 					valueCharacteristics: [],
 					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
@@ -390,6 +391,7 @@ export class FeatureLogic {
 				data = {
 					keywords: [],
 					value: 0,
+					valueFromController: null,
 					valueCharacteristics: [],
 					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
@@ -422,6 +424,7 @@ export class FeatureLogic {
 				data = {
 					field: FeatureField.Recoveries,
 					value: 0,
+					valueFromController: null,
 					valueCharacteristics: [],
 					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,

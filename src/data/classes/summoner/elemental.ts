@@ -1,3 +1,4 @@
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -231,7 +232,6 @@ export const elemental: SubClass = {
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						}),
@@ -295,7 +295,6 @@ export const elemental: SubClass = {
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						}),
@@ -347,7 +346,6 @@ export const elemental: SubClass = {
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						})
@@ -486,7 +484,6 @@ export const elemental: SubClass = {
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						}),
@@ -543,7 +540,6 @@ export const elemental: SubClass = {
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						}),
@@ -608,7 +604,6 @@ export const elemental: SubClass = {
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						})
@@ -641,69 +636,180 @@ export const elemental: SubClass = {
 					id: 'summoner-2-5-3',
 					name: '7-Essence Minion',
 					options: [
-						// TODO: Iron Reaver
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-5-3a',
 								name: 'Iron Reaver',
-								description: '',
+								description: 'Iron reavers are long, gnashing lines of centipede-like bladed legs. Their bodies endlessly shed metal shavings and hard sheets of iron as they move.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
+								keywords: [ 'Elemental (earth, fire, void)' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								size: FactoryLogic.createSize(1, 'L'),
+								speed: FactoryLogic.createSpeed(6, 'burrow'),
+								stamina: 10,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 6,
+								characteristics: FactoryLogic.createCharacteristics(3, 4, 0, 0, -1),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-2-5-3a-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-2-5-3a-2',
+										field: FeatureField.Stability,
+										valueCharacteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-5-3a-3',
+										name: 'Decentralized Segments',
+										description: 'The reaver has cover while adjacent to another reaver they were summoned with. Whenever they receive an eﬀect that allows them to move or shift outside of their move action, they share the eﬀect with each adjacent reaver they were summoned with.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-5-3a-4',
+										name: 'Bladed Strike',
+										description: 'The reaver’s free strikes inflict M < [weak] bleeding (save ends). Each time the reaver inflicts bleeding on a creature, they can shift 2 and make an additional free strike on a new target.'
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-2-5-3a-5',
+											name: 'Iron Barricade',
+											cost: 1,
+											sections: [
+												FactoryLogic.createAbilitySectionText('When the reaver is reduced to 0 Stamina, they create a line equal to 2 x their size centered on their space of iron shards on the ground until the end of the encounter. You or any ally have cover and damage immunity 2 while occupying an aﬀected square.')
+											]
+										})
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
-							count: 2
+							count: 3
 						}),
-						// TODO: Knight of Blood
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-5-3b',
 								name: 'Knight of Blood',
-								description: '',
+								description: 'A faceless suit of armor with visible rivers of deep red blood flowing throughout their being. Their blood has a powerful pull to it, causing any open wounds nearby to rip further and leak towards the knight.',
 								level: 0,
 								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								keywords: [ 'Elemental (earth, fire, rot, water)' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								size: FactoryLogic.createSize(1, 'L'),
+								speed: FactoryLogic.createSpeed(6),
+								stamina: 16,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 7,
+								freeStrikeType: DamageType.Corruption,
+								characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 0, 3),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-2-5-3b-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-2-5-3b-2',
+										field: FeatureField.Stability,
+										valueCharacteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-5-3b-3',
+										name: 'Scarlet Death',
+										description: 'The knight’s melee strikes inflict P < [strong] bleeding (save ends). While bleeding this way, the target can’t roll lower than a 3 on the die used to resolve bleeding damage.'
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-2-5-3b-4',
+											name: 'Red River',
+											cost: 2,
+											sections: [
+												FactoryLogic.createAbilitySectionText('When the knight is reduced to 0 Stamina, they move up to their speed ignoring opportunity attacks. Each square that they exit during this movement pools with blood until the end of the encounter. Each aﬀected square is considered diﬃcult terrain for enemies and deals 3 corruption damage to an enemy when they first enter it on a turn. Whenever a bleeding enemy starts their turn, they are pulled 2 towards the nearest aﬀected square, ignoring stability.')
+											]
+										})
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						}),
-						// TODO: Light of the Sun
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-5-3c',
 								name: 'Light of the Sun',
-								description: '',
+								description: 'These elementals are blazing white avian-shaped beings that are near impossible to look at directly. Between a light of the sun’s talons is a massive glowing sword that can render the heaviest of defenses weak.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Support),
+								keywords: [ 'Elemental (air, green, fire, void)' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(6, 'fly'),
+								stamina: 17,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 7,
+								freeStrikeType: DamageType.Fire,
+								characteristics: FactoryLogic.createCharacteristics(0, 2, 4, 0, 3),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-2-5-3c-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											}),
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Fire,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-2-5-3c-2',
+											name: 'Solar Blade',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike ],
+											distance: [ FactoryLogic.distance.createMelee() ],
+											target: 'One creature or object per minion',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: Characteristic.Reason,
+														tier1: '7 fire damage; I < [weak] dazed (EoT)',
+														tier2: '11 fire damage; I < [average] dazed (EoT)',
+														tier3: '16 fire damage; I < [strong] dazed (save ends)'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('A target dazed by this ability has their stability reduced to 0 until the condition ends.')
+											]
+										})
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-2-5-3c-3',
+											name: 'Radiant Field',
+											cost: 2,
+											sections: [
+												FactoryLogic.createAbilitySectionText('When the light is reduced to 0 Stamina, the area within 1 square of the light becomes wreathed in sentient flames until the end of the encounter. An enemy that enters this area or starts their turn there takes 3 fire damage and is slowed (EoT). You or any ally that enters this area or starts their turn there gains 5 temporary Stamina and their Speed increased by 2 until the end of their turn.')
+											]
+										})
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						})
@@ -740,27 +846,100 @@ Enlarged minions have their melee distance increased by 1 and inherent damage im
 					id: 'summoner-2-8-2',
 					name: 'Portfolio Champion',
 					summons: [
-						// TODO: Portfolio Champion
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-2-8-2a',
-								name: '',
-								description: '',
+								name: 'Dragon’s Portent',
+								description: `
+Your champion is a Portent of a dragon yet to manifest. Through defending the innocent, you have made yourself and your elementals a close neighbor to the malice that threatens them. The dragon desires you bring their creation about, and lends you strength to see your justice through.
+
+As a harbinger of ruin, the Dragon’s Portent has incredibly potent impact and control of the environment. Their final shape has yet to be determined; use this to your advantage and call upon the affinity that will end conflict the quickest.`,
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Champion),
+								keywords: [ 'Dragon', 'Elemental' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(6, 'fly'),
 								stamina: 0,
-								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								stability: 4,
+								freeStrikeDamage: 9,
+								characteristics: FactoryLogic.createCharacteristics(2, 2, 5, 5, 2),
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-2-8-2a-1',
+										field: FeatureField.Stamina,
+										valueFromController: FeatureField.Stamina
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-8-2a-2',
+										name: 'Affinity',
+										description: 'The Portent selects an affinity for one of the following damage types when they are summoned: acid, cold, corruption, fire, lightning, or poison. The Portent gains immunity 5 to this damage type. This type determines the  damage type of their abilities and free strikes.'
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-2-8-2a-3',
+											name: 'Elemental Tail Swing',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+											distance: [ FactoryLogic.distance.createMelee(2) ],
+											target: 'Two creatures or objects',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														bonus: 5,
+														tier1: '9 affinity damage; push 2',
+														tier2: '12 affinity damage; push 4',
+														tier3: '14 affinity damage; push 6'
+													})
+												)
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-8-2a-2',
+										name: 'Sealing Strike',
+										description: 'The Portent’s free strikes inflict M < [strong] slowed (save ends). While slowed this way, the target takes 1d6 aﬃnity damage at the start of each of their turns.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-8-2a-2',
+										name: 'Champion’s Ire',
+										description: 'If the Portent only targets one creature or object with a strike, they deal additional damage to the target equal to your Reason.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-8-2a-2',
+										name: 'Searing Wyrmscale',
+										description: 'Whenever an adjacent creature deals damage to the Portent, they take 4 affinity damage.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-8-2a-2',
+										name: 'Dragon Heart',
+										description: 'Once per turn, the Portent can take 10 damage to allow you or an ally within your Summoner’s Range to gain 1 heroic resource. This damage can’t be reduced in any way.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 9,
-							count: 1
+							count: 1,
+							level10: [
+								FactoryLogic.feature.createSize({
+									id: 'summoner-2-8-2a-10-1',
+									sizeValue: 3
+								}),
+								FactoryLogic.feature.createAbility({
+									ability: FactoryLogic.createAbility({
+										id: 'summoner-2-8-2a-10-2',
+										name: 'A Breath Felt in a Hurricane ',
+										type: FactoryLogic.type.createChampionAction(),
+										keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+										distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 10, within: 4 }) ],
+										target: 'All enemies and objects in the area',
+										cost: 1,
+										sections: [
+											FactoryLogic.createAbilitySectionText('9 affinity damage. The damage ignores immunity. The affected area becomes difficult terrain. An enemy has affinity weakness 5 while occupying an affected square.')
+										]
+									})
+								})
+							]
 						})
 					]
 				})

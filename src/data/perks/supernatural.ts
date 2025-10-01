@@ -67,10 +67,7 @@ Choose one of the following effects:
 		type: FeatureType.Summon,
 		data: {
 			summons: [
-				{
-					id: 'familiar',
-					name: 'Familiar',
-					description: '',
+				FactoryLogic.createSummon({
 					monster: FactoryLogic.createMonster({
 						id: 'familiar',
 						name: 'Familiar',
@@ -106,12 +103,9 @@ If your familiar is destroyed, you can restore them as a respite activity, or by
 							})
 						]
 					}),
-					info: {
-						isSignature: false,
-						cost: 0,
-						count: 1
-					}
-				}
+					cost: 0,
+					count: 1
+				})
 			]
 		},
 		list: PerkList.Supernatural

@@ -1,4 +1,5 @@
 import { Characteristic } from '@/enums/characteristic';
+import { FeatureField } from '@/enums/feature-field';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Monster } from '@/models/monster';
@@ -12,6 +13,26 @@ export class CreatureLogic {
 			return MonsterLogic.getCharacteristic(creature, characteristic);
 		} else {
 			return HeroLogic.getCharacteristic(creature, characteristic);
+		}
+	};
+
+	static getField = (creature: Hero | Monster | undefined, field: FeatureField) => {
+		if (!creature) {
+			return 0;
+		} else if (CreatureLogic.isMonster(creature)) {
+			switch (field) {
+				case FeatureField.Stamina:
+					return MonsterLogic.getStamina(creature);
+				default:
+					return 0;
+			}
+		} else {
+			switch (field) {
+				case FeatureField.Stamina:
+					return HeroLogic.getStamina(creature);
+				default:
+					return 0;
+			}
 		}
 	};
 

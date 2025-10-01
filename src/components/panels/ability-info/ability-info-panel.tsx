@@ -40,6 +40,9 @@ export const AbilityInfoPanel = (props: Props) => {
 				case AbilityUsage.VillainAction:
 					monogram = 'villain';
 					break;
+				case AbilityUsage.ChampionAction:
+					monogram = 'champion';
+					break;
 			}
 
 			if (props.ability.type.free) {

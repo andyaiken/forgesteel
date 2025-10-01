@@ -1,3 +1,4 @@
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -246,7 +247,6 @@ This ability becomes a free triggered action if the target was a minion (either 
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						}),
@@ -294,7 +294,6 @@ This ability becomes a free triggered action if the target was a minion (either 
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						}),
@@ -346,7 +345,6 @@ This ability becomes a free triggered action if the target was a minion (either 
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 3,
 							count: 2
 						})
@@ -502,7 +500,6 @@ This ability becomes a free triggered action if the target was a minion (either 
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						}),
@@ -560,7 +557,6 @@ This ability becomes a free triggered action if the target was a minion (either 
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						}),
@@ -607,7 +603,6 @@ This ability becomes a free triggered action if the target was a minion (either 
 									})
 								]
 							}),
-							isSignature: false,
 							cost: 5,
 							count: 3
 						})
@@ -645,71 +640,171 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 					id: 'summoner-4-5-3',
 					name: '7-Essence Minion',
 					options: [
-						// TODO: False Vampire
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-5-3a',
 								name: 'False Vampire',
-								description: '',
+								description: 'A false vampire is a bestial, bipedal ghoul that draws life from liquified remains. In death, their hands have curled into thick hooks, their bodies have darkened until they resemble suits, and their mouths have twisted and extended into large feeding needles that can pierce steel.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
+								keywords: [ 'Undead' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
-								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								size: FactoryLogic.createSize(1, 'L'),
+								speed: FactoryLogic.createSpeed(6, 'climb'),
+								stamina: 17,
+								stability: 2,
+								freeStrikeDamage: 8,
+								freeStrikeType: DamageType.Acid,
+								characteristics: FactoryLogic.createCharacteristics(4, 1, 3, 0, 0),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-4-5-3a-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											}),
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-5-3a-2',
+										name: 'Proboscis Strike',
+										description: 'The false vampire’s melee free strikes have a distance of 2 and inflict M < [average] restrained (EoT). The false vampire can move the target while they are restrained this way. At the start of a restrained creature’s turn, they take acid damage equal to your Reason.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-5-3a-3',
+										name: 'Bloodthirsty',
+										description: 'The false vampire has a speed of 10 while a creature is bleeding within 10.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						}),
-						// TODO: Phantom of the Ripper
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-5-3b',
 								name: 'Phantom of the Ripper',
-								description: '',
+								description: 'These phantoms still puppet along remnants of their corporeal forms. Unlike other spirits, the ripper tears the reality around them and leaves behind distorted or uneven “bumps” in the air. They can also do this to living matter!',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
+								keywords: [ 'Undead' ],
 								encounterValue: 0,
 								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
-								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								speed: FactoryLogic.createSpeed(6, 'fly, hover'),
+								stamina: 17,
+								stability: 1,
+								freeStrikeDamage: 8,
+								characteristics: FactoryLogic.createCharacteristics(0, 4, 0, 0, 3),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-4-5-3b-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											}),
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-4-5-3b-2',
+											name: 'Plunge of the Knife',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+											distance: [ FactoryLogic.distance.createMelee() ],
+											target: 'One creature or object per minion',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: Characteristic.Reason,
+														tier1: '8 damage; A < [weak] slowed (save ends)',
+														tier2: '13 damage; A < [average] slowed (save ends)',
+														tier3: '17 damage; A < [strong] slowed (save ends)'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('The phantom deals an additional 3 damage if they have an edge.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-5-3b-3',
+										name: 'Ripping Phase',
+										description: 'The phantom can move through other creatures and objects at normal speed. The first time in a round that the phantom passes through a creature, that creature takes 3 corrup on damage and has a bane on their next strike. The phantom doesn’t take damage from being force moved into objects.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
 							count: 2
 						}),
-						// TODO: Zombie Titan
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-5-3c',
 								name: 'Zombie Titan',
-								description: '',
+								description: 'Undead giants, or sometimes mishmashes of a graveyard’s entire population. The titan lumbers and slumps across battlefields, wanting desperately to collapse and crash into the earth like a sea of flesh and bone.',
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
+								keywords: [ 'Undead' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
-								stamina: 0,
+								size: FactoryLogic.createSize(4),
+								speed: FactoryLogic.createSpeed(4),
+								stamina: 40,
 								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								freeStrikeDamage: 7,
+								characteristics: FactoryLogic.createCharacteristics(4, 3, 0, 2, 3),
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-4-5-3c-1',
+										field: FeatureField.Stability,
+										valueCharacteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-4-5-3c-2',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											}),
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-5-3c-3',
+										name: 'Big Stomp',
+										description: 'The titan’s melee free strikes M < [strong] knock the target prone.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-5-3c-4',
+										name: 'Overwhelming Size',
+										description: 'The titan can move through enemies at normal speed. If the titan ends their turn in a prone size 2 or smaller creature’s space, the creature can’t stand.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-5-3c-5',
+										name: 'Flesh to Mountains',
+										description: 'When the titan is reduced to 0 Stamina, their space becomes diﬃcult terrain. If a creature was prone underneath the titan when the titan is killed, they take 10 damage and are restrained (save ends).'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 7,
-							count: 2
+							count: 1
 						})
 					]
 				})
@@ -735,27 +830,121 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 					id: 'summoner-4-8-2',
 					name: 'Portfolio Champion',
 					summons: [
-						// TODO: Portfolio Champion
 						FactoryLogic.createSummon({
 							monster: FactoryLogic.createMonster({
 								id: 'summoner-4-8-2a',
-								name: '',
-								description: '',
+								name: 'Avatar of Death',
+								description: `
+Your champion is an Avatar of Death. The number of creatures you and your army have laid to rest now hangs above your head and threatens to crush your skull at any moment. You were unable to gain the power of the ultimate force of nature without a memento mori to keep you humble.
+
+The Avatar of Death weighs down their foes with conditions so their army can take care of the rest. If an enemy can’t handle it, well then maybe they should just die.`,
 								level: 0,
-								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
-								keywords: [],
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Champion),
+								keywords: [ 'Undead' ],
 								encounterValue: 0,
-								size: FactoryLogic.createSize(1, 'M'),
-								speed: FactoryLogic.createSpeed(5),
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(6, 'fly'),
 								stamina: 0,
-								stability: 0,
-								freeStrikeDamage: 0,
-								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
-								features: []
+								stability: 3,
+								freeStrikeDamage: 9,
+								freeStrikeType: DamageType.Holy,
+								characteristics: FactoryLogic.createCharacteristics(5, 2, 5, 2, 2),
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-4-8-2a-1',
+										field: FeatureField.Stamina,
+										valueFromController: FeatureField.Stamina
+									}),
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-4-8-2a-2',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												value: 5
+											}),
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												value: 5
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-4-8-2a-3',
+											name: 'Culling Scythe',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+											distance: [ FactoryLogic.distance.createMelee(2) ],
+											target: 'Two creatures or objects',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														bonus: 5,
+														tier1: '9 corruption damage; M < [weak] bleeding (save ends)',
+														tier2: '12 corruption damage; M < [average] bleeding (save ends)',
+														tier3: '12 corruption damage; M < [strong] bleeding (save ends)'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('If the target is a creature that isn’t a leader or a solo and they are still bleeding at the end of the encounter, they instantly die.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-8-2a-4',
+										name: 'Revelation Strike',
+										description: 'The Avatar’s melee free strikes P < [weak] instantly reduces a winded non-leader or solo creature to 0 Stamina, including targets winded by the strike.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-8-2a-5',
+										name: 'Champion’s Ire',
+										description: 'If the Avatar only targets one creature or object with a strike, they deal additional damage to the target equal to your Reason.'
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-4-8-2a-6',
+											name: 'Dust and Rot',
+											type: FactoryLogic.type.createTrigger('The Avatar takes damage.', { free: true }),
+											keywords: [ AbilityKeyword.Area ],
+											distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
+											target: 'Each enemy in the burst',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionText('M < [average] weakened (EoT).')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-8-2a-7',
+										name: '',
+										description: 'The Avatar is unaﬀected by diﬃcult terrain and damage from forced movement.'
+									})
+								]
 							}),
-							isSignature: false,
 							cost: 9,
-							count: 1
+							count: 1,
+							level10: [
+								FactoryLogic.feature.createSize({
+									id: 'summoner-4-8-2a-10-1',
+									sizeValue: 3
+								}),
+								FactoryLogic.feature.createAbility({
+									ability: FactoryLogic.createAbility({
+										id: 'summoner-4-8-2a-10-2',
+										name: 'Gravemaker',
+										type: FactoryLogic.type.createChampionAction(),
+										keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+										distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 5, value2: 3, within: 1 }) ],
+										target: 'All enemies and objects in the line',
+										cost: 1,
+										sections: [
+											FactoryLogic.createAbilitySectionText('9 holy damage. Each target is vertically pulled a number of squares equal to their size straight down, ignoring stability. If the target would be force moved into the ground, they are buried beneath the ground instead.')
+										]
+									})
+								})
+							]
 						})
 					]
 				})

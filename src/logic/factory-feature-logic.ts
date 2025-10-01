@@ -57,7 +57,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createAbilityDamage = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], value?: number, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number, damageType?: DamageType }): FeatureAbilityDamage => {
+	createAbilityDamage = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], value?: number, valueFromController?: FeatureField, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number, damageType?: DamageType }): FeatureAbilityDamage => {
 		return {
 			id: data.id,
 			name: data.name || 'Ability damage modifier',
@@ -66,6 +66,7 @@ export class FactoryFeatureLogic {
 			data: {
 				keywords: data.keywords,
 				value: data.value || 0,
+				valueFromController: data.valueFromController || null,
 				valueCharacteristics: data.valueCharacteristics || [],
 				valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 0,
 				valuePerLevel: data.valuePerLevel || 0,
@@ -75,7 +76,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createAbilityDistance = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], value?: number, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureAbilityDistance => {
+	createAbilityDistance = (data: { id: string, name?: string, description?: string, keywords: AbilityKeyword[], value?: number, valueFromController?: FeatureField, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureAbilityDistance => {
 		return {
 			id: data.id,
 			name: data.name || 'Ability distance modifier',
@@ -84,6 +85,7 @@ export class FactoryFeatureLogic {
 			data: {
 				keywords: data.keywords,
 				value: data.value || 0,
+				valueFromController: data.valueFromController || null,
 				valueCharacteristics: data.valueCharacteristics || [],
 				valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 0,
 				valuePerLevel: data.valuePerLevel || 0,
@@ -135,7 +137,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createBonus = (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureBonus => {
+	createBonus = (data: { id: string, name?: string, description?: string, field: FeatureField, value?: number, valueFromController?: FeatureField, valueCharacteristics?: Characteristic[], valueCharacteristicMultiplier?: number, valuePerLevel?: number, valuePerEchelon?: number }): FeatureBonus => {
 		return {
 			id: data.id,
 			name: data.name || data.field.toString(),
@@ -144,6 +146,7 @@ export class FactoryFeatureLogic {
 			data: {
 				field: data.field,
 				value: data.value || 0,
+				valueFromController: data.valueFromController || null,
 				valueCharacteristics: data.valueCharacteristics || [],
 				valueCharacteristicMultiplier: data.valueCharacteristicMultiplier || 1,
 				valuePerLevel: data.valuePerLevel || 0,
@@ -480,7 +483,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createSize = (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod: 'T' | 'S' | 'M' | 'L' }): FeatureSize => {
+	createSize = (data: { id: string, name?: string, description?: string, sizeValue: number, sizeMod?: 'T' | 'S' | 'M' | 'L' }): FeatureSize => {
 		return {
 			id: data.id,
 			name: data.name || 'Size',
@@ -489,7 +492,7 @@ export class FactoryFeatureLogic {
 			data: {
 				size: {
 					value: data.sizeValue,
-					mod: data.sizeMod
+					mod: data.sizeMod || ''
 				}
 			}
 		};

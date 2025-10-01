@@ -49,7 +49,7 @@
     *:not(h2) {
         @include common.font-serif();
         font-size: round(1.1rem, 1px);
-        line-height: 1.3rem;
+        line-height: round(1.3rem, 1px);
         color: var(--color-text-lighter);
     }
 

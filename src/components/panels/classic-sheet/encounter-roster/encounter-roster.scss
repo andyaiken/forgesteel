@@ -153,6 +153,10 @@
                 common.$color-light calc(100% - 7px), transparent calc(100% - 7px)) 1 100%;
     }
 
+    .terrain-object .ev {
+        margin-top: -10px;
+    }
+
     .stamina-tracker {
         padding-left: 0;
         padding-right: 0;

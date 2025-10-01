@@ -7,5 +7,5 @@
 #classic-sheet .page-1 {
     display: grid;
     place-items: stretch;
-    grid-template-rows: min-content min-content 1fr;
+    grid-template-rows: min-content 1fr min-content;
 }

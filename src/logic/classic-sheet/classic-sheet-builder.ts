@@ -29,33 +29,47 @@ export class ClassicSheetBuilder {
 
 		sheet.name = sheet.name.replace(/\s*Benefit and Drawback\s*/, '').trim();
 
-		if (ability.cost === 'signature') {
-			sheet.isSignature = true;
-			sheet.abilityType = 'Signature Ability';
-		} else if (ability.cost > 0) {
-			sheet.abilityType = 'Heroic Ability';
-		} else if (ability.type.usage === AbilityUsage.Trigger) {
-			sheet.abilityType = 'Triggered Action';
-		} else if (ability.type.usage === AbilityUsage.FreeStrike) {
-			sheet.abilityType = 'Free Strike';
-			if (ability.name.toLowerCase().includes('melee')) {
-				sheet.name = 'Melee Free Strike';
-			} else if (ability.name.toLowerCase().includes('ranged')) {
-				sheet.name = 'Ranged Free Strike';
+		if (isHero) {
+			if (ability.cost === 'signature') {
+				sheet.isSignature = true;
+				sheet.abilityType = 'Signature Ability';
+			} else if (ability.cost > 0) {
+				sheet.abilityType = 'Heroic Ability';
+			} else if (ability.type.usage === AbilityUsage.Trigger) {
+				sheet.abilityType = 'Triggered Action';
+			} else if (ability.type.usage === AbilityUsage.FreeStrike) {
+				sheet.abilityType = 'Free Strike';
+				if (ability.name.toLowerCase().includes('melee')) {
+					sheet.name = 'Melee Free Strike';
+				} else if (ability.name.toLowerCase().includes('ranged')) {
+					sheet.name = 'Ranged Free Strike';
+				}
+			} else if (ability.type.usage === AbilityUsage.Maneuver) {
+				sheet.abilityType = 'Maneuver';
+			} else if (ability.type.usage === AbilityUsage.Move) {
+				sheet.abilityType = 'Move Action';
+			} else if (ability.keywords.includes('Performance')) {
+				sheet.abilityType = 'Performance';
 			}
-		} else if (ability.type.usage === AbilityUsage.Maneuver) {
-			sheet.abilityType = 'Maneuver';
-		} else if (ability.type.usage === AbilityUsage.Move) {
-			sheet.abilityType = 'Move Action';
-		} else if (ability.keywords.includes('Performance')) {
-			sheet.abilityType = 'Performance';
 		}
 
 		if (isMonster) {
-			if (sheet.isSignature) {
+			if (ability.cost === 'signature') {
 				sheet.abilityType = 'Signature Ability';
-			} else {
+			} else if (ability.cost > 0) {
+				sheet.abilityType = `${ability.cost} Malice`;
+			} else if (creature.retainer?.level) {
 				sheet.abilityType = 'Encounter';
+			} else {
+				sheet.abilityType = '';
+			}
+		}
+
+		if (creature === undefined) {
+			if (ability.cost !== 'signature' && ability.cost > 0) {
+				sheet.abilityType = `${ability.cost} Malice`;
+			} else {
+				sheet.abilityType = '';
 			}
 		}
 

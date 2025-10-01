@@ -24,5 +24,16 @@
             background-image: linear-gradient(180deg, common.$color-general-monster, transparent);
             border-radius: 6px 6px 0 0;
         }
+
+        .feature {
+            .power-roll {
+                // margin-left: -10px;
+
+                .header {
+                    margin-top: -5px;
+                    margin-left: 0;
+                }
+            }
+        }
     }
 }

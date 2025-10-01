@@ -11,7 +11,7 @@
             @include common.font-serif;
             text-align: center;
             font-size: round(1.3rem, 1px);
-            line-height: 1.6rem;
+            line-height: round(1.6rem, 1px);
             padding: 7px 0;
             margin: 10px 25px 20px;
             min-height: 36px;

@@ -73,8 +73,6 @@ As a maneuver, a creature adjacent to an arrow launcher can make an **Agility te
 						id: 'reload',
 						name: 'Reload',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The arrow launcher is reloaded, allowing **Arrow Storm** to be used again. This action can be used only once per round.')
 						]
@@ -90,8 +88,6 @@ As a maneuver, a creature adjacent to an arrow launcher can make an **Agility te
 						id: 'spot',
 						name: 'Spot',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The next use of **Arrow Storm** gains an edge and has a +10 bonus to ranged distance. This action can be used only once per round.')
 						]
@@ -107,9 +103,6 @@ As a maneuver, a creature adjacent to an arrow launcher can make an **Agility te
 						id: 'move',
 						name: 'Move',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The arrow launcher and the creature using this action move together up to 3 squares.')
 						]
@@ -234,8 +227,6 @@ As a maneuver, a creature adjacent to a boiling oil cauldron can make an **Agili
 						id: 'reload',
 						name: 'Reload',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The boiling oil cauldron is reloaded, allowing **Boiling Oil** to be used again. This action can be used only once per round.')
 						]
@@ -318,8 +309,6 @@ As a maneuver, a creature adjacent to a catapult can make an **Agility test**.
 						id: 'reload',
 						name: 'Reload',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The catapult is reloaded, allowing **Arcing Shot** to be used again. This action can be used only once per round.')
 						]
@@ -335,8 +324,6 @@ As a maneuver, a creature adjacent to a catapult can make an **Agility test**.
 						id: 'spot',
 						name: 'Spot',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The next use of **Arcing Shot** gains an edge and has a +10 bonus to ranged distance. This action can be used only once per round.')
 						]
@@ -352,8 +339,6 @@ As a maneuver, a creature adjacent to a catapult can make an **Agility test**.
 						id: 'move',
 						name: 'Move',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The catapult and the creature using this action move together up to 2 squares.')
 						]
@@ -542,8 +527,6 @@ As a maneuver, a creature adjacent to a field ballista can make an **Agility tes
 						id: 'reload',
 						name: 'Reload',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The field ballista is reloaded, allowing **Release Bolt** to be used again. This action can be used only once per round.')
 						]
@@ -559,8 +542,6 @@ As a maneuver, a creature adjacent to a field ballista can make an **Agility tes
 						id: 'spot',
 						name: 'Spot',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The next use of **Release Bolt** gains an edge and has a +10 bonus to ranged distance. This action can be used only once per round.')
 						]
@@ -576,8 +557,6 @@ As a maneuver, a creature adjacent to a field ballista can make an **Agility tes
 						id: 'move',
 						name: 'Move',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The field ballista and the creature using this action move together up to 3 squares.')
 						]
@@ -727,8 +706,6 @@ As a maneuver, a creature adjacent to an iron dragon can make an **Agility test*
 						id: 'reload',
 						name: 'Reload',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The iron dragon is reloaded, allowing **Gout of Flame** to be used again. This action can be used only once per round.')
 						]
@@ -744,8 +721,6 @@ As a maneuver, a creature adjacent to an iron dragon can make an **Agility test*
 						id: 'spot',
 						name: 'Spot',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The next use of **Gout of Flame** gains an edge and has a +10 bonus to ranged distance. This action can be used only once per round.')
 						]
@@ -761,8 +736,6 @@ As a maneuver, a creature adjacent to an iron dragon can make an **Agility test*
 						id: 'move',
 						name: 'Move',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'adjacent creature' ] }),
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The iron dragon and the creature using this action move together up to 2 squares')
 						]

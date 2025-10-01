@@ -174,11 +174,7 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 			ability: FactoryLogic.createAbility({
 				id: 'wardog-3rd-malice-5',
 				name: 'Alchemical Cloud',
-				type: FactoryLogic.type.createNoAction(),
 				cost: 7,
-				keywords: [ ],
-				distance: [ ],
-				target: '',
 				sections: [
 					FactoryLogic.createAbilitySectionText('A bank of choking chemicals sweeps across the area of the enácounter map. Each enemy in the encounter makes a **Might test**.'),
 					FactoryLogic.createAbilitySectionRoll(FactoryLogic.createPowerRoll({
@@ -1793,7 +1789,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						id: 'wardog-2nd-12-feature-7',
 						name: 'You Would Dare?!',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -2856,7 +2851,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						id: 'wardog-4th-5-feature-4',
 						name: 'Laugh It Off',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -3066,7 +3060,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						id: 'wardog-4th-7-feature-4',
 						name: 'Spirit Form',
 						type: FactoryLogic.type.createTrigger('An enemy moves within 2 squares of Psyche'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -3202,7 +3195,6 @@ These monstrous war dogs are developed to fulfill specific roles and combat nich
 						id: 'wardog-4th-8-feature-6',
 						name: 'Fog of War',
 						type: FactoryLogic.type.createVillainAction(1),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('') ],
 						target: 'Each ally in the encounter',
 						sections: [

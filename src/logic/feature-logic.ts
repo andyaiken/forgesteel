@@ -363,7 +363,6 @@ export class FeatureLogic {
 						name: '',
 						description: '',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '',
 						sections: []

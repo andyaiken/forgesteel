@@ -93,9 +93,6 @@ export const psionicShard: Terrain = {
 						id: 'psionic-pulse',
 						name: 'Psionic Pulse',
 						type: FactoryLogic.type.createTrigger('The shard is destroyed', { free: true }),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The shard releases a shockwave channeled through each creature affected by Psionic Barrier. Each ally in the encounter is dazed until the end of their next turn.')
 						]

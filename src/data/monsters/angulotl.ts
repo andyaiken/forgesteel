@@ -542,7 +542,6 @@ Pinna, Hedge Witch, Gravesford`,
 						id: 'angulotl-8-feature-5',
 						name: 'New Dawn',
 						type: FactoryLogic.type.createVillainAction(1),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
@@ -555,7 +554,6 @@ Pinna, Hedge Witch, Gravesford`,
 						id: 'angulotl-8-feature-6',
 						name: 'Plague of Frogs',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 8 })
 						],
@@ -570,7 +568,6 @@ Pinna, Hedge Witch, Gravesford`,
 						id: 'angulotl-8-feature-7',
 						name: 'It Is Day',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('') ],
 						target: 'Special',
 						sections: [

@@ -223,9 +223,6 @@ export const elemental: SubClass = {
 										ability: FactoryLogic.createAbility({
 											id: 'summoner-2-1-6a-3',
 											name: 'Ashen Cloud',
-											type: FactoryLogic.type.createNoAction(),
-											distance: [],
-											target: '',
 											cost: 1,
 											sections: [
 												FactoryLogic.createAbilitySectionText('When the crux is reduced to 0 Stamina, the area within 1 square of the crux is clouded by ash until it is dispersed by wind. You and any ally are concealed while occupying an aﬀected square. An enemy can’t establish line of eﬀect beyond the ash while occupying an aﬀected square.')
@@ -290,9 +287,6 @@ export const elemental: SubClass = {
 										ability: FactoryLogic.createAbility({
 											id: 'summoner-2-1-6b-3',
 											name: 'Eruption',
-											type: FactoryLogic.type.createNoAction(),
-											distance: [],
-											target: '',
 											cost: 1,
 											sections: [
 												FactoryLogic.createAbilitySectionText('When the flow is reduced to 0 Stamina, they launch lava into an area equal to 1 + their size within 5 squares. The aﬀected area becomes diﬃcult terrain for enemies until the end of the encounter. An enemy that enters an aﬀected square or starts their turn there takes A < [average] 4 fire damage.')
@@ -345,9 +339,6 @@ export const elemental: SubClass = {
 										ability: FactoryLogic.createAbility({
 											id: 'summoner-2-1-6c-4',
 											name: 'Shifting Sand Pit',
-											type: FactoryLogic.type.createNoAction(),
-											distance: [],
-											target: '',
 											cost: 1,
 											sections: [
 												FactoryLogic.createAbilitySectionText('When the desolation is reduced to 0 Stamina, the area within 1 square of the desolation becomes diﬃcult terrain for enemies until the end of the encounter. You or any ally that enters the aﬀected area can immediately shift 3.')
@@ -452,9 +443,175 @@ export const elemental: SubClass = {
 					id: 'summoner-2-2-2',
 					name: '5-Essence Minion',
 					options: [
-						// TODO: Dancing Silk
-						// TODO: Principle of the Swamp
-						// TODO: Quiet of Snow
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-2-2-2a',
+								name: 'Dancing Silk',
+								description: 'The silks are akin to baby spiders ballooning through the air on strands of webbing. They spin silk from their legs as they fly, eventually turning huge swaths of the environment into tangled web mazes.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [ 'Elemental (earth, air, green)' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'T'),
+								speed: FactoryLogic.createSpeed(5, 'fly'),
+								stamina: 4,
+								stability: 0,
+								freeStrikeDamage: 3,
+								characteristics: FactoryLogic.createCharacteristics(-1, 2, 3, 0, -1),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-2-2-2a-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-2-2a-2',
+										name: 'Entangling Strike',
+										description: 'The silk’s ranged free strikes inflict A < [average] restrained (EoT). Each creature adjacent to the target is A < [weak] slowed (EoT).'
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-2-2-2a-3',
+											name: 'Web',
+											cost: 1,
+											sections: [
+												FactoryLogic.createAbilitySectionText('When the silk is reduced to 0 Stamina, they launch ribbons of webbing into an area equal to their size + 1 within 5 before being destroyed. The aﬀected area is considered diﬃcult terrain for enemies until the end of the encounter. An enemy that ends their turn in the webbing is M < [strong] slowed (EoT).')
+											]
+										})
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						}),
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-2-2-2b',
+								name: 'Principle of the Swamp',
+								description: 'The manes of these equine sludge dwellers extends and hooks into things like strong, fraying arms. This allows the principle of the swamp to either pull themselves onto dry land, or pull their prey into the dank depths.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Brute),
+								keywords: [ 'Elemental (green, water, rot)' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(4, 'swim'),
+								stamina: 5,
+								stability: 0,
+								freeStrikeDamage: 4,
+								characteristics: FactoryLogic.createCharacteristics(3, -2, 0, 2, -2),
+								features: [
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-2-2-2b-1',
+										field: FeatureField.Stability,
+										valueCharacteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-2-2-2b-2',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											}),
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-2-2b-3',
+										name: 'Encroaching Strike',
+										description: 'The principle’s melee free strikes have a distance of R and inflict M < [strong] grabbed. The principle can have an unlimited number of creatures or objects grabbed. A creature grabbed by this strike still has their normal speed, but can’t move further away from the principle.'
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-2-2-2b-4',
+											name: 'Sludgefoot',
+											cost: 1,
+											sections: [
+												FactoryLogic.createAbilitySectionText('When the principle is reduced to 0 Stamina, the area within 1 square of the principle becomes diﬃcult terrain for enemies until the end of the encounter. An enemy that ends their turn in the aﬀected area is pulled 4 towards the center of the area.')
+											]
+										})
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						}),
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-2-2-2c',
+								name: 'Quiet of Snow',
+								description: 'A pure-white vulpine with six legs that freely sprints through the air. Their howls are telepathic, washing over the receivers with a strong chill and a wave of goosebumps.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Artillery),
+								keywords: [ 'Elemental (air, rot, water)' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'S'),
+								speed: FactoryLogic.createSpeed(5, 'fly, hover'),
+								stamina: 4,
+								stability: 1,
+								freeStrikeDamage: 4,
+								freeStrikeType: DamageType.Cold,
+								characteristics: FactoryLogic.createCharacteristics(-1, 2, 0, 0, 3),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-2-2-2c-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Sonic,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											}),
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Cold,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-2-2-2c-2',
+											name: 'Freezing Strike',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
+											distance: [ FactoryLogic.distance.createRanged(5) ],
+											target: 'One creature or object per minion',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: Characteristic.Reason,
+														tier1: '4 cold damage; M < [weak] slowed (EoT)',
+														tier2: '6 cold damage; M < [average] slowed (EoT)',
+														tier3: '8 cold damage; M < [strong] speed is 0 (EoT)'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('Frost slows the enemy down, allowing one ally adjacent to each target to shift 2 and either hide or defend.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-2-2-2c-3',
+										name: 'Cold Surge',
+										description: 'When the quiet is reduced to 0 Stamina, they launch a refreshing blast of air into an area equal to their size + 1 within 5 before being destroyed. Each ally in the aﬀected area gains a Surge.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						})
 					]
 				})
 			]
@@ -485,8 +642,71 @@ export const elemental: SubClass = {
 					name: '7-Essence Minion',
 					options: [
 						// TODO: Iron Reaver
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-2-5-3a',
+								name: 'Iron Reaver',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						}),
 						// TODO: Knight of Blood
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-2-5-3b',
+								name: 'Knight of Blood',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						}),
 						// TODO: Light of the Sun
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-2-5-3c',
+								name: 'Light of the Sun',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						})
 					]
 				})
 			]
@@ -515,8 +735,35 @@ Whenever you use Call Forth, you can spend essence to increase the size of one e
 | 5            | The minion becomes size 4 |
 
 Enlarged minions have their melee distance increased by 1 and inherent damage immunities doubled.`
+				}),
+				FactoryLogic.feature.createSummon({
+					id: 'summoner-2-8-2',
+					name: 'Portfolio Champion',
+					summons: [
+						// TODO: Portfolio Champion
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-2-8-2a',
+								name: '',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 9,
+							count: 1
+						})
+					]
 				})
-				// TODO: Portfolio Champion
 			]
 		},
 		{

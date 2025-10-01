@@ -172,7 +172,6 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 						id: 'ashen-hoarder-feature-6',
 						name: 'Bone Dozer',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -185,7 +184,6 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 						id: 'ashen-hoarder-feature-7',
 						name: 'Armor of Corpses',
 						type: FactoryLogic.type.createTrigger('The ashen hoarder takes damage.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 2,
@@ -229,7 +227,6 @@ When an ashen hoarder obtains corpses, they impale them on the many sharp bones 
 						id: 'ashen-hoarder-feature-11',
 						name: 'Mobile Mine Field',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 10, within: 20 }) ],
 						target: 'Special',
 						sections: [

@@ -54,7 +54,6 @@ export class AbilityData {
 		name: 'Advance',
 		description: '',
 		type: FactoryLogic.type.createMove(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -67,7 +66,6 @@ export class AbilityData {
 		name: 'Disengage',
 		description: '',
 		type: FactoryLogic.type.createMove(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -80,7 +78,6 @@ export class AbilityData {
 		name: 'Ride',
 		description: '',
 		type: FactoryLogic.type.createMove(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -97,7 +94,6 @@ export class AbilityData {
 		name: 'Aid Attack',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: 'One enemy',
 		sections: [
@@ -110,7 +106,6 @@ export class AbilityData {
 		name: 'Catch Breath',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -126,7 +121,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Claw Dirt',
 		description: '',
 		type: FactoryLogic.type.createManeuver({ qualifiers: [ 'usable if your speed is at least 2' ] }),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -146,7 +140,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Escape Grab',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -168,7 +161,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Go Prone',
 		description: '',
 		type: FactoryLogic.type.createManeuver({ free: true }),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -183,7 +175,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		type: FactoryLogic.type.createManeuver(),
 		keywords: [ AbilityKeyword.Melee ],
 		distance: [ FactoryLogic.distance.createMelee() ],
-		target: 'One creature',
 		sections: [
 			FactoryLogic.createAbilitySectionText('A creature seeking to keep a foe close and locked down can attempt to grab a creature using this ability.'),
 			FactoryLogic.createAbilitySectionRoll(
@@ -204,7 +195,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Hide',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -219,7 +209,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		type: FactoryLogic.type.createManeuver(),
 		keywords: [ AbilityKeyword.Melee ],
 		distance: [ FactoryLogic.distance.createMelee() ],
-		target: 'One creature',
 		sections: [
 			FactoryLogic.createAbilitySectionText('A creature wanting to push an adjacent creature away from them can attempt to shove that creature using this ability.'),
 			FactoryLogic.createAbilitySectionRoll(
@@ -239,7 +228,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Make Or Assist A Test',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -255,7 +243,6 @@ Complex or time-consuming tests might require a main action if made in combat—
 		name: 'Search for Hidden Creatures',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -268,7 +255,6 @@ Complex or time-consuming tests might require a main action if made in combat—
 		name: 'Stand Up',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [
 			FactoryLogic.distance.createSelf(),
 			FactoryLogic.distance.createMelee()
@@ -284,7 +270,6 @@ Complex or time-consuming tests might require a main action if made in combat—
 		name: 'Use Consumable',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [
 			FactoryLogic.distance.createSelf(),
 			FactoryLogic.distance.createMelee()
@@ -304,7 +289,6 @@ Complex or time-consuming tests might require a main action if made in combat—
 		name: 'Charge',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -320,7 +304,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Defend',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -333,7 +316,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Free Strike',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -346,7 +328,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Heal',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: 'One creature',
 		sections: [
@@ -359,7 +340,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Swap',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -376,7 +356,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Opportunity Attack',
 		description: '',
 		type: FactoryLogic.type.createTrigger('The target willingly moves to a space that isn’t adjacent to you without shifting.', { free: true }),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: 'One creature',
 		sections: [

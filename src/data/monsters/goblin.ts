@@ -724,7 +724,6 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						name: 'Trample',
 						type: FactoryLogic.type.createMain(),
 						cost: 5,
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

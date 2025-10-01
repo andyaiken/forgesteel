@@ -172,7 +172,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-2-feature-3',
 						name: 'Catcher',
 						type: FactoryLogic.type.createTrigger('A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.', { free: true }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The triggering creature or object',
 						sections: [
@@ -785,7 +784,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-8-retainer-7',
 						name: 'Magic Arrows',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -858,7 +856,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-9-retainer-3',
 						name: 'Frenzied Bite',
 						type: FactoryLogic.type.createTrigger('An enemy within 5 squares is reduced to 0 Stamina.', { qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -889,7 +886,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-9-retainer-5',
 						name: 'Horrific Feast',
 						type: FactoryLogic.type.createTrigger('The gnasher reduces a creature to 0 Stamina.', { qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -983,7 +979,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-10-retainer-10',
 						name: 'Poison Blade',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('Special') ],
 						target: 'Special',
 						sections: [
@@ -1139,7 +1134,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-12-retainer-4',
 						name: '‘Scuse Me, Boss',
 						type: FactoryLogic.type.createTrigger('The warrior’s mentor is targeted by a strike while within distance.', { qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The warrior’s mentor',
 						sections: [
@@ -1432,7 +1426,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-15-retainer-7',
 						name: 'Mow ’Em Down',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1517,7 +1510,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-16-retainer-4',
 						name: 'Boost',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1548,7 +1540,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-16-retainer-10',
 						name: 'Triumphant Squeak',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self and each ally',
 						sections: [

@@ -83,7 +83,6 @@ export const dragonKnight: Ancestry = {
 							name: 'Draconian Guard',
 							description: 'You can swing your wings around and guard against a blow.',
 							type: FactoryLogic.type.createTrigger('You, or a creature adjacent to you, takes damage from a strike'),
-							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [

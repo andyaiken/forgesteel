@@ -442,9 +442,175 @@ This ability becomes a free triggered action if the target was a minion (either 
 					id: 'summoner-4-2-2',
 					name: '5-Essence Minion',
 					options: [
-						// TODO: Assursed Mummy
-						// TODO: Ceaseless Mournling
-						// TODO: Phase Ghoul
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-4-2-2a',
+								name: 'Assursed Mummy',
+								description: 'The preserved dead, bound for eternal rest, know only violence when robbed of their future. Accursed mummies use their wrappings to bind others to the same fate.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
+								keywords: [ 'Mummy', 'Undead' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 4,
+								stability: 2,
+								freeStrikeDamage: 3,
+								freeStrikeType: DamageType.Poison,
+								characteristics: FactoryLogic.createCharacteristics(2, -1, 1, 3, -1),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-4-2-2a-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											}),
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-4-2-2a-2',
+											name: 'Fetid Bindings',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+											distance: [ FactoryLogic.distance.createSpecial('Melee R') ],
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: Characteristic.Reason,
+														tier1: '3 poison damage; pull R',
+														tier2: '4 poison damage; pull R + 1',
+														tier3: '6 poison damage; pull R + 2'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('A target pulled adjacent to the mummy is M < [strong] weakened (EoT).')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-2-2a-3',
+										name: 'Mummy Dust',
+										description: 'Whenever the mummy takes damage, each enemy adjacent to the mummy takes 2 poison damage.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						}),
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-4-2-2b',
+								name: 'Ceaseless Mournling',
+								description: 'A hulking amalgam of mismatched cadavers with tear stained trenches where their cheeks used to be. Their crying shakes enemies to their bone and renders them struggling to move.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [ 'Undead' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(5, 'burrow'),
+								stamina: 4,
+								stability: 0,
+								freeStrikeDamage: 3,
+								freeStrikeType: DamageType.Sonic,
+								characteristics: FactoryLogic.createCharacteristics(3, 2, -1, 1, -2),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-4-2-2b-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											}),
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.createBonus({
+										id: 'summoner-4-2-2b-2',
+										field: FeatureField.Stability,
+										valueCharacteristics: [ Characteristic.Reason ]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-2-2b-3',
+										name: 'Always Crying',
+										description: 'At the end of the mournling’s turn, each enemy within 1 of the mournling takes 2 sonic damage and can’t shift until the start of the mournling’s next turn.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-2-2b-4',
+										name: 'Immutable Form',
+										description: 'The mournling’s shape can’t change via any external eﬀects.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-2-2b-5',
+										name: 'Rupture',
+										description: 'The first time the mournling burrows out of the ground on their turn, they make a free strike against each adjacent enemy.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						}),
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-4-2-2c',
+								name: 'Phase Ghoul',
+								description: 'Phase ghouls are caught between two different manifolds and rapidly flicker between them. They almost appear transparent save for their long, bright blue tongues that appears to lag behind their movements by a full second.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
+								keywords: [ 'Undead' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5, 'teleport'),
+								stamina: 5,
+								stability: 0,
+								freeStrikeDamage: 3,
+								characteristics: FactoryLogic.createCharacteristics(2, 3, -2, 0, 1),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-4-2-2c-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Corruption,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											}),
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Poison,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-2-2c-2',
+										name: 'Leaping Strike',
+										description: 'The ghoul teleports 5 squares before making a melee free strike. The target is M < [average] knocked prone. If the target is in the air, the potency increases by 1.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-4-2-2c-3',
+										name: 'Nerveless',
+										description: 'The ghoul takes no damage from falling and always lands on their feet.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						})
 					]
 				})
 			]
@@ -480,8 +646,71 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 					name: '7-Essence Minion',
 					options: [
 						// TODO: False Vampire
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-4-5-3a',
+								name: 'False Vampire',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						}),
 						// TODO: Phantom of the Ripper
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-4-5-3b',
+								name: 'Phantom of the Ripper',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						}),
 						// TODO: Zombie Titan
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-4-5-3c',
+								name: 'Zombie Titan',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						})
 					]
 				})
 			]
@@ -501,8 +730,35 @@ After you stop channeling their spirit, you can’t use this feature to channel 
 					id: 'summoner-4-8-1',
 					name: 'Kill the Pain',
 					description: 'You and each of your undead minions ignore damage rolled as a d3 or a d6 and damage from environmental effects while you are not winded.'
+				}),
+				FactoryLogic.feature.createSummon({
+					id: 'summoner-4-8-2',
+					name: 'Portfolio Champion',
+					summons: [
+						// TODO: Portfolio Champion
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-4-8-2a',
+								name: '',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 9,
+							count: 1
+						})
+					]
 				})
-				// TODO: Portfolio Champion
 			]
 		},
 		{

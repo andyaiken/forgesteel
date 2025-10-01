@@ -1001,11 +1001,7 @@ export const polderShadow = {
 									qualifiers: [],
 									freeStrike: false
 								},
-								keywords: [],
-								distance: [],
 								target: 'Self',
-								cost: 0,
-								repeatable: false,
 								minLevel: 1,
 								sections: [
 									{

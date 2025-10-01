@@ -211,7 +211,6 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						id: 'chimera-feature-11',
 						name: 'Fire Solo',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -224,7 +223,6 @@ The queen’s resulting fury was said to be felt by the gods. As she screamed, a
 						id: 'chimera-feature-12',
 						name: 'Chorus of Destruction',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

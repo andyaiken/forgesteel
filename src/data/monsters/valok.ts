@@ -596,7 +596,6 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						id: 'valok-5-feature-3',
 						name: 'Destructive Rollout',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -609,7 +608,6 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						id: 'valok-5-feature-4',
 						name: 'Burning Oil',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 20, value2: 1, within: 1 }) ],
 						target: 'Each enemy and object in the area',
 						cost: 3,

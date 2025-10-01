@@ -152,7 +152,6 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						id: 'bredbeddle-feature-6',
 						name: 'Scramble',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf('while headless') ],
 						target: 'Self',
 						sections: [
@@ -218,7 +217,6 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						id: 'bredbeddle-feature-10',
 						name: 'Challenge',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
 						sections: [

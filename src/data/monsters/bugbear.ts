@@ -173,7 +173,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-1-feature-5',
 						name: 'Catcher',
 						type: FactoryLogic.type.createTrigger('A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.', { free: true }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The triggering creature or object',
 						sections: [
@@ -236,7 +235,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-2-feature-2',
 						name: 'You Next!',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One ally',
 						sections: [
@@ -249,7 +247,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-2-feature-3',
 						name: 'Fall Back!',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each ally in the area',
 						cost: 5,
@@ -277,7 +274,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-2-feature-5',
 						name: 'Catcher',
 						type: FactoryLogic.type.createTrigger('A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.', { free: true }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The triggering creature or object',
 						sections: [
@@ -396,7 +392,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-3-feature-6',
 						name: 'Flying Sawblade',
 						type: FactoryLogic.type.createTrigger('The roughneck is vertical force moved by another creature.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -511,7 +506,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-4-feature-6',
 						name: 'Clever Trick',
 						type: FactoryLogic.type.createTrigger('The sneak is targeted by a strike.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
 						cost: 1,

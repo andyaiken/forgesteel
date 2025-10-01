@@ -1324,7 +1324,6 @@ A number of lesser demons have been identified across categories 1 to 3:
 						name: 'Demonic Egress',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Special',
 						sections: [

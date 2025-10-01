@@ -170,7 +170,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						name: 'Elevate!',
 						cost: 2,
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 1, within: 5 }) ],
 						target: 'Special',
 						sections: [
@@ -272,7 +271,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						id: 'draconian-2-feature-3',
 						name: 'Takeoff',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -285,7 +283,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						id: 'draconian-2-feature-4',
 						name: 'Stay Back!',
 						type: FactoryLogic.type.createTrigger('A creature within distance moves or is forced moved.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee(2) ],
 						target: 'The triggering creature',
 						sections: [
@@ -370,7 +367,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						id: 'draconian-3-feature-3',
 						name: 'Parting Gift',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -383,7 +379,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						id: 'draconian-3-feature-4',
 						name: 'Wasn\'t Aiming For You',
 						type: FactoryLogic.type.createTrigger('Lydixavus obtains a tier 1 outcome on their signature ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -463,7 +458,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						id: 'draconian-4-feature-3',
 						name: 'Step and Swap',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(3) ],
 						target: 'One ally',
 						sections: [
@@ -477,7 +471,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						name: 'Anyone Can Do That',
 						cost: 2,
 						type: FactoryLogic.type.createTrigger('An adjacent creature damages Myxovidan with a melee ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -567,7 +560,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						name: 'Armor of the Ancients',
 						cost: 2,
 						type: FactoryLogic.type.createTrigger('Phrrygalax takes acid, cold, corruption, fire, lightning, or poison damage.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -580,7 +572,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						id: 'draconian-5-feature-5',
 						name: 'Still Your Tongue!',
 						type: FactoryLogic.type.createTrigger('Phrrygalax hears a creature within 5 squares reciting the oath of Good King Omund’s Dragon Phalanx.', { free: true }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -661,7 +652,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						id: 'draconian-6-feature-3',
 						name: 'Watch Your Six!',
 						type: FactoryLogic.type.createTrigger('An ally within distance takes damage while Dorzinuuth isn’t flying.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One ally',
 						sections: [
@@ -693,7 +683,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						id: 'draconian-6-feature-8',
 						name: 'Roaring Gambit',
 						type: FactoryLogic.type.createVillainAction(1),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each enemy in the area',
 						sections: [
@@ -713,7 +702,6 @@ Six individual draconians are presented in this section—not an adventuring par
 						id: 'draconian-6-feature-9',
 						name: 'Wings of Second Wind',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 })

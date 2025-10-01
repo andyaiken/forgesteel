@@ -250,7 +250,6 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						id: 'ajax-1-feature-10',
 						name: 'Who’s Hesitating?',
 						type: FactoryLogic.type.createTrigger('A creature uses the Hesitation is Weakness ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -415,7 +414,6 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						id: 'ajax-2-feature-4',
 						name: 'Strike Them Down',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two allies',
 						sections: [
@@ -459,7 +457,6 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						id: 'ajax-2-feature-8',
 						name: 'Who’s Hesitating?',
 						type: FactoryLogic.type.createTrigger('A creature uses the Hesitation is Weakness ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -519,7 +516,6 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						id: 'ajax-2-feature-12',
 						name: 'I’ve Learned Their Tricks ',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',
 						sections: [

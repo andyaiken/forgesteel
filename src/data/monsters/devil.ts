@@ -606,7 +606,6 @@ The following are samples of the wonders that a devil can offer—to only the mo
 						id: 'devil-7-feature-3',
 						name: 'Justice Turns Its Gaze',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

@@ -667,7 +667,6 @@ Many high elves have also collected extensive libraries of tomes over the centur
 						id: 'elf-high-11-feature-2',
 						name: 'Windwalk',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -741,7 +740,6 @@ Many high elves have also collected extensive libraries of tomes over the centur
 						cost: 2,
 						repeatable: true,
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
@@ -884,7 +882,6 @@ Many high elves have also collected extensive libraries of tomes over the centur
 						name: 'Buck',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'The horse\'s rider',
 						sections: [

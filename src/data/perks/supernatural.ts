@@ -50,7 +50,6 @@ Choose one of the following effects:
 				name: 'Creature Sense',
 				description: 'You intuit a creature\'s keywords.',
 				type: FactoryLogic.type.createManeuver(),
-				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [

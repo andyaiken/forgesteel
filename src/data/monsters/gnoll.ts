@@ -295,7 +295,6 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						name: 'Archer\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 2,
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
@@ -357,7 +356,6 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						id: 'gnoll-6-feature-2',
 						name: 'Call Abyssal Hyenas',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Special',
 						cost: 3,
@@ -372,7 +370,6 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						name: 'Summoner\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
 						target: 'Each ally in the area',
 						sections: [
@@ -427,7 +424,6 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						name: 'Bonesplitter\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
@@ -554,7 +550,6 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						name: 'Marauder\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 3,
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 })
@@ -611,7 +606,6 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						id: 'gnoll-10-feature-2',
 						name: 'Vengeful Tusker',
 						type: FactoryLogic.type.createTrigger('An enemy within distance deals damage to the tusker.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(7) ],
 						target: 'Triggering enemy',
 						sections: [
@@ -670,7 +664,6 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						name: 'Carnage\'s Cackletongue',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 4,
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf(),
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 })
@@ -701,7 +694,6 @@ As his last act, the demon gave the fiendish hyenas a demonic cunning to match t
 						id: 'gnoll-11-feature-6',
 						name: 'Call Up from The Abyss',
 						type: FactoryLogic.type.createVillainAction(1),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [

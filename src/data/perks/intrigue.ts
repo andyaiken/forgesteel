@@ -33,7 +33,6 @@ export class IntriguePerkData {
 				name: 'Gum Up The Works',
 				description: 'You prevent a trap from activating.',
 				type: FactoryLogic.type.createTrigger('A mundane trap activates within 3 squares of you.'),
-				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [

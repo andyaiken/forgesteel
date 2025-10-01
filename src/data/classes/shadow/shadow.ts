@@ -120,7 +120,6 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 						name: 'Careful Observation',
 						description: 'A moment of focus leaves a foe firmly in your sights.',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('20 squares') ],
 						target: 'One creature',
 						sections: [
@@ -246,8 +245,6 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 						name: 'Umbral Form',
 						description: 'You lose control of yourself, becoming a shadow creature dripping with ash.',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
-						distance: [],
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('This transformation lasts until the end of the encounter, until you are dying, or after 1 uninterrupted hour of quiet focus outside of combat. You gain the following effects while in this form:'),
@@ -689,7 +686,6 @@ Subterfuge remains until you spend it.`
 			name: 'Dancer',
 			description: 'You enter a flow state that makes you nearly impossible to pin down.',
 			type: FactoryLogic.type.createManeuver(),
-			keywords: [],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,

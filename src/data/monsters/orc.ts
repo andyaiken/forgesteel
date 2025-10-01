@@ -556,9 +556,6 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						id: 'orc-9-feature-3',
 						name: 'Chroma Cloak',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
-						distance: [],
-						target: '',
 						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The garroter turns invisible until the end of their turn. This invisibility ends early if they take damage or use an ability.')
@@ -956,7 +953,6 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						id: 'orc-14-feature-7',
 						name: 'I’ll Do This Myself',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

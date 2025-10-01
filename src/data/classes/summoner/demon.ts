@@ -408,9 +408,149 @@ When you finish a respite, the soul trails of each creature that took the respit
 					id: 'summoner-1-2-2',
 					name: '5-Essence Minion',
 					options: [
-						// TODO: Gushing Spewler
-						// TODO: Hulking Chimor
-						// TODO: Violence
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-1-2-2a',
+								name: 'Gushing Spewler',
+								description: 'A spewler’s mouth makes up most of its size. They unleash torrents of acid and bile from their pitless stomachs before consuming their prey with bag-like maws.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [ 'Abyssal', 'Demon' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 4,
+								stability: 0,
+								freeStrikeDamage: 3,
+								freeStrikeType: DamageType.Acid,
+								characteristics: FactoryLogic.createCharacteristics(-2, 0, -1, 3, 3),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-1-2-2a-1',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Holy,
+												modifierType: DamageModifierType.Weakness,
+												value: 1
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-2-2a-2',
+										name: 'Gushing Strike',
+										description: 'The spewer’s ranged free strikes have a distance of 10 and slide the target R + 2 squares.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-2-2a-3',
+										name: 'Spew Slide',
+										description: 'The spewler shifts 2 after all eﬀects resolve whenever they take damage. Each square they exit during this movement is covered in slime until the end of the encounter. An enemy has a bane on strikes while occupying a slimed square.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-2-2a-4',
+										name: 'Soulsight',
+										description: 'Each creature adjacent to the spewler can’t be hidden from them.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						}),
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-1-2-2b',
+								name: 'Hulking Chimor',
+								description: 'Their shape restructures and changes endlessly. Pieces of the chimor demon snap off inside their prey, causing their bodies to also restructure from the inside out.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Defender),
+								keywords: [ 'Abyssal', 'Demon' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 7,
+								stability: 3,
+								freeStrikeDamage: 3,
+								characteristics: FactoryLogic.createCharacteristics(3, 0, 2, 1, 1),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-1-2-2b-1',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Holy,
+												modifierType: DamageModifierType.Weakness,
+												value: 1
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-2-2b-2',
+										name: 'Mercurial Strike',
+										description: 'The chimor’s melee free strikes inflict M < [weak] weakened (EoT). The potency is increased by the current round number.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-2-2b-3',
+										name: 'Evershifting',
+										description: 'The chimor doesn’t provoke opportunity attacks by moving.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-2-2b-4',
+										name: 'Soulsight',
+										description: 'Each creature adjacent to the chimor can’t be hidden from them.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						}),
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-1-2-2c',
+								name: 'Violence',
+								description: 'The violence are lanky, oily red bipeds that contort and snap their bodies into unassuming objects. Their mimicry is particularly precise, to the point where it’s unclear whether their victims die from the surprise or the violent transformation process first.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
+								keywords: [ 'Abyssal', 'Demon' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(7, 'climb'),
+								stamina: 5,
+								stability: 1,
+								freeStrikeDamage: 4,
+								freeStrikeType: DamageType.Corruption,
+								characteristics: FactoryLogic.createCharacteristics(2, 3, 0, -1, -1),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-1-2-2c-1',
+										modifiers: [
+											FactoryLogic.damageModifier.create({
+												damageType: DamageType.Holy,
+												modifierType: DamageModifierType.Weakness,
+												value: 1
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-2-2c-2',
+										name: 'Transforming Strike',
+										description: 'The violence’s melee free strikes deal an additional 2 damage to each adjacent enemy they were hidden from. The violence loses their disguise after striking.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-2-2c-3',
+										name: 'Mimicry',
+										description: 'The violence uses the Hide maneuver at the start of their turn as a free action, disguising themselves as an object the same size or smaller.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-1-2-2c-4',
+										name: 'Soulsight',
+										description: 'Each creature adjacent to the violence can’t be hidden from them.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						})
 					]
 				})
 			]
@@ -444,8 +584,71 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 					name: '7-Essence Minion',
 					options: [
 						// TODO: Faded Blightling
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-1-5-3a',
+								name: 'Faded Blightling',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						}),
 						// TODO: Gorrre
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-1-5-3b',
+								name: 'Gorrre',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						}),
 						// TODO: Vicisittante
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-1-5-3c',
+								name: 'Vicisittante',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						})
 					]
 				})
 			]
@@ -465,8 +668,35 @@ Additionally, whenever one of your demon minions Death Snaps, their target is P 
 					id: 'summoner-1-8-1',
 					name: 'Abyssal Evolution',
 					description: 'At the start of each of your turns, you can transform one of your demon minions within your Summoner’s Range into a different demon minion within your Summoner’s Range, maintaining their current Stamina. Starting from round 2, you can choose to transform the demon into any demon minion you can call forth for half the essence cost. The minion must be reassigned to a new squad if their new name differs from the other squad members.'
+				}),
+				FactoryLogic.feature.createSummon({
+					id: 'summoner-1-8-2',
+					name: 'Portfolio Champion',
+					summons: [
+						// TODO: Portfolio Champion
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-1-8-2a',
+								name: '',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 9,
+							count: 1
+						})
+					]
 				})
-				// TODO: Portfolio Champion
 			]
 		},
 		{

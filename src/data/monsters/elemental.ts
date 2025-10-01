@@ -499,7 +499,6 @@ Tidedrifters have a healthy sense of humor that makes it easy to win their frien
 						name: 'Break Armor',
 						type: FactoryLogic.type.createTrigger('The force takes damage.'),
 						cost: 1,
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

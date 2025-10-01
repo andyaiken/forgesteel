@@ -32,10 +32,6 @@ export const theBlackObelisk: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'deactivate',
 						name: 'Deactivate',
-						type: FactoryLogic.type.createNoAction(),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('As a maneuver, a creature adjacent to the black obelisk can make a **Reason test.**'),
 							FactoryLogic.createAbilitySectionRoll(
@@ -115,10 +111,6 @@ export const theChronalHypercube: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'deactivate',
 						name: 'Deactivate',
-						type: FactoryLogic.type.createNoAction(),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('A creature who has the Psionics skill can deactivate and take control of the chronal hypercube by making a **Reason test** while within 10 squares of the hypercube.'),
 							FactoryLogic.createAbilitySectionRoll(
@@ -177,10 +169,6 @@ export const theThroneOfAAn: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'deactivate',
 						name: 'Deactivate',
-						type: FactoryLogic.type.createNoAction(),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The throne of A’An can be deactivated only by the current hierophant of A’An (see **Sitting on the Throne**), who must succeed on a **Presence test** that takes a bane to do so.'),
 							FactoryLogic.createAbilitySectionRoll(
@@ -198,10 +186,6 @@ export const theThroneOfAAn: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'light-of-the-northern-sun',
 						name: 'Light of the Northern Sun',
-						type: FactoryLogic.type.createNoAction(),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('In the Age of Suns, there was no darkness and no night. Even among the many suns of that time, the light of A’An was the brightest. The throne of A’An manifests the sun powers of that god, even when no one is seated in it. The following effects always occur within 10 squares of the throne:'),
 							FactoryLogic.createAbilitySectionText(`
@@ -215,10 +199,6 @@ export const theThroneOfAAn: Terrain = {
 					ability: FactoryLogic.createAbility({
 						id: 'sitting-on-the-throne',
 						name: 'Sitting on the Throne',
-						type: FactoryLogic.type.createNoAction(),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('Only a creature attuned to the throne can sit on it. A creature adjacent to the throne can use a main action to attune to it by succeeding on a **Presence test.**'),
 							FactoryLogic.createAbilitySectionRoll(

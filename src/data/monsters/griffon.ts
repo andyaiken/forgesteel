@@ -39,7 +39,6 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 				name: 'Swoop',
 				type: FactoryLogic.type.createManeuver(),
 				cost: 3,
-				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
@@ -158,7 +157,6 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 						id: 'griffon-1-feature-4',
 						name: 'Zephyr Feint',
 						type: FactoryLogic.type.createTrigger('The griffon takes damage.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -218,7 +216,6 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 						id: 'griffon-2-feature-2',
 						name: 'Bound Ahead',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 5,
@@ -253,7 +250,6 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 						id: 'griffon-2-feature-4',
 						name: 'Circle and Strike',
 						type: FactoryLogic.type.createTrigger('The griffon flies directly above a creature within distance.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'The triggering creature',
 						sections: [

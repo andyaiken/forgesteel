@@ -42,7 +42,6 @@ export class ExplorationPerkData {
 				name: 'Friend Catapult',
 				description: 'You hurl your ally through the air.',
 				type: FactoryLogic.type.createManeuver(),
-				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
@@ -64,7 +63,6 @@ export class ExplorationPerkData {
 				name: 'I\'ve Got You',
 				description: 'You catch a falling ally at the last possible moment.',
 				type: FactoryLogic.type.createTrigger('A willing ally lands on you or adjacent to you when they fall.', { free: true }),
-				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [

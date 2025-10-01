@@ -409,7 +409,6 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						id: 'rival-1st-5-feature-2',
 						name: 'Poison the Blade',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -893,7 +892,6 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						id: 'rival-2nd-5-feature-2',
 						name: 'Poison the Blade',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1377,7 +1375,6 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						id: 'rival-3rd-5-feature-2',
 						name: 'Poison the Blade',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1866,7 +1863,6 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 						id: 'rival-4th-5-feature-2',
 						name: 'Envenomed Steel',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

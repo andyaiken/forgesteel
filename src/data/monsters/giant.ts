@@ -382,7 +382,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-5-feature-3',
 						name: 'Cobble Stone Shape',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -505,7 +504,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-6-feature-5',
 						name: 'Emergency Beacon',
 						type: FactoryLogic.type.createTrigger('The lightbearer takes damage.'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -594,7 +592,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-7-feature-4',
 						name: 'Blazing Leap',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -607,7 +604,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-7-feature-5',
 						name: 'Heat and Pressure',
 						type: FactoryLogic.type.createTrigger('A creature within distance willingly moves or shifts away from the red fist.', { qualifiers: [ 'Free' ] }),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
@@ -627,7 +623,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-7-feature-6',
 						name: 'Guardian Block',
 						type: FactoryLogic.type.createTrigger('An ally within distance is targeted by an enemy’s ability.'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
@@ -725,7 +720,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-8-feature-5',
 						name: 'Frozen Retribution',
 						type: FactoryLogic.type.createTrigger('The storm hurler is targeted by a ranged strike.'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -791,7 +785,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						name: 'Blizzard Surge',
 						type: FactoryLogic.type.createMain(),
 						cost: 5,
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -819,7 +812,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-9-feature-5',
 						name: 'Begone, Smallfolk!',
 						type: FactoryLogic.type.createTrigger('The wind sprinter takes damage.'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -905,7 +897,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-10-feature-3',
 						name: 'Castle Stone Shape',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1143,7 +1134,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						name: 'Break Armor',
 						cost: 1,
 						type: FactoryLogic.type.createTrigger('The marble stone giant takes damage'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -1257,7 +1247,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						name: 'Fuel the Fire',
 						type: FactoryLogic.type.createTrigger('A fire giant ally within distance makes a strike.'),
 						cost: 1,
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createRanged(12)
 						],
@@ -1287,7 +1276,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-13-feature-7',
 						name: 'Burning Legion',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
 						sections: [

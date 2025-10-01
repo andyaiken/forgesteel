@@ -399,9 +399,141 @@ You gain a bane on the test for each subsequent rumor you collect in the same da
 					id: 'summoner-3-2-2',
 					name: '5-Essence Minion',
 					options: [
-						// TODO: Nixie Hemloche
-						// TODO: Sprite Foxglow
-						// TODO: Pixie Rosenthall
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-3-2-2a',
+								name: 'Nixie Hemloche',
+								description: 'A spotted nixie whose long, wavy hair endlessly bobs and flows into the water surrounding them. Any sailor caught in a whirlpool created by hemloches knows that their ship won’t survive the encounter.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Hexer),
+								keywords: [ 'Fey' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'T'),
+								speed: FactoryLogic.createSpeed(6, 'swim'),
+								stamina: 4,
+								stability: 0,
+								freeStrikeDamage: 3,
+								freeStrikeType: DamageType.Lightning,
+								characteristics: FactoryLogic.createCharacteristics(-2, 0, 1, 3, 2),
+								features: [
+									FactoryLogic.feature.create({
+										id: 'summoner-3-2-2a-1',
+										name: 'Water Weird',
+										description: 'Once per turn, each nixie under your control can teleport to a body of water within 6. The hemloche can’t teleport into water their own whirling waves is currently creating.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-2-2a-2',
+										name: 'Whirling Waves',
+										description: 'The area within 1 square of the hemloche is filled with churning water and is considered diﬃcult terrain. At the end of the hemloche’s turn, the hemloche can choose to slide each enemy in the aﬀected area 3 squares. An enemy that takes damage while being force moved is also M < [average] knocked prone.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-2-2a-3',
+										name: 'Minuscule',
+										description: 'The hemloche has cover while occupying a larger creature’s space.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						}),
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-3-2-2b',
+								name: 'Sprite Foxglow',
+								description: 'Foxglows are masked sprites that leave behind an evanescent trail of tiny glowing orbs as they fly. They beat their wings at a frequency that completely blocks out all nearby noise.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Ambusher),
+								keywords: [ 'Fey' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'T'),
+								speed: FactoryLogic.createSpeed(8, 'fly'),
+								stamina: 5,
+								stability: 0,
+								freeStrikeDamage: 4,
+								freeStrikeType: DamageType.Fire,
+								characteristics: FactoryLogic.createCharacteristics(-1, 3, 0, 1, 2),
+								features: [
+									FactoryLogic.feature.createDamageModifier({
+										id: 'summoner-3-2-2b-1',
+										modifiers: [
+											FactoryLogic.damageModifier.createCharacteristic({
+												damageType: DamageType.Fire,
+												modifierType: DamageModifierType.Immunity,
+												characteristics: [ Characteristic.Reason ]
+											})
+										]
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-2-2b-2',
+										name: 'Flash Strike',
+										description: 'The foxglow’s melee strikes inflict I < [strong] dazed (EoT) if they were hidden.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-2-2b-3',
+										name: 'Quiet Flight',
+										description: 'The area within 2 squares of the foxglow is completely silent. Each enemy has a bane on tests made to search for the foxglow and allies hidden in the aﬀected area.'
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-2-2b-4',
+										name: 'Minuscule',
+										description: 'The foxglow has cover while occupying a larger creature’s space.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						}),
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-3-2-2c',
+								name: 'Pixie Rosenthall',
+								description: 'The collective of warrior, blood-eyed pixies that make up a rosenthall are also known as rosies. It’s said that some rosenthall armies contain thousands of pixies and can span half the length of a wode.',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Harrier),
+								keywords: [ 'Fey' ],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(2),
+								speed: FactoryLogic.createSpeed(6, 'fly, hover'),
+								stamina: 5,
+								stability: 1,
+								freeStrikeDamage: 3,
+								characteristics: FactoryLogic.createCharacteristics(0, 2, 4, 0, 3),
+								features: [
+									FactoryLogic.feature.createAbility({
+										ability: FactoryLogic.createAbility({
+											id: 'summoner-3-2-2c-1',
+											name: 'Stickerbush Symphony',
+											type: FactoryLogic.type.createMain(),
+											keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+											distance: [ FactoryLogic.distance.createMelee(2) ],
+											target: 'One creature or object per minion',
+											cost: 'signature',
+											sections: [
+												FactoryLogic.createAbilitySectionRoll(
+													FactoryLogic.createPowerRoll({
+														characteristic: Characteristic.Reason,
+														tier1: '3 damage; pull 2; A < [weak] bleeding (EoT)',
+														tier2: '6 damage; pull 3; A < [average] bleeding (EoT)',
+														tier3: '8 damage; pull 4; A < [strong] bleeding (EoT)'
+													})
+												),
+												FactoryLogic.createAbilitySectionText('A target can’t shift while bleeding from this ability.')
+											]
+										})
+									}),
+									FactoryLogic.feature.create({
+										id: 'summoner-3-2-2c-2',
+										name: 'Swarm',
+										description: 'The rosenthall can move through squares as if they were size-1T, and can occupy other creatures’ spaces. At the start of the rosenthall’s turn, they deal 2 damage to each enemy they share a square with.'
+									})
+								]
+							}),
+							isSignature: false,
+							cost: 5,
+							count: 3
+						})
 					]
 				})
 			]
@@ -443,8 +575,71 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 					name: '7-Essence Minion',
 					options: [
 						// TODO: Nixie Corallia
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-3-5-3a',
+								name: 'Nixie Corallia',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						}),
 						// TODO: Pixie Belladonix
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-3-5-3b',
+								name: 'Pixie Belladonix',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						}),
 						// TODO: Sprite Oleandercules
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-3-5-3c',
+								name: 'Sprite Oleandercules',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 7,
+							count: 2
+						})
 					]
 				})
 			]
@@ -467,8 +662,35 @@ If your speed previously had the Fly keyword, you can now fly while sneaking an 
 The characteristic scores of you and each of your fey minions are considered 1 higher for the purposes of resisting potencies. If a characteristic would hit a maximum value this way, that maximum value also increases by 1.
 
 Additionally, any of your fey minions’ traits that affect adjacent creatures and/or the area within 1 or more squares of them have that distance increased by 1 square.`
+				}),
+				FactoryLogic.feature.createSummon({
+					id: 'summoner-3-8-2',
+					name: 'Portfolio Champion',
+					summons: [
+						// TODO: Portfolio Champion
+						FactoryLogic.createSummon({
+							monster: FactoryLogic.createMonster({
+								id: 'summoner-3-8-2a',
+								name: '',
+								description: '',
+								level: 0,
+								role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Minion, MonsterRoleType.Controller),
+								keywords: [],
+								encounterValue: 0,
+								size: FactoryLogic.createSize(1, 'M'),
+								speed: FactoryLogic.createSpeed(5),
+								stamina: 0,
+								stability: 0,
+								freeStrikeDamage: 0,
+								characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+								features: []
+							}),
+							isSignature: false,
+							cost: 9,
+							count: 1
+						})
+					]
 				})
-				// TODO: Portfolio Champion
 			]
 		},
 		{

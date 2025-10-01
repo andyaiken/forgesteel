@@ -475,7 +475,6 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 						id: 'lizardfolk-7-feature-3',
 						name: 'Trundle',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -514,7 +513,6 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 						id: 'lizardfolk-7-feature-6',
 						name: 'Shed Some Skin',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -527,7 +525,6 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 						id: 'lizardfolk-7-feature-7',
 						name: 'Thresher Thrasher',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Self and each ally in the area',
 						sections: [

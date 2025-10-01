@@ -194,7 +194,6 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 						id: 'arixx-1-feature-8',
 						name: 'Skitter',
 						type: FactoryLogic.type.createTrigger('The arixx takes damage.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

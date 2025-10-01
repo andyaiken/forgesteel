@@ -314,7 +314,6 @@ export class RetainerData {
 							id: 'retainer-brute-4',
 							name: 'Big Windup',
 							type: FactoryLogic.type.createManeuver(),
-							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [
@@ -428,7 +427,6 @@ export class RetainerData {
 							id: 'retainer-defender-4',
 							name: 'Watch Out!',
 							type: FactoryLogic.type.createTrigger('The target takes damage from a strike', { qualifiers: [ 'encounter' ] }),
-							keywords: [],
 							distance: [ FactoryLogic.distance.createMelee() ],
 							target: 'The retainer’s mentor',
 							sections: [
@@ -619,7 +617,6 @@ export class RetainerData {
 							id: 'retainer-mount-7',
 							name: 'Giddyup!',
 							type: FactoryLogic.type.createMove({ qualifiers: [ 'encounter' ] }),
-							keywords: [],
 							distance: [ FactoryLogic.distance.createRanged(5) ],
 							target: 'Self',
 							sections: [

@@ -21,10 +21,6 @@ export class ComplicationData {
 					id: 'comp-advanced-studies-1',
 					name: 'Advanced Study Benefit and Drawback',
 					description: 'As a respite activity, you can study the notebook.',
-					type: FactoryLogic.type.createNoAction(),
-					keywords: [ ],
-					distance: [ ],
-					target: 'None',
 					sections: [
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({
@@ -1902,11 +1898,6 @@ Note: Stormwight furies can’t take this complication.`,
 				ability: FactoryLogic.createAbility({
 					id: 'comp-waking-dreams-ability',
 					name: 'Waking Dreams',
-					description: '',
-					type: FactoryLogic.type.createNoAction(),
-					keywords: [ ],
-					distance: [ ],
-					target: 'Self',
 					sections: [
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({

@@ -424,7 +424,6 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-1st-5-feature-3',
 						name: 'Leap',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -565,7 +564,6 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-1st-7-feature-3',
 						name: 'Hidden Movement',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -645,9 +643,6 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 						id: 'undead-1st-8-feature-4',
 						name: 'Shadow Jump',
 						type: FactoryLogic.type.createManeuver({ free: true }),
-						keywords: [],
-						distance: [],
-						target: '',
 						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The umbral stalker teleports to an unoccupied space in an area of concealment within 10 squares.')
@@ -1544,10 +1539,6 @@ Outside of battle, mournlings patrol for interlopers in a trance-like state. Whe
 					ability: FactoryLogic.createAbility({
 						id: 'undead-2nd-9-feature-5',
 						name: 'Cursed Transference',
-						distance: [],
-						keywords: [],
-						target: '',
-						type: FactoryLogic.type.createNoAction(),
 						sections: [
 							FactoryLogic.createAbilitySectionText('At the end of each of their turns, the mummy lord can take 10 damage to end one effect on them that can be ended by a saving throw. This damage can’t be reduced in any way.'),
 							FactoryLogic.createAbilitySectionField({

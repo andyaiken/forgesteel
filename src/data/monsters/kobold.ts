@@ -717,7 +717,6 @@ Kobold legionaries might join worthy adventurers as retainers, lending their def
 						id: 'kobold-10-feature-5',
 						name: 'Firetail Pilum',
 						type: FactoryLogic.type.createVillainAction(1),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('Special') ],
 						target: 'Special',
 						sections: [

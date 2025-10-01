@@ -73,7 +73,6 @@ You can make this test only once for any encounter or negotiation.`
 						name: 'Goaded',
 						description: 'You have learned to leverage your marked foes’ psychology and goad them into acting before they’re tactically ready.',
 						type: FactoryLogic.type.createTrigger('A creature marked by you uses a strike that targets you or any ally within your line of effect.', { free: true }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -265,7 +264,6 @@ You can make this test only once for any encounter or negotiation.`
 									name: 'Counterstrategy',
 									description: 'I’ve identified a way to negate their strengths.',
 									type: FactoryLogic.type.createMain(),
-									keywords: [],
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
 									cost: 11,

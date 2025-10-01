@@ -479,7 +479,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						name: 'Throw',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 1,
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature grabbed by the brawler',
 						sections: [
@@ -696,9 +695,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-10-feature-4',
 						name: 'Dagger Storm',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
-						distance: [],
-						target: '',
 						cost: 5,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The scoundrel uses Rapier and Dagger against up to three targets. They shift up to 2 squares before or after each strike.')
@@ -915,7 +911,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-13-feature-4',
 						name: 'You!',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
 						sections: [
@@ -953,7 +948,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-13-feature-8',
 						name: 'Advance!',
 						type: FactoryLogic.type.createVillainAction(1),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1121,7 +1115,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-14-feature-10',
 						name: 'Lead From the Front',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1176,9 +1169,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-15-feature-2',
 						name: 'Dive',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The hawk moves up to their speed.')
 						]

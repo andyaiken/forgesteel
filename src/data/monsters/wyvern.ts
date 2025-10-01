@@ -140,7 +140,6 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 						id: 'wyvern-1-feature-3',
 						name: 'Swooping Torment',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -155,7 +154,6 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 						id: 'wyvern-1-feature-4',
 						name: 'Retaliatory Dive',
 						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the lurker with a ranged ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
 						sections: [

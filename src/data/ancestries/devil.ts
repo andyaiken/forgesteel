@@ -50,7 +50,6 @@ export const devil: Ancestry = {
 							name: 'Glowing Eyes',
 							description: 'Your eyes are a solid, vibrant color that flares to show your excitement or rage.',
 							type: FactoryLogic.type.createTrigger('You take damage from a creature'),
-							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [

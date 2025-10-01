@@ -74,7 +74,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-1-feature-2',
 						name: 'Rush',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -200,7 +199,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-3-feature-3',
 						name: 'Juke',
 						type: FactoryLogic.type.createTrigger('The animal is targeted by an area ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -253,7 +251,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-4-feature-2',
 						name: 'Trundle',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -266,7 +263,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-4-feature-3',
 						name: 'Animal Rally',
 						type: FactoryLogic.type.createTrigger('The target is knocked prone.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'One ally',
 						sections: [
@@ -324,7 +320,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-5-feature-2',
 						name: 'Ready to Strike',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

@@ -1,6 +1,6 @@
-import { CareerSheet } from '../../../../models/classic-sheets/hero-sheet';
-import { FeatureComponent } from '../components/feature-component';
-import { Hero } from '../../../../models/hero';
+import { CareerSheet } from '@/models/classic-sheets/hero-sheet';
+import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
+import { Hero } from '@/models/hero';
 import './career-card.scss';
 
 interface Props {

@@ -1,6 +1,6 @@
-import { Ancestry } from '../../models/ancestry';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { SkillList } from '../../enums/skill-list';
+import { Ancestry } from '@/models/ancestry';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SkillList } from '@/enums/skill-list';
 
 export const devil: Ancestry = {
 	id: 'ancestry-devil',

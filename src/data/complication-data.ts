@@ -1,14 +1,14 @@
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { Characteristic } from '../enums/characteristic';
-import { Complication } from '../models/complication';
-import { DamageModifierType } from '../enums/damage-modifier-type';
-import { DamageType } from '../enums/damage-type';
-import { FactoryLogic } from '../logic/factory-logic';
-import { FeatureField } from '../enums/feature-field';
-import { ItemType } from '../enums/item-type';
-import { LanguageType } from '../enums/language-type';
-import { SkillList } from '../enums/skill-list';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { Complication } from '@/models/complication';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { ItemType } from '@/enums/item-type';
+import { LanguageType } from '@/enums/language-type';
+import { SkillList } from '@/enums/skill-list';
 
 export class ComplicationData {
 	static advancedStudies: Complication = {

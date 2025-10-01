@@ -1,15 +1,15 @@
 import { Divider } from 'antd';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeaturePanel } from '../feature-panel/feature-panel';
-import { FeatureType } from '../../../../enums/feature-type';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { Monster } from '../../../../models/monster';
-import { MonsterGroup } from '../../../../models/monster-group';
-import { MonsterPanel } from '../monster-panel/monster-panel';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { FeatureType } from '@/enums/feature-type';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Monster } from '@/models/monster';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 
 import './monster-group-panel.scss';
 

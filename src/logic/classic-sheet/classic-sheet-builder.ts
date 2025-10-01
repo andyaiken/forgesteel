@@ -1,12 +1,12 @@
-import { Ability } from '../../models/ability';
-import { AbilityLogic } from '../ability-logic';
-import { AbilitySheet } from '../../models/classic-sheets/ability-sheet';
-import { AbilityUsage } from '../../enums/ability-usage';
-import { CreatureLogic } from '../creature-logic';
-import { Format } from '../../utils/format';
-import { Hero } from '../../models/hero';
-import { Monster } from '../../models/monster';
-import { SheetFormatter } from './sheet-formatter';
+import { Ability } from '@/models/ability';
+import { AbilityLogic } from '@/logic/ability-logic';
+import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { AbilityUsage } from '@/enums/ability-usage';
+import { CreatureLogic } from '@/logic/creature-logic';
+import { Format } from '@/utils/format';
+import { Hero } from '@/models/hero';
+import { Monster } from '@/models/monster';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
 export class ClassicSheetBuilder {
 	// #region Ability Sheet

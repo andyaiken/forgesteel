@@ -1,11 +1,11 @@
 import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Flex, Segmented } from 'antd';
-import { AppFooter } from '../../panels/app-footer/app-footer';
-import { AppHeader } from '../../panels/app-header/app-header';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { useMediaQuery } from '../../../hooks/use-media-query';
-import { useNavigation } from '../../../hooks/use-navigation';
+import { AppFooter } from '@/components/panels/app-footer/app-footer';
+import { AppHeader } from '@/components/panels/app-header/app-header';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { useMediaQuery } from '@/hooks/use-media-query';
+import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
 
 import './welcome-page.scss';

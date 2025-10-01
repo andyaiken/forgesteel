@@ -1,6 +1,6 @@
-import { Hero } from '../../../../models/hero';
-import { Title } from '../../../../models/title';
-import { TitleComponent } from '../components/title-component';
+import { Hero } from '@/models/hero';
+import { Title } from '@/models/title';
+import { TitleComponent } from '@/components/panels/classic-sheet/components/title-component';
 
 import './titles-card.scss';
 

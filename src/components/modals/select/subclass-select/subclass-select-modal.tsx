@@ -1,16 +1,16 @@
 import { Alert, Divider, Input, Space } from 'antd';
-import { Collections } from '../../../../utils/collections';
-import { Empty } from '../../../controls/empty/empty';
-import { Expander } from '../../../controls/expander/expander';
-import { Modal } from '../../modal/modal';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
+import { Collections } from '@/utils/collections';
+import { Empty } from '@/components/controls/empty/empty';
+import { Expander } from '@/components/controls/expander/expander';
+import { Modal } from '@/components/modals/modal/modal';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { SubClass } from '../../../../models/subclass';
-import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
-import { Utils } from '../../../../utils/utils';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { SubClass } from '@/models/subclass';
+import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './subclass-select-modal.scss';

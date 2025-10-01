@@ -1,8 +1,8 @@
 import * as htmlToImage from 'html-to-image';
-import { Collections } from './collections';
+import { Collections } from '@/utils/collections';
 import { Converter } from 'showdown';
-import { Random } from './random';
-import { SheetPageSize } from '../enums/sheet-page-size';
+import { Random } from '@/utils/random';
+import { SheetPageSize } from '@/enums/sheet-page-size';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
 

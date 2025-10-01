@@ -1,20 +1,20 @@
-import { Ancestry } from '../../../../../models/ancestry';
-import { AncestryPanel } from '../../../../panels/elements/ancestry-panel/ancestry-panel';
-import { Element } from '../../../../../models/element';
-import { EmptyMessage } from '../empty-message/empty-message';
-import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
-import { FeatureData } from '../../../../../models/feature';
-import { FeatureLogic } from '../../../../../logic/feature-logic';
-import { HeaderText } from '../../../../controls/header-text/header-text';
-import { Hero } from '../../../../../models/hero';
-import { Options } from '../../../../../models/options';
-import { PanelMode } from '../../../../../enums/panel-mode';
+import { Ancestry } from '@/models/ancestry';
+import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
+import { Element } from '@/models/element';
+import { EmptyMessage } from '@/components/pages/heroes/hero-edit/empty-message/empty-message';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '@/models/feature';
+import { FeatureLogic } from '@/logic/feature-logic';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { ReactNode } from 'react';
-import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
-import { Utils } from '../../../../../utils/utils';
-import { useMediaQuery } from '../../../../../hooks/use-media-query';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Utils } from '@/utils/utils';
+import { useIsSmall } from '@/hooks/use-is-small';
 
 import './ancestry-section.scss';
 
@@ -37,7 +37,7 @@ interface Props {
 }
 
 export const AncestrySection = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 
 	try {
 		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks).map(Utils.copy).filter(a => matchElement(a, props.searchTerm));

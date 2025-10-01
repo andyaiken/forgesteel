@@ -1,13 +1,13 @@
 import { CSSProperties } from 'react';
-import { Format } from '../../../utils/format';
-import { Hero } from '../../../models/hero';
-import { HeroLogic } from '../../../logic/hero-logic';
-import { Monster } from '../../../models/monster';
-import { MonsterGroup } from '../../../models/monster-group';
-import { MonsterLogic } from '../../../logic/monster-logic';
-import { MonsterRoleType } from '../../../enums/monster-role-type';
-import { Terrain } from '../../../models/terrain';
-import { TerrainLogic } from '../../../logic/terrain-logic';
+import { Format } from '@/utils/format';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Monster } from '@/models/monster';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Terrain } from '@/models/terrain';
+import { TerrainLogic } from '@/logic/terrain-logic';
 
 import './token.scss';
 

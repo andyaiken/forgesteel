@@ -1,6 +1,6 @@
-import { MonsterOrganizationType } from '../enums/monster-organization-type';
-import { MonsterRoleType } from '../enums/monster-role-type';
-import { TerrainRoleType } from '../enums/terrain-role-type';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { TerrainRoleType } from '@/enums/terrain-role-type';
 
 export interface MonsterFilter {
 	name: string;

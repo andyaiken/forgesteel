@@ -1,4 +1,4 @@
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './sash-panel.scss';
 

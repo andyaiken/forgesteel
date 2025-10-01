@@ -1,18 +1,18 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { FollowerType } from '../../../enums/follower-type';
-import { HeroClass } from '../../../models/class';
-import { KitArmor } from '../../../enums/kit-armor';
-import { KitWeapon } from '../../../enums/kit-weapon';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { demon } from './demon';
-import { elemental } from './elemental';
-import { fey } from './fey';
-import { undead } from './undead';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { FollowerType } from '@/enums/follower-type';
+import { HeroClass } from '@/models/class';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { demon } from '@/data/classes/summoner/demon';
+import { elemental } from '@/data/classes/summoner/elemental';
+import { fey } from '@/data/classes/summoner/fey';
+import { undead } from '@/data/classes/summoner/undead';
 
 export const summoner: HeroClass = {
 	id: 'class-summoner',

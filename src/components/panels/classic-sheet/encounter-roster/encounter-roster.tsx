@@ -1,9 +1,9 @@
-import { EncounterSheet } from '../../../../models/classic-sheets/encounter-sheet';
-import { MonsterLogic } from '../../../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
-import { Options } from '../../../../models/options';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { TerrainLogic } from '../../../../logic/terrain-logic';
+import { EncounterSheet } from '@/models/classic-sheets/encounter-sheet';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { Options } from '@/models/options';
+import { Sourcebook } from '@/models/sourcebook';
+import { TerrainLogic } from '@/logic/terrain-logic';
 import { useMemo } from 'react';
 
 import './encounter-roster.scss';

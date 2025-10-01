@@ -1,19 +1,19 @@
-import { Ability, AbilityDistance } from '../models/ability';
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { Characteristic } from '../enums/characteristic';
-import { Collections } from '../utils/collections';
-import { CreatureLogic } from './creature-logic';
-import { Format } from '../utils/format';
-import { FormatLogic } from './format-logic';
-import { Hero } from '../models/hero';
-import { HeroLogic } from './hero-logic';
-import { KitArmor } from '../enums/kit-armor';
-import { KitWeapon } from '../enums/kit-weapon';
-import { Monster } from '../models/monster';
-import { MonsterLogic } from './monster-logic';
-import { PowerRoll } from '../models/power-roll';
-import { Utils } from '../utils/utils';
+import { Ability, AbilityDistance } from '@/models/ability';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { CreatureLogic } from '@/logic/creature-logic';
+import { Format } from '@/utils/format';
+import { FormatLogic } from '@/logic/format-logic';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { Monster } from '@/models/monster';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { PowerRoll } from '@/models/power-roll';
+import { Utils } from '@/utils/utils';
 
 export class AbilityLogic {
 	static getKeywords = () => {

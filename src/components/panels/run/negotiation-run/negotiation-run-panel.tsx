@@ -1,14 +1,14 @@
 import { Divider, Progress, Select, Space } from 'antd';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Expander } from '../../../controls/expander/expander';
-import { Field } from '../../../controls/field/field';
-import { Format } from '../../../../utils/format';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { Negotiation } from '../../../../models/negotiation';
-import { NegotiationLogic } from '../../../../logic/negotiation-logic';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Utils } from '../../../../utils/utils';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
+import { Field } from '@/components/controls/field/field';
+import { Format } from '@/utils/format';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Negotiation } from '@/models/negotiation';
+import { NegotiationLogic } from '@/logic/negotiation-logic';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './negotiation-run-panel.scss';

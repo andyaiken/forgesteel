@@ -1,6 +1,6 @@
-import { Ancestry } from '../../models/ancestry';
-import { ConditionType } from '../../enums/condition-type';
-import { FactoryLogic } from '../../logic/factory-logic';
+import { Ancestry } from '@/models/ancestry';
+import { ConditionType } from '@/enums/condition-type';
+import { FactoryLogic } from '@/logic/factory-logic';
 
 export const hakaan: Ancestry = {
 	id: 'ancestry-hakaan',

@@ -1,15 +1,15 @@
 import { Alert, Button, Divider, Drawer, Flex, Space, notification } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
-import { FeatureType } from '../../../../enums/feature-type';
-import { Field } from '../../../controls/field/field';
-import { Format } from '../../../../utils/format';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
-import { HeroLogic } from '../../../../logic/hero-logic';
-import { Modal } from '../../modal/modal';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Random } from '../../../../utils/random';
-import { Utils } from '../../../../utils/utils';
+import { FeatureType } from '@/enums/feature-type';
+import { Field } from '@/components/controls/field/field';
+import { Format } from '@/utils/format';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Modal } from '@/components/modals/modal/modal';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Random } from '@/utils/random';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './stats-panel.scss';

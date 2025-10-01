@@ -1,9 +1,9 @@
 import { Button, Popover } from 'antd';
 import { DownOutlined, UploadOutlined } from '@ant-design/icons';
-import { Modal } from '../modal/modal';
-import { PanelMode } from '../../../enums/panel-mode';
-import { Terrain } from '../../../models/terrain';
-import { TerrainPanel } from '../../panels/elements/terrain-panel/terrain-panel';
+import { Modal } from '@/components/modals/modal/modal';
+import { PanelMode } from '@/enums/panel-mode';
+import { Terrain } from '@/models/terrain';
+import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 
 import './terrain-modal.scss';
 

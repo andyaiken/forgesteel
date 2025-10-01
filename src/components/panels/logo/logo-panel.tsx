@@ -1,6 +1,6 @@
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
-import shield from './../../../assets/shield.png';
+import shield from '@/assets/shield.png';
 
 import './logo-panel.scss';
 

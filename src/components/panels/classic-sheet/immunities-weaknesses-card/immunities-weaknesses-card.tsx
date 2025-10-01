@@ -1,4 +1,4 @@
-import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
+import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 
 import { useMemo } from 'react';
 

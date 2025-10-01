@@ -1,6 +1,6 @@
 import { Fragment, useMemo } from 'react';
 
-import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
+import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 
 import './primary-reference-card.scss';
 

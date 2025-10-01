@@ -1,7 +1,7 @@
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Ancestry } from '../../models/ancestry';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Ancestry } from '@/models/ancestry';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
 
 export const wodeElf: Ancestry = {
 	id: 'ancestry-wode-elf',

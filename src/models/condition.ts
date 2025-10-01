@@ -1,4 +1,4 @@
-import { ConditionEndType, ConditionType } from '../enums/condition-type';
+import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 
 export interface Condition {
 	id: string;

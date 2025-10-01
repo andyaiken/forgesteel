@@ -1,6 +1,6 @@
-import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
-import { Title } from '../../../../models/title';
-import { TitleComponent } from '../components/title-component';
+import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { Title } from '@/models/title';
+import { TitleComponent } from '@/components/panels/classic-sheet/components/title-component';
 import './titles-card.scss';
 
 interface Props {

@@ -1,8 +1,8 @@
-import { Characteristic } from '../enums/characteristic';
-import { Hero } from '../models/hero';
-import { HeroLogic } from './hero-logic';
-import { Monster } from '../models/monster';
-import { MonsterLogic } from './monster-logic';
+import { Characteristic } from '@/enums/characteristic';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Monster } from '@/models/monster';
+import { MonsterLogic } from '@/logic/monster-logic';
 
 export class CreatureLogic {
 	static getCharacteristic = (creature: Hero | Monster | undefined, characteristic: Characteristic) => {

@@ -1,8 +1,8 @@
-import { EncounterObjectiveData } from '../../data/encounter-objective-data';
-import { FactoryLogic } from '../factory-logic';
-import { MonsterUpdateLogic } from './monster-update-logic';
-import { Playbook } from '../../models/playbook';
-import { PlotContentReference } from '../../models/plot';
+import { EncounterObjectiveData } from '@/data/encounter-objective-data';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
+import { Playbook } from '@/models/playbook';
+import { PlotContentReference } from '@/models/plot';
 
 export class PlaybookUpdateLogic {
 	static updatePlaybook = (playbook: Playbook) => {

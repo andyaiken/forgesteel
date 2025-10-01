@@ -1,6 +1,6 @@
-import { FeatureComponent } from './feature-component';
-import { Hero } from '../../../../models/hero';
-import { Title } from '../../../../models/title';
+import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
+import { Hero } from '@/models/hero';
+import { Title } from '@/models/title';
 
 import './title-component.scss';
 

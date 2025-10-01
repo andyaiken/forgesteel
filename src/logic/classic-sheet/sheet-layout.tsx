@@ -1,11 +1,11 @@
 import { Fragment, JSX } from 'react';
-import { AbilityCard } from '../../components/panels/classic-sheet/ability-card/ability-card';
-import { AbilitySheet } from '../../models/classic-sheets/ability-sheet';
-import { EncounterSheet } from '../../models/classic-sheets/encounter-sheet';
-import { HeroSheet } from '../../models/classic-sheets/hero-sheet';
-import { Options } from '../../models/options';
-import { SheetFormatter } from './sheet-formatter';
-import { SheetPageSize } from '../../enums/sheet-page-size';
+import { AbilityCard } from '@/components/panels/classic-sheet/ability-card/ability-card';
+import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { EncounterSheet } from '@/models/classic-sheets/encounter-sheet';
+import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { Options } from '@/models/options';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export interface FillerCard {
 	element: JSX.Element;

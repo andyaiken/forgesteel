@@ -1,10 +1,10 @@
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeaturePanel } from '../feature-panel/feature-panel';
-import { Hero } from '../../../../models/hero';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { Perk } from '../../../../models/perk';
-import { Sourcebook } from '../../../../models/sourcebook';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { Hero } from '@/models/hero';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { Perk } from '@/models/perk';
+import { Sourcebook } from '@/models/sourcebook';
 
 import './perk-panel.scss';
 

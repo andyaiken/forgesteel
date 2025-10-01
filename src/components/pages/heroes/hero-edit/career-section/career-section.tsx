@@ -1,26 +1,26 @@
 import { Button, Drawer, Flex } from 'antd';
 import { ReactNode, useState } from 'react';
-import { Career } from '../../../../../models/career';
-import { CareerPanel } from '../../../../panels/elements/career-panel/career-panel';
+import { Career } from '@/models/career';
+import { CareerPanel } from '@/components/panels/elements/career-panel/career-panel';
 import { CloseOutlined } from '@ant-design/icons';
-import { Element } from '../../../../../models/element';
-import { ElementSelectModal } from '../../../../modals/select/element-select/element-select-modal';
-import { EmptyMessage } from '../empty-message/empty-message';
-import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
-import { FeatureConfigPanel } from '../../../../panels/feature-config-panel/feature-config-panel';
-import { FeatureData } from '../../../../../models/feature';
-import { FeatureLogic } from '../../../../../logic/feature-logic';
-import { Field } from '../../../../controls/field/field';
-import { HeaderText } from '../../../../controls/header-text/header-text';
-import { Hero } from '../../../../../models/hero';
-import { Markdown } from '../../../../controls/markdown/markdown';
-import { Options } from '../../../../../models/options';
-import { PanelMode } from '../../../../../enums/panel-mode';
-import { SelectablePanel } from '../../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../../logic/sourcebook-logic';
-import { Utils } from '../../../../../utils/utils';
-import { useMediaQuery } from '../../../../../hooks/use-media-query';
+import { Element } from '@/models/element';
+import { ElementSelectModal } from '@/components/modals/select/element-select/element-select-modal';
+import { EmptyMessage } from '@/components/pages/heroes/hero-edit/empty-message/empty-message';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '@/models/feature';
+import { FeatureLogic } from '@/logic/feature-logic';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Utils } from '@/utils/utils';
+import { useIsSmall } from '@/hooks/use-is-small';
 
 import './career-section.scss';
 
@@ -44,7 +44,7 @@ interface Props {
 }
 
 export const CareerSection = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const [ showIncitingIncidents, setShowIncitingIncidents ] = useState<boolean>(false);
 
 	try {

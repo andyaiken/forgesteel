@@ -1,15 +1,15 @@
-import { AbilityComponent } from '../components/ability-component';
-import { AbilitySheet } from '../../../../models/classic-sheets/ability-sheet';
-import { FeatureComponent } from '../components/feature-component';
-import { MonsterSheet } from '../../../../models/classic-sheets/encounter-sheet';
-import { Options } from '../../../../models/options';
-import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
-import { Utils } from '../../../../utils/utils';
+import { AbilityComponent } from '@/components/panels/classic-sheet/components/ability-component';
+import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
+import { MonsterSheet } from '@/models/classic-sheets/encounter-sheet';
+import { Options } from '@/models/options';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { Utils } from '@/utils/utils';
 import { useMemo } from 'react';
 
 import './monster-card.scss';
 
-import starIcon from '../../../../assets/icons/star.svg';
+import starIcon from '@/assets/icons/star.svg';
 
 interface Props {
 	monster: MonsterSheet;

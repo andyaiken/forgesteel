@@ -1,6 +1,6 @@
-import { Characteristic } from '../enums/characteristic';
-import { Element } from './element';
-import { FollowerType } from '../enums/follower-type';
+import { Characteristic } from '@/enums/characteristic';
+import { Element } from '@/models/element';
+import { FollowerType } from '@/enums/follower-type';
 
 export interface Follower extends Element {
 	type: FollowerType;

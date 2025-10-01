@@ -1,13 +1,13 @@
-import { LabeledBooleanField, LabeledTextField } from '../components/labeled-field';
-import { FeatureComponent } from '../components/feature-component';
-import { HeroSheet } from '../../../../models/classic-sheets/hero-sheet';
-import { SheetFormatter } from '../../../../logic/classic-sheet/sheet-formatter';
+import { LabeledBooleanField, LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
+import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
+import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
 import './modifiers-card.scss';
 
-import rollT1 from '../../../../assets/icons/power-roll-t1.svg';
-import rollT2 from '../../../../assets/icons/power-roll-t2.svg';
-import rollT3 from '../../../../assets/icons/power-roll-t3.svg';
+import rollT1 from '@/assets/icons/power-roll-t1.svg';
+import rollT2 from '@/assets/icons/power-roll-t2.svg';
+import rollT3 from '@/assets/icons/power-roll-t3.svg';
 import { useMemo } from 'react';
 
 interface Props {

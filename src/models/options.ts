@@ -1,5 +1,5 @@
-import { PanelWidth } from '../enums/panel-width';
-import { SheetPageSize } from '../enums/sheet-page-size';
+import { PanelWidth } from '@/enums/panel-width';
+import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export interface Options {
 	// Hero

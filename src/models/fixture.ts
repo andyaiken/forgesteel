@@ -1,7 +1,7 @@
-import { Element } from './element';
-import { Feature } from './feature';
-import { Size } from './size';
-import { TerrainRole } from './terrain';
+import { Element } from '@/models/element';
+import { Feature } from '@/models/feature';
+import { Size } from '@/models/size';
+import { TerrainRole } from '@/models/terrain';
 
 export interface Fixture extends Element {
 	role: TerrainRole;

@@ -1,5 +1,5 @@
-import { Element } from './element';
-import { Monster } from './monster';
+import { Element } from '@/models/element';
+import { Monster } from '@/models/monster';
 
 export interface SummoningInfo {
 	isSignature: boolean;

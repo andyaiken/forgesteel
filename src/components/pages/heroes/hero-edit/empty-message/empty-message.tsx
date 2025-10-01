@@ -1,6 +1,6 @@
 import { Alert, Button, Divider } from 'antd';
-import { Hero } from '../../../../../models/hero';
-import { useNavigation } from '../../../../../hooks/use-navigation';
+import { Hero } from '@/models/hero';
+import { useNavigation } from '@/hooks/use-navigation';
 
 import './empty-message.scss';
 

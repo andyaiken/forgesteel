@@ -1,13 +1,13 @@
 import { Divider, Segmented, Select, Space } from 'antd';
-import { Collections } from '../../../utils/collections';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Hero } from '../../../models/hero';
-import { NumberSpin } from '../../controls/number-spin/number-spin';
-import { Options } from '../../../models/options';
-import { PanelWidth } from '../../../enums/panel-width';
-import { SheetPageSize } from '../../../enums/sheet-page-size';
-import { Toggle } from '../../controls/toggle/toggle';
-import { Utils } from '../../../utils/utils';
+import { Collections } from '@/utils/collections';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Hero } from '@/models/hero';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
+import { PanelWidth } from '@/enums/panel-width';
+import { SheetPageSize } from '@/enums/sheet-page-size';
+import { Toggle } from '@/components/controls/toggle/toggle';
+import { Utils } from '@/utils/utils';
 
 import './options-panel.scss';
 

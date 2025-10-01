@@ -20,8 +20,8 @@ export const EncounterHeaderCard = (props: Props) => {
 			<HeaderImage />
 			<section className='container overview'>
 				<LabeledTextField
-					label='Encounter Objective'
-					content={encounter.objective}
+					label='Encounter Name'
+					content={encounter.name}
 					additionalClasses={[ 'name', 'no-box', 'text-left' ]}
 				/>
 				<LabeledTextField
@@ -50,14 +50,59 @@ export const EncounterHeaderCard = (props: Props) => {
 					content={encounter.encounterEv}
 				/>
 			</section>
-			<section className='container success'>
-				<h3>Success Condition</h3>
-				<Markdown text={encounter.successCondition || ''} />
-			</section>
-			<section className='container failure'>
-				<h3>Failure Condition</h3>
-				<Markdown text={encounter.failureCondition || ''} />
-			</section>
+			<div className='encounter-objective'>
+				<LabeledTextField
+					label='Encounter Objective'
+					content={encounter.objective}
+					additionalClasses={[ 'objective', 'no-box', 'text-left' ]}
+				/>
+				<section className='bordered success'>
+					<h3>Success Condition</h3>
+					<Markdown text={encounter.successCondition || ''} />
+				</section>
+				<section className='bordered failure'>
+					<h3>Failure Condition</h3>
+					<Markdown text={encounter.failureCondition || ''} />
+				</section>
+			</div>
+			<div className='encounter-tracker'>
+				<div className='round-tracker'>
+					<LabeledTextField
+						content=''
+						label='Round'
+						additionalClasses={[ 'label-above', 'fancy' ]}
+					/>
+					<div className='reference'>
+						<div className='round-1'>
+							<h4>Round 1 Malice</h4>
+							<LabeledTextField
+								content={encounter.heroCount}
+								label='Heroes'
+								additionalClasses={[ 'no-box' ]}
+							/>
+							<span>+ 1 +</span>
+							<LabeledTextField
+								content={encounter.heroVictories}
+								label='Victories'
+								additionalClasses={[ 'no-box' ]}
+							/>
+						</div>
+						<div className='round-2'>
+							<h4>Round 2+ Malice</h4>
+							<LabeledTextField
+								content={encounter.heroCount}
+								label='Heroes'
+								additionalClasses={[ 'no-box' ]}
+							/>
+							<span>+ Rounds</span>
+						</div>
+					</div>
+				</div>
+				<div className='malice-tracker'>
+					<h3>Malice</h3>
+					<div className='bordered'>&nbsp;</div>
+				</div>
+			</div>
 		</div>
 	);
 };

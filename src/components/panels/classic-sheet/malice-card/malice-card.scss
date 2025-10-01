@@ -2,112 +2,12 @@
 
 #classic-sheet .malice.card {
     display: grid;
-    grid-template-columns: 2fr 1fr;
     grid-template-rows: min-content 1fr;
     place-items: stretch;
 
-    .encounter-tracker {
-        display: grid;
-        grid-template-columns: min-content 1fr;
-        place-items: stretch;
-
-        .round-tracker {
-            display: grid;
-            grid-template-columns: min-content 1fr;
-            place-items: stretch;
-
-            .labeled-field.fancy {
-                align-self: flex-start;
-
-                label {
-                    font-size: round(1.5rem, 1px);
-                    text-transform: none;
-                }
-            }
-
-            .labeled-field.fancy>.labeled-field-content {
-                aspect-ratio: 1 / 1;
-                background-image: none;
-                border: 4px solid common.$color-medium;
-                max-width: 76px;
-                align-self: center;
-            
-                span {
-                    min-width: 76px;
-                }
-            }
-
-            .reference {
-                display: grid;
-                grid-template-rows: 1fr 1fr;
-                place-items: stretch;
-
-                margin-bottom: -10px;
-                margin-top: 10px;
-
-                .round-1,
-                .round-2 {
-                    display: grid;
-                    grid-template-rows: min-content 1fr;
-                    grid-template-columns: min-content min-content min-content 1fr;
-                    align-items: baseline;
-                    justify-content: stretch;
-
-                    h4 {
-                        grid-column-end: span 4;
-                        font-size: round(0.9rem, 1px);
-                        margin: 0 5px;
-                        font-weight: 400;
-                        text-align: left;
-                    }
-                    span {
-                        text-wrap: nowrap;
-                        font-size: round(1rem, 1px);
-                        font-weight: 350;
-                    }
-                    .labeled-field {
-                        margin: 0;
-                        padding: 0 3px;
-
-                        label {
-                            font-size: round(0.8rem, 1px);
-                            padding-top: 0;
-                        }
-                    }
-                }
-            }
-        }
-
-        .malice-tracker {
-            display: grid;
-            grid-template-rows: min-content 1fr;
-            place-items: stretch;
-            padding: 0 10px 5px;
-
-            h3 {
-                margin-bottom: 5px;
-                font-size: round(1.5rem, 1px);
-                text-transform: none;
-            }
-
-            .bordered {
-                @include common.border-beveled(10px, 2px, common.$color-medium);
-            }
-        }
-    }
-
-    .basic-malice {
-        grid-row-end: span 2;
-        border-left: 2px solid common.$color-light;
-        padding-left: 5px;
-        margin: 5px;
-    }
-
-    .basic-malice h2,
-    .malice-features h2 {
+    h2, h3:has(span) {
         line-height: 1.1rem;
-        @include common.divider-plain(common.$color-light, 2px);
-    
+
         span {
             display: inline-block;
             text-transform: none;
@@ -117,8 +17,6 @@
     }
 
     .malice-features {
-        grid-row-start: 2;
-        grid-column-start: 1;
         margin-top: 5px;
 
         h3 {

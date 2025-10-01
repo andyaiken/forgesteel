@@ -46,7 +46,7 @@ export const EncounterRosterCard = (props: Props) => {
 						const minionSlots = groupMonsters.filter(m => m.role.organization === MonsterOrganizationType.Minion).length;
 						const nonMinionSlots = groupMonsters.filter(m => m.role.organization !== MonsterOrganizationType.Minion).length;
 						return (
-							<tr key={`group-${i}`}>
+							<tr className='creature-group' key={`group-${i}`}>
 								<td className='encounter-group'>
 									<div className='group-number'>{`${i + 1}`}</div>
 									{group.name ?
@@ -88,9 +88,10 @@ export const EncounterRosterCard = (props: Props) => {
 												const monster = slot.monster;
 												let stamina = monster.stamina.toString();
 												if (slot.isMinion && slot.count > 1) {
-													let s = monster.stamina;
+													let s = monster.stamina * slot.count;
+													stamina = s.toString();
 													for (let i = 1; i < slot.count; ++i) {
-														s += monster.stamina;
+														s -= monster.stamina;
 														stamina += ` / ${s}`;
 													}
 												}
@@ -137,11 +138,18 @@ export const EncounterRosterCard = (props: Props) => {
 							</tr>
 						);
 					})}
-					<tr>
-						<th className='terrain' colSpan={2}>Dynamic Terrain Objects</th>
-						<th className='stamina-tracker-header' colSpan={2}>Stamina Tracker</th>
-						<th className='notes'>Notes/Temporary Effects</th>
-					</tr>
+				</tbody>
+				<tbody>
+					{
+						encounter.terrain?.length ?
+							<tr className='terrain-header'>
+								<th className='terrain' colSpan={2}>Dynamic Terrain Objects</th>
+								<th className='stamina-tracker-header' colSpan={2}>Stamina Tracker</th>
+								<th className='notes'>Notes/Temporary Effects</th>
+							</tr>
+							: null
+
+					}
 					{encounter.terrain?.map(terrain => {
 						return (
 							<tr className='terrain-object' key={`roster-terrain-${terrain.id}`}>

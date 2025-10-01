@@ -12,6 +12,7 @@ export class ClassicSheetBuilder {
 	// #region Ability Sheet
 	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | undefined): AbilitySheet => {
 		const isMonster = CreatureLogic.isMonster(creature);
+		const isHero = CreatureLogic.isHero(creature);
 		const sheet: AbilitySheet = {
 			id: ability.id,
 			abilityType: 'Ability',
@@ -88,7 +89,7 @@ export class ClassicSheetBuilder {
 					.sort(SheetFormatter.sortCharacteristics)
 					.map(c => Format.capitalize(c.slice(0, 1)))
 				);
-				rollPowerStr = isMonster ? rollPowerAmount.toString() : `${rollPowerAmount} (${characteristics})`;
+				rollPowerStr = isHero ? `${rollPowerAmount} (${characteristics})` : rollPowerAmount.toString();
 			} else {
 				let rollPowerAmount = 2;// echelon 1 always at least 2
 				[ rollSection.roll.tier1, rollSection.roll.tier2, rollSection.roll.tier3 ].forEach(tier => {

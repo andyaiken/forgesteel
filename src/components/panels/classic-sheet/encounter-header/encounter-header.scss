@@ -2,28 +2,14 @@
 
 #classic-sheet .encounter-header.card {
     display: grid;
-    grid-template-rows: min-content min-content;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: min-content min-content min-content;
+    grid-template-columns: 2fr 1fr;
     align-items: stretch;
     grid-gap: 8px;
     padding: 7px;
 
     .header-image {
-        grid-column-end: span 3;
-    }
-
-    section.container {
-        padding: 4px;
-
-        &.success,
-        &.failure {
-            padding: 5px 10px;
-            margin-bottom: 0;
-        
-            h3 {
-                font-size: 16px;
-            }
-        }
+        grid-column-end: span 2;
     }
 
     .overview {
@@ -60,6 +46,127 @@
 
             .labeled-field-content span {
                 font-size: round(1.9rem, 1px);
+            }
+        }
+    }
+
+    .encounter-objective {
+        grid-row-end: span 2;
+        grid-column-start: 2;
+        display: grid;
+        grid-template-rows: min-content 1fr 1fr;
+
+        .objective {
+            margin-bottom: 10px;
+            .labeled-field-content span {
+                font-size: round(1.9rem, 1px);
+                min-height: 1.9rem;
+            }
+        }
+
+        section.bordered {
+            padding-bottom: 2px;
+
+            div {
+                margin-top: -5px;
+                max-height: 80px;
+                overflow: hidden;
+            }
+        }
+
+        section.bordered:last-of-type {
+            margin-bottom: 5px;
+        }
+    }
+
+    .encounter-tracker {
+        display: grid;
+        grid-template-columns: min-content 1fr;
+        place-items: stretch;
+
+        .round-tracker {
+            display: grid;
+            grid-template-columns: min-content 1fr;
+            place-items: stretch;
+
+            .labeled-field.fancy {
+                align-self: flex-start;
+
+                label {
+                    font-size: round(1.5rem, 1px);
+                    text-transform: none;
+                }
+            }
+
+            .labeled-field.fancy>.labeled-field-content {
+                aspect-ratio: 1 / 1;
+                background-image: none;
+                border: 4px solid common.$color-medium;
+                max-width: 76px;
+                align-self: center;
+
+                span {
+                    min-width: 76px;
+                }
+            }
+
+            .reference {
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+                place-items: stretch;
+
+                margin-bottom: -5px;
+                margin-top: 5px;
+
+                .round-1,
+                .round-2 {
+                    display: grid;
+                    grid-template-rows: min-content 1fr;
+                    grid-template-columns: min-content min-content min-content 1fr;
+                    align-items: baseline;
+                    justify-content: stretch;
+
+                    h4 {
+                        grid-column-end: span 4;
+                        font-size: round(0.9rem, 1px);
+                        margin: 0 5px;
+                        font-weight: 400;
+                        text-align: left;
+                    }
+
+                    span {
+                        text-wrap: nowrap;
+                        font-size: round(1rem, 1px);
+                        font-weight: 350;
+                    }
+
+                    .labeled-field {
+                        margin: 0;
+                        padding: 0 3px;
+
+                        label {
+                            font-size: round(0.8rem, 1px);
+                            padding-top: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .malice-tracker {
+            display: grid;
+            grid-template-rows: min-content 1fr;
+            place-items: stretch;
+            padding: 0 10px 5px;
+
+            h3 {
+                margin-bottom: 5px;
+                font-size: round(1.5rem, 1px);
+                text-transform: none;
+            }
+
+            .bordered {
+                @include common.border-beveled(10px, 2px, common.$color-medium);
             }
         }
     }

@@ -2,6 +2,7 @@ import { Encounter, EncounterGroup } from '@/models/encounter';
 import { EncounterGroupSheet, EncounterSheet, EncounterSlotSheet, MonsterSheet } from '@/models/classic-sheets/encounter-sheet';
 import { Characteristic } from '@/enums/characteristic';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
+import { CreatureLogic } from '@/logic/creature-logic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterLogic } from '@/logic/encounter-logic';
@@ -26,7 +27,7 @@ export class EncounterSheetBuilder {
 
 		const sheet: EncounterSheet = {
 			id: encounter.id,
-			objective: encounter.objective?.name || encounter.name,
+			name: encounter.name,
 			description: encounter.description,
 			heroCount: options.heroCount,
 			heroLvl: options.heroLevel,
@@ -38,26 +39,28 @@ export class EncounterSheetBuilder {
 
 		sheet.notes = encounter.notes.map(note => `# ${note.name}\n${note.description}`).join('\n\n');
 
+		sheet.objective = encounter.objective?.name;
 		sheet.successCondition = encounter.objective?.successCondition;
 		sheet.failureCondition = encounter.objective?.failureCondition;
 
-		const monsterGroups = EncounterLogic.getMonsterGroups(encounter, sourcebooks);
-		sheet.malice = monsterGroups.filter(group => group.malice.length > 0).map(group => ({ monster: group.name, malice: group.malice }));
 		sheet.groups = encounter.groups.map(g => this.buildEncounterGroupSheet(g, sourcebooks, options));
 
 		const terrain = encounter.terrain.map(slot => SourcebookLogic.getTerrains(sourcebooks).find(t => t.id === slot.terrainID)).filter(t => !!t);
 		sheet.terrain = terrain;
 
-		const monsterData = EncounterLogic.getMonsterData(encounter);
-		sheet.monsters = monsterData.map(data => {
-			const monster = EncounterLogic.getCustomizedMonster(data.monsterID, data.customization, sourcebooks);
-			if (monster) {
-				return this.buildMonsterSheet(monster);
-			}
+		const encounterMonsters = EncounterLogic.getMonsterData(encounter)
+			.map(data => EncounterLogic.getCustomizedMonster(data.monsterID, data.customization, sourcebooks))
+			.filter(m => !!m);
+		sheet.monsters = encounterMonsters.map(this.buildMonsterSheet);
 
-			return null;
-		}).filter(ms => !!ms);
-
+		const monsterGroups = EncounterLogic.getMonsterGroups(encounter, sourcebooks);
+		sheet.malice = monsterGroups.filter(group => group.malice.length > 0)
+			.map(group => {
+				const maxLvl = encounterMonsters.reduce((maxLvl, monster) => Math.max(maxLvl, monster.level), 0);
+				const echelon = CreatureLogic.getEchelon(maxLvl);
+				const usableMalice = group.malice.filter(m => m.data.echelon <= echelon);
+				return ({ monster: group.name, malice: usableMalice });
+			});
 		return sheet;
 	};
 

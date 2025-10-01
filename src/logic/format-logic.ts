@@ -102,7 +102,7 @@ export class FormatLogic {
 	static getConstant = (text: string) => {
 		let constant = 0;
 
-		const constantMatch = text.match(/(?<c>^d*\d+^d*)\s*(\+|plus)/);
+		const constantMatch = text.match(/(equal to )?(?<c>[^d]*\d+[^d]*)\s*(\+|plus)/);
 		if (constantMatch && constantMatch.groups) {
 			constant = parseInt(constantMatch.groups['c']);
 		}

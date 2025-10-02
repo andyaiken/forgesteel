@@ -23,7 +23,7 @@
     padding: 10px 15px;
 
     font-size: round(1.1rem, 1px);
-    line-height: 1.3rem;
+    line-height: round(1.3rem, 1px);
     strong {
         font-weight: 500;
     }
@@ -52,7 +52,7 @@
 
         .trigger {
             margin-bottom: 2px;
-            line-height: 1.4rem;
+            line-height: round(1.4re, 1px);
         }
 
         .header {

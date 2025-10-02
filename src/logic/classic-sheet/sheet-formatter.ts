@@ -613,6 +613,8 @@ export class SheetFormatter {
 		// Ability Type
 		if (type?.includes('Trigger')) {
 			abilityIcon = triggerIcon;
+		} else if (type?.includes('Villain')) {
+			abilityIcon = skullIcon;
 		}
 
 		return abilityIcon;

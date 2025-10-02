@@ -82,6 +82,10 @@
             }
         }
 
+        strong {
+            font-weight: 700;
+        }
+
         blockquote, blockquote * {
             font-style: italic;
         }
@@ -89,7 +93,9 @@
         .potency {
             @include common.font-potency();
             display: inline-block;
-            transform: translateY(1px);
+            transform: translateY(2px);
+            margin-top: 0;
+            margin-bottom: 0;
         }
     }
 

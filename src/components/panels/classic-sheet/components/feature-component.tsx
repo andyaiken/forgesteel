@@ -383,7 +383,7 @@ const MaliceFeatureComponent = (feature: FeatureMalice) => {
 		return `${characteristics.join(' or ')} Test`;
 	};
 	const sections = (feature.data.sections ?? []).map((section, n) => (typeof section === 'string') ?
-		<Markdown key={n} text={section} />
+		<Markdown key={n} text={section} className='feature-description' />
 		:
 		<div className='power-roll' key={n}>
 			<div className='header'>{getHeader(section.characteristic)}</div>
@@ -413,12 +413,12 @@ const MaliceFeatureComponent = (feature: FeatureMalice) => {
 
 	return (
 		<div className='feature feature-malice ability' key={feature.id}>
-			<div className='cost'>{feature.data.cost}</div>
+			<img src={iconSrc} className='icon' />
 			<div className='details'>
 				<div className='header'>
 					<label className='name'>{feature.name}</label>
 					<div className='ability-type'>
-						<img src={iconSrc} className='icon' />
+						{feature.data.cost} Malice
 					</div>
 				</div>
 				{sections}
@@ -429,14 +429,15 @@ const MaliceFeatureComponent = (feature: FeatureMalice) => {
 
 const MaliceAbilityFeatureComponent = (feature: FeatureMaliceAbility) => {
 	const abilitySheet = ClassicSheetBuilder.buildAbilitySheet(feature.data.ability, undefined);
-	abilitySheet.abilityType = undefined;
+	// abilitySheet.abilityType = undefined;
+	const icon = SheetFormatter.getAbilityIcon(abilitySheet);
+
 	return (
 		<div className='feature feature-malice' key={feature.id}>
-			<div className='cost'>{feature.data.ability.cost}</div>
+			<img src={icon} className='icon' />
 			<div className='details'>
 				<AbilityComponent
 					ability={abilitySheet}
-					includeIcon={true}
 				/>
 			</div>
 		</div>

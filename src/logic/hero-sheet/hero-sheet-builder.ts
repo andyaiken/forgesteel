@@ -234,7 +234,7 @@ export class HeroSheetBuilder {
 			}
 			const dividedClassFeatures = SheetFormatter.divideFeatures(classFeatures.map(f => f.feature), classFeatureSpace);
 
-			sheet.classFeatures = SheetFormatter.convertFeatures(dividedClassFeatures.displayed);
+			sheet.classFeatures = SheetFormatter.enhanceFeatures(SheetFormatter.convertFeatures(dividedClassFeatures.displayed));
 
 			const referenceFeatures = classFeatures.filter(f => dividedClassFeatures.referenceIds.includes(f.feature.id));
 			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(referenceFeatures);

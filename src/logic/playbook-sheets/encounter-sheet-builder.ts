@@ -54,13 +54,19 @@ export class EncounterSheetBuilder {
 		sheet.monsters = encounterMonsters.map(this.buildMonsterSheet);
 
 		const monsterGroups = EncounterLogic.getMonsterGroups(encounter, sourcebooks);
+
+		const seenMalice = new Set<string>();
 		sheet.malice = monsterGroups.filter(group => group.malice.length > 0)
 			.map(group => {
 				const maxLvl = encounterMonsters.reduce((maxLvl, monster) => Math.max(maxLvl, monster.level), 0);
 				const echelon = CreatureLogic.getEchelon(maxLvl);
-				const usableMalice = group.malice.filter(m => m.data.echelon <= echelon);
+				const usableMalice = group.malice
+					.filter(m => m.data.echelon <= echelon)
+					.filter(m => seenMalice.has(m.id) ? false : seenMalice.add(m.id));
 				return ({ monster: group.name, malice: usableMalice });
-			});
+			})
+			.filter(mg => mg.malice.length);
+
 		return sheet;
 	};
 

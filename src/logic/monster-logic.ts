@@ -79,7 +79,7 @@ export class MonsterLogic {
 			});
 
 		if (monster.retainer && monster.retainer.level) {
-			stamina += 10 * (monster.retainer.level - monster.level);
+			stamina += 9 * (monster.retainer.level - monster.level);
 		}
 
 		return stamina;

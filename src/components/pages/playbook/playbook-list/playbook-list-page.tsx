@@ -202,7 +202,18 @@ export const PlaybookListPage = (props: Props) => {
 
 		switch (category) {
 			case 'adventure':
-				getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} playbook={props.playbook} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => (
+					<AdventurePanel
+						key={element.id}
+						adventure={element as Adventure}
+						heroes={props.heroes}
+						sourcebooks={props.sourcebooks}
+						playbook={props.playbook}
+						options={props.options}
+						mode={PanelMode.Full}
+						onStart={props.startElement}
+					/>
+				);
 				break;
 			case 'encounter':
 				getPanel = (element: Element) => {

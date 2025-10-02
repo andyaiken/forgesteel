@@ -1,9 +1,8 @@
-import { Button, Divider, Flex, Input, Popover, Progress, Segmented, Space } from 'antd';
+import { Button, Divider, Flex, Input, Popover, Segmented, Space } from 'antd';
 import { DownOutlined, EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { Encounter } from '@/models/encounter';
-import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
-import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { MalicePanel } from '@/components/panels/malice/malice-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
@@ -13,8 +12,6 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { MonsterToken } from '@/components/panels/token/token';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { ResourcePill } from '@/components/controls/pill/pill';
-import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SummoningInfo } from '@/models/summon';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -30,7 +27,7 @@ interface Props {
 	onClose: () => void;
 	export?: (format: 'image' | 'pdf' | 'json') => void;
 	updateMonster?: (monster: Monster) => void;
-	setMalice?: (value: number) => void;
+	updateEncounter?: (encounter: Encounter) => void;
 }
 
 export const MonsterModal = (props: Props) => {
@@ -104,44 +101,26 @@ export const MonsterModal = (props: Props) => {
 				return (
 					<Space direction='vertical' style={{ width: '100%', padding: '20px' }}>
 						{
-							MonsterLogic.getMaliceOptions(monster, props.monsterGroup).map(malice => {
-								const cost = malice.type === FeatureType.MaliceAbility ? malice.data.ability.cost as number : malice.data.cost;
-
-								return (
-									<SelectablePanel key={malice.id}>
-										<FeaturePanel
-											feature={malice}
-											options={props.options}
-											cost={cost}
-											repeatable={malice.type === FeatureType.Malice ? malice.data.repeatable : undefined}
-											mode={PanelMode.Full}
-										/>
-										{
-											encounter && props.setMalice ?
-												encounter.malice >= cost ?
-													<Button
-														block={true}
-														onClick={() => {
-															const value = Math.max(encounter!.malice - cost, 0);
-															const copy = Utils.copy(encounter);
-															copy.malice = value;
-															setEncounter(copy);
-															props.setMalice!(value);
-														}}
-													>
-														Use
-														<ResourcePill value={cost} />
-													</Button>
-													:
-													<div className='malice-progress'>
-														<Progress percent={100 * encounter.malice / cost} steps={cost} showInfo={false} />
-														<ResourcePill value={`${encounter.malice} of ${cost}`} />
-													</div>
-												: null
+							MonsterLogic.getMaliceOptions(monster, props.monsterGroup)
+								.map(malice => (
+									<MalicePanel
+										malice={malice}
+										options={props.options}
+										currentMalice={encounter ? encounter.malice : undefined}
+										updateCurrentMalice={
+											encounter ?
+												value => {
+													const copy = Utils.copy(encounter);
+													copy.malice = value;
+													setEncounter(copy);
+													if (props.updateEncounter) {
+														props.updateEncounter(copy);
+													}
+												}
+												: undefined
 										}
-									</SelectablePanel>
-								);
-							})
+									/>
+								))
 						}
 					</Space>
 				);

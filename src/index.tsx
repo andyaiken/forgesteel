@@ -9,7 +9,7 @@ import { OptionsUpdateLogic } from '@/logic/update/options-update-logic.ts';
 import { Playbook } from '@/models/playbook.ts';
 import { PlaybookUpdateLogic } from '@/logic/update/playbook-update-logic.ts';
 import { Sourcebook } from '@/models/sourcebook.ts';
-import { SourcebookData } from '@/data/sourcebook-data.ts';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -51,7 +51,7 @@ Promise.all(promises).then(results => {
 		SourcebookUpdateLogic.updateSourcebook(sourcebook);
 	});
 
-	[ SourcebookData.core, SourcebookData.orden, ...sourcebooks ].forEach(sourcebook => {
+	SourcebookLogic.getSourcebooks(sourcebooks).forEach(sourcebook => {
 		sourcebook.items.forEach(item => {
 			if (item.crafting) {
 				item.crafting.id = `${item.id}-crafting`;
@@ -78,7 +78,7 @@ Promise.all(promises).then(results => {
 	}
 
 	heroes.forEach(hero => {
-		HeroUpdateLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...sourcebooks ]);
+		HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
 	});
 
 	// #endregion

@@ -1,5 +1,5 @@
-import { Alert, Button, Flex, Input, Popover, Segmented, Space, Tag } from 'antd';
-import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined, UpOutlined } from '@ant-design/icons';
+import { Alert, Button, Flex, Input, Popover, Segmented, Tag } from 'antd';
+import { DownOutlined, EllipsisOutlined, HeartFilled, PlusOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { HeroInfo, MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
 import { Characteristic } from '@/enums/characteristic';
@@ -45,6 +45,7 @@ interface EncounterGroupHeroProps {
 
 export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 	const [ setRef, size ] = useDimensions();
+	const [ showMonsters, setShowMonsters ] = useState<boolean>(false);
 
 	const showStamina = size.width >= (widthBase + widthStaminaColumn);
 	const showCharacteristics = size.width >= (widthBase + widthStaminaColumn + widthCharacteristicsColumn);
@@ -163,59 +164,59 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 								{props.hero.state.hidden ? <Tag>Hidden</Tag> : null}
 								{props.hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
 							</div>
+							{
+								HeroLogic.getCompanions(props.hero).length + HeroLogic.getSummons(props.hero).length > 0 ?
+									<Button
+										type='text'
+										icon={showMonsters ? <DownOutlined rotate={180} /> : <DownOutlined />}
+										onClick={e => {
+											e.stopPropagation();
+											setShowMonsters(!showMonsters);
+										}}
+									/>
+									: null
+							}
 						</div>
-					</div>
-					{
-						(HeroLogic.getCompanions(props.hero).length + HeroLogic.getSummons(props.hero).length) > 0 ?
-							<>
-								{
-									props.hero.state.controlledSlots.map(slot => (
-										<div key={slot.id} className='encounter-slot controlled-slot'>
-											<Flex align='center' style={{ paddingLeft: '5px' }}>
-												<b style={{ flex: '1 1 0' }}>Controlling</b>
-												<Button type='text' icon={<PlusOutlined />} onClick={() => props.onAddMonsterToSquad(props.hero, slot.id)} />
-												<DangerButton mode='clear' onConfirm={() => props.onRemoveSquad(props.hero, slot.id)} />
-											</Flex>
-											<MonsterSlot
-												slot={slot}
-												encounter={props.encounter}
-												sourcebooks={props.sourcebooks}
-												onSelectMonster={props.onSelectMonster}
-												onSelectMinionSlot={props.onSelectMinionSlot}
-											/>
-											{slot.monsters.length === 0 ? <div>Empty</div> : null}
-										</div>
-									))
-								}
-								<Popover
-									trigger='click'
-									content={
-										<Space direction='vertical' style={{ width: '100%' }}>
-											{
-												HeroLogic.getCompanions(props.hero).map(m => (
-													<Button type='text' onClick={() => props.onAddSquad(props.hero, m, 1)}>
-														{m.name}
-													</Button>
-												))
-											}
-											{
-												HeroLogic.getSummons(props.hero).map(m => (
-													<Button type='text' onClick={() => props.onAddSquad(props.hero, m.monster, 1)}>
-														Summon: {m.name}
-													</Button>
-												))
-											}
-										</Space>
+						{
+							showMonsters ?
+								<div>
+									{
+										HeroLogic.getCompanions(props.hero).map(m => (
+											<Button block={true} onClick={() => props.onAddSquad(props.hero, m, 1)}>
+												{m.name}
+											</Button>
+										))
 									}
-								>
-									<Button block={true}>
-										Add a Controlled Monster
-										<DownOutlined />
-									</Button>
-								</Popover>
-							</>
-							: null
-					}
+									{
+										HeroLogic.getSummons(props.hero).map(m => (
+											<Button block={true} onClick={() => props.onAddSquad(props.hero, m.monster, m.info.count)}>
+												Summon: {m.name}
+											</Button>
+										))
+									}
+								</div>
+								: null
+						}
+						{
+							props.hero.state.controlledSlots.map(slot => (
+								<div key={slot.id} className='encounter-slot controlled-slot'>
+									<Flex align='center' style={{ paddingLeft: '5px' }}>
+										<b style={{ flex: '1 1 0' }}>Controlling</b>
+										<Button type='text' icon={<PlusOutlined />} onClick={() => props.onAddMonsterToSquad(props.hero, slot.id)} />
+										<DangerButton mode='clear' onConfirm={() => props.onRemoveSquad(props.hero, slot.id)} />
+									</Flex>
+									<MonsterSlot
+										slot={slot}
+										encounter={props.encounter}
+										sourcebooks={props.sourcebooks}
+										onSelectMonster={props.onSelectMonster}
+										onSelectMinionSlot={props.onSelectMinionSlot}
+									/>
+									{slot.monsters.length === 0 ? <div>Empty</div> : null}
+								</div>
+							))
+						}
+					</div>
 				</div>
 			</div>
 		);
@@ -449,7 +450,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 						</div>
 						<Button
 							type='text'
-							icon={showMonsters ? <UpOutlined /> : <DownOutlined />}
+							icon={showMonsters ? <DownOutlined rotate={180} /> : <DownOutlined />}
 							onClick={e => {
 								e.stopPropagation();
 								setShowMonsters(!showMonsters);

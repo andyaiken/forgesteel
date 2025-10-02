@@ -88,8 +88,8 @@ export class LeveledImplementData {
 					}),
 					FactoryLogic.feature.createPackageContent({
 						id: 'item-abjurers-bastion-9c',
-						name: '9th',
-						description: 'he size of your field of protection increases to a 3 cube, and it can be placed anywhere within 10 squares of you. You and each ally in the area gain its benefits.',
+						name: '',
+						description: 'The size of your field of protection increases to a 3 cube, and it can be placed anywhere within 10 squares of you. You and each ally in the area gain its benefits.',
 						tag: 'item-abjurers-bastion-tag'
 					})
 				]

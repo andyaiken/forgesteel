@@ -130,7 +130,7 @@ export const ItemSelectModal = (props: Props) => {
 											/>
 										]}
 									>
-										<ItemPanel item={item} options={props.options} hero={props.hero} mode={PanelMode.Full} />
+										<ItemPanel item={item} options={props.options} wielder={props.hero} mode={PanelMode.Full} />
 									</Expander>
 								))
 							}

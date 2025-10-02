@@ -61,7 +61,6 @@ import { RollModal } from '@/components/modals/roll/roll-modal';
 import { RulesPage } from '@/enums/rules-page';
 import { SessionDirectorPage } from '@/components/pages/session/director/session-director-page';
 import { SessionPlayerPage } from '@/components/pages/session/player/session-player-page';
-import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { SourcebooksModal } from '@/components/modals/sourcebooks/sourcebooks-modal';
@@ -248,10 +247,8 @@ export const Main = (props: Props) => {
 	// #region Heroes
 
 	const createHero = (folder: string) => {
-		const hero = FactoryLogic.createHero([
-			SourcebookData.core.id,
-			SourcebookData.orden.id
-		]);
+		const sourcebookIDs = SourcebookLogic.getSourcebooks().map(sb => sb.id);
+		const hero = FactoryLogic.createHero(sourcebookIDs);
 		hero.folder = folder;
 
 		setDrawer(null);
@@ -279,7 +276,7 @@ export const Main = (props: Props) => {
 			hero.id = Utils.guid();
 		}
 		hero.folder = folder;
-		HeroUpdateLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]);
+		HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(homebrewSourcebooks));
 
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroView(hero.id));
@@ -477,7 +474,7 @@ export const Main = (props: Props) => {
 	};
 
 	const importLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
-		const sourcebooks = [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ];
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
 		const elements = [
 			...sourcebooks.flatMap(sb => sb.ancestries),
 			...sourcebooks.flatMap(sb => sb.careers),
@@ -1164,7 +1161,7 @@ export const Main = (props: Props) => {
 
 		switch (kind) {
 			case 'encounter': {
-				e = PlaybookLogic.startEncounter(element as Encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], heroes, options);
+				e = PlaybookLogic.startEncounter(element as Encounter, SourcebookLogic.getSourcebooks(homebrewSourcebooks), heroes, options);
 				sessionCopy.encounters.push(e as Encounter);
 				break;
 			}
@@ -1193,7 +1190,7 @@ export const Main = (props: Props) => {
 	// #region Session
 
 	const startEncounter = async (encounter: Encounter) => {
-		const copy = PlaybookLogic.startEncounter(encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], heroes, options);
+		const copy = PlaybookLogic.startEncounter(encounter, SourcebookLogic.getSourcebooks(homebrewSourcebooks), heroes, options);
 
 		const sessionCopy = Utils.copy(session);
 		sessionCopy.encounters.push(copy);
@@ -1425,7 +1422,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<HeroStateModal
 				hero={hero}
-				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				startPage={page}
 				showEncounterControls={false}
@@ -1443,7 +1440,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<PartyModal
 				heroes={heroes.filter(h => h.folder === folder)}
-				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				onClose={() => setDrawer(null)}
 			/>
@@ -1454,7 +1451,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<ReferenceModal
 				hero={hero}
-				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				startPage={page}
 				onClose={() => setDrawer(null)}
 			/>
@@ -1465,7 +1462,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<SourcebooksModal
 				heroes={heroes}
-				officialSourcebooks={[ SourcebookData.core, SourcebookData.orden ]}
+				officialSourcebooks={SourcebookLogic.getSourcebooks()}
 				homebrewSourcebooks={homebrewSourcebooks}
 				hiddenSourcebookIDs={hiddenSourcebookIDs}
 				onClose={() => setDrawer(null)}
@@ -1479,7 +1476,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<EncounterToolsModal
 				encounter={encounter}
-				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				onClose={() => setDrawer(null)}
 			/>
@@ -1605,7 +1602,7 @@ export const Main = (props: Props) => {
 							element={
 								<HeroSheetPreviewPage
 									heroes={heroes}
-									sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									setOptions={persistOptions}
 								/>

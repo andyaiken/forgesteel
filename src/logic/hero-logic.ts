@@ -28,7 +28,6 @@ import { Size } from '@/models/size';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SummonLogic } from '@/logic/summon-logic';
 import { Utils } from '@/utils/utils';
@@ -959,7 +958,7 @@ export class HeroLogic {
 	///////////////////////////////////////////////////////////////////////////
 
 	static createRandomHero = () => {
-		const sourcebooks = [ SourcebookData.core, SourcebookData.orden ];
+		const sourcebooks = SourcebookLogic.getSourcebooks();
 		const hero = FactoryLogic.createHero(sourcebooks.map(sb => sb.id));
 		hero.name = NameGenerator.generateName();
 		hero.ancestry = Collections.draw(SourcebookLogic.getAncestries(sourcebooks));

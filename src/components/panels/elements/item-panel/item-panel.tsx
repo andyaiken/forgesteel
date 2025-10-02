@@ -1,6 +1,8 @@
 import { Alert, Button, Divider, Drawer, Space, Tag } from 'antd';
+import { CSSProperties, useState } from 'react';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
 import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureData } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -21,16 +23,16 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
-import { useState } from 'react';
 
 import './item-panel.scss';
 
 interface Props {
 	item: Item;
 	options: Options;
-	hero?: Hero;
+	wielder?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
+	style?: CSSProperties;
 	onChange?: (item: Item) => void;
 }
 
@@ -126,7 +128,7 @@ export const ItemPanel = (props: Props) => {
 				{
 					options.map(f => (
 						<SelectablePanel key={f.feature.id} onSelect={() => addImbuement(f)}>
-							<FeaturePanel feature={f.feature} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+							<FeaturePanel feature={f.feature} options={props.options} hero={props.wielder} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>
 					))
 				}
@@ -144,7 +146,7 @@ export const ItemPanel = (props: Props) => {
 	try {
 		return (
 			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? item.id : undefined}>
+				<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? item.id : undefined} style={props.style}>
 					<HeaderText
 						level={1}
 						tags={[ item.type ]}
@@ -152,7 +154,7 @@ export const ItemPanel = (props: Props) => {
 						{item.name || 'Unnamed Item'}
 					</HeaderText>
 					{
-						props.hero && !HeroLogic.canUseItem(props.hero, item) ?
+						props.wielder && !HeroLogic.canUseItem(props.wielder, item) ?
 							<Alert
 								type='warning'
 								showIcon={true}
@@ -183,7 +185,7 @@ export const ItemPanel = (props: Props) => {
 									key={f.id}
 									feature={f}
 									options={props.options}
-									hero={props.hero!}
+									hero={props.wielder!}
 									sourcebooks={props.sourcebooks}
 									setData={setFeatureData}
 									onDelete={props.onChange ? () => removeImbuement(f.id) : undefined}
@@ -200,14 +202,26 @@ export const ItemPanel = (props: Props) => {
 							<>
 								{item.keywords.length > 0 ? <Field label='Keywords' value={item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} /> : null}
 								<Markdown text={item.effect} />
-								{
-									item.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
-										<div key={lvl.level}>
-											<HeaderText>Level {lvl.level.toString()}</HeaderText>
-											{lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
-										</div>
-									))
-								}
+								<Space direction='vertical' style={{ width: '100%' }}>
+									{
+										item.featuresByLevel
+											.filter(lvl => lvl.features.length > 0)
+											.map(lvl => (
+												<Expander key={lvl.level} title={`Level ${lvl.level.toString()}`}>
+													{
+														lvl.features.map(f => (
+															<FeaturePanel
+																key={f.id}
+																feature={f}
+																options={props.options}
+																mode={PanelMode.Full}
+															/>
+														))
+													}
+												</Expander>
+											))
+									}
+								</Space>
 							</>
 							: null
 					}

@@ -1578,18 +1578,7 @@ export const TacticalMapPanel = (props: Props) => {
 										}
 									}
 								}}
-								setMalice={
-									selectedMonster.encounter ?
-										value => {
-											const copy = Utils.copy(selectedMonster.encounter as Encounter);
-											copy.malice = value;
-
-											if (props.updateEncounter) {
-												props.updateEncounter(copy);
-											}
-										}
-										: undefined
-								}
+								updateEncounter={props.updateEncounter}
 							/>
 							: null
 					}

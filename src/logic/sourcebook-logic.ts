@@ -108,7 +108,7 @@ export class SourcebookLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
-	static getSourcebooks = (homebrew: Sourcebook[]) => {
+	static getSourcebooks = (homebrew: Sourcebook[] = []) => {
 		const list: Sourcebook[] = [
 			SourcebookData.core,
 			SourcebookData.orden

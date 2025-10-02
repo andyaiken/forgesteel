@@ -10,6 +10,7 @@ import { ProjectsPanel } from '@/components/modals/hero-state/projects-panel/pro
 import { Segmented } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';
 import { StatsPanel } from '@/components/modals/hero-state/stats-panel/stats-panel';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './hero-state-modal.scss';
@@ -26,51 +27,57 @@ interface Props {
 }
 
 export const HeroStateModal = (props: Props) => {
+	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
 	const [ page, setPage ] = useState<HeroStatePage>(props.startPage);
+
+	const onChange = (hero: Hero) => {
+		setHero(hero);
+		props.onChange(hero);
+	};
 
 	const getContent = () => {
 		switch (page) {
 			case HeroStatePage.Hero:
 				return (
 					<StatsPanel
-						hero={props.hero}
-						onChange={props.onChange}
+						hero={hero}
+						onChange={onChange}
 						onLevelUp={props.onLevelUp}
 					/>
 				);
 			case HeroStatePage.Vitals:
 				return (
 					<HeroHealthPanel
-						hero={props.hero}
+						hero={hero}
 						showEncounterControls={props.showEncounterControls}
-						onChange={props.onChange}
+						onChange={onChange}
 					/>
 				);
 			case HeroStatePage.Inventory:
 				return (
 					<InventoryPanel
-						hero={props.hero}
+						hero={hero}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={props.onChange}
+						onChange={onChange}
 					/>
 				);
 			case HeroStatePage.Projects:
 				return (
 					<ProjectsPanel
-						hero={props.hero}
+						hero={hero}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={props.onChange}
+						onChange={onChange}
 					/>
 				);
 			case HeroStatePage.Customize:
 				return (
 					<CustomizePanel
-						hero={props.hero}
+						hero={hero}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={props.onChange}
+						onChange={onChange}
 					/>
 				);
 		}
@@ -85,7 +92,7 @@ export const HeroStateModal = (props: Props) => {
 							name='tabs'
 							block={true}
 							options={
-								HeroLogic.getStamina(props.hero) !== 0 ?
+								HeroLogic.getStamina(hero) !== 0 ?
 									[
 										HeroStatePage.Hero,
 										HeroStatePage.Vitals,

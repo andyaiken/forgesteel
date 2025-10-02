@@ -110,7 +110,7 @@ export const InventoryPanel = (props: Props) => {
 									<ItemPanel
 										item={i.item}
 										options={props.options}
-										hero={hero}
+										wielder={hero}
 										sourcebooks={props.sourcebooks}
 										mode={PanelMode.Full}
 										onChange={changeItem}
@@ -127,7 +127,7 @@ export const InventoryPanel = (props: Props) => {
 									<ItemPanel
 										item={i.item}
 										options={props.options}
-										hero={hero}
+										wielder={hero}
 										sourcebooks={props.sourcebooks}
 										mode={PanelMode.Full}
 									/>

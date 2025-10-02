@@ -1,11 +1,5 @@
 # Development Plans
 
-It'd be nice to have Malice features more readily visible when running an encounter
-
-I feel like I should be able to see Villain Actions listed in the same place as triggered actions during player turns
-
-When I edit an item, I have to save and open it to show changes, sometimes multiple times
-
 ### Heroes
 
 (nothing)

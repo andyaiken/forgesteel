@@ -554,11 +554,11 @@ export class HeroSheetBuilder {
 			type: retainerType,
 			role: follower.role.type,
 
-			might: follower.characteristics.find(c => c.characteristic === Characteristic.Might)?.value || 0,
-			agility: follower.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value || 0,
-			reason: follower.characteristics.find(c => c.characteristic === Characteristic.Reason)?.value || 0,
-			intuition: follower.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value || 0,
-			presence: follower.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value || 0
+			might: MonsterLogic.getCharacteristic(follower, Characteristic.Might),
+			agility: MonsterLogic.getCharacteristic(follower, Characteristic.Agility),
+			reason: MonsterLogic.getCharacteristic(follower, Characteristic.Reason),
+			intuition: MonsterLogic.getCharacteristic(follower, Characteristic.Intuition),
+			presence: MonsterLogic.getCharacteristic(follower, Characteristic.Presence)
 		};
 
 		sheet.keywords = follower.keywords.join(', ');

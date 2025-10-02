@@ -178,6 +178,20 @@ export class HeroUpdateLogic {
 			hero.abilityCustomizations = [];
 		}
 
+		hero.abilityCustomizations.forEach(ac => {
+			if (ac.distanceBonus === undefined) {
+				ac.distanceBonus = 0;
+			}
+
+			if (ac.damageBonus === undefined) {
+				ac.damageBonus = 0;
+			}
+
+			if (ac.characteristic === undefined) {
+				ac.characteristic = null;
+			}
+		});
+
 		HeroLogic.getFormerAncestries(hero).flatMap(t => t.features).forEach(FeatureUpdateLogic.updateFeature);
 		HeroLogic.getDomains(hero).flatMap(d => d.featuresByLevel).flatMap(lvl => lvl.features).forEach(FeatureUpdateLogic.updateFeature);
 		HeroLogic.getTitles(hero).flatMap(t => t.features).forEach(FeatureUpdateLogic.updateFeature);

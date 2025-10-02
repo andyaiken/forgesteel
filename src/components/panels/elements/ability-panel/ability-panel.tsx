@@ -1,5 +1,4 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { AbilityCustomization, Hero } from '@/models/hero';
 import { Alert, Button, Space, Tag } from 'antd';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
@@ -14,6 +13,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
@@ -280,11 +280,6 @@ export const AbilityPanel = (props: Props) => {
 			className += ' disabled';
 		}
 
-		let customization: AbilityCustomization | null = null;
-		if (props.hero) {
-			customization = props.hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id) || null;
-		}
-
 		return (
 			<ErrorBoundary>
 				<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
@@ -314,9 +309,9 @@ export const AbilityPanel = (props: Props) => {
 								: null
 						}
 					>
-						{customization?.name || props.ability.name || 'Unnamed Ability'}
+						{props.ability.name || 'Unnamed Ability'}
 					</HeaderText>
-					<Markdown text={customization?.description || props.ability.description} className='ability-description-text' />
+					<Markdown text={props.ability.description} className='ability-description-text' />
 					{
 						props.mode === PanelMode.Full ?
 							<div>
@@ -329,14 +324,6 @@ export const AbilityPanel = (props: Props) => {
 								}
 								<AbilityInfoPanel ability={props.ability} hero={props.hero} />
 								{(props.ability.sections || []).map(getSection)}
-								{
-									customization && customization.notes ?
-										<Field
-											label='Notes'
-											value={<Markdown text={parseText(customization.notes)} useSpan={true} />}
-										/>
-										: null
-								}
 								{
 									props.ability.keywords.includes(AbilityKeyword.Charge) && (props.ability.id !== AbilityData.freeStrikeMelee.id) ?
 										<Alert

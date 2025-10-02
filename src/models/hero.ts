@@ -1,5 +1,6 @@
 import { Ancestry } from '@/models/ancestry';
 import { Career } from '@/models/career';
+import { Characteristic } from '@/enums/characteristic';
 import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Feature } from '@/models/feature';
@@ -13,6 +14,7 @@ export interface AbilityCustomization {
 	notes: string;
 	distanceBonus: number;
 	damageBonus: number;
+	characteristic: Characteristic | null;
 }
 
 export interface Hero {

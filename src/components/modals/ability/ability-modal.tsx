@@ -1,5 +1,5 @@
 import { AbilityCustomization, Hero } from '@/models/hero';
-import { Input, Segmented, Space } from 'antd';
+import { Input, Segmented, Select, Space } from 'antd';
 import { Ability } from '@/models/ability';
 import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityLogic } from '@/logic/ability-logic';
@@ -135,6 +135,22 @@ export const AbilityModal = (props: Props) => {
 		}
 	};
 
+	const setCharacteristic = (value: Characteristic | null) => {
+		const copy = Utils.copy(hero) as Hero;
+
+		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
+		if (!ac) {
+			ac = createCustomization();
+			copy.abilityCustomizations.push(ac);
+		}
+		ac.characteristic = value;
+
+		setHero(copy);
+		if (props.updateHero) {
+			props.updateHero(copy);
+		}
+	};
+
 	const createCustomization = (): AbilityCustomization => {
 		return {
 			abilityID: props.ability.id,
@@ -142,7 +158,8 @@ export const AbilityModal = (props: Props) => {
 			description: '',
 			notes: '',
 			distanceBonus: 0,
-			damageBonus: 0
+			damageBonus: 0,
+			characteristic: null
 		};
 	};
 
@@ -224,6 +241,22 @@ export const AbilityModal = (props: Props) => {
 								/>
 							</Space>
 						</Expander>
+						{
+							props.ability.sections.some(s => (s.type === 'roll')) ?
+								<Expander title='Characteristic'>
+									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+										<Select
+											style={{ width: '100%' }}
+											allowClear={true}
+											placeholder='Select a characteristic'
+											options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch, label: <div className='ds-text'>{ch}</div> }))}
+											value={customization?.characteristic}
+											onChange={setCharacteristic}
+										/>
+									</Space>
+								</Expander>
+								: null
+						}
 					</div>
 				);
 		}

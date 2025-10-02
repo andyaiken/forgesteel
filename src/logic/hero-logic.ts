@@ -74,7 +74,23 @@ export class HeroLogic {
 			}
 		});
 
-		return Collections.sort(features, f => f.feature.name);
+		return Collections.sort(features, f => f.feature.name).map(f => {
+			const customization = hero.abilityCustomizations.find(ac => ac.abilityID === f.feature.id) || null;
+			if (customization) {
+				const feature = Utils.copy(f.feature);
+
+				feature.name = customization.name || feature.name;
+				feature.description = customization.description || feature.description;
+
+				if (customization.notes) {
+					feature.description += `\n\n${customization.notes}`;
+				}
+
+				return { feature: feature, source: f.source };
+			}
+
+			return f;
+		});
 	};
 
 	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], includeStandard: boolean) => {
@@ -120,8 +136,7 @@ export class HeroLogic {
 				}
 				return a.ability.cost - b.ability.cost;
 			})
-			.sort((a, b) => a.ability.type.usage.localeCompare(b.ability.type.usage))
-			;
+			.sort((a, b) => a.ability.type.usage.localeCompare(b.ability.type.usage));
 
 		if (includeStandard) {
 			abilities.push({ ability: AbilityData.advance, source: 'Standard' });
@@ -150,7 +165,29 @@ export class HeroLogic {
 			abilities.push({ ability: AbilityData.opportunityAttack, source: 'Standard' });
 		}
 
-		return abilities;
+		return abilities.map(a => {
+			const customization = hero.abilityCustomizations.find(ac => ac.abilityID === a.ability.id) || null;
+			if (customization) {
+				const ability = Utils.copy(a.ability);
+
+				ability.name = customization.name || ability.name;
+				ability.description = customization.description || ability.description;
+
+				// Distance bonus / damage bonus are handled separately
+
+				if (customization.characteristic) {
+					ability.sections.filter(s => s.type === 'roll').forEach(s => s.roll.characteristic = [ customization.characteristic! ]);
+				}
+
+				if (customization.notes) {
+					ability.sections.push(FactoryLogic.createAbilitySectionField({ name: 'Notes', effect: customization.notes }));
+				}
+
+				return { ability: ability, source: a.source };
+			}
+
+			return a;
+		});
 	};
 
 	static getPerks = (hero: Hero) => {

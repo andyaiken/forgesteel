@@ -5,11 +5,13 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { BarChartOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
+import { CreatureLogic } from '@/logic/creature-logic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Markdown } from '@/components/controls/markdown/markdown';
+import { Monster } from '@/models/monster';
 import { PowerRoll } from '@/models/power-roll';
 import { useState } from 'react';
 
@@ -18,7 +20,7 @@ import './power-roll-panel.scss';
 interface Props {
 	powerRoll: PowerRoll;
 	ability?: Ability;
-	hero?: Hero;
+	creature?: Hero | Monster;
 	test?: boolean;
 	autoCalc?: boolean;
 	highlightTier?: number;
@@ -40,8 +42,8 @@ export const PowerRollPanel = (props: Props) => {
 			return `${props.powerRoll.characteristic.join(' or ')} Test`;
 		}
 
-		if (props.hero && props.autoCalc) {
-			const values = props.powerRoll.characteristic.map(ch => HeroLogic.getCharacteristic(props.hero!, ch));
+		if (props.creature && props.autoCalc) {
+			const values = props.powerRoll.characteristic.map(ch => CreatureLogic.getCharacteristic(props.creature!, ch));
 			const bonus = Collections.max(values, v => v) || 0;
 			const sign = bonus >= 0 ? '+' : '';
 			return `2d10 ${sign} ${bonus}`;
@@ -66,54 +68,56 @@ export const PowerRollPanel = (props: Props) => {
 			return null;
 		}
 
-		if (props.hero && props.ability) {
+		if (props.creature && props.ability) {
 			const sections = [];
 
 			// #region Kits
 
-			let isMelee = props.ability.keywords.includes(AbilityKeyword.Melee) && props.ability.keywords.includes(AbilityKeyword.Weapon);
-			let isRanged = props.ability.keywords.includes(AbilityKeyword.Ranged) && props.ability.keywords.includes(AbilityKeyword.Weapon);
-			if (props.autoCalc && distance) {
-				isMelee = distance === AbilityDistanceType.Melee;
-				isRanged = distance === AbilityDistanceType.Ranged;
-			}
+			if (CreatureLogic.isHero(props.creature)) {
+				let isMelee = props.ability.keywords.includes(AbilityKeyword.Melee) && props.ability.keywords.includes(AbilityKeyword.Weapon);
+				let isRanged = props.ability.keywords.includes(AbilityKeyword.Ranged) && props.ability.keywords.includes(AbilityKeyword.Weapon);
+				if (props.autoCalc && distance) {
+					isMelee = distance === AbilityDistanceType.Melee;
+					isRanged = distance === AbilityDistanceType.Ranged;
+				}
 
-			const dmgKits = HeroLogic
-				.getKitDamageBonuses(props.hero)
-				.filter(dmg => {
-					switch (dmg.type) {
-						case 'melee':
-							return isMelee;
-						case 'ranged':
-							return isRanged;
-					}
-				});
+				const dmgKits = HeroLogic
+					.getKitDamageBonuses(props.creature)
+					.filter(dmg => {
+						switch (dmg.type) {
+							case 'melee':
+								return isMelee;
+							case 'ranged':
+								return isRanged;
+						}
+					});
 
-			// Show bonuses from kits if:
-			// * AutoCalc is off
-			// * we have more than 1 bonus
-			// * the ability can be used as melee and ranged
-			// ... because otherwise it should have already been applied
-			const showKitBonuses = !props.autoCalc || (dmgKits.length > 1) || (isMelee && isRanged);
-			if (showKitBonuses) {
-				dmgKits.forEach((bonus, n) => {
-					sections.push(
-						<Field
-							key={`kit-${n}`}
-							label={`${bonus.name}`}
-							value={`+${bonus.tier1} / +${bonus.tier2} / +${bonus.tier3} ${bonus.type} damage`}
-						/>
-					);
-				});
+				// Show bonuses from kits if:
+				// * AutoCalc is off
+				// * we have more than 1 bonus
+				// * the ability can be used as melee and ranged
+				// ... because otherwise it should have already been applied
+				const showKitBonuses = !props.autoCalc || (dmgKits.length > 1) || (isMelee && isRanged);
+				if (showKitBonuses) {
+					dmgKits.forEach((bonus, n) => {
+						sections.push(
+							<Field
+								key={`kit-${n}`}
+								label={`${bonus.name}`}
+								value={`+${bonus.tier1} / +${bonus.tier2} / +${bonus.tier3} ${bonus.type} damage`}
+							/>
+						);
+					});
+				}
 			}
 
 			// #endregion
 
 			// #region Damage bonuses
 
-			if (!props.autoCalc) {
+			if (!props.autoCalc && CreatureLogic.isHero(props.creature)) {
 				HeroLogic
-					.getFeatureDamageBonuses(props.hero, props.ability)
+					.getFeatureDamageBonuses(props.creature, props.ability)
 					.forEach((bonus, n) => {
 						const value = `${bonus.value} ${bonus.type}`;
 						sections.push(<Field key={`feature-${n}`} label={bonus.feature} value={value} />);
@@ -124,12 +128,12 @@ export const PowerRollPanel = (props: Props) => {
 
 			// #region Potency
 
-			if (!props.autoCalc) {
+			if (!props.autoCalc && CreatureLogic.isHero(props.creature)) {
 				const usesPotency = AbilityLogic.usesPotency(props.powerRoll);
 				if (usesPotency) {
-					const weak = HeroLogic.getPotency(props.hero, 'weak');
-					const avg = HeroLogic.getPotency(props.hero, 'average');
-					const strong = HeroLogic.getPotency(props.hero, 'strong');
+					const weak = HeroLogic.getPotency(props.creature, 'weak');
+					const avg = HeroLogic.getPotency(props.creature, 'average');
+					const strong = HeroLogic.getPotency(props.creature, 'strong');
 					sections.push(
 						<Field
 							key='potency'
@@ -156,7 +160,7 @@ export const PowerRollPanel = (props: Props) => {
 
 	const getTier = (tier: number, value: string) => {
 		if (props.autoCalc && props.ability) {
-			return AbilityLogic.getTierEffect(value, tier, props.ability, distance, props.hero);
+			return AbilityLogic.getTierEffectCreature(value, tier, props.ability, distance, props.creature);
 		}
 
 		return value;

@@ -154,9 +154,15 @@ export class EncounterLogic {
 					.filter(s => s.type === 'roll')
 					.forEach(s => {
 						s.roll.bonus += characteristicMod;
-						s.roll.tier1 += tier1Mod;
-						s.roll.tier2 += tier2Mod;
-						s.roll.tier3 += tier3Mod;
+						if (tier1Mod !== 0) {
+							s.roll.tier1 = `${s.roll.tier1}; ${tier1Mod > 0 ? '+' : ''}${tier1Mod} damage`;
+						}
+						if (tier2Mod !== 0) {
+							s.roll.tier2 = `${s.roll.tier2}; ${tier2Mod > 0 ? '+' : ''}${tier2Mod} damage`;
+						}
+						if (tier3Mod !== 0) {
+							s.roll.tier3 = `${s.roll.tier3}; ${tier3Mod > 0 ? '+' : ''}${tier3Mod} damage`;
+						}
 					});
 			}
 

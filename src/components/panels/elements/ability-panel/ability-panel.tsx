@@ -240,7 +240,7 @@ export const AbilityPanel = (props: Props) => {
 						key={index}
 						powerRoll={section.roll}
 						ability={props.ability}
-						hero={props.hero}
+						creature={props.hero || props.monster}
 						autoCalc={autoCalc}
 						highlightTier={props.highlightTier}
 						odds={props.odds}

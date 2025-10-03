@@ -12,7 +12,7 @@ import { Utils } from '@/utils/utils';
 import './options-panel.scss';
 
 interface Props {
-	mode: 'hero-modern' | 'hero-classic' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'tactical-map' | 'session' | 'player';
+	mode: 'hero-modern' | 'hero-classic' | 'library' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'tactical-map' | 'session' | 'player';
 	options: Options;
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
@@ -154,6 +154,12 @@ export const OptionsPanel = (props: Props) => {
 	const setSimilarSize = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.similarSize = value;
+		props.setOptions(copy);
+	};
+
+	const setShowMonsterGroups = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.showMonsterGroups = value;
 		props.setOptions(copy);
 	};
 
@@ -351,6 +357,12 @@ export const OptionsPanel = (props: Props) => {
 						<Toggle label='Monster role' value={props.options.similarRole} onChange={setSimilarRole} />
 						<Toggle label='Monster organization' value={props.options.similarOrganization} onChange={setSimilarOrganization} />
 						<Toggle label='Monster size' value={props.options.similarSize} onChange={setSimilarSize} />
+					</>
+				);
+			case 'library':
+				return (
+					<>
+						<Toggle label='Show monster groups' value={props.options.showMonsterGroups} onChange={setShowMonsterGroups} />
 					</>
 				);
 			case 'encounter-modern':

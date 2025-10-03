@@ -263,6 +263,16 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
+	static getMonsters = (sourcebooks: Sourcebook[]) => {
+		const list: Monster[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.monsterGroups.flatMap(g => g.monsters));
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
 	static getSkills = (sourcebooks: Sourcebook[]) => {
 		const list: Skill[] = [];
 

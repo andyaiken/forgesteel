@@ -182,14 +182,14 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 								<div>
 									{
 										HeroLogic.getCompanions(props.hero).map(m => (
-											<Button block={true} onClick={() => props.onAddSquad(props.hero, m, 1)}>
+											<Button key={m.id} block={true} onClick={() => props.onAddSquad(props.hero, m, 1)}>
 												{m.name}
 											</Button>
 										))
 									}
 									{
 										HeroLogic.getSummons(props.hero).map(m => (
-											<Button block={true} onClick={() => props.onAddSquad(props.hero, m.monster, m.info.count)}>
+											<Button key={m.id} block={true} onClick={() => props.onAddSquad(props.hero, m.monster, m.info.count)}>
 												Summon: {m.name}
 											</Button>
 										))

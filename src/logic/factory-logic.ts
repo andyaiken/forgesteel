@@ -1003,25 +1003,32 @@ export class FactoryLogic {
 			dimUnavailableAbilities: true,
 			showSources: true,
 			includePlayState: true,
+			compactView: false,
 			abilityWidth: PanelWidth.Medium,
+			// Classic Sheet
 			classicSheetPageSize: SheetPageSize.Letter,
-			pageOrientation: 'portrait',
 			colorSheet: true,
 			sheetTextColor: 'default',
 			featuresInclude: 'all',
 			abilitySort: 'size',
-			compactView: false,
+			pageOrientation: 'portrait',
+			// Library
+			showMonsterGroups: true,
+			// Monster Builder
 			similarLevel: true,
 			similarRole: true,
 			similarOrganization: true,
 			similarSize: true,
+			// Encounter
 			minionCount: 4,
 			party: '',
+			// Encounter Difficulty
 			heroParty: '',
 			heroCount: 4,
 			heroLevel: 1,
 			heroVictories: 0,
 			showDefeatedCombatants: false,
+			// Tactical Map
 			gridSize: 50,
 			playerGridSize: 50
 		};

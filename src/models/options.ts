@@ -12,12 +12,15 @@ export interface Options {
 	includePlayState: boolean;
 	compactView: boolean;
 	abilityWidth: PanelWidth;
+	// Classic Sheet
 	classicSheetPageSize: SheetPageSize;
 	colorSheet: boolean;
 	sheetTextColor: 'light' | 'default' | 'dark';
 	featuresInclude: 'minimal' | 'no-basic' | 'all';
 	abilitySort: 'size' | 'type';
 	pageOrientation: 'portrait' | 'landscape';
+	// Library
+	showMonsterGroups: boolean;
 	// Monster Builder
 	similarLevel: boolean;
 	similarRole: boolean;

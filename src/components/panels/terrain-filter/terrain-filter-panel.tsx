@@ -1,4 +1,4 @@
-import { Flex, Input, Select, Slider, Space } from 'antd';
+import { Input, Select, Slider, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
@@ -104,42 +104,36 @@ export const TerrainFilterPanel = (props: Props) => {
 						value={props.terrainFilter.terrainRoles}
 						onChange={setFilterTerrainRoles}
 					/>
-					<Flex gap={10}>
-						<div style={{ flex: '1 1 0' }}>
-							<Toggle label='By level' value={props.terrainFilter.level.length > 0} onChange={value => setFilterLevel(value ? [ 1, 2 ] : [])} />
-							{
-								props.terrainFilter.level.length > 0 ?
-									<>
-										<Slider
-											range={{ draggableTrack: true }}
-											min={1}
-											max={maxLevel}
-											value={props.terrainFilter.level}
-											onChange={setFilterLevel}
-										/>
-										<Field label='Level' value={`${Math.min(...props.terrainFilter.level)} to ${Math.max(...props.terrainFilter.level)}`} />
-									</>
-									: null
-							}
-						</div>
-						<div style={{ flex: '1 1 0' }}>
-							<Toggle label='By EV' value={props.terrainFilter.ev.length > 0} onChange={value => setFilterEV(value ? [ 1, 10 ] : [])} />
-							{
-								props.terrainFilter.ev.length > 0 ?
-									<>
-										<Slider
-											range={{ draggableTrack: true }}
-											min={0}
-											max={maxEV}
-											value={props.terrainFilter.ev}
-											onChange={setFilterEV}
-										/>
-										<Field label='EV' value={`${Math.min(...props.terrainFilter.ev)} to ${Math.max(...props.terrainFilter.ev)}`} />
-									</>
-									: null
-							}
-						</div>
-					</Flex>
+					<Toggle label='By level' value={props.terrainFilter.level.length > 0} onChange={value => setFilterLevel(value ? [ 1, 2 ] : [])} />
+					{
+						props.terrainFilter.level.length > 0 ?
+							<>
+								<Slider
+									range={{ draggableTrack: true }}
+									min={1}
+									max={maxLevel}
+									value={props.terrainFilter.level}
+									onChange={setFilterLevel}
+								/>
+								<Field label='Level' value={`${Math.min(...props.terrainFilter.level)} to ${Math.max(...props.terrainFilter.level)}`} />
+							</>
+							: null
+					}
+					<Toggle label='By EV' value={props.terrainFilter.ev.length > 0} onChange={value => setFilterEV(value ? [ 1, 10 ] : [])} />
+					{
+						props.terrainFilter.ev.length > 0 ?
+							<>
+								<Slider
+									range={{ draggableTrack: true }}
+									min={0}
+									max={maxEV}
+									value={props.terrainFilter.ev}
+									onChange={setFilterEV}
+								/>
+								<Field label='EV' value={`${Math.min(...props.terrainFilter.ev)} to ${Math.max(...props.terrainFilter.ev)}`} />
+							</>
+							: null
+					}
 				</Space>
 			</div>
 		</ErrorBoundary>

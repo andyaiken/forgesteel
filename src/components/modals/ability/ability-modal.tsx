@@ -243,7 +243,7 @@ export const AbilityModal = (props: Props) => {
 						</Expander>
 						{
 							props.ability.sections.some(s => (s.type === 'roll')) ?
-								<Expander title='Characteristic'>
+								<Expander title='Power Roll'>
 									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 										<Select
 											style={{ width: '100%' }}

@@ -100,6 +100,7 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<EncounterRunPanel
+							key={encounter.id}
 							encounter={encounter}
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
@@ -115,6 +116,7 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<MontageRunPanel
+							key={montage.id}
 							montage={montage}
 							onChange={props.updateMontage}
 						/>
@@ -127,6 +129,7 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<NegotiationRunPanel
+							key={negotiation.id}
 							negotiation={negotiation}
 							onChange={props.updateNegotiation}
 						/>
@@ -139,6 +142,7 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<TacticalMapPanel
+							key={map.id}
 							map={map}
 							display={TacticalMapDisplayType.DirectorEdit}
 							options={props.options}
@@ -159,6 +163,7 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<CounterRunPanel
+							key={counter.id}
 							counter={counter}
 							onChange={props.updateCounter}
 						/>

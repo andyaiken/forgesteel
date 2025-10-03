@@ -1,5 +1,5 @@
-import { Button, Divider, Input, Popover, Select, Space, Upload } from 'antd';
-import { CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, DownloadOutlined, EditOutlined, PlusOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Divider, Flex, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
+import { CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, DownloadOutlined, EditOutlined, FilterFilled, FilterOutlined, PlusOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Ancestry } from '@/models/ancestry';
@@ -19,7 +19,6 @@ import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-pa
 import { Element } from '@/models/element';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
@@ -35,6 +34,7 @@ import { MonsterFilter } from '@/models/filter';
 import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-filter-panel';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-panel/monster-group-panel';
+import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { Options } from '@/models/options';
@@ -44,6 +44,7 @@ import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { Playbook } from '@/models/playbook';
 import { PlaybookLogic } from '@/logic/playbook-logic';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SelectorRow } from '@/components/panels/selector-row/selector-row';
 import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -87,8 +88,9 @@ export const LibraryListPage = (props: Props) => {
 	const [ previousCategory, setPreviousCategory ] = useState<SourcebookElementKind | undefined>(kind);
 	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
-	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
+	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
+	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
 
 	if (kind !== previousCategory) {
@@ -658,30 +660,58 @@ export const LibraryListPage = (props: Props) => {
 								<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
 								<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
 								<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
-								{
-									props.options.showMonsterGroups ?
-										<SelectorRow selected={category === 'monster-group'} content='Monster Groups' info={getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
-										:
-										<SelectorRow selected={category === 'monster-group'} content='Monsters' info={getMonsters().length} onSelect={() => navigation.goToLibrary('monster-group')} />
-								}
+								<SelectorRow selected={category === 'monster-group'} content='Monsters' info={props.options.showMonsterGroups ? getMonsterGroups().length : getMonsters().length} onSelect={() => navigation.goToLibrary('monster-group')} />
 								<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
 								<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
 								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
 								<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
 							</div>
 							<div className='selection-list elements'>
-								{
-									(category === 'monster-group') && !props.options.showMonsterGroups ?
-										<Expander title='Filter'>
-											<div style={{ margin: '15px -5px -5px -5px' }}>
+								<div className='list-header'>
+									{
+										category === 'monster-group' ?
+											<Flex align='center' justify='space-between' gap={5}>
+												<Segmented
+													style={{ flex: '1 1 0' }}
+													block={true}
+													options={[
+														{ value: true, label: 'Groups' },
+														{ value: false, label: 'Monsters' }
+													]}
+													value={props.options.showMonsterGroups}
+													onChange={value => {
+														const copy = Utils.copy(props.options);
+														copy.showMonsterGroups = value;
+														props.setOptions(copy);
+													}}
+												/>
+												<Button
+													type='text'
+													disabled={props.options.showMonsterGroups}
+													icon={showMonsterFilter ? <FilterFilled /> : <FilterOutlined />}
+													onClick={() => setShowMonsterFilter(!showMonsterFilter)}
+												/>
+											</Flex>
+											: null
+									}
+									{
+										(category === 'monster-group') && !props.options.showMonsterGroups && showMonsterFilter ?
+											<SelectablePanel style={{ padding: '15px 10px 10px 10px' }}>
 												<MonsterFilterPanel monsterFilter={monsterFilter} monsters={SourcebookLogic.getMonsters(props.sourcebooks)} includeNameFilter={false} onChange={setMonsterFilter} />
-											</div>
-										</Expander>
-										: null
-								}
+											</SelectablePanel>
+											: null
+									}
+								</div>
 								{
 									list.map(a => (
-										<SelectorRow key={a.id} selected={selectedID === a.id} content={a.name || `Unnamed ${Format.capitalize(category)}`} info={getInfo(a)} tags={getTags(a)} onSelect={() => navigation.goToLibrary(category, a.id)} />
+										<SelectorRow
+											key={a.id}
+											selected={selectedID === a.id}
+											content={(category === 'monster-group') && !props.options.showMonsterGroups ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category)}`}
+											info={getInfo(a)}
+											tags={getTags(a)}
+											onSelect={() => navigation.goToLibrary(category, a.id)}
+										/>
 									))
 								}
 								{

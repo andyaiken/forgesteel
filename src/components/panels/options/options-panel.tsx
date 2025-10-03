@@ -363,6 +363,7 @@ export const OptionsPanel = (props: Props) => {
 				return (
 					<>
 						<Toggle label='Show monster groups' value={props.options.showMonsterGroups} onChange={setShowMonsterGroups} />
+						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
 					</>
 				);
 			case 'encounter-modern':

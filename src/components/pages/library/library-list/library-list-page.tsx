@@ -103,6 +103,12 @@ export const LibraryListPage = (props: Props) => {
 		setPreviousSelectedID(elementID);
 	}
 
+	const setShowMonsterGroups = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.showMonsterGroups = value;
+		props.setOptions(copy);
+	};
+
 	const getSourcebooks = () => {
 		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
 	};
@@ -536,13 +542,12 @@ export const LibraryListPage = (props: Props) => {
 					<Popover
 						trigger='click'
 						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Alert
-									type='info'
-									showIcon={true}
-									message='To create or edit a homebrew monster, switch to Group view.'
-								/>
-							</div>
+							<Alert
+								type='info'
+								showIcon={true}
+								message='To create a homebrew version of this monster, switch to Group view.'
+								action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsterGroups(true)}>Switch</Button>}
+							/>
 						)}
 					>
 						<Button icon={<CopyOutlined />}>
@@ -705,11 +710,7 @@ export const LibraryListPage = (props: Props) => {
 														{ value: false, label: 'Monsters' }
 													]}
 													value={props.options.showMonsterGroups}
-													onChange={value => {
-														const copy = Utils.copy(props.options);
-														copy.showMonsterGroups = value;
-														props.setOptions(copy);
-													}}
+													onChange={setShowMonsterGroups}
 												/>
 												<Button
 													type='text'
@@ -767,7 +768,22 @@ export const LibraryListPage = (props: Props) => {
 					<AppHeader subheader='Library'>
 						{
 							(category === 'monster-group') && !props.options.showMonsterGroups ?
-								null
+								<Popover
+									trigger='click'
+									content={(
+										<Alert
+											type='info'
+											showIcon={true}
+											message='To create a new monster, switch to Group view.'
+											action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsterGroups(true)}>Switch</Button>}
+										/>
+									)}
+								>
+									<Button type='primary'>
+										Add
+										<DownOutlined />
+									</Button>
+								</Popover>
 								:
 								<Popover
 									trigger='click'
@@ -820,7 +836,7 @@ export const LibraryListPage = (props: Props) => {
 										</div>
 									)}
 								>
-									<Button disabled={(category === 'monster-group') && !props.options.showMonsterGroups} type='primary'>
+									<Button type='primary'>
 										Add
 										<DownOutlined />
 									</Button>

@@ -676,7 +676,7 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Telekinesis ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: 'One size 1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(

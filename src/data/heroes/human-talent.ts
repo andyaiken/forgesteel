@@ -1824,7 +1824,7 @@ export const humanTalent = {
 						qualifier: ''
 					}
 				],
-				target: 'One size 1 creature or object',
+				target: 'One creature or object',
 				cost: 'signature',
 				repeatable: false,
 				minLevel: 1,

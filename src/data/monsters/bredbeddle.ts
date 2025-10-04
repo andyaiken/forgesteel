@@ -17,7 +17,7 @@ Although bredbeddles have no traditional sensory organs of their own, they are k
 		{
 			id: 'bredbeddle-info-1',
 			name: 'Immortal Wanderers',
-			description: 'Bredbeddles don’t age, and if they are slain, their bodies reform a few days later. Long ago, bredbeddles were giants who stood high among the nobility of giant kind. But when they declared themselves rulers of all giant kind, their kin thwarted the coup and beheaded the bredbeddles. Now these fallen nobles search the world for their missing heads, each wielding the axe that decapitated them. Many claim their heads are kept for safekeeping in a fire giant’s cellar to be returned after an indeterminate period of good behavior (which no bredbeddles has exhibited thus far).'
+			description: 'Bredbeddles don’t age, and if they are slain, their bodies reform a few days later. Long ago, bredbeddles were giants who stood high among the nobility of giant kind. But when they declared themselves rulers of all giant kind, their kin thwarted the coup and beheaded the bredbeddles. Now these fallen nobles search the world for their missing heads, each wielding the axe that decapitated them. Many claim their heads are kept for safekeeping in a fire giant’s cellar to be returned after an indeterminate period of good behavior (which no bredbeddle has exhibited thus far).'
 		},
 		{
 			id: 'bredbeddle-info-2',

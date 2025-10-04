@@ -820,7 +820,7 @@ export const LibraryListPage = (props: Props) => {
 										</div>
 									)}
 								>
-									<Button disabled={(category === 'monster-group') && props.options.showMonsterGroups} type='primary'>
+									<Button disabled={(category === 'monster-group') && !props.options.showMonsterGroups} type='primary'>
 										Add
 										<DownOutlined />
 									</Button>

@@ -14,11 +14,11 @@
     }
 
     .group-id {
-        width: 4rem;
+        width: round(4rem, 1px);
     }
 
     .stats {
-        width: 17rem;
+        width: 1round(7rem, 1px);
     }
 
     .notes {
@@ -65,7 +65,7 @@
     .ev-value {
         @include common.font-slab;
         display: inline-block;
-        width: 2rem;
+        width: round(2rem, 1px);
         text-align: center;
         border-bottom: 1px solid common.$color-medium;
     }
@@ -89,7 +89,7 @@
 
             .checkbox {
                 font-size: round(2rem, 1px);
-                line-height: 1.1rem;
+                line-height: round(1.1rem, 1px);
             }
         }
 

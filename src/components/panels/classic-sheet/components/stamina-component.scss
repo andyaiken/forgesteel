@@ -17,7 +17,7 @@
 
     .current-stamina {
         float: left;
-        width: 7rem;
+        width: round(7rem, 1px);
         position: absolute;
         display: flex;
         flex-flow: column;

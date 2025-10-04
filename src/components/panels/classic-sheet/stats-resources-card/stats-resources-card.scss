@@ -143,7 +143,7 @@
 
     .surges .reference {
         font-size: round(1rem, 1px);
-        line-height: 1.6rem;
+        line-height: round(1.6rem, 1px);
         display: flex;
         flex-direction: column;
         justify-content: center;

@@ -60,7 +60,7 @@
             margin-bottom: 10px;
             .labeled-field-content span {
                 font-size: round(1.9rem, 1px);
-                min-height: 1.9rem;
+                min-height: round(1.9rem, 1px);
             }
         }
 

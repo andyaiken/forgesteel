@@ -15,7 +15,7 @@
 
         &.labeled-field:not(.just-for-precedence)>.labeled-field-content {
             @include common.border-beveled(10px, 2px, common.$color-medium);
-            min-height: 3rem;
+            min-height: round(3rem, 1px);
         }
     }
 

@@ -770,7 +770,7 @@ export const EncounterEditPanel = (props: Props) => {
 								<Button
 									className='filter-button'
 									type='text'
-									icon={filterVisible ? <FilterFilled /> : <FilterOutlined />}
+									icon={filterVisible ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
 									onClick={() => setFilterVisible(!filterVisible)}
 								/>
 							}
@@ -804,7 +804,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 			<HeaderText
 				extra={
 					<Flex>
-						<Button key='edit' type='text' icon={editing ? <EditFilled /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
+						<Button key='edit' type='text' icon={editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
 						<DangerButton key='delete' mode='clear' label='Delete Group' onConfirm={() => props.deleteGroup(props.group)} />
 					</Flex>
 				}

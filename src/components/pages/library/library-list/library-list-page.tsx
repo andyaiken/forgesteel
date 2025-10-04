@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
+import { Alert, Button, Divider, Flex, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
 import { CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, DownloadOutlined, EditOutlined, FilterFilled, FilterOutlined, PlusOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
@@ -518,8 +518,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getElementToolbar = () => {
-		const list = getList();
-		const element = list.find(item => item.id == selectedID);
+		const element = getList().find(item => item.id == selectedID);
 		if (!element) {
 			return null;
 		}
@@ -529,39 +528,66 @@ export const LibraryListPage = (props: Props) => {
 			return null;
 		}
 
+		const homebrewSourcebooks = props.sourcebooks.filter(sb => sb.isHomebrew);
+
+		const getCreateHomebrew = () => {
+			if ((category === 'monster-group') && !props.options.showMonsterGroups) {
+				return (
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<Alert
+									type='info'
+									showIcon={true}
+									message='To create or edit a homebrew monster, switch to Group view.'
+								/>
+							</div>
+						)}
+					>
+						<Button icon={<CopyOutlined />}>
+							Create Homebrew Version
+							<DownOutlined />
+						</Button>
+					</Popover>
+				);
+			}
+
+			if (!sourcebook.isHomebrew && (homebrewSourcebooks.length === 0)) {
+				return (
+					<Button icon={<CopyOutlined />} onClick={() => props.createElement(category, null, element)}>
+						Create Homebrew Version
+					</Button>
+				);
+			}
+
+			if (!sourcebook.isHomebrew && (homebrewSourcebooks.length > 0)) {
+				return (
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<ErrorBoundary>
+									{homebrewSourcebooks.map(sb => <Button key={sb.id} onClick={() => props.createElement(category, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)}
+								</ErrorBoundary>
+								<Button onClick={() => props.createElement(category, null, element)}>In a new sourcebook</Button>
+							</div>
+						)}
+					>
+						<Button icon={<CopyOutlined />}>
+							Create Homebrew Version
+							<DownOutlined />
+						</Button>
+					</Popover>
+				);
+			}
+
+			return null;
+		};
+
 		return (
 			<>
-				{
-					!sourcebook.isHomebrew && (props.sourcebooks.filter(sb => sb.isHomebrew).length === 0) ?
-						<Button icon={<CopyOutlined />} onClick={() => props.createElement(category, null, element)}>
-							Create Homebrew Version
-						</Button>
-						: null
-				}
-				{
-					!sourcebook.isHomebrew && (props.sourcebooks.filter(sb => sb.isHomebrew).length > 0) ?
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<ErrorBoundary>
-										{
-											props.sourcebooks
-												.filter(sb => sb.isHomebrew)
-												.map(sb => <Button key={sb.id} onClick={() => props.createElement(category, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)
-										}
-									</ErrorBoundary>
-									<Button onClick={() => props.createElement(category, null, element)}>In a new sourcebook</Button>
-								</div>
-							)}
-						>
-							<Button icon={<CopyOutlined />}>
-								Create Homebrew Version
-								<DownOutlined />
-							</Button>
-						</Popover>
-						: null
-				}
+				{getCreateHomebrew()}
 				{
 					sourcebook.isHomebrew ?
 						<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(category, sourcebook.id, element.id)}>
@@ -688,7 +714,7 @@ export const LibraryListPage = (props: Props) => {
 												<Button
 													type='text'
 													disabled={props.options.showMonsterGroups}
-													icon={showMonsterFilter ? <FilterFilled /> : <FilterOutlined />}
+													icon={showMonsterFilter ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
 													onClick={() => setShowMonsterFilter(!showMonsterFilter)}
 												/>
 											</Flex>

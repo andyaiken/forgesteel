@@ -725,8 +725,8 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility ],
 						tier1: '6 + A damage; P < [weak], weakened (save ends)',
-						tier2: '10 + A damage; P < [weak], weakened (save ends)',
-						tier3: '14 + A damage; P < [weak], weakened (save ends)'
+						tier2: '10 + A damage; P < [average], weakened (save ends)',
+						tier3: '14 + A damage; P < [strong], weakened (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('You can become bleeding (save ends) to deal an extra 5 corruption damage to the target.')

@@ -21,7 +21,7 @@
     label {
         color: var(--color-text);
         font-size: round(1.1rem, 1px);
-        line-height: 1.1rem;
+        line-height: round(1.1rem, 1px);
     }
 
     &:not(.label-above):not(.box-both):not(.no-box) {
@@ -47,7 +47,7 @@
             align-self: center;
             span {
                 font-size: round(2.5rem, 1px);
-                line-height: 3rem;
+                line-height: round(3rem, 1px);
             }
         }
         &:not(.no-box):not(.box-both) {
@@ -91,13 +91,13 @@
             margin-bottom: 2px;
             span {
                 font-size: round(2rem, 1px);
-                line-height: 2rem;
+                line-height: round(2rem, 1px);
             }
         }
 
         label {
             font-size: round(1.1rem, 1px);
-            line-height: 1.4rem;
+            line-height: round(1.4rem, 1px);
             font-weight: 450;
         }
     }
@@ -113,7 +113,7 @@
         text-align: center;
 
         label {
-            line-height: 1.4rem;
+            line-height: round(1.4rem, 1px);
         }
     }
 
@@ -121,13 +121,13 @@
         order: 2;
         font-weight: 450;
         font-size: round(1.2rem, 1px);
-        line-height: 1.8rem;
+        line-height: round(1.8rem, 1px);
     }
 
     &>.labeled-boolean-content {
         order: 1;
         font-size: round(1.8rem, 1px);
-        line-height: 1.8rem;
+        line-height: round(1.8rem, 1px);
         margin:0;
         padding:0;
         margin-right: 4px;

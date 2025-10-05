@@ -214,7 +214,7 @@ main#classic-sheet .encounter-sheet .monster {
                 margin-top: 0;
             }
             .current-stamina {
-                width: 6.5rem;
+                width: round(6.5rem, 1px);
             }
 
             .current-state {

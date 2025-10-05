@@ -6,7 +6,7 @@
     place-items: stretch;
 
     h2, h3:has(span) {
-        line-height: 1.1rem;
+        line-height: round(1.1rem, 1px);
 
         span {
             display: inline-block;

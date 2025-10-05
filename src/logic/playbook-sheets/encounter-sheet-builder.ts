@@ -128,7 +128,7 @@ export class EncounterSheetBuilder {
 
 	static buildMonsterSheet = (monster: Monster): MonsterSheet => {
 		const level = MonsterLogic.getMonsterLevel(monster);
-		const monsterType = `Lvl ${level} ${monster.role.type}`;
+		const monsterType = `Lvl ${level} ${monster.role.organization} ${monster.role.type}`;
 
 		const speed = MonsterLogic.getSpeed(monster);
 		const immunities = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity);
@@ -154,7 +154,8 @@ export class EncounterSheetBuilder {
 			freeStrike: MonsterLogic.getFreeStrikeDamage(monster),
 			immunity: immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', '),
 			weakness: weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', '),
-			movement: speed.modes.map(m => Format.capitalize(m)).join(', ')
+			movement: speed.modes.map(m => Format.capitalize(m)).join(', '),
+			withCaptain: monster.withCaptain
 		};
 
 		sheet.features = MonsterLogic.getFeatures(monster)

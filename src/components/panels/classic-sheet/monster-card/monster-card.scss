@@ -132,11 +132,13 @@ main#classic-sheet .encounter-sheet .monster {
             flex-basis: 100%;
 
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr max-content;
             grid-template-rows: 1fr 1fr;
 
-            .weakness {
+            .weakness,
+            .with-captain {
                 text-align: right;
+                text-wrap: nowrap;
             }
         }
     }

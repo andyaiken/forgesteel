@@ -55,6 +55,14 @@ export const MonsterCard = (props: Props) => {
 						<label>Movement:</label>
 						<span>{Utils.valueOrDefault(monster.movement, '—')}</span>
 					</div>
+					{
+						monster.withCaptain.length ?
+							<div className='stat with-captain'>
+								<label>With Captain:</label>
+								<span>{monster.withCaptain}</span>
+							</div>
+							: null
+					}
 				</div>
 			</div>
 		);

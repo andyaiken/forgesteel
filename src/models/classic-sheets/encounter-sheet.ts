@@ -57,9 +57,6 @@ export interface MonsterSheet {
 	intuition: number;
 	presence: number;
 
-	// skills?: string[];
-	// languages?: string[];
-
 	keywords: string;
 
 	size: string;
@@ -72,7 +69,7 @@ export interface MonsterSheet {
 	weakness: string;
 	movement: string;
 
-	// recoveries?: RecoveriesSheet;
+	withCaptain: string;
 
 	features?: Feature[];
 	abilities?: AbilitySheet[];

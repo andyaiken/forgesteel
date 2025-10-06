@@ -103,6 +103,7 @@ export const ProjectsPanel = (props: Props) => {
 					>
 						<ProjectPanel
 							project={project}
+							hero={hero}
 							mode={PanelMode.Full}
 							onChange={changeProject}
 						/>

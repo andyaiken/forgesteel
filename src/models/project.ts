@@ -4,6 +4,7 @@ import { Element } from '@/models/element';
 export interface ProjectProgress {
 	prerequisites: boolean;
 	source: boolean;
+	followerID: string | null;
 	points: number;
 }
 

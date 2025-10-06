@@ -8,11 +8,17 @@ import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
 import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Follower } from '@/models/follower';
+import { FollowerPanel } from '../follower-panel/follower-panel';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { Item } from '@/models/item';
+import { ItemPanel } from '../item-panel/item-panel';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
+import { Monster } from '@/models/monster';
+import { MonsterPanel } from '../monster-panel/monster-panel';
 import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '@/models/negotiation';
@@ -25,6 +31,8 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { Title } from '@/models/title';
+import { TitlePanel } from '../title-panel/title-panel';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
 
@@ -47,6 +55,10 @@ export const PlotPanel = (props: PlotPanelProps) => {
 	const [ selectedEncounter, setSelectedEncounter ] = useState<Encounter | null>(null);
 	const [ selectedMontage, setSelectedMontage ] = useState<Montage | null>(null);
 	const [ selectedNegotiation, setSelectedNegotiation ] = useState<Negotiation | null>(null);
+	const [ selectedFollower, setSelectedFollower ] = useState<Follower | null>(null);
+	const [ selectedItem, setSelectedItem ] = useState<Item | null>(null);
+	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
+	const [ selectedTitle, setSelectedTitle ] = useState<Title | null>(null);
 
 	const getContent = (content: PlotContent) => {
 		switch (content.contentType) {
@@ -145,6 +157,50 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						break;
 					}
 				}
+				break;
+			}
+			case 'element': {
+				switch (content.type) {
+					case 'follower':
+						return (
+							<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }}>
+								<FollowerPanel
+									follower={content.content as Follower}
+								/>
+								<SashPanel monogram='Follower' />
+							</SelectablePanel>
+						);
+					case 'item':
+						return (
+							<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }}>
+								<ItemPanel
+									item={content.content as Item}
+									options={props.options}
+								/>
+								<SashPanel monogram='Item' />
+							</SelectablePanel>
+						);
+					case 'monster':
+						return (
+							<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }}>
+								<MonsterPanel
+									monster={content.content as Monster}
+									options={props.options}
+								/>
+								<SashPanel monogram='Monster' />
+							</SelectablePanel>
+						);
+					case 'title':
+						return (
+							<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }}>
+								<TitlePanel
+									title={content.content as Title}
+									options={props.options}
+								/>
+								<SashPanel monogram='Title' />
+							</SelectablePanel>
+						);
+				}
 			}
 		}
 
@@ -212,6 +268,35 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						}
 						break;
 					}
+				}
+				break;
+			}
+			case 'element': {
+				switch (content.type) {
+					case 'follower':
+						return (
+							<Flex vertical={true} gap={5}>
+								<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedFollower(content.content as Follower)} />
+							</Flex>
+						);
+					case 'item':
+						return (
+							<Flex vertical={true} gap={5}>
+								<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedItem(content.content as Item)} />
+							</Flex>
+						);
+					case 'monster':
+						return (
+							<Flex vertical={true} gap={5}>
+								<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedMonster(content.content as Monster)} />
+							</Flex>
+						);
+					case 'title':
+						return (
+							<Flex vertical={true} gap={5}>
+								<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedTitle(content.content as Title)} />
+							</Flex>
+						);
 				}
 			}
 		}
@@ -294,6 +379,61 @@ export const PlotPanel = (props: PlotPanelProps) => {
 								: null
 						}
 						onClose={() => setSelectedNegotiation(null)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedFollower} onClose={() => setSelectedFollower(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							selectedFollower ?
+								<FollowerPanel
+									follower={selectedFollower}
+									mode={PanelMode.Full}
+								/>
+								: null
+						}
+						onClose={() => setSelectedFollower(null)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							selectedItem ?
+								<ItemPanel
+									item={selectedItem}
+									options={props.options}
+									mode={PanelMode.Full}
+								/>
+								: null
+						}
+						onClose={() => setSelectedItem(null)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							selectedMonster ?
+								<MonsterPanel
+									monster={selectedMonster}
+									options={props.options}
+									mode={PanelMode.Full}
+								/>
+								: null
+						}
+						onClose={() => setSelectedMonster(null)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedTitle} onClose={() => setSelectedTitle(null)} closeIcon={null} width='500px'>
+					<Modal
+						content={
+							selectedTitle ?
+								<TitlePanel
+									title={selectedTitle}
+									options={props.options}
+									mode={PanelMode.Full}
+								/>
+								: null
+						}
+						onClose={() => setSelectedTitle(null)}
 					/>
 				</Drawer>
 			</ErrorBoundary>

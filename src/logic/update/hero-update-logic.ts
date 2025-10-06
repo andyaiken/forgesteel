@@ -174,6 +174,14 @@ export class HeroUpdateLogic {
 
 		hero.state.inventory.forEach(ItemUpdateLogic.updateItem);
 
+		hero.state.projects.forEach(p => {
+			if (p.progress) {
+				if (p.progress.followerID === undefined) {
+					p.progress.followerID = null;
+				}
+			}
+		});
+
 		if (hero.abilityCustomizations === undefined) {
 			hero.abilityCustomizations = [];
 		}

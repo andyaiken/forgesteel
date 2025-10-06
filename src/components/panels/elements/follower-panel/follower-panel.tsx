@@ -21,7 +21,7 @@ export const FollowerPanel = (props: Props) => {
 						level={1}
 						tags={[ props.follower.type ]}
 					>
-						{props.follower.name || `Unnamed ${props.follower.type}`}
+						{props.follower.name || 'Unnamed Follower'}
 					</HeaderText>
 					<Markdown text={props.follower.description} />
 					{

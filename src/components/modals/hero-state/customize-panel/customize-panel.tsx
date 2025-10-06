@@ -1,6 +1,5 @@
 import { Button, Divider, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
 import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '@/models/feature';
-import { PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { Characteristic } from '@/enums/characteristic';
@@ -15,8 +14,8 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
 import { FeatureField } from '@/enums/feature-field';
 import { FeatureType } from '@/enums/feature-type';
-import { Field } from '@/components/controls/field/field';
-import { FollowerLogic } from '@/logic/follower-logic';
+import { Follower } from '@/models/follower';
+import { FollowerEditPanel } from '@/components/panels/edit/follower-edit/follower-edit-panel';
 import { FollowerType } from '@/enums/follower-type';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -24,10 +23,10 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
-import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PerkList } from '@/enums/perk-list';
+import { PlusOutlined } from '@ant-design/icons';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -467,50 +466,9 @@ export const CustomizePanel = (props: Props) => {
 			setFeature(feature.id, copy);
 		};
 
-		const setFollowerName = (value: string) => {
+		const setFollower = (value: Follower) => {
 			const copy = Utils.copy(feature) as FeatureFollower;
-			copy.data.follower.name = value;
-			setFeature(feature.id, copy);
-		};
-
-		const setFollowerType = (value: FollowerType) => {
-			const copy = Utils.copy(feature) as FeatureFollower;
-			copy.data.follower.type = value;
-			copy.data.follower.characteristics.forEach(ch => {
-				switch (ch.characteristic) {
-					case Characteristic.Might:
-						ch.value = value === FollowerType.Artisan ? 1 : 0;
-						break;
-					case Characteristic.Reason:
-						ch.value = 1;
-						break;
-					case Characteristic.Intuition:
-						ch.value = value === FollowerType.Sage ? 1 : 0;
-						break;
-					default:
-						ch.value = 0;
-						break;
-				}
-			});
-			copy.data.follower.skills = [];
-			setFeature(feature.id, copy);
-		};
-
-		const setFollowerCharacteristics = (value: { characteristic: Characteristic, value: number }[]) => {
-			const copy = Utils.copy(feature) as FeatureFollower;
-			copy.data.follower.characteristics = value;
-			setFeature(feature.id, copy);
-		};
-
-		const setFollowerSkills = (value: string[]) => {
-			const copy = Utils.copy(feature) as FeatureFollower;
-			copy.data.follower.skills = value;
-			setFeature(feature.id, copy);
-		};
-
-		const setFollowerLanguages = (value: string[]) => {
-			const copy = Utils.copy(feature) as FeatureFollower;
-			copy.data.follower.languages = value;
+			copy.data.follower = value;
 			setFeature(feature.id, copy);
 		};
 
@@ -771,79 +729,7 @@ export const CustomizePanel = (props: Props) => {
 				return (
 					<div style={{ paddingTop: '20px' }}>
 						<Expander title='Customize'>
-							<HeaderText>Name</HeaderText>
-							<Input
-								status={feature.data.follower.name === '' ? 'warning' : ''}
-								placeholder='Name'
-								allowClear={true}
-								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setFollowerName(NameGenerator.generateName())} />}
-								value={feature.data.follower.name}
-								onChange={e => setFollowerName(e.target.value)}
-							/>
-							<HeaderText>Type</HeaderText>
-							<Segmented
-								block={true}
-								options={[ FollowerType.Artisan, FollowerType.Sage ].map(o => ({ value: o, label: o }))}
-								value={feature.data.follower.type}
-								onChange={setFollowerType}
-							/>
-							<HeaderText>Characteristics</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								allowClear={true}
-								placeholder='Characteristics'
-								options={FollowerLogic.getCharacteristicArrays(feature.data.follower.type).map(o => ({ value: o.filter(ch => ch.value !== 0).map(ch => `${ch.characteristic} ${ch.value}`).join(', '), array: o }))}
-								optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-								value={feature.data.follower.characteristics.filter(ch => ch.value !== 0).map(ch => `${ch.characteristic} ${ch.value}`).join(', ')}
-								onChange={(_text, option) => {
-									const data = option as unknown as { value: string, array: { characteristic: Characteristic, value: number }[] };
-									setFollowerCharacteristics(data.array);
-								}}
-							/>
-							<HeaderText>Skills</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								mode='multiple'
-								maxCount={4}
-								allowClear={true}
-								placeholder='Skills'
-								options={FollowerLogic.getSkillOptions(feature.data.follower.type, props.sourcebooks).map(s => ({ value: s.name, label: s.name, desc: s.description }))}
-								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-								showSearch={true}
-								filterOption={(input, option) => {
-									const strings = option ?
-										[
-											option.label,
-											option.desc
-										]
-										: [];
-									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-								}}
-								value={feature.data.follower.skills}
-								onChange={setFollowerSkills}
-							/>
-							<HeaderText>Languages</HeaderText>
-							<Select
-								style={{ width: '100%' }}
-								mode='multiple'
-								maxCount={2}
-								allowClear={true}
-								placeholder='Languages'
-								options={FollowerLogic.getLanguageOptions(props.sourcebooks).map(s => ({ value: s.name, label: s.name, desc: s.description }))}
-								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-								showSearch={true}
-								filterOption={(input, option) => {
-									const strings = option ?
-										[
-											option.label,
-											option.desc
-										]
-										: [];
-									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-								}}
-								value={feature.data.follower.languages}
-								onChange={setFollowerLanguages}
-							/>
+							<FollowerEditPanel follower={feature.data.follower} sourcebooks={props.sourcebooks} options={props.options} onChange={setFollower} />
 						</Expander>
 					</div>
 				);

@@ -1838,7 +1838,7 @@ Note: Stormwight furies can’t take this complication.`,
 	static hearsVoices: Complication = {
 		id: 'comp-hearsVoices',
 		name: 'Voice in your Head',
-		description: 'You occasionally hear a voice in your head, giving you orders or offering advice. You don’t know who the voice is or why it comes to you, but when you’ve followed the advice, it’s usually proved to be sound',
+		description: 'You occasionally hear a voice in your head, giving you orders or offering advice. You don’t know who the voice is or why it comes to you, but when you’ve followed the advice, it’s usually proved to be sound.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-hearsVoices-b',

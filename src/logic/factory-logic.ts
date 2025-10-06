@@ -458,6 +458,7 @@ export class FactoryLogic {
 		return {
 			prerequisites: false,
 			source: false,
+			followerID: null,
 			points: 0
 		};
 	};

@@ -28,7 +28,14 @@ export interface PlotContentReference {
 	contentID: string;
 }
 
-export type PlotContent = PlotContentText | PlotContentImage | PlotContentRoll | PlotContentReference;
+export interface PlotContentElement {
+	id: string;
+	contentType: 'element';
+	type: 'follower' | 'item' | 'monster' | 'title';
+	content: Element;
+}
+
+export type PlotContent = PlotContentText | PlotContentImage | PlotContentRoll | PlotContentReference | PlotContentElement;
 
 export interface PlotLink {
 	id: string;

@@ -36,6 +36,7 @@
     .condition {
         border-bottom: 2px solid common.$color-light;
         padding: 3px 5px;
+        line-height: round(2rem, 1px);
 
         &.immune div:first-child {
             text-decoration: line-through;

@@ -656,4 +656,12 @@ export class SheetFormatter {
 		}
 		return src;
 	};
+
+	static getSkillAbbreviation = (skill: string): string => {
+		switch (skill) {
+			case 'Criminal Underworld':
+				return 'Criminal Und.';
+		}
+		return skill;
+	};
 }

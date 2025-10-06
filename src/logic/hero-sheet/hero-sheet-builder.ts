@@ -281,7 +281,7 @@ export class HeroSheetBuilder {
 		const skillsMap = new Map<string, string[]>();
 		const allSkills = SourcebookLogic.getSkills(sourcebooks).reduce((map, skill) => {
 			const skillList = map.get(skill.list.toString()) || [];
-			skillList.push(skill.name);
+			skillList.push(SheetFormatter.getSkillAbbreviation(skill.name));
 			map.set(skill.list.toString(), Collections.distinct(skillList, s => s).sort());
 			return map;
 		}, skillsMap);

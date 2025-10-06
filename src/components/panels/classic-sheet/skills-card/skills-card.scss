@@ -15,7 +15,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
-        padding: 0 10px;
+        padding: 0;
     }
 
     h3 {
@@ -27,11 +27,20 @@
     ul {
         list-style: none;
         column-count: 2;
+        column-fill: balance;
+
+        // display: grid;
+        // grid-template-columns: 1fr 1fr;
+
         margin:0;
         padding: 0;
 
         li {
             padding: 3px 0;
+
+            &.spacer {
+                height: round(2rem, 1px);
+            }
         }
         li label{
             font-weight: 400;

@@ -18,15 +18,24 @@ export const SkillsCard = (props: Props) => {
 					<div className='skill-list' key={`skill-list-${list}`}>
 						<h3>{list}</h3>
 						<ul>
-							{skills.map(s =>
-								<li key={`skill-list-${list}-item-${s}`}>
-									<LabeledBooleanField
-										value={character.skills?.includes(s)}
-										label={s}
-										key={`skill-${s}`}
-									/>
-								</li>
-							)}
+							{skills.map(s => {
+								const key = s.replaceAll(' ', '-');
+								return (
+									<li key={`skill-list-${list}-item-${key}`}>
+										<LabeledBooleanField
+											value={character.skills?.includes(s)}
+											label={s}
+										/>
+									</li>
+								);
+							})}
+							{
+								skills.length % 2 !== 0 ?
+									<li>
+										<div className='spacer'>&nbsp;</div>
+									</li>
+									: null
+							}
 						</ul>
 					</div>
 				)}

@@ -115,7 +115,7 @@ export class SourcebookLogic {
 		];
 
 		if (Utils.isDev()) {
-			list.push(SourcebookData.summoner);
+			list.push(SourcebookData.playtest);
 		}
 
 		list.push(...Collections.sort(homebrew, cs => cs.name));

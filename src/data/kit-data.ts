@@ -7,7 +7,9 @@ import { dualWielder } from '@/data/kits/dual-wielder';
 import { guisarmier } from '@/data/kits/guisarmier';
 import { martialArtist } from '@/data/kits/martial-artist';
 import { mountain } from '@/data/kits/mountain';
+import { outrider } from '@/data/kits/beastheart/outrider';
 import { panther } from '@/data/kits/panther';
+import { predator } from '@/data/kits/beastheart/predator';
 import { pugilist } from '@/data/kits/pugilist';
 import { raden } from '@/data/kits/stormwight/raden';
 import { raider } from '@/data/kits/raider';
@@ -18,9 +20,11 @@ import { shiningArmor } from '@/data/kits/shining-armor';
 import { sniper } from '@/data/kits/sniper';
 import { spellsword } from '@/data/kits/spellsword';
 import { stickAndRobe } from '@/data/kits/stick-and-robe';
+import { stormcrow } from '@/data/kits/beastheart/stormcrow';
 import { swashbuckler } from '@/data/kits/swashbuckler';
 import { swordAndBoard } from '@/data/kits/sword-and-board';
 import { vuken } from '@/data/kits/stormwight/vuken';
+import { warBeast } from '@/data/kits/beastheart/war-beast';
 import { warriorPriest } from '@/data/kits/warrior-priest';
 import { whirlwind } from '@/data/kits/whirlwind';
 
@@ -51,4 +55,9 @@ export class KitData {
 	static corven = corven;
 	static raden = raden;
 	static vuken = vuken;
+
+	static outrider = outrider;
+	static predator = predator;
+	static stormcrow = stormcrow;
+	static warBeast = warBeast;
 }

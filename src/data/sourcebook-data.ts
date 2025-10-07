@@ -1,9 +1,9 @@
 import { core } from '@/data/sourcebooks/core';
 import { orden } from '@/data/sourcebooks/orden';
-import { summonerSourcebook } from '@/data/sourcebooks/summoner';
+import { playtest } from '@/data/sourcebooks/playtest';
 
 export class SourcebookData {
 	static core = core;
 	static orden = orden;
-	static summoner = summonerSourcebook;
+	static playtest = playtest;
 }

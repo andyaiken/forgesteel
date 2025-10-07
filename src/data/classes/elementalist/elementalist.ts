@@ -225,46 +225,102 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.createDamageModifier({
+							feature: FactoryLogic.feature.createChoice({
 								id: 'elementalist-1-8b',
 								name: 'Ward of Excellent Protection',
 								description: 'You weave a shield of all the elements around yourself, channeling their full protective power. You have immunity to acid, cold, corruption, fire, lightning, poison, or sonic damage equal to your Reason score.',
-								modifiers: [
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Acid,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Cold,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Corruption,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Fire,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Lightning,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Poison,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Sonic,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									})
+								options: [
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8ba',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Acid,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bb',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Cold,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bc',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Corruption,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bd',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Fire,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8be',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Lightning,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bf',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Poison,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bg',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Sonic,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									}
 								]
 							}),
 							value: 1

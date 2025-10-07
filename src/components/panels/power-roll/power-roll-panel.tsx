@@ -42,8 +42,8 @@ export const PowerRollPanel = (props: Props) => {
 			return `${props.powerRoll.characteristic.join(' or ')} Test`;
 		}
 
-		if (props.creature && props.autoCalc) {
-			const values = props.powerRoll.characteristic.map(ch => CreatureLogic.getCharacteristic(props.creature!, ch));
+		if ((CreatureLogic.isHero(props.creature) || (CreatureLogic.isMonster(props.creature) && props.creature.retainer)) && props.autoCalc) {
+			const values = props.powerRoll.characteristic.map(ch => CreatureLogic.getCharacteristic(props.creature, ch));
 			const bonus = Collections.max(values, v => v) || 0;
 			const sign = bonus >= 0 ? '+' : '';
 			return `2d10 ${sign} ${bonus}`;

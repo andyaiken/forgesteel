@@ -117,4 +117,71 @@ export class ExplorationPerkData {
 		data: null,
 		list: PerkList.Exploration
 	};
+
+	// Beastheart Perks
+
+	static bornTracker: Perk = {
+		id: 'perk-born-tracker',
+		name: 'Born Tracker',
+		description: '(Beastheart only) You and your companion have an edge on tests made to track creatures, find your way, or search for hidden creatures.',
+		type: FeatureType.Text,
+		data: null,
+		list: PerkList.Exploration
+	};
+
+	static rideAlong: Perk = {
+		id: 'perk-ride-along',
+		name: 'Rine Along',
+		description: '(Beastheart only)',
+		type: FeatureType.Ability,
+		data: {
+			ability: FactoryLogic.createAbility({
+				id: 'perk-ride-along-1',
+				name: 'Ride Along',
+				description: 'You ride behind your companion’s eyes.',
+				type: FactoryLogic.type.createManeuver(),
+				distance: [ FactoryLogic.distance.createMelee() ],
+				target: 'Companion',
+				sections: [
+					FactoryLogic.createAbilitySectionText(`
+Your body disappears, and your consciousness shares your companion’s body. While riding along, you can sense what your companion senses. You can communicate with your companion telepathically but not control them. You can’t be detected, targeted, or affected by any effect. Any condition or effect on you is temporarily suspended until you regain your body.
+
+While you are riding along, your companion continues to benefit normally from any magic treasure you are wearing.
+
+While riding along with your companion, you can’t act, except to spend a free maneuver to regain your body. You also regain your body if your companion dies or chooses to eject you. When you regain your body, you reappear in a space adjacent to your companion.`)
+				]
+			})
+		},
+		list: PerkList.Exploration
+	};
+
+	static wildRumpus: Perk = {
+		id: 'perk-wild-rumpus',
+		name: 'Wild Rumpus',
+		description: '(Beastheart only)',
+		type: FeatureType.Ability,
+		data: {
+			ability: FactoryLogic.createAbility({
+				id: 'perk-wild-rumpus-1',
+				name: 'Wild Rumpus',
+				description: 'The ability to glide like a condor or race like a wolf is intoxicating—but beware the temptation to run yourself to death.',
+				type: FactoryLogic.type.createManeuver({ free: true }),
+				distance: [ FactoryLogic.distance.createSelf() ],
+				target: 'Self',
+				sections: [
+					FactoryLogic.createAbilitySectionText('Until the end of your next turn you and your companion gain each others’ movement tags as well as your own. You and your companion both use your speed or your companion’s speed, whichever is higher. Once you have used this ability once, each additional time you use it before you finish a respite or gain 1 or more Victories you take damage equal to your level. This Stamina loss can’t be prevented in any way.')
+				]
+			})
+		},
+		list: PerkList.Exploration
+	};
+
+	static wildsExplorer: Perk = {
+		id: 'perk-wilds-explorer',
+		name: 'Wilds Explorer',
+		description: '(Beastheart only) You and your companion have an edge on tests made to overcome environmental cold, heat, weather, unsteady ground, or challenging terrain. During your turn each of you can ignore the extra cost for the first square of difficult terrain you enter.',
+		type: FeatureType.Text,
+		data: null,
+		list: PerkList.Exploration
+	};
 }

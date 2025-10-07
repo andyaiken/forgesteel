@@ -15,6 +15,7 @@ import { FormatLogic } from '@/logic/format-logic';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { PowerRoll } from '@/models/power-roll';
 import { SkillList } from '@/enums/skill-list';
@@ -451,7 +452,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createPerk = (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number }): FeaturePerk => {
+	createPerk = (data: { id: string, name?: string, description?: string, lists?: PerkList[], count?: number, selected?: Perk[] }): FeaturePerk => {
 		const count = data.count || 1;
 		const lists = data.lists || [];
 
@@ -465,7 +466,7 @@ export class FactoryFeatureLogic {
 			data: {
 				lists: data.lists || [ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ],
 				count: count,
-				selected: []
+				selected: data.selected || []
 			}
 		};
 	};

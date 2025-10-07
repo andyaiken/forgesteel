@@ -35,14 +35,12 @@
     }
 
     .modifier-augmentations {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
         border-bottom: 2px solid common.$color-light;
         padding-bottom: 10px;
 
         .proficiencies {
             display: grid;
-            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
 
             .labeled-field {
                 margin-left: 0;
@@ -56,8 +54,7 @@
     
         .stats {
             display: grid;
-            grid-template-rows: 1fr 1fr;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: repeat(6, 1fr);
         }
     }
 

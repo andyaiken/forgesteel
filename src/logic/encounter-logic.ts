@@ -153,7 +153,7 @@ export class EncounterLogic {
 					.flatMap(a => a.sections)
 					.filter(s => s.type === 'roll')
 					.forEach(s => {
-						if (s.roll.bonus > 0){
+						if (s.roll.bonus > 0) {
 							s.roll.bonus += characteristicMod;
 						}
 						if (tier1Mod !== 0 && s.roll.tier1.includes('damage')) {

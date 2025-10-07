@@ -1,4 +1,6 @@
+import { AbilityKeyword } from '@/enums/ability-keyword';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { PerkData } from '@/data/perk-data';
 import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
@@ -11,18 +13,57 @@ export const prowler: SubClass = {
 			level: 1,
 			features: [
 				FactoryLogic.feature.createSkillChoice({
-					id: 'beastheart-sub-1-1-1',
+					id: 'beastheart-sub-2-1-1',
 					listOptions: [ SkillList.Intrigue ],
 					selected: [ 'Hide' ]
+				}),
+				FactoryLogic.feature.createPackageContent({
+					id: 'beastheart-sub-2-1-2',
+					name: 'Wild Nature Benefit',
+					description: 'The target is weakened until the start of your next turn.',
+					tag: 'feral-strike'
+				}),
+				FactoryLogic.feature.createAbility({
+					ability: FactoryLogic.createAbility({
+						id: 'beastheart-sub-2-1-3',
+						name: 'While No One’s Looking',
+						description: 'While everyone’s eyes are drawn to your foe, you take the opportunity to blend into the scenery.',
+						type: FactoryLogic.type.createTrigger('An enemy deals damage to a creature other than you.'),
+						keywords: [ AbilityKeyword.Magic ],
+						distance: [ FactoryLogic.distance.createSelf() ],
+						target: 'Self',
+						sections: [
+							FactoryLogic.createAbilitySectionText('You become invisible, use the Hide maneuver, and move up to a number of squares equal to your Intuition score, in any order. You remain invisible until the end of your next turn or you deal damage.'),
+							FactoryLogic.createAbilitySectionField({
+								name: 'Spend',
+								value: 1,
+								effect: 'The distance of your move is doubled, and it ignores difficult terrain.'
+							})
+						]
+					})
 				})
-				// TODO: Triggered Action
 			]
 		},
 		{
 			level: 2,
 			features: [
-				// TODO: Feature
-				// TODO: Ability
+				FactoryLogic.feature.createPerk({
+					id: 'beastheart-sub-2-2-1a',
+					selected: [ PerkData.bornTracker ]
+				}),
+				FactoryLogic.feature.create({
+					id: 'beastheart-sub-2-2-1b',
+					name: 'Keen Smell',
+					description: 'While a creature is adjacent to your companion, the creature can’t be concealed or hidden from your companion.'
+				}),
+				FactoryLogic.feature.createChoice({
+					id: 'beastheart-sub-2-2-2',
+					name: 'Prowler Ability',
+					options: [
+						// TODO: Jump Scare
+						// TODO: Close Combat
+					]
+				})
 			]
 		},
 		{
@@ -36,13 +77,24 @@ export const prowler: SubClass = {
 		{
 			level: 5,
 			features: [
-				// TODO: Feature
+				FactoryLogic.feature.create({
+					id: 'beastheart-sub-2-5-1',
+					name: 'I Hate Being the Center of Attention',
+					description: 'You or your companion can use While No One’s Looking even when targeted by the triggering attack.'
+				})
 			]
 		},
 		{
 			level: 6,
 			features: [
-				// TODO: Ability
+				FactoryLogic.feature.createChoice({
+					id: 'beastheart-sub-2-6-1',
+					name: 'Prowler Ability',
+					options: [
+						// TODO: Phantom Form
+						// TODO: Raking Lunge
+					]
+				})
 			]
 		},
 		{
@@ -52,13 +104,24 @@ export const prowler: SubClass = {
 		{
 			level: 8,
 			features: [
-				// TODO: Feature
+				FactoryLogic.feature.create({
+					id: 'beastheart-sub-2-8-1',
+					name: 'Born to Run',
+					description: 'Your and your companion’s speed increases by 2.'
+				})
 			]
 		},
 		{
 			level: 9,
 			features: [
-				// TODO: Ability
+				FactoryLogic.feature.createChoice({
+					id: 'beastheart-sub-2-9-1',
+					name: 'Prowler Ability',
+					options: [
+						// TODO: Chaos Duel
+						// TODO: Nightmare Apparition
+					]
+				})
 			]
 		},
 		{

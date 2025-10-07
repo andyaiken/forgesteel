@@ -555,7 +555,7 @@ export class FactoryLogic {
 		};
 	};
 
-	static createSummon = (data: { monster: Monster, isSignature?: boolean, cost: number, count: number, level10?: Feature[] }): Summon => {
+	static createSummon = (data: { monster: Monster, isSignature?: boolean, cost: number, count: number, level3?: Feature[], level6?: Feature[], level10?: Feature[] }): Summon => {
 		return {
 			id: data.monster.id,
 			name: data.monster.name,
@@ -565,6 +565,8 @@ export class FactoryLogic {
 				isSignature: data.isSignature || false,
 				cost: data.cost,
 				count: data.count,
+				level3: data.level3 || [],
+				level6: data.level6 || [],
 				level10: data.level10 || []
 			}
 		};

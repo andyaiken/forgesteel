@@ -12,19 +12,19 @@ export const PotenciesCard = (props: Props) => {
 		<div className='potencies card'>
 			<h3>Potencies</h3>
 			<LabeledTextField
-				label='Strong'
-				content={character.potencyStrong}
-				additionalClasses={[ 'label-above', 'box-both' ]}
+				label='Weak'
+				content={character.potencyWeak}
+				additionalClasses={['label-above', 'box-both']}
 			/>
 			<LabeledTextField
 				label='Average'
 				content={character.potencyAverage}
-				additionalClasses={[ 'label-above', 'box-both' ]}
+				additionalClasses={['label-above', 'box-both']}
 			/>
 			<LabeledTextField
-				label='Weak'
-				content={character.potencyWeak}
-				additionalClasses={[ 'label-above', 'box-both' ]}
+				label='Strong'
+				content={character.potencyStrong}
+				additionalClasses={['label-above', 'box-both']}
 			/>
 		</div>
 	);

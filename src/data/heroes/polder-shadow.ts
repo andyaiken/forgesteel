@@ -3515,7 +3515,7 @@ export const polderShadow = {
 												name: 'Spend',
 												value: 1,
 												repeatable: false,
-												effect: 'You reduce the potency of any effect associated with the damage reduced by 1 for you..'
+												effect: 'The potency of any effects associated with the damage are reduced by 1 for you.'
 											}
 										],
 										preEffect: '',

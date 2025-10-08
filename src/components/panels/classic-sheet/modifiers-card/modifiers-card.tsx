@@ -17,18 +17,18 @@ interface Props {
 export const ModifiersCard = (props: Props) => {
 	const character = useMemo(
 		() => props.character,
-		[ props.character ]
+		[props.character]
 	);
 
 	const shownModifiers = useMemo(
 		() => {
-			let mods = [ 'Kit', 'Prayer', 'Ward', 'Augmentation', 'Enchantment' ];
+			let mods = ['Kit', 'Prayer', 'Ward', 'Augmentation', 'Enchantment'];
 			if (character.modifierTypes?.length) {
 				mods = mods.filter(t => character.modifierTypes?.includes(t));
 			}
 			return mods;
 		},
-		[ character.modifierTypes ]
+		[character.modifierTypes]
 	);
 
 	const getKitDamageModificationSection = () => {
@@ -36,23 +36,6 @@ export const ModifiersCard = (props: Props) => {
 		if (isKit) {
 			return (
 				<>
-					<div className='power-roll-damage-modifiers'>
-						<h4>Ranged Weapon Damage</h4>
-						<div className='roll-tiers'>
-							<div className='tier t1'>
-								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT1)}</div>
-								<img src={rollT1} alt='≤ 11' className='range' />
-							</div>
-							<div className='tier t2'>
-								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT2)}</div>
-								<img src={rollT2} alt='12 - 16' className='range' />
-							</div>
-							<div className='tier t3'>
-								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT3)}</div>
-								<img src={rollT3} alt='17 +' className='range' />
-							</div>
-						</div>
-					</div>
 					<div className='power-roll-damage-modifiers'>
 						<h4>Melee Weapon Damage</h4>
 						<div className='roll-tiers'>
@@ -66,6 +49,23 @@ export const ModifiersCard = (props: Props) => {
 							</div>
 							<div className='tier t3'>
 								<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT3)}</div>
+								<img src={rollT3} alt='17 +' className='range' />
+							</div>
+						</div>
+					</div>
+					<div className='power-roll-damage-modifiers'>
+						<h4>Ranged Weapon Damage</h4>
+						<div className='roll-tiers'>
+							<div className='tier t1'>
+								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT1)}</div>
+								<img src={rollT1} alt='≤ 11' className='range' />
+							</div>
+							<div className='tier t2'>
+								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT2)}</div>
+								<img src={rollT2} alt='12 - 16' className='range' />
+							</div>
+							<div className='tier t3'>
+								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT3)}</div>
 								<img src={rollT3} alt='17 +' className='range' />
 							</div>
 						</div>
@@ -91,10 +91,10 @@ export const ModifiersCard = (props: Props) => {
 			<LabeledTextField
 				label='Name'
 				content={character.modifierName}
-				additionalClasses={[ 'name' ]}
+				additionalClasses={['name']}
 			/>
 
-			<div className={[ 'modifier-augmentations' ].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
+			<div className={['modifier-augmentations'].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
 				<div className='proficiencies'>
 					<LabeledTextField
 						label='Weapon/Implement'
@@ -112,6 +112,18 @@ export const ModifiersCard = (props: Props) => {
 						content={SheetFormatter.addSign(character.modifierSpeed)}
 					/>
 					<LabeledTextField
+						label='Disengage'
+						content={SheetFormatter.addSign(character.modifierDisengage)}
+					/>
+					<LabeledTextField
+						label='Stamina'
+						content={SheetFormatter.addSign(character.modifierStamina)}
+					/>
+					<LabeledTextField
+						label='Stability'
+						content={SheetFormatter.addSign(character.modifierStability)}
+					/>
+					<LabeledTextField
 						label='Melee'
 						content={SheetFormatter.addSign(character.modifierMeleeDistance)}
 					/>
@@ -119,22 +131,10 @@ export const ModifiersCard = (props: Props) => {
 						label='Ranged'
 						content={SheetFormatter.addSign(character.modifierRangedDistance)}
 					/>
-					<LabeledTextField
-						label='Disengage'
-						content={SheetFormatter.addSign(character.modifierDisengage)}
-					/>
-					<LabeledTextField
-						label='Stability'
-						content={SheetFormatter.addSign(character.modifierStability)}
-					/>
-					<LabeledTextField
-						label='Stamina'
-						content={SheetFormatter.addSign(character.modifierStamina)}
-					/>
 				</div>
 			</div>
 
-			<div className={[ 'effects' ].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
+			<div className={['effects'].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
 				<div className='damage-modifiers'>
 					{getKitDamageModificationSection()}
 				</div>

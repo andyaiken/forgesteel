@@ -17,18 +17,18 @@ interface Props {
 export const ModifiersCard = (props: Props) => {
 	const character = useMemo(
 		() => props.character,
-		[props.character]
+		[ props.character ]
 	);
 
 	const shownModifiers = useMemo(
 		() => {
-			let mods = ['Kit', 'Prayer', 'Ward', 'Augmentation', 'Enchantment'];
+			let mods = [ 'Kit', 'Prayer', 'Ward', 'Augmentation', 'Enchantment' ];
 			if (character.modifierTypes?.length) {
 				mods = mods.filter(t => character.modifierTypes?.includes(t));
 			}
 			return mods;
 		},
-		[character.modifierTypes]
+		[ character.modifierTypes ]
 	);
 
 	const getKitDamageModificationSection = () => {
@@ -91,10 +91,10 @@ export const ModifiersCard = (props: Props) => {
 			<LabeledTextField
 				label='Name'
 				content={character.modifierName}
-				additionalClasses={['name']}
+				additionalClasses={[ 'name' ]}
 			/>
 
-			<div className={['modifier-augmentations'].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
+			<div className={[ 'modifier-augmentations' ].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
 				<div className='proficiencies'>
 					<LabeledTextField
 						label='Weapon/Implement'
@@ -134,7 +134,7 @@ export const ModifiersCard = (props: Props) => {
 				</div>
 			</div>
 
-			<div className={['effects'].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
+			<div className={[ 'effects' ].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
 				<div className='damage-modifiers'>
 					{getKitDamageModificationSection()}
 				</div>

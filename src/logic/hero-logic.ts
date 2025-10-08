@@ -356,12 +356,6 @@ export class HeroLogic {
 		// Collate from features
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.Skill)
-			.forEach(f => {
-				skillNames.push(f.data.skill);
-			});
-		HeroLogic.getFeatures(hero)
-			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.SkillChoice)
 			.forEach(f => {
 				skillNames.push(...f.data.selected);

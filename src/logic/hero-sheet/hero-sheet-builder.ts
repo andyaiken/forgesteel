@@ -289,7 +289,7 @@ export class HeroSheetBuilder {
 
 		sheet.skills = HeroLogic.getSkills(hero, sourcebooks).map(s => s.name);
 		coveredFeatureIds = coveredFeatureIds.concat(
-			allFeatures.filter(f => [ FeatureType.Skill, FeatureType.SkillChoice ].includes(f.feature.type))
+			allFeatures.filter(f => f.feature.type === FeatureType.SkillChoice)
 				.map(f => f.feature.id));
 
 		// Culture

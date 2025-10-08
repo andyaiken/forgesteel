@@ -239,11 +239,6 @@ export interface FeatureSizeData extends _FeatureData {
 };
 export type FeatureSize = FeatureOf<FeatureType.Size, FeatureSizeData>;
 
-export interface FeatureSkillData extends _FeatureData {
-	skill: string;
-};
-export type FeatureSkill = FeatureOf<FeatureType.Skill, FeatureSkillData>;
-
 export interface FeatureSkillChoiceData extends _FeatureData {
 	options: string[];
 	listOptions: SkillList[];
@@ -325,7 +320,6 @@ export type Feature =
 	| FeaturePerk
 	| FeatureProficiency
 	| FeatureSize
-	| FeatureSkill
 	| FeatureSkillChoice
 	| FeatureSpeed
 	| FeatureSummon

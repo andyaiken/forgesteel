@@ -33,7 +33,6 @@ export enum FeatureType {
 	Perk = 'Perk',
 	Proficiency = 'Proficiency',
 	Size = 'Size',
-	Skill = 'Skill',
 	SkillChoice = 'Skill Choice',
 	Speed = 'Speed',
 	Summon = 'Summon',

@@ -1,6 +1,6 @@
 import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '@/enums/ability-keyword';
@@ -268,12 +268,6 @@ export const FeatureEditPanel = (props: Props) => {
 		const setSkillSelected = (value: string[]) => {
 			const copy = Utils.copy(feature.data) as FeatureSkillChoiceData;
 			copy.selected = value;
-			setData(copy);
-		};
-
-		const setSkill = (value: string) => {
-			const copy = Utils.copy(feature.data) as FeatureSkillData;
-			copy.skill = value;
 			setData(copy);
 		};
 
@@ -1749,33 +1743,6 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
-			case FeatureType.Skill: {
-				const data = feature.data as FeatureSkillData;
-				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Skill</HeaderText>
-						<Select
-							style={{ width: '100%' }}
-							status={data.skill === '' ? 'warning' : ''}
-							placeholder='Skill'
-							allowClear={true}
-							options={SourcebookLogic.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
-							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
-							value={data.skill || ''}
-							onChange={setSkill}
-						/>
-					</Space>
-				);
-			}
 			case FeatureType.SkillChoice: {
 				const data = feature.data as FeatureSkillChoiceData;
 
@@ -2037,7 +2004,6 @@ export const FeatureEditPanel = (props: Props) => {
 			FeatureType.Perk,
 			FeatureType.Proficiency,
 			FeatureType.Size,
-			FeatureType.Skill,
 			FeatureType.SkillChoice,
 			FeatureType.Speed,
 			FeatureType.Summon,

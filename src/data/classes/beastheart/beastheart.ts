@@ -193,9 +193,9 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 										field: FeatureField.FreeStrikeDamage,
 										valueCharacteristics: [ Characteristic.Might ]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-2-3',
-										skill: 'Intimidate'
+										selected: [ 'Intimidate' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -273,9 +273,9 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 										field: FeatureField.FreeStrikeDamage,
 										valueCharacteristics: [ Characteristic.Might ]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-3-3',
-										skill: 'Search'
+										selected: [ 'Search' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -353,9 +353,9 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 										field: FeatureField.FreeStrikeDamage,
 										valueCharacteristics: [ Characteristic.Might ]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-4-3',
-										skill: 'Alertness'
+										selected: [ 'Alertness' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -433,9 +433,9 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 										field: FeatureField.FreeStrikeDamage,
 										valueCharacteristics: [ Characteristic.Might ]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-5-3',
-										skill: 'Track'
+										selected: [ 'Track' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -704,9 +704,9 @@ Additionally, you can use Drake Breath. You don’t need to spend ferocity to ch
 											})
 										]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-8-4',
-										skill: 'Intimidate'
+										selected: [ 'Intimidate' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -784,9 +784,9 @@ Additionally, you can use Drake Breath. You don’t need to spend ferocity to ch
 										field: FeatureField.FreeStrikeDamage,
 										valueCharacteristics: [ Characteristic.Might ]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-9-3',
-										skill: 'Hide'
+										selected: [ 'Hide' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -867,9 +867,9 @@ A dazzled creature can’t have line of effect to targets who aren’t adjacent 
 										field: FeatureField.FreeStrikeDamage,
 										valueCharacteristics: [ Characteristic.Might ]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-10-3',
-										skill: 'Sneak'
+										selected: [ 'Sneak' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -947,9 +947,9 @@ A dazzled creature can’t have line of effect to targets who aren’t adjacent 
 										field: FeatureField.FreeStrikeDamage,
 										valueCharacteristics: [ Characteristic.Might ]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-11-3',
-										skill: 'Sneak'
+										selected: [ 'Sneak' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -1037,9 +1037,9 @@ A dazzled creature can’t have line of effect to targets who aren’t adjacent 
 											})
 										]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-12-4',
-										skill: 'Hide'
+										selected: [ 'Hide' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({
@@ -1117,9 +1117,9 @@ A dazzled creature can’t have line of effect to targets who aren’t adjacent 
 										field: FeatureField.FreeStrikeDamage,
 										valueCharacteristics: [ Characteristic.Might ]
 									}),
-									FactoryLogic.feature.createSkill({
+									FactoryLogic.feature.createSkillChoice({
 										id: 'beastheart-1-2a-13-3',
-										skill: 'Track'
+										selected: [ 'Track' ]
 									}),
 									FactoryLogic.feature.createAbility({
 										ability: FactoryLogic.createAbility({

@@ -321,8 +321,25 @@ export class HeroUpdateLogic {
 			console.error(ex);
 		}
 
+		// We have to make sure we handle Domain features before we handle Domain Feature features
+		// That's why we do the below logic twice
+
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
+			.filter(f => f.type !== FeatureType.DomainFeature)
+			.forEach(f => {
+				const originalFeature = HeroLogic.getFeatures(original)
+					.map(of => of.feature)
+					.find(of => of.id === f.id);
+
+				if (originalFeature) {
+					HeroUpdateLogic.updateFeatureData(f, originalFeature, hero, sourcebooks);
+				}
+			});
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.DomainFeature)
 			.forEach(f => {
 				const originalFeature = HeroLogic.getFeatures(original)
 					.map(of => of.feature)
@@ -441,9 +458,8 @@ export class HeroUpdateLogic {
 				case FeatureType.LanguageChoice: {
 					const oFeature = originalFeature as FeatureLanguageChoice;
 
-					const languageNames = SourcebookLogic.getLanguages(sourcebooks)
-						.map(l => l.name);
-					feature.data.selected = oFeature.data.selected.filter(l => languageNames.includes(l));
+					feature.data.selected = [];
+					feature.data.selected.push(...oFeature.data.selected);
 					break;
 				}
 				case FeatureType.Perk: {
@@ -456,10 +472,8 @@ export class HeroUpdateLogic {
 				case FeatureType.SkillChoice: {
 					const oFeature = originalFeature as FeatureSkillChoice;
 
-					const skillNames = SourcebookLogic.getSkills(sourcebooks)
-						.filter(s => oFeature.data.options.includes(s.name) || oFeature.data.listOptions.includes(s.list))
-						.map(s => s.name);
-					feature.data.selected = oFeature.data.selected.filter(s => skillNames.includes(s));
+					feature.data.selected = [];
+					feature.data.selected.push(...oFeature.data.selected);
 					break;
 				}
 				case FeatureType.Summon: {

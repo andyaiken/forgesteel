@@ -1,6 +1,8 @@
 @use '../../../pages/classic-sheet/common.scss';
 
-.hero-sheet .class-features.card {
+#classic-sheet .hero-sheet .class-features.card {
+    // @include common.striped-card;
+
     min-width: 0;
     display: grid;
     grid-template-rows: min-content 1fr;

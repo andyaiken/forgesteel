@@ -1,6 +1,6 @@
 @use '../../../pages/classic-sheet/common.scss';
 
-.projects.card {
+#classic-sheet .projects.card {
     display: grid;
     grid-template-rows: min-content 1fr;
 
@@ -63,8 +63,12 @@
                 text-align: center;
 
                 .symbol-text {
-                    transform: translateY(5px);
                     text-wrap: nowrap;
+                    font-weight: 500;
+
+                    .characteristic {
+                        transform: translateY(5px);
+                    }
                 }
             }
 

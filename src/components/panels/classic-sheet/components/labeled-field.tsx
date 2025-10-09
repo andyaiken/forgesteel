@@ -8,10 +8,13 @@ interface TextProps {
 }
 
 export const LabeledTextField = (props: TextProps) => {
-	const classes = [ 'labeled-field' ].concat(props.additionalClasses || []).join(' ');
+	const classes = [ 'labeled-field' ].concat(props.additionalClasses || []);
 	const content = Utils.isNullOrEmpty(props.content?.toString()) ? <>&nbsp;</> : props.content;
+	if (Utils.isNullOrEmpty(props.content?.toString())) {
+		classes.push('no-content');
+	}
 	return (
-		<div className={classes}>
+		<div className={classes.join(' ')}>
 			<label>{props.label}</label>
 			<div className='labeled-field-content'><span>{content}</span></div>
 		</div>

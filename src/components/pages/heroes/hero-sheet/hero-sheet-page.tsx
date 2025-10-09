@@ -1,6 +1,6 @@
-import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard, TurnOptionsReferenceCard } from '@/components/panels/classic-sheet/reference/reference-cards';
+import { ConsumablesCard, LeveledTreasureCard, TrinketsCard } from '@/components/panels/classic-sheet/inventory-card/inventory-card';
+import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard } from '@/components/panels/classic-sheet/reference/reference-cards';
 import { ExtraCards, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
-import { AncestryTraitsCard } from '@/components/panels/classic-sheet/ancestry-traits-card/ancestry-traits-card';
 import { CareerCard } from '@/components/panels/classic-sheet/career-card/career-card';
 import { ClassFeaturesCard } from '@/components/panels/classic-sheet/class-features-card/class-features-card';
 import { ComplicationCard } from '@/components/panels/classic-sheet/complication-card/complication-card';
@@ -14,7 +14,6 @@ import { HeroHeaderCard } from '@/components/panels/classic-sheet/hero-header-ca
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { ImmunitiesWeaknessesCard } from '@/components/panels/classic-sheet/immunities-weaknesses-card/immunities-weaknesses-card';
-import { InventoryCard } from '@/components/panels/classic-sheet/inventory-card/inventory-card';
 import { ModifiersCard } from '@/components/panels/classic-sheet/modifiers-card/modifiers-card';
 import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
 import { Options } from '@/models/options';
@@ -66,7 +65,7 @@ export const HeroSheetPage = (props: Props) => {
 		[ props.options ]
 	);
 
-	const numTitlesInSmallCard = props.options.pageOrientation === 'portrait' ? 1 : 2;
+	// const numTitlesInSmallCard = props.options.pageOrientation === 'portrait' ? 1 : 2;
 	const populateExtraCards = (character: HeroSheet): ExtraCards => {
 		const required = [
 			{
@@ -79,39 +78,19 @@ export const HeroSheetPage = (props: Props) => {
 
 		let lineWidth = layout.cardLineLen;
 
-		// Inventory
-		let invH = Math.max(20, SheetFormatter.calculateInventorySize(character.inventory, lineWidth));
-		let invW = 1;
-		if (invH > 60) {
-			lineWidth = layout.cardGap + 2 * layout.cardLineLen;
-			invW = 2;
-			invH = Math.ceil(SheetFormatter.calculateInventorySize(character.inventory, lineWidth / 2) * 0.53);
-			if (invH > layout.linesY) {
-				console.warn('Inventory is still too long!');
-				invH = Math.min(layout.linesY, invH);// Will need a better solution at some point
-			}
-		}
-		// console.log('###### Inventory size: ', invH);
-		required.unshift({
-			element: <InventoryCard character={character} wide={invW > 1} key='inventory' />,
-			width: invW,
-			height: invH,
-			shown: false
-		});
-
 		// Features / Reference / Other
 		if (character.featuresReferenceOther?.length) {
 			lineWidth = layout.cardGap + 2 * layout.cardLineLen;
-			let refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, lineWidth);
+			let refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth);
 			let refW = 2;
 			if (refH > 60) {
 				refW = 3;
 				lineWidth = (2 * layout.cardGap) + (3 * layout.cardLineLen) * 0.49;
-				refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, lineWidth) * 0.52;
+				refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth) * 0.52;
 				if (refH > layout.linesY && layout.perRow === 4) {
 					refW = 4;
 					lineWidth = (3 * layout.cardGap) + (4 * layout.cardLineLen) * 0.33;
-					refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, lineWidth) * 0.34;
+					refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth) * 0.34;
 				}
 				if (refH > layout.linesY) {
 					console.warn('Features reference is still too long!');
@@ -128,28 +107,22 @@ export const HeroSheetPage = (props: Props) => {
 		}
 
 		// Titles
-		if (character.titles?.length && character.titles?.length > numTitlesInSmallCard) {
-			let titleH = SheetFormatter.calculateTitlesSize(character.titles, layout.cardLineLen);
-			let titleW = 1;
-			if (titleH > 60) {
-				titleW = 2;
-				titleH = titleH * 0.5;
-			}
-			required.push({
-				element: <TitlesCard character={character} showLong='all' wide={titleW > 1} key='titles-long' />,
-				width: titleW,
-				height: titleH,
-				shown: false
-			});
-		}
+		// if (character.titles?.length && character.titles?.length > numTitlesInSmallCard) {
+		// 	let titleH = SheetFormatter.calculateTitlesSize(character.titles, layout.cardLineLen);
+		// 	let titleW = 1;
+		// 	if (titleH > 60) {
+		// 		titleW = 2;
+		// 		titleH = titleH * 0.5;
+		// 	}
+		// 	required.push({
+		// 		element: <TitlesCard character={character} showLong='all' wide={titleW > 1} key='titles-long' />,
+		// 		width: titleW,
+		// 		height: titleH,
+		// 		shown: false
+		// 	});
+		// }
 
 		const optional = [
-			{
-				element: <TurnOptionsReferenceCard key='turn-options-reference' />,
-				width: 1,
-				height: 29,
-				shown: false
-			},
 			{
 				element: <EdgesBanesReferenceCard key='edges-banes-reference' />,
 				width: 1,
@@ -244,9 +217,9 @@ export const HeroSheetPage = (props: Props) => {
 				case 'feature-reference':
 					card.width = Math.min(2, card.width);
 					if (card.width === 1) {
-						card.height = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, layoutEnd.cardLineLen);
+						card.height = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, layoutEnd.cardLineLen);
 					} else {
-						card.height = Math.ceil(SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, layoutEnd.cardLineLen) * 0.5);
+						card.height = Math.ceil(SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, layoutEnd.cardLineLen) * 0.5);
 					}
 					break;
 				default:
@@ -309,46 +282,62 @@ export const HeroSheetPage = (props: Props) => {
 						/>
 						<PrimaryReferenceCard
 							character={character}
+							options={props.options}
 						/>
 						<ImmunitiesWeaknessesCard
 							character={character}
 						/>
 						<ClassFeaturesCard
 							character={character}
-						/>
-						<AncestryTraitsCard
-							character={character}
+							options={props.options}
 						/>
 					</div>
 					<hr className='dashed' />
 					<div className={`page page-2 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, '2')}>
-						<CareerCard
-							career={character.career}
-							hero={hero}
-						/>
-						<ComplicationCard
-							complication={character.complication}
-							hero={hero}
-						/>
-						<SkillsCard
+						<CultureCard
 							character={character}
 						/>
-						<CultureCard
+						<div className='career-complication'>
+							<CareerCard
+								career={character.career}
+								hero={hero}
+							/>
+							<ComplicationCard
+								complication={character.complication}
+								hero={hero}
+							/>
+
+						</div>
+						<SkillsCard
 							character={character}
 						/>
 						<PerksCard
 							character={character}
 						/>
+					</div>
+					{addAbilityPages(character, extraCards)}
+					<hr className='dashed' />
+					<div className={`page page-titles-inventory-projects ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, 'titles-inv-proj')}>
 						<TitlesCard
 							character={character}
-							showLong={numTitlesInSmallCard}
-							wide={props.options.pageOrientation === 'landscape'}
+							showLong='all'
+							wide={props.options.pageOrientation === 'portrait'}
+						/>
+						<TrinketsCard
+							character={character}
+							wide={props.options.pageOrientation === 'portrait'}
+						/>
+						<LeveledTreasureCard
+							character={character}
+							wide={true}
+						/>
+						<ConsumablesCard
+							character={character}
 						/>
 						<ProjectsCard
 							character={character}
 						/>
 					</div>
-					{addAbilityPages(character, extraCards)}
 					{getFinalCards(extraCards)}
 					{getFollowerCards(extraCards)}
 				</div>

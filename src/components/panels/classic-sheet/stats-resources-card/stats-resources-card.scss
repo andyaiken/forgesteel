@@ -2,7 +2,7 @@
 
 #classic-sheet .hero-sheet .stats-resources.card {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(3, 1.1fr) 1fr 1fr repeat(3, 1.1fr); //repeat(8, 1fr);
     align-items: stretch;
     justify-items: stretch;
     padding: 5px;

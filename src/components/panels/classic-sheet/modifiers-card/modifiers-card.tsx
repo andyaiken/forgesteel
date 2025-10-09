@@ -20,90 +20,115 @@ export const ModifiersCard = (props: Props) => {
 		[ props.character ]
 	);
 
-	const shownModifiers = useMemo(
-		() => {
-			let mods = [ 'Kit', 'Prayer', 'Ward', 'Augmentation', 'Enchantment' ];
-			if (character.modifierTypes?.length) {
-				mods = mods.filter(t => character.modifierTypes?.includes(t));
+	const getModifierNameLabel = () => {
+		let label = 'Name';
+
+		if (character.modifierTypes.includes('Kit')) {
+			label = 'Kit';
+			if (character.modifierName?.includes('&')) {
+				label += 's';
 			}
-			return mods;
-		},
-		[ character.modifierTypes ]
-	);
+		} else if (character.modifierTypes.includes('Augmentation')) {
+			label = 'Augmentation';
+		} else if (character.modifierTypes.includes('Prayer')) {
+			label = 'Prayer';
+		} else if (character.modifierTypes.includes('Enchantment')) {
+			label = 'Enchantment';
+		}
+
+		return label;
+	};
 
 	const getKitDamageModificationSection = () => {
-		const isKit = !character.modifierTypes?.length || character.modifierTypes?.includes('Kit');
-		if (isKit) {
-			return (
-				<>
-					<div className='power-roll-damage-modifiers'>
-						<h4>Melee Weapon Damage</h4>
-						<div className='roll-tiers'>
-							<div className='tier t1'>
-								<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT1)}</div>
-								<img src={rollT1} alt='≤ 11' className='range' />
-							</div>
-							<div className='tier t2'>
-								<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT2)}</div>
-								<img src={rollT2} alt='12 - 16' className='range' />
-							</div>
-							<div className='tier t3'>
-								<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT3)}</div>
-								<img src={rollT3} alt='17 +' className='range' />
-							</div>
+		return (
+			<>
+				<div className='power-roll-damage-modifiers'>
+					<h4>Melee Damage Bonus</h4>
+					<div className='roll-tiers'>
+						<div className='tier t1'>
+							<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT1)}</div>
+							<img src={rollT1} alt='≤ 11' className='range' />
+						</div>
+						<div className='tier t2'>
+							<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT2)}</div>
+							<img src={rollT2} alt='12 - 16' className='range' />
+						</div>
+						<div className='tier t3'>
+							<div className='effect'>{SheetFormatter.addSign(character.modifierMeleeDamageT3)}</div>
+							<img src={rollT3} alt='17 +' className='range' />
 						</div>
 					</div>
-					<div className='power-roll-damage-modifiers'>
-						<h4>Ranged Weapon Damage</h4>
-						<div className='roll-tiers'>
-							<div className='tier t1'>
-								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT1)}</div>
-								<img src={rollT1} alt='≤ 11' className='range' />
-							</div>
-							<div className='tier t2'>
-								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT2)}</div>
-								<img src={rollT2} alt='12 - 16' className='range' />
-							</div>
-							<div className='tier t3'>
-								<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT3)}</div>
-								<img src={rollT3} alt='17 +' className='range' />
-							</div>
+				</div>
+				<div className='power-roll-damage-modifiers'>
+					<h4>Ranged Damage Bonus</h4>
+					<div className='roll-tiers'>
+						<div className='tier t1'>
+							<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT1)}</div>
+							<img src={rollT1} alt='≤ 11' className='range' />
+						</div>
+						<div className='tier t2'>
+							<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT2)}</div>
+							<img src={rollT2} alt='12 - 16' className='range' />
+						</div>
+						<div className='tier t3'>
+							<div className='effect'>{SheetFormatter.addSign(character.modifierRangedDamageT3)}</div>
+							<img src={rollT3} alt='17 +' className='range' />
 						</div>
 					</div>
-				</>
-			);
-		}
+				</div>
+			</>
+		);
 	};
+
+	let bothWeaponArmor = true;
+	let onlyWeaponImplement = false;
+	let onlyArmorWard = false;
+	if (!character.modifierWeaponImplement?.length || !character.modifierArmorWard?.length) {
+		if (character.modifierWeaponImplement?.length) {
+			onlyWeaponImplement = true;
+			bothWeaponArmor = false;
+		}
+		if (character.modifierArmorWard?.length) {
+			onlyArmorWard = true;
+			bothWeaponArmor = false;
+		}
+	}
 
 	return (
 		<div className='modifiers card'>
-			<h2>Modifiers</h2>
-			<ul className='modifier-types'>
-				{shownModifiers.map(t =>
-					<li key={t}>
-						<LabeledBooleanField
-							label={t}
-							value={character.modifierTypes?.includes(t)}
-						/>
-					</li>
-				)}
-			</ul>
+			<h2>
+				<div className='title'>Equipment and Modifiers</div>
+				<LabeledBooleanField
+					label='Kit'
+					value={character.modifierTypes?.includes('Kit')}
+				/>
+			</h2>
 			<LabeledTextField
-				label='Name'
+				label={getModifierNameLabel()}
 				content={character.modifierName}
-				additionalClasses={[ 'name' ]}
+				additionalClasses={[ 'name', 'label-overlay' ]}
 			/>
 
-			<div className={[ 'modifier-augmentations' ].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
-				<div className='proficiencies'>
-					<LabeledTextField
-						label='Weapon/Implement'
-						content={character.modifierWeaponImplement}
-					/>
-					<LabeledTextField
-						label='Armor'
-						content={character.modifierArmor}
-					/>
+			<div className='modifier-augmentations'>
+				<div className={`proficiencies ${!bothWeaponArmor ? 'single' : null}`}>
+					{
+						bothWeaponArmor || onlyWeaponImplement ?
+							<LabeledTextField
+								label='Weapon / Implement'
+								content={character.modifierWeaponImplement}
+								additionalClasses={[ 'label-overlay' ]}
+							/>
+							: null
+					}
+					{
+						bothWeaponArmor || onlyArmorWard ?
+							<LabeledTextField
+								label='Armor / Ward'
+								content={character.modifierArmorWard}
+								additionalClasses={[ 'label-overlay' ]}
+							/>
+							: null
+					}
 				</div>
 
 				<div className='stats'>
@@ -124,23 +149,23 @@ export const ModifiersCard = (props: Props) => {
 						content={SheetFormatter.addSign(character.modifierStability)}
 					/>
 					<LabeledTextField
-						label='Melee'
+						label='Melee Dist.'
 						content={SheetFormatter.addSign(character.modifierMeleeDistance)}
 					/>
 					<LabeledTextField
-						label='Ranged'
+						label='Ranged Dist.'
 						content={SheetFormatter.addSign(character.modifierRangedDistance)}
 					/>
 				</div>
 			</div>
 
-			<div className={[ 'effects' ].concat(shownModifiers.map(m => m.toLocaleLowerCase())).join(' ')}>
+			<div className='effects'>
 				<div className='damage-modifiers'>
 					{getKitDamageModificationSection()}
 				</div>
 
 				<div className='benefits'>
-					<h3>Benefits</h3>
+					<h3>Effects</h3>
 					<div className='features'>
 						{character.modifierBenefits?.map(f =>
 							<FeatureComponent

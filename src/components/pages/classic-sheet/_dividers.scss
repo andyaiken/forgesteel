@@ -1,4 +1,5 @@
 @use './functions' as *;
+@use './_colors';
 
 @mixin plain($border-color, $border-size) {
     border: 0;
@@ -438,5 +439,14 @@
         calc(50% - $angle-dx) calc(100% - $ht-dy),
         calc(50% - $angle-dx) calc(100% - $hb-dy + $angle-size - 1px);
 
+    background-repeat: no-repeat;
+}
+
+@mixin gradient-line-center {
+    border: 0;
+    background-image: linear-gradient(90deg, transparent 0%,
+            colors.$medium 25%, colors.$medium 75%, transparent 100%);
+    background-size: 100% 1px;
+    background-position: center bottom;
     background-repeat: no-repeat;
 }

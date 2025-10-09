@@ -10,7 +10,7 @@ export const PotenciesCard = (props: Props) => {
 	const character = props.character;
 	return (
 		<div className='potencies card'>
-			<h3>Potencies</h3>
+			<h3>Potency</h3>
 			<LabeledTextField
 				label='Weak'
 				content={character.potencyWeak}

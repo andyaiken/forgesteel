@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -52,7 +52,7 @@ export class FeatureLogic {
 
 		features.push({
 			feature: FactoryLogic.feature.create({
-				id: `${culture.name}-culture-lore-influence`,
+				id: `${culture.name.toLocaleLowerCase().replaceAll(' ', '-')}-culture-lore-influence`,
 				name: `${culture.name} Culture`.trim(),
 				description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
 			}),
@@ -348,6 +348,59 @@ export class FeatureLogic {
 		features.forEach(f => addFeature(f.feature, f.source, f.level));
 
 		return list;
+	};
+
+	// Combine Features that do the 'same thing' - e.g. multiple Stamina bonuses into one
+	static reduceFeatures = (features: Feature[]): Feature[] => {
+		const reduced: Feature[] = [];
+
+		features.forEach(f => {
+			switch (f.type) {
+				case FeatureType.Bonus: {
+					const match = reduced.find(m => m.type === FeatureType.Bonus
+							&& this.matchDataFields(m.data, f.data, [ 'field' ]));
+					if (match) {
+						(match as FeatureBonus).data.value += f.data.value;
+					} else {
+						reduced.push(Utils.copy(f));
+					}
+					break;
+				}
+				case FeatureType.AbilityDamage: {
+					const match = reduced.find(m => m.type === FeatureType.AbilityDamage
+						&& this.matchDataFields(m.data, f.data, [ 'damageType', 'keywords' ]));
+					if (match) {
+						(match as FeatureAbilityDamage).data.value += f.data.value;
+					} else {
+						reduced.push(Utils.copy(f));
+					}
+					break;
+				}
+				default:
+					reduced.push(Utils.copy(f));
+					break;
+			}
+		});
+
+		return reduced;
+	};
+
+	static matchDataFields<T>(a: T, b: T, fields: string[]): boolean {
+		return fields.every(field => {
+			if (Object.prototype.hasOwnProperty.call(a, field)
+				&& Object.prototype.hasOwnProperty.call(b, field)) {
+				const aField = a[field as keyof T];
+				const bField = b[field as keyof T];
+
+				if (aField instanceof Array && bField instanceof Array) {
+					return aField.every(x => bField.includes(x));
+				} else {
+					return aField === bField;
+				}
+			} else {
+				return false;
+			}
+		});
 	};
 
 	///////////////////////////////////////////////////////////////////////////

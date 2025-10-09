@@ -11,6 +11,7 @@ interface Props {
 
 export const TitlesCard = (props: Props) => {
 	const character = props.character;
+	const wide = props.wide || false;
 
 	const getTitleFragment = (title: Title, size: 'short' | 'long') => {
 		const titleFeature = title.features.find(f => f.id === title.selectedFeatureID);
@@ -35,16 +36,10 @@ export const TitlesCard = (props: Props) => {
 	const numTitles = character.titles?.length || 0;
 	const fragmentSize = (props.showLong === 'all' || numTitles <= props.showLong) ? 'long' : 'short';
 
-	const cardClasses = [ 'titles', 'card' ];
-	if (props.wide)
-		cardClasses.push('wide');
-
-	const headerText = (props.showLong === 'all') ? 'Titles (Full)' : 'Titles';
-
 	return (
-		<div className={cardClasses.join(' ')}>
-			<h2>{headerText}</h2>
-			<ul className='titles-container'>
+		<div className='titles card'>
+			<h2>Titles</h2>
+			<ul className={`titles-container ${wide ? 'three-column' : 'two-column'}`}>
 				{character.titles?.map(t => getTitleFragment(t, fragmentSize))}
 			</ul>
 		</div>

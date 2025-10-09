@@ -35,6 +35,18 @@
         }
     }
 
+    &.label-overlay {
+        label {
+            background: #fff;
+            display: inline-block;
+            position: relative;
+            margin: 0 auto;
+            padding: 0 5px;
+            transform: translateY(-50%);
+            margin-bottom: calc(0px - round(1.1rem, 1px)/2);
+        }
+    }
+
     &.label-above{
         label {
             order: 2;
@@ -89,6 +101,7 @@
             background: none;
             margin-top: -2px;
             margin-bottom: 2px;
+            padding-top: 5px;
             span {
                 font-size: round(2rem, 1px);
                 line-height: round(2rem, 1px);
@@ -96,9 +109,9 @@
         }
 
         label {
-            font-size: round(1.1rem, 1px);
+            font-size: round(1rem, 1px);
             line-height: round(1.4rem, 1px);
-            font-weight: 450;
+            font-weight: 500;
         }
     }
 }

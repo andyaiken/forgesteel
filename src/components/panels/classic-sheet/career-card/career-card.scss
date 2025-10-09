@@ -1,8 +1,9 @@
 @use '../../../pages/classic-sheet/common.scss';
 
-.hero-sheet:not(#force) {
+#classic-sheet {
     .career.card,
     .complication.card {
+        min-height: 450px;
         display: grid;
         grid-template-rows: min-content min-content 1fr 1fr;
 

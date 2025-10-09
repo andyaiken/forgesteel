@@ -1498,35 +1498,528 @@ Your companion doesn’t spend rampage to activate abilities. Instead, when your
 		}
 	],
 	abilities: [
-		// TODO: Burning Rage
-		// TODO: Covering Fire
-		// TODO: Scatter!
-		// TODO: Tag Me In
-
-		// TODO: Herd the Sheep
-		// TODO: High and Low
-		// TODO: Hungry like the Wolf
-		// TODO: Mighty Roar
-
-		// TODO: Bloodlust Strike
-		// TODO: Bring it On!
-		// TODO: Friendly Fire
-		// TODO: Unfair Advantage
-
-		// TODO: Heart Eater
-		// TODO: Heedless Headbutt
-		// TODO: Primordial Jaws
-		// TODO: Setup Strike
-
-		// TODO: Dogpile
-		// TODO: Hunter's Mercy
-		// TODO: Massive Throw
-		// TODO: Rend in Two
-
-		// TODO: Bloodied Blade and Claw
-		// TODO: Burn the World to Ash
-		// TODO: Double Trouble
-		// TODO: Life-Drinking Wound
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-1',
+			name: 'Burning Rage',
+			description: 'Lances of primordial energy leap from you and your companion to sear, crush, or freeze your foe.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
+			],
+			target: 'One creature or object',
+			cost: 'signature',
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '2 + M cold, fire, lightning, or sonic damage',
+						tier2: '4 + M cold, fire, lightning, or sonic damage',
+						tier3: '6 + M cold, fire, lightning, or sonic damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You can spend a surge to allow your partner to use this ability as a free triggered action, targeting a different target with the same power roll and not using this effect.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-2',
+			name: 'Covering Fire',
+			description: 'Keep your head down or I’ll shoot it off!',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createRanged(5) ],
+			target: 'One creature',
+			cost: 'signature',
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Intuition,
+						tier1: '2 + I damage',
+						tier2: '4 + I damage',
+						tier3: '6 + I damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If the target is not prone, they must use a free triggered action to fall prone or take extra damage equal to twice your Intuition score. Your companion can shift up to a number of spaces equal to their Intuition score.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-3',
+			name: 'Scatter!',
+			description: 'You launch a flurry of attacks and then retreat.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
+			],
+			target: 'One creature or object',
+			cost: 'signature',
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '2 + M damage',
+						tier2: '3 + M damage',
+						tier3: '4 + M damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Your companion makes a free strike. You both shift up to a number of squares equal to your Intuition score.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-4',
+			name: 'Tag Me In',
+			description: 'Drawing on your primordial magic, you magically switch places with an ally, giving them a breather while you deliver a surprise attack.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature or object',
+			cost: 'signature',
+			sections: [
+				FactoryLogic.createAbilitySectionText('If you and a willing ally are standing on the ground within 10 squares of each other, you can teleport, swapping places. If you do so, you gain an edge on this ability’s power roll.'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Intuition,
+						tier1: '3 + I damage',
+						tier2: '5 + I damage',
+						tier3: '7 + I damage'
+					})
+				)
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-5',
+			name: 'Herd the Sheep',
+			description: 'Your companion circles your foe, luring them out of position with fake openings and unpredictable attacks.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Companion, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 3,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '5 + M damage; slide 1; I < [weak], weakened (save ends)',
+						tier2: '8 + M damage; slide 2; I < [average], weakened (save ends)',
+						tier3: '11 + M damage; slide 4; I < [strong], weakened (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You and your companion can shift up to a number of squares equal to the number of squares the target was moved.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-6',
+			name: 'High and Low',
+			description: 'You and your companion surround your foe in order to bring them down.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Companion, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature or object',
+			cost: 3,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '5 + M damage; push 2',
+						tier2: '8 + M damage; push 4',
+						tier3: '11 + M damage; push 6'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('This ability’s push can pass through your space but not end there. If it passes through your space, the target falls prone and takes extra damage equal to your Intuition score.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-7',
+			name: 'Hungry like the Wolf',
+			description: 'The enemy’s blood flows like wine, invigorating your companion.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Companion, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 3,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '4 + M damage; your companion can spend a Recovery',
+						tier2: '7 + M damage; each of you can can spend a Recovery',
+						tier3: '11 + M damage; A < [strong], bleeding (EoT); each of you can spend a Recovery and shift up to 2 squares'
+					})
+				)
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-8',
+			name: 'Mighty Roar',
+			description: 'Your companion unleashes a shattering roar, screech, or howl that terrifies your foes—or at least gets their attention.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Companion, AbilityKeyword.Magic ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+			target: 'Each enemy in the area',
+			cost: 3,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Intuition,
+						tier1: '3 sonic damage; push 1; P < [weak], taunted (save ends)',
+						tier2: '5 sonic damage; push 2; P < [average], taunted (save ends)',
+						tier3: '7 sonic damage; push 3; P < [strong], taunted (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Spend',
+					value: 1,
+					effect: 'This ability also affects a 2 burst around you. An enemy in both areas is only affected once.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-9',
+			name: 'Bloodlust Strike',
+			description: 'Invigorated by the smell of blood, you strike a savage blow.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
+			],
+			target: 'One creature',
+			cost: 5,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '8 + M damage',
+						tier2: '12 + M damage',
+						tier3: '16 + M damage; M < [strong], bleeding (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If the target is winded or bleeding after the attack, you gain two surges.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-10',
+			name: 'Bring it On!',
+			description: 'Let all of them come forward and shatter yourselves against your might!',
+			type: FactoryLogic.type.createManeuver(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Beastheart ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
+			target: 'Each enemy in the area',
+			cost: 5,
+			sections: [
+				FactoryLogic.createAbilitySectionText('You can spend a Recovery. Each enemy in the area is taunted (EoT). You gain 3 temporary Stamina for each enemy in the area.'),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Spend',
+					value: 1,
+					effect: 'This ability also affects a 3 burst around your companion. Creatures in this second burst are taunted by your companion. An enemy in both areas is taunted only by you.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-11',
+			name: 'Friendly Fire',
+			description: 'As your arrows rain down on your foes, flames spiral around your companion, setting the arrows ablaze.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Beastheart, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 3, within: 5 }) ],
+			target: 'Each enemy in the area',
+			cost: 5,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '3 damage',
+						tier2: '5 damage',
+						tier3: '8 damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If your companion is in the area, your companion deals fire damage equal to their Intuition score to each enemy in the area.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-12',
+			name: 'Unfair Advantage',
+			description: 'The wilderness has no concept of fair play.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Charge, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 5,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '8 + M damage; M < [weak], grabbed',
+						tier2: '12 + M damage; M < [average], grabbed',
+						tier3: '16 + M damage; M < [strong], grabbed'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If you grab the target while your companion is adjacent to the target, your companion can make a melee free strike against the target.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-13',
+			name: 'Heart Eater',
+			description: 'Bones crack as a bloody figure leaps from your foe’s corpse.',
+			type: FactoryLogic.type.createTrigger('You use an ability that reduces the creature to 0 Stamina.'),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Magic, AbilityKeyword.Ranged ],
+			distance: [ FactoryLogic.distance.createRanged(10) ],
+			target: 'One creature',
+			cost: 7,
+			sections: [
+				FactoryLogic.createAbilitySectionText('The creature dies and your companion rips their way out of the creature’s body. Your companion teleports into the creature’s space, shifts up to a number of squares equal to their Might, and can then make a melee free strike. Your companion makes the following power roll once, targeting each enemy within 5 squares of the target:'),
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: 'P < [weak], frightened (save ends)',
+						tier2: '4 psychic damage; P < [average], frightened (save ends)',
+						tier3: '8 psychic damage; P < [strong], frightened (save ends)'
+					})
+				)
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-14',
+			name: 'Heedless Headbutt',
+			description: 'Your bloody forehead smash drives your companion into a frenzy.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 7,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Intuition,
+						tier1: '13 + M damage; P < [weak], dazed (save ends)',
+						tier2: '19 + M damage; P < [average], dazed (save ends)',
+						tier3: '25 + M damage; P < [strong], dazed (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('You are bleeding (save ends). Until you are no longer bleeding, your companion has an edge on power rolls.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-15',
+			name: 'Primordial Jaws',
+			description: 'The spectral jaws of a trap clamp on a foe, chaining them to you and draining their life essence.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged ],
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
+			],
+			target: 'One creature',
+			cost: 7,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '7 + I damage; P < [weak], weakened (save ends)',
+						tier2: '10 + I damage; P < [average], weakened (save ends)',
+						tier3: '14 + I damage; P < [strong], weakened (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('When a target weakened by this ability fails their saving throw against this ability while more than 3 squares from you, as a free triggered action you can pull the target up to a number of squares equal to your Intuition score.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-16',
+			name: 'Setup Strike',
+			description: 'Your attack sets up a vicious combo.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
+			],
+			target: 'One creature',
+			cost: 7,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '9 + M damage',
+						tier2: '14 + M damage',
+						tier3: '19 + M damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('The next creature to damage the target before the start of your next turn gains three surges.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-17',
+			name: 'Dogpile',
+			description: 'You and your allies surround your enemy like a pack of wolves, mobbing them and pulling them down.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '10 + M damage; M < [weak], grabbed and prone',
+						tier2: '15 + M damage; M < [average], grabbed and prone',
+						tier3: '20 + M damage; M < [strong], grabbed and prone'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Each ally adjacent to the target can use a triggered free action to deal damage to the target equal to the ally’s highest characteristic.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-18',
+			name: 'Hunter\'s Mercy',
+			description: 'You take a single shot that ends your quarry’s life.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createRanged(15) ],
+			target: 'One creature or object',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Intuition,
+						tier1: '12 + I damage',
+						tier2: '18 + I damage',
+						tier3: '30 + I damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If you are hidden, you remain hidden after the attack.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-19',
+			name: 'Massive Throw',
+			description: 'You can bear impossible burdens with the aid of your companion.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '10 + M damage; vertical push 4; prone',
+						tier2: '15 + M damage; vertical push 6; prone',
+						tier3: '20 + M damage; vertical push 8; prone'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If your companion is adjacent to the target, you can ignore the target’s Stability.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-20',
+			name: 'Rend in Two',
+			description: 'In a gruesome display, you and your companion rip off a pinioned enemy’s limb or other body part and toss it away.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Melee, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [ FactoryLogic.distance.createMelee() ],
+			target: 'One creature',
+			cost: 9,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '11 + M damage; M < [weak], bleeding (save ends)',
+						tier2: '17 + M damage; M < [average], bleeding (save ends)',
+						tier3: '22 + M damage; M < [strong], bleeding (save ends)'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('If the target is grabbed by your partner, the target takes extra damage equal to your Might score plus your companion’s Might score. If this ability reduces a target to 0 Stamina, each enemy within 2 squares who has P < average is frightened (save ends).')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-21',
+			name: 'Bloodied Blade and Claw',
+			description: 'Driven by the pain and desperation of battle, you and your companion spend your last strength in a flurry of wild attacks.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
+			],
+			target: 'One creature or object',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Intuition,
+						tier1: '5 + M damage',
+						tier2: '15 + M damage',
+						tier3: '25 + M damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Your companion can repeat the attack as a melee attack, making their own power roll. Both power rolls have an edge if either of you is bleeding, dying, or winded, and your power roll has a double edge if your companion is dead or otherwise unable to act.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-22',
+			name: 'Burn the World to Ash',
+			description: 'Wrenching power from your primordial bond, you unleash elemental power in a devastating conflagration that you can’t control.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Area, AbilityKeyword.Beastheart, AbilityKeyword.Magic ],
+			distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 2 }) ],
+			target: 'Each enemy in the area',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Intuition,
+						tier1: '10 cold, fire, lightning, or sonic damage',
+						tier2: '18 cold, fire, lightning, or sonic damage',
+						tier3: '26 cold, fire, lightning, or sonic damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionField({
+					name: 'Spend',
+					value: 2,
+					repeatable: true,
+					effect: 'You can spend up to 6 extra ferocity. For each 2 extra ferocity you spend, the size of the burst is increased by 1, 2 is added to the power roll, and you take 5 damage that can’t be reduced in any way. You can decide how much ferocity you spend after you make the power roll.'
+				})
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-23',
+			name: 'Double Trouble',
+			description: 'Your enemies might be stronger than you, but that’s why you’re not here alone.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart ],
+			distance: [ FactoryLogic.distance.createSelf() ],
+			target: 'Self',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionText('You each use a different ability that costs 9 or less ferocity and that uses a maneuver or an action. These abilities cost no ferocity. If an ability lets you spend extra ferocity for an enhanced effect, you can’t do so.')
+			]
+		}),
+		FactoryLogic.createAbility({
+			id: 'beastheart-ability-24',
+			name: 'Life-Drinking Wound',
+			description: 'As your attack strikes home, your enemy’s escaping life force drifts to your allies in crimson threads.',
+			type: FactoryLogic.type.createMain(),
+			keywords: [ AbilityKeyword.Beastheart, AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
+			distance: [
+				FactoryLogic.distance.createMelee(),
+				FactoryLogic.distance.createRanged(5)
+			],
+			target: 'One creature',
+			cost: 11,
+			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '12 + M damage',
+						tier2: '18 + M damage',
+						tier3: '24 + M damage'
+					})
+				),
+				FactoryLogic.createAbilitySectionText('Up to three creatures within 2 squares of the target gain temporary Stamina equal to half the damage you dealt.')
+			]
+		})
 	],
 	subclasses: [
 		guardian,

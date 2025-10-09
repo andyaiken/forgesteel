@@ -12,7 +12,7 @@ export class SummonLogic {
 		const copy = Utils.copy(monster);
 
 		const handleModifier = (mod: Modifier) => {
-			return (mod.valueCharacteristics.length > 0) || (mod.valuePerEchelon > 0) || (mod.valuePerLevel > 0);
+			return mod.valueFromController || (mod.valueCharacteristics.length > 0) || (mod.valuePerEchelon > 0) || (mod.valuePerLevel > 0);
 		};
 
 		MonsterLogic.getFeatures(copy).forEach(f => {
@@ -39,6 +39,7 @@ export class SummonLogic {
 					if (handleModifier(f.data)) {
 						const value = ModifierLogic.calculateModifierValue(f.data, controller);
 						f.data.value = value;
+						f.data.valueFromController = null;
 						f.data.valueCharacteristics = [];
 						f.data.valueCharacteristicMultiplier = 1;
 						f.data.valuePerEchelon = 0;
@@ -50,6 +51,7 @@ export class SummonLogic {
 						if (handleModifier(dm)) {
 							const value = ModifierLogic.calculateModifierValue(dm, controller);
 							dm.value = value;
+							dm.valueFromController = null;
 							dm.valueCharacteristics = [];
 							dm.valueCharacteristicMultiplier = 1;
 							dm.valuePerEchelon = 0;

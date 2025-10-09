@@ -49,6 +49,7 @@ import { SkillSelectModal } from '@/components/modals/select/skill-select/skill-
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Summon } from '@/models/summon';
+import { SummonLogic } from '@/logic/summon-logic';
 import { SummonSelectModal } from '@/components/modals/select/summon-select/summon-select-modal';
 import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
@@ -1219,6 +1220,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
 					<SummonSelectModal
 						summons={data.options}
+						hero={props.hero}
 						options={props.options}
 						onSelect={summon => {
 							setMonsterSelectorOpen(false);
@@ -1233,7 +1235,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					/>
 				</Drawer>
 				<Drawer open={!!selectedSummon} onClose={() => setSelectedSummon(null)} closeIcon={null} width='500px'>
-					{selectedSummon ? <MonsterModal monster={selectedSummon.monster} summon={selectedSummon.info} options={props.options} onClose={() => setSelectedSummon(null)} /> : null}
+					{selectedSummon ? <MonsterModal monster={SummonLogic.getSummonedMonster(selectedSummon.monster, props.hero)} summon={selectedSummon.info} options={props.options} onClose={() => setSelectedSummon(null)} /> : null}
 				</Drawer>
 			</Space>
 		);

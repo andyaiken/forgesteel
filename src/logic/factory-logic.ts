@@ -49,7 +49,7 @@ import { PerkList } from '@/enums/perk-list';
 import { Playbook } from '@/models/playbook';
 import { Plot } from '@/models/plot';
 import { PowerRoll } from '@/models/power-roll';
-import { RetainerData } from '@/data/retainer-data';
+import { RetainerLogic } from '@/logic/retainer-logic';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { Size } from '@/models/size';
 import { Sourcebook } from '@/models/sourcebook';
@@ -523,15 +523,6 @@ export class FactoryLogic {
 		withCaptain?: string,
 		retainer?: { level4?: Feature, level7?: Feature, level10?: Feature }
 	}): Monster => {
-		const retainer = data.retainer ?
-			{
-				level: data.level,
-				level4: data.retainer.level4,
-				level7: data.retainer.level7,
-				level10: data.retainer.level10,
-				featuresByLevel: RetainerData.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
-			}
-			: null;
 		return {
 			id: data.id,
 			name: data.name,
@@ -550,7 +541,15 @@ export class FactoryLogic {
 			characteristics: data.characteristics,
 			features: data.features,
 			withCaptain: data.withCaptain || '',
-			retainer: retainer,
+			retainer: data.retainer ?
+				{
+					level: data.level,
+					level4: data.retainer.level4,
+					level7: data.retainer.level7,
+					level10: data.retainer.level10,
+					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
+				}
+				: null,
 			state: FactoryLogic.createMonsterState()
 		};
 	};

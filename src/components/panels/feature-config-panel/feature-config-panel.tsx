@@ -468,35 +468,14 @@ export const FeatureConfigPanel = (props: Props) => {
 			}
 		};
 
+		const choices = data.selected && data.selected.retainer ?
+			data.selected.retainer.featuresByLevel
+				.filter(lvl => data.selected!.retainer!.level >= lvl.level)
+				.filter(lvl => FeatureLogic.isChoice(lvl.feature))
+			: [];
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					data.selected && data.selected.retainer ?
-						data.selected.retainer.featuresByLevel
-							.filter(lvl => data.selected!.retainer!.level >= lvl.level)
-							.filter(lvl => FeatureLogic.isChoice(lvl.feature))
-							.map(lvl => (
-								<FeatureConfigPanel
-									key={lvl.level}
-									feature={lvl.feature}
-									options={props.options}
-									hero={props.hero}
-									sourcebooks={props.sourcebooks}
-									setData={(fID, d) => {
-										const dataCopy = Utils.copy(data);
-										dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
-											if (l.feature.id === fID) {
-												l.feature.data = d;
-											}
-										});
-										if (props.setData) {
-											props.setData(props.feature.id, dataCopy);
-										}
-									}}
-								/>
-							))
-						: null
-				}
 				{
 					data.selected ?
 						<Flex className='selection-box' align='center' gap={10}>
@@ -531,15 +510,41 @@ export const FeatureConfigPanel = (props: Props) => {
 				{
 					data.selected ?
 						<Expander title='Customize'>
-							<HeaderText>Name</HeaderText>
-							<Input
-								status={data.selected.name === '' ? 'warning' : ''}
-								placeholder='Name'
-								allowClear={true}
-								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-								value={data.selected.name}
-								onChange={e => setName(e.target.value)}
-							/>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<div>
+									<HeaderText>Name</HeaderText>
+									<Input
+										status={data.selected.name === '' ? 'warning' : ''}
+										placeholder='Name'
+										allowClear={true}
+										addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+										value={data.selected.name}
+										onChange={e => setName(e.target.value)}
+									/>
+								</div>
+								{
+									choices.map(lvl => (
+										<FeatureConfigPanel
+											key={lvl.level}
+											feature={lvl.feature}
+											options={props.options}
+											hero={props.hero}
+											sourcebooks={props.sourcebooks}
+											setData={(fID, d) => {
+												const dataCopy = Utils.copy(data);
+												dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
+													if (l.feature.id === fID) {
+														l.feature.data = d;
+													}
+												});
+												if (props.setData) {
+													props.setData(props.feature.id, dataCopy);
+												}
+											}}
+										/>
+									))
+								}
+							</Space>
 						</Expander>
 						: null
 				}

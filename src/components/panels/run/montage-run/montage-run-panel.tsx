@@ -146,26 +146,21 @@ export const MontageRunPanel = (props: Props) => {
 		);
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='montage-run-panel' id={montage.id}>
-					<HeaderText level={1}>{montage.name || 'Unnamed Montage'}</HeaderText>
-					<Markdown text={montage.description} />
-					<HeaderText>Setting the Scene</HeaderText>
-					<Markdown text={montage.scene} />
-					{montage.sections.map(getSection)}
-					<div>
-						<HeaderText>Montage Test Outcomes</HeaderText>
-						<Field label='Total Success' value={<Markdown text={montage.outcomes.totalSuccess} useSpan={true} />} />
-						<Field label='Partial Success' value={<Markdown text={montage.outcomes.partialSuccess} useSpan={true} />} />
-						<Field label='Total Failure' value={<Markdown text={montage.outcomes.totalFailure} useSpan={true} />} />
-					</div>
+	return (
+		<ErrorBoundary>
+			<div className='montage-run-panel' id={montage.id}>
+				<HeaderText level={1}>{montage.name || 'Unnamed Montage'}</HeaderText>
+				<Markdown text={montage.description} />
+				<HeaderText>Setting the Scene</HeaderText>
+				<Markdown text={montage.scene} />
+				{montage.sections.map(getSection)}
+				<div>
+					<HeaderText>Montage Test Outcomes</HeaderText>
+					<Field label='Total Success' value={<Markdown text={montage.outcomes.totalSuccess} useSpan={true} />} />
+					<Field label='Partial Success' value={<Markdown text={montage.outcomes.partialSuccess} useSpan={true} />} />
+					<Field label='Total Failure' value={<Markdown text={montage.outcomes.totalFailure} useSpan={true} />} />
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+			</div>
+		</ErrorBoundary>
+	);
 };

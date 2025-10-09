@@ -63,194 +63,189 @@ export const CreatePanel = (props: Props) => {
 		createElement(map);
 	};
 
-	try {
-		const exampleEncounters = [
-			EncounterData.goblinAmbush,
-			EncounterData.dragonAttack
-		];
+	const exampleEncounters = [
+		EncounterData.goblinAmbush,
+		EncounterData.dragonAttack
+	];
 
-		const exampleMontages = [
-			MontageData.fightFire,
-			MontageData.infiltrateThePalace,
-			MontageData.prepareForBattle,
-			MontageData.trackTheFugitive,
-			MontageData.wildernessRace
-		];
+	const exampleMontages = [
+		MontageData.fightFire,
+		MontageData.infiltrateThePalace,
+		MontageData.prepareForBattle,
+		MontageData.trackTheFugitive,
+		MontageData.wildernessRace
+	];
 
-		const exampleNegotiations = [
-			NegotiationData.banditChief,
-			NegotiationData.knight,
-			NegotiationData.guildmaster,
-			NegotiationData.warlord,
-			NegotiationData.burgomaster,
-			NegotiationData.virtuoso,
-			NegotiationData.highPriest,
-			NegotiationData.duke,
-			NegotiationData.dragon,
-			NegotiationData.monarch,
-			NegotiationData.lich,
-			NegotiationData.deity
-		];
+	const exampleNegotiations = [
+		NegotiationData.banditChief,
+		NegotiationData.knight,
+		NegotiationData.guildmaster,
+		NegotiationData.warlord,
+		NegotiationData.burgomaster,
+		NegotiationData.virtuoso,
+		NegotiationData.highPriest,
+		NegotiationData.duke,
+		NegotiationData.dragon,
+		NegotiationData.monarch,
+		NegotiationData.lich,
+		NegotiationData.deity
+	];
 
-		return (
-			<div className='create-panel'>
-				<Space direction='vertical' style={{ width: '100%' }}>
-					<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
-					<Upload
-						accept={`.drawsteel-${props.currentTab.toLowerCase()},.ds-${props.currentTab.toLowerCase()}`}
-						showUploadList={false}
-						beforeUpload={file => {
-							file
-								.text()
-								.then(json => {
-									if (props.currentTab === 'adventure') {
-										const ap = JSON.parse(json) as AdventurePackage;
-										props.importAdventurePackage(ap);
-									} else {
-										const e = JSON.parse(json) as Element;
-										props.importElement(props.currentTab, e);
-									}
-								});
-							return false;
-						}}
-					>
-						<Button block={true} icon={<DownloadOutlined />}>Import</Button>
-					</Upload>
-				</Space>
-				{
-					props.currentTab === 'encounter' ?
-						<div>
-							<div className='ds-text centered-text'>or start with a premade example:</div>
-							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-								{
-									exampleEncounters.map(n => (
-										<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
-									))
+	return (
+		<div className='create-panel'>
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => createElement(null)}>Create</Button>
+				<Upload
+					accept={`.drawsteel-${props.currentTab.toLowerCase()},.ds-${props.currentTab.toLowerCase()}`}
+					showUploadList={false}
+					beforeUpload={file => {
+						file
+							.text()
+							.then(json => {
+								if (props.currentTab === 'adventure') {
+									const ap = JSON.parse(json) as AdventurePackage;
+									props.importAdventurePackage(ap);
+								} else {
+									const e = JSON.parse(json) as Element;
+									props.importElement(props.currentTab, e);
 								}
-							</div>
+							});
+						return false;
+					}}
+				>
+					<Button block={true} icon={<DownloadOutlined />}>Import</Button>
+				</Upload>
+			</Space>
+			{
+				props.currentTab === 'encounter' ?
+					<div>
+						<div className='ds-text centered-text'>or start with a premade example:</div>
+						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
+							{
+								exampleEncounters.map(n => (
+									<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
+								))
+							}
 						</div>
-						: null
-				}
-				{
-					props.currentTab === 'negotiation' ?
-						<div>
-							<div className='ds-text centered-text'>or start with a premade example:</div>
-							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-								{
-									exampleNegotiations.map(n => (
-										<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
-									))
-								}
-							</div>
+					</div>
+					: null
+			}
+			{
+				props.currentTab === 'negotiation' ?
+					<div>
+						<div className='ds-text centered-text'>or start with a premade example:</div>
+						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
+							{
+								exampleNegotiations.map(n => (
+									<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
+								))
+							}
 						</div>
-						: null
-				}
-				{
-					props.currentTab === 'montage' ?
-						<div>
-							<div className='ds-text centered-text'>or start with a premade example:</div>
-							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
-								{
-									exampleMontages.map(m => (
-										<Button key={m.id} block={true} onClick={() => createElement(m)}>{m.name}</Button>
-									))
-								}
-							</div>
+					</div>
+					: null
+			}
+			{
+				props.currentTab === 'montage' ?
+					<div>
+						<div className='ds-text centered-text'>or start with a premade example:</div>
+						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
+							{
+								exampleMontages.map(m => (
+									<Button key={m.id} block={true} onClick={() => createElement(m)}>{m.name}</Button>
+								))
+							}
 						</div>
-						: null
-				}
-				{
-					props.currentTab === 'tactical-map' ?
-						<Space direction='vertical' style={{ width: '300px' }}>
-							<Divider />
-							<Expander title='Use a battlemap'>
-								<Space direction='vertical' style={{ width: '100%', marginTop: '15px' }}>
-									<Segmented
-										block={true}
-										options={[
-											{ value: 'image', label: 'Image' },
-											{ value: 'video', label: 'Animated' }
-										]}
-										value={mapImportType}
-										onChange={setMapImportType}
-									/>
-									<Upload
-										style={{ width: '100%' }}
-										accept={mapImportType === 'image' ? '.png,.webp,.gif,.jpg,.jpeg,.svg' : '.mp4,.webm'}
-										showUploadList={false}
-										beforeUpload={file => {
-											const reader = new FileReader();
-											reader.onload = progress => {
-												if (progress.target) {
-													const content = progress.target.result as string;
-													setMapImportData(content);
-												}
-											};
-											reader.readAsDataURL(file);
-											return false;
-										}}
-									>
-										<Button block={true}>
-											<DownloadOutlined />
-											Choose file
-										</Button>
-									</Upload>
-									{
-										mapImportData ?
-											<>
-												{
-													mapImportType === 'image' ?
-														<img
-															style={{ width: '100%' }}
-															src={mapImportData}
-														/>
-														:
-														<video
-															style={{ width: '100%' }}
-															src={mapImportData}
-															autoPlay={true}
-															controls={false}
-															loop={true}
-															muted={true}
-														/>
-												}
-												<Flex align='center' justify='space-between' gap={10}>
-													<NumberSpin min={1} value={mapImportWidth} onChange={setMapImportWidth}>
-														<Field orientation='vertical' label='Width' value={mapImportWidth} />
-													</NumberSpin>
-													<NumberSpin min={1} value={mapImportHeight} onChange={setMapImportHeight}>
-														<Field orientation='vertical' label='Height' value={mapImportHeight} />
-													</NumberSpin>
-												</Flex>
-												<Button block={true} type='primary' onClick={createImageMap}>Create</Button>
-											</>
-											: null
-									}
-								</Space>
-							</Expander>
-							<Expander title='Generate a random map'>
+					</div>
+					: null
+			}
+			{
+				props.currentTab === 'tactical-map' ?
+					<Space direction='vertical' style={{ width: '300px' }}>
+						<Divider />
+						<Expander title='Use a battlemap'>
+							<Space direction='vertical' style={{ width: '100%', marginTop: '15px' }}>
 								<Segmented
-									style={{ marginTop: '15px' }}
 									block={true}
 									options={[
-										{ value: 'dungeon', label: 'Dungeon' },
-										{ value: 'cavern', label: 'Cavern' }
+										{ value: 'image', label: 'Image' },
+										{ value: 'video', label: 'Animated' }
 									]}
-									value={mapGenerateType}
-									onChange={setMapGenerateType}
+									value={mapImportType}
+									onChange={setMapImportType}
 								/>
-								<NumberSpin min={1} value={mapGenerateSize} onChange={setMapGenerateSize}>
-									<Field orientation='vertical' label={mapGenerateType === 'dungeon' ? 'Rooms' : 'Size'} value={mapGenerateSize} />
-								</NumberSpin>
-								<Button block={true} type='primary' icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
-							</Expander>
-						</Space>
-						: null
-				}
-			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+								<Upload
+									style={{ width: '100%' }}
+									accept={mapImportType === 'image' ? '.png,.webp,.gif,.jpg,.jpeg,.svg' : '.mp4,.webm'}
+									showUploadList={false}
+									beforeUpload={file => {
+										const reader = new FileReader();
+										reader.onload = progress => {
+											if (progress.target) {
+												const content = progress.target.result as string;
+												setMapImportData(content);
+											}
+										};
+										reader.readAsDataURL(file);
+										return false;
+									}}
+								>
+									<Button block={true}>
+										<DownloadOutlined />
+										Choose file
+									</Button>
+								</Upload>
+								{
+									mapImportData ?
+										<>
+											{
+												mapImportType === 'image' ?
+													<img
+														style={{ width: '100%' }}
+														src={mapImportData}
+													/>
+													:
+													<video
+														style={{ width: '100%' }}
+														src={mapImportData}
+														autoPlay={true}
+														controls={false}
+														loop={true}
+														muted={true}
+													/>
+											}
+											<Flex align='center' justify='space-between' gap={10}>
+												<NumberSpin min={1} value={mapImportWidth} onChange={setMapImportWidth}>
+													<Field orientation='vertical' label='Width' value={mapImportWidth} />
+												</NumberSpin>
+												<NumberSpin min={1} value={mapImportHeight} onChange={setMapImportHeight}>
+													<Field orientation='vertical' label='Height' value={mapImportHeight} />
+												</NumberSpin>
+											</Flex>
+											<Button block={true} type='primary' onClick={createImageMap}>Create</Button>
+										</>
+										: null
+								}
+							</Space>
+						</Expander>
+						<Expander title='Generate a random map'>
+							<Segmented
+								style={{ marginTop: '15px' }}
+								block={true}
+								options={[
+									{ value: 'dungeon', label: 'Dungeon' },
+									{ value: 'cavern', label: 'Cavern' }
+								]}
+								value={mapGenerateType}
+								onChange={setMapGenerateType}
+							/>
+							<NumberSpin min={1} value={mapGenerateSize} onChange={setMapGenerateSize}>
+								<Field orientation='vertical' label={mapGenerateType === 'dungeon' ? 'Rooms' : 'Size'} value={mapGenerateSize} />
+							</NumberSpin>
+							<Button block={true} type='primary' icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
+						</Expander>
+					</Space>
+					: null
+			}
+		</div>
+	);
 };

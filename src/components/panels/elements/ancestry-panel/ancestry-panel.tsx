@@ -19,22 +19,17 @@ interface Props {
 }
 
 export const AncestryPanel = (props: Props) => {
-	try {
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'ancestry-panel' : 'ancestry-panel compact'} id={props.mode === PanelMode.Full ? props.ancestry.id : undefined}>
-					<HeaderText level={1}>{props.ancestry.name || 'Unnamed Ancestry'}</HeaderText>
-					<Markdown text={props.ancestry.description} />
-					{
-						props.mode === PanelMode.Full ?
-							props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
-							: null
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'ancestry-panel' : 'ancestry-panel compact'} id={props.mode === PanelMode.Full ? props.ancestry.id : undefined}>
+				<HeaderText level={1}>{props.ancestry.name || 'Unnamed Ancestry'}</HeaderText>
+				<Markdown text={props.ancestry.description} />
+				{
+					props.mode === PanelMode.Full ?
+						props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

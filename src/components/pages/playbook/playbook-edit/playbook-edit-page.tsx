@@ -187,69 +187,64 @@ export const PlaybookEditPage = (props: Props) => {
 		return Format.capitalize(kind!);
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='playbook-edit-page'>
-					<AppHeader subheader={`${getSubheader()} Builder`}>
-						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
-							Save Changes
-						</Button>
-						<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybook(kind!, element.id)}>
-							Cancel
-						</Button>
-						{
-							(kind === 'encounter') ?
-								<div className='divider' />
-								: null
-						}
-						{
-							(kind === 'encounter') ?
-								<Popover
-									trigger='click'
-									content={<OptionsPanel mode='encounter-modern' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
-								>
-									<Button icon={<SettingOutlined />}>
-										Options
-										<DownOutlined />
-									</Button>
-								</Popover>
-								: null
-						}
-						{
-							(kind === 'tactical-map') ?
-								<Popover
-									trigger='click'
-									content={<OptionsPanel mode={kind} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-								>
-									<Button icon={<SettingOutlined />}>
-										Options
-										<DownOutlined />
-									</Button>
-								</Popover>
-								: null
-						}
-					</AppHeader>
-					<div className='playbook-edit-page-content'>
-						<div className='edit-column'>
-							{getEditHeaderSection()}
-							{getEditSection()}
-						</div>
-						{
-							(kind !== 'adventure') && (kind !== 'encounter') && (kind !== 'tactical-map') ?
-								<div className='preview-column'>
-									{getPreviewHeaderSection()}
-									{getPreview()}
-								</div>
-								: null
-						}
+	return (
+		<ErrorBoundary>
+			<div className='playbook-edit-page'>
+				<AppHeader subheader={`${getSubheader()} Builder`}>
+					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
+						Save Changes
+					</Button>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybook(kind!, element.id)}>
+						Cancel
+					</Button>
+					{
+						(kind === 'encounter') ?
+							<div className='divider' />
+							: null
+					}
+					{
+						(kind === 'encounter') ?
+							<Popover
+								trigger='click'
+								content={<OptionsPanel mode='encounter-modern' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+									<DownOutlined />
+								</Button>
+							</Popover>
+							: null
+					}
+					{
+						(kind === 'tactical-map') ?
+							<Popover
+								trigger='click'
+								content={<OptionsPanel mode={kind} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+									<DownOutlined />
+								</Button>
+							</Popover>
+							: null
+					}
+				</AppHeader>
+				<div className='playbook-edit-page-content'>
+					<div className='edit-column'>
+						{getEditHeaderSection()}
+						{getEditSection()}
 					</div>
-					<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					{
+						(kind !== 'adventure') && (kind !== 'encounter') && (kind !== 'tactical-map') ?
+							<div className='preview-column'>
+								{getPreviewHeaderSection()}
+								{getPreview()}
+							</div>
+							: null
+					}
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+			</div>
+		</ErrorBoundary>
+	);
 };

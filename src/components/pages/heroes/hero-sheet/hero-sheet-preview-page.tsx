@@ -232,98 +232,93 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		}
 	};
 
-	try {
-		return (
-			<div id='pdf-preview'>
-				<div className='menu'>
-					<Segmented
-						options={[
-							{ value: 'html', label: 'HTML' },
-							{ value: 'canvas', label: 'Canvas' }
-						]}
-						value={previewOptions}
-						onChange={setDisplay}
-					/>
-				</div>
-				{getPreviewPage()}
-				<div id='pdf-canvas'></div>
-				<FloatButton
-					icon={<SettingFilled />}
-					onClick={showDrawer}
-					tooltip={<div>Sheet Display Options</div>}
+	return (
+		<div id='pdf-preview'>
+			<div className='menu'>
+				<Segmented
+					options={[
+						{ value: 'html', label: 'HTML' },
+						{ value: 'canvas', label: 'Canvas' }
+					]}
+					value={previewOptions}
+					onChange={setDisplay}
 				/>
-				<Drawer
-					title='Sheet Display Options'
-					closable={{ 'aria-label': 'Close Button' }}
-					onClose={onDrawerClose}
-					open={drawerOpen}
-					style={{ padding: '10px' }}
-				>
-
-					<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
-					<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
-					<Divider size='small'>Text Color</Divider>
-					<Segmented
-						name='textColor'
-						block={true}
-						options={[
-							{ value: 'dark', label: 'Darker' },
-							{ value: 'default', label: 'Default' },
-							{ value: 'light', label: 'Lighter' }
-						]}
-						value={props.options.sheetTextColor}
-						onChange={changeTextColor}
-					/>
-					<Divider size='small'>Include Class Features</Divider>
-					<Segmented
-						name='abilitySort'
-						block={true}
-						options={[
-							{ value: 'minimal', label: 'Minimal' },
-							{ value: 'no-basic', label: 'No Simple' },
-							{ value: 'all', label: 'All' }
-						]}
-						value={props.options.featuresInclude}
-						onChange={setFeaturesInclude}
-					/>
-					<Divider>Abilities</Divider>
-					<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
-					<Divider size='small'>Sort Abilities By</Divider>
-					<Segmented
-						name='abilitySort'
-						block={true}
-						options={[
-							{ value: 'size', label: 'Length' },
-							{ value: 'type', label: 'Action Type' }
-						]}
-						value={props.options.abilitySort}
-						onChange={setAbilitySort}
-					/>
-					<Divider>Layout</Divider>
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<Segmented
-							name='pagesize'
-							block={true}
-							options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
-							value={props.options.classicSheetPageSize}
-							onChange={setClassicSheetPageSize}
-						/>
-						<Segmented
-							name='orientation'
-							block={true}
-							options={[
-								{ value: 'portrait', label: 'Portrait' },
-								{ value: 'landscape', label: 'Landscape' }
-							]}
-							value={props.options.pageOrientation}
-							onChange={setPageOrientation}
-						/>
-					</Space>
-				</Drawer>
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+			{getPreviewPage()}
+			<div id='pdf-canvas'></div>
+			<FloatButton
+				icon={<SettingFilled />}
+				onClick={showDrawer}
+				tooltip={<div>Sheet Display Options</div>}
+			/>
+			<Drawer
+				title='Sheet Display Options'
+				closable={{ 'aria-label': 'Close Button' }}
+				onClose={onDrawerClose}
+				open={drawerOpen}
+				style={{ padding: '10px' }}
+			>
+
+				<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
+				<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+				<Divider size='small'>Text Color</Divider>
+				<Segmented
+					name='textColor'
+					block={true}
+					options={[
+						{ value: 'dark', label: 'Darker' },
+						{ value: 'default', label: 'Default' },
+						{ value: 'light', label: 'Lighter' }
+					]}
+					value={props.options.sheetTextColor}
+					onChange={changeTextColor}
+				/>
+				<Divider size='small'>Include Class Features</Divider>
+				<Segmented
+					name='abilitySort'
+					block={true}
+					options={[
+						{ value: 'minimal', label: 'Minimal' },
+						{ value: 'no-basic', label: 'No Simple' },
+						{ value: 'all', label: 'All' }
+					]}
+					value={props.options.featuresInclude}
+					onChange={setFeaturesInclude}
+				/>
+				<Divider>Abilities</Divider>
+				<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+				<Divider size='small'>Sort Abilities By</Divider>
+				<Segmented
+					name='abilitySort'
+					block={true}
+					options={[
+						{ value: 'size', label: 'Length' },
+						{ value: 'type', label: 'Action Type' }
+					]}
+					value={props.options.abilitySort}
+					onChange={setAbilitySort}
+				/>
+				<Divider>Layout</Divider>
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<Segmented
+						name='pagesize'
+						block={true}
+						options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
+						value={props.options.classicSheetPageSize}
+						onChange={setClassicSheetPageSize}
+					/>
+					<Segmented
+						name='orientation'
+						block={true}
+						options={[
+							{ value: 'portrait', label: 'Portrait' },
+							{ value: 'landscape', label: 'Landscape' }
+						]}
+						value={props.options.pageOrientation}
+						onChange={setPageOrientation}
+					/>
+				</Space>
+			</Drawer>
+		</div>
+	);
 };

@@ -11,19 +11,14 @@ interface Props {
 }
 
 export const FollowerModal = (props: Props) => {
-	try {
-		return (
-			<Modal
-				content={
-					<div className='follower-modal'>
-						<FollowerPanel follower={props.follower} mode={PanelMode.Full} />
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			content={
+				<div className='follower-modal'>
+					<FollowerPanel follower={props.follower} mode={PanelMode.Full} />
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

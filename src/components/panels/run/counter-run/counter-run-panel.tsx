@@ -22,19 +22,14 @@ export const CounterRunPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='counter-run-panel' id={counter.id}>
-					<HeaderText level={1}>{counter.name || 'Unnamed Counter'}</HeaderText>
-					<div className='stats'>
-						<NumberSpin label='Value' min={0} max={100} value={counter.value} onChange={setValue} />
-					</div>
+	return (
+		<ErrorBoundary>
+			<div className='counter-run-panel' id={counter.id}>
+				<HeaderText level={1}>{counter.name || 'Unnamed Counter'}</HeaderText>
+				<div className='stats'>
+					<NumberSpin label='Value' min={0} max={100} value={counter.value} onChange={setValue} />
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+			</div>
+		</ErrorBoundary>
+	);
 };

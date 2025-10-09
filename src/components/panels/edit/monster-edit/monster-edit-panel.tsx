@@ -801,74 +801,69 @@ export const MonsterEditPanel = (props: Props) => {
 		);
 	};
 
-	try {
-		const genesplice = () => {
-			const copy = Utils.copy(monster);
-			MonsterLogic.genesplice(copy, props.similarMonsters);
-			setMonster(copy);
-			props.onChange(copy);
-		};
+	const genesplice = () => {
+		const copy = Utils.copy(monster);
+		MonsterLogic.genesplice(copy, props.similarMonsters);
+		setMonster(copy);
+		props.onChange(copy);
+	};
 
-		const tabs = [
-			{
-				key: 'monster',
-				label: 'Monster',
-				children: getNameAndDescriptionSection()
-			},
-			{
-				key: 'type',
-				label: 'Type',
-				children: getTypeSection()
-			},
-			{
-				key: 'stats',
-				label: 'Stats',
-				children: getStatsSection()
-			},
-			{
-				key: 'characteristics',
-				label: 'Characteristics',
-				children: getCharacteristicsSection()
-			},
-			{
-				key: 'features',
-				label: 'Features',
-				children: getFeaturesSection()
-			}
-		];
-
-		if (monster.role.organization === MonsterOrganizationType.Minion) {
-			tabs.push({
-				key: 'minion',
-				label: 'Minion',
-				children: getMinionSection()
-			});
+	const tabs = [
+		{
+			key: 'monster',
+			label: 'Monster',
+			children: getNameAndDescriptionSection()
+		},
+		{
+			key: 'type',
+			label: 'Type',
+			children: getTypeSection()
+		},
+		{
+			key: 'stats',
+			label: 'Stats',
+			children: getStatsSection()
+		},
+		{
+			key: 'characteristics',
+			label: 'Characteristics',
+			children: getCharacteristicsSection()
+		},
+		{
+			key: 'features',
+			label: 'Features',
+			children: getFeaturesSection()
 		}
+	];
 
-		if (monster.role.organization === MonsterOrganizationType.Retainer) {
-			tabs.push({
-				key: 'retainer',
-				label: 'Retainer',
-				children: getRetainerSection()
-			});
-		}
-
-		return (
-			<ErrorBoundary>
-				<div className='monster-edit-panel'>
-					<Tabs
-						items={tabs}
-						tabBarExtraContent={
-							props.similarMonsters.length > 1 ?
-								<Button type='text' title='Genesplice' icon={<ThunderboltOutlined />} onClick={genesplice} />
-								: null
-						}
-					/>
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
+	if (monster.role.organization === MonsterOrganizationType.Minion) {
+		tabs.push({
+			key: 'minion',
+			label: 'Minion',
+			children: getMinionSection()
+		});
 	}
+
+	if (monster.role.organization === MonsterOrganizationType.Retainer) {
+		tabs.push({
+			key: 'retainer',
+			label: 'Retainer',
+			children: getRetainerSection()
+		});
+	}
+
+	return (
+		<ErrorBoundary>
+			<div className='monster-edit-panel'>
+				<Tabs
+					items={tabs}
+					tabBarExtraContent={
+						props.similarMonsters.length > 1 ?
+							<Button type='text' title='Genesplice' icon={<ThunderboltOutlined />} onClick={genesplice} />
+							: null
+					}
+				/>
+			</div>
+		</ErrorBoundary>
+	);
 };

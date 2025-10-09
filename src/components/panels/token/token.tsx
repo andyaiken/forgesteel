@@ -22,46 +22,41 @@ interface Props {
 }
 
 export const Token = (props: Props) => {
-	try {
-		const size = props.size ?? 22;
+	const size = props.size ?? 22;
 
-		let className = `token ${props.role.toLowerCase()}`;
-		if (props.onClick) {
-			className += ' clickable';
-		}
-
-		let innerClassName = 'inner-token';
-		if (props.type) {
-			innerClassName += ` ${props.type}`;
-		}
-		if (props.isDefeated) {
-			innerClassName += ' defeated';
-		}
-
-		return (
-			<div
-				className={className}
-				style={{ width: `${size}px`, height: `${size}px`, padding: `${size * 0.08}px` }}
-				title={props.name}
-				onClick={props.onClick}
-			>
-				<div
-					className={innerClassName}
-					style={{ fontSize: `${size * 0.3}px`, letterSpacing: `-${size * 0.01}px` }}
-				>
-					{
-						props.picture ?
-							<img className='portrait' src={props.picture} title={props.name} />
-							:
-							Format.getMonogram(props.name)
-					}
-				</div>
-			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
+	let className = `token ${props.role.toLowerCase()}`;
+	if (props.onClick) {
+		className += ' clickable';
 	}
+
+	let innerClassName = 'inner-token';
+	if (props.type) {
+		innerClassName += ` ${props.type}`;
+	}
+	if (props.isDefeated) {
+		innerClassName += ' defeated';
+	}
+
+	return (
+		<div
+			className={className}
+			style={{ width: `${size}px`, height: `${size}px`, padding: `${size * 0.08}px` }}
+			title={props.name}
+			onClick={props.onClick}
+		>
+			<div
+				className={innerClassName}
+				style={{ fontSize: `${size * 0.3}px`, letterSpacing: `-${size * 0.01}px` }}
+			>
+				{
+					props.picture ?
+						<img className='portrait' src={props.picture} title={props.name} />
+						:
+						Format.getMonogram(props.name)
+				}
+			</div>
+		</div>
+	);
 };
 
 interface HeroTokenProps {

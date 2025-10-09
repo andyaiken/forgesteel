@@ -45,48 +45,43 @@ export const NumberSpin = (props: Props) => {
 	const ascending = Utils.copy(steps).sort((a, b) => a - b);
 	const descending = Utils.copy(steps).sort((a, b) => b - a);
 
-	try {
-		return (
-			<div className={props.disabled ? 'number-spin disabled' : 'number-spin'} style={props.style}>
-				<div className='spin-buttons'>
-					{
-						descending.map((step, n) => (
-							<MinusCircleOutlined
-								key={n}
-								className={canDown ? 'spin-button' : 'spin-button disabled'}
-								title={`-${step}`}
-								onClick={() => onChange(step, -1)}
-							/>
-						))
-					}
-				</div>
+	return (
+		<div className={props.disabled ? 'number-spin disabled' : 'number-spin'} style={props.style}>
+			<div className='spin-buttons'>
 				{
-					props.children ?
-						props.children
-						:
-						<Statistic
-							className='spin-middle'
-							title={props.label}
-							value={props.format ? props.format(props.value) : props.value}
-							suffix={props.suffix}
+					descending.map((step, n) => (
+						<MinusCircleOutlined
+							key={n}
+							className={canDown ? 'spin-button' : 'spin-button disabled'}
+							title={`-${step}`}
+							onClick={() => onChange(step, -1)}
 						/>
+					))
 				}
-				<div className='spin-buttons'>
-					{
-						ascending.map((step, n) => (
-							<PlusCircleOutlined
-								key={n}
-								className={canUp ? 'spin-button' : 'spin-button disabled'}
-								title={`+${step}`}
-								onClick={() => onChange(step, +1)}
-							/>
-						))
-					}
-				</div>
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+			{
+				props.children ?
+					props.children
+					:
+					<Statistic
+						className='spin-middle'
+						title={props.label}
+						value={props.format ? props.format(props.value) : props.value}
+						suffix={props.suffix}
+					/>
+			}
+			<div className='spin-buttons'>
+				{
+					ascending.map((step, n) => (
+						<PlusCircleOutlined
+							key={n}
+							className={canUp ? 'spin-button' : 'spin-button disabled'}
+							title={`+${step}`}
+							onClick={() => onChange(step, +1)}
+						/>
+					))
+				}
+			</div>
+		</div>
+	);
 };

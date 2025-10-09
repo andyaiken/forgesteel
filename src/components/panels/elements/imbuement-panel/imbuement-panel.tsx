@@ -20,32 +20,27 @@ interface Props {
 }
 
 export const ImbuementPanel = (props: Props) => {
-	try {
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'imbuement-panel' : 'imbuement-panel compact'} id={props.mode === PanelMode.Full ? props.imbuement.id : undefined}>
-					<HeaderText
-						level={1}
-						tags={[ `Level ${props.imbuement.level}` ]}
-					>
-						{props.imbuement.name || 'Unnamed Imbuement'}
-					</HeaderText>
-					<Field label='Applies to' value={props.imbuement.type} />
-					<div className='features'>
-						<FeaturePanel
-							key={props.imbuement.feature.id}
-							feature={props.imbuement.feature}
-							options={props.options}
-							hero={props.hero}
-							sourcebooks={props.sourcebooks}
-							mode={PanelMode.Full}
-						/>
-					</div>
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'imbuement-panel' : 'imbuement-panel compact'} id={props.mode === PanelMode.Full ? props.imbuement.id : undefined}>
+				<HeaderText
+					level={1}
+					tags={[ `Level ${props.imbuement.level}` ]}
+				>
+					{props.imbuement.name || 'Unnamed Imbuement'}
+				</HeaderText>
+				<Field label='Applies to' value={props.imbuement.type} />
+				<div className='features'>
+					<FeaturePanel
+						key={props.imbuement.feature.id}
+						feature={props.imbuement.feature}
+						options={props.options}
+						hero={props.hero}
+						sourcebooks={props.sourcebooks}
+						mode={PanelMode.Full}
+					/>
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+			</div>
+		</ErrorBoundary>
+	);
 };

@@ -683,57 +683,52 @@ export const LibraryEditPage = (props: Props) => {
 		return `${Format.capitalize(kind!)} Builder`;
 	};
 
-	try {
-		let monster: Monster | null = null;
-		if ((kind === 'monster-group') && !!subElementID) {
-			monster = (element as MonsterGroup).monsters.find(m => m.id === subElementID) || null;
-		}
-
-		return (
-			<ErrorBoundary>
-				<div className='library-edit-page'>
-					<AppHeader subheader={getSubheader()}>
-						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
-							Save Changes
-						</Button>
-						<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibrary(kind!, elementID!)}>
-							Cancel
-						</Button>
-						{
-							monster ?
-								<div className='divider' />
-								: null
-						}
-						{
-							monster ?
-								<Popover
-									trigger='click'
-									content={<OptionsPanel mode='monster' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
-								>
-									<Button icon={<SettingOutlined />}>
-										Options
-										<DownOutlined />
-									</Button>
-								</Popover>
-								: null
-						}
-					</AppHeader>
-					<div className='library-edit-page-content'>
-						<div className='edit-column'>
-							{getEditHeaderSection()}
-							{getEditSection()}
-						</div>
-						<div className='preview-column'>
-							{getPreviewHeaderSection()}
-							{getPreview()}
-						</div>
-					</div>
-					<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
+	let monster: Monster | null = null;
+	if ((kind === 'monster-group') && !!subElementID) {
+		monster = (element as MonsterGroup).monsters.find(m => m.id === subElementID) || null;
 	}
+
+	return (
+		<ErrorBoundary>
+			<div className='library-edit-page'>
+				<AppHeader subheader={getSubheader()}>
+					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
+						Save Changes
+					</Button>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibrary(kind!, elementID!)}>
+						Cancel
+					</Button>
+					{
+						monster ?
+							<div className='divider' />
+							: null
+					}
+					{
+						monster ?
+							<Popover
+								trigger='click'
+								content={<OptionsPanel mode='monster' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+							>
+								<Button icon={<SettingOutlined />}>
+									Options
+									<DownOutlined />
+								</Button>
+							</Popover>
+							: null
+					}
+				</AppHeader>
+				<div className='library-edit-page-content'>
+					<div className='edit-column'>
+						{getEditHeaderSection()}
+						{getEditSection()}
+					</div>
+					<div className='preview-column'>
+						{getPreviewHeaderSection()}
+						{getPreview()}
+					</div>
+				</div>
+				<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+			</div>
+		</ErrorBoundary>
+	);
 };

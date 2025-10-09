@@ -219,34 +219,29 @@ export const EncounterPanel = (props: Props) => {
 		);
 	};
 
-	try {
-		const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
+	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
 
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
-					<HeaderText
-						level={1}
-						tags={[ difficulty ]}
-						extra={
-							props.showTools ?
-								<Button type='text' icon={<InfoCircleOutlined />} onClick={props.showTools} />
-								: null
-						}
-					>
-						{props.encounter.name || 'Unnamed Encounter'}
-					</HeaderText>
-					<Markdown text={props.encounter.description} />
-					{getEncounterGroups()}
-					{getMeta()}
-					{getStatBlocks()}
-					{getMaliceDetails()}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
+				<HeaderText
+					level={1}
+					tags={[ difficulty ]}
+					extra={
+						props.showTools ?
+							<Button type='text' icon={<InfoCircleOutlined />} onClick={props.showTools} />
+							: null
+					}
+				>
+					{props.encounter.name || 'Unnamed Encounter'}
+				</HeaderText>
+				<Markdown text={props.encounter.description} />
+				{getEncounterGroups()}
+				{getMeta()}
+				{getStatBlocks()}
+				{getMaliceDetails()}
+			</div>
+		</ErrorBoundary>
+	);
 };

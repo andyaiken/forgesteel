@@ -371,47 +371,19 @@ If you are strained while flying and are force moved, the forced movement distan
 					id: 'talent-6-1',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				}),
-				FactoryLogic.feature.createMultiple({
+				FactoryLogic.feature.create({
 					id: 'talent-6-2',
 					name: 'Psi Boost',
-					description: 'Whenever you use an ability that is a main action or a maneuver with the Psionic keyword, you can spend additional clarity to apply a psi boost to it and enhance its effects. A psi boost’s effects only last until the end of the turn which the ability is first used. You can apply multiple psi boosts to an ability, but only one instance of each specific boost.',
-					features: [
-						FactoryLogic.feature.create({
-							id: 'talent-6-2a',
-							name: 'Psi Boost: Dynamic Power (1 Clarity)',
-							description: 'If the ability force moves a target, the forced movement distance gains a bonus equal to your Reason score.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2b',
-							name: 'Psi Boost: Expanded Power (3 Clarity)',
-							description: 'If the ability targets an area, you increase the size of the area by 1. If the area is a line, you increase the size of one dimension, not both.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2c',
-							name: 'Psi Boost: Extended Power (1 Clarity)',
-							description: 'If the ability is ranged, the distance gains a bonus equal to your Reason score. If the ability is melee, the distance gains a +2 bonus.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2d',
-							name: 'Psi Boost: Heightened Power (1 Clarity)',
-							description: 'If the ability deals rolled damage, it deals extra damage equal to your Reason score.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2e',
-							name: 'Psi Boost: Magnified Power (5 Clarity)',
-							description: 'If the ability has a potency, you increase that potency by an amount equal to your Reason score.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2f',
-							name: 'Psi Boost: Shared Power (5 Clarity)',
-							description: 'If the ability targets individual creatures or objects, you target one additional creature or object within distance.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2g',
-							name: 'Psi Boost: Sharpened Power (1 Clarity)',
-							description: 'If the ability has any power roll, that roll gains an edge.'
-						})
-					]
+					description: `
+Whenever you use an ability that is a main action or a maneuver with the Psionic keyword, you can spend additional discipline to apply a psi boost to it and enhance its effects. A psi boost’s effects only last until the end of the turn which the ability is first used. You can apply multiple psi boosts to an ability, but only one instance of each specific boost. You can use the following psi boosts.
+
+**Dynamic Power** (1 Clarity) If the ability force moves a target, the forced movement distance gains a bonus equal to your Reason score.
+**Expanded Power** (3 Clarity) If the ability targets an area, you increase the size of the area by 1. If the area is a line, you increase the size of one dimension, not both.
+**Extended Power** (1 Clarity) If the ability is ranged, the distance gains a bonus equal to your Reason score. If the ability is melee, the distance gains a +2 bonus.
+**Heightened Power** (1 Clarity) If the ability deals rolled damage, it deals extra damage equal to your Reason score.
+**Magnified Power** (5 Clarity) If the ability has a potency, you increase that potency by an amount equal to your Reason score.
+**Shared Power** (5 Clarity) If the ability targets individual creatures or objects, you target one additional creature or object within distance.
+**Sharpened Power** (1 Clarity) If the ability has any power roll, that roll gains an edge.`
 				})
 			]
 		},

@@ -262,31 +262,26 @@ export const AbilityModal = (props: Props) => {
 		}
 	};
 
-	try {
-		return (
-			<Modal
-				toolbar={
-					props.updateHero ?
-						<div style={{ width: '100%', textAlign: 'center' }}>
-							<Segmented
-								name='tabs'
-								options={[ 'Ability Card', 'Customize' ]}
-								value={page}
-								onChange={setPage}
-							/>
-						</div>
-						: null
-				}
-				content={
-					<div className='ability-modal'>
-						{getContent()}
+	return (
+		<Modal
+			toolbar={
+				props.updateHero ?
+					<div style={{ width: '100%', textAlign: 'center' }}>
+						<Segmented
+							name='tabs'
+							options={[ 'Ability Card', 'Customize' ]}
+							value={page}
+							onChange={setPage}
+						/>
 					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+					: null
+			}
+			content={
+				<div className='ability-modal'>
+					{getContent()}
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

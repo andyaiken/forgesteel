@@ -34,61 +34,56 @@ export const ElementSelectModal = (props: Props) => {
 		setCustomElement(copy);
 	};
 
-	try {
-		const elements = props.elements
-			.filter(e => Utils.textMatches([
-				e.name,
-				e.description
-			], searchTerm));
+	const elements = props.elements
+		.filter(e => Utils.textMatches([
+			e.name,
+			e.description
+		], searchTerm));
 
-		return (
-			<Modal
-				toolbar={
-					<>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-					</>
-				}
-				content={
-					<div className='element-select-modal'>
+	return (
+		<Modal
+			toolbar={
+				<>
+					<Input
+						name='search'
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
+				</>
+			}
+			content={
+				<div className='element-select-modal'>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							elements.map(e => (
+								<SelectablePanel key={e.id} onSelect={() => props.onSelect(e)}>
+									<HeaderText>{e.name}</HeaderText>
+									<Markdown text={e.description} />
+								</SelectablePanel>
+							))
+						}
+					</Space>
+					<Divider />
+					<Expander title='Add a custom element'>
 						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								elements.map(e => (
-									<SelectablePanel key={e.id} onSelect={() => props.onSelect(e)}>
-										<HeaderText>{e.name}</HeaderText>
-										<Markdown text={e.description} />
-									</SelectablePanel>
-								))
-							}
+							<HeaderText>Name</HeaderText>
+							<Input
+								placeholder='Name'
+								allowClear={true}
+								value={customElement.name}
+								onChange={e => setCustomName(e.target.value)}
+							/>
+							<HeaderText>Description</HeaderText>
+							<MultiLine value={customElement.description} onChange={setCustomDescription} />
+							<Button block={true} disabled={!customElement.name} onClick={() => props.onSelect(customElement)}>Select</Button>
 						</Space>
-						<Divider />
-						<Expander title='Add a custom element'>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								<HeaderText>Name</HeaderText>
-								<Input
-									placeholder='Name'
-									allowClear={true}
-									value={customElement.name}
-									onChange={e => setCustomName(e.target.value)}
-								/>
-								<HeaderText>Description</HeaderText>
-								<MultiLine value={customElement.description} onChange={setCustomDescription} />
-								<Button block={true} disabled={!customElement.name} onClick={() => props.onSelect(customElement)}>Select</Button>
-							</Space>
-						</Expander>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+					</Expander>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

@@ -118,6 +118,9 @@ export default tseslint.config(
 				}
 			],
 			// Off
+			'react-hooks/set-state-in-effect': [
+				'off'
+			],
 			'@stylistic/brace-style': [
 				'off'
 			],

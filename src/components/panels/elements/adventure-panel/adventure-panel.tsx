@@ -88,38 +88,33 @@ export const AdventurePanel = (props: Props) => {
 		);
 	};
 
-	try {
-		if (props.mode !== PanelMode.Full) {
-			return (
-				<div className='adventure-panel compact'>
-					<HeaderText level={1}>{props.adventure.name || 'Unnamed Adventure'}</HeaderText>
-					<Markdown text={props.adventure.description} />
-				</div>
-			);
-		}
-
+	if (props.mode !== PanelMode.Full) {
 		return (
-			<ErrorBoundary>
-				<div className='adventure-panel' id={props.adventure.id}>
-					<div className='plot-workspace'>
-						<PlotGraphPanel
-							label={currentPlot === props.adventure.plot ? props.adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
-							plot={currentPlot}
-							adventure={props.adventure}
-							selectedPlot={selectedPlot || undefined}
-							onSelect={setSelectedPlot}
-							onOpen={plot => {
-								setSelectedPlot(null);
-								setCurrentPlot(plot);
-							}}
-						/>
-					</div>
-					{getPreview()}
-				</div>
-			</ErrorBoundary>
+			<div className='adventure-panel compact'>
+				<HeaderText level={1}>{props.adventure.name || 'Unnamed Adventure'}</HeaderText>
+				<Markdown text={props.adventure.description} />
+			</div>
 		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
 	}
+
+	return (
+		<ErrorBoundary>
+			<div className='adventure-panel' id={props.adventure.id}>
+				<div className='plot-workspace'>
+					<PlotGraphPanel
+						label={currentPlot === props.adventure.plot ? props.adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
+						plot={currentPlot}
+						adventure={props.adventure}
+						selectedPlot={selectedPlot || undefined}
+						onSelect={setSelectedPlot}
+						onOpen={plot => {
+							setSelectedPlot(null);
+							setCurrentPlot(plot);
+						}}
+					/>
+				</div>
+				{getPreview()}
+			</div>
+		</ErrorBoundary>
+	);
 };

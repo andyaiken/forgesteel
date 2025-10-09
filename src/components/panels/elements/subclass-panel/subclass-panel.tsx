@@ -20,36 +20,31 @@ interface Props {
 }
 
 export const SubclassPanel = (props: Props) => {
-	try {
-		if (props.mode !== PanelMode.Full) {
-			return (
-				<div className='subclass-panel compact'>
-					<HeaderText>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
-					<Markdown text={props.subclass.description} />
-				</div>
-			);
-		}
-
+	if (props.mode !== PanelMode.Full) {
 		return (
-			<ErrorBoundary>
-				<div className='subclass-panel' id={props.subclass.id}>
-					<HeaderText level={1}>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
-					<Markdown text={props.subclass.description} />
-					{
-						props.subclass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
-							<Space key={lvl.level} direction='vertical'>
-								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
-								<div className='features'>
-									{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
-								</div>
-							</Space>
-						))
-					}
-				</div>
-			</ErrorBoundary>
+			<div className='subclass-panel compact'>
+				<HeaderText>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
+				<Markdown text={props.subclass.description} />
+			</div>
 		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
 	}
+
+	return (
+		<ErrorBoundary>
+			<div className='subclass-panel' id={props.subclass.id}>
+				<HeaderText level={1}>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
+				<Markdown text={props.subclass.description} />
+				{
+					props.subclass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
+						<Space key={lvl.level} direction='vertical'>
+							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
+							<div className='features'>
+								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+							</div>
+						</Space>
+					))
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

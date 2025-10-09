@@ -28,54 +28,49 @@ interface Props {
 export const SummonSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	try {
-		const summons = props.summons
-			.filter(s => Utils.textMatches([
-				s.monster.name,
-				s.monster.description,
-				...s.monster.keywords
-			], searchTerm));
+	const summons = props.summons
+		.filter(s => Utils.textMatches([
+			s.monster.name,
+			s.monster.description,
+			...s.monster.keywords
+		], searchTerm));
 
-		const sortedSummons = Collections.sort(summons, s => MonsterLogic.getMonsterName(s.monster));
+	const sortedSummons = Collections.sort(summons, s => MonsterLogic.getMonsterName(s.monster));
 
-		return (
-			<Modal
-				toolbar={
-					<Input
-						name='search'
-						placeholder='Search'
-						allowClear={true}
-						value={searchTerm}
-						suffix={<SearchOutlined />}
-						onChange={e => setSearchTerm(e.target.value)}
-					/>
-				}
-				content={
-					<div className='summon-select-modal'>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								sortedSummons.map(s => (
-									<SelectablePanel
-										key={s.id}
-										onSelect={() => props.onSelect(s)}
-									>
-										<MonsterPanel monster={SummonLogic.getSummonedMonster(s.monster, props.hero)} summon={s.info} options={props.options} mode={PanelMode.Full} />
-									</SelectablePanel>
-								))
-							}
-							{
-								sortedSummons.length === 0 ?
-									<Empty />
-									: null
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			toolbar={
+				<Input
+					name='search'
+					placeholder='Search'
+					allowClear={true}
+					value={searchTerm}
+					suffix={<SearchOutlined />}
+					onChange={e => setSearchTerm(e.target.value)}
+				/>
+			}
+			content={
+				<div className='summon-select-modal'>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							sortedSummons.map(s => (
+								<SelectablePanel
+									key={s.id}
+									onSelect={() => props.onSelect(s)}
+								>
+									<MonsterPanel monster={SummonLogic.getSummonedMonster(s.monster, props.hero)} summon={s.info} options={props.options} mode={PanelMode.Full} />
+								</SelectablePanel>
+							))
+						}
+						{
+							sortedSummons.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

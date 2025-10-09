@@ -1972,127 +1972,122 @@ export const FeatureEditPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		const featureTypes = [
-			FeatureType.Text,
-			FeatureType.Ability,
-			FeatureType.AbilityCost,
-			FeatureType.AbilityDamage,
-			FeatureType.AbilityDistance,
-			FeatureType.AncestryChoice,
-			FeatureType.AncestryFeatureChoice,
-			FeatureType.Bonus,
-			FeatureType.CharacteristicBonus,
-			FeatureType.Choice,
-			FeatureType.ClassAbility,
-			FeatureType.Companion,
-			FeatureType.ConditionImmunity,
-			FeatureType.DamageModifier,
-			FeatureType.Domain,
-			FeatureType.DomainFeature,
-			FeatureType.Follower,
-			FeatureType.HeroicResource,
-			FeatureType.HeroicResourceGain,
-			FeatureType.ItemChoice,
-			FeatureType.Kit,
-			FeatureType.Language,
-			FeatureType.LanguageChoice,
-			FeatureType.MovementMode,
-			FeatureType.Multiple,
-			FeatureType.Package,
-			FeatureType.PackageContent,
-			FeatureType.Perk,
-			FeatureType.Proficiency,
-			FeatureType.Size,
-			FeatureType.SkillChoice,
-			FeatureType.Speed,
-			FeatureType.Summon,
-			FeatureType.TaggedFeature,
-			FeatureType.TaggedFeatureChoice,
-			FeatureType.TitleChoice
-		];
+	const featureTypes = [
+		FeatureType.Text,
+		FeatureType.Ability,
+		FeatureType.AbilityCost,
+		FeatureType.AbilityDamage,
+		FeatureType.AbilityDistance,
+		FeatureType.AncestryChoice,
+		FeatureType.AncestryFeatureChoice,
+		FeatureType.Bonus,
+		FeatureType.CharacteristicBonus,
+		FeatureType.Choice,
+		FeatureType.ClassAbility,
+		FeatureType.Companion,
+		FeatureType.ConditionImmunity,
+		FeatureType.DamageModifier,
+		FeatureType.Domain,
+		FeatureType.DomainFeature,
+		FeatureType.Follower,
+		FeatureType.HeroicResource,
+		FeatureType.HeroicResourceGain,
+		FeatureType.ItemChoice,
+		FeatureType.Kit,
+		FeatureType.Language,
+		FeatureType.LanguageChoice,
+		FeatureType.MovementMode,
+		FeatureType.Multiple,
+		FeatureType.Package,
+		FeatureType.PackageContent,
+		FeatureType.Perk,
+		FeatureType.Proficiency,
+		FeatureType.Size,
+		FeatureType.SkillChoice,
+		FeatureType.Speed,
+		FeatureType.Summon,
+		FeatureType.TaggedFeature,
+		FeatureType.TaggedFeatureChoice,
+		FeatureType.TitleChoice
+	];
 
-		return (
-			<ErrorBoundary>
-				<div className='feature-edit-panel'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Feature',
-								children: (
-									<div>
-										<HeaderText>Name</HeaderText>
-										<Input
-											status={feature.name === '' ? 'warning' : ''}
-											placeholder='Name'
-											allowClear={true}
-											value={feature.name}
-											onChange={e => setName(e.target.value)}
-										/>
-										<HeaderText>Description</HeaderText>
-										<MultiLine value={feature.description} onChange={setDescription} />
-									</div>
-								)
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: (
-									<div>
-										{
-											(props.allowedTypes || featureTypes).length !== 1 ?
-												<>
-													<HeaderText>Feature Type</HeaderText>
-													<Flex align='center' justify='space-between'>
-														<Field label={feature.type} value={FeatureLogic.getFeatureTypeDescription(feature.type)} />
-														<Button type='text' icon={<EditOutlined />} onClick={() => setTypeSelectorVisible(true)} />
-													</Flex>
-												</>
-												: null
-										}
-										{
-											(feature as Perk).list !== undefined ?
-												<div>
-													<HeaderText>Perk List</HeaderText>
-													<Select
-														style={{ width: '100%' }}
-														placeholder='Select list'
-														options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(o => ({ value: o }))}
-														optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-														showSearch={true}
-														filterOption={(input, option) => {
-															const strings = option ?
-																[
-																	option.value
-																]
-																: [];
-															return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-														}}
-														value={(feature as Perk).list}
-														onChange={setList}
-													/>
-												</div>
-												: null
-										}
-										{getDataSection()}
-									</div>
-								)
-							}
-						]}
-					/>
-				</div>
-				<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} width='500px'>
-					<FeatureTypeSelectModal
-						types={props.allowedTypes || featureTypes}
-						onSelect={setType}
-						onClose={() => setTypeSelectorVisible(false)}
-					/>
-				</Drawer>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className='feature-edit-panel'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Feature',
+							children: (
+								<div>
+									<HeaderText>Name</HeaderText>
+									<Input
+										status={feature.name === '' ? 'warning' : ''}
+										placeholder='Name'
+										allowClear={true}
+										value={feature.name}
+										onChange={e => setName(e.target.value)}
+									/>
+									<HeaderText>Description</HeaderText>
+									<MultiLine value={feature.description} onChange={setDescription} />
+								</div>
+							)
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: (
+								<div>
+									{
+										(props.allowedTypes || featureTypes).length !== 1 ?
+											<>
+												<HeaderText>Feature Type</HeaderText>
+												<Flex align='center' justify='space-between'>
+													<Field label={feature.type} value={FeatureLogic.getFeatureTypeDescription(feature.type)} />
+													<Button type='text' icon={<EditOutlined />} onClick={() => setTypeSelectorVisible(true)} />
+												</Flex>
+											</>
+											: null
+									}
+									{
+										(feature as Perk).list !== undefined ?
+											<div>
+												<HeaderText>Perk List</HeaderText>
+												<Select
+													style={{ width: '100%' }}
+													placeholder='Select list'
+													options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(o => ({ value: o }))}
+													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+													showSearch={true}
+													filterOption={(input, option) => {
+														const strings = option ?
+															[
+																option.value
+															]
+															: [];
+														return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+													}}
+													value={(feature as Perk).list}
+													onChange={setList}
+												/>
+											</div>
+											: null
+									}
+									{getDataSection()}
+								</div>
+							)
+						}
+					]}
+				/>
+			</div>
+			<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} width='500px'>
+				<FeatureTypeSelectModal
+					types={props.allowedTypes || featureTypes}
+					onSelect={setType}
+					onClose={() => setTypeSelectorVisible(false)}
+				/>
+			</Drawer>
+		</ErrorBoundary>
+	);
 };

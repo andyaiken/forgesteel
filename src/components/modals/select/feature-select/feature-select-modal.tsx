@@ -24,61 +24,56 @@ interface Props {
 export const FeatureSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	try {
-		const features = props.features
-			.filter(f => Utils.textMatches([
-				f.feature.name,
-				f.feature.description
-			], searchTerm));
+	const features = props.features
+		.filter(f => Utils.textMatches([
+			f.feature.name,
+			f.feature.description
+		], searchTerm));
 
-		const showCosts = props.features.some(f => f.value > 1);
+	const showCosts = props.features.some(f => f.value > 1);
 
-		return (
-			<Modal
-				toolbar={
-					<>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-					</>
-				}
-				content={
-					<div className='feature-select-modal'>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								features.map(f => (
-									<SelectablePanel
-										key={f.feature.id}
-										onSelect={() => props.onSelect(f.feature)}
-									>
-										<FeaturePanel
-											feature={f.feature}
-											hero={props.hero}
-											cost={showCosts ? f.value : undefined}
-											mode={PanelMode.Full}
-											options={props.options}
-										/>
-									</SelectablePanel>
-								))
-							}
-							{
-								features.length === 0 ?
-									<Empty />
-									: null
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			toolbar={
+				<>
+					<Input
+						name='search'
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
+				</>
+			}
+			content={
+				<div className='feature-select-modal'>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							features.map(f => (
+								<SelectablePanel
+									key={f.feature.id}
+									onSelect={() => props.onSelect(f.feature)}
+								>
+									<FeaturePanel
+										feature={f.feature}
+										hero={props.hero}
+										cost={showCosts ? f.value : undefined}
+										mode={PanelMode.Full}
+										options={props.options}
+									/>
+								</SelectablePanel>
+							))
+						}
+						{
+							features.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

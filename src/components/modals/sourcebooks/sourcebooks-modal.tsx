@@ -26,106 +26,101 @@ export const SourcebooksModal = (props: Props) => {
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(Utils.copy(props.homebrewSourcebooks));
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(Utils.copy(props.hiddenSourcebookIDs));
 
-	try {
-		const createSourcebook = () => {
-			const copy = Utils.copy(homebrewSourcebooks);
-			const sourcebook = FactoryLogic.createSourcebook();
-			copy.push(sourcebook);
+	const createSourcebook = () => {
+		const copy = Utils.copy(homebrewSourcebooks);
+		const sourcebook = FactoryLogic.createSourcebook();
+		copy.push(sourcebook);
+		setHomebrewSourcebooks(copy);
+		props.onHomebrewSourcebookChange(copy);
+	};
+
+	const changeSourcebook = (sourcebook: Sourcebook) => {
+		const copy = Utils.copy(homebrewSourcebooks);
+		const index = copy.findIndex(s => s.id === sourcebook.id);
+		if (index !== -1) {
+			copy[index] = sourcebook;
 			setHomebrewSourcebooks(copy);
 			props.onHomebrewSourcebookChange(copy);
-		};
+		}
+	};
 
-		const changeSourcebook = (sourcebook: Sourcebook) => {
-			const copy = Utils.copy(homebrewSourcebooks);
-			const index = copy.findIndex(s => s.id === sourcebook.id);
-			if (index !== -1) {
-				copy[index] = sourcebook;
-				setHomebrewSourcebooks(copy);
-				props.onHomebrewSourcebookChange(copy);
+	const deleteSourcebook = (sourcebook: Sourcebook) => {
+		const copy = Utils.copy(homebrewSourcebooks.filter(s => s.id !== sourcebook.id));
+		setHomebrewSourcebooks(copy);
+		props.onHomebrewSourcebookChange(copy);
+	};
+
+	const importSourcebook = (sourcebook: Sourcebook) => {
+		const copy = Utils.copy(homebrewSourcebooks);
+		copy.push(sourcebook);
+		setHomebrewSourcebooks(copy);
+		props.onHomebrewSourcebookChange(copy);
+	};
+
+	const setVisibility = (sourcebook: Sourcebook, visible: boolean) => {
+		if (visible) {
+			const copy = Utils.copy(hiddenSourcebookIDs.filter(id => id !== sourcebook.id));
+			setHiddenSourcebookIDs(copy);
+			props.onHiddenSourcebookIDsChange(copy);
+		} else {
+			const copy = Utils.copy(hiddenSourcebookIDs);
+			copy.push(sourcebook.id);
+			setHiddenSourcebookIDs(copy);
+			props.onHiddenSourcebookIDsChange(copy);
+		}
+	};
+
+	return (
+		<Modal
+			content={
+				<div className='sourcebooks-modal'>
+					<HeaderText
+						level={1}
+						extra={
+							<Flex>
+								<Button type='text' title='Create a new sourcebook' icon={<PlusOutlined />} onClick={createSourcebook} />
+								<Upload
+									style={{ width: '100%' }}
+									accept='.drawsteel-sourcebook,.ds-sourcebook'
+									showUploadList={false}
+									beforeUpload={file => {
+										file
+											.text()
+											.then(json => {
+												const sourcebook = JSON.parse(json) as Sourcebook;
+												sourcebook.id = Utils.guid();
+												SourcebookUpdateLogic.updateSourcebook(sourcebook);
+												importSourcebook(sourcebook);
+											});
+										return false;
+									}}
+								>
+									<Button type='text' title='Import a sourcebook' icon={<DownloadOutlined />} />
+								</Upload>
+							</Flex>
+						}
+					>
+						Sourcebooks
+					</HeaderText>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
+								<SourcebookPanel
+									key={s.id}
+									sourcebook={s}
+									sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
+									visible={!hiddenSourcebookIDs.includes(s.id)}
+									heroes={props.heroes}
+									onSetVisible={setVisibility}
+									onChange={changeSourcebook}
+									onDelete={deleteSourcebook}
+								/>
+							))
+						}
+					</Space>
+				</div>
 			}
-		};
-
-		const deleteSourcebook = (sourcebook: Sourcebook) => {
-			const copy = Utils.copy(homebrewSourcebooks.filter(s => s.id !== sourcebook.id));
-			setHomebrewSourcebooks(copy);
-			props.onHomebrewSourcebookChange(copy);
-		};
-
-		const importSourcebook = (sourcebook: Sourcebook) => {
-			const copy = Utils.copy(homebrewSourcebooks);
-			copy.push(sourcebook);
-			setHomebrewSourcebooks(copy);
-			props.onHomebrewSourcebookChange(copy);
-		};
-
-		const setVisibility = (sourcebook: Sourcebook, visible: boolean) => {
-			if (visible) {
-				const copy = Utils.copy(hiddenSourcebookIDs.filter(id => id !== sourcebook.id));
-				setHiddenSourcebookIDs(copy);
-				props.onHiddenSourcebookIDsChange(copy);
-			} else {
-				const copy = Utils.copy(hiddenSourcebookIDs);
-				copy.push(sourcebook.id);
-				setHiddenSourcebookIDs(copy);
-				props.onHiddenSourcebookIDsChange(copy);
-			}
-		};
-
-		return (
-			<Modal
-				content={
-					<div className='sourcebooks-modal'>
-						<HeaderText
-							level={1}
-							extra={
-								<Flex>
-									<Button type='text' title='Create a new sourcebook' icon={<PlusOutlined />} onClick={createSourcebook} />
-									<Upload
-										style={{ width: '100%' }}
-										accept='.drawsteel-sourcebook,.ds-sourcebook'
-										showUploadList={false}
-										beforeUpload={file => {
-											file
-												.text()
-												.then(json => {
-													const sourcebook = JSON.parse(json) as Sourcebook;
-													sourcebook.id = Utils.guid();
-													SourcebookUpdateLogic.updateSourcebook(sourcebook);
-													importSourcebook(sourcebook);
-												});
-											return false;
-										}}
-									>
-										<Button type='text' title='Import a sourcebook' icon={<DownloadOutlined />} />
-									</Upload>
-								</Flex>
-							}
-						>
-							Sourcebooks
-						</HeaderText>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
-									<SourcebookPanel
-										key={s.id}
-										sourcebook={s}
-										sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
-										visible={!hiddenSourcebookIDs.includes(s.id)}
-										heroes={props.heroes}
-										onSetVisible={setVisibility}
-										onChange={changeSourcebook}
-										onDelete={deleteSourcebook}
-									/>
-								))
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+			onClose={props.onClose}
+		/>
+	);
 };

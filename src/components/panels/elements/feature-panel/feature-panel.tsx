@@ -692,87 +692,82 @@ export const FeaturePanel = (props: Props) => {
 			&& (AbilityLogic.getTextEffect(props.feature.description, props.hero) !== props.feature.description);
 	};
 
-	try {
-		if ((props.feature.type === FeatureType.Ability) || (props.feature.type === FeatureType.MaliceAbility)) {
-			return (
-				<AbilityPanel
-					ability={props.feature.data.ability}
-					hero={props.hero}
-					cost={props.cost}
-					repeatable={props.repeatable}
-					mode={props.mode}
-					tags={getTags()}
-				/>
-			);
-		}
-
-		if (props.feature.type === FeatureType.AncestryFeatureChoice) {
-			if (props.feature.data.selected) {
-				return (
-					<FeaturePanel feature={props.feature.data.selected} options={props.options} style={props.style} />
-				);
-			}
-		}
-
-		if (props.feature.type === FeatureType.Follower) {
-			return (
-				<FollowerPanel follower={props.feature.data.follower} mode={PanelMode.Full} />
-			);
-		}
-
-		let customization: AbilityCustomization | null = null;
-		if (props.hero) {
-			customization = props.hero.abilityCustomizations.find(ac => ac.abilityID === props.feature.id) || null;
-		}
-
+	if ((props.feature.type === FeatureType.Ability) || (props.feature.type === FeatureType.MaliceAbility)) {
 		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined} style={props.style}>
-					<HeaderText
-						ribbon={
-							props.cost === 'signature' ?
-								<Pill>Signature</Pill>
-								:
-								props.cost ?
-									<ResourcePill value={props.cost} repeatable={props.repeatable} />
-									: null
-						}
-						tags={getTags()}
-						extra={
-							autoCalcAvailable() ?
-								<Button
-									type='text'
-									title='Auto-calculate damage, potency, etc'
-									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-								/>
+			<AbilityPanel
+				ability={props.feature.data.ability}
+				hero={props.hero}
+				cost={props.cost}
+				repeatable={props.repeatable}
+				mode={props.mode}
+				tags={getTags()}
+			/>
+		);
+	}
+
+	if (props.feature.type === FeatureType.AncestryFeatureChoice) {
+		if (props.feature.data.selected) {
+			return (
+				<FeaturePanel feature={props.feature.data.selected} options={props.options} style={props.style} />
+			);
+		}
+	}
+
+	if (props.feature.type === FeatureType.Follower) {
+		return (
+			<FollowerPanel follower={props.feature.data.follower} mode={PanelMode.Full} />
+		);
+	}
+
+	let customization: AbilityCustomization | null = null;
+	if (props.hero) {
+		customization = props.hero.abilityCustomizations.find(ac => ac.abilityID === props.feature.id) || null;
+	}
+
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined} style={props.style}>
+				<HeaderText
+					ribbon={
+						props.cost === 'signature' ?
+							<Pill>Signature</Pill>
+							:
+							props.cost ?
+								<ResourcePill value={props.cost} repeatable={props.repeatable} />
 								: null
-						}
-					>
-						{customization?.name || props.feature.name || 'Unnamed Feature'}
-					</HeaderText>
-					<Markdown
-						text={
-							(props.feature.type === FeatureType.Text) && autoCalc && props.hero ?
-								AbilityLogic.getTextEffect(customization?.description || props.feature.description, props.hero)
-								:
-								(customization?.description || props.feature.description)
-						}
-					/>
-					{props.mode === PanelMode.Full ? getInformation() : null}
-					{
-						customization && customization.notes ?
-							<Field
-								label='Notes'
-								value={<Markdown text={customization.notes} useSpan={true} />}
+					}
+					tags={getTags()}
+					extra={
+						autoCalcAvailable() ?
+							<Button
+								type='text'
+								title='Auto-calculate damage, potency, etc'
+								icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+								onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
 							/>
 							: null
 					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				>
+					{customization?.name || props.feature.name || 'Unnamed Feature'}
+				</HeaderText>
+				<Markdown
+					text={
+						(props.feature.type === FeatureType.Text) && autoCalc && props.hero ?
+							AbilityLogic.getTextEffect(customization?.description || props.feature.description, props.hero)
+							:
+							(customization?.description || props.feature.description)
+					}
+				/>
+				{props.mode === PanelMode.Full ? getInformation() : null}
+				{
+					customization && customization.notes ?
+						<Field
+							label='Notes'
+							value={<Markdown text={customization.notes} useSpan={true} />}
+						/>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

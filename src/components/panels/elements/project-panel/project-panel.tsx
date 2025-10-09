@@ -72,127 +72,122 @@ export const ProjectPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		let itemOK = true;
-		if (project.itemPrerequisites && project.progress && !project.progress.prerequisites) {
-			itemOK = false;
-		}
-		let sourceOK = true;
-		if (project.source && project.progress && !project.progress.source) {
-			sourceOK = false;
+	let itemOK = true;
+	if (project.itemPrerequisites && project.progress && !project.progress.prerequisites) {
+		itemOK = false;
+	}
+	let sourceOK = true;
+	if (project.source && project.progress && !project.progress.source) {
+		sourceOK = false;
+	}
+
+	const getProgress = () => {
+		if (!project.progress || !props.hero) {
+			return null;
 		}
 
-		const getProgress = () => {
-			if (!project.progress || !props.hero) {
-				return null;
+		const follower = HeroLogic.getFollowers(props.hero).find(f => f.id === project.progress!.followerID);
+
+		const getChar = (characteristic: Characteristic) => {
+			if (!follower) {
+				return 0;
 			}
 
-			const follower = HeroLogic.getFollowers(props.hero).find(f => f.id === project.progress!.followerID);
-
-			const getChar = (characteristic: Characteristic) => {
-				if (!follower) {
-					return 0;
-				}
-
-				const c = follower.characteristics.find(ch => ch.characteristic === characteristic);
-				return c ? c.value : 0;
-			};
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{
-						HeroLogic.getFollowers(props.hero).length > 0 ?
-							<Select
-								style={{ width: '100%' }}
-								placeholder='Choose a follower'
-								allowClear={true}
-								options={HeroLogic.getFollowers(props.hero).map(f => ({ value: f.id, label: <div className='ds-text'>{f.name}</div> }))}
-								value={project.progress.followerID}
-								onChange={setFollowerID}
-							/>
-							: null
-					}
-					{
-						follower ?
-							<div>
-								<HeaderText tags={[ follower.type ]}>{follower.name}</HeaderText>
-								<Field label='Characteristics' value={`Might ${getChar(Characteristic.Might)}, Agility ${getChar(Characteristic.Agility)}, Reason ${getChar(Characteristic.Reason)}, Intuition ${getChar(Characteristic.Intuition)}, Presence ${getChar(Characteristic.Presence)}`} />
-								<Field label='Skills' value={follower.skills.join(', ')} />
-								<Field label='Languages' value={follower.languages.join(', ')} />
-							</div>
-							: null
-					}
-					{
-						itemOK && sourceOK ?
-							<NumberSpin
-								label='Progress'
-								min={0}
-								max={project.goal || undefined}
-								steps={[ 1, 10 ]}
-								value={project.progress.points}
-								suffix={props.project.goal ? `/ ${props.project.goal}` : undefined}
-								onChange={setPoints}
-							/>
-							: null
-					}
-					{
-						itemOK && sourceOK && (project.goal > 0) ?
-							<div className='project-progress-gauge'>
-								<Progress
-									type='dashboard'
-									percent={100 * project.progress.points / project.goal}
-									format={value => `${Math.round(value || 0)}%`}
-								/>
-							</div>
-							: null
-					}
-				</Space>
-			);
+			const c = follower.characteristics.find(ch => ch.characteristic === characteristic);
+			return c ? c.value : 0;
 		};
 
 		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'project-panel' : 'project-panel compact'} id={props.mode === PanelMode.Full ? props.project.id : undefined}>
-					<HeaderText
-						level={1}
-						extra={
-							project.isCustom && (props.mode === PanelMode.Full) ?
-								<Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
-								: null
-						}
-					>
-						{props.project.name || 'Unnamed Project'}
-					</HeaderText>
-					<Markdown text={props.project.description} />
-					{
-						(props.mode === PanelMode.Full) && !editing ?
-							<>
-								{project.itemPrerequisites ? <Field label='Item Prerequisites' value={props.project.itemPrerequisites} /> : null}
-								{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
-								{project.source ? <Field label='Source' value={props.project.source} /> : null}
-								{project.source && project.progress ? <Toggle label='Obtained Source' value={project.progress.source} onChange={setSource} /> : null}
-								<Field label='Characteristic' value={props.project.characteristic.length === 5 ? 'highest characteristic' : props.project.characteristic.join(' or ')} />
-								<Field label='Goal' value={props.project.goal || '(varies)'} />
-								<Markdown text={props.project.effect} />
-								{project.progress ? <Divider /> : null}
-								{getProgress()}
-							</>
-							: null
-					}
-					{
-						(props.mode === PanelMode.Full) && editing ?
-							<ProjectEditPanel
-								project={project}
-								includeNameAndDescription={true}
-								onChange={onChange}
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					HeroLogic.getFollowers(props.hero).length > 0 ?
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Choose a follower'
+							allowClear={true}
+							options={HeroLogic.getFollowers(props.hero).map(f => ({ value: f.id, label: <div className='ds-text'>{f.name}</div> }))}
+							value={project.progress.followerID}
+							onChange={setFollowerID}
+						/>
+						: null
+				}
+				{
+					follower ?
+						<div>
+							<HeaderText tags={[ follower.type ]}>{follower.name}</HeaderText>
+							<Field label='Characteristics' value={`Might ${getChar(Characteristic.Might)}, Agility ${getChar(Characteristic.Agility)}, Reason ${getChar(Characteristic.Reason)}, Intuition ${getChar(Characteristic.Intuition)}, Presence ${getChar(Characteristic.Presence)}`} />
+							<Field label='Skills' value={follower.skills.join(', ')} />
+							<Field label='Languages' value={follower.languages.join(', ')} />
+						</div>
+						: null
+				}
+				{
+					itemOK && sourceOK ?
+						<NumberSpin
+							label='Progress'
+							min={0}
+							max={project.goal || undefined}
+							steps={[ 1, 10 ]}
+							value={project.progress.points}
+							suffix={props.project.goal ? `/ ${props.project.goal}` : undefined}
+							onChange={setPoints}
+						/>
+						: null
+				}
+				{
+					itemOK && sourceOK && (project.goal > 0) ?
+						<div className='project-progress-gauge'>
+							<Progress
+								type='dashboard'
+								percent={100 * project.progress.points / project.goal}
+								format={value => `${Math.round(value || 0)}%`}
 							/>
+						</div>
+						: null
+				}
+			</Space>
+		);
+	};
+
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'project-panel' : 'project-panel compact'} id={props.mode === PanelMode.Full ? props.project.id : undefined}>
+				<HeaderText
+					level={1}
+					extra={
+						project.isCustom && (props.mode === PanelMode.Full) ?
+							<Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
 							: null
 					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				>
+					{props.project.name || 'Unnamed Project'}
+				</HeaderText>
+				<Markdown text={props.project.description} />
+				{
+					(props.mode === PanelMode.Full) && !editing ?
+						<>
+							{project.itemPrerequisites ? <Field label='Item Prerequisites' value={props.project.itemPrerequisites} /> : null}
+							{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
+							{project.source ? <Field label='Source' value={props.project.source} /> : null}
+							{project.source && project.progress ? <Toggle label='Obtained Source' value={project.progress.source} onChange={setSource} /> : null}
+							<Field label='Characteristic' value={props.project.characteristic.length === 5 ? 'highest characteristic' : props.project.characteristic.join(' or ')} />
+							<Field label='Goal' value={props.project.goal || '(varies)'} />
+							<Markdown text={props.project.effect} />
+							{project.progress ? <Divider /> : null}
+							{getProgress()}
+						</>
+						: null
+				}
+				{
+					(props.mode === PanelMode.Full) && editing ?
+						<ProjectEditPanel
+							project={project}
+							includeNameAndDescription={true}
+							onChange={onChange}
+						/>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

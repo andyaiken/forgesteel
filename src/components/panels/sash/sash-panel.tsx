@@ -7,14 +7,9 @@ interface Props {
 }
 
 export const SashPanel = (props: Props) => {
-	try {
-		return (
-			<ErrorBoundary>
-				<div className={`sash-panel type-${props.monogram.toLowerCase()}`}>{props.monogram}</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className={`sash-panel type-${props.monogram.toLowerCase()}`}>{props.monogram}</div>
+		</ErrorBoundary>
+	);
 };

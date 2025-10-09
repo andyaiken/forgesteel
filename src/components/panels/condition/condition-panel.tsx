@@ -39,50 +39,45 @@ export const ConditionPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='condition-panel'>
-					<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
-						{
-							condition.type === ConditionType.Custom ?
-								<MultiLine placeholder='Custom Condition Text' value={condition.text} onChange={setConditionText} />
-								: null
-						}
-						{
-							condition.type === ConditionType.Quick ?
-								<div className='ds-text bold-text'>{condition.text}</div>
-								: null
-						}
-						{
-							(condition.type !== ConditionType.Custom) && (condition.type !== ConditionType.Quick) ?
-								<Field
-									label={condition.type}
-									value={
-										<Markdown
-											text={ConditionLogic.getDescription(condition.type)}
-											useSpan={true}
-										/>
-									}
-								/>
-								: null
-						}
-						<Segmented
-							name='endtypes'
-							block={true}
-							options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds, ConditionEndType.UntilRemoved ]}
-							value={condition.ends}
-							onChange={setConditionEndType}
-						/>
-					</Space>
-					<div className='action-buttons'>
-						<DangerButton mode='clear' onConfirm={() => props.onDelete(condition)} />
-					</div>
+	return (
+		<ErrorBoundary>
+			<div className='condition-panel'>
+				<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
+					{
+						condition.type === ConditionType.Custom ?
+							<MultiLine placeholder='Custom Condition Text' value={condition.text} onChange={setConditionText} />
+							: null
+					}
+					{
+						condition.type === ConditionType.Quick ?
+							<div className='ds-text bold-text'>{condition.text}</div>
+							: null
+					}
+					{
+						(condition.type !== ConditionType.Custom) && (condition.type !== ConditionType.Quick) ?
+							<Field
+								label={condition.type}
+								value={
+									<Markdown
+										text={ConditionLogic.getDescription(condition.type)}
+										useSpan={true}
+									/>
+								}
+							/>
+							: null
+					}
+					<Segmented
+						name='endtypes'
+						block={true}
+						options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds, ConditionEndType.UntilRemoved ]}
+						value={condition.ends}
+						onChange={setConditionEndType}
+					/>
+				</Space>
+				<div className='action-buttons'>
+					<DangerButton mode='clear' onConfirm={() => props.onDelete(condition)} />
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+			</div>
+		</ErrorBoundary>
+	);
 };

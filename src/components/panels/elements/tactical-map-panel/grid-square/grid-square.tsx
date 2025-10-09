@@ -39,28 +39,23 @@ export const GridSquarePanel = (props: Props) => {
 		}
 	};
 
-	try {
-		let className = 'grid-square-panel ' + props.display + ' ' + props.render;
-		if (props.display === TacticalMapDisplayType.DirectorEdit) {
-			className += ' selectable';
-		}
-		if (props.selected) {
-			className += ' selected';
-		}
-
-		return (
-			<ErrorBoundary>
-				<div
-					className={className}
-					style={props.style}
-					onMouseDown={mouseDown}
-					onMouseUp={mouseUp}
-					onMouseEnter={mouseEnter}
-				/>
-			</ErrorBoundary>
-		);
-	} catch (e) {
-		console.error(e);
-		return null;
+	let className = 'grid-square-panel ' + props.display + ' ' + props.render;
+	if (props.display === TacticalMapDisplayType.DirectorEdit) {
+		className += ' selectable';
 	}
+	if (props.selected) {
+		className += ' selected';
+	}
+
+	return (
+		<ErrorBoundary>
+			<div
+				className={className}
+				style={props.style}
+				onMouseDown={mouseDown}
+				onMouseUp={mouseUp}
+				onMouseEnter={mouseEnter}
+			/>
+		</ErrorBoundary>
+	);
 };

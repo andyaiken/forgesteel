@@ -22,57 +22,52 @@ interface Props {
 export const AbilitySelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	try {
-		const abilities = props.abilities
-			.filter(a => Utils.textMatches([
-				a.name,
-				a.description,
-				a.type.usage,
-				...a.keywords,
-				...a.sections.filter(s => s.type === 'text').map(s => s.text),
-				...a.sections.filter(s => s.type === 'field').map(s => s.effect)
-			], searchTerm));
+	const abilities = props.abilities
+		.filter(a => Utils.textMatches([
+			a.name,
+			a.description,
+			a.type.usage,
+			...a.keywords,
+			...a.sections.filter(s => s.type === 'text').map(s => s.text),
+			...a.sections.filter(s => s.type === 'field').map(s => s.effect)
+		], searchTerm));
 
-		return (
-			<Modal
-				toolbar={
-					<>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-					</>
-				}
-				content={
-					<div className='ability-select-modal'>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								abilities.map(a => (
-									<SelectablePanel
-										key={a.id}
-										onSelect={() => props.onSelect(a)}
-									>
-										<AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} />
-									</SelectablePanel>
-								))
-							}
-							{
-								abilities.length === 0 ?
-									<Empty />
-									: null
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			toolbar={
+				<>
+					<Input
+						name='search'
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
+				</>
+			}
+			content={
+				<div className='ability-select-modal'>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							abilities.map(a => (
+								<SelectablePanel
+									key={a.id}
+									onSelect={() => props.onSelect(a)}
+								>
+									<AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} />
+								</SelectablePanel>
+							))
+						}
+						{
+							abilities.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

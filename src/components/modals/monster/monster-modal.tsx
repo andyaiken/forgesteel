@@ -129,54 +129,49 @@ export const MonsterModal = (props: Props) => {
 		return null;
 	};
 
-	try {
-		return (
-			<Modal
-				toolbar={
-					<>
-						{
-							props.updateMonster ?
-								<Flex align='center' justify='center' style={{ width: '100%' }}>
-									<Segmented
-										name='tabs'
-										options={encounter ? [ 'Encounter', 'Stat Block', 'Malice' ] : [ 'Encounter', 'Stat Block' ]}
-										value={page}
-										onChange={setPage}
-									/>
-								</Flex>
-								: null
-						}
-						{
-							props.export ?
-								<Popover
-									trigger='click'
-									content={(
-										<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-											<Button onClick={() => props.export!('image')}>Export As Image</Button>
-											<Button onClick={() => props.export!('pdf')}>Export As PDF</Button>
-											<Button onClick={() => props.export!('json')}>Export as Data</Button>
-										</div>
-									)}
-								>
-									<Button icon={<UploadOutlined />}>
-										Export
-										<DownOutlined />
-									</Button>
-								</Popover>
-								: null
-						}
-					</>
-				}
-				content={
-					<div className='monster-modal'>
-						{getContent()}
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			toolbar={
+				<>
+					{
+						props.updateMonster ?
+							<Flex align='center' justify='center' style={{ width: '100%' }}>
+								<Segmented
+									name='tabs'
+									options={encounter ? [ 'Encounter', 'Stat Block', 'Malice' ] : [ 'Encounter', 'Stat Block' ]}
+									value={page}
+									onChange={setPage}
+								/>
+							</Flex>
+							: null
+					}
+					{
+						props.export ?
+							<Popover
+								trigger='click'
+								content={(
+									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+										<Button onClick={() => props.export!('image')}>Export As Image</Button>
+										<Button onClick={() => props.export!('pdf')}>Export As PDF</Button>
+										<Button onClick={() => props.export!('json')}>Export as Data</Button>
+									</div>
+								)}
+							>
+								<Button icon={<UploadOutlined />}>
+									Export
+									<DownOutlined />
+								</Button>
+							</Popover>
+							: null
+					}
+				</>
+			}
+			content={
+				<div className='monster-modal'>
+					{getContent()}
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

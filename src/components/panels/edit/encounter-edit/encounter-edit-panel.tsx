@@ -61,729 +61,724 @@ export const EncounterEditPanel = (props: Props) => {
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ terrainFilter, setTerrainFilter ] = useState<TerrainFilter>(FactoryLogic.createTerrainFilter());
 
-	try {
-		const getNameAndDescriptionSection = () => {
-			const setName = (value: string) => {
-				const copy = Utils.copy(encounter);
-				copy.name = value;
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const setDescription = (value: string) => {
-				const copy = Utils.copy(encounter);
-				copy.description = value;
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					<HeaderText>Name</HeaderText>
-					<Input
-						status={encounter.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-						value={encounter.name}
-						onChange={e => setName(e.target.value)}
-					/>
-					<HeaderText>Description</HeaderText>
-					<MultiLine value={encounter.description} onChange={setDescription} />
-				</Space>
-			);
+	const getNameAndDescriptionSection = () => {
+		const setName = (value: string) => {
+			const copy = Utils.copy(encounter);
+			copy.name = value;
+			setEncounter(copy);
+			props.onChange(copy);
 		};
 
-		const getMonstersSection = () => {
-			const setName = (group: EncounterGroup, value: string) => {
-				const copy = Utils.copy(encounter);
-				copy.groups.filter(g => g.id === group.id).forEach(g => g.name = value);
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const deleteGroup = (group: EncounterGroup) => {
-				const copy = Utils.copy(encounter);
-				copy.groups = copy.groups.filter(g => g.id !== group.id);
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const getSlot = (slot: EncounterSlot, group: EncounterGroup) => {
-				const setSlotCount = (groupID: string, slotID: string, value: number) => {
-					const copy = Utils.copy(encounter);
-					const group = copy.groups.find(g => g.id === groupID);
-					if (group) {
-						const slot = group.slots.find(s => s.id === slotID);
-						if (slot) {
-							slot.count = value;
-
-							if (slot.count === 0) {
-								group.slots = group.slots.filter(s => s.id !== slotID);
-							}
-						}
-
-						if (group.slots.length === 0) {
-							copy.groups = copy.groups.filter(g => g.id !== groupID);
-						}
-					}
-					setEncounter(copy);
-					props.onChange(copy);
-				};
-
-				const moveSlot = (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => {
-					const copy = Utils.copy(encounter);
-					const fromGroup = copy.groups.find(g => g.id === fromGroupID);
-					let toGroup = copy.groups.find(g => g.id === toGroupID);
-					if (!toGroup) {
-						toGroup = FactoryLogic.createEncounterGroup();
-						copy.groups.push(toGroup);
-					}
-					if (fromGroup && toGroup) {
-						const slot = fromGroup.slots.find(s => s.id === slotID);
-						if (slot) {
-							if (remove) {
-								fromGroup.slots = fromGroup.slots.filter(s => s.id !== slotID);
-							}
-							toGroup.slots.push(slot);
-						}
-					}
-					setEncounter(copy);
-					props.onChange(copy);
-				};
-
-				const setSlotAddOnIDs = (groupID: string, slotID: string, value: string[]) => {
-					const copy = Utils.copy(encounter);
-					const group = copy.groups.find(g => g.id === groupID);
-					if (group) {
-						const slot = group.slots.find(s => s.id === slotID);
-						if (slot) {
-							slot.customization.addOnIDs = value;
-						}
-					}
-					setEncounter(copy);
-					props.onChange(copy);
-				};
-
-				const setSlotLevelAdjustment = (groupID: string, slotID: string, value: number) => {
-					const copy = Utils.copy(encounter);
-					const group = copy.groups.find(g => g.id === groupID);
-					if (group) {
-						const slot = group.slots.find(s => s.id === slotID);
-						if (slot) {
-							slot.customization.levelAdjustment = value;
-						}
-					}
-					setEncounter(copy);
-					props.onChange(copy);
-				};
-
-				const setSlotConvertToSolo = (groupID: string, slotID: string, value: boolean) => {
-					const copy = Utils.copy(encounter);
-					const group = copy.groups.find(g => g.id === groupID);
-					if (group) {
-						const slot = group.slots.find(s => s.id === slotID);
-						if (slot) {
-							slot.customization.convertToSolo = value;
-						}
-					}
-					setEncounter(copy);
-					props.onChange(copy);
-				};
-
-				const addItem = (groupID: string, slotID: string, value: string) => {
-					const copy = Utils.copy(encounter);
-					const group = copy.groups.find(g => g.id === groupID);
-					if (group) {
-						const slot = group.slots.find(s => s.id === slotID);
-						if (slot) {
-							slot.customization.itemIDs.push(value);
-						}
-					}
-					setEncounter(copy);
-					props.onChange(copy);
-				};
-
-				const removeItem = (groupID: string, slotID: string, value: string) => {
-					const copy = Utils.copy(encounter);
-					const group = copy.groups.find(g => g.id === groupID);
-					if (group) {
-						const slot = group.slots.find(s => s.id === slotID);
-						if (slot) {
-							slot.customization.itemIDs = slot.customization.itemIDs.filter(id => id !== value);
-						}
-					}
-					setEncounter(copy);
-					props.onChange(copy);
-				};
-
-				return (
-					<MonsterSlotPanel
-						key={slot.id}
-						slot={slot}
-						group={group}
-						encounter={encounter}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						showMonster={props.showMonster}
-						setSlotCount={setSlotCount}
-						moveSlot={moveSlot}
-						setSlotAddOnIDs={setSlotAddOnIDs}
-						setSlotLevelAdjustment={setSlotLevelAdjustment}
-						setSlotConvertToSolo={setSlotConvertToSolo}
-						addItem={addItem}
-						removeItem={removeItem}
-					/>
-				);
-			};
-
-			const warnings = [];
-			const statblocks = Collections.distinct(encounter.groups.flatMap(g => g.slots).map(s => s.monsterID), s => s).length;
-			if (statblocks > 6) {
-				warnings.push(
-					<Alert
-						key='too-many-statblocks'
-						type='warning'
-						showIcon={true}
-						message={`You shouldn't generally have more than 6 different types of monster in an encounter (this encounter has ${statblocks}).`}
-					/>
-				);
-			}
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{warnings}
-					{
-						encounter.groups.map((group, n) => (
-							<GroupPanel
-								key={group.id}
-								group={group}
-								index={n}
-								sourcebooks={props.sourcebooks}
-								options={props.options}
-								setName={setName}
-								deleteGroup={deleteGroup}
-								getSlot={getSlot}
-							/>
-						))
-					}
-					{
-						encounter.groups.length === 0 ?
-							<div className='ds-text dimmed-text centered-text'>None</div>
-							: null
-					}
-				</Space>
-			);
+		const setDescription = (value: string) => {
+			const copy = Utils.copy(encounter);
+			copy.description = value;
+			setEncounter(copy);
+			props.onChange(copy);
 		};
 
-		const getTerrainSection = () => {
-			const getTerrain = (slot: TerrainSlot) => {
-				const setTerrainCount = (id: string, value: number) => {
-					const copy = Utils.copy(encounter);
-					const slot = copy.terrain.find(t => t.id === id);
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Name</HeaderText>
+				<Input
+					status={encounter.name === '' ? 'warning' : ''}
+					placeholder='Name'
+					allowClear={true}
+					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+					value={encounter.name}
+					onChange={e => setName(e.target.value)}
+				/>
+				<HeaderText>Description</HeaderText>
+				<MultiLine value={encounter.description} onChange={setDescription} />
+			</Space>
+		);
+	};
+
+	const getMonstersSection = () => {
+		const setName = (group: EncounterGroup, value: string) => {
+			const copy = Utils.copy(encounter);
+			copy.groups.filter(g => g.id === group.id).forEach(g => g.name = value);
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const deleteGroup = (group: EncounterGroup) => {
+			const copy = Utils.copy(encounter);
+			copy.groups = copy.groups.filter(g => g.id !== group.id);
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const getSlot = (slot: EncounterSlot, group: EncounterGroup) => {
+			const setSlotCount = (groupID: string, slotID: string, value: number) => {
+				const copy = Utils.copy(encounter);
+				const group = copy.groups.find(g => g.id === groupID);
+				if (group) {
+					const slot = group.slots.find(s => s.id === slotID);
 					if (slot) {
 						slot.count = value;
 
 						if (slot.count === 0) {
-							copy.terrain = copy.terrain.filter(t => t.id !== id);
+							group.slots = group.slots.filter(s => s.id !== slotID);
 						}
 					}
-					setEncounter(copy);
-					props.onChange(copy);
-				};
 
-				const setTerrainUpgradeIDs = (id: string, value: string[]) => {
-					const copy = Utils.copy(encounter);
-					const slot = copy.terrain.find(t => t.id === id);
+					if (group.slots.length === 0) {
+						copy.groups = copy.groups.filter(g => g.id !== groupID);
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const moveSlot = (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => {
+				const copy = Utils.copy(encounter);
+				const fromGroup = copy.groups.find(g => g.id === fromGroupID);
+				let toGroup = copy.groups.find(g => g.id === toGroupID);
+				if (!toGroup) {
+					toGroup = FactoryLogic.createEncounterGroup();
+					copy.groups.push(toGroup);
+				}
+				if (fromGroup && toGroup) {
+					const slot = fromGroup.slots.find(s => s.id === slotID);
 					if (slot) {
-						slot.upgradeIDs = value;
-					}
-					setEncounter(copy);
-					props.onChange(copy);
-				};
-
-				return (
-					<TerrainSlotPanel
-						slot={slot}
-						sourcebooks={props.sourcebooks}
-						showTerrain={props.showTerrain}
-						setTerrainCount={setTerrainCount}
-						setTerrainUpgradeIDs={setTerrainUpgradeIDs}
-					/>
-				);
-			};
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{
-						encounter.terrain.map(slot => (
-							<div key={`${slot.terrainID}-container`} className='terrain-container-row'>
-								{getTerrain(slot)}
-							</div>
-						))
-					}
-					{
-						encounter.terrain.length === 0 ?
-							<div className='ds-text dimmed-text centered-text'>None</div>
-							: null
-					}
-				</Space>
-			);
-		};
-
-		const getObjectiveSection = () => {
-			const setObjective = (value: EncounterObjective | null) => {
-				const copy = Utils.copy(encounter);
-				copy.objective = Utils.copy(value);
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const setObjectiveName = (value: string) => {
-				const copy = Utils.copy(encounter);
-				if (copy.objective) {
-					copy.objective.name = value;
-					setEncounter(copy);
-					props.onChange(copy);
-				}
-			};
-
-			const setObjectiveDescription = (value: string) => {
-				const copy = Utils.copy(encounter);
-				if (copy.objective) {
-					copy.objective.description = value;
-					setEncounter(copy);
-					props.onChange(copy);
-				}
-			};
-
-			const setObjectiveDifficultyModifier = (value: string) => {
-				const copy = Utils.copy(encounter);
-				if (copy.objective) {
-					copy.objective.difficultyModifier = value;
-					setEncounter(copy);
-					props.onChange(copy);
-				}
-			};
-
-			const setObjectiveSuccessCondition = (value: string) => {
-				const copy = Utils.copy(encounter);
-				if (copy.objective) {
-					copy.objective.successCondition = value;
-					setEncounter(copy);
-					props.onChange(copy);
-				}
-			};
-
-			const setObjectiveFailureCondition = (value: string) => {
-				const copy = Utils.copy(encounter);
-				if (copy.objective) {
-					copy.objective.failureCondition = value;
-					setEncounter(copy);
-					props.onChange(copy);
-				}
-			};
-
-			const setObjectiveVictories = (value: string) => {
-				const copy = Utils.copy(encounter);
-				if (copy.objective) {
-					copy.objective.victories = value;
-					setEncounter(copy);
-					props.onChange(copy);
-				}
-			};
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					<Flex align='center' justify='space-between' gap={10}>
-						<Toggle label='Specify an encounter objective' value={!!encounter.objective} onChange={value => setObjective(value ? FactoryLogic.createEncounterObjective() : null)} />
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
-									{
-										[
-											EncounterObjectiveData.diminishNumbers,
-											EncounterObjectiveData.defeatFoe,
-											EncounterObjectiveData.getThing,
-											EncounterObjectiveData.destroyThing,
-											EncounterObjectiveData.saveAnother,
-											EncounterObjectiveData.escort,
-											EncounterObjectiveData.holdThemOff,
-											EncounterObjectiveData.assaultDefenses,
-											EncounterObjectiveData.stopAction,
-											EncounterObjectiveData.completeAction
-										].map(o => (
-											<Button key={o.id} block={true} onClick={() => setObjective(o)}>{o.name}</Button>
-										))
-									}
-								</div>
-							)}
-						>
-							<Button>
-								Common Objectives
-								<DownOutlined />
-							</Button>
-						</Popover>
-					</Flex>
-					{
-						encounter.objective ?
-							<>
-								<HeaderText>Name</HeaderText>
-								<Input
-									placeholder='Name'
-									allowClear={true}
-									value={encounter.objective.name}
-									onChange={e => setObjectiveName(e.target.value)}
-								/>
-								<HeaderText>Description</HeaderText>
-								<MultiLine value={encounter.objective.description} onChange={setObjectiveDescription} />
-								<HeaderText>Difficulty Modifier</HeaderText>
-								<MultiLine value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
-								<HeaderText>Success Condition</HeaderText>
-								<MultiLine value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
-								<HeaderText>Failure Condition</HeaderText>
-								<MultiLine value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
-								<HeaderText>Victories</HeaderText>
-								<MultiLine value={encounter.objective.victories} onChange={setObjectiveVictories} />
-							</>
-							: null
-					}
-				</Space>
-			);
-		};
-
-		const getNotesSection = () => {
-			const addNote = () => {
-				const copy = Utils.copy(encounter);
-				copy.notes.push({
-					id: Utils.guid(),
-					name: '',
-					description: ''
-				});
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const changeNote = (notes: Element) => {
-				const copy = Utils.copy(encounter);
-				const index = copy.notes.findIndex(i => i.id === notes.id);
-				if (index !== -1) {
-					copy.notes[index] = notes;
-				}
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const moveNote = (notes: Element, direction: 'up' | 'down') => {
-				const copy = Utils.copy(encounter);
-				const index = copy.notes.findIndex(i => i.id === notes.id);
-				copy.notes = Collections.move(copy.notes, index, direction);
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			const deleteNote = (notes: Element) => {
-				const copy = Utils.copy(encounter);
-				copy.notes = copy.notes.filter(i => i.id !== notes.id);
-				setEncounter(copy);
-				props.onChange(copy);
-			};
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					<HeaderText
-						extra={
-							<Button type='text' icon={<PlusOutlined />} onClick={addNote} />
+						if (remove) {
+							fromGroup.slots = fromGroup.slots.filter(s => s.id !== slotID);
 						}
-					>
-						Notes
-					</HeaderText>
-					{
-						encounter.notes.map(i => (
-							<Expander
-								key={i.id}
-								title={i.name || 'Unnamed Note'}
-								extra={[
-									<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveNote(i, 'up'); }} />,
-									<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveNote(i, 'down'); }} />,
-									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteNote(i); }} />
-								]}
-							>
-								<ElementEditPanel
-									element={i}
-									onChange={changeNote}
-								/>
-							</Expander>
-						))
+						toGroup.slots.push(slot);
 					}
-					{
-						encounter.notes.length === 0 ?
-							<Empty />
-							: null
-					}
-				</Space>
-			);
-		};
-
-		const getMonsterListSection = () => {
-			const setMonsterFilterName = (name: string) => {
-				const copy = Utils.copy(monsterFilter);
-				copy.name = name;
-				setMonsterFilter(copy);
-			};
-
-			const addMonster = (monster: Monster, encounterGroupID: string | null) => {
-				const copy = Utils.copy(encounter);
-
-				if (encounterGroupID) {
-					const group = copy.groups.find(g => g.id === encounterGroupID);
-					if (group) {
-						const slot = group.slots.find(s => s.monsterID === monster.id);
-						if (slot) {
-							slot.count += 1;
-						} else {
-							group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
-						}
-					};
-				} else {
-					const group = FactoryLogic.createEncounterGroup();
-					group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
-					copy.groups.push(group);
 				}
-
 				setEncounter(copy);
 				props.onChange(copy);
 			};
 
-			const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					<Input
-						placeholder='Search'
-						allowClear={true}
-						value={monsterFilter.name}
-						onChange={e => setMonsterFilterName(e.target.value)}
-					/>
-					{
-						filterVisible ?
-							<MonsterFilterPanel
-								monsterFilter={monsterFilter}
-								monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
-								includeNameFilter={false}
-								onChange={setMonsterFilter}
-							/>
-							: null
-					}
-					{
-						groups.map(g => (
-							<Expander key={g.id} title={g.name}>
-								<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-									{
-										Collections.sort(g.monsters.filter(m => m.role.organization !== MonsterOrganizationType.Retainer).filter(m => MonsterLogic.matches(m, monsterFilter)), m => m.name).map(m => {
-											const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
-
-											let addBtn: ReactNode;
-											if (encounter.groups.length === 0) {
-												addBtn = (
-													<Button icon={<PlusOutlined />} onClick={() => addMonster(m, null)}>Add</Button>
-												);
-											} else {
-												const groups = encounter.groups.map((group, n) => ({
-													key: group.id,
-													label: <div className='ds-text centered-text'>Group {n + 1}</div>
-												}));
-												groups.push({
-													key: '',
-													label: <div className='ds-text centered-text'>New Group</div>
-												});
-												addBtn = (
-													<DropdownButton
-														label='Add'
-														items={groups}
-														onClick={groupID => addMonster(m, groupID !== '' ? groupID : null)}
-													/>
-												);
-											}
-
-											return (
-												<div key={m.id} className='monster-row'>
-													<MonsterInfo monster={m} />
-													<Flex gap={10}>
-														<Button onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
-														{addBtn}
-													</Flex>
-												</div>
-											);
-										})
-									}
-								</Space>
-							</Expander>
-						))
-					}
-					{
-						groups.length === 0 ?
-							<Empty />
-							: null
-					}
-				</Space>
-			);
-		};
-
-		const getTerrainListSection = () => {
-			const setTerrainFilterName = (name: string) => {
-				const copy = Utils.copy(terrainFilter);
-				copy.name = name;
-				setTerrainFilter(copy);
-			};
-
-			const addTerrain = (terrain: Terrain) => {
+			const setSlotAddOnIDs = (groupID: string, slotID: string, value: string[]) => {
 				const copy = Utils.copy(encounter);
-
-				const data = copy.terrain.find(t => t.terrainID === terrain.id);
-				if (data) {
-					data.count += 1;
-				} else {
-					copy.terrain.push({
-						id: Utils.guid(),
-						terrainID: terrain.id,
-						upgradeIDs: [],
-						count: 1,
-						terrain: []
-					});
+				const group = copy.groups.find(g => g.id === groupID);
+				if (group) {
+					const slot = group.slots.find(s => s.id === slotID);
+					if (slot) {
+						slot.customization.addOnIDs = value;
+					}
 				}
-
 				setEncounter(copy);
 				props.onChange(copy);
 			};
 
-			const allTerrains = SourcebookLogic.getTerrains(props.sourcebooks);
-			const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
+			const setSlotLevelAdjustment = (groupID: string, slotID: string, value: number) => {
+				const copy = Utils.copy(encounter);
+				const group = copy.groups.find(g => g.id === groupID);
+				if (group) {
+					const slot = group.slots.find(s => s.id === slotID);
+					if (slot) {
+						slot.customization.levelAdjustment = value;
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const setSlotConvertToSolo = (groupID: string, slotID: string, value: boolean) => {
+				const copy = Utils.copy(encounter);
+				const group = copy.groups.find(g => g.id === groupID);
+				if (group) {
+					const slot = group.slots.find(s => s.id === slotID);
+					if (slot) {
+						slot.customization.convertToSolo = value;
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const addItem = (groupID: string, slotID: string, value: string) => {
+				const copy = Utils.copy(encounter);
+				const group = copy.groups.find(g => g.id === groupID);
+				if (group) {
+					const slot = group.slots.find(s => s.id === slotID);
+					if (slot) {
+						slot.customization.itemIDs.push(value);
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const removeItem = (groupID: string, slotID: string, value: string) => {
+				const copy = Utils.copy(encounter);
+				const group = copy.groups.find(g => g.id === groupID);
+				if (group) {
+					const slot = group.slots.find(s => s.id === slotID);
+					if (slot) {
+						slot.customization.itemIDs = slot.customization.itemIDs.filter(id => id !== value);
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
 
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					<Input
-						placeholder='Search'
-						allowClear={true}
-						value={terrainFilter.name}
-						onChange={e => setTerrainFilterName(e.target.value)}
-					/>
-					{
-						filterVisible ?
-							<TerrainFilterPanel
-								terrainFilter={terrainFilter}
-								terrain={allTerrains}
-								includeNameFilter={false}
-								onChange={setTerrainFilter}
-							/>
-							: null
-					}
-					{
-						terrains.map(t => {
-							return (
-								<div key={t.id} className='terrain-row'>
-									<TerrainInfo terrain={t} />
-									<Flex gap={10}>
-										<Button onClick={() => props.showTerrain(t, [])}>Details</Button>
-										<Button icon={<PlusOutlined />} onClick={() => addTerrain(t)}>Add</Button>
-									</Flex>
-								</div>
-							);
-						})
-					}
-					{
-						terrains.length === 0 ?
-							<Empty />
-							: null
-					}
-				</Space>
+				<MonsterSlotPanel
+					key={slot.id}
+					slot={slot}
+					group={group}
+					encounter={encounter}
+					sourcebooks={props.sourcebooks}
+					options={props.options}
+					showMonster={props.showMonster}
+					setSlotCount={setSlotCount}
+					moveSlot={moveSlot}
+					setSlotAddOnIDs={setSlotAddOnIDs}
+					setSlotLevelAdjustment={setSlotLevelAdjustment}
+					setSlotConvertToSolo={setSlotConvertToSolo}
+					addItem={addItem}
+					removeItem={removeItem}
+				/>
 			);
 		};
 
-		const getDifficultySection = () => {
-			const strength = EncounterDifficultyLogic.getStrength(encounter, props.sourcebooks);
-			const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+		const warnings = [];
+		const statblocks = Collections.distinct(encounter.groups.flatMap(g => g.slots).map(s => s.monsterID), s => s).length;
+		if (statblocks > 6) {
+			warnings.push(
+				<Alert
+					key='too-many-statblocks'
+					type='warning'
+					showIcon={true}
+					message={`You shouldn't generally have more than 6 different types of monster in an encounter (this encounter has ${statblocks}).`}
+				/>
+			);
+		}
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{warnings}
+				{
+					encounter.groups.map((group, n) => (
+						<GroupPanel
+							key={group.id}
+							group={group}
+							index={n}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							setName={setName}
+							deleteGroup={deleteGroup}
+							getSlot={getSlot}
+						/>
+					))
+				}
+				{
+					encounter.groups.length === 0 ?
+						<div className='ds-text dimmed-text centered-text'>None</div>
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getTerrainSection = () => {
+		const getTerrain = (slot: TerrainSlot) => {
+			const setTerrainCount = (id: string, value: number) => {
+				const copy = Utils.copy(encounter);
+				const slot = copy.terrain.find(t => t.id === id);
+				if (slot) {
+					slot.count = value;
+
+					if (slot.count === 0) {
+						copy.terrain = copy.terrain.filter(t => t.id !== id);
+					}
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
+
+			const setTerrainUpgradeIDs = (id: string, value: string[]) => {
+				const copy = Utils.copy(encounter);
+				const slot = copy.terrain.find(t => t.id === id);
+				if (slot) {
+					slot.upgradeIDs = value;
+				}
+				setEncounter(copy);
+				props.onChange(copy);
+			};
 
 			return (
-				<Expander title='Difficulty' tags={[ difficulty ]}>
-					<EncounterDifficultyPanel
-						encounter={encounter}
-						sourcebooks={props.sourcebooks}
-						heroes={props.heroes}
-						options={props.options}
-					/>
-				</Expander>
+				<TerrainSlotPanel
+					slot={slot}
+					sourcebooks={props.sourcebooks}
+					showTerrain={props.showTerrain}
+					setTerrainCount={setTerrainCount}
+					setTerrainUpgradeIDs={setTerrainUpgradeIDs}
+				/>
 			);
 		};
 
 		return (
-			<ErrorBoundary>
-				<div className='encounter-edit-panel'>
-					<div className='encounter-workspace-column'>
-						<Tabs
-							items={[
-								{
-									key: '1',
-									label: 'Encounter',
-									children: getNameAndDescriptionSection()
-								},
-								{
-									key: '2',
-									label: 'Monsters',
-									children: getMonstersSection()
-								},
-								{
-									key: '3',
-									label: 'Terrain',
-									children: getTerrainSection()
-								},
-								{
-									key: '4',
-									label: 'Objective',
-									children: getObjectiveSection()
-								},
-								{
-									key: '5',
-									label: 'Notes',
-									children: getNotesSection()
-								}
-							]}
-						/>
-					</div>
-					<div className='encounter-list-column'>
-						{getDifficultySection()}
-						<Tabs
-							items={[
-								{
-									key: '1',
-									label: 'Monsters',
-									children: getMonsterListSection()
-								},
-								{
-									key: '2',
-									label: 'Terrain',
-									children: getTerrainListSection()
-								}
-							]}
-							tabBarExtraContent={
-								<Button
-									className='filter-button'
-									type='text'
-									icon={filterVisible ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
-									onClick={() => setFilterVisible(!filterVisible)}
-								/>
-							}
-						/>
-
-					</div>
-				</div>
-			</ErrorBoundary>
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					encounter.terrain.map(slot => (
+						<div key={`${slot.terrainID}-container`} className='terrain-container-row'>
+							{getTerrain(slot)}
+						</div>
+					))
+				}
+				{
+					encounter.terrain.length === 0 ?
+						<div className='ds-text dimmed-text centered-text'>None</div>
+						: null
+				}
+			</Space>
 		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	};
+
+	const getObjectiveSection = () => {
+		const setObjective = (value: EncounterObjective | null) => {
+			const copy = Utils.copy(encounter);
+			copy.objective = Utils.copy(value);
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const setObjectiveName = (value: string) => {
+			const copy = Utils.copy(encounter);
+			if (copy.objective) {
+				copy.objective.name = value;
+				setEncounter(copy);
+				props.onChange(copy);
+			}
+		};
+
+		const setObjectiveDescription = (value: string) => {
+			const copy = Utils.copy(encounter);
+			if (copy.objective) {
+				copy.objective.description = value;
+				setEncounter(copy);
+				props.onChange(copy);
+			}
+		};
+
+		const setObjectiveDifficultyModifier = (value: string) => {
+			const copy = Utils.copy(encounter);
+			if (copy.objective) {
+				copy.objective.difficultyModifier = value;
+				setEncounter(copy);
+				props.onChange(copy);
+			}
+		};
+
+		const setObjectiveSuccessCondition = (value: string) => {
+			const copy = Utils.copy(encounter);
+			if (copy.objective) {
+				copy.objective.successCondition = value;
+				setEncounter(copy);
+				props.onChange(copy);
+			}
+		};
+
+		const setObjectiveFailureCondition = (value: string) => {
+			const copy = Utils.copy(encounter);
+			if (copy.objective) {
+				copy.objective.failureCondition = value;
+				setEncounter(copy);
+				props.onChange(copy);
+			}
+		};
+
+		const setObjectiveVictories = (value: string) => {
+			const copy = Utils.copy(encounter);
+			if (copy.objective) {
+				copy.objective.victories = value;
+				setEncounter(copy);
+				props.onChange(copy);
+			}
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Flex align='center' justify='space-between' gap={10}>
+					<Toggle label='Specify an encounter objective' value={!!encounter.objective} onChange={value => setObjective(value ? FactoryLogic.createEncounterObjective() : null)} />
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
+								{
+									[
+										EncounterObjectiveData.diminishNumbers,
+										EncounterObjectiveData.defeatFoe,
+										EncounterObjectiveData.getThing,
+										EncounterObjectiveData.destroyThing,
+										EncounterObjectiveData.saveAnother,
+										EncounterObjectiveData.escort,
+										EncounterObjectiveData.holdThemOff,
+										EncounterObjectiveData.assaultDefenses,
+										EncounterObjectiveData.stopAction,
+										EncounterObjectiveData.completeAction
+									].map(o => (
+										<Button key={o.id} block={true} onClick={() => setObjective(o)}>{o.name}</Button>
+									))
+								}
+							</div>
+						)}
+					>
+						<Button>
+							Common Objectives
+							<DownOutlined />
+						</Button>
+					</Popover>
+				</Flex>
+				{
+					encounter.objective ?
+						<>
+							<HeaderText>Name</HeaderText>
+							<Input
+								placeholder='Name'
+								allowClear={true}
+								value={encounter.objective.name}
+								onChange={e => setObjectiveName(e.target.value)}
+							/>
+							<HeaderText>Description</HeaderText>
+							<MultiLine value={encounter.objective.description} onChange={setObjectiveDescription} />
+							<HeaderText>Difficulty Modifier</HeaderText>
+							<MultiLine value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
+							<HeaderText>Success Condition</HeaderText>
+							<MultiLine value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
+							<HeaderText>Failure Condition</HeaderText>
+							<MultiLine value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
+							<HeaderText>Victories</HeaderText>
+							<MultiLine value={encounter.objective.victories} onChange={setObjectiveVictories} />
+						</>
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getNotesSection = () => {
+		const addNote = () => {
+			const copy = Utils.copy(encounter);
+			copy.notes.push({
+				id: Utils.guid(),
+				name: '',
+				description: ''
+			});
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const changeNote = (notes: Element) => {
+			const copy = Utils.copy(encounter);
+			const index = copy.notes.findIndex(i => i.id === notes.id);
+			if (index !== -1) {
+				copy.notes[index] = notes;
+			}
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const moveNote = (notes: Element, direction: 'up' | 'down') => {
+			const copy = Utils.copy(encounter);
+			const index = copy.notes.findIndex(i => i.id === notes.id);
+			copy.notes = Collections.move(copy.notes, index, direction);
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const deleteNote = (notes: Element) => {
+			const copy = Utils.copy(encounter);
+			copy.notes = copy.notes.filter(i => i.id !== notes.id);
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText
+					extra={
+						<Button type='text' icon={<PlusOutlined />} onClick={addNote} />
+					}
+				>
+					Notes
+				</HeaderText>
+				{
+					encounter.notes.map(i => (
+						<Expander
+							key={i.id}
+							title={i.name || 'Unnamed Note'}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveNote(i, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveNote(i, 'down'); }} />,
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteNote(i); }} />
+							]}
+						>
+							<ElementEditPanel
+								element={i}
+								onChange={changeNote}
+							/>
+						</Expander>
+					))
+				}
+				{
+					encounter.notes.length === 0 ?
+						<Empty />
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getMonsterListSection = () => {
+		const setMonsterFilterName = (name: string) => {
+			const copy = Utils.copy(monsterFilter);
+			copy.name = name;
+			setMonsterFilter(copy);
+		};
+
+		const addMonster = (monster: Monster, encounterGroupID: string | null) => {
+			const copy = Utils.copy(encounter);
+
+			if (encounterGroupID) {
+				const group = copy.groups.find(g => g.id === encounterGroupID);
+				if (group) {
+					const slot = group.slots.find(s => s.monsterID === monster.id);
+					if (slot) {
+						slot.count += 1;
+					} else {
+						group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
+					}
+				};
+			} else {
+				const group = FactoryLogic.createEncounterGroup();
+				group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
+				copy.groups.push(group);
+			}
+
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Input
+					placeholder='Search'
+					allowClear={true}
+					value={monsterFilter.name}
+					onChange={e => setMonsterFilterName(e.target.value)}
+				/>
+				{
+					filterVisible ?
+						<MonsterFilterPanel
+							monsterFilter={monsterFilter}
+							monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+							includeNameFilter={false}
+							onChange={setMonsterFilter}
+						/>
+						: null
+				}
+				{
+					groups.map(g => (
+						<Expander key={g.id} title={g.name}>
+							<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+								{
+									Collections.sort(g.monsters.filter(m => m.role.organization !== MonsterOrganizationType.Retainer).filter(m => MonsterLogic.matches(m, monsterFilter)), m => m.name).map(m => {
+										const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
+
+										let addBtn: ReactNode;
+										if (encounter.groups.length === 0) {
+											addBtn = (
+												<Button icon={<PlusOutlined />} onClick={() => addMonster(m, null)}>Add</Button>
+											);
+										} else {
+											const groups = encounter.groups.map((group, n) => ({
+												key: group.id,
+												label: <div className='ds-text centered-text'>Group {n + 1}</div>
+											}));
+											groups.push({
+												key: '',
+												label: <div className='ds-text centered-text'>New Group</div>
+											});
+											addBtn = (
+												<DropdownButton
+													label='Add'
+													items={groups}
+													onClick={groupID => addMonster(m, groupID !== '' ? groupID : null)}
+												/>
+											);
+										}
+
+										return (
+											<div key={m.id} className='monster-row'>
+												<MonsterInfo monster={m} />
+												<Flex gap={10}>
+													<Button onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
+													{addBtn}
+												</Flex>
+											</div>
+										);
+									})
+								}
+							</Space>
+						</Expander>
+					))
+				}
+				{
+					groups.length === 0 ?
+						<Empty />
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getTerrainListSection = () => {
+		const setTerrainFilterName = (name: string) => {
+			const copy = Utils.copy(terrainFilter);
+			copy.name = name;
+			setTerrainFilter(copy);
+		};
+
+		const addTerrain = (terrain: Terrain) => {
+			const copy = Utils.copy(encounter);
+
+			const data = copy.terrain.find(t => t.terrainID === terrain.id);
+			if (data) {
+				data.count += 1;
+			} else {
+				copy.terrain.push({
+					id: Utils.guid(),
+					terrainID: terrain.id,
+					upgradeIDs: [],
+					count: 1,
+					terrain: []
+				});
+			}
+
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const allTerrains = SourcebookLogic.getTerrains(props.sourcebooks);
+		const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<Input
+					placeholder='Search'
+					allowClear={true}
+					value={terrainFilter.name}
+					onChange={e => setTerrainFilterName(e.target.value)}
+				/>
+				{
+					filterVisible ?
+						<TerrainFilterPanel
+							terrainFilter={terrainFilter}
+							terrain={allTerrains}
+							includeNameFilter={false}
+							onChange={setTerrainFilter}
+						/>
+						: null
+				}
+				{
+					terrains.map(t => {
+						return (
+							<div key={t.id} className='terrain-row'>
+								<TerrainInfo terrain={t} />
+								<Flex gap={10}>
+									<Button onClick={() => props.showTerrain(t, [])}>Details</Button>
+									<Button icon={<PlusOutlined />} onClick={() => addTerrain(t)}>Add</Button>
+								</Flex>
+							</div>
+						);
+					})
+				}
+				{
+					terrains.length === 0 ?
+						<Empty />
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getDifficultySection = () => {
+		const strength = EncounterDifficultyLogic.getStrength(encounter, props.sourcebooks);
+		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+
+		return (
+			<Expander title='Difficulty' tags={[ difficulty ]}>
+				<EncounterDifficultyPanel
+					encounter={encounter}
+					sourcebooks={props.sourcebooks}
+					heroes={props.heroes}
+					options={props.options}
+				/>
+			</Expander>
+		);
+	};
+
+	return (
+		<ErrorBoundary>
+			<div className='encounter-edit-panel'>
+				<div className='encounter-workspace-column'>
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Encounter',
+								children: getNameAndDescriptionSection()
+							},
+							{
+								key: '2',
+								label: 'Monsters',
+								children: getMonstersSection()
+							},
+							{
+								key: '3',
+								label: 'Terrain',
+								children: getTerrainSection()
+							},
+							{
+								key: '4',
+								label: 'Objective',
+								children: getObjectiveSection()
+							},
+							{
+								key: '5',
+								label: 'Notes',
+								children: getNotesSection()
+							}
+						]}
+					/>
+				</div>
+				<div className='encounter-list-column'>
+					{getDifficultySection()}
+					<Tabs
+						items={[
+							{
+								key: '1',
+								label: 'Monsters',
+								children: getMonsterListSection()
+							},
+							{
+								key: '2',
+								label: 'Terrain',
+								children: getTerrainListSection()
+							}
+						]}
+						tabBarExtraContent={
+							<Button
+								className='filter-button'
+								type='text'
+								icon={filterVisible ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
+								onClick={() => setFilterVisible(!filterVisible)}
+							/>
+						}
+					/>
+
+				</div>
+			</div>
+		</ErrorBoundary>
+	);
 };
 
 interface GroupPanelProps {

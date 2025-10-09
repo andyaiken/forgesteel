@@ -45,155 +45,150 @@ interface Props {
 }
 
 export const ElementModal = (props: Props) => {
-	try {
-		const getPanel = () => {
-			switch (props.kind) {
-				case 'ancestry':
-					return (
-						<AncestryPanel
-							ancestry={props.element as Ancestry}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'career':
-					return (
-						<CareerPanel
-							career={props.element as Career}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'class':
-					return (
-						<ClassPanel
-							heroClass={props.element as HeroClass}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'complication':
-					return (
-						<ComplicationPanel
-							complication={props.element as Complication}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'culture':
-					return (
-						<CulturePanel
-							culture={props.element as Culture}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'domain':
-					return (
-						<DomainPanel
-							domain={props.element as Domain}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'imbuement':
-					return (
-						<ImbuementPanel
-							imbuement={props.element as Imbuement}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'item':
-					return (
-						<ItemPanel
-							item={props.element as Item}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'kit':
-					return (
-						<KitPanel
-							kit={props.element as Kit}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'monster-group':
-					return (
-						<MonsterGroupPanel
-							monsterGroup={props.element as MonsterGroup}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'perk':
-					return (
-						<PerkPanel
-							perk={props.element as Perk}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'subclass':
-					return (
-						<SubclassPanel
-							subclass={props.element as SubClass}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'terrain':
-					return (
-						<TerrainPanel
-							terrain={props.element as Terrain}
-							showCustomizations={true}
-							mode={PanelMode.Full}
-						/>
-					);
-				case 'title':
-					return (
-						<TitlePanel
-							title={props.element as Title}
-							options={props.options}
-							mode={PanelMode.Full}
-						/>
-					);
-			}
-		};
+	const getPanel = () => {
+		switch (props.kind) {
+			case 'ancestry':
+				return (
+					<AncestryPanel
+						ancestry={props.element as Ancestry}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'career':
+				return (
+					<CareerPanel
+						career={props.element as Career}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'class':
+				return (
+					<ClassPanel
+						heroClass={props.element as HeroClass}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'complication':
+				return (
+					<ComplicationPanel
+						complication={props.element as Complication}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'culture':
+				return (
+					<CulturePanel
+						culture={props.element as Culture}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'domain':
+				return (
+					<DomainPanel
+						domain={props.element as Domain}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'imbuement':
+				return (
+					<ImbuementPanel
+						imbuement={props.element as Imbuement}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'item':
+				return (
+					<ItemPanel
+						item={props.element as Item}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'kit':
+				return (
+					<KitPanel
+						kit={props.element as Kit}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'monster-group':
+				return (
+					<MonsterGroupPanel
+						monsterGroup={props.element as MonsterGroup}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'perk':
+				return (
+					<PerkPanel
+						perk={props.element as Perk}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'subclass':
+				return (
+					<SubclassPanel
+						subclass={props.element as SubClass}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'terrain':
+				return (
+					<TerrainPanel
+						terrain={props.element as Terrain}
+						showCustomizations={true}
+						mode={PanelMode.Full}
+					/>
+				);
+			case 'title':
+				return (
+					<TitlePanel
+						title={props.element as Title}
+						options={props.options}
+						mode={PanelMode.Full}
+					/>
+				);
+		}
+	};
 
-		return (
-			<Modal
-				toolbar={
-					<>
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Button onClick={() => props.export('image')}>Export As Image</Button>
-									<Button onClick={() => props.export('pdf')}>Export As PDF</Button>
-									<Button onClick={() => props.export('json')}>Export As Data</Button>
-								</div>
-							)}
-						>
-							<Button icon={<UploadOutlined />}>
-								Export
-								<DownOutlined />
-							</Button>
-						</Popover>
-					</>
-				}
-				content={
-					<div className='element-modal'>
-						{getPanel()}
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			toolbar={
+				<>
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<Button onClick={() => props.export('image')}>Export As Image</Button>
+								<Button onClick={() => props.export('pdf')}>Export As PDF</Button>
+								<Button onClick={() => props.export('json')}>Export As Data</Button>
+							</div>
+						)}
+					>
+						<Button icon={<UploadOutlined />}>
+							Export
+							<DownOutlined />
+						</Button>
+					</Popover>
+				</>
+			}
+			content={
+				<div className='element-modal'>
+					{getPanel()}
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

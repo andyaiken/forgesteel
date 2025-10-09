@@ -694,178 +694,173 @@ export const PlotEditPanel = (props: Props) => {
 		);
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='plot-edit-panel'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Plot Point',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Content',
-								children: getContentSection()
-							},
-							{
-								key: '3',
-								label: 'Links',
-								children: getLinksSection()
-							},
-							{
-								key: '4',
-								label: 'Preview',
-								children: getPreviewSection()
-							}
-						]}
-						tabBarExtraContent={
-							<Flex gap={5}>
-								<Button icon={<PlusOutlined />} onClick={() => props.onAddAfter(plot.id)}>Add Point After</Button>
-								<DangerButton mode='icon' onConfirm={() => props.onDelete(plot.id)} />
-							</Flex>
+	return (
+		<ErrorBoundary>
+			<div className='plot-edit-panel'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Plot Point',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Content',
+							children: getContentSection()
+						},
+						{
+							key: '3',
+							label: 'Links',
+							children: getLinksSection()
+						},
+						{
+							key: '4',
+							label: 'Preview',
+							children: getPreviewSection()
 						}
-					/>
-				</div>
-				<Drawer open={addingEncounter} onClose={() => setAddingEncounter(false)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							<div style={{ padding: '20px' }}>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										props.playbook.encounters.map(e =>
-											<SelectablePanel key={e.id} onSelect={() => addContentReference('encounter', e.id)}>
-												<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
-											</SelectablePanel>
-										)
-									}
-									{props.playbook.encounters.length === 0 ? <Empty /> : null}
-								</Space>
-							</div>
-						}
-						onClose={() => setAddingEncounter(false)}
-					/>
-				</Drawer>
-				<Drawer open={addingMontage} onClose={() => setAddingMontage(false)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							<div style={{ padding: '20px' }}>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										props.playbook.montages.map(m =>
-											<SelectablePanel key={m.id} onSelect={() => addContentReference('montage', m.id)}>
-												<MontagePanel montage={m} />
-											</SelectablePanel>
-										)
-									}
-									{props.playbook.montages.length === 0 ? <Empty /> : null}
-								</Space>
-							</div>
-						}
-						onClose={() => setAddingMontage(false)}
-					/>
-				</Drawer>
-				<Drawer open={addingNegotiation} onClose={() => setAddingNegotiation(false)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							<div style={{ padding: '20px' }}>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										props.playbook.negotiations.map(n =>
-											<SelectablePanel key={n.id} onSelect={() => addContentReference('negotiation', n.id)}>
-												<NegotiationPanel negotiation={n} />
-											</SelectablePanel>
-										)
-									}
-									{props.playbook.negotiations.length === 0 ? <Empty /> : null}
-								</Space>
-							</div>
-						}
-						onClose={() => setAddingNegotiation(false)}
-					/>
-				</Drawer>
-				<Drawer open={addingMap} onClose={() => setAddingMap(false)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							<div style={{ padding: '20px' }}>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										props.playbook.tacticalMaps.map(tm =>
-											<SelectablePanel key={tm.id} onSelect={() => addContentReference('map', tm.id)}>
-												<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
-											</SelectablePanel>
-										)
-									}
-									{props.playbook.tacticalMaps.length === 0 ? <Empty /> : null}
-								</Space>
-							</div>
-						}
-						onClose={() => setAddingMap(false)}
-					/>
-				</Drawer>
-				<Drawer open={addingItem} onClose={() => setAddingItem(false)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							<div style={{ padding: '20px' }}>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										SourcebookLogic.getItems(props.sourcebooks).map(i =>
-											<SelectablePanel key={i.id} onSelect={() => addContentElement('item', i)}>
-												<ItemPanel item={i} options={props.options} />
-											</SelectablePanel>
-										)
-									}
-									{SourcebookLogic.getItems(props.sourcebooks).length === 0 ? <Empty /> : null}
-								</Space>
-							</div>
-						}
-						onClose={() => setAddingItem(false)}
-					/>
-				</Drawer>
-				<Drawer open={addingMonster} onClose={() => setAddingMonster(false)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							<div style={{ padding: '20px' }}>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										SourcebookLogic.getMonsters(props.sourcebooks).map(m =>
-											<SelectablePanel key={m.id} onSelect={() => addContentElement('monster', m)}>
-												<MonsterPanel monster={m} options={props.options} />
-											</SelectablePanel>
-										)
-									}
-									{SourcebookLogic.getMonsters(props.sourcebooks).length === 0 ? <Empty /> : null}
-								</Space>
-							</div>
-						}
-						onClose={() => setAddingMonster(false)}
-					/>
-				</Drawer>
-				<Drawer open={addingTitle} onClose={() => setAddingTitle(false)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							<div style={{ padding: '20px' }}>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										SourcebookLogic.getTitles(props.sourcebooks).map(t =>
-											<SelectablePanel key={t.id} onSelect={() => addContentElement('title', t)}>
-												<TitlePanel title={t} options={props.options} />
-											</SelectablePanel>
-										)
-									}
-									{SourcebookLogic.getItems(props.sourcebooks).length === 0 ? <Empty /> : null}
-								</Space>
-							</div>
-						}
-						onClose={() => setAddingTitle(false)}
-					/>
-				</Drawer>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+					]}
+					tabBarExtraContent={
+						<Flex gap={5}>
+							<Button icon={<PlusOutlined />} onClick={() => props.onAddAfter(plot.id)}>Add Point After</Button>
+							<DangerButton mode='icon' onConfirm={() => props.onDelete(plot.id)} />
+						</Flex>
+					}
+				/>
+			</div>
+			<Drawer open={addingEncounter} onClose={() => setAddingEncounter(false)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						<div style={{ padding: '20px' }}>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									props.playbook.encounters.map(e =>
+										<SelectablePanel key={e.id} onSelect={() => addContentReference('encounter', e.id)}>
+											<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+										</SelectablePanel>
+									)
+								}
+								{props.playbook.encounters.length === 0 ? <Empty /> : null}
+							</Space>
+						</div>
+					}
+					onClose={() => setAddingEncounter(false)}
+				/>
+			</Drawer>
+			<Drawer open={addingMontage} onClose={() => setAddingMontage(false)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						<div style={{ padding: '20px' }}>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									props.playbook.montages.map(m =>
+										<SelectablePanel key={m.id} onSelect={() => addContentReference('montage', m.id)}>
+											<MontagePanel montage={m} />
+										</SelectablePanel>
+									)
+								}
+								{props.playbook.montages.length === 0 ? <Empty /> : null}
+							</Space>
+						</div>
+					}
+					onClose={() => setAddingMontage(false)}
+				/>
+			</Drawer>
+			<Drawer open={addingNegotiation} onClose={() => setAddingNegotiation(false)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						<div style={{ padding: '20px' }}>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									props.playbook.negotiations.map(n =>
+										<SelectablePanel key={n.id} onSelect={() => addContentReference('negotiation', n.id)}>
+											<NegotiationPanel negotiation={n} />
+										</SelectablePanel>
+									)
+								}
+								{props.playbook.negotiations.length === 0 ? <Empty /> : null}
+							</Space>
+						</div>
+					}
+					onClose={() => setAddingNegotiation(false)}
+				/>
+			</Drawer>
+			<Drawer open={addingMap} onClose={() => setAddingMap(false)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						<div style={{ padding: '20px' }}>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									props.playbook.tacticalMaps.map(tm =>
+										<SelectablePanel key={tm.id} onSelect={() => addContentReference('map', tm.id)}>
+											<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+										</SelectablePanel>
+									)
+								}
+								{props.playbook.tacticalMaps.length === 0 ? <Empty /> : null}
+							</Space>
+						</div>
+					}
+					onClose={() => setAddingMap(false)}
+				/>
+			</Drawer>
+			<Drawer open={addingItem} onClose={() => setAddingItem(false)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						<div style={{ padding: '20px' }}>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									SourcebookLogic.getItems(props.sourcebooks).map(i =>
+										<SelectablePanel key={i.id} onSelect={() => addContentElement('item', i)}>
+											<ItemPanel item={i} options={props.options} />
+										</SelectablePanel>
+									)
+								}
+								{SourcebookLogic.getItems(props.sourcebooks).length === 0 ? <Empty /> : null}
+							</Space>
+						</div>
+					}
+					onClose={() => setAddingItem(false)}
+				/>
+			</Drawer>
+			<Drawer open={addingMonster} onClose={() => setAddingMonster(false)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						<div style={{ padding: '20px' }}>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									SourcebookLogic.getMonsters(props.sourcebooks).map(m =>
+										<SelectablePanel key={m.id} onSelect={() => addContentElement('monster', m)}>
+											<MonsterPanel monster={m} options={props.options} />
+										</SelectablePanel>
+									)
+								}
+								{SourcebookLogic.getMonsters(props.sourcebooks).length === 0 ? <Empty /> : null}
+							</Space>
+						</div>
+					}
+					onClose={() => setAddingMonster(false)}
+				/>
+			</Drawer>
+			<Drawer open={addingTitle} onClose={() => setAddingTitle(false)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						<div style={{ padding: '20px' }}>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									SourcebookLogic.getTitles(props.sourcebooks).map(t =>
+										<SelectablePanel key={t.id} onSelect={() => addContentElement('title', t)}>
+											<TitlePanel title={t} options={props.options} />
+										</SelectablePanel>
+									)
+								}
+								{SourcebookLogic.getItems(props.sourcebooks).length === 0 ? <Empty /> : null}
+							</Space>
+						</div>
+					}
+					onClose={() => setAddingTitle(false)}
+				/>
+			</Drawer>
+		</ErrorBoundary>
+	);
 };

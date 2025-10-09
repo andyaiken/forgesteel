@@ -350,32 +350,27 @@ export const AdventureEditPanel = (props: Props) => {
 		return getAdventureEditor();
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='adventure-edit-panel'>
-					<div className='plot-workspace'>
-						<PlotGraphPanel
-							label={currentPlot === adventure.plot ? adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
-							plot={currentPlot}
-							adventure={adventure}
-							selectedPlot={selectedPlot || undefined}
-							onSelect={setSelectedPlot}
-							onOpen={plot => {
-								setSelectedPlot(null);
-								setCurrentPlot(plot);
-							}}
-							onCreate={addPlotPoint}
-						/>
-					</div>
-					<div className='plot-editor'>
-						{getEditor()}
-					</div>
+	return (
+		<ErrorBoundary>
+			<div className='adventure-edit-panel'>
+				<div className='plot-workspace'>
+					<PlotGraphPanel
+						label={currentPlot === adventure.plot ? adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
+						plot={currentPlot}
+						adventure={adventure}
+						selectedPlot={selectedPlot || undefined}
+						onSelect={setSelectedPlot}
+						onOpen={plot => {
+							setSelectedPlot(null);
+							setCurrentPlot(plot);
+						}}
+						onCreate={addPlotPoint}
+					/>
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				<div className='plot-editor'>
+					{getEditor()}
+				</div>
+			</div>
+		</ErrorBoundary>
+	);
 };

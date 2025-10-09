@@ -30,86 +30,81 @@ export const TitlePanel = (props: Props) => {
 	const [ title, setTitle ] = useState<Title>(Utils.copy(props.title));
 	const [ editing, setEditing ] = useState<boolean>(false);
 
-	try {
-		const selectedFeature = title.features.find(f => f.id === title.selectedFeatureID);
-		const editable = selectedFeature && (selectedFeature.type === FeatureType.Text);
+	const selectedFeature = title.features.find(f => f.id === title.selectedFeatureID);
+	const editable = selectedFeature && (selectedFeature.type === FeatureType.Text);
 
-		const setFeatureName = (value: string) => {
-			const copy = Utils.copy(title);
-			copy.name = value;
-			copy.features
-				.filter(f => f.id === title.selectedFeatureID)
-				.forEach(f => f.name = value);
-			setTitle(copy);
-			if (props.onChange) {
-				props.onChange(copy);
-			}
-		};
+	const setFeatureName = (value: string) => {
+		const copy = Utils.copy(title);
+		copy.name = value;
+		copy.features
+			.filter(f => f.id === title.selectedFeatureID)
+			.forEach(f => f.name = value);
+		setTitle(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
 
-		const setFeatureDescription = (value: string) => {
-			const copy = Utils.copy(title);
-			copy.features
-				.filter(f => f.id === title.selectedFeatureID)
-				.forEach(f => f.description = value);
-			setTitle(copy);
-			if (props.onChange) {
-				props.onChange(copy);
-			}
-		};
+	const setFeatureDescription = (value: string) => {
+		const copy = Utils.copy(title);
+		copy.features
+			.filter(f => f.id === title.selectedFeatureID)
+			.forEach(f => f.description = value);
+		setTitle(copy);
+		if (props.onChange) {
+			props.onChange(copy);
+		}
+	};
 
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? title.id : undefined}>
-					<HeaderText
-						level={1}
-						tags={[ `Echelon ${title.echelon}` ]}
-						extra={
-							editable ? <Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} /> : null
-						}
-					>
-						{title.name || 'Unnamed Title'}
-					</HeaderText>
-					<Markdown text={title.description} />
-					{title.prerequisites ? <Field label='Prerequisites' value={title.prerequisites} /> : null}
-					{
-						props.mode === PanelMode.Full ?
-							selectedFeature && editing ?
-								<div className='features'>
-									<HeaderText>Name</HeaderText>
-									<Input
-										status={selectedFeature.name === '' ? 'warning' : ''}
-										placeholder='Name'
-										allowClear={true}
-										value={selectedFeature.name}
-										onChange={e => setFeatureName(e.target.value)}
-									/>
-									<HeaderText>Description</HeaderText>
-									<MultiLine value={selectedFeature.description} onChange={setFeatureDescription} />
-								</div>
-								:
-								<div className='features'>
-									{
-										title.features
-											.filter(f => title.selectedFeatureID ? (f.id === title.selectedFeatureID) : true)
-											.map(f => (
-												<FeaturePanel
-													key={f.id}
-													feature={f}
-													options={props.options}
-													hero={props.hero}
-													sourcebooks={props.sourcebooks}
-													mode={PanelMode.Full}
-												/>
-											))
-									}
-								</div>
-							: null
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? title.id : undefined}>
+				<HeaderText
+					level={1}
+					tags={[ `Echelon ${title.echelon}` ]}
+					extra={
+						editable ? <Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} /> : null
 					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				>
+					{title.name || 'Unnamed Title'}
+				</HeaderText>
+				<Markdown text={title.description} />
+				{title.prerequisites ? <Field label='Prerequisites' value={title.prerequisites} /> : null}
+				{
+					props.mode === PanelMode.Full ?
+						selectedFeature && editing ?
+							<div className='features'>
+								<HeaderText>Name</HeaderText>
+								<Input
+									status={selectedFeature.name === '' ? 'warning' : ''}
+									placeholder='Name'
+									allowClear={true}
+									value={selectedFeature.name}
+									onChange={e => setFeatureName(e.target.value)}
+								/>
+								<HeaderText>Description</HeaderText>
+								<MultiLine value={selectedFeature.description} onChange={setFeatureDescription} />
+							</div>
+							:
+							<div className='features'>
+								{
+									title.features
+										.filter(f => title.selectedFeatureID ? (f.id === title.selectedFeatureID) : true)
+										.map(f => (
+											<FeaturePanel
+												key={f.id}
+												feature={f}
+												options={props.options}
+												hero={props.hero}
+												sourcebooks={props.sourcebooks}
+												mode={PanelMode.Full}
+											/>
+										))
+								}
+							</div>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

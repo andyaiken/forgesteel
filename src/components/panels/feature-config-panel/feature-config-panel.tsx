@@ -1499,45 +1499,40 @@ export const FeatureConfigPanel = (props: Props) => {
 		return desc;
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='feature-config-panel'>
-					<HeaderText
-						extra={
-							<>
-								{
-									autoCalcAvailable() ?
-										<Button
-											key='autocalc'
-											type='text'
-											title='Auto-calculate damage, potency, etc'
-											icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-											onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-										/>
-										: null
-								}
-								{
-									props.onDelete ?
-										<DangerButton
-											key='delete'
-											mode='clear'
-											onConfirm={() => props.onDelete!()}
-										/>
-										: null
-								}
-							</>
-						}
-					>
-						{props.feature.name || 'Unnamed Feature'}
-					</HeaderText>
-					<Markdown text={getDescription()} />
-					{getSelection()}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className='feature-config-panel'>
+				<HeaderText
+					extra={
+						<>
+							{
+								autoCalcAvailable() ?
+									<Button
+										key='autocalc'
+										type='text'
+										title='Auto-calculate damage, potency, etc'
+										icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+										onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
+									/>
+									: null
+							}
+							{
+								props.onDelete ?
+									<DangerButton
+										key='delete'
+										mode='clear'
+										onConfirm={() => props.onDelete!()}
+									/>
+									: null
+							}
+						</>
+					}
+				>
+					{props.feature.name || 'Unnamed Feature'}
+				</HeaderText>
+				<Markdown text={getDescription()} />
+				{getSelection()}
+			</div>
+		</ErrorBoundary>
+	);
 };

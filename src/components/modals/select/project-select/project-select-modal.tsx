@@ -23,67 +23,62 @@ interface Props {
 export const ProjectSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	try {
-		const projects = [
-			FactoryLogic.createProject({
-				name: 'Custom Project',
-				isCustom: true
-			}),
-			...SourcebookLogic.getProjects(props.sourcebooks)
-		]
-			.filter(item => Utils.textMatches([
-				item.name,
-				item.description
-			], searchTerm));
+	const projects = [
+		FactoryLogic.createProject({
+			name: 'Custom Project',
+			isCustom: true
+		}),
+		...SourcebookLogic.getProjects(props.sourcebooks)
+	]
+		.filter(item => Utils.textMatches([
+			item.name,
+			item.description
+		], searchTerm));
 
-		return (
-			<Modal
-				toolbar={
-					<>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-					</>
-				}
-				content={
-					<div className='project-select-modal'>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								projects.map(project => (
-									<SelectablePanel
-										key={project.id}
-										onSelect={() => {
-											if (props.selectOriginal) {
-												props.onSelect(project);
-											} else {
-												const copy = Utils.copy(project);
-												copy.id = Utils.guid();
-												props.onSelect(copy);
-											}
-										}}
-									>
-										<ProjectPanel project={project} />
-									</SelectablePanel>
-								))
-							}
-							{
-								projects.length === 0 ?
-									<Empty />
-									: null
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			toolbar={
+				<>
+					<Input
+						name='search'
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
+				</>
+			}
+			content={
+				<div className='project-select-modal'>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							projects.map(project => (
+								<SelectablePanel
+									key={project.id}
+									onSelect={() => {
+										if (props.selectOriginal) {
+											props.onSelect(project);
+										} else {
+											const copy = Utils.copy(project);
+											copy.id = Utils.guid();
+											props.onSelect(copy);
+										}
+									}}
+								>
+									<ProjectPanel project={project} />
+								</SelectablePanel>
+							))
+						}
+						{
+							projects.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

@@ -283,81 +283,76 @@ export const HeroSheetPage = (props: Props) => {
 		return SheetLayout.getRequiredCardPages(extraCards, character, layoutEnd, 'followers');
 	};
 
-	try {
-		const extraCards = populateExtraCards(character);
-		return (
-			<ErrorBoundary>
-				<main id='classic-sheet'>
-					<div className={sheetClasses.join(' ')} id={hero.id}>
-						<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, 'main')}>
-							<HeroHeaderCard
-								character={character}
-								options={props.options}
-							/>
-							<StatsResourcesCard
-								character={character}
-								options={props.options}
-							/>
-							<ModifiersCard
-								character={character}
-							/>
-							<PotenciesCard
-								character={character}
-							/>
-							<ConditionsCard
-								character={character}
-								options={props.options}
-							/>
-							<PrimaryReferenceCard
-								character={character}
-							/>
-							<ImmunitiesWeaknessesCard
-								character={character}
-							/>
-							<ClassFeaturesCard
-								character={character}
-							/>
-							<AncestryTraitsCard
-								character={character}
-							/>
-						</div>
-						<hr className='dashed' />
-						<div className={`page page-2 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, '2')}>
-							<CareerCard
-								career={character.career}
-								hero={hero}
-							/>
-							<ComplicationCard
-								complication={character.complication}
-								hero={hero}
-							/>
-							<SkillsCard
-								character={character}
-							/>
-							<CultureCard
-								character={character}
-							/>
-							<PerksCard
-								character={character}
-							/>
-							<TitlesCard
-								character={character}
-								showLong={numTitlesInSmallCard}
-								wide={props.options.pageOrientation === 'landscape'}
-							/>
-							<ProjectsCard
-								character={character}
-							/>
-						</div>
-						{addAbilityPages(character, extraCards)}
-						{getFinalCards(extraCards)}
-						{getFollowerCards(extraCards)}
+	const extraCards = populateExtraCards(character);
+	return (
+		<ErrorBoundary>
+			<main id='classic-sheet'>
+				<div className={sheetClasses.join(' ')} id={hero.id}>
+					<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, 'main')}>
+						<HeroHeaderCard
+							character={character}
+							options={props.options}
+						/>
+						<StatsResourcesCard
+							character={character}
+							options={props.options}
+						/>
+						<ModifiersCard
+							character={character}
+						/>
+						<PotenciesCard
+							character={character}
+						/>
+						<ConditionsCard
+							character={character}
+							options={props.options}
+						/>
+						<PrimaryReferenceCard
+							character={character}
+						/>
+						<ImmunitiesWeaknessesCard
+							character={character}
+						/>
+						<ClassFeaturesCard
+							character={character}
+						/>
+						<AncestryTraitsCard
+							character={character}
+						/>
 					</div>
-				</main>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+					<hr className='dashed' />
+					<div className={`page page-2 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, '2')}>
+						<CareerCard
+							career={character.career}
+							hero={hero}
+						/>
+						<ComplicationCard
+							complication={character.complication}
+							hero={hero}
+						/>
+						<SkillsCard
+							character={character}
+						/>
+						<CultureCard
+							character={character}
+						/>
+						<PerksCard
+							character={character}
+						/>
+						<TitlesCard
+							character={character}
+							showLong={numTitlesInSmallCard}
+							wide={props.options.pageOrientation === 'landscape'}
+						/>
+						<ProjectsCard
+							character={character}
+						/>
+					</div>
+					{addAbilityPages(character, extraCards)}
+					{getFinalCards(extraCards)}
+					{getFollowerCards(extraCards)}
+				</div>
+			</main>
+		</ErrorBoundary>
+	);
 };

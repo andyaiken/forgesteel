@@ -13,29 +13,24 @@ interface Props {
 }
 
 export const HeaderText = (props: Props) => {
-	try {
-		if (!props.children) {
-			return null;
-		}
-
-		return (
-			<div className={`header-text-panel level-${props.level || 2}`} style={props.style}>
-				<div className='header-text-content'>
-					{props.ribbon}
-					<div className='header-text'>{props.children}</div>
-					{
-						props.tags ?
-							<div className='header-tags'>
-								{props.tags.map((t, n) => <Tag key={n}>{t}</Tag>)}
-							</div>
-							: null
-					}
-				</div>
-				{props.extra}
-			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
+	if (!props.children) {
 		return null;
 	}
+
+	return (
+		<div className={`header-text-panel level-${props.level || 2}`} style={props.style}>
+			<div className='header-text-content'>
+				{props.ribbon}
+				<div className='header-text'>{props.children}</div>
+				{
+					props.tags ?
+						<div className='header-tags'>
+							{props.tags.map((t, n) => <Tag key={n}>{t}</Tag>)}
+						</div>
+						: null
+				}
+			</div>
+			{props.extra}
+		</div>
+	);
 };

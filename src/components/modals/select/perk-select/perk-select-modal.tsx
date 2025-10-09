@@ -26,62 +26,57 @@ interface Props {
 export const PerkSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	try {
-		const perks = props.perks
-			.filter(p => Utils.textMatches([
-				p.name,
-				p.description
-			], searchTerm));
+	const perks = props.perks
+		.filter(p => Utils.textMatches([
+			p.name,
+			p.description
+		], searchTerm));
 
-		return (
-			<Modal
-				toolbar={
-					<>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-					</>
-				}
-				content={
-					<div className='perk-select-modal'>
-						{
-							[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(list => {
-								const subset = perks.filter(p => p.list === list);
-								if (subset.length === 0) {
-									return null;
-								}
+	return (
+		<Modal
+			toolbar={
+				<>
+					<Input
+						name='search'
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
+				</>
+			}
+			content={
+				<div className='perk-select-modal'>
+					{
+						[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(list => {
+							const subset = perks.filter(p => p.list === list);
+							if (subset.length === 0) {
+								return null;
+							}
 
-								return (
-									<Space key={list} direction='vertical' style={{ width: '100%' }}>
-										<HeaderText level={1}>{list}</HeaderText>
-										{
-											subset.map((p, n) => (
-												<SelectablePanel key={n} onSelect={() => props.onSelect(p)}>
-													<PerkPanel perk={p} hero={props.hero} mode={PanelMode.Full} options={props.options} />
-												</SelectablePanel>
-											))
-										}
-									</Space>
-								);
-							})
-						}
-						{
-							perks.length === 0 ?
-								<Empty />
-								: null
-						}
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+							return (
+								<Space key={list} direction='vertical' style={{ width: '100%' }}>
+									<HeaderText level={1}>{list}</HeaderText>
+									{
+										subset.map((p, n) => (
+											<SelectablePanel key={n} onSelect={() => props.onSelect(p)}>
+												<PerkPanel perk={p} hero={props.hero} mode={PanelMode.Full} options={props.options} />
+											</SelectablePanel>
+										))
+									}
+								</Space>
+							);
+						})
+					}
+					{
+						perks.length === 0 ?
+							<Empty />
+							: null
+					}
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

@@ -17,16 +17,11 @@ interface Props {
 }
 
 export const PerkPanel = (props: Props) => {
-	try {
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'perk-panel' : 'perk-panel compact'} id={props.mode === PanelMode.Full ? props.perk.id : undefined}>
-					<FeaturePanel feature={props.perk} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={props.mode} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'perk-panel' : 'perk-panel compact'} id={props.mode === PanelMode.Full ? props.perk.id : undefined}>
+				<FeaturePanel feature={props.perk} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={props.mode} />
+			</div>
+		</ErrorBoundary>
+	);
 };

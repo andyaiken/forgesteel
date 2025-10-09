@@ -12,24 +12,19 @@ interface Props {
 }
 
 export const Expander = (props: Props) => {
-	try {
-		return (
-			<Collapse
-				className='expander'
-				items={[
-					{
-						key: '1',
-						label: props.tags ? <>{props.title} {props.tags.map((t, n) => <Tag key={n}>{t}</Tag>)}</> : props.title,
-						children: props.children,
-						extra: props.extra ? <>{props.extra}</> : null
-					}
-				]}
-				defaultActiveKey={props.expandedByDefault ? '1' : undefined}
-				expandIconPosition='end'
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Collapse
+			className='expander'
+			items={[
+				{
+					key: '1',
+					label: props.tags ? <>{props.title} {props.tags.map((t, n) => <Tag key={n}>{t}</Tag>)}</> : props.title,
+					children: props.children,
+					extra: props.extra ? <>{props.extra}</> : null
+				}
+			]}
+			defaultActiveKey={props.expandedByDefault ? '1' : undefined}
+			expandIconPosition='end'
+		/>
+	);
 };

@@ -14,45 +14,40 @@ interface Props {
 }
 
 export const ConditionSelectModal = (props: Props) => {
-	try {
-		const conditions = [
-			ConditionType.Custom,
-			ConditionType.Bleeding,
-			ConditionType.Dazed,
-			ConditionType.Frightened,
-			ConditionType.Grabbed,
-			ConditionType.Prone,
-			ConditionType.Restrained,
-			ConditionType.Slowed,
-			ConditionType.Taunted,
-			ConditionType.Weakened
-		];
+	const conditions = [
+		ConditionType.Custom,
+		ConditionType.Bleeding,
+		ConditionType.Dazed,
+		ConditionType.Frightened,
+		ConditionType.Grabbed,
+		ConditionType.Prone,
+		ConditionType.Restrained,
+		ConditionType.Slowed,
+		ConditionType.Taunted,
+		ConditionType.Weakened
+	];
 
-		return (
-			<Modal
-				content={
-					<div className='condition-select-modal'>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								conditions.map(c => (
-									<SelectablePanel
-										key={c}
-										disabled={props.immunities.includes(c)}
-										onSelect={() => props.onSelect(c)}
-									>
-										<HeaderText>{c}</HeaderText>
-										<div className='ds-text'>{ConditionLogic.getDescription(c)}</div>
-									</SelectablePanel>
-								))
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			content={
+				<div className='condition-select-modal'>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							conditions.map(c => (
+								<SelectablePanel
+									key={c}
+									disabled={props.immunities.includes(c)}
+									onSelect={() => props.onSelect(c)}
+								>
+									<HeaderText>{c}</HeaderText>
+									<div className='ds-text'>{ConditionLogic.getDescription(c)}</div>
+								</SelectablePanel>
+							))
+						}
+					</Space>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

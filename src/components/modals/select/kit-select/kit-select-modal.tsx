@@ -24,53 +24,48 @@ interface Props {
 export const KitSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
-	try {
-		const kits = props.kits
-			.filter(k => Utils.textMatches([
-				k.name,
-				k.description
-			], searchTerm));
+	const kits = props.kits
+		.filter(k => Utils.textMatches([
+			k.name,
+			k.description
+		], searchTerm));
 
-		return (
-			<Modal
-				toolbar={
-					<>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-					</>
-				}
-				content={
-					<div className='kit-select-modal'>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								kits.map(k => (
-									<SelectablePanel
-										key={k.id}
-										onSelect={() => props.onSelect(k)}
-									>
-										<KitPanel kit={k} hero={props.hero} options={props.options} mode={PanelMode.Full} />
-									</SelectablePanel>
-								))
-							}
-							{
-								kits.length === 0 ?
-									<Empty />
-									: null
-							}
-						</Space>
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			toolbar={
+				<>
+					<Input
+						name='search'
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
+				</>
+			}
+			content={
+				<div className='kit-select-modal'>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							kits.map(k => (
+								<SelectablePanel
+									key={k.id}
+									onSelect={() => props.onSelect(k)}
+								>
+									<KitPanel kit={k} hero={props.hero} options={props.options} mode={PanelMode.Full} />
+								</SelectablePanel>
+							))
+						}
+						{
+							kits.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

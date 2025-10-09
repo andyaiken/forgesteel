@@ -833,50 +833,45 @@ export const CustomizePanel = (props: Props) => {
 		return null;
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='customize-panel'>
-					<HeaderText extra={getMenu()}>
-						Customize
-					</HeaderText>
-					{
-						hero.features
-							.filter(f => f.id !== 'default-language')
-							.map(f => (
-								<Expander
-									key={f.id}
-									title={f.name}
-									extra={[
-										<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
-									]}
-								>
-									{getEditSection(f)}
-									{
-										[ FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier, FeatureType.MovementMode, FeatureType.Proficiency ].includes(f.type) ?
-											null
-											:
-											<FeatureConfigPanel
-												feature={f}
-												options={props.options}
-												hero={hero}
-												sourcebooks={props.sourcebooks}
-												setData={setFeatureData}
-											/>
-									}
-								</Expander>
-							))
-					}
-					{
-						hero.features.filter(f => f.id !== 'default-language').length === 0 ?
-							<Empty text='You have no customizations.' />
-							: null
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className='customize-panel'>
+				<HeaderText extra={getMenu()}>
+					Customize
+				</HeaderText>
+				{
+					hero.features
+						.filter(f => f.id !== 'default-language')
+						.map(f => (
+							<Expander
+								key={f.id}
+								title={f.name}
+								extra={[
+									<DangerButton key='delete' mode='clear' onConfirm={() => deleteFeature(f)} />
+								]}
+							>
+								{getEditSection(f)}
+								{
+									[ FeatureType.Bonus, FeatureType.ConditionImmunity, FeatureType.DamageModifier, FeatureType.MovementMode, FeatureType.Proficiency ].includes(f.type) ?
+										null
+										:
+										<FeatureConfigPanel
+											feature={f}
+											options={props.options}
+											hero={hero}
+											sourcebooks={props.sourcebooks}
+											setData={setFeatureData}
+										/>
+								}
+							</Expander>
+						))
+				}
+				{
+					hero.features.filter(f => f.id !== 'default-language').length === 0 ?
+						<Empty text='You have no customizations.' />
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

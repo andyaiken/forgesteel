@@ -12,17 +12,12 @@ interface Props {
 }
 
 export const CounterPanel = (props: Props) => {
-	try {
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'counter-panel' : 'counter-panel compact'} id={props.mode === PanelMode.Full ? props.counter.id : undefined}>
-					<HeaderText level={1}>{props.counter.name || 'Unnamed Counter'}</HeaderText>
-					<Field label='Value' value={props.counter.value} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'counter-panel' : 'counter-panel compact'} id={props.mode === PanelMode.Full ? props.counter.id : undefined}>
+				<HeaderText level={1}>{props.counter.name || 'Unnamed Counter'}</HeaderText>
+				<Field label='Value' value={props.counter.value} />
+			</div>
+		</ErrorBoundary>
+	);
 };

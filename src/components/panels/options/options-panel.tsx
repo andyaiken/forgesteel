@@ -455,16 +455,11 @@ export const OptionsPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='options-panel'>
-					{getContent()}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className='options-panel'>
+				{getContent()}
+			</div>
+		</ErrorBoundary>
+	);
 };

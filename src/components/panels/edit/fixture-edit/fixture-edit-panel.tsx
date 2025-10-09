@@ -35,257 +35,252 @@ interface Props {
 export const FixtureEditPanel = (props: Props) => {
 	const [ fixture, setFixture ] = useState<Fixture>(props.fixture);
 
-	try {
-		const getNameAndDescriptionSection = () => {
-			const setName = (value: string) => {
-				const copy = Utils.copy(fixture);
-				copy.name = value;
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			const setDescription = (value: string) => {
-				const copy = Utils.copy(fixture);
-				copy.description = value;
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					<HeaderText>Name</HeaderText>
-					<Input
-						status={fixture.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-						value={fixture.name}
-						onChange={e => setName(e.target.value)}
-					/>
-					<HeaderText>Description</HeaderText>
-					<MultiLine value={fixture.description} onChange={setDescription} />
-				</Space>
-			);
+	const getNameAndDescriptionSection = () => {
+		const setName = (value: string) => {
+			const copy = Utils.copy(fixture);
+			copy.name = value;
+			setFixture(copy);
+			props.onChange(copy);
 		};
 
-		const getDetailsSection = () => {
-			const setRoleType = (value: MonsterRoleType) => {
-				const copy = Utils.copy(fixture);
-				copy.role.type = value;
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			const setTerrainRoleType = (value: TerrainRoleType) => {
-				const copy = Utils.copy(fixture);
-				copy.role.terrainType = value;
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			const setBaseStamina = (value: number) => {
-				const copy = Utils.copy(fixture);
-				copy.baseStamina = value;
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			const setSizeValue = (value: number) => {
-				const copy = Utils.copy(fixture);
-				copy.size.value = value;
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
-				const copy = Utils.copy(fixture);
-				copy.size.mod = value;
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					<HeaderText>Role</HeaderText>
-					<Select
-						style={{ width: '100%' }}
-						options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(type => ({ label: type, value: type, desc: MonsterLogic.getRoleTypeDescription(type) }))}
-						optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.label,
-									option.desc
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
-						value={fixture.role.type}
-						onChange={setRoleType}
-					/>
-					<Select
-						style={{ width: '100%' }}
-						options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(type => ({ label: type, value: type }))}
-						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.label
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
-						value={fixture.role.terrainType}
-						onChange={setTerrainRoleType}
-					/>
-					<HeaderText>Base Stamina</HeaderText>
-					<NumberSpin min={0} value={fixture.baseStamina} onChange={setBaseStamina} />
-					<HeaderText>Size</HeaderText>
-					<NumberSpin min={1} value={fixture.size.value} onChange={setSizeValue} />
-					{
-						fixture.size.value === 1 ?
-							<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
-								name='sizemodtypes'
-								block={true}
-								options={[ 'T', 'S', 'M', 'L' ]}
-								value={fixture.size.mod}
-								onChange={setSizeMod}
-							/>
-							: null
-					}
-				</Space>
-			);
-		};
-
-		const getFeaturesByLevelEditSection = () => {
-			const addFeature = (level: number) => {
-				const copy = Utils.copy(fixture);
-				copy.featuresByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						lvl.features.push(FactoryLogic.feature.create({
-							id: Utils.guid(),
-							name: '',
-							description: ''
-						}));
-					});
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			const changeFeature = (level: number, feature: Feature) => {
-				const copy = Utils.copy(fixture);
-				copy.featuresByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						const index = lvl.features.findIndex(f => f.id === feature.id);
-						if (index !== -1) {
-							lvl.features[index] = feature;
-						}
-					});
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			const moveFeature = (level: number, feature: Feature, direction: 'up' | 'down') => {
-				const copy = Utils.copy(fixture);
-				copy.featuresByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						const index = lvl.features.findIndex(f => f.id === feature.id);
-						lvl.features = Collections.move(lvl.features, index, direction);
-					});
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			const deleteFeature = (level: number, feature: Feature) => {
-				const copy = Utils.copy(fixture);
-				copy.featuresByLevel
-					.filter(lvl => lvl.level === level)
-					.forEach(lvl => {
-						lvl.features = lvl.features.filter(f => f.id !== feature.id);
-					});
-				setFixture(copy);
-				props.onChange(copy);
-			};
-
-			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
-					{
-						fixture.featuresByLevel.map(lvl => (
-							<div key={lvl.level}>
-								<HeaderText
-									extra={
-										<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
-									}
-								>
-									Level {lvl.level.toString()}
-								</HeaderText>
-								<Space direction='vertical' style={{ width: '100%' }}>
-									{
-										lvl.features.map(f => (
-											<Expander
-												key={f.id}
-												title={f.name || 'Unnamed Feature'}
-												tags={[ FeatureLogic.getFeatureTag(f) ]}
-												extra={[
-													<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'up'); }} />,
-													<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'down'); }} />,
-													<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(lvl.level, f); }} />
-												]}
-											>
-												<FeatureEditPanel
-													feature={f}
-													sourcebooks={props.sourcebooks}
-													options={props.options}
-													onChange={feature => changeFeature(lvl.level, feature)}
-												/>
-											</Expander>
-										))
-									}
-									{
-										lvl.features.length === 0 ?
-											<Empty />
-											: null
-									}
-								</Space>
-							</div>
-						))
-					}
-				</Space>
-			);
+		const setDescription = (value: string) => {
+			const copy = Utils.copy(fixture);
+			copy.description = value;
+			setFixture(copy);
+			props.onChange(copy);
 		};
 
 		return (
-			<ErrorBoundary>
-				<div className='domain-edit-panel'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Fixture',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: getDetailsSection()
-							},
-							{
-								key: '3',
-								label: 'Levels',
-								children: getFeaturesByLevelEditSection()
-							}
-						]}
-					/>
-				</div>
-			</ErrorBoundary>
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Name</HeaderText>
+				<Input
+					status={fixture.name === '' ? 'warning' : ''}
+					placeholder='Name'
+					allowClear={true}
+					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+					value={fixture.name}
+					onChange={e => setName(e.target.value)}
+				/>
+				<HeaderText>Description</HeaderText>
+				<MultiLine value={fixture.description} onChange={setDescription} />
+			</Space>
 		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	};
+
+	const getDetailsSection = () => {
+		const setRoleType = (value: MonsterRoleType) => {
+			const copy = Utils.copy(fixture);
+			copy.role.type = value;
+			setFixture(copy);
+			props.onChange(copy);
+		};
+
+		const setTerrainRoleType = (value: TerrainRoleType) => {
+			const copy = Utils.copy(fixture);
+			copy.role.terrainType = value;
+			setFixture(copy);
+			props.onChange(copy);
+		};
+
+		const setBaseStamina = (value: number) => {
+			const copy = Utils.copy(fixture);
+			copy.baseStamina = value;
+			setFixture(copy);
+			props.onChange(copy);
+		};
+
+		const setSizeValue = (value: number) => {
+			const copy = Utils.copy(fixture);
+			copy.size.value = value;
+			setFixture(copy);
+			props.onChange(copy);
+		};
+
+		const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
+			const copy = Utils.copy(fixture);
+			copy.size.mod = value;
+			setFixture(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Role</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(type => ({ label: type, value: type, desc: MonsterLogic.getRoleTypeDescription(type) }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label,
+								option.desc
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
+					value={fixture.role.type}
+					onChange={setRoleType}
+				/>
+				<Select
+					style={{ width: '100%' }}
+					options={[ TerrainRoleType.Fortification, TerrainRoleType.Hazard, TerrainRoleType.Relic, TerrainRoleType.SiegeEngine, TerrainRoleType.Trap, TerrainRoleType.Trigger ].map(type => ({ label: type, value: type }))}
+					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.label
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
+					value={fixture.role.terrainType}
+					onChange={setTerrainRoleType}
+				/>
+				<HeaderText>Base Stamina</HeaderText>
+				<NumberSpin min={0} value={fixture.baseStamina} onChange={setBaseStamina} />
+				<HeaderText>Size</HeaderText>
+				<NumberSpin min={1} value={fixture.size.value} onChange={setSizeValue} />
+				{
+					fixture.size.value === 1 ?
+						<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
+							name='sizemodtypes'
+							block={true}
+							options={[ 'T', 'S', 'M', 'L' ]}
+							value={fixture.size.mod}
+							onChange={setSizeMod}
+						/>
+						: null
+				}
+			</Space>
+		);
+	};
+
+	const getFeaturesByLevelEditSection = () => {
+		const addFeature = (level: number) => {
+			const copy = Utils.copy(fixture);
+			copy.featuresByLevel
+				.filter(lvl => lvl.level === level)
+				.forEach(lvl => {
+					lvl.features.push(FactoryLogic.feature.create({
+						id: Utils.guid(),
+						name: '',
+						description: ''
+					}));
+				});
+			setFixture(copy);
+			props.onChange(copy);
+		};
+
+		const changeFeature = (level: number, feature: Feature) => {
+			const copy = Utils.copy(fixture);
+			copy.featuresByLevel
+				.filter(lvl => lvl.level === level)
+				.forEach(lvl => {
+					const index = lvl.features.findIndex(f => f.id === feature.id);
+					if (index !== -1) {
+						lvl.features[index] = feature;
+					}
+				});
+			setFixture(copy);
+			props.onChange(copy);
+		};
+
+		const moveFeature = (level: number, feature: Feature, direction: 'up' | 'down') => {
+			const copy = Utils.copy(fixture);
+			copy.featuresByLevel
+				.filter(lvl => lvl.level === level)
+				.forEach(lvl => {
+					const index = lvl.features.findIndex(f => f.id === feature.id);
+					lvl.features = Collections.move(lvl.features, index, direction);
+				});
+			setFixture(copy);
+			props.onChange(copy);
+		};
+
+		const deleteFeature = (level: number, feature: Feature) => {
+			const copy = Utils.copy(fixture);
+			copy.featuresByLevel
+				.filter(lvl => lvl.level === level)
+				.forEach(lvl => {
+					lvl.features = lvl.features.filter(f => f.id !== feature.id);
+				});
+			setFixture(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					fixture.featuresByLevel.map(lvl => (
+						<div key={lvl.level}>
+							<HeaderText
+								extra={
+									<Button type='text' icon={<PlusOutlined />} onClick={() => addFeature(lvl.level)} />
+								}
+							>
+								Level {lvl.level.toString()}
+							</HeaderText>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								{
+									lvl.features.map(f => (
+										<Expander
+											key={f.id}
+											title={f.name || 'Unnamed Feature'}
+											tags={[ FeatureLogic.getFeatureTag(f) ]}
+											extra={[
+												<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'up'); }} />,
+												<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveFeature(lvl.level, f, 'down'); }} />,
+												<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteFeature(lvl.level, f); }} />
+											]}
+										>
+											<FeatureEditPanel
+												feature={f}
+												sourcebooks={props.sourcebooks}
+												options={props.options}
+												onChange={feature => changeFeature(lvl.level, feature)}
+											/>
+										</Expander>
+									))
+								}
+								{
+									lvl.features.length === 0 ?
+										<Empty />
+										: null
+								}
+							</Space>
+						</div>
+					))
+				}
+			</Space>
+		);
+	};
+
+	return (
+		<ErrorBoundary>
+			<div className='domain-edit-panel'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Fixture',
+							children: getNameAndDescriptionSection()
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: getDetailsSection()
+						},
+						{
+							key: '3',
+							label: 'Levels',
+							children: getFeaturesByLevelEditSection()
+						}
+					]}
+				/>
+			</div>
+		</ErrorBoundary>
+	);
 };

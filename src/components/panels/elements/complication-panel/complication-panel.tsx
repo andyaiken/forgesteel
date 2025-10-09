@@ -19,24 +19,19 @@ interface Props {
 }
 
 export const ComplicationPanel = (props: Props) => {
-	try {
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'complication-panel' : 'complication-panel compact'} id={props.mode === PanelMode.Full ? props.complication.id : undefined}>
-					<HeaderText level={1}>{props.complication.name || 'Unnamed Complication'}</HeaderText>
-					<Markdown text={props.complication.description} />
-					{
-						props.mode === PanelMode.Full ?
-							props.complication.features.map(f => (
-								<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-							))
-							: null
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'complication-panel' : 'complication-panel compact'} id={props.mode === PanelMode.Full ? props.complication.id : undefined}>
+				<HeaderText level={1}>{props.complication.name || 'Unnamed Complication'}</HeaderText>
+				<Markdown text={props.complication.description} />
+				{
+					props.mode === PanelMode.Full ?
+						props.complication.features.map(f => (
+							<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+						))
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

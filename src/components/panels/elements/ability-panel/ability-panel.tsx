@@ -271,76 +271,71 @@ export const AbilityPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		let className = 'ability-panel';
-		if (props.mode !== PanelMode.Full) {
-			className += ' compact';
-		}
-		if (disabled) {
-			className += ' disabled';
-		}
+	let className = 'ability-panel';
+	if (props.mode !== PanelMode.Full) {
+		className += ' compact';
+	}
+	if (disabled) {
+		className += ' disabled';
+	}
 
-		return (
-			<ErrorBoundary>
-				<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
-					<Space direction='vertical' style={{ marginTop: '15px', width: '100%' }}>
-						{
-							getWarnings().map((warn, n) => (
-								<Alert
-									key={n}
-									type='warning'
-									showIcon={true}
-									message={<div><b>{warn.label}</b>: {warn.text}</div>}
-								/>
-							))
-						}
-					</Space>
-					<HeaderText
-						ribbon={headerRibbon}
-						tags={props.tags}
-						extra={
-							autoCalcAvailable() ?
-								<Button
-									type='text'
-									title='Auto-calculate damage, potency, etc'
-									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-								/>
-								: null
-						}
-					>
-						{props.ability.name || 'Unnamed Ability'}
-					</HeaderText>
-					<Markdown text={props.ability.description} className='ability-description-text' />
+	return (
+		<ErrorBoundary>
+			<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
+				<Space direction='vertical' style={{ marginTop: '15px', width: '100%' }}>
 					{
-						props.mode === PanelMode.Full ?
-							<div>
-								{
-									props.ability.keywords.length > 0 ?
-										<div>
-											{props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
-										</div>
-										: null
-								}
-								<AbilityInfoPanel ability={props.ability} hero={props.hero} />
-								{(props.ability.sections || []).map(getSection)}
-								{
-									props.ability.keywords.includes(AbilityKeyword.Charge) && (props.ability.id !== AbilityData.freeStrikeMelee.id) ?
-										<Alert
-											type='info'
-											showIcon={true}
-											message='This ability can be used in place of a melee free strike when you take the Charge action.'
-										/>
-										: null
-								}
-							</div>
+						getWarnings().map((warn, n) => (
+							<Alert
+								key={n}
+								type='warning'
+								showIcon={true}
+								message={<div><b>{warn.label}</b>: {warn.text}</div>}
+							/>
+						))
+					}
+				</Space>
+				<HeaderText
+					ribbon={headerRibbon}
+					tags={props.tags}
+					extra={
+						autoCalcAvailable() ?
+							<Button
+								type='text'
+								title='Auto-calculate damage, potency, etc'
+								icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+								onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
+							/>
 							: null
 					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				>
+					{props.ability.name || 'Unnamed Ability'}
+				</HeaderText>
+				<Markdown text={props.ability.description} className='ability-description-text' />
+				{
+					props.mode === PanelMode.Full ?
+						<div>
+							{
+								props.ability.keywords.length > 0 ?
+									<div>
+										{props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
+									</div>
+									: null
+							}
+							<AbilityInfoPanel ability={props.ability} hero={props.hero} />
+							{(props.ability.sections || []).map(getSection)}
+							{
+								props.ability.keywords.includes(AbilityKeyword.Charge) && (props.ability.id !== AbilityData.freeStrikeMelee.id) ?
+									<Alert
+										type='info'
+										showIcon={true}
+										message='This ability can be used in place of a melee free strike when you take the Charge action.'
+									/>
+									: null
+							}
+						</div>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

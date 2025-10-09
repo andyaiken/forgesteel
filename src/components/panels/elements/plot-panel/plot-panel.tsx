@@ -304,142 +304,137 @@ export const PlotPanel = (props: PlotPanelProps) => {
 		return null;
 	};
 
-	try {
-		if (props.mode !== PanelMode.Full) {
-			return (
-				<div className='plot-panel compact'>
-					<HeaderText level={1}>{props.plot.name || 'Unnamed Plot Point'}</HeaderText>
-					<Markdown text={props.plot.description} />
-				</div>
-			);
-		}
-
+	if (props.mode !== PanelMode.Full) {
 		return (
-			<ErrorBoundary>
-				<div className='plot-panel'>
-					<HeaderText level={1}>{props.plot.name || 'Unnamed Plot Point'}</HeaderText>
-					<Markdown text={props.plot.description} />
+			<div className='plot-panel compact'>
+				<HeaderText level={1}>{props.plot.name || 'Unnamed Plot Point'}</HeaderText>
+				<Markdown text={props.plot.description} />
+			</div>
+		);
+	}
+
+	return (
+		<ErrorBoundary>
+			<div className='plot-panel'>
+				<HeaderText level={1}>{props.plot.name || 'Unnamed Plot Point'}</HeaderText>
+				<Markdown text={props.plot.description} />
+				{
+					props.plot.content.map(c => (
+						<div key={c.id} className='plot-content-row'>
+							{getContent(c)}
+							{getActions(c)}
+						</div>
+					))
+				}
+				{!props.plot.description && (props.plot.content.length === 0) ? <Empty text='No details' /> : null}
+				{props.plot.links.length > 0 ? <HeaderText>Links</HeaderText> : null}
+				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						props.plot.content.map(c => (
-							<div key={c.id} className='plot-content-row'>
-								{getContent(c)}
-								{getActions(c)}
-							</div>
+						props.plot.links.map(l => (
+							<Button key={l.id} block={true} onClick={() => props.onSelect(props.adventure.plot.plots.find(p => p.id === l.plotID)!)}>
+								{FormatLogic.getPlotLinkTitle(l, props.adventure.plot)}
+							</Button>
 						))
 					}
-					{!props.plot.description && (props.plot.content.length === 0) ? <Empty text='No details' /> : null}
-					{props.plot.links.length > 0 ? <HeaderText>Links</HeaderText> : null}
-					<Space direction='vertical' style={{ width: '100%' }}>
-						{
-							props.plot.links.map(l => (
-								<Button key={l.id} block={true} onClick={() => props.onSelect(props.adventure.plot.plots.find(p => p.id === l.plotID)!)}>
-									{FormatLogic.getPlotLinkTitle(l, props.adventure.plot)}
-								</Button>
-							))
-						}
-					</Space>
-				</div>
-				<Drawer open={!!selectedEncounter} onClose={() => setSelectedEncounter(null)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							selectedEncounter ?
-								<EncounterPanel
-									encounter={selectedEncounter}
-									sourcebooks={props.sourcebooks}
-									heroes={props.heroes}
-									options={props.options}
-									mode={PanelMode.Full}
-								/>
-								: null
-						}
-						onClose={() => setSelectedEncounter(null)}
-					/>
-				</Drawer>
-				<Drawer open={!!selectedMontage} onClose={() => setSelectedMontage(null)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							selectedMontage ?
-								<MontagePanel
-									montage={selectedMontage}
-									mode={PanelMode.Full}
-								/>
-								: null
-						}
-						onClose={() => setSelectedMontage(null)}
-					/>
-				</Drawer>
-				<Drawer open={!!selectedNegotiation} onClose={() => setSelectedNegotiation(null)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							selectedNegotiation ?
-								<NegotiationPanel
-									negotiation={selectedNegotiation}
-									mode={PanelMode.Full}
-								/>
-								: null
-						}
-						onClose={() => setSelectedNegotiation(null)}
-					/>
-				</Drawer>
-				<Drawer open={!!selectedFollower} onClose={() => setSelectedFollower(null)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							selectedFollower ?
-								<FollowerPanel
-									follower={selectedFollower}
-									mode={PanelMode.Full}
-								/>
-								: null
-						}
-						onClose={() => setSelectedFollower(null)}
-					/>
-				</Drawer>
-				<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							selectedItem ?
-								<ItemPanel
-									item={selectedItem}
-									options={props.options}
-									mode={PanelMode.Full}
-								/>
-								: null
-						}
-						onClose={() => setSelectedItem(null)}
-					/>
-				</Drawer>
-				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							selectedMonster ?
-								<MonsterPanel
-									monster={selectedMonster}
-									options={props.options}
-									mode={PanelMode.Full}
-								/>
-								: null
-						}
-						onClose={() => setSelectedMonster(null)}
-					/>
-				</Drawer>
-				<Drawer open={!!selectedTitle} onClose={() => setSelectedTitle(null)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							selectedTitle ?
-								<TitlePanel
-									title={selectedTitle}
-									options={props.options}
-									mode={PanelMode.Full}
-								/>
-								: null
-						}
-						onClose={() => setSelectedTitle(null)}
-					/>
-				</Drawer>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				</Space>
+			</div>
+			<Drawer open={!!selectedEncounter} onClose={() => setSelectedEncounter(null)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						selectedEncounter ?
+							<EncounterPanel
+								encounter={selectedEncounter}
+								sourcebooks={props.sourcebooks}
+								heroes={props.heroes}
+								options={props.options}
+								mode={PanelMode.Full}
+							/>
+							: null
+					}
+					onClose={() => setSelectedEncounter(null)}
+				/>
+			</Drawer>
+			<Drawer open={!!selectedMontage} onClose={() => setSelectedMontage(null)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						selectedMontage ?
+							<MontagePanel
+								montage={selectedMontage}
+								mode={PanelMode.Full}
+							/>
+							: null
+					}
+					onClose={() => setSelectedMontage(null)}
+				/>
+			</Drawer>
+			<Drawer open={!!selectedNegotiation} onClose={() => setSelectedNegotiation(null)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						selectedNegotiation ?
+							<NegotiationPanel
+								negotiation={selectedNegotiation}
+								mode={PanelMode.Full}
+							/>
+							: null
+					}
+					onClose={() => setSelectedNegotiation(null)}
+				/>
+			</Drawer>
+			<Drawer open={!!selectedFollower} onClose={() => setSelectedFollower(null)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						selectedFollower ?
+							<FollowerPanel
+								follower={selectedFollower}
+								mode={PanelMode.Full}
+							/>
+							: null
+					}
+					onClose={() => setSelectedFollower(null)}
+				/>
+			</Drawer>
+			<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						selectedItem ?
+							<ItemPanel
+								item={selectedItem}
+								options={props.options}
+								mode={PanelMode.Full}
+							/>
+							: null
+					}
+					onClose={() => setSelectedItem(null)}
+				/>
+			</Drawer>
+			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						selectedMonster ?
+							<MonsterPanel
+								monster={selectedMonster}
+								options={props.options}
+								mode={PanelMode.Full}
+							/>
+							: null
+					}
+					onClose={() => setSelectedMonster(null)}
+				/>
+			</Drawer>
+			<Drawer open={!!selectedTitle} onClose={() => setSelectedTitle(null)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						selectedTitle ?
+							<TitlePanel
+								title={selectedTitle}
+								options={props.options}
+								mode={PanelMode.Full}
+							/>
+							: null
+					}
+					onClose={() => setSelectedTitle(null)}
+				/>
+			</Drawer>
+		</ErrorBoundary>
+	);
 };

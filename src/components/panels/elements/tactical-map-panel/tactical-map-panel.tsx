@@ -1481,147 +1481,142 @@ export const TacticalMapPanel = (props: Props) => {
 
 	// #endregion
 
-	try {
-		let boundaries = TacticalMapLogic.getMapBoundaries(map);
-		if (!boundaries) {
-			if (props.display === TacticalMapDisplayType.DirectorEdit) {
-				boundaries = {
-					minX: 0,
-					minY: 0,
-					minZ: 0,
-					maxX: 15,
-					maxY: 15,
-					maxZ: 0
-				};
-			} else {
-				return (
-					<Empty text='Empty map' />
-				);
-			}
+	let boundaries = TacticalMapLogic.getMapBoundaries(map);
+	if (!boundaries) {
+		if (props.display === TacticalMapDisplayType.DirectorEdit) {
+			boundaries = {
+				minX: 0,
+				minY: 0,
+				minZ: 0,
+				maxX: 15,
+				maxY: 15,
+				maxZ: 0
+			};
+		} else {
+			return (
+				<Empty text='Empty map' />
+			);
 		}
-
-		if (boundaries && (props.display === TacticalMapDisplayType.DirectorEdit) && (editMode === TacticalMapEditMode.Tiles) && editAdding) {
-			// Apply a border
-			const paddingSquares = 5;
-			boundaries.minX -= paddingSquares;
-			boundaries.minY -= paddingSquares;
-			boundaries.maxX += paddingSquares;
-			boundaries.maxY += paddingSquares;
-		}
-
-		const widthInSquares = 1 + boundaries.maxX - boundaries.minX;
-		const heightInSquares = 1 + boundaries.maxY - boundaries.minY;
-		const widthInPixels = (size * widthInSquares);
-		const heightInPixels = (size * heightInSquares);
-
-		return (
-			<ErrorBoundary>
-				{getTopToolbar()}
-				<div
-					id={map.id}
-					className={'tactical-map-panel ' + props.display}
-					style={{ width: widthInPixels + 'px', height: heightInPixels + 'px' }}
-				>
-					<div className='grid' onClick={() => setSelectedMapItemID(null)}>
-						{getTiles(boundaries)}
-						{getWalls(boundaries)}
-						{getZones(boundaries)}
-						{getMinis(boundaries)}
-						{getFog(boundaries)}
-						{getGrid(boundaries)}
-						{getWallVertices(boundaries)}
-					</div>
-				</div>
-				{getBottomToolbar()}
-				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
-					{
-						selectedMonster ?
-							<MonsterModal
-								monster={selectedMonster.monster}
-								monsterGroup={selectedMonster.monsterGroup}
-								encounter={selectedMonster.encounter}
-								options={props.options}
-								onClose={() => setSelectedMonster(null)}
-								updateMonster={monster => {
-									const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);
-									if (mini && mini.content) {
-										const encounter = props.encounters ? props.encounters.find(e => e.id === mini.content!.encounterID) : undefined;
-										if (encounter) {
-											const copy = Utils.copy(encounter as Encounter);
-											copy.groups.forEach(g => {
-												g.slots.forEach(s => {
-													const index = s.monsters.findIndex(m => m.id === monster.id);
-													if (index !== -1) {
-														s.monsters[index] = monster;
-													}
-												});
-											});
-
-											// Make sure no minion groups have a dead captain
-											const captainIDs = copy.groups
-												.flatMap(g => g.slots)
-												.flatMap(s => s.monsters)
-												.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
-												.filter(m => !m.state.defeated)
-												.map(m => m.id);
-											copy.groups.forEach(g => {
-												g.slots.forEach(s => {
-													if (s.state.captainID && !captainIDs.includes(s.state.captainID)) {
-														s.state.captainID = undefined;
-													}
-												});
-											});
-
-											if (props.updateEncounter) {
-												props.updateEncounter(copy);
-											}
-										}
-									}
-								}}
-								updateEncounter={props.updateEncounter}
-							/>
-							: null
-					}
-				</Drawer>
-				<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} width='500px'>
-					{
-						selectedHero ?
-							<HeroStateModal
-								hero={selectedHero}
-								sourcebooks={props.sourcebooks || []}
-								options={props.options}
-								startPage={HeroStatePage.Vitals}
-								showEncounterControls={true}
-								onClose={() => setSelectedHero(null)}
-								onChange={hero => {
-									const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);
-									if (mini && mini.content) {
-										const encounter = props.encounters ? props.encounters.find(e => e.id === mini.content!.encounterID) : undefined;
-										if (encounter) {
-											const copy = Utils.copy(encounter);
-											const index = copy.heroes.findIndex(h => h.id === hero.id);
-											if (index !== -1) {
-												copy.heroes[index] = hero;
-											}
-
-											if (props.updateEncounter) {
-												props.updateEncounter(copy);
-											}
-										} else {
-											if (props.updateHero) {
-												props.updateHero(hero);
-											}
-										}
-									}
-								}}
-							/>
-							: null
-					}
-				</Drawer>
-			</ErrorBoundary>
-		);
-	} catch (e) {
-		console.error(e);
-		return null;
 	}
+
+	if (boundaries && (props.display === TacticalMapDisplayType.DirectorEdit) && (editMode === TacticalMapEditMode.Tiles) && editAdding) {
+		// Apply a border
+		const paddingSquares = 5;
+		boundaries.minX -= paddingSquares;
+		boundaries.minY -= paddingSquares;
+		boundaries.maxX += paddingSquares;
+		boundaries.maxY += paddingSquares;
+	}
+
+	const widthInSquares = 1 + boundaries.maxX - boundaries.minX;
+	const heightInSquares = 1 + boundaries.maxY - boundaries.minY;
+	const widthInPixels = (size * widthInSquares);
+	const heightInPixels = (size * heightInSquares);
+
+	return (
+		<ErrorBoundary>
+			{getTopToolbar()}
+			<div
+				id={map.id}
+				className={'tactical-map-panel ' + props.display}
+				style={{ width: widthInPixels + 'px', height: heightInPixels + 'px' }}
+			>
+				<div className='grid' onClick={() => setSelectedMapItemID(null)}>
+					{getTiles(boundaries)}
+					{getWalls(boundaries)}
+					{getZones(boundaries)}
+					{getMinis(boundaries)}
+					{getFog(boundaries)}
+					{getGrid(boundaries)}
+					{getWallVertices(boundaries)}
+				</div>
+			</div>
+			{getBottomToolbar()}
+			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+				{
+					selectedMonster ?
+						<MonsterModal
+							monster={selectedMonster.monster}
+							monsterGroup={selectedMonster.monsterGroup}
+							encounter={selectedMonster.encounter}
+							options={props.options}
+							onClose={() => setSelectedMonster(null)}
+							updateMonster={monster => {
+								const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);
+								if (mini && mini.content) {
+									const encounter = props.encounters ? props.encounters.find(e => e.id === mini.content!.encounterID) : undefined;
+									if (encounter) {
+										const copy = Utils.copy(encounter as Encounter);
+										copy.groups.forEach(g => {
+											g.slots.forEach(s => {
+												const index = s.monsters.findIndex(m => m.id === monster.id);
+												if (index !== -1) {
+													s.monsters[index] = monster;
+												}
+											});
+										});
+
+										// Make sure no minion groups have a dead captain
+										const captainIDs = copy.groups
+											.flatMap(g => g.slots)
+											.flatMap(s => s.monsters)
+											.filter(m => m.role.organization !== MonsterOrganizationType.Minion)
+											.filter(m => !m.state.defeated)
+											.map(m => m.id);
+										copy.groups.forEach(g => {
+											g.slots.forEach(s => {
+												if (s.state.captainID && !captainIDs.includes(s.state.captainID)) {
+													s.state.captainID = undefined;
+												}
+											});
+										});
+
+										if (props.updateEncounter) {
+											props.updateEncounter(copy);
+										}
+									}
+								}
+							}}
+							updateEncounter={props.updateEncounter}
+						/>
+						: null
+				}
+			</Drawer>
+			<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} width='500px'>
+				{
+					selectedHero ?
+						<HeroStateModal
+							hero={selectedHero}
+							sourcebooks={props.sourcebooks || []}
+							options={props.options}
+							startPage={HeroStatePage.Vitals}
+							showEncounterControls={true}
+							onClose={() => setSelectedHero(null)}
+							onChange={hero => {
+								const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);
+								if (mini && mini.content) {
+									const encounter = props.encounters ? props.encounters.find(e => e.id === mini.content!.encounterID) : undefined;
+									if (encounter) {
+										const copy = Utils.copy(encounter);
+										const index = copy.heroes.findIndex(h => h.id === hero.id);
+										if (index !== -1) {
+											copy.heroes[index] = hero;
+										}
+
+										if (props.updateEncounter) {
+											props.updateEncounter(copy);
+										}
+									} else {
+										if (props.updateHero) {
+											props.updateHero(hero);
+										}
+									}
+								}
+							}}
+						/>
+						: null
+				}
+			</Drawer>
+		</ErrorBoundary>
+	);
 };

@@ -13,25 +13,20 @@ interface Props {
 }
 
 export const DropdownButton = (props: Props) => {
-	try {
-		return (
-			<div className='dropdown-button' style={props.style}>
-				<Dropdown
-					menu={{
-						items: props.items,
-						onClick: e => props.onClick(e.key)
-					}}
-					trigger={[ 'click' ]}
-				>
-					<Button className={props.className} block={true}>
-						{props.label}
-						<DownOutlined />
-					</Button>
-				</Dropdown>
-			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<div className='dropdown-button' style={props.style}>
+			<Dropdown
+				menu={{
+					items: props.items,
+					onClick: e => props.onClick(e.key)
+				}}
+				trigger={[ 'click' ]}
+			>
+				<Button className={props.className} block={true}>
+					{props.label}
+					<DownOutlined />
+				</Button>
+			</Dropdown>
+		</div>
+	);
 };

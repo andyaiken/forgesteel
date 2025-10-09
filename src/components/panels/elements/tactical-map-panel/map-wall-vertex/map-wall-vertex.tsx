@@ -38,25 +38,20 @@ export const MapWallVertexPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		let className = 'map-wall-vertex-panel ' + props.display;
-		if (props.selected) {
-			className += ' selected';
-		}
-
-		return (
-			<ErrorBoundary>
-				<div
-					className={className}
-					style={props.style}
-					onMouseDown={mouseDown}
-					onMouseUp={mouseUp}
-					onMouseEnter={mouseEnter}
-				/>
-			</ErrorBoundary>
-		);
-	} catch (e) {
-		console.error(e);
-		return null;
+	let className = 'map-wall-vertex-panel ' + props.display;
+	if (props.selected) {
+		className += ' selected';
 	}
+
+	return (
+		<ErrorBoundary>
+			<div
+				className={className}
+				style={props.style}
+				onMouseDown={mouseDown}
+				onMouseUp={mouseUp}
+				onMouseEnter={mouseEnter}
+			/>
+		</ErrorBoundary>
+	);
 };

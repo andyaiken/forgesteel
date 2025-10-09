@@ -364,377 +364,372 @@ export const AbilityEditPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='ability-edit-panel'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Ability',
-								children: (
-									<div>
-										<HeaderText>Name</HeaderText>
-										<Input
-											status={ability.name === '' ? 'warning' : ''}
-											placeholder='Name'
-											allowClear={true}
-											value={ability.name}
-											onChange={e => setName(e.target.value)}
-										/>
-										<HeaderText>Description</HeaderText>
-										<MultiLine value={ability.description} onChange={setDescription} />
-									</div>
-								)
-							},
-							{
-								key: '2',
-								label: 'Usage',
-								children: (
-									<div>
-										<HeaderText>Type</HeaderText>
-										<Space direction='vertical' style={{ width: '100%' }}>
-											<Select
-												style={{ width: '100%' }}
-												placeholder='Select usage type'
-												options={[ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.ChampionAction, AbilityUsage.NoAction, AbilityUsage.Other ].map(option => ({ value: option }))}
-												optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-												value={ability.type.usage}
-												onChange={setTypeUsage}
-											/>
-											{
-												(ability.type.usage === AbilityUsage.MainAction) || (ability.type.usage === AbilityUsage.Maneuver) || (ability.type.usage === AbilityUsage.Trigger) ?
-													<Toggle label='Free' value={ability.type.free} onChange={setTypeFree} />
-													: null
-											}
-											{
-												ability.type.usage === AbilityUsage.Trigger ?
-													<Input
-														status={ability.type.trigger === '' ? 'warning' : ''}
-														placeholder='Trigger'
-														allowClear={true}
-														value={ability.type.trigger}
-														onChange={e => setTypeTrigger(e.target.value)}
-													/>
-													: null
-											}
-											{
-												ability.type.usage === AbilityUsage.Other ?
-													<Input
-														status={ability.type.time === '' ? 'warning' : ''}
-														placeholder='Other'
-														allowClear={true}
-														value={ability.type.time}
-														onChange={e => setTypeTime(e.target.value)}
-													/>
-													: null
-											}
-											{
-												ability.type.usage === AbilityUsage.VillainAction ?
-													<NumberSpin label='Villain Action Order' min={1} max={3} value={ability.type.order || 1} onChange={setTypeOrder} />
-													: null
-											}
-											<Input
-												placeholder='Qualifiers'
-												allowClear={true}
-												value={ability.type.qualifiers}
-												onChange={e => setTypeQualifiers(e.target.value)}
-											/>
-											<Toggle label='Can be used as a free strike' value={ability.type.freeStrike} onChange={setTypeFreeStrike} />
-										</Space>
-										<HeaderText>Keywords</HeaderText>
+	return (
+		<ErrorBoundary>
+			<div className='ability-edit-panel'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Ability',
+							children: (
+								<div>
+									<HeaderText>Name</HeaderText>
+									<Input
+										status={ability.name === '' ? 'warning' : ''}
+										placeholder='Name'
+										allowClear={true}
+										value={ability.name}
+										onChange={e => setName(e.target.value)}
+									/>
+									<HeaderText>Description</HeaderText>
+									<MultiLine value={ability.description} onChange={setDescription} />
+								</div>
+							)
+						},
+						{
+							key: '2',
+							label: 'Usage',
+							children: (
+								<div>
+									<HeaderText>Type</HeaderText>
+									<Space direction='vertical' style={{ width: '100%' }}>
 										<Select
 											style={{ width: '100%' }}
-											placeholder='Keywords'
-											mode='tags'
-											allowClear={true}
-											options={AbilityLogic.getKeywords().map(option => ({ value: option }))}
+											placeholder='Select usage type'
+											options={[ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Move, AbilityUsage.Trigger, AbilityUsage.VillainAction, AbilityUsage.ChampionAction, AbilityUsage.NoAction, AbilityUsage.Other ].map(option => ({ value: option }))}
 											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-											showSearch={true}
-											filterOption={(input, option) => {
-												const strings = option ?
-													[
-														option.value
-													]
-													: [];
-												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-											}}
-											value={ability.keywords}
-											onChange={setKeywords}
+											value={ability.type.usage}
+											onChange={setTypeUsage}
 										/>
-										<HeaderText
-											extra={
-												<Button type='text' icon={<PlusOutlined />} onClick={addDistance} />
-											}
-										>
-											Distance
-										</HeaderText>
-										<Space direction='vertical' style={{ width: '100%' }}>
-											{
-												ability.distance.map((distance, n) => (
-													<Expander
-														key={n}
-														title={AbilityLogic.getDistance(distance)}
-														extra={[
-															<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveDistance(n, 'up'); }} />,
-															<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveDistance(n, 'down'); }} />,
-															<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteDistance(n); }} />
-														]}
-													>
-														<Space direction='vertical' style={{ width: '100%' }}>
-															<HeaderText>Distance Type</HeaderText>
-															<Select
-																style={{ width: '100%' }}
-																placeholder='Distance'
-																options={[ 'Self', 'Melee', 'Ranged', 'Area', 'Line', 'Summoner', 'Special' ].map(option => ({ value: option }))}
-																optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-																value={getDistanceMainType(n)}
-																onChange={value => setDistanceMainType(n, value)}
-															/>
-															{
-																getDistanceMainType(n) === 'Area' ?
-																	<HeaderText>Area Type</HeaderText>
-																	: null
-															}
-															{
-																getDistanceMainType(n) === 'Area' ?
-																	<Select
-																		style={{ width: '100%' }}
-																		disabled={getDistanceMainType(n) !== 'Area'}
-																		placeholder='Area type'
-																		options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option }))}
-																		optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-																		value={distance.type}
-																		onChange={value => setDistanceType(n, value)}
-																	/>
-																	: null
-															}
-															{
-																(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Summoner Range') && (getDistanceMainType(n) !== 'Special') ?
-																	<HeaderText>Value</HeaderText>
-																	: null
-															}
-															{
-																(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Summoner Range') && (getDistanceMainType(n) !== 'Special') ?
-																	<NumberSpin min={1} value={distance.value} onChange={value => setDistanceValue(n, value)} />
-																	: null
-															}
-															{
-																getDistanceMainType(n) === 'Line' ?
-																	<HeaderText>Value 2</HeaderText>
-																	: null
-															}
-															{
-																getDistanceMainType(n) === 'Line' ?
-																	<NumberSpin min={1} value={distance.value2} onChange={value => setDistanceValue2(n, value)} />
-																	: null
-															}
-															{
-																(getDistanceMainType(n) === 'Area') || (getDistanceMainType(n) === 'Line') ?
-																	<HeaderText>Within</HeaderText>
-																	: null
-															}
-															{
-																(getDistanceMainType(n) === 'Area') || (getDistanceMainType(n) === 'Line') ?
-																	<NumberSpin min={1} value={distance.within} onChange={value => setDistanceWithin(n, value)} />
-																	: null
-															}
-															{
-																getDistanceMainType(n) === 'Special' ?
-																	<HeaderText>Special</HeaderText>
-																	: null
-															}
-															{
-																getDistanceMainType(n) === 'Special' ?
-																	<Input
-																		status={distance.special === '' ? 'warning' : ''}
-																		placeholder='Special'
-																		allowClear={true}
-																		value={distance.special}
-																		onChange={e => setDistanceSpecial(n, e.target.value)}
-																	/>
-																	: null
-															}
-														</Space>
-													</Expander>
-												))
-											}
-											{
-												ability.distance.length === 0 ?
-													<Empty />
-													: null
-											}
-										</Space>
-										<HeaderText>Target</HeaderText>
-										<Input
-											status={ability.target === '' ? 'warning' : ''}
-											placeholder='Target'
-											allowClear={true}
-											value={ability.target}
-											onChange={e => setTarget(e.target.value)}
-										/>
-										<HeaderText>Signature</HeaderText>
-										<Toggle label='Signature' value={ability.cost === 'signature'} onChange={value => setCost(value ? 'signature' : 0)} />
 										{
-											ability.cost !== 'signature' ?
-												<>
-													<HeaderText>Cost</HeaderText>
-													<NumberSpin min={0} value={ability.cost} onChange={setCost} />
-													<HeaderText>Repeatable</HeaderText>
-													<Toggle label='Repeatable' value={ability.repeatable} onChange={setRepeatable} />
-												</>
+											(ability.type.usage === AbilityUsage.MainAction) || (ability.type.usage === AbilityUsage.Maneuver) || (ability.type.usage === AbilityUsage.Trigger) ?
+												<Toggle label='Free' value={ability.type.free} onChange={setTypeFree} />
 												: null
 										}
-									</div>
-								)
-							},
-							{
-								key: '3',
-								label: 'Content',
-								children: (
-									<div>
-										<HeaderText
-											extra={
-												<Popover
-													trigger='click'
-													content={
-														<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-															<Button type='text' onClick={() => addSection('text')}>Add Text</Button>
-															<Button type='text' onClick={() => addSection('field')}>Add a Field</Button>
-															<Button type='text' onClick={() => addSection('roll')}>Add a Roll</Button>
-															<Button type='text' onClick={() => addSection('package')}>Add a Package</Button>
-														</div>
-													}
-												>
-													<Button type='text' icon={<PlusOutlined />} />
-												</Popover>
-											}
-										>
-											Sections
-										</HeaderText>
-										<Space direction='vertical' style={{ width: '100%' }}>
-											{
-												ability.sections.map((section, n) => (
-													<Expander
-														key={n}
-														title={getSectionTitle(section)}
-														extra={[
-															<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'up'); }} />,
-															<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'down'); }} />,
-															<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSection(n); }} />
-														]}
-													>
-														{
-															section.type === 'text' ?
-																<Space direction='vertical' style={{ width: '100%' }}>
-																	<HeaderText>Text</HeaderText>
-																	<MultiLine value={section.text} onChange={value => setTextSectionText(n, value)} />
-																</Space>
-																: null
-														}
-														{
-															section.type === 'field' ?
-																<Space direction='vertical' style={{ width: '100%' }}>
-																	<HeaderText>Name</HeaderText>
-																	<Input
-																		status={section.name === '' ? 'warning' : ''}
-																		placeholder='Name'
-																		allowClear={true}
-																		value={section.name}
-																		onChange={e => setFieldSectionName(n, e.target.value)}
-																	/>
-																	<HeaderText>Effect</HeaderText>
-																	<MultiLine value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
-																	<HeaderText>Cost</HeaderText>
-																	<NumberSpin min={0} value={section.value} onChange={value => setFieldSectionValue(n, value)} />
-																	<Toggle label='Repeatable' value={section.repeatable} onChange={value => setFieldSectionRepeatable(n, value)} />
-																</Space>
-																: null
-														}
-														{
-															section.type === 'roll' ?
-																<Space direction='vertical' style={{ width: '100%' }}>
-																	<HeaderText>Characteristics / Bonus</HeaderText>
-																	<Select
-																		style={{ width: '100%' }}
-																		disabled={section.roll.bonus > 0}
-																		status={(section.roll.characteristic.length === 0) && (section.roll.bonus === 0) ? 'warning' : ''}
-																		placeholder='Characteristics'
-																		mode='multiple'
-																		options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-																		optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-																		value={section.roll.characteristic}
-																		onChange={value => setRollSectionCharacteristics(n, value)}
-																	/>
-																	<NumberSpin disabled={section.roll.characteristic.length > 0} label='Bonus' min={0} value={section.roll.bonus} onChange={value => setRollSectionBonus(n, value)} />
-																	{
-																		(section.roll.characteristic.length === 0) && (section.roll.bonus === 0) ?
-																			<Alert
-																				type='warning'
-																				showIcon={true}
-																				message='A roll must have either (a) at least one characteristic or (b) a set bonus.'
-																			/>
-																			: null
-																	}
-																	<HeaderText>Tiers</HeaderText>
-																	<Input
-																		status={section.roll.tier1 === '' ? 'warning' : ''}
-																		placeholder='Tier 1'
-																		allowClear={true}
-																		value={section.roll.tier1}
-																		onChange={e => setRollSectionTier1(n, e.target.value)}
-																	/>
-																	<Input
-																		status={section.roll.tier2 === '' ? 'warning' : ''}
-																		placeholder='Tier 2'
-																		allowClear={true}
-																		value={section.roll.tier2}
-																		onChange={e => setRollSectionTier2(n, e.target.value)}
-																	/>
-																	<Input
-																		status={section.roll.tier3 === '' ? 'warning' : ''}
-																		placeholder='Tier 3'
-																		allowClear={true}
-																		value={section.roll.tier3}
-																		onChange={e => setRollSectionTier3(n, e.target.value)}
-																	/>
-																</Space>
-																: null
-														}
-														{
-															section.type === 'package' ?
-																<Space direction='vertical' style={{ width: '100%' }}>
-																	<HeaderText>Tag</HeaderText>
-																	<Input
-																		status={section.tag === '' ? 'warning' : ''}
-																		placeholder='Tag'
-																		allowClear={true}
-																		value={section.tag}
-																		onChange={e => setPackageSectionTag(n, e.target.value)}
-																	/>
-																</Space>
-																: null
-														}
-													</Expander>
-												))
-											}
-										</Space>
 										{
-											ability.sections.length === 0 ?
+											ability.type.usage === AbilityUsage.Trigger ?
+												<Input
+													status={ability.type.trigger === '' ? 'warning' : ''}
+													placeholder='Trigger'
+													allowClear={true}
+													value={ability.type.trigger}
+													onChange={e => setTypeTrigger(e.target.value)}
+												/>
+												: null
+										}
+										{
+											ability.type.usage === AbilityUsage.Other ?
+												<Input
+													status={ability.type.time === '' ? 'warning' : ''}
+													placeholder='Other'
+													allowClear={true}
+													value={ability.type.time}
+													onChange={e => setTypeTime(e.target.value)}
+												/>
+												: null
+										}
+										{
+											ability.type.usage === AbilityUsage.VillainAction ?
+												<NumberSpin label='Villain Action Order' min={1} max={3} value={ability.type.order || 1} onChange={setTypeOrder} />
+												: null
+										}
+										<Input
+											placeholder='Qualifiers'
+											allowClear={true}
+											value={ability.type.qualifiers}
+											onChange={e => setTypeQualifiers(e.target.value)}
+										/>
+										<Toggle label='Can be used as a free strike' value={ability.type.freeStrike} onChange={setTypeFreeStrike} />
+									</Space>
+									<HeaderText>Keywords</HeaderText>
+									<Select
+										style={{ width: '100%' }}
+										placeholder='Keywords'
+										mode='tags'
+										allowClear={true}
+										options={AbilityLogic.getKeywords().map(option => ({ value: option }))}
+										optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+										showSearch={true}
+										filterOption={(input, option) => {
+											const strings = option ?
+												[
+													option.value
+												]
+												: [];
+											return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+										}}
+										value={ability.keywords}
+										onChange={setKeywords}
+									/>
+									<HeaderText
+										extra={
+											<Button type='text' icon={<PlusOutlined />} onClick={addDistance} />
+										}
+									>
+										Distance
+									</HeaderText>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											ability.distance.map((distance, n) => (
+												<Expander
+													key={n}
+													title={AbilityLogic.getDistance(distance)}
+													extra={[
+														<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveDistance(n, 'up'); }} />,
+														<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveDistance(n, 'down'); }} />,
+														<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteDistance(n); }} />
+													]}
+												>
+													<Space direction='vertical' style={{ width: '100%' }}>
+														<HeaderText>Distance Type</HeaderText>
+														<Select
+															style={{ width: '100%' }}
+															placeholder='Distance'
+															options={[ 'Self', 'Melee', 'Ranged', 'Area', 'Line', 'Summoner', 'Special' ].map(option => ({ value: option }))}
+															optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+															value={getDistanceMainType(n)}
+															onChange={value => setDistanceMainType(n, value)}
+														/>
+														{
+															getDistanceMainType(n) === 'Area' ?
+																<HeaderText>Area Type</HeaderText>
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Area' ?
+																<Select
+																	style={{ width: '100%' }}
+																	disabled={getDistanceMainType(n) !== 'Area'}
+																	placeholder='Area type'
+																	options={[ AbilityDistanceType.Aura, AbilityDistanceType.Burst, AbilityDistanceType.Cube, AbilityDistanceType.Wall ].map(option => ({ value: option }))}
+																	optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+																	value={distance.type}
+																	onChange={value => setDistanceType(n, value)}
+																/>
+																: null
+														}
+														{
+															(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Summoner Range') && (getDistanceMainType(n) !== 'Special') ?
+																<HeaderText>Value</HeaderText>
+																: null
+														}
+														{
+															(getDistanceMainType(n) !== 'Self') && (getDistanceMainType(n) !== 'Summoner Range') && (getDistanceMainType(n) !== 'Special') ?
+																<NumberSpin min={1} value={distance.value} onChange={value => setDistanceValue(n, value)} />
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Line' ?
+																<HeaderText>Value 2</HeaderText>
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Line' ?
+																<NumberSpin min={1} value={distance.value2} onChange={value => setDistanceValue2(n, value)} />
+																: null
+														}
+														{
+															(getDistanceMainType(n) === 'Area') || (getDistanceMainType(n) === 'Line') ?
+																<HeaderText>Within</HeaderText>
+																: null
+														}
+														{
+															(getDistanceMainType(n) === 'Area') || (getDistanceMainType(n) === 'Line') ?
+																<NumberSpin min={1} value={distance.within} onChange={value => setDistanceWithin(n, value)} />
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Special' ?
+																<HeaderText>Special</HeaderText>
+																: null
+														}
+														{
+															getDistanceMainType(n) === 'Special' ?
+																<Input
+																	status={distance.special === '' ? 'warning' : ''}
+																	placeholder='Special'
+																	allowClear={true}
+																	value={distance.special}
+																	onChange={e => setDistanceSpecial(n, e.target.value)}
+																/>
+																: null
+														}
+													</Space>
+												</Expander>
+											))
+										}
+										{
+											ability.distance.length === 0 ?
 												<Empty />
 												: null
 										}
-									</div>
-								)
-							}
-						]}
-					/>
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+									</Space>
+									<HeaderText>Target</HeaderText>
+									<Input
+										status={ability.target === '' ? 'warning' : ''}
+										placeholder='Target'
+										allowClear={true}
+										value={ability.target}
+										onChange={e => setTarget(e.target.value)}
+									/>
+									<HeaderText>Signature</HeaderText>
+									<Toggle label='Signature' value={ability.cost === 'signature'} onChange={value => setCost(value ? 'signature' : 0)} />
+									{
+										ability.cost !== 'signature' ?
+											<>
+												<HeaderText>Cost</HeaderText>
+												<NumberSpin min={0} value={ability.cost} onChange={setCost} />
+												<HeaderText>Repeatable</HeaderText>
+												<Toggle label='Repeatable' value={ability.repeatable} onChange={setRepeatable} />
+											</>
+											: null
+									}
+								</div>
+							)
+						},
+						{
+							key: '3',
+							label: 'Content',
+							children: (
+								<div>
+									<HeaderText
+										extra={
+											<Popover
+												trigger='click'
+												content={
+													<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+														<Button type='text' onClick={() => addSection('text')}>Add Text</Button>
+														<Button type='text' onClick={() => addSection('field')}>Add a Field</Button>
+														<Button type='text' onClick={() => addSection('roll')}>Add a Roll</Button>
+														<Button type='text' onClick={() => addSection('package')}>Add a Package</Button>
+													</div>
+												}
+											>
+												<Button type='text' icon={<PlusOutlined />} />
+											</Popover>
+										}
+									>
+										Sections
+									</HeaderText>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											ability.sections.map((section, n) => (
+												<Expander
+													key={n}
+													title={getSectionTitle(section)}
+													extra={[
+														<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'up'); }} />,
+														<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSection(n, 'down'); }} />,
+														<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSection(n); }} />
+													]}
+												>
+													{
+														section.type === 'text' ?
+															<Space direction='vertical' style={{ width: '100%' }}>
+																<HeaderText>Text</HeaderText>
+																<MultiLine value={section.text} onChange={value => setTextSectionText(n, value)} />
+															</Space>
+															: null
+													}
+													{
+														section.type === 'field' ?
+															<Space direction='vertical' style={{ width: '100%' }}>
+																<HeaderText>Name</HeaderText>
+																<Input
+																	status={section.name === '' ? 'warning' : ''}
+																	placeholder='Name'
+																	allowClear={true}
+																	value={section.name}
+																	onChange={e => setFieldSectionName(n, e.target.value)}
+																/>
+																<HeaderText>Effect</HeaderText>
+																<MultiLine value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
+																<HeaderText>Cost</HeaderText>
+																<NumberSpin min={0} value={section.value} onChange={value => setFieldSectionValue(n, value)} />
+																<Toggle label='Repeatable' value={section.repeatable} onChange={value => setFieldSectionRepeatable(n, value)} />
+															</Space>
+															: null
+													}
+													{
+														section.type === 'roll' ?
+															<Space direction='vertical' style={{ width: '100%' }}>
+																<HeaderText>Characteristics / Bonus</HeaderText>
+																<Select
+																	style={{ width: '100%' }}
+																	disabled={section.roll.bonus > 0}
+																	status={(section.roll.characteristic.length === 0) && (section.roll.bonus === 0) ? 'warning' : ''}
+																	placeholder='Characteristics'
+																	mode='multiple'
+																	options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+																	optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+																	value={section.roll.characteristic}
+																	onChange={value => setRollSectionCharacteristics(n, value)}
+																/>
+																<NumberSpin disabled={section.roll.characteristic.length > 0} label='Bonus' min={0} value={section.roll.bonus} onChange={value => setRollSectionBonus(n, value)} />
+																{
+																	(section.roll.characteristic.length === 0) && (section.roll.bonus === 0) ?
+																		<Alert
+																			type='warning'
+																			showIcon={true}
+																			message='A roll must have either (a) at least one characteristic or (b) a set bonus.'
+																		/>
+																		: null
+																}
+																<HeaderText>Tiers</HeaderText>
+																<Input
+																	status={section.roll.tier1 === '' ? 'warning' : ''}
+																	placeholder='Tier 1'
+																	allowClear={true}
+																	value={section.roll.tier1}
+																	onChange={e => setRollSectionTier1(n, e.target.value)}
+																/>
+																<Input
+																	status={section.roll.tier2 === '' ? 'warning' : ''}
+																	placeholder='Tier 2'
+																	allowClear={true}
+																	value={section.roll.tier2}
+																	onChange={e => setRollSectionTier2(n, e.target.value)}
+																/>
+																<Input
+																	status={section.roll.tier3 === '' ? 'warning' : ''}
+																	placeholder='Tier 3'
+																	allowClear={true}
+																	value={section.roll.tier3}
+																	onChange={e => setRollSectionTier3(n, e.target.value)}
+																/>
+															</Space>
+															: null
+													}
+													{
+														section.type === 'package' ?
+															<Space direction='vertical' style={{ width: '100%' }}>
+																<HeaderText>Tag</HeaderText>
+																<Input
+																	status={section.tag === '' ? 'warning' : ''}
+																	placeholder='Tag'
+																	allowClear={true}
+																	value={section.tag}
+																	onChange={e => setPackageSectionTag(n, e.target.value)}
+																/>
+															</Space>
+															: null
+													}
+												</Expander>
+											))
+										}
+									</Space>
+									{
+										ability.sections.length === 0 ?
+											<Empty />
+											: null
+									}
+								</div>
+							)
+						}
+					]}
+				/>
+			</div>
+		</ErrorBoundary>
+	);
 };

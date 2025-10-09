@@ -30,25 +30,20 @@ export const ElementEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='element-edit-panel'>
-					<HeaderText>Name</HeaderText>
-					<Input
-						status={element.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={element.name}
-						onChange={e => setName(e.target.value)}
-					/>
-					<HeaderText>Description</HeaderText>
-					<MultiLine value={element.description} onChange={setDescription} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className='element-edit-panel'>
+				<HeaderText>Name</HeaderText>
+				<Input
+					status={element.name === '' ? 'warning' : ''}
+					placeholder='Name'
+					allowClear={true}
+					value={element.name}
+					onChange={e => setName(e.target.value)}
+				/>
+				<HeaderText>Description</HeaderText>
+				<MultiLine value={element.description} onChange={setDescription} />
+			</div>
+		</ErrorBoundary>
+	);
 };

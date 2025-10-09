@@ -18,35 +18,30 @@ interface Props {
 }
 
 export const MapZonePanel = (props: Props) => {
-	try {
-		let className = 'map-zone-panel ' + props.display;
-		if (props.selectable) {
-			className += ' selectable';
-		}
-		if (props.selected) {
-			className += ' selected';
-		}
-
-		return (
-			<ErrorBoundary>
-				<Popover content={props.zone.notes ? <Markdown text={props.zone.notes} /> : null}>
-					<div
-						className={className}
-						style={props.style}
-						onClick={e => {
-							if (props.selectable) {
-								e.stopPropagation();
-								props.selectZone(props.zone);
-							}
-						}}
-					>
-						<div className='zone-content' style={{ borderRadius: props.style.borderRadius, backgroundColor: `#${props.zone.color}` }} />
-					</div>
-				</Popover>
-			</ErrorBoundary>
-		);
-	} catch (e) {
-		console.error(e);
-		return null;
+	let className = 'map-zone-panel ' + props.display;
+	if (props.selectable) {
+		className += ' selectable';
 	}
+	if (props.selected) {
+		className += ' selected';
+	}
+
+	return (
+		<ErrorBoundary>
+			<Popover content={props.zone.notes ? <Markdown text={props.zone.notes} /> : null}>
+				<div
+					className={className}
+					style={props.style}
+					onClick={e => {
+						if (props.selectable) {
+							e.stopPropagation();
+							props.selectZone(props.zone);
+						}
+					}}
+				>
+					<div className='zone-content' style={{ borderRadius: props.style.borderRadius, backgroundColor: `#${props.zone.color}` }} />
+				</div>
+			</Popover>
+		</ErrorBoundary>
+	);
 };

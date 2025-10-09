@@ -20,28 +20,23 @@ interface Props {
 }
 
 export const FixturePanel = (props: Props) => {
-	try {
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'fixture-panel' : 'fixture-panel compact'} id={props.mode === PanelMode.Full ? props.fixture.id : undefined}>
-					<HeaderText level={1}>{props.fixture.name || 'Unnamed Fixture'}</HeaderText>
-					<Markdown text={props.fixture.description} />
-					// Stamina, size, role
-					{
-						props.mode === PanelMode.Full ?
-							props.fixture.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
-								<Space key={lvl.level} direction='vertical'>
-									<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
-									{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
-								</Space>
-							))
-							: null
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'fixture-panel' : 'fixture-panel compact'} id={props.mode === PanelMode.Full ? props.fixture.id : undefined}>
+				<HeaderText level={1}>{props.fixture.name || 'Unnamed Fixture'}</HeaderText>
+				<Markdown text={props.fixture.description} />
+				// Stamina, size, role
+				{
+					props.mode === PanelMode.Full ?
+						props.fixture.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
+							<Space key={lvl.level} direction='vertical'>
+								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
+								{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+							</Space>
+						))
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

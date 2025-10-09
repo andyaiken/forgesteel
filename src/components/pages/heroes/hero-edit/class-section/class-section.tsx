@@ -247,109 +247,104 @@ export const ClassSection = (props: Props) => {
 		return options;
 	};
 
-	try {
-		const classes = SourcebookLogic.getClasses(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
-		const options = classes.map(c => (
-			<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
-				<ClassPanel heroClass={c} options={props.options} />
-			</SelectablePanel>
-		));
+	const classes = SourcebookLogic.getClasses(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
+	const options = classes.map(c => (
+		<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
+			<ClassPanel heroClass={c} options={props.options} />
+		</SelectablePanel>
+	));
 
-		const choicesByLevel: { level: number, choices: ReactNode[], completed: boolean }[] = [];
+	const choicesByLevel: { level: number, choices: ReactNode[], completed: boolean }[] = [];
 
-		if (props.hero.class) {
-			choicesByLevel.push(getClassOptions(props.hero.class));
+	if (props.hero.class) {
+		choicesByLevel.push(getClassOptions(props.hero.class));
 
-			const features = FeatureLogic.getFeaturesFromClass(props.hero.class, props.hero);
+		const features = FeatureLogic.getFeaturesFromClass(props.hero.class, props.hero);
 
-			for (let level = 1; level <= 10; ++level) {
-				const featuresForLevel = features.filter(f => f.level === level).map(f => f.feature);
-				if (featuresForLevel.length > 0) {
-					choicesByLevel.push({
-						level: level,
-						choices: featuresForLevel
-							.filter(f => FeatureLogic.isChoice(f))
-							.map(f => (
-								<SelectablePanel key={f.id}>
-									<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
-								</SelectablePanel>
-							)),
-						completed: featuresForLevel.every(f => FeatureLogic.isChosen(f, props.hero))
-					});
-				}
+		for (let level = 1; level <= 10; ++level) {
+			const featuresForLevel = features.filter(f => f.level === level).map(f => f.feature);
+			if (featuresForLevel.length > 0) {
+				choicesByLevel.push({
+					level: level,
+					choices: featuresForLevel
+						.filter(f => FeatureLogic.isChoice(f))
+						.map(f => (
+							<SelectablePanel key={f.id}>
+								<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+							</SelectablePanel>
+						)),
+					completed: featuresForLevel.every(f => FeatureLogic.isChosen(f, props.hero))
+				});
 			}
 		}
-
-		let columnClassName = 'hero-edit-content-column selected';
-		if (choicesByLevel.length === 0) {
-			columnClassName += ' single-column';
-		}
-
-		return (
-			<div className='hero-edit-content class-section'>
-				{
-					props.hero.class && (!isSmall || (choicesByLevel.length === 0)) ?
-						<div className={columnClassName} id='class-selected'>
-							<SelectablePanel showShadow={false}>
-								<ClassPanel heroClass={props.hero.class} hero={props.hero} options={props.options} mode={PanelMode.Full} />
-							</SelectablePanel>
-						</div>
-						: null
-				}
-				{
-					!props.hero.class && (options.length > 0) ?
-						<div className='hero-edit-content-column grid' id='class-list'>
-							{options}
-						</div>
-						: null
-				}
-				{
-					!props.hero.class && (options.length === 0) ?
-						<div className='hero-edit-content-column' id='class-list'>
-							<EmptyMessage hero={props.hero} />
-						</div>
-						: null
-				}
-				{
-					choicesByLevel.length > 0 ?
-						<div className='hero-edit-content-column choices' id='class-choices'>
-							<HeaderText>Choices</HeaderText>
-							{
-								choicesByLevel.map(lvl => (
-									<Expander
-										key={lvl.level}
-										title={lvl.level === 0 ? 'Class Choices' : `Level ${lvl.level} Choices`}
-										expandedByDefault={!lvl.completed}
-										extra={[
-											lvl.completed ?
-												<CheckCircleFilled key='completed' title='Completed' style={{ color: 'rgb(0, 120, 0)' }} />
-												: null
-										]}
-									>
-										<Space direction='vertical' size={20} style={{ width: '100%', paddingTop: '15px' }}>
-											{lvl.choices}
-											{
-												lvl.choices.length === 0 ?
-													<Empty text='Nothing to choose for this level' />
-													: null
-											}
-										</Space>
-									</Expander>
-								))
-							}
-						</div>
-						: null
-				}
-				<Drawer open={!!selectedSubClass} onClose={() => setSelectedSubClass(null)} closeIcon={null} width='500px'>
-					<Modal
-						content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} options={props.options} mode={PanelMode.Full} /> : null}
-						onClose={() => setSelectedSubClass(null)}
-					/>
-				</Drawer>
-			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
 	}
+
+	let columnClassName = 'hero-edit-content-column selected';
+	if (choicesByLevel.length === 0) {
+		columnClassName += ' single-column';
+	}
+
+	return (
+		<div className='hero-edit-content class-section'>
+			{
+				props.hero.class && (!isSmall || (choicesByLevel.length === 0)) ?
+					<div className={columnClassName} id='class-selected'>
+						<SelectablePanel showShadow={false}>
+							<ClassPanel heroClass={props.hero.class} hero={props.hero} options={props.options} mode={PanelMode.Full} />
+						</SelectablePanel>
+					</div>
+					: null
+			}
+			{
+				!props.hero.class && (options.length > 0) ?
+					<div className='hero-edit-content-column grid' id='class-list'>
+						{options}
+					</div>
+					: null
+			}
+			{
+				!props.hero.class && (options.length === 0) ?
+					<div className='hero-edit-content-column' id='class-list'>
+						<EmptyMessage hero={props.hero} />
+					</div>
+					: null
+			}
+			{
+				choicesByLevel.length > 0 ?
+					<div className='hero-edit-content-column choices' id='class-choices'>
+						<HeaderText>Choices</HeaderText>
+						{
+							choicesByLevel.map(lvl => (
+								<Expander
+									key={lvl.level}
+									title={lvl.level === 0 ? 'Class Choices' : `Level ${lvl.level} Choices`}
+									expandedByDefault={!lvl.completed}
+									extra={[
+										lvl.completed ?
+											<CheckCircleFilled key='completed' title='Completed' style={{ color: 'rgb(0, 120, 0)' }} />
+											: null
+									]}
+								>
+									<Space direction='vertical' size={20} style={{ width: '100%', paddingTop: '15px' }}>
+										{lvl.choices}
+										{
+											lvl.choices.length === 0 ?
+												<Empty text='Nothing to choose for this level' />
+												: null
+										}
+									</Space>
+								</Expander>
+							))
+						}
+					</div>
+					: null
+			}
+			<Drawer open={!!selectedSubClass} onClose={() => setSelectedSubClass(null)} closeIcon={null} width='500px'>
+				<Modal
+					content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} options={props.options} mode={PanelMode.Full} /> : null}
+					onClose={() => setSelectedSubClass(null)}
+				/>
+			</Drawer>
+		</div>
+	);
 };

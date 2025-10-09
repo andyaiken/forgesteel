@@ -83,43 +83,38 @@ export const HeroStateModal = (props: Props) => {
 		}
 	};
 
-	try {
-		return (
-			<Modal
-				toolbar={
-					<div style={{ width: '100%' }}>
-						<Segmented
-							name='tabs'
-							block={true}
-							options={
-								HeroLogic.getStamina(hero) !== 0 ?
-									[
-										HeroStatePage.Hero,
-										HeroStatePage.Vitals,
-										HeroStatePage.Inventory,
-										HeroStatePage.Projects,
-										HeroStatePage.Customize
-									]
-									:
-									[
-										HeroStatePage.Vitals
-									]
-							}
-							value={page}
-							onChange={setPage}
-						/>
-					</div>
-				}
-				content={
-					<div className='hero-state-modal'>
-						{getContent()}
-					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<Modal
+			toolbar={
+				<div style={{ width: '100%' }}>
+					<Segmented
+						name='tabs'
+						block={true}
+						options={
+							HeroLogic.getStamina(hero) !== 0 ?
+								[
+									HeroStatePage.Hero,
+									HeroStatePage.Vitals,
+									HeroStatePage.Inventory,
+									HeroStatePage.Projects,
+									HeroStatePage.Customize
+								]
+								:
+								[
+									HeroStatePage.Vitals
+								]
+						}
+						value={page}
+						onChange={setPage}
+					/>
+				</div>
+			}
+			content={
+				<div className='hero-state-modal'>
+					{getContent()}
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

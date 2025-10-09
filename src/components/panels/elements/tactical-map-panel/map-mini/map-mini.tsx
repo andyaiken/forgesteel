@@ -121,57 +121,52 @@ export const MapMiniPanel = (props: Props) => {
 		return null;
 	}
 
-	try {
-		const size = getSize();
+	const size = getSize();
 
-		let className = `map-mini-panel ${props.display} size-${size.mod.toLowerCase()}`;
-		if (props.selectable) {
-			className += ' selectable';
-		}
-		if (props.selected) {
-			className += ' selected';
-		}
-		if (props.content && props.content.state.hidden) {
-			className += ' hidden';
-		}
+	let className = `map-mini-panel ${props.display} size-${size.mod.toLowerCase()}`;
+	if (props.selectable) {
+		className += ' selectable';
+	}
+	if (props.selected) {
+		className += ' selected';
+	}
+	if (props.content && props.content.state.hidden) {
+		className += ' hidden';
+	}
 
-		return (
-			<ErrorBoundary>
-				<Popover content={getInfo()}>
-					<div
-						className={className}
-						style={props.style}
-						onClick={e => {
-							if (props.selectable) {
-								e.stopPropagation();
-								props.selectMini(props.mini);
-							}
-						}}
-						onDoubleClick={e => {
-							if (props.selectable) {
-								e.stopPropagation();
-								if (props.display === TacticalMapDisplayType.DirectorEdit) {
-									if (props.content && props.mini.content) {
-										if (props.mini.content.type === 'hero') {
-											props.selectHero(props.content as Hero);
-										}
-										if (props.mini.content.type === 'monster') {
-											props.selectMonster(props.content as Monster);
-										}
+	return (
+		<ErrorBoundary>
+			<Popover content={getInfo()}>
+				<div
+					className={className}
+					style={props.style}
+					onClick={e => {
+						if (props.selectable) {
+							e.stopPropagation();
+							props.selectMini(props.mini);
+						}
+					}}
+					onDoubleClick={e => {
+						if (props.selectable) {
+							e.stopPropagation();
+							if (props.display === TacticalMapDisplayType.DirectorEdit) {
+								if (props.content && props.mini.content) {
+									if (props.mini.content.type === 'hero') {
+										props.selectHero(props.content as Hero);
+									}
+									if (props.mini.content.type === 'monster') {
+										props.selectMonster(props.content as Monster);
 									}
 								}
 							}
-						}}
-					>
-						<div className='mini-content'>
-							{getContent()}
-						</div>
+						}
+					}}
+				>
+					<div className='mini-content'>
+						{getContent()}
 					</div>
-				</Popover>
-			</ErrorBoundary>
-		);
-	} catch (e) {
-		console.error(e);
-		return null;
-	}
+				</div>
+			</Popover>
+		</ErrorBoundary>
+	);
 };

@@ -78,39 +78,32 @@ export const MapTilePanel = (props: Props) => {
 						/>
 				);
 		}
-
-		return null;
 	};
 
-	try {
-		let className = 'map-tile-panel ' + props.display;
-		if (props.selectable) {
-			className += ' selectable';
-		}
-		if (props.selected) {
-			className += ' selected';
-		}
-
-		return (
-			<ErrorBoundary>
-				<Popover content={props.tile.notes ? <Markdown text={props.tile.notes} /> : null}>
-					<div
-						className={className}
-						style={props.style}
-						onClick={e => {
-							if (props.selectable) {
-								e.stopPropagation();
-								props.selectTile(props.tile);
-							}
-						}}
-					>
-						{getContent()}
-					</div>
-				</Popover>
-			</ErrorBoundary>
-		);
-	} catch (e) {
-		console.error(e);
-		return null;
+	let className = 'map-tile-panel ' + props.display;
+	if (props.selectable) {
+		className += ' selectable';
 	}
+	if (props.selected) {
+		className += ' selected';
+	}
+
+	return (
+		<ErrorBoundary>
+			<Popover content={props.tile.notes ? <Markdown text={props.tile.notes} /> : null}>
+				<div
+					className={className}
+					style={props.style}
+					onClick={e => {
+						if (props.selectable) {
+							e.stopPropagation();
+							props.selectTile(props.tile);
+						}
+					}}
+				>
+					{getContent()}
+				</div>
+			</Popover>
+		</ErrorBoundary>
+	);
 };

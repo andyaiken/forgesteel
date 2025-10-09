@@ -152,190 +152,185 @@ export const SourcebookPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	try {
-		let content: ReactNode = null;
-		const buttons: ReactNode[] = [];
+	let content: ReactNode = null;
+	const buttons: ReactNode[] = [];
 
-		if (isEditing) {
-			const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
-			const distinctLanguages = Collections.distinct(languages, l => l.name);
-			const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
+	if (isEditing) {
+		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
+		const distinctLanguages = Collections.distinct(languages, l => l.name);
+		const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
 
-			content = (
-				<Space direction='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
-					<Input
-						status={sourcebook.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-						value={sourcebook.name}
-						onChange={e => setName(e.target.value)}
-					/>
-					<Expander title='Description'>
-						<HeaderText>Description</HeaderText>
-						<MultiLine value={sourcebook.description} onChange={setDescription} />
-					</Expander>
-					<Expander title='Languages'>
-						<HeaderText>Languages</HeaderText>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								sourcebook.languages.map((lang, n) => (
-									<Expander
-										key={n}
-										title={lang.name || 'Unnamed Language'}
-										extra={[
-											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'up'); }} />,
-											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'down'); }} />,
-											<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
-										]}
-									>
-										<Space direction='vertical' style={{ width: '100%' }}>
-											<Input
-												status={lang.name === '' ? 'warning' : ''}
-												placeholder='Name'
-												allowClear={true}
-												addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setLanguageName(n, NameGenerator.generateName())} />}
-												value={lang.name}
-												onChange={e => setLanguageName(n, e.target.value)}
-											/>
-											<MultiLine placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
-											<Segmented
-												block={true}
-												options={[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]}
-												value={lang.type}
-												onChange={value => setLanguageType(n, value)}
-											/>
-											<Select
-												style={{ width: '100%' }}
-												mode='multiple'
-												allowClear={true}
-												placeholder='Select related languages'
-												options={sortedLanguages.filter(l => l.name !== lang.name).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
-												optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-												showSearch={true}
-												filterOption={(input, option) => {
-													const strings = option ?
-														[
-															option.label,
-															option.desc
-														]
-														: [];
-													return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-												}}
-												value={lang.related}
-												onChange={value => setLanguageRelated(n, value)}
-											/>
-										</Space>
-									</Expander>
-								))
-							}
-							{
-								sourcebook.languages.length === 0 ?
-									<Empty />
-									: null
-							}
-							<Button block={true} onClick={addLanguage}>
-								<PlusOutlined />
-								Add a new language
-							</Button>
-						</Space>
-					</Expander>
-					<Expander title='Skills'>
-						<HeaderText>Skills</HeaderText>
-						<Space direction='vertical' style={{ width: '100%' }}>
-							{
-								sourcebook.skills.map((skill, n) => (
-									<Expander
-										key={n}
-										title={skill.name || 'Unnamed Skill'}
-										extra={[
-											<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'up'); }} />,
-											<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'down'); }} />,
-											<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
-										]}
-									>
-										<Space direction='vertical' style={{ width: '100%' }}>
-											<Input
-												status={skill.name === '' ? 'warning' : ''}
-												placeholder='Name'
-												allowClear={true}
-												addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setSkillName(n, NameGenerator.generateName())} />}
-												value={skill.name}
-												onChange={e => setSkillName(n, e.target.value)}
-											/>
-											<MultiLine placeholder='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
-											<Select
-												style={{ width: '100%' }}
-												placeholder='Skill List'
-												options={[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map(option => ({ value: option }))}
-												optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-												value={skill.list}
-												onChange={list => setSkillList(n, list)}
-											/>
-										</Space>
-									</Expander>
-								))
-							}
-							{
-								sourcebook.skills.length === 0 ?
-									<Empty />
-									: null
-							}
-							<Button block={true} onClick={addSkill}>
-								<PlusOutlined />
-								Add a new skill
-							</Button>
-						</Space>
-					</Expander>
-				</Space>
-			);
-
-			if (sourcebook.isHomebrew) {
-				buttons.push(
-					<Button key='save' type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
-				);
-			}
-		} else {
-			content = (
-				<>
-					<Markdown text={props.sourcebook.description} />
-					<div className='ds-text'>{SourcebookLogic.getElementCount(sourcebook)} elements</div>
-				</>
-			);
-
-			buttons.push(
-				<Button key='show-hide' type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
-			);
-			if (sourcebook.isHomebrew) {
-				buttons.push(
-					<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} />
-				);
-				buttons.push(
-					<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} />
-				);
-				buttons.push(
-					<DangerButton key='delete' disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={onDelete} />
-				);
-			}
-		}
-
-		return (
-			<ErrorBoundary>
-				<SelectablePanel>
-					<div className='sourcebook-panel' id={sourcebook.id}>
-						<HeaderText
-							tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}
-							extra={<Flex>{buttons}</Flex>}
-						>
-							{sourcebook.name || 'Unnamed Sourcebook'}
-						</HeaderText>
-						{content}
-					</div>
-				</SelectablePanel>
-			</ErrorBoundary>
+		content = (
+			<Space direction='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
+				<Input
+					status={sourcebook.name === '' ? 'warning' : ''}
+					placeholder='Name'
+					allowClear={true}
+					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+					value={sourcebook.name}
+					onChange={e => setName(e.target.value)}
+				/>
+				<Expander title='Description'>
+					<HeaderText>Description</HeaderText>
+					<MultiLine value={sourcebook.description} onChange={setDescription} />
+				</Expander>
+				<Expander title='Languages'>
+					<HeaderText>Languages</HeaderText>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							sourcebook.languages.map((lang, n) => (
+								<Expander
+									key={n}
+									title={lang.name || 'Unnamed Language'}
+									extra={[
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveLanguage(n, 'down'); }} />,
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
+									]}
+								>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<Input
+											status={lang.name === '' ? 'warning' : ''}
+											placeholder='Name'
+											allowClear={true}
+											addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setLanguageName(n, NameGenerator.generateName())} />}
+											value={lang.name}
+											onChange={e => setLanguageName(n, e.target.value)}
+										/>
+										<MultiLine placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
+										<Segmented
+											block={true}
+											options={[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]}
+											value={lang.type}
+											onChange={value => setLanguageType(n, value)}
+										/>
+										<Select
+											style={{ width: '100%' }}
+											mode='multiple'
+											allowClear={true}
+											placeholder='Select related languages'
+											options={sortedLanguages.filter(l => l.name !== lang.name).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
+											optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+											showSearch={true}
+											filterOption={(input, option) => {
+												const strings = option ?
+													[
+														option.label,
+														option.desc
+													]
+													: [];
+												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+											}}
+											value={lang.related}
+											onChange={value => setLanguageRelated(n, value)}
+										/>
+									</Space>
+								</Expander>
+							))
+						}
+						{
+							sourcebook.languages.length === 0 ?
+								<Empty />
+								: null
+						}
+						<Button block={true} onClick={addLanguage}>
+							<PlusOutlined />
+							Add a new language
+						</Button>
+					</Space>
+				</Expander>
+				<Expander title='Skills'>
+					<HeaderText>Skills</HeaderText>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							sourcebook.skills.map((skill, n) => (
+								<Expander
+									key={n}
+									title={skill.name || 'Unnamed Skill'}
+									extra={[
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSkill(n, 'down'); }} />,
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
+									]}
+								>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										<Input
+											status={skill.name === '' ? 'warning' : ''}
+											placeholder='Name'
+											allowClear={true}
+											addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setSkillName(n, NameGenerator.generateName())} />}
+											value={skill.name}
+											onChange={e => setSkillName(n, e.target.value)}
+										/>
+										<MultiLine placeholder='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
+										<Select
+											style={{ width: '100%' }}
+											placeholder='Skill List'
+											options={[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ].map(option => ({ value: option }))}
+											optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+											value={skill.list}
+											onChange={list => setSkillList(n, list)}
+										/>
+									</Space>
+								</Expander>
+							))
+						}
+						{
+							sourcebook.skills.length === 0 ?
+								<Empty />
+								: null
+						}
+						<Button block={true} onClick={addSkill}>
+							<PlusOutlined />
+							Add a new skill
+						</Button>
+					</Space>
+				</Expander>
+			</Space>
 		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
+
+		if (sourcebook.isHomebrew) {
+			buttons.push(
+				<Button key='save' type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
+			);
+		}
+	} else {
+		content = (
+			<>
+				<Markdown text={props.sourcebook.description} />
+				<div className='ds-text'>{SourcebookLogic.getElementCount(sourcebook)} elements</div>
+			</>
+		);
+
+		buttons.push(
+			<Button key='show-hide' type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
+		);
+		if (sourcebook.isHomebrew) {
+			buttons.push(
+				<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} />
+			);
+			buttons.push(
+				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} />
+			);
+			buttons.push(
+				<DangerButton key='delete' disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={onDelete} />
+			);
+		}
 	}
+
+	return (
+		<ErrorBoundary>
+			<SelectablePanel>
+				<div className='sourcebook-panel' id={sourcebook.id}>
+					<HeaderText
+						tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}
+						extra={<Flex>{buttons}</Flex>}
+					>
+						{sourcebook.name || 'Unnamed Sourcebook'}
+					</HeaderText>
+					{content}
+				</div>
+			</SelectablePanel>
+		</ErrorBoundary>
+	);
 };

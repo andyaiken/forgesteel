@@ -20,19 +20,14 @@ export const Toggle = (props: Props) => {
 		props.onChange(!props.value);
 	};
 
-	try {
-		return (
-			<div className={props.disabled ? 'toggle disabled' : 'toggle'} style={props.style} onClick={onClick}>
-				<div>{props.label}</div>
-				<Switch
-					unCheckedChildren={props.text ? props.text.unchecked : undefined}
-					checkedChildren={props.text ? props.text.checked : undefined}
-					checked={props.value}
-				/>
-			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<div className={props.disabled ? 'toggle disabled' : 'toggle'} style={props.style} onClick={onClick}>
+			<div>{props.label}</div>
+			<Switch
+				unCheckedChildren={props.text ? props.text.unchecked : undefined}
+				checkedChildren={props.text ? props.text.checked : undefined}
+				checked={props.value}
+			/>
+		</div>
+	);
 };

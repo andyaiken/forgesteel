@@ -373,61 +373,56 @@ export const SessionDirectorPage = (props: Props) => {
 		}
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='session-director-page'>
-					<AppHeader subheader='Session'>
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ width: '500px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Segmented
-										name='startelements'
-										block={true}
-										options={[ 'encounter', 'montage', 'negotiation', 'map', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
-										value={startElement}
-										onChange={setStartElement}
-									/>
-									{getStartContent()}
-								</div>
-							)}
-						>
-							<Button type='primary'>
-								Start
-								<DownOutlined />
-							</Button>
-						</Popover>
-						{
-							selectedElementID ?
-								<DangerButton
-									label='Finish'
-									onConfirm={finish}
+	return (
+		<ErrorBoundary>
+			<div className='session-director-page'>
+				<AppHeader subheader='Session'>
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ width: '500px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<Segmented
+									name='startelements'
+									block={true}
+									options={[ 'encounter', 'montage', 'negotiation', 'map', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
+									value={startElement}
+									onChange={setStartElement}
 								/>
-								: null
-						}
-						<div className='divider' />
-						<Button onClick={props.showPlayerView}>Player View</Button>
-						<Popover
-							trigger='click'
-							content={<OptionsPanel mode='session' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-						>
-							<Button icon={<SettingOutlined />}>
-								Options
-								<DownOutlined />
-							</Button>
-						</Popover>
-					</AppHeader>
-					<div className='session-director-page-content'>
-						{getSelector()}
-						{getSelectedContent()}
-					</div>
-					<AppFooter page='session' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+								{getStartContent()}
+							</div>
+						)}
+					>
+						<Button type='primary'>
+							Start
+							<DownOutlined />
+						</Button>
+					</Popover>
+					{
+						selectedElementID ?
+							<DangerButton
+								label='Finish'
+								onConfirm={finish}
+							/>
+							: null
+					}
+					<div className='divider' />
+					<Button onClick={props.showPlayerView}>Player View</Button>
+					<Popover
+						trigger='click'
+						content={<OptionsPanel mode='session' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+					>
+						<Button icon={<SettingOutlined />}>
+							Options
+							<DownOutlined />
+						</Button>
+					</Popover>
+				</AppHeader>
+				<div className='session-director-page-content'>
+					{getSelector()}
+					{getSelectedContent()}
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				<AppFooter page='session' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+			</div>
+		</ErrorBoundary>
+	);
 };

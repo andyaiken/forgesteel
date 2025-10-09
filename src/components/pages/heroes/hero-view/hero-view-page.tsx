@@ -77,163 +77,158 @@ export const HeroViewPage = (props: Props) => {
 		[ heroID, props.heroes ]
 	);
 
-	try {
-		const getContent = () => {
-			switch (view) {
-				case 'modern':
-					return (
-						<HeroPanel
-							hero={hero}
-							sourcebooks={props.sourcebooks}
-							options={props.options}
-							mode={PanelMode.Full}
-							onSelectAncestry={props.showAncestry}
-							onSelectCulture={props.showCulture}
-							onSelectCareer={props.showCareer}
-							onSelectClass={props.showClass}
-							onSelectComplication={props.showComplication}
-							onSelectDomain={props.showDomain}
-							onSelectKit={props.showKit}
-							onSelectTitle={props.showTitle}
-							onSelectMonster={props.showMonster}
-							onSelectFollower={props.showFollower}
-							onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
-							onSelectFeature={feature => props.showFeature(feature, hero)}
-							onSelectAbility={ability => props.showAbility(ability, hero)}
-							onShowState={page => props.showHeroState(hero, page)}
-							onshowReference={page => props.showReference(hero, page)}
-						/>
-					);
-				case 'classic':
-					return (
-						<HeroSheetPage
-							hero={hero}
-							sourcebooks={props.sourcebooks}
-							options={props.options}
-						/>
-					);
-				case 'abilities':
-					return (
-						<StandardAbilitiesPanel hero={hero} />
-					);
-				case 'notes':
-					return (
-						<MultiLine
-							style={{ height: '100%', flex: '1 1 0' }}
-							inputStyle={{ flex: '1 1 0', resize: 'none' }}
-							value={hero.state.notes}
-							showMarkdownPrompt={false}
-							onChange={value => props.setNotes(hero, value)}
-						/>
-					);
-			}
-		};
+	const getContent = () => {
+		switch (view) {
+			case 'modern':
+				return (
+					<HeroPanel
+						hero={hero}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						mode={PanelMode.Full}
+						onSelectAncestry={props.showAncestry}
+						onSelectCulture={props.showCulture}
+						onSelectCareer={props.showCareer}
+						onSelectClass={props.showClass}
+						onSelectComplication={props.showComplication}
+						onSelectDomain={props.showDomain}
+						onSelectKit={props.showKit}
+						onSelectTitle={props.showTitle}
+						onSelectMonster={props.showMonster}
+						onSelectFollower={props.showFollower}
+						onSelectCharacteristic={characteristic => props.showCharacteristic(characteristic, hero)}
+						onSelectFeature={feature => props.showFeature(feature, hero)}
+						onSelectAbility={ability => props.showAbility(ability, hero)}
+						onShowState={page => props.showHeroState(hero, page)}
+						onshowReference={page => props.showReference(hero, page)}
+					/>
+				);
+			case 'classic':
+				return (
+					<HeroSheetPage
+						hero={hero}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+					/>
+				);
+			case 'abilities':
+				return (
+					<StandardAbilitiesPanel hero={hero} />
+				);
+			case 'notes':
+				return (
+					<MultiLine
+						style={{ height: '100%', flex: '1 1 0' }}
+						inputStyle={{ flex: '1 1 0', resize: 'none' }}
+						value={hero.state.notes}
+						showMarkdownPrompt={false}
+						onChange={value => props.setNotes(hero, value)}
+					/>
+				);
+		}
+	};
 
-		return (
-			<ErrorBoundary>
-				<div className='hero-view-page'>
-					<AppHeader subheader='Hero'>
-						<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
-							Close
+	return (
+		<ErrorBoundary>
+			<div className='hero-view-page'>
+				<AppHeader subheader='Hero'>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToHeroList(hero.folder)}>
+						Close
+					</Button>
+					<div className='divider' />
+					<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
+						Edit
+					</Button>
+					<Button icon={<CopyOutlined />} onClick={() => props.copyHero(hero)}>
+						Copy
+					</Button>
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ width: '315px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								{
+									![ 'classic', 'abilities' ].includes(view) ?
+										<Alert
+											type='info'
+											showIcon={true}
+											message='If you want to export your hero as a PDF, switch to Classic view.'
+											action={<Button onClick={() => setView('classic')}>Classic</Button>}
+										/>
+										: null
+								}
+								{
+									view === 'classic' ?
+										<>
+											<Button onClick={() => props.exportPdf(hero, 'standard')}>Export as PDF</Button>
+											<Button onClick={() => props.exportPdf(hero, 'high')}>Export as PDF (high res)</Button>
+										</>
+										: null
+								}
+								{
+									view === 'abilities' ?
+										<Button onClick={props.exportStandardAbilities}>Export as PDF</Button>
+										: null
+								}
+								<Divider />
+								<Button onClick={() => props.exportHero(hero, 'json')}>Export as Data</Button>
+							</div>
+						)}
+					>
+						<Button icon={<UploadOutlined />}>
+							Export
+							<DownOutlined />
 						</Button>
-						<div className='divider' />
-						<Button icon={<EditOutlined />} onClick={() => navigation.goToHeroEdit(heroID!, 'details')}>
-							Edit
+					</Popover>
+					<DangerButton
+						mode='block'
+						onConfirm={() => props.deleteHero(hero)}
+					/>
+					<div className='divider' />
+					<Button
+						icon={<ToolOutlined />}
+						onClick={() => props.showHeroState ? props.showHeroState(hero, HeroStatePage.Hero) : null}
+					>
+						Manage
+					</Button>
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								<Segmented
+									block={true}
+									vertical={true}
+									options={[
+										{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
+										{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Classic Sheet</div> },
+										{ value: 'abilities', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Standard Abilities</div> },
+										{ value: 'notes', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Notes</div> }
+									]}
+									value={view}
+									onChange={setView}
+								/>
+							</div>
+						)}
+					>
+						<Button>
+							View
+							<DownOutlined />
 						</Button>
-						<Button icon={<CopyOutlined />} onClick={() => props.copyHero(hero)}>
-							Copy
+					</Popover>
+					<Popover
+						trigger='click'
+						content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+					>
+						<Button disabled={![ 'modern', 'classic' ].includes(view)} icon={<SettingOutlined />}>
+							Options
+							<DownOutlined />
 						</Button>
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ width: '315px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									{
-										![ 'classic', 'abilities' ].includes(view) ?
-											<Alert
-												type='info'
-												showIcon={true}
-												message='If you want to export your hero as a PDF, switch to Classic view.'
-												action={<Button onClick={() => setView('classic')}>Classic</Button>}
-											/>
-											: null
-									}
-									{
-										view === 'classic' ?
-											<>
-												<Button onClick={() => props.exportPdf(hero, 'standard')}>Export as PDF</Button>
-												<Button onClick={() => props.exportPdf(hero, 'high')}>Export as PDF (high res)</Button>
-											</>
-											: null
-									}
-									{
-										view === 'abilities' ?
-											<Button onClick={props.exportStandardAbilities}>Export as PDF</Button>
-											: null
-									}
-									<Divider />
-									<Button onClick={() => props.exportHero(hero, 'json')}>Export as Data</Button>
-								</div>
-							)}
-						>
-							<Button icon={<UploadOutlined />}>
-								Export
-								<DownOutlined />
-							</Button>
-						</Popover>
-						<DangerButton
-							mode='block'
-							onConfirm={() => props.deleteHero(hero)}
-						/>
-						<div className='divider' />
-						<Button
-							icon={<ToolOutlined />}
-							onClick={() => props.showHeroState ? props.showHeroState(hero, HeroStatePage.Hero) : null}
-						>
-							Manage
-						</Button>
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Segmented
-										block={true}
-										vertical={true}
-										options={[
-											{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
-											{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Classic Sheet</div> },
-											{ value: 'abilities', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Standard Abilities</div> },
-											{ value: 'notes', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Notes</div> }
-										]}
-										value={view}
-										onChange={setView}
-									/>
-								</div>
-							)}
-						>
-							<Button>
-								View
-								<DownOutlined />
-							</Button>
-						</Popover>
-						<Popover
-							trigger='click'
-							content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-						>
-							<Button disabled={![ 'modern', 'classic' ].includes(view)} icon={<SettingOutlined />}>
-								Options
-								<DownOutlined />
-							</Button>
-						</Popover>
-					</AppHeader>
-					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>
-						{getContent()}
-					</div>
-					<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
+					</Popover>
+				</AppHeader>
+				<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>
+					{getContent()}
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
+			</div>
+		</ErrorBoundary>
+	);
 };

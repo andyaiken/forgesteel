@@ -118,10 +118,10 @@ export class SheetFormatter {
 			.replace(/P<([svw])\]/g, 'p<$1]')
 			.replace(/([marip])<([svw]\])/g, '<span class="potency">$1&lt;$2</span>')
 			.replace(/\|\s+≤\s*11\s+\|/g, `|![11 or less](${rollT1Icon})|`)
-			.replace(/\|\s+12\s*[-–]\s*16\s+\|/g, `|![between 12 and 16](${rollT2Icon})|`)
+			.replace(/\|\s+12\s*[-–]\s*16\s+\|/g, `|![12 to 16](${rollT2Icon})|`)
 			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17 or greater](${rollT3Icon})|`)
 			.replace(/11 or lower:?/g, `![11 or less](${rollT1Icon})`)
-			.replace(/12\s*[-–]\s*16:?/g, `![between 12 and 16](${rollT2Icon})`)
+			.replace(/12\s*[-–]\s*16:?/g, `![12 to 16](${rollT2Icon})`)
 			.replace(/17\s*\+:?/g, `![17 or greater](${rollT3Icon})`);
 		return text;
 	};

@@ -55,9 +55,10 @@
             }
         }
 
+        .item-effect,
         .item-effect * {
-            line-height: 18px;
-            font-size: 15px;
+            line-height: round(1.3rem, 1px);
+            font-size: round(1.1rem, 1px);
             margin-bottom: 10px;
             margin-top: 5px;
         }

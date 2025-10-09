@@ -108,7 +108,7 @@ export const LeveledTreasureCard = (props: InventoryProps) => {
 					<div className='leveled-treasure-boxes'>
 						<ol>
 							{[ ...Array(3) ].map((_o, i) => {
-								return <li key={i}>{leveledTreasures.length >= i + 1 ? '◼' : <>&nbsp;</>}</li>;
+								return <li key={`leveled-treasure-marker-${i}`}>{leveledTreasures.length >= i + 1 ? '◼' : <>&nbsp;</>}</li>;
 							})}
 						</ol>
 					</div>
@@ -147,7 +147,7 @@ export const ItemComponent = (props: ItemProps) => {
 						<span className='item-uses'>
 							<ol>
 								{[ ...Array(item.count) ].map((_o, i) => {
-									return <li key={i}>◇</li>;
+									return <li key={`consumable-${item.id}-uses-${i}`}>◇</li>;
 								})}
 							</ol>
 						</span>
@@ -191,6 +191,8 @@ export const ItemComponent = (props: ItemProps) => {
 		);
 	};
 
+	const featuresToDisplay = itemSheet.features?.filter(f => f.id !== item.id) || [];
+
 	return (
 		<div className='item'>
 			<h3>{getItemName()}</h3>
@@ -199,15 +201,19 @@ export const ItemComponent = (props: ItemProps) => {
 				<div className='item-type'>{getItemType()}</div>
 			</div>
 			{getItemEffect()}
-			<div className='item-features'>
-				{itemSheet.features?.filter(f => f.id !== item.id).map(f =>
-					<FeatureComponent
-						key={f.id}
-						hero={props.character.hero}
-						feature={f}
-					/>
-				)}
-			</div>
+			{
+				featuresToDisplay.length ?
+					<div className='item-features'>
+						{featuresToDisplay.map(f =>
+							<FeatureComponent
+								key={f.id}
+								hero={props.character.hero}
+								feature={f}
+							/>
+						)}
+					</div>
+					: null
+			}
 		</div>
 	);
 };

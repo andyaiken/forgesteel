@@ -52,7 +52,7 @@ export const HeroHeaderCard = (props: Props) => {
 						<div className='victories-boxes'>
 							<ol>
 								{[ ...Array(15) ].map((_o, i) => {
-									return <li key={i}>{currentVictories >= i + 1 ? '◼' : <>&nbsp;</>}</li>;
+									return <li key={`victories-marker-box-${i}`}>{currentVictories >= i + 1 ? '◼' : <>&nbsp;</>}</li>;
 								})}
 							</ol>
 						</div>

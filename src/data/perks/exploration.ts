@@ -131,7 +131,7 @@ export class ExplorationPerkData {
 
 	static rideAlong: Perk = {
 		id: 'perk-ride-along',
-		name: 'Rine Along',
+		name: 'Ride Along',
 		description: '(Beastheart only)',
 		type: FeatureType.Ability,
 		data: {

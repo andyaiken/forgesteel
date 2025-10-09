@@ -1,4 +1,4 @@
-import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
+import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureDomain, FeatureDomainFeature, FeatureItemChoice, FeatureKit, FeatureLanguageChoice, FeatureMultiple, FeaturePerk, FeatureSkillChoice, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeatureChoice, FeatureTitleChoice } from '@/models/feature';
 import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
@@ -458,8 +458,18 @@ export class HeroUpdateLogic {
 				case FeatureType.LanguageChoice: {
 					const oFeature = originalFeature as FeatureLanguageChoice;
 
-					feature.data.selected = [];
-					feature.data.selected.push(...oFeature.data.selected);
+					feature.data.selected = [ ...oFeature.data.selected ];
+					break;
+				}
+				case FeatureType.Multiple: {
+					const oFeature = originalFeature as FeatureMultiple;
+
+					feature.data.features.forEach(child => {
+						const oChild = oFeature.data.features.find(x => x.id === child.id);
+						if (oChild) {
+							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
+						}
+					});
 					break;
 				}
 				case FeatureType.Perk: {
@@ -467,13 +477,19 @@ export class HeroUpdateLogic {
 
 					const selectedIDs = oFeature.data.selected.map(p => p.id);
 					feature.data.selected = SourcebookLogic.getPerks(sourcebooks).filter(p => selectedIDs.includes(p.id));
+
+					feature.data.selected.forEach(child => {
+						const oChild = oFeature.data.selected.find(x => x.id === child.id);
+						if (oChild) {
+							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
+						}
+					});
 					break;
 				}
 				case FeatureType.SkillChoice: {
 					const oFeature = originalFeature as FeatureSkillChoice;
 
-					feature.data.selected = [];
-					feature.data.selected.push(...oFeature.data.selected);
+					feature.data.selected = [ ...oFeature.data.selected ];
 					break;
 				}
 				case FeatureType.Summon: {

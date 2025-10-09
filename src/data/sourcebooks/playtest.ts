@@ -1,6 +1,7 @@
 import { KitData } from '@/data/kit-data';
 import { PerkData } from '@/data/perk-data';
 import { Sourcebook } from '@/models/sourcebook';
+import { TitleData } from '@/data/title-data';
 import { beastheart } from '@/data/classes/beastheart/beastheart';
 import { summoner } from '@/data/classes/summoner/summoner';
 
@@ -35,7 +36,13 @@ export const playtest: Sourcebook = {
 		PerkData.youCanPetThem,
 		PerkData.trainedThief
 	],
-	titles: [],
+	titles: [
+		TitleData.safeguarded,
+		TitleData.summonerSuccessor,
+		TitleData.ringleader,
+		TitleData.delegator,
+		TitleData.highSummoner
+	],
 	items: [],
 	imbuements: [],
 	monsterGroups: [],

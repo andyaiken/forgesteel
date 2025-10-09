@@ -20,7 +20,7 @@ export const SelectorRow = (props: Props) => {
 			</Flex>
 			{
 				props.tags && (props.tags.length > 0) ?
-					<div>
+					<div style={{ margin: '-1px -1px 3px -1px' }}>
 						{
 							props.tags.map((tag, n) => <Tag key={n}>{tag}</Tag>)
 						}

@@ -163,7 +163,6 @@ export class SheetLayout {
 	};
 
 	static getAbilityPages = (character: HeroSheet, extraCards: ExtraCards, layout: CardPageLayout, options: Options) => {
-		// future: Allow options to filter abilities displayed?
 		let allAbilities = character.abilities;
 
 		// future: Allow filtering *these* separately?
@@ -181,46 +180,124 @@ export class SheetLayout {
 		let p = 1;
 		const abilityCardPages: JSX.Element[] = [];
 		// console.log('Layout:', layout);
-		let n = 0;
-		while (n < allAbilities.length) {
+		let numAbilitiesPlaced = 0;
+		while (numAbilitiesPlaced < allAbilities.length) {
 			// build a single page
-			const pageStart = n;
+			const pageStart = numAbilitiesPlaced;
 			let pageH = 0;
 			let rowH = 0;
-			let pageAbilities: AbilitySheet[] = [];
+			let pageAbilityGrid: { card: AbilitySheet, h: number; }[][] = [];
 			let refCards: JSX.Element[] = [];
 
-			while (n < allAbilities.length && pageH < layout.linesY) {
-				// get a row, calculate height
-				const rowStart = n;
-				const rowEnd = Math.min(n + layout.perRow, allAbilities.length);
-				const rowAbilities = allAbilities.slice(rowStart, rowEnd);
+			while (numAbilitiesPlaced < allAbilities.length && pageH < layout.linesY) {
+				// Try to fill a row with ability cards, calculating height
+				const rowStartN = numAbilitiesPlaced;
+				// const rowEnd = Math.min(numAbilitiesPlaced + layout.perRow, allAbilities.length);
+				const rowAbilities = allAbilities.slice(rowStartN);
 
 				rowH = 0;
-				const allAdded = rowAbilities.every(a => {
-					const aH = SheetFormatter.calculateAbilitySize(a, layout.cardLineLen);
-					if (pageH + aH <= layout.linesY) {
-						pageAbilities.push(a);
-						rowH = Math.max(rowH, aH);
-						n += 1;
-						return true;
-					} else {
+				let rowSlotsFilled = 0;
+				let rowIsFilled = false;
+
+				let slotH = 0;
+				let currentSlotCards: { card: AbilitySheet, h: number }[] = [];
+				rowAbilities.every(a => {
+					// if row was just filled, break out
+					if (rowIsFilled)
 						return false;
+
+					// Calculate the next ability card height
+					const aH = SheetFormatter.calculateAbilitySize(a, layout.cardLineLen);
+					// if we are trying to fill a partial slot, check combined height
+					if (currentSlotCards.length > 0) {
+						// only fill up to current row height (+ a little wiggle room)
+						let canStack = slotH + aH <= (rowH + 2);
+						// -or- if there is not a lot of pageH left, allow going up to that
+						if (layout.linesY - (pageH + rowH) < 20) {
+							canStack = pageH + Math.max(slotH + aH, rowH) <= layout.linesY;
+						}
+						if (canStack) {
+							currentSlotCards.push({ card: a, h: aH });
+							numAbilitiesPlaced += 1;
+							slotH += aH;
+
+							rowH = Math.max(slotH, rowH);
+
+							return true;
+						} else {
+							// Can't stack with previous slot, place *previous* slot
+							pageAbilityGrid.push(currentSlotCards);
+							rowH = Math.max(rowH, slotH);
+							currentSlotCards = [];
+							slotH = 0;
+
+							rowSlotsFilled += 1;
+							rowIsFilled = rowSlotsFilled === layout.perRow;
+
+							if (rowIsFilled)
+								return false;
+						}
 					}
+
+					// If we got this far, check height as a new slot
+					if (pageH + aH <= layout.linesY) {
+						currentSlotCards.push({ card: a, h: aH });
+						numAbilitiesPlaced += 1;
+						slotH += aH;
+
+						// Check if we can consolidate *previous* cards based on current rowH
+						// Process:
+						// - start with most recent TWO slots (only makes sense at 2+)
+						// 		(or just grab whole row?)
+						// - see if the combined heights is <= the latest card H
+						// - if so, combine them and re-add to the array, adjusting rowSlots as necessary
+						if (rowSlotsFilled >= 2) {
+							let currentRow: { card: AbilitySheet, h: number; }[][] = [];
+
+							for (let i = rowSlotsFilled; i > 0; --i) {
+								const slot = pageAbilityGrid.pop();
+								if (slot)
+									currentRow.unshift(slot);
+							}
+
+							const slotHeights = currentRow.map(arr => arr.reduce((h, ash) => h += ash.h, 0));
+							if (slotHeights[slotHeights.length - 1] + slotHeights[slotHeights.length - 2] <= slotH) {
+								const combined = currentRow.slice(-2).flat(1);
+								currentRow = currentRow.slice(0, -2);
+								currentRow.push(combined);
+								rowSlotsFilled -= 1;
+							}
+
+							currentRow.forEach(ash => pageAbilityGrid.push(ash));
+						}
+
+						return true;
+					}
+					return false;
 				});
+				// The final card will still need to be placed if we ended by going through all of the cards
+				if (!rowIsFilled && currentSlotCards.length > 0) {
+					pageAbilityGrid.push(currentSlotCards);
+					rowH = Math.max(rowH, slotH);
+					rowSlotsFilled += 1;
+					rowIsFilled = rowSlotsFilled === layout.perRow;
+				}
+
 				pageH += rowH;
 				if (rowH > 0) {
 					pageH += 2.5; // For vertical card gap between rows
 					// console.log(`Row (${rowStart + 1}, ${n}):`, allAbilities.slice(rowStart, n).map(a => a.name), 'Height', rowH);
 				}
-				if (!allAdded)
+
+				// If we didn't fill this row, break out to start getting filler cards
+				if (!rowIsFilled)
 					break;
 			}
-			const abilitiesInLastRow = (pageAbilities.length % layout.perRow) || layout.perRow;
+			const filledSlotsInLastRow = (pageAbilityGrid.length % layout.perRow) || layout.perRow;
 			// console.log('last row:', abilitiesInLastRow, 'pageH', pageH, 'lines', layout.linesY);
-			if (abilitiesInLastRow < layout.perRow || pageH < layout.linesY) {
+			if (filledSlotsInLastRow < layout.perRow || pageH < layout.linesY) {
 				// try to find filler cards that will fit
-				const spacesToFill = layout.perRow - abilitiesInLastRow;
+				const spacesToFill = layout.perRow - filledSlotsInLastRow;
 				let spaceY = layout.linesY - pageH + rowH;
 				// console.log(`Need more cards, with ${pageAbilities.length} existing cards to fill out ${spaceY} lines in rows of ${layout.perRow} cards`);
 				if (spacesToFill === 0) {
@@ -232,30 +309,45 @@ export class SheetLayout {
 				refCards = SheetLayout.getFillerCards(spacesToFill, spaceY, rowH, extraCards, layout);
 				// console.log('reference cards:', refCards);
 
-				if (refCards.length < spacesToFill && abilitiesInLastRow < layout.perRow) {
+				if (refCards.length < spacesToFill && filledSlotsInLastRow < layout.perRow) {
 					// console.log('Need to cleanup partial abilities row!');
 					// Incomplete row, remove partial row
-					const newEnd = pageAbilities.length - abilitiesInLastRow;
-					n -= abilitiesInLastRow;
-					pageAbilities = pageAbilities.slice(0, newEnd);
+					const newEnd = pageAbilityGrid.length - filledSlotsInLastRow;
+					numAbilitiesPlaced -= filledSlotsInLastRow;
+					pageAbilityGrid = pageAbilityGrid.slice(0, newEnd);
 				}
 			}
 
-			if (n === pageStart) {
-				console.warn(`Didn't add any abilities to this page! (pg ${abilityCardPages.length}), n=${n}/${allAbilities.length}`);
-				n = allAbilities.length;
+			if (numAbilitiesPlaced === pageStart) {
+				console.warn(`Didn't add any abilities to this page! (pg ${abilityCardPages.length}), n=${numAbilitiesPlaced}/${allAbilities.length}`);
+				numAbilitiesPlaced = allAbilities.length;
 			}
 			// console.log(`page abilities (${pageStart}, ${n}):`, pageAbilities);
 			abilityCardPages.push(
 				<Fragment key={`abilities-${p++}`}>
 					<hr className='dashed' />
 					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId('hero-sheet', character.hero.id, `abilities-${p}`)}>
-						{pageAbilities.map(a =>
-							<AbilityCard
-								key={a.id}
-								ability={a}
-							/>
-						)}
+						{pageAbilityGrid.map((a, i) => {
+							if (a.length > 1) {
+								return (
+									<div className='stacked-cards' key={`abilities-${p}-${i}`}>
+										{a.map(sa =>
+											<AbilityCard
+												key={sa.card.id}
+												ability={sa.card}
+											/>
+										)}
+									</div>
+								);
+							} else {
+								return (
+									<AbilityCard
+										key={a[0].card.id}
+										ability={a[0].card}
+									/>
+								);
+							}
+						})}
 						{refCards}
 					</div>
 				</Fragment>

@@ -435,11 +435,15 @@ export class SheetFormatter {
 		}
 	};
 
-	static sortAbilitiesByLength = (a: AbilitySheet, b: AbilitySheet): number => {
+	static sortAbilitiesByLength = (a: AbilitySheet, b: AbilitySheet, order: 'asc' | 'desc' = 'asc'): number => {
 		const aLength = this.calculateAbilitySize(a, 50);
 		const bLength = this.calculateAbilitySize(b, 50);
 
-		return aLength - bLength;
+		if (order === 'asc') {
+			return aLength - bLength;
+		} else {
+			return bLength - aLength;
+		}
 	};
 
 	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
@@ -509,7 +513,7 @@ export class SheetFormatter {
 			if (s === 0) {
 				s = a.cost - b.cost;
 				if (s === 0) {
-					return this.sortAbilitiesByLength(a, b);
+					return this.sortAbilitiesByLength(a, b, 'desc');
 				} else {
 					return s;
 				}
@@ -522,7 +526,7 @@ export class SheetFormatter {
 		} else {
 			const alpha = aType.localeCompare(bType);
 			if (alpha === 0) {
-				return this.sortAbilitiesByLength(a, b);
+				return this.sortAbilitiesByLength(a, b, 'desc');
 			}
 			return alpha;
 		}

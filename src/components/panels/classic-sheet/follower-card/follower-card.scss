@@ -162,9 +162,9 @@
             }
 
             .symbol {
-                @include common.font-potency;
+                @include common.font-glyphs;
                 display: inline-block;
-                transform: translateY(2px);
+                // transform: translateY(2px);
                 margin-right: 1px;
             }
 

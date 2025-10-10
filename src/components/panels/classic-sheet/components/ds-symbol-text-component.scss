@@ -4,15 +4,13 @@
     display: inline-block;
 
     .characteristic {
-        @include common.font-potency();
+        @include common.font-glyphs();
         display: inline-block;
-        font-size: 1.2em;
-        transform: translateY(1px);
+        font-size: round(1.2rem, 1px);
     }
     .potency {
-        @include common.font-potency();
+        @include common.font-glyphs();
         display: inline-block;
-        font-size: 1.1em;
-        transform: translateY(3px);
+        font-size: round(1.2rem, 1px);
     }
 }

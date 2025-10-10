@@ -15,9 +15,9 @@ export const PerksCard = (props: Props) => {
 	}
 	return (
 		<div className='perks card'>
-			<h2>Perks</h2>
+			<h2>Ancestry Traits and Perks</h2>
 			<ul className='features-container two-column'>
-				{character.perks?.map(f =>
+				{character.ancestryTraitsPerksCombined?.map(f =>
 					<li key={f.id}>
 						<FeatureComponent
 							feature={f}

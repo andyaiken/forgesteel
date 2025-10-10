@@ -1,10 +1,16 @@
-.hero-sheet .potencies.card {
-    min-width: 325px;
+#classic-sheet .hero-sheet .potencies.card {
+    // min-width: 325px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1.6em 1fr;
+    column-gap: 5px;
+    padding: 5px;
 
     h3 {
         grid-column-end: span 3;
+    }
+
+    .labeled-field {
+        margin: 3px 0 0;
     }
 }

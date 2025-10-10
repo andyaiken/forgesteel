@@ -1,6 +1,6 @@
 @use '../../../pages/classic-sheet/common.scss';
 
-.skills.card {
+#classic-sheet .skills.card {
     display: grid;
     grid-template-rows: min-content min-content 1fr;
 
@@ -22,16 +22,13 @@
         text-align: left;
         border-bottom: 2px solid common.$color-medium;
         font-size: round(1.2rem, 1px);
+        margin-bottom: 5px;
     }
 
     ul {
         list-style: none;
         column-count: 2;
         column-fill: balance;
-
-        // display: grid;
-        // grid-template-columns: 1fr 1fr;
-
         margin:0;
         padding: 0;
 

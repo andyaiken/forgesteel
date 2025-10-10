@@ -2,10 +2,16 @@ import { Ability } from '@/models/ability';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { AbilityUsage } from '@/enums/ability-usage';
+import { ClassicSheetLogic } from './classic-sheet-logic';
 import { CreatureLogic } from '@/logic/creature-logic';
+import { FeatureLogic } from '../feature-logic';
+import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
+import { Item } from '@/models/item';
+import { ItemSheet } from '@/models/classic-sheets/hero-sheet';
 import { Monster } from '@/models/monster';
+import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
 export class ClassicSheetBuilder {
@@ -121,6 +127,43 @@ export class ClassicSheetBuilder {
 			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, creature);
 			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, creature);
 			sheet.rollT3Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, creature);
+		}
+
+		return sheet;
+	};
+	// #endregion
+
+	// #region Item Sheet
+	static buildItemSheet = (item: Item, hero: Hero, options: Options): ItemSheet => {
+		const features = FeatureLogic.getFeaturesFromItem(item, hero)
+			.map(f => f.feature)
+			.filter(f => ClassicSheetLogic.includeFeature(f, options));
+		const sheet: ItemSheet = {
+			id: item.id,
+			item: item,
+			effect: SheetFormatter.enhanceMarkdown(item.effect),
+			features: FeatureLogic.reduceFeatures(features)
+		};
+
+		if (item.imbuements.length) {
+			sheet.effect = item.imbuements.map(imbuement => imbuement.feature)
+				.reduce((effect, feature) => {
+					if (feature.type === FeatureType.Text) {
+						if (feature.description) {
+							if (feature.name) {
+								effect += '\n\n';
+								effect += `**${feature.name}**`;
+							}
+							effect += '\n\n';
+							effect += feature.description;
+						}
+					}
+					return effect;
+				}, '');
+		}
+
+		if (!sheet.effect.length) {
+			sheet.effect = features.find(f => f.id === item.id)?.description || '';
 		}
 
 		return sheet;

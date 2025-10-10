@@ -4,18 +4,6 @@
     @include common.font-slab();
 }
 
-.landscape .primary-reference.card {
-    flex-direction: row;
-    gap: 0 10px;
-    .heroic-resource {
-        order: 2;
-        flex-basis: 130%;
-        .heroic-resource-gain {
-            margin-bottom: 0;
-        }
-    }
-}
-
 .primary-reference.card {
     display: flex;
     flex-direction: column;
@@ -34,9 +22,14 @@
     }
 
     h3 {
-        border-bottom: 2px solid common.$color-light;
-        margin-bottom: 10px;
-        padding: 5px;
+        margin-bottom: 5px;
+        text-wrap: nowrap;
+    }
+
+    .hero-tokens h3,
+    .turn-reference h3 {
+        border-top: 2px solid common.$color-light;
+        padding-top: 10px;
     }
 
     .heroic-resource-gain {
@@ -59,6 +52,58 @@
             font-weight: 500;
             margin-bottom: 4px;
             border-bottom: 2px solid common.$color-medium;
+        }
+    }
+
+    .turn-reference {
+        & * {
+            @include common.font-slab();
+        }
+
+        p {
+            margin-top: 0;
+        }
+
+        .actions-maneuvers {
+            * {
+                color: var(--color-text-lighter);
+            }
+
+            h5 {
+                margin: 4px 20px 4px 0;
+                border-bottom: 2px solid common.$color-light;
+                font-size: round(1rem, 1px);
+                font-weight: 450;
+            }
+
+            ul {
+                margin: 4px 10px 4px 4px;
+                list-style-type: '— ';
+                list-style-position: outside;
+
+                li {
+                    margin-top: 2px;
+                }
+            }
+        }
+
+        &.condensed {
+            .actions-maneuvers {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: min-content min-content 1fr;
+            }
+
+            .main-actions,
+            .move-actions {
+                grid-column-start: 2;
+            }
+
+            .maneuvers {
+                grid-column-start: 1;
+                grid-row-start: 1;
+                grid-row-end: span 3;
+            }
         }
     }
 }

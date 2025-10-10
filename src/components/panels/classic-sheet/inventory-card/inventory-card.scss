@@ -17,38 +17,58 @@
         }
     }
 
-    &.wide ul {
-        column-count: 2;
-        column-gap: 25px;
-
-        background-image: linear-gradient(0deg, common.$color-light, common.$color-light);
-        background-size: 2px 100%;
-        background-position: 50% 4px;
-        background-repeat: no-repeat;
-    }
-
     .item {
         margin-bottom: 15px;
 
-        h3:not(#priority) {
-            text-align: left;
-            text-transform: none;
-            padding-bottom: 2px;
-            margin-bottom: 3px;
-            color: var(--color-text);
-            font-weight: 450;
+        h3 {
+            &,
+            .item-name {
+                text-align: left;
+                text-transform: none;
+                padding-bottom: 2px;
+                margin-bottom: 3px;
+                color: var(--color-text);
+                font-weight: 450;
+            }
 
             background-image: linear-gradient(90deg, common.$color-medium 50%, transparent);
             background-size: 100% 1px;
             background-position: left bottom;
             background-repeat: no-repeat;
+
+            &:has(.item-name) {
+                display: grid;
+                grid-template-columns: 1fr min-content;
+
+                .item-uses {
+                    ol {
+                        list-style: none;
+                        display: flex;
+                        gap: 5px;
+                        flex-wrap: nowrap;
+
+                        li {
+                            font-size: round(2.2rem, 1px);
+                        }
+                    }
+                }
+            }
         }
 
+        .item-effect,
         .item-effect * {
-            line-height: 18px;
-            font-size: 15px;
+            line-height: round(1.3rem, 1px);
+            font-size: round(1.1rem, 1px);
             margin-bottom: 10px;
             margin-top: 5px;
+        }
+
+        .item-effect {
+            img {
+                width: 50px;
+                height: 18px;
+                margin: 4px 0 -4px;
+            }
         }
 
         .keywords-item-type {
@@ -69,6 +89,56 @@
 
         .item-features .feature-line {
             font-weight: 400;
+        }
+    }
+
+    &.leveled-treasure {
+        h2 {
+            display: grid;
+            grid-template-columns: 1fr 250px;
+
+            .title {
+                @include common.font-slab();
+                transform: translateX(125px);
+            }
+        
+            .count {
+                @include common.font-slab();
+                font-weight: 500;
+                font-size: round(0.9rem, 1px);
+                text-wrap: nowrap;
+
+                display: grid;
+                grid-template-columns: min-content min-content;
+
+                .leveled-treasure-boxes {
+                    width: 75px;
+                    margin-top: -6px;
+                    margin-left: 10px;
+                    margin-bottom: -8px;
+                }
+
+                ol {
+                    @include common.border-beveled(7px, 2px, common.$color-medium);
+                    list-style-type: none;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    margin: 4px 0;
+                    padding: 5px;
+            
+                    li {
+                        text-align: center;
+                        font-weight: 900;
+                        border-right: 2px solid common.$color-light;
+                        height: 14px;
+                        line-height: 14px;
+            
+                        &:last-of-type {
+                            border-right: none;
+                        }
+                    }
+                }
+            }
         }
     }
 }

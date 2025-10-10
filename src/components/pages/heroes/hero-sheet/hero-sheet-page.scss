@@ -42,163 +42,174 @@
 }
 
 #classic-sheet .hero-sheet {
-    .page-1 {
+    .page-1,
+    .page-2,
+    .page-titles-inventory-projects {
         display: grid;
-        align-items: stretch;
-        justify-items: stretch;
-        grid-template-rows: 248px 213px 102px min-content min-content 1fr;
-        
-        $last-col: 350px;
-        grid-template-columns: 6fr 1fr calc(($last-col + 395px) - (100% / 3)) calc((100% / 3) - $last-col) $last-col;
-    }
-
-    .page-1.landscape {
-        grid-template-rows: 248px 213px 102px min-content min-content 1fr;
-        $last-col: 350px;
-        grid-template-columns: 1fr min-content $last-col;
-
-        .hero-header.card,
-        .stats-resources.card {
-            grid-column-end: span 2;
-        }
-
-        .conditions {
-            grid-column-start: 3;
-            grid-row-start: 1;
-            grid-row-end: span 3;
-        }
-
-        .primary-reference {
-            grid-row-start: 3;
-            grid-row-end: span 3;
-            grid-column-start: 1;
-        }
-
-        .potencies {
-            grid-column-start: 2;
-        }
-
-        .immunities-weaknesses.card {
-            grid-column-start: 2;
-        }
-
-        .ancestry-traits.card {
-            grid-column-start: 3;
-            grid-row-start: 4;
-            grid-row-end: span 3;
-        }
-        .modifiers {
-            grid-column-start: 2;
-            grid-row-start: 5;
-            grid-row-end: span 2;
-        }
-    
-        .class-features.card {
-            grid-row-start: 6;
-            // grid-row-end: span 2;
-        }
-    
-    }
-
-    &.a4 .page-1.landscape {
-        $last-col: 430px;
-        grid-template-columns: 1fr min-content $last-col;
+        place-items: stretch;
     }
 
     .page-1.portrait {
+        grid-template-rows: repeat(5, min-content) 1fr;
+        grid-template-columns: 1fr 1fr 280px;
+
         .hero-header.card,
         .stats-resources.card {
-            grid-column-end: span 5;
-        }
-        
-        .modifiers {
-            grid-column-end: span 2;
-            grid-row-end: span 3;
-        }
-        
-        .potencies {
-            grid-column-end: span 2;
-        }
-        .conditions {
-            grid-column-end: span 2;
-            grid-column-start: 3;
-            grid-row-start: 4;
-            grid-row-end: span 2;
-        }
-           
-        .primary-reference {
-            grid-row-end: span 2;
-        }
-        .immunities-weaknesses.card {
-            grid-column-start: 5;
-        }
-        .class-features.card {
             grid-column-end: span 3;
         }
-        .ancestry-traits.card {
-            grid-column-end: span 2;
-        }
-    }
     
-    .page-2 {
-        display: grid;
-        grid-template-columns: 438px 1fr 365px;
-        grid-template-rows: min-content 1fr 1fr 2fr 315px;
-    }
-
-    .page-2.portrait {
-        .skills {
-            grid-row-end: span 4;
+        .modifiers {
+            grid-row-end: span 3;
         }
-
-        .culture, .perks {
+    
+        .potencies {
+            grid-column-start: 3;
+        }
+    
+        .conditions {
+            grid-column-start: 2;
+            grid-row-start: 3;
+            grid-row-end: span 2;
+        }
+    
+        .primary-reference {
+            grid-row-end: span 3;
+        }
+    
+        .immunities-weaknesses.card {
+            grid-column-start: 2;
+        }
+    
+        .class-features.card {
             grid-column-end: span 2;
         }
+    }
 
-        .perks {
+    .page-1.landscape {
+        grid-template-rows: min-content min-content 213px min-content 1fr;
+        grid-template-columns: 1fr min-content min-content 280px;
+
+        .hero-header.card {
+            grid-column-end: span 3;
             grid-row-end: span 2;
         }
 
-        .titles.card {
+        .stats-resources.card {
+            grid-row-start: 3;
+            grid-column-start: 1;
+            grid-column-end: span 3;
+        }
+
+        .potencies {
+            grid-column-start: 4;
+            grid-row-start: 1;
+        }
+
+        .primary-reference {
+            grid-row-start: 2;
+            grid-row-end: span 4;
+            grid-column-start: 4;
+        }
+
+        .immunities-weaknesses.card {
+            grid-column-start: 3;
+        }
+
+        .conditions {
+            grid-column-start: 3;
             grid-row-start: 5;
         }
 
-        .projects.card {
+        .modifiers {
             grid-column-start: 2;
+            grid-row-start: 4;
+            grid-row-end: span 2;
+        }
+    
+        .class-features.card {
+            grid-row-start: 4;
+            grid-row-end: span 2;
+        }
+    
+    }
+
+    .page-2.portrait {
+        grid-template-columns: 1fr 365px;
+        grid-template-rows: min-content min-content 1fr;
+
+        .culture {
             grid-column-end: span 2;
+        }
+
+        .career-complication {
+            grid-row-start: 2;
+            grid-column-start: 1;
+
+            display: grid;
+            place-items: stretch;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .skills {
+            grid-row-end: span 2;
         }
     }
 
     .page-2.landscape {
-        grid-template-rows: min-content 1fr 1fr min-content 315px;
-        .career {
-            grid-row-end: span 2;
-            grid-column-start: 1;
-        }
-
-        .complication {
-            grid-row-start: 3;
-            grid-row-end: span 3;
-            grid-column-start: 1;
-        }
-
-        .skills {
-            grid-column-start: 3;
-            grid-row-start: 1;
-            grid-row-end: span 5;
-        }
-
+        grid-template-columns: 375px 1fr 365px;
+        grid-template-rows: min-content 1fr;
+        
         .culture {
             grid-row-start: 1;
             grid-column-start: 2;
         }
 
-        .perks {
+        .career-complication {
+            grid-row-start: 1;
+            grid-column-start: 1;
+            grid-row-end: span 2;
+
+            display: grid;
+            place-items: stretch;
+            grid-template-rows: 1fr 1fr;
+        }
+        .skills {
+            grid-column-start: 3;
+            grid-row-start: 1;
             grid-row-end: span 2;
         }
 
-        .projects.card {
-            grid-row-start: 5;
+        .perks {
+            grid-row-end: span 2;
+        }
+    }
+
+    .page-titles-inventory-projects.portrait {
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 2fr;
+
+        .titles,
+        .trinkets,
+        .leveled-treasure {
+            grid-column-end: span 2;
+        }
+    }
+
+    .page-titles-inventory-projects.landscape {
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+
+        .titles,
+        .trinkets {
+            grid-column-end: span 2;
+        }
+
+        .leveled-treasure {
+            grid-column-end: span 4;
+        }
+
+        .projects {
+            grid-column-end: span 3;
         }
     }
 }

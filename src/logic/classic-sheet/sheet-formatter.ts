@@ -42,20 +42,24 @@ export class SheetFormatter {
 		}
 	};
 
-	static convertFeatures = (features: Feature[]): Feature[] => {
-		features.sort(this.sortFeatures);
+	static convertFeaturesShort = (features: Feature[]): Feature[] => {
+		return this.convertFeatures(features.map(f => ({ feature: f, display: 'short' })));
+	};
+
+	static convertFeatures = (features: { feature: Feature, display: 'short' | 'full' }[]): Feature[] => {
+		features.sort((a, b) => this.sortFeatures(a.feature, b.feature));
 		const results: Feature[] = [];
-		for (const feature of features) {
-			results.push(this.cleanupFeature(feature));
+		for (const fd of features) {
+			results.push(this.cleanupFeature(fd.feature, fd.display));
 		}
 		return results;
 	};
 
-	static cleanupFeature = (feature: Feature): Feature => {
+	static cleanupFeature = (feature: Feature, display: 'short' | 'full' = 'short'): Feature => {
 		const result = Utils.copy(feature);
-		if (this.isVERYLongFeature(feature)) {
+		if (display !== 'full' && this.isVERYLongFeature(feature)) {
 			result.description = '*See Reference for details…*';
-		} else if (this.isLongFeature(feature)) {
+		} else if (display !== 'full' && this.isLongFeature(feature)) {
 			result.description = this.shortenText(feature.description);
 		} else {
 			result.description = this.cleanupText(feature.description);
@@ -113,9 +117,12 @@ export class SheetFormatter {
 			.replace(/I<([svw])\]/g, 'i<$1]')
 			.replace(/P<([svw])\]/g, 'p<$1]')
 			.replace(/([marip])<([svw]\])/g, '<span class="potency">$1&lt;$2</span>')
-			.replace(/\|\s+≤\s*11\s+\|/g, `|![≤ 11](${rollT1Icon})|`)
-			.replace(/\|\s+12\s*[-–]\s*16\s+\|/g, `|![12 - 16](${rollT2Icon})|`)
-			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17+](${rollT3Icon})|`);
+			.replace(/\|\s+≤\s*11\s+\|/g, `|![11 or less](${rollT1Icon})|`)
+			.replace(/\|\s+12\s*[-–]\s*16\s+\|/g, `|![12 to 16](${rollT2Icon})|`)
+			.replace(/\|\s+≥?\s*17\s*\+?\s+\|/g, `|![17 or greater](${rollT3Icon})|`)
+			.replace(/11 or lower:?/g, `![11 or less](${rollT1Icon})`)
+			.replace(/12\s*[-–]\s*16:?/g, `![12 to 16](${rollT2Icon})`)
+			.replace(/17\s*\+:?/g, `![17 or greater](${rollT3Icon})`);
 		return text;
 	};
 
@@ -140,55 +147,105 @@ export class SheetFormatter {
 		return f.name.includes('Persistent Magic');
 	};
 
-	static divideFeatures = (features: Feature[], availableSpace: number) => {
-		const displayed: Feature[] = [];
+	static divideFeatures = (features: Feature[], hero: Hero, availableSpace: number, lineLength: number = 50, columns: number = 1) => {
+		const displayed: { feature: Feature, display: 'short' | 'full' }[] = [];
 		const reference: Feature[] = [];
 
 		features.sort(this.sortFeatures);
 		let size = 0;
+		let longest = 0;
 		features.forEach(f => {
 			let display = false;
 			let fSize = 1;
+			let displaySize: 'short' | 'full' = 'full';
 			if (size < availableSpace) {
-				fSize = this.calculateFeatureSize(f, 50);
+				fSize = this.calculateFeatureSize(f, hero, lineLength);
+				longest = Math.max(fSize, longest);
 				if (this.isLongFeature(f)) {
+					displaySize = 'short';
 					reference.push(f);
+					if (this.isVERYLongFeature(f)) {
+						fSize = 2;
+					}
 					fSize += 1;
 				}
-				if (size + fSize <= availableSpace) {
+				// double-count the longest feature to acocunt for worst-case column balancing
+				if (size + fSize + (longest * (columns - 1)) <= availableSpace) {
 					display = true;
 				}
 			}
 			size += fSize;
 
 			if (display) {
-				displayed.push(f);
+				displayed.push({ feature: f, display: displaySize });
 			} else {
 				reference.push(f);
 			}
 		});
 
+		let distinctReference = Collections.distinct(reference, f => f);
+
+		// If we still have space, see if we can show full versions of some long features
+		if (size < availableSpace) {
+			const referenceWithSize = distinctReference.map(f => {
+				const fullSize = this.calculateFeatureSize(f, hero, lineLength, false);
+				return {
+					feature: f,
+					size: fullSize
+				};
+			}).sort((a, b) => a.size - b.size);
+
+			referenceWithSize.every(fws => {
+				const f = fws.feature;
+				let prevSize = 0;
+				if (displayed.find(fd => fd.feature.id === fws.feature.id)) {
+					prevSize = this.isVERYLongFeature(f) ? 2 : this.calculateFeatureSize(f, hero, lineLength);
+				}
+				if (size - prevSize + fws.size < availableSpace) {
+					distinctReference = distinctReference.filter(f => f.id !== fws.feature.id);
+					const d = displayed.find(fd => fd.feature.id === fws.feature.id);
+					if (d) {
+						d.display = 'full';
+					} else {
+						displayed.push({ feature: f, display: 'full' });
+					}
+					size = size - prevSize + fws.size;
+					return true;
+				} else {
+					return false;
+				}
+			});
+		}
+
 		return {
 			displayed: displayed,
-			referenceIds: Collections.distinct(reference.map(f => f.id), f => f)
+			referenceIds: distinctReference.map(f => f.id)
 		};
 	};
 
-	static calculateFeatureSize = (f: Feature, lineWidth: number, countShortenedText: boolean = true): number => {
+	static calculateFeatureSize = (f: Feature, hero: Hero | null, lineWidth: number, countShortenedText: boolean = true): number => {
 		let size = 1;
 		const headerSize = 1.5;
 		const bottomMargin = 0.3;
-		if ([ FeatureType.Multiple ].includes(f.type)) {
+		if ([ FeatureType.Multiple, FeatureType.PackageContent ].includes(f.type)) {
 			size = 0;
-		} else if (this.isLongFeature(f)) {
-			if (countShortenedText) {
-				size = headerSize + this.countLines(f.description.trim().split('\n')[0], lineWidth);
-			} else {
-				size = headerSize + this.countLines(f.description, lineWidth);
-			}
+		} else if (this.isLongFeature(f) && countShortenedText) {
+			size = headerSize + this.countLines(f.description.trim().split('\n')[0], lineWidth);
 			size += bottomMargin;
-		} else if ([ FeatureType.Text, FeatureType.Package, FeatureType.PackageContent ].includes(f.type)) {
+		} else if (f.type === FeatureType.Text) {
 			size = headerSize + this.countLines(f.description, lineWidth);
+			size += bottomMargin;
+		} else if (f.type === FeatureType.Package) {
+			size = headerSize + this.countLines(f.description, lineWidth);
+			if (hero) {
+				const packageContent = HeroLogic.getFeatures(hero)
+					.map(hf => hf.feature)
+					.filter(hf => hf.type === FeatureType.PackageContent)
+					.filter(hf => hf.data.tag === f.data.tag);
+				packageContent.forEach(pc => {
+					size += headerSize + this.countLines(pc.description, lineWidth);
+				});
+			}
 			size += bottomMargin;
 		} else if (f.type === FeatureType.Ability) {
 			size = headerSize + this.countLines(f.data.ability.description, lineWidth);
@@ -215,11 +272,11 @@ export class SheetFormatter {
 		return size;
 	};
 
-	static calculateFeatureReferenceSize = (features: { feature: Feature, source: string }[] | undefined, lineWidth: number): number => {
+	static calculateFeatureReferenceSize = (features: { feature: Feature, source: string }[] | undefined, hero: Hero, lineWidth: number): number => {
 		let size = 2.5; // Card header
 		if (features) {
 			features.forEach(f => {
-				size += this.calculateFeatureSize(f.feature, lineWidth, false);
+				size += this.calculateFeatureSize(f.feature, hero, lineWidth, false);
 			});
 
 			size += 2 * Collections.distinct(features, f => f.source).length;
@@ -235,7 +292,7 @@ export class SheetFormatter {
 				itemSize = 1.4; // account for item display differences from plain features
 				if (i.features) {
 					itemSize += i.features.reduce((s, f) => {
-						s += this.calculateFeatureSize(f, lineWidth, false);
+						s += this.calculateFeatureSize(f, null, lineWidth, false);
 						return s;
 					}, 0);
 					size += itemSize;
@@ -251,7 +308,7 @@ export class SheetFormatter {
 			let tSize = 1.7 + this.countLines(title.description, lineWidth);
 			if (title.features) {
 				title.features.filter(f => f.id === title.selectedFeatureID).forEach(f => {
-					tSize += this.calculateFeatureSize(f, lineWidth, false);
+					tSize += this.calculateFeatureSize(f, null, lineWidth, false);
 				});
 			}
 			size += tSize;
@@ -272,7 +329,7 @@ export class SheetFormatter {
 				size += this.calculateAbilityComponentSize(ability, lineWidth);
 			});
 			follower.features?.forEach(f => {
-				size += this.calculateFeatureSize(f, lineWidth, false);
+				size += this.calculateFeatureSize(f, null, lineWidth, false);
 			});
 			follower.advancement?.forEach(advancement => {
 				size += 1.5 + this.calculateAbilityComponentSize(advancement.ability, lineWidth);
@@ -288,7 +345,7 @@ export class SheetFormatter {
 			size += this.calculateAbilityComponentSize(ability, lineWidth - 5);
 		});
 		monster.features?.forEach(f => {
-			size += this.calculateFeatureSize(f, lineWidth, false);
+			size += this.calculateFeatureSize(f, null, lineWidth, false);
 		});
 		// ability/feature dividers
 		size += 0.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
@@ -663,5 +720,40 @@ export class SheetFormatter {
 				return 'Criminal Und.';
 		}
 		return skill;
+	};
+
+	static resourceGainTriggerOrder: string[] = [
+		'when', 'the first time'
+	];
+
+	static sortHeroicResourceGains = (a: { tag: string, trigger: string, value: string; }, b: { tag: string, trigger: string, value: string; }): number => {
+		const aStart = a.tag === 'start';
+		const bStart = b.tag === 'start';
+
+		const aSort = this.resourceGainTriggerOrder.reduce((v, s, i) => {
+			if (v < 0) {
+				if (a.trigger.toLocaleLowerCase().startsWith(s)) {
+					v = i;
+				}
+			}
+			return v;
+		}, -1);
+		const bSort = this.resourceGainTriggerOrder.reduce((v, s, i) => {
+			if (v < 0) {
+				if (b.trigger.toLocaleLowerCase().startsWith(s)) {
+					v = i;
+				}
+			}
+			return v;
+		}, -1);
+		if (aStart && !bStart) {
+			return -1;
+		} else if (!aStart && bStart) {
+			return 1;
+		} else if (aSort !== bSort) {
+			return aSort - bSort;
+		} else {
+			return a.trigger.length - b.trigger.length;
+		}
 	};
 }

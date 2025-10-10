@@ -1,40 +1,11 @@
 @forward './_borders' as border-*;
 @forward './_dividers' as divider-*;
+@forward './_colors' as color-*;
 @forward './functions';
 
 @use './borders';
 @use './dividers';
-
-$color-extra-light: #eee;
-$color-light: #bbb;     // 73.3%
-$color-medium: #666;    // 40%
-$color-dark: #444;      // 26.7%
-
-:root {
-    --color-text: #222;
-    --color-text-lighter: #444;
-    --color-text-lightest: #666;
-}
-
-// Print-optimized colors
-$color-main-action: #00aeef;
-$color-triggered-action: #ed1c24;
-$color-maneuver: #00a651;
-$color-performance: #92278f;
-$color-free-strike: #666;
-$color-move: #db8b27;
-
-// Monster Role colors
-$color-general-monster: #c7c8ca;
-$color-ambusher: #f8db55;
-$color-artillery: #c8c3db;
-$color-brute: #93b4dc;
-$color-controller: #f48a89;
-$color-defender: #c6c19e;
-$color-harrier: #e7bdc0;
-$color-hexer: #d6e0c2;
-$color-mount: #b8dce9;
-$color-support: #f4d6bf;
+@use './colors';
 
 @mixin font-slab() {
     font-family: 'Roboto Slab', Georgia, serif !important;
@@ -58,7 +29,7 @@ $color-support: #f4d6bf;
 }
 
 main#classic-sheet {
-    background: $color-extra-light;
+    background: colors.$extra-light;
 
     &.hidden {
         display: none;
@@ -103,7 +74,7 @@ main#classic-sheet {
             font-size: 18px;
             padding: 5px 0;
 
-            @include dividers.fancy($color-medium);
+            @include dividers.fancy(colors.$medium);
         }
 
         h3 {
@@ -142,7 +113,7 @@ main#classic-sheet {
 
         .card {
             background: #fff;
-            border: 2px solid $color-light;
+            border: 2px solid colors.$light;
             border-radius: 2px;
             margin: 5px;
             padding: 5px 15px;
@@ -150,12 +121,12 @@ main#classic-sheet {
 
         section.container,
         .beveled {
-            @include borders.beveled(10px, 2px, $color-light);
+            @include borders.beveled(10px, 2px, colors.$light);
             padding: round(0.5rem, 1px);
         }
 
         .card section.bordered {
-            @include borders.beveled(8px, 2px, $color-light);
+            @include borders.beveled(8px, 2px, colors.$light);
             margin-bottom: 10px;
             padding: 0 10px 10px;
 
@@ -179,7 +150,8 @@ main#classic-sheet {
             }
         }
 
-        ul.features-container {
+        ul.features-container,
+        ul.titles-container {
             list-style: none;
             padding: 0;
             margin: 0;
@@ -188,7 +160,7 @@ main#classic-sheet {
                 column-count: 2;
                 column-gap: 15px;
 
-                background-image: linear-gradient(0deg, $color-light, $color-light);
+                background-image: linear-gradient(0deg, colors.$light, colors.$light);
                 background-size: 2px 100%;
                 background-position: 50% 4px;
                 background-repeat: no-repeat;
@@ -205,9 +177,9 @@ main#classic-sheet {
                 $l2-s: calc(2 * $col-w + (3 * $gap / 2) - 1px);
                 $l2-e: calc($l2-s + 2px);
                 background-image: linear-gradient(90deg, transparent $l1-s,
-                    $color-light $l1-s, $color-light $l1-e,
+                    colors.$light $l1-s, colors.$light $l1-e,
                     transparent $l1-e, transparent $l2-s,
-                    $color-light $l2-s, $color-light $l2-e,
+                    colors.$light $l2-s, colors.$light $l2-e,
                     transparent $l2-e);
 
                 background-size: 100% 100%;
@@ -290,7 +262,7 @@ main#classic-sheet {
 
         hr.dashed {
             border: 0;
-            border-top: 1px dashed $color-medium;
+            border-top: 1px dashed colors.$medium;
             width: 100%;
         }
 

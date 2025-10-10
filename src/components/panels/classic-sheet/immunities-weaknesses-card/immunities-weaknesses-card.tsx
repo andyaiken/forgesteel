@@ -52,10 +52,14 @@ export const ImmunitiesWeaknessesCard = (props: Props) => {
 
 	return (
 		<div className='immunities-weaknesses card'>
-			<h4>Immunities</h4>
-			{getImmunities()}
-			<h4>Weaknesses</h4>
-			{getWeaknesses()}
+			<div className='immunities'>
+				<h4>Immunities</h4>
+				{getImmunities()}
+			</div>
+			<div className='weaknesses'>
+				<h4>Weaknesses</h4>
+				{getWeaknesses()}
+			</div>
 		</div>
 	);
 };

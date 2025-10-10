@@ -1,36 +1,42 @@
 @use '../../../pages/classic-sheet/common.scss';
 
 #classic-sheet .hero-sheet .modifiers.card {
-    min-width: 450px;
+    min-width: 470px;
     display: grid;
     grid-template-rows: repeat(4, max-content) 1fr;
 
-    ul, .name {
-        margin: 0 10px;
-        padding: 8px 0;
+    h2 {
+        display: grid;
+        grid-template-columns: 1fr round(4rem, 1px);
+        justify-items: stretch;
+        align-items: baseline;
+
+        .title {
+            @include common.font-slab;
+            font-weight: inherit;
+            transform: translateX(round(2rem, 1px));
+        }
+        .labeled-boolean {
+            text-transform: none;
+            float: right;
+        }
     }
 
     .name {
-        padding: 10px 20px;
+        padding: 5px 0 0;
+        margin-left: 0;
+        margin-right: 0;
 
-        &.labeled-field:not(.just-for-precedence)>.labeled-field-content {
-            @include common.border-beveled(10px, 2px, common.$color-medium);
-            min-height: round(3rem, 1px);
-        }
-    }
+        &.labeled-field {
+            label {
+                font-weight: 450;
+                top: -2px;
+            }
 
-    ul.modifier-types {
-        list-style-type: none;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        padding: 0;
-
-        li {
-            margin: 0 15px;
-        }
-        label {
-            font-size: round(1.3rem, 1px);
+            &>.labeled-field-content {
+                @include common.border-beveled(10px, 2px, common.$color-medium);
+                min-height: round(3rem, 1px);
+            }
         }
     }
 
@@ -38,16 +44,38 @@
         border-bottom: 2px solid common.$color-light;
         padding-bottom: 10px;
 
+        .proficiencies,
+        .stats {
+            margin-left: -3px;
+            margin-right: -3px;
+
+            label {
+                font-size: round(1rem, 1px);
+                color: var(--color-text-lighter);
+                text-wrap: nowrap;
+            }
+
+            .labeled-field.no-content {
+                opacity: 0.7;
+            }
+        }
+
         .proficiencies {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            gap: 5px;
+
+            &.single {
+                grid-template-columns: 1fr;
+            }
 
             .labeled-field {
                 margin-left: 0;
                 margin-right: 0;
 
                 .labeled-field-content span {
-                    font-size: round(1.1rem, 1px);
+                    font-size: round(1.2rem, 1px);
+                    line-height: round(1.8rem, 1px);
                 }
             }
         }
@@ -55,6 +83,16 @@
         .stats {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
+            justify-content: space-between;
+            place-items: stretch;
+
+            .labeled-field {
+                margin: 3px 0;
+
+                .labeled-field-content span {
+                    font-weight: 600;
+                }
+            }
         }
     }
 
@@ -68,9 +106,6 @@
     }
 
     .damage-modifiers {
-        display: none;
-    }
-    .kit .damage-modifiers {
         display: flex;
         justify-content: space-around;
         align-content: stretch;
@@ -84,7 +119,7 @@
         grid-template-rows: min-content 1fr;
         grid-template-columns: 1fr 1fr 1fr;
         place-items: stretch;
-        padding: 10px 0;
+        padding: 5px 0 10px;
 
         h4 {
             grid-column-end: span 3;
@@ -101,6 +136,7 @@
 
             .tier {
                 margin: 5px 0 0;
+                padding: 0 3px;
                 display: grid;
                 grid-template-rows: 1fr min-content;
                 place-items: center;
@@ -109,9 +145,10 @@
                     border-right: 2px solid common.$color-light;
                 }
 
-                div {
+                .effect {
                     @include common.font-slab();
                     font-size: round(1.4rem, 1px);
+                    padding-bottom: 5px;
                 }
 
                 .range {
@@ -135,6 +172,11 @@
         padding: 0 5px;
         display: grid;
         grid-template-rows: min-content 1fr;
+
+        h3 {
+            @include common.divider-gradient-line-center;
+            margin-bottom: 5px;
+        }
 
         .features {
             justify-self: stretch;

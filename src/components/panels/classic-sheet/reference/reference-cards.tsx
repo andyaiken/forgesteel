@@ -19,53 +19,6 @@ export const RulesReferenceCard = (props: Props) => {
 	);
 };
 
-export const TurnOptionsReferenceCard = () => {
-	return (
-		<div className='turn-reference extra-reference card'>
-			<h2>Your Turn</h2>
-			<p>Each creature can take a move action, a maneuver, and an action on their turn — in any order</p>
-			<p>You can also take <strong>one triggered action per round</strong> when the trigger happens. There is no limit to the number of free triggered actions you can take.</p>
-			<div className='actions-maneuvers'>
-				<div className='move-actions'>
-					<h5>Move Actions</h5>
-					<ul>
-						<li>Advance</li>
-						<li>Disengage</li>
-						<li>Ride</li>
-					</ul>
-				</div>
-				<div className='main-actions'>
-					<h5>Main Actions</h5>
-					<ul>
-						<li>Charge</li>
-						<li>Defend</li>
-						<li>Heal</li>
-						<li>Free Strike</li>
-						<li>Trade for Maneuver</li>
-						<li>Trade for Move</li>
-					</ul>
-				</div>
-				<div className='maneuvers'>
-					<h5>Maneuvers</h5>
-					<ul>
-						<li>Aid Attack</li>
-						<li>Catch Breath</li>
-						<li>Claw Dirt</li>
-						<li>Escape Grab</li>
-						<li>Grab</li>
-						<li>Hide</li>
-						<li>Knockback</li>
-						<li>Make or Assist Test</li>
-						<li>Search for Hidden Creature</li>
-						<li>Stand Up</li>
-						<li>Use Consumable</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	);
-};
-
 export const MainActionsReferenceCard = () => {
 	return (
 		<div className='extra-reference card'>

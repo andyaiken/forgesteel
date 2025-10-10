@@ -52,10 +52,10 @@ export interface HeroSheet {
 	surgesCurrent?: number;
 
 	// Modifiers (Kits, Prayers, Wards, etc)
-	modifierTypes?: string[];
+	modifierTypes: string[];
 	modifierName?: string;
 	modifierWeaponImplement?: string;
-	modifierArmor?: string;
+	modifierArmorWard?: string;
 
 	modifierSpeed?: number;
 	modifierMeleeDistance?: number;
@@ -75,8 +75,8 @@ export interface HeroSheet {
 	modifierBenefits?: Feature[];
 
 	// Immunities and Weaknesses
-	immunities?: { damageType: string, value: number }[];
-	weaknesses?: { damageType: string, value: number }[];
+	immunities: { damageType: string, value: number }[];
+	weaknesses: { damageType: string, value: number }[];
 	conditionImmunities?: ConditionType[];
 
 	// Potencies
@@ -108,13 +108,15 @@ export interface HeroSheet {
 
 	// Culture
 	culture?: Culture;
-	cultureFeatures?: Feature[];
 
 	languages?: string[];
 
-	// Perks & titles
+	// Perks & Titles
 	perks?: Perk[];
 	titles?: Title[];
+
+	// Ancestry & Perks combined
+	ancestryTraitsPerksCombined?: Feature[];
 
 	// Projects
 	projects?: ProjectSheet[];

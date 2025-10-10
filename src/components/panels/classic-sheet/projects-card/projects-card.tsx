@@ -11,12 +11,12 @@ export const ProjectsCard = (props: Props) => {
 	const emptyProject = {
 		name: '',
 		characteristic: '',
-		pointsGoal: undefined,
-		pointsCurrent: undefined
+		pointsGoal: null,
+		pointsCurrent: null
 	};
 	const projects = [];
 	let i = 0;
-	for (i; i < 5; ++i) {
+	for (i; i < 7; ++i) {
 		if (character.projects && character.projects.length > i) {
 			projects.push(character.projects[i]);
 		} else {

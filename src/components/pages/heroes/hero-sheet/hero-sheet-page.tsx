@@ -65,7 +65,6 @@ export const HeroSheetPage = (props: Props) => {
 		[ props.options ]
 	);
 
-	// const numTitlesInSmallCard = props.options.pageOrientation === 'portrait' ? 1 : 2;
 	const populateExtraCards = (character: HeroSheet): ExtraCards => {
 		const required = [
 			{
@@ -105,22 +104,6 @@ export const HeroSheetPage = (props: Props) => {
 				shown: false
 			});
 		}
-
-		// Titles
-		// if (character.titles?.length && character.titles?.length > numTitlesInSmallCard) {
-		// 	let titleH = SheetFormatter.calculateTitlesSize(character.titles, layout.cardLineLen);
-		// 	let titleW = 1;
-		// 	if (titleH > 60) {
-		// 		titleW = 2;
-		// 		titleH = titleH * 0.5;
-		// 	}
-		// 	required.push({
-		// 		element: <TitlesCard character={character} showLong='all' wide={titleW > 1} key='titles-long' />,
-		// 		width: titleW,
-		// 		height: titleH,
-		// 		shown: false
-		// 	});
-		// }
 
 		const optional = [
 			{

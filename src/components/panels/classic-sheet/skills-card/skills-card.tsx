@@ -1,5 +1,6 @@
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import './skills-card.scss';
 
 interface Props {
@@ -24,7 +25,7 @@ export const SkillsCard = (props: Props) => {
 									<li key={`skill-list-${list}-item-${key}`}>
 										<LabeledBooleanField
 											value={character.skills?.includes(s)}
-											label={s}
+											label={SheetFormatter.getSkillAbbreviation(s)}
 										/>
 									</li>
 								);

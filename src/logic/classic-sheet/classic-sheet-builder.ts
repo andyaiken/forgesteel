@@ -6,7 +6,6 @@ import { ClassicSheetLogic } from './classic-sheet-logic';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { FeatureLogic } from '../feature-logic';
 import { FeatureType } from '@/enums/feature-type';
-import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
 import { ItemSheet } from '@/models/classic-sheets/hero-sheet';
@@ -105,11 +104,7 @@ export class ClassicSheetBuilder {
 				const rollPowerAmount = Math.max(...rollSection.roll.characteristic
 					.map(c => CreatureLogic.getCharacteristic(creature, c)));
 
-				const characteristics = SheetFormatter.joinCommasOr(rollSection.roll.characteristic
-					.sort(SheetFormatter.sortCharacteristics)
-					.map(c => Format.capitalize(c.slice(0, 1)))
-				);
-				rollPowerStr = isHero ? `${rollPowerAmount} (${characteristics})` : rollPowerAmount.toString();
+				rollPowerStr = rollPowerAmount.toString();
 			} else {
 				let rollPowerAmount = 2;// echelon 1 always at least 2
 				[ rollSection.roll.tier1, rollSection.roll.tier2, rollSection.roll.tier3 ].forEach(tier => {

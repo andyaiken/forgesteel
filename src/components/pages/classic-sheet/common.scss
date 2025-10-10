@@ -14,8 +14,8 @@
 @mixin font-serif() {
     font-family: 'Merriweather', Georgia, serif !important;
 }
-@mixin font-potency() {
-    font-family: 'Draw Steel Potencies', Arial, Helvetica, sans-serif !important;
+@mixin font-glyphs() {
+    font-family: 'Draw Steel Glyphs', Arial, Helvetica, sans-serif !important;
 }
 
 @mixin striped-card() {

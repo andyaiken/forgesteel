@@ -1,0 +1,83 @@
+interface FeatureFlag {
+	code: string;
+	description: string;
+}
+
+export class FeatureFlags {
+	// #region List of all the recognised flags
+
+	static playtest: FeatureFlag = {
+		code: 'The Bluetones',
+		description: 'Access to playtest material'
+	};
+
+	private static all = [
+		FeatureFlags.playtest
+	];
+
+	// #endregion
+
+	// #region List functions
+
+	static flagExists = (code: string) => {
+		return FeatureFlags.all.some(f => f.code === code);
+	};
+
+	// #endregion
+
+	// #region User entitlement functions
+
+	static active = () => {
+		return FeatureFlags.all.filter(flag => FeatureFlags.hasFlag(flag.code));
+	};
+
+	static add = (code: string) => {
+		const flag = FeatureFlags.all.find(f => f.code === code);
+		if (!flag) {
+			return;
+		}
+
+		if (FeatureFlags.hasFlag(flag.code)) {
+			return;
+		}
+
+		const codes = FeatureFlags.getCurrentCodes();
+		codes.push(flag.code);
+		FeatureFlags.setCurrentCodes(codes);
+	};
+
+	static remove = (code: string) => {
+		const codes = FeatureFlags.getCurrentCodes().filter(f => f !== code);
+		FeatureFlags.setCurrentCodes(codes);
+	};
+
+	static clear = () => {
+		FeatureFlags.setCurrentCodes([]);
+	};
+
+	static hasFlag = (code: string) => {
+		const codes = FeatureFlags.getCurrentCodes();
+		return codes.includes(code);
+	};
+
+	// #endregion
+
+	// #region Local storage access
+
+	private static KEY = 'feature_flag_codes';
+
+	private static getCurrentCodes = () => {
+		const codes = localStorage.getItem(FeatureFlags.KEY) || '';
+		return codes.split(';').filter(f => !!f);
+	};
+
+	private static setCurrentCodes = (codes: string[]) => {
+		if (codes.length === 0) {
+			localStorage.removeItem(FeatureFlags.KEY);
+		} else {
+			localStorage.setItem(FeatureFlags.KEY, codes.join(';'));
+		}
+	};
+
+	// #endregion
+}

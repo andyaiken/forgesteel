@@ -13,7 +13,7 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { initializeTheme } from '@/utils/initializeTheme.ts';
+import { initializeTheme } from '@/utils/initialize-theme';
 import localforage from 'localforage';
 
 import './index.scss';

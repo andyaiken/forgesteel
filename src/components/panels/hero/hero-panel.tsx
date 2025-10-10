@@ -587,7 +587,7 @@ export const HeroPanel = (props: Props) => {
 									<Statistic title='Recov Value' value={HeroLogic.getRecoveryValue(props.hero)} />
 								</div>
 							</div>
-							<div className='stats-box-caption'>Health</div>
+							<div className='stats-box-caption'>Vitals</div>
 						</div>
 					</Col>
 				</Row>

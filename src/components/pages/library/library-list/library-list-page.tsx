@@ -698,9 +698,9 @@ export const LibraryListPage = (props: Props) => {
 								<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
 							</div>
 							<div className='selection-list elements'>
-								<div className='list-header'>
-									{
-										category === 'monster-group' ?
+								{
+									category === 'monster-group' ?
+										<div className='list-header'>
 											<Flex align='center' justify='space-between' gap={5}>
 												<Segmented
 													style={{ flex: '1 1 0' }}
@@ -719,16 +719,16 @@ export const LibraryListPage = (props: Props) => {
 													onClick={() => setShowMonsterFilter(!showMonsterFilter)}
 												/>
 											</Flex>
-											: null
-									}
-									{
-										(category === 'monster-group') && !props.options.showMonsterGroups && showMonsterFilter ?
-											<SelectablePanel style={{ padding: '15px 10px 10px 10px' }}>
-												<MonsterFilterPanel monsterFilter={monsterFilter} monsters={SourcebookLogic.getMonsters(props.sourcebooks)} includeNameFilter={false} onChange={setMonsterFilter} />
-											</SelectablePanel>
-											: null
-									}
-								</div>
+											{
+												!props.options.showMonsterGroups && showMonsterFilter ?
+													<SelectablePanel style={{ padding: '15px 10px 10px 10px' }}>
+														<MonsterFilterPanel monsterFilter={monsterFilter} monsters={SourcebookLogic.getMonsters(props.sourcebooks)} includeNameFilter={false} onChange={setMonsterFilter} />
+													</SelectablePanel>
+													: null
+											}
+										</div>
+										: null
+								}
 								{
 									list.map(a => (
 										<SelectorRow

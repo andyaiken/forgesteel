@@ -6,6 +6,7 @@ import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
 import { Feature } from '@/models/feature';
+import { FeatureFlags } from '@/utils/feature-flags';
 import { FeatureType } from '@/enums/feature-type';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
@@ -24,7 +25,6 @@ import { SourcebookData } from '@/data/sourcebook-data';
 import { SubClass } from '@/models/subclass';
 import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
-import { Utils } from '@/utils/utils';
 
 export class SourcebookLogic {
 	static getElementCount = (sourcebook: Sourcebook) => {
@@ -114,7 +114,7 @@ export class SourcebookLogic {
 			SourcebookData.orden
 		];
 
-		if (Utils.isDev()) {
+		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
 			list.push(SourcebookData.playtest);
 		}
 

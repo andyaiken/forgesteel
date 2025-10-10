@@ -27,57 +27,59 @@ export const WelcomePage = (props: Props) => {
 		<ErrorBoundary name='welcome-page'>
 			<div className={isSmall ? 'welcome-page compact' : 'welcome-page full'}>
 				<AppHeader />
-				<div className='welcome-page-content'>
-					<div className='welcome-column'>
-						<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>
-						<div className='ds-text'>
-							<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
+				<ErrorBoundary>
+					<div className='welcome-page-content'>
+						<div className='welcome-column'>
+							<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>
+							<div className='ds-text'>
+								<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
+							</div>
+							<Flex justify='center' style={{ margin: '15px 0 10px 0' }}>
+								<Segmented
+									options={[
+										{
+											value: 'player',
+											label: (
+												<div className='welcome-tab-button'>
+													<div className='title'>Players</div>
+												</div>
+											)
+										},
+										{
+											value: 'director-prep',
+											label: (
+												<div className='welcome-tab-button'>
+													<div className='title'>Directors</div>
+													<div className='subtitle'>Prep Time</div>
+												</div>
+											)
+										},
+										{
+											value: 'director-run',
+											label: (
+												<div className='welcome-tab-button'>
+													<div className='title'>Directors</div>
+													<div className='subtitle'>Game Time</div>
+												</div>
+											)
+										},
+										{
+											value: 'creator',
+											label: (
+												<div className='welcome-tab-button'>
+													<div className='title'>Creators</div>
+												</div>
+											)
+										}
+									]}
+									value={page}
+									onChange={setPage}
+								/>
+							</Flex>
+							<Content type={page} />
 						</div>
-						<Flex justify='center' style={{ margin: '15px 0 10px 0' }}>
-							<Segmented
-								options={[
-									{
-										value: 'player',
-										label: (
-											<div className='welcome-tab-button'>
-												<div className='title'>Players</div>
-											</div>
-										)
-									},
-									{
-										value: 'director-prep',
-										label: (
-											<div className='welcome-tab-button'>
-												<div className='title'>Directors</div>
-												<div className='subtitle'>Prep Time</div>
-											</div>
-										)
-									},
-									{
-										value: 'director-run',
-										label: (
-											<div className='welcome-tab-button'>
-												<div className='title'>Directors</div>
-												<div className='subtitle'>Game Time</div>
-											</div>
-										)
-									},
-									{
-										value: 'creator',
-										label: (
-											<div className='welcome-tab-button'>
-												<div className='title'>Creators</div>
-											</div>
-										)
-									}
-								]}
-								value={page}
-								onChange={setPage}
-							/>
-						</Flex>
-						<Content type={page} />
 					</div>
-				</div>
+				</ErrorBoundary>
 				<AppFooter page='welcome' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>

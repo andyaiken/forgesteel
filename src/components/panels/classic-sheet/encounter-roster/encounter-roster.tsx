@@ -1,4 +1,5 @@
 import { EncounterSheet } from '@/models/classic-sheets/encounter-sheet';
+import { FormatLogic } from '@/logic/format-logic';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Options } from '@/models/options';
@@ -110,14 +111,10 @@ export const EncounterRosterCard = (props: Props) => {
 											group.slots.map((slot, i) => {
 												const monster = slot.monster;
 												const speed = MonsterLogic.getSpeed(monster);
-												let modes = ' ';
-												if (speed.modes.length) {
-													modes += `(${speed.modes.join(', ')})`;
-												}
 												return (
 													<div key={`stats-${slot.id}-${i}`} className='encounter-slot'>
 														<span>{monster.stability}</span>
-														<span>{speed.value}{modes}</span>
+														<span>{FormatLogic.getSpeed(speed)}</span>
 														<span>{monster.freeStrikeDamage}</span>
 														<span>{MonsterLogic.getFreeStrikeDistance(monster)}</span>
 													</div>

@@ -417,10 +417,12 @@ export const SessionDirectorPage = (props: Props) => {
 						</Button>
 					</Popover>
 				</AppHeader>
-				<div className='session-director-page-content'>
-					{getSelector()}
-					{getSelectedContent()}
-				</div>
+				<ErrorBoundary>
+					<div className='session-director-page-content'>
+						{getSelector()}
+						{getSelectedContent()}
+					</div>
+				</ErrorBoundary>
 				<AppFooter page='session' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>

@@ -127,7 +127,7 @@ export const MonsterPanel = (props: Props) => {
 									<div className='features'>
 										{
 											speed.modes.length > 0 ?
-												<Field label='Movement' value={Format.capitalize(speed.modes.join(', '))} />
+												<Field label='Movement' value={Format.capitalize(FormatLogic.getSpeedModes(speed.modes))} />
 												: null
 										}
 										{

@@ -717,16 +717,18 @@ export const LibraryEditPage = (props: Props) => {
 							: null
 					}
 				</AppHeader>
-				<div className='library-edit-page-content'>
-					<div className='edit-column'>
-						{getEditHeaderSection()}
-						{getEditSection()}
+				<ErrorBoundary>
+					<div className='library-edit-page-content'>
+						<div className='edit-column'>
+							{getEditHeaderSection()}
+							{getEditSection()}
+						</div>
+						<div className='preview-column'>
+							{getPreviewHeaderSection()}
+							{getPreview()}
+						</div>
 					</div>
-					<div className='preview-column'>
-						{getPreviewHeaderSection()}
-						{getPreview()}
-					</div>
-				</div>
+				</ErrorBoundary>
 				<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>

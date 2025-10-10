@@ -26,15 +26,20 @@ export class FormatLogic {
 	};
 
 	static getSpeed = (speed: Speed) => {
-		if (speed.modes.length === 0) {
-			return speed.value.toString();
+		const modes = FormatLogic.getSpeedModes(speed.modes);
+		if (!modes) {
+			return `${speed.value}`;
 		}
 
-		if (typeof speed.modes === 'string') {
-			return `${speed.value} (${speed.modes})`;
+		return `${speed.value} (${modes})`;
+	};
+
+	static getSpeedModes = (modes: string | string[]) => {
+		if (typeof modes === 'string') {
+			return modes;
 		}
 
-		return `${speed.value} (${speed.modes.join(', ')})`;
+		return modes.join(', ');
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {

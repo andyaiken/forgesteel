@@ -616,10 +616,12 @@ export const HeroEditPage = (props: Props) => {
 						Cancel
 					</Button>
 				</AppHeader>
-				<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
-					{getControls()}
-					{getContent()}
-				</div>
+				<ErrorBoundary>
+					<div className={isSmall ? 'hero-edit-page-content small' : 'hero-edit-page-content'}>
+						{getControls()}
+						{getContent()}
+					</div>
+				</ErrorBoundary>
 				<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>

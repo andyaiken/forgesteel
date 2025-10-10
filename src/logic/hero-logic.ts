@@ -547,7 +547,7 @@ export class HeroLogic {
 				.map(f => f.feature)
 				.filter(f => f.type === FeatureType.MovementMode)
 				.map(f => f.data.mode);
-			return Collections.sort(Collections.distinct(modes, m => m), m => m);
+			return Collections.sort(Collections.distinct(modes, m => m), m => m) || [];
 		};
 
 		return {

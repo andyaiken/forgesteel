@@ -168,22 +168,24 @@ export const HeroListPage = (props: Props) => {
 							: null
 					}
 				</AppHeader>
-				<div className='hero-list-page-content'>
-					<Tabs
-						activeKey={currentTab}
-						items={folders.map(f => ({
-							key: f,
-							label: (
-								<div className='section-header'>
-									<div className='section-title'>{f || 'Heroes'}</div>
-									<div className='section-count'>{getHeroes(f).length}</div>
-								</div>
-							),
-							children: getHeroesSection(getHeroes(f))
-						}))}
-						onChange={navigation.goToHeroList}
-					/>
-				</div>
+				<ErrorBoundary>
+					<div className='hero-list-page-content'>
+						<Tabs
+							activeKey={currentTab}
+							items={folders.map(f => ({
+								key: f,
+								label: (
+									<div className='section-header'>
+										<div className='section-title'>{f || 'Heroes'}</div>
+										<div className='section-count'>{getHeroes(f).length}</div>
+									</div>
+								),
+								children: getHeroesSection(getHeroes(f))
+							}))}
+							onChange={navigation.goToHeroList}
+						/>
+					</div>
+				</ErrorBoundary>
 				<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>

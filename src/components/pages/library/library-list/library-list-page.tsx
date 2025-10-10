@@ -852,17 +852,19 @@ export const LibraryListPage = (props: Props) => {
 						</Button>
 					</Popover>
 				</AppHeader>
-				<div className='library-list-page-content'>
-					{getSidebar()}
-					<div className='element-selected'>
-						{
-							selected ?
-								getPanel(selected)
-								:
-								<Empty text='Nothing selected' />
-						}
+				<ErrorBoundary>
+					<div className='library-list-page-content'>
+						{getSidebar()}
+						<div className='element-selected'>
+							{
+								selected ?
+									getPanel(selected)
+									:
+									<Empty text='Nothing selected' />
+							}
+						</div>
 					</div>
-				</div>
+				</ErrorBoundary>
 				<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>

@@ -463,17 +463,19 @@ export const PlaybookListPage = (props: Props) => {
 							: null
 					}
 				</AppHeader>
-				<div className='playbook-list-page-content'>
-					{getSidebar()}
-					<div className='element-selected'>
-						{
-							selected ?
-								getPanel(selected)
-								:
-								<Empty text='Nothing selected' />
-						}
+				<ErrorBoundary>
+					<div className='playbook-list-page-content'>
+						{getSidebar()}
+						<div className='element-selected'>
+							{
+								selected ?
+									getPanel(selected)
+									:
+									<Empty text='Nothing selected' />
+							}
+						</div>
 					</div>
-				</div>
+				</ErrorBoundary>
 				<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>

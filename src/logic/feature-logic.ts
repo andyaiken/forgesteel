@@ -318,7 +318,9 @@ export class FeatureLogic {
 					break;
 				case FeatureType.Domain:
 					feature.data.selected.forEach(d => {
-						d.defaultFeatures.forEach(f => addFeature(f, `${d.name} Domain`, level));
+						if (d.defaultFeatures) {
+							d.defaultFeatures.forEach(f => addFeature(f, `${d.name} Domain`, level));
+						}
 					});
 					break;
 				case FeatureType.DomainFeature:

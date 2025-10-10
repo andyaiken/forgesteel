@@ -46,6 +46,10 @@ export class MonsterUpdateLogic {
 			monster.freeStrikeType = DamageType.Damage;
 		}
 
+		if (typeof monster.speed.modes === 'string') {
+			monster.speed.modes = monster.speed.modes ? [ monster.speed.modes ] : [];
+		}
+
 		if (monster.state === undefined) {
 			monster.state = {
 				staminaDamage: 0,

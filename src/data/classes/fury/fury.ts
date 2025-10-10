@@ -62,7 +62,6 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-1-1',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Nature' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

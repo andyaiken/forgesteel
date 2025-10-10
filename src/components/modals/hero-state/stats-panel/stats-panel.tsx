@@ -1,5 +1,6 @@
 import { Alert, Button, Divider, Drawer, Flex, Space, notification } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
@@ -501,11 +502,13 @@ export const StatsPanel = (props: Props) => {
 	};
 
 	return (
-		<div className='stats-panel'>
-			{getStatsSection()}
-			{getHeroicResourceSection()}
-			{getHeroTokenSection()}
-			{notifyContext}
-		</div>
+		<ErrorBoundary>
+			<div className='stats-panel'>
+				{getStatsSection()}
+				{getHeroicResourceSection()}
+				{getHeroTokenSection()}
+				{notifyContext}
+			</div>
+		</ErrorBoundary>
 	);
 };

@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from 'react';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './field.scss';
 
@@ -36,28 +37,30 @@ export const Field = (props: Props) => {
 	}
 
 	return (
-		<div className={className} style={props.style}>
-			<span className='field-label' style={props.innerStyle}>
+		<ErrorBoundary>
+			<div className={className} style={props.style}>
+				<span className='field-label' style={props.innerStyle}>
+					{
+						props.labelTag ?
+							<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+								{props.label}
+								{props.labelTag}
+							</div>
+							:
+							props.label
+					}
+				</span>
+				<span className='field-value' style={props.innerStyle}>
+					{props.value}
+				</span>
 				{
-					props.labelTag ?
-						<div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-							{props.label}
-							{props.labelTag}
-						</div>
-						:
-						props.label
+					props.valueTag ?
+						<span className='field-tag'>
+							{props.valueTag}
+						</span>
+						: null
 				}
-			</span>
-			<span className='field-value' style={props.innerStyle}>
-				{props.value}
-			</span>
-			{
-				props.valueTag ?
-					<span className='field-tag'>
-						{props.valueTag}
-					</span>
-					: null
-			}
-		</div>
+			</div>
+		</ErrorBoundary>
 	);
 };

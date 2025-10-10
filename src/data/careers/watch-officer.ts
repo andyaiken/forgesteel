@@ -10,7 +10,6 @@ export const watchOfficer: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-watch-officer-feature-1',
-			listOptions: [ SkillList.Intrigue ],
 			selected: [ 'Alertness' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

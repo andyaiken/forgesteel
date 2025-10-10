@@ -27,7 +27,6 @@ import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PerkList } from '@/enums/perk-list';
 import { PlusOutlined } from '@ant-design/icons';
-import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
@@ -329,7 +328,6 @@ export const CustomizePanel = (props: Props) => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createSkillChoice({
 										id: Utils.guid(),
-										listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ],
 										count: -1
 									}));
 								}}

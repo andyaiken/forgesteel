@@ -43,7 +43,6 @@ Jackson Bootblack`,
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'UH5m1URtvSjZqfQb',
-					listOptions: [ SkillList.Interpersonal ],
 					selected: [ 'Read Person' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

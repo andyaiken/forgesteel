@@ -2,7 +2,6 @@ import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
 export const virtuoso: SubClass = {
@@ -15,7 +14,6 @@ export const virtuoso: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'zVuRuelOOMRXxCgG',
-					listOptions: [ SkillList.Interpersonal ],
 					selected: [ 'Music' ]
 				}),
 				FactoryLogic.feature.createAbility({

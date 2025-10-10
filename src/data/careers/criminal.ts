@@ -11,7 +11,6 @@ export const criminal: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-criminal-feature-1',
-			listOptions: [ SkillList.Lore ],
 			selected: [ 'Criminal Underworld' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

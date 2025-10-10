@@ -3,6 +3,7 @@ import { CaretDownOutlined, CaretUpOutlined, PlusOutlined } from '@ant-design/ic
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -74,50 +75,52 @@ export const ProjectsPanel = (props: Props) => {
 	};
 
 	return (
-		<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
-			<HeaderText
-				extra={
-					<Button type='text' icon={<PlusOutlined />} onClick={() => setProjectsVisible(true)} />
+		<ErrorBoundary>
+			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
+				<HeaderText
+					extra={
+						<Button type='text' icon={<PlusOutlined />} onClick={() => setProjectsVisible(true)} />
+					}
+				>
+					Projects
+				</HeaderText>
+				<NumberSpin
+					label='Project Points'
+					value={hero.state.projectPoints}
+					steps={[ 1, 10 ]}
+					format={() => HeroLogic.getProjectPoints(hero).toString()}
+					onChange={setProjectPoints}
+				/>
+				<Divider />
+				{
+					hero.state.projects.map(project => (
+						<Expander
+							key={project.id}
+							title={project.name}
+							extra={[
+								<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'up'); }} />,
+								<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'down'); }} />,
+								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteProject(project); }} />
+							]}
+						>
+							<ProjectPanel
+								project={project}
+								hero={hero}
+								mode={PanelMode.Full}
+								onChange={changeProject}
+							/>
+						</Expander>
+					))
 				}
-			>
-				Projects
-			</HeaderText>
-			<NumberSpin
-				label='Project Points'
-				value={hero.state.projectPoints}
-				steps={[ 1, 10 ]}
-				format={() => HeroLogic.getProjectPoints(hero).toString()}
-				onChange={setProjectPoints}
-			/>
-			<Divider />
-			{
-				hero.state.projects.map(project => (
-					<Expander
-						key={project.id}
-						title={project.name}
-						extra={[
-							<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'up'); }} />,
-							<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveProject(project, 'down'); }} />,
-							<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteProject(project); }} />
-						]}
-					>
-						<ProjectPanel
-							project={project}
-							hero={hero}
-							mode={PanelMode.Full}
-							onChange={changeProject}
-						/>
-					</Expander>
-				))
-			}
-			{
-				hero.state.projects.length === 0 ?
-					<Empty text='You have no projects underway.' />
-					: null
-			}
-			<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} width='500px'>
-				<ProjectSelectModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
-			</Drawer>
-		</Space>
+				{
+					hero.state.projects.length === 0 ?
+						<Empty text='You have no projects underway.' />
+						: null
+				}
+				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} width='500px'>
+					<ProjectSelectModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
+				</Drawer>
+			</Space>
+		</ErrorBoundary>
 	);
 };

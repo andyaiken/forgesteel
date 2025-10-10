@@ -1,6 +1,10 @@
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { Field } from '@/components/controls/field/field';
 import { Fixture } from '@/models/fixture';
+import { FixtureLabel } from '../../monster-label/monster-label';
+import { FixtureLogic } from '@/logic/fixture-logic';
+import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
@@ -24,8 +28,10 @@ export const FixturePanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className={props.mode === PanelMode.Full ? 'fixture-panel' : 'fixture-panel compact'} id={props.mode === PanelMode.Full ? props.fixture.id : undefined}>
 				<HeaderText level={1}>{props.fixture.name || 'Unnamed Fixture'}</HeaderText>
+				<FixtureLabel fixture={props.fixture} />
+				<Field label='Stamina' value={FixtureLogic.getStamina(props.fixture)} />
+				<Field label='Size' value={FormatLogic.getSize(props.fixture.size)} />
 				<Markdown text={props.fixture.description} />
-				// Stamina, size, role
 				{
 					props.mode === PanelMode.Full ?
 						props.fixture.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (

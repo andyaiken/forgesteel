@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from 'react';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Switch } from 'antd';
 
 import './toggle.scss';
@@ -21,13 +22,15 @@ export const Toggle = (props: Props) => {
 	};
 
 	return (
-		<div className={props.disabled ? 'toggle disabled' : 'toggle'} style={props.style} onClick={onClick}>
-			<div>{props.label}</div>
-			<Switch
-				unCheckedChildren={props.text ? props.text.unchecked : undefined}
-				checkedChildren={props.text ? props.text.checked : undefined}
-				checked={props.value}
-			/>
-		</div>
+		<ErrorBoundary>
+			<div className={props.disabled ? 'toggle disabled' : 'toggle'} style={props.style} onClick={onClick}>
+				<div>{props.label}</div>
+				<Switch
+					unCheckedChildren={props.text ? props.text.unchecked : undefined}
+					checkedChildren={props.text ? props.text.checked : undefined}
+					checked={props.value}
+				/>
+			</div>
+		</ErrorBoundary>
 	);
 };

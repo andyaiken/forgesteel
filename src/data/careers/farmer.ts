@@ -11,7 +11,6 @@ export const farmer: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-farmer-feature-1',
-			listOptions: [ SkillList.Interpersonal ],
 			selected: [ 'Handle Animals' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

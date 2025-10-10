@@ -275,7 +275,6 @@ Each time you complete this project, your knowledge of your chosen field expands
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-crashLanded-skill',
-				listOptions: [ SkillList.Lore ],
 				selected: [ 'Timescape' ]
 			}),
 			FactoryLogic.feature.create({
@@ -540,7 +539,6 @@ Each time you complete this project, your knowledge of your chosen field expands
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-fallenImmortal-skill',
-				listOptions: [ SkillList.Lore ],
 				selected: [ 'Religion' ]
 			}),
 			FactoryLogic.feature.create({
@@ -1095,7 +1093,6 @@ You can’t take this complication if you can’t be made dazed.`,
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-masterChef-skill',
-				listOptions: [ SkillList.Crafting ],
 				selected: [ 'Cooking' ]
 			}),
 			FactoryLogic.feature.create({
@@ -1388,7 +1385,6 @@ You can’t take this complication if you can’t be made dazed.`,
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-raisedByBeasts-skill',
-				listOptions: [ SkillList.Interpersonal ],
 				selected: [ 'Handle Animals' ]
 			}),
 			FactoryLogic.feature.create({
@@ -1682,7 +1678,6 @@ You can’t take this complication if you can’t be made dazed.`,
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-silentSentinel-skill1',
-				listOptions: [ SkillList.Intrigue ],
 				count: 2,
 				selected: [ 'Eavesdrop', 'Sneak' ]
 			}),

@@ -1,4 +1,6 @@
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Fixture } from '@/models/fixture';
+import { FixtureLogic } from '@/logic/fixture-logic';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { Terrain } from '@/models/terrain';
@@ -18,9 +20,11 @@ export const MonsterLabel = (props: MonsterLabelProps) => {
 
 	const type = props.monster.role.type.toLowerCase().replace(' ', '');
 	return (
-		<div className={`monster-label ${type}`}>
-			{desc}
-		</div>
+		<ErrorBoundary>
+			<div className={`monster-label ${type}`}>
+				{desc}
+			</div>
+		</ErrorBoundary>
 	);
 };
 
@@ -38,6 +42,26 @@ export const TerrainLabel = (props: TerrainLabelProps) => {
 	return (
 		<ErrorBoundary>
 			<div className={`terrain-label ${type}`}>
+				{desc}
+			</div>
+		</ErrorBoundary>
+	);
+};
+
+interface FixtureLabelProps {
+	fixture: Fixture;
+}
+
+export const FixtureLabel = (props: FixtureLabelProps) => {
+	const desc = FixtureLogic.getFixtureDescription(props.fixture);
+	if (!desc) {
+		return null;
+	}
+
+	const type = props.fixture.role.type.toLowerCase().replace(' ', '');
+	return (
+		<ErrorBoundary>
+			<div className={`fixture-label ${type}`}>
 				{desc}
 			</div>
 		</ErrorBoundary>

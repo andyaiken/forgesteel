@@ -2,20 +2,18 @@ import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
 export const oracle: SubClass = {
 	id: 'censor-sub-2',
 	name: 'Oracle',
-	description: 'Corruption has deep tendrils that can be missed, leading you to specialize in uncovering clandestine threats to your order. You have the Magic skill.',
+	description: 'Corruption has deep tendrils that can be missed, leading you to specialize in uncovering clandestine threats to your order.',
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-sub-2-1-1',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createPackageContent({

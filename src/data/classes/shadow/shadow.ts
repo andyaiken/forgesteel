@@ -61,7 +61,6 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-1-1',
-					listOptions: [ SkillList.Intrigue ],
 					count: 2,
 					selected: [ 'Hide', 'Sneak' ]
 				}),

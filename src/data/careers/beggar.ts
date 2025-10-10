@@ -10,7 +10,6 @@ export const beggar: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-beggar-feature-1',
-			listOptions: [ SkillList.Lore ],
 			selected: [ 'Rumors' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

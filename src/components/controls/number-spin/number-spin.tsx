@@ -1,5 +1,6 @@
 import { CSSProperties, ReactNode } from 'react';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Statistic } from 'antd';
 import { Utils } from '@/utils/utils';
 
@@ -46,42 +47,44 @@ export const NumberSpin = (props: Props) => {
 	const descending = Utils.copy(steps).sort((a, b) => b - a);
 
 	return (
-		<div className={props.disabled ? 'number-spin disabled' : 'number-spin'} style={props.style}>
-			<div className='spin-buttons'>
+		<ErrorBoundary>
+			<div className={props.disabled ? 'number-spin disabled' : 'number-spin'} style={props.style}>
+				<div className='spin-buttons'>
+					{
+						descending.map((step, n) => (
+							<MinusCircleOutlined
+								key={n}
+								className={canDown ? 'spin-button' : 'spin-button disabled'}
+								title={`-${step}`}
+								onClick={() => onChange(step, -1)}
+							/>
+						))
+					}
+				</div>
 				{
-					descending.map((step, n) => (
-						<MinusCircleOutlined
-							key={n}
-							className={canDown ? 'spin-button' : 'spin-button disabled'}
-							title={`-${step}`}
-							onClick={() => onChange(step, -1)}
+					props.children ?
+						props.children
+						:
+						<Statistic
+							className='spin-middle'
+							title={props.label}
+							value={props.format ? props.format(props.value) : props.value}
+							suffix={props.suffix}
 						/>
-					))
 				}
+				<div className='spin-buttons'>
+					{
+						ascending.map((step, n) => (
+							<PlusCircleOutlined
+								key={n}
+								className={canUp ? 'spin-button' : 'spin-button disabled'}
+								title={`+${step}`}
+								onClick={() => onChange(step, +1)}
+							/>
+						))
+					}
+				</div>
 			</div>
-			{
-				props.children ?
-					props.children
-					:
-					<Statistic
-						className='spin-middle'
-						title={props.label}
-						value={props.format ? props.format(props.value) : props.value}
-						suffix={props.suffix}
-					/>
-			}
-			<div className='spin-buttons'>
-				{
-					ascending.map((step, n) => (
-						<PlusCircleOutlined
-							key={n}
-							className={canUp ? 'spin-button' : 'spin-button disabled'}
-							title={`+${step}`}
-							onClick={() => onChange(step, +1)}
-						/>
-					))
-				}
-			</div>
-		</div>
+		</ErrorBoundary>
 	);
 };

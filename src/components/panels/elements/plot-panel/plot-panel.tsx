@@ -306,10 +306,12 @@ export const PlotPanel = (props: PlotPanelProps) => {
 
 	if (props.mode !== PanelMode.Full) {
 		return (
-			<div className='plot-panel compact'>
-				<HeaderText level={1}>{props.plot.name || 'Unnamed Plot Point'}</HeaderText>
-				<Markdown text={props.plot.description} />
-			</div>
+			<ErrorBoundary>
+				<div className='plot-panel compact'>
+					<HeaderText level={1}>{props.plot.name || 'Unnamed Plot Point'}</HeaderText>
+					<Markdown text={props.plot.description} />
+				</div>
+			</ErrorBoundary>
 		);
 	}
 

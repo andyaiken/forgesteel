@@ -62,7 +62,6 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'elementalist-1-1',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

@@ -1,5 +1,6 @@
 import { Alert, Button, Input } from 'antd';
 import { CSSProperties, useState } from 'react';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
 import './multi-line.scss';
@@ -22,25 +23,27 @@ export const MultiLine = (props: Props) => {
 	};
 
 	return (
-		<div className='multi-line' style={props.style}>
-			<Input.TextArea
-				className='multi-line-input'
-				style={props.inputStyle}
-				placeholder={props.placeholder}
-				value={value}
-				onChange={e => onChange(e.target.value)}
-			/>
-			{
-				(props.showMarkdownPrompt ?? true) ?
-					<Alert
-						className='multi-line-alert'
-						type='info'
-						showIcon={true}
-						message='You can use markdown here.'
-						action={<Button type='text' title='Info' icon={<InfoCircleOutlined />} onClick={() => window.open('https://www.markdownguide.org/cheat-sheet/', '_blank')} />}
-					/>
-					: null
-			}
-		</div>
+		<ErrorBoundary>
+			<div className='multi-line' style={props.style}>
+				<Input.TextArea
+					className='multi-line-input'
+					style={props.inputStyle}
+					placeholder={props.placeholder}
+					value={value}
+					onChange={e => onChange(e.target.value)}
+				/>
+				{
+					(props.showMarkdownPrompt ?? true) ?
+						<Alert
+							className='multi-line-alert'
+							type='info'
+							showIcon={true}
+							message='You can use markdown here.'
+							action={<Button type='text' title='Info' icon={<InfoCircleOutlined />} onClick={() => window.open('https://www.markdownguide.org/cheat-sheet/', '_blank')} />}
+						/>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
 	);
 };

@@ -3,7 +3,6 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { PerkData } from '@/data/perk-data';
-import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
 export const spark: SubClass = {
@@ -16,7 +15,6 @@ export const spark: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-sub-4-1-1',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createPackageContent({

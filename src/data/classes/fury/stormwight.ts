@@ -2,7 +2,6 @@ import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
 export const stormwight: SubClass = {
@@ -15,7 +14,6 @@ export const stormwight: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-sub-3-1-1',
-					listOptions: [ SkillList.Intrigue ],
 					selected: [ 'Track' ]
 				}),
 				FactoryLogic.feature.createKitChoice({

@@ -11,7 +11,6 @@ export const laborer: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'laborer-feature-1',
-			listOptions: [ SkillList.Exploration ],
 			selected: [ 'Endurance' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

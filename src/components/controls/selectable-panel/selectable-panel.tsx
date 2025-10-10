@@ -1,5 +1,6 @@
 import { CSSProperties, ReactNode } from 'react';
 import { Button } from 'antd';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './selectable-panel.scss';
 
@@ -33,10 +34,12 @@ export const SelectablePanel = (props: Props) => {
 	}
 
 	return (
-		<div className={className} style={props.style} onClick={props.disabled ? undefined : props.onSelect}>
-			{props.watermark ? <img className='watermark' src={props.watermark} /> : null}
-			{props.children}
-			{props.action ? <Button className='action-button' onClick={e => { e.stopPropagation(); props.action!.onClick(); }}>{props.action.label}</Button> : null}
-		</div>
+		<ErrorBoundary>
+			<div className={className} style={props.style} onClick={props.disabled ? undefined : props.onSelect}>
+				{props.watermark ? <img className='watermark' src={props.watermark} /> : null}
+				{props.children}
+				{props.action ? <Button className='action-button' onClick={e => { e.stopPropagation(); props.action!.onClick(); }}>{props.action.label}</Button> : null}
+			</div>
+		</ErrorBoundary>
 	);
 };

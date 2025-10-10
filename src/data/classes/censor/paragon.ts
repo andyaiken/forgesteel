@@ -2,20 +2,18 @@ import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
 export const paragon: SubClass = {
 	id: 'censor-sub-3',
 	name: 'Paragon',
-	description: 'Without a strong example and a firm hand, the weak will be corrupted. You specialize in setting an example for your order. You have the Lead skill.',
+	description: 'Without a strong example and a firm hand, the weak will be corrupted. You specialize in setting an example for your order.',
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-sub-3-1-1',
-					listOptions: [ SkillList.Interpersonal ],
 					selected: [ 'Lead' ]
 				}),
 				FactoryLogic.feature.createPackageContent({

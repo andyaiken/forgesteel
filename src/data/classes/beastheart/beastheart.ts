@@ -66,7 +66,6 @@ Play a beastheart if you want to face the world’s dangers with your mighty wil
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-1-1a',
-					listOptions: [ SkillList.Interpersonal ],
 					selected: [ 'Handle Animals' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -1442,7 +1441,6 @@ Your companion doesn’t spend rampage to activate abilities. Instead, when your
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-9-1b',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Nature' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

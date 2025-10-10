@@ -63,14 +63,9 @@ You can also take advantage of powerful magic to buff your allies, whittle down 
 					details: 'Whenever you use a heroic ability or call forth a minion that costs essence, you can willingly sacrifice one or more of your minions within your Summoner’s Range to reduce the cost by 1. You can’t kill minions this way if they used a main action or maneuver during the turn. You can sacrifice more minions than you would reduce the cost by.'
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'summoner-1-1a',
-					listOptions: [ SkillList.Lore ],
-					selected: [ 'Magic' ]
-				}),
-				FactoryLogic.feature.createSkillChoice({
-					id: 'summoner-1-1b',
-					listOptions: [ SkillList.Lore ],
-					selected: [ 'Strategy' ]
+					id: 'summoner-1-1',
+					count: 2,
+					selected: [ 'Magic', 'Strategy' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'summoner-1-1c',

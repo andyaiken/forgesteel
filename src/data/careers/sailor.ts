@@ -10,7 +10,6 @@ export const sailor: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-sailor-feature-1',
-			listOptions: [ SkillList.Exploration ],
 			selected: [ 'Swim' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

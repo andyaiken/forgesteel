@@ -2,7 +2,6 @@ import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
 export const duelist: SubClass = {
@@ -15,7 +14,6 @@ export const duelist: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: '1NhlI9WCQUCKkX0u',
-					listOptions: [ SkillList.Exploration ],
 					selected: [ 'Gymnastics' ]
 				}),
 				FactoryLogic.feature.createAbility({

@@ -11,7 +11,6 @@ export const warden: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-warden-feature-1',
-			listOptions: [ SkillList.Lore ],
 			selected: [ 'Nature' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

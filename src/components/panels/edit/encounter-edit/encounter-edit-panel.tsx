@@ -795,52 +795,54 @@ const GroupPanel = (props: GroupPanelProps) => {
 	const [ editing, setEditing ] = useState<boolean>(false);
 
 	return (
-		<div className='group-row'>
-			<HeaderText
-				extra={
-					<Flex>
-						<Button key='edit' type='text' icon={editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
-						<DangerButton key='delete' mode='clear' label='Delete Group' onConfirm={() => props.deleteGroup(props.group)} />
-					</Flex>
-				}
-			>
+		<ErrorBoundary>
+			<div className='group-row'>
+				<HeaderText
+					extra={
+						<Flex>
+							<Button key='edit' type='text' icon={editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
+							<DangerButton key='delete' mode='clear' label='Delete Group' onConfirm={() => props.deleteGroup(props.group)} />
+						</Flex>
+					}
+				>
+					{
+						editing ?
+							<Input
+								placeholder='Group name'
+								value={props.group.name}
+								allowClear={true}
+								onChange={e => props.setName(props.group, e.target.value)}
+							/>
+							:
+							(props.group.name || `Group ${props.index + 1}`)
+					}
+				</HeaderText>
+				{props.group.slots.map(slot => props.getSlot(slot, props.group))}
 				{
-					editing ?
-						<Input
-							placeholder='Group name'
-							value={props.group.name}
-							allowClear={true}
-							onChange={e => props.setName(props.group, e.target.value)}
-						/>
-						:
-						(props.group.name || `Group ${props.index + 1}`)
+					props.group.slots.length === 0 ?
+						<Empty />
+						: null
 				}
-			</HeaderText>
-			{props.group.slots.map(slot => props.getSlot(slot, props.group))}
-			{
-				props.group.slots.length === 0 ?
-					<Empty />
-					: null
-			}
-			{
-				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) ?
-					<Alert
-						type='warning'
-						showIcon={true}
-						message='This group is probably not strong enough; you might want to add more monsters'
-					/>
-					: null
-			}
-			{
-				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2) ?
-					<Alert
-						type='warning'
-						showIcon={true}
-						message='This group is probably too strong; you might want to split it into smaller groups'
-					/>
-					: null
-			}
-		</div>
+				{
+					EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='This group is probably not strong enough; you might want to add more monsters'
+						/>
+						: null
+				}
+				{
+					EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2) ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='This group is probably too strong; you might want to split it into smaller groups'
+						/>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
 	);
 };
 
@@ -936,52 +938,54 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 		};
 
 		return (
-			<div className='slot-row'>
-				<div className='content'>
-					<MonsterPanel
-						monster={monster}
-						monsterGroup={monsterGroup}
-						options={props.options}
-						extra={
-							<Flex align='center'>
-								<Button type='text' title='Customize' icon={<EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />
-								<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />
-							</Flex>
-						}
-					/>
-					{showCustomize ? getCustomizePanel() : null}
+			<ErrorBoundary>
+				<div className='slot-row'>
+					<div className='content'>
+						<MonsterPanel
+							monster={monster}
+							monsterGroup={monsterGroup}
+							options={props.options}
+							extra={
+								<Flex align='center'>
+									<Button type='text' title='Customize' icon={<EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />
+									<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />
+								</Flex>
+							}
+						/>
+						{showCustomize ? getCustomizePanel() : null}
+					</div>
+					<div className='actions'>
+						<NumberSpin
+							value={props.slot.count}
+							format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)).toString()}
+							onChange={value => props.setSlotCount(props.group.id, props.slot.id, value)}
+						/>
+						<Divider />
+						<DropdownButton
+							label='Move To'
+							items={[
+								...props.encounter.groups
+									.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+									.filter(g => g.id !== props.group.id)
+									.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+								{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+							]}
+							onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, true)}
+						/>
+						<DropdownButton
+							label='Copy To'
+							items={[
+								...props.encounter.groups
+									.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+									.filter(g => g.id !== props.group.id)
+									.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+								{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+							]}
+							onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, false)}
+						/>
+					</div>
 				</div>
-				<div className='actions'>
-					<NumberSpin
-						value={props.slot.count}
-						format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)).toString()}
-						onChange={value => props.setSlotCount(props.group.id, props.slot.id, value)}
-					/>
-					<Divider />
-					<DropdownButton
-						label='Move To'
-						items={[
-							...props.encounter.groups
-								.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
-								.filter(g => g.id !== props.group.id)
-								.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
-							{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
-						]}
-						onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, true)}
-					/>
-					<DropdownButton
-						label='Copy To'
-						items={[
-							...props.encounter.groups
-								.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
-								.filter(g => g.id !== props.group.id)
-								.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
-							{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
-						]}
-						onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, false)}
-					/>
-				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	}
 
@@ -1005,42 +1009,44 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 
 	if (terrain) {
 		return (
-			<div className='terrain-row'>
-				<div className='content'>
-					<TerrainPanel terrain={terrain} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />} />
-					{
-						terrain.upgrades.length > 0 ?
-							<Expander title='Customize'>
-								<HeaderText>Customize</HeaderText>
-								<Select
-									style={{ width: '100%' }}
-									placeholder='Select'
-									mode='multiple'
-									options={Collections.sort(terrain.upgrades, a => a.label).map(a => ({ value: a.id, label: a.label, cost: a.cost }))}
-									optionRender={option => <Flex align='center' gap={8}><div className='ds-text'>{option.data.label}</div><Pill>+{option.data.cost} EV</Pill></Flex>}
-									showSearch={true}
-									filterOption={(input, option) => {
-										const strings = option ?
-											[
-												option.label
-											]
-											: [];
-										return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-									}}
-									value={props.slot.upgradeIDs}
-									onChange={ids => props.setTerrainUpgradeIDs(props.slot.id, ids)}
-								/>
-							</Expander>
-							: null
-					}
+			<ErrorBoundary>
+				<div className='terrain-row'>
+					<div className='content'>
+						<TerrainPanel terrain={terrain} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />} />
+						{
+							terrain.upgrades.length > 0 ?
+								<Expander title='Customize'>
+									<HeaderText>Customize</HeaderText>
+									<Select
+										style={{ width: '100%' }}
+										placeholder='Select'
+										mode='multiple'
+										options={Collections.sort(terrain.upgrades, a => a.label).map(a => ({ value: a.id, label: a.label, cost: a.cost }))}
+										optionRender={option => <Flex align='center' gap={8}><div className='ds-text'>{option.data.label}</div><Pill>+{option.data.cost} EV</Pill></Flex>}
+										showSearch={true}
+										filterOption={(input, option) => {
+											const strings = option ?
+												[
+													option.label
+												]
+												: [];
+											return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+										}}
+										value={props.slot.upgradeIDs}
+										onChange={ids => props.setTerrainUpgradeIDs(props.slot.id, ids)}
+									/>
+								</Expander>
+								: null
+						}
+					</div>
+					<div className='actions'>
+						<NumberSpin
+							value={props.slot.count}
+							onChange={value => props.setTerrainCount(props.slot.id, value)}
+						/>
+					</div>
 				</div>
-				<div className='actions'>
-					<NumberSpin
-						value={props.slot.count}
-						onChange={value => props.setTerrainCount(props.slot.id, value)}
-					/>
-				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	}
 

@@ -10,7 +10,6 @@ export const explorer: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-explorer-feature-1',
-			listOptions: [ SkillList.Exploration ],
 			selected: [ 'Navigate' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

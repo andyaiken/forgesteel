@@ -2,7 +2,6 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
-import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
 export const reaver: SubClass = {
@@ -15,7 +14,6 @@ export const reaver: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-sub-2-1-1',
-					listOptions: [ SkillList.Intrigue ],
 					selected: [ 'Hide' ]
 				}),
 				FactoryLogic.feature.createKitChoice({

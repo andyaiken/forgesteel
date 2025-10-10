@@ -69,13 +69,8 @@ Whenever you use an ability with a strain effect outside of combat, you can take
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-skill-a',
-					listOptions: [ SkillList.Lore ],
-					selected: [ 'Psionics' ]
-				}),
-				FactoryLogic.feature.createSkillChoice({
-					id: 'talent-skill-b',
-					listOptions: [ SkillList.Interpersonal ],
-					selected: [ 'Read Person' ]
+					count: 2,
+					selected: [ 'Psionics', 'Read Person' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-skill-c',

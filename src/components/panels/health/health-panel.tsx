@@ -720,23 +720,25 @@ const HealthPanel = (props: Props) => {
 		}
 
 		return (
-			<div className='health-panel compact'>
-				{
-					props.stamina ?
-						<Field
-							label='Stamina'
-							value={props.stamina.staminaDamage ? `${props.stamina!.staminaMax - props.stamina!.staminaDamage} / ${props.stamina!.staminaMax}` : props.stamina!.staminaMax}
-						/>
-						: null
-				}
-				{
-					tags.length > 0 ?
-						<div>
-							{tags.map((tag, n) => <Tag key={n}>{tag}</Tag>)}
-						</div>
-						: null
-				}
-			</div>
+			<ErrorBoundary>
+				<div className='health-panel compact'>
+					{
+						props.stamina ?
+							<Field
+								label='Stamina'
+								value={props.stamina.staminaDamage ? `${props.stamina!.staminaMax - props.stamina!.staminaDamage} / ${props.stamina!.staminaMax}` : props.stamina!.staminaMax}
+							/>
+							: null
+					}
+					{
+						tags.length > 0 ?
+							<div>
+								{tags.map((tag, n) => <Tag key={n}>{tag}</Tag>)}
+							</div>
+							: null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	}
 

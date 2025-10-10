@@ -11,7 +11,6 @@ export const magesApprentice: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'mages-apprentice-feature-1',
-			listOptions: [ SkillList.Lore ],
 			selected: [ 'Magic' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

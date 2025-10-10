@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Utils } from '@/utils/utils';
 
 interface Props {
@@ -11,15 +12,14 @@ export const Markdown = (props: Props) => {
 		return null;
 	}
 
-	const md = Utils.showdownConverter.makeHtml(props.text);
-
-	if (props.useSpan) {
-		return (
-			<span className={props.className} dangerouslySetInnerHTML={{ __html: md }} />
-		);
-	}
-
 	return (
-		<div className={props.className} dangerouslySetInnerHTML={{ __html: md }} />
+		<ErrorBoundary>
+			{
+				props.useSpan ?
+					<span className={props.className} dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.text) }} />
+					:
+					<div className={props.className} dangerouslySetInnerHTML={{ __html: Utils.showdownConverter.makeHtml(props.text) }} />
+			}
+		</ErrorBoundary>
 	);
 };

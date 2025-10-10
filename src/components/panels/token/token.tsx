@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -38,24 +39,26 @@ export const Token = (props: Props) => {
 	}
 
 	return (
-		<div
-			className={className}
-			style={{ width: `${size}px`, height: `${size}px`, padding: `${size * 0.08}px` }}
-			title={props.name}
-			onClick={props.onClick}
-		>
+		<ErrorBoundary>
 			<div
-				className={innerClassName}
-				style={{ fontSize: `${size * 0.3}px`, letterSpacing: `-${size * 0.01}px` }}
+				className={className}
+				style={{ width: `${size}px`, height: `${size}px`, padding: `${size * 0.08}px` }}
+				title={props.name}
+				onClick={props.onClick}
 			>
-				{
-					props.picture ?
-						<img className='portrait' src={props.picture} title={props.name} />
-						:
-						Format.getMonogram(props.name)
-				}
+				<div
+					className={innerClassName}
+					style={{ fontSize: `${size * 0.3}px`, letterSpacing: `-${size * 0.01}px` }}
+				>
+					{
+						props.picture ?
+							<img className='portrait' src={props.picture} title={props.name} />
+							:
+							Format.getMonogram(props.name)
+					}
+				</div>
 			</div>
-		</div>
+		</ErrorBoundary>
 	);
 };
 
@@ -67,15 +70,17 @@ interface HeroTokenProps {
 
 export const HeroToken = (props: HeroTokenProps) => {
 	return (
-		<Token
-			name={props.hero.name || 'Hero'}
-			picture={props.hero.picture || undefined}
-			role={MonsterRoleType.NoRole}
-			type='hero'
-			isDefeated={props.hero.state.defeated}
-			size={props.size}
-			onClick={props.onClick}
-		/>
+		<ErrorBoundary>
+			<Token
+				name={props.hero.name || 'Hero'}
+				picture={props.hero.picture || undefined}
+				role={MonsterRoleType.NoRole}
+				type='hero'
+				isDefeated={props.hero.state.defeated}
+				size={props.size}
+				onClick={props.onClick}
+			/>
+		</ErrorBoundary>
 	);
 };
 
@@ -86,13 +91,15 @@ interface HeroInfoProps {
 
 export const HeroInfo = (props: HeroInfoProps) => {
 	return (
-		<div className='combatant-button-content' style={props.style}>
-			<HeroToken hero={props.hero} size={30} />
-			<div className='combatant-button-details'>
-				<div className='combatant-name'>{props.hero.name}</div>
-				<div className='combatant-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
+		<ErrorBoundary>
+			<div className='combatant-button-content' style={props.style}>
+				<HeroToken hero={props.hero} size={30} />
+				<div className='combatant-button-details'>
+					<div className='combatant-name'>{props.hero.name}</div>
+					<div className='combatant-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
+				</div>
 			</div>
-		</div>
+		</ErrorBoundary>
 	);
 };
 
@@ -105,15 +112,17 @@ interface MonsterTokenProps {
 
 export const MonsterToken = (props: MonsterTokenProps) => {
 	return (
-		<Token
-			name={MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
-			picture={props.monster.picture || props.monsterGroup?.picture || undefined}
-			role={props.monster.role.type}
-			type='monster'
-			isDefeated={props.monster.state.defeated}
-			size={props.size}
-			onClick={props.onClick}
-		/>
+		<ErrorBoundary>
+			<Token
+				name={MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+				picture={props.monster.picture || props.monsterGroup?.picture || undefined}
+				role={props.monster.role.type}
+				type='monster'
+				isDefeated={props.monster.state.defeated}
+				size={props.size}
+				onClick={props.onClick}
+			/>
+		</ErrorBoundary>
 	);
 };
 
@@ -124,13 +133,15 @@ interface MonsterInfoProps {
 
 export const MonsterInfo = (props: MonsterInfoProps) => {
 	return (
-		<div className='combatant-button-content' style={props.style}>
-			<MonsterToken monster={props.monster} size={30} />
-			<div className='combatant-button-details'>
-				<div className='combatant-name'>{props.monster.name}</div>
-				<div className='combatant-info'>{MonsterLogic.getMonsterDescription(props.monster)}</div>
+		<ErrorBoundary>
+			<div className='combatant-button-content' style={props.style}>
+				<MonsterToken monster={props.monster} size={30} />
+				<div className='combatant-button-details'>
+					<div className='combatant-name'>{props.monster.name}</div>
+					<div className='combatant-info'>{MonsterLogic.getMonsterDescription(props.monster)}</div>
+				</div>
 			</div>
-		</div>
+		</ErrorBoundary>
 	);
 };
 
@@ -141,11 +152,13 @@ interface TerrainInfoProps {
 
 export const TerrainInfo = (props: TerrainInfoProps) => {
 	return (
-		<div className='combatant-button-content' style={props.style}>
-			<div className='combatant-button-details'>
-				<div className='combatant-name'>{props.terrain.name}</div>
-				<div className='combatant-info'>{TerrainLogic.getTerrainDescription(props.terrain)}</div>
+		<ErrorBoundary>
+			<div className='combatant-button-content' style={props.style}>
+				<div className='combatant-button-details'>
+					<div className='combatant-name'>{props.terrain.name}</div>
+					<div className='combatant-info'>{TerrainLogic.getTerrainDescription(props.terrain)}</div>
+				</div>
 			</div>
-		</div>
+		</ErrorBoundary>
 	);
 };

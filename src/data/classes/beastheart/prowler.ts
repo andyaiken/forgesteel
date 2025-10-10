@@ -3,7 +3,6 @@ import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { PerkData } from '@/data/perk-data';
-import { SkillList } from '@/enums/skill-list';
 import { SubClass } from '@/models/subclass';
 
 export const prowler: SubClass = {
@@ -16,7 +15,6 @@ export const prowler: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'beastheart-sub-2-1-1',
-					listOptions: [ SkillList.Intrigue ],
 					selected: [ 'Hide' ]
 				}),
 				FactoryLogic.feature.createPackageContent({

@@ -267,8 +267,8 @@ export class FactoryFeatureLogic {
 	createFixture = (data: { fixture: Fixture }): FeatureFixture => {
 		return {
 			id: data.fixture.id,
-			name: data.fixture.name,
-			description: data.fixture.description,
+			name: `Fixture: ${data.fixture.name}`,
+			description: '',
 			type: FeatureType.Fixture,
 			data: {
 				fixture: data.fixture

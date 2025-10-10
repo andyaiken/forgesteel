@@ -203,194 +203,196 @@ export const HeroPanel = (props: Props) => {
 		}
 
 		return (
-			<div className={`hero-sidebar ${display}`}>
-				{
-					HeroLogic.getCombatState(props.hero) === 'dying' ?
-						useRows ?
-							<div className='selectable-row danger clickable' onClick={onShowVitals}>
-								<div><b>Dying</b></div>
-							</div>
-							:
-							<div className='overview-tile danger clickable' onClick={onShowVitals}>
-								<HeaderText>Dying</HeaderText>
-								<div className='ds-text'>
-									You can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.
+			<ErrorBoundary>
+				<div className={`hero-sidebar ${display}`}>
+					{
+						HeroLogic.getCombatState(props.hero) === 'dying' ?
+							useRows ?
+								<div className='selectable-row danger clickable' onClick={onShowVitals}>
+									<div><b>Dying</b></div>
 								</div>
-								<div className='ds-text'>
-									Your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.
+								:
+								<div className='overview-tile danger clickable' onClick={onShowVitals}>
+									<HeaderText>Dying</HeaderText>
+									<div className='ds-text'>
+										You can’t take the Catch Breath maneuver in combat, and you are bleeding, and this condition can’t be removed in any way until you are no longer dying.
+									</div>
+									<div className='ds-text'>
+										Your allies can help you spend Recoveries in combat, and you can spend Recoveries out of combat as usual.
+									</div>
 								</div>
-							</div>
-						: null
-				}
-				{
-					props.hero.state.conditions.map(c =>
+							: null
+					}
+					{
+						props.hero.state.conditions.map(c =>
+							useRows ?
+								<div key={c.id} className='selectable-row warning clickable' onClick={onShowVitals}>
+									<div>Condition: <b>{c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)}</b></div>
+								</div>
+								:
+								<div key={c.id} className='overview-tile warning clickable' onClick={onShowVitals}>
+									<HeaderText tags={[ c.ends ]}>{c.type}</HeaderText>
+									<Markdown text={c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)} />
+								</div>
+						)
+					}
+					{
 						useRows ?
-							<div key={c.id} className='selectable-row warning clickable' onClick={onShowVitals}>
-								<div>Condition: <b>{c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)}</b></div>
-							</div>
+							null
 							:
-							<div key={c.id} className='overview-tile warning clickable' onClick={onShowVitals}>
-								<HeaderText tags={[ c.ends ]}>{c.type}</HeaderText>
-								<Markdown text={c.type === ConditionType.Custom ? c.text || 'A custom condition.' : ConditionLogic.getDescription(c.type)} />
+							<div className='overview-tile clickable' style={{ display: 'flex', justifyContent: 'center', padding: '0' }} onClick={onShowVitals}>
+								<HealthGauge
+									stamina={{
+										staminaMax: HeroLogic.getStamina(props.hero),
+										staminaDamage: props.hero.state.staminaDamage,
+										state: HeroLogic.getCombatState(props.hero)
+									}}
+									staminaTemp={{
+										staminaTemp: props.hero.state.staminaTemp
+									}}
+									recoveries={{
+										recoveriesMax: HeroLogic.getRecoveries(props.hero),
+										recoveriesUsed: props.hero.state.recoveriesUsed
+									}}
+								/>
 							</div>
-					)
-				}
-				{
-					useRows ?
-						null
-						:
-						<div className='overview-tile clickable' style={{ display: 'flex', justifyContent: 'center', padding: '0' }} onClick={onShowVitals}>
-							<HealthGauge
-								stamina={{
-									staminaMax: HeroLogic.getStamina(props.hero),
-									staminaDamage: props.hero.state.staminaDamage,
-									state: HeroLogic.getCombatState(props.hero)
-								}}
-								staminaTemp={{
-									staminaTemp: props.hero.state.staminaTemp
-								}}
-								recoveries={{
-									recoveriesMax: HeroLogic.getRecoveries(props.hero),
-									recoveriesUsed: props.hero.state.recoveriesUsed
-								}}
-							/>
-						</div>
-				}
-				{
-					(heroicResources.length > 0) && !props.options.singlePage ?
-						<>
-							{
-								heroicResources.map(hr =>
-									useRows ?
-										<div key={hr.id} className={hr.value >= 0 ? 'selectable-row clickable' : 'selectable-row warning clickable'} onClick={onShowStats}>
-											<div>Resource: <b>{hr.name}</b></div>
-											<div>{hr.value}</div>
-										</div>
-										:
-										<div key={hr.id} className={hr.value >= 0 ? 'overview-tile clickable' : 'overview-tile warning clickable'} onClick={onShowStats}>
-											<HeaderText
-												extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{hr.value}</div>}
-											>
-												{hr.name}
-											</HeaderText>
-											{
-												hr.gains.map((g, n) => (
-													<Flex key={n} align='center' justify='space-between' gap={10}>
-														<div className='ds-text compact-text'>{g.trigger}</div>
-														<Pill>+{g.value}</Pill>
-													</Flex>
-												))
-											}
-										</div>
-								)
-							}
-						</>
-						: null
-				}
-				{
-					(triggers.length > 0) && !props.options.singlePage ?
-						useRows ?
-							<div className='selectable-row clickable' onClick={() => setTab('Triggers')}>
-								<div>Triggers: <b>{triggers.map(t => t.ability.name).join(', ')}</b></div>
-							</div>
-							:
-							<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
-								<HeaderText>Triggered Actions</HeaderText>
-								<Space direction='vertical'>
-									{triggers.map(t => getTrigger(t.ability))}
-								</Space>
-							</div>
-						: null
-				}
-				{
-					conditionImmunities.length > 0 ?
-						useRows ?
-							<div className='selectable-row clickable' onClick={onShowConditions}>
-								<div>Cannot Be: <b>{conditionImmunities.join(', ')}</b></div>
-							</div>
-							:
-							<div className='overview-tile clickable' onClick={onShowConditions}>
-								<HeaderText>Cannot Be</HeaderText>
-								{conditionImmunities.map((c, n) => <div key={n} className='ds-text'>{c}</div>)}
-							</div>
-						: null
-				}
-				{
-					damageImmunities.length > 0 ?
-						useRows ?
-							<div className='selectable-row'>
-								<div>Immunities: <b>{damageImmunities.map(dm => `${dm.damageType} ${dm.value}`).join(', ')}</b></div>
-							</div>
-							:
-							<div className='overview-tile'>
-								<HeaderText>Immunities</HeaderText>
-								{damageImmunities.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
-							</div>
-						: null
-				}
-				{
-					damageWeaknesses.length > 0 ?
-						useRows ?
-							<div className='selectable-row'>
-								<div>Weaknesses: <b>{damageWeaknesses.map(dm => `${dm.damageType} ${dm.value}`).join(', ')}</b></div>
-							</div>
-							:
-							<div className='overview-tile'>
-								<HeaderText>Weaknesses</HeaderText>
-								{damageWeaknesses.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
-							</div>
-						: null
-				}
-				{
-					useRows ?
-						<div className='selectable-row clickable' onClick={onShowLanguages}>
-							<div>Languages: <b>{languages.map(l => l.name).join(', ')}</b></div>
-						</div>
-						:
-						<div className='overview-tile clickable' onClick={onShowLanguages}>
-							<HeaderText>Languages</HeaderText>
-							{
-								languages.length > 0 ?
-									languages.map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
-									:
-									<div className='ds-text dimmed-text'>None</div>
-							}
-						</div>
-				}
-				{
-					(props.options.showSkillsInGroups || false) ?
-						[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
-							.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
-						:
-						getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))
-				}
-				{
-					props.hero.state.projects.length > 0 ?
-						useRows ?
-							<div className='selectable-row clickable' onClick={onShowProjects}>
-								<div>Projects: <b>{props.hero.state.projects.map(p => p.name).join(', ')}</b></div>
-							</div>
-							:
-							<div className='overview-tile clickable' onClick={onShowProjects}>
-								<HeaderText>Projects</HeaderText>
+					}
+					{
+						(heroicResources.length > 0) && !props.options.singlePage ?
+							<>
 								{
-									props.hero.state.projects.map(p => (
-										<Flex key={p.id} align='center' justify='space-between' gap={10}>
-											<div className='ds-text compact-text'>{p.name}</div>
-											{
-												p.progress ?
-													<div className='ds-text compact-text'>
-														{p.goal > 0 ? `${Math.round(100 * p.progress.points / p.goal)}%` : `${p.goal}`}
-													</div>
-													: null
-											}
-										</Flex>
-									))
+									heroicResources.map(hr =>
+										useRows ?
+											<div key={hr.id} className={hr.value >= 0 ? 'selectable-row clickable' : 'selectable-row warning clickable'} onClick={onShowStats}>
+												<div>Resource: <b>{hr.name}</b></div>
+												<div>{hr.value}</div>
+											</div>
+											:
+											<div key={hr.id} className={hr.value >= 0 ? 'overview-tile clickable' : 'overview-tile warning clickable'} onClick={onShowStats}>
+												<HeaderText
+													extra={<div style={{ fontSize: '16px', fontWeight: '600' }}>{hr.value}</div>}
+												>
+													{hr.name}
+												</HeaderText>
+												{
+													hr.gains.map((g, n) => (
+														<Flex key={n} align='center' justify='space-between' gap={10}>
+															<div className='ds-text compact-text'>{g.trigger}</div>
+															<Pill>+{g.value}</Pill>
+														</Flex>
+													))
+												}
+											</div>
+									)
+								}
+							</>
+							: null
+					}
+					{
+						(triggers.length > 0) && !props.options.singlePage ?
+							useRows ?
+								<div className='selectable-row clickable' onClick={() => setTab('Triggers')}>
+									<div>Triggers: <b>{triggers.map(t => t.ability.name).join(', ')}</b></div>
+								</div>
+								:
+								<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
+									<HeaderText>Triggered Actions</HeaderText>
+									<Space direction='vertical'>
+										{triggers.map(t => getTrigger(t.ability))}
+									</Space>
+								</div>
+							: null
+					}
+					{
+						conditionImmunities.length > 0 ?
+							useRows ?
+								<div className='selectable-row clickable' onClick={onShowConditions}>
+									<div>Cannot Be: <b>{conditionImmunities.join(', ')}</b></div>
+								</div>
+								:
+								<div className='overview-tile clickable' onClick={onShowConditions}>
+									<HeaderText>Cannot Be</HeaderText>
+									{conditionImmunities.map((c, n) => <div key={n} className='ds-text'>{c}</div>)}
+								</div>
+							: null
+					}
+					{
+						damageImmunities.length > 0 ?
+							useRows ?
+								<div className='selectable-row'>
+									<div>Immunities: <b>{damageImmunities.map(dm => `${dm.damageType} ${dm.value}`).join(', ')}</b></div>
+								</div>
+								:
+								<div className='overview-tile'>
+									<HeaderText>Immunities</HeaderText>
+									{damageImmunities.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
+								</div>
+							: null
+					}
+					{
+						damageWeaknesses.length > 0 ?
+							useRows ?
+								<div className='selectable-row'>
+									<div>Weaknesses: <b>{damageWeaknesses.map(dm => `${dm.damageType} ${dm.value}`).join(', ')}</b></div>
+								</div>
+								:
+								<div className='overview-tile'>
+									<HeaderText>Weaknesses</HeaderText>
+									{damageWeaknesses.map((dm, n) => <div key={n} className='ds-text damage-modifier'><span>{dm.damageType}</span><span>{dm.value}</span></div>)}
+								</div>
+							: null
+					}
+					{
+						useRows ?
+							<div className='selectable-row clickable' onClick={onShowLanguages}>
+								<div>Languages: <b>{languages.map(l => l.name).join(', ')}</b></div>
+							</div>
+							:
+							<div className='overview-tile clickable' onClick={onShowLanguages}>
+								<HeaderText>Languages</HeaderText>
+								{
+									languages.length > 0 ?
+										languages.map(l => <div key={l.name} className='ds-text'>{l.name}</div>)
+										:
+										<div className='ds-text dimmed-text'>None</div>
 								}
 							</div>
-						: null
-				}
-			</div>
+					}
+					{
+						(props.options.showSkillsInGroups || false) ?
+							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+								.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
+							:
+							getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))
+					}
+					{
+						props.hero.state.projects.length > 0 ?
+							useRows ?
+								<div className='selectable-row clickable' onClick={onShowProjects}>
+									<div>Projects: <b>{props.hero.state.projects.map(p => p.name).join(', ')}</b></div>
+								</div>
+								:
+								<div className='overview-tile clickable' onClick={onShowProjects}>
+									<HeaderText>Projects</HeaderText>
+									{
+										props.hero.state.projects.map(p => (
+											<Flex key={p.id} align='center' justify='space-between' gap={10}>
+												<div className='ds-text compact-text'>{p.name}</div>
+												{
+													p.progress ?
+														<div className='ds-text compact-text'>
+															{p.goal > 0 ? `${Math.round(100 * p.progress.points / p.goal)}%` : `${p.goal}`}
+														</div>
+														: null
+												}
+											</Flex>
+										))
+									}
+								</div>
+							: null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	};
 
@@ -452,140 +454,144 @@ export const HeroPanel = (props: Props) => {
 
 		if (useRows) {
 			return (
-				<div style={{ padding: '5px' }}>
-					<Flex align='center' justify='space-between' gap={5}>
-						<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-							<Field orientation='vertical' label='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
+				<ErrorBoundary>
+					<div style={{ padding: '5px' }}>
+						<Flex align='center' justify='space-between' gap={5}>
+							<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+								<Field orientation='vertical' label='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
+							</div>
+							<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+								<Field orientation='vertical' label='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
+							</div>
+							<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+								<Field orientation='vertical' label='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
+							</div>
+							<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+								<Field orientation='vertical' label='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
+							</div>
+							<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+								<Field orientation='vertical' label='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
+							</div>
+						</Flex>
+						<div className='selectable-row clickable' onClick={onShowHero}>
+							{
+								HeroLogic.getHeroicResources(props.hero).map(hr => (
+									<div key={hr.id}>{hr.name}: <b>{hr.value}</b></div>
+								))
+							}
+							<div>Surges: <b>{props.hero.state.surges}</b></div>
+							<div>Victories: <b>{props.hero.state.victories}</b></div>
+							<div>XP: <b>{props.hero.state.xp}</b></div>
+							<div>Renown: <b>{HeroLogic.getRenown(props.hero)}</b></div>
+							<div>Wealth: <b>{HeroLogic.getWealth(props.hero)}</b></div>
 						</div>
-						<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-							<Field orientation='vertical' label='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
+						<div className='selectable-row'>
+							<div>Size: <b>{FormatLogic.getSize(size)}</b></div>
+							<div>{speedStr}: <b>{speed.value}</b></div>
+							<div>Stability: <b>{HeroLogic.getStability(props.hero)}</b></div>
+							<div>Disengage: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
 						</div>
-						<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-							<Field orientation='vertical' label='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
+						<div className='selectable-row clickable' onClick={onShowVitals}>
+							<div>Stamina: <b>{stamina}</b></div>
+							<div>Recoveries: <b>{recoveries}</b></div>
+							<div>Recovery Value: <b>{HeroLogic.getRecoveryValue(props.hero)}</b></div>
 						</div>
-						<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-							<Field orientation='vertical' label='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
-						</div>
-						<div className='selectable-row clickable' onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-							<Field orientation='vertical' label='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
-						</div>
-					</Flex>
-					<div className='selectable-row clickable' onClick={onShowHero}>
-						{
-							HeroLogic.getHeroicResources(props.hero).map(hr => (
-								<div key={hr.id}>{hr.name}: <b>{hr.value}</b></div>
-							))
-						}
-						<div>Surges: <b>{props.hero.state.surges}</b></div>
-						<div>Victories: <b>{props.hero.state.victories}</b></div>
-						<div>XP: <b>{props.hero.state.xp}</b></div>
-						<div>Renown: <b>{HeroLogic.getRenown(props.hero)}</b></div>
-						<div>Wealth: <b>{HeroLogic.getWealth(props.hero)}</b></div>
 					</div>
-					<div className='selectable-row'>
-						<div>Size: <b>{FormatLogic.getSize(size)}</b></div>
-						<div>{speedStr}: <b>{speed.value}</b></div>
-						<div>Stability: <b>{HeroLogic.getStability(props.hero)}</b></div>
-						<div>Disengage: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
-					</div>
-					<div className='selectable-row clickable' onClick={onShowVitals}>
-						<div>Stamina: <b>{stamina}</b></div>
-						<div>Recoveries: <b>{recoveries}</b></div>
-						<div>Recovery Value: <b>{HeroLogic.getRecoveryValue(props.hero)}</b></div>
-					</div>
-				</div>
+				</ErrorBoundary>
 			);
 		}
 
 		return (
-			<Row gutter={[ 16, 16 ]} className='stats-section'>
-				<Col span={24}>
-					<div className='stats-box'>
-						<div className='stats'>
-							<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Might)}>
-								<Statistic title='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
+			<ErrorBoundary>
+				<Row gutter={[ 16, 16 ]} className='stats-section'>
+					<Col span={24}>
+						<div className='stats-box'>
+							<div className='stats'>
+								<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Might)}>
+									<Statistic title='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
+								</div>
+								<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Agility)}>
+									<Statistic title='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
+								</div>
+								<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Reason)}>
+									<Statistic title='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
+								</div>
+								<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Intuition)}>
+									<Statistic title='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
+								</div>
+								<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Presence)}>
+									<Statistic title='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
+								</div>
 							</div>
-							<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Agility)}>
-								<Statistic title='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
-							</div>
-							<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Reason)}>
-								<Statistic title='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
-							</div>
-							<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Intuition)}>
-								<Statistic title='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
-							</div>
-							<div className='stat clickable' onClick={() => onSelectCharacteristic(Characteristic.Presence)}>
-								<Statistic title='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
-							</div>
+							<div className='stats-box-caption'>Characteristics</div>
 						</div>
-						<div className='stats-box-caption'>Characteristics</div>
-					</div>
-				</Col>
-				<Col span={24}>
-					<div className='stats-box clickable' onClick={onShowHero}>
-						<div className='stats'>
-							{
-								HeroLogic.getHeroicResources(props.hero).map(hr => (
-									<div key={hr.id} className='stat'>
-										<Statistic title={hr.name} value={hr.value} />
-									</div>
-								))
-							}
-							<div className='stat'>
-								<Statistic title='Surges' value={props.hero.state.surges} />
+					</Col>
+					<Col span={24}>
+						<div className='stats-box clickable' onClick={onShowHero}>
+							<div className='stats'>
+								{
+									HeroLogic.getHeroicResources(props.hero).map(hr => (
+										<div key={hr.id} className='stat'>
+											<Statistic title={hr.name} value={hr.value} />
+										</div>
+									))
+								}
+								<div className='stat'>
+									<Statistic title='Surges' value={props.hero.state.surges} />
+								</div>
+								<div className='stat'>
+									<Statistic title='Victories' value={props.hero.state.victories} />
+								</div>
+								<div className='stat'>
+									<Statistic title='XP' value={props.hero.state.xp} suffix={xpSuffix} />
+								</div>
+								<div className='stat'>
+									<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
+								</div>
+								<div className='stat'>
+									<Statistic title='Wealth' value={HeroLogic.getWealth(props.hero)} />
+								</div>
 							</div>
-							<div className='stat'>
-								<Statistic title='Victories' value={props.hero.state.victories} />
-							</div>
-							<div className='stat'>
-								<Statistic title='XP' value={props.hero.state.xp} suffix={xpSuffix} />
-							</div>
-							<div className='stat'>
-								<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
-							</div>
-							<div className='stat'>
-								<Statistic title='Wealth' value={HeroLogic.getWealth(props.hero)} />
-							</div>
+							<div className='stats-box-caption'>Resources</div>
 						</div>
-						<div className='stats-box-caption'>Resources</div>
-					</div>
-				</Col>
-				<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
-					<div className='stats-box'>
-						<div className='stats'>
-							<div className='stat'>
-								<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
+					</Col>
+					<Col xs={sizeLarge.xs} sm={sizeLarge.sm} md={sizeLarge.md} lg={sizeLarge.lg} xl={sizeLarge.xl} xxl={sizeLarge.xxl}>
+						<div className='stats-box'>
+							<div className='stats'>
+								<div className='stat'>
+									<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
+								</div>
+								<div className='stat'>
+									<Statistic title={speedStr} value={speed.value} suffix={speedSuffix} />
+								</div>
+								<div className='stat'>
+									<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
+								</div>
+								<div className='stat'>
+									<Statistic title='Disengage' value={HeroLogic.getDisengage(props.hero)} />
+								</div>
 							</div>
-							<div className='stat'>
-								<Statistic title={speedStr} value={speed.value} suffix={speedSuffix} />
-							</div>
-							<div className='stat'>
-								<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
-							</div>
-							<div className='stat'>
-								<Statistic title='Disengage' value={HeroLogic.getDisengage(props.hero)} />
-							</div>
+							<div className='stats-box-caption'>Statistics</div>
 						</div>
-						<div className='stats-box-caption'>Statistics</div>
-					</div>
-				</Col>
-				<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
-					<div className='stats-box clickable' onClick={onShowVitals}>
-						<div className='stats'>
-							<div className='stat'>
-								<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
+					</Col>
+					<Col xs={sizeSmall.xs} sm={sizeSmall.sm} md={sizeSmall.md} lg={sizeSmall.lg} xl={sizeSmall.xl} xxl={sizeSmall.xxl}>
+						<div className='stats-box clickable' onClick={onShowVitals}>
+							<div className='stats'>
+								<div className='stat'>
+									<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
+								</div>
+								<div className='stat'>
+									<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
+								</div>
+								<div className='stat'>
+									<Statistic title='Recov Value' value={HeroLogic.getRecoveryValue(props.hero)} />
+								</div>
 							</div>
-							<div className='stat'>
-								<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
-							</div>
-							<div className='stat'>
-								<Statistic title='Recov Value' value={HeroLogic.getRecoveryValue(props.hero)} />
-							</div>
+							<div className='stats-box-caption'>Health</div>
 						</div>
-						<div className='stats-box-caption'>Health</div>
-					</div>
-				</Col>
-			</Row>
+					</Col>
+				</Row>
+			</ErrorBoundary>
 		);
 	};
 
@@ -646,156 +652,158 @@ export const HeroPanel = (props: Props) => {
 		const useRows = props.options.compactView;
 
 		return (
-			<div className={`choices-section ${useRows ? 'compact' : ''}`}>
-				{
-					props.hero.ancestry ?
-						useRows ?
-							<div className='selectable-row clickable' onClick={onSelectAncestry}>
-								<div>Ancestry: <b>{props.hero.ancestry.name}</b></div>
-							</div>
+			<ErrorBoundary>
+				<div className={`choices-section ${useRows ? 'compact' : ''}`}>
+					{
+						props.hero.ancestry ?
+							useRows ?
+								<div className='selectable-row clickable' onClick={onSelectAncestry}>
+									<div>Ancestry: <b>{props.hero.ancestry.name}</b></div>
+								</div>
+								:
+								<div className='overview-tile clickable' onClick={onSelectAncestry}>
+									<HeaderText>Ancestry</HeaderText>
+									<Field label='Ancestry' value={props.hero.ancestry.name} />
+									{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={a.name} />)}
+								</div>
 							:
-							<div className='overview-tile clickable' onClick={onSelectAncestry}>
+							<div className='overview-tile'>
 								<HeaderText>Ancestry</HeaderText>
-								<Field label='Ancestry' value={props.hero.ancestry.name} />
-								{HeroLogic.getFormerAncestries(props.hero).map(a => <Field key={a.id} label='Former Life' value={a.name} />)}
+								<div className='ds-text dimmed-text'>No ancestry chosen</div>
 							</div>
-						:
-						<div className='overview-tile'>
-							<HeaderText>Ancestry</HeaderText>
-							<div className='ds-text dimmed-text'>No ancestry chosen</div>
-						</div>
-				}
-				{
-					props.hero.culture ?
-						useRows ?
-							<div className='selectable-row clickable' onClick={onSelectCulture}>
-								<div>Culture: <b>{props.hero.culture.name}</b></div>
-							</div>
+					}
+					{
+						props.hero.culture ?
+							useRows ?
+								<div className='selectable-row clickable' onClick={onSelectCulture}>
+									<div>Culture: <b>{props.hero.culture.name}</b></div>
+								</div>
+								:
+								<div className='overview-tile clickable' onClick={onSelectCulture}>
+									<HeaderText>Culture</HeaderText>
+									{props.hero.culture ? <Field label='Culture' value={props.hero.culture.name} /> : null}
+									{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
+									{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
+									{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
+								</div>
 							:
-							<div className='overview-tile clickable' onClick={onSelectCulture}>
+							<div className='overview-tile'>
 								<HeaderText>Culture</HeaderText>
-								{props.hero.culture ? <Field label='Culture' value={props.hero.culture.name} /> : null}
-								{props.hero.culture.environment ? <Field label='Environment' value={props.hero.culture.environment.name} /> : null}
-								{props.hero.culture.organization ? <Field label='Organization' value={props.hero.culture.organization.name} /> : null}
-								{props.hero.culture.upbringing ? <Field label='Upbringing' value={props.hero.culture.upbringing.name} /> : null}
+								<div className='ds-text dimmed-text'>No culture chosen</div>
 							</div>
-						:
-						<div className='overview-tile'>
-							<HeaderText>Culture</HeaderText>
-							<div className='ds-text dimmed-text'>No culture chosen</div>
-						</div>
-				}
-				{
-					props.hero.career ?
-						useRows ?
-							<div className='selectable-row clickable' onClick={onSelectCareer}>
-								<div>Career: <b>{props.hero.career.name}</b></div>
-							</div>
+					}
+					{
+						props.hero.career ?
+							useRows ?
+								<div className='selectable-row clickable' onClick={onSelectCareer}>
+									<div>Career: <b>{props.hero.career.name}</b></div>
+								</div>
+								:
+								<div className='overview-tile clickable' onClick={onSelectCareer}>
+									<HeaderText>Career</HeaderText>
+									<Field label='Career' value={props.hero.career.name} />
+									{incitingIncident ? <Field label='Inciting Incident' value={incitingIncident.name} /> : null}
+								</div>
 							:
-							<div className='overview-tile clickable' onClick={onSelectCareer}>
+							<div className='overview-tile'>
 								<HeaderText>Career</HeaderText>
-								<Field label='Career' value={props.hero.career.name} />
-								{incitingIncident ? <Field label='Inciting Incident' value={incitingIncident.name} /> : null}
+								<div className='ds-text dimmed-text'>No career chosen</div>
 							</div>
-						:
-						<div className='overview-tile'>
-							<HeaderText>Career</HeaderText>
-							<div className='ds-text dimmed-text'>No career chosen</div>
-						</div>
-				}
-				{
-					props.hero.class ?
-						useRows ?
-							<div className='selectable-row clickable' onClick={onSelectClass}>
-								{
-									props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
-										<div>Class: <b>{props.hero.class.name} ({props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(' ')}, level {props.hero.class.level})</b></div>
-										:
-										<div>Class: <b>{props.hero.class.name} (level {props.hero.class.level})</b></div>
-								}
-							</div>
+					}
+					{
+						props.hero.class ?
+							useRows ?
+								<div className='selectable-row clickable' onClick={onSelectClass}>
+									{
+										props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
+											<div>Class: <b>{props.hero.class.name} ({props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(' ')}, level {props.hero.class.level})</b></div>
+											:
+											<div>Class: <b>{props.hero.class.name} (level {props.hero.class.level})</b></div>
+									}
+								</div>
+								:
+								<div className='overview-tile clickable' onClick={onSelectClass}>
+									<HeaderText>Class</HeaderText>
+									<Field label='Class' value={props.hero.class.name} />
+									<Field label='Level' value={props.hero.class.level} />
+									{
+										props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
+											<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
+											: null
+									}
+								</div>
 							:
-							<div className='overview-tile clickable' onClick={onSelectClass}>
+							<div className='overview-tile'>
 								<HeaderText>Class</HeaderText>
-								<Field label='Class' value={props.hero.class.name} />
-								<Field label='Level' value={props.hero.class.level} />
-								{
-									props.hero.class.subclasses.filter(sc => sc.selected).length > 0 ?
-										<Field label={props.hero.class.subclassName} value={props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name).join(', ') || ''} />
-										: null
-								}
+								<div className='ds-text dimmed-text'>No class chosen</div>
 							</div>
-						:
-						<div className='overview-tile'>
-							<HeaderText>Class</HeaderText>
-							<div className='ds-text dimmed-text'>No class chosen</div>
-						</div>
-				}
-				{
-					HeroLogic.getDomains(props.hero).length > 0 ?
-						HeroLogic.getDomains(props.hero).map(domain =>
-							useRows ?
-								<div key={domain.id} className='selectable-row clickable' onClick={() => onSelectDomain(domain)}>
-									<div>Domain: <b>{domain.name}</b></div>
-								</div>
-								:
-								<div key={domain.id} className='overview-tile clickable' onClick={() => onSelectDomain(domain)}>
-									<HeaderText>Domain</HeaderText>
-									<Field label='Domain' value={domain.name} />
-								</div>
-						)
-						:
-						null
-				}
-				{
-					HeroLogic.getKits(props.hero).length > 0 ?
-						HeroLogic.getKits(props.hero).map(kit =>
-							useRows ?
-								<div key={kit.id} className='selectable-row clickable' onClick={() => onSelectKit(kit)}>
-									<div>Kit: <b>{kit.name}</b></div>
-								</div>
-								:
-								<div key={kit.id} className='overview-tile clickable' onClick={() => onSelectKit(kit)}>
-									<HeaderText>Kit</HeaderText>
-									<Field label='Kit' value={kit.name} />
-									{kit.armor.length > 0 ? <Field label='Armor' value={kit.armor.join(', ')} /> : null}
-									{kit.weapon.length > 0 ? <Field label='Weapons' value={kit.weapon.join(', ')} /> : null}
-								</div>
-						)
-						:
-						null
-				}
-				{
-					HeroLogic.getTitles(props.hero).length > 0 ?
-						HeroLogic.getTitles(props.hero).map(title =>
-							useRows ?
-								<div key={title.id} className='selectable-row clickable' onClick={() => onSelectTitle(title)}>
-									<div>Title: <b>{title.name}</b></div>
-								</div>
-								:
-								<div key={title.id} className='overview-tile clickable' onClick={() => onSelectTitle(title)}>
-									<HeaderText>Title</HeaderText>
-									<Field label='Title' value={title.name} />
-								</div>
-						)
-						:
-						null
-				}
-				{
-					props.hero.complication ?
-						useRows ?
-							<div className='selectable-row clickable' onClick={onSelectComplication}>
-								<div>Complication: <b>{props.hero.complication.name}</b></div>
-							</div>
+					}
+					{
+						HeroLogic.getDomains(props.hero).length > 0 ?
+							HeroLogic.getDomains(props.hero).map(domain =>
+								useRows ?
+									<div key={domain.id} className='selectable-row clickable' onClick={() => onSelectDomain(domain)}>
+										<div>Domain: <b>{domain.name}</b></div>
+									</div>
+									:
+									<div key={domain.id} className='overview-tile clickable' onClick={() => onSelectDomain(domain)}>
+										<HeaderText>Domain</HeaderText>
+										<Field label='Domain' value={domain.name} />
+									</div>
+							)
 							:
-							<div className='overview-tile clickable' onClick={onSelectComplication}>
-								<HeaderText>Complication</HeaderText>
-								<Field label='Complication' value={props.hero.complication.name} />
-							</div>
-						:
-						null
-				}
-			</div>
+							null
+					}
+					{
+						HeroLogic.getKits(props.hero).length > 0 ?
+							HeroLogic.getKits(props.hero).map(kit =>
+								useRows ?
+									<div key={kit.id} className='selectable-row clickable' onClick={() => onSelectKit(kit)}>
+										<div>Kit: <b>{kit.name}</b></div>
+									</div>
+									:
+									<div key={kit.id} className='overview-tile clickable' onClick={() => onSelectKit(kit)}>
+										<HeaderText>Kit</HeaderText>
+										<Field label='Kit' value={kit.name} />
+										{kit.armor.length > 0 ? <Field label='Armor' value={kit.armor.join(', ')} /> : null}
+										{kit.weapon.length > 0 ? <Field label='Weapons' value={kit.weapon.join(', ')} /> : null}
+									</div>
+							)
+							:
+							null
+					}
+					{
+						HeroLogic.getTitles(props.hero).length > 0 ?
+							HeroLogic.getTitles(props.hero).map(title =>
+								useRows ?
+									<div key={title.id} className='selectable-row clickable' onClick={() => onSelectTitle(title)}>
+										<div>Title: <b>{title.name}</b></div>
+									</div>
+									:
+									<div key={title.id} className='overview-tile clickable' onClick={() => onSelectTitle(title)}>
+										<HeaderText>Title</HeaderText>
+										<Field label='Title' value={title.name} />
+									</div>
+							)
+							:
+							null
+					}
+					{
+						props.hero.complication ?
+							useRows ?
+								<div className='selectable-row clickable' onClick={onSelectComplication}>
+									<div>Complication: <b>{props.hero.complication.name}</b></div>
+								</div>
+								:
+								<div className='overview-tile clickable' onClick={onSelectComplication}>
+									<HeaderText>Complication</HeaderText>
+									<Field label='Complication' value={props.hero.complication.name} />
+								</div>
+							:
+							null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	};
 
@@ -827,18 +835,43 @@ export const HeroPanel = (props: Props) => {
 		const useRows = props.options.compactView;
 
 		return (
-			<div className='features-section'>
-				{
-					mainFeatures.length > 0 ?
-						<div className={`features-grid ${useRows ? 'compact' : ''}`}>
-							{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>Features</HeaderText> : null}
-							{
-								mainFeatures.map(f =>
-									useRows ?
-										getRow(f)
-										:
-										<SelectablePanel key={f.feature.id} onSelect={() => showFeature(f.feature)}>
+			<ErrorBoundary>
+				<div className='features-section'>
+					{
+						mainFeatures.length > 0 ?
+							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
+								{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>Features</HeaderText> : null}
+								{
+									mainFeatures.map(f =>
+										useRows ?
+											getRow(f)
+											:
+											<SelectablePanel key={f.feature.id} onSelect={() => showFeature(f.feature)}>
+												<FeaturePanel
+													feature={f.feature}
+													source={props.options.showSources ? f.source : undefined}
+													options={props.options}
+													hero={props.hero}
+													sourcebooks={props.sourcebooks}
+													mode={PanelMode.Full}
+												/>
+											</SelectablePanel>
+									)
+								}
+							</div>
+							: null
+					}
+					{
+						inventoryFeatures.length > 0 ?
+							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Inventory</HeaderText>
+								{
+									inventoryFeatures.map(f =>
+										useRows ?
+											getRow(f)
+											:
 											<FeaturePanel
+												key={f.feature.id}
 												feature={f.feature}
 												source={props.options.showSources ? f.source : undefined}
 												options={props.options}
@@ -846,36 +879,13 @@ export const HeroPanel = (props: Props) => {
 												sourcebooks={props.sourcebooks}
 												mode={PanelMode.Full}
 											/>
-										</SelectablePanel>
-								)
-							}
-						</div>
-						: null
-				}
-				{
-					inventoryFeatures.length > 0 ?
-						<div className={`features-grid ${useRows ? 'compact' : ''}`}>
-							<HeaderText level={props.options.compactView ? 3 : 1}>Inventory</HeaderText>
-							{
-								inventoryFeatures.map(f =>
-									useRows ?
-										getRow(f)
-										:
-										<FeaturePanel
-											key={f.feature.id}
-											feature={f.feature}
-											source={props.options.showSources ? f.source : undefined}
-											options={props.options}
-											hero={props.hero}
-											sourcebooks={props.sourcebooks}
-											mode={PanelMode.Full}
-										/>
-								)
-							}
-						</div>
-						: null
-				}
-			</div>
+									)
+								}
+							</div>
+							: null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	};
 
@@ -914,55 +924,57 @@ export const HeroPanel = (props: Props) => {
 		const useRows = props.options.compactView;
 
 		return (
-			<div className='abilities-section'>
-				{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>{title}</HeaderText> : null}
-				{
-					(nonStandard.length === 0) && (standard.length === 0) ?
-						<Empty />
-						: null
-				}
-				<div className={`abilities-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+			<ErrorBoundary>
+				<div className='abilities-section'>
+					{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>{title}</HeaderText> : null}
 					{
-						nonStandard.map(a =>
-							useRows ?
-								getRow(a)
-								:
-								<SelectablePanel key={a.ability.id} style={isSmall ? undefined : { gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
-									<AbilityPanel
-										ability={a.ability}
-										hero={props.hero}
-										options={props.options}
-										mode={PanelMode.Full}
-										tags={props.options.showSources ? [ a.source ] : undefined}
-									/>
-								</SelectablePanel>
-						)
+						(nonStandard.length === 0) && (standard.length === 0) ?
+							<Empty />
+							: null
 					}
-				</div>
-				{
-					(nonStandard.length > 0) && (standard.length > 0) ?
-						<Divider />
-						: null
-				}
-				<div className={`abilities-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+					<div className={`abilities-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+						{
+							nonStandard.map(a =>
+								useRows ?
+									getRow(a)
+									:
+									<SelectablePanel key={a.ability.id} style={isSmall ? undefined : { gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
+										<AbilityPanel
+											ability={a.ability}
+											hero={props.hero}
+											options={props.options}
+											mode={PanelMode.Full}
+											tags={props.options.showSources ? [ a.source ] : undefined}
+										/>
+									</SelectablePanel>
+							)
+						}
+					</div>
 					{
-						standard.map(a =>
-							useRows ?
-								getRow(a)
-								:
-								<SelectablePanel key={a.ability.id} style={{ gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
-									<AbilityPanel
-										ability={a.ability}
-										hero={props.hero}
-										options={props.options}
-										mode={PanelMode.Full}
-										tags={props.options.showSources ? [ a.source ] : undefined}
-									/>
-								</SelectablePanel>
-						)
+						(nonStandard.length > 0) && (standard.length > 0) ?
+							<Divider />
+							: null
 					}
+					<div className={`abilities-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+						{
+							standard.map(a =>
+								useRows ?
+									getRow(a)
+									:
+									<SelectablePanel key={a.ability.id} style={{ gridColumn: `span ${AbilityLogic.getPanelWidth(a.ability)}` }} onSelect={() => showAbility(a.ability)}>
+										<AbilityPanel
+											ability={a.ability}
+											hero={props.hero}
+											options={props.options}
+											mode={PanelMode.Full}
+											tags={props.options.showSources ? [ a.source ] : undefined}
+										/>
+									</SelectablePanel>
+							)
+						}
+					</div>
 				</div>
-			</div>
+			</ErrorBoundary>
 		);
 	};
 
@@ -986,71 +998,73 @@ export const HeroPanel = (props: Props) => {
 		const summons = HeroLogic.getSummons(props.hero);
 
 		return (
-			<div className='retinue-section'>
-				{
-					companions.length > 0 ?
-						<>
-							<HeaderText level={props.options.compactView ? 3 : 1}>Companions</HeaderText>
-							<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-								{
-									companions.map(monster =>
-										useRows ?
-											<div key={monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(monster)}>
-												<div>Companion: <b>{monster.name}</b></div>
-											</div>
-											:
-											<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
-												<MonsterPanel monster={monster} options={props.options} />
-											</SelectablePanel>
-									)
-								}
-							</div>
-						</>
-						: null
-				}
-				{
-					followers.length > 0 ?
-						<>
-							<HeaderText level={props.options.compactView ? 3 : 1}>Followers</HeaderText>
-							<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-								{
-									followers.map(follower =>
-										useRows ?
-											<div key={follower.id} className='selectable-row clickable' onClick={() => onSelectFollower(follower)}>
-												<div>Follower: <b>{follower.name}</b></div>
-											</div>
-											:
-											<SelectablePanel key={follower.id} onSelect={() => onSelectFollower(follower)}>
-												<FollowerPanel follower={follower} />
-											</SelectablePanel>
-									)
-								}
-							</div>
-						</>
-						: null
-				}
-				{
-					summons.length > 0 ?
-						<>
-							<HeaderText level={props.options.compactView ? 3 : 1}>Summons</HeaderText>
-							<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
-								{
-									summons.map(summon =>
-										useRows ?
-											<div key={summon.id} className='selectable-row clickable' onClick={() => onSelectMonster(summon.monster)}>
-												<div>Summon: <b>{summon.monster.name}</b></div>
-											</div>
-											:
-											<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster)}>
-												<MonsterPanel monster={summon.monster} summon={summon.info} options={props.options} />
-											</SelectablePanel>
-									)
-								}
-							</div>
-						</>
-						: null
-				}
-			</div>
+			<ErrorBoundary>
+				<div className='retinue-section'>
+					{
+						companions.length > 0 ?
+							<>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Companions</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+									{
+										companions.map(monster =>
+											useRows ?
+												<div key={monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(monster)}>
+													<div>Companion: <b>{monster.name}</b></div>
+												</div>
+												:
+												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
+													<MonsterPanel monster={monster} options={props.options} />
+												</SelectablePanel>
+										)
+									}
+								</div>
+							</>
+							: null
+					}
+					{
+						followers.length > 0 ?
+							<>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Followers</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+									{
+										followers.map(follower =>
+											useRows ?
+												<div key={follower.id} className='selectable-row clickable' onClick={() => onSelectFollower(follower)}>
+													<div>Follower: <b>{follower.name}</b></div>
+												</div>
+												:
+												<SelectablePanel key={follower.id} onSelect={() => onSelectFollower(follower)}>
+													<FollowerPanel follower={follower} />
+												</SelectablePanel>
+										)
+									}
+								</div>
+							</>
+							: null
+					}
+					{
+						summons.length > 0 ?
+							<>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Summons</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+									{
+										summons.map(summon =>
+											useRows ?
+												<div key={summon.id} className='selectable-row clickable' onClick={() => onSelectMonster(summon.monster)}>
+													<div>Summon: <b>{summon.monster.name}</b></div>
+												</div>
+												:
+												<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster)}>
+													<MonsterPanel monster={summon.monster} summon={summon.info} options={props.options} />
+												</SelectablePanel>
+										)
+									}
+								</div>
+							</>
+							: null
+					}
+				</div>
+			</ErrorBoundary>
 		);
 	};
 
@@ -1157,20 +1171,22 @@ export const HeroPanel = (props: Props) => {
 
 	if (props.mode !== PanelMode.Full) {
 		return (
-			<div className='hero-panel compact'>
-				<HeaderText
-					level={1}
-					ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={34} /> : null}
-					tags={props.hero.folder ? [ props.hero.folder ] : []}
-				>
-					{props.hero.name || 'Unnamed Hero'}
-				</HeaderText>
-				<Flex align='flex-start' justify='space-evenly'>
-					{props.hero.ancestry ? <Field orientation='vertical' label='Ancestry' value={props.hero.ancestry.name} /> : null}
-					{props.hero.career ? <Field orientation='vertical' label='Career' value={props.hero.career.name} /> : null}
-					{props.hero.class ? <Field orientation='vertical' label='Class' value={`${props.hero.class.name} (${props.hero.class.level})`} /> : null}
-				</Flex>
-			</div>
+			<ErrorBoundary>
+				<div className='hero-panel compact'>
+					<HeaderText
+						level={1}
+						ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={34} /> : null}
+						tags={props.hero.folder ? [ props.hero.folder ] : []}
+					>
+						{props.hero.name || 'Unnamed Hero'}
+					</HeaderText>
+					<Flex align='flex-start' justify='space-evenly'>
+						{props.hero.ancestry ? <Field orientation='vertical' label='Ancestry' value={props.hero.ancestry.name} /> : null}
+						{props.hero.career ? <Field orientation='vertical' label='Career' value={props.hero.career.name} /> : null}
+						{props.hero.class ? <Field orientation='vertical' label='Class' value={`${props.hero.class.name} (${props.hero.class.level})`} /> : null}
+					</Flex>
+				</div>
+			</ErrorBoundary>
 		);
 	}
 

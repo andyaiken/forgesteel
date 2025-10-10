@@ -11,7 +11,6 @@ export const disciple: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-disciple-feature-1',
-			listOptions: [ SkillList.Lore ],
 			selected: [ 'Religion' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

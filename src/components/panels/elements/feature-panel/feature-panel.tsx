@@ -233,7 +233,9 @@ export const FeaturePanel = (props: Props) => {
 
 	const getInformationFixture = (data: FeatureFixtureData) => {
 		return (
-			<FixturePanel key={data.fixture.id} fixture={data.fixture} sourcebooks={props.sourcebooks} hero={props.hero} options={props.options} />
+			<SelectablePanel key={data.fixture.id}>
+				<FixturePanel fixture={data.fixture} sourcebooks={props.sourcebooks} hero={props.hero} options={props.options} />
+			</SelectablePanel>
 		);
 	};
 

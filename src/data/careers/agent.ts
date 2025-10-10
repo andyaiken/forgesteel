@@ -10,7 +10,6 @@ export const agent: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-agent-feature-1',
-			listOptions: [ SkillList.Intrigue ],
 			selected: [ 'Sneak' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

@@ -165,9 +165,8 @@ export class SheetLayout {
 	static getAbilityPages = (character: HeroSheet, extraCards: ExtraCards, layout: CardPageLayout, options: Options) => {
 		let allAbilities = character.abilities;
 
-		// future: Allow filtering *these* separately?
-		if (options.showStandardAbilities) {
-			allAbilities = allAbilities.concat(character.standardAbilities);
+		if (options.shownStandardAbilities.length) {
+			allAbilities = allAbilities.concat(character.standardAbilities.filter(a => options.shownStandardAbilities.includes(a.id)));
 		}
 
 		if (options.abilitySort === 'type') {

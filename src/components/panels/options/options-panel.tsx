@@ -1,16 +1,19 @@
-import { Divider, Segmented, Select, Space } from 'antd';
+import { Divider, Segmented, Select, SelectProps, Space, Tooltip } from 'antd';
+import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelWidth } from '@/enums/panel-width';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 
 import './options-panel.scss';
-
 interface Props {
 	mode: 'hero-modern' | 'hero-classic' | 'library' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'tactical-map' | 'session' | 'player';
 	options: Options;
@@ -217,6 +220,23 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
+	const includedStandardAbilitiesChanged = (value: string | string[]) => {
+		const copy = Utils.copy(props.options);
+		copy.shownStandardAbilities = [ value ].flat(1);
+		props.setOptions(copy);
+	};
+
+	const standardAbilityOptions: SelectProps['options'] = [];
+	const standardAbilities = HeroLogic.getAbilities(FactoryLogic.createHero([]), [], true)
+		.map(a => ClassicSheetBuilder.buildAbilitySheet(a.ability, undefined));
+	standardAbilities.sort(SheetFormatter.sortAbilitiesByType);
+	standardAbilities.forEach(a => {
+		standardAbilityOptions.push({
+			value: a.id,
+			label: `[${a.actionType}] ${a.name}`
+		});
+	});
+
 	const getContent = () => {
 		const getParties = () => {
 			return Collections
@@ -291,7 +311,13 @@ export const OptionsPanel = (props: Props) => {
 					<>
 						<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
 						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
-						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+						<Divider size='small'>Included Standard Abilities</Divider>
+						<Select
+							mode='tags'
+							placeholder='Included Standard Abilities'
+							onChange={includedStandardAbilitiesChanged}
+							options={standardAbilityOptions}
+						/>
 						<Divider size='small'>Text Color</Divider>
 						<Segmented
 							name='textColor'
@@ -309,9 +335,30 @@ export const OptionsPanel = (props: Props) => {
 							name='abilitySort'
 							block={true}
 							options={[
-								{ value: 'minimal', label: 'Minimal' },
-								{ value: 'no-basic', label: 'No Simple' },
-								{ value: 'all', label: 'All' }
+								{
+									value: 'minimal',
+									label: (
+										<Tooltip title='No Abilities. Only Perks, Text features, and the like.'>
+											Minimal
+										</Tooltip>
+									)
+								},
+								{
+									value: 'no-basic',
+									label: (
+										<Tooltip title='Does not show things like bonuses, skills, languages, etc. Does still show Abilities.'>
+											No Simple
+										</Tooltip>
+									)
+								},
+								{
+									value: 'all',
+									label: (
+										<Tooltip title='Show all features. Useful for seeing where all of the numbers come from on the sheet.'>
+											All
+										</Tooltip>
+									)
+								}
 							]}
 							value={props.options.featuresInclude}
 							onChange={setFeaturesInclude}

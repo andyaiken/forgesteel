@@ -20,7 +20,7 @@ export class ClassicSheetBuilder {
 		const isHero = CreatureLogic.isHero(creature);
 		const sheet: AbilitySheet = {
 			id: ability.id,
-			abilityType: 'Ability',
+			abilityType: ability.type.usage.toString(),
 			name: ability.name,
 			description: ability.description,
 			isSignature: false,

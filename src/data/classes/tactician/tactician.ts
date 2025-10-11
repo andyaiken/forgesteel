@@ -107,9 +107,9 @@ While a creature marked by you is within your line of effect, you and allies wit
 								type: FactoryLogic.type.createTrigger('You or any ally uses an ability to deal rolled damage to a creature marked by you', { free: true }),
 								distance: [ FactoryLogic.distance.createSpecial('Special') ],
 								target: 'Special',
-								cost: 1,
 								sections: [
 									FactoryLogic.createAbilitySectionText(`
+#### Spend 1:
 You gain one of the following benefits:
 
 * The ability deals extra damage equal to twice your Reason score.

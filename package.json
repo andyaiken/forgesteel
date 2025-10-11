@@ -10,6 +10,7 @@
 		"update": "npx npm-check-updates --interactive --format group",
 		"lint": "tsc -p tsconfig.node.json && tsc -p tsconfig.app.json && eslint . && npm audit",
 		"fix": "eslint . --fix",
+		"test": "vitest",
 		"build": "vite build",
 		"predeploy": "npm run lint && vite build",
 		"deploy": "gh-pages -d dist"
@@ -42,6 +43,7 @@
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.46.0",
 		"vite": "^7.1.9",
-		"vite-tsconfig-paths": "^5.1.4"
+		"vite-tsconfig-paths": "^5.1.4",
+		"vitest": "^3.2.4"
 	}
 }

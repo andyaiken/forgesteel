@@ -6,7 +6,7 @@ You can find it [here](https://andyaiken.github.io/forgesteel/).
 
 ## Heroes
 
-With this app you can create heroes using the **DRAW STEEL** backer packet.
+With this app you can create heroes using the **DRAW STEEL** core rules.
 
 ![Hero Edit](./src/assets/screenshots/hero-edit.png)
 Here is a hero being edited.
@@ -58,4 +58,10 @@ When you've finished with your changes, make sure to appease the linter:
 
 ```
 npm run lint
+```
+
+Unit tests can be run with the following:
+
+```
+npm run test
 ```

@@ -166,9 +166,8 @@ export class SheetLayout {
 		// future: Allow options to filter abilities displayed?
 		let allAbilities = character.abilities;
 
-		// future: Allow filtering *these* separately?
-		if (options.showStandardAbilities) {
-			allAbilities = allAbilities.concat(character.standardAbilities);
+		if (options.shownStandardAbilities.length) {
+			allAbilities = allAbilities.concat(character.standardAbilities.filter(a => options.shownStandardAbilities.includes(a.id)));
 		}
 
 		if (options.abilitySort === 'type') {

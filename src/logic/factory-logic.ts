@@ -1008,6 +1008,7 @@ export class FactoryLogic {
 			compactView: false,
 			abilityWidth: PanelWidth.Medium,
 			// Classic Sheet
+			shownStandardAbilities: [],
 			classicSheetPageSize: SheetPageSize.Letter,
 			colorSheet: true,
 			sheetTextColor: 'default',

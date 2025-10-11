@@ -13,6 +13,7 @@ export interface Options {
 	compactView: boolean;
 	abilityWidth: PanelWidth;
 	// Classic Sheet
+	shownStandardAbilities: string[];
 	classicSheetPageSize: SheetPageSize;
 	colorSheet: boolean;
 	sheetTextColor: 'light' | 'default' | 'dark';

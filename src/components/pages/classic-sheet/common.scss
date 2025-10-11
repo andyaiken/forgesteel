@@ -14,8 +14,8 @@
 @mixin font-serif() {
     font-family: 'Merriweather', Georgia, serif !important;
 }
-@mixin font-potency() {
-    font-family: 'Draw Steel Potencies', Arial, Helvetica, sans-serif !important;
+@mixin font-glyphs() {
+    font-family: 'Draw Steel Glyphs', Arial, Helvetica, sans-serif !important;
 }
 
 @mixin striped-card() {
@@ -239,9 +239,9 @@ main#classic-sheet {
                     margin: 0;
 
                     .range {
-                        margin-top: 2px;
                         width: 50px;
-                        height: 18px;
+                        height: 26px;
+                        margin-top: -1px;
                     }
 
                     .effect .potency {
@@ -279,13 +279,25 @@ main#classic-sheet {
             }
         }
 
+        .abilities.page .stacked-cards {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+            justify-content: stretch;
+
+            .card {
+                flex-grow: 1;
+            }
+        }
+
         .page {
             overflow: hidden;
             margin: 0;
         }
 
         .page.row-cards-2 {
-            .card {
+            .card,
+            .stacked-cards {
                 flex-basis: calc((100% - var(--gap)) / 2);
             }
 
@@ -295,7 +307,8 @@ main#classic-sheet {
         }
 
         .page.row-cards-3 {
-            .card {
+            .card,
+            .stacked-cards {
                 flex-basis: calc((100% - 2 * var(--gap)) / 3);
             }
 
@@ -310,8 +323,8 @@ main#classic-sheet {
         }
 
         .page.row-cards-4 {
-
             .card,
+            .stacked-cards,
             .feature-reference.single {
                 flex-basis: calc((100% - 3 * var(--gap)) / 4);
             }

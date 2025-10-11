@@ -17,10 +17,10 @@ import { StatBlockIcon } from '@/enums/stat-block-icon';
 import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 
-import areaIcon from '@/assets/icons/area-icon.svg';
-import burstIcon from '@/assets/icons/burst-icon.svg';
-import meleeIcon from '@/assets/icons/sword.svg';
-import meleeRangedIcon from '@/assets/icons/melee-ranged.svg';
+import areaIcon from '@/assets/icons/area.svg';
+import burstIcon from '@/assets/icons/burst.svg';
+import meleeIcon from '@/assets/icons/melee.svg';
+import meleeRangedIcon from '@/assets/icons/versatile.svg';
 import rangedIcon from '@/assets/icons/ranged.svg';
 import rollT1Icon from '@/assets/icons/power-roll-t1.svg';
 import rollT2Icon from '@/assets/icons/power-roll-t2.svg';
@@ -435,11 +435,15 @@ export class SheetFormatter {
 		}
 	};
 
-	static sortAbilitiesByLength = (a: AbilitySheet, b: AbilitySheet): number => {
+	static sortAbilitiesByLength = (a: AbilitySheet, b: AbilitySheet, order: 'asc' | 'desc' = 'asc'): number => {
 		const aLength = this.calculateAbilitySize(a, 50);
 		const bLength = this.calculateAbilitySize(b, 50);
 
-		return aLength - bLength;
+		if (order === 'asc') {
+			return aLength - bLength;
+		} else {
+			return bLength - aLength;
+		}
 	};
 
 	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
@@ -509,7 +513,7 @@ export class SheetFormatter {
 			if (s === 0) {
 				s = a.cost - b.cost;
 				if (s === 0) {
-					return this.sortAbilitiesByLength(a, b);
+					return this.sortAbilitiesByLength(a, b, 'desc');
 				} else {
 					return s;
 				}
@@ -522,7 +526,7 @@ export class SheetFormatter {
 		} else {
 			const alpha = aType.localeCompare(bType);
 			if (alpha === 0) {
-				return this.sortAbilitiesByLength(a, b);
+				return this.sortAbilitiesByLength(a, b, 'desc');
 			}
 			return alpha;
 		}

@@ -186,7 +186,8 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 				})
 			),
 			FactoryLogic.createAbilitySectionText('You can usually target only creatures of your size or smaller. If your Might score is 2 or higher, you can target any creature with a size equal to or less than your Might score.'),
-			FactoryLogic.createAbilitySectionText('Unless otherwise indicated, a creature can grab only one creature at a time.')
+			FactoryLogic.createAbilitySectionText('Unless otherwise indicated, a creature can grab only one creature at a time.'),
+			FactoryLogic.createAbilitySectionPackage('null-psionic-martial-arts-grab')
 		]
 	});
 
@@ -219,7 +220,8 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 					tier3: 'Push 3'
 				})
 			),
-			FactoryLogic.createAbilitySectionText('You can usually target only creatures of your size or smaller. If your Might score is 2 or higher, you can target any creature with a size equal to or less than your Might score.')
+			FactoryLogic.createAbilitySectionText('You can usually target only creatures of your size or smaller. If your Might score is 2 or higher, you can target any creature with a size equal to or less than your Might score.'),
+			FactoryLogic.createAbilitySectionPackage('null-psionic-martial-arts-knockback')
 		]
 	});
 

@@ -188,10 +188,27 @@ This ability remains active even after an encounter ends. It ends only if you ar
 						}
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'null-1-8',
-					name: 'Psionic Martial Arts',
-					description: 'Whenever you use the Knockback or Grab maneuver, you use Intuition instead of Might for the power roll and for determining if you can target creatures larger than you. Additionally, whenever you use the Knockback maneuver, you can choose to slide the target instead of pushing them.'
+					features: [
+						FactoryLogic.feature.create({
+							id: 'null-1-8a',
+							name: 'Psionic Martial Arts',
+							description: 'Whenever you use the Knockback or Grab maneuver, you use Intuition instead of Might for the power roll and for determining if you can target creatures larger than you. Additionally, whenever you use the Knockback maneuver, you can choose to slide the target instead of pushing them.'
+						}),
+						FactoryLogic.feature.createPackageContent({
+							id: 'null-1-8b',
+							name: 'Psionic Martial Arts',
+							description: 'You use Intuition instead of Might for the power roll and for determining if you can target creatures larger than you.',
+							tag: 'null-psionic-martial-arts-grab'
+						}),
+						FactoryLogic.feature.createPackageContent({
+							id: 'null-1-8c',
+							name: 'Psionic Martial Arts',
+							description: 'You use Intuition instead of Might for the power roll and you can choose to slide the target instead of pushing them.',
+							tag: 'null-psionic-martial-arts-knockback'
+						})
+					]
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'null-1-9',

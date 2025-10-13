@@ -68,7 +68,11 @@ export const AbilityCard = (props: Props) => {
 		if (ability.effect) {
 			return (
 				<div className='effect'>
-					<h4>Effect:</h4>
+					{
+						!ability.effect.startsWith('##') ?
+							<h4>Effect:</h4>
+							: null
+					}
 					<Markdown
 						text={ability.effect}
 						className='ability-effect'

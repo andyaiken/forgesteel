@@ -1,4 +1,4 @@
-import { Divider, Segmented, Select, SelectProps, Space, Tooltip } from 'antd';
+import { Divider, Segmented, Select, SelectProps, Space, Tag, Tooltip } from 'antd';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -233,7 +233,7 @@ export const OptionsPanel = (props: Props) => {
 	standardAbilities.forEach(a => {
 		standardAbilityOptions.push({
 			value: a.id,
-			label: `[${a.actionType}] ${a.name}`
+			label: <div className='ds-text'>{a.name} <Tag>{a.actionType}</Tag></div>
 		});
 	});
 

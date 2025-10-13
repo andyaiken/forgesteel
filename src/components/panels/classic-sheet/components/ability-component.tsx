@@ -64,7 +64,7 @@ export const AbilityComponent = (props: Props) => {
 			let addedLabel = false;
 			const effectText = ability.effect.split('\n').map(l => {
 				let newLine = l;
-				if (!addedLabel && !l.startsWith('**')) {
+				if (!addedLabel && !(l.startsWith('**') || l.startsWith('#'))) {
 					addedLabel = true;
 					newLine = '**Effect**: ' + l;
 				}

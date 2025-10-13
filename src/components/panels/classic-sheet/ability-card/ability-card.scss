@@ -147,18 +147,12 @@
         .power  {
             font-weight: 600;
             margin: 0 10px 10px;
-            > span {
+            .symbol-text {
                 display: inline-block;
-                font-size: 17px;
-
+                font-size: round(1.2rem, 1px);
+                font-weight: 500;
+                padding: 0 5px;
                 border-bottom: 1px solid common.$color-medium;
-                min-width: 50%;
-
-                .characteristic {
-                    transform: translateY(2.5px);
-                    font-size: 15px;
-                    color: var(--color-text-lightest);
-                }
             }
         }
 
@@ -168,15 +162,7 @@
             margin: 0 10px 10px;
 
             .tier {
-                display: grid;
-                grid-template-columns: min-content 1fr;
                 margin: 5px 0;
-
-                .range {
-                    margin-top: 2px;
-                    width: 50px;
-                    height: 18px;
-                }
 
                 .effect {
                     border-bottom: 2px solid common.$color-light;
@@ -208,9 +194,8 @@
         }
 
         .potency {
-            @include common.font-potency();
+            @include common.font-glyphs();
             display: inline-block;
-            transform: translateY(2px);
         }
     }
 }

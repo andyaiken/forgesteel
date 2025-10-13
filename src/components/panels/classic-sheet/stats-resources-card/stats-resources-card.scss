@@ -49,9 +49,9 @@
                 text-wrap: nowrap;
             }
             .symbol {
-                @include common.font-potency;
+                @include common.font-glyphs;
                 display: inline-block;
-                transform: translateY(2px);
+                font-size: round(1.2rem, 1px);
             }
             >.labeled-field-content {
                 @include common.border-beveled-fancy-1(15px, 4px, 3px, 2px, common.$color-medium);

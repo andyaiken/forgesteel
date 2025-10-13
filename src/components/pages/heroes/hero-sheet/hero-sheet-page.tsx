@@ -144,7 +144,8 @@ export const HeroSheetPage = (props: Props) => {
 			}
 		];
 
-		const addlRules = [ RulesData.concealment,
+		const addlRules = [
+			RulesData.concealment,
 			RulesData.criticalHit,
 			RulesData.climbingAndSwimming,
 			RulesData.jumping,
@@ -154,7 +155,8 @@ export const HeroSheetPage = (props: Props) => {
 			RulesData.flanking,
 			RulesData.hiding,
 			RulesData.highGround,
-			RulesData.shifting ];
+			RulesData.shifting
+		];
 
 		addlRules.forEach((rule, n) => {
 			optional.push({

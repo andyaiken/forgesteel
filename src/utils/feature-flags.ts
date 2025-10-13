@@ -1,5 +1,5 @@
 interface FeatureFlag {
-	code: string;
+	code: number;
 	description: string;
 }
 
@@ -7,7 +7,7 @@ export class FeatureFlags {
 	// #region List of all the recognised flags
 
 	static playtest: FeatureFlag = {
-		code: 'The Bluetones',
+		code: -1755389952,
 		description: 'Access to playtest material'
 	};
 
@@ -19,7 +19,7 @@ export class FeatureFlags {
 
 	// #region List functions
 
-	static flagExists = (code: string) => {
+	static flagExists = (code: number) => {
 		return FeatureFlags.all.some(f => f.code === code);
 	};
 
@@ -31,7 +31,7 @@ export class FeatureFlags {
 		return FeatureFlags.all.filter(flag => FeatureFlags.hasFlag(flag.code));
 	};
 
-	static add = (code: string) => {
+	static add = (code: number) => {
 		const flag = FeatureFlags.all.find(f => f.code === code);
 		if (!flag) {
 			return;
@@ -46,7 +46,7 @@ export class FeatureFlags {
 		FeatureFlags.setCurrentCodes(codes);
 	};
 
-	static remove = (code: string) => {
+	static remove = (code: number) => {
 		const codes = FeatureFlags.getCurrentCodes().filter(f => f !== code);
 		FeatureFlags.setCurrentCodes(codes);
 	};
@@ -55,7 +55,7 @@ export class FeatureFlags {
 		FeatureFlags.setCurrentCodes([]);
 	};
 
-	static hasFlag = (code: string) => {
+	static hasFlag = (code: number) => {
 		const codes = FeatureFlags.getCurrentCodes();
 		return codes.includes(code);
 	};
@@ -68,14 +68,14 @@ export class FeatureFlags {
 
 	private static getCurrentCodes = () => {
 		const codes = localStorage.getItem(FeatureFlags.KEY) || '';
-		return codes.split(';').filter(f => !!f);
+		return codes.split(';').filter(f => !!f).map(f => parseInt(f));
 	};
 
-	private static setCurrentCodes = (codes: string[]) => {
+	private static setCurrentCodes = (codes: number[]) => {
 		if (codes.length === 0) {
 			localStorage.removeItem(FeatureFlags.KEY);
 		} else {
-			localStorage.setItem(FeatureFlags.KEY, codes.join(';'));
+			localStorage.setItem(FeatureFlags.KEY, codes.map(f => `${f}`).join(';'));
 		}
 	};
 

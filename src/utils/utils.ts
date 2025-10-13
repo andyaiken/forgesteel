@@ -23,6 +23,14 @@ export class Utils {
 		return id;
 	};
 
+	static hashCode = (str: string): number => {
+		let h = 0;
+		for (let i = 0; i < str.length; ++i) {
+			h = (31 * h) + str.charCodeAt(i);
+		}
+		return h & 0xFFFFFFFF;
+	};
+
 	static copy = <T>(object: T) => {
 		return JSON.parse(
 			JSON.stringify(object)

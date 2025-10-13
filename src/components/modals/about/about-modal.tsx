@@ -9,6 +9,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { LogoPanel } from '@/components/panels/logo/logo-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -139,14 +140,17 @@ export const AboutModal = (props: Props) => {
 								placeholder='Enter a feature flag code'
 								allowClear={true}
 								value={flag}
-								onChange={e => setFlag(e.target.value)}
+								onChange={e => {
+									const flag = e.target.value;
+									setFlag(flag);
+								}}
 							/>
 							{
-								flag && FeatureFlags.flagExists(flag) && !FeatureFlags.hasFlag(flag) ?
+								flag && FeatureFlags.flagExists(Utils.hashCode(flag)) && !FeatureFlags.hasFlag(Utils.hashCode(flag)) ?
 									<Button
 										icon={<FlagOutlined />}
 										onClick={() => {
-											FeatureFlags.add(flag);
+											FeatureFlags.add(Utils.hashCode(flag));
 											setFlag('');
 										}}
 									/>

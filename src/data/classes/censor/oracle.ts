@@ -19,7 +19,7 @@ export const oracle: SubClass = {
 				FactoryLogic.feature.createPackageContent({
 					id: 'censor-sub-2-1-2',
 					name: 'Judgment Order Benefit',
-					description: 'You can deal holy damage equal to twice your Presence score to the judged creature.',
+					description: 'The first time on a turn that you use your Judgment ability to judge a creature, you can deal holy damage equal to twice your Presence score to the judged creature.',
 					tag: 'censor-judgment'
 				})
 			]

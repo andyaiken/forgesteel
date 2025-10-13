@@ -19,7 +19,7 @@ export const paragon: SubClass = {
 				FactoryLogic.feature.createPackageContent({
 					id: 'censor-sub-3-1-2',
 					name: 'Judgment Order Benefit',
-					description: 'You can vertical pull the judged creature up to a number of squares equal to twice your Presence score.',
+					description: 'The first time on a turn that you use your Judgment ability to judge a creature, you can vertical pull the judged creature up to a number of squares equal to twice your Presence score.',
 					tag: 'censor-judgment'
 				})
 			]

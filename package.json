@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "11.63.0",
+	"version": "11.64.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -11,8 +11,9 @@
 		"lint": "tsc -p tsconfig.node.json && tsc -p tsconfig.app.json && eslint . && npm audit",
 		"fix": "eslint . --fix",
 		"test": "vitest",
+		"check": "npm run lint && vitest run",
 		"build": "vite build",
-		"predeploy": "npm run lint && vite build",
+		"predeploy": "npm run check && vite build",
 		"deploy": "gh-pages -d dist"
 	},
 	"dependencies": {
@@ -37,6 +38,7 @@
 		"@types/react": "^19.2.2",
 		"@types/react-dom": "^19.2.1",
 		"@vitejs/plugin-react": "^5.0.4",
+		"@vitest/coverage-v8": "^3.2.4",
 		"eslint": "^9.37.0",
 		"eslint-plugin-react-hooks": "^7.0.0",
 		"globals": "^16.4.0",

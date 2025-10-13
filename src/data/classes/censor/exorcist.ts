@@ -19,7 +19,7 @@ export const exorcist: SubClass = {
 				FactoryLogic.feature.createPackageContent({
 					id: 'censor-sub-1-1-2',
 					name: 'Judgment Order Benefit',
-					description: 'You can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.',
+					description: 'The first time on a turn that you use your Judgment ability to judge a creature, you can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.',
 					tag: 'censor-judgment'
 				})
 			]

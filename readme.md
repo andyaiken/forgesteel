@@ -54,14 +54,10 @@ npm run start
 
 Once built, the app should then be available at `http://localhost:5173/forgesteel/`.
 
-When you've finished with your changes, make sure to appease the linter:
+When you've finished with your changes, make sure to appease the linter and run the unit tests:
 
 ```
-npm run lint
+npm run check
 ```
 
-Unit tests can be run with the following:
-
-```
-npm run test
-```
+If all is well, you can then create your pull request.

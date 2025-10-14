@@ -1,4 +1,4 @@
-import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, PlayCircleOutlined, PlusOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Flex, Segmented } from 'antd';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
@@ -15,6 +15,8 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
+	onNewHero: () => void;
+	onNewEncounter: () => void;
 }
 
 type WelcomeType = 'player' | 'director-prep' | 'director-run' | 'creator';
@@ -76,7 +78,11 @@ export const WelcomePage = (props: Props) => {
 									onChange={setPage}
 								/>
 							</Flex>
-							<Content type={page} />
+							<WelcomeContent
+								type={page}
+								onNewHero={props.onNewHero}
+								onNewEncounter={props.onNewEncounter}
+							/>
 						</div>
 					</div>
 				</ErrorBoundary>
@@ -86,11 +92,13 @@ export const WelcomePage = (props: Props) => {
 	);
 };
 
-interface ContentProps {
+interface WelcomeContentProps {
 	type: WelcomeType;
+	onNewHero: () => void;
+	onNewEncounter: () => void;
 }
 
-const Content = (props: ContentProps) => {
+const WelcomeContent = (props: WelcomeContentProps) => {
 	const navigation = useNavigation();
 
 	switch (props.type) {
@@ -98,7 +106,12 @@ const Content = (props: ContentProps) => {
 			return (
 				<div className='welcome-section'>
 					<HeaderText
-						extra={<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>}
+						extra={
+							<Flex gap={5}>
+								<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>
+								<Button icon={<PlusOutlined />} onClick={props.onNewHero}>New Hero</Button>
+							</Flex>
+						}
 					>
 						For Players
 					</HeaderText>
@@ -134,7 +147,12 @@ const Content = (props: ContentProps) => {
 			return (
 				<div className='welcome-section'>
 					<HeaderText
-						extra={<Button type='primary' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('adventure')}>Playbook</Button>}
+						extra={
+							<Flex gap={5}>
+								<Button type='primary' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('adventure')}>Playbook</Button>
+								<Button icon={<PlusOutlined />} onClick={props.onNewEncounter}>New Encounter</Button>
+							</Flex>
+						}
 					>
 						For Directors: Prep Time
 					</HeaderText>

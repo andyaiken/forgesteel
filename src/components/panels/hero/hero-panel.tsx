@@ -360,7 +360,7 @@ export const HeroPanel = (props: Props) => {
 					}
 					{
 						(props.options.showSkillsInGroups || false) ?
-							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore, SkillList.Custom ]
 								.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
 							:
 							getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))

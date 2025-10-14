@@ -244,9 +244,9 @@ export const Main = (props: Props) => {
 
 	// #endregion
 
-	// #region Heroes
+	// #region Welcome
 
-	const createHero = (folder: string) => {
+	const newHero = (folder: string) => {
 		const sourcebookIDs = SourcebookLogic.getSourcebooks().map(sb => sb.id);
 		const hero = FactoryLogic.createHero(sourcebookIDs);
 		hero.folder = folder;
@@ -254,6 +254,20 @@ export const Main = (props: Props) => {
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'start'));
 	};
+
+	const newEncounter = () => {
+		const copy = Utils.copy(playbook);
+
+		const enc = FactoryLogic.createEncounter();
+		copy.encounters.push(enc);
+
+		setDrawer(null);
+		persistPlaybook(copy).then(() => navigation.goToPlaybookEdit('encounter', enc.id));
+	};
+
+	// #endregion
+
+	// #region Heroes
 
 	const deleteHero = (hero: Hero) => {
 		const copy = Utils.copy(heroes.filter(h => h.id !== hero.id));
@@ -1516,6 +1530,8 @@ export const Main = (props: Props) => {
 								showAbout={showAbout}
 								showRoll={showRoll}
 								showReference={showReference}
+								onNewHero={() => newHero('')}
+								onNewEncounter={() => newEncounter()}
 							/>
 						}
 					/>
@@ -1532,7 +1548,7 @@ export const Main = (props: Props) => {
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
-									addHero={createHero}
+									addHero={newHero}
 									importHero={importHero}
 									showParty={onShowParty}
 								/>

@@ -571,6 +571,14 @@ Additionally, whenever an ally uses a heroic ability that targets one or more cr
 			target: 'One creature',
 			cost: 9,
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '9 + M damage',
+						tier2: '13 + M damage',
+						tier3: '18 + M damage'
+					})
+				),
 				FactoryLogic.createAbilitySectionText('You and each ally adjacent to the target gain 10 temporary Stamina.')
 			]
 		}),

@@ -111,6 +111,18 @@
         }
     }
 
+    .feature-description {
+        table {
+            tr {
+                border-bottom: 1px solid common.$color-light;
+
+                th {
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
     &:has(.feature-iteration) {
         display: flex;
         flex-wrap: wrap;

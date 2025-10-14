@@ -1,5 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { FactoryLogic } from '../factory-logic';
+import { Feature } from '@/models/feature';
+import { FeatureType } from '@/enums/feature-type';
 import { SheetFormatter } from './sheet-formatter';
 
 describe.concurrent('Test addSign', () => {
@@ -107,5 +109,52 @@ Line 3`
 		expect(result.displayed[0].display).toBe('full');
 		expect(result.displayed[1].feature.id).toBe('df-2');
 		expect(result.displayed[1].display).toBe('short');
+	});
+});
+
+describe.concurrent('sortFeatures', () => {
+	test.each([
+		[ FeatureType.Package, FeatureType.Text, true ],
+		[ FeatureType.Package, FeatureType.PackageContent, false ],
+		[ FeatureType.Ability, FeatureType.PackageContent, true ],
+		[ FeatureType.HeroicResource, FeatureType.Ability, true ],
+		[ FeatureType.HeroicResource, FeatureType.Kit, false ],
+		[ FeatureType.Domain, FeatureType.HeroicResource, true ],
+		[ FeatureType.Language, FeatureType.ConditionImmunity, true ]
+	])('sorts types correctly', (aType, bType, bFirst) => {
+		const fA = {
+			type: aType
+		} as Feature;
+		const fB = {
+			type: bType
+		} as Feature;
+
+		const result = SheetFormatter.sortFeatures(fA, fB);
+		if (bFirst) {
+			expect(result).toBeGreaterThan(0);
+		} else {
+			expect(result).toBeLessThan(0);
+		}
+	});
+
+	test.each([
+		[ 'Line1 \n Line 2', 'Line 1', false ],
+		[ 'Line 1', 'Line 1 \n Line 2', true ]
+	])('falls back to sorting by length if types are the same', (aDesc, bDesc, aFirst) => {
+		const fA = {
+			type: FeatureType.Text,
+			description: aDesc
+		} as Feature;
+		const fB = {
+			type: FeatureType.Text,
+			description: bDesc
+		} as Feature;
+		const result = SheetFormatter.sortFeatures(fA, fB);
+
+		if (aFirst) {
+			expect(result).toBeLessThan(0);
+		} else {
+			expect(result).toBeGreaterThan(0);
+		}
 	});
 });

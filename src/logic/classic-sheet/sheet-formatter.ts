@@ -406,13 +406,21 @@ export class SheetFormatter {
 		const bSort = this.featureTypeOrder.includes(b.type);
 
 		if (aSort && bSort) {
-			return this.featureTypeOrder.indexOf(a.type) - this.featureTypeOrder.indexOf(b.type);
+			const typeOrder = this.featureTypeOrder.indexOf(a.type) - this.featureTypeOrder.indexOf(b.type);
+			if (typeOrder === 0) {
+				return this.calculateFeatureSize(a, null, 50, false) - this.calculateFeatureSize(b, null, 50, false);
+			}
+			return typeOrder;
 		} else if (aSort) {
 			return -1;
 		} else if (bSort) {
 			return 1;
 		} else {
-			return a.type.toString().localeCompare(b.type.toString());
+			const typeOrder = a.type.toString().localeCompare(b.type.toString());
+			if (typeOrder === 0) {
+				return this.calculateFeatureSize(a, null, 50, false) - this.calculateFeatureSize(b, null, 50, false);
+			}
+			return typeOrder;
 		}
 	};
 

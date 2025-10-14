@@ -169,11 +169,7 @@ export class SheetLayout {
 			allAbilities = allAbilities.concat(character.standardAbilities.filter(a => options.shownStandardAbilities.includes(a.id)));
 		}
 
-		if (options.abilitySort === 'type') {
-			allAbilities.sort(SheetFormatter.sortAbilitiesByType);
-		} else {
-			allAbilities.sort(SheetFormatter.sortAbilitiesByLength);
-		}
+		allAbilities.sort(SheetFormatter.sortAbilitiesByType);
 
 		const pageClasses = [ 'abilities', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
 		let p = 1;

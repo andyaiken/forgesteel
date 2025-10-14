@@ -70,8 +70,6 @@ export class SheetFormatter {
 
 	static cleanupText = (text: string) => {
 		text = text
-			.replace(/(\|:-+)+\|\n/g, '')
-			.replace(/\|\s+(.+?)\s+\| (.+?)\s+\|/g, '$1\t\t$2')
 			.replace(/11 -\t/g, '≤ 11\t')
 			.replace(/17 \+/g, '17+\t')
 			.replace(/\n\* \*\*(.*?)\*\*(:) /g, '\n   • $1$2\t')
@@ -147,7 +145,7 @@ export class SheetFormatter {
 		return f.name.includes('Persistent Magic');
 	};
 
-	static divideFeatures = (features: Feature[], hero: Hero, availableSpace: number, lineLength: number = 50, columns: number = 1) => {
+	static divideFeatures = (features: Feature[], hero: Hero | null, availableSpace: number, lineLength: number = 50, columns: number = 1) => {
 		const displayed: { feature: Feature, display: 'short' | 'full' }[] = [];
 		const reference: Feature[] = [];
 
@@ -201,7 +199,8 @@ export class SheetFormatter {
 				if (displayed.find(fd => fd.feature.id === fws.feature.id)) {
 					prevSize = this.isVERYLongFeature(f) ? 2 : this.calculateFeatureSize(f, hero, lineLength);
 				}
-				if (size - prevSize + fws.size < availableSpace) {
+				const newLongest = Math.max(longest, fws.size);
+				if (size - prevSize + fws.size + (newLongest * (columns - 1)) < availableSpace) {
 					distinctReference = distinctReference.filter(f => f.id !== fws.feature.id);
 					const d = displayed.find(fd => fd.feature.id === fws.feature.id);
 					if (d) {
@@ -210,6 +209,7 @@ export class SheetFormatter {
 						displayed.push({ feature: f, display: 'full' });
 					}
 					size = size - prevSize + fws.size;
+					longest = newLongest;
 					return true;
 				} else {
 					return false;
@@ -233,22 +233,22 @@ export class SheetFormatter {
 			size = headerSize + this.countLines(f.description.trim().split('\n')[0], lineWidth);
 			size += bottomMargin;
 		} else if (f.type === FeatureType.Text) {
-			size = headerSize + this.countLines(f.description, lineWidth);
+			size = headerSize + this.countLines(f.description.trim(), lineWidth);
 			size += bottomMargin;
 		} else if (f.type === FeatureType.Package) {
-			size = headerSize + this.countLines(f.description, lineWidth);
+			size = headerSize + this.countLines(f.description.trim(), lineWidth);
 			if (hero) {
 				const packageContent = HeroLogic.getFeatures(hero)
 					.map(hf => hf.feature)
 					.filter(hf => hf.type === FeatureType.PackageContent)
 					.filter(hf => hf.data.tag === f.data.tag);
 				packageContent.forEach(pc => {
-					size += headerSize + this.countLines(pc.description, lineWidth);
+					size += headerSize + this.countLines(pc.description.trim(), lineWidth);
 				});
 			}
 			size += bottomMargin;
 		} else if (f.type === FeatureType.Ability) {
-			size = headerSize + this.countLines(f.data.ability.description, lineWidth);
+			size = headerSize + this.countLines(f.data.ability.description.trim(), lineWidth);
 			size += bottomMargin;
 		} else if (f.type === FeatureType.DamageModifier) {
 			size = headerSize + (Collections.distinct(f.data.modifiers, m => m.type).length);
@@ -406,13 +406,21 @@ export class SheetFormatter {
 		const bSort = this.featureTypeOrder.includes(b.type);
 
 		if (aSort && bSort) {
-			return this.featureTypeOrder.indexOf(a.type) - this.featureTypeOrder.indexOf(b.type);
+			const typeOrder = this.featureTypeOrder.indexOf(a.type) - this.featureTypeOrder.indexOf(b.type);
+			if (typeOrder === 0) {
+				return this.calculateFeatureSize(a, null, 50, false) - this.calculateFeatureSize(b, null, 50, false);
+			}
+			return typeOrder;
 		} else if (aSort) {
 			return -1;
 		} else if (bSort) {
 			return 1;
 		} else {
-			return a.type.toString().localeCompare(b.type.toString());
+			const typeOrder = a.type.toString().localeCompare(b.type.toString());
+			if (typeOrder === 0) {
+				return this.calculateFeatureSize(a, null, 50, false) - this.calculateFeatureSize(b, null, 50, false);
+			}
+			return typeOrder;
 		}
 	};
 
@@ -629,7 +637,7 @@ export class SheetFormatter {
 						.map(f => (
 							`\n#### ${f.name}:\n${f.description}`
 						)).join('\n');
-				} else {
+				} else if (creature !== undefined) {
 					console.warn('Ability package in NON-HERO!', section, creature);
 				}
 				break;

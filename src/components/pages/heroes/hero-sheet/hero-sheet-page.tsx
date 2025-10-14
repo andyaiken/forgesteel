@@ -155,8 +155,23 @@ export const HeroSheetPage = (props: Props) => {
 			RulesData.flanking,
 			RulesData.hiding,
 			RulesData.highGround,
-			RulesData.shifting
+			RulesData.shifting,
+			RulesData.damageAndEffect,
+			RulesData.duringTheMove,
+			RulesData.opportunityAttack,
+			RulesData.invisibility,
+			RulesData.slammingCreatures,
+			RulesData.slammingObjects,
+			RulesData.sneaking,
+			RulesData.rollVsMultipleCreatures
 		];
+
+		// future: check for 'flying' or 'hover' in the character and add relevant reference card(s)?
+		// Other possible candidates:
+		//   - Teleportation
+		//   - Wielding Treasures
+		// -- or --
+		// Have a multiselect for users to manually choose reference cards like for standard abilities?
 
 		addlRules.forEach((rule, n) => {
 			optional.push({

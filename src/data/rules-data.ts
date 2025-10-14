@@ -168,7 +168,7 @@ Areas of acid, fire, sharp rocks, lava, or any other terrain that causes damage 
 	};
 
 	static damageAndEffect: RulesItem = {
-		label: 'Abilities with Damage and Effect',
+		label: 'Damage and Effect',
 		content: `
 Strikes and area abilities can deal damage and have an additional effect on a target. The damage and the strength of the effect are determined by the ability roll.
 

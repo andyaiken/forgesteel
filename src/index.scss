@@ -338,6 +338,16 @@ td {
 	}
 }
 
+.ant-select-show-search.ant-select-multiple .ant-select-selector {
+	.ant-select-selection-item {
+		height: 26px;
+		.ds-text {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+}
+
 .ant-statistic {
 	.ant-statistic-title {
 		min-height: 24px;
@@ -494,6 +504,14 @@ html[data-theme="dark"] {
 		}
 		.ant-select-item {
 			color: rgba(255, 255, 255, 0.88);
+		}
+	}
+
+	.ant-select-show-search.ant-select-multiple .ant-select-selector {
+		.ant-select-selection-item {
+			.ds-text {
+				color: rgba(0, 0, 0, 0.88);
+			}
 		}
 	}
 

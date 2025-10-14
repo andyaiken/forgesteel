@@ -106,12 +106,6 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const setAbilitySort = (value: 'size' | 'type') => {
-		const copy = Utils.copy(props.options);
-		copy.abilitySort = value;
-		props.setOptions(copy);
-	};
-
 	const setClassicSheetPageSize = (value: SheetPageSize) => {
 		const copy = Utils.copy(props.options);
 		copy.classicSheetPageSize = value;
@@ -362,17 +356,6 @@ export const OptionsPanel = (props: Props) => {
 							]}
 							value={props.options.featuresInclude}
 							onChange={setFeaturesInclude}
-						/>
-						<Divider size='small'>Sort Abilities By</Divider>
-						<Segmented
-							name='abilitySort'
-							block={true}
-							options={[
-								{ value: 'size', label: 'Length' },
-								{ value: 'type', label: 'Action Type' }
-							]}
-							value={props.options.abilitySort}
-							onChange={setAbilitySort}
 						/>
 						<Divider>Layout</Divider>
 						<Space direction='vertical' style={{ width: '100%' }}>

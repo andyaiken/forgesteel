@@ -1013,7 +1013,6 @@ export class FactoryLogic {
 			colorSheet: true,
 			sheetTextColor: 'default',
 			featuresInclude: 'all',
-			abilitySort: 'size',
 			pageOrientation: 'portrait',
 			// Library
 			showMonsterGroups: true,

@@ -96,28 +96,10 @@ export class ClassicSheetBuilder {
 			sheet.hasPowerRoll = true;
 			const rollSection = rollSections[0];
 			if (rollSections.length > 1) {
-				console.warn('More than one roll section!', rollSections);
+				console.warn('More than one roll section!', ability.name, rollSections);
 			}
 
-			let rollPowerStr = '';
-			if (rollSection.roll.characteristic.length) {
-				const rollPowerAmount = Math.max(...rollSection.roll.characteristic
-					.map(c => CreatureLogic.getCharacteristic(creature, c)));
-
-				rollPowerStr = rollPowerAmount.toString();
-			} else {
-				let rollPowerAmount = 2;// echelon 1 always at least 2
-				[ rollSection.roll.tier1, rollSection.roll.tier2, rollSection.roll.tier3 ].forEach(tier => {
-					const potency = tier.match(/[MmAaRrIiPp]<(\d)/);
-					if (potency && potency[1]) {
-						rollPowerAmount = Math.max(rollPowerAmount, Number.parseInt(potency[1]));
-					}
-				});
-
-				rollPowerStr = rollPowerAmount.toString();
-			}
-
-			sheet.rollPower = rollPowerStr;
+			sheet.rollPower = AbilityLogic.getPowerRollBonusValue(ability, creature).toString();
 
 			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, creature);
 			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, creature);

@@ -43,20 +43,30 @@ export const PowerRollPanel = (props: Props) => {
 		}
 
 		if ((CreatureLogic.isHero(props.creature) || (CreatureLogic.isMonster(props.creature) && props.creature.retainer)) && props.autoCalc) {
-			const values = props.powerRoll.characteristic.map(ch => CreatureLogic.getCharacteristic(props.creature, ch));
-			const bonus = Collections.max(values, v => v) || 0;
+			let bonus = 0;
+			if (props.ability) {
+				bonus = AbilityLogic.getPowerRollBonusValue(props.ability, props.creature);
+			} else {
+				const values = props.powerRoll.characteristic.map(ch => CreatureLogic.getCharacteristic(props.creature, ch));
+				bonus = Collections.max(values, v => v) || 0;
+			}
 			const sign = bonus >= 0 ? '+' : '';
 			return `2d10 ${sign} ${bonus}`;
 		}
 
-		if (props.powerRoll.characteristic.length > 0) {
-			if (props.powerRoll.characteristic.length === 0) {
+		let rollCharacteristics = props.powerRoll.characteristic;
+		if (props.ability) {
+			rollCharacteristics = AbilityLogic.getPowerRollCharacteristics(props.ability, props.creature);
+		}
+
+		if (rollCharacteristics.length > 0) {
+			if (rollCharacteristics.length === 0) {
 				return 'Power Roll';
 			}
-			if (props.powerRoll.characteristic.length === 5) {
+			if (rollCharacteristics.length === 5) {
 				return 'Power Roll + Highest Characteristic';
 			}
-			return `Power Roll + ${props.powerRoll.characteristic.join(' or ')}`;
+			return `Power Roll + ${rollCharacteristics.join(' or ')}`;
 		}
 
 		const sign = props.powerRoll.bonus >= 0 ? '+' : '';

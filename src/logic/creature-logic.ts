@@ -36,14 +36,18 @@ export class CreatureLogic {
 		}
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	static isMonster = (creature: any): creature is Monster => {
-		return creature && 'withCaptain' in creature;
+	static isMonster = (creature: unknown): creature is Monster => {
+		return creature !== undefined
+			&& creature !== null
+			&& typeof creature === 'object'
+			&& 'withCaptain' in creature;
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	static isHero = (creature: any): creature is Hero => {
-		return creature && 'complication' in creature;
+	static isHero = (creature: unknown): creature is Hero => {
+		return creature !== undefined
+			&& creature !== null
+			&& typeof creature === 'object'
+			&& 'complication' in creature;
 	};
 
 	static getEchelon = (level: number) => {

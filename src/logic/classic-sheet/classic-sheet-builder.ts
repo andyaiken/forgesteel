@@ -7,6 +7,7 @@ import { CreatureLogic } from '@/logic/creature-logic';
 import { FeatureLogic } from '../feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '../hero-logic';
 import { Item } from '@/models/item';
 import { ItemSheet } from '@/models/classic-sheets/hero-sheet';
 import { Monster } from '@/models/monster';
@@ -89,7 +90,15 @@ export class ClassicSheetBuilder {
 		}
 
 		const effectSections = ability.sections.filter(s => s.type !== 'roll');
-		sheet.effect = SheetFormatter.abilitySections(effectSections, creature).trim();
+		let effectText = SheetFormatter.abilitySections(effectSections, creature).trim();
+
+		// Kind of hacky, but this is a one-off at the moment
+		if (CreatureLogic.isHero(creature)
+				&& ([ 'grab', 'knockback' ].includes(ability.id))
+				&& HeroLogic.getFeatures(creature as Hero).find(f => f.feature.id === 'null-1-8')) { // Psionic Martial Arts id
+			effectText = effectText.replace(/your Might/g, 'your Intuition');
+		}
+		sheet.effect = effectText;
 
 		const rollSections = ability.sections.filter(s => s.type === 'roll');
 		if (rollSections.length) {

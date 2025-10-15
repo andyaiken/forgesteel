@@ -12,6 +12,7 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Random } from '@/utils/random';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -141,24 +142,32 @@ export const EncounterTurnModal = (props: Props) => {
 
 		const getGroupButton = (group: EncounterGroup, onClick: () => void) => {
 			return (
-				<Button key={group.id} className='container-button' block={true} onClick={onClick}>
-					{
-						group.slots
-							.flatMap(s => s.monsters)
-							.filter(m => !m.state.defeated)
-							.map(m => (
-								<MonsterInfo key={m.id} monster={m} />
-							))
-					}
-				</Button>
+				<SelectablePanel key={group.id} onSelect={onClick}>
+					<HeaderText style={{ marginTop: '-5px' }}>
+						{group.name ? group.name : `Group ${encounter.groups.indexOf(group) + 1}`}
+					</HeaderText>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							group.slots
+								.flatMap(s => s.monsters)
+								.filter(m => !m.state.defeated)
+								.map(m => (
+									<MonsterInfo key={m.id} monster={m} />
+								))
+						}
+					</Space>
+				</SelectablePanel>
 			);
 		};
 
 		const getHeroButton = (hero: Hero, onClick: () => void) => {
 			return (
-				<Button key={hero.id} className='container-button' block={true} onClick={onClick}>
+				<SelectablePanel key={hero.id} onSelect={onClick}>
+					<HeaderText style={{ marginTop: '-5px' }}>
+						{hero.name}
+					</HeaderText>
 					<HeroInfo hero={hero} />
-				</Button>
+				</SelectablePanel>
 			);
 		};
 
@@ -283,6 +292,9 @@ export const EncounterTurnModal = (props: Props) => {
 			encounter.groups
 				.filter(g => g.encounterState === 'current')
 				.forEach(group => {
+					const groupButtons = groups.map(g => getGroupButton(g, () => endTurnAndStartNext(group.id, g.id)));
+					const heroButtons = heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(group.id, h.id)));
+
 					content.push(
 						<Space key={group.id} direction='vertical' style={{ width: '100%' }}>
 							{group.slots.map(s => getConditions(s.id, EncounterLogic.getSlotName(s), s.state.conditions))}
@@ -302,9 +314,13 @@ export const EncounterTurnModal = (props: Props) => {
 							</div>
 							{
 								heroes.length > 0 ?
-									heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(group.id, h.id)))
+									<>
+										{heroButtons}
+										<div className='ds-text'>Or choose a monster group:</div>
+										{groupButtons}
+									</>
 									:
-									groups.map(g => getGroupButton(g, () => endTurnAndStartNext(group.id, g.id)))
+									groupButtons
 							}
 							{
 								(groups.length === 0) && (heroes.length === 0) ?
@@ -320,6 +336,9 @@ export const EncounterTurnModal = (props: Props) => {
 			encounter.heroes
 				.filter(h => h.state.encounterState === 'current')
 				.forEach(hero => {
+					const groupButtons = groups.map(g => getGroupButton(g, () => endTurnAndStartNext(hero.id, g.id)));
+					const heroButtons = heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(hero.id, h.id)));
+
 					content.push(
 						<Space key={hero.id} direction='vertical' style={{ width: '100%' }}>
 							{getConditions(hero.id, hero.name, hero.state.conditions)}
@@ -334,9 +353,13 @@ export const EncounterTurnModal = (props: Props) => {
 							</div>
 							{
 								groups.length > 0 ?
-									groups.map(g => getGroupButton(g, () => endTurnAndStartNext(hero.id, g.id)))
+									<>
+										{groupButtons}
+										<div className='ds-text'>Or choose a hero:</div>
+										{heroButtons}
+									</>
 									:
-									heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(hero.id, h.id)))
+									heroButtons
 							}
 							{
 								(groups.length === 0) && (heroes.length === 0) ?

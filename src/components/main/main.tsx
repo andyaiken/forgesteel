@@ -61,6 +61,7 @@ import { RollModal } from '@/components/modals/roll/roll-modal';
 import { RulesPage } from '@/enums/rules-page';
 import { SessionDirectorPage } from '@/components/pages/session/director/session-director-page';
 import { SessionPlayerPage } from '@/components/pages/session/player/session-player-page';
+import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { SourcebooksModal } from '@/components/modals/sourcebooks/sourcebooks-modal';
@@ -247,8 +248,7 @@ export const Main = (props: Props) => {
 	// #region Welcome
 
 	const newHero = (folder: string) => {
-		const sourcebookIDs = SourcebookLogic.getSourcebooks().map(sb => sb.id);
-		const hero = FactoryLogic.createHero(sourcebookIDs);
+		const hero = FactoryLogic.createHero([ SourcebookData.core.id, SourcebookData.orden.id ]);
 		hero.folder = folder;
 
 		setDrawer(null);

@@ -111,7 +111,7 @@ export const HeroListPage = (props: Props) => {
 					<Popover
 						trigger='click'
 						content={(
-							<div style={{ width: '500px' }}>
+							<div style={{ width: '550px' }}>
 								<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
 									Create a New Hero
 								</Button>

@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "11.66.0",
+	"version": "11.67.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -13,13 +13,13 @@
 		"test": "vitest",
 		"check": "npm run lint && vitest run",
 		"build": "vite build",
-		"predeploy": "npm run check && vite build",
+		"predeploy": "npm run lint && vitest run && vite build",
 		"deploy": "gh-pages -d dist"
 	},
 	"dependencies": {
 		"@ant-design/icons": "^6.1.0",
 		"@types/showdown": "^2.0.6",
-		"antd": "^5.27.4",
+		"antd": "^5.27.5",
 		"gh-pages": "^6.3.0",
 		"html-to-image": "1.11.11",
 		"html2canvas": "^1.4.1",
@@ -44,7 +44,7 @@
 		"globals": "^16.4.0",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.46.1",
-		"vite": "^7.1.9",
+		"vite": "^7.1.10",
 		"vite-tsconfig-paths": "^5.1.4",
 		"vitest": "^3.2.4"
 	}

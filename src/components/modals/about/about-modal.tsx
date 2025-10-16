@@ -142,6 +142,7 @@ export const AboutModal = (props: Props) => {
 								value={flag}
 								onChange={e => {
 									const flag = e.target.value;
+									// console.error(`${flag}: ${Utils.hashCode(flag)}`);
 									setFlag(flag);
 								}}
 							/>

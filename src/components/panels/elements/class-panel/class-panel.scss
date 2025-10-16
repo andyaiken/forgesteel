@@ -9,19 +9,43 @@
 		padding: unset;
 	}
 
-	.features {
+	&.interactive {
+		.class-abilities-grid {
+			padding-top: 15px;
+		}
+	}
+
+	.class-features-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 20px;
 	}
 
-	.abilities {
+	.class-abilities-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 20px;
 	}
 
-	.subclasses {
+	.class-subclasses-grid {
 		display: block;
+	}
+
+	.class-features-list {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	.class-abilities-list {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	.class-subclasses-list {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
 	}
 }

@@ -20,6 +20,7 @@ export interface Options {
 	featuresInclude: 'minimal' | 'no-basic' | 'all';
 	pageOrientation: 'portrait' | 'landscape';
 	// Library
+	showInteractivePanels: boolean;
 	showMonsterGroups: boolean;
 	// Monster Builder
 	similarLevel: boolean;

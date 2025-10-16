@@ -1015,6 +1015,7 @@ export class FactoryLogic {
 			featuresInclude: 'all',
 			pageOrientation: 'portrait',
 			// Library
+			showInteractivePanels: true,
 			showMonsterGroups: true,
 			// Monster Builder
 			similarLevel: true,

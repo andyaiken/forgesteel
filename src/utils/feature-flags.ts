@@ -11,8 +11,14 @@ export class FeatureFlags {
 		description: 'Access to playtest material'
 	};
 
+	static interactiveContent: FeatureFlag = {
+		code: 2135415398,
+		description: 'Interactive content display'
+	};
+
 	private static all = [
-		FeatureFlags.playtest
+		FeatureFlags.playtest,
+		FeatureFlags.interactiveContent
 	];
 
 	// #endregion

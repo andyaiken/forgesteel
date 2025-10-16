@@ -3,6 +3,7 @@ import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureFlags } from '@/utils/feature-flags';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
@@ -151,6 +152,12 @@ export const OptionsPanel = (props: Props) => {
 	const setSimilarSize = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.similarSize = value;
+		props.setOptions(copy);
+	};
+
+	const setShowInteractivePanels = (value: boolean) => {
+		const copy = Utils.copy(props.options);
+		copy.showInteractivePanels = value;
 		props.setOptions(copy);
 	};
 
@@ -392,6 +399,11 @@ export const OptionsPanel = (props: Props) => {
 			case 'library':
 				return (
 					<>
+						{
+							FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) ?
+								<Toggle label='Show content interactively' value={props.options.showInteractivePanels} onChange={setShowInteractivePanels} />
+								: null
+						}
 						<Toggle label='Show monster groups' value={props.options.showMonsterGroups} onChange={setShowMonsterGroups} />
 						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
 					</>

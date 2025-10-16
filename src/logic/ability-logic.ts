@@ -169,6 +169,51 @@ export class AbilityLogic {
 		return [ powerRoll.tier1, powerRoll.tier2, powerRoll.tier3 ].some(tier => match(tier));
 	};
 
+	static getPowerRollBonusValue = (ability: Ability, creature: Hero | Monster | undefined): number => {
+		const rollCharacteristics = this.getPowerRollCharacteristics(ability, creature);
+		let rollPowerAmount = 2;// echelon 1 always at least 2
+		if (rollCharacteristics.length) {
+			rollPowerAmount = Math.max(...rollCharacteristics
+				.map(c => CreatureLogic.getCharacteristic(creature, c)));
+		} else {
+			const rollSections = ability.sections.filter(s => s.type === 'roll');
+			if (rollSections.length) {
+				const rollSection = rollSections[0];
+				if (rollSections.length > 1) {
+					console.warn('More than one roll section!', ability.name, rollSections);
+				}
+
+				[ rollSection.roll.tier1, rollSection.roll.tier2, rollSection.roll.tier3 ].forEach(tier => {
+					const potency = tier.match(/[MmAaRrIiPp]<(\d)/);
+					if (potency && potency[1]) {
+						rollPowerAmount = Math.max(rollPowerAmount, Number.parseInt(potency[1]));
+					}
+				});
+			}
+		}
+		return rollPowerAmount;
+	};
+
+	static getPowerRollCharacteristics = (ability: Ability, creature: Hero | Monster | undefined): Characteristic[] => {
+		const rollSections = ability.sections.filter(s => s.type === 'roll');
+		if (rollSections.length) {
+			const rollSection = rollSections[0];
+			if (rollSections.length > 1) {
+				console.warn('More than one roll section!', ability.name, rollSections);
+			}
+
+			let rollCharacteristics = rollSection.roll.characteristic;
+			// Specific check for Grab/Knockback + Psionic Martial Arts override
+			if (CreatureLogic.isHero(creature)
+				&& ([ 'grab', 'knockback' ].includes(ability.id))
+				&& HeroLogic.getFeatures(creature as Hero).find(f => f.feature.id === 'null-1-8')) { // Psionic Martial Arts id
+				rollCharacteristics = [ Characteristic.Intuition ];
+			}
+			return rollCharacteristics;
+		}
+		return [];
+	};
+
 	static getTierEffect = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, hero: Hero | undefined) => {
 		return value
 			.split(';')

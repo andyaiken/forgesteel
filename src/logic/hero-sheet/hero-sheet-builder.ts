@@ -24,6 +24,7 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SheetPageSize } from '@/enums/sheet-page-size';
+import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 
@@ -295,7 +296,12 @@ export class HeroSheetBuilder {
 		}, skillsMap);
 		sheet.allSkills = new Map([ ...allSkills.entries() ].sort());
 
-		sheet.skills = HeroLogic.getSkills(hero, sourcebooks).map(s => s.name);
+		const heroSkills = HeroLogic.getSkills(hero, sourcebooks);
+		const customSkills = heroSkills.filter(s => s.list === SkillList.Custom);
+		if (customSkills.length) {
+			sheet.allSkills.set(SkillList.Custom, customSkills.map(s => s.name));
+		}
+		sheet.skills = heroSkills.map(s => s.name);
 		coveredFeatureIds = coveredFeatureIds.concat(
 			allFeatures.filter(f => f.feature.type === FeatureType.SkillChoice)
 				.map(f => f.feature.id));

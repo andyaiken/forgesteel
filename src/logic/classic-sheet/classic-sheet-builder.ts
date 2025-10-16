@@ -7,6 +7,7 @@ import { CreatureLogic } from '@/logic/creature-logic';
 import { FeatureLogic } from '../feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
+import { HeroLogic } from '../hero-logic';
 import { Item } from '@/models/item';
 import { ItemSheet } from '@/models/classic-sheets/hero-sheet';
 import { Monster } from '@/models/monster';
@@ -89,35 +90,25 @@ export class ClassicSheetBuilder {
 		}
 
 		const effectSections = ability.sections.filter(s => s.type !== 'roll');
-		sheet.effect = SheetFormatter.abilitySections(effectSections, creature).trim();
+		let effectText = SheetFormatter.abilitySections(effectSections, creature).trim();
+
+		// Kind of hacky, but this is a one-off at the moment
+		if (CreatureLogic.isHero(creature)
+				&& ([ 'grab', 'knockback' ].includes(ability.id))
+				&& HeroLogic.getFeatures(creature as Hero).find(f => f.feature.id === 'null-1-8')) { // Psionic Martial Arts id
+			effectText = effectText.replace(/your Might/g, 'your Intuition');
+		}
+		sheet.effect = effectText;
 
 		const rollSections = ability.sections.filter(s => s.type === 'roll');
 		if (rollSections.length) {
 			sheet.hasPowerRoll = true;
 			const rollSection = rollSections[0];
 			if (rollSections.length > 1) {
-				console.warn('More than one roll section!', rollSections);
+				console.warn('More than one roll section!', ability.name, rollSections);
 			}
 
-			let rollPowerStr = '';
-			if (rollSection.roll.characteristic.length) {
-				const rollPowerAmount = Math.max(...rollSection.roll.characteristic
-					.map(c => CreatureLogic.getCharacteristic(creature, c)));
-
-				rollPowerStr = rollPowerAmount.toString();
-			} else {
-				let rollPowerAmount = 2;// echelon 1 always at least 2
-				[ rollSection.roll.tier1, rollSection.roll.tier2, rollSection.roll.tier3 ].forEach(tier => {
-					const potency = tier.match(/[MmAaRrIiPp]<(\d)/);
-					if (potency && potency[1]) {
-						rollPowerAmount = Math.max(rollPowerAmount, Number.parseInt(potency[1]));
-					}
-				});
-
-				rollPowerStr = rollPowerAmount.toString();
-			}
-
-			sheet.rollPower = rollPowerStr;
+			sheet.rollPower = AbilityLogic.getPowerRollBonusValue(ability, creature).toString();
 
 			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, creature);
 			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, creature);

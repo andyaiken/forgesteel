@@ -186,7 +186,7 @@ export class FactoryFeatureLogic {
 	createClassAbilityChoice = (data: { id: string, name?: string, description?: string, cost: number | 'signature', allowAnySource?: boolean, minLevel?: number, count?: number }): FeatureClassAbility => {
 		return {
 			id: data.id,
-			name: data.name || 'Ability',
+			name: data.name || `${data.cost === 'signature' ? 'Signature' : `${data.cost}pt`} Ability`,
 			description: data.description || '',
 			type: FeatureType.ClassAbility,
 			data: {

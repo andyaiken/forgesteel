@@ -18,6 +18,7 @@ import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
+import { MontageSheetPage } from '@/components/panels/classic-sheet/montage-sheet/montage-sheet-page';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
@@ -243,7 +244,25 @@ export const PlaybookListPage = (props: Props) => {
 				};
 				break;
 			case 'montage':
-				getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => {
+					if (view === 'classic') {
+						return (
+							<MontageSheetPage
+								key={element.id}
+								montage={element as Montage}
+								options={props.options}
+							/>
+						);
+					} else {
+						return (
+							<MontagePanel
+								key={element.id}
+								montage={element as Montage}
+								mode={PanelMode.Full}
+							/>
+						);
+					}
+				};
 				break;
 			case 'negotiation':
 				getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} mode={PanelMode.Full} />;
@@ -410,7 +429,7 @@ export const PlaybookListPage = (props: Props) => {
 							: null
 					}
 					{
-						(category === 'encounter') ?
+						(category === 'encounter') || (category === 'montage') ?
 							<Popover
 								trigger='click'
 								content={(
@@ -450,10 +469,10 @@ export const PlaybookListPage = (props: Props) => {
 					}
 
 					{
-						(category === 'encounter') ?
+						(category === 'encounter') || (category === 'montage' && view === 'classic') ?
 							<Popover
 								trigger='click'
-								content={<OptionsPanel mode={view === 'classic' ? 'encounter-classic' : 'encounter-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode={`${category}-${view}`} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

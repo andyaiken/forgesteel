@@ -16,7 +16,7 @@ import { useState } from 'react';
 import './options-panel.scss';
 
 interface Props {
-	mode: 'hero-modern' | 'hero-classic' | 'library' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'tactical-map' | 'session' | 'player';
+	mode: 'hero-modern' | 'hero-classic' | 'library' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'montage-modern' | 'montage-classic' | 'tactical-map' | 'session' | 'player';
 	options: Options;
 	heroes: Hero[];
 	setOptions: (options: Options) => void;

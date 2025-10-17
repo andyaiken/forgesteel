@@ -127,7 +127,7 @@ export class SheetFormatter {
 	static shortenText = (text: string, splitAt: number = 1) => {
 		const split = text.trim().split('\n');
 		if (split.length > splitAt) {
-			text = split.slice(0, splitAt).join('\n') + '\n<em class="continued-in-reference">…(continued in reference)…</em>';
+			text = split.slice(0, splitAt).join('\n') + '\n<p class="continued-in-reference"><em>…(continued in reference)…</em></p>';
 		}
 		return this.cleanupText(text);
 	};

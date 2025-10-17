@@ -465,7 +465,7 @@ export class HeroUpdateLogic {
 					const oFeature = originalFeature as FeatureMultiple;
 
 					feature.data.features.forEach(child => {
-						const oChild = oFeature.data.features.find(x => x.id === child.id);
+						const oChild = oFeature.data.features.length && oFeature.data.features.find(x => x.id === child.id);
 						if (oChild) {
 							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
 						}

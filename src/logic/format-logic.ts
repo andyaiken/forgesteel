@@ -90,7 +90,7 @@ export class FormatLogic {
 	};
 
 	static getDice = (text: string) => {
-		const diceMatch = text.match(/(?<throws>\d+)d(?<sides>\d+)\s*(\+|plus)/);
+		const diceMatch = text.match(/(?<throws>\d+)d(?<sides>\d+)\s*/);
 		if (diceMatch && diceMatch.groups) {
 			let throws = 0;
 			let sides = 0;
@@ -107,7 +107,7 @@ export class FormatLogic {
 	static getConstant = (text: string) => {
 		let constant = 0;
 
-		const constantMatch = text.match(/(equal to )?(?<c>[^d]*\d+[^d]*)\s*(\+|plus)/);
+		const constantMatch = text.match(/(?<c>(?<!d)\d+(?!d|\s?(x|times)))\s*/);
 		if (constantMatch && constantMatch.groups) {
 			constant = parseInt(constantMatch.groups['c']);
 		}

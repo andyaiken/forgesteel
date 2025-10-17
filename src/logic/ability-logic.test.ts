@@ -1,15 +1,16 @@
-import { afterEach, assert, describe, expect, test, vi } from 'vitest';
+import { afterEach, assert, describe, expect, it, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityLogic } from './ability-logic';
 import { Characteristic } from '@/enums/characteristic';
 import { CreatureLogic } from './creature-logic';
 import { FactoryLogic } from './factory-logic';
+import { Hero } from '@/models/hero';
 import { HeroLogic } from './hero-logic';
 
 describe('getPowerRollCharacteristics', () => {
 	afterEach(() => {
-		vi.restoreAllMocks();
+		vi.resetAllMocks();
 	});
 
 	vi.mock('@/logic/creature-logic', () => {
@@ -60,5 +61,60 @@ describe('getPowerRollCharacteristics', () => {
 			expect(result.length).toBe(1);
 			expect(result[0]).toBe(Characteristic.Intuition);
 		});
+	});
+});
+
+describe('getTextEffect', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	vi.mock('@/logic/hero-logic', () => {
+		const HeroLogic = vi.fn();
+		return { HeroLogic: HeroLogic };
+	});
+	HeroLogic.getPotency = vi.fn();
+
+	it('should calculate constant dice roll effects properly when no hero is provided', () => {
+		expect(AbilityLogic.getTextEffect('Value equal to 1d6 + 2', undefined)).toBe('Value equal to 1d6 + 2');
+	});
+
+	it('should calculate constant dice roll effects properly when a hero is provided', () => {
+		const hero = {} as Hero;
+		expect(AbilityLogic.getTextEffect('Value equal to 1d6 + 2', hero)).toBe('Value equal to 1d6 + 2');
+	});
+
+	test.each([
+		[ '<weak', 0, '< 0' ],
+		[ '< avg', 2, '< 2' ],
+		[ '< average', 1, '< 1' ],
+		[ '<strong', 5, '< 5' ]
+	])('should properly swap in the correct Hero potency value', (text: string, potency: number, expected: string) => {
+		const hero = {} as Hero;
+		HeroLogic.getPotency = vi.fn().mockReturnValue(potency);
+
+		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
+	});
+
+	test.each([
+		[ 'equal to your level', 1, 'equal to 1' ],
+		[ 'equal to 2 + your level', 1, 'equal to 3' ]
+	])('should properly calculate references to hero level', (text: string, level: number, expected: string) => {
+		const hero = {
+			class: { level: level }
+		} as Hero;
+
+		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
+	});
+
+	test.each([
+		[ 'equal to 1d6 + your level', 2, 'equal to 1d6 + 2' ],
+		[ 'equal to 1d6 + twice your level', 3, 'equal to 1d6 + 6' ]
+	])('should properly calculate combinations of dice rolls and hero level', (text: string, level: number, expected: string) => {
+		const hero = {
+			class: { level: level }
+		} as Hero;
+
+		expect(AbilityLogic.getTextEffect(text, hero)).toBe(expected);
 	});
 });

@@ -510,17 +510,24 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getTags = (element: Element) => {
+		const tags: string[] = [];
+
 		const sb = getSourcebook(element);
 		if (sb && sb.id !== SourcebookData.core.id) {
-			const tags = [];
 			tags.push(sb.name || 'Unnamed Sourcebook');
 			if (sb.isHomebrew) {
 				tags.push('Homebrew');
 			}
-			return tags;
 		}
 
-		return undefined;
+		if (category === 'kit') {
+			const kit = element as Kit;
+			if (kit.type) {
+				tags.push(kit.type);
+			}
+		}
+
+		return tags.length > 0 ? tags : undefined;
 	};
 
 	const getElementToolbar = () => {

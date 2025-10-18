@@ -504,6 +504,12 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setHeroicResourceGainReplacesTags = (data: FeatureHeroicResourceGainData, value: string[]) => {
+			const copy = Utils.copy(data);
+			copy.replacesTags = value;
+			setData(copy);
+		};
+
 		const addMaliceSectionText = (data: FeatureMaliceData) => {
 			const copy = Utils.copy(data);
 			copy.sections.push('');
@@ -1317,6 +1323,15 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							value={data.value}
 							onChange={e => setHeroicResourceGainValue(data, e.target.value)}
+						/>
+						<HeaderText>Replaces Tags</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Replaces tags'
+							mode='tags'
+							allowClear={true}
+							value={data.replacesTags}
+							onChange={value => setHeroicResourceGainReplacesTags(data, value)}
 						/>
 					</Space>
 				);

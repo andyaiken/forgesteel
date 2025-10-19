@@ -30,7 +30,23 @@ Most animals are not monsters, but some are twisted by magic and malice to becom
 			name: 'Animal Notation',
 			description: `When building an animal by adding traits to a stat block, you can use a shorthand to describe the animal. For example, a dire wolf might be denoted as “Predator B: Swiftness, Pack, Hunter” to indicate that you’re using the Predator B stat block with the Swiftness, Pack, and Hunter traits.
 
-The Example Animals table breaks out a number of animals using this notation. Selected traits are listed in order by category—mobility, defensive, offensive, and supernatural.`
+The Example Animals table breaks out a number of animals using this notation. Selected traits are listed in order by category—mobility, defensive, offensive, and supernatural.
+
+| Animal          | Environment                  | Stat Block   | Animal Traits                          | EV | Description                                                                                         |
+|:----------------|:-----------------------------|:-------------|:---------------------------------------|:---|:----------------------------------------------------------------------------------------------------|
+| Rot bat         | Caves, desolate battlefields | Animal       | Flight, Hunter, Elemental (corruption) | 14 | This large, mangy bat has a skin-peeling bite and a terrible scream.                                |
+| Thrazz          | Throughout the timescape     | Animal       | Grappler, Hunter, Translation          | 12 | This hexocular, hexapod canine has no fur and knows no fear.                                        |
+| Wild horse      | Grasslands, canyons          | Big Animal A | Swiftness x2, Charger                  | 12 | A grazing equine, a wild horse has a remarkable top speed and a powerful charge.                    |
+| Quadrakanga     | Throughout the timescape     | Big Animal A | Leaping, Multilimb, Pouncer            | 14 | This highly aggressive four-armed kangaroo has a punch that can pierce steel.                       |
+| Rhinoceros      | Grasslands, deserts          | Big Animal B | Plated, Charger, Power                 | 16 | A horn-nosed ungulate with a plated hide, a rhinoceros has poor eyesight.                           |
+| Cass-o-war      | Canyons, jungles             | Big Animal B | Swiftness, Fearsome, Reach             | 16 | A cass-o-war is a long-limbed sprinting bird with a colorful collar of waddles and a whiplike tail. |
+| Bear            | Forests, arctic              | Predator A   | Climbing, Thick Hide, Unrelenting      | 12 | A bear is an imposing mammal with loose, thick skin and a huge appetite.                            |
+| Titan beetle    | Caves, jungles               | Predator A   | Flight, Plated, Multilimb              | 14 | This hardy beetle can stand on their hind legs, creating the appearance of an armored warrior.      |
+| Dire wolf       | Forests, swamps              | Predator B   | Swiftness, Pack, Hunter                | 16 | This massive wolf is covered in rot and spiked fur.                                                 |
+| Wode toad       | Any wode                     | Predator B   | Leaping, Grappler, Reach x2            | 18 | A giant hairy toad, the wode toad has clawed limbs and two tongues, one on both ends.               |
+| Piranha school  | Rivers, swamps               | Animal swarm | Swimming, Spiny, Frenzy                | 12 | Piranhas are an aggressive species of fanged fish that leave no remnants of their prey behind.      |
+| Slag mite swarm | Desolate battlefields        | Animal swarm | Burrowing, Venom                       | 12 | A species of silver bugs, slag mites have powerful mandibles they use to feed on iron and copper.   |
+`
 		}
 	],
 	malice: [],

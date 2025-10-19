@@ -520,11 +520,45 @@ export const LibraryListPage = (props: Props) => {
 			}
 		}
 
+		if (category === 'class') {
+			const heroClass = element as HeroClass;
+			switch (heroClass.type) {
+				case 'master':
+					tags.push('Master Class');
+					break;
+			}
+		}
+
+		if (category === 'culture') {
+			const culture = element as Culture;
+			tags.push(culture.type);
+		}
+
+		if (category === 'item') {
+			const item = element as Item;
+			tags.push(item.type);
+		}
+
+		if (category === 'imbuement') {
+			const imbuement = element as Imbuement;
+			tags.push(`Level ${imbuement.level}`);
+		}
+
 		if (category === 'kit') {
 			const kit = element as Kit;
 			if (kit.type) {
 				tags.push(kit.type);
 			}
+		}
+
+		if (category === 'perk') {
+			const perk = element as Perk;
+			tags.push(perk.list);
+		}
+
+		if (category === 'title') {
+			const title = element as Title;
+			tags.push(`Echelon ${title.echelon}`);
 		}
 
 		return tags.length > 0 ? tags : undefined;

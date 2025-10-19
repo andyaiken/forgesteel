@@ -7,6 +7,7 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Pill } from '@/components/controls/pill/pill';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -105,7 +106,7 @@ export const MontageRunPanel = (props: Props) => {
 			<div key={section.id} className='montage-section'>
 				<HeaderText>{section.name}</HeaderText>
 				<Markdown text={section.description} />
-				<div className='stats'>
+				<StatsRow>
 					<Field
 						orientation='vertical'
 						label='Successes'
@@ -126,7 +127,7 @@ export const MontageRunPanel = (props: Props) => {
 							</Space>
 						)}
 					/>
-				</div>
+				</StatsRow>
 				<HeaderText>{section.name || 'Montage'} Challenges</HeaderText>
 				{section.challenges.map((c, n) => getChallenge(c, index, n))}
 				{(section.twists.length > 0) || (section.twistInfo !== '') ? <HeaderText>Optional Twists</HeaderText> : null}

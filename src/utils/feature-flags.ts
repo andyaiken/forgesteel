@@ -34,7 +34,9 @@ export class FeatureFlags {
 	// #region User entitlement functions
 
 	static active = () => {
-		return FeatureFlags.all.filter(flag => FeatureFlags.hasFlag(flag.code));
+		return FeatureFlags.all
+			.sort((a, b) => a.description.localeCompare(b.description))
+			.filter(flag => FeatureFlags.hasFlag(flag.code));
 	};
 
 	static add = (code: number) => {

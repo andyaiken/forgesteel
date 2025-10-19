@@ -9,6 +9,7 @@ import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Career } from '@/models/career';
 import { CareerPanel } from '@/components/panels/elements/career-panel/career-panel';
 import { ClassPanel } from '@/components/panels/elements/class-panel/class-panel';
+import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
 import { ComplicationPanel } from '@/components/panels/elements/complication-panel/complication-panel';
 import { Culture } from '@/models/culture';
@@ -391,6 +392,12 @@ export const LibraryListPage = (props: Props) => {
 		return list;
 	};
 
+	const getGroupHeaders = () => {
+		const headers = getList().map(getGroupHeader);
+		const distinct = Collections.distinct(headers, x => x);
+		return Collections.sort(distinct, x => x || '');
+	};
+
 	const getElementPanel = () => {
 		let getPanel: (element: Element) => ReactNode = () => null;
 
@@ -529,39 +536,43 @@ export const LibraryListPage = (props: Props) => {
 			}
 		}
 
+		return tags.length > 0 ? tags : undefined;
+	};
+
+	const getGroupHeader = (element: Element) => {
 		if (category === 'culture') {
 			const culture = element as Culture;
-			tags.push(culture.type);
+			return culture.type;
 		}
 
 		if (category === 'item') {
 			const item = element as Item;
-			tags.push(item.type);
+			return item.type;
 		}
 
 		if (category === 'imbuement') {
 			const imbuement = element as Imbuement;
-			tags.push(`Level ${imbuement.level}`);
+			return `Level ${imbuement.level}`;
 		}
 
 		if (category === 'kit') {
 			const kit = element as Kit;
 			if (kit.type) {
-				tags.push(kit.type);
+				return kit.type;
 			}
 		}
 
 		if (category === 'perk') {
 			const perk = element as Perk;
-			tags.push(perk.list);
+			return perk.list;
 		}
 
 		if (category === 'title') {
 			const title = element as Title;
-			tags.push(`Echelon ${title.echelon}`);
+			return `Echelon ${title.echelon}`;
 		}
 
-		return tags.length > 0 ? tags : undefined;
+		return null;
 	};
 
 	const getElementToolbar = () => {
@@ -693,7 +704,78 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getSidebar = () => {
-		const list = getList();
+		const getElementListHeader = () => {
+			if (category === 'monster-group') {
+				return (
+					<div className='list-header'>
+						<Flex align='center' justify='space-between' gap={5}>
+							<Segmented
+								style={{ flex: '1 1 0' }}
+								block={true}
+								options={[
+									{ value: true, label: 'Groups' },
+									{ value: false, label: 'Monsters' }
+								]}
+								value={props.options.showMonsterGroups}
+								onChange={setShowMonsterGroups}
+							/>
+							<Button
+								type='text'
+								disabled={props.options.showMonsterGroups}
+								icon={showMonsterFilter ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
+								onClick={() => setShowMonsterFilter(!showMonsterFilter)}
+							/>
+						</Flex>
+						{
+							!props.options.showMonsterGroups && showMonsterFilter ?
+								<SelectablePanel style={{ padding: '15px 10px 10px 10px' }}>
+									<MonsterFilterPanel monsterFilter={monsterFilter} monsters={SourcebookLogic.getMonsters(props.sourcebooks)} includeNameFilter={false} onChange={setMonsterFilter} />
+								</SelectablePanel>
+								: null
+						}
+					</div>
+				);
+			}
+
+			return null;
+		};
+
+		const getElementListItems = () => {
+			const listItems: ReactNode[] = [];
+
+			getGroupHeaders().forEach(header => {
+				if (header) {
+					listItems.push(
+						<div key={`${header}-header`} className='selection-list-group-header'>
+							{header || 'List'}
+						</div>
+					);
+				}
+
+				const items = getList().filter(item => getGroupHeader(item) === header);
+
+				items.forEach(a => {
+					listItems.push(
+						<SelectorRow
+							key={a.id}
+							selected={selectedID === a.id}
+							content={(category === 'monster-group') && !props.options.showMonsterGroups ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category)}`}
+							info={getInfo(a)}
+							tags={getTags(a)}
+							onSelect={() => navigation.goToLibrary(category, a.id)}
+						/>
+					);
+				});
+
+				if (items.length === 0) {
+					listItems.push(
+						<Empty key={`${header}-empty`} />
+					);
+				}
+			});
+
+			return listItems;
+		};
 
 		return (
 			<div className={showSidebar ? 'selection-sidebar' : 'selection-sidebar closed'}>
@@ -739,54 +821,8 @@ export const LibraryListPage = (props: Props) => {
 								<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
 							</div>
 							<div className='selection-list elements'>
-								{
-									category === 'monster-group' ?
-										<div className='list-header'>
-											<Flex align='center' justify='space-between' gap={5}>
-												<Segmented
-													style={{ flex: '1 1 0' }}
-													block={true}
-													options={[
-														{ value: true, label: 'Groups' },
-														{ value: false, label: 'Monsters' }
-													]}
-													value={props.options.showMonsterGroups}
-													onChange={setShowMonsterGroups}
-												/>
-												<Button
-													type='text'
-													disabled={props.options.showMonsterGroups}
-													icon={showMonsterFilter ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
-													onClick={() => setShowMonsterFilter(!showMonsterFilter)}
-												/>
-											</Flex>
-											{
-												!props.options.showMonsterGroups && showMonsterFilter ?
-													<SelectablePanel style={{ padding: '15px 10px 10px 10px' }}>
-														<MonsterFilterPanel monsterFilter={monsterFilter} monsters={SourcebookLogic.getMonsters(props.sourcebooks)} includeNameFilter={false} onChange={setMonsterFilter} />
-													</SelectablePanel>
-													: null
-											}
-										</div>
-										: null
-								}
-								{
-									list.map(a => (
-										<SelectorRow
-											key={a.id}
-											selected={selectedID === a.id}
-											content={(category === 'monster-group') && !props.options.showMonsterGroups ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category)}`}
-											info={getInfo(a)}
-											tags={getTags(a)}
-											onSelect={() => navigation.goToLibrary(category, a.id)}
-										/>
-									))
-								}
-								{
-									list.length === 0 ?
-										<Empty />
-										: null
-								}
+								{getElementListHeader()}
+								{getElementListItems()}
 							</div>
 						</div>
 						: null

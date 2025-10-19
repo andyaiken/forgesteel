@@ -11,6 +11,7 @@ import { OptionsLogic } from '@/logic/options-logic';
 import { ReactNode } from 'react';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 
 import './encounter-difficulty-panel.scss';
 
@@ -73,12 +74,12 @@ export const EncounterDifficultyPanel = (props: Props) => {
 						tooltip={{ open: false }}
 					/>
 				</div>
-				<div className='stats'>
+				<StatsRow>
 					<Field orientation='vertical' label='Monsters' value={count} />
 					<Field orientation='vertical' label='Strength' value={strength} />
 					<Field orientation='vertical' label='Difficulty' value={difficulty} />
 					<Field orientation='vertical' label='Victories' value={victories} />
-				</div>
+				</StatsRow>
 				{warnings}
 			</div>
 		</ErrorBoundary>

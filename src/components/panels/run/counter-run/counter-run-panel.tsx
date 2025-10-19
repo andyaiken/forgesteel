@@ -2,6 +2,7 @@ import { Counter } from '@/models/counter';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -26,9 +27,9 @@ export const CounterRunPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='counter-run-panel' id={counter.id}>
 				<HeaderText level={1}>{counter.name || 'Unnamed Counter'}</HeaderText>
-				<div className='stats'>
+				<StatsRow>
 					<NumberSpin label='Value' min={0} max={100} value={counter.value} onChange={setValue} />
-				</div>
+				</StatsRow>
 			</div>
 		</ErrorBoundary>
 	);

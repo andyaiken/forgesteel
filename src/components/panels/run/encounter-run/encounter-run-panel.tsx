@@ -38,6 +38,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { Terrain } from '@/models/terrain';
 import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
 import { Utils } from '@/utils/utils';
@@ -157,8 +158,8 @@ export const EncounterRunPanel = (props: Props) => {
 		const victory = EncounterLogic.getEncounterVictory(encounter);
 
 		return (
-			<div className='stats'>
-				<NumberSpin min={0} value={encounter.round} onChange={setRound}>
+			<StatsRow>
+				<NumberSpin style={{ flex: '0 0 120px' }} min={0} value={encounter.round} onChange={setRound}>
 					<Field orientation='vertical' label='Round' value={encounter.round || '-'} />
 				</NumberSpin>
 				{
@@ -184,10 +185,10 @@ export const EncounterRunPanel = (props: Props) => {
 							</Space>
 						</Button>
 				}
-				<NumberSpin min={0} value={encounter.malice} onChange={setMalice}>
+				<NumberSpin style={{ flex: '0 0 120px' }} min={0} value={encounter.malice} onChange={setMalice}>
 					<Field orientation='vertical' label='Malice' value={encounter.malice} />
 				</NumberSpin>
-			</div>
+			</StatsRow>
 		);
 	};
 

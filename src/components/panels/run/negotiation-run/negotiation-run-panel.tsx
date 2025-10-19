@@ -8,6 +8,7 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationLogic } from '@/logic/negotiation-logic';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -75,7 +76,7 @@ export const NegotiationRunPanel = (props: Props) => {
 			<div className='negotiation-run-panel' id={negotiation.id}>
 				<HeaderText level={1}>{props.negotiation.name || 'Unnamed Negotiation'}</HeaderText>
 				<Markdown text={props.negotiation.description} />
-				<div className='stats'>
+				<StatsRow>
 					<Field
 						orientation='vertical'
 						label='Starting Attitude'
@@ -110,7 +111,7 @@ export const NegotiationRunPanel = (props: Props) => {
 							</>
 							: null
 					}
-				</div>
+				</StatsRow>
 				<Field label='Impression' value={`${negotiation.impression}: If a hero is famous to an NPC, they gain an edge on tests when making arguments to which the Flirt, Lead, or Persuade skill could be applied. If they are infamous to the NPC, they gain an edge on tests when making arguments to which the Brag, Interrogate, or Intimidate skill could be applied. A hero gains this edge even if they don’t have the appropriate skill.`} />
 				<div className='negotiation-content'>
 					<div>

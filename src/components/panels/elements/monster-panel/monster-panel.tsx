@@ -24,6 +24,7 @@ import { MonsterToken } from '@/components/panels/token/token';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { SummoningInfo } from '@/models/summon';
 
 import './monster-panel.scss';
@@ -100,13 +101,13 @@ export const MonsterPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<>
-							<div className='stats'>
+							<StatsRow>
 								<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
 								<Field orientation='vertical' label='Speed' value={speedStr} />
 								<Field orientation='vertical' label='Stamina' value={MonsterLogic.getStaminaDescription(props.monster)} />
 								<Field orientation='vertical' label='Stability' value={MonsterLogic.getStability(props.monster)} />
 								<Field orientation='vertical' label='Free Strike' value={MonsterLogic.getFreeStrikeDamage(props.monster)} />
-							</div>
+							</StatsRow>
 							{
 								![ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(props.monster)) ?
 									<Alert
@@ -116,12 +117,12 @@ export const MonsterPanel = (props: Props) => {
 									/>
 									: null
 							}
-							<div className='stats'>
+							<StatsRow>
 								{
 									[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
 										.map(ch => <Field key={ch} orientation='vertical' label={ch} value={MonsterLogic.getCharacteristic(props.monster, ch)} />)
 								}
-							</div>
+							</StatsRow>
 							{
 								signatureBonus || props.monster.withCaptain || (conditions.length > 0) || (immunities.length > 0) || (weaknesses.length > 0) || (features.length > 0) ?
 									<div className='features'>

@@ -11,6 +11,7 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { TerrainLabel } from '@/components/panels/monster-label/monster-label';
 import { TerrainLogic } from '@/logic/terrain-logic';
 import { Utils } from '@/utils/utils';
@@ -89,7 +90,7 @@ export const TerrainPanel = (props: Props) => {
 						<div>
 							{
 								props.updateTerrain ?
-									<div className='stats'>
+									<StatsRow>
 										{
 											terrain.stamina.perSquare ?
 												<NumberSpin min={0} value={terrain.state.squares} onChange={setSquares}>
@@ -100,7 +101,7 @@ export const TerrainPanel = (props: Props) => {
 										<NumberSpin min={0} value={terrain.state.staminaDamage} onChange={setStaminaDamage}>
 											<Field orientation='vertical' label='Damage' value={terrain.state.staminaDamage} />
 										</NumberSpin>
-									</div>
+									</StatsRow>
 									: null
 							}
 							<Field label='Size' value={terrain.size} />

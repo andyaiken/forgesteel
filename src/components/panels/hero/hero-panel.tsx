@@ -13,6 +13,7 @@ import { Complication } from '@/models/complication';
 import { ConditionLogic } from '@/logic/condition-logic';
 import { ConditionType } from '@/enums/condition-type';
 import { Culture } from '@/models/culture';
+import { CultureData } from '@/data/culture-data';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
@@ -1180,11 +1181,46 @@ export const HeroPanel = (props: Props) => {
 					>
 						{props.hero.name || 'Unnamed Hero'}
 					</HeaderText>
-					<Flex align='flex-start' justify='space-evenly'>
-						{props.hero.ancestry ? <Field orientation='vertical' label='Ancestry' value={props.hero.ancestry.name} /> : null}
-						{props.hero.career ? <Field orientation='vertical' label='Career' value={props.hero.career.name} /> : null}
-						{props.hero.class ? <Field orientation='vertical' label='Class' value={`${props.hero.class.name} (${props.hero.class.level})`} /> : null}
-					</Flex>
+					{
+						props.hero.ancestry ?
+							<Field
+								label='Ancestry'
+								value={props.hero.ancestry.name}
+							/>
+							: null
+					}
+					{
+						props.hero.culture && (props.hero.culture.id !== CultureData.bespoke.id) ?
+							<Field
+								label='Culture'
+								value={props.hero.culture.name}
+							/>
+							: null
+					}
+					{
+						props.hero.career ?
+							<Field
+								label='Career'
+								value={`${props.hero.career.name} (${props.hero.career.incitingIncidents.selected?.name || 'no inciting incident'})`}
+							/>
+							: null
+					}
+					{
+						props.hero.class ?
+							<Field
+								label='Class'
+								value={`${props.hero.class.name} (${[ `Level ${props.hero.class.level}`, ...props.hero.class.subclasses.filter(sc => sc.selected).map(sc => sc.name) ].join(' ')})`}
+							/>
+							: null
+					}
+					{
+						props.hero.complication ?
+							<Field
+								label='Complication'
+								value={props.hero.complication.name}
+							/>
+							: null
+					}
 				</div>
 			</ErrorBoundary>
 		);

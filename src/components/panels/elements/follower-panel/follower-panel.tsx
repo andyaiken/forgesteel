@@ -4,6 +4,7 @@ import { Follower } from '@/models/follower';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { PanelMode } from '@/enums/panel-mode';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 
 import './follower-panel.scss';
 
@@ -26,9 +27,9 @@ export const FollowerPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<>
-							<div className='stats'>
+							<StatsRow>
 								{props.follower.characteristics.map(ch => <Field key={ch.characteristic} orientation='vertical' label={ch.characteristic} value={ch.value} />)}
-							</div>
+							</StatsRow>
 							<Field label='Skills' value={props.follower.skills.sort().join(', ') || '(none)'} />
 							<Field label='Languages' value={[ 'Caelian', ...props.follower.languages ].sort().join(', ') || '(none)'} />
 						</>

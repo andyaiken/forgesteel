@@ -16,6 +16,7 @@ import { createRoot } from 'react-dom/client';
 import { initializeTheme } from '@/utils/initialize-theme';
 import localforage from 'localforage';
 
+import '@ant-design/v5-patch-for-react-19';
 import './index.scss';
 
 initializeTheme();

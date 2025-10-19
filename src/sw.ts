@@ -132,8 +132,8 @@ self.addEventListener('push', (event: Event) => {
 		const data = pushEvent.data.json() as { title: string; body: string };
 		const options: NotificationOptions = {
 			body: data.body,
-			icon: '/forgesteel/assets/shield.png',
-			badge: '/forgesteel/assets/shield.png',
+			icon: '/forgesteel/src/assets/shield.png',
+			badge: '/forgesteel/src/assets/shield.png',
 			data: {
 				dateOfArrival: Date.now(),
 				primaryKey: 1

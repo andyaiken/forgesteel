@@ -22,6 +22,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
+import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
@@ -747,7 +748,7 @@ export const LibraryListPage = (props: Props) => {
 				if (header) {
 					listItems.push(
 						<div key={`${header}-header`} className='selection-list-group-header'>
-							{header || 'List'}
+							<HeaderText level={3}>{header || 'List'}</HeaderText>
 						</div>
 					);
 				}

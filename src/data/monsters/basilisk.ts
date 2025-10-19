@@ -16,7 +16,7 @@ export const basilisk: MonsterGroup = {
 	information: [
 		{
 			id: 'basilisk-info-1',
-			name: 'Rasising Young',
+			name: 'Raising Young',
 			description: 'Basilisks typically live in mated pairs and raise small clutches of younglings from the comforts of damp caves. Adults prefer to subsist on berries, fish, fowl, and carrion, resorting to eating their petrified victims only when starving. By contrast, basilisk younglings can eat only petrified victims, and basilisks have been known to travel far from their nest to populated areas in search of prey for their babies.'
 		},
 		{

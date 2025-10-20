@@ -76,25 +76,31 @@ This is some initial feature text. It will be followed by a table.
 });
 
 describe.concurrent('divideFeatures', () => {
-	const features = [
-		FactoryLogic.feature.create({
-			id: 'df-1',
-			name: 'DF 1',
-			description: 'Line 1'
-		}),
-		FactoryLogic.feature.create({
-			id: 'df-2',
-			name: 'DF 2',
-			description: `
+	test('does expand a displayed feature if it will fit', () => {
+		const features = [
+			{
+				source: 'test',
+				feature: FactoryLogic.feature.create({
+					id: 'df-1',
+					name: 'DF 1',
+					description: 'Line 1'
+				})
+			},
+			{
+				source: 'test',
+				feature: FactoryLogic.feature.create({
+					id: 'df-2',
+					name: 'DF 2',
+					description: `
 Line 1
 
 Line 2
 
 Line 3`
-		})
-	];
+				})
+			}
+		];
 
-	test('does expand a displayed feature if it will fit', () => {
 		const result = SheetFormatter.divideFeatures(features, null, 10, 50, 1);
 		expect(result.displayed.length).toBe(2);
 		expect(result.displayed[0].feature.id).toBe('df-1');
@@ -103,12 +109,67 @@ Line 3`
 	});
 
 	test('does not expand a displayed feature if it might cause column balancing issues', () => {
+		const features = [
+			{
+				source: 'test',
+				feature: FactoryLogic.feature.create({
+					id: 'df-1',
+					name: 'DF 1',
+					description: 'Line 1'
+				})
+			},
+			{
+				source: 'test',
+				feature: FactoryLogic.feature.create({
+					id: 'df-2',
+					name: 'DF 2',
+					description: `
+Line 1
+
+Line 2
+
+Line 3`
+				})
+			}
+		];
+
 		const result = SheetFormatter.divideFeatures(features, null, 10, 50, 2);
 		expect(result.displayed.length).toBe(2);
 		expect(result.displayed[0].feature.id).toBe('df-1');
 		expect(result.displayed[0].display).toBe('full');
 		expect(result.displayed[1].feature.id).toBe('df-2');
 		expect(result.displayed[1].display).toBe('short');
+		expect(result.reference.length).toBe(1);
+		expect(result.reference[0].source).toBe('test');
+		expect(result.reference[0].feature.id).toBe('df-2');
+	});
+
+	test('should create an extra reference item for tables with more than 3 columns', () => {
+		const features = [ {
+			source: 'test',
+			feature: FactoryLogic.feature.create({
+				id: 'tf1',
+				name: 'Table Feature',
+				description: `
+This is some description of the table below.
+
+| Header 1 | Header 2 | Header 3 | Header 4 |
+|:---|:---:|:---:|---:|
+| Content 1 | Lorem Ipsum | Test 1 | Column 4 |
+| Content 2 | Lorem Ipsum | Test 2 | Column 4 |
+| Content 3 | Lorem Ipsum | Test 3 | Column 4 |`
+			})
+		} ];
+
+		const result = SheetFormatter.divideFeatures(features, null, 50, 50, 1);
+		expect(result.displayed.length).toBe(1);
+		expect(result.displayed[0].feature.id).toBe('tf1');
+		expect(result.displayed[0].display).toBe('short');
+
+		expect(result.reference.length).toBe(0);
+
+		expect(result.extraReferenceItems.length).toBe(1);
+		expect(result.extraReferenceItems[0].title).toBe('Table Feature: Header 1 Table');
 	});
 });
 
@@ -157,4 +218,84 @@ describe.concurrent('sortFeatures', () => {
 			expect(result).toBeGreaterThan(0);
 		}
 	});
+});
+
+describe('containsLargeTable', () => {
+	test.each([
+		[ 'Some text.' ],
+		[ 'Some text.\nMultiple\nLines' ],
+		[ `| A Table | With Three | Columns |
+| --- | --- | --- |
+| A Table | With Three | Columns |
+| A Table | With Three | Columns |` ]
+	])('returns false when there is not a table with more than 3 columns', (content: string) => {
+		const feature = {
+			description: content
+		} as Feature;
+
+		expect(SheetFormatter.containsLargeTable(feature)).toBe(false);
+	});
+
+	test.each([
+		[ `| A Table | With | FOUR | Columns |
+| --- | --- | --- | --- |
+| A Table | With | FOUR | Columns |
+| A Table | With | FOUR | Columns |` ],
+		[ `| A Table | With | FOUR | Columns |
+|:---|:---:|===:|===|
+| A Table | With | FOUR | Columns |
+| A Table | With | FOUR | Columns |` ]
+	])('returns true when there is a table with more than 3 columns', (content: string) => {
+		const feature = {
+			description: content
+		} as Feature;
+
+		expect(SheetFormatter.containsLargeTable(feature)).toBe(true);
+	});
+});
+
+describe('extractTable', () => {
+	test.each([
+		[ 'No table here' ],
+		[ '| Might | Look |\n|Like| A | Table|\n|But isnt|' ]
+	])('returns null when there is no table', (t: string) => {
+		expect(SheetFormatter.extractTable(t)).toBeNull();
+	});
+
+	test.each([
+		[ `|Simple|Table|
+|---|---|
+|Some|Content|`, '', `|Simple|Table|
+|---|---|
+|Some|Content|` ],
+		[ `Content Before
+
+		|Simple|Table|\n|---|---|\n|Some|Content|`, 'Content Before', '|Simple|Table|\n|---|---|\n|Some|Content|' ],
+		[ `Content Before
+|Simple|Table|\n|---|---|\n|Some|Content|
+		
+Content After`, 'Content Before\nContent After', '|Simple|Table|\n|---|---|\n|Some|Content|' ],
+		[ `Content Before
+			** Table Label**
+		|Simple|Table|\n|---|---|\n|Some|Content|`, 'Content Before', '|Simple|Table|\n|---|---|\n|Some|Content|' ]
+	])('Correctly extracts tables from features', (initial: string, after: string, table: string) => {
+		const result = SheetFormatter.extractTable(initial);
+		expect(result).not.toBeNull();
+		expect(result?.table).toBe(table);
+		expect(result?.leftover).toBe(after);
+	});
+
+	test.each([
+		[ 'No hint from content\n|Simple|Table|\n|---|---|\n|Some|Content|', 'Simple Table' ],
+		[ 'No hint from content\n| Simple 2  |Table|\n|---|---|\n|Some|Content|', 'Simple 2 Table' ],
+		[ '**Table Label**\n|Simple|Table|\n|---|---|\n|Some|Content|', 'Table Label' ],
+		[ '### Table Label\n|Simple|Table|\n|---|---|\n|Some|Content|', 'Table Label' ],
+		[ '\t### Table Label\n|Simple|Table|\n|---|---|\n|Some|Content|', 'Table Label' ]
+	])('correctly sets the table title', (text: string, expectedTitle: string) => {
+		const result = SheetFormatter.extractTable(text);
+		expect(result).not.toBeNull();
+		expect(result?.title).toBe(expectedTitle);
+	});
+
+	// future: multiple tables?
 });

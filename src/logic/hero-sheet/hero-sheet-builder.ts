@@ -44,16 +44,17 @@ export class HeroSheetBuilder {
 			standardAbilities: [],
 			followers: [],
 			featuresReferenceOther: [],
+			extraReferenceItems: [],
 
 			notes: hero.state.notes
 		};
 
-		let coveredFeatureIds: string[] = [];
+		const coveredFeatureIds: string[] = [];
 		const allFeatures = HeroLogic.getFeatures(hero);
 
 		// Package Contents handled within packages
 		const packageContents = allFeatures.filter(f => f.feature.type == FeatureType.PackageContent);
-		coveredFeatureIds = coveredFeatureIds.concat(packageContents.map(p => p.feature.id));
+		coveredFeatureIds.push(...packageContents.map(p => p.feature.id));
 
 		sheet.currentVictories = hero.state.victories;
 		sheet.wealth = hero.state.wealth;
@@ -66,7 +67,7 @@ export class HeroSheetBuilder {
 
 		const inventory = hero.state.inventory.concat(featureItems);
 		sheet.inventory = inventory.map(item => ClassicSheetBuilder.buildItemSheet(item, hero, options));
-		coveredFeatureIds = coveredFeatureIds.concat(inventory.flatMap(i => FeatureLogic.getFeaturesFromItem(i, hero).map(f => f.feature).map(f => f.id) || []));
+		coveredFeatureIds.push(...inventory.flatMap(i => FeatureLogic.getFeaturesFromItem(i, hero).map(f => f.feature).map(f => f.id) || []));
 
 		// #region Class
 		if (hero.class) {
@@ -163,7 +164,7 @@ export class HeroSheetBuilder {
 				.filter(f => !ClassicSheetLogic.isClassFeatureInKit(f));
 			sheet.modifierBenefits = SheetFormatter.convertFeaturesShort(kitFeatures);
 
-			coveredFeatureIds = coveredFeatureIds.concat(kitFeatures.map(f => f.id));
+			coveredFeatureIds.push(...kitFeatures.map(f => f.id));
 		} else if (modifiers) {
 			modifiers.forEach(modifier => {
 				if (modifier.name.match(' Augmentation')) {
@@ -207,7 +208,7 @@ export class HeroSheetBuilder {
 					return f;
 				});
 
-			coveredFeatureIds = coveredFeatureIds.concat(classFeatures.map(f => f.feature.id));
+			coveredFeatureIds.push(...classFeatures.map(f => f.feature.id));
 			classFeatures = classFeatures.filter(f => ClassicSheetLogic.includeFeature(f.feature, options));
 
 			const perkIds = classFeatures.map(f => f.feature)
@@ -241,12 +242,13 @@ export class HeroSheetBuilder {
 				classFeatureSpace -= 2 * extraLines;
 			}
 			classFeatureSpace = classFeatureSpace * numCols;
-			const dividedClassFeatures = SheetFormatter.divideFeatures(classFeatures.map(f => f.feature), hero, classFeatureSpace, classFeatureLineLen, numCols);
+			const dividedClassFeatures = SheetFormatter.divideFeatures(classFeatures, hero, classFeatureSpace, classFeatureLineLen, numCols);
 
 			sheet.classFeatures = SheetFormatter.enhanceFeatures(SheetFormatter.convertFeatures(dividedClassFeatures.displayed));
 
-			const referenceFeatures = classFeatures.filter(f => dividedClassFeatures.referenceIds.includes(f.feature.id));
-			sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(referenceFeatures);
+			const referenceFeatures = dividedClassFeatures.reference;
+			sheet.featuresReferenceOther.push(...referenceFeatures);
+			sheet.extraReferenceItems.push(...dividedClassFeatures.extraReferenceItems);
 		}
 		// #endregion
 
@@ -277,14 +279,14 @@ export class HeroSheetBuilder {
 		if (hero.career) {
 			sheet.career = this.buildCareerSheet(hero.career);
 
-			coveredFeatureIds = coveredFeatureIds.concat(hero.career.features.map(f => f.id));
+			coveredFeatureIds.push(...hero.career.features.map(f => f.id));
 		}
 
 		if (hero.complication) {
 			sheet.complication = this.buildComplicationSheet(hero.complication);
 
-			coveredFeatureIds = coveredFeatureIds.concat(sheet.complication.benefits.map(f => f.id));
-			coveredFeatureIds = coveredFeatureIds.concat(sheet.complication.drawbacks.map(f => f.id));
+			coveredFeatureIds.push(...sheet.complication.benefits.map(f => f.id));
+			coveredFeatureIds.push(...sheet.complication.drawbacks.map(f => f.id));
 		}
 
 		const skillsMap = new Map<string, string[]>();
@@ -302,21 +304,21 @@ export class HeroSheetBuilder {
 			sheet.allSkills.set(SkillList.Custom, customSkills.map(s => s.name));
 		}
 		sheet.skills = heroSkills.map(s => s.name);
-		coveredFeatureIds = coveredFeatureIds.concat(
-			allFeatures.filter(f => f.feature.type === FeatureType.SkillChoice)
-				.map(f => f.feature.id));
+		coveredFeatureIds.push(...allFeatures
+			.filter(f => f.feature.type === FeatureType.SkillChoice)
+			.map(f => f.feature.id));
 
 		// Culture
 		if (hero.culture) {
 			const cultureFeatures = FeatureLogic.getFeaturesFromCulture(hero.culture, hero).map(f => f.feature);
 			sheet.culture = hero.culture;
-			coveredFeatureIds = coveredFeatureIds.concat(cultureFeatures.map(f => f.id));
+			coveredFeatureIds.push(...cultureFeatures.map(f => f.id));
 		}
 
 		sheet.languages = HeroLogic.getLanguages(hero, sourcebooks).map(l => l.name);
-		coveredFeatureIds = coveredFeatureIds.concat(
-			allFeatures.filter(f => [ FeatureType.Language, FeatureType.LanguageChoice ].includes(f.feature.type))
-				.map(f => f.feature.id));
+		coveredFeatureIds.push(...allFeatures
+			.filter(f => [ FeatureType.Language, FeatureType.LanguageChoice ].includes(f.feature.type))
+			.map(f => f.feature.id));
 
 		// #region Ancestry + Perks (combined)
 		const combinedAncestryPerks: { feature: Feature, source: string }[] = [];
@@ -327,7 +329,7 @@ export class HeroSheetBuilder {
 				.filter(f => f.feature.type !== FeatureType.Choice)
 				.map(f => ({ feature: f.feature, source: f.source })));
 
-			coveredFeatureIds = coveredFeatureIds.concat(ancestryFeatures.map(f => f.feature.id));
+			coveredFeatureIds.push(...ancestryFeatures.map(f => f.feature.id));
 		}
 
 		combinedAncestryPerks.push(...HeroLogic.getPerks(hero)
@@ -354,20 +356,21 @@ export class HeroSheetBuilder {
 				perkLineLen = 75;
 			}
 		}
-		const divided = SheetFormatter.divideFeatures(combinedAncestryPerks.map(f => f.feature), hero, perkSpace * 2, perkLineLen, 2);
+		const divided = SheetFormatter.divideFeatures(combinedAncestryPerks, hero, perkSpace * 2, perkLineLen, 2);
 		sheet.ancestryTraitsPerksCombined = SheetFormatter.convertFeatures(divided.displayed);
 
-		const additional = combinedAncestryPerks.filter(f => divided.referenceIds.includes(f.feature.id));
-		sheet.featuresReferenceOther = sheet.featuresReferenceOther?.concat(additional);
-		coveredFeatureIds = coveredFeatureIds.concat(combinedAncestryPerks.map(f => f.feature.id));
+		const additional = divided.reference;
+		sheet.featuresReferenceOther.push(...additional);
+		coveredFeatureIds.push(...combinedAncestryPerks.map(f => f.feature.id));
+		sheet.extraReferenceItems.push(...divided.extraReferenceItems);
 		// #endregion
 
 		const titles = HeroLogic.getTitles(hero);
 		sheet.titles = titles;
-		coveredFeatureIds = coveredFeatureIds.concat(titles.flatMap(t => t.features.map(f => f.id)));
-		coveredFeatureIds = coveredFeatureIds.concat(
-			allFeatures.filter(f => [ FeatureType.TitleChoice ].includes(f.feature.type))
-				.map(f => f.feature.id));
+		coveredFeatureIds.push(...titles.flatMap(t => t.features.map(f => f.id)));
+		coveredFeatureIds.push(...allFeatures
+			.filter(f => [ FeatureType.TitleChoice ].includes(f.feature.type))
+			.map(f => f.feature.id));
 
 		sheet.projects = hero.state.projects.map(p => {
 			let characteristics = SheetFormatter.joinCommasOr(p.characteristic
@@ -397,16 +400,16 @@ export class HeroSheetBuilder {
 		const standard = HeroLogic.getAbilities(FactoryLogic.createHero([]), sourcebooks, true).map(a => a.ability);
 		sheet.standardAbilities = standard.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero));
 
-		coveredFeatureIds = coveredFeatureIds.concat(
-			allFeatures.filter(f => [ FeatureType.ClassAbility, FeatureType.Ability ].includes(f.feature.type))
-				.map(f => f.feature.id));
+		coveredFeatureIds.push(...allFeatures
+			.filter(f => [ FeatureType.ClassAbility, FeatureType.Ability ].includes(f.feature.type))
+			.map(f => f.feature.id));
 		// #endregion
 
 		const followers = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Companion ].includes(f.feature.type))
 			.map(f => f.feature);
 		sheet.followers = followers.map(f => this.buildFollowerCompanionSheet(f)).filter(s => !!s);
 
-		coveredFeatureIds = coveredFeatureIds.concat(followers.map(f => f.id));
+		coveredFeatureIds.push(...followers.map(f => f.id));
 
 		// Feature coverage check
 		const missedFeatures: { feature: Feature; source: string; }[] = [];

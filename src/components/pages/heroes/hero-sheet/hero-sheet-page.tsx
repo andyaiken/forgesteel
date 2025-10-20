@@ -1,5 +1,5 @@
 import { ConsumablesCard, LeveledTreasureCard, TrinketsCard } from '@/components/panels/classic-sheet/inventory-card/inventory-card';
-import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard } from '@/components/panels/classic-sheet/reference/reference-cards';
+import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MarkdownTableReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard } from '@/components/panels/classic-sheet/reference/reference-cards';
 import { ExtraCards, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
 import { CareerCard } from '@/components/panels/classic-sheet/career-card/career-card';
 import { ClassFeaturesCard } from '@/components/panels/classic-sheet/class-features-card/class-features-card';
@@ -41,10 +41,11 @@ interface Props {
 export const HeroSheetPage = (props: Props) => {
 	const hero = useMemo(() => props.hero, [ props.hero ]);
 
-	const character = useMemo(
-		() => HeroSheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options),
-		[ hero, props.sourcebooks, props.options ]
-	);
+	const character = HeroSheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options);
+	// const character = useMemo(
+	// 	() => HeroSheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options),
+	// 	[ hero, props.sourcebooks, props.options ]
+	// );
 
 	const sheetClasses = useMemo(
 		() => {
@@ -78,7 +79,7 @@ export const HeroSheetPage = (props: Props) => {
 		let lineWidth = layout.cardLineLen;
 
 		// Features / Reference / Other
-		if (character.featuresReferenceOther?.length) {
+		if (character.featuresReferenceOther.length) {
 			lineWidth = layout.cardGap + 2 * layout.cardLineLen;
 			let refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth);
 			let refW = 2;
@@ -102,6 +103,19 @@ export const HeroSheetPage = (props: Props) => {
 				width: refW,
 				height: refH,
 				shown: false
+			});
+		}
+
+		if (character.extraReferenceItems.length) {
+			lineWidth = ((layout.perRow - 1) * layout.cardGap) + (layout.perRow * layout.cardLineLen);
+			character.extraReferenceItems.forEach((refItem, i) => {
+				const refH = SheetFormatter.countLines(refItem.content, lineWidth);
+				required.unshift({
+					element: <MarkdownTableReferenceCard title={refItem.title} content={refItem.content} key={`reference-${i}-${refItem.title}`} />,
+					width: layout.perRow,
+					height: refH,
+					shown: false
+				});
 			});
 		}
 

@@ -4,17 +4,31 @@ import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
 import './reference-cards.scss';
 
-interface Props {
+interface RulesReferenceProps {
 	rule: RulesItem;
 }
 
-export const RulesReferenceCard = (props: Props) => {
+export const RulesReferenceCard = (props: RulesReferenceProps) => {
 	const rule = props.rule;
 	const c = rule.label.toLocaleLowerCase().split(' ').join('-');
 	return (
 		<div className={`${c} extra-reference card`} key={c}>
 			<h2>{rule.label}</h2>
 			<Markdown text={SheetFormatter.enhanceMarkdown(rule.content)} />
+		</div>
+	);
+};
+
+interface MarkdownTableRefProps {
+	title: string;
+	content: string;
+}
+
+export const MarkdownTableReferenceCard = (props: MarkdownTableRefProps) => {
+	return (
+		<div className='table-reference extra-reference card'>
+			<h2>{props.title}</h2>
+			<Markdown text={SheetFormatter.enhanceMarkdown(props.content)} />
 		</div>
 	);
 };

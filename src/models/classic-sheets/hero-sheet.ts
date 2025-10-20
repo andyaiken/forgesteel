@@ -129,9 +129,14 @@ export interface HeroSheet {
 	followers: FollowerSheet[];
 
 	// Other Features and Reference
-	featuresReferenceOther?: {
+	featuresReferenceOther: {
 		feature: Feature,
 		source: string
+	}[];
+
+	extraReferenceItems: {
+		title: string,
+		content: string
 	}[];
 
 	notes: string;

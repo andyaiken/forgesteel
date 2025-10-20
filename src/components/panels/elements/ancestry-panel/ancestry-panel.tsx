@@ -109,7 +109,9 @@ export const AncestryPanel = (props: Props) => {
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='ancestry-panel compact'>
-				<HeaderText>{props.ancestry.name || 'Unnamed Ancestry'}</HeaderText>
+				<HeaderText level={1}>
+					{props.ancestry.name || 'Unnamed Ancestry'}
+				</HeaderText>
 				<Markdown text={props.ancestry.description} />
 			</div>
 		);
@@ -123,7 +125,9 @@ export const AncestryPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className={className} id={props.ancestry.id}>
-				<HeaderText level={1}>{props.ancestry.name || 'Unnamed Ancestry'}</HeaderText>
+				<HeaderText level={1}>
+					{props.ancestry.name || 'Unnamed Ancestry'}
+				</HeaderText>
 				{getContent()}
 			</div>
 		</ErrorBoundary>

@@ -4,11 +4,16 @@ import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
 
+import pbds from '@/assets/powered-by-draw-steel.png';
+
 import './welcome-page.scss';
+
+type WelcomeType = 'player' | 'director-prep' | 'director-run' | 'creator';
 
 interface Props {
 	highlightAbout: boolean;
@@ -18,8 +23,6 @@ interface Props {
 	onNewHero: () => void;
 	onNewEncounter: () => void;
 }
-
-type WelcomeType = 'player' | 'director-prep' | 'director-run' | 'creator';
 
 export const WelcomePage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
@@ -32,57 +35,64 @@ export const WelcomePage = (props: Props) => {
 				<ErrorBoundary>
 					<div className='welcome-page-content'>
 						<div className='welcome-column'>
-							<HeaderText level={1}>Welcome to FORGE STEEL</HeaderText>
-							<div className='ds-text'>
+							<div className='ds-text centered-text'>
 								<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
 							</div>
-							<Flex justify='center' style={{ margin: '15px 0 10px 0' }}>
-								<Segmented
-									options={[
-										{
-											value: 'player',
-											label: (
-												<div className='welcome-tab-button'>
-													<div className='title'>Players</div>
-												</div>
-											)
-										},
-										{
-											value: 'director-prep',
-											label: (
-												<div className='welcome-tab-button'>
-													<div className='title'>Directors</div>
-													<div className='subtitle'>Prep Time</div>
-												</div>
-											)
-										},
-										{
-											value: 'director-run',
-											label: (
-												<div className='welcome-tab-button'>
-													<div className='title'>Directors</div>
-													<div className='subtitle'>Game Time</div>
-												</div>
-											)
-										},
-										{
-											value: 'creator',
-											label: (
-												<div className='welcome-tab-button'>
-													<div className='title'>Creators</div>
-												</div>
-											)
-										}
-									]}
-									value={page}
-									onChange={setPage}
-								/>
-							</Flex>
-							<WelcomeContent
-								type={page}
-								onNewHero={props.onNewHero}
-								onNewEncounter={props.onNewEncounter}
+							<Segmented
+								style={{ margin: '15px 0' }}
+								block={true}
+								options={[
+									{
+										value: 'player',
+										label: (
+											<div className='welcome-tab-button'>
+												<div className='title'>Players</div>
+											</div>
+										)
+									},
+									{
+										value: 'director-prep',
+										label: (
+											<div className='welcome-tab-button'>
+												<div className='title'>Directors</div>
+												<div className='subtitle'>Prep Time</div>
+											</div>
+										)
+									},
+									{
+										value: 'director-run',
+										label: (
+											<div className='welcome-tab-button'>
+												<div className='title'>Directors</div>
+												<div className='subtitle'>Game Time</div>
+											</div>
+										)
+									},
+									{
+										value: 'creator',
+										label: (
+											<div className='welcome-tab-button'>
+												<div className='title'>Creators</div>
+											</div>
+										)
+									}
+								]}
+								value={page}
+								onChange={setPage}
 							/>
+							<SelectablePanel>
+								<WelcomeContent
+									type={page}
+								/>
+								<WelcomeButtons
+									type={page}
+									onNewHero={props.onNewHero}
+									onNewEncounter={props.onNewEncounter}
+								/>
+							</SelectablePanel>
+							<div className='logo-container'>
+								<img src={pbds} />
+							</div>
 						</div>
 					</div>
 				</ErrorBoundary>
@@ -94,25 +104,14 @@ export const WelcomePage = (props: Props) => {
 
 interface WelcomeContentProps {
 	type: WelcomeType;
-	onNewHero: () => void;
-	onNewEncounter: () => void;
 }
 
 const WelcomeContent = (props: WelcomeContentProps) => {
-	const navigation = useNavigation();
-
 	switch (props.type) {
 		case 'player':
 			return (
 				<div className='welcome-section'>
-					<HeaderText
-						extra={
-							<Flex gap={5}>
-								<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>
-								<Button icon={<PlusOutlined />} onClick={props.onNewHero}>New Hero</Button>
-							</Flex>
-						}
-					>
+					<HeaderText>
 						For Players
 					</HeaderText>
 					<div className='ds-text'>
@@ -146,14 +145,7 @@ const WelcomeContent = (props: WelcomeContentProps) => {
 		case 'director-prep':
 			return (
 				<div className='welcome-section'>
-					<HeaderText
-						extra={
-							<Flex gap={5}>
-								<Button type='primary' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('adventure')}>Playbook</Button>
-								<Button icon={<PlusOutlined />} onClick={props.onNewEncounter}>New Encounter</Button>
-							</Flex>
-						}
-					>
+					<HeaderText>
 						For Directors: Prep Time
 					</HeaderText>
 					<div className='ds-text'>
@@ -184,9 +176,7 @@ const WelcomeContent = (props: WelcomeContentProps) => {
 		case 'director-run':
 			return (
 				<div className='welcome-section'>
-					<HeaderText
-						extra={<Button type='primary' icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Session</Button>}
-					>
+					<HeaderText>
 						For Directors: Game Time
 					</HeaderText>
 					<div className='ds-text'>
@@ -219,9 +209,7 @@ const WelcomeContent = (props: WelcomeContentProps) => {
 		case 'creator':
 			return (
 				<div className='welcome-section'>
-					<HeaderText
-						extra={<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>Library</Button>}
-					>
+					<HeaderText>
 						For Content Creators
 					</HeaderText>
 					<div className='ds-text'>
@@ -252,6 +240,53 @@ const WelcomeContent = (props: WelcomeContentProps) => {
 							Want to create a monster that's a mashup of two or three existing monsters? You can do that with a click.
 						</li>
 					</ul>
+				</div>
+			);
+	}
+};
+
+interface WelcomeButtonsProps {
+	type: WelcomeType;
+	onNewHero: () => void;
+	onNewEncounter: () => void;
+}
+
+const WelcomeButtons = (props: WelcomeButtonsProps) => {
+	const navigation = useNavigation();
+
+	switch (props.type) {
+		case 'player':
+			return (
+				<div className='welcome-buttons'>
+					<Flex align='center' justify='center' gap={10}>
+						<Button type='primary' icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>Heroes</Button>
+						<Button icon={<PlusOutlined />} onClick={props.onNewHero}>New Hero</Button>
+					</Flex>
+				</div>
+			);
+		case 'director-prep':
+			return (
+				<div className='welcome-buttons'>
+					<Flex align='center' justify='center' gap={10}>
+						<Button type='primary' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('adventure')}>Playbook</Button>
+						<Button icon={<PlusOutlined />} onClick={props.onNewEncounter}>New Encounter</Button>
+					</Flex>
+				</div>
+			);
+		case 'director-run':
+			return (
+				<div className='welcome-buttons'>
+					<Flex align='center' justify='center' gap={10}>
+						<Button type='primary' icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>Session</Button>
+					</Flex>
+				</div>
+			);
+		case 'creator':
+			return (
+				<div className='welcome-buttons'>
+					<Flex align='center' justify='center' gap={10}>
+						<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>Library</Button>
+					</Flex>
 				</div>
 			);
 	}

@@ -237,7 +237,9 @@ export const ClassPanel = (props: Props) => {
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='class-panel compact'>
-				<HeaderText>{props.heroClass.name || 'Unnamed Class'}</HeaderText>
+				<HeaderText level={1} tags={getTags()}>
+					{props.heroClass.name || 'Unnamed Class'}
+				</HeaderText>
 				<Markdown text={props.heroClass.description} />
 			</div>
 		);

@@ -69,7 +69,9 @@ export const SubclassPanel = (props: Props) => {
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='subclass-panel compact'>
-				<HeaderText>{props.subclass.name || 'Unnamed Subclass'}</HeaderText>
+				<HeaderText level={1}>
+					{props.subclass.name || 'Unnamed Subclass'}
+				</HeaderText>
 				<Markdown text={props.subclass.description} />
 			</div>
 		);

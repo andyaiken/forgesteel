@@ -67,7 +67,9 @@ export const DomainPanel = (props: Props) => {
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='domain-panel compact'>
-				<HeaderText>{props.domain.name || 'Unnamed Domain'}</HeaderText>
+				<HeaderText level={1}>
+					{props.domain.name || 'Unnamed Domain'}
+				</HeaderText>
 				<Markdown text={props.domain.description} />
 			</div>
 		);

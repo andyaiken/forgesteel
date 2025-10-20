@@ -162,7 +162,9 @@ export const MonsterGroupPanel = (props: Props) => {
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='monster-group-panel compact'>
-				<HeaderText level={1}>{props.monsterGroup.name || 'Unnamed Monster Group'}</HeaderText>
+				<HeaderText level={1}>
+					{props.monsterGroup.name || 'Unnamed Monster Group'}
+				</HeaderText>
 				<Markdown text={props.monsterGroup.description} />
 			</div>
 		);

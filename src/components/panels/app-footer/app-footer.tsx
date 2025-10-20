@@ -50,10 +50,16 @@ export const AppFooter = (props: Props) => {
 				}
 				<div className='action-buttons-panel'>
 					<SyncStatus />
-					<Button onClick={props.showReference}>Reference</Button>
-					<Button onClick={props.showRoll}>Roll</Button>
+					<Button onClick={props.showReference}>
+						{ isSmall ? 'Ref' : 'Reference' }
+					</Button>
+					<Button onClick={props.showRoll}>
+						Roll
+					</Button>
 					<Badge dot={props.highlightAbout}>
-						<Button onClick={props.showAbout}>About</Button>
+						<Button onClick={props.showAbout}>
+							{ isSmall ? 'Abt' : 'About' }
+						</Button>
 					</Badge>
 				</div>
 			</div>

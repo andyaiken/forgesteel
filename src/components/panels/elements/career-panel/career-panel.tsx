@@ -109,7 +109,9 @@ export const CareerPanel = (props: Props) => {
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='career-panel compact'>
-				<HeaderText>{props.career.name || 'Unnamed Career'}</HeaderText>
+				<HeaderText level={1}>
+					{props.career.name || 'Unnamed Career'}
+				</HeaderText>
 				<Markdown text={props.career.description} />
 			</div>
 		);
@@ -123,7 +125,9 @@ export const CareerPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className={className} id={props.career.id}>
-				<HeaderText level={1}>{props.career.name || 'Unnamed Career'}</HeaderText>
+				<HeaderText level={1}>
+					{props.career.name || 'Unnamed Career'}
+				</HeaderText>
 				{getContent()}
 			</div>
 		</ErrorBoundary>

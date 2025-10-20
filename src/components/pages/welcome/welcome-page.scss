@@ -28,7 +28,6 @@
 
 		.welcome-column {
 			.welcome-tab-button {
-				width: 70px;
 				height: 45px;
 				display: flex;
 				flex-direction: column;
@@ -50,8 +49,26 @@
 			}
 
 			.welcome-section {
+				margin-top: -10px;
+			}
+
+			.welcome-buttons {
+				border-top: 1px solid rgba(5, 5, 5, 0.06);
+				padding-top: 15px;
+
 				.ant-btn {
-					flex: 0 0 160px;
+					flex: 0 0 150px;
+				}
+			}
+
+			.logo-container {
+				margin-top: 10px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				>img {
+					height: 50px;
 				}
 			}
 		}
@@ -62,6 +79,14 @@ html[data-theme="dark"] {
 	.welcome-page {
 		.welcome-page-content {
 			background-color: rgb(55, 55, 55);
+
+			.welcome-column {
+				.logo-container {
+					>img {
+						filter: invert(1);
+					}
+				}
+			}
 		}
 	}
 }

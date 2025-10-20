@@ -425,10 +425,8 @@ export class SheetFormatter {
 	static extractTable = (text: string): { title: string, table: string, leftover: string } | null => {
 		let result = null;
 
-		// const table = text.match(/(?:^\s*\|(?:.*\|){2,}\s*(?:\n|$)){3,}/gm);
 		const tableAndLabel = text.match(/(?:^\s*(?:\*\*|#+\s+)(?<label>[^*]*)(?:\*\*)?(?:\n|$)+)?(?<table>(?:^\s*\|(?:.*\|){2,}\s*(?:\n|$)){3,})/m);
 		if (tableAndLabel && tableAndLabel.groups) {
-			// const tableContent = table[0].trim();
 			const tableContent = tableAndLabel.groups['table'].trim();
 			const firstHeaderCellMatch = tableContent.match(/(?:^\|([^|]*)\|)/m);
 			let titleLabel = 'Table';

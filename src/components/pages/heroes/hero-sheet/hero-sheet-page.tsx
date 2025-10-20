@@ -41,11 +41,10 @@ interface Props {
 export const HeroSheetPage = (props: Props) => {
 	const hero = useMemo(() => props.hero, [ props.hero ]);
 
-	const character = HeroSheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options);
-	// const character = useMemo(
-	// 	() => HeroSheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options),
-	// 	[ hero, props.sourcebooks, props.options ]
-	// );
+	const character = useMemo(
+		() => HeroSheetBuilder.buildHeroSheet(hero, props.sourcebooks, props.options),
+		[ hero, props.sourcebooks, props.options ]
+	);
 
 	const sheetClasses = useMemo(
 		() => {

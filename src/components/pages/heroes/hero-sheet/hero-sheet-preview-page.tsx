@@ -1,5 +1,6 @@
 import { Divider, Drawer, FloatButton, Segmented, Select, SelectProps, Space, Tag } from 'antd';
 import { useMemo, useState } from 'react';
+import { AbilityData } from '@/data/ability-data';
 import { Career } from '@/models/career';
 import { CareerCard } from '@/components/panels/classic-sheet/career-card/career-card';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
@@ -114,7 +115,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 	};
 
 	const standardAbilityOptions: SelectProps['options'] = [];
-	const standardAbilities = HeroLogic.getAbilities(FactoryLogic.createHero([]), [], true)
+	const standardAbilities = HeroLogic.getAbilities(FactoryLogic.createHero([]), [], AbilityData.standardAbilities.map(a => a.id))
 		.map(a => ClassicSheetBuilder.buildAbilitySheet(a.ability, undefined));
 	standardAbilities.sort(SheetFormatter.sortAbilitiesByType);
 	standardAbilities.forEach(a => {

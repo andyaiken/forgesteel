@@ -108,10 +108,6 @@ export class OptionsUpdateLogic {
 			options.playerGridSize = 50;
 		}
 
-		if (options.showStandardAbilities === undefined) {
-			options.showStandardAbilities = false;
-		}
-
 		if (options.shownStandardAbilities === undefined) {
 			options.shownStandardAbilities = [];
 		}

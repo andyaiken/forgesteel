@@ -289,7 +289,7 @@ export const ClassSection = (props: Props) => {
 			{
 				props.hero.class && (!isSmall || (choicesByLevel.length === 0)) ?
 					<div className={columnClassName} id='class-selected'>
-						<SelectablePanel showShadow={false}>
+						<SelectablePanel>
 							<ClassPanel heroClass={props.hero.class} hero={props.hero} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>

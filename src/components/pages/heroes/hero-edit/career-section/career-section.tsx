@@ -106,7 +106,7 @@ export const CareerSection = (props: Props) => {
 				{
 					props.hero.career && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='career-selected'>
-							<SelectablePanel showShadow={false}>
+							<SelectablePanel>
 								<CareerPanel career={props.hero.career} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>

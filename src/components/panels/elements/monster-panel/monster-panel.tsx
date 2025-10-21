@@ -181,7 +181,7 @@ export const MonsterPanel = (props: Props) => {
 							{
 								abilities.length > 0 ?
 									<div className='abilities'>
-										{abilities.map(a => <SelectablePanel key={a.id} showShadow={false} onSelect={() => setSelectedAbility(a)}><AbilityPanel ability={a} monster={props.monster} mode={PanelMode.Full} /></SelectablePanel>)}
+										{abilities.map(a => <SelectablePanel key={a.id} onSelect={() => setSelectedAbility(a)}><AbilityPanel ability={a} monster={props.monster} mode={PanelMode.Full} /></SelectablePanel>)}
 									</div>
 									: null
 							}

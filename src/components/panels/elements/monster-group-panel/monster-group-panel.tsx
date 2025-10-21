@@ -127,17 +127,23 @@ export const MonsterGroupPanel = (props: Props) => {
 					break;
 			}
 
+			const options: { value: string, label: string }[] = [
+				{ value: 'overview', label: 'Overview' }
+			];
+			if (props.monsterGroup.malice.length > 0) {
+				options.push({ value: 'malice', label: 'Malice' });
+			}
+			options.push({ value: 'monsters', label: 'Monsters' });
+			if (props.monsterGroup.addOns.length > 0) {
+				options.push({ value: 'customization', label: 'Customization' });
+			}
+
 			return (
 				<>
 					<Segmented
 						style={{ marginBottom: '20px' }}
 						block={true}
-						options={[
-							{ value: 'overview', label: 'Overview' },
-							{ value: 'malice', label: 'Malice' },
-							{ value: 'monsters', label: 'Monsters' },
-							{ value: 'customization', label: 'Customization' }
-						]}
+						options={options}
 						value={page}
 						onChange={setPage}
 					/>

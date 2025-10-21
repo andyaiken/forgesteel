@@ -9,7 +9,6 @@ import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
 import { ConditionType } from '@/enums/condition-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
-import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -200,7 +199,7 @@ export class HeroSheetBuilder {
 
 		// #region Class Features
 		if (hero.class) {
-			const refAbilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
+			const refAbilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
 			let classFeatures = FeatureLogic.getFeaturesFromClass(hero.class, hero)
 				.filter(f => !coveredFeatureIds.includes(f.feature.id))
 				.map(f => {
@@ -391,14 +390,13 @@ export class HeroSheetBuilder {
 		});
 
 		// #region Abilities
-		const abilities = HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability);
+		const abilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
 
 		const freeStrikes = [ AbilityData.freeStrikeMelee, AbilityData.freeStrikeRanged ]
 			.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero));
 		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero)).concat(freeStrikes);
 
-		const standard = HeroLogic.getAbilities(FactoryLogic.createHero([]), sourcebooks, true).map(a => a.ability);
-		sheet.standardAbilities = standard.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero));
+		sheet.standardAbilities = AbilityData.standardAbilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero));
 
 		coveredFeatureIds.push(...allFeatures
 			.filter(f => [ FeatureType.ClassAbility, FeatureType.Ability ].includes(f.feature.type))

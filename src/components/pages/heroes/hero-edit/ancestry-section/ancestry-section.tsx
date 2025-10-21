@@ -68,7 +68,7 @@ export const AncestrySection = (props: Props) => {
 			{
 				props.hero.ancestry && (!isSmall || (choices.length === 0)) ?
 					<div className={columnClassName} id='ancestry-selected'>
-						<SelectablePanel showShadow={false}>
+						<SelectablePanel>
 							<AncestryPanel ancestry={props.hero.ancestry} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>

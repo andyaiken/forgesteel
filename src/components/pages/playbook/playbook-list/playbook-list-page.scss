@@ -30,6 +30,12 @@
 				gap: 5px;
 			}
 
+			@media (max-width: 420px) {
+				.selection-toolbar > * {
+					max-width: 200px;
+				}
+			}
+
 			.selection-content {
 				flex: 1 1 0;
 				display: flex;

@@ -205,7 +205,7 @@ export class HeroUpdateLogic {
 		HeroLogic.getTitles(hero).flatMap(t => t.features).forEach(FeatureUpdateLogic.updateFeature);
 
 		HeroLogic.getFeatures(hero).map(f => f.feature).forEach(FeatureUpdateLogic.updateFeature);
-		HeroLogic.getAbilities(hero, sourcebooks, false).map(a => a.ability).forEach(AbilityUpdateLogic.updateAbility);
+		HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability).forEach(AbilityUpdateLogic.updateAbility);
 
 		const x = hero.state as unknown as { heroicResource: number | undefined };
 		if (x.heroicResource) {

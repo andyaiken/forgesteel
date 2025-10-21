@@ -190,7 +190,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 				{
 					props.hero.culture && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='culture-selected'>
-							<SelectablePanel showShadow={false}>
+							<SelectablePanel>
 								<CulturePanel culture={props.hero.culture} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>

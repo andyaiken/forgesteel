@@ -1001,14 +1001,13 @@ export class FactoryLogic {
 			singlePage: false,
 			separateInventoryFeatures: false,
 			showSkillsInGroups: true,
-			showStandardAbilities: true,
 			dimUnavailableAbilities: true,
 			showSources: true,
 			includePlayState: true,
 			compactView: false,
 			abilityWidth: PanelWidth.Medium,
-			// Classic Sheet
 			shownStandardAbilities: [],
+			// Classic Sheet
 			classicSheetPageSize: SheetPageSize.Letter,
 			colorSheet: true,
 			sheetTextColor: 'default',

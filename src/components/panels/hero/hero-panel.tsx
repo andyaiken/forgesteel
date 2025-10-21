@@ -131,7 +131,7 @@ export const HeroPanel = (props: Props) => {
 		const damageImmunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 		const damageWeaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
-		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
+		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.shownStandardAbilities);
 		const heroicResources = HeroLogic.getHeroicResources(props.hero);
 		const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 		const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
@@ -1075,7 +1075,7 @@ export const HeroPanel = (props: Props) => {
 		tabs.push('Hero');
 		tabs.push('Features');
 
-		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
+		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.shownStandardAbilities);
 		if (props.options.compactView) {
 			if (abilities.length > 0) {
 				tabs.push('Abilities');
@@ -1114,7 +1114,7 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	const getContent = (tab: string) => {
-		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
+		const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.shownStandardAbilities);
 		const mains = abilities.filter(a => a.ability.type.usage === AbilityUsage.MainAction);
 		const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
 		const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);

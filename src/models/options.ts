@@ -6,14 +6,13 @@ export interface Options {
 	singlePage: boolean;
 	separateInventoryFeatures: boolean;
 	showSkillsInGroups: boolean;
-	showStandardAbilities: boolean;
 	dimUnavailableAbilities: boolean;
 	showSources: boolean;
 	includePlayState: boolean;
 	compactView: boolean;
 	abilityWidth: PanelWidth;
-	// Classic Sheet
 	shownStandardAbilities: string[];
+	// Classic Sheet
 	classicSheetPageSize: SheetPageSize;
 	colorSheet: boolean;
 	sheetTextColor: 'light' | 'default' | 'dark';

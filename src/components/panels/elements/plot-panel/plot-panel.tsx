@@ -96,7 +96,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						const encounter = props.playbook.encounters.find(e => e.id === content.contentID);
 						if (encounter) {
 							return (
-								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('encounter', encounter.id)}>
+								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('encounter', encounter.id)}>
 									<EncounterPanel
 										encounter={encounter}
 										sourcebooks={props.sourcebooks}
@@ -113,7 +113,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						const montage = props.playbook.montages.find(m => m.id === content.contentID);
 						if (montage) {
 							return (
-								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('montage', montage.id)}>
+								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('montage', montage.id)}>
 									<MontagePanel
 										montage={montage}
 									/>
@@ -127,7 +127,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						const negotiation = props.playbook.negotiations.find(n => n.id === content.contentID);
 						if (negotiation) {
 							return (
-								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('negotiation', negotiation.id)}>
+								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('negotiation', negotiation.id)}>
 									<NegotiationPanel
 										negotiation={negotiation}
 									/>
@@ -141,7 +141,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						const map = props.playbook.tacticalMaps.find(tm => tm.id === content.contentID);
 						if (map) {
 							return (
-								<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('tactical-map', map.id)}>
+								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('tactical-map', map.id)}>
 									<HeaderText level={1}>{map.name || 'Unnamed Map'}</HeaderText>
 									<div className='tactical-map-container'>
 										<TacticalMapPanel
@@ -163,7 +163,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 				switch (content.type) {
 					case 'follower':
 						return (
-							<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }}>
+							<SelectablePanel style={{ overflow: 'hidden' }}>
 								<FollowerPanel
 									follower={content.content as Follower}
 								/>
@@ -172,7 +172,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						);
 					case 'item':
 						return (
-							<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }}>
+							<SelectablePanel style={{ overflow: 'hidden' }}>
 								<ItemPanel
 									item={content.content as Item}
 									options={props.options}
@@ -182,7 +182,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						);
 					case 'monster':
 						return (
-							<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }}>
+							<SelectablePanel style={{ overflow: 'hidden' }}>
 								<MonsterPanel
 									monster={content.content as Monster}
 									options={props.options}
@@ -192,7 +192,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						);
 					case 'title':
 						return (
-							<SelectablePanel showShadow={false} style={{ overflow: 'hidden' }}>
+							<SelectablePanel style={{ overflow: 'hidden' }}>
 								<TitlePanel
 									title={content.content as Title}
 									options={props.options}

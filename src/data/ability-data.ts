@@ -369,4 +369,32 @@ If you have a bane or double bane on the power roll against the target, you canâ
 	});
 
 	// #endregion
+
+	static standardAbilities = [
+		// Main
+		AbilityData.charge,
+		AbilityData.defend,
+		AbilityData.freeStrike,
+		AbilityData.heal,
+		AbilityData.swap,
+		// Maneuver
+		AbilityData.aidAttack,
+		AbilityData.catchBreath,
+		AbilityData.clawDirt,
+		AbilityData.escapeGrab,
+		AbilityData.goProne,
+		AbilityData.grab,
+		AbilityData.hide,
+		AbilityData.knockback,
+		AbilityData.makeAssistTest,
+		AbilityData.search,
+		AbilityData.standUp,
+		AbilityData.useConsumable,
+		// Move
+		AbilityData.advance,
+		AbilityData.disengage,
+		AbilityData.ride,
+		// Trigger
+		AbilityData.opportunityAttack
+	];
 }

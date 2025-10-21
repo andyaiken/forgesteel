@@ -93,7 +93,7 @@ export class HeroLogic {
 		});
 	};
 
-	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], includeStandard: boolean) => {
+	static getAbilities = (hero: Hero, sourcebooks: Sourcebook[], standardAbilityIDs: string[]) => {
 		const choices: { ability: Ability, source: string }[] = [];
 
 		HeroLogic.getFeatures(hero)
@@ -138,32 +138,9 @@ export class HeroLogic {
 			})
 			.sort((a, b) => a.ability.type.usage.localeCompare(b.ability.type.usage));
 
-		if (includeStandard) {
-			abilities.push({ ability: AbilityData.advance, source: 'Standard' });
-			abilities.push({ ability: AbilityData.disengage, source: 'Standard' });
-			abilities.push({ ability: AbilityData.ride, source: 'Standard' });
-
-			abilities.push({ ability: AbilityData.aidAttack, source: 'Standard' });
-			abilities.push({ ability: AbilityData.catchBreath, source: 'Standard' });
-			abilities.push({ ability: AbilityData.clawDirt, source: 'Standard' });
-			abilities.push({ ability: AbilityData.escapeGrab, source: 'Standard' });
-			abilities.push({ ability: AbilityData.goProne, source: 'Standard' });
-			abilities.push({ ability: AbilityData.grab, source: 'Standard' });
-			abilities.push({ ability: AbilityData.hide, source: 'Standard' });
-			abilities.push({ ability: AbilityData.knockback, source: 'Standard' });
-			abilities.push({ ability: AbilityData.makeAssistTest, source: 'Standard' });
-			abilities.push({ ability: AbilityData.search, source: 'Standard' });
-			abilities.push({ ability: AbilityData.standUp, source: 'Standard' });
-			abilities.push({ ability: AbilityData.useConsumable, source: 'Standard' });
-
-			abilities.push({ ability: AbilityData.charge, source: 'Standard' });
-			abilities.push({ ability: AbilityData.defend, source: 'Standard' });
-			abilities.push({ ability: AbilityData.freeStrike, source: 'Standard' });
-			abilities.push({ ability: AbilityData.heal, source: 'Standard' });
-			abilities.push({ ability: AbilityData.swap, source: 'Standard' });
-
-			abilities.push({ ability: AbilityData.opportunityAttack, source: 'Standard' });
-		}
+		AbilityData.standardAbilities
+			.filter(a => standardAbilityIDs.includes(a.id))
+			.forEach(a => abilities.push({ ability: a, source: 'Standard' }));
 
 		return abilities.map(a => {
 			const customization = hero.abilityCustomizations.find(ac => ac.abilityID === a.ability.id) || null;

@@ -1,20 +1,20 @@
-import { Divider, Segmented, Select, SelectProps, Space, Tag, Tooltip } from 'antd';
-import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
+import { Button, Divider, Drawer, Segmented, Select, Space, Tooltip } from 'antd';
+import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Hero } from '@/models/hero';
-import { HeroLogic } from '@/logic/hero-logic';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelWidth } from '@/enums/panel-width';
-import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SheetPageSize } from '@/enums/sheet-page-size';
+import { StandardAbilitySelectModal } from '@/components/modals/select/standard-ability-select/standard-ability-select-modal';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useState } from 'react';
 
 import './options-panel.scss';
+
 interface Props {
 	mode: 'hero-modern' | 'hero-classic' | 'library' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'tactical-map' | 'session' | 'player';
 	options: Options;
@@ -23,6 +23,8 @@ interface Props {
 }
 
 export const OptionsPanel = (props: Props) => {
+	const [ showAbilitySelector, setShowAbilitySelector ] = useState<boolean>(false);
+
 	const setSinglePage = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.singlePage = value;
@@ -38,12 +40,6 @@ export const OptionsPanel = (props: Props) => {
 	const setShowSkillsInGroups = (value: boolean) => {
 		const copy = Utils.copy(props.options);
 		copy.showSkillsInGroups = value;
-		props.setOptions(copy);
-	};
-
-	const setShowStandardAbilities = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.showStandardAbilities = value;
 		props.setOptions(copy);
 	};
 
@@ -221,24 +217,69 @@ export const OptionsPanel = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const includedStandardAbilitiesChanged = (value: string | string[]) => {
+	const setShownStandardAbilities = (value: string | string[]) => {
 		const copy = Utils.copy(props.options);
 		copy.shownStandardAbilities = [ value ].flat(1);
 		props.setOptions(copy);
 	};
 
-	const standardAbilityOptions: SelectProps['options'] = [];
-	const standardAbilities = HeroLogic.getAbilities(FactoryLogic.createHero([]), [], true)
-		.map(a => ClassicSheetBuilder.buildAbilitySheet(a.ability, undefined));
-	standardAbilities.sort(SheetFormatter.sortAbilitiesByType);
-	standardAbilities.forEach(a => {
-		standardAbilityOptions.push({
-			value: a.id,
-			label: <div className='ds-text'>{a.name} <Tag>{a.actionType}</Tag></div>
-		});
-	});
-
 	const getContent = () => {
+		const getShownStandardAbilitiesSection = () => {
+			const getValue = () => {
+				if (props.options.shownStandardAbilities.length === AbilityData.standardAbilities.length) {
+					return 'all';
+				}
+
+				if (props.options.shownStandardAbilities.length === 0) {
+					return 'none';
+				}
+
+				return 'custom';
+			};
+
+			const setValue = (value: string) => {
+				switch (value) {
+					case 'all':
+						setShownStandardAbilities(AbilityData.standardAbilities.map(a => a.id));
+						break;
+					case 'none':
+						setShownStandardAbilities([]);
+						break;
+					case 'custom':
+						setShowAbilitySelector(true);
+						break;
+				}
+			};
+
+			return (
+				<>
+					<Divider size='small'>Show Standard Abilities</Divider>
+					<Segmented
+						block={true}
+						options={[
+							{ value: 'none', label: 'None' },
+							{ value: 'custom', label: 'Custom' },
+							{ value: 'all', label: 'All' }
+						]}
+						value={getValue()}
+						onChange={setValue}
+					/>
+					{
+						getValue() === 'custom' ?
+							<Button block={true} onClick={() => setShowAbilitySelector(true)}>Select Abilities</Button>
+							: null
+					}
+					<Drawer open={showAbilitySelector} onClose={() => setShowAbilitySelector(false)} closeIcon={null} width='500px'>
+						<StandardAbilitySelectModal
+							abilityIDs={props.options.shownStandardAbilities}
+							onSelect={setShownStandardAbilities}
+							onClose={() => setShowAbilitySelector(false)}
+						/>
+					</Drawer>
+				</>
+			);
+		};
+
 		const getParties = () => {
 			return Collections
 				.distinct(props.heroes.map(h => h.folder), f => f)
@@ -285,9 +326,9 @@ export const OptionsPanel = (props: Props) => {
 					<>
 						<Toggle label='Separate inventory features' value={props.options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 						<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
-						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
 						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 						<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
+						{getShownStandardAbilitiesSection()}
 						<Divider>View</Divider>
 						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
 						<Toggle label='Compact' value={props.options.compactView} onChange={setCompactView} />
@@ -312,13 +353,6 @@ export const OptionsPanel = (props: Props) => {
 					<>
 						<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
 						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
-						<Divider size='small'>Included Standard Abilities</Divider>
-						<Select
-							mode='tags'
-							placeholder='Included Standard Abilities'
-							onChange={includedStandardAbilitiesChanged}
-							options={standardAbilityOptions}
-						/>
 						<Divider size='small'>Text Color</Divider>
 						<Segmented
 							name='textColor'
@@ -331,7 +365,7 @@ export const OptionsPanel = (props: Props) => {
 							value={props.options.sheetTextColor}
 							onChange={changeTextColor}
 						/>
-						<Divider size='small'>Include Class Features</Divider>
+						<Divider size='small'>Show Class Features</Divider>
 						<Segmented
 							name='abilitySort'
 							block={true}
@@ -364,6 +398,7 @@ export const OptionsPanel = (props: Props) => {
 							value={props.options.featuresInclude}
 							onChange={setFeaturesInclude}
 						/>
+						{getShownStandardAbilitiesSection()}
 						<Divider>Layout</Divider>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Segmented

@@ -321,7 +321,8 @@ main#classic-sheet {
                 flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
             }
 
-            .feature-reference.wide {
+            .feature-reference.wide,
+            .table-reference.card {
                 flex-basis: 100%;
             }
         }

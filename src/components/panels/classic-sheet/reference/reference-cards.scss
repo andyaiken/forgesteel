@@ -27,3 +27,22 @@
         }
     }
 }
+
+#classic-sheet .hero-sheet .table-reference.card {
+    table {
+        tr {
+            border-bottom: 1px solid common.$color-light;
+            &:has(th) {
+                border-bottom: 2px solid common.$color-medium;
+            }
+
+            &:nth-child(odd) td {
+                background-color: common.$color-extra-light;
+            }
+
+            th {
+                font-weight: 600;
+            }
+        }
+    }
+}

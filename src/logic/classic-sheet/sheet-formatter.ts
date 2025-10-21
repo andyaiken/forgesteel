@@ -145,14 +145,20 @@ export class SheetFormatter {
 		return f.name.includes('Persistent Magic');
 	};
 
-	static divideFeatures = (features: Feature[], hero: Hero | null, availableSpace: number, lineLength: number = 50, columns: number = 1) => {
+	// Takes a list of features for a given Hero, as well as some info about how much display space is available on the sheet,
+	// and divides the features into those that can be displayed within that space, and those that need to go in the
+	// overflow/reference space.
+	static divideFeatures = (sourcedFeatures: { feature: Feature, source: string }[], hero: Hero | null, availableSpace: number, lineLength: number = 50, columns: number = 1) => {
 		const displayed: { feature: Feature, display: 'short' | 'full' }[] = [];
-		const reference: Feature[] = [];
+		const reference: { feature: Feature, source: string }[] = [];
+		const extraRefItems: { title: string, content: string }[] = [];
 
-		features.sort(this.sortFeatures);
+		sourcedFeatures.sort((a, b) => this.sortFeatures(a.feature, b.feature));
 		let size = 0;
 		let longest = 0;
-		features.forEach(f => {
+		sourcedFeatures.forEach(sf => {
+			const sourcedFeature = Utils.copy(sf);
+			const f = sourcedFeature.feature;
 			let display = false;
 			let fSize = 1;
 			let displaySize: 'short' | 'full' = 'full';
@@ -160,8 +166,29 @@ export class SheetFormatter {
 				fSize = this.calculateFeatureSize(f, hero, lineLength);
 				longest = Math.max(fSize, longest);
 				if (this.isLongFeature(f)) {
+					let addToReference = true;
 					displaySize = 'short';
-					reference.push(f);
+					if (this.containsLargeTable(f)) {
+						// pull out table
+						const tableContent = this.extractTable(f.description);
+						if (tableContent) {
+							f.description = tableContent.leftover;
+							extraRefItems.push({
+								title: `${f.name}: ${tableContent.title}`,
+								content: tableContent.table
+							});
+						}
+						// re-check size without table to see if needs to go in reference
+						fSize = this.calculateFeatureSize(f, hero, lineLength);
+						longest = Math.max(fSize, longest);
+						// can fit
+						if (!this.isLongFeature(f)) {
+							addToReference = false;
+						}
+					}
+					if (addToReference)
+						reference.push(sourcedFeature);
+
 					if (this.isVERYLongFeature(f)) {
 						fSize = 2;
 					}
@@ -177,7 +204,7 @@ export class SheetFormatter {
 			if (display) {
 				displayed.push({ feature: f, display: displaySize });
 			} else {
-				reference.push(f);
+				reference.push(sourcedFeature);
 			}
 		});
 
@@ -185,24 +212,24 @@ export class SheetFormatter {
 
 		// If we still have space, see if we can show full versions of some long features
 		if (size < availableSpace) {
-			const referenceWithSize = distinctReference.map(f => {
-				const fullSize = this.calculateFeatureSize(f, hero, lineLength, false);
+			const referenceWithSize = distinctReference.map(sf => {
+				const fullSize = this.calculateFeatureSize(sf.feature, hero, lineLength, false);
 				return {
-					feature: f,
+					feature: sf,
 					size: fullSize
 				};
 			}).sort((a, b) => a.size - b.size);
 
 			referenceWithSize.every(fws => {
-				const f = fws.feature;
+				const f = fws.feature.feature;
 				let prevSize = 0;
-				if (displayed.find(fd => fd.feature.id === fws.feature.id)) {
+				if (displayed.find(fd => fd.feature.id === f.id)) {
 					prevSize = this.isVERYLongFeature(f) ? 2 : this.calculateFeatureSize(f, hero, lineLength);
 				}
 				const newLongest = Math.max(longest, fws.size);
 				if (size - prevSize + fws.size + (newLongest * (columns - 1)) < availableSpace) {
-					distinctReference = distinctReference.filter(f => f.id !== fws.feature.id);
-					const d = displayed.find(fd => fd.feature.id === fws.feature.id);
+					distinctReference = distinctReference.filter(rf => rf.feature.id !== f.id);
+					const d = displayed.find(fd => fd.feature.id === f.id);
 					if (d) {
 						d.display = 'full';
 					} else {
@@ -219,7 +246,8 @@ export class SheetFormatter {
 
 		return {
 			displayed: displayed,
-			referenceIds: distinctReference.map(f => f.id)
+			reference: distinctReference,
+			extraReferenceItems: extraRefItems
 		};
 	};
 
@@ -385,6 +413,36 @@ export class SheetFormatter {
 		let size = 3;
 		size += this.countLines(rule.content, lineWidth - 4); // account for padding
 		return size;
+	};
+
+	static containsLargeTable = (feature: Feature): boolean => {
+		const fourColumns = feature.description.match(/\|([:\-=\s]{3,}\|){4,}/);
+
+		return fourColumns !== null;
+	};
+
+	// If there is a table in the given feature's description, remove it and return separately
+	static extractTable = (text: string): { title: string, table: string, leftover: string } | null => {
+		let result = null;
+
+		const tableAndLabel = text.match(/(?:^\s*(?:\*\*|#+\s+)(?<label>[^*]*)(?:\*\*)?(?:\n|$)+)?(?<table>(?:^\s*\|(?:.*\|){2,}\s*(?:\n|$)){3,})/m);
+		if (tableAndLabel && tableAndLabel.groups) {
+			const tableContent = tableAndLabel.groups['table'].trim();
+			const firstHeaderCellMatch = tableContent.match(/(?:^\|([^|]*)\|)/m);
+			let titleLabel = 'Table';
+			if (tableAndLabel.groups['label']) {
+				titleLabel = tableAndLabel.groups['label'].trim();
+			} else if (firstHeaderCellMatch) {
+				titleLabel = `${firstHeaderCellMatch[1].trim()} Table`;
+			}
+			const title = `${titleLabel}`;
+			result = {
+				title: title,
+				table: tableContent,
+				leftover: text.split(tableAndLabel[0]).map(s => s.trim()).join('\n').trim()
+			};
+		}
+		return result;
 	};
 
 	static featureTypeOrder: FeatureType[] = [

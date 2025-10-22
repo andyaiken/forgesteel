@@ -7,7 +7,7 @@ import './selectable-panel.scss';
 interface Props {
 	children: ReactNode;
 	watermark?: string;
-	showShadow?: boolean;
+	shadow?: boolean;
 	disabled?: boolean;
 	selected?: boolean;
 	style?: CSSProperties;
@@ -29,8 +29,8 @@ export const SelectablePanel = (props: Props) => {
 	if (props.disabled) {
 		className += ' disabled';
 	}
-	if ((props.showShadow !== false) && !props.disabled) {
-		className += ' shadow';
+	if ((props.shadow === false) || props.disabled) {
+		className += ' no-shadow';
 	}
 
 	return (

@@ -1,12 +1,13 @@
 .selectable-panel {
 	position: relative;
 	width: 100%;
-	border: 1px solid rgba(5, 5, 5, 0.3);
+	border: 1px solid rgba(5, 5, 5, 0.06);
 	background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
 	border-radius: 10px;
 	padding: 10px 20px 20px 20px;
 	display: flex;
 	flex-direction: column;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
 
 	&.selectable {
 		cursor: pointer;
@@ -23,9 +24,8 @@
 		opacity: 0.5;
 	}
 
-	&.shadow {
-		border-color: rgba(5, 5, 5, 0.06);
-		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+	&.no-shadow {
+		box-shadow: none;
 	}
 
 	.watermark {

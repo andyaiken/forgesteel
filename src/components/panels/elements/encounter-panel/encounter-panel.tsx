@@ -1,12 +1,14 @@
-import { Button, Space } from 'antd';
+import { Button, Segmented, Space } from 'antd';
 import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
+import { CreatureLogic } from '@/logic/creature-logic';
 import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '@/logic/encounter-logic';
-import { EncounterObjectivePanel } from '@/components/panels/elements/encounter-objective/encounter-objective-panel';
+import { EncounterObjectivePanel } from '@/components/panels/elements/encounter-objective-panel/encounter-objective-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeatureFlags } from '@/utils/feature-flags';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -23,6 +25,7 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
+import { useState } from 'react';
 
 import './encounter-panel.scss';
 
@@ -36,11 +39,22 @@ interface Props {
 }
 
 export const EncounterPanel = (props: Props) => {
-	const getEncounterGroups = () => {
-		if (props.mode !== PanelMode.Full) {
-			return null;
-		}
+	const [ page, setPage ] = useState<string>('overview');
 
+	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
+
+	const getOverview = () => {
+		return (
+			<>
+				<Markdown text={props.encounter.description} />
+				{props.encounter.objective ? <EncounterObjectivePanel objective={props.encounter.objective} mode={PanelMode.Full} /> : null}
+				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+				{props.encounter.notes.map(note => <Field key={note.id} label={note.name} value={<Markdown text={note.description} useSpan={true} />} />)}
+			</>
+		);
+	};
+
+	const getEncounterGroups = () => {
 		if ((props.encounter.groups.length === 0) && (props.encounter.terrain.length === 0)) {
 			return (
 				<Empty text='No monsters or terrain' />
@@ -113,25 +127,7 @@ export const EncounterPanel = (props: Props) => {
 		);
 	};
 
-	const getMeta = () => {
-		if (props.mode !== PanelMode.Full) {
-			return null;
-		}
-
-		return (
-			<div className='encounter-meta'>
-				{props.encounter.objective ? <EncounterObjectivePanel objective={props.encounter.objective} mode={PanelMode.Full} /> : null}
-				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
-				{props.encounter.notes.map(note => <Field key={note.id} label={note.name} value={<Markdown text={note.description} useSpan={true} />} />)}
-			</div>
-		);
-	};
-
 	const getStatBlocks = () => {
-		if (props.mode !== PanelMode.Full) {
-			return null;
-		}
-
 		const monsterData = EncounterLogic.getMonsterData(props.encounter);
 		if ((monsterData.length === 0) && (props.encounter.terrain.length === 0)) {
 			return null;
@@ -139,7 +135,6 @@ export const EncounterPanel = (props: Props) => {
 
 		return (
 			<>
-				<HeaderText level={1}>Stat Blocks</HeaderText>
 				<div className='encounter-stat-blocks'>
 					{
 						monsterData.map(data => {
@@ -181,11 +176,7 @@ export const EncounterPanel = (props: Props) => {
 		);
 	};
 
-	const getMaliceDetails = () => {
-		if (props.mode !== PanelMode.Full) {
-			return null;
-		}
-
+	const getMalice = () => {
 		const monsterGroups = EncounterLogic.getMonsterGroups(props.encounter, props.sourcebooks);
 		if (monsterGroups.length === 0) {
 			return null;
@@ -194,37 +185,99 @@ export const EncounterPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
-					monsterGroups.filter(group => group.malice.length > 0).map(group => (
-						<div key={group.id}>
-							<HeaderText level={1}>{group.name} Malice</HeaderText>
-							<div className='malice'>
-								{
-									group.malice.map(m => (
-										<SelectablePanel key={m.id}>
-											<FeaturePanel
-												feature={m}
-												options={props.options}
-												mode={PanelMode.Full}
-												cost={m.type === FeatureType.MaliceAbility ? m.data.ability.cost : m.data.cost}
-												repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
-											/>
-										</SelectablePanel>
-									))
+					monsterGroups.filter(group => group.malice.length > 0).map(group => {
+						let maxEchelon = 1;
+						props.encounter.groups.forEach(g => {
+							g.slots.forEach(s => {
+								const monster = group.monsters.find(m => m.id === s.monsterID);
+								if (monster) {
+									const echelon = CreatureLogic.getEchelon(monster.level);
+									maxEchelon = Math.max(maxEchelon, echelon);
 								}
+							});
+						});
+
+						return (
+							<div key={group.id}>
+								<HeaderText level={1}>{group.name} Malice</HeaderText>
+								<div className='encounter-malice'>
+									{
+										group.malice.filter(m => m.data.echelon <= maxEchelon).map(m => (
+											<SelectablePanel key={m.id}>
+												<FeaturePanel
+													feature={m}
+													options={props.options}
+													mode={PanelMode.Full}
+													cost={m.type === FeatureType.MaliceAbility ? m.data.ability.cost : m.data.cost}
+													repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
+												/>
+											</SelectablePanel>
+										))
+									}
+								</div>
 							</div>
-						</div>
-					))
+						);
+					})
 				}
 			</Space>
+		);
+	};
+
+	const getContent = () => {
+		if (isInteractive) {
+			let content = null;
+			switch (page) {
+				case 'overview':
+					content = getOverview();
+					break;
+				case 'groups':
+					content = getEncounterGroups();
+					break;
+				case 'statblocks':
+					content = getStatBlocks();
+					break;
+				case 'malice':
+					content = getMalice();
+					break;
+			}
+
+			return (
+				<>
+					<Segmented
+						style={{ marginBottom: '20px' }}
+						block={true}
+						options={[
+							{ value: 'overview', label: 'Overview' },
+							{ value: 'groups', label: 'Groups' },
+							{ value: 'statblocks', label: 'Stat Blocks' },
+							{ value: 'malice', label: 'Malice' }
+						]}
+						value={page}
+						onChange={setPage}
+					/>
+					{content}
+				</>
+			);
+		}
+
+		return (
+			<>
+				{getOverview()}
+				<HeaderText level={1}>Encounter Groups</HeaderText>
+				{getEncounterGroups()}
+				<HeaderText level={1}>Stat Blocks</HeaderText>
+				{getStatBlocks()}
+				{getMalice()}
+			</>
 		);
 	};
 
 	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
 	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
 
-	return (
-		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'encounter-panel' : 'encounter-panel compact'} id={props.mode === PanelMode.Full ? props.encounter.id : undefined}>
+	if (props.mode !== PanelMode.Full) {
+		return (
+			<div className='encounter-panel compact'>
 				<HeaderText
 					level={1}
 					tags={[ difficulty ]}
@@ -237,10 +290,25 @@ export const EncounterPanel = (props: Props) => {
 					{props.encounter.name || 'Unnamed Encounter'}
 				</HeaderText>
 				<Markdown text={props.encounter.description} />
-				{getEncounterGroups()}
-				{getMeta()}
-				{getStatBlocks()}
-				{getMaliceDetails()}
+			</div>
+		);
+	}
+
+	return (
+		<ErrorBoundary>
+			<div className='encounter-panel' id={props.encounter.id}>
+				<HeaderText
+					level={1}
+					tags={[ difficulty ]}
+					extra={
+						props.showTools ?
+							<Button type='text' icon={<InfoCircleOutlined />} onClick={props.showTools} />
+							: null
+					}
+				>
+					{props.encounter.name || 'Unnamed Encounter'}
+				</HeaderText>
+				{getContent()}
 			</div>
 		</ErrorBoundary>
 	);

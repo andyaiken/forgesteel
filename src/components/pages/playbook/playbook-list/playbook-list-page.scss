@@ -30,12 +30,6 @@
 				gap: 5px;
 			}
 
-			@media (max-width: 420px) {
-				.selection-toolbar > * {
-					max-width: 200px;
-				}
-			}
-
 			.selection-content {
 				flex: 1 1 0;
 				display: flex;
@@ -61,6 +55,12 @@
 						flex: 1 1 0;
 					}
 				}
+			}
+		}
+
+		@media (max-width: 420px) {
+			.selection-sidebar > * {
+				max-width: 200px;
 			}
 		}
 

@@ -7,7 +7,7 @@ import { AbilityUsage } from '@/enums/ability-usage';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficulty/encounter-difficulty-panel';
 import { EncounterLogic } from '@/logic/encounter-logic';
-import { EncounterObjectivePanel } from '@/components/panels/elements/encounter-objective/encounter-objective-panel';
+import { EncounterObjectivePanel } from '@/components/panels/elements/encounter-objective-panel/encounter-objective-panel';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { EncounterTurnModal } from '@/components/modals/encounter-turn/encounter-turn-modal';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';

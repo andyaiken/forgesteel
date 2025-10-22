@@ -215,18 +215,16 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setSizeValue = (value: number) => {
+		const setEncounterValue = (value: number) => {
 			const copy = Utils.copy(monster);
-			copy.size.value = value;
+			copy.encounterValue = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
-		const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
-			const copy = Utils.copy(monster);
-			copy.size.mod = value;
-			setMonster(copy);
-			props.onChange(copy);
+		const selectRandomEncounterValue = () => {
+			const values = props.similarMonsters.map(m => m.encounterValue);
+			setEncounterValue(Collections.draw(values));
 		};
 
 		return (
@@ -243,49 +241,38 @@ export const MonsterEditPanel = (props: Props) => {
 				<HeaderText>Role</HeaderText>
 				<Select
 					style={{ width: '100%' }}
-					placeholder='Select role'
-					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
-					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
-					value={monster.role.type}
-					onChange={setRoleType}
-				/>
-				<Select
-					style={{ width: '100%' }}
 					placeholder='Select organization'
 					options={[ MonsterOrganizationType.NoOrganization, MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
 					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={monster.role.organization}
 					onChange={setRoleOrganization}
 				/>
-				<HeaderText>Size</HeaderText>
-				<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Select role'
+					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
+					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+					value={monster.role.type}
+					onChange={setRoleType}
+				/>
+				<HeaderText>Encounter Value</HeaderText>
+				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
 				{
-					monster.size.value === 1 ?
-						<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
-							name='sizemodtypes'
-							block={true}
-							options={[ 'T', 'S', 'M', 'L' ]}
-							value={monster.size.mod}
-							onChange={setSizeMod}
-						/>
+					props.similarMonsters.length > 0 ?
+						<Expander
+							title='Similar Monsters'
+							extra={[
+								<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomEncounterValue(); }} />
+							]}
+						>
+							<HeaderText>Encounter Value</HeaderText>
+							<HistogramPanel
+								min={0}
+								values={props.similarMonsters.map(m => m.encounterValue)}
+								selected={monster.encounterValue}
+								onSelect={setEncounterValue}
+							/>
+						</Expander>
 						: null
 				}
 			</Space>
@@ -293,9 +280,16 @@ export const MonsterEditPanel = (props: Props) => {
 	};
 
 	const getStatsSection = () => {
-		const setEncounterValue = (value: number) => {
+		const setSizeValue = (value: number) => {
 			const copy = Utils.copy(monster);
-			copy.encounterValue = value;
+			copy.size.value = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
+			const copy = Utils.copy(monster);
+			copy.size.mod = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -342,11 +336,6 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const selectRandomEncounterValue = () => {
-			const values = props.similarMonsters.map(m => m.encounterValue);
-			setEncounterValue(Collections.draw(values));
-		};
-
 		const selectRandomSpeed = () => {
 			const values = props.similarMonsters.map(m => m.speed.value);
 			setSpeed(Collections.draw(values));
@@ -369,24 +358,17 @@ export const MonsterEditPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>Encounter Value</HeaderText>
-				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
+				<HeaderText>Size</HeaderText>
+				<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
 				{
-					props.similarMonsters.length > 0 ?
-						<Expander
-							title='Similar Monsters'
-							extra={[
-								<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomEncounterValue(); }} />
-							]}
-						>
-							<HeaderText>Encounter Value</HeaderText>
-							<HistogramPanel
-								min={0}
-								values={props.similarMonsters.map(m => m.encounterValue)}
-								selected={monster.encounterValue}
-								onSelect={setEncounterValue}
-							/>
-						</Expander>
+					monster.size.value === 1 ?
+						<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
+							name='sizemodtypes'
+							block={true}
+							options={[ 'T', 'S', 'M', 'L' ]}
+							value={monster.size.mod}
+							onChange={setSizeMod}
+						/>
 						: null
 				}
 				<HeaderText>Speed</HeaderText>

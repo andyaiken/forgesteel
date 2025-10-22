@@ -49,7 +49,7 @@ export const EncounterToolsModal = (props: Props) => {
 					<Alert
 						type='info'
 						showIcon={true}
-						message='This list provides a breakdown of the minis you will need to run this encounter.'
+						message='This list provides useful information to help you choose the minis you will need to run this encounter.'
 					/>
 					{
 						Collections.sort(monsters, data => data.monster.name).map(data => {

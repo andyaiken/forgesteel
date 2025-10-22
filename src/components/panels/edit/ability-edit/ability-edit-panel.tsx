@@ -403,11 +403,6 @@ export const AbilityEditPanel = (props: Props) => {
 											onChange={setTypeUsage}
 										/>
 										{
-											(ability.type.usage === AbilityUsage.MainAction) || (ability.type.usage === AbilityUsage.Maneuver) || (ability.type.usage === AbilityUsage.Trigger) ?
-												<Toggle label='Free' value={ability.type.free} onChange={setTypeFree} />
-												: null
-										}
-										{
 											ability.type.usage === AbilityUsage.Trigger ?
 												<Input
 													status={ability.type.trigger === '' ? 'warning' : ''}
@@ -440,6 +435,11 @@ export const AbilityEditPanel = (props: Props) => {
 											value={ability.type.qualifiers}
 											onChange={e => setTypeQualifiers(e.target.value)}
 										/>
+										{
+											(ability.type.usage === AbilityUsage.MainAction) || (ability.type.usage === AbilityUsage.Maneuver) || (ability.type.usage === AbilityUsage.Trigger) ?
+												<Toggle label='Free' value={ability.type.free} onChange={setTypeFree} />
+												: null
+										}
 										<Toggle label='Can be used as a free strike' value={ability.type.freeStrike} onChange={setTypeFreeStrike} />
 									</Space>
 									<HeaderText>Keywords</HeaderText>

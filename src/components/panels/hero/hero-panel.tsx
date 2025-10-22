@@ -1171,6 +1171,18 @@ export const HeroPanel = (props: Props) => {
 	};
 
 	if (props.mode !== PanelMode.Full) {
+		const background: string[] = [];
+		if (props.hero.culture && (props.hero.culture.id !== CultureData.bespoke.id)) {
+			background.push(props.hero.culture.name);
+		}
+		if (props.hero.career) {
+			background.push(props.hero.career.name);
+
+			if (props.hero.career.incitingIncidents.selected) {
+				background.push(props.hero.career.incitingIncidents.selected.name);
+			}
+		}
+
 		return (
 			<ErrorBoundary>
 				<div className='hero-panel compact'>
@@ -1190,18 +1202,10 @@ export const HeroPanel = (props: Props) => {
 							: null
 					}
 					{
-						props.hero.culture && (props.hero.culture.id !== CultureData.bespoke.id) ?
+						background.length > 0 ?
 							<Field
-								label='Culture'
-								value={props.hero.culture.name}
-							/>
-							: null
-					}
-					{
-						props.hero.career ?
-							<Field
-								label='Career'
-								value={`${props.hero.career.name} (${props.hero.career.incitingIncidents.selected?.name || 'no inciting incident'})`}
+								label='Background'
+								value={background.join(' / ')}
 							/>
 							: null
 					}

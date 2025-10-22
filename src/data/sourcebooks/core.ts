@@ -556,6 +556,7 @@ export const core: Sourcebook = {
 		MonsterData.bredbeddle,
 		MonsterData.bugbear,
 		MonsterData.chimera,
+		MonsterData.civilian,
 		MonsterData.countRhodar,
 		MonsterData.demon,
 		MonsterData.devil,

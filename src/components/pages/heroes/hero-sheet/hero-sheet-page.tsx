@@ -292,8 +292,6 @@ export const HeroSheetPage = (props: Props) => {
 				});
 			});
 
-		console.log(extraCards.required);
-
 		return SheetLayout.getRequiredCardPages(extraCards, character, layoutEnd, 'followers');
 	};
 

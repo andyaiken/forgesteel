@@ -35,8 +35,7 @@ main#classic-sheet {
         display: none;
     }
 
-    .hero-sheet,
-    .encounter-sheet {
+    .hero-sheet, .encounter-sheet {
         height: 100%;
         font-size: 14px;
         padding: 5px;
@@ -283,7 +282,7 @@ main#classic-sheet {
             }
         }
 
-        .abilities.page .stacked-cards {
+        .page .stacked-cards {
             display: flex;
             gap: 10px;
             flex-direction: column;

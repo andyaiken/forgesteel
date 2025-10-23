@@ -49,3 +49,25 @@
   * Monster building / genesplice
   * Encounter building / running
   * Map making / adding minis
+
+
+## Classic Sheet
+
+### Heroes
+
+- Add 'Made With Forge Steel' to classic sheet
+- convert 'Standard Features' view to classic sheet style + PDF export
+- Add ability to create standalone 'reference sheets' with selectable 'reference cards'
+- (possibly solved along with above) Have ability to create handout sheets with items, followers, etc without being attached to a character
+- add something like 'known projects'? or, would it be adding 'project cards' for projects that show the description, etc
+- Check hero features/abilities for certain keywords and ensure relevant reference cards get put into the character sheet?
+- Add user-selectable color scheme
+
+### Encounter
+- Add filter/selection of Malice features
+
+### Negotiation
+- Add Negotiation classic sheet
+
+### Montage
+- Add Montage classic sheet

@@ -1,7 +1,8 @@
 import { AbilityComponent } from '@/components/panels/classic-sheet/components/ability-component';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { CharacteristicsComponent } from '../components/characteristics-component';
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
-import { MonsterSheet } from '@/models/classic-sheets/encounter-sheet';
+import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Utils } from '@/utils/utils';
@@ -60,6 +61,14 @@ export const MonsterCard = (props: Props) => {
 							<div className='stat with-captain'>
 								<label>With Captain:</label>
 								<span>{monster.withCaptain}</span>
+							</div>
+							: null
+					}
+					{
+						monster.freeStrikeDamageType?.length ?
+							<div className='stat fs-dmg-type'>
+								<label>Free Strike Damage Type:</label>
+								<span>{Utils.valueOrDefault(monster.freeStrikeDamageType, '—')}</span>
 							</div>
 							: null
 					}
@@ -125,31 +134,15 @@ export const MonsterCard = (props: Props) => {
 						<span className='name'>{monster.name}</span>
 						<span className='type'>{monster.type}</span>
 						<span className='keywords'>{monster.keywords}</span>
+						{
+							monster.cost?.length ?
+								<span className='cost'>{monster.cost}</span>
+								: null
+						}
 					</h2>
 				</div>
 				{getDetails()}
-				<div className='characteristics'>
-					<div className='characteristic'>
-						<label><span className='symbol'>M</span>ight</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.might)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>A</span>gility</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.agility)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>R</span>eason</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.reason)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>I</span>ntuition</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.intuition)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>P</span>resence</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.presence)}</span></div>
-					</div>
-				</div>
+				<CharacteristicsComponent characteristics={monster.characteristics} />
 				<div className='features-abilities'>
 					{getAbilities()}
 					{getFeatures()}

@@ -23,12 +23,13 @@
         }
         img {
             width: 50px;
-            height: 18px;
+            height: 26px;
+            margin-top: -1px;
         }
     }
 }
 
-#classic-sheet .hero-sheet .table-reference.card {
+#classic-sheet .hero-sheet .special-reference.card {
     table {
         tr {
             border-bottom: 1px solid common.$color-light;

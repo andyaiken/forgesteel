@@ -1,4 +1,5 @@
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { CharacteristicsSheet } from './classic-sheets';
 import { Condition } from '@/models/condition';
 import { ConditionType } from '@/enums/condition-type';
 import { Culture } from '@/models/culture';
@@ -6,6 +7,7 @@ import { Element } from '@/models/element';
 import { Feature } from '@/models/feature';
 import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
+import { MonsterSheet } from './monster-sheet';
 import { Perk } from '@/models/perk';
 import { Title } from '@/models/title';
 
@@ -127,6 +129,8 @@ export interface HeroSheet {
 
 	// Followers
 	followers: FollowerSheet[];
+	// companions: FollowerSheet[];
+	summons: MonsterSheet[];
 
 	// Other Features and Reference
 	featuresReferenceOther: {
@@ -136,7 +140,9 @@ export interface HeroSheet {
 
 	extraReferenceItems: {
 		title: string,
-		content: string
+		content: string,
+		wide: boolean,
+		section: string
 	}[];
 
 	notes: string;
@@ -190,7 +196,7 @@ export interface ItemSheet {
 }
 // #endregion
 
-// #region Follower
+// #region Follower, Retainer, & Companion
 export interface FollowerSheet {
 	id: string;
 	name: string;
@@ -198,11 +204,7 @@ export interface FollowerSheet {
 	type: string;
 	role: string;
 
-	might: number;
-	agility: number;
-	reason: number;
-	intuition: number;
-	presence: number;
+	characteristics: CharacteristicsSheet;
 
 	skills?: string[];
 	languages?: string[];
@@ -226,6 +228,8 @@ export interface FollowerSheet {
 
 	advancement?: {
 		level: number,
-		ability: AbilitySheet
+		ability?: AbilitySheet,
+		features?: Feature[]
 	}[];
 };
+// #endregion

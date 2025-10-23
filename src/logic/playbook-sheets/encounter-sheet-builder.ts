@@ -1,17 +1,11 @@
 import { Encounter, EncounterGroup } from '@/models/encounter';
-import { EncounterGroupSheet, EncounterSheet, EncounterSlotSheet, MonsterSheet } from '@/models/classic-sheets/encounter-sheet';
-import { Characteristic } from '@/enums/characteristic';
+import { EncounterGroupSheet, EncounterSheet, EncounterSlotSheet } from '@/models/classic-sheets/encounter-sheet';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { CreatureLogic } from '@/logic/creature-logic';
-import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { EncounterSlot } from '@/models/encounter-slot';
-import { FeatureType } from '@/enums/feature-type';
-import { Format } from '@/utils/format';
-import { FormatLogic } from '@/logic/format-logic';
 import { Hero } from '@/models/hero';
-import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Options } from '@/models/options';
@@ -51,7 +45,7 @@ export class EncounterSheetBuilder {
 		const encounterMonsters = EncounterLogic.getMonsterData(encounter)
 			.map(data => EncounterLogic.getCustomizedMonster(data.monsterID, data.customization, sourcebooks))
 			.filter(m => !!m);
-		sheet.monsters = encounterMonsters.map(this.buildMonsterSheet);
+		sheet.monsters = encounterMonsters.map(ClassicSheetBuilder.buildMonsterSheet);
 
 		const monsterGroups = EncounterLogic.getMonsterGroups(encounter, sourcebooks);
 
@@ -122,49 +116,6 @@ export class EncounterSheetBuilder {
 			isMinion: monster.role.organization === MonsterOrganizationType.Minion,
 			count: roleMult * slot.count
 		};
-
-		return sheet;
-	};
-
-	static buildMonsterSheet = (monster: Monster): MonsterSheet => {
-		const level = MonsterLogic.getMonsterLevel(monster);
-		const monsterType = `Lvl ${level} ${monster.role.organization} ${monster.role.type}`;
-
-		const speed = MonsterLogic.getSpeed(monster);
-		const immunities = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity);
-		const weaknesses = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness);
-
-		const sheet: MonsterSheet = {
-			id: monster.id,
-			name: MonsterLogic.getMonsterName(monster),
-			type: monsterType,
-			role: monster.role.type,
-
-			might: monster.characteristics.find(c => c.characteristic === Characteristic.Might)?.value || 0,
-			agility: monster.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value || 0,
-			reason: monster.characteristics.find(c => c.characteristic === Characteristic.Reason)?.value || 0,
-			intuition: monster.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value || 0,
-			presence: monster.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value || 0,
-
-			keywords: monster.keywords.join(', '),
-			size: FormatLogic.getSize(monster.size),
-			speed: speed.value,
-			stamina: MonsterLogic.getStamina(monster),
-			stability: monster.stability,
-			freeStrike: MonsterLogic.getFreeStrikeDamage(monster),
-			immunity: immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', '),
-			weakness: weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', '),
-			movement: speed.modes.map(m => Format.capitalize(m)).join(', '),
-			withCaptain: monster.withCaptain
-		};
-
-		sheet.features = MonsterLogic.getFeatures(monster)
-			.filter(f => [ FeatureType.Text, FeatureType.AddOn ].includes(f.type));
-
-		const abilities = MonsterLogic.getFeatures(monster)
-			.filter(f => f.type === FeatureType.Ability)
-			.map(f => f.data.ability);
-		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, monster));
 
 		return sheet;
 	};

@@ -35,8 +35,7 @@ main#classic-sheet {
         display: none;
     }
 
-    .hero-sheet,
-    .encounter-sheet {
+    .hero-sheet, .encounter-sheet {
         height: 100%;
         font-size: 14px;
         padding: 5px;
@@ -283,7 +282,7 @@ main#classic-sheet {
             }
         }
 
-        .abilities.page .stacked-cards {
+        .page .stacked-cards {
             display: flex;
             gap: 10px;
             flex-direction: column;
@@ -305,7 +304,8 @@ main#classic-sheet {
                 flex-basis: calc((100% - var(--gap)) / 2);
             }
 
-            .card.wide {
+            .card.wide,
+            .card.slots-2-wide {
                 flex-basis: 100%;
             }
         }
@@ -317,11 +317,13 @@ main#classic-sheet {
             }
 
             .card.wide,
+            .card.slots-2-wide,
             .feature-reference {
                 flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
             }
 
             .feature-reference.wide,
+            .card.slots-3-wide,
             .table-reference.card {
                 flex-basis: 100%;
             }
@@ -335,15 +337,18 @@ main#classic-sheet {
             }
 
             .card.wide,
+            .card.slots-2-wide,
             .feature-reference {
                 flex-basis: calc(2 * ((100% - 3 * var(--gap)) / 4) + var(--gap));
             }
 
-            .feature-reference.wide {
+            .feature-reference.wide,
+            .card.slots-3-wide {
                 flex-basis: calc(3 * ((100% - 3 * var(--gap)) / 4) + 2 * var(--gap));
             }
 
-            .feature-reference.extra-wide {
+            .feature-reference.extra-wide,
+            .card.slots-4-wide {
                 flex-basis: 100%;
             }
         }

@@ -1,6 +1,6 @@
+import { CharacteristicsComponent } from '../components/characteristics-component';
 import { FollowerSheet } from '@/models/classic-sheets/hero-sheet';
 import { Options } from '@/models/options';
-import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { useMemo } from 'react';
 
 import './follower-card.scss';
@@ -23,28 +23,7 @@ export const FollowersCard = (props: Props) => {
 						<span className='keywords'>{follower.keywords}</span>
 					</h2>
 				</div>
-				<div className='characteristics'>
-					<div className='characteristic'>
-						<label><span className='symbol'>M</span>ight</label>
-						<div className='value'><span>{SheetFormatter.addSign(follower.might)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>A</span>gility</label>
-						<div className='value'><span>{SheetFormatter.addSign(follower.agility)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>R</span>eason</label>
-						<div className='value'><span>{SheetFormatter.addSign(follower.reason)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>I</span>ntuition</label>
-						<div className='value'><span>{SheetFormatter.addSign(follower.intuition)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>P</span>resence</label>
-						<div className='value'><span>{SheetFormatter.addSign(follower.presence)}</span></div>
-					</div>
-				</div>
+				<CharacteristicsComponent characteristics={follower.characteristics} />
 				<div className='stat skills'>
 					<label>Skills:</label>
 					<span>{follower.skills?.join(', ')}</span>

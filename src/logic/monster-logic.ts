@@ -20,6 +20,10 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterState } from '@/models/monster-state';
 import { Options } from '@/models/options';
 import { Random } from '@/utils/random';
+import { Skill } from '@/models/skill';
+import { SkillList } from '@/enums/skill-list';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from './sourcebook-logic';
 import { Utils } from '@/utils/utils';
 
 export class MonsterLogic {
@@ -416,6 +420,30 @@ export class MonsterLogic {
 
 	static getDeadThreshold = (monster: Monster) => {
 		return -MonsterLogic.getWindedThreshold(monster);
+	};
+
+	static getSkills = (monster: Monster, sourcebooks: Sourcebook[]) => {
+		const skillNames: string[] = [];
+
+		// Collate from features
+		this.getFeatures(monster)
+			.filter(f => f.type === FeatureType.SkillChoice)
+			.forEach(f => {
+				skillNames.push(...f.data.selected);
+			});
+
+		const skills: Skill[] = [];
+		Collections.distinct(skillNames, s => s)
+			.forEach(name => {
+				const skill = SourcebookLogic.getSkill(name, sourcebooks);
+				if (skill) {
+					skills.push(skill);
+				} else {
+					skills.push({ name: name, description: '', list: SkillList.Custom });
+				}
+			});
+
+		return Collections.sort(skills, s => s.name);
 	};
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

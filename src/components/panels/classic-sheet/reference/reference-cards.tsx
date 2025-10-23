@@ -19,14 +19,15 @@ export const RulesReferenceCard = (props: RulesReferenceProps) => {
 	);
 };
 
-interface MarkdownTableRefProps {
+interface MarkdownRefProps {
 	title: string;
 	content: string;
+	width: number;
 }
 
-export const MarkdownTableReferenceCard = (props: MarkdownTableRefProps) => {
+export const MarkdownReferenceCard = (props: MarkdownRefProps) => {
 	return (
-		<div className='table-reference extra-reference card'>
+		<div className={`special-reference extra-reference slots-${props.width}-wide card`}>
 			<h2>{props.title}</h2>
 			<Markdown text={SheetFormatter.enhanceMarkdown(props.content)} />
 		</div>

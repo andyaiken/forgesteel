@@ -11,7 +11,7 @@ import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Monster } from '@/models/monster';
-import { MonsterSheet } from '@/models/classic-sheets/encounter-sheet';
+import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { RulesItem } from '@/models/rules-item';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
 import { Title } from '@/models/title';
@@ -151,7 +151,7 @@ export class SheetFormatter {
 	static divideFeatures = (sourcedFeatures: { feature: Feature, source: string }[], hero: Hero | null, availableSpace: number, lineLength: number = 50, columns: number = 1) => {
 		const displayed: { feature: Feature, display: 'short' | 'full' }[] = [];
 		const reference: { feature: Feature, source: string }[] = [];
-		const extraRefItems: { title: string, content: string }[] = [];
+		const extraRefItems: { title: string, content: string, wide: boolean, section: string }[] = [];
 
 		sourcedFeatures.sort((a, b) => this.sortFeatures(a.feature, b.feature));
 		let size = 0;
@@ -168,15 +168,19 @@ export class SheetFormatter {
 				if (this.isLongFeature(f)) {
 					let addToReference = true;
 					displaySize = 'short';
-					if (this.containsLargeTable(f)) {
+					if (this.containsExtractableReferenceContent(f)) {
 						// pull out table
-						const tableContent = this.extractTable(f.description);
-						if (tableContent) {
-							f.description = tableContent.leftover;
+						const referenceContent = this.extractReferenceContent(f);
+						if (referenceContent) {
 							extraRefItems.push({
-								title: `${f.name}: ${tableContent.title}`,
-								content: tableContent.table
+								title: referenceContent.title,
+								content: referenceContent.content,
+								wide: referenceContent.wide,
+								section: referenceContent.section
 							});
+							if (!referenceContent.leftover.length)
+								return;
+							f.description = referenceContent.leftover;
 						}
 						// re-check size without table to see if needs to go in reference
 						fSize = this.calculateFeatureSize(f, hero, lineLength);
@@ -261,17 +265,17 @@ export class SheetFormatter {
 			size = headerSize + this.countLines(f.description.trim().split('\n')[0], lineWidth);
 			size += bottomMargin;
 		} else if (f.type === FeatureType.Text) {
-			size = headerSize + this.countLines(f.description.trim(), lineWidth);
+			size = headerSize + this.countLines(f.description.trim(), lineWidth, 0, 0.88);
 			size += bottomMargin;
 		} else if (f.type === FeatureType.Package) {
-			size = headerSize + this.countLines(f.description.trim(), lineWidth);
+			size = headerSize + this.countLines(f.description.trim(), lineWidth, 0, 0.88);
 			if (hero) {
 				const packageContent = HeroLogic.getFeatures(hero)
 					.map(hf => hf.feature)
 					.filter(hf => hf.type === FeatureType.PackageContent)
 					.filter(hf => hf.data.tag === f.data.tag);
 				packageContent.forEach(pc => {
-					size += headerSize + this.countLines(pc.description.trim(), lineWidth);
+					size += headerSize + this.countLines(pc.description.trim(), lineWidth, 0, 0.88);
 				});
 			}
 			size += bottomMargin;
@@ -300,16 +304,25 @@ export class SheetFormatter {
 		return size;
 	};
 
-	static calculateFeatureReferenceSize = (features: { feature: Feature, source: string }[] | undefined, hero: Hero, lineWidth: number): number => {
-		let size = 2.5; // Card header
+	static calculateFeatureReferenceSize = (features: { feature: Feature, source: string }[], hero: Hero, lineWidth: number, columns: number): number => {
+		const headerSize = 2.5; // Card header
+		let largestFeature = 0;
+		let size = 0;
+		const sources: string[] = [];
 		if (features) {
 			features.forEach(f => {
-				size += this.calculateFeatureSize(f.feature, hero, lineWidth, false);
+				let fSize = this.calculateFeatureSize(f.feature, hero, lineWidth, false);
+				if (!sources.includes(f.source)) {
+					fSize += 2;
+					sources.push(f.source);
+				}
+				size += fSize;
+				largestFeature = Math.max(largestFeature, fSize);
 			});
-
-			size += 2 * Collections.distinct(features, f => f.source).length;
+			size = Math.max(Math.ceil(size / columns), largestFeature);
 		}
-		return +size.toFixed(1);
+		const totalSize = headerSize + size;
+		return +totalSize.toFixed(1);
 	};
 
 	static calculateInventorySize = (items: ItemSheet[] | undefined, lineWidth: number): number => {
@@ -354,13 +367,21 @@ export class SheetFormatter {
 		} else {
 			size = 22; // name, stats, characteristics, stamina
 			follower.abilities?.forEach(ability => {
-				size += this.calculateAbilityComponentSize(ability, lineWidth);
+				size += this.calculateAbilityComponentSize(ability, lineWidth) + 1;
 			});
 			follower.features?.forEach(f => {
-				size += this.calculateFeatureSize(f, null, lineWidth, false);
+				size += this.calculateFeatureSize(f, null, lineWidth, false) + 1;
 			});
 			follower.advancement?.forEach(advancement => {
-				size += 1.5 + this.calculateAbilityComponentSize(advancement.ability, lineWidth);
+				size += 1.5;
+				if (advancement.ability) {
+					size += this.calculateAbilityComponentSize(advancement.ability, lineWidth);
+				}
+				if (advancement.features?.length) {
+					advancement.features.forEach(f => {
+						size += this.calculateFeatureSize(f, null, lineWidth);
+					});
+				}
 			});
 		}
 		return size;
@@ -415,14 +436,40 @@ export class SheetFormatter {
 		return size;
 	};
 
+	static containsExtractableReferenceContent = (feature: Feature): boolean => {
+		return this.containsLargeTable(feature)
+			|| this.isSpecialHandlingFeature(feature);
+	};
+
 	static containsLargeTable = (feature: Feature): boolean => {
 		const fourColumns = feature.description.match(/\|([:\-=\s]{3,}\|){4,}/);
 
 		return fourColumns !== null;
 	};
 
+	// Some specific features can use some special handling to improve the layout/usability of the sheet
+	static isSpecialHandlingFeature = (feature: Feature): boolean => {
+		return [
+			'beastheart-1-2b',
+			'summoner-1-2'
+		].includes(feature.id);
+	};
+
+	static extractReferenceContent = (feature: Feature): { title: string, content: string, leftover: string, wide: boolean, section: string } | null => {
+		if (this.containsLargeTable(feature)) {
+			const table = this.extractTable(feature.description);
+			if (table) {
+				table.title = `${feature.name}: ${table.title}`;
+			}
+			return table;
+		} else if (this.isSpecialHandlingFeature(feature)) {
+			return this.extractSpecialHandlingData(feature);
+		}
+		return null;
+	};
+
 	// If there is a table in the given feature's description, remove it and return separately
-	static extractTable = (text: string): { title: string, table: string, leftover: string } | null => {
+	static extractTable = (text: string): { title: string, content: string, leftover: string, wide: boolean, section: string } | null => {
 		let result = null;
 
 		const tableAndLabel = text.match(/(?:^\s*(?:\*\*|#+\s+)(?<label>[^*]*)(?:\*\*)?(?:\n|$)+)?(?<table>(?:^\s*\|(?:.*\|){2,}\s*(?:\n|$)){3,})/m);
@@ -438,11 +485,39 @@ export class SheetFormatter {
 			const title = `${titleLabel}`;
 			result = {
 				title: title,
-				table: tableContent,
-				leftover: text.split(tableAndLabel[0]).map(s => s.trim()).join('\n').trim()
+				content: tableContent,
+				leftover: text.split(tableAndLabel[0]).map(s => s.trim()).join('\n').trim(),
+				wide: true,
+				section: 'abilities'
 			};
 		}
 		return result;
+	};
+
+	static extractSpecialHandlingData = (feature: Feature): { title: string, content: string, leftover: string, wide: boolean, section: string } | null => {
+		switch (feature.id) {
+			case 'summoner-1-2': {
+				const splitLoc = feature.description.indexOf('###');
+				const before = feature.description.slice(0, splitLoc).trim();
+				const ref = feature.description.slice(splitLoc).trim();
+				return {
+					title: 'Summoner Minions',
+					content: ref,
+					leftover: before,
+					wide: false,
+					section: 'followers'
+				};
+			}
+			case 'beastheart-1-2b':
+				return {
+					title: feature.name,
+					content: feature.description,
+					leftover: '',
+					wide: false,
+					section: 'followers'
+				};
+		}
+		return null;
 	};
 
 	static featureTypeOrder: FeatureType[] = [
@@ -533,9 +608,9 @@ export class SheetFormatter {
 		return size;
 	};
 
-	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0) => {
+	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0, lineFactor: number = 1) => {
 		return text?.trim().split('\n').reduce((n, l) => {
-			let len = Math.max(emptyLineSize, Math.ceil(l.length / lineWidth));
+			let len = Math.max(emptyLineSize, Math.ceil((l.length / lineWidth) * lineFactor));
 			if (l.startsWith('|:---')) { // table divider
 				len = 0;
 			} else if (l.startsWith('|') && l.endsWith('|')) { // table row

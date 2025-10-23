@@ -65,7 +65,8 @@
         @include common.divider-fancy(common.$color-dark);
     
         .type,
-        .keywords {
+        .keywords,
+        .details {
             @include common.font-slab;
         }
 
@@ -79,6 +80,7 @@
 
         .type {
             text-transform: none;
+            text-align: right;
             text-wrap: nowrap;
             font-size: 16px;
         }
@@ -131,51 +133,13 @@
             flex-basis: 100%;
 
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr max-content;
             grid-template-rows: 1fr 1fr;
 
             .weakness {
                 text-align: right;
-            }
-        }
-    }
-
-    .characteristics {
-        margin: 5px 0;
-        border-top: 1px solid common.$color-medium;
-        border-bottom: 1px solid common.$color-medium;
-        padding: 5px 0;
-
-        font-size: 17px;
-
-        display: grid;
-        grid-template-columns: repeat(5, auto);
-        justify-content: space-around;
-
-        .characteristic {
-            display: grid;
-            grid-template-columns: min-content 1fr;
-
-            label {
                 text-wrap: nowrap;
-                align-self: baseline;
             }
-
-            .symbol {
-                @include common.font-glyphs;
-                display: inline-block;
-                margin-right: 1px;
-            }
-
-            .value {
-                justify-self: center;
-                align-self: baseline;
-                margin-left: 8px;
-                font-size: 20px;
-            }
-
-            margin-left: 0;
-            margin-right: 0;
         }
     }
 
@@ -269,7 +233,6 @@
         }
     }
 
-
     .advancement-abilities {
         display: flex;
         flex-direction: column;
@@ -360,6 +323,15 @@
         }
         .advancement h4 {
             background-color: common.$color-support;
+        }
+    }
+    
+    &.companion {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-companion);
+        }
+        .advancement h4 {
+            background-color: common.$color-companion;
         }
     }
 }

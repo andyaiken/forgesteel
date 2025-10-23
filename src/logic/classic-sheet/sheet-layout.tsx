@@ -19,7 +19,7 @@ export interface ExtraCards {
 	optional: FillerCard[];
 };
 
-interface CardPageLayout {
+export interface CardPageLayout {
 	orientation: 'portrait' | 'landscape';
 	perRow: number;
 	linesY: number;
@@ -108,11 +108,18 @@ export class SheetLayout {
 				.sort((a, b) => b.height - a.height)
 				.find(c => c.height <= rowH);
 
-			//	2. Smallest required card under availableLinesY
+			//	2a. Smallest required card under availableLinesY
+			//  2b. - LARGEST if on a new row
 			if (!card) {
-				card = extraCards.required.filter(c => !c.shown && c.width <= spaceInRow)
-					.sort((a, b) => a.height - b.height)
-					.find(c => c.height <= availableLinesY);
+				if (slotsToFillInRow === layout.perRow) {
+					card = extraCards.required.filter(c => !c.shown && c.width <= spaceInRow)
+						.sort((a, b) => b.height - a.height)
+						.find(c => c.height <= availableLinesY);
+				} else {
+					card = extraCards.required.filter(c => !c.shown && c.width <= spaceInRow)
+						.sort((a, b) => a.height - b.height)
+						.find(c => c.height <= availableLinesY);
+				}
 			}
 
 			//  3. Largest optional card under rowH
@@ -122,19 +129,50 @@ export class SheetLayout {
 					.find(c => c.height <= rowH);
 			}
 
-			//	4. Smallest under availableLinesY
+			//	4a. Smallest under availableLinesY
+			//  4b. - LARGEST if on a new row
 			if (!card) {
-				card = extraCards.optional.filter(c => !c.shown && c.width <= spaceInRow)
-					.sort((a, b) => a.height - b.height)
-					.find(c => c.height <= availableLinesY);
+				if (slotsToFillInRow === layout.perRow) {
+					card = extraCards.optional.filter(c => !c.shown && c.width <= spaceInRow)
+						.sort((a, b) => b.height - a.height)
+						.find(c => c.height <= availableLinesY);
+				} else {
+					card = extraCards.optional.filter(c => !c.shown && c.width <= spaceInRow)
+						.sort((a, b) => a.height - b.height)
+						.find(c => c.height <= availableLinesY);
+				}
 			}
 
 			if (card) {
-				// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
-				refCards.push(card.element);
-				slotsToFillInRow -= card.width;
+				// See if we can stack cards
+				// only return cards smaller than rowH - cardH
 				card.shown = true;
-				rowH = Math.max(rowH, card.height);
+				let stackable = this.findExtraCard(extraCards, rowH - card.height - 2.5, spaceInRow);
+				if (stackable) {
+					const stack = [ card.element ];
+					let key = `ref-${card.element.key}`;
+					let stackH = card.height;
+					do {
+						stack.push(stackable.element);
+						stackable.shown = true;
+						key += `-${stackable.element.key}`;
+						stackH += 2.5 + stackable.height;
+						stackable = this.findExtraCard(extraCards, rowH - stackH - 2.5, spaceInRow);
+					} while (stackable);
+
+					refCards.push(
+						<div className='stacked-cards' key={key}>
+							{stack}
+						</div>
+					);
+					// stackH shouldn't ever go over rowH?
+					rowH = Math.max(rowH, stackH);
+				} else {
+					// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
+					refCards.push(card.element);
+					rowH = Math.max(rowH, card.height);
+				}
+				slotsToFillInRow -= card.width;
 				continue nextCard;
 			}
 
@@ -160,6 +198,19 @@ export class SheetLayout {
 		if (availableLinesY > 0 && extraCards.optional.length > 0)
 			console.warn('Got through all cards?', extraCards);
 		return refCards;
+	};
+
+	static findExtraCard = (extraCards: ExtraCards, maxH: number, maxW: number) => {
+		let card = extraCards.required.filter(c => !c.shown && c.width <= maxW)
+			.sort((a, b) => b.height - a.height)
+			.find(c => c.height <= maxH);
+
+		if (!card) {
+			card = extraCards.optional.filter(c => !c.shown && c.width <= maxW)
+				.sort((a, b) => b.height - a.height)
+				.find(c => c.height <= maxH);
+		}
+		return card;
 	};
 
 	static getAbilityPagesForCharacter = (character: HeroSheet, extraCards: ExtraCards, layout: CardPageLayout, options: Options) => {

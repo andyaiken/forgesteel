@@ -140,7 +140,9 @@ export interface HeroSheet {
 
 	extraReferenceItems: {
 		title: string,
-		content: string
+		content: string,
+		wide: boolean,
+		section: string
 	}[];
 
 	notes: string;

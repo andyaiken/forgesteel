@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { FactoryLogic } from '../factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
@@ -220,6 +220,26 @@ describe.concurrent('sortFeatures', () => {
 	});
 });
 
+describe('containsExtractableReferenceContent', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	test.each([
+		[ false, false, false ],
+		[ true, false, true ],
+		[ false, true, true ],
+		[ true, true, true ]
+	])('returns true if there is an extractable table or is a special feature', (hasTable: boolean, isSpecial: boolean, expected: boolean) => {
+		const f = {} as Feature;
+
+		vi.spyOn(SheetFormatter, 'containsLargeTable').mockReturnValue(hasTable);
+		vi.spyOn(SheetFormatter, 'isSpecialHandlingFeature').mockReturnValue(isSpecial);
+
+		expect(SheetFormatter.containsExtractableReferenceContent(f)).toBe(expected);
+	});
+});
+
 describe('containsLargeTable', () => {
 	test.each([
 		[ 'Some text.' ],
@@ -254,6 +274,17 @@ describe('containsLargeTable', () => {
 	});
 });
 
+describe('isSpecialHandlingFeature', () => {
+	test.each([
+		[ 'not-special', false ],
+		[ 'beastheart-1-2b', true ],
+		[ 'summoner-1-2', true ]
+	])(' returns true for the correct feature ids', (id: string, expected: boolean) => {
+		const f = { id: id } as Feature;
+		expect(SheetFormatter.isSpecialHandlingFeature(f)).toBe(expected);
+	});
+});
+
 describe('extractTable', () => {
 	test.each([
 		[ 'No table here' ],
@@ -281,7 +312,7 @@ Content After`, 'Content Before\nContent After', '|Simple|Table|\n|---|---|\n|So
 	])('Correctly extracts tables from features', (initial: string, after: string, table: string) => {
 		const result = SheetFormatter.extractTable(initial);
 		expect(result).not.toBeNull();
-		expect(result?.table).toBe(table);
+		expect(result?.content).toBe(table);
 		expect(result?.leftover).toBe(after);
 	});
 
@@ -298,4 +329,77 @@ Content After`, 'Content Before\nContent After', '|Simple|Table|\n|---|---|\n|So
 	});
 
 	// future: multiple tables?
+});
+
+describe('calculateFeatureReferenceSize', () => {
+	afterEach(() => {
+		vi.resetAllMocks();
+	});
+
+	test('Correctly calculates the size for a single column and source', () => {
+		const features = [ { feature: {} as Feature, source: 'Source 1' } ];
+		const hero = FactoryLogic.createHero([]);
+
+		vi.spyOn(SheetFormatter, 'calculateFeatureSize').mockReturnValueOnce(10);
+
+		const result = SheetFormatter.calculateFeatureReferenceSize(features, hero, 50, 1);
+		expect(result).toBe(14.5);
+	});
+
+	test('Correctly calculates the size for a single column and multiple sources', () => {
+		const features = [
+			{ feature: {} as Feature, source: 'Source 1' },
+			{ feature: {} as Feature, source: 'Source 2' }
+		];
+		const hero = FactoryLogic.createHero([]);
+
+		vi.spyOn(SheetFormatter, 'calculateFeatureSize').mockReturnValueOnce(10).mockReturnValueOnce(20);
+
+		const result = SheetFormatter.calculateFeatureReferenceSize(features, hero, 50, 1);
+		expect(result).toBe(36.5);
+	});
+
+	test('Correctly calculates the size for two columns and a single feature', () => {
+		const features = [
+			{ feature: {} as Feature, source: 'Source 1' }
+		];
+		const hero = FactoryLogic.createHero([]);
+
+		vi.spyOn(SheetFormatter, 'calculateFeatureSize').mockReturnValueOnce(10);
+
+		const result = SheetFormatter.calculateFeatureReferenceSize(features, hero, 50, 2);
+		expect(result).toBe(14.5);
+	});
+
+	test('Correctly calculates the size for two columns and two features', () => {
+		const features = [
+			{ feature: {} as Feature, source: 'Source 1' },
+			{ feature: {} as Feature, source: 'Source 2' }
+		];
+		const hero = FactoryLogic.createHero([]);
+
+		vi.spyOn(SheetFormatter, 'calculateFeatureSize').mockReturnValueOnce(10).mockReturnValueOnce(20);
+
+		// with two different sized features, the value of the largest should determine the overall height
+		const result = SheetFormatter.calculateFeatureReferenceSize(features, hero, 50, 2);
+		expect(result).toBe(24.5);
+	});
+
+	test('Correctly calculates the size for two columns and many features', () => {
+		const features = [
+			{ feature: {} as Feature, source: 'Source 1' },
+			{ feature: {} as Feature, source: 'Source 1' },
+			{ feature: {} as Feature, source: 'Source 1' },
+			{ feature: {} as Feature, source: 'Source 2' },
+			{ feature: {} as Feature, source: 'Source 2' },
+			{ feature: {} as Feature, source: 'Source 2' }
+		];
+		const hero = FactoryLogic.createHero([]);
+
+		vi.spyOn(SheetFormatter, 'calculateFeatureSize').mockReturnValue(10);
+
+		// with two different sized features, the value of the largest should determine the overall height
+		const result = SheetFormatter.calculateFeatureReferenceSize(features, hero, 50, 2);
+		expect(result).toBe(34.5);
+	});
 });

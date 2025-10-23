@@ -1,5 +1,5 @@
 import { ConsumablesCard, LeveledTreasureCard, TrinketsCard } from '@/components/panels/classic-sheet/inventory-card/inventory-card';
-import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MarkdownTableReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard } from '@/components/panels/classic-sheet/reference/reference-cards';
+import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MarkdownReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard } from '@/components/panels/classic-sheet/reference/reference-cards';
 import { ExtraCards, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
 import { CareerCard } from '@/components/panels/classic-sheet/career-card/career-card';
 import { ClassFeaturesCard } from '@/components/panels/classic-sheet/class-features-card/class-features-card';
@@ -81,19 +81,19 @@ export const HeroSheetPage = (props: Props) => {
 		// Features / Reference / Other
 		if (character.featuresReferenceOther.length) {
 			lineWidth = layout.cardGap + 2 * layout.cardLineLen;
-			let refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth);
+			let refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth, 1);
 			let refW = 2;
 			if (refH > 60) {
 				refW = 3;
 				lineWidth = (2 * layout.cardGap) + (3 * layout.cardLineLen) * 0.49;
-				refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth) * 0.52;
+				refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth, 2);
 				if (refH > layout.linesY && layout.perRow === 4) {
 					refW = 4;
 					lineWidth = (3 * layout.cardGap) + (4 * layout.cardLineLen) * 0.33;
-					refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth) * 0.34;
+					refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth, 3);
 				}
 				if (refH > layout.linesY) {
-					console.warn('Features reference is still too long!');
+					console.warn('Features reference is still too long!', refH, layout.linesY);
 					refH = Math.min(layout.linesY, refH);// Will need a better solution at some point
 				}
 			}
@@ -106,18 +106,19 @@ export const HeroSheetPage = (props: Props) => {
 			});
 		}
 
-		if (character.extraReferenceItems.length) {
-			lineWidth = ((layout.perRow - 1) * layout.cardGap) + (layout.perRow * layout.cardLineLen);
-			character.extraReferenceItems.forEach((refItem, i) => {
+		character.extraReferenceItems
+			.filter(refItem => refItem.section === 'abilities')
+			.forEach((refItem, i) => {
+				const refW = refItem.wide ? layout.perRow : 1;
+				lineWidth = refItem.wide ? ((layout.perRow - 1) * layout.cardGap) + (layout.perRow * layout.cardLineLen) : layout.cardLineLen;
 				const refH = SheetFormatter.countLines(refItem.content, lineWidth);
 				required.unshift({
-					element: <MarkdownTableReferenceCard title={refItem.title} content={refItem.content} key={`reference-${i}-${refItem.title}`} />,
-					width: layout.perRow,
+					element: <MarkdownReferenceCard title={refItem.title} content={refItem.content} width={refW} key={`reference-${i}-${refItem.title}`} />,
+					width: refW,
 					height: refH,
 					shown: false
 				});
 			});
-		}
 
 		const optional = [
 			{
@@ -231,10 +232,11 @@ export const HeroSheetPage = (props: Props) => {
 				case 'feature-reference':
 					card.width = Math.min(2, card.width);
 					if (card.width === 1) {
-						card.height = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, layoutEnd.cardLineLen);
+						card.height = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, layoutEnd.cardLineLen, 1);
 					} else {
-						card.height = Math.ceil(SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, layoutEnd.cardLineLen) * 0.5);
+						card.height = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, layoutEnd.cardLineLen, 2);
 					}
+					// console.log('###### RECALC Reference size: ', card.height);
 					break;
 				default:
 					card.height *= heightRatio;
@@ -244,10 +246,12 @@ export const HeroSheetPage = (props: Props) => {
 
 		extraCards.optional.filter(card => !card.shown).forEach(card => card.height *= heightRatio);
 
+		extraCards.required.sort((a, b) => a.height - b.height);
+
 		// Folowers only go here
 		if (character.followers.length) {
 			character.followers.filter(f => f.classification !== 'Follower').forEach(fs => {
-				extraCards.required.push({
+				extraCards.required.unshift({
 					element: <CompanionCard companion={fs} options={props.options} key={fs.id} />,
 					width: 1,
 					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen)),
@@ -256,7 +260,7 @@ export const HeroSheetPage = (props: Props) => {
 			});
 			const followers = character.followers.filter(f => f.classification === 'Follower');
 			if (followers.length) {
-				extraCards.required.push({
+				extraCards.required.unshift({
 					element: <FollowersCard followers={followers} options={props.options} key='followers' />,
 					width: 1,
 					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowersSize(followers, layoutEnd.cardLineLen)),
@@ -265,7 +269,7 @@ export const HeroSheetPage = (props: Props) => {
 			}
 		}
 		character.summons.forEach(fs => {
-			extraCards.required.push({
+			extraCards.required.unshift({
 				element: <MonsterCard monster={fs} options={props.options} key={fs.id} />,
 				width: 1,
 				height: Math.min(layoutEnd.linesY, SheetFormatter.calculateMonsterSize(fs, layoutEnd.cardLineLen)),
@@ -273,7 +277,23 @@ export const HeroSheetPage = (props: Props) => {
 			});
 		});
 
-		extraCards.required.sort((a, b) => a.height - b.height);
+		const lineLenWide = ((layoutEnd.perRow - 1) * layoutEnd.cardGap) + (layoutEnd.perRow * layoutEnd.cardLineLen);
+		character.extraReferenceItems
+			.filter(refItem => refItem.section === 'followers')
+			.forEach((refItem, i) => {
+				const refW = refItem.wide ? layoutEnd.perRow : 1;
+				const lineWidth = refItem.wide ? lineLenWide : layoutEnd.cardLineLen;
+				const refH = SheetFormatter.countLines(refItem.content, lineWidth);
+				extraCards.required.unshift({
+					element: <MarkdownReferenceCard title={refItem.title} content={refItem.content} width={refW} key={`reference-${i}-${refItem.title}`} />,
+					width: refW,
+					height: refH,
+					shown: false
+				});
+			});
+
+		console.log(extraCards.required);
+
 		return SheetLayout.getRequiredCardPages(extraCards, character, layoutEnd, 'followers');
 	};
 

@@ -131,7 +131,7 @@ export const CompanionCard = (props: Props) => {
 									{
 										a.features.map(f => {
 											return (
-												<FeatureComponent feature={f} />
+												<FeatureComponent feature={f} key={`${companion.id}-advancement-${f.id}`} />
 											);
 										})
 									}

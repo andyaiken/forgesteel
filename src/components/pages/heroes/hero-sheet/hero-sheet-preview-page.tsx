@@ -129,7 +129,6 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		setPreviewOptions(type);
 		const element = document.getElementById('classic-sheet');
 		const canvasElem = document.getElementById('pdf-canvas');
-		const prevDpr = window.devicePixelRatio;
 		if (element && canvasElem) {
 			const initialW = element.clientWidth;
 			switch (type) {
@@ -139,14 +138,12 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					break;
 				case 'canvas':
 					element.className = '';
-					window.devicePixelRatio = 4;
-					Utils.elementToCanvas(element)
-						.then(function (canvas) {
-							canvas.style.width = initialW + 'px';
-							canvasElem.replaceChildren(canvas);
+					Utils.elementToImage(element, 2)
+						.then(function (image) {
+							image.style.width = initialW + 'px';
+							canvasElem.replaceChildren(image);
 							canvasElem.className = '';
 							element.className = 'hidden';
-							window.devicePixelRatio = prevDpr;
 						});
 					break;
 			}

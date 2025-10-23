@@ -317,7 +317,13 @@ export const Main = (props: Props) => {
 	};
 
 	const exportStandardAbilities = () => {
-		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', 'pdf');
+		setSpinning(true);
+		const pageIds: string[] = [];
+		document.querySelectorAll('[id^=hero-sheet-standard-abilities-page-abilities]').forEach(elem => pageIds.push(elem.id));
+		Utils.elementsToPdf(pageIds, 'Standard Abilities', options.classicSheetPageSize, 'high')
+			.then(() => {
+				setSpinning(false);
+			});
 	};
 
 	const setNotes = (hero: Hero, value: string) => {

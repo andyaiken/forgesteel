@@ -168,11 +168,10 @@ export class SheetLayout {
 					// stackH shouldn't ever go over rowH?
 					rowH = Math.max(rowH, stackH);
 				} else {
+					// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
 					refCards.push(card.element);
 					rowH = Math.max(rowH, card.height);
 				}
-
-				// console.log(`Adding card ${card.element.key} with H ${card.height} and W ${card.width} to current row`);
 				slotsToFillInRow -= card.width;
 				continue nextCard;
 			}

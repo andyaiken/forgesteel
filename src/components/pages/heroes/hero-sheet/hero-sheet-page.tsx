@@ -171,7 +171,6 @@ export const HeroSheetPage = (props: Props) => {
 			RulesData.hiding,
 			RulesData.highGround,
 			RulesData.shifting,
-			RulesData.damageAndEffect,
 			RulesData.duringTheMove,
 			RulesData.opportunityAttack,
 			RulesData.invisibility,
@@ -181,16 +180,9 @@ export const HeroSheetPage = (props: Props) => {
 			RulesData.rollVsMultipleCreatures
 		];
 
-		// future: check for 'flying' or 'hover' in the character and add relevant reference card(s)?
-		// Other possible candidates:
-		//   - Teleportation
-		//   - Wielding Treasures
-		// -- or --
-		// Have a multiselect for users to manually choose reference cards like for standard abilities?
-
-		addlRules.forEach((rule, n) => {
+		addlRules.forEach(rule => {
 			optional.push({
-				element: <RulesReferenceCard key={n} rule={rule} />,
+				element: <RulesReferenceCard key={rule.label.toLocaleLowerCase().split(' ').join('-')} rule={rule} />,
 				width: 1,
 				height: SheetFormatter.calculateRuleReferenceCardSize(rule, layout.cardLineLen),
 				shown: false
@@ -207,12 +199,8 @@ export const HeroSheetPage = (props: Props) => {
 		return SheetLayout.getAbilityPagesForCharacter(character, extraCards, layout, props.options);
 	};
 
-	const getFinalCards = (extraCards: ExtraCards) => {
-		return SheetLayout.getRequiredCardPages(extraCards, character, layout);
-	};
-
-	const getFollowerCards = (extraCards: ExtraCards) => {
-		const hasRetainers = character.followers.some(f => [ 'Retainer', 'Minion' ].includes(f.classification));
+	const getRemainingCards = (extraCards: ExtraCards) => {
+		const hasRetainers = character.followers.some(f => [ 'Retainer', 'Companion' ].includes(f.classification));
 		const layoutEnd = SheetLayout.getFollowerCardsLayout(props.options, hasRetainers);
 		const heightRatio = 0.83;
 
@@ -222,15 +210,9 @@ export const HeroSheetPage = (props: Props) => {
 				case 'notes':
 					card.height = Math.max(20, card.height * heightRatio);
 					break;
-				case 'inventory':
-					if (card.width === 1) {
-						card.height = Math.max(20, SheetFormatter.calculateInventorySize(character.inventory, layoutEnd.cardLineLen));
-					} else {
-						card.height = Math.ceil(SheetFormatter.calculateInventorySize(character.inventory, layoutEnd.cardLineLen) * 0.5);
-					}
-					break;
-				case 'feature-reference':
-					card.width = Math.min(2, card.width);
+				case 'feature-reference': {
+					const minW = layoutEnd.orientation === 'portrait' ? 1 : 2;
+					card.width = Math.min(minW, card.width);
 					if (card.width === 1) {
 						card.height = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, layoutEnd.cardLineLen, 1);
 					} else {
@@ -238,6 +220,7 @@ export const HeroSheetPage = (props: Props) => {
 					}
 					// console.log('###### RECALC Reference size: ', card.height);
 					break;
+				}
 				default:
 					card.height *= heightRatio;
 					break;
@@ -378,8 +361,7 @@ export const HeroSheetPage = (props: Props) => {
 							character={character}
 						/>
 					</div>
-					{getFinalCards(extraCards)}
-					{getFollowerCards(extraCards)}
+					{getRemainingCards(extraCards)}
 				</div>
 			</main>
 		</ErrorBoundary>

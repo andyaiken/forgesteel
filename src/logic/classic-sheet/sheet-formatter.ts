@@ -367,10 +367,10 @@ export class SheetFormatter {
 		} else {
 			size = 22; // name, stats, characteristics, stamina
 			follower.abilities?.forEach(ability => {
-				size += this.calculateAbilityComponentSize(ability, lineWidth);
+				size += this.calculateAbilityComponentSize(ability, lineWidth) + 1;
 			});
 			follower.features?.forEach(f => {
-				size += this.calculateFeatureSize(f, null, lineWidth, false);
+				size += this.calculateFeatureSize(f, null, lineWidth, false) + 1;
 			});
 			follower.advancement?.forEach(advancement => {
 				size += 1.5;

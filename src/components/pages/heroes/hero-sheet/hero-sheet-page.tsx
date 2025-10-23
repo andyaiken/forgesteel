@@ -27,6 +27,7 @@ import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SkillsCard } from '@/components/panels/classic-sheet/skills-card/skills-card';
 import { Sourcebook } from '@/models/sourcebook';
 import { StatsResourcesCard } from '@/components/panels/classic-sheet/stats-resources-card/stats-resources-card';
+import { SummonCard } from '@/components/panels/classic-sheet/follower-card/summon-card';
 import { TitlesCard } from '@/components/panels/classic-sheet/titles-card/titles-card';
 import { useMemo } from 'react';
 
@@ -210,7 +211,7 @@ export const HeroSheetPage = (props: Props) => {
 	};
 
 	const getFollowerCards = (extraCards: ExtraCards) => {
-		const hasRetainers = character.followers.some(f => f.classification === 'Retainer');
+		const hasRetainers = character.followers.some(f => [ 'Retainer', 'Minion' ].includes(f.classification));
 		const layoutEnd = SheetLayout.getFollowerCardsLayout(props.options, hasRetainers);
 		const heightRatio = 0.83;
 
@@ -248,6 +249,14 @@ export const HeroSheetPage = (props: Props) => {
 			character.followers.filter(f => f.classification === 'Retainer').forEach(fs => {
 				extraCards.required.push({
 					element: <RetainerCard follower={fs} options={props.options} key={fs.id} />,
+					width: 1,
+					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen)),
+					shown: false
+				});
+			});
+			character.followers.filter(f => f.classification === 'Minion').forEach(fs => {
+				extraCards.required.push({
+					element: <SummonCard summon={fs} options={props.options} key={fs.id} />,
 					width: 1,
 					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen)),
 					shown: false

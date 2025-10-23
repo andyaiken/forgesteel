@@ -1,9 +1,14 @@
 import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { FeatureField } from '@/enums/feature-field';
+import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { ModifierLogic } from './modifier-logic';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
+import { Summon } from '@/models/summon';
 
 export class CreatureLogic {
 	static getCharacteristic = (creature: Hero | Monster | undefined, characteristic: Characteristic) => {
@@ -50,6 +55,13 @@ export class CreatureLogic {
 			&& 'complication' in creature;
 	};
 
+	static isSummon = (creature: unknown): creature is Summon => {
+		return creature !== undefined
+			&& creature !== null
+			&& typeof creature === 'object'
+			&& 'info' in creature;
+	};
+
 	static getEchelon = (level: number) => {
 		switch (level) {
 			case 1:
@@ -69,5 +81,32 @@ export class CreatureLogic {
 		}
 
 		return 1;
+	};
+
+	static getSummonDamageModifiers = (summon: Summon, summoner: Hero, type: DamageModifierType) => {
+		const modifiers: { damageType: string, value: number }[] = [];
+		const monster = summon.monster;
+		// Collate from features
+		MonsterLogic.getFeatures(monster)
+			.filter(f => f.type === FeatureType.DamageModifier)
+			.forEach(f => {
+				f.data.modifiers
+					.filter(dm => dm.type === type)
+					.forEach(dm => {
+						const value = ModifierLogic.calculateModifierValue(dm, summoner);
+
+						const existing = modifiers.find(x => x.damageType === dm.damageType);
+						if (existing) {
+							existing.value += dm.value;
+						} else {
+							modifiers.push({
+								damageType: dm.damageType,
+								value: value
+							});
+						}
+					});
+			});
+
+		return Collections.sort(modifiers, dm => dm.damageType);
 	};
 }

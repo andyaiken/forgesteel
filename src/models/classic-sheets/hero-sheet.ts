@@ -1,4 +1,5 @@
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { CharacteristicsSheet } from './classic-sheets';
 import { Condition } from '@/models/condition';
 import { ConditionType } from '@/enums/condition-type';
 import { Culture } from '@/models/culture';
@@ -197,12 +198,9 @@ export interface FollowerSheet {
 	classification: string;
 	type: string;
 	role: string;
+	cost?: string;
 
-	might: number;
-	agility: number;
-	reason: number;
-	intuition: number;
-	presence: number;
+	characteristics: CharacteristicsSheet;
 
 	skills?: string[];
 	languages?: string[];
@@ -217,6 +215,7 @@ export interface FollowerSheet {
 	immunity?: string;
 	weakness?: string;
 	movement?: string;
+	damageType?: string;
 
 	stamina?: StaminaSheet;
 	recoveries?: RecoveriesSheet;

@@ -8,7 +8,9 @@ import { ClassicSheetLogic } from '../classic-sheet/classic-sheet-logic';
 import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
 import { ConditionType } from '@/enums/condition-type';
+import { CreatureLogic } from '../creature-logic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
 import { Feature } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -26,6 +28,7 @@ import { SheetPageSize } from '@/enums/sheet-page-size';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Summon } from '@/models/summon';
 
 export class HeroSheetBuilder {
 	static buildHeroSheet = (hero: Hero, sourcebooks: Sourcebook[], options: Options): HeroSheet => {
@@ -406,9 +409,9 @@ export class HeroSheetBuilder {
 			.map(f => f.feature.id));
 		// #endregion
 
-		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Companion ].includes(f.feature.type))
+		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Companion, FeatureType.Summon, FeatureType.SummonChoice ].includes(f.feature.type))
 			.map(f => f.feature);
-		sheet.followers = retinue.map(f => this.buildFollowerCompanionSheet(f)).filter(s => !!s);
+		sheet.followers = retinue.flatMap(f => this.buildFollowerCompanionSheet(f, hero)).filter(s => !!s);
 
 		coveredFeatureIds.push(...retinue.map(f => f.id));
 
@@ -502,11 +505,13 @@ export class HeroSheetBuilder {
 	// #endregion
 
 	// #region Follower Sheet
-	static buildFollowerCompanionSheet = (feature: Feature) => {
+	static buildFollowerCompanionSheet = (feature: Feature, hero: Hero) => {
 		if (feature.type === FeatureType.Follower) {
 			return this.buildFollowerSheet(feature.data.follower);
 		} else if (feature.type === FeatureType.Companion && feature.data.selected) {
 			return this.buildRetainerSheet(feature.data.selected);
+		} else if (feature.type === FeatureType.SummonChoice && feature.data.selected) {
+			return feature.data.selected.map(s => this.buildSummonSheet(s, hero));
 		}
 	};
 
@@ -520,11 +525,7 @@ export class HeroSheetBuilder {
 			type: followerType,
 			role: followerType,
 
-			might: follower.characteristics.find(c => c.characteristic === Characteristic.Might)?.value || 0,
-			agility: follower.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value || 0,
-			reason: follower.characteristics.find(c => c.characteristic === Characteristic.Reason)?.value || 0,
-			intuition: follower.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value || 0,
-			presence: follower.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value || 0
+			characteristics: ClassicSheetBuilder.buildCharacteristicsSheet(follower)
 		};
 
 		sheet.skills = follower.skills;
@@ -543,11 +544,7 @@ export class HeroSheetBuilder {
 			type: retainerType,
 			role: follower.role.type,
 
-			might: MonsterLogic.getCharacteristic(follower, Characteristic.Might),
-			agility: MonsterLogic.getCharacteristic(follower, Characteristic.Agility),
-			reason: MonsterLogic.getCharacteristic(follower, Characteristic.Reason),
-			intuition: MonsterLogic.getCharacteristic(follower, Characteristic.Intuition),
-			presence: MonsterLogic.getCharacteristic(follower, Characteristic.Presence)
+			characteristics: ClassicSheetBuilder.buildCharacteristicsSheet(follower)
 		};
 
 		sheet.keywords = follower.keywords.join(', ');
@@ -606,6 +603,57 @@ export class HeroSheetBuilder {
 			});
 		}
 		sheet.advancement = advancement;
+
+		return sheet;
+	};
+
+	static buildSummonSheet = (summon: Summon, hero: Hero): FollowerSheet => {
+		const monster = summon.monster;
+		const signature = summon.info.isSignature ? 'Signature ' : '';
+		const summonType = `${signature}Minion ${monster.role.type}`;
+		const sheet: FollowerSheet = {
+			id: monster.id,
+			name: MonsterLogic.getMonsterName(monster),
+			classification: 'Minion',
+			type: summonType,
+			role: monster.role.type,
+
+			characteristics: ClassicSheetBuilder.buildCharacteristicsSheet(monster)
+		};
+		sheet.keywords = monster.keywords.join(', ');
+
+		let summonCost = `${summon.info.cost} essence `;
+		summonCost += summon.info.count === 1 ? 'per minion summoned' : `for ${summon.info.count} minions`;
+		sheet.cost = summonCost;
+
+		const speed = MonsterLogic.getSpeed(monster);
+		sheet.size = FormatLogic.getSize(monster.size);
+		sheet.speed = speed.value;
+		sheet.stability = monster.stability;
+		sheet.freeStrike = MonsterLogic.getFreeStrikeDamage(monster);
+		sheet.damageType = monster.freeStrikeType !== DamageType.Damage ? monster.freeStrikeType : '';
+
+		sheet.stamina = {
+			max: MonsterLogic.getStamina(monster),
+			current: Math.max(MonsterLogic.getStamina(monster) - monster.state.staminaDamage, 0),
+			temp: monster.state.staminaTemp,
+			windedAt: MonsterLogic.getWindedThreshold(monster),
+			deadAt: MonsterLogic.getDeadThreshold(monster)
+		};
+
+		const immunities = CreatureLogic.getSummonDamageModifiers(summon, hero, DamageModifierType.Immunity);
+		sheet.immunity = immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
+		const weaknesses = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness);
+		sheet.weakness = weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
+		sheet.movement = speed.modes.map(m => Format.capitalize(m)).join(', ');
+
+		sheet.features = MonsterLogic.getFeatures(monster)
+			.filter(f => [ FeatureType.Text, FeatureType.AddOn ].includes(f.type));
+
+		const abilities = MonsterLogic.getFeatures(monster)
+			.filter(f => f.type === FeatureType.Ability)
+			.map(f => f.data.ability);
+		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, summon, hero));
 
 		return sheet;
 	};

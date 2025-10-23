@@ -80,22 +80,6 @@ export const SummonCard = (props: Props) => {
 		);
 	};
 
-	const getAdvancement = () => {
-		return (
-			<div className='advancement-abilities'>
-				{summon.advancement?.map(a =>
-					<div className='advancement' key={a.ability.id}>
-						<h4>Level {a.level} Retainer Advancement Ability</h4>
-						{getAbilityIcon(a.ability)}
-						<AbilityComponent
-							ability={a.ability}
-						/>
-					</div>
-				)}
-			</div>
-		);
-	};
-
 	const getAbilityIcon = (ability: AbilitySheet) => {
 		const icon = SheetFormatter.getAbilityIcon(ability);
 		const alt = 'Ability';
@@ -147,7 +131,6 @@ export const SummonCard = (props: Props) => {
 					{getAbilities()}
 					{getFeatures()}
 				</div>
-				{getAdvancement()}
 			</section>
 		</div>
 	);

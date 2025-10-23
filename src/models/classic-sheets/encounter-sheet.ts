@@ -1,5 +1,6 @@
 import { Feature, FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { CharacteristicsSheet } from './classic-sheets';
 import { Monster } from '@/models/monster';
 import { Terrain } from '@/models/terrain';
 
@@ -51,11 +52,7 @@ export interface MonsterSheet {
 	type: string;
 	role: string;
 
-	might: number;
-	agility: number;
-	reason: number;
-	intuition: number;
-	presence: number;
+	characteristics: CharacteristicsSheet;
 
 	keywords: string;
 

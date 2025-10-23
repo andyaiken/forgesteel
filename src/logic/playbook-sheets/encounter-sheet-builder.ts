@@ -1,6 +1,5 @@
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { EncounterGroupSheet, EncounterSheet, EncounterSlotSheet, MonsterSheet } from '@/models/classic-sheets/encounter-sheet';
-import { Characteristic } from '@/enums/characteristic';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { CreatureLogic } from '@/logic/creature-logic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -140,11 +139,7 @@ export class EncounterSheetBuilder {
 			type: monsterType,
 			role: monster.role.type,
 
-			might: monster.characteristics.find(c => c.characteristic === Characteristic.Might)?.value || 0,
-			agility: monster.characteristics.find(c => c.characteristic === Characteristic.Agility)?.value || 0,
-			reason: monster.characteristics.find(c => c.characteristic === Characteristic.Reason)?.value || 0,
-			intuition: monster.characteristics.find(c => c.characteristic === Characteristic.Intuition)?.value || 0,
-			presence: monster.characteristics.find(c => c.characteristic === Characteristic.Presence)?.value || 0,
+			characteristics: ClassicSheetBuilder.buildCharacteristicsSheet(monster),
 
 			keywords: monster.keywords.join(', '),
 			size: FormatLogic.getSize(monster.size),

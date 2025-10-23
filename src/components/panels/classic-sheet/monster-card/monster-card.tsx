@@ -1,5 +1,6 @@
 import { AbilityComponent } from '@/components/panels/classic-sheet/components/ability-component';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { CharacteristicsComponent } from '../components/characteristics-component';
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { MonsterSheet } from '@/models/classic-sheets/encounter-sheet';
 import { Options } from '@/models/options';
@@ -128,28 +129,7 @@ export const MonsterCard = (props: Props) => {
 					</h2>
 				</div>
 				{getDetails()}
-				<div className='characteristics'>
-					<div className='characteristic'>
-						<label><span className='symbol'>M</span>ight</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.might)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>A</span>gility</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.agility)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>R</span>eason</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.reason)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>I</span>ntuition</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.intuition)}</span></div>
-					</div>
-					<div className='characteristic'>
-						<label><span className='symbol'>P</span>resence</label>
-						<div className='value'><span>{SheetFormatter.addSign(monster.presence)}</span></div>
-					</div>
-				</div>
+				<CharacteristicsComponent characteristics={monster.characteristics} />
 				<div className='features-abilities'>
 					{getAbilities()}
 					{getFeatures()}

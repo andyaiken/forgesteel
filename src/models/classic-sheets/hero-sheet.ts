@@ -176,7 +176,7 @@ export interface ComplicationSheet {
 export interface ProjectSheet {
 	id: string;
 	name?: string;
-	// assignee?: string;
+	assignee?: string;
 	characteristic?: string;
 	pointsGoal?: number;
 	pointsCurrent?: number;

@@ -1,5 +1,5 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { FollowerSheet, ItemSheet } from '@/models/classic-sheets/hero-sheet';
+import { FollowerSheet, ItemSheet, ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { Characteristic } from '@/enums/characteristic';
@@ -441,6 +441,35 @@ export class SheetFormatter {
 			|| this.isSpecialHandlingFeature(feature);
 	};
 
+	static calculateProjectDetailCardSize = (project: ProjectSheet, lineWidth: number): number => {
+		let size = 3;
+		size += this.calculateProjectComponentSize(project, lineWidth);
+		return size;
+	};
+
+	static calculateProjectComponentSize = (project: ProjectSheet, lineWidth: number): number => {
+		let size = 0;
+		size += this.countLines(`Item Prerequisite ${project.prerequisites}`, lineWidth);
+		size += 1.8; // Prerequisites box
+		size += this.countLines(`Project Source ${project.source}`, lineWidth);
+		size += 1.8; // Source box
+		size += this.countLines(`Project Roll Characteristic ${project.characteristic}`, lineWidth);
+		size += 1; // points goal
+		size += this.countLines(project.effect, lineWidth, 0);
+		return size;
+	};
+
+	static calculateProjectsOverviewCardSize = (projects: ProjectSheet[], lineWidth: number): number => {
+		let size = 2.7;
+		projects.forEach(p => {
+			size += 1.8; // header
+			size += this.calculateProjectComponentSize(p, lineWidth);
+			size += 1.2; // divider
+		});
+		size -= 1.2;// last divider not present
+		return size;
+	};
+
 	static containsLargeTable = (feature: Feature): boolean => {
 		const fourColumns = feature.description.match(/\|([:\-=\s]{3,}\|){4,}/);
 
@@ -609,21 +638,26 @@ export class SheetFormatter {
 	};
 
 	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0, lineFactor: number = 1) => {
-		return text?.trim().split('\n').reduce((n, l) => {
-			let len = Math.max(emptyLineSize, Math.ceil((l.length / lineWidth) * lineFactor));
+		const result = text?.trim().split('\n').reduce((n, l) => {
+			let len = emptyLineSize;
+			if (l.length) {
+				len = Math.ceil(l.length / lineWidth) * lineFactor;
+				len += 0.2;// additional spacing
+			}
 			if (l.startsWith('|:---')) { // table divider
 				len = 0;
 			} else if (l.startsWith('|') && l.endsWith('|')) { // table row
 				len = Math.ceil(l.replaceAll('|', '').trim().length / (lineWidth - 3));
-				len += 0.4;// additional row spacing
+				len += 0.6;// additional row spacing
 			} else if (l.startsWith('**')) { // bolded label - will have extra bottom margin
 				len += 0.5;
 			} else if (l.startsWith('* ')) { // list item, will be indented
 				len = Math.ceil(l.length / (lineWidth - 3));
 			}
 
-			return n + len + 0.2;
+			return n + len;
 		}, 0) || 0;
+		return result;
 	};
 
 	static getLargestSize = (abilities: AbilitySheet[], lineLength: number): number => {

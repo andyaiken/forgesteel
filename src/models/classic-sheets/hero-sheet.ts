@@ -121,7 +121,7 @@ export interface HeroSheet {
 	ancestryTraitsPerksCombined?: Feature[];
 
 	// Projects
-	projects?: ProjectSheet[];
+	projects: ProjectSheet[];
 
 	// Abilities
 	abilities: AbilitySheet[];
@@ -181,10 +181,16 @@ export interface ComplicationSheet {
 
 export interface ProjectSheet {
 	id: string;
-	name?: string;
-	assignee?: string;
-	characteristic?: string;
-	pointsGoal?: number;
+	name: string;
+	description: string,
+	effect: string,
+	assignee: string;
+	characteristic: string;
+	prerequisites: string,
+	havePrerequisites: boolean,
+	source: string,
+	haveSource: boolean,
+	pointsGoal: number;
 	pointsCurrent?: number;
 }
 

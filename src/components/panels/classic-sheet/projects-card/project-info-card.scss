@@ -1,0 +1,18 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+// main#classic-sheet .page .project-info.card {
+//     @include common.striped-card;
+// }
+
+main#classic-sheet .page .projects-overview.card {
+    // @include common.striped-card;
+
+    .project-info {
+        &:not(:last-of-type) {
+            @include common.divider-single-arrow(common.$color-medium);
+        }
+        h3 {
+            @include common.divider-gradient-line-center;
+        }
+    }
+}

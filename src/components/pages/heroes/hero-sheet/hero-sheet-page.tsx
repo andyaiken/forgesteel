@@ -23,6 +23,7 @@ import { PerksCard } from '@/components/panels/classic-sheet/perks-card/perks-ca
 import { PotenciesCard } from '@/components/panels/classic-sheet/potencies-card/potencies-card';
 import { PrimaryReferenceCard } from '@/components/panels/classic-sheet/reference/primary-reference-card';
 import { ProjectsCard } from '@/components/panels/classic-sheet/projects-card/projects-card';
+import { ProjectsOverviewCard } from '@/components/panels/classic-sheet/projects-card/project-info-card';
 import { RulesData } from '@/data/rules-data';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SkillsCard } from '@/components/panels/classic-sheet/skills-card/skills-card';
@@ -119,6 +120,16 @@ export const HeroSheetPage = (props: Props) => {
 					shown: false
 				});
 			});
+
+		if (character.projects.length) {
+			const h = SheetFormatter.calculateProjectsOverviewCardSize(character.projects, layout.cardLineLen);
+			required.push({
+				element: <ProjectsOverviewCard projects={character.projects} key='projects-overview' />,
+				width: 1,
+				height: h,
+				shown: false
+			});
+		}
 
 		const optional = [
 			{
@@ -358,7 +369,7 @@ export const HeroSheetPage = (props: Props) => {
 							wide={props.options.pageOrientation !== 'portrait'}
 						/>
 						<ProjectsCard
-							character={character}
+							projects={character.projects}
 						/>
 					</div>
 					{getRemainingCards(extraCards)}

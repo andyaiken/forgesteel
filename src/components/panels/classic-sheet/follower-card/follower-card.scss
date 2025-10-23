@@ -80,22 +80,16 @@
 
         .type {
             text-transform: none;
+            text-align: right;
             text-wrap: nowrap;
             font-size: 16px;
         }
 
-        .keywords,
-        .cost {
+        .keywords {
             font-size: 14px;
             font-weight: 350;
             text-align: left;
             text-transform: none;
-        }
-
-        .cost,
-        .type {
-            text-align: right;
-            text-wrap: nowrap;
         }
     }
 
@@ -258,14 +252,6 @@
     }
 }
 
-#classic-sheet .hero-sheet .summon.card {
-    .details {
-        .field {
-            flex-basis: calc(100% / 5);
-        }
-    }
-}
-
 #classic-sheet .hero-sheet.color .follower.card {
     &.ambusher {
         .name-wrapper {
@@ -337,6 +323,15 @@
         }
         .advancement h4 {
             background-color: common.$color-support;
+        }
+    }
+    
+    &.companion {
+        .name-wrapper {
+            @include retainer-header-gradient(common.$color-companion);
+        }
+        .advancement h4 {
+            background-color: common.$color-companion;
         }
     }
 }

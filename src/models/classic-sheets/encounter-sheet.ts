@@ -1,7 +1,6 @@
-import { Feature, FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
-import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
-import { CharacteristicsSheet } from './classic-sheets';
+import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { Monster } from '@/models/monster';
+import { MonsterSheet } from './monster-sheet';
 import { Terrain } from '@/models/terrain';
 
 export interface EncounterSheet {
@@ -43,32 +42,4 @@ export interface EncounterSlotSheet {
 	count: number;
 	isMinion: boolean;
 }
-// #endregion
-
-// #region Monster
-export interface MonsterSheet {
-	id: string;
-	name: string;
-	type: string;
-	role: string;
-
-	characteristics: CharacteristicsSheet;
-
-	keywords: string;
-
-	size: string;
-	speed: number;
-	stamina: number;
-	stability: number;
-	freeStrike: number;
-
-	immunity: string;
-	weakness: string;
-	movement: string;
-
-	withCaptain: string;
-
-	features?: Feature[];
-	abilities?: AbilitySheet[];
-};
 // #endregion

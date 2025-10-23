@@ -6,15 +6,19 @@ import { Characteristic } from '@/enums/characteristic';
 import { CharacteristicsSheet } from '@/models/classic-sheets/classic-sheets';
 import { ClassicSheetLogic } from './classic-sheet-logic';
 import { CreatureLogic } from '@/logic/creature-logic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { FeatureLogic } from '../feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { Follower } from '@/models/follower';
+import { Format } from '@/utils/format';
+import { FormatLogic } from '../format-logic';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '../hero-logic';
 import { Item } from '@/models/item';
 import { ItemSheet } from '@/models/classic-sheets/hero-sheet';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '../monster-logic';
+import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Summon } from '@/models/summon';
@@ -56,6 +60,47 @@ export class ClassicSheetBuilder {
 			};
 		}
 	};
+
+	// #region Monster Sheet
+	static buildMonsterSheet = (monster: Monster): MonsterSheet => {
+		const level = MonsterLogic.getMonsterLevel(monster);
+		const monsterType = `Lvl ${level} ${monster.role.organization} ${monster.role.type}`;
+
+		const speed = MonsterLogic.getSpeed(monster);
+		const immunities = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity);
+		const weaknesses = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness);
+
+		const sheet: MonsterSheet = {
+			id: monster.id,
+			name: MonsterLogic.getMonsterName(monster),
+			type: monsterType,
+			role: monster.role.type,
+
+			characteristics: ClassicSheetBuilder.buildCharacteristicsSheet(monster),
+
+			keywords: monster.keywords.join(', '),
+			size: FormatLogic.getSize(monster.size),
+			speed: speed.value,
+			stamina: MonsterLogic.getStamina(monster),
+			stability: monster.stability,
+			freeStrike: MonsterLogic.getFreeStrikeDamage(monster),
+			immunity: immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', '),
+			weakness: weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', '),
+			movement: speed.modes.map(m => Format.capitalize(m)).join(', '),
+			withCaptain: monster.withCaptain
+		};
+
+		sheet.features = MonsterLogic.getFeatures(monster)
+			.filter(f => [ FeatureType.Text, FeatureType.AddOn ].includes(f.type));
+
+		const abilities = MonsterLogic.getFeatures(monster)
+			.filter(f => f.type === FeatureType.Ability)
+			.map(f => f.data.ability);
+		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, monster));
+
+		return sheet;
+	};
+	// #endregion
 
 	// #region Ability Sheet
 	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | Summon | undefined, summoner?: Hero): AbilitySheet => {

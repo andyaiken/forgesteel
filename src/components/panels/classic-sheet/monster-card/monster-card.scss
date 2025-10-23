@@ -27,7 +27,8 @@
         center center;
 }
 
-main#classic-sheet .encounter-sheet .monster {
+main#classic-sheet .encounter-sheet .monster,
+main#classic-sheet .hero-sheet .monster {
     padding: 10px;
     display: grid;
     justify-self: stretch;
@@ -65,7 +66,8 @@ main#classic-sheet .encounter-sheet .monster {
         @include common.divider-fancy(common.$color-dark);
     
         .type,
-        .keywords {
+        .keywords,
+        .cost {
             @include common.font-slab;
         }
 
@@ -81,6 +83,7 @@ main#classic-sheet .encounter-sheet .monster {
             text-transform: none;
             text-wrap: nowrap;
             font-size: 16px;
+            text-align: right;
         }
 
         .keywords {
@@ -88,6 +91,14 @@ main#classic-sheet .encounter-sheet .monster {
             font-weight: 350;
             text-align: left;
             text-transform: none;
+        }
+
+        .cost {
+            text-transform: none;
+            text-wrap: nowrap;
+            font-size: 14px;
+            font-weight: 350;
+            text-align: right;
         }
     }
 
@@ -272,49 +283,49 @@ main#classic-sheet .encounter-sheet .monster {
     }
 }
 
-#classic-sheet .encounter-sheet.color .monster.card {
+main#classic-sheet .color .monster.card {
     &.ambusher {
-        .name-wrapper {
+        section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-ambusher);
         }
     }
     &.artillery {
-        .name-wrapper {
+        section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-artillery);
         }
     }
     &.brute {
-        .name-wrapper {
+        section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-brute);
         }
     }
     &.controller {
-        .name-wrapper {
+        section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-controller);
         }
     }
     &.defender {
-        .name-wrapper {
+        section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-defender);
         }
     }
     &.harrier {
-        .name-wrapper {
+        section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-harrier);
         }
     }
     &.hexer {
-        .name-wrapper {
+        section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-hexer);
         }
     }
     &.mount {
-        .name-wrapper {
+        section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-mount);
         }
     }
     &.support {
-        .name-wrapper {
+        section.bordered .name-wrapper {
             @include monster-header-gradient(common.$color-support);
         }
     }

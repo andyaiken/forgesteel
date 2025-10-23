@@ -3,6 +3,7 @@ import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard
 import { ExtraCards, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
 import { CareerCard } from '@/components/panels/classic-sheet/career-card/career-card';
 import { ClassFeaturesCard } from '@/components/panels/classic-sheet/class-features-card/class-features-card';
+import { CompanionCard } from '@/components/panels/classic-sheet/follower-card/companion-card';
 import { ComplicationCard } from '@/components/panels/classic-sheet/complication-card/complication-card';
 import { ConditionsCard } from '@/components/panels/classic-sheet/conditions-card/conditions-card';
 import { CultureCard } from '@/components/panels/classic-sheet/culture-card/culture-card';
@@ -15,19 +16,18 @@ import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { ImmunitiesWeaknessesCard } from '@/components/panels/classic-sheet/immunities-weaknesses-card/immunities-weaknesses-card';
 import { ModifiersCard } from '@/components/panels/classic-sheet/modifiers-card/modifiers-card';
+import { MonsterCard } from '@/components/panels/classic-sheet/monster-card/monster-card';
 import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
 import { Options } from '@/models/options';
 import { PerksCard } from '@/components/panels/classic-sheet/perks-card/perks-card';
 import { PotenciesCard } from '@/components/panels/classic-sheet/potencies-card/potencies-card';
 import { PrimaryReferenceCard } from '@/components/panels/classic-sheet/reference/primary-reference-card';
 import { ProjectsCard } from '@/components/panels/classic-sheet/projects-card/projects-card';
-import { RetainerCard } from '@/components/panels/classic-sheet/follower-card/retainer-card';
 import { RulesData } from '@/data/rules-data';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SkillsCard } from '@/components/panels/classic-sheet/skills-card/skills-card';
 import { Sourcebook } from '@/models/sourcebook';
 import { StatsResourcesCard } from '@/components/panels/classic-sheet/stats-resources-card/stats-resources-card';
-import { SummonCard } from '@/components/panels/classic-sheet/follower-card/summon-card';
 import { TitlesCard } from '@/components/panels/classic-sheet/titles-card/titles-card';
 import { useMemo } from 'react';
 
@@ -246,17 +246,9 @@ export const HeroSheetPage = (props: Props) => {
 
 		// Folowers only go here
 		if (character.followers.length) {
-			character.followers.filter(f => f.classification === 'Retainer').forEach(fs => {
+			character.followers.filter(f => f.classification !== 'Follower').forEach(fs => {
 				extraCards.required.push({
-					element: <RetainerCard follower={fs} options={props.options} key={fs.id} />,
-					width: 1,
-					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen)),
-					shown: false
-				});
-			});
-			character.followers.filter(f => f.classification === 'Minion').forEach(fs => {
-				extraCards.required.push({
-					element: <SummonCard summon={fs} options={props.options} key={fs.id} />,
+					element: <CompanionCard companion={fs} options={props.options} key={fs.id} />,
 					width: 1,
 					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen)),
 					shown: false
@@ -272,9 +264,16 @@ export const HeroSheetPage = (props: Props) => {
 				});
 			}
 		}
+		character.summons.forEach(fs => {
+			extraCards.required.push({
+				element: <MonsterCard monster={fs} options={props.options} key={fs.id} />,
+				width: 1,
+				height: Math.min(layoutEnd.linesY, SheetFormatter.calculateMonsterSize(fs, layoutEnd.cardLineLen)),
+				shown: false
+			});
+		});
 
 		extraCards.required.sort((a, b) => a.height - b.height);
-
 		return SheetLayout.getRequiredCardPages(extraCards, character, layoutEnd, 'followers');
 	};
 

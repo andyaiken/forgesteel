@@ -28,7 +28,6 @@ describe('buildSummonSheet', () => {
 		expect(sheet).not.toBeNull();
 		expect(sheet.id).toBe('summoner-4-1-4c');
 		expect(sheet.name).toBe('Skeleton');
-		expect(sheet.classification).toBe('Minion');
 		expect(sheet.type).toBe('Signature Minion Harrier');
 		expect(sheet.role).toBe(MonsterRoleType.Harrier);
 
@@ -43,13 +42,13 @@ describe('buildSummonSheet', () => {
 
 		expect(sheet.size).toBe('1M');
 		expect(sheet.speed).toBe(6);
-		expect(sheet.stamina?.max).toBe(2);
+		expect(sheet.stamina).toBe(2);
 		expect(sheet.stability).toBe(0);
 		expect(sheet.freeStrike).toBe(1);
 
 		expect(sheet.immunity).toBe('Corruption 2, Poison 2');
 		expect(sheet.weakness).toBe('');
 		expect(sheet.movement).toBe('');
-		expect(sheet.damageType).toBe('');
+		expect(sheet.freeStrikeDamageType).toBe('');
 	});
 });

@@ -22,6 +22,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { ModifierLogic } from '@/logic/modifier-logic';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SheetPageSize } from '@/enums/sheet-page-size';
@@ -45,6 +46,7 @@ export class HeroSheetBuilder {
 			abilities: [],
 			standardAbilities: [],
 			followers: [],
+			summons: [],
 			featuresReferenceOther: [],
 			extraReferenceItems: [],
 
@@ -412,6 +414,8 @@ export class HeroSheetBuilder {
 		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Companion, FeatureType.Summon, FeatureType.SummonChoice ].includes(f.feature.type))
 			.map(f => f.feature);
 		sheet.followers = retinue.flatMap(f => this.buildFollowerCompanionSheet(f, hero)).filter(s => !!s);
+		sheet.summons = retinue.filter(f => f.type === FeatureType.SummonChoice).flatMap(f => f.data.selected)
+			.filter(f => CreatureLogic.isSummon(f)).map(f => this.buildSummonSheet(f, hero)).filter(s => !!s);
 
 		coveredFeatureIds.push(...retinue.map(f => f.id));
 
@@ -511,7 +515,7 @@ export class HeroSheetBuilder {
 		} else if (feature.type === FeatureType.Companion && feature.data.selected) {
 			return this.buildRetainerSheet(feature.data.selected);
 		} else if (feature.type === FeatureType.SummonChoice && feature.data.selected) {
-			return feature.data.selected.map(s => this.buildSummonSheet(s, hero));
+			return feature.data.selected.filter(CreatureLogic.isCompanion).map(s => this.buildCompanionSheet(s, hero));
 		}
 	};
 
@@ -607,45 +611,39 @@ export class HeroSheetBuilder {
 		return sheet;
 	};
 
-	static buildSummonSheet = (summon: Summon, hero: Hero): FollowerSheet => {
-		const monster = summon.monster;
-		const signature = summon.info.isSignature ? 'Signature ' : '';
-		const summonType = `${signature}Minion ${monster.role.type}`;
+	static buildCompanionSheet = (companion: Summon, hero: Hero): FollowerSheet => {
+		const monster = companion.monster;
 		const sheet: FollowerSheet = {
-			id: monster.id,
-			name: MonsterLogic.getMonsterName(monster),
-			classification: 'Minion',
-			type: summonType,
+			id: companion.id,
+			name: companion.name,
+			classification: 'Companion',
+			type: 'Companion',
 			role: monster.role.type,
 
 			characteristics: ClassicSheetBuilder.buildCharacteristicsSheet(monster)
 		};
-		sheet.keywords = monster.keywords.join(', ');
 
-		let summonCost = `${summon.info.cost} essence `;
-		summonCost += summon.info.count === 1 ? 'per minion summoned' : `for ${summon.info.count} minions`;
-		sheet.cost = summonCost;
+		sheet.keywords = monster.keywords.join(', ');
 
 		const speed = MonsterLogic.getSpeed(monster);
 		sheet.size = FormatLogic.getSize(monster.size);
 		sheet.speed = speed.value;
 		sheet.stability = monster.stability;
 		sheet.freeStrike = MonsterLogic.getFreeStrikeDamage(monster);
-		sheet.damageType = monster.freeStrikeType !== DamageType.Damage ? monster.freeStrikeType : '';
-
-		sheet.stamina = {
-			max: MonsterLogic.getStamina(monster),
-			current: Math.max(MonsterLogic.getStamina(monster) - monster.state.staminaDamage, 0),
-			temp: monster.state.staminaTemp,
-			windedAt: MonsterLogic.getWindedThreshold(monster),
-			deadAt: MonsterLogic.getDeadThreshold(monster)
-		};
-
-		const immunities = CreatureLogic.getSummonDamageModifiers(summon, hero, DamageModifierType.Immunity);
+		const immunities = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Immunity);
 		sheet.immunity = immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
 		const weaknesses = MonsterLogic.getDamageModifiers(monster, DamageModifierType.Weakness);
 		sheet.weakness = weaknesses.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
 		sheet.movement = speed.modes.map(m => Format.capitalize(m)).join(', ');
+		sheet.skills = MonsterLogic.getSkills(monster, []).map(s => s.name);
+
+		sheet.stamina = {
+			max: HeroLogic.getStamina(hero),
+			current: Math.max(HeroLogic.getStamina(hero) - monster.state.staminaDamage, 0),
+			temp: monster.state.staminaTemp,
+			windedAt: HeroLogic.getWindedThreshold(hero),
+			deadAt: HeroLogic.getDeadThreshold(hero)
+		};
 
 		sheet.features = MonsterLogic.getFeatures(monster)
 			.filter(f => [ FeatureType.Text, FeatureType.AddOn ].includes(f.type));
@@ -653,8 +651,49 @@ export class HeroSheetBuilder {
 		const abilities = MonsterLogic.getFeatures(monster)
 			.filter(f => f.type === FeatureType.Ability)
 			.map(f => f.data.ability);
-		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, summon, hero));
+		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, monster));
 
+		const level = hero.class?.level || 0;
+		const advancement = [];
+		if (level < 3 && companion.info.level3) {
+			advancement.push({
+				level: 3,
+				features: companion.info.level3
+			});
+		}
+		if (level < 6 && companion.info.level6) {
+			advancement.push({
+				level: 6,
+				features: companion.info.level6
+			});
+		}
+		if (level < 10 && companion.info.level10) {
+			advancement.push({
+				level: 10,
+				features: companion.info.level10
+			});
+		}
+		sheet.advancement = advancement;
+
+		return sheet;
+	};
+
+	static buildSummonSheet = (summon: Summon, hero: Hero): MonsterSheet => {
+		const monster = summon.monster;
+
+		const sheet = ClassicSheetBuilder.buildMonsterSheet(monster);
+
+		const signature = summon.info.isSignature ? 'Signature ' : '';
+		const summonType = `${signature}Minion ${monster.role.type}`;
+		sheet.type = summonType;
+
+		let summonCost = `${summon.info.cost} essence `;
+		summonCost += summon.info.count === 1 ? 'per minion summoned' : `for ${summon.info.count} minions`;
+		sheet.cost = summonCost;
+		sheet.freeStrikeDamageType = monster.freeStrikeType !== DamageType.Damage ? monster.freeStrikeType : '';
+
+		const immunities = CreatureLogic.getSummonDamageModifiers(summon, hero, DamageModifierType.Immunity);
+		sheet.immunity = immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
 		return sheet;
 	};
 	// #endregion

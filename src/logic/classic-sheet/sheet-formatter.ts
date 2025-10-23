@@ -11,7 +11,7 @@ import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Monster } from '@/models/monster';
-import { MonsterSheet } from '@/models/classic-sheets/encounter-sheet';
+import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { RulesItem } from '@/models/rules-item';
 import { StatBlockIcon } from '@/enums/stat-block-icon';
 import { Title } from '@/models/title';
@@ -360,7 +360,15 @@ export class SheetFormatter {
 				size += this.calculateFeatureSize(f, null, lineWidth, false);
 			});
 			follower.advancement?.forEach(advancement => {
-				size += 1.5 + this.calculateAbilityComponentSize(advancement.ability, lineWidth);
+				size += 1.5;
+				if (advancement.ability) {
+					size += this.calculateAbilityComponentSize(advancement.ability, lineWidth);
+				}
+				if (advancement.features?.length) {
+					advancement.features.forEach(f => {
+						size += this.calculateFeatureSize(f, null, lineWidth);
+					});
+				}
 			});
 		}
 		return size;

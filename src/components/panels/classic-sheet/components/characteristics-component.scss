@@ -1,6 +1,6 @@
 @use '../../../pages/classic-sheet/common.scss';
 
-#classic-sheet .card .characteristics {
+#classic-sheet :not(.stats-resources).card .characteristics {
     margin: 5px 0;
     border-top: 1px solid common.$color-medium;
     border-bottom: 1px solid common.$color-medium;

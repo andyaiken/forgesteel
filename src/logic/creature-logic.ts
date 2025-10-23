@@ -8,6 +8,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { ModifierLogic } from './modifier-logic';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Summon } from '@/models/summon';
 
 export class CreatureLogic {
@@ -59,7 +60,16 @@ export class CreatureLogic {
 		return creature !== undefined
 			&& creature !== null
 			&& typeof creature === 'object'
-			&& 'info' in creature;
+			&& 'monster' in creature
+			&& (creature.monster as Monster).role.organization === MonsterOrganizationType.Minion;
+	};
+
+	static isCompanion = (creature: unknown): creature is Summon => {
+		return creature !== undefined
+			&& creature !== null
+			&& typeof creature === 'object'
+			&& 'monster' in creature
+			&& (creature.monster as Monster).role.organization === MonsterOrganizationType.Companion;
 	};
 
 	static getEchelon = (level: number) => {

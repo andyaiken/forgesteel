@@ -162,7 +162,7 @@ export class SheetLayout {
 		return refCards;
 	};
 
-	static getAbilityPages = (character: HeroSheet, extraCards: ExtraCards, layout: CardPageLayout, options: Options) => {
+	static getAbilityPagesForCharacter = (character: HeroSheet, extraCards: ExtraCards, layout: CardPageLayout, options: Options) => {
 		let allAbilities = character.abilities;
 
 		if (options.shownStandardAbilities.length) {
@@ -171,6 +171,10 @@ export class SheetLayout {
 
 		allAbilities.sort(SheetFormatter.sortAbilitiesByType);
 
+		return this.getAbilityPages(allAbilities, extraCards, layout, p => SheetFormatter.getPageId('hero-sheet', character.hero.id, `abilities-${p}`));
+	};
+
+	static getAbilityPages = (allAbilities: AbilitySheet[], extraCards: ExtraCards, layout: CardPageLayout, getPageId: (s: string) => string) => {
 		const pageClasses = [ 'abilities', 'page', layout.orientation, `row-cards-${layout.perRow}` ];
 		let p = 1;
 		const abilityCardPages: JSX.Element[] = [];
@@ -321,7 +325,7 @@ export class SheetLayout {
 			abilityCardPages.push(
 				<Fragment key={`abilities-${p++}`}>
 					<hr className='dashed' />
-					<div className={pageClasses.join(' ')} id={SheetFormatter.getPageId('hero-sheet', character.hero.id, `abilities-${p}`)}>
+					<div className={pageClasses.join(' ')} id={getPageId(p.toString())}>
 						{pageAbilityGrid.map((a, i) => {
 							if (a.length > 1) {
 								return (

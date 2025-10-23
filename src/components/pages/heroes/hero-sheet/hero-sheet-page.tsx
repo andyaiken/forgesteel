@@ -202,7 +202,7 @@ export const HeroSheetPage = (props: Props) => {
 	};
 
 	const addAbilityPages = (character: HeroSheet, extraCards: ExtraCards) => {
-		return SheetLayout.getAbilityPages(character, extraCards, layout, props.options);
+		return SheetLayout.getAbilityPagesForCharacter(character, extraCards, layout, props.options);
 	};
 
 	const getFinalCards = (extraCards: ExtraCards) => {

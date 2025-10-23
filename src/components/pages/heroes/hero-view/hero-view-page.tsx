@@ -27,7 +27,7 @@ import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { RulesPage } from '@/enums/rules-page';
 import { Sourcebook } from '@/models/sourcebook';
-import { StandardAbilitiesPanel } from '@/components/panels/standard-abilities/standard-abilities-panel';
+import { StandardAbilitiesPage } from '../hero-sheet/standard-abilities-page';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
 import { useIsSmall } from '@/hooks/use-is-small';
@@ -113,7 +113,7 @@ export const HeroViewPage = (props: Props) => {
 				);
 			case 'abilities':
 				return (
-					<StandardAbilitiesPanel hero={hero} />
+					<StandardAbilitiesPage options={props.options} />
 				);
 			case 'notes':
 				return (
@@ -216,9 +216,9 @@ export const HeroViewPage = (props: Props) => {
 					</Popover>
 					<Popover
 						trigger='click'
-						content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+						content={<OptionsPanel mode={view === 'modern' ? 'hero-modern' : 'hero-classic'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 					>
-						<Button disabled={![ 'modern', 'classic' ].includes(view)} icon={<SettingOutlined />}>
+						<Button disabled={![ 'modern', 'classic', 'abilities' ].includes(view)} icon={<SettingOutlined />}>
 							Options
 							<DownOutlined />
 						</Button>

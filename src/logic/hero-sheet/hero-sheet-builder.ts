@@ -371,6 +371,7 @@ export class HeroSheetBuilder {
 			.filter(f => [ FeatureType.TitleChoice ].includes(f.feature.type))
 			.map(f => f.feature.id));
 
+		const followers = HeroLogic.getFollowers(hero);
 		sheet.projects = hero.state.projects.map(p => {
 			let characteristics = SheetFormatter.joinCommasOr(p.characteristic
 				.sort(SheetFormatter.sortCharacteristics)
@@ -379,11 +380,13 @@ export class HeroSheetBuilder {
 			if (characteristics === 'M, A, R, I or P') {
 				characteristics = 'Any';
 			}
+			const assignee = followers.find(f => f.id === p.progress!.followerID)!.name || '';
 
 			return {
 				id: p.id,
 				name: p.name,
 				characteristic: characteristics,
+				assignee: assignee,
 				pointsGoal: p.goal,
 				pointsCurrent: p.progress?.points
 			};
@@ -403,11 +406,11 @@ export class HeroSheetBuilder {
 			.map(f => f.feature.id));
 		// #endregion
 
-		const followers = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Companion ].includes(f.feature.type))
+		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Companion ].includes(f.feature.type))
 			.map(f => f.feature);
-		sheet.followers = followers.map(f => this.buildFollowerCompanionSheet(f)).filter(s => !!s);
+		sheet.followers = retinue.map(f => this.buildFollowerCompanionSheet(f)).filter(s => !!s);
 
-		coveredFeatureIds.push(...followers.map(f => f.id));
+		coveredFeatureIds.push(...retinue.map(f => f.id));
 
 		// Feature coverage check
 		const missedFeatures: { feature: Feature; source: string; }[] = [];

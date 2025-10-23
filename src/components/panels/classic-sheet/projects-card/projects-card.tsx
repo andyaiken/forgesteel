@@ -11,6 +11,7 @@ export const ProjectsCard = (props: Props) => {
 	const emptyProject = {
 		name: '',
 		characteristic: '',
+		assignee: '',
 		pointsGoal: null,
 		pointsCurrent: null
 	};
@@ -37,7 +38,7 @@ export const ProjectsCard = (props: Props) => {
 				{projects.map(proj =>
 					<div className='project' key={proj.name || i++}>
 						<div>{proj.name}</div>
-						<div></div>
+						<div>{proj.assignee}</div>
 						<div className='roll-characteristic'>
 							<DrawSteelSymbolText
 								content={proj.characteristic}

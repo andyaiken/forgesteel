@@ -6,6 +6,7 @@ export const HeaderImage = () => {
 	return (
 		<div className='header-image'>
 			<img src={pbds} />
+			<h1>Made with Forge Steel</h1>
 		</div>
 	);
 };

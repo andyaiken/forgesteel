@@ -12,30 +12,6 @@ interface InventoryProps {
 	wide?: boolean;
 }
 
-export const InventoryCard = (props: InventoryProps) => {
-	const character = props.character;
-
-	const columns = props.wide || false;
-
-	const cardClasses = [ 'inventory', 'card' ];
-	if (columns) {
-		cardClasses.push('wide');
-	}
-
-	return (
-		<div className={cardClasses.join(' ')}>
-			<h2>Inventory</h2>
-			<ul>
-				{character.inventory?.map(item => (
-					<li key={item.id}>
-						<ItemComponent item={item} character={character} />
-					</li>
-				))}
-			</ul>
-		</div>
-	);
-};
-
 export const TrinketsCard = (props: InventoryProps) => {
 	const character = props.character;
 	const wide = props.wide || false;
@@ -61,11 +37,8 @@ export const TrinketsCard = (props: InventoryProps) => {
 
 export const ConsumablesCard = (props: InventoryProps) => {
 	const character = props.character;
-	const columns = props.wide || false;
+	const wide = props.wide || false;
 	const cardClasses = [ 'inventory', 'consumables', 'card' ];
-	if (columns) {
-		cardClasses.push('wide');
-	}
 
 	const getConsumables = () => {
 		return character.inventory?.filter(i => i.item.type === ItemType.Consumable) || [];
@@ -74,7 +47,7 @@ export const ConsumablesCard = (props: InventoryProps) => {
 	return (
 		<div className={cardClasses.join(' ')}>
 			<h2>Consumables</h2>
-			<ul>
+			<ul className={`features-container ${wide ? 'two-column' : ''}`}>
 				{getConsumables().map(item => (
 					<li key={item.id}>
 						<ItemComponent item={item} character={character} />
@@ -186,6 +159,7 @@ export const ItemComponent = (props: ItemProps) => {
 				<Markdown
 					text={itemSheet.effect}
 					className='item-effect'
+					key={`item-effect-${item.id}`}
 				/>
 			</>
 		);

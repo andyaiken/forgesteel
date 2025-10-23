@@ -346,6 +346,7 @@ export const HeroSheetPage = (props: Props) => {
 						/>
 						<ConsumablesCard
 							character={character}
+							wide={props.options.pageOrientation !== 'portrait'}
 						/>
 						<ProjectsCard
 							character={character}

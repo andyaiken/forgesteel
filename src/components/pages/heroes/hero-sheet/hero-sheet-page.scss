@@ -208,8 +208,9 @@
             grid-column-end: span 4;
         }
 
+        .consumables,
         .projects {
-            grid-column-end: span 3;
+            grid-column-end: span 2;
         }
     }
 }

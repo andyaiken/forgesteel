@@ -165,6 +165,7 @@ export const EncounterRunPanel = (props: Props) => {
 				{
 					victory ?
 						<Alert
+							className='initiative-button'
 							type='info'
 							showIcon={true}
 							message={(

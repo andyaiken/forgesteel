@@ -141,7 +141,7 @@ export const AbilityPanel = (props: Props) => {
 
 		const hasRoll = (props.ability.sections || []).some(s => s.type === 'roll');
 
-		if ((conditions.includes(ConditionType.Bleeding) || ((state === 'dying') && (props.ability.id !== AbilityData.catchBreath.id))) && ([ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Trigger ].includes(props.ability.type.usage) || props.ability.keywords.includes(AbilityKeyword.Strike))) {
+		if ((conditions.includes(ConditionType.Bleeding) || ((state === 'dying') && (props.ability.id !== AbilityData.catchBreath.id))) && [ AbilityUsage.MainAction, AbilityUsage.Trigger ].includes(props.ability.type.usage)) {
 			warnings.push({
 				label: ConditionType.Bleeding,
 				text: `After using this ability, you lose 1d6 + ${level} Stamina.`
@@ -198,7 +198,7 @@ export const AbilityPanel = (props: Props) => {
 		if (conditions.includes(ConditionType.Taunted) && hasRoll) {
 			warnings.push({
 				label: ConditionType.Taunted,
-				text: 'This ability takes a bane if it doesn’t target the creature who taunted you, and you have line of effect to that creature.'
+				text: 'This ability takes a double bane if it doesn’t target the creature who taunted you, and you have line of effect to that creature.'
 			});
 		}
 		if (conditions.includes(ConditionType.Weakened) && hasRoll) {

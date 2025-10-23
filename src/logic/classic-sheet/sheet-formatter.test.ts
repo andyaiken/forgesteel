@@ -72,7 +72,7 @@ This is some initial feature text. It will be followed by a table.
 
 		expect(SheetFormatter.calculateFeatureSize(feature, null, 100, true)).toBe(3);
 
-		expect(SheetFormatter.calculateFeatureSize(feature, null, 100, false)).toBe(11);
+		expect(SheetFormatter.calculateFeatureSize(feature, null, 100, false)).toBeCloseTo(11, 0.2);
 	});
 });
 

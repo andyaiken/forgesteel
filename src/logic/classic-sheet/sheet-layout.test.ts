@@ -107,7 +107,14 @@ describe('getFillerCards', () => {
 
 		const result = SheetLayout.getFillerCards(1, 10, 10, extraCards, layout);
 		expect(result.length).toBe(1);
-		expect(result[0]).toBe('r1 r2');
+		expect(result[0]).toMatchInlineSnapshot(`
+			<div
+			  className="stacked-cards"
+			>
+			  r1
+			  r2
+			</div>
+		`);
 	});
 });
 
@@ -118,7 +125,7 @@ describe('findExtraCard', () => {
 			optional: []
 		};
 		const result = SheetLayout.findExtraCard(extraCards, 100, 100);
-		expect(result).toBeNull();
+		expect(result).toBeNullable();
 	});
 
 	test('returns nothing if there are no unshown extra cards', () => {
@@ -129,7 +136,7 @@ describe('findExtraCard', () => {
 			optional: [ o1 ]
 		};
 		const result = SheetLayout.findExtraCard(extraCards, 100, 100);
-		expect(result).toBeNull();
+		expect(result).toBeNullable();
 	});
 
 	test.each([

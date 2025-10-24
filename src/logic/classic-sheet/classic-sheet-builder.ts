@@ -16,6 +16,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '../hero-logic';
 import { Item } from '@/models/item';
 import { ItemSheet } from '@/models/classic-sheets/hero-sheet';
+import { ItemType } from '@/enums/item-type';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '../monster-logic';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
@@ -223,6 +224,7 @@ export class ClassicSheetBuilder {
 		const features = FeatureLogic.getFeaturesFromItem(item, hero)
 			.map(f => f.feature)
 			.filter(f => ClassicSheetLogic.includeFeature(f, options));
+		// console.log(features);
 		const sheet: ItemSheet = {
 			id: item.id,
 			item: item,
@@ -247,8 +249,12 @@ export class ClassicSheetBuilder {
 				}, '');
 		}
 
+		if (item.type === ItemType.Artifact) {
+			sheet.effect = SheetFormatter.enhanceMarkdown(features.find(f => f.id === item.id)?.description ?? sheet.effect);
+		}
+
 		if (!sheet.effect.length) {
-			sheet.effect = features.find(f => f.id === item.id)?.description || '';
+			sheet.effect = features.find(f => f.id === item.id)?.description ?? '';
 		}
 
 		return sheet;

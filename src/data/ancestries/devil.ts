@@ -68,10 +68,11 @@ export const devil: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSaveThreshold({
 						id: 'devil-feature-2-5',
 						name: 'Impressive Horns',
-						description: 'Your cherished horns are larger than your average devil’s, and a hardened representation of your force of will. Whenever you make a saving throw, you succeed on a roll of 5 or higher.'
+						description: 'Your cherished horns are larger than your average devil’s, and a hardened representation of your force of will. Whenever you make a saving throw, you succeed on a roll of 5 or higher.',
+						value: 5
 					}),
 					value: 2
 				},

@@ -1,7 +1,7 @@
 import { AbilityCustomization, Hero } from '@/models/hero';
 import { Button, Flex, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResource, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResource, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { Ability } from '@/models/ability';
@@ -442,6 +442,16 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
+	const getInformationSaveThreshold = (data: FeatureSaveThresholdData) => {
+		if (!props.feature.description) {
+			return (
+				<Field label='Value' value={`${data.value}+`} />
+			);
+		}
+
+		return null;
+	};
+
 	const getInformationSize = (data: FeatureSizeData) => {
 		if (!props.feature.description) {
 			return (
@@ -625,6 +635,8 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationPerk(props.feature.data);
 			case FeatureType.Proficiency:
 				return getInformationProficiency(props.feature.data);
+			case FeatureType.SaveThreshold:
+				return getInformationSaveThreshold(props.feature.data);
 			case FeatureType.Size:
 				return getInformationSize(props.feature.data);
 			case FeatureType.SkillChoice:

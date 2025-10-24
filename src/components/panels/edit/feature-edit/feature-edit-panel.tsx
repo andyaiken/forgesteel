@@ -1,6 +1,6 @@
 import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '@/enums/ability-keyword';
@@ -304,6 +304,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setSourceFormer = (value: boolean) => {
 			const copy = Utils.copy(feature.data) as FeatureAncestryFeatureChoiceData;
 			copy.source.former = value;
+			setData(copy);
+		};
+
+		const setSaveThreshold = (value: number) => {
+			const copy = Utils.copy(feature.data) as FeatureSaveThresholdData;
+			copy.value = value;
 			setData(copy);
 		};
 
@@ -909,7 +915,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select field'
-							options={[ FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
+							options={[ FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 							showSearch={true}
 							filterOption={(input, option) => {
@@ -1733,6 +1739,15 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.SaveThreshold: {
+				const data = feature.data as FeatureSaveThresholdData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Save Threshold</HeaderText>
+						<NumberSpin min={1} value={data.value} onChange={setSaveThreshold} />
+					</Space>
+				);
+			}
 			case FeatureType.Size: {
 				const data = feature.data as FeatureSizeData;
 				return (
@@ -2017,6 +2032,7 @@ export const FeatureEditPanel = (props: Props) => {
 		FeatureType.PackageContent,
 		FeatureType.Perk,
 		FeatureType.Proficiency,
+		FeatureType.SaveThreshold,
 		FeatureType.Size,
 		FeatureType.SkillChoice,
 		FeatureType.Speed,
@@ -2099,7 +2115,7 @@ export const FeatureEditPanel = (props: Props) => {
 			<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} width='500px'>
 				<FeatureTypeSelectModal
 					types={props.allowedTypes || featureTypes}
-					onSelect={setType}
+					onSelect={type => { setType(type); setTypeSelectorVisible(false); }}
 					onClose={() => setTypeSelectorVisible(false)}
 				/>
 			</Drawer>

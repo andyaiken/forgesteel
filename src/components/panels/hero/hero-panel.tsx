@@ -491,42 +491,57 @@ export const HeroPanel = (props: Props) => {
 						<div className='stats-box clickable' onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
 							<div className='stats'>
 								<div className='stat'>
-									<Statistic title='Might' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
+									<Statistic
+										title={isSmall ? 'M' : 'Might'}
+										value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)}
+									/>
 								</div>
 							</div>
-							<div className='stats-box-caption'>Might</div>
+							<div className='stats-box-caption'>{isSmall ? 'M' : 'Might'}</div>
 						</div>
 						<div className='stats-box clickable' onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
 							<div className='stats'>
 								<div className='stat'>
-									<Statistic title='Agility' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
+									<Statistic
+										title={isSmall ? 'A' : 'Agility'}
+										value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)}
+									/>
 								</div>
 							</div>
-							<div className='stats-box-caption'>Agility</div>
+							<div className='stats-box-caption'>{isSmall ? 'A' : 'Agility'}</div>
 						</div>
 						<div className='stats-box clickable' onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
 							<div className='stats'>
 								<div className='stat'>
-									<Statistic title='Reason' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
+									<Statistic
+										title={isSmall ? 'R' : 'Reason'}
+										value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)}
+									/>
 								</div>
 							</div>
-							<div className='stats-box-caption'>Reason</div>
+							<div className='stats-box-caption'>{isSmall ? 'R' : 'Reason'}</div>
 						</div>
 						<div className='stats-box clickable' onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
 							<div className='stats'>
 								<div className='stat'>
-									<Statistic title='Intuition' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
+									<Statistic
+										title={isSmall ? 'I' : 'Intuition'}
+										value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)}
+									/>
 								</div>
 							</div>
-							<div className='stats-box-caption'>Intuition</div>
+							<div className='stats-box-caption'>{isSmall ? 'I' : 'Intuition'}</div>
 						</div>
 						<div className='stats-box clickable' onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
 							<div className='stats'>
 								<div className='stat'>
-									<Statistic title='Presence' value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
+									<Statistic
+										title={isSmall ? 'P' : 'Presence'}
+										value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)}
+									/>
 								</div>
 							</div>
-							<div className='stats-box-caption'>Presence</div>
+							<div className='stats-box-caption'>{isSmall ? 'P' : 'Presence'}</div>
 						</div>
 					</Flex>
 					<div className='stats-box clickable' onClick={onShowHero}>
@@ -534,42 +549,82 @@ export const HeroPanel = (props: Props) => {
 							{
 								HeroLogic.getHeroicResources(props.hero).map(hr => (
 									<div key={hr.id} className='stat'>
-										<Statistic title={hr.name} value={hr.value} />
+										<Statistic
+											title={hr.name}
+											value={hr.value}
+										/>
 									</div>
 								))
 							}
 							<div className='stat'>
-								<Statistic title='Surges' value={props.hero.state.surges} />
+								<Statistic
+									title='Surges'
+									value={props.hero.state.surges}
+								/>
 							</div>
 							<div className='stat'>
-								<Statistic title='Victories' value={props.hero.state.victories} />
+								<Statistic
+									title='Victories'
+									value={props.hero.state.victories}
+								/>
 							</div>
 							<div className='stat'>
-								<Statistic title='XP' value={props.hero.state.xp} suffix={xpSuffix} />
+								<Statistic
+									title='XP'
+									value={props.hero.state.xp}
+									suffix={xpSuffix}
+								/>
 							</div>
 							<div className='stat'>
-								<Statistic title='Renown' value={HeroLogic.getRenown(props.hero)} />
+								<Statistic
+									title='Renown'
+									value={HeroLogic.getRenown(props.hero)}
+								/>
 							</div>
 							<div className='stat'>
-								<Statistic title='Wealth' value={HeroLogic.getWealth(props.hero)} />
+								<Statistic
+									title='Wealth'
+									value={HeroLogic.getWealth(props.hero)}
+								/>
 							</div>
 						</div>
 						<div className='stats-box-caption'>Resources</div>
 					</div>
 					<Flex gap={10}>
-						<div className='stats-box' style={{ flex: '4 4 0' }}>
+						<div className='stats-box' style={{ flex: '5 5 0' }}>
 							<div className='stats'>
 								<div className='stat'>
-									<Statistic title='Size' value={size.value} suffix={sizeSuffix} />
+									<Statistic
+										title='Size'
+										value={size.value}
+										suffix={sizeSuffix}
+									/>
 								</div>
 								<div className='stat'>
-									<Statistic title={speedStr} value={speed.value} suffix={speedSuffix} />
+									<Statistic
+										title={speedStr}
+										value={speed.value}
+										suffix={speedSuffix}
+									/>
 								</div>
 								<div className='stat'>
-									<Statistic title='Stability' value={HeroLogic.getStability(props.hero)} />
+									<Statistic
+										title='Stability'
+										value={HeroLogic.getStability(props.hero)}
+									/>
 								</div>
 								<div className='stat'>
-									<Statistic title='Disengage' value={HeroLogic.getDisengage(props.hero)} />
+									<Statistic
+										title='Disengage'
+										value={HeroLogic.getDisengage(props.hero)}
+									/>
+								</div>
+								<div className='stat'>
+									<Statistic
+										title='Save'
+										value={HeroLogic.getSaveThreshold(props.hero)}
+										suffix={HeroLogic.getSaveBonus(props.hero) ? `+${HeroLogic.getSaveBonus(props.hero)}` : undefined}
+									/>
 								</div>
 							</div>
 							<div className='stats-box-caption'>Statistics</div>
@@ -577,13 +632,24 @@ export const HeroPanel = (props: Props) => {
 						<div className='stats-box clickable' onClick={onShowVitals} style={{ flex: '3 3 0' }}>
 							<div className='stats'>
 								<div className='stat'>
-									<Statistic title='Stamina' value={stamina} suffix={staminaSuffix} />
+									<Statistic
+										title='Stamina'
+										value={stamina}
+										suffix={staminaSuffix}
+									/>
 								</div>
 								<div className='stat'>
-									<Statistic title='Recoveries' value={recoveries} suffix={recoveriesSuffix} />
+									<Statistic
+										title='Recoveries'
+										value={recoveries}
+										suffix={recoveriesSuffix}
+									/>
 								</div>
 								<div className='stat'>
-									<Statistic title='Recov Value' value={HeroLogic.getRecoveryValue(props.hero)} />
+									<Statistic
+										title='Recov Value'
+										value={HeroLogic.getRecoveryValue(props.hero)}
+									/>
 								</div>
 							</div>
 							<div className='stats-box-caption'>Vitals</div>

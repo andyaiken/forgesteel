@@ -234,6 +234,11 @@ export interface FeatureProficiencyData extends _FeatureData {
 };
 export type FeatureProficiency = FeatureOf<FeatureType.Proficiency, FeatureProficiencyData>;
 
+export interface FeatureSaveThresholdData extends _FeatureData {
+	value: number;
+};
+export type FeatureSaveThreshold = FeatureOf<FeatureType.SaveThreshold, FeatureSaveThresholdData>;
+
 export interface FeatureSizeData extends _FeatureData {
 	size: Size;
 };
@@ -319,6 +324,7 @@ export type Feature =
 	| FeaturePackageContent
 	| FeaturePerk
 	| FeatureProficiency
+	| FeatureSaveThreshold
 	| FeatureSize
 	| FeatureSkillChoice
 	| FeatureSpeed

@@ -575,6 +575,30 @@ export class HeroLogic {
 		return value;
 	};
 
+	static getSaveThreshold = (hero: Hero) => {
+		const values = [ 6 ];
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.SaveThreshold)
+			.forEach(f => values.push(f.data.value));
+
+		return Math.min(...values);
+	};
+
+	static getSaveBonus = (hero: Hero) => {
+		let value = 0;
+
+		HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Bonus)
+			.map(f => f.data)
+			.filter(data => data.field === FeatureField.Save)
+			.forEach(data => value += ModifierLogic.calculateModifierValue(data, hero));
+
+		return value;
+	};
+
 	static getRenown = (hero: Hero) => {
 		let value = hero.state.renown;
 
@@ -865,20 +889,6 @@ export class HeroLogic {
 				};
 			});
 		});
-	};
-
-	static calculateSaveValue = (hero: Hero) => {
-		// Account for Ancestry Traits that reduce Saving Throw
-		const featureIdsSaveOn5: string[] = [
-			'devil-feature-2-5', // Impressive Horns
-			'high-elf-feature-2-4', // Otherworldly Grace
-			'wode-elf-feature-2-4' // Otherworldly Grace
-		];
-		const features = HeroLogic.getFeatures(hero);
-		if (features.find(f => featureIdsSaveOn5.includes(f.feature.id))) {
-			return 5;
-		}
-		return 6;
 	};
 
 	static getPotency = (hero: Hero, strength: 'weak' | 'average' | 'strong') => {

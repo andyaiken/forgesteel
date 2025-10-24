@@ -32,6 +32,7 @@ export enum FeatureType {
 	PackageContent = 'Package Content',
 	Perk = 'Perk',
 	Proficiency = 'Proficiency',
+	SaveThreshold = 'Save Threshold',
 	Size = 'Size',
 	SkillChoice = 'Skill Choice',
 	Speed = 'Speed',

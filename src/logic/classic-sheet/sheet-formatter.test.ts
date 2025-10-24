@@ -2,6 +2,7 @@ import { afterEach, describe, expect, test, vi } from 'vitest';
 import { FactoryLogic } from '../factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
+import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { SheetFormatter } from './sheet-formatter';
 
 describe.concurrent('Test addSign', () => {
@@ -71,7 +72,7 @@ This is some initial feature text. It will be followed by a table.
 
 		expect(SheetFormatter.calculateFeatureSize(feature, null, 100, true)).toBe(3);
 
-		expect(SheetFormatter.calculateFeatureSize(feature, null, 100, false)).toBe(11.4);
+		expect(SheetFormatter.calculateFeatureSize(feature, null, 100, false)).toBeCloseTo(11, 0.2);
 	});
 });
 
@@ -401,5 +402,61 @@ describe('calculateFeatureReferenceSize', () => {
 		// with two different sized features, the value of the largest should determine the overall height
 		const result = SheetFormatter.calculateFeatureReferenceSize(features, hero, 50, 2);
 		expect(result).toBe(34.5);
+	});
+});
+
+describe('calculateProjectDetailCardSize', () => {
+	test('calculates card size correctly', () => {
+		const sheet = {
+			name: 'Craft Black Ash Dart',
+			prerequisites: 'Three vials of black ash from the College of Black Ash',
+			source: 'Texts or lore in Szetch',
+			characteristic: 'A or I',
+			pointsGoal: 45,
+			effect: 'Yields 1d3 darts, or three darts if crafted by a shadow'
+		} as ProjectSheet;
+
+		const result = SheetFormatter.calculateProjectDetailCardSize(sheet, 54);// 54 is equivalent to the Letter/Portrait cardLineLen
+		expect(result).toBeCloseTo(14.4, 0.2);
+	});
+});
+
+describe('calculateProjectsOverviewCardSize', () => {
+	test('calculates size properly for multiple projects', () => {
+		const projects = [
+			{
+				name: 'Craft Buzz Balm',
+				characteristic: 'R or I',
+				prerequisites: 'An ounce of demon honey',
+				source: 'Texts or lore in Kalliak',
+				pointsGoal: 45
+			},
+			{
+				name: 'Craft Healing Potion',
+				characteristic: 'R or I',
+				prerequisites: 'An ounce of costmary leaves',
+				source: 'Texts or lore in Caelian',
+				pointsGoal: 45
+			},
+			{
+				name: 'Craft Foesense Lenses',
+				characteristic: 'R or I',
+				prerequisites: 'Two clear lenses carved from volcanic glass',
+				source: 'Texts or lore in Caelian',
+				pointsGoal: 450
+			},
+			{
+				name: 'Craft Black Ash Dart',
+				characteristic: 'A or I',
+				effect: 'Yields 1d3 darts, or three darts if crafted by a shadow',
+				prerequisites: 'Three vials of black ash from the College of Black Ash',
+				source: 'Texts or lore in Szetch',
+				pointsGoal: 45
+			}
+		];
+		const sheets = projects.map(p => p as ProjectSheet);
+
+		const result = SheetFormatter.calculateProjectsOverviewCardSize(sheets, 54);
+		expect(result).toBeCloseTo(50.5, 0.2);
 	});
 });

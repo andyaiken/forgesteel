@@ -41,7 +41,7 @@ export const DrawSteelSymbolText = (props: Props) => {
 			i = str.index + str[0].length;
 			results.push(beforeMatch);
 
-			if (str.length > 2) { // potency
+			if (str.length > 2 && str[2]) { // potency
 				const c = str[1].toLowerCase();
 				let check = str[2];
 				switch (str[2].toLowerCase()) {

@@ -1,0 +1,31 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .project-info {
+    font-size: round(1.1rem, 1px);
+
+    .details {
+        line-height: round(1.6rem, 1px);
+
+        label {
+            font-weight: 650;
+            margin-right: 5px;
+        }
+
+        .items,
+        .source {
+            display: grid;
+            grid-template-rows: min-content min-content;
+
+            .obtained {
+                display: grid;
+                grid-template-columns: min-content 1fr;
+                justify-content: stretch;
+                margin-bottom: 4px;
+
+                .details {
+                    @include common.border-beveled(8px, 2px, common.$color-light);
+                }
+            }
+        }
+    }
+}

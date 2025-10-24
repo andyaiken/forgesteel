@@ -1,5 +1,5 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { FollowerSheet, ItemSheet } from '@/models/classic-sheets/hero-sheet';
+import { FollowerSheet, ItemSheet, ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { Characteristic } from '@/enums/characteristic';
@@ -32,6 +32,7 @@ import starIcon from '@/assets/icons/star.svg';
 import triggerIcon from '@/assets/icons/trigger-solid.svg';
 
 export class SheetFormatter {
+	// #region Text & Feature Manipulation
 	static getPageId = (kind: string, id: string, key: string) => {
 		return `${kind}-${id}-page-${key}`;
 	};
@@ -132,6 +133,39 @@ export class SheetFormatter {
 		return this.cleanupText(text);
 	};
 
+	static pluralize = (text: string, n: number): string => {
+		let result = text;
+		if (n > 1 && text.slice(-1).toLowerCase() !== 's') {
+			result += 's';
+		}
+		return result;
+	};
+
+	static joinCommasOr = (options: string[] | undefined): string => {
+		if (options?.length) {
+			if (options.length <= 2) {
+				return options.slice(-2).join(' or ');
+			} else {
+				const last2 = options.slice(-2).join(' or ');
+				return [ options.slice(0, -2).join(', '), last2 ].join(', ');
+			}
+		} else {
+			return '';
+		}
+	};
+
+	static fixAncestryName = (name: string): string => {
+		let result = name;
+		const match = name.match(/\s\((\w+)\)$/);
+		if (match) {
+			const mod = match[1];
+			result = Format.capitalize(mod) + ' ' + name.split(' (')[0];
+		}
+		return result;
+	};
+	// #endregion Text & Feature Manipulation
+
+	// #region Feature Logic
 	static isLongFeature = (f: Feature, check: number = 2): boolean => {
 		return ([ FeatureType.Text, FeatureType.Package ].includes(f.type))
 			&& (f.description.trim().split('\n').length > check);
@@ -255,6 +289,247 @@ export class SheetFormatter {
 		};
 	};
 
+	static containsExtractableReferenceContent = (feature: Feature): boolean => {
+		return this.containsLargeTable(feature)
+			|| this.isSpecialHandlingFeature(feature);
+	};
+
+	static containsLargeTable = (feature: Feature): boolean => {
+		const fourColumns = feature.description.match(/\|([:\-=\s]{3,}\|){4,}/);
+
+		return fourColumns !== null;
+	};
+
+	// Some specific features can use some special handling to improve the layout/usability of the sheet
+	static isSpecialHandlingFeature = (feature: Feature): boolean => {
+		return [
+			'beastheart-1-2b',
+			'summoner-1-2'
+		].includes(feature.id);
+	};
+
+	static extractReferenceContent = (feature: Feature): { title: string, content: string, leftover: string, wide: boolean, section: string } | null => {
+		if (this.containsLargeTable(feature)) {
+			const table = this.extractTable(feature.description);
+			if (table) {
+				table.title = `${feature.name}: ${table.title}`;
+			}
+			return table;
+		} else if (this.isSpecialHandlingFeature(feature)) {
+			return this.extractSpecialHandlingData(feature);
+		}
+		return null;
+	};
+
+	// If there is a table in the given feature's description, remove it and return separately
+	static extractTable = (text: string): { title: string, content: string, leftover: string, wide: boolean, section: string } | null => {
+		let result = null;
+
+		const tableAndLabel = text.match(/(?:^\s*(?:\*\*|#+\s+)(?<label>[^*]*)(?:\*\*)?(?:\n|$)+)?(?<table>(?:^\s*\|(?:.*\|){2,}\s*(?:\n|$)){3,})/m);
+		if (tableAndLabel && tableAndLabel.groups) {
+			const tableContent = tableAndLabel.groups['table'].trim();
+			const firstHeaderCellMatch = tableContent.match(/(?:^\|([^|]*)\|)/m);
+			let titleLabel = 'Table';
+			if (tableAndLabel.groups['label']) {
+				titleLabel = tableAndLabel.groups['label'].trim();
+			} else if (firstHeaderCellMatch) {
+				titleLabel = `${firstHeaderCellMatch[1].trim()} Table`;
+			}
+			const title = `${titleLabel}`;
+			result = {
+				title: title,
+				content: tableContent,
+				leftover: text.split(tableAndLabel[0]).map(s => s.trim()).join('\n').trim(),
+				wide: true,
+				section: 'abilities'
+			};
+		}
+		return result;
+	};
+
+	static extractSpecialHandlingData = (feature: Feature): { title: string, content: string, leftover: string, wide: boolean, section: string } | null => {
+		switch (feature.id) {
+			case 'summoner-1-2': {
+				const splitLoc = feature.description.indexOf('###');
+				const before = feature.description.slice(0, splitLoc).trim();
+				const ref = feature.description.slice(splitLoc).trim();
+				return {
+					title: 'Summoner Minions',
+					content: ref,
+					leftover: before,
+					wide: false,
+					section: 'followers'
+				};
+			}
+			case 'beastheart-1-2b':
+				return {
+					title: feature.name,
+					content: feature.description,
+					leftover: '',
+					wide: false,
+					section: 'followers'
+				};
+		}
+		return null;
+	};
+
+	static formatAbilityTier = (value: string, tier: number, ability: Ability, creature: Hero | Monster | undefined) => {
+		if (ability.distance.length > 1) {
+			const distanceTypes = ability.distance.map(d => d.type);
+			const values = distanceTypes.map(d => {
+				return {
+					type: d,
+					effect: SheetFormatter.cleanupText(AbilityLogic.getTierEffectCreature(value, tier, ability, d, creature)).split('; ')
+				};
+			});
+			const combined: string[] = [];
+			const size = Math.max(...values.map(v => v.effect.length));
+			for (let i = 0; i < size; ++i) {
+				const parts = values.map(v => v.effect[i]);
+				if (parts.every(t => t === parts[0])) {
+					combined.push(parts[0]);
+				} else {
+					combined.push(values.map(v => `${v.effect[i]} (${v.type})`).join(' | '));
+				}
+			}
+			return combined.join('; ');
+		}
+		return SheetFormatter.cleanupText(AbilityLogic.getTierEffectCreature(value, tier, ability, undefined, creature));
+	};
+	// #endregion Feature Logic
+
+	// #region Ability Logic
+	static abilitySections = (sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[], creature: Hero | Monster | undefined): string => {
+		const lines: string[] = [];
+		for (const section of sections) {
+			let text = SheetFormatter.abilitySection(section, creature);
+			text = SheetFormatter.enhanceMarkdown(text);
+			lines.push(text);
+		}
+		return lines.join('\n');
+	};
+
+	static abilitySection = (section: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage), creature: Hero | Monster | undefined): string => {
+		let text = '';
+		switch (section.type) {
+			case 'text':
+				text = section.text.replace(/^\s+/, '');
+				break;
+			case 'field':
+				if (section.value !== 0) {
+					text = `\n#### ${section.name} ${section.value}${section.repeatable ? '+' : ''}:\n${section.effect}`;
+				} else {
+					text = `\n#### ${section.name}:\n${section.effect}`;
+				}
+				break;
+			case 'package':
+				if (CreatureLogic.isHero(creature)) {
+					text = HeroLogic.getFeatures(creature)
+						.map(f => f.feature)
+						.filter(f => f.type === FeatureType.PackageContent)
+						.filter(f => f.data.tag === section.tag)
+						.map(f => (
+							`\n#### ${f.name}:\n${f.description}`
+						)).join('\n');
+				} else if (creature !== undefined) {
+					console.warn('Ability package in NON-HERO!', section, creature);
+				}
+				break;
+		}
+		return text;
+	};
+
+	static getAbilityIcon = (ability: Ability | AbilitySheet) => {
+		let abilityIcon = starIcon;
+		// Melee / Ranged
+		if (ability.keywords?.includes('Melee')) {
+			if (ability.keywords.includes('Ranged')) {
+				abilityIcon = meleeRangedIcon;
+			} else {
+				abilityIcon = meleeIcon;
+			}
+		} else if (ability.keywords?.includes('Ranged')) {
+			abilityIcon = rangedIcon;
+		}
+
+		// Targets
+		if (ability.target?.toLowerCase() === 'self') {
+			abilityIcon = selfIcon;
+		}
+
+		// Other Distances
+		let distance, type;
+		if ('repeatable' in ability) { // Ability
+			distance = ability.distance.map(ad => ad.type.toString()).join(' ');
+			type = ability.type.usage.toString();
+		} else {
+			distance = ability.distance;
+			type = ability.actionType;
+		}
+
+		if (distance?.includes('Aura') || distance?.includes('Burst')) {
+			abilityIcon = burstIcon;
+		} else if (distance?.includes('Line') || distance?.includes('Cube') || distance?.includes('Wall')) {
+			abilityIcon = areaIcon;
+		}
+
+		// Ability Type
+		if (type?.includes('Trigger')) {
+			abilityIcon = triggerIcon;
+		} else if (type?.includes('Villain')) {
+			abilityIcon = skullIcon;
+		}
+
+		return abilityIcon;
+	};
+
+	static getIconSrc = (icon: StatBlockIcon | undefined) => {
+		let src = starIcon;
+		switch (icon) {
+			case StatBlockIcon.Area:
+				src = areaIcon;
+				break;
+			case StatBlockIcon.AuraBurst:
+				src = burstIcon;
+				break;
+			case StatBlockIcon.Melee:
+				src = meleeIcon;
+				break;
+			case StatBlockIcon.MeleeRanged:
+				src = meleeRangedIcon;
+				break;
+			case StatBlockIcon.Ranged:
+				src = rangedIcon;
+				break;
+			case StatBlockIcon.Self:
+				src = selfIcon;
+				break;
+			case StatBlockIcon.SpecialArea:
+				src = specialAreaIcon;
+				break;
+			case StatBlockIcon.Trait:
+				src = starIcon;
+				break;
+			case StatBlockIcon.Trigger:
+				src = triggerIcon;
+				break;
+			case StatBlockIcon.Villain:
+				src = skullIcon;
+				break;
+		}
+		return src;
+	};
+
+	static getSkillAbbreviation = (skill: string): string => {
+		switch (skill) {
+			case 'Criminal Underworld':
+				return 'Criminal Und.';
+		}
+		return skill;
+	};
+	// #endregion Ability Logic
+
+	// #region Size Calculation
 	static calculateFeatureSize = (f: Feature, hero: Hero | null, lineWidth: number, countShortenedText: boolean = true): number => {
 		let size = 1;
 		const headerSize = 1.5;
@@ -436,90 +711,88 @@ export class SheetFormatter {
 		return size;
 	};
 
-	static containsExtractableReferenceContent = (feature: Feature): boolean => {
-		return this.containsLargeTable(feature)
-			|| this.isSpecialHandlingFeature(feature);
+	static calculateProjectDetailCardSize = (project: ProjectSheet, lineWidth: number): number => {
+		let size = 3;
+		size += this.calculateProjectComponentSize(project, lineWidth);
+		return size;
 	};
 
-	static containsLargeTable = (feature: Feature): boolean => {
-		const fourColumns = feature.description.match(/\|([:\-=\s]{3,}\|){4,}/);
-
-		return fourColumns !== null;
+	static calculateProjectComponentSize = (project: ProjectSheet, lineWidth: number): number => {
+		let size = 0;
+		size += this.countLines(`Item Prerequisite ${project.prerequisites}`, lineWidth);
+		size += 1.8; // Prerequisites box
+		size += this.countLines(`Project Source ${project.source}`, lineWidth);
+		size += 1.8; // Source box
+		size += this.countLines(`Project Roll Characteristic ${project.characteristic}`, lineWidth);
+		size += 1; // points goal
+		size += this.countLines(project.effect, lineWidth, 0);
+		return size;
 	};
 
-	// Some specific features can use some special handling to improve the layout/usability of the sheet
-	static isSpecialHandlingFeature = (feature: Feature): boolean => {
-		return [
-			'beastheart-1-2b',
-			'summoner-1-2'
-		].includes(feature.id);
+	static calculateProjectsOverviewCardSize = (projects: ProjectSheet[], lineWidth: number): number => {
+		let size = 2.7;
+		projects.forEach(p => {
+			size += 1.8; // header
+			size += this.calculateProjectComponentSize(p, lineWidth);
+			size += 1.2; // divider
+		});
+		size -= 1.2;// last divider not present
+		return size;
 	};
 
-	static extractReferenceContent = (feature: Feature): { title: string, content: string, leftover: string, wide: boolean, section: string } | null => {
-		if (this.containsLargeTable(feature)) {
-			const table = this.extractTable(feature.description);
-			if (table) {
-				table.title = `${feature.name}: ${table.title}`;
+	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
+		let size = 0;
+		const rollLineLen = Math.ceil(0.8 * lineWidth);
+		if (ability) {
+			size += 4; // title
+			size += this.countLines(ability.description, lineWidth);
+			size += 2.5; // keywords, distance, etc
+			size += ability.hasPowerRoll ? 2 : 0;
+			size += 2 * this.countLines(ability.rollT1Effect, rollLineLen);
+			size += 2 * this.countLines(ability.rollT2Effect, rollLineLen);
+			size += 2 * this.countLines(ability.rollT3Effect, rollLineLen);
+			if (ability.trigger)
+				size += 1 + this.countLines(ability.trigger, lineWidth);
+			if (ability.effect) {
+				const effectSize = this.countLines(ability.effect, lineWidth, 1);
+				size += 2 + effectSize;
 			}
-			return table;
-		} else if (this.isSpecialHandlingFeature(feature)) {
-			return this.extractSpecialHandlingData(feature);
 		}
-		return null;
+		return size;
 	};
 
-	// If there is a table in the given feature's description, remove it and return separately
-	static extractTable = (text: string): { title: string, content: string, leftover: string, wide: boolean, section: string } | null => {
-		let result = null;
-
-		const tableAndLabel = text.match(/(?:^\s*(?:\*\*|#+\s+)(?<label>[^*]*)(?:\*\*)?(?:\n|$)+)?(?<table>(?:^\s*\|(?:.*\|){2,}\s*(?:\n|$)){3,})/m);
-		if (tableAndLabel && tableAndLabel.groups) {
-			const tableContent = tableAndLabel.groups['table'].trim();
-			const firstHeaderCellMatch = tableContent.match(/(?:^\|([^|]*)\|)/m);
-			let titleLabel = 'Table';
-			if (tableAndLabel.groups['label']) {
-				titleLabel = tableAndLabel.groups['label'].trim();
-			} else if (firstHeaderCellMatch) {
-				titleLabel = `${firstHeaderCellMatch[1].trim()} Table`;
+	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0, lineFactor: number = 1) => {
+		const result = text?.trim().split('\n').reduce((n, l) => {
+			let len = emptyLineSize;
+			if (l.length) {
+				len = Math.ceil(l.length / lineWidth) * lineFactor;
+				len += 0.2;// additional spacing
 			}
-			const title = `${titleLabel}`;
-			result = {
-				title: title,
-				content: tableContent,
-				leftover: text.split(tableAndLabel[0]).map(s => s.trim()).join('\n').trim(),
-				wide: true,
-				section: 'abilities'
-			};
-		}
+			if (l.startsWith('|:---')) { // table divider
+				len = 0;
+			} else if (l.startsWith('|') && l.endsWith('|')) { // table row
+				len = Math.ceil(l.replaceAll('|', '').trim().length / (lineWidth - 3));
+				len += 0.6;// additional row spacing
+			} else if (l.startsWith('**')) { // bolded label - will have extra bottom margin
+				len += 0.5;
+			} else if (l.startsWith('* ')) { // list item, will be indented
+				len = Math.ceil(l.length / (lineWidth - 3));
+			}
+
+			return n + len;
+		}, 0) || 0;
 		return result;
 	};
 
-	static extractSpecialHandlingData = (feature: Feature): { title: string, content: string, leftover: string, wide: boolean, section: string } | null => {
-		switch (feature.id) {
-			case 'summoner-1-2': {
-				const splitLoc = feature.description.indexOf('###');
-				const before = feature.description.slice(0, splitLoc).trim();
-				const ref = feature.description.slice(splitLoc).trim();
-				return {
-					title: 'Summoner Minions',
-					content: ref,
-					leftover: before,
-					wide: false,
-					section: 'followers'
-				};
-			}
-			case 'beastheart-1-2b':
-				return {
-					title: feature.name,
-					content: feature.description,
-					leftover: '',
-					wide: false,
-					section: 'followers'
-				};
-		}
-		return null;
+	static getLargestSize = (abilities: AbilitySheet[], lineLength: number): number => {
+		const largestSize = abilities.reduce((h, a) => {
+			return Math.max(h, this.calculateAbilitySize(a, lineLength));
+		}, 0);
+		return largestSize;
 	};
+	// #endregion Size Calculation
 
+	// #region Sorting
 	static featureTypeOrder: FeatureType[] = [
 		FeatureType.Text,
 		FeatureType.Package,
@@ -587,52 +860,6 @@ export class SheetFormatter {
 		}
 	};
 
-	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
-		let size = 0;
-		const rollLineLen = Math.ceil(0.8 * lineWidth);
-		if (ability) {
-			size += 4; // title
-			size += this.countLines(ability.description, lineWidth);
-			size += 2.5; // keywords, distance, etc
-			size += ability.hasPowerRoll ? 2 : 0;
-			size += 2 * this.countLines(ability.rollT1Effect, rollLineLen);
-			size += 2 * this.countLines(ability.rollT2Effect, rollLineLen);
-			size += 2 * this.countLines(ability.rollT3Effect, rollLineLen);
-			if (ability.trigger)
-				size += 1 + this.countLines(ability.trigger, lineWidth);
-			if (ability.effect) {
-				const effectSize = this.countLines(ability.effect, lineWidth, 1);
-				size += 2 + effectSize;
-			}
-		}
-		return size;
-	};
-
-	static countLines = (text: string | undefined, lineWidth: number, emptyLineSize = 0, lineFactor: number = 1) => {
-		return text?.trim().split('\n').reduce((n, l) => {
-			let len = Math.max(emptyLineSize, Math.ceil((l.length / lineWidth) * lineFactor));
-			if (l.startsWith('|:---')) { // table divider
-				len = 0;
-			} else if (l.startsWith('|') && l.endsWith('|')) { // table row
-				len = Math.ceil(l.replaceAll('|', '').trim().length / (lineWidth - 3));
-				len += 0.4;// additional row spacing
-			} else if (l.startsWith('**')) { // bolded label - will have extra bottom margin
-				len += 0.5;
-			} else if (l.startsWith('* ')) { // list item, will be indented
-				len = Math.ceil(l.length / (lineWidth - 3));
-			}
-
-			return n + len + 0.2;
-		}, 0) || 0;
-	};
-
-	static getLargestSize = (abilities: AbilitySheet[], lineLength: number): number => {
-		const largestSize = abilities.reduce((h, a) => {
-			return Math.max(h, this.calculateAbilitySize(a, lineLength));
-		}, 0);
-		return largestSize;
-	};
-
 	static abilityTypeOrder: string[] = [
 		'Main Action',
 		'Free Maneuver',
@@ -683,190 +910,6 @@ export class SheetFormatter {
 		return this.characteristicOrder.indexOf(aCheck) - this.characteristicOrder.indexOf(bCheck);
 	};
 
-	static pluralize = (text: string, n: number): string => {
-		let result = text;
-		if (n > 1 && text.slice(-1).toLowerCase() !== 's') {
-			result += 's';
-		}
-		return result;
-	};
-
-	static joinCommasOr = (options: string[] | undefined): string => {
-		if (options?.length) {
-			if (options.length <= 2) {
-				return options.slice(-2).join(' or ');
-			} else {
-				const last2 = options.slice(-2).join(' or ');
-				return [ options.slice(0, -2).join(', '), last2 ].join(', ');
-			}
-		} else {
-			return '';
-		}
-	};
-
-	static fixAncestryName = (name: string): string => {
-		let result = name;
-		const match = name.match(/\s\((\w+)\)$/);
-		if (match) {
-			const mod = match[1];
-			result = Format.capitalize(mod) + ' ' + name.split(' (')[0];
-		}
-		return result;
-	};
-
-	static formatAbilityTier = (value: string, tier: number, ability: Ability, creature: Hero | Monster | undefined) => {
-		if (ability.distance.length > 1) {
-			const distanceTypes = ability.distance.map(d => d.type);
-			const values = distanceTypes.map(d => {
-				return {
-					type: d,
-					effect: SheetFormatter.cleanupText(AbilityLogic.getTierEffectCreature(value, tier, ability, d, creature)).split('; ')
-				};
-			});
-			const combined: string[] = [];
-			const size = Math.max(...values.map(v => v.effect.length));
-			for (let i = 0; i < size; ++i) {
-				const parts = values.map(v => v.effect[i]);
-				if (parts.every(t => t === parts[0])) {
-					combined.push(parts[0]);
-				} else {
-					combined.push(values.map(v => `${v.effect[i]} (${v.type})`).join(' | '));
-				}
-			}
-			return combined.join('; ');
-		}
-		return SheetFormatter.cleanupText(AbilityLogic.getTierEffectCreature(value, tier, ability, undefined, creature));
-	};
-
-	static abilitySections = (sections: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage)[], creature: Hero | Monster | undefined): string => {
-		const lines: string[] = [];
-		for (const section of sections) {
-			let text = SheetFormatter.abilitySection(section, creature);
-			text = SheetFormatter.enhanceMarkdown(text);
-			lines.push(text);
-		}
-		return lines.join('\n');
-	};
-
-	static abilitySection = (section: (AbilitySectionText | AbilitySectionField | AbilitySectionRoll | AbilitySectionPackage), creature: Hero | Monster | undefined): string => {
-		let text = '';
-		switch (section.type) {
-			case 'text':
-				text = section.text.replace(/^\s+/, '');
-				break;
-			case 'field':
-				if (section.value !== 0) {
-					text = `\n#### ${section.name} ${section.value}${section.repeatable ? '+' : ''}:\n${section.effect}`;
-				} else {
-					text = `\n#### ${section.name}:\n${section.effect}`;
-				}
-				break;
-			case 'package':
-				if (CreatureLogic.isHero(creature)) {
-					text = HeroLogic.getFeatures(creature)
-						.map(f => f.feature)
-						.filter(f => f.type === FeatureType.PackageContent)
-						.filter(f => f.data.tag === section.tag)
-						.map(f => (
-							`\n#### ${f.name}:\n${f.description}`
-						)).join('\n');
-				} else if (creature !== undefined) {
-					console.warn('Ability package in NON-HERO!', section, creature);
-				}
-				break;
-		}
-		return text;
-	};
-
-	static getAbilityIcon = (ability: Ability | AbilitySheet) => {
-		let abilityIcon = starIcon;
-		// Melee / Ranged
-		if (ability.keywords?.includes('Melee')) {
-			if (ability.keywords.includes('Ranged')) {
-				abilityIcon = meleeRangedIcon;
-			} else {
-				abilityIcon = meleeIcon;
-			}
-		} else if (ability.keywords?.includes('Ranged')) {
-			abilityIcon = rangedIcon;
-		}
-
-		// Targets
-		if (ability.target?.toLowerCase() === 'self') {
-			abilityIcon = selfIcon;
-		}
-
-		// Other Distances
-		let distance, type;
-		if ('repeatable' in ability) { // Ability
-			distance = ability.distance.map(ad => ad.type.toString()).join(' ');
-			type = ability.type.usage.toString();
-		} else {
-			distance = ability.distance;
-			type = ability.actionType;
-		}
-
-		if (distance?.includes('Aura') || distance?.includes('Burst')) {
-			abilityIcon = burstIcon;
-		} else if (distance?.includes('Line') || distance?.includes('Cube') || distance?.includes('Wall')) {
-			abilityIcon = areaIcon;
-		}
-
-		// Ability Type
-		if (type?.includes('Trigger')) {
-			abilityIcon = triggerIcon;
-		} else if (type?.includes('Villain')) {
-			abilityIcon = skullIcon;
-		}
-
-		return abilityIcon;
-	};
-
-	static getIconSrc = (icon: StatBlockIcon | undefined) => {
-		let src = starIcon;
-		switch (icon) {
-			case StatBlockIcon.Area:
-				src = areaIcon;
-				break;
-			case StatBlockIcon.AuraBurst:
-				src = burstIcon;
-				break;
-			case StatBlockIcon.Melee:
-				src = meleeIcon;
-				break;
-			case StatBlockIcon.MeleeRanged:
-				src = meleeRangedIcon;
-				break;
-			case StatBlockIcon.Ranged:
-				src = rangedIcon;
-				break;
-			case StatBlockIcon.Self:
-				src = selfIcon;
-				break;
-			case StatBlockIcon.SpecialArea:
-				src = specialAreaIcon;
-				break;
-			case StatBlockIcon.Trait:
-				src = starIcon;
-				break;
-			case StatBlockIcon.Trigger:
-				src = triggerIcon;
-				break;
-			case StatBlockIcon.Villain:
-				src = skullIcon;
-				break;
-		}
-		return src;
-	};
-
-	static getSkillAbbreviation = (skill: string): string => {
-		switch (skill) {
-			case 'Criminal Underworld':
-				return 'Criminal Und.';
-		}
-		return skill;
-	};
-
 	static resourceGainTriggerOrder: string[] = [
 		'when', 'the first time'
 	];
@@ -901,4 +944,5 @@ export class SheetFormatter {
 			return a.trigger.length - b.trigger.length;
 		}
 	};
+	// #endregion Sorting
 }

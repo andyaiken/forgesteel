@@ -1,4 +1,4 @@
-import { CareerSheet, ComplicationSheet, FollowerSheet, HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { CareerSheet, ComplicationSheet, FollowerSheet, HeroSheet, ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { AbilityData } from '@/data/ability-data';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Career } from '@/models/career';
@@ -24,6 +24,7 @@ import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Options } from '@/models/options';
+import { Project } from '@/models/project';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { SkillList } from '@/enums/skill-list';
@@ -45,6 +46,7 @@ export class HeroSheetBuilder {
 			weaknesses: [],
 			abilities: [],
 			standardAbilities: [],
+			projects: [],
 			followers: [],
 			summons: [],
 			featuresReferenceOther: [],
@@ -376,26 +378,7 @@ export class HeroSheetBuilder {
 			.filter(f => [ FeatureType.TitleChoice ].includes(f.feature.type))
 			.map(f => f.feature.id));
 
-		const followers = HeroLogic.getFollowers(hero);
-		sheet.projects = hero.state.projects.map(p => {
-			let characteristics = SheetFormatter.joinCommasOr(p.characteristic
-				.sort(SheetFormatter.sortCharacteristics)
-				.map(c => Format.capitalize(c.slice(0, 1)))
-			);
-			if (characteristics === 'M, A, R, I or P') {
-				characteristics = 'Any';
-			}
-			const assignee = followers.find(f => f.id === p.progress!.followerID)!.name || '';
-
-			return {
-				id: p.id,
-				name: p.name,
-				characteristic: characteristics,
-				assignee: assignee,
-				pointsGoal: p.goal,
-				pointsCurrent: p.progress?.points
-			};
-		});
+		sheet.projects = hero.state.projects.map(p => this.buildProjectSheet(p, hero));
 
 		// #region Abilities
 		const abilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
@@ -695,6 +678,36 @@ export class HeroSheetBuilder {
 		const immunities = CreatureLogic.getSummonDamageModifiers(summon, hero, DamageModifierType.Immunity);
 		sheet.immunity = immunities.map(mod => `${mod.damageType} ${mod.value}`).join(', ');
 		return sheet;
+	};
+	// #endregion
+
+	// #region Project Sheet
+	static buildProjectSheet = (project: Project, hero: Hero): ProjectSheet => {
+		const followers = HeroLogic.getFollowers(hero);
+		const assignee = followers.find(f => f.id === project.progress?.followerID)?.name ?? '';
+
+		let characteristics = SheetFormatter.joinCommasOr(project.characteristic
+			.sort(SheetFormatter.sortCharacteristics)
+			.map(c => Format.capitalize(c.slice(0, 1)))
+		);
+		if (characteristics === 'M, A, R, I or P') {
+			characteristics = 'Any';
+		}
+
+		return {
+			id: project.id,
+			name: project.name,
+			characteristic: characteristics,
+			assignee: assignee,
+			description: project.description,
+			effect: project.effect,
+			prerequisites: project.itemPrerequisites,
+			havePrerequisites: project.progress?.prerequisites ?? false,
+			source: project.source,
+			haveSource: project.progress?.source ?? false,
+			pointsGoal: project.goal,
+			pointsCurrent: project.progress?.points
+		};
 	};
 	// #endregion
 }

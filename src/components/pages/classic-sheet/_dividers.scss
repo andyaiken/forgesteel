@@ -1,6 +1,10 @@
 @use './functions' as *;
 @use './_colors';
 
+@mixin single-arrow($border-color) {
+    @include plain($border-color, 1px);
+}
+
 @mixin plain($border-color, $border-size) {
     border: 0;
     background-color: transparent;

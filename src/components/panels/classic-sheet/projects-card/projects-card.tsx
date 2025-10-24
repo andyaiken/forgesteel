@@ -1,13 +1,12 @@
 import { DrawSteelSymbolText } from '@/components/panels/classic-sheet/components/ds-symbol-text-component';
-import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
+import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import './projects-card.scss';
 
 interface Props {
-	character: HeroSheet;
+	projects: ProjectSheet[];
 }
 
 export const ProjectsCard = (props: Props) => {
-	const character = props.character;
 	const emptyProject = {
 		name: '',
 		characteristic: '',
@@ -18,8 +17,8 @@ export const ProjectsCard = (props: Props) => {
 	const projects = [];
 	let i = 0;
 	for (i; i < 7; ++i) {
-		if (character.projects && character.projects.length > i) {
-			projects.push(character.projects[i]);
+		if (props.projects.length > i) {
+			projects.push(props.projects[i]);
 		} else {
 			projects.push(emptyProject);
 		}

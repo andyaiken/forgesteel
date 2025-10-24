@@ -66,8 +66,15 @@
         .item-effect {
             img {
                 width: 50px;
-                height: 18px;
-                margin: 4px 0 -4px;
+                height: 26px;
+                margin: 4px 0 -9px;
+            }
+
+            ul {
+                margin-top: -10px;
+                li {
+                    margin: 0;
+                }
             }
         }
 

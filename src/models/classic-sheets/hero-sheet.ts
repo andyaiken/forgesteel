@@ -90,7 +90,8 @@ export interface HeroSheet {
 	conditions?: Condition[];
 	condition1Name?: string;
 	condition2Name?: string;
-	saveEndsTarget?: number;
+	saveTarget?: number;
+	saveBonus?: number;
 
 	// Class Features
 	classFeatures?: Feature[];

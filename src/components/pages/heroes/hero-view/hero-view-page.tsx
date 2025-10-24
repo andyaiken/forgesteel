@@ -42,7 +42,7 @@ interface Props {
 	options: Options;
 	highlightAbout: boolean;
 	showAbout: () => void;
-	showRoll: () => void;
+	showRoll: (hero: Hero) => void;
 	showReference: (hero: Hero, page?: RulesPage) => void;
 	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'json') => void;
@@ -229,7 +229,7 @@ export const HeroViewPage = (props: Props) => {
 						{getContent()}
 					</div>
 				</ErrorBoundary>
-				<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
+				<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={() => props.showRoll(hero)} showReference={() => props.showReference(hero)} />
 			</div>
 		</ErrorBoundary>
 	);

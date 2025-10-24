@@ -1347,9 +1347,10 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const showRoll = () => {
+	const showRoll = (hero?: Hero) => {
 		setDrawer(
 			<RollModal
+				hero={hero}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1534,7 +1535,7 @@ export const Main = (props: Props) => {
 							<WelcomePage
 								highlightAbout={errors.length > 0}
 								showAbout={showAbout}
-								showRoll={showRoll}
+								showRoll={() => showRoll()}
 								showReference={showReference}
 								onNewHero={() => newHero('')}
 								onNewEncounter={() => newEncounter()}
@@ -1552,7 +1553,7 @@ export const Main = (props: Props) => {
 									options={props.options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
-									showRoll={showRoll}
+									showRoll={() => showRoll()}
 									showReference={showReference}
 									addHero={newHero}
 									importHero={importHero}
@@ -1608,7 +1609,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
-									showRoll={showRoll}
+									showRoll={() => showRoll()}
 									showReference={showReference}
 									saveChanges={saveHero}
 									importSourcebook={sourcebook => {
@@ -1647,7 +1648,7 @@ export const Main = (props: Props) => {
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
-									showRoll={showRoll}
+									showRoll={() => showRoll()}
 									showReference={showReference}
 									showSourcebooks={showSourcebooks}
 									showSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
@@ -1669,7 +1670,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
-									showRoll={showRoll}
+									showRoll={() => showRoll()}
 									showReference={showReference}
 									showMonster={onSelectMonster}
 									saveChanges={saveLibraryElement}
@@ -1693,7 +1694,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
-									showRoll={showRoll}
+									showRoll={() => showRoll()}
 									showReference={showReference}
 									showEncounterTools={showEncounterTools}
 									setOptions={persistOptions}
@@ -1717,7 +1718,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
-									showRoll={showRoll}
+									showRoll={() => showRoll()}
 									showReference={showReference}
 									showMonster={onSelectMonster}
 									showTerrain={onSelectTerrain}
@@ -1743,7 +1744,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
-									showRoll={showRoll}
+									showRoll={() => showRoll()}
 									showReference={showReference}
 									showPlayerView={showPlayerView}
 									startEncounter={startEncounter}
@@ -1773,7 +1774,7 @@ export const Main = (props: Props) => {
 									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
-									showRoll={showRoll}
+									showRoll={() => showRoll()}
 									showReference={showReference}
 									setOptions={persistOptions}
 								/>

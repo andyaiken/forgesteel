@@ -25,7 +25,8 @@ export const RollModal = (props: Props) => {
 	const [ rollState, setRollState ] = useState<RollState>(RollState.Standard);
 
 	const warnings: { label: string, text: string }[] = [];
-	let bonus = 0;
+	let characteristicBonus = 0;
+	let saveBonus = 0;
 
 	if (props.characteristics && props.hero) {
 		if (props.characteristics.some(ch => [ Characteristic.Might, Characteristic.Agility ].includes(ch))) {
@@ -43,7 +44,11 @@ export const RollModal = (props: Props) => {
 			}
 		}
 
-		bonus = Math.max(...props.characteristics.map(ch => HeroLogic.getCharacteristic(props.hero!, ch)));
+		characteristicBonus = Math.max(...props.characteristics.map(ch => HeroLogic.getCharacteristic(props.hero!, ch)));
+	}
+
+	if (props.hero) {
+		saveBonus = HeroLogic.getSaveBonus(props.hero);
 	}
 
 	const getContent = () => {
@@ -64,12 +69,12 @@ export const RollModal = (props: Props) => {
 						<Flex align='center' justify='space-evenly'>
 							{
 								props.characteristics && props.hero ?
-									<Statistic title={props.characteristics.join(', ')} value={bonus} />
+									<Statistic title={props.characteristics.join(', ')} value={characteristicBonus} />
 									: null
 							}
 							<NumberSpin style={{ width: '150px' }} label='Modifier' value={modifier} onChange={setModifier} />
 						</Flex>
-						<DieRollPanel type='Power Roll' modifiers={[ bonus, modifier ]} rollState={rollState} onRollStateChange={setRollState} />
+						<DieRollPanel type='Power Roll' modifiers={[ characteristicBonus, modifier ]} rollState={rollState} hero={props.hero} onRollStateChange={setRollState} />
 						<Expander title='Rules'>
 							<HeaderText>Test Results</HeaderText>
 							<table>
@@ -114,7 +119,7 @@ export const RollModal = (props: Props) => {
 			case 'Saving Throw':
 				return (
 					<>
-						<DieRollPanel type='Saving Throw' modifiers={[ modifier ]} rollState={rollState} onRollStateChange={setRollState} />
+						<DieRollPanel type='Saving Throw' modifiers={[ saveBonus, modifier ]} rollState={rollState} hero={props.hero} onRollStateChange={setRollState} />
 					</>
 				);
 		}

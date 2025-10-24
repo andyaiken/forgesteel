@@ -473,6 +473,7 @@ export const HeroPanel = (props: Props) => {
 							<div>{speedStr}: <b>{speed.value}</b></div>
 							<div>Stability: <b>{HeroLogic.getStability(props.hero)}</b></div>
 							<div>Disengage: <b>{HeroLogic.getDisengage(props.hero)}</b></div>
+							<div>Save: <b>{HeroLogic.getSaveThreshold(props.hero)}</b></div>
 						</div>
 						<div className='selectable-row clickable' onClick={onShowVitals}>
 							<div>Stamina: <b>{stamina}</b></div>

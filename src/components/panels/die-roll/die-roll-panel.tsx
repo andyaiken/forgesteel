@@ -4,6 +4,8 @@ import { BarChartOutlined } from '@ant-design/icons';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
 import { HistogramPanel } from '@/components/panels/histogram/histogram-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { Random } from '@/utils/random';
@@ -16,6 +18,7 @@ interface Props {
 	type: 'Power Roll' | 'Saving Throw';
 	modifiers: number[];
 	rollState: RollState;
+	hero?: Hero;
 	onRollStateChange: (value: RollState) => void;
 	onRoll?: (tier: number) => void;
 }
@@ -95,7 +98,7 @@ export const DieRollPanel = (props: Props) => {
 		case 'Saving Throw':
 			max = 10;
 			marks[1] = <div className='ds-text dimmed-text small-text'>1</div>;
-			marks[5.5] = <div className='ds-text dimmed-text small-text'>-</div>;
+			marks[(props.hero ? HeroLogic.getSaveThreshold(props.hero) : 6) - 0.5] = <div className='ds-text dimmed-text small-text'>-</div>;
 			marks[10] = <div className='ds-text dimmed-text small-text'>10</div>;
 			break;
 	}
@@ -180,7 +183,7 @@ export const DieRollPanel = (props: Props) => {
 						<Alert
 							type='info'
 							showIcon={true}
-							message={`This roll would usually indicate a ${total > 5 ? 'success' : 'failure'}.`}
+							message={`This roll would usually indicate a ${total >= (props.hero ? HeroLogic.getSaveThreshold(props.hero) : 6) ? 'success' : 'failure'}.`}
 						/>
 						: null
 				}

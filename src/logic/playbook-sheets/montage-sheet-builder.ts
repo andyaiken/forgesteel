@@ -4,7 +4,12 @@ export class MontageSheetBuilder {
 	static buildMontageSheet = (montage: Montage) => {
 		const sheet = {
 			id: montage.id,
-			goal: montage.name
+			goal: montage.name,
+			outcomes: {
+				totalSuccess: montage.outcomes.totalSuccess,
+				partialSuccess: montage.outcomes.partialSuccess,
+				totalFailure: montage.outcomes.totalFailure
+			}
 		};
 
 		return sheet;

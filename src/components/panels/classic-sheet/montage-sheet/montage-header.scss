@@ -1,0 +1,46 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .montage-header.card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content min-content;
+    gap: 10px;
+
+    section.overview {
+        display: flex;
+        align-items: center;
+
+        .labeled-field {
+            flex-grow: 1;
+        }
+    }
+
+    section.stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        .num-rounds {
+            .labeled-field-content span {
+                color: common.$color-light;
+            }
+        }
+
+        .difficulty-table {
+            grid-column-end: span 3;
+
+            h2 {
+                background: transparent;
+                padding: 5px 0;
+            }
+
+            table {
+                margin: 0;
+
+                thead tr:nth-child(odd),
+                tbody tr:nth-child(even) {
+                    background: common.$color-extra-light;
+                }
+            }
+        }
+    }
+}

@@ -1,4 +1,9 @@
 export interface MontageSheet {
 	id: string;
-	goal?: string;
+	name?: string;
+	outcomes: {
+		totalSuccess: string;
+		partialSuccess: string;
+		totalFailure: string;
+	}
 };

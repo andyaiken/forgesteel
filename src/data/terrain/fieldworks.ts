@@ -139,7 +139,7 @@ export const bearTrap: Terrain = {
 		base: 6,
 		perSquare: 0
 	},
-	size: '1S',
+	size: FactoryLogic.createSize(1, 'S'),
 	damageMods: [],
 	sections: [
 		{
@@ -397,7 +397,7 @@ export const paviseShield: Terrain = {
 		base: 9,
 		perSquare: 0
 	},
-	size: '1M',
+	size: FactoryLogic.createSize(1, 'M'),
 	damageMods: [],
 	sections: [
 		{
@@ -458,7 +458,7 @@ export const snareTrap: Terrain = {
 		base: 1,
 		perSquare: 0
 	},
-	size: '1S',
+	size: FactoryLogic.createSize(1, 'S'),
 	damageMods: [],
 	sections: [
 		{

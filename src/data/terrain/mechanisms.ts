@@ -25,7 +25,7 @@ export const columnOfBlades: Terrain = {
 		base: 5,
 		perSquare: 0
 	},
-	size: '1L',
+	size: FactoryLogic.createSize(1, 'L'),
 	damageMods: [],
 	sections: [
 		{
@@ -183,7 +183,7 @@ export const dartTrap: Terrain = {
 		perSquare: 0
 	},
 	direction: 'The dart trap fires in a fixed direction.',
-	size: '1S',
+	size: FactoryLogic.createSize(1, 'S'),
 	damageMods: [],
 	sections: [
 		{
@@ -591,7 +591,7 @@ export const pulley: Terrain = {
 		base: 1,
 		perSquare: 0
 	},
-	size: '1S',
+	size: FactoryLogic.createSize(1, 'S'),
 	damageMods: [],
 	sections: [
 		{
@@ -806,7 +806,7 @@ export const switchTerrain: Terrain = {
 		base: 3,
 		perSquare: 0
 	},
-	size: '1T',
+	size: FactoryLogic.createSize(1, 'T'),
 	link: 'A switch is linked to another mechanism that it activates when triggered',
 	damageMods: [],
 	sections: [

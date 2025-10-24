@@ -21,7 +21,7 @@ export const angryBeehive: Terrain = {
 		base: 3,
 		perSquare: 0
 	},
-	size: '1S',
+	size: FactoryLogic.createSize(1, 'S'),
 	damageMods: [],
 	sections: [
 		{

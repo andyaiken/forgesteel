@@ -6,6 +6,7 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
+import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
@@ -104,7 +105,7 @@ export const TerrainPanel = (props: Props) => {
 									</StatsRow>
 									: null
 							}
-							<Field label='Size' value={terrain.size} />
+							<Field label='Size' value={typeof terrain.size === 'string' ? terrain.size : FormatLogic.getSize(terrain.size)} />
 							<Field label='Stamina' value={props.updateTerrain ? TerrainLogic.getStaminaValue(terrain) : TerrainLogic.getStaminaDescription(terrain)} />
 							{
 								terrain.direction ?

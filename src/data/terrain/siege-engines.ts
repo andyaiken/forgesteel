@@ -21,7 +21,7 @@ export const arrowLauncher: Terrain = {
 		base: 30,
 		perSquare: 0
 	},
-	size: '1L',
+	size: FactoryLogic.createSize(1, 'L'),
 	damageMods: [],
 	sections: [
 		{
@@ -175,7 +175,7 @@ export const boilingOilCauldron: Terrain = {
 		base: 50,
 		perSquare: 0
 	},
-	size: '1L',
+	size: FactoryLogic.createSize(1, 'L'),
 	damageMods: [],
 	sections: [
 		{
@@ -257,7 +257,7 @@ export const catapult: Terrain = {
 		base: 50,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{
@@ -384,7 +384,7 @@ export const explodingMillWheel: Terrain = {
 		base: 25,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{
@@ -475,7 +475,7 @@ export const fieldBallista: Terrain = {
 		base: 40,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{
@@ -654,7 +654,7 @@ export const ironDragon: Terrain = {
 		base: 60,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{
@@ -766,7 +766,7 @@ export const watchtower: Terrain = {
 		base: 50,
 		perSquare: 0
 	},
-	size: '3',
+	size: FactoryLogic.createSize(3),
 	damageMods: [],
 	sections: [
 		{

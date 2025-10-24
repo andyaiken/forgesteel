@@ -22,7 +22,7 @@ export const theBlackObelisk: Terrain = {
 		base: 100,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{
@@ -101,7 +101,7 @@ export const theChronalHypercube: Terrain = {
 		base: 80,
 		perSquare: 0
 	},
-	size: '1M',
+	size: FactoryLogic.createSize(1, 'M'),
 	damageMods: [],
 	sections: [
 		{
@@ -159,7 +159,7 @@ export const theThroneOfAAn: Terrain = {
 		base: 140,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{

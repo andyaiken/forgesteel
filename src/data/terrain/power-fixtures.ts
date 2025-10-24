@@ -23,7 +23,7 @@ export const holyIdol: Terrain = {
 		base: 35,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{
@@ -72,7 +72,7 @@ export const psionicShard: Terrain = {
 		base: 40,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{
@@ -126,7 +126,7 @@ export const treeOfMight: Terrain = {
 		base: 60,
 		perSquare: 0
 	},
-	size: '3',
+	size: FactoryLogic.createSize(3),
 	damageMods: [],
 	sections: [
 		{

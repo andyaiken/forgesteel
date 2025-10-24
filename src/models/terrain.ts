@@ -2,6 +2,7 @@ import { FeatureAbility, FeatureText } from '@/models/feature';
 import { DamageModifier } from '@/models/damage-modifier';
 import { Element } from '@/models/element';
 import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Size } from '@/models/size';
 import { TerrainCategory } from '@/enums/terrain-category';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 
@@ -25,7 +26,7 @@ export interface Terrain extends Element {
 		base: number;
 		perSquare: number;
 	};
-	size: string;
+	size: Size | string;
 	direction: string | null;
 	link: string | null;
 	damageMods: DamageModifier[];

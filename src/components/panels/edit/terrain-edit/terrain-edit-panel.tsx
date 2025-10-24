@@ -20,6 +20,7 @@ import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
+import { Size } from '@/models/size';
 import { Sourcebook } from '@/models/sourcebook';
 import { Terrain } from '@/models/terrain';
 import { TerrainCategory } from '@/enums/terrain-category';
@@ -128,11 +129,29 @@ export const TerrainEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setSize = (value: string) => {
+		const setSize = (value: string | Size) => {
 			const copy = Utils.copy(terrain);
 			copy.size = value;
 			setTerrain(copy);
 			props.onChange(copy);
+		};
+
+		const setSizeValue = (value: number) => {
+			const copy = Utils.copy(terrain);
+			if (typeof copy.size !== 'string') {
+				copy.size.value = value;
+				setTerrain(copy);
+				props.onChange(copy);
+			}
+		};
+
+		const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
+			const copy = Utils.copy(terrain);
+			if (typeof copy.size !== 'string') {
+				copy.size.mod = value;
+				setTerrain(copy);
+				props.onChange(copy);
+			}
 		};
 
 		return (
@@ -207,12 +226,39 @@ export const TerrainEditPanel = (props: Props) => {
 				<NumberSpin label='Base Stamina' min={0} value={terrain.stamina.base} steps={[ 1, 10 ]} onChange={setStaminaBase} />
 				<NumberSpin label='Per Square' min={0} value={terrain.stamina.perSquare} steps={[ 1, 10 ]} onChange={setStaminaPerSquare} />
 				<HeaderText>Size</HeaderText>
-				<Input
-					placeholder='Size'
-					allowClear={true}
-					value={terrain.size}
-					onChange={e => setSize(e.target.value)}
+				<Segmented
+					block={true}
+					options={[
+						{ value: false, label: 'Standard' },
+						{ value: true, label: 'Custom' }
+					]}
+					value={typeof terrain.size === 'string'}
+					onChange={value => setSize(value ? '' : FactoryLogic.createSize(1, 'M'))}
 				/>
+				{
+					typeof terrain.size === 'string' ?
+						<Input
+							placeholder='Size'
+							allowClear={true}
+							value={terrain.size}
+							onChange={e => setSize(e.target.value)}
+						/>
+						:
+						<>
+							<NumberSpin min={1} value={terrain.size.value} onChange={setSizeValue} />
+							{
+								terrain.size.value === 1 ?
+									<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
+										name='sizemodtypes'
+										block={true}
+										options={[ 'T', 'S', 'M', 'L' ]}
+										value={terrain.size.mod}
+										onChange={setSizeMod}
+									/>
+									: null
+							}
+						</>
+				}
 			</Space>
 		);
 	};

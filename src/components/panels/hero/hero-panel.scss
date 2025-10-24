@@ -65,7 +65,10 @@
 			}
 
 			.stats-section {
-				padding: 0 5px;
+				padding: 5px;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
 
 				.stats-box {
 					border: 1px solid rgb(200, 200, 200);
@@ -101,22 +104,6 @@
 							border: 1px solid transparent;
 							border-radius: 10px;
 							padding: 5px 0;
-
-							&.clickable {
-								cursor: pointer;
-
-								&:hover {
-									border-color: rgb(22, 119, 255);
-									background-color: rgb(230, 244, 255);
-
-									.ant-statistic {
-										.ant-statistic-title,
-										.ant-statistic-content {
-											color: rgba(0, 0, 0, 0.88);
-										}
-									}
-								}
-							}
 						}
 					}
 
@@ -271,23 +258,6 @@ html[data-theme="dark"] {
 
 							.stats-box-caption {
 								color: rgba(255, 255, 255, 0.88);
-							}
-						}
-					}
-	
-					.stats {
-						.stat {
-							&.clickable {
-								&:hover {
-									background-color: rgb(22, 119, 255) !important;
-
-									.ant-statistic {
-										.ant-statistic-title,
-										.ant-statistic-content {
-											color: rgba(255, 255, 255, 0.88) !important;
-										}
-									}
-								}
 							}
 						}
 					}

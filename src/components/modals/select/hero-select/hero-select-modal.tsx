@@ -2,10 +2,9 @@ import { Alert, Button, Flex, Input, Segmented, Space } from 'antd';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { HeroLogic } from '@/logic/hero-logic';
+import { HeroInfo } from '@/components/panels/token/token';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { Options } from '@/models/options';
@@ -42,20 +41,33 @@ export const HeroSelectModal = (props: Props) => {
 					);
 				}
 
-				return folders.map(f => (
-					<SelectablePanel
-						key={f}
-						onSelect={() => props.onSelect(props.heroes.filter(h => h.folder === f))}
-					>
-						<HeaderText level={1}>{f}</HeaderText>
+				return (
+					<>
+						<Alert
+							type='info'
+							showIcon={true}
+							message='Select a folder to add all the heroes within it.'
+						/>
 						{
-							props.heroes
-								.filter(h => h.folder === f)
-								.sort()
-								.map(h => <Field key={h.id} label={h.name} value={HeroLogic.getHeroDescription(h)} />)
+							folders.map(f => (
+								<SelectablePanel
+									key={f}
+									onSelect={() => props.onSelect(props.heroes.filter(h => h.folder === f))}
+								>
+									<HeaderText level={1}>{f}</HeaderText>
+									<Space direction='vertical' style={{ width: '100%' }}>
+										{
+											props.heroes
+												.filter(h => h.folder === f)
+												.sort()
+												.map(h => <HeroInfo key={h.id} hero={h} />)
+										}
+									</Space>
+								</SelectablePanel>
+							))
 						}
-					</SelectablePanel>
-				));
+					</>
+				);
 			}
 			case 'hero': {
 				const heroes = props.heroes;
@@ -66,17 +78,23 @@ export const HeroSelectModal = (props: Props) => {
 					);
 				}
 
-				return heroes.map(h => (
-					<SelectablePanel
-						key={h.id}
-						watermark={h.picture || undefined}
-						onSelect={() => {
-							props.onSelect([ h ]);
-						}}
-					>
-						<HeroPanel hero={h} sourcebooks={props.sourcebooks} options={props.options} />
-					</SelectablePanel>
-				));
+				return (
+					<>
+						{
+							heroes.map(h => (
+								<SelectablePanel
+									key={h.id}
+									watermark={h.picture || undefined}
+									onSelect={() => {
+										props.onSelect([ h ]);
+									}}
+								>
+									<HeroPanel hero={h} sourcebooks={props.sourcebooks} options={props.options} />
+								</SelectablePanel>
+							))
+						}
+					</>
+				);
 			}
 			case 'simple': {
 				return (

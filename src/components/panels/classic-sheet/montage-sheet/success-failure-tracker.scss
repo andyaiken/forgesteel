@@ -1,0 +1,87 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .success-failure-tracker.card {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+
+    .success-failures {
+        display: grid;
+        grid-template-rows: repeat(3, min-content);
+        margin-bottom: 15px;
+
+        .tracker {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 3fr 1fr 1.5fr;
+            text-align: center;
+            margin-bottom: -10px;
+
+            &>label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                @include common.font-slab;
+                font-size: round(1.6rem, 1px);
+            }
+
+            .current-successes,
+            .current-failures {
+                border: 4px solid common.$color-medium;
+                aspect-ratio: 1/1;
+                display: flex;
+                flex-direction: column-reverse;
+                padding: 0 5px;
+                z-index: 100;
+                background-color: #fff;
+
+                label {
+                    font-size: round(0.9rem, 1px);
+                }
+            }
+
+            .current-successes {
+                margin: 4px;
+            }
+
+            .current-failures {
+                border-radius: 50%;
+                padding: 0 9px 4px;
+            }
+
+            .limits {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                margin: 12px -30px;
+                padding: 0 30px;
+                border: 2px solid common.$color-light;
+
+                background-image: linear-gradient(0deg, common.$color-light, common.$color-light);
+                background-size: 2px calc(100% - 10px);
+                background-position: 50% 5px;
+                background-repeat: no-repeat;
+
+                .labeled-field {
+                    margin: 3px 15px;
+                }
+                label {
+                    font-size: round(0.9rem, 1px);
+                }
+            }
+        }
+
+        .info {
+            @include common.font-slab;
+            text-align: center;
+        }
+    }
+
+    .outcomes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+
+        section p {
+            margin: 0;
+        }
+    }
+}

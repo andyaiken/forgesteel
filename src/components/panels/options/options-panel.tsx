@@ -16,7 +16,7 @@ import { useState } from 'react';
 import './options-panel.scss';
 
 interface Props {
-	mode: 'hero-modern' | 'hero-classic' | 'library' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'tactical-map' | 'session' | 'player';
+	mode: 'hero-modern' | 'hero-classic' | 'library' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'montage-modern' | 'montage-classic' | 'tactical-map' | 'session' | 'player';
 	options: Options;
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
@@ -481,6 +481,7 @@ export const OptionsPanel = (props: Props) => {
 					</>
 				);
 			case 'encounter-classic':
+			case 'montage-classic':
 				return (
 					<>
 						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
@@ -496,7 +497,7 @@ export const OptionsPanel = (props: Props) => {
 							value={props.options.sheetTextColor}
 							onChange={changeTextColor}
 						/>
-						<Divider>Layout</Divider>
+						<Divider>Page Size</Divider>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Segmented
 								name='pagesize'

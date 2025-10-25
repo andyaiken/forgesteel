@@ -7,12 +7,6 @@
     display:grid;
     justify-self: stretch;
 
-    p strong,
-    li strong {
-        @include common.font-slab;
-        font-weight: 450;
-    }
-
     section.bordered {
         @include common.border-beveled-fancy-curve(10px, 2px, common.$color-light);
         margin-bottom: 0;
@@ -140,21 +134,6 @@
         grid-template-rows: min-content 1fr;
 
         font-size: 15px;
-
-        .power, .symbol-text {
-            @include common.font-slab;
-        }
-        .power  {
-            font-weight: 600;
-            margin: 0 10px 10px;
-            .symbol-text {
-                display: inline-block;
-                font-size: round(1.2rem, 1px);
-                font-weight: 500;
-                padding: 0 5px;
-                border-bottom: 1px solid common.$color-medium;
-            }
-        }
 
         .roll-tiers {
             display: grid;

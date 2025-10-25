@@ -1,4 +1,5 @@
 @use '../../../pages/classic-sheet/common.scss';
+@use 'sass:color';
 
 #classic-sheet .hero-header.card {
     display: grid;
@@ -105,6 +106,12 @@
                         border-right: none;
                     }
                 }
+            }
+        }
+
+        .xp {
+            .labeled-field-content span {
+                color: color.adjust(common.$color-medium, $lightness: 20%);
             }
         }
     }

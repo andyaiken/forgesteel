@@ -1,0 +1,68 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .montage-sheet {
+    table {
+        * {
+            border: 0;
+            text-align: center;
+            @include common.font-serif;
+        }
+    }
+
+    .tests-difficulty.card {
+        .tests-difficulty-table {
+            display: grid;
+            grid-template-rows: repeat(5, min-content);
+
+            div {
+                @include common.font-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+            .header {
+                font-weight: 700;
+                margin-top: 5px;
+            }
+
+            .header, .result-row {
+                display: grid;
+                grid-template-columns: 1fr repeat(3, 1.6fr);
+                border-bottom: 2px solid common.$color-light;
+                align-items: stretch;
+            }
+
+            .result-row {
+                padding: 5px 0;
+
+                div:not(:last-of-type) {
+                    border-right: 2px solid common.$color-light;
+                }
+
+                &:nth-child(even) {
+                    background: common.$color-extra-light;
+                }
+            }
+        }
+
+        h3 {
+            margin: 5px 0 0;
+            font-size: round(1.1rem, 1px);
+            text-align: left;
+            border-bottom: 2px solid common.$color-medium;
+            width: 70%;
+        }
+    }
+
+    .page-1 {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: min-content min-content 1fr;
+
+        .montage-header,
+        .montage-challenges {
+            grid-column-end: span 2;
+        }
+    }
+}

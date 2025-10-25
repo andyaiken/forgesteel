@@ -102,8 +102,6 @@ main#classic-sheet .hero-sheet .monster {
         }
     }
 
-    p strong,
-    li strong,
     label {
         @include common.font-slab;
         font-weight: 450;

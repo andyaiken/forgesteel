@@ -74,9 +74,9 @@ export const HeroHeaderCard = (props: Props) => {
 					additionalClasses={[ 'label-above', 'box-both' ]}
 				/>
 				<LabeledTextField
-					label='XP / Epic'
+					label={character.level === 10 ? 'Epic' : 'XP'}
 					content={character.xp}
-					additionalClasses={[ 'label-above', 'box-both' ]}
+					additionalClasses={[ 'xp', 'label-above', 'box-both' ]}
 				/>
 			</section>
 		</div>

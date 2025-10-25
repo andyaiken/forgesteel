@@ -18,6 +18,7 @@ import { Format } from '@/utils/format';
 import { Hero } from '@/models/hero';
 import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
+import { MontageSheetPage } from '@/components/panels/classic-sheet/montage-sheet/montage-sheet-page';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
@@ -243,7 +244,25 @@ export const PlaybookListPage = (props: Props) => {
 				};
 				break;
 			case 'montage':
-				getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => {
+					if (view === 'classic') {
+						return (
+							<MontageSheetPage
+								key={element.id}
+								montage={element as Montage}
+								options={props.options}
+							/>
+						);
+					} else {
+						return (
+							<MontagePanel
+								key={element.id}
+								montage={element as Montage}
+								mode={PanelMode.Full}
+							/>
+						);
+					}
+				};
 				break;
 			case 'negotiation':
 				getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} mode={PanelMode.Full} />;
@@ -279,7 +298,7 @@ export const PlaybookListPage = (props: Props) => {
 							:
 							<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 								{
-									category === 'encounter' && view !== 'classic' ?
+									[ 'encounter', 'montage' ].includes(category) && view !== 'classic' ?
 										<Alert
 											type='info'
 											showIcon={true}
@@ -289,7 +308,7 @@ export const PlaybookListPage = (props: Props) => {
 										: null
 								}
 								{
-									category === 'encounter' && view === 'classic' ?
+									[ 'encounter', 'montage' ].includes(category) && view === 'classic' ?
 										<>
 											<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export as PDF</Button>
 											<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export as PDF (high res)</Button>
@@ -297,13 +316,8 @@ export const PlaybookListPage = (props: Props) => {
 										: null
 								}
 								{
-									category !== 'encounter' ?
+									![ 'encounter', 'montage' ].includes(category) ?
 										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
-										: null
-								}
-								{
-									category === 'encounter' && view !== 'classic' ?
-										<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
 										: null
 								}
 								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
@@ -410,7 +424,7 @@ export const PlaybookListPage = (props: Props) => {
 							: null
 					}
 					{
-						(category === 'encounter') ?
+						(category === 'encounter') || (category === 'montage') ?
 							<Popover
 								trigger='click'
 								content={(
@@ -450,10 +464,10 @@ export const PlaybookListPage = (props: Props) => {
 					}
 
 					{
-						(category === 'encounter') ?
+						(category === 'encounter') || (category === 'montage' && view === 'classic') ?
 							<Popover
 								trigger='click'
-								content={<OptionsPanel mode={view === 'classic' ? 'encounter-classic' : 'encounter-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode={`${category}-${view}`} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

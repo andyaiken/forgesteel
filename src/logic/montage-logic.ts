@@ -26,7 +26,7 @@ export class MontageLogic {
 			heroCount = party.length;
 		}
 		if (heroCount < 5) {
-			value -= 2 * (5 - heroCount);
+			value = Math.max(2, value - (5 - heroCount));
 		}
 		if (heroCount > 5) {
 			value += (heroCount - 5);
@@ -56,7 +56,7 @@ export class MontageLogic {
 			heroCount = party.length;
 		}
 		if (heroCount < 5) {
-			value -= 2 * (5 - heroCount);
+			value = Math.max(2, value - (5 - heroCount));
 		}
 		if (heroCount > 5) {
 			value += (heroCount - 5);
@@ -71,13 +71,24 @@ export class MontageLogic {
 		const successLimit = MontageLogic.getSuccessLimit(montage, heroes, options);
 		const failureLimit = MontageLogic.getFailureLimit(montage, heroes, options);
 
+		let heroCount = options.heroCount;
+		if (options.heroParty) {
+			const party = heroes.filter(h => h.folder === options.heroParty);
+			heroCount = party.length;
+		}
+		// 2 rounds = 2 * number of heroes chances
+		const totalChances = heroCount * 2;
+		const testsUsed = successes + failures;
+		const timeRanOut = testsUsed >= totalChances;
+
+		// Time runs out or the heroes hit the failure limit
+		const unsuccessful = timeRanOut || (failures >= failureLimit);
+
 		if (successes >= successLimit) {
 			return 'Total Success';
-		}
-		if ((failures >= failureLimit) && (successes >= 2)) {
+		} else if (unsuccessful && (successes - failures >= 2)) { // at least two more successes than failures
 			return 'Partial Success';
-		}
-		if ((failures >= failureLimit) && (successes < 2)) {
+		} else if (unsuccessful && (successes - failures < 2)) {
 			return 'Total Failure';
 		}
 

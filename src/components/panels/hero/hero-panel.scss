@@ -68,57 +68,6 @@
 				padding: 5px;
 				display: flex;
 				flex-direction: column;
-				gap: 10px;
-
-				.stats-box {
-					border: 1px solid rgb(200, 200, 200);
-					border-radius: 20px;
-					background-color: rgb(255, 255, 255);
-					padding: 10px;
-					box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
-
-					&.clickable {
-						cursor: pointer;
-
-						&:hover {
-							border-color: rgb(22, 119, 255);
-							background-color: rgb(230, 244, 255);
-
-							.ant-statistic {
-								.ant-statistic-title,
-								.ant-statistic-content {
-									color: rgba(0, 0, 0, 0.88);
-								}
-							}
-						}
-					}
-
-					.stats {
-						display: flex;
-						align-items: flex-start;
-						justify-content: space-evenly;
-
-						.stat {
-							flex: 1 1 0;
-							border: 1px solid transparent;
-							border-radius: 10px;
-						}
-					}
-
-					.stats-box-caption {
-						margin-top: 5px;
-						border-top: 1px solid rgb(230, 230, 230);
-						padding-top: 10px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						font-size: 10px;
-						font-weight: 600;
-						text-transform: uppercase;
-						letter-spacing: 2px;
-						opacity: 0.5;
-					}
-				}
 			}
 
 			.choices-section {
@@ -128,8 +77,10 @@
 				gap: 10px;
 
 				&.compact {
-					display: block;
-					padding: 0 5px;
+					padding: 5px;
+					display: flex;
+					flex-direction: column;
+					gap: 0;
 				}
 			}
 
@@ -207,19 +158,20 @@
 			flex-direction: row;
 			align-items: center;
 			gap: 10px;
-			border: 1px solid rgba(0, 0, 0, 0.25);
+			border: 1px solid rgba(5, 5, 5, 0.06);
 			border-radius: 5px;
-			background-color: rgb(255, 255, 255);
+			background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
 			padding: 10px;
+			box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
 
 			&.danger {
 				border-color: red;
-				background-color: rgba(255, 0, 0, 0.2);
+				background: rgba(255, 0, 0, 0.2);
 			}
 
 			&.warning {
 				border-color: orange;
-				background-color: rgba(255, 166, 0, 0.2);
+				background: rgba(255, 166, 0, 0.2);
 			}
 
 			&.clickable {
@@ -227,7 +179,7 @@
 
 				&:hover {
 					border-color: rgb(22, 119, 255);
-					background-color: rgb(230, 244, 255);
+					background: rgb(230, 244, 255);
 				}
 			}
 		}
@@ -237,31 +189,6 @@
 html[data-theme="dark"] {
 	.hero-panel {
 		.hero-main-section {
-			.hero-center-column {
-
-				.stats-box {
-					border-color: rgb(200, 200, 200);
-					background-color: rgb(0, 0, 0) !important;
-
-					&.clickable {
-						&:hover {
-							background-color: rgb(22, 119, 255) !important;
-
-							.ant-statistic {
-								.ant-statistic-title,
-								.ant-statistic-content {
-									color: rgba(255, 255, 255, 0.88) !important;
-								}
-							}
-
-							.stats-box-caption {
-								color: rgba(255, 255, 255, 0.88);
-							}
-						}
-					}
-				}
-			}
-
 			.overview-tile {
 				&.clickable {
 					&:hover {
@@ -271,11 +198,12 @@ html[data-theme="dark"] {
 			}
 
 			.selectable-row {
-				background-color: black;
+				border-color: rgba(250, 250, 250, 0.6);
+				background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
 
 				&.clickable {
 					&:hover {
-						background-color: rgb(22, 119, 255);
+						background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
 					}
 				}
 			}

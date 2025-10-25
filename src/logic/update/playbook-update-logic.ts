@@ -1,3 +1,4 @@
+import { AttitudeType } from '@/enums/attitude-type';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterObjectiveData } from '@/data/encounter-objective-data';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -145,8 +146,16 @@ export class PlaybookUpdateLogic {
 		}
 
 		playbook.negotiations.forEach(n => {
+			if (n.attitude === undefined) {
+				n.attitude = AttitudeType.Open;
+			}
+
 			if (n.impression === undefined) {
 				n.impression = 1;
+			}
+
+			if (n.languages === undefined) {
+				n.languages = [];
 			}
 
 			if (n.outcomes === undefined) {

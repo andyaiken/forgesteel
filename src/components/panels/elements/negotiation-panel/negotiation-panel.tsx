@@ -5,11 +5,15 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationLogic } from '@/logic/negotiation-logic';
 import { PanelMode } from '@/enums/panel-mode';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { StatsRow } from '../../stats-row/stats-row';
 
 import './negotiation-panel.scss';
 
 interface Props {
 	negotiation: Negotiation;
+	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -22,17 +26,27 @@ export const NegotiationPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<>
-							<Field label='Impression' value={props.negotiation.impression} />
+							<StatsRow>
+								<Field orientation='vertical' label='Attitude' value={props.negotiation.attitude} />
+								<Field orientation='vertical' label='Interest' value={props.negotiation.interest} />
+								<Field orientation='vertical' label='Patience' value={props.negotiation.patience} />
+								<Field orientation='vertical' label='Impression' value={props.negotiation.impression} />
+							</StatsRow>
 							<div className='negotiation-content'>
 								<div>
 									<HeaderText>Motivations</HeaderText>
-									{props.negotiation.motivations.map((t, n) => <Field key={n} label={t.trait} value={t.description || NegotiationLogic.getMotivationDescription(t.trait)} />)}
+									{props.negotiation.motivations.map((t, n) => <Field key={n} label={t.trait} value={<Markdown text={t.description || NegotiationLogic.getMotivationDescription(t.trait)} useSpan={true} />} />)}
 									{props.negotiation.motivations.length === 0 ? <div className='ds-text dimmed-text'>None</div> : null}
 								</div>
 								<div>
 									<HeaderText>Pitfalls</HeaderText>
-									{props.negotiation.pitfalls.map((t, n) => <Field key={n} label={t.trait} value={t.description || NegotiationLogic.getPitfallDescription(t.trait)} />)}
+									{props.negotiation.pitfalls.map((t, n) => <Field key={n} label={t.trait} value={<Markdown text={t.description || NegotiationLogic.getPitfallDescription(t.trait)} useSpan={true} />} />)}
 									{props.negotiation.pitfalls.length === 0 ? <div className='ds-text dimmed-text'>None</div> : null}
+								</div>
+								<div>
+									<HeaderText>Languages</HeaderText>
+									{props.negotiation.languages.map(l => SourcebookLogic.getLanguage(l, props.sourcebooks)).filter(l => !!l).map((l, n) => <Field key={n} label={l.name} value={l.description} />)}
+									{props.negotiation.languages.length === 0 ? <div className='ds-text dimmed-text'>None</div> : null}
 								</div>
 								<div>
 									<HeaderText>Outcomes</HeaderText>

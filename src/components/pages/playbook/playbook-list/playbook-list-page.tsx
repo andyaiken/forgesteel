@@ -267,7 +267,7 @@ export const PlaybookListPage = (props: Props) => {
 				};
 				break;
 			case 'negotiation':
-				getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 				break;
 			case 'tactical-map':
 				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;

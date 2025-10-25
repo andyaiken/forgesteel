@@ -132,6 +132,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('negotiation', negotiation.id)}>
 									<NegotiationPanel
 										negotiation={negotiation}
+										sourcebooks={props.sourcebooks}
 									/>
 									<SashPanel monogram='Negotiation' />
 								</SelectablePanel>
@@ -379,6 +380,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						selectedNegotiation ?
 							<NegotiationPanel
 								negotiation={selectedNegotiation}
+								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
 							/>
 							: null

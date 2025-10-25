@@ -1,6 +1,64 @@
+import { AttitudeType } from '@/enums/attitude-type';
 import { NegotiationTrait } from '@/enums/negotiation-trait';
 
 export class NegotiationLogic {
+	static getInterest = (attitude: AttitudeType) => {
+		switch (attitude) {
+			case AttitudeType.Hostile:
+				return 1;
+			case AttitudeType.Suspicious:
+				return 2;
+			case AttitudeType.Neutral:
+				return 2;
+			case AttitudeType.Open:
+				return 3;
+			case AttitudeType.Friendly:
+				return 3;
+			case AttitudeType.Trusting:
+				return 3;
+		}
+
+		return 0;
+	};
+
+	static getPatience = (attitude: AttitudeType) => {
+		switch (attitude) {
+			case AttitudeType.Hostile:
+				return 2;
+			case AttitudeType.Suspicious:
+				return 2;
+			case AttitudeType.Neutral:
+				return 3;
+			case AttitudeType.Open:
+				return 3;
+			case AttitudeType.Friendly:
+				return 4;
+			case AttitudeType.Trusting:
+				return 5;
+		}
+
+		return 0;
+	};
+
+	static getAttitudeDescription = (attitude: AttitudeType) => {
+		switch (attitude) {
+			case AttitudeType.Hostile:
+				return 'Openly opposed to the heroes. Barely willing to listen. ';
+			case AttitudeType.Suspicious:
+				return 'Doubts the heroes’ motives but is willing to listen. ';
+			case AttitudeType.Neutral:
+				return 'Doesn’t feel one way or the other. Would probably rather be somewhere else, but doesn’t want to be rude.';
+			case AttitudeType.Open:
+				return 'Willing to listen, willing to help, as long as the heroes aren’t asking too much. ';
+			case AttitudeType.Friendly:
+				return 'The heroes seem like the NPC’s people. The NPC is willing to give them the benefit of the doubt.';
+			case AttitudeType.Trusting:
+				return 'The NPC has reason to take the heroes at their word and will help if the characters don’t screw this up.';
+		}
+
+		return '';
+	};
+
 	static getMotivationDescription = (trait: NegotiationTrait) => {
 		switch (trait) {
 			case NegotiationTrait.Benevolence:

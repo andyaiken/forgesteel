@@ -1,5 +1,6 @@
 import { Button, Input, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { AttitudeType } from '@/enums/attitude-type';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -13,6 +14,8 @@ import { Negotiation } from '@/models/negotiation';
 import { NegotiationLogic } from '@/logic/negotiation-logic';
 import { NegotiationTrait } from '@/enums/negotiation-trait';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -20,6 +23,7 @@ import './negotiation-edit-panel.scss';
 
 interface Props {
 	negotiation: Negotiation;
+	sourcebooks: Sourcebook[];
 	onChange: (negotiation: Negotiation) => void;
 }
 
@@ -59,6 +63,15 @@ export const NegotiationEditPanel = (props: Props) => {
 	};
 
 	const getNegotiationDetailsSection = () => {
+		const setAttitude = (value: AttitudeType) => {
+			const copy = Utils.copy(negotiation);
+			copy.attitude = value;
+			copy.interest = NegotiationLogic.getInterest(value);
+			copy.patience = NegotiationLogic.getPatience(value);
+			setNegotiation(copy);
+			props.onChange(copy);
+		};
+
 		const setImpression = (value: number) => {
 			const copy = Utils.copy(negotiation);
 			copy.impression = value;
@@ -66,9 +79,35 @@ export const NegotiationEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
+		const setLanguages = (value: string[]) => {
+			const copy = Utils.copy(negotiation);
+			copy.languages = value;
+			setNegotiation(copy);
+			props.onChange(copy);
+		};
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<NumberSpin label='Impression' min={0} max={15} value={negotiation.impression} onChange={setImpression} />
+				<HeaderText>Attitude</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					options={[ AttitudeType.Trusting, AttitudeType.Friendly, AttitudeType.Open, AttitudeType.Neutral, AttitudeType.Suspicious, AttitudeType.Hostile ].map(a => ({ value: a, label: a, desc: NegotiationLogic.getAttitudeDescription(a) }))}
+					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+					value={negotiation.attitude}
+					onChange={setAttitude}
+				/>
+				<HeaderText>Impression</HeaderText>
+				<NumberSpin min={0} max={15} value={negotiation.impression} onChange={setImpression} />
+				<HeaderText>Languages</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					mode='multiple'
+					placeholder='Select languages'
+					options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ value: l.name, label: l.name, desc: l.description }))}
+					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+					value={negotiation.languages}
+					onChange={setLanguages}
+				/>
 			</Space>
 		);
 	};

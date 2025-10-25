@@ -1,8 +1,7 @@
-import { Divider, Progress, Select, Space } from 'antd';
+import { Divider, Progress, Space } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
-import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Negotiation } from '@/models/negotiation';
@@ -21,41 +20,6 @@ interface Props {
 
 export const NegotiationRunPanel = (props: Props) => {
 	const [ negotiation, setNegotiation ] = useState<Negotiation>(Utils.copy(props.negotiation));
-	const [ attitude, setAttitude ] = useState<string>();
-
-	const updateAttitude = (value: string) => {
-		setAttitude(value);
-
-		const copy = Utils.copy(negotiation);
-		switch (value) {
-			case 'hostile':
-				copy.interest = 1;
-				copy.patience = 2;
-				break;
-			case 'suspicious':
-				copy.interest = 2;
-				copy.patience = 2;
-				break;
-			case 'neutral':
-				copy.interest = 2;
-				copy.patience = 3;
-				break;
-			case 'open':
-				copy.interest = 3;
-				copy.patience = 3;
-				break;
-			case 'friendly':
-				copy.interest = 3;
-				copy.patience = 4;
-				break;
-			case 'trusting':
-				copy.interest = 3;
-				copy.patience = 5;
-				break;
-		}
-		setNegotiation(copy);
-		props.onChange(copy);
-	};
 
 	const setInterest = (value: number) => {
 		const copy = Utils.copy(negotiation);
@@ -77,42 +41,23 @@ export const NegotiationRunPanel = (props: Props) => {
 				<HeaderText level={1}>{props.negotiation.name || 'Unnamed Negotiation'}</HeaderText>
 				<Markdown text={props.negotiation.description} />
 				<StatsRow>
-					<Field
-						orientation='vertical'
-						label='Starting Attitude'
-						value={
-							<Select
-								style={{ width: '120px' }}
-								placeholder='Select'
-								status={attitude ? '' : 'warning'}
-								options={[ 'hostile', 'suspicious', 'neutral', 'open', 'friendly', 'trusting' ].map(o => ({ value: o, label: <div className='ds-text'>{Format.capitalize(o)}</div> }))}
-								value={attitude}
-								onChange={updateAttitude}
-							/>
-						}
-					/>
-					{
-						attitude ?
-							<>
-								<NumberSpin min={0} max={5} value={negotiation.interest} onChange={setInterest}>
-									<Field
-										orientation='vertical'
-										label='Interest'
-										value={<Progress percent={negotiation.interest * 20} steps={5} showInfo={false} />}
-									/>
-								</NumberSpin>
-								<NumberSpin min={0} max={5} value={negotiation.patience} onChange={setPatience}>
-									<Field
-										orientation='vertical'
-										label='Patience'
-										value={<Progress percent={negotiation.patience * 20} steps={5} showInfo={false} />}
-									/>
-								</NumberSpin>
-							</>
-							: null
-					}
+					<NumberSpin min={0} max={5} value={negotiation.interest} onChange={setInterest}>
+						<Field
+							orientation='vertical'
+							label='Interest'
+							value={<Progress percent={negotiation.interest * 20} steps={5} showInfo={false} />}
+						/>
+					</NumberSpin>
+					<NumberSpin min={0} max={5} value={negotiation.patience} onChange={setPatience}>
+						<Field
+							orientation='vertical'
+							label='Patience'
+							value={<Progress percent={negotiation.patience * 20} steps={5} showInfo={false} />}
+						/>
+					</NumberSpin>
 				</StatsRow>
 				<Field label='Impression' value={`${negotiation.impression}: If a hero is famous to an NPC, they gain an edge on tests when making arguments to which the Flirt, Lead, or Persuade skill could be applied. If they are infamous to the NPC, they gain an edge on tests when making arguments to which the Brag, Interrogate, or Intimidate skill could be applied. A hero gains this edge even if they don’t have the appropriate skill.`} />
+				{negotiation.languages.length > 0 ? <Field label='Languages' value={negotiation.languages.join(', ')} /> : null}
 				<div className='negotiation-content'>
 					<div>
 						<HeaderText>Motivations</HeaderText>

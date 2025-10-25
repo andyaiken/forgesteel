@@ -119,6 +119,7 @@ export const PlaybookEditPage = (props: Props) => {
 				return (
 					<NegotiationEditPanel
 						negotiation={element as Negotiation}
+						sourcebooks={props.sourcebooks}
 						onChange={applyChanges}
 					/>
 				);
@@ -170,6 +171,7 @@ export const PlaybookEditPage = (props: Props) => {
 					<SelectablePanel key={JSON.stringify(element)}>
 						<NegotiationPanel
 							negotiation={element as Negotiation}
+							sourcebooks={props.sourcebooks}
 							mode={PanelMode.Full}
 						/>
 					</SelectablePanel>

@@ -9,6 +9,7 @@ import { Terrain, TerrainRole } from '@/models/terrain';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Adventure } from '@/models/adventure';
 import { Ancestry } from '@/models/ancestry';
+import { AttitudeType } from '@/enums/attitude-type';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
 import { Complication } from '@/models/complication';
@@ -724,11 +725,13 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			attitude: AttitudeType.Neutral,
 			impression: 0,
 			interest: 1,
 			patience: 1,
 			motivations: [],
 			pitfalls: [],
+			languages: [],
 			outcomes: [ '', '', '', '', '', '' ]
 		};
 	};

@@ -1,3 +1,4 @@
+import { AttitudeType } from '@/enums/attitude-type';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationTrait } from '@/enums/negotiation-trait';
 
@@ -9,6 +10,7 @@ export class NegotiationData {
 *The bandit chief is a bully and a braggart, and most negotiate using intimidation and bluster before softening.*
 
 The bandit chief archetype can be used for any other local big shot, such as the privileged child of a local lord, an arrogant tavern darts champion, or any bully.`,
+		attitude: AttitudeType.Neutral,
 		impression: 1,
 		interest: 2,
 		patience: 3,
@@ -48,6 +50,7 @@ The bandit chief archetype can be used for any other local big shot, such as the
 				description: 'In times of peace, if you pick up a silver coin that’s not yours, the sheriff comes knocking on your door. In war, whole caravans disappear and nobody blinks. Give me war.'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -58,6 +61,7 @@ The bandit chief archetype can be used for any other local big shot, such as the
 *Although not always an idealist, the knight is a loyal servant of their liege and a stickler for duty. A knight knows their place in a regimented society, and believes that everyone else should keep to their own place.*
 
 The knight archetype can be used for any other local authority, such as a village elder, town guard officer, or academic professor.`,
+		attitude: AttitudeType.Neutral,
 		impression: 2,
 		interest: 2,
 		patience: 3,
@@ -97,6 +101,7 @@ The knight archetype can be used for any other local authority, such as a villag
 				description: 'I believe in law, not vengeance, and law is decided by higher courts. I’m just a functionary.'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -107,6 +112,7 @@ The knight archetype can be used for any other local authority, such as a villag
 *The guildmaster knows the value of a coin, but understands that knowledge—inside information and trade secrets alike—is the most valuable currency. They bargain accordingly.*
 
 The guildmaster archetype can be used for any other local information broker, such as a cult leader, hag, or spy.`,
+		attitude: AttitudeType.Neutral,
 		impression: 3,
 		interest: 2,
 		patience: 3,
@@ -146,6 +152,7 @@ The guildmaster archetype can be used for any other local information broker, su
 				description: 'I don’t have time for this foolishness. Come talk to me again when you have something of value to show me.'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -156,6 +163,7 @@ The guildmaster archetype can be used for any other local information broker, su
 *The warlord has raised their banner and troops flock to their cause. Some say a warlord never negotiates, but that’s not true. They’re happy to listen to terms of surrender.*
 
 The warlord archetype can be used for any other local-level threat, such as a vampire, hobgoblin bloodlord, or rebellious noble.`,
+		attitude: AttitudeType.Neutral,
 		impression: 4,
 		interest: 2,
 		patience: 3,
@@ -195,6 +203,7 @@ The warlord archetype can be used for any other local-level threat, such as a va
 				description: 'I’m not some sniveling coward who begs for protection, and neither are my troops. Anyone who asks for safety doesn’t deserve it.'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -205,6 +214,7 @@ The warlord archetype can be used for any other local-level threat, such as a va
 *The burgomaster’s power comes from their constituents, and for the most part, they aim to serve their people. Most burgomasters are experienced negotiators, never giving up any more than they mean to.*
 
 The burgomaster archetype can be used for any other local ruler, such as a baron, governor, or a watch captain in a metropolis.`,
+		attitude: AttitudeType.Neutral,
 		impression: 5,
 		interest: 2,
 		patience: 3,
@@ -244,6 +254,7 @@ The burgomaster archetype can be used for any other local ruler, such as a baron
 				description: 'In politics, you have to have a short memory. Your enemy today may be your ally tomorrow. There’s no need to make things personal.'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -254,6 +265,7 @@ The burgomaster archetype can be used for any other local ruler, such as a baron
 *The virtuoso is the preeminent musician in the land—perhaps a celebrated opera singer or composer. If you need a cause popularized or an enemy’s name tarnished, you come to them.*
 
 The virtuoso archetype can be used for any other local celebrity, such as a master crafter, inspired artist, famous gladiator, or world champion.`,
+		attitude: AttitudeType.Neutral,
 		impression: 6,
 		interest: 2,
 		patience: 3,
@@ -293,6 +305,7 @@ The virtuoso archetype can be used for any other local celebrity, such as a mast
 				description: 'Perhaps there are some who hate me—those who think I stand in their way, or whose accomplishments I have eclipsed. But I hate no one and am jealous of no one.'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -303,6 +316,7 @@ The virtuoso archetype can be used for any other local celebrity, such as a mast
 *The high priest might be a high-ranking member of their faith, but as they are quick to tell you, that doesn’t make them free to act as they wish. The commands of their deity must be paramount.*
 
 The high priest archetype can be used for any other national authority, such as a count, judge, or general.`,
+		attitude: AttitudeType.Neutral,
 		impression: 7,
 		interest: 2,
 		patience: 3,
@@ -342,6 +356,7 @@ The high priest archetype can be used for any other national authority, such as 
 				description: 'For shame! Do you boast of doing evil and expect me to join you in it?'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -352,6 +367,7 @@ The high priest archetype can be used for any other national authority, such as 
 *As the duke gestures you to join them at their card table, spies whisper in their ear. The duke never plays a game or enters a negotiation unless they think they can gain the high card.*
 
 The duke archetype can be used for any other royal counselor, such as an archmage, spymaster, vizier, or even a beloved jester.`,
+		attitude: AttitudeType.Neutral,
 		impression: 8,
 		interest: 2,
 		patience: 3,
@@ -391,6 +407,7 @@ The duke archetype can be used for any other royal counselor, such as an archmag
 				description: 'I don’t care about saving lives. We’re all doomed to die. The question is, what will live on after us?'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -401,6 +418,7 @@ The duke archetype can be used for any other royal counselor, such as an archmag
 *The dragon’s tremendous might is overshadowed only by their boundless ambition and pride.*
 
 The dragon archetype can be used for any other kingdom-level threat, such as a fire giant chief, a contender for a throne, or the dread synliroi Lord Syuul.`,
+		attitude: AttitudeType.Neutral,
 		impression: 9,
 		interest: 2,
 		patience: 3,
@@ -440,6 +458,7 @@ The dragon archetype can be used for any other kingdom-level threat, such as a f
 				description: 'My pleasures are as far beyond your comprehension as yours are to a worm.'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -450,6 +469,7 @@ The dragon archetype can be used for any other kingdom-level threat, such as a f
 *Whether they’re good or evil, a monarch is accustomed to authority—and wants to keep it. They respond better to pleas than to demands.*
 
 The monarch archetype can be used for any other kingdom-level ruler, such as a tyrant, a theocracy’s archpriest, or a republic’s consul.`,
+		attitude: AttitudeType.Neutral,
 		impression: 10,
 		interest: 2,
 		patience: 3,
@@ -489,6 +509,7 @@ The monarch archetype can be used for any other kingdom-level ruler, such as a t
 				description: 'Revenge is an exciting sport. Sadly, it’s one I’ve had to give up. It’s policy, not revenge, that rules here.'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -501,6 +522,7 @@ The monarch archetype can be used for any other kingdom-level ruler, such as a t
 The lich is willing to negotiate with strong heroes who might make loyal lieutenants—or powerful undead servants if the talks don’t go well.
 
 The lich archetype can be used for any other world-shaking threat, such as a would-be emperor or the vampire lord Count Rhodar von Glauer.`,
+		attitude: AttitudeType.Neutral,
 		impression: 11,
 		interest: 2,
 		patience: 3,
@@ -540,6 +562,7 @@ The lich archetype can be used for any other world-shaking threat, such as a wou
 				description: 'If you’re so intent on saving lives, then save your own by bowing down before me! No harm will come to my servants.'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 
@@ -550,6 +573,7 @@ The lich archetype can be used for any other world-shaking threat, such as a wou
 *The deity will listen to your prayers—and might perhaps answer them as well, if the mood strikes them.*
 
 The deity archetype can be used for any other world-transcending power, such as the legendary time dragon Cthrion Uroniziir, or the dread pharaoh Khorsekef the Infinite.`,
+		attitude: AttitudeType.Neutral,
 		impression: 12,
 		interest: 2,
 		patience: 3,
@@ -589,6 +613,7 @@ The deity archetype can be used for any other world-transcending power, such as 
 				description: 'Who do you speak of? Who is beyond me, who is above me? Who will live to see me die, and who drew breath before I gave it? Let them come forth and say their name!'
 			}
 		],
+		languages: [],
 		outcomes: [ '', '', '', '', '', '' ]
 	};
 }

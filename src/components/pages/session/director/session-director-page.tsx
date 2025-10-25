@@ -382,7 +382,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<Popover
 						trigger='click'
 						content={(
-							<div style={{ width: '500px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							<div style={{ width: '500px', display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '500px', overflowY: 'auto' }}>
 								<Segmented
 									name='startelements'
 									block={true}

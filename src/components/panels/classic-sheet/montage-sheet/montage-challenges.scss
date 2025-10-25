@@ -1,0 +1,64 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .montage-challenges.card {
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+    grid-template-rows: min-content 1fr;
+
+    h2 {
+        grid-column-end: span 2;
+        margin-bottom: 5px;
+    }
+
+    .hazards-events {
+        padding: 0 10px;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px;
+
+        font-size: round(1.2rem, 1px);
+        line-height: round(1.65rem, 1px);
+    }
+
+    .test-table {
+        display: grid;
+        padding-bottom: 10px;
+
+        .row, .header {
+            display: grid;
+            grid-template-columns: 0.8fr 2fr 2fr 2fr 2.2fr;
+            border-bottom: 2px solid common.$color-light;
+        }
+
+        .row {
+            &:nth-child(odd of .row) {
+                background: common.$color-extra-light;
+            }
+
+            &>div {
+                margin: 10px 0;
+                &:not(:nth-last-child(-n + 2)) {
+                    border-right: 2px solid common.$color-light;
+                }
+            }
+
+            .test-result {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                margin: -4px 0;
+                margin-right: 10px;
+            }
+        }
+
+        .header {
+            * {
+                @include common.font-slab;
+                font-weight: 600;
+                font-size: round(1.1rem, 1px);
+            }
+            align-content: center;
+            text-align: center;
+        }
+    }
+}

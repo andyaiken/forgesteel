@@ -45,6 +45,14 @@ main#classic-sheet .montage-sheet {
                 }
             }
         }
+
+        h3 {
+            margin: 5px 0 0;
+            font-size: round(1.1rem, 1px);
+            text-align: left;
+            border-bottom: 2px solid common.$color-medium;
+            width: 70%;
+        }
     }
 
     .page-1 {
@@ -52,7 +60,8 @@ main#classic-sheet .montage-sheet {
         grid-template-columns: 1fr 2fr;
         grid-template-rows: min-content min-content 1fr;
 
-        .montage-header {
+        .montage-header,
+        .montage-challenges {
             grid-column-end: span 2;
         }
     }

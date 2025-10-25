@@ -5,5 +5,7 @@ export interface MontageSheet {
 		totalSuccess: string;
 		partialSuccess: string;
 		totalFailure: string;
-	}
+	};
+	hazards: string;
+	eventsNotes: string;
 };

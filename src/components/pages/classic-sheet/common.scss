@@ -109,6 +109,12 @@ main#classic-sheet {
             background-color: transparent;
             color: var(--color-text);
         }
+        
+        p strong,
+        li strong  {
+            @include font-slab;
+            font-weight: 450;
+        }
 
         .card {
             background: #fff;
@@ -226,8 +232,19 @@ main#classic-sheet {
             grid-template-rows: min-content 1fr;
             font-size: 15px;
 
-            .symbol-text {
+            .power, .symbol-text {
                 @include font-slab;
+            }
+            .power  {
+                font-weight: 600;
+                margin: 0 10px 10px;
+                .symbol-text {
+                    display: inline-block;
+                    font-size: round(1.2rem, 1px);
+                    font-weight: 500;
+                    padding: 0 5px;
+                    border-bottom: 1px solid colors.$medium;
+                }
             }
 
             .roll-tiers {

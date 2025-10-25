@@ -52,6 +52,8 @@ export const SessionPlayerPage = (props: Props) => {
 			return (
 				<MontageRunPanel
 					montage={montage}
+					heroes={props.heroes}
+					options={props.options}
 					onChange={() => null}
 				/>
 			);

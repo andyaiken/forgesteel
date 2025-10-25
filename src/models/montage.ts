@@ -1,5 +1,6 @@
 import { Characteristic } from '@/enums/characteristic';
 import { Element } from '@/models/element';
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 
 export interface MontageChallenge extends Element {
 	characteristics: Characteristic[];
@@ -17,6 +18,7 @@ export interface MontageSection extends Element {
 };
 
 export interface Montage extends Element {
+	difficulty: EncounterDifficulty
 	scene: string;
 	sections: MontageSection[];
 	outcomes: {

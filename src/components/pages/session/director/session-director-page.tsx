@@ -118,6 +118,8 @@ export const SessionDirectorPage = (props: Props) => {
 						<MontageRunPanel
 							key={montage.id}
 							montage={montage}
+							heroes={props.heroes}
+							options={props.options}
 							onChange={props.updateMontage}
 						/>
 					</div>

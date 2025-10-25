@@ -5,7 +5,10 @@ import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
+import { MontageLogic } from '@/logic/montage-logic';
+import { Options } from '@/models/options';
 import { Pill } from '@/components/controls/pill/pill';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { Utils } from '@/utils/utils';
@@ -15,6 +18,8 @@ import './montage-run-panel.scss';
 
 interface Props {
 	montage: Montage;
+	heroes: Hero[];
+	options: Options;
 	onChange: (montage: Montage) => void;
 }
 
@@ -147,11 +152,49 @@ export const MontageRunPanel = (props: Props) => {
 		);
 	};
 
+	const successes = Collections.sum(montage.sections, s => Collections.sum(s.challenges, c => c.successes));
+	const failures = Collections.sum(montage.sections, s => Collections.sum(s.challenges, c => c.failures));
+	const successLimit = MontageLogic.getSuccessLimit(props.montage, props.heroes, props.options);
+	const failureLimit = MontageLogic.getFailureLimit(props.montage, props.heroes, props.options);
+	const outcome = MontageLogic.getOutcome(props.montage, props.heroes, props.options);
+
 	return (
 		<ErrorBoundary>
 			<div className='montage-run-panel' id={montage.id}>
 				<HeaderText level={1}>{montage.name || 'Unnamed Montage'}</HeaderText>
 				<Markdown text={montage.description} />
+				<StatsRow>
+					<Field
+						orientation='vertical'
+						label='Difficulty'
+						value={props.montage.difficulty}
+					/>
+					<Field
+						orientation='vertical'
+						label='Successes'
+						value={(
+							<Space>
+								{successes} / {successLimit}
+								<CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} />
+							</Space>
+						)}
+					/>
+					<Field
+						orientation='vertical'
+						label='Failures'
+						value={(
+							<Space>
+								{failures} / {failureLimit}
+								<CloseCircleFilled style={{ color: 'rgb(200, 0, 0)' }} />
+							</Space>
+						)}
+					/>
+					<Field
+						orientation='vertical'
+						label='Outcome'
+						value={outcome}
+					/>
+				</StatsRow>
 				<HeaderText>Setting the Scene</HeaderText>
 				<Markdown text={montage.scene} />
 				{montage.sections.map(getSection)}

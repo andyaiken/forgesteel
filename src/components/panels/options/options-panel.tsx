@@ -320,6 +320,43 @@ export const OptionsPanel = (props: Props) => {
 			);
 		};
 
+		const getDifficultySection = (initialDivider: boolean) => {
+			return (
+				<>
+					{initialDivider ? <Divider /> : null}
+					<div className='ds-text'>
+						Calculate encounter / montage difficulty based on these heroes:
+					</div>
+					<Select
+						style={{ width: '100%' }}
+						placeholder='Select a party'
+						options={[ ...getParties(), '' ].map(p => ({ value: p, label: p || 'A custom party' }))}
+						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+						showSearch={true}
+						filterOption={(input, option) => {
+							const strings = option ?
+								[
+									option.label
+								]
+								: [];
+							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+						}}
+						value={props.options.heroParty}
+						onChange={p => setHeroParty(p || '')}
+					/>
+					{
+						props.options.heroParty === '' ?
+							<>
+								<NumberSpin label='Number of heroes' min={1} value={props.options.heroCount} onChange={setHeroCount} />
+								<NumberSpin label='Hero level' min={1} max={10} value={props.options.heroLevel} onChange={setHeroLevel} />
+								<NumberSpin label='Number of victories' min={0} value={props.options.heroVictories} onChange={setHeroVictories} />
+							</>
+							: null
+					}
+				</>
+			);
+		};
+
 		switch (props.mode) {
 			case 'hero-modern':
 				return (
@@ -448,36 +485,13 @@ export const OptionsPanel = (props: Props) => {
 					<>
 						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
 						{getPartySection(true)}
-						<Divider />
-						<div className='ds-text'>
-							Calculate encounter difficulty based on these heroes:
-						</div>
-						<Select
-							style={{ width: '100%' }}
-							placeholder='Select a party'
-							options={[ ...getParties(), '' ].map(p => ({ value: p, label: p || 'A custom party' }))}
-							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.label
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
-							value={props.options.heroParty}
-							onChange={p => setHeroParty(p || '')}
-						/>
-						{
-							props.options.heroParty === '' ?
-								<>
-									<NumberSpin label='Number of heroes' min={1} value={props.options.heroCount} onChange={setHeroCount} />
-									<NumberSpin label='Hero level' min={1} max={10} value={props.options.heroLevel} onChange={setHeroLevel} />
-									<NumberSpin label='Number of victories' min={0} value={props.options.heroVictories} onChange={setHeroVictories} />
-								</>
-								: null
-						}
+						{getDifficultySection(true)}
+					</>
+				);
+			case 'montage-modern':
+				return (
+					<>
+						{getDifficultySection(false)}
 					</>
 				);
 			case 'encounter-classic':

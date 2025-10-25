@@ -29,12 +29,12 @@ export interface Options {
 	// Encounter
 	minionCount: number;
 	party: string;
-	// Encounter Difficulty
+	showDefeatedCombatants: boolean;
+	// Encounter / Montage Difficulty
 	heroParty: string;
 	heroCount: number;
 	heroLevel: number;
 	heroVictories: number;
-	showDefeatedCombatants: boolean;
 	// Tactical Map
 	gridSize: number;
 	playerGridSize: number;

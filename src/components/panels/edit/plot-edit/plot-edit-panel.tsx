@@ -497,7 +497,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Montage';
 											content = (
-												<MontagePanel montage={element} />
+												<MontagePanel montage={element} heroes={props.heroes} options={props.options} />
 											);
 										}
 										break;
@@ -755,7 +755,7 @@ export const PlotEditPanel = (props: Props) => {
 								{
 									props.playbook.montages.map(m =>
 										<SelectablePanel key={m.id} onSelect={() => addContentReference('montage', m.id)}>
-											<MontagePanel montage={m} />
+											<MontagePanel montage={m} heroes={props.heroes} options={props.options} />
 										</SelectablePanel>
 									)
 								}

@@ -4,6 +4,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -58,6 +59,13 @@ export const MontageEditPanel = (props: Props) => {
 	};
 
 	const getMontageSceneSection = () => {
+		const setDifficulty = (value: EncounterDifficulty) => {
+			const copy = Utils.copy(montage);
+			copy.difficulty = value;
+			setMontage(copy);
+			props.onChange(copy);
+		};
+
 		const setScene = (value: string) => {
 			const copy = Utils.copy(montage);
 			copy.scene = value;
@@ -67,6 +75,14 @@ export const MontageEditPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Difficulty</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Select difficulty'
+					options={[ EncounterDifficulty.Easy, EncounterDifficulty.Standard, EncounterDifficulty.Hard ].map(diff => ({ value: diff, label: <div className='ds-text'>{diff}</div> }))}
+					value={montage.difficulty}
+					onChange={setDifficulty}
+				/>
 				<HeaderText>Setting the Scene</HeaderText>
 				<MultiLine value={montage.scene} onChange={setScene} />
 			</Space>

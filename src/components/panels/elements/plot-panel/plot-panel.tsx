@@ -116,6 +116,8 @@ export const PlotPanel = (props: PlotPanelProps) => {
 								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('montage', montage.id)}>
 									<MontagePanel
 										montage={montage}
+										heroes={props.heroes}
+										options={props.options}
 									/>
 									<SashPanel monogram='Montage' />
 								</SelectablePanel>
@@ -362,6 +364,8 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						selectedMontage ?
 							<MontagePanel
 								montage={selectedMontage}
+								heroes={props.heroes}
+								options={props.options}
 								mode={PanelMode.Full}
 							/>
 							: null

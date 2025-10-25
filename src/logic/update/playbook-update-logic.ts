@@ -1,3 +1,4 @@
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterObjectiveData } from '@/data/encounter-objective-data';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
@@ -132,6 +133,12 @@ export class PlaybookUpdateLogic {
 		if (playbook.montages === undefined) {
 			playbook.montages = [];
 		}
+
+		playbook.montages.forEach(m => {
+			if (m.difficulty === undefined) {
+				m.difficulty = EncounterDifficulty.Standard;
+			}
+		});
 
 		if (playbook.negotiations === undefined) {
 			playbook.negotiations = [];

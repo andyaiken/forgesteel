@@ -1,4 +1,5 @@
 import { Characteristic } from '@/enums/characteristic';
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Montage } from '@/models/montage';
 
@@ -7,6 +8,7 @@ export class MontageData {
 		id: 'montage-fight-fire',
 		name: 'Fight Fire',
 		description: 'Fire has broken out in the town! The heroes must prevent the conflagration from spreading while saving as many townsfolk as possible. Their efforts might be more complicated if the cause of the fire — such as a marauding dragon or an invading army — is still around causing trouble.',
+		difficulty: EncounterDifficulty.Standard,
 		scene: 'Fire blazes in several buildings whose occupants need to be rescued. Elsewhere, some townsfolk flee while others throw water on the fire with no organization or plan. Without leadership and a way to stop its spread, the fire could easily consume everything. In a nearby stable, horses are panicking as their hay smolders. Burning rubble blocks pathways everywhere',
 		sections: [
 			{
@@ -101,6 +103,7 @@ export class MontageData {
 		id: 'montage-infiltrate-the-palace',
 		name: 'Infiltrate the Palace',
 		description: 'Whether the heroes are trying to reach a tyrant’s throne room, pull off a daring art heist, or rescue royalty from captivity, they’re somewhere they’re not supposed to be — and they’d prefer to keep their presence secret.',
+		difficulty: EncounterDifficulty.Standard,
 		scene: 'The palace is well defended, with exterior patrols always on the alert. The few obvious entrances are locked and guarded, and once the party is inside, no one knows the way to the goal. Guards patrol the interior of the site as well, forcing the characters to sneak or bluff their way past them.',
 		sections: [
 			{
@@ -212,6 +215,7 @@ The first time any hero fails a test made as part of the montage test while the 
 		id: 'montage-prepare-for-battle',
 		name: 'Prepare for Battle',
 		description: 'Whether it’s a village threatened by bandits or a great city preparing for a siege, enemies are on their way and readyu to attack. The heroes have a limited time to fortify the settlement’s defenses and bolster its troops.',
+		difficulty: EncounterDifficulty.Standard,
 		scene: 'The walls or palisades around the settlement (if any) are in poor shape. Roads or rivers through the area give the invaders free access to the settlement unless barricades, traps, or ambushes can be set up. Supplies of food, weapons, and ammunition are too low to survive a long siege. The area is home to few experienced fighters compared to the numbers of the invaders, and the local militia is poorly equipped and untrained.',
 		sections: [
 			{
@@ -291,6 +295,7 @@ The first time any hero fails a test made as part of the montage test while the 
 		id: 'montage-track-the-fugitive',
 		name: 'Track the Fugitive',
 		description: 'The heroes are on the trail of someone. An escaped criminal? A dangerous beast? A lost or kidnapped child? The difficulties of the chase depend on whether the quarry knows they’re being pursued and whether they want to be found.',
+		difficulty: EncounterDifficulty.Standard,
 		scene: 'The fugitive’s route is easy to follow, but could they be setting a false trail? Did anyone see them pass by, and is there any sense of where they might be headed? The goal is for the characters to do whatever they can to find and stay on the fugitive’s trail.',
 		sections: [
 			{
@@ -350,6 +355,7 @@ The first time any hero fails a test made as part of the montage test while the 
 		id: 'montage-wilderness-race',
 		name: 'Wilderness Race',
 		description: 'The heroes must cross trackless wilderness, perhaps to reach a besieged city before it falls or seek the site where a curse is about to be activated. Getting there fast is a priority—but so is getting there alive.',
+		difficulty: EncounterDifficulty.Standard,
 		scene: 'The wilds hold unknown dangers. Characters need to figure out the best route while maintaining a good pace, watching out for hazards, and avoiding predatory monsters.',
 		sections: [
 			{

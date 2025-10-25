@@ -17,6 +17,7 @@ import { CultureType } from '@/enums/culture-type';
 import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterSlot } from '@/models/encounter-slot';
 import { FactoryAbilityTypeLogic } from '@/logic/factory-ability-type-logic';
 import { FactoryDamageModifierLogic } from '@/logic/factory-damage-modifier-logic';
@@ -737,6 +738,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			difficulty: EncounterDifficulty.Standard,
 			scene: '',
 			sections: [ FactoryLogic.createMontageSection() ],
 			outcomes: {

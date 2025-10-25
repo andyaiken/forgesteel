@@ -258,6 +258,8 @@ export const PlaybookListPage = (props: Props) => {
 							<MontagePanel
 								key={element.id}
 								montage={element as Montage}
+								heroes={props.heroes}
+								options={props.options}
 								mode={PanelMode.Full}
 							/>
 						);
@@ -464,7 +466,7 @@ export const PlaybookListPage = (props: Props) => {
 					}
 
 					{
-						(category === 'encounter') || (category === 'montage' && view === 'classic') ?
+						(category === 'encounter') || (category === 'montage') ?
 							<Popover
 								trigger='click'
 								content={<OptionsPanel mode={`${category}-${view}`} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}

@@ -412,7 +412,7 @@ export class FeatureLogic {
 		const fromChar = fromStr[0];
 		const toChar = toStr[0];
 
-		feature.description.replaceAll(fromStr, toStr);
+		feature.description = feature.description.replaceAll(fromStr, toStr);
 
 		switch (feature.type) {
 			case FeatureType.Ability:

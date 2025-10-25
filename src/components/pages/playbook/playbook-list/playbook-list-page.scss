@@ -75,6 +75,14 @@ html[data-theme="dark"] {
 	.playbook-list-page {
 		.playbook-list-page-content {
 			background-color: rgb(55, 55, 55);
+
+			.selection-sidebar {
+				.selection-content {
+					.selection-list {
+						background-color: rgb(0, 0, 0);
+					}
+				}
+			}
 		}
 	}
 }

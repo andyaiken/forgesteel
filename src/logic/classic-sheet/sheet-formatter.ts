@@ -600,22 +600,25 @@ export class SheetFormatter {
 		return +totalSize.toFixed(1);
 	};
 
-	static calculateInventorySize = (items: ItemSheet[] | undefined, lineWidth: number): number => {
+	static calculateInventorySize = (items: ItemSheet[], lineWidth: number): number => {
 		let size = 2.5; // Card header
 		if (items) {
-			let itemSize;
 			items.forEach(i => {
-				itemSize = 1.4; // account for item display differences from plain features
-				if (i.features) {
-					itemSize += i.features.reduce((s, f) => {
-						s += this.calculateFeatureSize(f, null, lineWidth, false);
-						return s;
-					}, 0);
-					size += itemSize;
-				}
+				size += this.calculateItemSize(i, lineWidth);
 			});
 		}
 		return +size.toFixed(1);
+	};
+
+	static calculateItemSize = (item: ItemSheet, lineWidth: number): number => {
+		let size = 2;
+		if (item.features) {
+			size += item.features.reduce((s, f) => {
+				s += this.calculateFeatureSize(f, null, lineWidth, false);
+				return s;
+			}, 0);
+		}
+		return size;
 	};
 
 	static calculateTitlesSize = (titles: Title[] | undefined, lineWidth: number): number => {

@@ -2,6 +2,9 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { RulesItem } from '@/models/rules-item';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
+import rollT1Icon from '@/assets/icons/power-roll-t1.svg';
+import rollT2Icon from '@/assets/icons/power-roll-t2.svg';
+import rollT3Icon from '@/assets/icons/power-roll-t3.svg';
 import './reference-cards.scss';
 
 interface RulesReferenceProps {
@@ -235,6 +238,58 @@ export const FallingReferenceCard = () => {
 				creature’s size is greater than the Might score of the creature they land
 				on, that creature is knocked prone.
 			</p>
+		</div>
+	);
+};
+
+export const CarryThreeSafelyReference = () => {
+	return (
+		<div className='extra-reference card'>
+			<h2>Carry Three Safely</h2>
+			<p>
+				Your connection with leveled treasures doesn’t just make them useful.
+				It also makes them dangerous. Each leveled treasure is a quasi-sentient,
+				purpose-driven entity. A magic sword wishes to be used in combat.
+				A psionic implement yearns to unleash its powerful magic. As such,
+				a creature can safely carry a maximum of three leveled treasures at a
+				time. If you carry more leveled treasures, those items become jealous of
+				one another and fight for your attention, attempting to subconsciously
+				influence you into using them—and leaving your other items behind.
+			</p>
+			<p>
+				It’s fine to own or possess more than three leveled treasures, as long as
+				the extras are stored away or in the possession of other creatures. But if
+				you carry more than three leveled treasures, you must make a Presence
+				test during each respite:
+			</p>
+			<div className='power-roll'>
+				<div className='roll-tiers'>
+					<div className='tier t1'>
+						<img alt='≤ 11' className='range' src={rollT1Icon} />
+						<span className='effect'>
+							One of your leveled treasures (chosen by the Director) grabs
+							hold of your psyche. It forces you to sleepwalk or otherwise
+							enter an active fugue state and discard the rest of your leveled
+							treasures in locations you can’t remember. If you want those
+							items back, you’d better get looking before someone else
+							finds them.
+						</span>
+					</div>
+					<div className='tier t2'>
+						<img alt='12 - 16' className='range' src={rollT2Icon} />
+						<span className='effect'>
+							Your items work together to prevent you from moving until
+							you pick three items and leave the rest behind.
+						</span>
+					</div>
+					<div className='tier t3'>
+						<img alt='17 +' className='range' src={rollT3Icon} />
+						<span className='effect'>
+							Nothing happens.
+						</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };

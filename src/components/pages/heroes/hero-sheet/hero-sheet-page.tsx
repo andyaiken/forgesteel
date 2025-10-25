@@ -1,5 +1,5 @@
-import { ConsumablesCard, LeveledTreasureCard, TrinketsCard } from '@/components/panels/classic-sheet/inventory-card/inventory-card';
-import { EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MarkdownReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard } from '@/components/panels/classic-sheet/reference/reference-cards';
+import { CarryThreeSafelyReference, EdgesBanesReferenceCard, FallingReferenceCard, MainActionsReferenceCard, ManeuversReferenceCard, MarkdownReferenceCard, MoveActionsReferenceCard, MovementReferenceCard, RulesReferenceCard } from '@/components/panels/classic-sheet/reference/reference-cards';
+import { ConsumablesCard, LeveledTreasureCard, RemainingInventoryCard, TrinketsCard } from '@/components/panels/classic-sheet/inventory-card/inventory-card';
 import { ExtraCards, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
 import { CareerCard } from '@/components/panels/classic-sheet/career-card/career-card';
 import { ClassFeaturesCard } from '@/components/panels/classic-sheet/class-features-card/class-features-card';
@@ -15,6 +15,8 @@ import { HeroHeaderCard } from '@/components/panels/classic-sheet/hero-header-ca
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { ImmunitiesWeaknessesCard } from '@/components/panels/classic-sheet/immunities-weaknesses-card/immunities-weaknesses-card';
+import { ItemLogic } from '@/logic/item-logic';
+import { ItemType } from '@/enums/item-type';
 import { ModifiersCard } from '@/components/panels/classic-sheet/modifiers-card/modifiers-card';
 import { MonsterCard } from '@/components/panels/classic-sheet/monster-card/monster-card';
 import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
@@ -120,6 +122,16 @@ export const HeroSheetPage = (props: Props) => {
 					shown: false
 				});
 			});
+
+		const numLeveledTreasures = character.inventory?.filter(i => ItemLogic.isLeveledTreasure(i.item)).length ?? 0;
+		if (numLeveledTreasures > 3) {
+			required.push({
+				element: <CarryThreeSafelyReference />,
+				width: 1,
+				height: 31,
+				shown: false
+			});
+		}
 
 		if (character.projects.length) {
 			const h = SheetFormatter.calculateProjectsOverviewCardSize(character.projects, layout.cardLineLen);
@@ -285,6 +297,21 @@ export const HeroSheetPage = (props: Props) => {
 					shown: false
 				});
 			});
+
+		// Artifacts, and maybe consumables on 'overflow' inventory card
+		const artifacts = character.inventory?.filter(i => i.item.type === ItemType.Artifact) ?? [];
+		const consumables = character.inventory?.filter(i => i.item.type === ItemType.Consumable) ?? [];
+		const maxConsumables = props.options.pageOrientation === 'portrait' ? 2 : 4; // approximation
+		if (artifacts.length || consumables.length > maxConsumables) {
+			const inv = artifacts.concat(consumables);
+			const invH = SheetFormatter.calculateInventorySize(inv, layoutEnd.cardLineLen);
+			extraCards.required.push({
+				element: <RemainingInventoryCard key='inventory-overflow' character={character} items={inv} />,
+				width: 1,
+				height: invH,
+				shown: false
+			});
+		}
 
 		return SheetLayout.getRequiredCardPages(extraCards, character, layoutEnd, 'followers');
 	};

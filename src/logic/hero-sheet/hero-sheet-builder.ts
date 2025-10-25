@@ -268,7 +268,8 @@ export class HeroSheetBuilder {
 		sheet.potencyWeak = HeroLogic.getPotency(hero, 'weak');
 
 		// Conditions
-		sheet.saveEndsTarget = HeroLogic.getSaveThreshold(hero);
+		sheet.saveTarget = HeroLogic.getSaveThreshold(hero);
+		sheet.saveBonus = HeroLogic.getSaveBonus(hero);
 
 		const conditions = hero.state.conditions;
 		conditions.filter(c => [ ConditionType.Custom, ConditionType.Quick ].includes(c.type))

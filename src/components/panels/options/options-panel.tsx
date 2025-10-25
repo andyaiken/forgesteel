@@ -481,6 +481,7 @@ export const OptionsPanel = (props: Props) => {
 					</>
 				);
 			case 'encounter-classic':
+			case 'montage-classic':
 				return (
 					<>
 						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
@@ -496,7 +497,7 @@ export const OptionsPanel = (props: Props) => {
 							value={props.options.sheetTextColor}
 							onChange={changeTextColor}
 						/>
-						<Divider>Layout</Divider>
+						<Divider>Page Size</Divider>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Segmented
 								name='pagesize'

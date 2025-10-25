@@ -298,7 +298,7 @@ export const PlaybookListPage = (props: Props) => {
 							:
 							<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 								{
-									category === 'encounter' && view !== 'classic' ?
+									[ 'encounter', 'montage' ].includes(category) && view !== 'classic' ?
 										<Alert
 											type='info'
 											showIcon={true}
@@ -308,7 +308,7 @@ export const PlaybookListPage = (props: Props) => {
 										: null
 								}
 								{
-									category === 'encounter' && view === 'classic' ?
+									[ 'encounter', 'montage' ].includes(category) && view === 'classic' ?
 										<>
 											<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export as PDF</Button>
 											<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export as PDF (high res)</Button>
@@ -316,13 +316,8 @@ export const PlaybookListPage = (props: Props) => {
 										: null
 								}
 								{
-									category !== 'encounter' ?
+									![ 'encounter', 'montage' ].includes(category) ?
 										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
-										: null
-								}
-								{
-									category === 'encounter' && view !== 'classic' ?
-										<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
 										: null
 								}
 								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>

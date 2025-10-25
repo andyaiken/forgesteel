@@ -492,7 +492,7 @@ Additionally, whenever an ally uses a heroic ability that targets one or more cr
 			name: 'Now!',
 			description: 'Your allies wait for your command - then unleash death!',
 			type: FactoryLogic.type.createManeuver(),
-			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Three allies',
 			cost: 5,

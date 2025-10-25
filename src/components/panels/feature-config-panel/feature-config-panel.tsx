@@ -7,6 +7,7 @@ import { AbilityModal } from '@/components/modals/ability/ability-modal';
 import { AbilitySelectModal } from '@/components/modals/select/ability-select/ability-select-modal';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
+import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Domain } from '@/models/domain';
@@ -614,18 +615,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select a domain' : 'Select domains'}
-					options={sortedDomains.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
-					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
+					options={sortedDomains.map(a => ({ value: a.id, label: <Field label={a.name} value={a.description} /> }))}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -639,7 +629,9 @@ export const FeatureConfigPanel = (props: Props) => {
 						ids.forEach(id => {
 							const domain = domains.find(k => k.id === id);
 							if (domain) {
-								dataCopy.selected.push(domain);
+								const domainCopy = Utils.copy(domain);
+								[ ...domainCopy.defaultFeatures, ...domainCopy.featuresByLevel.flatMap(lvl => lvl.features) ].forEach(f => FeatureLogic.switchFeatureCharacteristic(f, Characteristic.Intuition, dataCopy.characteristic));
+								dataCopy.selected.push(domainCopy);
 							}
 						});
 						if (props.setData) {

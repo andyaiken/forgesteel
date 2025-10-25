@@ -2,9 +2,11 @@ import { Feature, FeatureAncestryChoice, FeatureChoice, FeatureClassAbility, Fea
 import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
+import { Characteristic } from '@/enums/characteristic';
 import { CultureData } from '@/data/culture-data';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureLogic } from '../feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { Hero } from '@/models/hero';
@@ -359,7 +361,9 @@ export class HeroUpdateLogic {
 
 					if (oFeature.data.selected) {
 						const ancestryID = oFeature.data.selected.id;
-						feature.data.selected = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === ancestryID) || null;
+						feature.data.selected = SourcebookLogic.getAncestries(sourcebooks)
+							.map(a => Utils.copy(a))
+							.find(a => a.id === ancestryID) || null;
 					}
 					break;
 				}
@@ -368,7 +372,9 @@ export class HeroUpdateLogic {
 
 					const ancestries: Ancestry[] = [];
 					if (feature.data.source.customID) {
-						const a = SourcebookLogic.getAncestries(sourcebooks).find(a => a.id === feature.data.source.customID);
+						const a = SourcebookLogic.getAncestries(sourcebooks)
+							.map(a => Utils.copy(a))
+							.find(a => a.id === feature.data.source.customID);
 						if (a) {
 							ancestries.push(a);
 						}
@@ -424,7 +430,13 @@ export class HeroUpdateLogic {
 					const oFeature = originalFeature as FeatureDomain;
 
 					const selectedIDs = oFeature.data.selected.map(d => d.id);
-					feature.data.selected = SourcebookLogic.getDomains(sourcebooks).filter(d => selectedIDs.includes(d.id));
+					feature.data.selected = SourcebookLogic.getDomains(sourcebooks)
+						.filter(d => selectedIDs.includes(d.id))
+						.map(d => {
+							const copy = Utils.copy(d);
+							[ ...copy.defaultFeatures, ...copy.featuresByLevel.flatMap(lvl => lvl.features) ].forEach(f => FeatureLogic.switchFeatureCharacteristic(f, Characteristic.Intuition, feature.data.characteristic));
+							return copy;
+						});
 					break;
 				}
 				case FeatureType.DomainFeature: {
@@ -445,14 +457,18 @@ export class HeroUpdateLogic {
 					const oFeature = originalFeature as FeatureItemChoice;
 
 					const selectedIDs = oFeature.data.selected.map(i => i.id);
-					feature.data.selected = SourcebookLogic.getItems(sourcebooks).filter(i => selectedIDs.includes(i.id));
+					feature.data.selected = SourcebookLogic.getItems(sourcebooks)
+						.filter(i => selectedIDs.includes(i.id))
+						.map(i => Utils.copy(i));
 					break;
 				}
 				case FeatureType.Kit: {
 					const oFeature = originalFeature as FeatureKit;
 
 					const selectedIDs = oFeature.data.selected.map(k => k.id);
-					feature.data.selected = SourcebookLogic.getKits(sourcebooks).filter(k => selectedIDs.includes(k.id));
+					feature.data.selected = SourcebookLogic.getKits(sourcebooks)
+						.filter(k => selectedIDs.includes(k.id))
+						.map(k => Utils.copy(k));
 					break;
 				}
 				case FeatureType.LanguageChoice: {
@@ -476,7 +492,9 @@ export class HeroUpdateLogic {
 					const oFeature = originalFeature as FeaturePerk;
 
 					const selectedIDs = oFeature.data.selected.map(p => p.id);
-					feature.data.selected = SourcebookLogic.getPerks(sourcebooks).filter(p => selectedIDs.includes(p.id));
+					feature.data.selected = SourcebookLogic.getPerks(sourcebooks)
+						.filter(p => selectedIDs.includes(p.id))
+						.map(p => Utils.copy(p));
 
 					feature.data.selected.forEach(child => {
 						const oChild = oFeature.data.selected.find(x => x.id === child.id);
@@ -517,7 +535,9 @@ export class HeroUpdateLogic {
 					const oFeature = originalFeature as FeatureTitleChoice;
 
 					const selectedIDs = oFeature.data.selected.map(p => p.id);
-					feature.data.selected = SourcebookLogic.getTitles(sourcebooks).filter(t => selectedIDs.includes(t.id));
+					feature.data.selected = SourcebookLogic.getTitles(sourcebooks)
+						.filter(t => selectedIDs.includes(t.id))
+						.map(t => Utils.copy(t));
 					feature.data.selected.forEach(title => {
 						const originalTitle = oFeature.data.selected.find(t => t.id === title.id);
 						title.selectedFeatureID = originalTitle ? originalTitle.selectedFeatureID : '';

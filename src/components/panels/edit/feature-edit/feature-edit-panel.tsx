@@ -140,7 +140,7 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setCharacteristic = (value: Characteristic) => {
-			const copy = Utils.copy(feature.data) as FeatureCharacteristicBonusData;
+			const copy = Utils.copy(feature.data) as FeatureCharacteristicBonusData | FeatureDomainData;
 			copy.characteristic = value;
 			setData(copy);
 		};
@@ -962,17 +962,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select field'
-							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o }))}
-							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o, label: <div className='ds-text'>{o}</div> }))}
 							value={data.characteristic}
 							onChange={setCharacteristic}
 						/>
@@ -1202,6 +1192,14 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureDomainData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Characteristic</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select field'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o, label: <div className='ds-text'>{o}</div> }))}
+							value={data.characteristic}
+							onChange={setCharacteristic}
+						/>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>

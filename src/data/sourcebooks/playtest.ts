@@ -8,7 +8,7 @@ import { summoner } from '@/data/classes/summoner/summoner';
 export const playtest: Sourcebook = {
 	id: 'playtest',
 	name: 'Playtest',
-	description: '',
+	description: 'Unreleased game content.',
 	isHomebrew: false,
 	ancestries: [],
 	cultures: [],

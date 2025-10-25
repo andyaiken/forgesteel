@@ -405,6 +405,49 @@ export class FeatureLogic {
 		});
 	};
 
+	static switchFeatureCharacteristic = (feature: Feature, fromCharacteristic: Characteristic, toCharacteristic: Characteristic) => {
+		const fromStr = fromCharacteristic.toString();
+		const toStr = toCharacteristic.toString();
+
+		const fromChar = fromStr[0];
+		const toChar = toStr[0];
+
+		feature.description.replaceAll(fromStr, toStr);
+
+		switch (feature.type) {
+			case FeatureType.Ability:
+				feature.data.ability.sections.forEach(s => {
+					switch (s.type) {
+						case 'text':
+							s.text = s.text.replaceAll(fromStr, toStr);
+							break;
+						case 'field':
+							s.effect = s.effect.replaceAll(fromStr, toStr);
+							break;
+						case 'roll':
+							s.roll.characteristic = [ toCharacteristic ];
+							s.roll.tier1 = s.roll.tier1.replaceAll(fromStr, toStr);
+							s.roll.tier1 = s.roll.tier1.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
+							s.roll.tier2 = s.roll.tier2.replaceAll(fromStr, toStr);
+							s.roll.tier2 = s.roll.tier2.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
+							s.roll.tier3 = s.roll.tier3.replaceAll(fromStr, toStr);
+							s.roll.tier3 = s.roll.tier3.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
+							s.roll.crit = s.roll.crit.replaceAll(fromStr, toStr);
+							s.roll.crit = s.roll.crit.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
+							break;
+					}
+				});
+				break;
+			case FeatureType.Choice:
+				[ ...feature.data.options.map(f => f.feature), ...feature.data.selected ]
+					.forEach(f => FeatureLogic.switchFeatureCharacteristic(f, fromCharacteristic, toCharacteristic));
+				break;
+			case FeatureType.Multiple:
+				feature.data.features.forEach(f => FeatureLogic.switchFeatureCharacteristic(f, fromCharacteristic, toCharacteristic));
+				break;
+		}
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getFeatureData = (type: FeatureType) => {
@@ -521,6 +564,7 @@ export class FeatureLogic {
 				break;
 			case FeatureType.Domain:
 				data = {
+					characteristic: Characteristic.Intuition,
 					count: 1,
 					selected: []
 				} as FeatureDomainData;

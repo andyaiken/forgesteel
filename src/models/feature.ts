@@ -121,6 +121,7 @@ export interface FeatureDamageModifierData extends _FeatureData {
 export type FeatureDamageModifier = FeatureOf<FeatureType.DamageModifier, FeatureDamageModifierData>;
 
 export interface FeatureDomainData extends _FeatureData {
+	characteristic: Characteristic;
 	count: number;
 	selected: Domain[];
 };

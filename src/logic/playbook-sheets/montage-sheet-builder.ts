@@ -1,9 +1,13 @@
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
+import { Hero } from '@/models/hero';
 import { Montage } from '@/models/montage';
+import { MontageLogic } from '../montage-logic';
 import { MontageSheet } from '@/models/classic-sheets/montage-sheet';
+import { Options } from '@/models/options';
 import { SheetFormatter } from '../classic-sheet/sheet-formatter';
 
 export class MontageSheetBuilder {
-	static buildMontageSheet = (montage: Montage): MontageSheet => {
+	static buildMontageSheet = (montage: Montage, heroes: Hero[], options: Options): MontageSheet => {
 		const sheet: MontageSheet = {
 			id: montage.id,
 			name: montage.name,
@@ -15,6 +19,16 @@ export class MontageSheetBuilder {
 			hazards: '',
 			eventsNotes: ''
 		};
+
+		if ([ EncounterDifficulty.Easy, EncounterDifficulty.Standard, EncounterDifficulty.Hard ].includes(montage.difficulty)) {
+			sheet.difficulty = montage.difficulty.toString();
+			if (montage.difficulty === EncounterDifficulty.Standard) {
+				sheet.difficulty = 'Moderate';
+			}
+			sheet.successLimit = MontageLogic.getSuccessLimit(montage, heroes, options);
+			sheet.failureLimit = MontageLogic.getFailureLimit(montage, heroes, options);
+		}
+		sheet.numHeroes = MontageLogic.getHeroCount(heroes, options);
 
 		let hazards = '';
 		let eventsNotes = '';

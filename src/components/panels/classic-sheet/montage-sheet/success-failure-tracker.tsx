@@ -28,12 +28,12 @@ export const SuccessFailureTrackerCard = (props: Props) => {
 					<div className='limits'>
 						<LabeledTextField
 							label='Success Limit'
-							content=''
+							content={montage.successLimit}
 							additionalClasses={[ 'no-box' ]}
 						/>
 						<LabeledTextField
 							label='Failure Limit'
-							content=''
+							content={montage.failureLimit}
 							additionalClasses={[ 'no-box' ]}
 						/>
 					</div>

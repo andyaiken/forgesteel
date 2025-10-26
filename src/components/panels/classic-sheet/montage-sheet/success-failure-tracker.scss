@@ -62,6 +62,11 @@ main#classic-sheet .success-failure-tracker.card {
 
                 .labeled-field {
                     margin: 3px 15px;
+
+                    .labeled-field-content span {
+                        font-size: round(2rem, 1px);
+                        color: var(--color-text-lighter);
+                    }
                 }
                 label {
                     font-size: round(0.9rem, 1px);

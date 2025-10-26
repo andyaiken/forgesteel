@@ -250,6 +250,7 @@ export const PlaybookListPage = (props: Props) => {
 							<MontageSheetPage
 								key={element.id}
 								montage={element as Montage}
+								heroes={props.heroes}
 								options={props.options}
 							/>
 						);

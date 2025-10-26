@@ -2,7 +2,7 @@
 
 main#classic-sheet .montage-header.card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 4fr 6fr;
     grid-template-rows: min-content min-content;
     gap: 10px;
 
@@ -17,7 +17,7 @@ main#classic-sheet .montage-header.card {
 
     section.stats {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
 
         .num-rounds {
             .labeled-field-content span {

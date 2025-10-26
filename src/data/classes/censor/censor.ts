@@ -67,7 +67,8 @@ As a censor, you’re at your best against the strongest foes. Your judgment ter
 				}),
 				FactoryLogic.feature.createDomainChoice({
 					id: 'censor-1-2',
-					characteristic: Characteristic.Presence
+					characteristic: Characteristic.Presence,
+					levels: [ 1, 4, 7 ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

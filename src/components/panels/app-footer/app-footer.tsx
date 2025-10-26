@@ -1,5 +1,5 @@
 import { Badge, Button, Divider, Flex } from 'antd';
-import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, ReadOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { SyncStatus } from '@/components/panels/sync-status/sync-status';
 import { useIsSmall } from '@/hooks/use-is-small';
@@ -15,6 +15,7 @@ interface Props {
 	showReference: () => void;
 	showRoll: () => void;
 	showAbout: () => void;
+	showSettings: () => void;
 }
 
 export const AppFooter = (props: Props) => {
@@ -56,9 +57,12 @@ export const AppFooter = (props: Props) => {
 					<Button onClick={props.showRoll}>
 						Roll
 					</Button>
+					<Button onClick={props.showAbout}>
+						{ isSmall ? <InfoCircleOutlined /> : 'About' }
+					</Button>
 					<Badge dot={props.highlightAbout}>
-						<Button onClick={props.showAbout}>
-							{ isSmall ? 'Abt' : 'About' }
+						<Button onClick={props.showSettings}>
+							{ isSmall ? <SettingOutlined /> : 'Settings' }
 						</Button>
 					</Badge>
 				</div>

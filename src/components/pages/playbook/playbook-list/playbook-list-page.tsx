@@ -1,6 +1,6 @@
 import { Adventure, AdventurePackage } from '@/models/adventure';
 import { Alert, Button, Input, Popover, Segmented, Tag } from 'antd';
-import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
+import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '@/models/playbook';
 import { ReactNode, useState } from 'react';
 import { AdventurePanel } from '@/components/panels/elements/adventure-panel/adventure-panel';
@@ -22,7 +22,6 @@ import { MontageSheetPage } from '@/components/panels/classic-sheet/montage-shee
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
-import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlaybookLogic } from '@/logic/playbook-logic';
 import { SelectorRow } from '@/components/panels/selector-row/selector-row';
@@ -42,11 +41,11 @@ interface Props {
 	playbook: Playbook;
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	showEncounterTools: (encounter: Encounter) => void;
-	setOptions: (options: Options) => void;
 	createElement: (kind: PlaybookElementKind, element: Element | null) => void;
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
 	importAdventurePackage: (ap: AdventurePackage) => void;
@@ -452,33 +451,6 @@ export const PlaybookListPage = (props: Props) => {
 							</Popover>
 							: null
 					}
-					{
-						(category === 'tactical-map') ?
-							<Popover
-								trigger='click'
-								content={<OptionsPanel mode={category} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-							>
-								<Button icon={<SettingOutlined />}>
-									Options
-									<DownOutlined />
-								</Button>
-							</Popover>
-							: null
-					}
-
-					{
-						(category === 'encounter') || (category === 'montage') ?
-							<Popover
-								trigger='click'
-								content={<OptionsPanel mode={`${category}-${view}`} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-							>
-								<Button icon={<SettingOutlined />}>
-									Options
-									<DownOutlined />
-								</Button>
-							</Popover>
-							: null
-					}
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='playbook-list-page-content'>
@@ -493,7 +465,14 @@ export const PlaybookListPage = (props: Props) => {
 						</div>
 					</div>
 				</ErrorBoundary>
-				<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+				<AppFooter
+					page='playbook'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
 			</div>
 		</ErrorBoundary>
 	);

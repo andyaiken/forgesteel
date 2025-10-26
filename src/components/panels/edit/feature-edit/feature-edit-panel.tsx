@@ -145,6 +145,12 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setLevels = (value: number[]) => {
+			const copy = Utils.copy(feature.data) as FeatureDomainData;
+			copy.levels = value;
+			setData(copy);
+		};
+
 		const setAbilityClassID = (value: string) => {
 			const copy = Utils.copy(feature.data) as FeatureClassAbilityData;
 			copy.classID = value === '' ? undefined : value;
@@ -1199,6 +1205,15 @@ export const FeatureEditPanel = (props: Props) => {
 							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o, label: <div className='ds-text'>{o}</div> }))}
 							value={data.characteristic}
 							onChange={setCharacteristic}
+						/>
+						<HeaderText>Levels</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select field'
+							mode='multiple'
+							options={[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(o => ({ value: o, label: <div className='ds-text'>Level {o}</div> }))}
+							value={data.levels}
+							onChange={setLevels}
 						/>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />

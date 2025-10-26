@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
-import { CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, DownloadOutlined, EditOutlined, FilterFilled, FilterOutlined, PlusOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
+import { CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, DownloadOutlined, EditOutlined, FilterFilled, FilterOutlined, PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Ancestry } from '@/models/ancestry';
@@ -40,7 +40,6 @@ import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { Options } from '@/models/options';
-import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
@@ -69,9 +68,10 @@ interface Props {
 	options: Options;
 	hiddenSourcebookIDs: string[];
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	showSourcebooks: () => void;
 	showSubclass: (subclass: SubClass) => void;
 	showMonster: (monster: Monster) => void;
@@ -920,15 +920,6 @@ export const LibraryListPage = (props: Props) => {
 							</Popover>
 					}
 					{getElementToolbar()}
-					<Popover
-						trigger='click'
-						content={<OptionsPanel mode='library' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-					>
-						<Button icon={<SettingOutlined />}>
-							Options
-							<DownOutlined />
-						</Button>
-					</Popover>
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='library-list-page-content'>
@@ -943,7 +934,14 @@ export const LibraryListPage = (props: Props) => {
 						</div>
 					</div>
 				</ErrorBoundary>
-				<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+				<AppFooter
+					page='library'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
 			</div>
 		</ErrorBoundary>
 	);

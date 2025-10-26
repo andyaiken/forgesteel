@@ -237,7 +237,7 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createDomainChoice = (data: { id: string, name?: string, description?: string, characteristic?: Characteristic, count?: number }): FeatureDomain => {
+	createDomainChoice = (data: { id: string, name?: string, description?: string, characteristic?: Characteristic, levels?: number[], count?: number }): FeatureDomain => {
 		return {
 			id: data.id,
 			name: data.name || 'Domain',
@@ -245,6 +245,7 @@ export class FactoryFeatureLogic {
 			type: FeatureType.Domain,
 			data: {
 				characteristic: data.characteristic || Characteristic.Intuition,
+				levels: data.levels || [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
 				count: data.count || 1,
 				selected: []
 			}

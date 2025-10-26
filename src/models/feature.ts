@@ -122,6 +122,7 @@ export type FeatureDamageModifier = FeatureOf<FeatureType.DamageModifier, Featur
 
 export interface FeatureDomainData extends _FeatureData {
 	characteristic: Characteristic;
+	levels: number[];
 	count: number;
 	selected: Domain[];
 };

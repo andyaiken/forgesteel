@@ -630,6 +630,7 @@ export const FeatureConfigPanel = (props: Props) => {
 							const domain = domains.find(k => k.id === id);
 							if (domain) {
 								const domainCopy = Utils.copy(domain);
+								domainCopy.featuresByLevel = domainCopy.featuresByLevel.filter(lvl => dataCopy.levels.includes(lvl.level));
 								[ ...domainCopy.defaultFeatures, ...domainCopy.featuresByLevel.flatMap(lvl => lvl.features) ].forEach(f => FeatureLogic.switchFeatureCharacteristic(f, Characteristic.Intuition, dataCopy.characteristic));
 								dataCopy.selected.push(domainCopy);
 							}

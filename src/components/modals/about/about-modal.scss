@@ -10,19 +10,6 @@
 			height: 50px;
 		}
 	}
-
-	.feature-flag {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 10px;
-		border-radius: 5px;
-		padding: 0 10px;
-
-		&:hover {
-			background-color: rgba(5, 5, 5, 0.06);
-		}
-	}
 }
 
 html[data-theme="dark"] {

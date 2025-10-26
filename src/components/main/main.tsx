@@ -61,6 +61,7 @@ import { RollModal } from '@/components/modals/roll/roll-modal';
 import { RulesPage } from '@/enums/rules-page';
 import { SessionDirectorPage } from '@/components/pages/session/director/session-director-page';
 import { SessionPlayerPage } from '@/components/pages/session/player/session-player-page';
+import { SettingsModal } from '@/components/modals/settings/settings-modal';
 import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
@@ -1340,7 +1341,18 @@ export const Main = (props: Props) => {
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
+	const showSettings = () => {
+		setDrawer(
+			<SettingsModal
+				options={options}
 				errors={errors}
+				heroes={heroes}
+				setOptions={persistOptions}
 				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
 			/>
@@ -1534,9 +1546,10 @@ export const Main = (props: Props) => {
 						element={
 							<WelcomePage
 								highlightAbout={errors.length > 0}
-								showAbout={showAbout}
-								showRoll={() => showRoll()}
 								showReference={showReference}
+								showRoll={() => showRoll()}
+								showAbout={showAbout}
+								showSettings={showSettings}
 								onNewHero={() => newHero('')}
 								onNewEncounter={() => newEncounter()}
 							/>
@@ -1552,9 +1565,10 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={props.options}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
-									showRoll={() => showRoll()}
 									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
 									addHero={newHero}
 									importHero={importHero}
 									showParty={onShowParty}
@@ -1568,10 +1582,11 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
-									setOptions={persistOptions}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
+									showReference={onShowReference}
 									showRoll={showRoll}
+									showAbout={showAbout}
+									showSettings={showSettings}
 									exportHero={exportHero}
 									exportPdf={exportHeroPdf}
 									exportStandardAbilities={exportStandardAbilities}
@@ -1591,7 +1606,6 @@ export const Main = (props: Props) => {
 									showFeature={onSelectFeature}
 									showAbility={onSelectAbility}
 									showHeroState={onShowHeroState}
-									showReference={onShowReference}
 									setNotes={setNotes}
 								/>
 							}
@@ -1608,9 +1622,10 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
-									showRoll={() => showRoll()}
 									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
 									saveChanges={saveHero}
 									importSourcebook={sourcebook => {
 										const copy = Utils.copy(homebrewSourcebooks);
@@ -1647,10 +1662,11 @@ export const Main = (props: Props) => {
 									options={options}
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
-									showRoll={() => showRoll()}
 									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
 									showSourcebooks={showSourcebooks}
+									showSettings={showSettings}
 									showSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
 									showMonster={onSelectMonster}
 									setOptions={persistOptions}
@@ -1669,12 +1685,12 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
-									showRoll={() => showRoll()}
 									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
 									showMonster={onSelectMonster}
 									saveChanges={saveLibraryElement}
-									setOptions={persistOptions}
 								/>
 							}
 						/>
@@ -1693,11 +1709,11 @@ export const Main = (props: Props) => {
 									playbook={playbook}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
-									showRoll={() => showRoll()}
 									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
 									showEncounterTools={showEncounterTools}
-									setOptions={persistOptions}
 									createElement={createPlaybookElement}
 									importElement={(kind, element) => importPlaybookElement([ { kind: kind, element: element } ])}
 									importAdventurePackage={importAdventurePackage}
@@ -1717,13 +1733,13 @@ export const Main = (props: Props) => {
 									playbook={playbook}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
-									showRoll={() => showRoll()}
 									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
 									showMonster={onSelectMonster}
 									showTerrain={onSelectTerrain}
 									saveChanges={savePlaybookElement}
-									setOptions={persistOptions}
 								/>
 							}
 						/>
@@ -1743,9 +1759,10 @@ export const Main = (props: Props) => {
 									session={session}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
-									showRoll={() => showRoll()}
 									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
 									showPlayerView={showPlayerView}
 									startEncounter={startEncounter}
 									startMontage={startMontage}
@@ -1759,7 +1776,6 @@ export const Main = (props: Props) => {
 									updateMap={updateMap}
 									updateCounter={updateCounter}
 									finishSessionElement={finishSessionElement}
-									setOptions={persistOptions}
 								/>
 							}
 						/>
@@ -1773,10 +1789,10 @@ export const Main = (props: Props) => {
 									session={session}
 									options={options}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
-									showRoll={() => showRoll()}
 									showReference={showReference}
-									setOptions={persistOptions}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
 								/>
 							}
 						/>

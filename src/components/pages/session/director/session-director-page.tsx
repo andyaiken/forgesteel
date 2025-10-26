@@ -1,5 +1,5 @@
 import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
-import { DownOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
+import { DownOutlined, ReadOutlined } from '@ant-design/icons';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Collections } from '@/utils/collections';
@@ -21,7 +21,6 @@ import { NegotiationData } from '@/data/negotiation-data';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
-import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Playbook } from '@/models/playbook';
 import { PlaybookLogic } from '@/logic/playbook-logic';
@@ -42,9 +41,10 @@ interface Props {
 	session: Playbook;
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	showPlayerView: () => void;
 	startEncounter: (encounter: Encounter) => Promise<string>;
 	startMontage: (montage: Montage) => Promise<string>;
@@ -58,7 +58,6 @@ interface Props {
 	updateMap: (map: TacticalMap) => void;
 	updateCounter: (counter: Counter) => void;
 	finishSessionElement: (id: string) => string | null;
-	setOptions: (options: Options) => void;
 }
 
 export const SessionDirectorPage = (props: Props) => {
@@ -410,15 +409,6 @@ export const SessionDirectorPage = (props: Props) => {
 					}
 					<div className='divider' />
 					<Button onClick={props.showPlayerView}>Player View</Button>
-					<Popover
-						trigger='click'
-						content={<OptionsPanel mode='session' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-					>
-						<Button icon={<SettingOutlined />}>
-							Options
-							<DownOutlined />
-						</Button>
-					</Popover>
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='session-director-page-content'>
@@ -426,7 +416,14 @@ export const SessionDirectorPage = (props: Props) => {
 						{getSelectedContent()}
 					</div>
 				</ErrorBoundary>
-				<AppFooter page='session' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+				<AppFooter
+					page='session'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
 			</div>
 		</ErrorBoundary>
 	);

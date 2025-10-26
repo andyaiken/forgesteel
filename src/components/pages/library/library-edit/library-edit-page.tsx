@@ -1,5 +1,5 @@
-import { Button, Drawer, Flex, Popover, Select, Space, Tabs } from 'antd';
-import { CloseOutlined, DownOutlined, LeftOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
+import { Button, Drawer, Flex, Select, Space, Tabs } from 'antd';
+import { CloseOutlined, LeftOutlined, SaveOutlined } from '@ant-design/icons';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryEditPanel } from '@/components/panels/edit/ancestry-edit/ancestry-edit-panel';
@@ -49,7 +49,6 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { Options } from '@/models/options';
-import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
@@ -77,12 +76,12 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
-	setOptions: (options: Options) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
@@ -683,11 +682,6 @@ export const LibraryEditPage = (props: Props) => {
 		return `${Format.capitalize(kind!)} Builder`;
 	};
 
-	let monster: Monster | null = null;
-	if ((kind === 'monster-group') && !!subElementID) {
-		monster = (element as MonsterGroup).monsters.find(m => m.id === subElementID) || null;
-	}
-
 	return (
 		<ErrorBoundary>
 			<div className='library-edit-page'>
@@ -698,24 +692,6 @@ export const LibraryEditPage = (props: Props) => {
 					<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibrary(kind!, elementID!)}>
 						Cancel
 					</Button>
-					{
-						monster ?
-							<div className='divider' />
-							: null
-					}
-					{
-						monster ?
-							<Popover
-								trigger='click'
-								content={<OptionsPanel mode='monster' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
-							>
-								<Button icon={<SettingOutlined />}>
-									Options
-									<DownOutlined />
-								</Button>
-							</Popover>
-							: null
-					}
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='library-edit-page-content'>
@@ -729,7 +705,14 @@ export const LibraryEditPage = (props: Props) => {
 						</div>
 					</div>
 				</ErrorBoundary>
-				<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+				<AppFooter
+					page='library'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
 			</div>
 		</ErrorBoundary>
 	);

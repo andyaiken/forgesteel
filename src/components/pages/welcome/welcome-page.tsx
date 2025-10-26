@@ -17,9 +17,10 @@ type WelcomeType = 'player' | 'director-prep' | 'director-run' | 'creator';
 
 interface Props {
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	onNewHero: () => void;
 	onNewEncounter: () => void;
 }
@@ -96,7 +97,14 @@ export const WelcomePage = (props: Props) => {
 						</div>
 					</div>
 				</ErrorBoundary>
-				<AppFooter page='welcome' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+				<AppFooter
+					page='welcome'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
 			</div>
 		</ErrorBoundary>
 	);

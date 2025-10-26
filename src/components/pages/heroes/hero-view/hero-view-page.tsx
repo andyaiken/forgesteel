@@ -1,5 +1,5 @@
 import { Alert, Button, Divider, Popover, Segmented } from 'antd';
-import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, SettingOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
+import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '@/models/ability';
 import { Ancestry } from '@/models/ancestry';
@@ -23,7 +23,6 @@ import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { Options } from '@/models/options';
-import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { RulesPage } from '@/enums/rules-page';
 import { Sourcebook } from '@/models/sourcebook';
@@ -41,10 +40,10 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: (hero: Hero) => void;
 	showReference: (hero: Hero, page?: RulesPage) => void;
-	setOptions: (options: Options) => void;
+	showRoll: (hero: Hero) => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	exportHero: (hero: Hero, format: 'image' | 'json') => void;
 	exportPdf: (hero: Hero, resolution: 'standard' | 'high') => void;
 	exportStandardAbilities: () => void;
@@ -214,22 +213,20 @@ export const HeroViewPage = (props: Props) => {
 							<DownOutlined />
 						</Button>
 					</Popover>
-					<Popover
-						trigger='click'
-						content={<OptionsPanel mode={view === 'modern' ? 'hero-modern' : 'hero-classic'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-					>
-						<Button disabled={![ 'modern', 'classic', 'abilities' ].includes(view)} icon={<SettingOutlined />}>
-							Options
-							<DownOutlined />
-						</Button>
-					</Popover>
 				</AppHeader>
 				<ErrorBoundary>
 					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>
 						{getContent()}
 					</div>
 				</ErrorBoundary>
-				<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={() => props.showRoll(hero)} showReference={() => props.showReference(hero)} />
+				<AppFooter
+					page='heroes'
+					highlightAbout={props.highlightAbout}
+					showReference={() => props.showReference(hero)}
+					showRoll={() => props.showRoll(hero)}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
 			</div>
 		</ErrorBoundary>
 	);

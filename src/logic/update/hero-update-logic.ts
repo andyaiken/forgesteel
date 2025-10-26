@@ -434,6 +434,7 @@ export class HeroUpdateLogic {
 						.filter(d => selectedIDs.includes(d.id))
 						.map(d => {
 							const copy = Utils.copy(d);
+							copy.featuresByLevel = copy.featuresByLevel.filter(lvl => feature.data.levels.includes(lvl.level));
 							[ ...copy.defaultFeatures, ...copy.featuresByLevel.flatMap(lvl => lvl.features) ].forEach(f => FeatureLogic.switchFeatureCharacteristic(f, Characteristic.Intuition, feature.data.characteristic));
 							return copy;
 						});

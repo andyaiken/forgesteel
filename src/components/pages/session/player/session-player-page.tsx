@@ -1,5 +1,3 @@
-import { Button, Popover } from 'antd';
-import { DownOutlined, SettingOutlined } from '@ant-design/icons';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run-panel';
@@ -10,7 +8,6 @@ import { Hero } from '@/models/hero';
 import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run-panel';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
 import { Options } from '@/models/options';
-import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Playbook } from '@/models/playbook';
 import { Sourcebook } from '@/models/sourcebook';
@@ -26,10 +23,10 @@ interface Props {
 	session: Playbook;
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
-	setOptions: (options: Options) => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 }
 
 export const SessionPlayerPage = (props: Props) => {
@@ -101,23 +98,20 @@ export const SessionPlayerPage = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='session-player-page'>
-				<AppHeader subheader='Forge Steel'>
-					<Popover
-						trigger='click'
-						content={<OptionsPanel mode='player' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-					>
-						<Button icon={<SettingOutlined />}>
-							Options
-							<DownOutlined />
-						</Button>
-					</Popover>
-				</AppHeader>
+				<AppHeader subheader='Forge Steel' />
 				<ErrorBoundary>
 					<div className='session-player-page-content'>
 						{getContent()}
 					</div>
 				</ErrorBoundary>
-				<AppFooter page='player-view' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+				<AppFooter
+					page='player-view'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
 			</div>
 		</ErrorBoundary>
 	);

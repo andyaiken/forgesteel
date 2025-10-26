@@ -87,6 +87,11 @@ export class FeatureUpdateLogic {
 					feature.data.echelon = 1;
 				}
 				break;
+			case FeatureType.MaliceAbility:
+				if (feature.data.echelon === undefined) {
+					feature.data.echelon = 1;
+				}
+				break;
 			case FeatureType.Multiple:
 				feature.data.features.forEach(FeatureUpdateLogic.updateFeature);
 				break;

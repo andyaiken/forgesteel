@@ -1,10 +1,13 @@
 import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
 import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '../factory-logic';
+import { FeatureMaliceAbilityData } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { Utils } from '@/utils/utils';
 
 export class MonsterUpdateLogic {
 	static updateMonsterGroup = (monsterGroup: MonsterGroup) => {
@@ -15,6 +18,22 @@ export class MonsterUpdateLogic {
 		monsterGroup.malice.forEach(f => {
 			if (f.type.toString() === 'Ability') {
 				f.type = FeatureType.MaliceAbility;
+
+				if (!f.data) {
+					const data: FeatureMaliceAbilityData = {
+						ability: FactoryLogic.createAbility({
+							id: Utils.guid(),
+							name: '',
+							description: '',
+							type: FactoryLogic.type.createMain(),
+							distance: [ FactoryLogic.distance.createMelee() ],
+							target: '',
+							sections: []
+						}),
+						echelon: 0
+					};
+					f.data = data;
+				}
 			}
 
 			if (f.data.echelon === undefined) {

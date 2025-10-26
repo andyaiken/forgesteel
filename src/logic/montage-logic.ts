@@ -26,7 +26,7 @@ export class MontageLogic {
 			heroCount = party.length;
 		}
 		if (heroCount < 5) {
-			value = Math.max(2, value - (5 - heroCount));
+			value -= (5 - heroCount);
 		}
 		if (heroCount > 5) {
 			value += (heroCount - 5);
@@ -56,7 +56,7 @@ export class MontageLogic {
 			heroCount = party.length;
 		}
 		if (heroCount < 5) {
-			value = Math.max(2, value - (5 - heroCount));
+			value -= (5 - heroCount);
 		}
 		if (heroCount > 5) {
 			value += (heroCount - 5);

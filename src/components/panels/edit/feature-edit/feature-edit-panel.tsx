@@ -1578,7 +1578,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.MaliceAbility: {
 				const data = feature.data as FeatureMaliceAbilityData;
 				return (
-					<div style={{ margin: '10px 0' }}>
+					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Echelon</HeaderText>
 						<NumberSpin min={1} max={4} value={data.echelon} onChange={setEchelon} />
 						<Expander title={data.ability.name || 'Unnamed Ability'}>
@@ -1587,7 +1587,7 @@ export const FeatureEditPanel = (props: Props) => {
 								onChange={setAbility}
 							/>
 						</Expander>
-					</div>
+					</Space>
 				);
 			}
 			case FeatureType.MovementMode: {

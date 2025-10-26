@@ -1,3 +1,4 @@
+import { Hero } from '@/models/hero';
 import { Montage } from '@/models/montage';
 import { MontageChallengesCard } from './montage-challenges';
 import { MontageHeaderCard } from './montage-header';
@@ -15,13 +16,14 @@ import './montage-sheet-page.scss';
 
 interface Props {
 	montage: Montage;
+	heroes: Hero[];
 	options: Options;
 }
 
 export const MontageSheetPage = (props: Props) => {
 	const montage = useMemo(
-		() => MontageSheetBuilder.buildMontageSheet(props.montage),
-		[ props.montage ]
+		() => MontageSheetBuilder.buildMontageSheet(props.montage, props.heroes, props.options),
+		[ props.montage, props.heroes, props.options ]
 	);
 
 	const sheetClasses = useMemo(

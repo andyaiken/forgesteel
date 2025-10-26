@@ -6,6 +6,30 @@ import { Hero } from '@/models/hero';
 import { MontageLogic } from './montage-logic';
 import { Options } from '@/models/options';
 
+describe('getHeroCount', () => {
+	test('returns the correct hero count when defined in options', () => {
+		const options = {
+			heroCount: 4
+		} as Options;
+
+		expect(MontageLogic.getHeroCount([], options)).toBe(4);
+	});
+
+	test('returns the correct hero count a party is defined', () => {
+		const partyHero = FactoryLogic.createHero([]);
+		partyHero.folder = 'test';
+		const heroes: Hero[] = new Array(4).fill(partyHero);
+		const nonPartyHero = FactoryLogic.createHero([]);
+		nonPartyHero.folder = 'asdf';
+		heroes.push(nonPartyHero);
+		const options = {
+			heroParty: 'test'
+		} as Options;
+
+		expect(MontageLogic.getHeroCount(heroes, options)).toBe(4);
+	});
+});
+
 describe('getSuccessLimit', () => {
 	test.each([
 		[ EncounterDifficulty.Easy, 5, 5 ],

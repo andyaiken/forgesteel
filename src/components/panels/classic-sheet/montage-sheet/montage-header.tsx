@@ -14,6 +14,70 @@ interface Props {
 export const MontageHeaderCard = (props: Props) => {
 	const montage = useMemo(() => props.montage, [ props.montage ]);
 
+	const getDifficultyTable = () => {
+		return (
+			<div className='difficulty-table'>
+				<h2>Montage Test Difficulty</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Difficulty</th>
+							<th>Success Limit</th>
+							<th>Failure Limit</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Easy</td>
+							<td>5</td>
+							<td>5</td>
+						</tr>
+						<tr>
+							<td>Moderate</td>
+							<td>6</td>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>Hard</td>
+							<td>7</td>
+							<td>3</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		);
+	};
+
+	const getLimitsBoxes = () => {
+		return (
+			<>
+				<LabeledTextField
+					label='Success Limit'
+					content={montage.successLimit}
+					additionalClasses={[ 'box-both', 'label-above' ]}
+				/>
+				<LabeledTextField
+					label='Failure Limit'
+					content={montage.failureLimit}
+					additionalClasses={[ 'box-both', 'label-above' ]}
+				/>
+				<LabeledTextField
+					label='Difficulty'
+					content={montage.difficulty}
+					additionalClasses={[ 'box-both', 'label-above' ]}
+				/>
+			</>
+		);
+	};
+
+	const getLimitsSection = () => {
+		if (montage.difficulty) {
+			return getLimitsBoxes();
+		} else {
+			return getDifficultyTable();
+		}
+	};
+
 	return (
 		<div className='montage-header card'>
 			<HeaderImage />
@@ -30,35 +94,12 @@ export const MontageHeaderCard = (props: Props) => {
 					content='2'
 					additionalClasses={[ 'num-rounds', 'box-both', 'label-above' ]}
 				/>
-				<div className='difficulty-table'>
-					<h2>Montage Test Difficulty</h2>
-					<table>
-						<thead>
-							<tr>
-								<th>Difficulty</th>
-								<th>Success Limit</th>
-								<th>Failure Limit</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Easy</td>
-								<td>5</td>
-								<td>5</td>
-							</tr>
-							<tr>
-								<td>Moderate</td>
-								<td>6</td>
-								<td>4</td>
-							</tr>
-							<tr>
-								<td>Hard</td>
-								<td>7</td>
-								<td>3</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+				<LabeledTextField
+					label='# Heroes'
+					content={montage.numHeroes}
+					additionalClasses={[ 'box-both', 'label-above' ]}
+				/>
+				{getLimitsSection()}
 			</section>
 			<div className='montage-objective'>
 

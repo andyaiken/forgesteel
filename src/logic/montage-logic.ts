@@ -5,6 +5,15 @@ import { Montage } from '@/models/montage';
 import { Options } from '@/models/options';
 
 export class MontageLogic {
+	static getHeroCount = (heroes: Hero[], options: Options) => {
+		let heroCount = options.heroCount;
+		if (options.heroParty) {
+			const party = heroes.filter(h => h.folder === options.heroParty);
+			heroCount = party.length;
+		}
+		return heroCount;
+	};
+
 	static getSuccessLimit = (montage: Montage, heroes: Hero[], options: Options) => {
 		let value = 6;
 
@@ -20,11 +29,7 @@ export class MontageLogic {
 				break;
 		}
 
-		let heroCount = options.heroCount;
-		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
-			heroCount = party.length;
-		}
+		const heroCount = this.getHeroCount(heroes, options);
 		if (heroCount < 5) {
 			value -= (5 - heroCount);
 		}
@@ -50,11 +55,7 @@ export class MontageLogic {
 				break;
 		}
 
-		let heroCount = options.heroCount;
-		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
-			heroCount = party.length;
-		}
+		const heroCount = this.getHeroCount(heroes, options);
 		if (heroCount < 5) {
 			value -= (5 - heroCount);
 		}
@@ -71,11 +72,7 @@ export class MontageLogic {
 		const successLimit = MontageLogic.getSuccessLimit(montage, heroes, options);
 		const failureLimit = MontageLogic.getFailureLimit(montage, heroes, options);
 
-		let heroCount = options.heroCount;
-		if (options.heroParty) {
-			const party = heroes.filter(h => h.folder === options.heroParty);
-			heroCount = party.length;
-		}
+		const heroCount = this.getHeroCount(heroes, options);
 		// 2 rounds = 2 * number of heroes chances
 		const totalChances = heroCount * 2;
 		const testsUsed = successes + failures;

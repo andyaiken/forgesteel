@@ -133,6 +133,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 									<NegotiationPanel
 										negotiation={negotiation}
 										sourcebooks={props.sourcebooks}
+										options={props.options}
 									/>
 									<SashPanel monogram='Negotiation' />
 								</SelectablePanel>
@@ -381,6 +382,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 							<NegotiationPanel
 								negotiation={selectedNegotiation}
 								sourcebooks={props.sourcebooks}
+								options={props.options}
 								mode={PanelMode.Full}
 							/>
 							: null

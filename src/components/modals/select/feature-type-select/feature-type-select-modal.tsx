@@ -1,6 +1,6 @@
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
-import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Field } from '@/components/controls/field/field';
 import { Modal } from '@/components/modals/modal/modal';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Space } from 'antd';
@@ -23,10 +23,10 @@ export const FeatureTypeSelectModal = (props: Props) => {
 							props.types.map(ft => (
 								<SelectablePanel
 									key={ft}
+									style={{ padding: '5px 15px' }}
 									onSelect={() => props.onSelect(ft)}
 								>
-									<HeaderText>{ft}</HeaderText>
-									<div className='ds-text'>{FeatureLogic.getFeatureTypeDescription(ft)}</div>
+									<Field label={ft} value={FeatureLogic.getFeatureTypeDescription(ft)} />
 								</SelectablePanel>
 							))
 						}

@@ -2,6 +2,7 @@ import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
 import { DownOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
+import { Collections } from '@/utils/collections';
 import { Counter } from '@/models/counter';
 import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run-panel';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -248,7 +249,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your encounters:</div>
 						{
-							props.playbook.encounters.map(e => (
+							Collections.sort(props.playbook.encounters, e => e.name).map(e => (
 								<Button key={e.id} block={true} onClick={() => startEncounter(e)}>{e.name || 'Unnamed Encounter'}</Button>
 							))
 						}
@@ -277,7 +278,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your montages:</div>
 						{
-							props.playbook.montages.map(m => (
+							Collections.sort(props.playbook.montages, m => m.name).map(m => (
 								<Button key={m.id} block={true} onClick={() => startMontage(m)}>{m.name || 'Unnamed Montage'}</Button>
 							))
 						}
@@ -306,7 +307,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your negotiations:</div>
 						{
-							props.playbook.negotiations.map(n => (
+							Collections.sort(props.playbook.negotiations, n => n.name).map(n => (
 								<Button key={n.id} block={true} onClick={() => startNegotiation(n)}>{n.name || 'Unnamed Negotiation'}</Button>
 							))
 						}
@@ -335,7 +336,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your maps:</div>
 						{
-							props.playbook.tacticalMaps.map(tm => (
+							Collections.sort(props.playbook.tacticalMaps, m => m.name).map(tm => (
 								<Button key={tm.id} block={true} onClick={() => startMap(tm)}>{tm.name || 'Unnamed Map'}</Button>
 							))
 						}

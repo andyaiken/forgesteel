@@ -172,6 +172,7 @@ export const PlaybookEditPage = (props: Props) => {
 						<NegotiationPanel
 							negotiation={element as Negotiation}
 							sourcebooks={props.sourcebooks}
+							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					</SelectablePanel>

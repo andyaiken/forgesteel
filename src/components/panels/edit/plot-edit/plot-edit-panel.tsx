@@ -508,7 +508,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Negotiation';
 											content = (
-												<NegotiationPanel negotiation={element} sourcebooks={props.sourcebooks} />
+												<NegotiationPanel negotiation={element} sourcebooks={props.sourcebooks} options={props.options} />
 											);
 										}
 										break;
@@ -774,7 +774,7 @@ export const PlotEditPanel = (props: Props) => {
 								{
 									props.playbook.negotiations.map(n =>
 										<SelectablePanel key={n.id} onSelect={() => addContentReference('negotiation', n.id)}>
-											<NegotiationPanel negotiation={n} sourcebooks={props.sourcebooks} />
+											<NegotiationPanel negotiation={n} sourcebooks={props.sourcebooks} options={props.options} />
 										</SelectablePanel>
 									)
 								}

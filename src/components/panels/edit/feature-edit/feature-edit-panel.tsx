@@ -2074,7 +2074,10 @@ export const FeatureEditPanel = (props: Props) => {
 												<HeaderText>Feature Type</HeaderText>
 												<Flex align='center' justify='space-between'>
 													<Field label={feature.type} value={FeatureLogic.getFeatureTypeDescription(feature.type)} />
-													<Button type='text' icon={<EditOutlined />} onClick={() => setTypeSelectorVisible(true)} />
+													<Button onClick={() => setTypeSelectorVisible(true)}>
+														<EditOutlined />
+														Change
+													</Button>
 												</Flex>
 											</>
 											: null

@@ -18,7 +18,9 @@ export class MonsterUpdateLogic {
 		monsterGroup.malice.forEach(f => {
 			if (f.type.toString() === 'Ability') {
 				f.type = FeatureType.MaliceAbility;
+			}
 
+			if (f.type === FeatureType.MaliceAbility) {
 				if (!f.data) {
 					const data: FeatureMaliceAbilityData = {
 						ability: FactoryLogic.createAbility({

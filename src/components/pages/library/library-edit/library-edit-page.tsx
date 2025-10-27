@@ -137,6 +137,7 @@ export const LibraryEditPage = (props: Props) => {
 		return Utils.copy(original) as Element;
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
+	const [ revision, setRevision ] = useState<number>(0);
 	const [ scratchpadMonsters, setScratchpadMonsters ] = useState<Monster[]>([]);
 	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
@@ -145,6 +146,7 @@ export const LibraryEditPage = (props: Props) => {
 		const copy = Utils.copy(element);
 		setElement(copy);
 		setDirty(true);
+		setRevision(revision + 1);
 	};
 
 	const getSimilarMonsters = (monster: Monster) => {
@@ -517,26 +519,26 @@ export const LibraryEditPage = (props: Props) => {
 		switch (kind) {
 			case 'ancestry':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<AncestryPanel ancestry={element as Ancestry} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'culture':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<CulturePanel culture={element as Culture} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'career':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<CareerPanel career={element as Career} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'class':
 				if (!subElementID) {
 					return (
-						<SelectablePanel key={JSON.stringify(element)}>
+						<SelectablePanel key={`${element.id}-${revision}`}>
 							<ClassPanel heroClass={element as HeroClass} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
@@ -545,57 +547,57 @@ export const LibraryEditPage = (props: Props) => {
 					const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
 
 					return (
-						<SelectablePanel key={JSON.stringify(subclass)}>
+						<SelectablePanel key={`${subclass.id}-${revision}`}>
 							<SubclassPanel subclass={subclass} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				}
 			case 'complication':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<ComplicationPanel complication={element as Complication} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'domain':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<DomainPanel domain={element as Domain} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'kit':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<KitPanel kit={element as Kit} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'perk':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<PerkPanel perk={element as Perk} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'subclass':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<SubclassPanel subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'terrain':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<TerrainPanel terrain={element as Terrain} showCustomizations={true} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'title':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<TitlePanel title={element as Title} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'item':
 				return (
 					<>
-						<SelectablePanel key={JSON.stringify(element)}>
+						<SelectablePanel key={`${element.id}-${revision}`}>
 							<ItemPanel item={element as Item} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
@@ -610,7 +612,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'imbuement':
 				return (
 					<>
-						<SelectablePanel key={JSON.stringify(element)}>
+						<SelectablePanel key={`${element.id}-${revision}`}>
 							<ImbuementPanel imbuement={element as Imbuement} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
@@ -625,7 +627,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'monster-group':
 				if (!subElementID) {
 					return (
-						<SelectablePanel key={JSON.stringify(element)}>
+						<SelectablePanel key={`${element.id}-${revision}`}>
 							<MonsterGroupPanel monsterGroup={element as MonsterGroup} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
@@ -640,7 +642,7 @@ export const LibraryEditPage = (props: Props) => {
 									key: '1',
 									label: 'Preview',
 									children: (
-										<SelectablePanel key={JSON.stringify(monster)}>
+										<SelectablePanel key={`${monster.id}-${revision}`}>
 											<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
 										</SelectablePanel>
 									)

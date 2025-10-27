@@ -74,11 +74,14 @@ export const PlaybookEditPage = (props: Props) => {
 		return Utils.copy(original);
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
+	// A simple incrementing counter used to force remounts when the element changes in this editor.
+	const [ revision, setRevision ] = useState<number>(0);
 
 	const applyChanges = (element: Element) => {
 		const copy = Utils.copy(element);
 		setElement(copy);
 		setDirty(true);
+		setRevision(revision + 1);
 	};
 
 	// #region Edit
@@ -156,7 +159,7 @@ export const PlaybookEditPage = (props: Props) => {
 		switch (kind!) {
 			case 'montage':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<MontagePanel
 							montage={element as Montage}
 							heroes={props.heroes}
@@ -167,7 +170,7 @@ export const PlaybookEditPage = (props: Props) => {
 				);
 			case 'negotiation':
 				return (
-					<SelectablePanel key={JSON.stringify(element)}>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<NegotiationPanel
 							negotiation={element as Negotiation}
 							sourcebooks={props.sourcebooks}

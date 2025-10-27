@@ -32,9 +32,11 @@ export class Utils {
 	};
 
 	static copy = <T>(object: T) => {
-		return JSON.parse(
-			JSON.stringify(object)
-		) as T;
+		if (typeof structuredClone === 'function') {
+			return structuredClone<T>(object);
+		}
+
+		return JSON.parse(JSON.stringify(object)) as T;
 	};
 
 	static debounce = (func: () => void, delay = 500) => {

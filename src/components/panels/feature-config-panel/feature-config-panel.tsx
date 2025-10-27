@@ -615,7 +615,8 @@ export const FeatureConfigPanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select a domain' : 'Select domains'}
-					options={sortedDomains.map(a => ({ value: a.id, label: <Field label={a.name} value={a.description} /> }))}
+					options={sortedDomains.map(a => ({ value: a.id, label: a.name, desc: a.description }))}
+					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 					onChange={value => {
 						let ids: string[] = [];

@@ -2,7 +2,7 @@
 
 ### Heroes
 
-(nothing)
+* BUG: When (eg) the Third Eye Seeker is equipped, it applies its [ Ranged, Weapon ] damage bonus to any ability with [ Melee, Ranged, Weapon ] keywords, even if the ability is being used in melee
 
 ### Library
 

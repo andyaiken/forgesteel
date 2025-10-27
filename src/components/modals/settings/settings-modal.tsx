@@ -35,16 +35,11 @@ interface Props {
 export const SettingsModal = (props: Props) => {
 	const { themeMode, setTheme } = useTheme();
 	const [ options, setOptions ] = useState<Options>(Utils.copy(props.options));
+	const [ page, setPage ] = useState<string>('Settings');
 	const [ showAbilitySelector, setShowAbilitySelector ] = useState<boolean>(false);
 	const [ flag, setFlag ] = useState<string>('');
 
 	const getAppearance = () => {
-		const setShowInteractivePanels = (value: boolean) => {
-			const copy = Utils.copy(options);
-			copy.showInteractivePanels = value;
-			props.setOptions(copy);
-		};
-
 		return (
 			<Expander title='Appearance'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
@@ -58,17 +53,12 @@ export const SettingsModal = (props: Props) => {
 							{ label: 'Dark Mode', value: 'dark', icon: <MoonOutlined /> }
 						]}
 					/>
-					{
-						FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) ?
-							<Toggle label='Show content interactively' value={options.showInteractivePanels} onChange={setShowInteractivePanels} />
-							: null
-					}
 				</Space>
 			</Expander>
 		);
 	};
 
-	const getHero = () => {
+	const getHeroesGeneral = () => {
 		const setShownStandardAbilities = (value: string | string[]) => {
 			const copy = Utils.copy(options);
 			copy.shownStandardAbilities = [ value ].flat(1);
@@ -102,7 +92,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		return (
-			<Expander title='Hero'>
+			<Expander title='Heroes - General'>
 				<Space direction='vertical' style={{ width: '100%' }}>
 					<div>
 						<Divider>Show Standard Abilities</Divider>
@@ -134,7 +124,7 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getHeroModern = () => {
+	const getHeroesModern = () => {
 		const setSeparateInventoryFeatures = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.separateInventoryFeatures = value;
@@ -185,7 +175,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		return (
-			<Expander title='Hero - Modern Sheet'>
+			<Expander title='Heroes - Modern Sheet'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Toggle label='Separate inventory features' value={options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 					<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
@@ -217,7 +207,7 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getHeroClassic = () => {
+	const getHeroesClassic = () => {
 		const setIncludePlayState = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.includePlayState = value;
@@ -240,7 +230,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		return (
-			<Expander title='Hero - Classic Sheet'>
+			<Expander title='Heroes - Classic Sheet'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
 					<Toggle label='Use color' value={options.colorSheet} onChange={setColorSheet} />
@@ -548,7 +538,7 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getTacticalMap = () => {
+	const getTacticalMaps = () => {
 		const setGridSize = (value: number) => {
 			const copy = Utils.copy(options);
 			copy.gridSize = value;
@@ -564,7 +554,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		return (
-			<Expander title='Tactical Map'>
+			<Expander title='Tactical Maps'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<NumberSpin label='Director Map Grid Size' min={5} steps={[ 5 ]} value={options.gridSize} onChange={setGridSize} />
 					<NumberSpin label='Player Map Grid Size' min={5} steps={[ 5 ]} value={options.playerGridSize} onChange={setPlayerGridSize} />
@@ -619,6 +609,33 @@ export const SettingsModal = (props: Props) => {
 					{
 						FeatureFlags.active().length === 0 ?
 							<Empty />
+							: null
+					}
+				</Space>
+			</Expander>
+		);
+	};
+
+	const getFeatureFlagControls = () => {
+		const flags = [
+			FeatureFlags.interactiveContent
+		];
+		if (!flags.some(f => FeatureFlags.hasFlag(f.code))) {
+			return null;
+		}
+
+		const setShowInteractivePanels = (value: boolean) => {
+			const copy = Utils.copy(options);
+			copy.showInteractivePanels = value;
+			props.setOptions(copy);
+		};
+
+		return (
+			<Expander title='Features'>
+				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+					{
+						FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) ?
+							<Toggle label='Show content interactively' value={options.showInteractivePanels} onChange={setShowInteractivePanels} />
 							: null
 					}
 				</Space>
@@ -688,24 +705,51 @@ export const SettingsModal = (props: Props) => {
 			: null;
 	};
 
-	return (
-		<Modal
-			content={
-				<div className='settings-modal'>
+	const getContent = () => {
+		switch (page) {
+			case 'Settings':
+				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{getAppearance()}
-						{getHero()}
-						{getHeroModern()}
-						{getHeroClassic()}
+						{getHeroesGeneral()}
+						{getHeroesModern()}
+						{getHeroesClassic()}
 						{getClassicSheet()}
 						{getMonsterBuilder()}
 						{getEncounterBuilder()}
 						{getEncounterRunner()}
 						{getDifficulty()}
-						{getTacticalMap()}
+						{getTacticalMaps()}
+					</Space>
+				);
+			case 'Admin':
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
+						{getFeatureFlagControls()}
 						{getErrors()}
 					</Space>
+				);
+		}
+
+		return null;
+	};
+
+	return (
+		<Modal
+			toolbar={
+				<Flex align='center' justify='center' style={{ width: '100%' }}>
+					<Segmented
+						name='tabs'
+						options={[ 'Settings', 'Admin' ]}
+						value={page}
+						onChange={setPage}
+					/>
+				</Flex>
+			}
+			content={
+				<div className='settings-modal'>
+					{getContent()}
 				</div>
 			}
 			onClose={props.onClose}

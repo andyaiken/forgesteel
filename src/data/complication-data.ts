@@ -827,7 +827,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static hunted: Complication = {
 		id: 'comp-hunted',
 		name: 'Hunted',
-		description: 'You’re one step ahead of a pursuer - perhaps a bounty hunter determined to bring you to justice, a revenant, or an assassin intent on your death. Someday, you’ll be strong enough to face your pursuer head to head. Bbut for now, you live your life on the run.',
+		description: 'You’re one step ahead of a pursuer - perhaps a bounty hunter determined to bring you to justice, a revenant, or an assassin intent on your death. Someday, you’ll be strong enough to face your pursuer head to head. But for now, you live your life on the run.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-hunted-skill',

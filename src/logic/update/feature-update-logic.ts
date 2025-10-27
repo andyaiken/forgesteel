@@ -46,6 +46,9 @@ export class FeatureUpdateLogic {
 				if (feature.data.characteristic === undefined) {
 					feature.data.characteristic = Characteristic.Intuition;
 				}
+				if (feature.data.levels === undefined) {
+					feature.data.levels = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+				}
 				feature.data.selected.forEach(d => {
 					if (d.resourceGains === undefined) {
 						d.resourceGains = [];

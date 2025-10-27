@@ -1,4 +1,4 @@
-import { LabeledTextField } from '../components/labeled-field';
+import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { MontageSheet } from '@/models/classic-sheets/montage-sheet';
 import { Options } from '@/models/options';
 import { useMemo } from 'react';

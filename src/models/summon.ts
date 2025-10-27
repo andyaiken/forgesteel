@@ -1,5 +1,5 @@
 import { Element } from '@/models/element';
-import { Feature } from './feature';
+import { Feature } from '@/models/feature';
 import { Monster } from '@/models/monster';
 
 export interface SummoningInfo {

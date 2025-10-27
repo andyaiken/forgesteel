@@ -11,7 +11,7 @@ import { MontageLogic } from '@/logic/montage-logic';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
-import { StatsRow } from '../../stats-row/stats-row';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { useState } from 'react';
 
 import './montage-panel.scss';

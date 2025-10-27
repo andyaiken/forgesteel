@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { CreatureLogic } from './creature-logic';
+import { CreatureLogic } from '@/logic/creature-logic';
 import { FeatureSummonChoice } from '@/models/feature';
 import { Summon } from '@/models/summon';
 import { beastheart } from '@/data/classes/beastheart/beastheart';

@@ -1,9 +1,9 @@
 import { Montage, MontageChallenge, MontageSection } from '@/models/montage';
 import { describe, expect, test } from 'vitest';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
-import { FactoryLogic } from './factory-logic';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { Hero } from '@/models/hero';
-import { MontageLogic } from './montage-logic';
+import { MontageLogic } from '@/logic/montage-logic';
 import { Options } from '@/models/options';
 
 describe('getHeroCount', () => {

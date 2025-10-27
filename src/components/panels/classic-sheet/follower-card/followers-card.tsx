@@ -1,4 +1,4 @@
-import { CharacteristicsComponent } from '../components/characteristics-component';
+import { CharacteristicsComponent } from '@/components/panels/classic-sheet/components/characteristics-component';
 import { FollowerSheet } from '@/models/classic-sheets/hero-sheet';
 import { Options } from '@/models/options';
 import { useMemo } from 'react';

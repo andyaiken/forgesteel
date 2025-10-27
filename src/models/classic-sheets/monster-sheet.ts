@@ -1,6 +1,6 @@
-import { AbilitySheet } from './ability-sheet';
-import { CharacteristicsSheet } from './classic-sheets';
-import { Feature } from '../feature';
+import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
+import { CharacteristicsSheet } from '@/models/classic-sheets/classic-sheets';
+import { Feature } from '@/models/feature';
 
 // #region Monster
 export interface MonsterSheet {

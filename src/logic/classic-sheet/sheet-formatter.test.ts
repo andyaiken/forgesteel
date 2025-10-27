@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { FactoryLogic } from '../factory-logic';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
-import { SheetFormatter } from './sheet-formatter';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
 describe.concurrent('Test addSign', () => {
 	test.each([

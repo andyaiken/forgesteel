@@ -1,10 +1,10 @@
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { Hero } from '@/models/hero';
 import { Montage } from '@/models/montage';
-import { MontageLogic } from '../montage-logic';
+import { MontageLogic } from '@/logic/montage-logic';
 import { MontageSheet } from '@/models/classic-sheets/montage-sheet';
 import { Options } from '@/models/options';
-import { SheetFormatter } from '../classic-sheet/sheet-formatter';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
 export class MontageSheetBuilder {
 	static buildMontageSheet = (montage: Montage, heroes: Hero[], options: Options): MontageSheet => {

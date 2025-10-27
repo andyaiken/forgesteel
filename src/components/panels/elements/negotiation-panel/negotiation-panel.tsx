@@ -10,7 +10,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
-import { StatsRow } from '../../stats-row/stats-row';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { useState } from 'react';
 
 import './negotiation-panel.scss';

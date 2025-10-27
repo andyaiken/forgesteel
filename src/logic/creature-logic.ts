@@ -5,7 +5,7 @@ import { FeatureField } from '@/enums/feature-field';
 import { FeatureType } from '@/enums/feature-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
-import { ModifierLogic } from './modifier-logic';
+import { ModifierLogic } from '@/logic/modifier-logic';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';

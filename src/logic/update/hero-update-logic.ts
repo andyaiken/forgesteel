@@ -6,7 +6,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { CultureData } from '@/data/culture-data';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureLogic } from '../feature-logic';
+import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { Hero } from '@/models/hero';

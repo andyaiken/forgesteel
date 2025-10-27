@@ -1,6 +1,7 @@
 import { Feature, FeatureAbility, FeatureClassAbility, FeatureLanguageChoice } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryData } from '@/data/ancestry-data';
@@ -706,12 +707,23 @@ export class HeroLogic {
 		return result;
 	};
 
-	static getFeatureDamageBonuses = (hero: Hero, ability: Ability) => {
+	static getFeatureDamageBonuses = (hero: Hero, ability: Ability, distance: AbilityDistanceType | undefined) => {
 		const array: { feature: string, value: number, type: DamageType }[] = [];
 
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.AbilityDamage)
+			.filter(f => {
+				if (distance === AbilityDistanceType.Melee) {
+					return f.data.keywords.includes(AbilityKeyword.Melee);
+				}
+
+				if (distance === AbilityDistanceType.Ranged) {
+					return f.data.keywords.includes(AbilityKeyword.Ranged);
+				}
+
+				return true;
+			})
 			.filter(f => f.data.keywords.every(kw => ability.keywords.includes(kw)))
 			.forEach(f => {
 				const mod = ModifierLogic.calculateModifierValue(f.data, hero);
@@ -911,8 +923,9 @@ export class HeroLogic {
 	};
 
 	static calculateSurgeDamage = (hero: Hero) => {
-		const value = hero.class && (hero.class.characteristics.length > 0) ? Math.max(...hero.class.characteristics.map(c => this.getCharacteristic(hero, c.characteristic))) : 0;
-		return value;
+		return hero.class && (hero.class.characteristics.length > 0) ?
+			Math.max(...hero.class.characteristics.map(c => this.getCharacteristic(hero, c.characteristic)))
+			: 0;
 	};
 
 	static getCombatState = (hero: Hero) => {

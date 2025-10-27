@@ -2,7 +2,7 @@ import { HeroSheet, ItemSheet } from '@/models/classic-sheets/hero-sheet';
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { ItemLogic } from '@/logic/item-logic';
 import { ItemType } from '@/enums/item-type';
-import { LabeledTextField } from '../components/labeled-field';
+import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { Markdown } from '@/components/controls/markdown/markdown';
 
 import './inventory-card.scss';

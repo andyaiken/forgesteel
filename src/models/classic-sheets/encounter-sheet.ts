@@ -1,6 +1,6 @@
 import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { Monster } from '@/models/monster';
-import { MonsterSheet } from './monster-sheet';
+import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Terrain } from '@/models/terrain';
 
 export interface EncounterSheet {

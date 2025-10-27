@@ -9,10 +9,10 @@ import { HeroClass } from '@/models/class';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { PerkList } from '@/enums/perk-list';
 import { SkillList } from '@/enums/skill-list';
-import { guardian } from './guardian';
-import { prowler } from './prowler';
-import { punisher } from './punisher';
-import { spark } from './spark';
+import { guardian } from '@/data/classes/beastheart/guardian';
+import { prowler } from '@/data/classes/beastheart/prowler';
+import { punisher } from '@/data/classes/beastheart/punisher';
+import { spark } from '@/data/classes/beastheart/spark';
 
 export const beastheart: HeroClass = {
 	id: 'class-beastheart',

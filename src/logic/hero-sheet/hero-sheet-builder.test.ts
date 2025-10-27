@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { FactoryLogic } from '../factory-logic';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureSummonChoice } from '@/models/feature';
-import { HeroLogic } from '../hero-logic';
-import { HeroSheetBuilder } from './hero-sheet-builder';
+import { HeroLogic } from '@/logic/hero-logic';
+import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Summon } from '@/models/summon';
 import { undead } from '@/data/classes/summoner/undead';

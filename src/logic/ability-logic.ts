@@ -261,7 +261,7 @@ export class AbilityLogic {
 						}
 					}
 
-					const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability);
+					const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability, distance);
 					value += Collections.sum(dmgFeatures, x => x.value);
 
 					section.toLowerCase().split(' ').forEach(token => {

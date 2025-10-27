@@ -127,7 +127,7 @@ export const PowerRollPanel = (props: Props) => {
 
 			if (!props.autoCalc && CreatureLogic.isHero(props.creature)) {
 				HeroLogic
-					.getFeatureDamageBonuses(props.creature, props.ability)
+					.getFeatureDamageBonuses(props.creature, props.ability, distance)
 					.forEach((bonus, n) => {
 						const value = `${bonus.value} ${bonus.type}`;
 						sections.push(<Field key={`feature-${n}`} label={bonus.feature} value={value} />);

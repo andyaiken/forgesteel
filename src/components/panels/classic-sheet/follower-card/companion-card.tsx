@@ -1,6 +1,6 @@
 import { AbilityComponent } from '@/components/panels/classic-sheet/components/ability-component';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
-import { CharacteristicsComponent } from '../components/characteristics-component';
+import { CharacteristicsComponent } from '@/components/panels/classic-sheet/components/characteristics-component';
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { FollowerSheet } from '@/models/classic-sheets/hero-sheet';
 import { Options } from '@/models/options';

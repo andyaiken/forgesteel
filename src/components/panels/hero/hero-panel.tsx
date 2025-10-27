@@ -44,7 +44,7 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
-import { StatsRow } from '../stats-row/stats-row';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
 import { useIsSmall } from '@/hooks/use-is-small';

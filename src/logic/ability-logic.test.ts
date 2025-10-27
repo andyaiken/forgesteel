@@ -1,12 +1,12 @@
 import { afterEach, assert, describe, expect, it, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
-import { AbilityLogic } from './ability-logic';
+import { AbilityLogic } from '@/logic/ability-logic';
 import { Characteristic } from '@/enums/characteristic';
-import { CreatureLogic } from './creature-logic';
-import { FactoryLogic } from './factory-logic';
+import { CreatureLogic } from '@/logic/creature-logic';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { Hero } from '@/models/hero';
-import { HeroLogic } from './hero-logic';
+import { HeroLogic } from '@/logic/hero-logic';
 
 describe('getPowerRollCharacteristics', () => {
 	afterEach(() => {

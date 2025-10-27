@@ -1,5 +1,5 @@
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
-import { CharacteristicsSheet } from './classic-sheets';
+import { CharacteristicsSheet } from '@/models/classic-sheets/classic-sheets';
 import { Condition } from '@/models/condition';
 import { ConditionType } from '@/enums/condition-type';
 import { Culture } from '@/models/culture';
@@ -7,7 +7,7 @@ import { Element } from '@/models/element';
 import { Feature } from '@/models/feature';
 import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
-import { MonsterSheet } from './monster-sheet';
+import { MonsterSheet } from '@/models/classic-sheets/monster-sheet';
 import { Perk } from '@/models/perk';
 import { Title } from '@/models/title';
 

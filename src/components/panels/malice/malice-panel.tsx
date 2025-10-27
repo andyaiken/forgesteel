@@ -1,7 +1,7 @@
 import { Button, Progress } from 'antd';
 import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeaturePanel } from '../elements/feature-panel/feature-panel';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';

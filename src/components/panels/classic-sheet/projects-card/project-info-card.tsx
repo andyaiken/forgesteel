@@ -1,4 +1,4 @@
-import { ProjectInfoComponent } from '../components/project-info-component';
+import { ProjectInfoComponent } from '@/components/panels/classic-sheet/components/project-info-component';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 
 import './project-info-card.scss';

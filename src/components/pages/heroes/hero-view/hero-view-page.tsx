@@ -26,7 +26,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { RulesPage } from '@/enums/rules-page';
 import { Sourcebook } from '@/models/sourcebook';
-import { StandardAbilitiesPage } from '../hero-sheet/standard-abilities-page';
+import { StandardAbilitiesPage } from '@/components/pages/heroes/hero-sheet/standard-abilities-page';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
 import { useIsSmall } from '@/hooks/use-is-small';

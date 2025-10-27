@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { ArtifactData } from '@/data/items/artifact-data';
-import { ClassicSheetBuilder } from './classic-sheet-builder';
-import { FactoryLogic } from '../factory-logic';
+import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
+import { FactoryLogic } from '@/logic/factory-logic';
 import { Options } from '@/models/options';
 import { goblin } from '@/data/monsters/goblin';
 

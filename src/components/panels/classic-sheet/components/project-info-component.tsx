@@ -1,5 +1,5 @@
-import { DrawSteelSymbolText } from './ds-symbol-text-component';
-import { LabeledBooleanField } from './labeled-field';
+import { DrawSteelSymbolText } from '@/components/panels/classic-sheet/components/ds-symbol-text-component';
+import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 
 import './project-info-component.scss';

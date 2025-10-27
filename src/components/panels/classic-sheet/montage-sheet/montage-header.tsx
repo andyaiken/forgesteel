@@ -1,5 +1,5 @@
-import { HeaderImage } from '../header-image/header-image';
-import { LabeledTextField } from '../components/labeled-field';
+import { HeaderImage } from '@/components/panels/classic-sheet/header-image/header-image';
+import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { MontageSheet } from '@/models/classic-sheets/montage-sheet';
 import { Options } from '@/models/options';
 import { useMemo } from 'react';

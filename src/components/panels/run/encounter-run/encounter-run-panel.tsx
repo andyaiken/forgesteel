@@ -21,7 +21,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSelectModal } from '@/components/modals/select/hero-select/hero-select-modal';
 import { HeroStateModal } from '@/components/modals/hero-state/hero-state-modal';
 import { HeroStatePage } from '@/enums/hero-state-page';
-import { ItemPanel } from '../../elements/item-panel/item-panel';
+import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MinionGroupHealthPanel } from '@/components/panels/health/health-panel';

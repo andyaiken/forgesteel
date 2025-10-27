@@ -1,11 +1,11 @@
 import { Hero } from '@/models/hero';
 import { Montage } from '@/models/montage';
-import { MontageChallengesCard } from './montage-challenges';
-import { MontageHeaderCard } from './montage-header';
+import { MontageChallengesCard } from '@/components/panels/classic-sheet/montage-sheet/montage-challenges';
+import { MontageHeaderCard } from '@/components/panels/classic-sheet/montage-sheet/montage-header';
 import { MontageSheetBuilder } from '@/logic/playbook-sheets/montage-sheet-builder';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
-import { SuccessFailureTrackerCard } from './success-failure-tracker';
+import { SuccessFailureTrackerCard } from '@/components/panels/classic-sheet/montage-sheet/success-failure-tracker';
 import { useMemo } from 'react';
 
 import rollT1Icon from '@/assets/icons/power-roll-t1.svg';

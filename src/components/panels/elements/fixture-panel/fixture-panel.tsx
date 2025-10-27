@@ -2,7 +2,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Field } from '@/components/controls/field/field';
 import { Fixture } from '@/models/fixture';
-import { FixtureLabel } from '../../monster-label/monster-label';
+import { FixtureLabel } from '@/components/panels/monster-label/monster-label';
 import { FixtureLogic } from '@/logic/fixture-logic';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';

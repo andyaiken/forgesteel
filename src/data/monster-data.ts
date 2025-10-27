@@ -9,7 +9,7 @@ import { basilisk } from '@/data/monsters/basilisk';
 import { bredbeddle } from '@/data/monsters/bredbeddle';
 import { bugbear } from '@/data/monsters/bugbear';
 import { chimera } from '@/data/monsters/chimera';
-import { civilian } from './monsters/civilian';
+import { civilian } from '@/data/monsters/civilian';
 import { countRhodar } from '@/data/monsters/count-rhodar';
 import { demon } from '@/data/monsters/demon';
 import { devil } from '@/data/monsters/devil';

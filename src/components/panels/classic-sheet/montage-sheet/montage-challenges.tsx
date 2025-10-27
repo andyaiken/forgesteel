@@ -1,4 +1,4 @@
-import { LabeledBooleanField } from '../components/labeled-field';
+import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MontageSheet } from '@/models/classic-sheets/montage-sheet';
 import { Options } from '@/models/options';

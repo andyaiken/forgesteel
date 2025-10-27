@@ -1,4 +1,4 @@
-import { CardPageLayout, FillerCard, SheetLayout } from './sheet-layout';
+import { CardPageLayout, FillerCard, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
 import { describe, expect, test } from 'vitest';
 import { JSX } from 'react';
 

@@ -1,9 +1,9 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditFilled, EditOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditFilled, EditOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
+import { Fragment, ReactNode, useState } from 'react';
 import { MonsterFilter, TerrainFilter } from '@/models/filter';
 import { MonsterInfo, TerrainInfo } from '@/components/panels/token/token';
-import { ReactNode, useState } from 'react';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DropdownButton } from '@/components/controls/dropdown-button/dropdown-button';
@@ -526,6 +526,86 @@ export const EncounterEditPanel = (props: Props) => {
 		);
 	};
 
+	const getMaliceSection = () => {
+		const maliceFeatures = EncounterLogic.getAllMaliceFeatures(encounter, props.sourcebooks);
+
+		const removeMaliceFeatureIds = (ids: string[]) => {
+			const copy = Utils.copy(encounter);
+			const newList = [ ...copy.hiddenMaliceFeatures, ...ids.filter(id => !copy.hiddenMaliceFeatures.includes(id)) ];
+			copy.hiddenMaliceFeatures = newList;
+
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const addMaliceFeatureIds = (ids: string[]) => {
+			const copy = Utils.copy(encounter);
+			const encounterMalice = copy.hiddenMaliceFeatures;
+			const newList = encounterMalice.filter(f => !ids.includes(f));
+			copy.hiddenMaliceFeatures = newList;
+
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>
+					Malice Features
+				</HeaderText>
+				{
+					maliceFeatures.map((groupMalice, i) => {
+						return (
+							<Fragment key={`group-malice-${groupMalice.group}-${i}`}>
+								<HeaderText
+									level={3}
+									extra={
+										<Flex>
+											<Button
+												type='text'
+												icon={<MinusCircleOutlined />}
+												onClick={() => {
+													const featureIds = groupMalice.features.map(f => f.id);
+													removeMaliceFeatureIds(featureIds);
+												}}
+											/>
+											<Button
+												type='text'
+												icon={<PlusCircleOutlined />}
+												onClick={() => {
+													const featureIds = groupMalice.features.map(f => f.id);
+													addMaliceFeatureIds(featureIds);
+												}}
+											/>
+										</Flex>
+									}
+								>
+									{groupMalice.group}
+								</HeaderText>
+								{
+									groupMalice.features.map(feature => (
+										<Toggle
+											key={`malice-feature-toggle-${i}-${feature.id}`}
+											label={feature.name}
+											value={!encounter.hiddenMaliceFeatures.includes(feature.id)}
+											onChange={value => {
+												if (value) {
+													addMaliceFeatureIds([ feature.id ]);
+												} else {
+													removeMaliceFeatureIds([ feature.id ]);
+												}
+											}}
+										/>
+									))
+								}
+							</Fragment>
+						);
+					})
+				}
+			</Space>
+		);
+	};
+
 	const getMonsterListSection = () => {
 		const setMonsterFilterName = (name: string) => {
 			const copy = Utils.copy(monsterFilter);
@@ -747,6 +827,11 @@ export const EncounterEditPanel = (props: Props) => {
 								key: '5',
 								label: 'Notes',
 								children: getNotesSection()
+							},
+							{
+								key: '6',
+								label: 'Malice',
+								children: getMaliceSection()
 							}
 						]}
 					/>

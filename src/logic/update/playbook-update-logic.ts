@@ -129,6 +129,10 @@ export class PlaybookUpdateLogic {
 			if (e.additionalTurnsTaken === undefined) {
 				e.additionalTurnsTaken = [];
 			}
+
+			if (e.hiddenMaliceFeatures === undefined) {
+				e.hiddenMaliceFeatures = [];
+			}
 		});
 
 		if (playbook.montages === undefined) {

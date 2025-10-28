@@ -47,17 +47,17 @@ export class EncounterSheetBuilder {
 			.filter(m => !!m);
 		sheet.monsters = encounterMonsters.map(ClassicSheetBuilder.buildMonsterSheet);
 
-		const monsterGroups = EncounterLogic.getMonsterGroups(encounter, sourcebooks);
-
 		const seenMalice = new Set<string>();
-		sheet.malice = monsterGroups.filter(group => group.malice.length > 0)
-			.map(group => {
+		const possibleMalice = EncounterLogic.getAllMaliceFeatures(encounter, sourcebooks);
+		sheet.malice = possibleMalice
+			.map(groupMalice => {
 				const maxLvl = encounterMonsters.reduce((maxLvl, monster) => Math.max(maxLvl, monster.level), 0);
 				const echelon = CreatureLogic.getEchelon(maxLvl);
-				const usableMalice = group.malice
+				const usableMalice = groupMalice.features
 					.filter(m => m.data.echelon <= echelon)
+					.filter(m => !encounter.hiddenMaliceFeatures.includes(m.id))
 					.filter(m => seenMalice.has(m.id) ? false : seenMalice.add(m.id));
-				return ({ monster: group.name, malice: usableMalice });
+				return ({ monster: groupMalice.group, malice: usableMalice });
 			})
 			.filter(mg => mg.malice.length);
 

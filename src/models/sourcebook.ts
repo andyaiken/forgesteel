@@ -22,23 +22,23 @@ export interface Sourcebook extends Element {
 	type: SourcebookType;
 
 	ancestries: Ancestry[];
-	cultures: Culture[];
 	careers: Career[];
 	classes: HeroClass[];
 	complications: Complication[];
+	cultures: Culture[];
 	domains: Domain[];
-	kits: Kit[];
-	perks: Perk[];
-	titles: Title[];
-	items: Item[];
 	imbuements: Imbuement[];
+	items: Item[];
+	kits: Kit[];
 	monsterGroups: MonsterGroup[];
+	perks: Perk[];
+	projects: Project[];
 	subclasses: SubClass[];
 	terrain: Terrain[];
+	titles: Title[];
 
 	skills: Skill[];
 	languages: Language[];
-	projects: Project[];
 }
 
-export type SourcebookElementKind = 'ancestry' | 'culture' | 'career' | 'class' | 'subclass' | 'complication' | 'kit' | 'domain' | 'perk' | 'title' | 'item' | 'imbuement' | 'monster-group' | 'terrain';
+export type SourcebookElementKind = 'ancestry' | 'career' | 'class' | 'complication' | 'culture' | 'domain' | 'imbuement' | 'item' | 'kit' | 'monster-group' | 'perk' | 'project' | 'subclass' | 'terrain' | 'title';

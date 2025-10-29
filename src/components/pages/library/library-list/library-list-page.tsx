@@ -45,6 +45,8 @@ import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { Playbook } from '@/models/playbook';
 import { PlaybookLogic } from '@/logic/playbook-logic';
+import { Project } from '@/models/project';
+import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SelectorRow } from '@/components/panels/selector-row/selector-row';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -297,6 +299,20 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
+	const getProjects = () => {
+		try {
+			return SourcebookLogic
+				.getProjects(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
 	const getSubclasses = () => {
 		try {
 			return SourcebookLogic
@@ -379,6 +395,9 @@ export const LibraryListPage = (props: Props) => {
 			case 'perk':
 				list = getPerks();
 				break;
+			case 'project':
+				list = getProjects();
+				break;
 			case 'subclass':
 				list = getSubclasses();
 				break;
@@ -441,6 +460,9 @@ export const LibraryListPage = (props: Props) => {
 			case 'perk':
 				getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} options={props.options} mode={PanelMode.Full} />;
 				break;
+			case 'project':
+				getPanel = (element: Element) => <ProjectPanel key={element.id} project={element as Project} mode={PanelMode.Full} />;
+				break;
 			case 'subclass':
 				getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />;
 				break;
@@ -495,6 +517,9 @@ export const LibraryListPage = (props: Props) => {
 			case 'perk':
 				sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, element as Perk);
 				break;
+			case 'project':
+				sourcebook = SourcebookLogic.getProjectSourcebook(props.sourcebooks, element as Project);
+				break;
 			case 'subclass':
 				sourcebook = SourcebookLogic.getSubClassSourcebook(props.sourcebooks, element as SubClass);
 				break;
@@ -543,6 +568,17 @@ export const LibraryListPage = (props: Props) => {
 		if (category === 'perk') {
 			const perk = element as Perk;
 			return perk.list;
+		}
+
+		if (category === 'project') {
+			const project = element as Project;
+			if (project.name.startsWith('Craft')) {
+				return 'Crafting';
+			}
+			if (project.name.startsWith('Imbue')) {
+				return 'Imbuing';
+			}
+			return 'Misc';
 		}
 
 		if (category === 'title') {
@@ -793,6 +829,7 @@ export const LibraryListPage = (props: Props) => {
 								<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
 								<SelectorRow selected={category === 'monster-group'} content='Monsters' info={props.options.showMonsterGroups ? getMonsterGroups().length : getMonsters().length} onSelect={() => navigation.goToLibrary('monster-group')} />
 								<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
+								<SelectorRow selected={category === 'project'} content='Projects' info={getProjects().length} onSelect={() => navigation.goToLibrary('project')} />
 								<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
 								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
 								<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />

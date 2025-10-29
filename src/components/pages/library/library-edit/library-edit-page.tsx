@@ -52,6 +52,8 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
+import { Project } from '@/models/project';
+import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -123,6 +125,9 @@ export const LibraryEditPage = (props: Props) => {
 				break;
 			case 'perk':
 				original = sourcebook.perks.find(e => e.id === elementID)!;
+				break;
+			case 'project':
+				original = sourcebook.projects.find(e => e.id === elementID)!;
 				break;
 			case 'subclass':
 				original = sourcebook.subclasses.find(e => e.id === elementID)!;
@@ -308,15 +313,6 @@ export const LibraryEditPage = (props: Props) => {
 						onChange={applyChanges}
 					/>
 				);
-			case 'culture':
-				return (
-					<CultureEditPanel
-						key={element.id}
-						culture={element as Culture}
-						sourcebooks={props.sourcebooks}
-						onChange={applyChanges}
-					/>
-				);
 			case 'career':
 				return (
 					<CareerEditPanel
@@ -360,16 +356,6 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
-			case 'subclass':
-				return (
-					<SubClassEditPanel
-						key={element.id}
-						subClass={element as SubClass}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onChange={applyChanges}
-					/>
-				);
 			case 'complication':
 				return (
 					<ComplicationEditPanel
@@ -377,6 +363,15 @@ export const LibraryEditPage = (props: Props) => {
 						complication={element as Complication}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
+						onChange={applyChanges}
+					/>
+				);
+			case 'culture':
+				return (
+					<CultureEditPanel
+						key={element.id}
+						culture={element as Culture}
+						sourcebooks={props.sourcebooks}
 						onChange={applyChanges}
 					/>
 				);
@@ -390,41 +385,21 @@ export const LibraryEditPage = (props: Props) => {
 						onChange={applyChanges}
 					/>
 				);
-			case 'kit':
+			case 'subclass':
 				return (
-					<KitEditPanel
+					<SubClassEditPanel
 						key={element.id}
-						kit={element as Kit}
+						subClass={element as SubClass}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onChange={applyChanges}
 					/>
 				);
-			case 'perk':
+			case 'imbuement':
 				return (
-					<FeatureEditPanel
+					<ImbuementEditPanel
 						key={element.id}
-						feature={element as Perk}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onChange={applyChanges}
-					/>
-				);
-			case 'terrain':
-				return (
-					<TerrainEditPanel
-						key={element.id}
-						terrain={element as Terrain}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onChange={applyChanges}
-					/>
-				);
-			case 'title':
-				return (
-					<TitleEditPanel
-						key={element.id}
-						title={element as Title}
+						imbuement={element as Imbuement}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onChange={applyChanges}
@@ -440,11 +415,11 @@ export const LibraryEditPage = (props: Props) => {
 						onChange={applyChanges}
 					/>
 				);
-			case 'imbuement':
+			case 'kit':
 				return (
-					<ImbuementEditPanel
+					<KitEditPanel
 						key={element.id}
-						imbuement={element as Imbuement}
+						kit={element as Kit}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onChange={applyChanges}
@@ -485,6 +460,45 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
+			case 'perk':
+				return (
+					<FeatureEditPanel
+						key={element.id}
+						feature={element as Perk}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
+					/>
+				);
+			case 'project':
+				return (
+					<ProjectEditPanel
+						key={element.id}
+						project={element as Project}
+						includeNameAndDescription={true}
+						onChange={applyChanges}
+					/>
+				);
+			case 'terrain':
+				return (
+					<TerrainEditPanel
+						key={element.id}
+						terrain={element as Terrain}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
+					/>
+				);
+			case 'title':
+				return (
+					<TitleEditPanel
+						key={element.id}
+						title={element as Title}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
+					/>
+				);
 		}
 
 		return null;
@@ -574,6 +588,12 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
 						<PerkPanel perk={element as Perk} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'project':
+				return (
+					<SelectablePanel key={`${element.id}-${revision}`}>
+						<ProjectPanel project={element as Project} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'subclass':

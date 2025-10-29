@@ -56,6 +56,7 @@ import { PlaybookListPage } from '@/components/pages/playbook/playbook-list/play
 import { PlaybookLogic } from '@/logic/playbook-logic';
 import { PlaybookUpdateLogic } from '@/logic/update/playbook-update-logic';
 import { PlayerViewModal } from '@/components/modals/player-view/player-view-modal';
+import { Project } from '@/models/project';
 import { ReferenceModal } from '@/components/modals/reference/reference-modal';
 import { RollModal } from '@/components/modals/roll/roll-modal';
 import { RulesPage } from '@/enums/rules-page';
@@ -621,6 +622,28 @@ export const Main = (props: Props) => {
 			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('perk', sourcebook.id, perk.id));
 		};
 
+		const createProject = (original: Project | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let project: Project;
+			if (original) {
+				project = Utils.copy(original);
+				project.id = Utils.guid();
+			} else {
+				project = FactoryLogic.createProject({});
+			}
+
+			sourcebook.projects.push(project);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('project', sourcebook.id, project.id));
+		};
+
 		const createSubClass = (original: SubClass | null, sourcebook: Sourcebook | null) => {
 			const sourcebooks = Utils.copy(homebrewSourcebooks);
 			if (!sourcebook) {
@@ -724,6 +747,9 @@ export const Main = (props: Props) => {
 			case 'perk':
 				createPerk(original as Perk | null, sourcebook);
 				break;
+			case 'project':
+				createProject(original as Project | null, sourcebook);
+				break;
 			case 'terrain':
 				createTerrain(original as Terrain | null, sourcebook);
 				break;
@@ -775,6 +801,9 @@ export const Main = (props: Props) => {
 					break;
 				case 'perk':
 					sourcebook.perks = sourcebook.perks.filter(x => x.id !== element.id);
+					break;
+				case 'project':
+					sourcebook.projects = sourcebook.projects.filter(x => x.id !== element.id);
 					break;
 				case 'terrain':
 					sourcebook.terrain = sourcebook.terrain.filter(x => x.id !== element.id);
@@ -829,6 +858,9 @@ export const Main = (props: Props) => {
 				case 'perk':
 					sourcebook.perks = sourcebook.perks.map(x => x.id === element.id ? element : x) as Perk[];
 					break;
+				case 'project':
+					sourcebook.projects = sourcebook.projects.map(x => x.id === element.id ? element : x) as Project[];
+					break;
 				case 'terrain':
 					sourcebook.terrain = sourcebook.terrain.map(x => x.id === element.id ? element : x) as Terrain[];
 					break;
@@ -865,6 +897,7 @@ export const Main = (props: Props) => {
 			...sourcebooks.flatMap(sb => sb.kits),
 			...sourcebooks.flatMap(sb => sb.monsterGroups),
 			...sourcebooks.flatMap(sb => sb.perks),
+			...sourcebooks.flatMap(sb => sb.projects),
 			...sourcebooks.flatMap(sb => sb.terrain),
 			...sourcebooks.flatMap(sb => sb.titles)
 		];
@@ -919,6 +952,10 @@ export const Main = (props: Props) => {
 			case 'perk':
 				sourcebook.perks.push(element as Perk);
 				sourcebook.perks = Collections.sort<Element>(sourcebook.perks, item => item.name) as Perk[];
+				break;
+			case 'project':
+				sourcebook.projects.push(element as Project);
+				sourcebook.projects = Collections.sort<Element>(sourcebook.projects, item => item.name) as Project[];
 				break;
 			case 'terrain':
 				sourcebook.terrain.push(element as Terrain);

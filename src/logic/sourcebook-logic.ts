@@ -104,6 +104,10 @@ export class SourcebookLogic {
 		return sourcebooks.find(s => s.monsterGroups.find(mg => mg.monsters.some(m => m.id === monster.id)));
 	};
 
+	static getProjectSourcebook = (sourcebooks: Sourcebook[], project: Project) => {
+		return sourcebooks.find(s => s.projects.find(p => p.id === project.id));
+	};
+
 	static getTerrainSourcebook = (sourcebooks: Sourcebook[], terrain: Terrain) => {
 		return sourcebooks.find(s => s.terrain.find(t => t.id === terrain.id));
 	};

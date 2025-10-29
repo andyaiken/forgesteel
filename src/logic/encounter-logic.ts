@@ -1,8 +1,10 @@
 import { Encounter, EncounterGroup } from '@/models/encounter';
 import { EncounterSlot, EncounterSlotCustomization } from '@/models/encounter-slot';
+import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { Collections } from '@/utils/collections';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
+import { MonsterData } from '@/data/monster-data';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { Options } from '@/models/options';
@@ -217,6 +219,20 @@ export class EncounterLogic {
 		malice += encounter.round + 1;
 
 		return malice;
+	};
+
+	static getAllMaliceFeatures = (encounter: Encounter, sourcebooks: Sourcebook[]): { group: string, features: (FeatureMalice | FeatureMaliceAbility)[] }[] => {
+		const monsterGroups = this.getMonsterGroups(encounter, sourcebooks);
+		const result: { group: string, features: (FeatureMalice | FeatureMaliceAbility)[] }[] = [
+			{ group: 'Basic', features: MonsterData.malice }
+		];
+		monsterGroups.filter(group => group.malice.length > 0)
+			.forEach(group => {
+				result.push(
+					{ group: group.name, features: group.malice }
+				);
+			});
+		return result;
 	};
 
 	static getCombatants = (encounter: Encounter) => {

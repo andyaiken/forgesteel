@@ -27,6 +27,7 @@ export interface EncounterObjective extends Element {
 
 export interface Encounter extends Element {
 	groups: EncounterGroup[];
+	hiddenMaliceFeatures: string[];
 	terrain: TerrainSlot[];
 	heroes: Hero[];
 	objective: EncounterObjective | null;

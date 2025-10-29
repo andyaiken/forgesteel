@@ -635,6 +635,7 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			groups: [],
+			hiddenMaliceFeatures: [],
 			terrain: [],
 			heroes: [],
 			objective: null,

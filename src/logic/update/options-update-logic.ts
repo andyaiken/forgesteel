@@ -24,9 +24,9 @@ export class OptionsUpdateLogic {
 			options.abilityWidth = PanelWidth.Medium;
 		}
 
-		if (options.includePlayState === undefined) {
-			options.includePlayState = false;
-		}
+		// Rather than remove this feature, disable it every session
+		// to minimize confusion for those who don't know it's even there
+		options.includePlayState = false;
 
 		if (options.colorSheet === undefined) {
 			options.colorSheet = true;

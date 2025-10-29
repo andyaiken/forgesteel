@@ -10,6 +10,7 @@ import { Playbook } from '@/models/playbook.ts';
 import { PlaybookUpdateLogic } from '@/logic/update/playbook-update-logic.ts';
 import { Sourcebook } from '@/models/sourcebook.ts';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -32,8 +33,8 @@ if ('serviceWorker' in navigator) {
 }
 
 const promises = [
-	localforage.getItem<Hero[]>('forgesteel-heroes'),
 	localforage.getItem<Sourcebook[]>('forgesteel-homebrew-settings'),
+	localforage.getItem<Hero[]>('forgesteel-heroes'),
 	localforage.getItem<string[]>('forgesteel-hidden-setting-ids'),
 	localforage.getItem<Playbook>('forgesteel-playbook'),
 	localforage.getItem<Playbook>('forgesteel-session'),
@@ -43,12 +44,13 @@ const promises = [
 Promise.all(promises).then(results => {
 	// #region Homebrew sourcebooks
 
-	let sourcebooks = results[1] as Sourcebook[] | null;
+	let sourcebooks = results[0] as Sourcebook[] | null;
 	if (!sourcebooks) {
 		sourcebooks = [];
 	}
 
 	sourcebooks.forEach(sourcebook => {
+		sourcebook.type = SourcebookType.Homebrew;
 		SourcebookUpdateLogic.updateSourcebook(sourcebook);
 	});
 
@@ -73,7 +75,7 @@ Promise.all(promises).then(results => {
 
 	// #region Heroes
 
-	let heroes = results[0] as Hero[] | null;
+	let heroes = results[1] as Hero[] | null;
 	if (!heroes) {
 		heroes = [];
 	}

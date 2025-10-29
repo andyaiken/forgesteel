@@ -6,19 +6,25 @@ interface FeatureFlag {
 export class FeatureFlags {
 	// #region List of all the recognised flags
 
-	static playtest: FeatureFlag = {
-		code: -1755389952,
-		description: 'Access to playtest material'
-	};
-
 	static interactiveContent: FeatureFlag = {
 		code: 2135415398,
 		description: 'Interactive content display'
 	};
 
+	static playtest: FeatureFlag = {
+		code: -1755389952, // Glauer
+		description: 'Access to playtest material'
+	};
+
+	static ratcatcher: FeatureFlag = {
+		code: 69601744, // Heden
+		description: 'Access to material from Ratcatcher Magazine'
+	};
+
 	private static all = [
+		FeatureFlags.interactiveContent,
 		FeatureFlags.playtest,
-		FeatureFlags.interactiveContent
+		FeatureFlags.ratcatcher
 	];
 
 	// #endregion

@@ -13,12 +13,13 @@ import { MonsterGroup } from '@/models/monster-group';
 import { Perk } from '@/models/perk';
 import { Project } from '@/models/project';
 import { Skill } from '@/models/skill';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { SubClass } from '@/models/subclass';
 import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
 
 export interface Sourcebook extends Element {
-	isHomebrew: boolean;
+	type: SourcebookType;
 
 	ancestries: Ancestry[];
 	cultures: Culture[];

@@ -13,15 +13,51 @@ import { LanguageType } from '@/enums/language-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
-import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Random } from '@/utils/random';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { Utils } from '@/utils/utils';
 
 import './sourcebook-panel.scss';
 
 interface Props {
+	sourcebook: Sourcebook;
+}
+
+export const SourcebookPanel = (props: Props) => {
+	const elements = SourcebookLogic.getElements(props.sourcebook).map(e => e.name);
+
+	const samples: string[] = [];
+	if (elements.length > 3) {
+		const rng = Random.getSeededRNG(props.sourcebook.name);
+		samples.push(Collections.draw(elements, rng));
+		samples.push(Collections.draw(elements, rng));
+		samples.push(Collections.draw(elements, rng));
+	}
+
+	return (
+		<ErrorBoundary>
+			<div className='sourcebook-panel' id={props.sourcebook.id}>
+				<HeaderText
+					tags={[ props.sourcebook.type ]}
+				>
+					{props.sourcebook.name || 'Unnamed Sourcebook'}
+				</HeaderText>
+				<Markdown text={props.sourcebook.description} />
+				{
+					samples.length === 0 ?
+						<div className='ds-text'>{elements.length} elements</div>
+						:
+						<div className='ds-text'>{elements.length} elements, including {Collections.sort(samples, s => s).join(', ')}</div>
+				}
+			</div>
+		</ErrorBoundary>
+	);
+};
+
+interface EditorProps {
 	sourcebook: Sourcebook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
@@ -31,7 +67,7 @@ interface Props {
 	onDelete: (sourcebook: Sourcebook) => void;
 }
 
-export const SourcebookPanel = (props: Props) => {
+export const SourcebookEditorPanel = (props: EditorProps) => {
 	const [ sourcebook, setSourcebook ] = useState<Sourcebook>(Utils.copy(props.sourcebook));
 	const [ isEditing, setIsEditing ] = useState<boolean>(false);
 
@@ -289,23 +325,38 @@ export const SourcebookPanel = (props: Props) => {
 			</Space>
 		);
 
-		if (sourcebook.isHomebrew) {
+		if (sourcebook.type === SourcebookType.Homebrew) {
 			buttons.push(
 				<Button key='save' type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
 			);
 		}
 	} else {
+		const elements = SourcebookLogic.getElements(sourcebook).map(e => e.name);
+
+		const samples: string[] = [];
+		if (elements.length > 3) {
+			const rng = Random.getSeededRNG(sourcebook.name);
+			samples.push(Collections.draw(elements, rng));
+			samples.push(Collections.draw(elements, rng));
+			samples.push(Collections.draw(elements, rng));
+		}
+
 		content = (
 			<>
 				<Markdown text={props.sourcebook.description} />
-				<div className='ds-text'>{SourcebookLogic.getElementCount(sourcebook)} elements</div>
+				{
+					samples.length === 0 ?
+						<div className='ds-text'>{elements.length} elements</div>
+						:
+						<div className='ds-text'>{elements.length} elements, including {Collections.sort(samples, s => s).join(', ')}</div>
+				}
 			</>
 		);
 
 		buttons.push(
 			<Button key='show-hide' type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
 		);
-		if (sourcebook.isHomebrew) {
+		if (sourcebook.type === SourcebookType.Homebrew) {
 			buttons.push(
 				<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} />
 			);
@@ -320,17 +371,15 @@ export const SourcebookPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<SelectablePanel>
-				<div className='sourcebook-panel' id={sourcebook.id}>
-					<HeaderText
-						tags={sourcebook.isHomebrew ? [ 'Homebrew' ] : []}
-						extra={<Flex>{buttons}</Flex>}
-					>
-						{sourcebook.name || 'Unnamed Sourcebook'}
-					</HeaderText>
-					{content}
-				</div>
-			</SelectablePanel>
+			<div className='sourcebook-panel' id={sourcebook.id}>
+				<HeaderText
+					tags={[ sourcebook.type ]}
+					extra={<Flex>{buttons}</Flex>}
+				>
+					{sourcebook.name || 'Unnamed Sourcebook'}
+				</HeaderText>
+				{content}
+			</div>
 		</ErrorBoundary>
 	);
 };

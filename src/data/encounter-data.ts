@@ -148,7 +148,8 @@ export class EncounterData {
 		initiative: undefined,
 		round: 1,
 		malice: 0,
-		additionalTurnsTaken: []
+		additionalTurnsTaken: [],
+		hiddenMaliceFeatures: []
 	};
 
 	static dragonAttack: Encounter = {
@@ -193,6 +194,7 @@ export class EncounterData {
 		initiative: undefined,
 		round: 1,
 		malice: 0,
-		additionalTurnsTaken: []
+		additionalTurnsTaken: [],
+		hiddenMaliceFeatures: []
 	};
 }

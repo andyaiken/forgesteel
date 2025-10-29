@@ -1,11 +1,11 @@
-import { Button, Divider, Select, Upload } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
+import { Button, Drawer } from 'antd';
+import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
-import { Utils } from '@/utils/utils';
+import { SourcebookSelectModal } from '@/components/modals/select/sourcebook-select/sourcebook-select-modal';
+import { useState } from 'react';
 
 import './start-section.scss';
 
@@ -17,6 +17,8 @@ interface Props {
 }
 
 export const StartSection = (props: Props) => {
+	const [ sourcebookSelectOpen, setSourcebookSelectOpen ] = useState<boolean>(false);
+
 	return (
 		<div className='hero-edit-content start-section'>
 			<div className='hero-edit-content-column single-column selected'>
@@ -44,46 +46,44 @@ export const StartSection = (props: Props) => {
 				<SelectablePanel>
 					<HeaderText>Sourcebooks</HeaderText>
 					<div className='ds-text'>
-						Sourcebooks contain ancestries, classes, kits, and so on.
-						If you have a homebrew sourcebook you'd like to use for this hero, you can include it here.
+						This hero can use content from the following sourcebooks:
 					</div>
-					<Select
-						style={{ width: '100%' }}
-						placeholder='Select'
-						mode='multiple'
-						options={props.sourcebooks.map(cs => ({ value: cs.id, label: cs.name || 'Unnamed Sourcebook' }))}
-						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						popupRender={menu => (
-							<>
-								{menu}
-								<Divider style={{ margin: '8px 0' }} />
-								<Upload
-									style={{ width: '100%' }}
-									accept='.drawsteel-sourcebook,.ds-sourcebook'
-									showUploadList={false}
-									beforeUpload={file => {
-										file
-											.text()
-											.then(json => {
-												const sourcebook = JSON.parse(json) as Sourcebook;
-												sourcebook.id = Utils.guid();
-												SourcebookUpdateLogic.updateSourcebook(sourcebook);
-												props.importSourcebook(sourcebook);
-											});
-										return false;
-									}}
-								>
-									<Button block={true} icon={<DownloadOutlined />}>Import a sourcebook</Button>
-								</Upload>
-							</>
-						)}
-						showSearch={true}
-						filterOption={(input, option) => { return (option?.label || '').toLowerCase().includes(input.toLowerCase()); }}
-						value={props.hero.settingIDs}
-						onChange={props.setSettingIDs}
-					/>
+					<ul>
+						{
+							props.hero.settingIDs.map(id => {
+								const sb = props.sourcebooks.find(x => x.id === id);
+								return sb ?
+									<li key={sb.id}>
+										<Field label={sb.name || 'Unnamed Sourcebook'} value={sb.description} />
+									</li>
+									: null;
+							})
+						}
+						{
+							props.hero.settingIDs.length === 0 ?
+								<li key='empty'>
+									None
+								</li>
+								: null
+						}
+					</ul>
+					<div className='ds-text'>
+						If you have a homebrew sourcebook you'd like to use for this hero, you should include it here.
+					</div>
+					<Button block={true} onClick={() => setSourcebookSelectOpen(true)}>
+						Select Sourcebooks
+					</Button>
 				</SelectablePanel>
 			</div>
+			<Drawer open={sourcebookSelectOpen} onClose={() => setSourcebookSelectOpen(false)} closeIcon={null} width='500px'>
+				<SourcebookSelectModal
+					selectedIDs={props.hero.settingIDs}
+					sourcebooks={props.sourcebooks}
+					onSelect={props.setSettingIDs}
+					onImport={props.importSourcebook}
+					onClose={() => setSourcebookSelectOpen(false)}
+				/>
+			</Drawer>
 		</div>
 	);
 };

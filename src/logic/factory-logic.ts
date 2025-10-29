@@ -55,6 +55,7 @@ import { RetainerLogic } from '@/logic/retainer-logic';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { Size } from '@/models/size';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { Speed } from '@/models/speed';
 import { SubClass } from '@/models/subclass';
 import { Summon } from '@/models/summon';
@@ -124,7 +125,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			isHomebrew: true,
+			type: SourcebookType.Homebrew,
 			ancestries: [],
 			cultures: [],
 			careers: [],
@@ -635,7 +636,6 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			groups: [],
-			hiddenMaliceFeatures: [],
 			terrain: [],
 			heroes: [],
 			objective: null,
@@ -643,7 +643,8 @@ export class FactoryLogic {
 			initiative: undefined,
 			round: 0,
 			malice: 0,
-			additionalTurnsTaken: []
+			additionalTurnsTaken: [],
+			hiddenMaliceFeatures: []
 		};
 	};
 

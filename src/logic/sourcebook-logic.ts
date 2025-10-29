@@ -5,6 +5,7 @@ import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
+import { Element } from '@/models/element';
 import { Feature } from '@/models/feature';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { FeatureType } from '@/enums/feature-type';
@@ -27,23 +28,24 @@ import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
 
 export class SourcebookLogic {
-	static getElementCount = (sourcebook: Sourcebook) => {
-		let count = 0;
-
-		count += sourcebook.ancestries.length;
-		count += sourcebook.cultures.length;
-		count += sourcebook.careers.length;
-		count += sourcebook.classes.length;
-		count += sourcebook.complications.length;
-		count += sourcebook.kits.length;
-		count += sourcebook.domains.length;
-		count += sourcebook.perks.length;
-		count += sourcebook.items.length;
-		count += sourcebook.monsterGroups.length;
-		count += sourcebook.subclasses.length;
-		count += sourcebook.terrain.length;
-
-		return count;
+	static getElements = (sourcebook: Sourcebook): Element[] => {
+		return [
+			...sourcebook.ancestries,
+			...sourcebook.careers,
+			...sourcebook.classes,
+			...sourcebook.complications,
+			...sourcebook.cultures,
+			...sourcebook.domains,
+			...sourcebook.imbuements,
+			...sourcebook.items,
+			...sourcebook.kits,
+			...sourcebook.monsterGroups,
+			...sourcebook.perks,
+			...sourcebook.projects,
+			...sourcebook.subclasses,
+			...sourcebook.terrain,
+			...sourcebook.titles
+		];
 	};
 
 	static getAncestrySourcebook = (sourcebooks: Sourcebook[], ancestry: Ancestry) => {
@@ -116,6 +118,10 @@ export class SourcebookLogic {
 
 		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
 			list.push(SourcebookData.playtest);
+		}
+
+		if (FeatureFlags.hasFlag(FeatureFlags.ratcatcher.code)) {
+			list.push(SourcebookData.ratcatcher);
 		}
 
 		list.push(...Collections.sort(homebrew, cs => cs.name));

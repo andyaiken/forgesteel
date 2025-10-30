@@ -483,24 +483,26 @@ export const EncounterRunPanel = (props: Props) => {
 						{
 							key: 'active',
 							label: active.length > 1 ? 'Active Monsters' : 'Active Monster',
-							children: active.map(m => (
-								<MonsterPanel
-									key={m.monster.id}
-									monster={m.monster}
-									options={props.options}
-									mode={PanelMode.Full}
-									style={{ padding: 0 }}
-									extra={[
-										<Button
-											key='select'
-											type='text'
-											title='Show stat block'
-											icon={<InfoCircleOutlined />}
-											onClick={() => setSelectedMonster(m)}
-										/>
-									]}
-								/>
-							))
+							children: (
+								active.map(m => (
+									<MonsterPanel
+										key={m.monster.id}
+										monster={m.monster}
+										options={props.options}
+										mode={PanelMode.Full}
+										style={{ padding: '0 5px' }}
+										extra={[
+											<Button
+												key='select'
+												type='text'
+												title='Show stat block'
+												icon={<InfoCircleOutlined />}
+												onClick={() => setSelectedMonster(m)}
+											/>
+										]}
+									/>
+								))
+							)
 						},
 						{
 							key: 'malice',

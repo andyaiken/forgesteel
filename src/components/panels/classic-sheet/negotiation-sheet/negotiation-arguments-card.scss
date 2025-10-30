@@ -1,0 +1,55 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .negotiation-arguments.card {
+    .arguments-tracker-table {
+        display: grid;
+        margin-bottom: 5px;
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr min-content;
+
+            border-bottom: 2px solid common.$color-light;
+            line-height: round(2rem, 1px);
+            padding: 10px 20px;
+            padding-left: 5px;
+
+            &:nth-of-type(even) {
+                background: common.$color-extra-light;
+            }
+
+            &.header {
+                padding-top: 0;
+                & div {
+                    @include common.font-slab;
+                    font-weight: 550;
+                    font-size: round(1.3rem, 1px);
+                    text-wrap: nowrap;
+                }
+            }
+
+            .motivation-indicator {
+                grid-column-start: 2;
+                display: grid;
+                grid-template-columns: min-content min-content;
+
+                .labeled-boolean-content span {
+                    font-size: round(2.2rem, 1px);
+                    font-weight: 700;
+                }
+
+                .space {
+                    margin-left: 5px;
+                    width: 11rem;
+                    border-bottom: 2px solid common.$color-medium;
+                }
+            }
+        }
+    }
+
+    .reference-rolls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+}

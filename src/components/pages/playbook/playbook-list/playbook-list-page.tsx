@@ -21,6 +21,7 @@ import { MontagePanel } from '@/components/panels/elements/montage-panel/montage
 import { MontageSheetPage } from '@/components/panels/classic-sheet/montage-sheet/montage-sheet-page';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
+import { NegotiationSheetPage } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-sheet-page';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlaybookLogic } from '@/logic/playbook-logic';
@@ -67,6 +68,8 @@ export const PlaybookListPage = (props: Props) => {
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 	const [ view, setView ] = useState<'modern' | 'classic'>('modern');
 	useTitle('Playbook');
+
+	const categoriesWithClassicView = [ 'encounter', 'montage', 'negotiation' ];
 
 	if (kind !== previousCategory) {
 		setCategory(kind || 'adventure');
@@ -269,7 +272,27 @@ export const PlaybookListPage = (props: Props) => {
 				};
 				break;
 			case 'negotiation':
-				getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => {
+					if (view === 'classic') {
+						return (
+							<NegotiationSheetPage
+								key={element.id}
+								negotiation={element as Negotiation}
+								options={props.options}
+							/>
+						);
+					} else {
+						return (
+							<NegotiationPanel
+								key={element.id}
+								negotiation={element as Negotiation}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								mode={PanelMode.Full}
+							/>
+						);
+					}
+				};
 				break;
 			case 'tactical-map':
 				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
@@ -302,17 +325,17 @@ export const PlaybookListPage = (props: Props) => {
 							:
 							<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 								{
-									[ 'encounter', 'montage' ].includes(category) && view !== 'classic' ?
+									categoriesWithClassicView.includes(category) && view !== 'classic' ?
 										<Alert
 											type='info'
 											showIcon={true}
-											message='To export your encounter as a PDF, switch to Classic view.'
+											message='To export as a PDF, switch to Classic view.'
 											action={<Button onClick={() => setView('classic')}>Classic</Button>}
 										/>
 										: null
 								}
 								{
-									[ 'encounter', 'montage' ].includes(category) && view === 'classic' ?
+									categoriesWithClassicView.includes(category) && view === 'classic' ?
 										<>
 											<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export as PDF</Button>
 											<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export as PDF (high res)</Button>
@@ -320,7 +343,7 @@ export const PlaybookListPage = (props: Props) => {
 										: null
 								}
 								{
-									![ 'encounter', 'montage' ].includes(category) ?
+									!categoriesWithClassicView.includes(category) ?
 										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
 										: null
 								}
@@ -431,7 +454,7 @@ export const PlaybookListPage = (props: Props) => {
 							: null
 					}
 					{
-						(category === 'encounter') || (category === 'montage') ?
+						categoriesWithClassicView.includes(category) ?
 							<Popover
 								trigger='click'
 								content={(

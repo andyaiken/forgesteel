@@ -21,16 +21,10 @@ export const MontageChallengesCard = (props: Props) => {
 				<section className='bordered'>
 					<h3>Hazards</h3>
 					<Markdown text={montage.hazards} />
-					{/* {
-						montage.hazards.map(h => (<p>{h}</p>))
-					} */}
 				</section>
 				<section className='bordered'>
 					<h3>Events</h3>
 					<Markdown text={montage.eventsNotes} />
-					{/* {
-						montage.eventsNotes.map(n => (<p>{n}</p>))
-					} */}
 				</section>
 			</div>
 			<div className='test-table'>

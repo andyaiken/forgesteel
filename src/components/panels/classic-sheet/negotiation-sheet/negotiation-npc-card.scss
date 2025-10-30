@@ -1,0 +1,53 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .negotiation-npc.card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content 1fr min-content;
+    gap: 10px;
+
+    h2 {
+        grid-column-end: span 2;
+    }
+
+    .uncover-roll {
+        margin-bottom: 5px;
+        h3 {
+            margin-top: 0;
+        }
+    } 
+
+    section.bordered:not(#priority) {
+        margin-bottom: 5px;
+        position: relative;
+
+        .traits {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: -5px;
+
+            h4 {
+                border-bottom: 2px solid common.$color-light;
+                font-size: round(1.3rem, 1px);
+                line-height: round(1.8rem, 1px);
+            }
+        }
+
+        p:not(.reference) strong {
+            font-size: round(1.1rem, 1px);
+        }
+
+        p.reference strong {
+            color: var(--color-text);
+        }
+
+        div:last-of-type p {
+            margin-bottom: 0;
+        }
+
+        .languages {
+            font-size: round(1.4rem, 1px);;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .negotiation-header.card {
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+    grid-template-rows: min-content min-content;
+    gap: 10px;
+
+    section.overview {
+        display: flex;
+        align-items: center;
+
+        .labeled-field {
+            flex-grow: 1;
+        }
+    }
+
+    section.stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

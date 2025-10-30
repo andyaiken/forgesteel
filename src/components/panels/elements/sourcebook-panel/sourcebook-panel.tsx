@@ -13,7 +13,6 @@ import { LanguageType } from '@/enums/language-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
-import { Random } from '@/utils/random';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -22,21 +21,30 @@ import { Utils } from '@/utils/utils';
 
 import './sourcebook-panel.scss';
 
+const getSourcebookContent = (sourcebook: Sourcebook) => {
+	const elementCount = SourcebookLogic.getElements(sourcebook).length;
+	return (
+		<>
+			<Markdown text={sourcebook.description} />
+			{
+				elementCount < 3 ?
+					<div className='ds-text'>
+						{elementCount} elements
+					</div>
+					:
+					<div className='ds-text'>
+						{elementCount} elements, including {SourcebookLogic.getExampleContent(sourcebook).join(', ')}
+					</div>
+			}
+		</>
+	);
+};
+
 interface Props {
 	sourcebook: Sourcebook;
 }
 
 export const SourcebookPanel = (props: Props) => {
-	const elements = SourcebookLogic.getElements(props.sourcebook).map(e => e.name);
-
-	const samples: string[] = [];
-	if (elements.length > 3) {
-		const rng = Random.getSeededRNG(props.sourcebook.name);
-		samples.push(Collections.draw(elements, rng));
-		samples.push(Collections.draw(elements, rng));
-		samples.push(Collections.draw(elements, rng));
-	}
-
 	return (
 		<ErrorBoundary>
 			<div className='sourcebook-panel' id={props.sourcebook.id}>
@@ -45,13 +53,7 @@ export const SourcebookPanel = (props: Props) => {
 				>
 					{props.sourcebook.name || 'Unnamed Sourcebook'}
 				</HeaderText>
-				<Markdown text={props.sourcebook.description} />
-				{
-					samples.length === 0 ?
-						<div className='ds-text'>{elements.length} elements</div>
-						:
-						<div className='ds-text'>{elements.length} elements, including {Collections.sort(samples, s => s).join(', ')}</div>
-				}
+				{getSourcebookContent(props.sourcebook)}
 			</div>
 		</ErrorBoundary>
 	);
@@ -71,123 +73,6 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 	const [ sourcebook, setSourcebook ] = useState<Sourcebook>(Utils.copy(props.sourcebook));
 	const [ isEditing, setIsEditing ] = useState<boolean>(false);
 
-	const toggleEditing = () => {
-		setIsEditing(!isEditing);
-	};
-
-	const onExport = () => {
-		Utils.export([ sourcebook.id ], sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook', 'json');
-	};
-
-	const onDelete = () => {
-		props.onDelete(sourcebook);
-	};
-
-	const setName = (value: string) => {
-		const copy = Utils.copy(sourcebook);
-		copy.name = value;
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const setDescription = (value: string) => {
-		const copy = Utils.copy(sourcebook);
-		copy.description = value;
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const addLanguage = () => {
-		const copy = Utils.copy(sourcebook);
-		copy.languages.push({ name: '', description: '', type: LanguageType.Cultural, related: [] });
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const deleteLanguage = (index: number) => {
-		const copy = Utils.copy(sourcebook);
-		copy.languages.splice(index, 1);
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const moveLanguage = (index: number, direction: 'up' | 'down') => {
-		const copy = Utils.copy(sourcebook);
-		copy.languages = Collections.move(copy.languages, index, direction);
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const setLanguageName = (index: number, value: string) => {
-		const copy = Utils.copy(sourcebook);
-		copy.languages[index].name = value;
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const setLanguageDescription = (index: number, value: string) => {
-		const copy = Utils.copy(sourcebook);
-		copy.languages[index].description = value;
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const setLanguageType = (index: number, value: LanguageType) => {
-		const copy = Utils.copy(sourcebook);
-		copy.languages[index].type = value;
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const setLanguageRelated = (index: number, value: string[]) => {
-		const copy = Utils.copy(sourcebook);
-		copy.languages[index].related = value;
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const addSkill = () => {
-		const copy = Utils.copy(sourcebook);
-		copy.skills.push({ name: '', description: '', list: SkillList.Crafting });
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const deleteSkill = (index: number) => {
-		const copy = Utils.copy(sourcebook);
-		copy.skills.splice(index, 1);
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const moveSkill = (index: number, direction: 'up' | 'down') => {
-		const copy = Utils.copy(sourcebook);
-		copy.skills = Collections.move(copy.skills, index, direction);
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const setSkillName = (index: number, value: string) => {
-		const copy = Utils.copy(sourcebook);
-		copy.skills[index].name = value;
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const setSkillDescription = (index: number, value: string) => {
-		const copy = Utils.copy(sourcebook);
-		copy.skills[index].description = value;
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
-	const setSkillList = (index: number, value: SkillList) => {
-		const copy = Utils.copy(sourcebook);
-		copy.skills[index].list = value;
-		setSourcebook(copy);
-		props.onChange(copy);
-	};
-
 	let content: ReactNode = null;
 	const buttons: ReactNode[] = [];
 
@@ -195,6 +80,111 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 		const languages = SourcebookLogic.getLanguages(props.sourcebooks as Sourcebook[]);
 		const distinctLanguages = Collections.distinct(languages, l => l.name);
 		const sortedLanguages = Collections.sort(distinctLanguages, l => l.name);
+
+		const setName = (value: string) => {
+			const copy = Utils.copy(sourcebook);
+			copy.name = value;
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const setDescription = (value: string) => {
+			const copy = Utils.copy(sourcebook);
+			copy.description = value;
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const addLanguage = () => {
+			const copy = Utils.copy(sourcebook);
+			copy.languages.push({ name: '', description: '', type: LanguageType.Cultural, related: [] });
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const deleteLanguage = (index: number) => {
+			const copy = Utils.copy(sourcebook);
+			copy.languages.splice(index, 1);
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const moveLanguage = (index: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(sourcebook);
+			copy.languages = Collections.move(copy.languages, index, direction);
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const setLanguageName = (index: number, value: string) => {
+			const copy = Utils.copy(sourcebook);
+			copy.languages[index].name = value;
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const setLanguageDescription = (index: number, value: string) => {
+			const copy = Utils.copy(sourcebook);
+			copy.languages[index].description = value;
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const setLanguageType = (index: number, value: LanguageType) => {
+			const copy = Utils.copy(sourcebook);
+			copy.languages[index].type = value;
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const setLanguageRelated = (index: number, value: string[]) => {
+			const copy = Utils.copy(sourcebook);
+			copy.languages[index].related = value;
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const addSkill = () => {
+			const copy = Utils.copy(sourcebook);
+			copy.skills.push({ name: '', description: '', list: SkillList.Crafting });
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const deleteSkill = (index: number) => {
+			const copy = Utils.copy(sourcebook);
+			copy.skills.splice(index, 1);
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const moveSkill = (index: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(sourcebook);
+			copy.skills = Collections.move(copy.skills, index, direction);
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const setSkillName = (index: number, value: string) => {
+			const copy = Utils.copy(sourcebook);
+			copy.skills[index].name = value;
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const setSkillDescription = (index: number, value: string) => {
+			const copy = Utils.copy(sourcebook);
+			copy.skills[index].description = value;
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
+
+		const setSkillList = (index: number, value: SkillList) => {
+			const copy = Utils.copy(sourcebook);
+			copy.skills[index].list = value;
+			setSourcebook(copy);
+			props.onChange(copy);
+		};
 
 		content = (
 			<Space direction='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
@@ -211,7 +201,11 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 					<MultiLine value={sourcebook.description} onChange={setDescription} />
 				</Expander>
 				<Expander title='Languages'>
-					<HeaderText>Languages</HeaderText>
+					<HeaderText
+						extra={<Button type='text' icon={<PlusOutlined />} onClick={addLanguage} />}
+					>
+						Languages
+					</HeaderText>
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{
 							sourcebook.languages.map((lang, n) => (
@@ -269,14 +263,14 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 								<Empty />
 								: null
 						}
-						<Button block={true} onClick={addLanguage}>
-							<PlusOutlined />
-							Add a new language
-						</Button>
 					</Space>
 				</Expander>
 				<Expander title='Skills'>
-					<HeaderText>Skills</HeaderText>
+					<HeaderText
+						extra={<Button type='text' icon={<PlusOutlined />} onClick={addSkill} />}
+					>
+						Skills
+					</HeaderText>
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{
 							sourcebook.skills.map((skill, n) => (
@@ -316,10 +310,6 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 								<Empty />
 								: null
 						}
-						<Button block={true} onClick={addSkill}>
-							<PlusOutlined />
-							Add a new skill
-						</Button>
 					</Space>
 				</Expander>
 			</Space>
@@ -327,44 +317,24 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 
 		if (sourcebook.type === SourcebookType.Homebrew) {
 			buttons.push(
-				<Button key='save' type='text' title='OK' icon={<CheckCircleOutlined />} onClick={toggleEditing} />
+				<Button key='save' type='text' title='OK' icon={<CheckCircleOutlined />} onClick={() => setIsEditing(false)} />
 			);
 		}
 	} else {
-		const elements = SourcebookLogic.getElements(sourcebook).map(e => e.name);
-
-		const samples: string[] = [];
-		if (elements.length > 3) {
-			const rng = Random.getSeededRNG(sourcebook.name);
-			samples.push(Collections.draw(elements, rng));
-			samples.push(Collections.draw(elements, rng));
-			samples.push(Collections.draw(elements, rng));
-		}
-
-		content = (
-			<>
-				<Markdown text={props.sourcebook.description} />
-				{
-					samples.length === 0 ?
-						<div className='ds-text'>{elements.length} elements</div>
-						:
-						<div className='ds-text'>{elements.length} elements, including {Collections.sort(samples, s => s).join(', ')}</div>
-				}
-			</>
-		);
+		content = getSourcebookContent(props.sourcebook);
 
 		buttons.push(
 			<Button key='show-hide' type='text' title='Show / Hide' icon={props.visible ? <EyeOutlined /> : <EyeInvisibleOutlined />} onClick={() => props.onSetVisible(sourcebook, !props.visible)} />
 		);
 		if (sourcebook.type === SourcebookType.Homebrew) {
 			buttons.push(
-				<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={toggleEditing} />
+				<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={() => setIsEditing(true)} />
 			);
 			buttons.push(
-				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={onExport} />
+				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={() => Utils.export([ sourcebook.id ], sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook', 'json')} />
 			);
 			buttons.push(
-				<DangerButton key='delete' disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={onDelete} />
+				<DangerButton key='delete' disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={() => props.onDelete(sourcebook)} />
 			);
 		}
 	}

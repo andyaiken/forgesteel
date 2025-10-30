@@ -19,6 +19,7 @@ import { MonsterGroup } from '@/models/monster-group';
 import { Options } from '@/models/options';
 import { Perk } from '@/models/perk';
 import { Project } from '@/models/project';
+import { Random } from '@/utils/random';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
@@ -28,24 +29,36 @@ import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
 
 export class SourcebookLogic {
-	static getElements = (sourcebook: Sourcebook): Element[] => {
+	static getElements = (sourcebook: Sourcebook): { element: Element, type: string }[] => {
 		return [
-			...sourcebook.ancestries,
-			...sourcebook.careers,
-			...sourcebook.classes,
-			...sourcebook.complications,
-			...sourcebook.cultures,
-			...sourcebook.domains,
-			...sourcebook.imbuements,
-			...sourcebook.items,
-			...sourcebook.kits,
-			...sourcebook.monsterGroups,
-			...sourcebook.perks,
-			...sourcebook.projects,
-			...sourcebook.subclasses,
-			...sourcebook.terrain,
-			...sourcebook.titles
+			...sourcebook.ancestries.map(x => ({ element: x, type: 'ancestry' })),
+			...sourcebook.careers.map(x => ({ element: x, type: 'career' })),
+			...sourcebook.classes.map(x => ({ element: x, type: 'class' })),
+			...sourcebook.complications.map(x => ({ element: x, type: 'complication' })),
+			...sourcebook.cultures.map(x => ({ element: x, type: 'culture' })),
+			...sourcebook.domains.map(x => ({ element: x, type: 'domain' })),
+			...sourcebook.imbuements.map(x => ({ element: x, type: 'imbuement' })),
+			...sourcebook.items.map(x => ({ element: x, type: 'item' })),
+			...sourcebook.kits.map(x => ({ element: x, type: 'kit' })),
+			...sourcebook.monsterGroups.map(x => ({ element: x, type: 'monster group' })),
+			...sourcebook.perks.map(x => ({ element: x, type: 'perk' })),
+			...sourcebook.projects.map(x => ({ element: x, type: 'project' })),
+			...sourcebook.subclasses.map(x => ({ element: x, type: 'subclass' })),
+			...sourcebook.terrain.map(x => ({ element: x, type: 'terrain' })),
+			...sourcebook.titles.map(x => ({ element: x, type: 'title' }))
 		];
+	};
+
+	static getExampleContent = (sourcebook: Sourcebook) => {
+		const elements = SourcebookLogic
+			.getElements(sourcebook)
+			.map(x => `${x.element.name} (${x.type})`);
+
+		const rng = Random.getSeededRNG(sourcebook.name);
+		const shuffled = Collections.shuffle(elements, rng);
+		const samples = shuffled.slice(0, 3);
+
+		return Collections.sort(samples, s => s);
 	};
 
 	static getAncestrySourcebook = (sourcebooks: Sourcebook[], ancestry: Ancestry) => {

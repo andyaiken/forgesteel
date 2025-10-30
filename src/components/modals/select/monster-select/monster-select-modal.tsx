@@ -22,7 +22,6 @@ interface Props {
 	monsters: Monster[];
 	subset?: 'mount' | 'retainer';
 	options: Options;
-	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (monster: Monster) => void;
 }
@@ -77,15 +76,7 @@ export const MonsterSelectModal = (props: Props) => {
 							sortedMonsters.map(m => (
 								<SelectablePanel
 									key={m.id}
-									onSelect={() => {
-										if (props.selectOriginal) {
-											props.onSelect(m);
-										} else {
-											const copy = Utils.copy(m);
-											copy.id = Utils.guid();
-											props.onSelect(copy);
-										}
-									}}
+									onSelect={() => props.onSelect(m)}
 								>
 									<MonsterPanel monster={m} options={props.options} />
 								</SelectablePanel>

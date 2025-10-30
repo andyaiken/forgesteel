@@ -788,7 +788,6 @@ export const EncounterRunPanel = (props: Props) => {
 				<MonsterSelectModal
 					monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 					options={props.options}
-					selectOriginal={true}
 					onClose={() => setAddingMonsters(false)}
 					onSelect={m => {
 						setAddingMonsters(false);

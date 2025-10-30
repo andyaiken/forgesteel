@@ -373,7 +373,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 						options={props.options}
-						selectOriginal={false}
 						onSelect={monster => {
 							copyMonster(monster);
 							setDrawerOpen(false);

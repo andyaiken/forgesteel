@@ -244,7 +244,6 @@ export const LibraryEditPage = (props: Props) => {
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 						options={props.options}
-						selectOriginal={true}
 						onSelect={monster => {
 							const copy = Utils.copy(scratchpadMonsters) as Monster[];
 							copy.push(monster);

@@ -162,14 +162,17 @@ const WelcomeContent = (props: WelcomeContentProps) => {
 					<ul>
 						<li>
 							You can build <b>encounters</b>, ensuring that they're perfectly balanced for your heroes.
-							Add monsters and terrain objects, and the app will automatically calculate the encounter's difficulty.
-							You can specify the encounter objectives, or you can use one of the predefined options.
+							Add monsters and terrain objects, and the app will automatically calculate the encounter's difficulty - or let the app generate a random encounter for you.
+							You can specify the encounter's objectives, or you can use one of the predefined options.
 						</li>
 						<li>
-							You can build <b>montage tests</b> - or copy a predefined one - laying out all the options the players can take and how many times they can take them.
+							You can build <b>montage tests</b>, laying out all the options the players can take and how many times they can take them.
 						</li>
 						<li>
-							You can build <b>negotiations</b> - or copy a predefined one - specifying all the motivations and pitfalls.
+							You can build <b>negotiations</b>, specifying motivations, pitfalls, and outcomes.
+						</li>
+						<li>
+							You can choose from a set of predefined encounters, montages, and negotiations - or use them as a starting point for your own creations.
 						</li>
 						<li>
 							You can also create detailed <b>tactical maps</b> for your heroes to explore, adding tiles and walls and overlays - or you can generate a random map of whatever size you need.

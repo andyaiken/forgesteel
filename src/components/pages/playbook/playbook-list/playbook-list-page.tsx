@@ -408,6 +408,9 @@ export const PlaybookListPage = (props: Props) => {
 						content={
 							<CreatePanel
 								currentTab={category}
+								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
 								createElement={props.createElement}
 								importElement={props.importElement}
 								importAdventurePackage={props.importAdventurePackage}
@@ -421,7 +424,7 @@ export const PlaybookListPage = (props: Props) => {
 					</Popover>
 					{getElementToolbar()}
 					{
-						(category === 'encounter') || (category === 'tactical-map') ?
+						(category === 'encounter') || (category === 'montage') ?
 							<div className='divider' />
 							: null
 					}

@@ -1,15 +1,23 @@
-import { Button, Divider, Flex, Segmented, Space, Upload } from 'antd';
+import { Button, Divider, Flex, Segmented, Select, Space, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { AdventurePackage } from '@/models/adventure';
+import { Collections } from '@/utils/collections';
 import { Element } from '@/models/element';
 import { EncounterData } from '@/data/encounter-data';
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
+import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
+import { EncounterLogic } from '@/logic/encounter-logic';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Field } from '@/components/controls/field/field';
+import { Hero } from '@/models/hero';
 import { MontageData } from '@/data/montage-data';
 import { NegotiationData } from '@/data/negotiation-data';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
 import { PlaybookElementKind } from '@/models/playbook';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMapLogic } from '@/logic/tactical-map-logic';
 import { useState } from 'react';
 
@@ -17,12 +25,17 @@ import './create-panel.scss';
 
 interface Props {
 	currentTab: PlaybookElementKind;
+	heroes: Hero[];
+	sourcebooks: Sourcebook[];
+	options: Options;
 	createElement: (kind: PlaybookElementKind, original: Element | null) => void;
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
 	importAdventurePackage: (ap: AdventurePackage) => void;
 }
 
 export const CreatePanel = (props: Props) => {
+	const [ difficulty, setDifficulty ] = useState<EncounterDifficulty>(EncounterDifficulty.Standard);
+	const [ keywords, setKeywords ] = useState<string[]>([]);
 	const [ mapImportType, setMapImportType ] = useState<'image' | 'video'>('image');
 	const [ mapImportData, setMapImportData ] = useState<string>('');
 	const [ mapImportWidth, setMapImportWidth ] = useState<number>(10);
@@ -32,6 +45,31 @@ export const CreatePanel = (props: Props) => {
 
 	const createElement = (original: Element | null) => {
 		props.createElement(props.currentTab, original);
+	};
+
+	const generateEncounter = () => {
+		const enc = FactoryLogic.createEncounter();
+
+		let heroLevel = props.options.heroLevel;
+		if (props.options.heroParty) {
+			const party = props.heroes.filter(h => h.folder === props.options.heroParty);
+			heroLevel = Math.round(Collections.mean(party, h => h.class ? h.class.level : 1));
+		}
+
+		const budgets = EncounterDifficultyLogic.getBudgets(props.options, props.heroes);
+		switch (difficulty) {
+			case EncounterDifficulty.Easy:
+				EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxTrivial, heroLevel, heroLevel + 1);
+				break;
+			case EncounterDifficulty.Standard:
+				EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxEasy, heroLevel, heroLevel + 1);
+				break;
+			case EncounterDifficulty.Hard:
+				EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxStandard, heroLevel, heroLevel + 2);
+				break;
+		}
+
+		createElement(enc);
 	};
 
 	const createImageMap = () => {
@@ -115,53 +153,75 @@ export const CreatePanel = (props: Props) => {
 				>
 					<Button block={true} icon={<DownloadOutlined />}>Import</Button>
 				</Upload>
-			</Space>
-			{
-				props.currentTab === 'encounter' ?
-					<div>
-						<div className='ds-text centered-text'>or start with a premade example:</div>
-						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-							{
-								exampleEncounters.map(n => (
-									<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
-								))
-							}
-						</div>
-					</div>
-					: null
-			}
-			{
-				props.currentTab === 'negotiation' ?
-					<div>
-						<div className='ds-text centered-text'>or start with a premade example:</div>
-						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-							{
-								exampleNegotiations.map(n => (
-									<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
-								))
-							}
-						</div>
-					</div>
-					: null
-			}
-			{
-				props.currentTab === 'montage' ?
-					<div>
-						<div className='ds-text centered-text'>or start with a premade example:</div>
-						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '10px' }}>
-							{
-								exampleMontages.map(m => (
-									<Button key={m.id} block={true} onClick={() => createElement(m)}>{m.name}</Button>
-								))
-							}
-						</div>
-					</div>
-					: null
-			}
-			{
-				props.currentTab === 'tactical-map' ?
-					<Space direction='vertical' style={{ width: '300px' }}>
+				{
+					props.currentTab !== 'adventure' ?
 						<Divider />
+						: null
+				}
+				{
+					props.currentTab === 'encounter' ?
+						<Expander title='Use a premade example'>
+							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px', paddingTop: '15px' }}>
+								{
+									exampleEncounters.map(n => (
+										<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
+									))
+								}
+							</div>
+						</Expander>
+						: null
+				}
+				{
+					props.currentTab === 'encounter' ?
+						<Expander title='Generate a random encounter'>
+							<Segmented
+								style={{ marginTop: '15px' }}
+								block={true}
+								options={[ EncounterDifficulty.Easy, EncounterDifficulty.Standard, EncounterDifficulty.Hard ]}
+								value={difficulty}
+								onChange={setDifficulty}
+							/>
+							<Select
+								style={{ width: '100%', margin: '10px 0' }}
+								mode='multiple'
+								placeholder='Use monsters with any keywords'
+								options={Collections.sort(Collections.distinct(SourcebookLogic.getMonsters(props.sourcebooks).flatMap(m => m.keywords), kw => kw), kw => kw).map(kw => ({ value: kw, label: <div className='ds-text'>{kw}</div> }))}
+								value={keywords}
+								onChange={setKeywords}
+
+							/>
+							<Button block={true} type='primary' icon={<ThunderboltOutlined />} onClick={generateEncounter}>Generate</Button>
+						</Expander>
+						: null
+				}
+				{
+					props.currentTab === 'montage' ?
+						<Expander title='Use a premade example'>
+							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '10px', paddingTop: '15px' }}>
+								{
+									exampleMontages.map(m => (
+										<Button key={m.id} block={true} onClick={() => createElement(m)}>{m.name}</Button>
+									))
+								}
+							</div>
+						</Expander>
+						: null
+				}
+				{
+					props.currentTab === 'negotiation' ?
+						<Expander title='Use a premade example'>
+							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px', paddingTop: '15px' }}>
+								{
+									exampleNegotiations.map(n => (
+										<Button key={n.id} block={true} onClick={() => createElement(n)}>{n.name}</Button>
+									))
+								}
+							</div>
+						</Expander>
+						: null
+				}
+				{
+					props.currentTab === 'tactical-map' ?
 						<Expander title='Use a battlemap'>
 							<Space direction='vertical' style={{ width: '100%', marginTop: '15px' }}>
 								<Segmented
@@ -227,6 +287,10 @@ export const CreatePanel = (props: Props) => {
 								}
 							</Space>
 						</Expander>
+						: null
+				}
+				{
+					props.currentTab === 'tactical-map' ?
 						<Expander title='Generate a random map'>
 							<Segmented
 								style={{ marginTop: '15px' }}
@@ -243,9 +307,9 @@ export const CreatePanel = (props: Props) => {
 							</NumberSpin>
 							<Button block={true} type='primary' icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
 						</Expander>
-					</Space>
-					: null
-			}
+						: null
+				}
+			</Space>
 		</div>
 	);
 };

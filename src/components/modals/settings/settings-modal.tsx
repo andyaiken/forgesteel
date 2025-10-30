@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tooltip } from 'antd';
+import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space } from 'antd';
 import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
@@ -9,6 +9,7 @@ import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { LabelControl } from '@/components/controls/label-control/label-control';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -66,12 +67,12 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		const getShownStandardAbilitiesValue = () => {
-			if (options.shownStandardAbilities.length === AbilityData.standardAbilities.length) {
-				return 'all';
-			}
-
 			if (options.shownStandardAbilities.length === 0) {
 				return 'none';
+			}
+
+			if (options.shownStandardAbilities.length === AbilityData.standardAbilities.length) {
+				return 'all';
 			}
 
 			return 'custom';
@@ -79,32 +80,36 @@ export const SettingsModal = (props: Props) => {
 
 		const setShownStandardAbilitiesValue = (value: string) => {
 			switch (value) {
-				case 'all':
-					setShownStandardAbilities(AbilityData.standardAbilities.map(a => a.id));
-					break;
 				case 'none':
 					setShownStandardAbilities([]);
 					break;
 				case 'custom':
 					setShowAbilitySelector(true);
 					break;
+				case 'all':
+					setShownStandardAbilities(AbilityData.standardAbilities.map(a => a.id));
+					break;
 			}
 		};
 
 		return (
 			<Expander title='Heroes - General'>
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<div>
-						<Divider>Show Standard Abilities</Divider>
-						<Segmented
-							block={true}
-							options={[
-								{ value: 'none', label: 'None' },
-								{ value: 'custom', label: 'Custom' },
-								{ value: 'all', label: 'All' }
-							]}
-							value={getShownStandardAbilitiesValue()}
-							onChange={setShownStandardAbilitiesValue}
+						<LabelControl
+							label='Show standard abilities'
+							control={
+								<Segmented
+									block={true}
+									options={[
+										{ value: 'none', label: 'None' },
+										{ value: 'custom', label: 'Custom' },
+										{ value: 'all', label: 'All' }
+									]}
+									value={getShownStandardAbilitiesValue()}
+									onChange={setShownStandardAbilitiesValue}
+								/>
+							}
 						/>
 						{
 							getShownStandardAbilitiesValue() === 'custom' ?
@@ -181,26 +186,28 @@ export const SettingsModal = (props: Props) => {
 					<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
 					<Toggle label='Dim unavailable abilities' value={options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
 					<Toggle label='Show feature / ability sources' value={options.showSources} onChange={setShowSources} />
+					<LabelControl
+						label='Ability card width'
+						control={
+							<Segmented
+								name='abilitywidth'
+								block={true}
+								disabled={options.compactView}
+								options={[
+									{ value: PanelWidth.Narrow, label: 'S' },
+									{ value: PanelWidth.Medium, label: 'M' },
+									{ value: PanelWidth.Wide, label: 'L' },
+									{ value: PanelWidth.ExtraWide, label: 'XL' }
+								]}
+								value={options.abilityWidth}
+								onChange={setAbilityWidth}
+							/>
+						}
+					/>
 					<div>
 						<Divider>View</Divider>
 						<Toggle label='Single page' value={options.singlePage} onChange={setSinglePage} />
 						<Toggle label='Compact' value={options.compactView} onChange={setCompactView} />
-					</div>
-					<div>
-						<Divider>Abilities</Divider>
-						<Segmented
-							name='abilitywidth'
-							block={true}
-							disabled={options.compactView}
-							options={[
-								{ value: PanelWidth.Narrow, label: 'S' },
-								{ value: PanelWidth.Medium, label: 'M' },
-								{ value: PanelWidth.Wide, label: 'L' },
-								{ value: PanelWidth.ExtraWide, label: 'XL' }
-							]}
-							value={options.abilityWidth}
-							onChange={setAbilityWidth}
-						/>
 					</div>
 				</Space>
 			</Expander>
@@ -234,41 +241,34 @@ export const SettingsModal = (props: Props) => {
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
 					<Toggle label='Use color' value={options.colorSheet} onChange={setColorSheet} />
-					<div>
-						<Divider>Show Class Features</Divider>
-						<Segmented
-							name='abilitySort'
-							block={true}
-							options={[
-								{
-									value: 'minimal',
-									label: (
-										<Tooltip title='No Abilities. Only Perks, Text features, and the like.'>
-											Minimal
-										</Tooltip>
-									)
-								},
-								{
-									value: 'no-basic',
-									label: (
-										<Tooltip title='Does not show things like bonuses, skills, languages, etc. Does still show Abilities.'>
-											No Simple
-										</Tooltip>
-									)
-								},
-								{
-									value: 'all',
-									label: (
-										<Tooltip title='Show all features. Useful for seeing where all of the numbers come from on the sheet.'>
-											All
-										</Tooltip>
-									)
-								}
-							]}
-							value={options.featuresInclude}
-							onChange={setFeaturesInclude}
-						/>
-					</div>
+					<LabelControl
+						label='Show class features'
+						control={
+							<Select
+								style={{ width: '100%' }}
+								options={[
+									{
+										value: 'minimal',
+										label: 'Minimal',
+										desc: 'No abilities; only perks, text features, and the like.'
+									},
+									{
+										value: 'no-basic',
+										label: 'No Simple',
+										desc: 'Does not show things like bonuses, skills, languages, etc; does still show abilities.'
+									},
+									{
+										value: 'all',
+										label: 'All',
+										desc: 'Show all features. Useful for seeing where all of the numbers come from on the sheet.'
+									}
+								]}
+								optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
+								value={options.featuresInclude}
+								onChange={setFeaturesInclude}
+							/>
+						}
+					/>
 				</Space>
 			</Expander>
 		);
@@ -323,9 +323,9 @@ export const SettingsModal = (props: Props) => {
 		return (
 			<Expander title='Classic Sheet'>
 				<Space direction='vertical' style={{ width: '100%' }}>
-					<div>
-						<Divider>Page Layout</Divider>
-						<Space direction='vertical' style={{ width: '100%' }}>
+					<LabelControl
+						label='Page size'
+						control={
 							<Segmented
 								name='pagesize'
 								block={true}
@@ -333,6 +333,11 @@ export const SettingsModal = (props: Props) => {
 								value={options.classicSheetPageSize}
 								onChange={setClassicSheetPageSize}
 							/>
+						}
+					/>
+					<LabelControl
+						label='Orientation'
+						control={
 							<Segmented
 								name='orientation'
 								block={true}
@@ -343,22 +348,24 @@ export const SettingsModal = (props: Props) => {
 								value={options.pageOrientation}
 								onChange={setPageOrientation}
 							/>
-						</Space>
-					</div>
-					<div>
-						<Divider>Text Color</Divider>
-						<Segmented
-							name='textColor'
-							block={true}
-							options={[
-								{ value: 'dark', label: 'Darker' },
-								{ value: 'default', label: 'Default' },
-								{ value: 'light', label: 'Lighter' }
-							]}
-							value={options.sheetTextColor}
-							onChange={changeTextColor}
-						/>
-					</div>
+						}
+					/>
+					<LabelControl
+						label='Text color'
+						control={
+							<Segmented
+								name='textColor'
+								block={true}
+								options={[
+									{ value: 'dark', label: 'Darker' },
+									{ value: 'default', label: 'Default' },
+									{ value: 'light', label: 'Lighter' }
+								]}
+								value={options.sheetTextColor}
+								onChange={changeTextColor}
+							/>
+						}
+					/>
 				</Space>
 			</Expander>
 		);
@@ -449,17 +456,19 @@ export const SettingsModal = (props: Props) => {
 					<Toggle label='Show defeated combatants' value={options.showDefeatedCombatants} onChange={setShowDefeatedCombatants} />
 					{
 						parties.length > 0 ?
-							<div>
-								<Divider>Start Encounters With</Divider>
-								<Select
-									style={{ width: '100%' }}
-									placeholder='Select a party'
-									options={[ '', ...parties ].map(p => ({ value: p, label: p || 'No heroes' }))}
-									optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-									value={options.party}
-									onChange={p => setParty(p || '')}
-								/>
-							</div>
+							<LabelControl
+								label='Start encounters with'
+								control={
+									<Select
+										style={{ width: '100%' }}
+										placeholder='Select a party'
+										options={[ '', ...parties ].map(p => ({ value: p, label: p || 'No heroes' }))}
+										optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+										value={options.party}
+										onChange={p => setParty(p || '')}
+									/>
+								}
+							/>
 							: null
 					}
 				</Space>
@@ -504,25 +513,18 @@ export const SettingsModal = (props: Props) => {
 		return (
 			<Expander title='Encounter / Montage Difficulty'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-					<div className='ds-text'>
-						Calculate encounter / montage difficulty based on these heroes:
-					</div>
-					<Select
-						style={{ width: '100%' }}
-						placeholder='Select a party'
-						options={[ ...parties, '' ].map(p => ({ value: p, label: p || 'A custom party' }))}
-						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.label
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
-						value={options.heroParty}
-						onChange={p => setHeroParty(p || '')}
+					<LabelControl
+						label='Calculate difficulty based on these heroes'
+						control={
+							<Select
+								style={{ width: '100%' }}
+								placeholder='Select a party'
+								options={[ ...parties, '' ].map(p => ({ value: p, label: p || 'A custom party' }))}
+								optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+								value={options.heroParty}
+								onChange={p => setHeroParty(p || '')}
+							/>
+						}
 					/>
 					{
 						options.heroParty === '' ?

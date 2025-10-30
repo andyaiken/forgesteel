@@ -70,6 +70,7 @@ import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
+import { useTitle } from '@/hooks/use-title';
 
 import './library-edit-page.scss';
 
@@ -146,6 +147,26 @@ export const LibraryEditPage = (props: Props) => {
 	const [ scratchpadMonsters, setScratchpadMonsters ] = useState<Monster[]>([]);
 	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
+
+	const getSubheader = () => {
+		if (kind === 'class') {
+			if (subElementID) {
+				return 'Subclass Builder';
+			}
+		}
+
+		if (kind === 'monster-group') {
+			if (subElementID) {
+				return 'Monster Builder';
+			}
+
+			return 'Monster Group Builder';
+		}
+
+		return `${Format.capitalize(kind!)} Builder`;
+	};
+
+	useTitle(getSubheader());
 
 	const applyChanges = (element: Element) => {
 		const copy = Utils.copy(element);
@@ -683,24 +704,6 @@ export const LibraryEditPage = (props: Props) => {
 		}
 
 		return null;
-	};
-
-	const getSubheader = () => {
-		if (kind === 'class') {
-			if (subElementID) {
-				return 'Subclass Builder';
-			}
-		}
-
-		if (kind === 'monster-group') {
-			if (subElementID) {
-				return 'Monster Builder';
-			}
-
-			return 'Monster Group Builder';
-		}
-
-		return `${Format.capitalize(kind!)} Builder`;
 	};
 
 	return (

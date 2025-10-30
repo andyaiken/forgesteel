@@ -17,6 +17,7 @@ import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
+import { useTitle } from '@/hooks/use-title';
 
 import './hero-list-page.scss';
 
@@ -40,6 +41,7 @@ export const HeroListPage = (props: Props) => {
 	const [ previousTab, setPreviousTab ] = useState<string | undefined>(folder);
 	const [ currentTab, setCurrentTab ] = useState<string>(folder ?? '');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	useTitle('Heroes');
 
 	if (folder !== previousTab) {
 		setCurrentTab(folder ?? '');

@@ -34,6 +34,7 @@ import { Utils } from '@/utils/utils';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useTitle } from '@/hooks/use-title';
 
 import './hero-edit-page.scss';
 
@@ -66,6 +67,7 @@ export const HeroEditPage = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(originalHero));
 	const [ dirty, setDirty ] = useState<boolean>(false);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	useTitle('Hero Builder');
 
 	const getPageState = (page: HeroEditTab) => {
 		switch (page) {

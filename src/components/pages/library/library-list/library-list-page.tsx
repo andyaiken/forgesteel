@@ -60,6 +60,7 @@ import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useTitle } from '@/hooks/use-title';
 
 import './library-list-page.scss';
 
@@ -96,6 +97,7 @@ export const LibraryListPage = (props: Props) => {
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew)[0].id : null);
+	useTitle('Library');
 
 	if (kind !== previousCategory) {
 		setCategory(kind || 'ancestry');

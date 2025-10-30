@@ -32,6 +32,7 @@ import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-pane
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useTitle } from '@/hooks/use-title';
 
 import './playbook-list-page.scss';
 
@@ -65,6 +66,7 @@ export const PlaybookListPage = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 	const [ view, setView ] = useState<'modern' | 'classic'>('modern');
+	useTitle('Playbook');
 
 	if (kind !== previousCategory) {
 		setCategory(kind || 'adventure');

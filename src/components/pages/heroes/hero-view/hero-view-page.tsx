@@ -32,6 +32,7 @@ import { Title } from '@/models/title';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useTitle } from '@/hooks/use-title';
 
 import './hero-view-page.scss';
 
@@ -75,6 +76,7 @@ export const HeroViewPage = (props: Props) => {
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
 	);
+	useTitle(hero.name || 'Unnamed Hero');
 
 	const getContent = () => {
 		switch (view) {

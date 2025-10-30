@@ -385,10 +385,10 @@ export class HeroSheetBuilder {
 		const abilities = HeroLogic.getAbilities(hero, sourcebooks, []).map(a => a.ability);
 
 		const freeStrikes = [ AbilityData.freeStrikeMelee, AbilityData.freeStrikeRanged ]
-			.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero));
-		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero)).concat(freeStrikes);
+			.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero, undefined, options));
+		sheet.abilities = abilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero, undefined, options)).concat(freeStrikes);
 
-		sheet.standardAbilities = AbilityData.standardAbilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero));
+		sheet.standardAbilities = AbilityData.standardAbilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero, undefined, options));
 
 		coveredFeatureIds.push(...allFeatures
 			.filter(f => [ FeatureType.ClassAbility, FeatureType.Ability ].includes(f.feature.type))

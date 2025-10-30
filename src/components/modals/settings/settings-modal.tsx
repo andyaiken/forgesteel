@@ -229,6 +229,13 @@ export const SettingsModal = (props: Props) => {
 			props.setOptions(copy);
 		};
 
+		const setShowPowerRollCalculation = (value: boolean) => {
+			const copy = Utils.copy(options);
+			copy.showPowerRollCalculation = value;
+			setOptions(copy);
+			props.setOptions(copy);
+		};
+
 		const setFeaturesInclude = (value: 'minimal' | 'no-basic' | 'all') => {
 			const copy = Utils.copy(options);
 			copy.featuresInclude = value;
@@ -240,6 +247,7 @@ export const SettingsModal = (props: Props) => {
 			<Expander title='Heroes - Classic Sheet'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
+					<Toggle label='Calculate Power Roll bonuses' value={options.showPowerRollCalculation} onChange={setShowPowerRollCalculation} />
 					<Toggle label='Use color' value={options.colorSheet} onChange={setColorSheet} />
 					<LabelControl
 						label='Show class features'

@@ -126,7 +126,7 @@ export const HeroSheetPage = (props: Props) => {
 		const numLeveledTreasures = character.inventory?.filter(i => ItemLogic.isLeveledTreasure(i.item)).length ?? 0;
 		if (numLeveledTreasures > 3) {
 			required.push({
-				element: <CarryThreeSafelyReference />,
+				element: <CarryThreeSafelyReference key='carry-three-safely-reference' />,
 				width: 1,
 				height: 31,
 				shown: false

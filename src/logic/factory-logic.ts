@@ -1017,6 +1017,7 @@ export class FactoryLogic {
 			includePlayState: false,
 			classicSheetPageSize: SheetPageSize.Letter,
 			colorSheet: true,
+			showPowerRollCalculation: true,
 			sheetTextColor: 'default',
 			featuresInclude: 'all',
 			pageOrientation: 'portrait',

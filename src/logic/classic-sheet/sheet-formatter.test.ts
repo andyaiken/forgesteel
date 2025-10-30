@@ -1,4 +1,7 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
+import { Ability } from '@/models/ability';
+import { AbilityData } from '@/data/ability-data';
+import { ClassicSheetBuilder } from './classic-sheet-builder';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
@@ -458,5 +461,20 @@ describe('calculateProjectsOverviewCardSize', () => {
 
 		const result = SheetFormatter.calculateProjectsOverviewCardSize(sheets, 54);
 		expect(result).toBeCloseTo(50.5, 0.2);
+	});
+});
+
+describe('calculateAbilitySize', () => {
+	test.each([
+		[ AbilityData.heal, 14.7 ],
+		[ AbilityData.freeStrike, 11 ],
+		[ AbilityData.escapeGrab, 26.1 ],
+		[ AbilityData.clawDirt, 23.1 ]
+	])('calculates size properly for standard abilities', (ability: Ability, expected: number) => {
+		const hero = FactoryLogic.createHero([]);
+		const sheet = ClassicSheetBuilder.buildAbilitySheet(ability, hero);
+
+		const result = SheetFormatter.calculateAbilitySize(sheet, 54);
+		expect(result).toBeCloseTo(expected, 0.2);
 	});
 });

@@ -138,15 +138,10 @@
         .roll-tiers {
             display: grid;
             grid-template-rows: min-content min-content min-content;
-            margin: 0 10px 10px;
+            margin: 0 10px;
 
             .tier {
                 margin: 5px 0;
-
-                .effect {
-                    border-bottom: 2px solid common.$color-light;
-                    padding-bottom: 5px;
-                }
             }
 
         }

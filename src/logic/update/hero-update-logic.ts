@@ -328,7 +328,7 @@ export class HeroUpdateLogic {
 
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
-			.filter(f => f.type !== FeatureType.DomainFeature)
+			.filter(f => f.type === FeatureType.Domain)
 			.forEach(f => {
 				const originalFeature = HeroLogic.getFeatures(original)
 					.map(of => of.feature)
@@ -341,7 +341,7 @@ export class HeroUpdateLogic {
 
 		HeroLogic.getFeatures(hero)
 			.map(f => f.feature)
-			.filter(f => f.type === FeatureType.DomainFeature)
+			.filter(f => f.type !== FeatureType.Domain)
 			.forEach(f => {
 				const originalFeature = HeroLogic.getFeatures(original)
 					.map(of => of.feature)
@@ -412,6 +412,12 @@ export class HeroUpdateLogic {
 					}
 
 					feature.data.selected = availableOptions.map(o => o.feature).filter(o => selectedIDs.includes(o.id));
+					feature.data.selected.forEach(child => {
+						const oChild = oFeature.data.selected.find(x => x.id === child.id);
+						if (oChild) {
+							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
+						}
+					});
 					break;
 				}
 				case FeatureType.ClassAbility: {
@@ -452,6 +458,12 @@ export class HeroUpdateLogic {
 
 					const selectedIDs = oFeature.data.selected.map(f => f.id);
 					feature.data.selected = domainFeatures.filter(df => selectedIDs.includes(df.id));
+					feature.data.selected.forEach(child => {
+						const oChild = oFeature.data.selected.find(x => x.id === child.id);
+						if (oChild) {
+							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
+						}
+					});
 					break;
 				}
 				case FeatureType.ItemChoice: {
@@ -482,7 +494,7 @@ export class HeroUpdateLogic {
 					const oFeature = originalFeature as FeatureMultiple;
 
 					feature.data.features.forEach(child => {
-						const oChild = oFeature.data?.features?.find(x => x.id === child.id);
+						const oChild = oFeature.data.features.find(x => x.id === child.id);
 						if (oChild) {
 							HeroUpdateLogic.updateFeatureData(child, oChild, hero, sourcebooks);
 						}

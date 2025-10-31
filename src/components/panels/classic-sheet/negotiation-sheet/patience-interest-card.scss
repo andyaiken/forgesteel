@@ -1,0 +1,177 @@
+@use '../../../pages/classic-sheet/common.scss';
+@use '../../../pages/classic-sheet/functions' as *;
+
+main#classic-sheet .negotiation-patience-interest.card {
+    display: grid;
+    grid-template-columns: 3.5fr 6.5fr;
+
+    .patience,
+    .interest {
+        &>label {
+            display: block;
+            font-size: round(1.8rem, 1px);
+            line-height: round(2.4rem, 1px);
+            font-weight: 500;
+            text-align: center;
+            margin: 5px 0;
+        }
+    }
+
+    .patience {
+        display: grid;
+        grid-template-columns: 4fr 6fr;
+        
+        background-image: linear-gradient(180deg, common.$color-light, common.$color-light);
+        background-size: 2px calc(100% - 30px);
+        background-position: center right;
+        background-repeat: no-repeat;
+
+        label {
+            grid-column-end: span 2;
+        }
+
+        .patience-reference {
+            padding-right: 15px;
+        }
+
+        p.reference {
+            @include common.font-slab;
+            color: var(--color-text-lightest);
+            strong {
+                color: var(--color-text);
+            }
+        }
+
+        .current-patience {
+            .field {
+                margin: 10px 30px;
+                border: 4px solid common.$color-medium;
+                aspect-ratio: 1/1;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
+                @include common.font-slab;
+                font-size: round(2rem, 1px);
+                color: common.$color-light;
+            }
+
+            p.reference {
+                font-weight: 500;
+                text-align: center;
+            }
+        }
+    }
+
+    .interest {
+        display: grid;
+        grid-template-rows: min-content 1fr min-content;
+
+        .interest-tracker {
+            display: grid;
+            grid-template-rows: min-content min-content;
+            margin-top: 5px;
+
+            .start-point,
+            .reference {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .tracker,
+            .reference {
+                margin: 0 10px;
+            }
+
+            .tracker {
+                @include common.border-beveled(10px, 2px, common.$color-medium);
+                padding: 2px 0;
+
+                .start-point {
+                    padding: 0 10px;
+
+                    --start-x: 200%;
+                    --start-val: 7;
+                    &.start-1 {
+                        --start-val: 1;
+                    }
+                    &.start-2 {
+                        --start-val: 2;
+                    }
+                    &.start-3 {
+                        --start-val: 3;
+                    }
+                    &.start-4 {
+                        --start-val: 4;
+                    }
+                    --start-x: calc((var(--start-val) + 0.5) * ((100%) / 6));
+
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="#{encodecolor(common.$color-light)}"></path></svg>'),
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64" xml:space="preserve"><path d="M62 32L32 62L2.001 32l30-30z" fill="#{encodecolor(common.$color-light)}"></path></svg>');
+
+                    background-size: 32px 32px,
+                        32px 32px;
+
+                    background-position: calc(var(--start-x)) calc(100% + 22px),
+                        calc(var(--start-x)) calc(0% - 22px);
+
+                    background-repeat: no-repeat;
+
+                }
+
+                .labeled-boolean {
+                    justify-content: center;
+                    margin: 10px 0;
+
+                    &:not(:last-of-type) {
+                        border-right: 2px solid common.$color-medium;
+                    }
+
+                    label {
+                        font-size: round(2rem, 1px);
+                        font-weight: 500;
+                    }
+                    .labeled-boolean-content span {
+                        font-size: round(2rem, 1px);
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .reference * {
+                @include common.font-slab;
+                text-align: center;
+                font-size: round(0.95rem, 1px);
+                font-weight: 450;
+                color: var(--color-text-lightest);
+                margin-top: 5px;
+            }
+            .ref-5 {
+                grid-column-start: 6;
+            }
+        }
+
+        .renown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            .renown-level {
+                @include common.font-slab;
+                grid-column-end: span 2;
+                margin: 0;
+            }
+
+            p {
+                text-align: center;
+                font-size: round(0.95rem, 1px);
+                font-weight: 450;
+                color: var(--color-text-lightest);
+
+                strong {
+                    color: var(--color-text);
+                }
+            }
+        }
+    }
+}

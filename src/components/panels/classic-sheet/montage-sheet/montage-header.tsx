@@ -101,9 +101,6 @@ export const MontageHeaderCard = (props: Props) => {
 				/>
 				{getLimitsSection()}
 			</section>
-			<div className='montage-objective'>
-
-			</div>
 		</div>
 	);
 };

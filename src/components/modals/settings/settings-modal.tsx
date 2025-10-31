@@ -141,7 +141,7 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getHeroesModern = () => {
+	const getHeroesInteractive = () => {
 		const setSeparateInventoryFeatures = (value: boolean) => {
 			const copy = Utils.copy(options);
 			copy.separateInventoryFeatures = value;
@@ -192,7 +192,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		return (
-			<Expander title='Heroes - Modern Sheet'>
+			<Expander title='Heroes - Interactive View'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Toggle label='Separate inventory features' value={options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 					<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
@@ -256,7 +256,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		return (
-			<Expander title='Heroes - Classic Sheet'>
+			<Expander title='Heroes - Classic View'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
 					<Toggle label='Calculate Power Roll bonuses' value={options.showPowerRollCalculation} onChange={setShowPowerRollCalculation} />
@@ -294,7 +294,7 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getClassicSheet = () => {
+	const getClassicView = () => {
 		const setClassicSheetPageSize = (value: SheetPageSize) => {
 			const copy = Utils.copy(options);
 			copy.classicSheetPageSize = value;
@@ -341,7 +341,7 @@ export const SettingsModal = (props: Props) => {
 		};
 
 		return (
-			<Expander title='Classic Sheet'>
+			<Expander title='Classic View'>
 				<Space direction='vertical' style={{ width: '100%' }}>
 					<LabelControl
 						label='Page size'
@@ -734,9 +734,9 @@ export const SettingsModal = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{getAppearance()}
 						{getHeroesGeneral()}
-						{getHeroesModern()}
+						{getHeroesInteractive()}
 						{getHeroesClassic()}
-						{getClassicSheet()}
+						{getClassicView()}
 						{getMonsterBuilder()}
 						{getEncounterBuilder()}
 						{getEncounterRunner()}

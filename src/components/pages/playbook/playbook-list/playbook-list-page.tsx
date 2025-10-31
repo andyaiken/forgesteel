@@ -1,5 +1,5 @@
 import { Adventure, AdventurePackage } from '@/models/adventure';
-import { Alert, Button, Input, Popover, Segmented, Tag } from 'antd';
+import { Alert, Button, Input, Popover } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '@/models/playbook';
 import { ReactNode, useState } from 'react';
@@ -31,6 +31,7 @@ import { TacticalMap } from '@/models/tactical-map';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
 import { Utils } from '@/utils/utils';
+import { ViewSelector } from '@/components/panels/view-selector/view-selector';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useTitle } from '@/hooks/use-title';
@@ -66,7 +67,7 @@ export const PlaybookListPage = (props: Props) => {
 	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
-	const [ view, setView ] = useState<'modern' | 'classic'>('modern');
+	const [ view, setView ] = useState<string>('modern');
 	useTitle('Playbook');
 
 	const categoriesWithClassicView = [ 'encounter', 'montage', 'negotiation' ];
@@ -455,28 +456,7 @@ export const PlaybookListPage = (props: Props) => {
 					}
 					{
 						!!selectedID && categoriesWithClassicView.includes(category) ?
-							<Popover
-								trigger='click'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<Segmented
-											block={true}
-											vertical={true}
-											options={[
-												{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
-												{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Tag color='red'>BETA</Tag>Classic Sheet</div> }
-											]}
-											value={view}
-											onChange={setView}
-										/>
-									</div>
-								)}
-							>
-								<Button>
-									View
-									<DownOutlined />
-								</Button>
-							</Popover>
+							<ViewSelector value={view} onChange={setView} />
 							: null
 					}
 				</AppHeader>

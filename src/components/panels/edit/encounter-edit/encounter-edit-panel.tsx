@@ -550,15 +550,11 @@ export const EncounterEditPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>
-					Malice Features
-				</HeaderText>
 				{
 					maliceFeatures.map((groupMalice, i) => {
 						return (
 							<Fragment key={`group-malice-${groupMalice.group}-${i}`}>
 								<HeaderText
-									level={3}
 									extra={
 										<Flex>
 											<Button

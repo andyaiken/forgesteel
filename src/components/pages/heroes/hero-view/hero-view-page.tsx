@@ -114,7 +114,7 @@ export const HeroViewPage = (props: Props) => {
 				);
 			case 'abilities':
 				return (
-					<StandardAbilitiesPage options={props.options} />
+					<StandardAbilitiesPage options={props.options} hero={hero} />
 				);
 			case 'notes':
 				return (

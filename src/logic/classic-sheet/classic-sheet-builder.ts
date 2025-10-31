@@ -104,7 +104,7 @@ export class ClassicSheetBuilder {
 	// #endregion
 
 	// #region Ability Sheet
-	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | Summon | undefined, summoner?: Hero): AbilitySheet => {
+	static buildAbilitySheet = (ability: Ability, creature: Hero | Monster | Summon | undefined, summoner?: Hero, options?: Options): AbilitySheet => {
 		const isMonster = CreatureLogic.isMonster(creature);
 		const isHero = CreatureLogic.isHero(creature);
 		const isSummon = CreatureLogic.isSummon(creature);
@@ -203,11 +203,17 @@ export class ClassicSheetBuilder {
 			if (rollSections.length > 1) {
 				console.warn('More than one roll section!', ability.name, rollSections);
 			}
+			const rollAutoCalc = options?.showPowerRollCalculation ?? true;
 
-			if (isSummon) {
-				sheet.rollPower = AbilityLogic.getPowerRollBonusValue(ability, summoner).toString();
+			if (rollAutoCalc) {
+				if (isSummon) {
+					sheet.rollPower = AbilityLogic.getPowerRollBonusValue(ability, summoner).toString();
+				} else {
+					sheet.rollPower = AbilityLogic.getPowerRollBonusValue(ability, refCreature).toString();
+				}
 			} else {
-				sheet.rollPower = AbilityLogic.getPowerRollBonusValue(ability, refCreature).toString();
+				sheet.rollPower = SheetFormatter.joinCommasOr(AbilityLogic.getPowerRollCharacteristics(ability, undefined)
+					.map(c => c.toString().slice(0, 1)));
 			}
 
 			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, refCreature);

@@ -745,18 +745,23 @@ export class SheetFormatter {
 
 	static calculateAbilitySize = (ability: AbilitySheet | undefined, lineWidth: number): number => {
 		let size = 0;
-		const rollLineLen = Math.ceil(0.8 * lineWidth);
+		const rollLineLen = Math.ceil(0.8 * lineWidth) - 10;
 		if (ability) {
 			size += 4; // title
 			size += this.countLines(ability.description, lineWidth);
 			size += 2.5; // keywords, distance, etc
 			size += ability.hasPowerRoll ? 2 : 0;
-			size += 2 * this.countLines(ability.rollT1Effect, rollLineLen);
-			size += 2 * this.countLines(ability.rollT2Effect, rollLineLen);
-			size += 2 * this.countLines(ability.rollT3Effect, rollLineLen);
+			if (ability.hasPowerRoll) {
+				size += 0.3 + this.countLines(ability.rollT1Effect, rollLineLen);
+				size += 0.3 + this.countLines(ability.rollT2Effect, rollLineLen);
+				size += 0.3 + this.countLines(ability.rollT3Effect, rollLineLen);
+			}
 			if (ability.trigger)
 				size += 1 + this.countLines(ability.trigger, lineWidth);
 			if (ability.effect) {
+				if (ability.hasPowerRoll) {
+					size += 0.5; // extra padding when effect follows power roll
+				}
 				const effectSize = this.countLines(ability.effect, lineWidth, 1);
 				size += 2 + effectSize;
 			}
@@ -873,7 +878,7 @@ export class SheetFormatter {
 		'Move Action'
 	];
 
-	static sortAbilitiesByType = (a: AbilitySheet, b: AbilitySheet): number => {
+	static sortAbilitiesByType = (a: AbilitySheet, b: AbilitySheet, order: 'asc' | 'desc' = 'desc'): number => {
 		const aType = a.actionType || '';
 		const bType = b.actionType || '';
 		const aSort = aType.length && this.abilityTypeOrder.includes(aType);
@@ -884,7 +889,7 @@ export class SheetFormatter {
 			if (s === 0) {
 				s = a.cost - b.cost;
 				if (s === 0) {
-					return this.sortAbilitiesByLength(a, b, 'desc');
+					return this.sortAbilitiesByLength(a, b, order);
 				} else {
 					return s;
 				}

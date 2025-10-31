@@ -237,13 +237,12 @@ main#classic-sheet {
             }
             .power  {
                 font-weight: 600;
-                margin: 0 10px 10px;
+                margin: 0 10px 5px;
                 .symbol-text {
                     display: inline-block;
                     font-size: round(1.2rem, 1px);
                     font-weight: 500;
-                    padding: 0 5px;
-                    border-bottom: 1px solid colors.$medium;
+                    padding: 0;
                 }
             }
 

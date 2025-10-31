@@ -449,12 +449,12 @@ export const PlaybookListPage = (props: Props) => {
 					</Popover>
 					{getElementToolbar()}
 					{
-						(category === 'encounter') || (category === 'montage') ?
+						!!selectedID && categoriesWithClassicView.includes(category) ?
 							<div className='divider' />
 							: null
 					}
 					{
-						categoriesWithClassicView.includes(category) ?
+						!!selectedID && categoriesWithClassicView.includes(category) ?
 							<Popover
 								trigger='click'
 								content={(

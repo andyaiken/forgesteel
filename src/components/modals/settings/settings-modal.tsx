@@ -37,6 +37,16 @@ export const SettingsModal = (props: Props) => {
 	const { themeMode, setTheme } = useTheme();
 	const [ options, setOptions ] = useState<Options>(Utils.copy(props.options));
 	const [ page, setPage ] = useState<string>('Settings');
+	const [ standardAbilitiesMode, setStandardAbilitiesMode ] = useState<string>(() => {
+		if (options.shownStandardAbilities.length === 0) {
+			return 'none';
+		}
+		if (options.shownStandardAbilities.length === AbilityData.standardAbilities.length) {
+			return 'all';
+		}
+
+		return 'custom';
+	});
 	const [ showAbilitySelector, setShowAbilitySelector ] = useState<boolean>(false);
 	const [ flag, setFlag ] = useState<string>('');
 
@@ -66,19 +76,9 @@ export const SettingsModal = (props: Props) => {
 			props.setOptions(copy);
 		};
 
-		const getShownStandardAbilitiesValue = () => {
-			if (options.shownStandardAbilities.length === 0) {
-				return 'none';
-			}
-
-			if (options.shownStandardAbilities.length === AbilityData.standardAbilities.length) {
-				return 'all';
-			}
-
-			return 'custom';
-		};
-
 		const setShownStandardAbilitiesValue = (value: string) => {
+			setStandardAbilitiesMode(value);
+
 			switch (value) {
 				case 'none':
 					setShownStandardAbilities([]);
@@ -90,6 +90,18 @@ export const SettingsModal = (props: Props) => {
 					setShownStandardAbilities(AbilityData.standardAbilities.map(a => a.id));
 					break;
 			}
+		};
+
+		const closeStandardAbilitiesModal = () => {
+			if (options.shownStandardAbilities.length === 0) {
+				setStandardAbilitiesMode('none');
+			} else if (options.shownStandardAbilities.length === AbilityData.standardAbilities.length) {
+				setStandardAbilitiesMode('all');
+			} else {
+				setStandardAbilitiesMode('custom');
+			}
+
+			setShowAbilitySelector(false);
 		};
 
 		return (
@@ -106,23 +118,23 @@ export const SettingsModal = (props: Props) => {
 										{ value: 'custom', label: 'Custom' },
 										{ value: 'all', label: 'All' }
 									]}
-									value={getShownStandardAbilitiesValue()}
+									value={standardAbilitiesMode}
 									onChange={setShownStandardAbilitiesValue}
 								/>
 							}
 						/>
 						{
-							getShownStandardAbilitiesValue() === 'custom' ?
+							standardAbilitiesMode === 'custom' ?
 								<Button block={true} onClick={() => setShowAbilitySelector(true)}>Select Abilities</Button>
 								: null
 						}
 					</div>
 				</Space>
-				<Drawer open={showAbilitySelector} onClose={() => setShowAbilitySelector(false)} closeIcon={null} width='500px'>
+				<Drawer open={showAbilitySelector} onClose={closeStandardAbilitiesModal} closeIcon={null} width='500px'>
 					<StandardAbilitySelectModal
 						abilityIDs={options.shownStandardAbilities}
 						onSelect={setShownStandardAbilities}
-						onClose={() => setShowAbilitySelector(false)}
+						onClose={closeStandardAbilitiesModal}
 					/>
 				</Drawer>
 			</Expander>

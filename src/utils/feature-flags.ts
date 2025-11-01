@@ -1,3 +1,5 @@
+import { Utils } from './utils';
+
 interface FeatureFlag {
 	code: number;
 	description: string;
@@ -7,17 +9,17 @@ export class FeatureFlags {
 	// #region List of all the recognised flags
 
 	static interactiveContent: FeatureFlag = {
-		code: 2135415398,
+		code: Utils.hashCode('Glauer'),
 		description: 'Interactive content display'
 	};
 
 	static playtest: FeatureFlag = {
-		code: -1755389952, // Glauer
+		code: -1755389952,
 		description: 'Access to playtest material'
 	};
 
 	static ratcatcher: FeatureFlag = {
-		code: 69601744, // Heden
+		code: Utils.hashCode('Heden'),
 		description: 'Access to material from Ratcatcher Magazine'
 	};
 

@@ -1,11 +1,8 @@
 # Development Plans
 
-Blade of Quintessence is not adding the bonus damage to some abilities.
-Blade of Quintessence at level 5 now applies to ranged attacks adding +3 range and the returning property.
+### Bugs
 
-The epic heroic resources seem to be implemented incorrectly.
-* Firstly, it was giving me Command per victories at the start of encounters, instead of after a respite.
-* Also, heroic abilities did not read as available even if I had enough Focus, they only would show as usable if I had that number in Command (i.e. a 5 Focus ability was greyed out until I had 5 Command)
+* The Blade of Quintessence should gain the Ranged keyword at level 5.
 
 ### Heroes
 

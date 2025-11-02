@@ -328,34 +328,38 @@ export const StatsPanel = (props: Props) => {
 													);
 												})
 											}
-											<Flex align='center' justify='space-evenly' gap={10}>
-												<Button
-													key='start-encounter'
-													style={{ flex: '1 1 0' }}
-													className='tall-button'
-													onClick={() => startEncounter(hr.id)}
-												>
-													<div>
-														<div>Start Encounter</div>
-														<div className='subtext'>
-															Victories to {hr.name || 'Heroic Resource'}
-														</div>
-													</div>
-												</Button>
-												<Button
-													key='end-encounter'
-													style={{ flex: '1 1 0' }}
-													className='tall-button'
-													onClick={() => endEncounter(hr.id)}
-												>
-													<div>
-														<div>End Encounter</div>
-														<div className='subtext'>
-															+1 Victory
-														</div>
-													</div>
-												</Button>
-											</Flex>
+											{
+												hr.type === 'heroic' ?
+													<Flex align='center' justify='space-evenly' gap={10}>
+														<Button
+															key='start-encounter'
+															style={{ flex: '1 1 0' }}
+															className='tall-button'
+															onClick={() => startEncounter(hr.id)}
+														>
+															<div>
+																<div>Start Encounter</div>
+																<div className='subtext'>
+																	Victories to {hr.name || 'Heroic Resource'}
+																</div>
+															</div>
+														</Button>
+														<Button
+															key='end-encounter'
+															style={{ flex: '1 1 0' }}
+															className='tall-button'
+															onClick={() => endEncounter(hr.id)}
+														>
+															<div>
+																<div>End Encounter</div>
+																<div className='subtext'>
+																	+1 Victory
+																</div>
+															</div>
+														</Button>
+													</Flex>
+													: null
+											}
 										</>
 										: null
 								}

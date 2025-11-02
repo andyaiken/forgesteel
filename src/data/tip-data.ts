@@ -14,13 +14,18 @@ import libraryMain from '@/assets/screenshots/library.png';
 import librarySourcebooks from '@/assets/screenshots/sourcebooks.png';
 
 import homebrewEditor from '@/assets/screenshots/homebrew.png';
+import homebrewMonsterBuilder from '@/assets/screenshots/monster-builder.png';
 
+import appAbout from '@/assets/screenshots/footer.png';
 import appNavigation from '@/assets/screenshots/navigation.png';
+import appReference from '@/assets/screenshots/footer-reference.png';
+import appRoll from '@/assets/screenshots/footer-roll.png';
+import appSettings from '@/assets/screenshots/footer-settings.png';
 
 export class TipData {
 	static getTips = (): Tip[] => {
 		return [
-			// #region Heroes
+			// #region Hero Sheet
 			{
 				image: heroSheetInteractive,
 				content: 'If you\'re using your device to play, use the Interactive View.'
@@ -78,7 +83,11 @@ export class TipData {
 				image: homebrewEditor,
 				content: 'You can create homebrew versions of anything in the Library.'
 			},
-			// TODO: Monster builder - similar monsters, genesplice
+			{
+				image: homebrewMonsterBuilder,
+				content: 'When you\'re creating a homebrew monster, Forge Steel shows you similar monsters to help you choose your new monster\'s stat values.'
+			},
+			// TODO: Monster builder - genesplice
 			// #endregion
 
 			// #region Playbook
@@ -100,11 +109,23 @@ export class TipData {
 			{
 				image: appNavigation,
 				content: 'Use the navigation bar, at the bottom left of the screen, to switch between Forge Steel\'s sections.'
+			},
+			{
+				image: appReference,
+				content: 'Press the Reference button, at the bottom right of the screen, to access the reference section.'
+			},
+			{
+				image: appRoll,
+				content: 'Press the Roll button, at the bottom right of the screen, to make a power roll or saving throw.'
+			},
+			{
+				image: appSettings,
+				content: 'Press the Settings button, at the bottom right of the screen, to modify app preferences and settings.'
+			},
+			{
+				image: appAbout,
+				content: 'Spotted a bug? Have an idea for a new feature? Press the About button to find links to the issue tracker, or post on the MCDM Draw Steel Discord.'
 			}
-			// TODO: Reference
-			// TODO: Roll
-			// TODO: Settings
-			// TODO: Bug or feature? Discord or issues
 			// #endregion
 		];
 	};

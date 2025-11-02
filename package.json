@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "11.110.0",
+	"version": "11.111.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -20,7 +20,7 @@
 		"@ant-design/icons": "^6.1.0",
 		"@ant-design/v5-patch-for-react-19": "^1.0.3",
 		"@types/showdown": "^2.0.6",
-		"antd": "^5.27.6",
+		"antd": "^5.28.0",
 		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^3.0.3",

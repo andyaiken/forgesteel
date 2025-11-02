@@ -49,6 +49,7 @@
 	.encounter-list-column {
 		flex: 1 1 0;
 		overflow-y: auto;
+		padding: 0 5px;
 
 		.monster-row,
 		.terrain-row {

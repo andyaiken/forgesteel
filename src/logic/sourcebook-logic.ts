@@ -111,7 +111,8 @@ export class SourcebookLogic {
 	static getSourcebooks = (homebrew: Sourcebook[] = []) => {
 		const list: Sourcebook[] = [
 			SourcebookData.core,
-			SourcebookData.orden
+			SourcebookData.orden,
+			SourcebookData.draachenmar
 		];
 
 		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {

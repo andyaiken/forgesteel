@@ -1,6 +1,12 @@
+import { aurealgar } from '@/data/ancestries/aurealgar';
+import { aurkin } from '@/data/ancestries/aurkin';
+import { aurven } from '@/data/ancestries/aurven';
+import { caprini } from '@/data/ancestries/caprini';
+import { cervari } from '@/data/ancestries/cervari';
 import { devil } from '@/data/ancestries/devil';
 import { dragonKnight } from '@/data/ancestries/dragon-knight';
 import { dwarf } from '@/data/ancestries/dwarf';
+import { elgari } from '@/data/ancestries/elgari';
 import { hakaan } from '@/data/ancestries/hakaan';
 import { highElf } from '@/data/ancestries/elf-high';
 import { human } from '@/data/ancestries/human';
@@ -9,8 +15,8 @@ import { orc } from '@/data/ancestries/orc';
 import { polder } from '@/data/ancestries/polder';
 import { revenant } from '@/data/ancestries/revenant';
 import { timeRaider } from '@/data/ancestries/time-raider';
+import { warforged } from '@/data/ancestries/warforged';
 import { wodeElf } from '@/data/ancestries/elf-wode';
-
 export class AncestryData {
 	static devil = devil;
 	static dragonKnight = dragonKnight;
@@ -24,4 +30,11 @@ export class AncestryData {
 	static polder = polder;
 	static revenant = revenant;
 	static timeRaider = timeRaider;
+	static aurealgar = aurealgar;
+	static cervari = cervari;
+	static aurkin = aurkin;
+	static aurven = aurven;
+	static caprini = caprini;
+	static elgari = elgari;
+	static warforged = warforged;
 }

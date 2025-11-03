@@ -25,7 +25,8 @@ export const draachenmar: Sourcebook = {
 		AncestryData.caprini,
 		AncestryData.elgari,
 		AncestryData.cervari,
-		AncestryData.warforged
+		AncestryData.warforged,
+		AncestryData.seraphite
 	],
 	cultures: [
 		FactoryLogic.createCulture(

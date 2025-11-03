@@ -14,6 +14,7 @@ import { memonek } from '@/data/ancestries/memonek';
 import { orc } from '@/data/ancestries/orc';
 import { polder } from '@/data/ancestries/polder';
 import { revenant } from '@/data/ancestries/revenant';
+import { seraphite } from '@/data/ancestries/seraphite';
 import { timeRaider } from '@/data/ancestries/time-raider';
 import { warforged } from '@/data/ancestries/warforged';
 import { wodeElf } from '@/data/ancestries/elf-wode';
@@ -37,4 +38,5 @@ export class AncestryData {
 	static caprini = caprini;
 	static elgari = elgari;
 	static warforged = warforged;
+	static seraphite = seraphite;
 }

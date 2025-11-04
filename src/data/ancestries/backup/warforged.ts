@@ -1,6 +1,5 @@
 import { Ancestry } from '@/models/ancestry';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureField } from '@/enums/feature-field';
 
 export const warforged: Ancestry = {
 	id: 'ancestry-warforged',
@@ -28,11 +27,11 @@ export const warforged: Ancestry = {
 			name: 'Warforged Options',
 			options: [
 				{
-					feature: FactoryLogic.feature.createSpeed({
+					feature: FactoryLogic.feature.create({
 						id: 'warforged-agile-chassis',
 						name: 'Agile Chassis',
-						description: 'Your chassis was built for speed.',
-						speed: 6
+						description:
+                            'Your chassis was built for speed. Your Speed is 6.'
 					}),
 					value: 1
 				},
@@ -56,28 +55,20 @@ export const warforged: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'warforged-integrated-stabilizer',
 						name: 'Integrated Stabilizer',
-						description: 'Your internal gyros lock you in place.',
-						field: FeatureField.Stability,
-						value: 1
+						description:
+                            'Your internal gyros lock in. You gain +1 Stability.'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'warforged-warframe-overdrive',
-							name: 'Warframe Overdrive',
-							description: 'You push your construct body to its limits.',
-							type: FactoryLogic.type.createMain(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
-							sections: [
-								FactoryLogic.createAbilitySectionText('Until the start of your next turn, you gain Resistance 5 vs weapon damage, and your melee strikes deal +2 damage.')
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'warforged-warframe-overdrive',
+						name: 'Warframe Overdrive',
+						description:
+                            'Action. Until the start of your next turn, you gain Resistance 5 vs weapon damage, and your melee strikes deal +2 damage.'
 					}),
 					value: 2
 				}

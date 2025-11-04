@@ -1,10 +1,5 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
-import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
-import { Characteristic } from '@/enums/characteristic';
-import { ConditionType } from '@/enums/condition-type';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureField } from '@/enums/feature-field';
 
 export const seraphite: Ancestry = {
 	id: 'ancestry-seraphite',
@@ -33,53 +28,29 @@ export const seraphite: Ancestry = {
 			options: [
 				// 2-point options
 				{
-					feature: FactoryLogic.feature.createConditionImmunity({
+					feature: FactoryLogic.feature.create({
 						id: 'seraphite-fearless',
 						name: 'Fearless',
-						description: 'Your celestial nature makes you immune to fear.',
-						conditions: [ ConditionType.Frightened ]
+						description:
+                            'Condition Immunity. You are immune to Frightened.'
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'seraphite-seraphic-step',
-							name: 'Seraphic Step',
-							description: 'You teleport with celestial grace.',
-							type: FactoryLogic.type.createManeuver(),
-							keywords: [ AbilityKeyword.Magic ],
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
-							sections: [
-								FactoryLogic.createAbilitySectionText('Teleport 3 to a space you can see. This movement ignores engagement and does not provoke. You must end on a surface that can support you. If you begin your turn Slowed, you can still use Seraphic Step.')
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'seraphite-seraphic-step',
+						name: 'Seraphic Step',
+						description:
+                            'Manoeuvre. Teleport 3 to a space you can see. This movement ignores engagement and does not provoke. You must end on a surface that can support you. If you begin your turn Slowed, you can still use Seraphic Step.'
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'seraphite-sunlit-revelation',
-							name: 'Sunlit Revelation',
-							description: 'You unleash a burst of divine light that sears your foes.',
-							type: FactoryLogic.type.createMain(),
-							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
-							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
-							target: 'Each enemy in the area',
-							cost: 'signature',
-							sections: [
-								FactoryLogic.createAbilitySectionRoll(
-									FactoryLogic.createPowerRoll({
-										characteristic: [ Characteristic.Presence ],
-										tier1: '2 untyped damage',
-										tier2: '5 untyped damage',
-										tier3: '7 untyped damage; choose one target hit—that target is Dazed until the end of its next turn'
-									})
-								)
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'seraphite-sunlit-revelation',
+						name: 'Sunlit Revelation',
+						description:
+                            'Action. Close burst 1; enemies in burst. Each enemy in the burst takes 2/5/7 untyped damage based on your tier. Choose one target hit; that target is Dazed until the end of its next turn.'
 					}),
 					value: 2
 				},
@@ -95,32 +66,28 @@ export const seraphite: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'seraphite-heavens-vitality',
-						name: 'Heaven\'s Vitality',
-						description: 'Your celestial vitality enhances your resilience.',
-						field: FeatureField.Stamina,
-						valuePerEchelon: 3
+						name: 'Heaven’s Vitality',
+						description:
+                            'Kit Bonus. You gain +3 Stamina per echelon.'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'seraphite-angelic-poise',
 						name: 'Angelic Poise',
-						description: 'Your graceful movements enhance your ability to escape.',
-						field: FeatureField.Disengage,
-						value: 1
+						description:
+                            'Kit Bonus. Your Disengage increases by +1.'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'seraphite-luminous-stride',
 						name: 'Luminous Stride',
-						description: 'Your movement is enhanced by celestial grace.',
-						field: FeatureField.Speed,
-						value: 1
+						description: 'Kit Bonus. Your Speed increases by +1.'
 					}),
 					value: 1
 				},

@@ -1,9 +1,5 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
-import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
-import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureField } from '@/enums/feature-field';
 
 export const aurkin: Ancestry = {
 	id: 'ancestry-aurkin',
@@ -17,17 +13,15 @@ export const aurkin: Ancestry = {
 			features: [
 				FactoryLogic.feature.create({
 					id: 'aurkin-feature-1a',
-					name: 'Natural Claws – Predator\'s Rend',
+					name: 'Natural Claws – Predator’s Rend',
 					description:
 						'Triggered, 1/round. When you hit with a melee strike, you can use a triggered action to deal extra damage equal to your highest characteristic to that target.'
 				}),
-				FactoryLogic.feature.createSize({
+				FactoryLogic.feature.create({
 					id: 'aurkin-feature-1b',
 					name: 'Small Stature',
 					description:
-						'Your diminutive stature lets you easily get out of trouble and move through larger creatures\' spaces. You may move through the spaces of creatures larger than you (you can\'t end your movement in an occupied space).',
-					sizeValue: 1,
-					sizeMod: 'S'
+						'You are size 1S. You gain +1 disengage and may move through the spaces of creatures larger than you (you can’t end your movement in an occupied space).'
 				})
 			]
 		}),
@@ -55,22 +49,18 @@ export const aurkin: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'aurkin-feature-2-3',
 						name: 'Tail Balance',
-						description: 'Your tail provides enhanced balance and agility when maneuvering.',
-						field: FeatureField.Disengage,
-						value: 1
+						description: '+1 disengage.'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'aurkin-feature-2-4',
-						name: 'Cat\'s Grace',
-						description: 'Your feline agility grants you enhanced movement speed.',
-						field: FeatureField.Speed,
-						value: 1
+						name: 'Cat’s Grace',
+						description: '+1 speed.'
 					}),
 					value: 1
 				},
@@ -84,12 +74,10 @@ export const aurkin: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'aurkin-feature-2-6',
 						name: 'Sun-Doze',
-						description: 'Your ability to rest in sunlight increases your resilience.',
-						field: FeatureField.Stamina,
-						valuePerEchelon: 3
+						description: '+3 Stamina per echelon.'
 					}),
 					value: 1
 				},
@@ -113,12 +101,10 @@ export const aurkin: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'aurkin-feature-2-9',
 						name: 'Tightrope Tail',
-						description: 'Your exceptional balance on narrow surfaces enhances your maneuvering.',
-						field: FeatureField.Disengage,
-						value: 1
+						description: '+1 disengage.'
 					}),
 					value: 1
 				},
@@ -142,18 +128,11 @@ export const aurkin: Ancestry = {
 
 				// shared 2-point
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'aurkin-feature-2-12',
-							name: 'Pounce',
-							description: 'You leap toward your prey with feline grace.',
-							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
-							sections: [
-								FactoryLogic.createAbilitySectionText('Stride up to your speed toward a creature you can see, then make a melee strike. On a tier 2+ outcome, push the target 1.')
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'aurkin-feature-2-12',
+						name: 'Pounce',
+						description:
+							'Maneuver. Stride up to your speed toward a creature you can see, then make a melee strike. On a tier 2+ outcome, push the target 1.'
 					}),
 					value: 2
 				},
@@ -178,44 +157,20 @@ export const aurkin: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'aurkin-feature-2-15',
-							name: 'Blinding Scramble',
-							description: 'You claw and scratch in a flurry of motion, disorienting your foes.',
-							type: FactoryLogic.type.createMain(),
-							keywords: [ AbilityKeyword.Area ],
-							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 1, within: 1 }) ],
-							target: 'Targets in area',
-							cost: 'signature',
-							sections: [
-								FactoryLogic.createAbilitySectionRoll(
-									FactoryLogic.createPowerRoll({
-										characteristic: [ Characteristic.Agility ],
-										tier1: '2 damage',
-										tier2: '4 damage; the first target suffers a bane',
-										tier3: '6 damage; two targets suffer a bane'
-									})
-								)
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'aurkin-feature-2-15',
+						name: 'Blinding Scramble',
+						description:
+							'Action; Area 1 line within 1. t1: 2 damage; t2: 4 damage and the first target suffers a bane; t3: 6 damage and two targets suffer a bane.'
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'aurkin-feature-2-16',
-							name: 'Ghost-Step',
-							description: 'You vanish into the shadows and reappear in a safer position.',
-							type: FactoryLogic.type.createManeuver(),
-							keywords: [ AbilityKeyword.Magic ],
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
-							sections: [
-								FactoryLogic.createAbilitySectionText('Teleport 2 to a square you can see that provides light or greater cover from any one enemy.')
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'aurkin-feature-2-16',
+						name: 'Ghost-Step',
+						description:
+							'Maneuver. Teleport 2 to a square you can see that provides light or greater cover from any one enemy.'
 					}),
 					value: 2
 				}

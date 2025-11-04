@@ -249,7 +249,7 @@ export const Main = (props: Props) => {
 	// #region Welcome
 
 	const newHero = (folder: string) => {
-		const hero = FactoryLogic.createHero([ SourcebookData.core.id, SourcebookData.orden.id ]);
+		const hero = FactoryLogic.createHero([ SourcebookData.core.id, SourcebookData.draachenmar.id ]);
 		hero.folder = folder;
 
 		setDrawer(null);

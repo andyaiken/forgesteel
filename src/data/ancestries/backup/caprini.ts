@@ -1,6 +1,5 @@
 import { Ancestry } from '@/models/ancestry';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureField } from '@/enums/feature-field';
 
 export const caprini: Ancestry = {
 	id: 'ancestry-caprini',
@@ -19,13 +18,11 @@ export const caprini: Ancestry = {
 					description:
             'Triggered; 1/round. When you hit a creature with a melee strike, deal extra damage equal to your highest characteristic to that target.'
 				}),
-				FactoryLogic.feature.createSize({
+				FactoryLogic.feature.create({
 					id: 'caprini-signature-2',
 					name: 'Small Stature',
 					description:
-            'Your diminutive stature lets you easily get out of trouble and move through larger creatures\' spaces. You may move through squares of larger creatures (you cannot end your movement in an occupied square).',
-					sizeValue: 1,
-					sizeMod: 'S'
+            'You are size 1S. You gain +1 disengage and may move through squares of larger creatures (you cannot end your movement in an occupied square).'
 				})
 			]
 		}),
@@ -45,12 +42,10 @@ export const caprini: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'caprini-option-2',
 						name: 'Tight Turn',
-						description: 'Your nimble movement enhances your ability to escape.',
-						field: FeatureField.Disengage,
-						value: 1
+						description: '+1 disengage.'
 					}),
 					value: 1
 				},
@@ -82,27 +77,20 @@ export const caprini: Ancestry = {
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'caprini-option-6',
-							name: 'Wall-Run',
-							description: 'You run along vertical surfaces with supernatural grace.',
-							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
-							sections: [
-								FactoryLogic.createAbilitySectionText('Move up to your speed along vertical surfaces or narrow ledges without tests this turn, starting and ending on a surface that can support you.')
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'caprini-option-6',
+						name: 'Wall-Run',
+						description:
+              'Maneuver. Move up to your speed along vertical surfaces or narrow ledges without tests this turn, starting and ending on a surface that can support you.'
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createSaveThreshold({
+					feature: FactoryLogic.feature.create({
 						id: 'caprini-option-7',
-						name: 'Ram\'s Head',
-						description: 'Your hardened skull and stubborn nature improve your resilience. Your first shove or Grab each scene gains an edge.',
-						value: 5
+						name: 'Ram’s Head',
+						description:
+              'You succeed on saving throws on a 5+. Your first shove or Grab each scene gains an edge.'
 					}),
 					value: 2
 				}

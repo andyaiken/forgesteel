@@ -1,6 +1,5 @@
 import { Ancestry } from '@/models/ancestry';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureField } from '@/enums/feature-field';
 
 export const cervari: Ancestry = {
 	id: 'ancestry-cervari',
@@ -55,28 +54,19 @@ export const cervari: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'cervari-option-4',
 						name: 'Sure-Footed',
-						description: 'Your steady gait makes you difficult to move.',
-						field: FeatureField.Stability,
-						value: 1
+						description: '+1 stability.'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'cervari-option-5',
-							name: 'Gazelle Dash',
-							description: 'You build tremendous momentum in your sprint.',
-							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
-							sections: [
-								FactoryLogic.createAbilitySectionText('Move up to your speed in a straight line 5+ squares; your next melee strike this turn gains +5 damage and +1 reach.')
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'cervari-option-5',
+						name: 'Gazelle Dash',
+						description:
+              'Maneuver. Move up to your speed in a straight line 5+ squares; your next melee strike this turn gains +5 damage and +1 reach.'
 					}),
 					value: 2
 				},

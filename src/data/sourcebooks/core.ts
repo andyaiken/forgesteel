@@ -35,12 +35,15 @@ export const core: Sourcebook = {
 		AncestryData.devil,
 		AncestryData.dragonKnight,
 		AncestryData.dwarf,
-		AncestryData.wodeElf,
+		AncestryData.hakaan,
 		AncestryData.highElf,
 		AncestryData.human,
+		AncestryData.memonek,
 		AncestryData.orc,
 		AncestryData.polder,
-		AncestryData.revenant
+		AncestryData.revenant,
+		AncestryData.timeRaider,
+		AncestryData.wodeElf
 	],
 	cultures: [
 		FactoryLogic.createCulture('Artisan Guild', 'Urban, bureaucratic, creative.', CultureType.Professional, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.creative),

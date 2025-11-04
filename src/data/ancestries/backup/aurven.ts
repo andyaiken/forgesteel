@@ -1,6 +1,5 @@
 import { Ancestry } from '@/models/ancestry';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { FeatureField } from '@/enums/feature-field';
 
 export const aurven: Ancestry = {
 	id: 'ancestry-aurven',
@@ -14,7 +13,7 @@ export const aurven: Ancestry = {
 			features: [
 				FactoryLogic.feature.create({
 					id: 'aurven-feature-1a',
-					name: 'Natural Claws – Predator\'s Rend',
+					name: 'Natural Claws – Predator’s Rend',
 					description:
 						'Triggered, 1/round. When you hit with a melee strike, you can use a triggered action to deal extra damage equal to your highest characteristic to that target.'
 				}),
@@ -49,22 +48,18 @@ export const aurven: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'aurven-feature-2-3',
 						name: 'Tail Balance',
-						description: 'Your tail provides enhanced balance and agility when maneuvering.',
-						field: FeatureField.Disengage,
-						value: 1
+						description: '+1 disengage.'
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'aurven-feature-2-4',
-						name: 'Cat\'s Grace',
-						description: 'Your feline agility grants you enhanced movement speed.',
-						field: FeatureField.Speed,
-						value: 1
+						name: 'Cat’s Grace',
+						description: '+1 speed.'
 					}),
 					value: 1
 				},
@@ -78,12 +73,10 @@ export const aurven: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'aurven-feature-2-6',
 						name: 'Sun-Doze',
-						description: 'Your ability to rest in sunlight increases your resilience.',
-						field: FeatureField.Stamina,
-						valuePerEchelon: 3
+						description: '+3 Stamina per echelon.'
 					}),
 					value: 1
 				},
@@ -117,30 +110,21 @@ export const aurven: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.createBonus({
+					feature: FactoryLogic.feature.create({
 						id: 'aurven-feature-2-10',
 						name: 'Sure-Footed',
-						description: 'Your mountain heritage makes you difficult to move.',
-						field: FeatureField.Stability,
-						value: 1
+						description: '+1 stability.'
 					}),
 					value: 1
 				},
 
 				// shared 2-point
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'aurven-feature-2-11',
-							name: 'Pounce',
-							description: 'You leap toward your prey with feline grace.',
-							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
-							sections: [
-								FactoryLogic.createAbilitySectionText('Stride up to your speed toward a creature you can see, then make a melee strike. On a tier 2+ outcome, push the target 1.')
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'aurven-feature-2-11',
+						name: 'Pounce',
+						description:
+							'Maneuver. Stride up to your speed toward a creature you can see, then make a melee strike. On a tier 2+ outcome, push the target 1.'
 					}),
 					value: 2
 				},
@@ -156,34 +140,20 @@ export const aurven: Ancestry = {
 
 				// Aurven 2-point
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'aurven-feature-2-13',
-							name: 'Explosive Dash',
-							description: 'You build tremendous momentum in your charge.',
-							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
-							sections: [
-								FactoryLogic.createAbilitySectionText('Move up to your speed; your next melee strike this turn gains +5 damage and +1 reach if you moved in a straight line at least 5 squares.')
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'aurven-feature-2-13',
+						name: 'Explosive Dash',
+						description:
+							'Maneuver. Move up to your speed; your next melee strike this turn gains +5 damage and +1 reach if you moved in a straight line at least 5 squares.'
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.createAbility({
-						ability: FactoryLogic.createAbility({
-							id: 'aurven-feature-2-14',
-							name: 'Tree Panther',
-							description: 'You scale to higher ground with ease.',
-							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
-							sections: [
-								FactoryLogic.createAbilitySectionText('Climb up to your speed. Until the end of the turn, you count as having high ground for your strikes (line-of-effect permitting).')
-							]
-						})
+					feature: FactoryLogic.feature.create({
+						id: 'aurven-feature-2-14',
+						name: 'Tree Panther',
+						description:
+							'Maneuver. Climb up to your speed. Until the end of the turn, you count as having high ground for your strikes (line-of-effect permitting).'
 					}),
 					value: 2
 				},

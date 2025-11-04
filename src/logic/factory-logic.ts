@@ -88,7 +88,7 @@ export class FactoryLogic {
 				FactoryLogic.feature.createLanguageChoice({
 					id: 'default-language',
 					name: 'Default Language',
-					selected: [ 'Caelian' ]
+					selected: [ 'Draachen Trade' ]
 				})
 			],
 			state: FactoryLogic.createHeroState(),

@@ -1,3 +1,4 @@
+import { angulotl } from './ancestries/angulotl';
 import { aurealgar } from '@/data/ancestries/aurealgar';
 import { aurkin } from '@/data/ancestries/aurkin';
 import { aurven } from '@/data/ancestries/aurven';
@@ -39,4 +40,5 @@ export class AncestryData {
 	static elgari = elgari;
 	static warforged = warforged;
 	static seraphite = seraphite;
+	static angulotl = angulotl;
 }

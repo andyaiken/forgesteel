@@ -1,5 +1,10 @@
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
+import { Characteristic } from '@/enums/characteristic';
+import { ConditionType } from '@/enums/condition-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 
 export const aurealgar: Ancestry = {
 	id: 'ancestry-aurealgar',
@@ -14,7 +19,7 @@ export const aurealgar: Ancestry = {
 			features: [
 				FactoryLogic.feature.create({
 					id: 'aurealgar-feature-1a',
-					name: 'Natural Claws – Predator’s Rend',
+					name: 'Natural Claws – Predator\'s Rend',
 					description:
 						'Triggered, 1/round. When you hit with a melee strike, you can use a triggered action to deal extra damage equal to your highest characteristic to that target.'
 				}),
@@ -50,18 +55,22 @@ export const aurealgar: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createBonus({
 						id: 'aurealgar-feature-2-3',
 						name: 'Tail Balance',
-						description: '+1 disengage.'
+						description: 'Your tail provides enhanced balance and agility when maneuvering.',
+						field: FeatureField.Disengage,
+						value: 1
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createBonus({
 						id: 'aurealgar-feature-2-4',
-						name: 'Cat’s Grace',
-						description: '+1 speed.'
+						name: 'Cat\'s Grace',
+						description: 'Your feline agility grants you enhanced movement speed.',
+						field: FeatureField.Speed,
+						value: 1
 					}),
 					value: 1
 				},
@@ -75,29 +84,40 @@ export const aurealgar: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createBonus({
 						id: 'aurealgar-feature-2-6',
 						name: 'Sun-Doze',
-						description: '+3 Stamina per echelon.'
+						description: 'Your ability to rest in sunlight increases your resilience.',
+						field: FeatureField.Stamina,
+						valuePerEchelon: 3
 					}),
 					value: 1
 				},
 
 				// Aurealgar 1-point
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createBonus({
 						id: 'aurealgar-feature-2-7',
 						name: 'Thick Hide',
-						description: '+3 Stamina per echelon.'
+						description: 'Your thick hide provides enhanced protection.',
+						field: FeatureField.Stamina,
+						valuePerEchelon: 3
 					}),
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'aurealgar-feature-2-8',
-						name: 'Pride-Guard',
-						description:
-							'Triggered. When you or an adjacent ally take damage from a strike, reduce that damage by your level.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'aurealgar-feature-2-8',
+							name: 'Pride-Guard',
+							description: 'You protect your allies with fierce dedication.',
+							type: FactoryLogic.type.createTrigger('You or an adjacent ally takes damage from a strike'),
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'The triggering creature',
+							sections: [
+								FactoryLogic.createAbilitySectionText('You reduce the damage from the strike by an amount equal to your level.')
+							]
+						})
 					}),
 					value: 1
 				},
@@ -112,11 +132,18 @@ export const aurealgar: Ancestry = {
 
 				// shared 2-point
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'aurealgar-feature-2-10',
-						name: 'Pounce',
-						description:
-							'Maneuver. Stride up to your speed toward a creature you can see, then make a melee strike. On a tier 2+ outcome, push the target 1.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'aurealgar-feature-2-10',
+							name: 'Pounce',
+							description: 'You leap toward your prey with feline grace.',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							sections: [
+								FactoryLogic.createAbilitySectionText('Stride up to your speed toward a creature you can see, then make a melee strike. On a tier 2+ outcome, push the target 1.')
+							]
+						})
 					}),
 					value: 2
 				},
@@ -132,37 +159,77 @@ export const aurealgar: Ancestry = {
 
 				// Aurealgar 2-point
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createConditionImmunity({
 						id: 'aurealgar-feature-2-12',
 						name: 'King of the Dunes',
-						description: 'You are immune to the frightened condition.'
+						description: 'Your proud nature makes you immune to fear.',
+						conditions: [ ConditionType.Frightened ]
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'aurealgar-feature-2-13',
-						name: 'Mauling Drive',
-						description:
-							'Action; Melee; Weapon. Power Roll + Might. t1: +2 damage; t2: +4 damage and push 1; t3: +6 damage and push 2.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'aurealgar-feature-2-13',
+							name: 'Mauling Drive',
+							description: 'You drive forward with overwhelming force.',
+							type: FactoryLogic.type.createMain(),
+							keywords: [ AbilityKeyword.Weapon ],
+							distance: [ FactoryLogic.distance.createMelee() ],
+							target: 'One creature',
+							cost: 'signature',
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Might ],
+										tier1: '+2 damage',
+										tier2: '+4 damage; push 1',
+										tier3: '+6 damage; push 2'
+									})
+								)
+							]
+						})
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'aurealgar-feature-2-14',
-						name: 'Standing Charge',
-						description:
-							'Maneuver. Move up to 2. Your next strike this turn gains +5 damage if you started the maneuver adjacent to an ally.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'aurealgar-feature-2-14',
+							name: 'Standing Charge',
+							description: 'You charge forward with the support of your pride.',
+							type: FactoryLogic.type.createManeuver(),
+							distance: [ FactoryLogic.distance.createSelf() ],
+							target: 'Self',
+							sections: [
+								FactoryLogic.createAbilitySectionText('Move up to 2. Your next strike this turn gains +5 damage if you started the maneuver adjacent to an ally.')
+							]
+						})
 					}),
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
-						id: 'aurealgar-feature-2-15',
-						name: 'Lion’s Roar',
-						description:
-							'Action; Area 1 burst; Magic. Roll Might or Presence vs. each enemy in the area. t1: 2 damage; t2: 5 damage and push 1; t3: 7 damage and push 2.'
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'aurealgar-feature-2-15',
+							name: 'Lion\'s Roar',
+							description: 'You let loose a mighty roar to shake your foes\' spirits.',
+							type: FactoryLogic.type.createMain(),
+							keywords: [ AbilityKeyword.Area, AbilityKeyword.Magic ],
+							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
+							target: 'Each enemy in the area',
+							cost: 'signature',
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Might, Characteristic.Presence ],
+										tier1: '2 damage',
+										tier2: '5 damage; push 1',
+										tier3: '7 damage; push 2'
+									})
+								)
+							]
+						})
 					}),
 					value: 2
 				}

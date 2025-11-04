@@ -4,8 +4,9 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
+import { SourcebookEditorPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -105,16 +106,17 @@ export const SourcebooksModal = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{
 							[ ...props.officialSourcebooks, ...homebrewSourcebooks ].map(s => (
-								<SourcebookPanel
-									key={s.id}
-									sourcebook={s}
-									sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
-									visible={!hiddenSourcebookIDs.includes(s.id)}
-									heroes={props.heroes}
-									onSetVisible={setVisibility}
-									onChange={changeSourcebook}
-									onDelete={deleteSourcebook}
-								/>
+								<SelectablePanel key={s.id}>
+									<SourcebookEditorPanel
+										sourcebook={s}
+										sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
+										visible={!hiddenSourcebookIDs.includes(s.id)}
+										heroes={props.heroes}
+										onSetVisible={setVisibility}
+										onChange={changeSourcebook}
+										onDelete={deleteSourcebook}
+									/>
+								</SelectablePanel>
 							))
 						}
 					</Space>

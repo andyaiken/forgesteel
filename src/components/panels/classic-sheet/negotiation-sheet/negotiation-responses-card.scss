@@ -1,0 +1,22 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .negotiation-responses.card {
+    display: grid;
+    grid-template-rows: min-content repeat(6, 1fr);
+    gap: 5px;
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    section.bordered {
+        position: relative;
+
+        h4 {
+            text-align: left;
+            margin-top: -10px;
+            font-size: round(1.15rem, 1px);
+        }
+    }
+
+}

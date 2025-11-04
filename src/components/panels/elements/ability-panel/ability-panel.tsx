@@ -8,6 +8,7 @@ import { AbilityInfoPanel } from '@/components/panels/ability-info/ability-info-
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityUsage } from '@/enums/ability-usage';
+import { Collections } from '@/utils/collections';
 import { ConditionType } from '@/enums/condition-type';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureType } from '@/enums/feature-type';
@@ -76,9 +77,7 @@ export const AbilityPanel = (props: Props) => {
 		() => {
 			if (props.hero) {
 				const resources = HeroLogic.getHeroicResources(props.hero);
-				if (resources.length > 0) {
-					return resources[0].value;
-				}
+				return Collections.sum(resources, r => r.value);
 			}
 
 			return 0;

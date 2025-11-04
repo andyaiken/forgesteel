@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "11.96.0",
+	"version": "11.114.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -20,7 +20,7 @@
 		"@ant-design/icons": "^6.1.0",
 		"@ant-design/v5-patch-for-react-19": "^1.0.3",
 		"@types/showdown": "^2.0.6",
-		"antd": "^5.27.6",
+		"antd": "^5.28.0",
 		"gh-pages": "^6.3.0",
 		"html2canvas": "^1.4.1",
 		"jspdf": "^3.0.3",
@@ -29,24 +29,24 @@
 		"pdf-lib": "^1.17.1",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0",
-		"react-router": "^7.9.4",
-		"sass": "^1.93.2",
+		"react-router": "^7.9.5",
+		"sass": "^1.93.3",
 		"showdown": "^2.1.0"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.38.0",
+		"@eslint/js": "^9.39.1",
 		"@stylistic/eslint-plugin": "^5.5.0",
 		"@types/react": "^19.2.2",
 		"@types/react-dom": "^19.2.2",
 		"@vitejs/plugin-react": "^5.1.0",
-		"@vitest/coverage-v8": "^4.0.3",
-		"eslint": "^9.38.0",
+		"@vitest/coverage-v8": "^4.0.6",
+		"eslint": "^9.39.1",
 		"eslint-plugin-react-hooks": "^7.0.1",
-		"globals": "^16.4.0",
+		"globals": "^16.5.0",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.46.2",
+		"typescript-eslint": "^8.46.3",
 		"vite": "^7.1.12",
 		"vite-tsconfig-paths": "^5.1.4",
-		"vitest": "^4.0.3"
+		"vitest": "^4.0.6"
 	}
 }

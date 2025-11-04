@@ -22,6 +22,7 @@ import { PerkData } from '@/data/perk-data';
 import { ProjectData } from '@/data/project-data';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { TerrainData } from '@/data/terrain-data';
 import { TitleData } from '@/data/title-data';
 import { TrinketData } from '@/data/items/trinket-data';
@@ -30,7 +31,7 @@ export const core: Sourcebook = {
 	id: '',
 	name: 'Core',
 	description: 'Core game elements.',
-	isHomebrew: false,
+	type: SourcebookType.Official,
 	ancestries: [
 		AncestryData.devil,
 		AncestryData.draconem,

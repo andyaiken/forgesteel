@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Popover, Segmented } from 'antd';
+import { Alert, Button, Divider, Popover } from 'antd';
 import { CloseOutlined, CopyOutlined, DownOutlined, EditOutlined, ToolOutlined, UploadOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
 import { Ability } from '@/models/ability';
@@ -29,9 +29,11 @@ import { Sourcebook } from '@/models/sourcebook';
 import { StandardAbilitiesPage } from '@/components/pages/heroes/hero-sheet/standard-abilities-page';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
+import { ViewSelector } from '@/components/panels/view-selector/view-selector';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useTitle } from '@/hooks/use-title';
 
 import './hero-view-page.scss';
 
@@ -70,11 +72,12 @@ export const HeroViewPage = (props: Props) => {
 	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const { heroID } = useParams<{ heroID: string }>();
-	const [ view, setView ] = useState<'modern' | 'classic' | 'abilities' | 'notes'>('modern');
+	const [ view, setView ] = useState<string>('modern');
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
 		[ heroID, props.heroes ]
 	);
+	useTitle(hero.name || 'Unnamed Hero');
 
 	const getContent = () => {
 		switch (view) {
@@ -112,7 +115,7 @@ export const HeroViewPage = (props: Props) => {
 				);
 			case 'abilities':
 				return (
-					<StandardAbilitiesPage options={props.options} />
+					<StandardAbilitiesPage options={props.options} hero={hero} />
 				);
 			case 'notes':
 				return (
@@ -189,30 +192,8 @@ export const HeroViewPage = (props: Props) => {
 					>
 						Manage
 					</Button>
-					<Popover
-						trigger='click'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Segmented
-									block={true}
-									vertical={true}
-									options={[
-										{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
-										{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Classic Sheet</div> },
-										{ value: 'abilities', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Standard Abilities</div> },
-										{ value: 'notes', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Notes</div> }
-									]}
-									value={view}
-									onChange={setView}
-								/>
-							</div>
-						)}
-					>
-						<Button>
-							View
-							<DownOutlined />
-						</Button>
-					</Popover>
+					<div className='divider' />
+					<ViewSelector value={view} showHeroOptions={true} onChange={setView} />
 				</AppHeader>
 				<ErrorBoundary>
 					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>

@@ -3,30 +3,24 @@
 	display: flex;
 	flex-direction: column;
 
-	&.full {
-		.welcome-page-content {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: space-around;
-
-			.welcome-column {
-				max-width: 800px;
-
-				.welcome-section {
-					height: 300px;
-				}
-			}
-		}
-	}
-
 	.welcome-page-content {
 		height: 100%;
 		background-color: rgb(230, 230, 230);
+		padding: 50px;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		justify-content: space-evenly;
+		gap: 50px;
 		overflow-y: auto;
-		padding: 0 20px 20px 20px;
+
+		&.compact {
+			padding: 20px;
+		}
 
 		.welcome-column {
+			flex: 2 2 0;
+
 			.welcome-tab-button {
 				height: 45px;
 				display: flex;
@@ -35,21 +29,17 @@
 				justify-content: center;
 
 				.title {
-					font-size: 14px;
-					font-weight: 600;
-					height: 20px;
 					line-height: 20px;
 				}
 
 				.subtitle {
 					font-size: 11px;
-					height: 18px;
 					line-height: 18px;
 				}
 			}
 
 			.welcome-section {
-				margin-top: -10px;
+				margin: -10px 0 10px 0;
 			}
 
 			.welcome-buttons {
@@ -60,17 +50,22 @@
 					flex: 1 1 0;
 				}
 			}
+		}
 
-			.logo-container {
-				margin-top: 10px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
+		.tip-column {
+			flex: 1 1 0;
+			padding-top: 10px;
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+		}
+	}
 
-				>img {
-					height: 50px;
-				}
-			}
+	.logo-container {
+		margin: 5px 0 -5px 0;
+
+		>img {
+			height: 45px;
 		}
 	}
 }

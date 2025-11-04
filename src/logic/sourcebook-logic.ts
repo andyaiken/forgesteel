@@ -5,6 +5,7 @@ import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
+import { Element } from '@/models/element';
 import { Feature } from '@/models/feature';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { FeatureType } from '@/enums/feature-type';
@@ -18,6 +19,7 @@ import { MonsterGroup } from '@/models/monster-group';
 import { Options } from '@/models/options';
 import { Perk } from '@/models/perk';
 import { Project } from '@/models/project';
+import { Random } from '@/utils/random';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
@@ -27,23 +29,36 @@ import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
 
 export class SourcebookLogic {
-	static getElementCount = (sourcebook: Sourcebook) => {
-		let count = 0;
+	static getElements = (sourcebook: Sourcebook): { element: Element, type: string }[] => {
+		return [
+			...sourcebook.ancestries.map(x => ({ element: x, type: 'ancestry' })),
+			...sourcebook.careers.map(x => ({ element: x, type: 'career' })),
+			...sourcebook.classes.map(x => ({ element: x, type: 'class' })),
+			...sourcebook.complications.map(x => ({ element: x, type: 'complication' })),
+			...sourcebook.cultures.map(x => ({ element: x, type: 'culture' })),
+			...sourcebook.domains.map(x => ({ element: x, type: 'domain' })),
+			...sourcebook.imbuements.map(x => ({ element: x, type: 'imbuement' })),
+			...sourcebook.items.map(x => ({ element: x, type: 'item' })),
+			...sourcebook.kits.map(x => ({ element: x, type: 'kit' })),
+			...sourcebook.monsterGroups.map(x => ({ element: x, type: 'monster group' })),
+			...sourcebook.perks.map(x => ({ element: x, type: 'perk' })),
+			...sourcebook.projects.map(x => ({ element: x, type: 'project' })),
+			...sourcebook.subclasses.map(x => ({ element: x, type: 'subclass' })),
+			...sourcebook.terrain.map(x => ({ element: x, type: 'terrain' })),
+			...sourcebook.titles.map(x => ({ element: x, type: 'title' }))
+		];
+	};
 
-		count += sourcebook.ancestries.length;
-		count += sourcebook.cultures.length;
-		count += sourcebook.careers.length;
-		count += sourcebook.classes.length;
-		count += sourcebook.complications.length;
-		count += sourcebook.kits.length;
-		count += sourcebook.domains.length;
-		count += sourcebook.perks.length;
-		count += sourcebook.items.length;
-		count += sourcebook.monsterGroups.length;
-		count += sourcebook.subclasses.length;
-		count += sourcebook.terrain.length;
+	static getExampleContent = (sourcebook: Sourcebook) => {
+		const elements = SourcebookLogic
+			.getElements(sourcebook)
+			.map(x => `${x.element.name} (${x.type})`);
 
-		return count;
+		const rng = Random.getSeededRNG(sourcebook.name);
+		const shuffled = Collections.shuffle(elements, rng);
+		const samples = shuffled.slice(0, 3);
+
+		return Collections.sort(samples, s => s);
 	};
 
 	static getAncestrySourcebook = (sourcebooks: Sourcebook[], ancestry: Ancestry) => {
@@ -102,6 +117,10 @@ export class SourcebookLogic {
 		return sourcebooks.find(s => s.monsterGroups.find(mg => mg.monsters.some(m => m.id === monster.id)));
 	};
 
+	static getProjectSourcebook = (sourcebooks: Sourcebook[], project: Project) => {
+		return sourcebooks.find(s => s.projects.find(p => p.id === project.id));
+	};
+
 	static getTerrainSourcebook = (sourcebooks: Sourcebook[], terrain: Terrain) => {
 		return sourcebooks.find(s => s.terrain.find(t => t.id === terrain.id));
 	};
@@ -116,6 +135,10 @@ export class SourcebookLogic {
 
 		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
 			list.push(SourcebookData.playtest);
+		}
+
+		if (FeatureFlags.hasFlag(FeatureFlags.ratcatcher.code)) {
+			list.push(SourcebookData.ratcatcher);
 		}
 
 		list.push(...Collections.sort(homebrew, cs => cs.name));

@@ -45,10 +45,12 @@ import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { Playbook } from '@/models/playbook';
 import { PlaybookLogic } from '@/logic/playbook-logic';
+import { Project } from '@/models/project';
+import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SelectorRow } from '@/components/panels/selector-row/selector-row';
-import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { SubClass } from '@/models/subclass';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 import { Terrain } from '@/models/terrain';
@@ -58,6 +60,7 @@ import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useTitle } from '@/hooks/use-title';
 
 import './library-list-page.scss';
 
@@ -93,7 +96,8 @@ export const LibraryListPage = (props: Props) => {
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
-	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(cs => cs.isHomebrew).length > 0 ? props.sourcebooks.filter(cs => cs.isHomebrew)[0].id : null);
+	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew)[0].id : null);
+	useTitle('Library');
 
 	if (kind !== previousCategory) {
 		setCategory(kind || 'ancestry');
@@ -297,6 +301,20 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
+	const getProjects = () => {
+		try {
+			return SourcebookLogic
+				.getProjects(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
 	const getSubclasses = () => {
 		try {
 			return SourcebookLogic
@@ -379,6 +397,9 @@ export const LibraryListPage = (props: Props) => {
 			case 'perk':
 				list = getPerks();
 				break;
+			case 'project':
+				list = getProjects();
+				break;
 			case 'subclass':
 				list = getSubclasses();
 				break;
@@ -441,6 +462,9 @@ export const LibraryListPage = (props: Props) => {
 			case 'perk':
 				getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} options={props.options} mode={PanelMode.Full} />;
 				break;
+			case 'project':
+				getPanel = (element: Element) => <ProjectPanel key={element.id} project={element as Project} mode={PanelMode.Full} />;
+				break;
 			case 'subclass':
 				getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />;
 				break;
@@ -495,6 +519,9 @@ export const LibraryListPage = (props: Props) => {
 			case 'perk':
 				sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, element as Perk);
 				break;
+			case 'project':
+				sourcebook = SourcebookLogic.getProjectSourcebook(props.sourcebooks, element as Project);
+				break;
 			case 'subclass':
 				sourcebook = SourcebookLogic.getSubClassSourcebook(props.sourcebooks, element as SubClass);
 				break;
@@ -515,29 +542,6 @@ export const LibraryListPage = (props: Props) => {
 		}
 
 		return undefined;
-	};
-
-	const getTags = (element: Element) => {
-		const tags: string[] = [];
-
-		const sb = getSourcebook(element);
-		if (sb) {
-			tags.push(sb.name || 'Unnamed Sourcebook');
-			if (sb.isHomebrew) {
-				tags.push('Homebrew');
-			}
-		}
-
-		if (category === 'class') {
-			const heroClass = element as HeroClass;
-			switch (heroClass.type) {
-				case 'master':
-					tags.push('Master Class');
-					break;
-			}
-		}
-
-		return tags.length > 0 ? tags : undefined;
 	};
 
 	const getGroupHeader = (element: Element) => {
@@ -568,6 +572,17 @@ export const LibraryListPage = (props: Props) => {
 			return perk.list;
 		}
 
+		if (category === 'project') {
+			const project = element as Project;
+			if (project.name.startsWith('Craft')) {
+				return 'Crafting';
+			}
+			if (project.name.startsWith('Imbue')) {
+				return 'Imbuing';
+			}
+			return 'Misc';
+		}
+
 		if (category === 'title') {
 			const title = element as Title;
 			return `Echelon ${title.echelon}`;
@@ -587,7 +602,7 @@ export const LibraryListPage = (props: Props) => {
 			return null;
 		}
 
-		const homebrewSourcebooks = props.sourcebooks.filter(sb => sb.isHomebrew);
+		const homebrewSourcebooks = props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew);
 
 		const getCreateHomebrew = () => {
 			if ((category === 'monster-group') && !props.options.showMonsterGroups) {
@@ -611,7 +626,7 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
-			if (!sourcebook.isHomebrew && (homebrewSourcebooks.length === 0)) {
+			if ((sourcebook.type !== SourcebookType.Homebrew) && (homebrewSourcebooks.length === 0)) {
 				return (
 					<Button icon={<CopyOutlined />} onClick={() => props.createElement(category, null, element)}>
 						Create Homebrew Version
@@ -619,7 +634,7 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
-			if (!sourcebook.isHomebrew && (homebrewSourcebooks.length > 0)) {
+			if ((sourcebook.type !== SourcebookType.Homebrew) && (homebrewSourcebooks.length > 0)) {
 				return (
 					<Popover
 						trigger='click'
@@ -647,14 +662,14 @@ export const LibraryListPage = (props: Props) => {
 			<>
 				{getCreateHomebrew()}
 				{
-					sourcebook.isHomebrew ?
+					sourcebook.type === SourcebookType.Homebrew ?
 						<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(category, sourcebook.id, element.id)}>
 							Edit
 						</Button>
 						: null
 				}
 				{
-					sourcebook.isHomebrew ?
+					sourcebook.type === SourcebookType.Homebrew ?
 						<Popover
 							trigger='click'
 							content={(
@@ -662,7 +677,7 @@ export const LibraryListPage = (props: Props) => {
 									<ErrorBoundary>
 										{
 											props.sourcebooks
-												.filter(sb => sb.isHomebrew)
+												.filter(sb => sb.type === SourcebookType.Homebrew)
 												.map(sb => <Button key={sb.id} onClick={() => props.createElement(category, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)
 										}
 									</ErrorBoundary>
@@ -692,7 +707,7 @@ export const LibraryListPage = (props: Props) => {
 					</Button>
 				</Popover>
 				{
-					sourcebook.isHomebrew ?
+					sourcebook.type === SourcebookType.Homebrew ?
 						<DangerButton
 							mode='block'
 							disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
@@ -762,7 +777,6 @@ export const LibraryListPage = (props: Props) => {
 							selected={selectedID === a.id}
 							content={(category === 'monster-group') && !props.options.showMonsterGroups ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category)}`}
 							info={getInfo(a)}
-							tags={getTags(a)}
 							onSelect={() => navigation.goToLibrary(category, a.id)}
 						/>
 					);
@@ -817,6 +831,7 @@ export const LibraryListPage = (props: Props) => {
 								<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
 								<SelectorRow selected={category === 'monster-group'} content='Monsters' info={props.options.showMonsterGroups ? getMonsterGroups().length : getMonsters().length} onSelect={() => navigation.goToLibrary('monster-group')} />
 								<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
+								<SelectorRow selected={category === 'project'} content='Projects' info={getProjects().length} onSelect={() => navigation.goToLibrary('project')} />
 								<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
 								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
 								<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
@@ -836,7 +851,7 @@ export const LibraryListPage = (props: Props) => {
 	const getPanel = getElementPanel();
 
 	const sourcebookOptions = props.sourcebooks
-		.filter(cs => cs.isHomebrew)
+		.filter(cs => cs.type === SourcebookType.Homebrew)
 		.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
 	return (

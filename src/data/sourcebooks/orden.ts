@@ -5,12 +5,13 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { LanguageType } from '@/enums/language-type';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookType } from '@/enums/sourcebook-type';
 
 export const orden: Sourcebook = {
 	id: 'orden',
 	name: 'Orden',
 	description: 'The default setting for Draw Steel.',
-	isHomebrew: false,
+	type: SourcebookType.Official,
 	ancestries: [
 		AncestryData.hakaan,
 		AncestryData.memonek,

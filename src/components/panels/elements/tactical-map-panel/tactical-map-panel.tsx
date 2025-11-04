@@ -1423,8 +1423,10 @@ export const TacticalMapPanel = (props: Props) => {
 		switch (editMode) {
 			case TacticalMapEditMode.Tiles:
 			case TacticalMapEditMode.Zones:
-			case TacticalMapEditMode.Minis:
 				showGrid = editAdding;
+				break;
+			case TacticalMapEditMode.Minis:
+				showGrid = editAdding && !!selectedMini;
 				break;
 			case TacticalMapEditMode.Fog:
 				showGrid = true;

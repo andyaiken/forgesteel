@@ -1198,7 +1198,7 @@ You gain a small magic spy device called a boffin. Once per encounter, you can a
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-sworn-hunter-3',
-				name: 'Spy Ring',
+				name: 'We\'re In This Together',
 				description: 'When you have a creature grabbed and take damage from an ability not used by that creature, the grabbed creature takes the same damage.'
 			})
 		],

@@ -1,5 +1,5 @@
-import { Flex, Tag } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Flex } from 'antd';
 import { ReactNode } from 'react';
 
 import './selector-row.scss';
@@ -7,7 +7,6 @@ import './selector-row.scss';
 interface Props {
 	content: ReactNode;
 	info?: ReactNode;
-	tags?: string[];
 	selected: boolean;
 	onSelect: () => void;
 }
@@ -20,15 +19,6 @@ export const SelectorRow = (props: Props) => {
 					<div className='content'>{props.content}</div>
 					{props.info ? <div className='info'>{props.info}</div> : null}
 				</Flex>
-				{
-					props.tags && (props.tags.length > 0) ?
-						<div style={{ margin: '-1px -1px 1px -1px' }}>
-							{
-								props.tags.map((tag, n) => <Tag key={n}>{tag}</Tag>)
-							}
-						</div>
-						: null
-				}
 			</div>
 		</ErrorBoundary>
 	);

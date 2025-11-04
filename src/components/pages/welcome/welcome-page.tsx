@@ -1,10 +1,14 @@
-import { BookOutlined, PlayCircleOutlined, PlusOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, DoubleLeftOutlined, DoubleRightOutlined, PlayCircleOutlined, PlusOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Flex, Segmented } from 'antd';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
+import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Tip } from '@/models/tip';
+import { TipData } from '@/data/tip-data';
+import { TipPanel } from '@/components/panels/tip/tip-panel';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
@@ -28,11 +32,108 @@ interface Props {
 export const WelcomePage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const [ page, setPage ] = useState<WelcomeType>('player');
+	const [ tips ] = useState<Tip[]>(Collections.shuffle(TipData.getTips()));
+	const [ tipIndex, setTipIndex ] = useState<number>(0);
+
+	const prevTip = () => {
+		const index = tipIndex - 1;
+		setTipIndex(Math.max(index, 0));
+	};
+
+	const nextTip = () => {
+		const index = tipIndex + 1;
+		setTipIndex(Math.min(index, tips.length - 1));
+	};
+
+	if (isSmall) {
+		return (
+			<ErrorBoundary name='welcome-page'>
+				<div className='welcome-page'>
+					<AppHeader />
+					<ErrorBoundary>
+						<div className='welcome-page-content compact'>
+							<div className='welcome-column'>
+								<div className='ds-text centered-text'>
+									<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
+								</div>
+								<Segmented
+									style={{ margin: '15px 0' }}
+									block={true}
+									options={[
+										{
+											value: 'player',
+											label: (
+												<div className='welcome-tab-button'>
+													<div className='title'>Players</div>
+												</div>
+											)
+										},
+										{
+											value: 'director-prep',
+											label: (
+												<div className='welcome-tab-button'>
+													<div className='title'>Directors</div>
+													<div className='subtitle'>Prep Time</div>
+												</div>
+											)
+										},
+										{
+											value: 'director-run',
+											label: (
+												<div className='welcome-tab-button'>
+													<div className='title'>Directors</div>
+													<div className='subtitle'>Game Time</div>
+												</div>
+											)
+										},
+										{
+											value: 'creator',
+											label: (
+												<div className='welcome-tab-button'>
+													<div className='title'>Creators</div>
+												</div>
+											)
+										}
+									]}
+									value={page}
+									onChange={setPage}
+								/>
+								<SelectablePanel>
+									<WelcomeContent
+										type={page}
+									/>
+									<WelcomeButtons
+										type={page}
+										onNewHero={props.onNewHero}
+										onNewEncounter={props.onNewEncounter}
+									/>
+								</SelectablePanel>
+							</div>
+						</div>
+					</ErrorBoundary>
+					<AppFooter
+						page='welcome'
+						highlightAbout={props.highlightAbout}
+						showReference={props.showReference}
+						showRoll={props.showRoll}
+						showAbout={props.showAbout}
+						showSettings={props.showSettings}
+					/>
+				</div>
+			</ErrorBoundary>
+		);
+	}
 
 	return (
 		<ErrorBoundary name='welcome-page'>
-			<div className={isSmall ? 'welcome-page compact' : 'welcome-page full'}>
-				<AppHeader />
+			<div className='welcome-page'>
+				<AppHeader
+					children={
+						<div className='logo-container'>
+							<img src={pbds} />
+						</div>
+					}
+				/>
 				<ErrorBoundary>
 					<div className='welcome-page-content'>
 						<div className='welcome-column'>
@@ -91,9 +192,19 @@ export const WelcomePage = (props: Props) => {
 									onNewEncounter={props.onNewEncounter}
 								/>
 							</SelectablePanel>
-							<div className='logo-container'>
-								<img src={pbds} />
-							</div>
+						</div>
+						<div className='tip-column'>
+							<Flex justify='space-evenly'>
+								<Button disabled={tipIndex === 0} onClick={prevTip}>
+									<DoubleLeftOutlined />
+									Prev Tip
+								</Button>
+								<Button disabled={tipIndex === tips.length - 1} onClick={nextTip}>
+									Next Tip
+									<DoubleRightOutlined />
+								</Button>
+							</Flex>
+							<TipPanel tip={tips[tipIndex]} />
 						</div>
 					</div>
 				</ErrorBoundary>
@@ -162,14 +273,17 @@ const WelcomeContent = (props: WelcomeContentProps) => {
 					<ul>
 						<li>
 							You can build <b>encounters</b>, ensuring that they're perfectly balanced for your heroes.
-							Add monsters and terrain objects, and the app will automatically calculate the encounter's difficulty.
-							You can specify the encounter objectives, or you can use one of the predefined options.
+							Add monsters and terrain objects, and the app will automatically calculate the encounter's difficulty - or let the app generate a random encounter for you.
+							You can specify the encounter's objectives, or you can use one of the predefined options.
 						</li>
 						<li>
-							You can build <b>montage tests</b> - or copy a predefined one - laying out all the options the players can take and how many times they can take them.
+							You can build <b>montage tests</b>, laying out all the options the players can take and how many times they can take them.
 						</li>
 						<li>
-							You can build <b>negotiations</b> - or copy a predefined one - specifying all the motivations and pitfalls.
+							You can build <b>negotiations</b>, specifying motivations, pitfalls, and outcomes.
+						</li>
+						<li>
+							You can choose from a set of predefined encounters, montages, and negotiations - or use them as a starting point for your own creations.
 						</li>
 						<li>
 							You can also create detailed <b>tactical maps</b> for your heroes to explore, adding tiles and walls and overlays - or you can generate a random map of whatever size you need.

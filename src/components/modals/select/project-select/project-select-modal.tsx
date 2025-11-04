@@ -15,7 +15,6 @@ import './project-select-modal.scss';
 
 interface Props {
 	sourcebooks: Sourcebook[];
-	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (project: Project) => void;
 }
@@ -56,15 +55,7 @@ export const ProjectSelectModal = (props: Props) => {
 							projects.map(project => (
 								<SelectablePanel
 									key={project.id}
-									onSelect={() => {
-										if (props.selectOriginal) {
-											props.onSelect(project);
-										} else {
-											const copy = Utils.copy(project);
-											copy.id = Utils.guid();
-											props.onSelect(copy);
-										}
-									}}
+									onSelect={() => props.onSelect(project)}
 								>
 									<ProjectPanel project={project} />
 								</SelectablePanel>

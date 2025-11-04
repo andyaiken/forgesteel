@@ -426,7 +426,7 @@ If you pull a size 1T object adjacent to you, you can catch it.`
 		type: ItemType.Consumable,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
-			prerequisites: 'A grub steeped in voiceless talker bil',
+			prerequisites: 'A grub steeped in voiceless talker bile',
 			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Intuition ],
 			goal: 180

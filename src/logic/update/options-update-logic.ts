@@ -32,6 +32,10 @@ export class OptionsUpdateLogic {
 			options.colorSheet = true;
 		}
 
+		if (options.showPowerRollCalculation === undefined) {
+			options.showPowerRollCalculation = true;
+		}
+
 		if (options.sheetTextColor === undefined) {
 			options.sheetTextColor = 'default';
 		}

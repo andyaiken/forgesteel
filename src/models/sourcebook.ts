@@ -13,31 +13,32 @@ import { MonsterGroup } from '@/models/monster-group';
 import { Perk } from '@/models/perk';
 import { Project } from '@/models/project';
 import { Skill } from '@/models/skill';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { SubClass } from '@/models/subclass';
 import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
 
 export interface Sourcebook extends Element {
-	isHomebrew: boolean;
+	type: SourcebookType;
 
 	ancestries: Ancestry[];
-	cultures: Culture[];
 	careers: Career[];
 	classes: HeroClass[];
 	complications: Complication[];
+	cultures: Culture[];
 	domains: Domain[];
-	kits: Kit[];
-	perks: Perk[];
-	titles: Title[];
-	items: Item[];
 	imbuements: Imbuement[];
+	items: Item[];
+	kits: Kit[];
 	monsterGroups: MonsterGroup[];
+	perks: Perk[];
+	projects: Project[];
 	subclasses: SubClass[];
 	terrain: Terrain[];
+	titles: Title[];
 
 	skills: Skill[];
 	languages: Language[];
-	projects: Project[];
 }
 
-export type SourcebookElementKind = 'ancestry' | 'culture' | 'career' | 'class' | 'subclass' | 'complication' | 'kit' | 'domain' | 'perk' | 'title' | 'item' | 'imbuement' | 'monster-group' | 'terrain';
+export type SourcebookElementKind = 'ancestry' | 'career' | 'class' | 'complication' | 'culture' | 'domain' | 'imbuement' | 'item' | 'kit' | 'monster-group' | 'perk' | 'project' | 'subclass' | 'terrain' | 'title';

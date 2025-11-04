@@ -56,6 +56,7 @@ import { PlaybookListPage } from '@/components/pages/playbook/playbook-list/play
 import { PlaybookLogic } from '@/logic/playbook-logic';
 import { PlaybookUpdateLogic } from '@/logic/update/playbook-update-logic';
 import { PlayerViewModal } from '@/components/modals/player-view/player-view-modal';
+import { Project } from '@/models/project';
 import { ReferenceModal } from '@/components/modals/reference/reference-modal';
 import { RollModal } from '@/components/modals/roll/roll-modal';
 import { RulesPage } from '@/enums/rules-page';
@@ -339,6 +340,384 @@ export const Main = (props: Props) => {
 	// #region Library
 
 	const createLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, original: Element | null) => {
+		const createAncestry = (original: Ancestry | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let ancestry: Ancestry;
+			if (original) {
+				ancestry = Utils.copy(original);
+				ancestry.id = Utils.guid();
+			} else {
+				ancestry = FactoryLogic.createAncestry();
+			}
+
+			sourcebook.ancestries.push(ancestry);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('ancestry', sourcebook.id, ancestry.id));
+		};
+
+		const createCareer = (original: Career | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let career: Career;
+			if (original) {
+				career = Utils.copy(original);
+				career.id = Utils.guid();
+			} else {
+				career = FactoryLogic.createCareer();
+			}
+
+			sourcebook.careers.push(career);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('career', sourcebook.id, career.id));
+		};
+
+		const createClass = (original: HeroClass | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let heroClass: HeroClass;
+			if (original) {
+				heroClass = Utils.copy(original);
+				heroClass.id = Utils.guid();
+
+				// Make sure this has 10 levels
+				while (heroClass.featuresByLevel.length < 10) {
+					heroClass.featuresByLevel.push({
+						level: heroClass.featuresByLevel.length + 1,
+						features: []
+					});
+				}
+				heroClass.subclasses.forEach(sc => {
+					while (sc.featuresByLevel.length < 10) {
+						sc.featuresByLevel.push({
+							level: sc.featuresByLevel.length + 1,
+							features: []
+						});
+					}
+				});
+			} else {
+				heroClass = FactoryLogic.createClass();
+			}
+
+			sourcebook.classes.push(heroClass);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('class', sourcebook.id, heroClass.id));
+		};
+
+		const createComplication = (original: Complication | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let complication: Complication;
+			if (original) {
+				complication = Utils.copy(original);
+				complication.id = Utils.guid();
+			} else {
+				complication = FactoryLogic.createComplication();
+			}
+
+			sourcebook.complications.push(complication);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('complication', sourcebook.id, complication.id));
+		};
+
+		const createCulture = (original: Culture | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let culture: Culture;
+			if (original) {
+				culture = Utils.copy(original);
+				culture.id = Utils.guid();
+			} else {
+				culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
+			}
+
+			sourcebook.cultures.push(culture);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('culture', sourcebook.id, culture.id));
+		};
+
+		const createDomain = (original: Domain | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let domain: Domain;
+			if (original) {
+				domain = Utils.copy(original);
+				domain.id = Utils.guid();
+
+				// Make sure this has 10 levels
+				while (domain.featuresByLevel.length < 10) {
+					domain.featuresByLevel.push({
+						level: domain.featuresByLevel.length + 1,
+						features: []
+					});
+				}
+			} else {
+				domain = FactoryLogic.createDomain();
+			}
+
+			sourcebook.domains.push(domain);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('domain', sourcebook.id, domain.id));
+		};
+
+		const createImbuement = (original: Imbuement | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let imbuement: Imbuement;
+			if (original) {
+				imbuement = Utils.copy(original);
+				imbuement.id = Utils.guid();
+			} else {
+				imbuement = FactoryLogic.createImbuement({
+					type: ItemType.Consumable,
+					crafting: FactoryLogic.createProject({}),
+					level: 1,
+					feature: FactoryLogic.feature.create({
+						id: Utils.guid(),
+						name: '',
+						description: ''
+					})
+				});
+			}
+
+			sourcebook.imbuements.push(imbuement);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('imbuement', sourcebook.id, imbuement.id));
+		};
+
+		const createItem = (original: Item | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let item: Item;
+			if (original) {
+				item = Utils.copy(original);
+				item.id = Utils.guid();
+			} else {
+				item = FactoryLogic.createItem({
+					id: Utils.guid(),
+					name: '',
+					description: '',
+					type: ItemType.Consumable,
+					crafting: FactoryLogic.createProject({})
+				});
+			}
+
+			sourcebook.items.push(item);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('item', sourcebook.id, item.id));
+		};
+
+		const createKit = (original: Kit | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let kit: Kit;
+			if (original) {
+				kit = Utils.copy(original);
+				kit.id = Utils.guid();
+			} else {
+				kit = FactoryLogic.createKit();
+			}
+
+			sourcebook.kits.push(kit);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('kit', sourcebook.id, kit.id));
+		};
+
+		const createMonsterGroup = (original: MonsterGroup | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let monsterGroup: MonsterGroup;
+			if (original) {
+				monsterGroup = Utils.copy(original);
+				monsterGroup.id = Utils.guid();
+				monsterGroup.monsters.forEach(m => m.id = Utils.guid());
+			} else {
+				monsterGroup = FactoryLogic.createMonsterGroup();
+			}
+
+			sourcebook.monsterGroups.push(monsterGroup);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('monster-group', sourcebook.id, monsterGroup.id));
+		};
+
+		const createPerk = (original: Perk | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let perk: Perk;
+			if (original) {
+				perk = Utils.copy(original);
+				perk.id = Utils.guid();
+			} else {
+				perk = FactoryLogic.createPerk();
+			}
+
+			sourcebook.perks.push(perk);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('perk', sourcebook.id, perk.id));
+		};
+
+		const createProject = (original: Project | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let project: Project;
+			if (original) {
+				project = Utils.copy(original);
+				project.id = Utils.guid();
+			} else {
+				project = FactoryLogic.createProject({});
+			}
+
+			sourcebook.projects.push(project);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('project', sourcebook.id, project.id));
+		};
+
+		const createSubClass = (original: SubClass | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let sc: SubClass;
+			if (original) {
+				sc = Utils.copy(original);
+				sc.id = Utils.guid();
+
+				// Make sure this has 10 levels
+				while (sc.featuresByLevel.length < 10) {
+					sc.featuresByLevel.push({
+						level: sc.featuresByLevel.length + 1,
+						features: []
+					});
+				}
+			} else {
+				sc = FactoryLogic.createSubclass();
+			}
+
+			sourcebook.subclasses.push(sc);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('subclass', sourcebook.id, sc.id));
+		};
+
+		const createTerrain = (original: Terrain | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let terrain: Terrain;
+			if (original) {
+				terrain = Utils.copy(original);
+				terrain.id = Utils.guid();
+			} else {
+				terrain = FactoryLogic.createTerrain();
+			}
+
+			sourcebook.terrain.push(terrain);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('terrain', sourcebook.id, terrain.id));
+		};
+
+		const createTitle = (original: Title | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let title: Title;
+			if (original) {
+				title = Utils.copy(original);
+				title.id = Utils.guid();
+			} else {
+				title = FactoryLogic.createTitle();
+			}
+
+			sourcebook.titles.push(title);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('title', sourcebook.id, title.id));
+		};
+
 		const sourcebook = homebrewSourcebooks.find(cs => cs.id === sourcebookID) || null;
 		switch (kind) {
 			case 'ancestry':
@@ -367,6 +746,9 @@ export const Main = (props: Props) => {
 				break;
 			case 'perk':
 				createPerk(original as Perk | null, sourcebook);
+				break;
+			case 'project':
+				createProject(original as Project | null, sourcebook);
 				break;
 			case 'terrain':
 				createTerrain(original as Terrain | null, sourcebook);
@@ -419,6 +801,9 @@ export const Main = (props: Props) => {
 					break;
 				case 'perk':
 					sourcebook.perks = sourcebook.perks.filter(x => x.id !== element.id);
+					break;
+				case 'project':
+					sourcebook.projects = sourcebook.projects.filter(x => x.id !== element.id);
 					break;
 				case 'terrain':
 					sourcebook.terrain = sourcebook.terrain.filter(x => x.id !== element.id);
@@ -473,6 +858,9 @@ export const Main = (props: Props) => {
 				case 'perk':
 					sourcebook.perks = sourcebook.perks.map(x => x.id === element.id ? element : x) as Perk[];
 					break;
+				case 'project':
+					sourcebook.projects = sourcebook.projects.map(x => x.id === element.id ? element : x) as Project[];
+					break;
 				case 'terrain':
 					sourcebook.terrain = sourcebook.terrain.map(x => x.id === element.id ? element : x) as Terrain[];
 					break;
@@ -509,6 +897,7 @@ export const Main = (props: Props) => {
 			...sourcebooks.flatMap(sb => sb.kits),
 			...sourcebooks.flatMap(sb => sb.monsterGroups),
 			...sourcebooks.flatMap(sb => sb.perks),
+			...sourcebooks.flatMap(sb => sb.projects),
 			...sourcebooks.flatMap(sb => sb.terrain),
 			...sourcebooks.flatMap(sb => sb.titles)
 		];
@@ -564,6 +953,10 @@ export const Main = (props: Props) => {
 				sourcebook.perks.push(element as Perk);
 				sourcebook.perks = Collections.sort<Element>(sourcebook.perks, item => item.name) as Perk[];
 				break;
+			case 'project':
+				sourcebook.projects.push(element as Project);
+				sourcebook.projects = Collections.sort<Element>(sourcebook.projects, item => item.name) as Project[];
+				break;
 			case 'terrain':
 				sourcebook.terrain.push(element as Terrain);
 				sourcebook.terrain = Collections.sort<Element>(sourcebook.terrain, item => item.name) as Terrain[];
@@ -604,362 +997,6 @@ export const Main = (props: Props) => {
 		};
 
 		Utils.export([ element.id ], element.name || name, element, extension, format);
-	};
-
-	const createAncestry = (original: Ancestry | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let ancestry: Ancestry;
-		if (original) {
-			ancestry = Utils.copy(original);
-			ancestry.id = Utils.guid();
-		} else {
-			ancestry = FactoryLogic.createAncestry();
-		}
-
-		sourcebook.ancestries.push(ancestry);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('ancestry', sourcebook.id, ancestry.id));
-	};
-
-	const createCulture = (original: Culture | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let culture: Culture;
-		if (original) {
-			culture = Utils.copy(original);
-			culture.id = Utils.guid();
-		} else {
-			culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
-		}
-
-		sourcebook.cultures.push(culture);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('culture', sourcebook.id, culture.id));
-	};
-
-	const createCareer = (original: Career | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let career: Career;
-		if (original) {
-			career = Utils.copy(original);
-			career.id = Utils.guid();
-		} else {
-			career = FactoryLogic.createCareer();
-		}
-
-		sourcebook.careers.push(career);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('career', sourcebook.id, career.id));
-	};
-
-	const createClass = (original: HeroClass | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let heroClass: HeroClass;
-		if (original) {
-			heroClass = Utils.copy(original);
-			heroClass.id = Utils.guid();
-
-			// Make sure this has 10 levels
-			while (heroClass.featuresByLevel.length < 10) {
-				heroClass.featuresByLevel.push({
-					level: heroClass.featuresByLevel.length + 1,
-					features: []
-				});
-			}
-			heroClass.subclasses.forEach(sc => {
-				while (sc.featuresByLevel.length < 10) {
-					sc.featuresByLevel.push({
-						level: sc.featuresByLevel.length + 1,
-						features: []
-					});
-				}
-			});
-		} else {
-			heroClass = FactoryLogic.createClass();
-		}
-
-		sourcebook.classes.push(heroClass);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('class', sourcebook.id, heroClass.id));
-	};
-
-	const createSubClass = (original: SubClass | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let sc: SubClass;
-		if (original) {
-			sc = Utils.copy(original);
-			sc.id = Utils.guid();
-
-			// Make sure this has 10 levels
-			while (sc.featuresByLevel.length < 10) {
-				sc.featuresByLevel.push({
-					level: sc.featuresByLevel.length + 1,
-					features: []
-				});
-			}
-		} else {
-			sc = FactoryLogic.createSubclass();
-		}
-
-		sourcebook.subclasses.push(sc);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('subclass', sourcebook.id, sc.id));
-	};
-
-	const createComplication = (original: Complication | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let complication: Complication;
-		if (original) {
-			complication = Utils.copy(original);
-			complication.id = Utils.guid();
-		} else {
-			complication = FactoryLogic.createComplication();
-		}
-
-		sourcebook.complications.push(complication);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('complication', sourcebook.id, complication.id));
-	};
-
-	const createDomain = (original: Domain | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let domain: Domain;
-		if (original) {
-			domain = Utils.copy(original);
-			domain.id = Utils.guid();
-
-			// Make sure this has 10 levels
-			while (domain.featuresByLevel.length < 10) {
-				domain.featuresByLevel.push({
-					level: domain.featuresByLevel.length + 1,
-					features: []
-				});
-			}
-		} else {
-			domain = FactoryLogic.createDomain();
-		}
-
-		sourcebook.domains.push(domain);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('domain', sourcebook.id, domain.id));
-	};
-
-	const createKit = (original: Kit | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let kit: Kit;
-		if (original) {
-			kit = Utils.copy(original);
-			kit.id = Utils.guid();
-		} else {
-			kit = FactoryLogic.createKit();
-		}
-
-		sourcebook.kits.push(kit);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('kit', sourcebook.id, kit.id));
-	};
-
-	const createPerk = (original: Perk | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let perk: Perk;
-		if (original) {
-			perk = Utils.copy(original);
-			perk.id = Utils.guid();
-		} else {
-			perk = FactoryLogic.createPerk();
-		}
-
-		sourcebook.perks.push(perk);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('perk', sourcebook.id, perk.id));
-	};
-
-	const createTitle = (original: Title | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let title: Title;
-		if (original) {
-			title = Utils.copy(original);
-			title.id = Utils.guid();
-		} else {
-			title = FactoryLogic.createTitle();
-		}
-
-		sourcebook.titles.push(title);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('title', sourcebook.id, title.id));
-	};
-
-	const createItem = (original: Item | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let item: Item;
-		if (original) {
-			item = Utils.copy(original);
-			item.id = Utils.guid();
-		} else {
-			item = FactoryLogic.createItem({
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				type: ItemType.Consumable,
-				crafting: FactoryLogic.createProject({})
-			});
-		}
-
-		sourcebook.items.push(item);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('item', sourcebook.id, item.id));
-	};
-
-	const createImbuement = (original: Imbuement | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let imbuement: Imbuement;
-		if (original) {
-			imbuement = Utils.copy(original);
-			imbuement.id = Utils.guid();
-		} else {
-			imbuement = FactoryLogic.createImbuement({
-				type: ItemType.Consumable,
-				crafting: FactoryLogic.createProject({}),
-				level: 1,
-				feature: FactoryLogic.feature.create({
-					id: Utils.guid(),
-					name: '',
-					description: ''
-				})
-			});
-		}
-
-		sourcebook.imbuements.push(imbuement);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('imbuement', sourcebook.id, imbuement.id));
-	};
-
-	const createMonsterGroup = (original: MonsterGroup | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let monsterGroup: MonsterGroup;
-		if (original) {
-			monsterGroup = Utils.copy(original);
-			monsterGroup.id = Utils.guid();
-			monsterGroup.monsters.forEach(m => m.id = Utils.guid());
-		} else {
-			monsterGroup = FactoryLogic.createMonsterGroup();
-		}
-
-		sourcebook.monsterGroups.push(monsterGroup);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('monster-group', sourcebook.id, monsterGroup.id));
-	};
-
-	const createTerrain = (original: Terrain | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let terrain: Terrain;
-		if (original) {
-			terrain = Utils.copy(original);
-			terrain.id = Utils.guid();
-		} else {
-			terrain = FactoryLogic.createTerrain();
-		}
-
-		sourcebook.terrain.push(terrain);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('terrain', sourcebook.id, terrain.id));
 	};
 
 	// #endregion

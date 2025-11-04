@@ -31,6 +31,7 @@ import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
+import { useTitle } from '@/hooks/use-title';
 
 import './playbook-edit-page.scss';
 
@@ -74,8 +75,17 @@ export const PlaybookEditPage = (props: Props) => {
 		return Utils.copy(original);
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
-	// A simple incrementing counter used to force remounts when the element changes in this editor.
 	const [ revision, setRevision ] = useState<number>(0);
+
+	const getSubheader = () => {
+		if (kind === 'tactical-map') {
+			return 'Tactical Map';
+		}
+
+		return Format.capitalize(kind!);
+	};
+
+	useTitle(getSubheader());
 
 	const applyChanges = (element: Element) => {
 		const copy = Utils.copy(element);
@@ -185,14 +195,6 @@ export const PlaybookEditPage = (props: Props) => {
 	};
 
 	// #endregion
-
-	const getSubheader = () => {
-		if (kind === 'tactical-map') {
-			return 'Tactical Map';
-		}
-
-		return Format.capitalize(kind!);
-	};
 
 	return (
 		<ErrorBoundary>

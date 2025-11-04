@@ -2,6 +2,7 @@ import { Encounter, EncounterGroup } from '@/models/encounter';
 import { EncounterSlot, EncounterSlotCustomization } from '@/models/encounter-slot';
 import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { Collections } from '@/utils/collections';
+import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
 import { MonsterData } from '@/data/monster-data';
@@ -267,5 +268,34 @@ export class EncounterLogic {
 		}
 
 		return null;
+	};
+
+	static generateEncounter = (encounter: Encounter, sourcebooks: Sourcebook[], keywords: string[], minStrength: number, minLevel: number, maxLevel: number) => {
+		const monsters = SourcebookLogic.getMonsters(sourcebooks)
+			.filter(m => (keywords.length === 0) || keywords.some(k => m.keywords.includes(k)))
+			.filter(m => (m.level >= minLevel) && (m.level <= maxLevel));
+
+		if (monsters.length === 0) {
+			return;
+		}
+
+		while (EncounterDifficultyLogic.getStrength(encounter, sourcebooks) < minStrength) {
+			const monster = Collections.draw(monsters);
+
+			const slot = FactoryLogic.createEncounterSlotFromMonster(monster);
+			switch (monster.role.organization) {
+				case MonsterOrganizationType.Minion:
+					slot.count = 4;
+					break;
+				case MonsterOrganizationType.Horde:
+					slot.count = 2;
+					break;
+			}
+
+			const group = FactoryLogic.createEncounterGroup();
+			group.slots.push(slot);
+
+			encounter.groups.push(group);
+		}
 	};
 }

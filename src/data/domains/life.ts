@@ -92,7 +92,9 @@ export const life: Domain = {
 				FactoryLogic.feature.create({
 					id: 'domain-life-7',
 					name: 'Font of Grace',
-					description: 'Each time you use your Healing Grace ability, you gain 1 piety that can be spent only on that ability during the same turn. If you don’t use this piety, it is lost. Additionally, you can use your Minor Miracle feature to return a creature to life even if you don’t have their remains.'
+					description: `
+* If you are a **Conduit**: Each time you use your *Healing Grace* ability, you gain 1 piety that can be spent only on that ability during the same turn. If you don’t use this piety, it is lost. Additionally, you can use your *Minor Miracle* feature to return a creature to life even if you don’t have their remains.
+* If you are a **Censor**: Each time you use your *My Life for Yours* ability, you gain 1 wrath that can be spent only on that ability during the same turn. If you don’t use this wrath, it is lost. Additionally, the target of *My Life for Yours* gains 10 temporary Stamina.`
 				})
 			]
 		},

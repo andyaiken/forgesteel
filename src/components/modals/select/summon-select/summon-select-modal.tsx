@@ -20,7 +20,6 @@ interface Props {
 	summons: Summon[];
 	hero: Hero;
 	options: Options;
-	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (summon: Summon) => void;
 }

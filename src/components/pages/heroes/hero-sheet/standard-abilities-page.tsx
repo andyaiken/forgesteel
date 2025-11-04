@@ -2,19 +2,22 @@ import { ExtraCards, SheetLayout } from '@/logic/classic-sheet/sheet-layout';
 import { AbilityData } from '@/data/ability-data';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FactoryLogic } from '@/logic/factory-logic';
+import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { useMemo } from 'react';
 
 interface Props {
+	hero: Hero;
 	options: Options;
 };
 
 export const StandardAbilitiesPage = (props: Props) => {
-	const hero = FactoryLogic.createHero([]);
-	const abilities = AbilityData.standardAbilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, hero));
-	abilities.sort(SheetFormatter.sortAbilitiesByType);
+	const abilities = useMemo(
+		() => AbilityData.standardAbilities.map(a => ClassicSheetBuilder.buildAbilitySheet(a, props.hero, undefined, props.options)),
+		[ props.hero, props.options ]
+	);
+	abilities.sort((a, b) => SheetFormatter.sortAbilitiesByType(a, b, 'asc'));
 
 	const layout = useMemo(
 		() => SheetLayout.getAbilityLayout(props.options),
@@ -43,7 +46,7 @@ export const StandardAbilitiesPage = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<main id='classic-sheet'>
-				<div className={sheetClasses.join(' ')} id={hero.id}>
+				<div className={sheetClasses.join(' ')} id={props.hero.id}>
 					{
 						SheetLayout.getAbilityPages(abilities, extraCards, layout, p => SheetFormatter.getPageId('hero-sheet', 'standard-abilities', `abilities-${p}`))
 					}

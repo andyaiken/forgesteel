@@ -937,7 +937,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'orc-14-feature-5',
+						id: 'orc-14-feature-6',
 						name: 'Familial Reinforcements',
 						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Ranged ],

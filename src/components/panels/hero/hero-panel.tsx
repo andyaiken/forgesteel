@@ -440,19 +440,19 @@ export const HeroPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className='stats-section'>
 					<Flex gap={5}>
-						<StatsRow caption='Might' onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? 'M' : 'Might'} onClick={() => onSelectCharacteristic(Characteristic.Might)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Might)} />
 						</StatsRow>
-						<StatsRow caption='Agility' onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? 'A' : 'Agility'} onClick={() => onSelectCharacteristic(Characteristic.Agility)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Agility)} />
 						</StatsRow>
-						<StatsRow caption='Reason' onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? 'R' : 'Reason'} onClick={() => onSelectCharacteristic(Characteristic.Reason)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Reason)} />
 						</StatsRow>
-						<StatsRow caption='Intuition' onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? 'I' : 'Intuition'} onClick={() => onSelectCharacteristic(Characteristic.Intuition)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Intuition)} />
 						</StatsRow>
-						<StatsRow caption='Presence' onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
+						<StatsRow caption={isSmall ? 'P' : 'Presence'} onClick={() => onSelectCharacteristic(Characteristic.Presence)} style={{ flex: '1 1 0' }}>
 							<Statistic value={HeroLogic.getCharacteristic(props.hero, Characteristic.Presence)} />
 						</StatsRow>
 					</Flex>

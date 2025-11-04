@@ -31,6 +31,7 @@ import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-pane
 import { Utils } from '@/utils/utils';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
+import { useTitle } from '@/hooks/use-title';
 
 import './session-director-page.scss';
 
@@ -69,6 +70,7 @@ export const SessionDirectorPage = (props: Props) => {
 	const [ startElement, setStartElement ] = useState<string>('encounter');
 	const [ newCounterName, setNewCounterName ] = useState<string>('');
 	const [ newCounterValue, setNewCounterValue ] = useState<number>(0);
+	useTitle('Session');
 
 	const getSelector = () => {
 		const options = PlaybookLogic.getContentOptions(props.session).map(o => {

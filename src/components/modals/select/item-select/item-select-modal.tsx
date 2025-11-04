@@ -23,7 +23,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	hero: Hero;
-	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (item: Item) => void;
 }
@@ -117,15 +116,7 @@ export const ItemSelectModal = (props: Props) => {
 											type='text'
 											title='Select'
 											icon={<PlusOutlined />}
-											onClick={() => {
-												if (props.selectOriginal) {
-													props.onSelect(item);
-												} else {
-													const copy = Utils.copy(item);
-													copy.id = Utils.guid();
-													props.onSelect(copy);
-												}
-											}}
+											onClick={() => props.onSelect(item)}
 										/>
 									]}
 								>

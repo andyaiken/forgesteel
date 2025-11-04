@@ -5,6 +5,8 @@ import { Collections } from '@/utils/collections';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Modal } from '@/components/modals/modal/modal';
 import { Toggle } from '@/components/controls/toggle/toggle';
+import { Utils } from '@/utils/utils';
+import { useState } from 'react';
 
 import './standard-ability-select-modal.scss';
 
@@ -15,14 +17,21 @@ interface Props {
 }
 
 export const StandardAbilitySelectModal = (props: Props) => {
-	const addAbilityIDs = (abilityIDs: string[]) => {
-		const list = [ ...props.abilityIDs, ...abilityIDs.filter(id => !props.abilityIDs.includes(id)) ];
-		props.onSelect(list);
+	const [ abilityIDs, setAbilityIDs ] = useState<string[]>(Utils.copy(props.abilityIDs));
+
+	const addAbilityIDs = (ids: string[]) => {
+		const copy = Utils.copy(abilityIDs);
+		copy.push(...ids.filter(id => !copy.includes(id)));
+
+		setAbilityIDs(copy);
+		props.onSelect(copy);
 	};
 
-	const removeAbilityIDs = (abilityIDs: string[]) => {
-		const list = props.abilityIDs.filter(id => !abilityIDs.includes(id));
-		props.onSelect(list);
+	const removeAbilityIDs = (ids: string[]) => {
+		const copy = Utils.copy(abilityIDs).filter(id => !ids.includes(id));
+
+		setAbilityIDs(copy);
+		props.onSelect(copy);
 	};
 
 	return (
@@ -66,7 +75,7 @@ export const StandardAbilitySelectModal = (props: Props) => {
 													<Toggle
 														key={a.id}
 														label={a.name}
-														value={props.abilityIDs.includes(a.id)}
+														value={abilityIDs.includes(a.id)}
 														onChange={value => {
 															if (value) {
 																addAbilityIDs([ a.id ]);

@@ -1,0 +1,39 @@
+.label-control {
+	margin: 5px 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+
+	.label-control-label {
+		flex: 2 2 0;
+		padding-right: 5px;
+		color: rgb(0, 0, 0);
+		font-size: 14px;
+		overflow-wrap: break-word;
+		word-break: normal;
+	}
+
+	&.disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+	.label-control-control {
+		flex: 3 3 0;
+		color: rgba(0, 0, 0, 0.88);
+	}
+}
+
+html[data-theme="dark"] {
+	.label-control {
+		.label-control-label {
+			color: rgb(255, 255, 255);
+		}
+
+		.label-control-control {
+			color: rgba(255, 255, 255, 0.88);
+		}
+	}
+}

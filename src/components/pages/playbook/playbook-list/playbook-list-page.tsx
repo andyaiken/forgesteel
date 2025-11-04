@@ -1,5 +1,5 @@
 import { Adventure, AdventurePackage } from '@/models/adventure';
-import { Alert, Button, Input, Popover, Segmented, Tag } from 'antd';
+import { Alert, Button, Input, Popover } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { Playbook, PlaybookElementKind } from '@/models/playbook';
 import { ReactNode, useState } from 'react';
@@ -21,6 +21,7 @@ import { MontagePanel } from '@/components/panels/elements/montage-panel/montage
 import { MontageSheetPage } from '@/components/panels/classic-sheet/montage-sheet/montage-sheet-page';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
+import { NegotiationSheetPage } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-sheet-page';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlaybookLogic } from '@/logic/playbook-logic';
@@ -30,8 +31,10 @@ import { TacticalMap } from '@/models/tactical-map';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
 import { Utils } from '@/utils/utils';
+import { ViewSelector } from '@/components/panels/view-selector/view-selector';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useTitle } from '@/hooks/use-title';
 
 import './playbook-list-page.scss';
 
@@ -64,7 +67,10 @@ export const PlaybookListPage = (props: Props) => {
 	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
-	const [ view, setView ] = useState<'modern' | 'classic'>('modern');
+	const [ view, setView ] = useState<string>('modern');
+	useTitle('Playbook');
+
+	const categoriesWithClassicView = [ 'encounter', 'montage', 'negotiation' ];
 
 	if (kind !== previousCategory) {
 		setCategory(kind || 'adventure');
@@ -267,7 +273,27 @@ export const PlaybookListPage = (props: Props) => {
 				};
 				break;
 			case 'negotiation':
-				getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => {
+					if (view === 'classic') {
+						return (
+							<NegotiationSheetPage
+								key={element.id}
+								negotiation={element as Negotiation}
+								options={props.options}
+							/>
+						);
+					} else {
+						return (
+							<NegotiationPanel
+								key={element.id}
+								negotiation={element as Negotiation}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								mode={PanelMode.Full}
+							/>
+						);
+					}
+				};
 				break;
 			case 'tactical-map':
 				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
@@ -300,17 +326,17 @@ export const PlaybookListPage = (props: Props) => {
 							:
 							<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 								{
-									[ 'encounter', 'montage' ].includes(category) && view !== 'classic' ?
+									categoriesWithClassicView.includes(category) && view !== 'classic' ?
 										<Alert
 											type='info'
 											showIcon={true}
-											message='To export your encounter as a PDF, switch to Classic view.'
+											message='To export as a PDF, switch to Classic view.'
 											action={<Button onClick={() => setView('classic')}>Classic</Button>}
 										/>
 										: null
 								}
 								{
-									[ 'encounter', 'montage' ].includes(category) && view === 'classic' ?
+									categoriesWithClassicView.includes(category) && view === 'classic' ?
 										<>
 											<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export as PDF</Button>
 											<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export as PDF (high res)</Button>
@@ -318,7 +344,7 @@ export const PlaybookListPage = (props: Props) => {
 										: null
 								}
 								{
-									![ 'encounter', 'montage' ].includes(category) ?
+									!categoriesWithClassicView.includes(category) ?
 										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
 										: null
 								}
@@ -408,6 +434,9 @@ export const PlaybookListPage = (props: Props) => {
 						content={
 							<CreatePanel
 								currentTab={category}
+								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
 								createElement={props.createElement}
 								importElement={props.importElement}
 								importAdventurePackage={props.importAdventurePackage}
@@ -421,34 +450,13 @@ export const PlaybookListPage = (props: Props) => {
 					</Popover>
 					{getElementToolbar()}
 					{
-						(category === 'encounter') || (category === 'tactical-map') ?
+						!!selectedID && categoriesWithClassicView.includes(category) ?
 							<div className='divider' />
 							: null
 					}
 					{
-						(category === 'encounter') || (category === 'montage') ?
-							<Popover
-								trigger='click'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<Segmented
-											block={true}
-											vertical={true}
-											options={[
-												{ value: 'modern', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Modern Sheet</div> },
-												{ value: 'classic', label: <div style={{ margin: '5px', width: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Tag color='red'>BETA</Tag>Classic Sheet</div> }
-											]}
-											value={view}
-											onChange={setView}
-										/>
-									</div>
-								)}
-							>
-								<Button>
-									View
-									<DownOutlined />
-								</Button>
-							</Popover>
+						!!selectedID && categoriesWithClassicView.includes(category) ?
+							<ViewSelector value={view} onChange={setView} />
 							: null
 					}
 				</AppHeader>

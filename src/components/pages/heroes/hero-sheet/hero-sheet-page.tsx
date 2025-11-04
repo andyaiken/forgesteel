@@ -235,13 +235,27 @@ export const HeroSheetPage = (props: Props) => {
 					break;
 				case 'feature-reference': {
 					const minW = layoutEnd.orientation === 'portrait' ? 1 : 2;
-					card.width = Math.min(minW, card.width);
-					if (card.width === 1) {
-						card.height = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, layoutEnd.cardLineLen, 1);
-					} else {
-						card.height = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, layoutEnd.cardLineLen, 2);
+					let lineWidth = layoutEnd.cardLineLen;
+					let refW = Math.min(minW, card.width);
+					let refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth, 1);
+					if (refH > 60) {
+						refW += 1;
+						lineWidth = ((refW - 1) * layoutEnd.cardGap) + (refW * layoutEnd.cardLineLen) * 0.49;
+						refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth, 2);
+						if (refH > layoutEnd.linesY && layoutEnd.perRow === 4) {
+							refW = 4;
+							lineWidth = (3 * layoutEnd.cardGap) + (4 * layoutEnd.cardLineLen) * 0.33;
+							refH = SheetFormatter.calculateFeatureReferenceSize(character.featuresReferenceOther, hero, lineWidth, 3);
+						}
+						if (refH > layoutEnd.linesY) {
+							console.warn('Features reference is still too long!', refH, layoutEnd.linesY);
+							refH = Math.min(layoutEnd.linesY, refH);// Will need a better solution at some point
+						}
 					}
-					// console.log('###### RECALC Reference size: ', card.height);
+					// console.log('###### RECALC Reference size: ', refH, refW);
+					card.width = refW;
+					card.height = refH;
+
 					break;
 				}
 				default:

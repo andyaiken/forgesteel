@@ -173,6 +173,30 @@
         font-weight: 450;
         border-bottom: 1px solid common.$color-light;
     }
+
+    .feature-description table tr:has(td img) {
+        border-bottom: 0;
+
+        td {
+            vertical-align:top;
+            padding-bottom: 0;
+
+            &:not(:first-child) {
+                padding-top: 8px;
+            }
+        }
+        
+        td:first-child {
+            text-wrap: nowrap;
+            vertical-align: text-top;
+
+            img {
+                width: 50px;
+                height: 26px;
+                margin: 1px 0;
+            }
+        }
+    }
 }
 
 #classic-sheet .feature-malice {
@@ -232,17 +256,6 @@
 
 li .feature ul.feature-description {
     margin-left: 5px;
-}
-
-.feature-reference .feature .feature-description table td:first-child {
-    text-wrap: nowrap;
-    vertical-align: text-top;
-
-    img {
-        width: 50px;
-        height: 18px;
-        margin: 1px 0;
-    }
 }
 
 #classic-sheet .color .feature {

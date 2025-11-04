@@ -6,7 +6,7 @@ export const defaultNS = 'common';
 
 i18next.use(HttpBackend).use(initReactI18next).init({
 	fallbackLng: 'en',
-	lng: 'it', // if you're using a language detector, do not define the lng option
+	lng: 'it',
 	debug: true,
 	ns: [ 'common', 'welcomePage' ],
 	backend: {

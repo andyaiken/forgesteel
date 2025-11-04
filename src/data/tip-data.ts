@@ -34,6 +34,12 @@ import playbookNegotiation from '@/assets/screenshots/playbook-negotiation.png';
 import playbookNegotiationBuilder from '@/assets/screenshots/playbook-negotiation-builder.png';
 import playbookNegotiationClassic from '@/assets/screenshots/playbook-negotiation-classic.png';
 
+import sessionCounter from '@/assets/screenshots/session-counter.png';
+import sessionEncounter from '@/assets/screenshots/session-encounter.png';
+import sessionMontage from '@/assets/screenshots/session-montage.png';
+import sessionMultiple from '@/assets/screenshots/session-multiple.png';
+import sessionNegotiation from '@/assets/screenshots/session-negotiation.png';
+
 import appAbout from '@/assets/screenshots/footer.png';
 import appNavigation from '@/assets/screenshots/navigation.png';
 import appReference from '@/assets/screenshots/footer-reference.png';
@@ -194,12 +200,27 @@ export class TipData {
 			// #endregion
 
 			// #region Session
-			// TODO: Encounter runner
-			// TODO: Montage runner
-			// TODO: Negotiation runner
+			{
+				image: sessionCounter,
+				content: 'In the **Session** screen you can set counters, counting down (or up) to track whatever needs to be tracked in your adventure.'
+			},
+			{
+				image: sessionEncounter,
+				content: 'In the **Session** screen you can run encounters, easily handling stamina and conditions for each of the combatants.'
+			},
+			{
+				image: sessionMontage,
+				content: 'In the **Session** screen you can run montages, tracking each of the heroes\' successes and failures.'
+			},
+			{
+				image: sessionNegotiation,
+				content: 'In the **Session** screen you can run negotiations, tracking the NPC\'s interest and patience.'
+			},
 			// TODO: Run a predefined encounter / montage / negotiation
-			// TODO: Counter
-			// TODO: Running multiple things
+			{
+				image: sessionMultiple,
+				content: 'If you\'re running more than one encounter (or montage, or negotiation) you can switch between them at the top of the **Session** screen.'
+			},
 			// #endregion
 
 			// #region App

@@ -35,6 +35,7 @@
   * Ability to set 'used reaction' flag on heroes / monsters / minions
   * Monsters:
     * Ability to duplicate / delete monsters in a slot
+    * It should be possible to pull 'quick condition' things from monsters and apply them
   * Terrain:
     * Show number of squares on terrain encounter row
     * Show 'should be N squares' for terrain

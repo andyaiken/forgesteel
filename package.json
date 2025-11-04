@@ -1,7 +1,7 @@
 {
 	"name": "forgesteel",
 	"private": true,
-	"version": "11.112.0",
+	"version": "11.113.0",
 	"type": "module",
 	"repository": "https://github.com/andyaiken/forgesteel.git",
 	"homepage": "https://andyaiken.github.io/forgesteel/",
@@ -34,17 +34,17 @@
 		"showdown": "^2.1.0"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.39.0",
+		"@eslint/js": "^9.39.1",
 		"@stylistic/eslint-plugin": "^5.5.0",
 		"@types/react": "^19.2.2",
 		"@types/react-dom": "^19.2.2",
 		"@vitejs/plugin-react": "^5.1.0",
 		"@vitest/coverage-v8": "^4.0.6",
-		"eslint": "^9.39.0",
+		"eslint": "^9.39.1",
 		"eslint-plugin-react-hooks": "^7.0.1",
 		"globals": "^16.5.0",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.46.2",
+		"typescript-eslint": "^8.46.3",
 		"vite": "^7.1.12",
 		"vite-tsconfig-paths": "^5.1.4",
 		"vitest": "^4.0.6"

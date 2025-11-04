@@ -22,6 +22,18 @@ import librarySourcebooks from '@/assets/screenshots/sourcebooks.png';
 import homebrewEditor from '@/assets/screenshots/homebrew.png';
 import homebrewMonsterBuilder from '@/assets/screenshots/monster-builder.png';
 
+import playbookEncounter from '@/assets/screenshots/playbook-encounter.png';
+import playbookEncounterBuilder from '@/assets/screenshots/playbook-encounter-builder.png';
+import playbookEncounterClassic from '@/assets/screenshots/playbook-encounter-classic.png';
+import playbookEncounterRandom from '@/assets/screenshots/playbook-encounter-random.png';
+import playbookEncounterTools from '@/assets/screenshots/playbook-encounter-tools.png';
+import playbookMontage from '@/assets/screenshots/playbook-montage.png';
+import playbookMontageBuilder from '@/assets/screenshots/playbook-montage-builder.png';
+import playbookMontageClassic from '@/assets/screenshots/playbook-montage-classic.png';
+import playbookNegotiation from '@/assets/screenshots/playbook-negotiation.png';
+import playbookNegotiationBuilder from '@/assets/screenshots/playbook-negotiation-builder.png';
+import playbookNegotiationClassic from '@/assets/screenshots/playbook-negotiation-classic.png';
+
 import appAbout from '@/assets/screenshots/footer.png';
 import appNavigation from '@/assets/screenshots/navigation.png';
 import appReference from '@/assets/screenshots/footer-reference.png';
@@ -72,12 +84,13 @@ export class TipData {
 				image: heroSheetRetinue,
 				content: 'If your hero has a mount, a retainer, or can summon monsters, you\'ll see them in your **Retinue**s tab.'
 			},
+			// TODO: Hero folders
 			// #endregion
 
 			// #region Hero Builder
 			{
 				image: heroBuilderEdit,
-				content: 'Forge Steel lets you build heroes.'
+				content: 'Forge Steel lets you build heroes, taking you through the process step-by-step.'
 			},
 			{
 				image: heroBuilderSourcebooks,
@@ -116,30 +129,77 @@ export class TipData {
 			// TODO: Monster builder - genesplice
 			// #endregion
 
-			// #region Playbook
+			// #region Adventures
 			// TODO: Adventures
-			// TODO: Encounter
-			// TODO: Encounter tools
-			// TODO: Montage
-			// TODO: Negotiation
+			// #endregion
+
+			// #region Encounters
+			{
+				image: playbookEncounter,
+				content: 'You can design encounters in the **Playbook**.'
+			},
+			{
+				image: playbookEncounterTools,
+				content: 'If you tap the Information icon in the encounter header, you\'ll see information that\'ll help you pick minis for this encounter.'
+			},
+			{
+				image: playbookEncounterClassic,
+				content: 'If you want to print out your encounter, switch to the Classic view.'
+			},
+			{
+				image: playbookEncounterBuilder,
+				content: 'Forge Steel makes it easy to build encounters by adding monsters and terrain elements.'
+			},
+			{
+				image: playbookEncounterRandom,
+				content: 'If you need an encounter in a hurry, Forge Steel can generate one - you just specify the difficulty and, optionally, the sort of monsters you want it to showcase.'
+			},
+			// #endregion
+
+			// #region Montages
+			{
+				image: playbookMontage,
+				content: 'You can design montages in the **Playbook**.'
+			},
+			{
+				image: playbookMontageClassic,
+				content: 'If you want to print out your montage, switch to the Classic view.'
+			},
+			{
+				image: playbookMontageBuilder,
+				content: 'Forge Steel makes it easy to build montages by adding challenges and twists.'
+			},
+			// #endregion
+
+			// #region Negotiations
+			{
+				image: playbookNegotiation,
+				content: 'You can design negotiations in the **Playbook**.'
+			},
+			{
+				image: playbookNegotiationClassic,
+				content: 'If you want to print out your negotiation, switch to the Classic view.'
+			},
+			{
+				image: playbookNegotiationBuilder,
+				content: 'Forge Steel makes it easy to build negotiations by adding motivatons and pitfalls.'
+			},
+			// #endregion
+
+			// #region Maps
 			// TODO: Map
-			// TODO: Encounter classic view
-			// TODO: Montage classic view
-			// TODO: Negotiation classic view
-			// TODO: Encounter builder
-			// TODO: Montage builder
-			// TODO: Negotiation builder
 			// TODO: Map autobuild
+			// TODO: Map runner
+			// TODO: Map - adding minis
 			// #endregion
 
 			// #region Session
-			// TODO: Run a predefined encounter / montage / negotiation
 			// TODO: Encounter runner
 			// TODO: Montage runner
 			// TODO: Negotiation runner
-			// TODO: Map runner
+			// TODO: Run a predefined encounter / montage / negotiation
 			// TODO: Counter
-			// TODO: Multiple things
+			// TODO: Running multiple things
 			// #endregion
 
 			// #region App

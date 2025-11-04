@@ -219,5 +219,5 @@ export const angulotl: Ancestry = {
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 4
 };

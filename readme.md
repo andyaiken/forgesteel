@@ -2,7 +2,7 @@
 
 **FORGE STEEL** is a hero builder app for **DRAW STEEL**, designed by [Andy Aiken](mailto:andy.aiken@live.co.uk).
 
-You can find it [here](https://andyaiken.github.io/forgesteel/).
+You can find it [here link to live](https://andyaiken.github.io/forgesteel/).
 
 ## Heroes
 
@@ -42,22 +42,18 @@ here we can see a homebrew kit being created.
 
 If you would like to contribute, you can:
 
-* Add feature requests and raise bug reports [here](https://github.com/andyaiken/forgesteel/issues)
+* Add feature requests and raise bug reports [here to Live](https://github.com/andyaiken/forgesteel/issues)
 * Fork the repository, make your changes to the code, and raise a pull request
 
 To run the app locally, run the following commands:
 
-```
 npm install
 npm run start
-```
 
 Once built, the app should then be available at `http://localhost:5173/forgesteel/`.
 
 When you've finished with your changes, make sure to appease the linter and run the unit tests:
 
-```
 npm run check
-```
 
 If all is well, you can then create your pull request.

@@ -18,7 +18,7 @@ I've analyzed all established ancestry files in the codebase and compared them t
 
 **Established Ancestries Reviewed:**
 - human.ts, dwarf.ts, elf-high.ts
-- devil.ts, dragon-knight.ts
+- devil.ts, draconem.ts
 - orc.ts, polder.ts
 - (and others)
 

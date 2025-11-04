@@ -1372,12 +1372,12 @@ When you are reduced to 0 Stamina by damage that isn’t fire or holy damage and
 			FactoryLogic.feature.create({
 				id: 'title-dragon-blooded-1',
 				name: 'Dragon Scaled',
-				description: 'Dragon scales grow on your body wherever the heart’s blood of the dragon touched you. You gain the Wyrmplate signature trait from the dragon knight ancestry.'
+				description: 'Dragon scales grow on your body wherever the heart\'s blood of the dragon touched you. You gain the Wyrmplate signature trait from the draconem ancestry.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-dragon-blooded-2',
 				name: 'Dragon Touched',
-				description: 'You gain 3 ancestry points to spend on purchased dragon knight ancestry traits.'
+				description: 'You gain 3 ancestry points to spend on purchased draconem ancestry traits.'
 			})
 		],
 		selectedFeatureID: ''

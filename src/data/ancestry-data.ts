@@ -5,23 +5,25 @@ import { aurven } from '@/data/ancestries/aurven';
 import { caprini } from '@/data/ancestries/caprini';
 import { cervari } from '@/data/ancestries/cervari';
 import { devil } from '@/data/ancestries/devil';
-import { dragonKnight } from '@/data/ancestries/dragon-knight';
+import { draconem } from '@/data/ancestries/draconem';
 import { dwarf } from '@/data/ancestries/dwarf';
 import { elgari } from '@/data/ancestries/elgari';
 import { hakaan } from '@/data/ancestries/hakaan';
 import { highElf } from '@/data/ancestries/elf-high';
 import { human } from '@/data/ancestries/human';
+import { lizardfolk } from '@/data/ancestries/lizardfolk';
 import { memonek } from '@/data/ancestries/memonek';
 import { orc } from '@/data/ancestries/orc';
 import { polder } from '@/data/ancestries/polder';
 import { revenant } from '@/data/ancestries/revenant';
 import { seraphite } from '@/data/ancestries/seraphite';
 import { timeRaider } from '@/data/ancestries/time-raider';
+import { verminari } from '@/data/ancestries/verminari';
 import { warforged } from '@/data/ancestries/warforged';
 import { wodeElf } from '@/data/ancestries/elf-wode';
 export class AncestryData {
 	static devil = devil;
-	static dragonKnight = dragonKnight;
+	static draconem = draconem;
 	static dwarf = dwarf;
 	static wodeElf = wodeElf;
 	static highElf = highElf;
@@ -41,4 +43,6 @@ export class AncestryData {
 	static warforged = warforged;
 	static seraphite = seraphite;
 	static angulotl = angulotl;
+	static lizardfolk = lizardfolk;
+	static verminari = verminari;
 }

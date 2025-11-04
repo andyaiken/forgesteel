@@ -263,6 +263,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				.map(opt => opt.feature.id);
 		}
 
+		// Calculate available options fresh each render to ensure selected items are filtered out
 		const availableOptions = allOptions
 			.filter(f => !unavailableIDs.includes(f.feature.id))
 			.filter(f => !selectedIDs.includes(f.feature.id));
@@ -374,10 +375,16 @@ export const FeatureConfigPanel = (props: Props) => {
 			.filter(f => f.id !== props.feature.id)
 			.filter(f => f.type === FeatureType.ClassAbility)
 			.flatMap(f => f.data.selectedIDs);
-		const abilities = (data.allowAnySource ? SourcebookLogic.getAllClassAbilities(heroClass) : heroClass.abilities)
+
+		// Get all abilities for displaying selected ones
+		const allAbilities = (data.allowAnySource ? SourcebookLogic.getAllClassAbilities(heroClass) : heroClass.abilities)
 			.filter(a => a.cost === data.cost)
-			.filter(a => a.minLevel <= data.minLevel)
-			.filter(a => !currentAbilityIDs.includes(a.id));
+			.filter(a => a.minLevel <= data.minLevel);
+
+		// Get available abilities for selection (exclude already selected from OTHER features AND this feature)
+		const abilities = allAbilities
+			.filter(a => !currentAbilityIDs.includes(a.id))
+			.filter(a => !data.selectedIDs.includes(a.id));
 		const distinctAbilities = Collections.distinct(abilities, a => a.name);
 		const sortedAbilities = Collections.sort(distinctAbilities, a => a.name);
 
@@ -402,7 +409,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				</div>
 				{
 					data.selectedIDs.map(id => {
-						const ability = abilities.find(a => a.id === id) as Ability;
+						const ability = allAbilities.find(a => a.id === id) as Ability;
 						return (
 							<Flex key={ability.id} className='selection-box' align='center' gap={10}>
 								<Field

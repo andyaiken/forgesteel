@@ -467,7 +467,7 @@ Each time you complete this project, your knowledge of your chosen field expands
 			FactoryLogic.feature.create({
 				id: 'comp-dragonDreams-b',
 				name: 'Dragon Dreams Benefit',
-				description: 'Choose two ancestry points worth of purchased dragon knight traits. You can use these traits whenever you have 5 or more Victories.'
+				description: 'Choose two ancestry points worth of purchased draconem traits. You can use these traits whenever you have 5 or more Victories.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-dragonDreams-d',

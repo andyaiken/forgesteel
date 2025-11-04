@@ -33,7 +33,7 @@ export const core: Sourcebook = {
 	isHomebrew: false,
 	ancestries: [
 		AncestryData.devil,
-		AncestryData.dragonKnight,
+		AncestryData.draconem,
 		AncestryData.dwarf,
 		AncestryData.hakaan,
 		AncestryData.highElf,

@@ -11,7 +11,7 @@
 Added the complete list of ancestral cultures from orden.ts to draachenmar.ts:
 
 - Devil (Urban, bureaucratic, academic - Anjali)
-- Dragon Knight (Secluded, bureaucratic, martial - Vastariax)
+- Draconem (Secluded, bureaucratic, martial - Vastariax)
 - Dwarf (Secluded, bureaucratic, creative - Zaliac)
 - Wode Elf (Wilderness, bureaucratic, martial - Yllyric)
 - High Elf (Secluded, bureaucratic, martial - Hyrallic)
@@ -73,7 +73,7 @@ FactoryLogic.createCulture(
 
 **16 cultures total:**
 
-- 11 from Orden (Devil, Dragon Knight, Dwarf, Elves, Hakaan, Human, Memonek, Orc, Polder, Time Raider)
+- 11 from Orden (Devil, Draconem, Dwarf, Elves, Hakaan, Human, Memonek, Orc, Polder, Time Raider)
 - 5 Draachenmar-specific (Angulotl, Seraphite, Aurian, Hornvar, Warforged)
 
 ## ESLint Status

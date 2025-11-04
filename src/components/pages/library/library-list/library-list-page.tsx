@@ -521,7 +521,7 @@ export const LibraryListPage = (props: Props) => {
 		const tags: string[] = [];
 
 		const sb = getSourcebook(element);
-		if (sb && sb.id !== SourcebookData.core.id) {
+		if (sb) {
 			tags.push(sb.name || 'Unnamed Sourcebook');
 			if (sb.isHomebrew) {
 				tags.push('Homebrew');

@@ -1,12 +1,15 @@
 # Draachenmar Cultures Update
 
 ## Summary
+
 ✅ All Draachenmar ancestries now have associated cultures
 
 ## Changes Made
 
 ### 1. Added All Orden Core Cultures (11 total)
+
 Added the complete list of ancestral cultures from orden.ts to draachenmar.ts:
+
 - Devil (Urban, bureaucratic, academic - Anjali)
 - Dragon Knight (Secluded, bureaucratic, martial - Vastariax)
 - Dwarf (Secluded, bureaucratic, creative - Zaliac)
@@ -20,6 +23,7 @@ Added the complete list of ancestral cultures from orden.ts to draachenmar.ts:
 - Time Raider (Nomadic, communal, martial - Voll)
 
 ### 2. Added Missing Angulotl Culture
+
 Created new ancestral culture for the Angulotl ancestry:
 
 ```typescript
@@ -35,6 +39,7 @@ FactoryLogic.createCulture(
 ```
 
 **Design Rationale**:
+
 - **Environment: Wilderness** - Matches their amphibious, river/tide-pool nature
 - **Organization: Communal** - Consistent with other aquatic/small ancestries
 - **Upbringing: Creative** - Reflects their "current-craft" and artisan nature from the ancestry description
@@ -67,15 +72,18 @@ FactoryLogic.createCulture(
 ## Total Cultures Available in Draachenmar
 
 **16 cultures total:**
+
 - 11 from Orden (Devil, Dragon Knight, Dwarf, Elves, Hakaan, Human, Memonek, Orc, Polder, Time Raider)
 - 5 Draachenmar-specific (Angulotl, Seraphite, Aurian, Hornvar, Warforged)
 
 ## ESLint Status
+
 ✅ **CLEAN** - No errors or warnings
 
 ## Language Reference
 
 The Filliaric language was already defined in draachenmar.ts:
+
 ```typescript
 {
     name: 'Filliaric',

@@ -54,23 +54,53 @@ export const WelcomePage = (props: Props) => {
 						</div>
 						<ul>
 							<li>
-								All the official content is included, and you can also use any homebrew content your director has created.
+								<Trans
+									i18n={i18n}
+									ns='welcomePage'
+									i18nKey='officialContent'
+									defaults='All the official content is included, and you can also use any homebrew content your director has created.'
+								/>
 							</li>
 							<li>
-								You can use the app to track your hero's stamina, conditions, surges, and so on.
+								<Trans
+									i18n={i18n}
+									ns='welcomePage'
+									i18nKey='appUses'
+									defaults="You can use the app to track your hero's stamina, conditions, surges, and so on."
+								/>
 							</li>
 							<li>
-								If you're playing offline, you can export your heroes in PNG or PDF formats (either portrait or landscape).
+								<Trans
+									i18n={i18n}
+									ns='welcomePage'
+									i18nKey='appOfflineUses'
+									defaults="If you're playing offline, you can export your heroes in PNG or PDF formats (either portrait or landscape)."
+								/>
 							</li>
 							<li>
-								Want something a little different? You can customize any of your abilities to make them more unique to your hero.
+								<Trans
+									i18n={i18n}
+									ns='welcomePage'
+									i18nKey='customizeAbilities'
+									defaults='Want something a little different? You can customize any of your abilities to make them more unique to your hero.'
+								/>
 							</li>
 							<li>
-								Need to tweak your hero in a way that's not strictly by the book? No problem! You can customize your hero in any number of ways - an extra ability, bonuses to your characteristics, extra skills, retainers, etc.
+								<Trans
+									i18n={i18n}
+									ns='welcomePage'
+									i18nKey='heroCustomization'
+									defaults="Need to tweak your hero in a way that's not strictly by the book? No problem! You can customize your hero in any number of ways - an extra ability, bonuses to your characteristics, extra skills, retainers, etc."
+								/>
 							</li>
 						</ul>
 						<div className='ds-text'>
-							In addition, you can quickly look up rules at any time using the Reference button at the bottom right of the screen.
+							<Trans
+								i18n={i18n}
+								ns='welcomePage'
+								i18nKey='rulesLookup'
+								defaults='In addition, you can quickly look up rules at any time using the Reference button at the bottom right of the screen.'
+							/>
 						</div>
 					</div>
 				);

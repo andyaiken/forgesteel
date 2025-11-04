@@ -1,8 +1,8 @@
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterRoleType } from '../../enums/monster-role-type';
-import { Terrain } from '../../models/terrain';
-import { TerrainCategory } from '../../enums/terrain-category';
-import { TerrainRoleType } from '../../enums/terrain-role-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Terrain } from '@/models/terrain';
+import { TerrainCategory } from '@/enums/terrain-category';
+import { TerrainRoleType } from '@/enums/terrain-role-type';
 
 export const holyIdol: Terrain = {
 	id: 'holy-idol',
@@ -23,7 +23,7 @@ export const holyIdol: Terrain = {
 		base: 35,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{
@@ -72,7 +72,7 @@ export const psionicShard: Terrain = {
 		base: 40,
 		perSquare: 0
 	},
-	size: '2',
+	size: FactoryLogic.createSize(2),
 	damageMods: [],
 	sections: [
 		{
@@ -93,9 +93,6 @@ export const psionicShard: Terrain = {
 						id: 'psionic-pulse',
 						name: 'Psionic Pulse',
 						type: FactoryLogic.type.createTrigger('The shard is destroyed', { free: true }),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The shard releases a shockwave channeled through each creature affected by Psionic Barrier. Each ally in the encounter is dazed until the end of their next turn.')
 						]
@@ -129,7 +126,7 @@ export const treeOfMight: Terrain = {
 		base: 60,
 		perSquare: 0
 	},
-	size: '3',
+	size: FactoryLogic.createSize(3),
 	damageMods: [],
 	sections: [
 		{

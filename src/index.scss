@@ -37,8 +37,8 @@
 	font-display: swap;
 }
 @font-face {
-	font-family: 'Draw Steel Potencies';
-	src: url('../src/assets/fonts/ds-symbols/DrawSteel-Potencies.ttf') format('truetype');
+	font-family: 'Draw Steel Glyphs';
+	src: url('../src/assets/fonts/ds-glyphs/DrawSteelGlyphs-Regular.otf') format('truetype');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
@@ -338,6 +338,16 @@ td {
 	}
 }
 
+.ant-select-show-search.ant-select-multiple .ant-select-selector {
+	.ant-select-selection-item {
+		height: 26px;
+		.ds-text {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+}
+
 .ant-statistic {
 	.ant-statistic-title {
 		min-height: 24px;
@@ -379,11 +389,9 @@ td {
 	}
 }
 
-@media (prefers-color-scheme: dark) {
-	html {
-		color: rgba(255, 255, 255, 0.88);
-		background-color: rgb(55, 55, 55);
-	}
+html[data-theme="dark"] {
+	color: rgba(255, 255, 255, 0.88);
+	background-color: rgb(55, 55, 55);
 
 	h1,
 	h2,
@@ -491,6 +499,17 @@ td {
 			.ds-text,
 			.field .field-label,
 			.field .field-value {
+				color: rgba(0, 0, 0, 0.88);
+			}
+		}
+		.ant-select-item {
+			color: rgba(255, 255, 255, 0.88);
+		}
+	}
+
+	.ant-select-show-search.ant-select-multiple .ant-select-selector {
+		.ant-select-selection-item {
+			.ds-text {
 				color: rgba(0, 0, 0, 0.88);
 			}
 		}

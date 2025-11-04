@@ -1,12 +1,12 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const lordSyuul: MonsterGroup = {
 	id: 'monster-group-lord-syuul',
@@ -56,6 +56,7 @@ In his mind, everything that is not Lord Syuul is flawed. When his new device is
 			id: 'lord-syuul-malice-1',
 			name: 'Guise',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'Lord Syuul projects a psionic screen over his body, preventing other creatures from treating him as an enemy until the end of his next turn.'
 			]
@@ -64,6 +65,7 @@ In his mind, everything that is not Lord Syuul is flawed. When his new device is
 			id: 'lord-syuul-malice-2',
 			name: 'Do It For Me',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Lord Syuul psionically plunders the minds of each creature within 2 squares of him. Each such creature makes a **Reason test**.',
 				FactoryLogic.createPowerRoll({
@@ -78,6 +80,7 @@ In his mind, everything that is not Lord Syuul is flawed. When his new device is
 			id: 'lord-syuul-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'Lord Syuul takes an additional main action on his turn. He can use this feature even if he is dazed.'
 			]
@@ -86,6 +89,7 @@ In his mind, everything that is not Lord Syuul is flawed. When his new device is
 			id: 'lord-syuul-malice-4',
 			name: 'Overpower',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Lord Syuul sends out a psionic burst to completely overpower his greatest threats. He makes a **Reason test**.',
 				FactoryLogic.createPowerRoll({
@@ -119,7 +123,7 @@ In his mind, everything that is not Lord Syuul is flawed. When his new device is
 			stamina: 450,
 			stability: 3,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 4, 4, 3),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 4, 4, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'lord-syull-feature-0',

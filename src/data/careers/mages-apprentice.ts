@@ -1,8 +1,8 @@
-import { Career } from '../../models/career';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
-import { PerkList } from '../../enums/perk-list';
-import { SkillList } from '../../enums/skill-list';
+import { Career } from '@/models/career';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
 
 export const magesApprentice: Career = {
 	id: 'career-mages-apprentice',
@@ -11,7 +11,6 @@ export const magesApprentice: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'mages-apprentice-feature-1',
-			listOptions: [ SkillList.Lore ],
 			selected: [ 'Magic' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

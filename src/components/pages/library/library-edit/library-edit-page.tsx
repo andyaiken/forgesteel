@@ -1,74 +1,76 @@
-import { Button, Drawer, Flex, Popover, Select, Space, Tabs } from 'antd';
-import { CloseOutlined, DownOutlined, LeftOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
-import { Sourcebook, SourcebookElementKind } from '../../../../models/sourcebook';
-import { Ancestry } from '../../../../models/ancestry';
-import { AncestryEditPanel } from '../../../panels/edit/ancestry-edit/ancestry-edit-panel';
-import { AncestryPanel } from '../../../panels/elements/ancestry-panel/ancestry-panel';
-import { AppFooter } from '../../../panels/app-footer/app-footer';
-import { AppHeader } from '../../../panels/app-header/app-header';
-import { Career } from '../../../../models/career';
-import { CareerEditPanel } from '../../../panels/edit/career-edit/career-edit-panel';
-import { CareerPanel } from '../../../panels/elements/career-panel/career-panel';
-import { ClassEditPanel } from '../../../panels/edit/class-edit/class-edit-panel';
-import { ClassPanel } from '../../../panels/elements/class-panel/class-panel';
-import { Collections } from '../../../../utils/collections';
-import { Complication } from '../../../../models/complication';
-import { ComplicationEditPanel } from '../../../panels/edit/complication-edit/complication-edit-panel';
-import { ComplicationPanel } from '../../../panels/elements/complication-panel/complication-panel';
-import { Culture } from '../../../../models/culture';
-import { CultureEditPanel } from '../../../panels/edit/culture-edit/culture-edit-panel';
-import { CulturePanel } from '../../../panels/elements/culture-panel/culture-panel';
-import { Domain } from '../../../../models/domain';
-import { DomainEditPanel } from '../../../panels/edit/domain-edit/domain-edit-panel';
-import { DomainPanel } from '../../../panels/elements/domain-panel/domain-panel';
-import { Element } from '../../../../models/element';
-import { Empty } from '../../../controls/empty/empty';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Expander } from '../../../controls/expander/expander';
-import { FeatureEditPanel } from '../../../panels/edit/feature-edit/feature-edit-panel';
-import { Field } from '../../../controls/field/field';
-import { Format } from '../../../../utils/format';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
-import { HeroClass } from '../../../../models/class';
-import { Imbuement } from '../../../../models/imbuement';
-import { ImbuementEditPanel } from '../../../panels/edit/imbuement-edit/imbuement-edit-panel';
-import { ImbuementPanel } from '../../../panels/elements/imbuement-panel/imbuement-panel';
-import { Item } from '../../../../models/item';
-import { ItemEditPanel } from '../../../panels/edit/item-edit/item-edit-panel';
-import { ItemPanel } from '../../../panels/elements/item-panel/item-panel';
-import { Kit } from '../../../../models/kit';
-import { KitEditPanel } from '../../../panels/edit/kit-edit/kit-edit-panel';
-import { KitPanel } from '../../../panels/elements/kit-panel/kit-panel';
-import { Monster } from '../../../../models/monster';
-import { MonsterEditPanel } from '../../../panels/edit/monster-edit/monster-edit-panel';
-import { MonsterGroup } from '../../../../models/monster-group';
-import { MonsterGroupEditPanel } from '../../../panels/edit/monster-group-edit/monster-group-edit-panel';
-import { MonsterGroupPanel } from '../../../panels/elements/monster-group-panel/monster-group-panel';
-import { MonsterLogic } from '../../../../logic/monster-logic';
-import { MonsterPanel } from '../../../panels/elements/monster-panel/monster-panel';
-import { MonsterSelectModal } from '../../../modals/select/monster-select/monster-select-modal';
-import { Options } from '../../../../models/options';
-import { OptionsPanel } from '../../../panels/options/options-panel';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { Perk } from '../../../../models/perk';
-import { PerkPanel } from '../../../panels/elements/perk-panel/perk-panel';
-import { ProjectPanel } from '../../../panels/elements/project-panel/project-panel';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { SubClass } from '../../../../models/subclass';
-import { SubClassEditPanel } from '../../../panels/edit/subclass-edit/subclass-edit-panel';
-import { SubclassPanel } from '../../../panels/elements/subclass-panel/subclass-panel';
-import { Terrain } from '../../../../models/terrain';
-import { TerrainEditPanel } from '../../../panels/edit/terrain-edit/terrain-edit-panel';
-import { TerrainPanel } from '../../../panels/elements/terrain-panel/terrain-panel';
-import { Title } from '../../../../models/title';
-import { TitleEditPanel } from '../../../panels/edit/title-edit/title-edit-panel';
-import { TitlePanel } from '../../../panels/elements/title-panel/title-panel';
-import { Utils } from '../../../../utils/utils';
-import { useNavigation } from '../../../../hooks/use-navigation';
+import { Button, Drawer, Flex, Select, Space, Tabs } from 'antd';
+import { CloseOutlined, LeftOutlined, SaveOutlined } from '@ant-design/icons';
+import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
+import { Ancestry } from '@/models/ancestry';
+import { AncestryEditPanel } from '@/components/panels/edit/ancestry-edit/ancestry-edit-panel';
+import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
+import { AppFooter } from '@/components/panels/app-footer/app-footer';
+import { AppHeader } from '@/components/panels/app-header/app-header';
+import { Career } from '@/models/career';
+import { CareerEditPanel } from '@/components/panels/edit/career-edit/career-edit-panel';
+import { CareerPanel } from '@/components/panels/elements/career-panel/career-panel';
+import { ClassEditPanel } from '@/components/panels/edit/class-edit/class-edit-panel';
+import { ClassPanel } from '@/components/panels/elements/class-panel/class-panel';
+import { Collections } from '@/utils/collections';
+import { Complication } from '@/models/complication';
+import { ComplicationEditPanel } from '@/components/panels/edit/complication-edit/complication-edit-panel';
+import { ComplicationPanel } from '@/components/panels/elements/complication-panel/complication-panel';
+import { Culture } from '@/models/culture';
+import { CultureEditPanel } from '@/components/panels/edit/culture-edit/culture-edit-panel';
+import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
+import { Domain } from '@/models/domain';
+import { DomainEditPanel } from '@/components/panels/edit/domain-edit/domain-edit-panel';
+import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
+import { Element } from '@/models/element';
+import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
+import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
+import { Field } from '@/components/controls/field/field';
+import { Format } from '@/utils/format';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroClass } from '@/models/class';
+import { Imbuement } from '@/models/imbuement';
+import { ImbuementEditPanel } from '@/components/panels/edit/imbuement-edit/imbuement-edit-panel';
+import { ImbuementPanel } from '@/components/panels/elements/imbuement-panel/imbuement-panel';
+import { Item } from '@/models/item';
+import { ItemEditPanel } from '@/components/panels/edit/item-edit/item-edit-panel';
+import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
+import { Kit } from '@/models/kit';
+import { KitEditPanel } from '@/components/panels/edit/kit-edit/kit-edit-panel';
+import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
+import { Monster } from '@/models/monster';
+import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterGroupEditPanel } from '@/components/panels/edit/monster-group-edit/monster-group-edit-panel';
+import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-panel/monster-group-panel';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
+import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { Perk } from '@/models/perk';
+import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
+import { Project } from '@/models/project';
+import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
+import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SubClass } from '@/models/subclass';
+import { SubClassEditPanel } from '@/components/panels/edit/subclass-edit/subclass-edit-panel';
+import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
+import { Terrain } from '@/models/terrain';
+import { TerrainEditPanel } from '@/components/panels/edit/terrain-edit/terrain-edit-panel';
+import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
+import { Title } from '@/models/title';
+import { TitleEditPanel } from '@/components/panels/edit/title-edit/title-edit-panel';
+import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
+import { Utils } from '@/utils/utils';
+import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
+import { useTitle } from '@/hooks/use-title';
 
 import './library-edit-page.scss';
 
@@ -77,12 +79,12 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
-	setOptions: (options: Options) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
@@ -125,6 +127,9 @@ export const LibraryEditPage = (props: Props) => {
 			case 'perk':
 				original = sourcebook.perks.find(e => e.id === elementID)!;
 				break;
+			case 'project':
+				original = sourcebook.projects.find(e => e.id === elementID)!;
+				break;
 			case 'subclass':
 				original = sourcebook.subclasses.find(e => e.id === elementID)!;
 				break;
@@ -138,9 +143,37 @@ export const LibraryEditPage = (props: Props) => {
 		return Utils.copy(original) as Element;
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
+	const [ revision, setRevision ] = useState<number>(0);
 	const [ scratchpadMonsters, setScratchpadMonsters ] = useState<Monster[]>([]);
 	const [ hiddenMonsterIDs, setHiddenMonsterIDs ] = useState<string[]>([]);
 	const [ drawerOpen, setDrawerOpen ] = useState<boolean>(false);
+
+	const getSubheader = () => {
+		if (kind === 'class') {
+			if (subElementID) {
+				return 'Subclass Builder';
+			}
+		}
+
+		if (kind === 'monster-group') {
+			if (subElementID) {
+				return 'Monster Builder';
+			}
+
+			return 'Monster Group Builder';
+		}
+
+		return `${Format.capitalize(kind!)} Builder`;
+	};
+
+	useTitle(getSubheader());
+
+	const applyChanges = (element: Element) => {
+		const copy = Utils.copy(element);
+		setElement(copy);
+		setDirty(true);
+		setRevision(revision + 1);
+	};
 
 	const getSimilarMonsters = (monster: Monster) => {
 		const monsters = SourcebookLogic
@@ -232,7 +265,6 @@ export const LibraryEditPage = (props: Props) => {
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 						options={props.options}
-						selectOriginal={true}
 						onSelect={monster => {
 							const copy = Utils.copy(scratchpadMonsters) as Monster[];
 							copy.push(monster);
@@ -298,22 +330,7 @@ export const LibraryEditPage = (props: Props) => {
 						ancestry={element as Ancestry}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={a => {
-							setElement(a);
-							setDirty(true);
-						}}
-					/>
-				);
-			case 'culture':
-				return (
-					<CultureEditPanel
-						key={element.id}
-						culture={element as Culture}
-						sourcebooks={props.sourcebooks}
-						onChange={c => {
-							setElement(c);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'career':
@@ -323,10 +340,7 @@ export const LibraryEditPage = (props: Props) => {
 						career={element as Career}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={c => {
-							setElement(c);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'class':
@@ -337,10 +351,7 @@ export const LibraryEditPage = (props: Props) => {
 							heroClass={element as HeroClass}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
-							onChange={c => {
-								setElement(c);
-								setDirty(true);
-							}}
+							onChange={applyChanges}
 							onEditSubClass={sc => navigation.goToLibraryEdit(kind!, sourcebookID!, element.id, sc.id)}
 						/>
 					);
@@ -360,25 +371,11 @@ export const LibraryEditPage = (props: Props) => {
 								if (index !== -1) {
 									copy.subclasses[index] = sc;
 								}
-								setElement(copy);
-								setDirty(true);
+								applyChanges(copy);
 							}}
 						/>
 					);
 				}
-			case 'subclass':
-				return (
-					<SubClassEditPanel
-						key={element.id}
-						subClass={element as SubClass}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onChange={c => {
-							setElement(c);
-							setDirty(true);
-						}}
-					/>
-				);
 			case 'complication':
 				return (
 					<ComplicationEditPanel
@@ -386,10 +383,16 @@ export const LibraryEditPage = (props: Props) => {
 						complication={element as Complication}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={c => {
-							setElement(c);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
+					/>
+				);
+			case 'culture':
+				return (
+					<CultureEditPanel
+						key={element.id}
+						culture={element as Culture}
+						sourcebooks={props.sourcebooks}
+						onChange={applyChanges}
 					/>
 				);
 			case 'domain':
@@ -399,76 +402,17 @@ export const LibraryEditPage = (props: Props) => {
 						domain={element as Domain}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={d => {
-							setElement(d);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
-			case 'kit':
+			case 'subclass':
 				return (
-					<KitEditPanel
+					<SubClassEditPanel
 						key={element.id}
-						kit={element as Kit}
+						subClass={element as SubClass}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={k => {
-							setElement(k);
-							setDirty(true);
-						}}
-					/>
-				);
-			case 'perk':
-				return (
-					<FeatureEditPanel
-						key={element.id}
-						feature={element as Perk}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onChange={perk => {
-							const copy = Utils.copy(perk) as Perk;
-							setElement(copy);
-							setDirty(true);
-						}}
-					/>
-				);
-			case 'terrain':
-				return (
-					<TerrainEditPanel
-						key={element.id}
-						terrain={element as Terrain}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onChange={t => {
-							setElement(t);
-							setDirty(true);
-						}}
-					/>
-				);
-			case 'title':
-				return (
-					<TitleEditPanel
-						key={element.id}
-						title={element as Title}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onChange={t => {
-							setElement(t);
-							setDirty(true);
-						}}
-					/>
-				);
-			case 'item':
-				return (
-					<ItemEditPanel
-						key={element.id}
-						item={element as Item}
-						sourcebooks={props.sourcebooks}
-						options={props.options}
-						onChange={i => {
-							setElement(i);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'imbuement':
@@ -478,10 +422,27 @@ export const LibraryEditPage = (props: Props) => {
 						imbuement={element as Imbuement}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={i => {
-							setElement(i);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
+					/>
+				);
+			case 'item':
+				return (
+					<ItemEditPanel
+						key={element.id}
+						item={element as Item}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
+					/>
+				);
+			case 'kit':
+				return (
+					<KitEditPanel
+						key={element.id}
+						kit={element as Kit}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
 					/>
 				);
 			case 'monster-group':
@@ -492,10 +453,7 @@ export const LibraryEditPage = (props: Props) => {
 							monsterGroup={element as MonsterGroup}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
-							onChange={mg => {
-								setElement(mg);
-								setDirty(true);
-							}}
+							onChange={applyChanges}
 							onEditMonster={m => navigation.goToLibraryEdit(kind!, sourcebookID!, element.id, m.id)}
 						/>
 					);
@@ -517,12 +475,50 @@ export const LibraryEditPage = (props: Props) => {
 								if (index !== -1) {
 									copy.monsters[index] = monster;
 								}
-								setElement(copy);
-								setDirty(true);
+								applyChanges(copy);
 							}}
 						/>
 					);
 				}
+			case 'perk':
+				return (
+					<FeatureEditPanel
+						key={element.id}
+						feature={element as Perk}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
+					/>
+				);
+			case 'project':
+				return (
+					<ProjectEditPanel
+						key={element.id}
+						project={element as Project}
+						includeNameAndDescription={true}
+						onChange={applyChanges}
+					/>
+				);
+			case 'terrain':
+				return (
+					<TerrainEditPanel
+						key={element.id}
+						terrain={element as Terrain}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
+					/>
+				);
+			case 'title':
+				return (
+					<TitleEditPanel
+						key={element.id}
+						title={element as Title}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
+					/>
+				);
 		}
 
 		return null;
@@ -557,26 +553,26 @@ export const LibraryEditPage = (props: Props) => {
 		switch (kind) {
 			case 'ancestry':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<AncestryPanel ancestry={element as Ancestry} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'culture':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<CulturePanel culture={element as Culture} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'career':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<CareerPanel career={element as Career} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'class':
 				if (!subElementID) {
 					return (
-						<SelectablePanel>
+						<SelectablePanel key={`${element.id}-${revision}`}>
 							<ClassPanel heroClass={element as HeroClass} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
@@ -585,57 +581,63 @@ export const LibraryEditPage = (props: Props) => {
 					const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
 
 					return (
-						<SelectablePanel>
+						<SelectablePanel key={`${subclass.id}-${revision}`}>
 							<SubclassPanel subclass={subclass} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				}
 			case 'complication':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<ComplicationPanel complication={element as Complication} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'domain':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<DomainPanel domain={element as Domain} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'kit':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<KitPanel kit={element as Kit} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'perk':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<PerkPanel perk={element as Perk} options={props.options} mode={PanelMode.Full} />
+					</SelectablePanel>
+				);
+			case 'project':
+				return (
+					<SelectablePanel key={`${element.id}-${revision}`}>
+						<ProjectPanel project={element as Project} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'subclass':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<SubclassPanel subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'terrain':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<TerrainPanel terrain={element as Terrain} showCustomizations={true} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'title':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<TitlePanel title={element as Title} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'item':
 				return (
 					<>
-						<SelectablePanel>
+						<SelectablePanel key={`${element.id}-${revision}`}>
 							<ItemPanel item={element as Item} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
@@ -650,7 +652,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'imbuement':
 				return (
 					<>
-						<SelectablePanel>
+						<SelectablePanel key={`${element.id}-${revision}`}>
 							<ImbuementPanel imbuement={element as Imbuement} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
@@ -665,7 +667,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'monster-group':
 				if (!subElementID) {
 					return (
-						<SelectablePanel>
+						<SelectablePanel key={`${element.id}-${revision}`}>
 							<MonsterGroupPanel monsterGroup={element as MonsterGroup} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
@@ -680,8 +682,8 @@ export const LibraryEditPage = (props: Props) => {
 									key: '1',
 									label: 'Preview',
 									children: (
-										<SelectablePanel>
-											<MonsterPanel key={JSON.stringify(monster)} monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
+										<SelectablePanel key={`${monster.id}-${revision}`}>
+											<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
 										</SelectablePanel>
 									)
 								},
@@ -704,59 +706,18 @@ export const LibraryEditPage = (props: Props) => {
 		return null;
 	};
 
-	const getSubheader = () => {
-		if (kind === 'class') {
-			if (subElementID) {
-				return 'Subclass Builder';
-			}
-		}
-
-		if (kind === 'monster-group') {
-			if (subElementID) {
-				return 'Monster Builder';
-			}
-
-			return 'Monster Group Builder';
-		}
-
-		return `${Format.capitalize(kind!)} Builder`;
-	};
-
-	try {
-		let monster: Monster | null = null;
-		if ((kind === 'monster-group') && !!subElementID) {
-			monster = (element as MonsterGroup).monsters.find(m => m.id === subElementID) || null;
-		}
-
-		return (
-			<ErrorBoundary>
-				<div className='library-edit-page'>
-					<AppHeader subheader={getSubheader()}>
-						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
-							Save Changes
-						</Button>
-						<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibrary(kind!, elementID!)}>
-							Cancel
-						</Button>
-						{
-							monster ?
-								<div className='divider' />
-								: null
-						}
-						{
-							monster ?
-								<Popover
-									trigger='click'
-									content={<OptionsPanel mode='monster' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
-								>
-									<Button icon={<SettingOutlined />}>
-										Options
-										<DownOutlined />
-									</Button>
-								</Popover>
-								: null
-						}
-					</AppHeader>
+	return (
+		<ErrorBoundary>
+			<div className='library-edit-page'>
+				<AppHeader subheader={getSubheader()}>
+					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, sourcebookID!, element)}>
+						Save Changes
+					</Button>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToLibrary(kind!, elementID!)}>
+						Cancel
+					</Button>
+				</AppHeader>
+				<ErrorBoundary>
 					<div className='library-edit-page-content'>
 						<div className='edit-column'>
 							{getEditHeaderSection()}
@@ -767,12 +728,16 @@ export const LibraryEditPage = (props: Props) => {
 							{getPreview()}
 						</div>
 					</div>
-					<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				</ErrorBoundary>
+				<AppFooter
+					page='library'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
+			</div>
+		</ErrorBoundary>
+	);
 };

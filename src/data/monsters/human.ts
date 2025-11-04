@@ -1,12 +1,12 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const human: MonsterGroup = {
 	id: 'monster-group-human',
@@ -73,6 +73,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			id: 'human-malice-2',
 			name: 'Exploit Opening',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each human acting this turn gains an edge on abilities until the end of their turn, or has a double edge on any ability that targets an enemy affected by a condition.'
 			]
@@ -81,6 +82,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			id: 'human-malice-3',
 			name: 'Staying Power',
 			cost: 7,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				' Each non-minion human in the encounter regains Stamina equal to 5 times their level.'
 			]
@@ -100,7 +102,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-1-1',
@@ -156,7 +158,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-2-1',
@@ -212,7 +214,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-3-1',
@@ -267,7 +269,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-4-1',
@@ -323,7 +325,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-5-1',
@@ -379,7 +381,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-6-1',
@@ -435,7 +437,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-7-1',
@@ -477,7 +479,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						name: 'Throw',
 						type: FactoryLogic.type.createManeuver(),
 						cost: 1,
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'One creature grabbed by the brawler',
 						sections: [
@@ -509,7 +510,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 1, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-8-1',
@@ -575,7 +576,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-9-1',
@@ -649,7 +650,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-10-1',
@@ -694,9 +695,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-10-feature-4',
 						name: 'Dagger Storm',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
-						distance: [],
-						target: '',
 						cost: 5,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The scoundrel uses Rapier and Dagger against up to three targets. They shift up to 2 squares before or after each strike.')
@@ -722,7 +720,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 40,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 2, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 2, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-11-1',
@@ -806,7 +804,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 20,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-12-1',
@@ -867,7 +865,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 80,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 2, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 2, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-13-1',
@@ -913,7 +911,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-13-feature-4',
 						name: 'You!',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One enemy',
 						sections: [
@@ -951,7 +948,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-13-feature-8',
 						name: 'Advance!',
 						type: FactoryLogic.type.createVillainAction(1),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -999,7 +995,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 2, 3, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 2, 3, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'human-14-1',
@@ -1119,7 +1115,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-14-feature-10',
 						name: 'Lead From the Front',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1141,7 +1136,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, -3, 1, -2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, -3, 1, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1174,9 +1169,6 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 						id: 'human-15-feature-2',
 						name: 'Dive',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
-						distance: [],
-						target: '',
 						sections: [
 							FactoryLogic.createAbilitySectionText('The hawk moves up to their speed.')
 						]

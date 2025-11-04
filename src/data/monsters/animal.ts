@@ -1,11 +1,10 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureAddOnType } from '../../enums/feature-addon-type';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureAddOnType } from '@/enums/feature-addon-type';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
 
 export const animal: MonsterGroup = {
 	id: 'monster-group-animal',
@@ -31,7 +30,23 @@ Most animals are not monsters, but some are twisted by magic and malice to becom
 			name: 'Animal Notation',
 			description: `When building an animal by adding traits to a stat block, you can use a shorthand to describe the animal. For example, a dire wolf might be denoted as “Predator B: Swiftness, Pack, Hunter” to indicate that you’re using the Predator B stat block with the Swiftness, Pack, and Hunter traits.
 
-The Example Animals table breaks out a number of animals using this notation. Selected traits are listed in order by category—mobility, defensive, offensive, and supernatural.`
+The Example Animals table breaks out a number of animals using this notation. Selected traits are listed in order by category—mobility, defensive, offensive, and supernatural.
+
+| Animal          | Environment                  | Stat Block   | Animal Traits                          | EV | Description                                                                                         |
+|:----------------|:-----------------------------|:-------------|:---------------------------------------|:---|:----------------------------------------------------------------------------------------------------|
+| Rot bat         | Caves, desolate battlefields | Animal       | Flight, Hunter, Elemental (corruption) | 14 | This large, mangy bat has a skin-peeling bite and a terrible scream.                                |
+| Thrazz          | Throughout the timescape     | Animal       | Grappler, Hunter, Translation          | 12 | This hexocular, hexapod canine has no fur and knows no fear.                                        |
+| Wild horse      | Grasslands, canyons          | Big Animal A | Swiftness x2, Charger                  | 12 | A grazing equine, a wild horse has a remarkable top speed and a powerful charge.                    |
+| Quadrakanga     | Throughout the timescape     | Big Animal A | Leaping, Multilimb, Pouncer            | 14 | This highly aggressive four-armed kangaroo has a punch that can pierce steel.                       |
+| Rhinoceros      | Grasslands, deserts          | Big Animal B | Plated, Charger, Power                 | 16 | A horn-nosed ungulate with a plated hide, a rhinoceros has poor eyesight.                           |
+| Cass-o-war      | Canyons, jungles             | Big Animal B | Swiftness, Fearsome, Reach             | 16 | A cass-o-war is a long-limbed sprinting bird with a colorful collar of waddles and a whiplike tail. |
+| Bear            | Forests, arctic              | Predator A   | Climbing, Thick Hide, Unrelenting      | 12 | A bear is an imposing mammal with loose, thick skin and a huge appetite.                            |
+| Titan beetle    | Caves, jungles               | Predator A   | Flight, Plated, Multilimb              | 14 | This hardy beetle can stand on their hind legs, creating the appearance of an armored warrior.      |
+| Dire wolf       | Forests, swamps              | Predator B   | Swiftness, Pack, Hunter                | 16 | This massive wolf is covered in rot and spiked fur.                                                 |
+| Wode toad       | Any wode                     | Predator B   | Leaping, Grappler, Reach x2            | 18 | A giant hairy toad, the wode toad has clawed limbs and two tongues, one on both ends.               |
+| Piranha school  | Rivers, swamps               | Animal swarm | Swimming, Spiny, Frenzy                | 12 | Piranhas are an aggressive species of fanged fish that leave no remnants of their prey behind.      |
+| Slag mite swarm | Desolate battlefields        | Animal swarm | Burrowing, Venom                       | 12 | A species of silver bugs, slag mites have powerful mandibles they use to feed on iron and copper.   |
+`
 		}
 	],
 	malice: [],
@@ -48,7 +63,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -2, 1, -2),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -2, 1, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -75,7 +90,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-1-feature-2',
 						name: 'Rush',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -102,7 +116,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 40,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(-2, 1, -3, 2, -3),
+			characteristics: FactoryLogic.createCharacteristics(-2, 1, -3, 2, -3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -161,7 +175,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 60,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, -2, 1, -2),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, -2, 1, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -201,7 +215,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-3-feature-3',
 						name: 'Juke',
 						type: FactoryLogic.type.createTrigger('The animal is targeted by an area ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -228,7 +241,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 80,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -254,7 +267,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-4-feature-2',
 						name: 'Trundle',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -267,7 +279,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-4-feature-3',
 						name: 'Animal Rally',
 						type: FactoryLogic.type.createTrigger('The target is knocked prone.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(20) ],
 						target: 'One ally',
 						sections: [
@@ -299,7 +310,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 80,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, -2, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, -2, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -325,7 +336,6 @@ The Example Animals table breaks out a number of animals using this notation. Se
 						id: 'animal-5-feature-2',
 						name: 'Ready to Strike',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -365,7 +375,7 @@ The Example Animals table breaks out a number of animals using this notation. Se
 			stamina: 100,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -1, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

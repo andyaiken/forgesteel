@@ -1,47 +1,49 @@
 import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
-import { Ability } from '../../../../models/ability';
-import { AbilityEditPanel } from '../ability-edit/ability-edit-panel';
-import { AbilityKeyword } from '../../../../enums/ability-keyword';
-import { AbilityLogic } from '../../../../logic/ability-logic';
-import { Characteristic } from '../../../../enums/characteristic';
-import { Collections } from '../../../../utils/collections';
-import { ConditionType } from '../../../../enums/condition-type';
-import { DamageModifierType } from '../../../../enums/damage-modifier-type';
-import { DamageType } from '../../../../enums/damage-type';
-import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { Empty } from '../../../controls/empty/empty';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Expander } from '../../../controls/expander/expander';
-import { FactoryLogic } from '../../../../logic/factory-logic';
-import { FeatureAddOnType } from '../../../../enums/feature-addon-type';
-import { FeatureField } from '../../../../enums/feature-field';
-import { FeatureLogic } from '../../../../logic/feature-logic';
-import { FeatureType } from '../../../../enums/feature-type';
-import { FeatureTypeSelectModal } from '../../../modals/select/feature-type-select/feature-type-select-modal';
-import { Field } from '../../../controls/field/field';
-import { Format } from '../../../../utils/format';
-import { FormatLogic } from '../../../../logic/format-logic';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { ItemType } from '../../../../enums/item-type';
-import { KitArmor } from '../../../../enums/kit-armor';
-import { KitWeapon } from '../../../../enums/kit-weapon';
-import { Monster } from '../../../../models/monster';
-import { MonsterEditPanel } from '../monster-edit/monster-edit-panel';
-import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../../../enums/monster-role-type';
-import { MultiLine } from '../../../controls/multi-line/multi-line';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Options } from '../../../../models/options';
-import { Perk } from '../../../../models/perk';
-import { PerkList } from '../../../../enums/perk-list';
-import { PowerRoll } from '../../../../models/power-roll';
-import { SkillList } from '../../../../enums/skill-list';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { Toggle } from '../../../controls/toggle/toggle';
-import { Utils } from '../../../../utils/utils';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Ability } from '@/models/ability';
+import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityLogic } from '@/logic/ability-logic';
+import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { ConditionType } from '@/enums/condition-type';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureAddOnType } from '@/enums/feature-addon-type';
+import { FeatureField } from '@/enums/feature-field';
+import { FeatureLogic } from '@/logic/feature-logic';
+import { FeatureType } from '@/enums/feature-type';
+import { FeatureTypeSelectModal } from '@/components/modals/select/feature-type-select/feature-type-select-modal';
+import { Field } from '@/components/controls/field/field';
+import { Fixture } from '@/models/fixture';
+import { FixtureEditPanel } from '@/components/panels/edit/fixture-edit/fixture-edit-panel';
+import { Format } from '@/utils/format';
+import { FormatLogic } from '@/logic/format-logic';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { ItemType } from '@/enums/item-type';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { Monster } from '@/models/monster';
+import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
+import { Perk } from '@/models/perk';
+import { PerkList } from '@/enums/perk-list';
+import { PowerRoll } from '@/models/power-roll';
+import { SkillList } from '@/enums/skill-list';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Toggle } from '@/components/controls/toggle/toggle';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './feature-edit-panel.scss';
@@ -96,7 +98,7 @@ export const FeatureEditPanel = (props: Props) => {
 
 	const getDataSection = () => {
 		const setCount = (value: number) => {
-			const copy = Utils.copy(feature.data) as FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureSummonData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
+			const copy = Utils.copy(feature.data) as FeatureClassAbilityData | FeatureDomainData | FeatureDomainFeatureData | FeatureItemChoiceData | FeatureKitData | FeatureLanguageChoiceData | FeaturePerkData | FeatureSkillChoiceData | FeatureSummonChoiceData | FeatureTaggedFeatureChoiceData | FeatureTitleChoiceData;
 			copy.count = value;
 			setData(copy);
 		};
@@ -138,8 +140,14 @@ export const FeatureEditPanel = (props: Props) => {
 		};
 
 		const setCharacteristic = (value: Characteristic) => {
-			const copy = Utils.copy(feature.data) as FeatureCharacteristicBonusData;
+			const copy = Utils.copy(feature.data) as FeatureCharacteristicBonusData | FeatureDomainData;
 			copy.characteristic = value;
+			setData(copy);
+		};
+
+		const setLevels = (value: number[]) => {
+			const copy = Utils.copy(feature.data) as FeatureDomainData;
+			copy.levels = value;
 			setData(copy);
 		};
 
@@ -269,15 +277,15 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
-		const setSkill = (value: string) => {
-			const copy = Utils.copy(feature.data) as FeatureSkillData;
-			copy.skill = value;
-			setData(copy);
-		};
-
 		const setAbility = (value: Ability) => {
 			const copy = Utils.copy(feature.data) as FeatureAbilityData;
 			copy.ability = value;
+			setData(copy);
+		};
+
+		const setFixture = (value: Fixture) => {
+			const copy = Utils.copy(feature.data) as FeatureFixtureData;
+			copy.fixture = value;
 			setData(copy);
 		};
 
@@ -302,6 +310,12 @@ export const FeatureEditPanel = (props: Props) => {
 		const setSourceFormer = (value: boolean) => {
 			const copy = Utils.copy(feature.data) as FeatureAncestryFeatureChoiceData;
 			copy.source.former = value;
+			setData(copy);
+		};
+
+		const setSaveThreshold = (value: number) => {
+			const copy = Utils.copy(feature.data) as FeatureSaveThresholdData;
+			copy.value = value;
 			setData(copy);
 		};
 
@@ -502,6 +516,12 @@ export const FeatureEditPanel = (props: Props) => {
 			setData(copy);
 		};
 
+		const setHeroicResourceGainReplacesTags = (data: FeatureHeroicResourceGainData, value: string[]) => {
+			const copy = Utils.copy(data);
+			copy.replacesTags = value;
+			setData(copy);
+		};
+
 		const addMaliceSectionText = (data: FeatureMaliceData) => {
 			const copy = Utils.copy(data);
 			copy.sections.push('');
@@ -595,46 +615,127 @@ export const FeatureEditPanel = (props: Props) => {
 
 		const addSummon = (data: FeatureSummonData) => {
 			const copy = Utils.copy(data);
-			copy.options.push(FactoryLogic.createMonster({
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				level: 1,
-				role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
-				keywords: [],
-				encounterValue: 0,
-				size: FactoryLogic.createSize(1),
-				speed: FactoryLogic.createSpeed(5),
-				stamina: 8,
-				stability: 0,
-				freeStrikeDamage: 1,
-				characteristics: [
-					{ characteristic: Characteristic.Might, value: 0 },
-					{ characteristic: Characteristic.Agility, value: 0 },
-					{ characteristic: Characteristic.Reason, value: 0 },
-					{ characteristic: Characteristic.Intuition, value: 0 },
-					{ characteristic: Characteristic.Presence, value: 0 }
-				],
-				features: []
-			}));
+			copy.summons.push(
+				FactoryLogic.createSummon({
+					monster: FactoryLogic.createMonster({
+						id: Utils.guid(),
+						name: '',
+						description: '',
+						level: 1,
+						role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
+						keywords: [],
+						encounterValue: 0,
+						size: FactoryLogic.createSize(1),
+						speed: FactoryLogic.createSpeed(5),
+						stamina: 8,
+						stability: 0,
+						freeStrikeDamage: 1,
+						characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+						features: []
+					}),
+					isSignature: true,
+					cost: 1,
+					count: 1
+				})
+			);
 			setData(copy);
 		};
 
 		const moveSummon = (data: FeatureSummonData, index: number, direction: 'up' | 'down') => {
 			const copy = Utils.copy(data);
-			copy.options = Collections.move(copy.options, index, direction);
+			copy.summons = Collections.move(copy.summons, index, direction);
 			setData(copy);
 		};
 
 		const deleteSummon = (data: FeatureSummonData, index: number) => {
 			const copy = Utils.copy(data);
+			copy.summons.splice(index, 1);
+			setData(copy);
+		};
+
+		const setSummonIsSignature = (data: FeatureSummonData, index: number, value: boolean) => {
+			const copy = Utils.copy(data);
+			copy.summons[index].info.isSignature = value;
+			setData(copy);
+		};
+
+		const setSummonCost = (data: FeatureSummonData, index: number, value: number) => {
+			const copy = Utils.copy(data);
+			copy.summons[index].info.cost = value;
+			setData(copy);
+		};
+
+		const setSummonCount = (data: FeatureSummonData, index: number, value: number) => {
+			const copy = Utils.copy(data);
+			copy.summons[index].info.count = value;
+			setData(copy);
+		};
+
+		const setSummonMonster = (data: FeatureSummonData, index: number, value: Monster) => {
+			const copy = Utils.copy(data);
+			copy.summons[index].monster = value;
+			setData(copy);
+		};
+
+		const addSummonChoice = (data: FeatureSummonChoiceData) => {
+			const copy = Utils.copy(data);
+			copy.options.push(FactoryLogic.createSummon({
+				monster: FactoryLogic.createMonster({
+					id: Utils.guid(),
+					name: '',
+					description: '',
+					level: 1,
+					role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Horde, MonsterRoleType.Ambusher),
+					keywords: [],
+					encounterValue: 0,
+					size: FactoryLogic.createSize(1),
+					speed: FactoryLogic.createSpeed(5),
+					stamina: 8,
+					stability: 0,
+					freeStrikeDamage: 1,
+					characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 0, 0),
+					features: []
+				}),
+				isSignature: true,
+				cost: 1,
+				count: 1
+			}));
+			setData(copy);
+		};
+
+		const moveSummonChoice = (data: FeatureSummonChoiceData, index: number, direction: 'up' | 'down') => {
+			const copy = Utils.copy(data);
+			copy.options = Collections.move(copy.options, index, direction);
+			setData(copy);
+		};
+
+		const deleteSummonChoice = (data: FeatureSummonChoiceData, index: number) => {
+			const copy = Utils.copy(data);
 			copy.options.splice(index, 1);
 			setData(copy);
 		};
 
-		const setSummon = (data: FeatureSummonData, index: number, value: Monster) => {
+		const setSummonChoiceIsSignature = (data: FeatureSummonChoiceData, index: number, value: boolean) => {
 			const copy = Utils.copy(data);
-			copy.options[index] = value;
+			copy.options[index].info.isSignature = value;
+			setData(copy);
+		};
+
+		const setSummonChoiceCost = (data: FeatureSummonChoiceData, index: number, value: number) => {
+			const copy = Utils.copy(data);
+			copy.options[index].info.cost = value;
+			setData(copy);
+		};
+
+		const setSummonChoiceCount = (data: FeatureSummonChoiceData, index: number, value: number) => {
+			const copy = Utils.copy(data);
+			copy.options[index].info.count = value;
+			setData(copy);
+		};
+
+		const setSummonChoiceMonster = (data: FeatureSummonChoiceData, index: number, value: Monster) => {
+			const copy = Utils.copy(data);
+			copy.options[index].monster = value;
 			setData(copy);
 		};
 
@@ -820,7 +921,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select field'
-							options={[ FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
+							options={[ FeatureField.Disengage, FeatureField.ProjectPoints, FeatureField.Recoveries, FeatureField.RecoveryValue, FeatureField.Renown, FeatureField.Save, FeatureField.Speed, FeatureField.Stability, FeatureField.Stamina, FeatureField.Wealth ].map(o => ({ value: o }))}
 							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
 							showSearch={true}
 							filterOption={(input, option) => {
@@ -867,17 +968,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<Select
 							style={{ width: '100%' }}
 							placeholder='Select field'
-							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o }))}
-							optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o, label: <div className='ds-text'>{o}</div> }))}
 							value={data.characteristic}
 							onChange={setCharacteristic}
 						/>
@@ -954,7 +1045,7 @@ export const FeatureEditPanel = (props: Props) => {
 							value={data.classID || ''}
 							onChange={setAbilityClassID}
 						/>
-						<HeaderText>Signature</HeaderText>
+						<HeaderText>Signature / Cost</HeaderText>
 						<Flex align='center' justify='center'>
 							<Segmented<'signature' | number>
 								options={[
@@ -1107,6 +1198,23 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureDomainData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Characteristic</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select field'
+							options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(o => ({ value: o, label: <div className='ds-text'>{o}</div> }))}
+							value={data.characteristic}
+							onChange={setCharacteristic}
+						/>
+						<HeaderText>Levels</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Select field'
+							mode='multiple'
+							options={[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ].map(o => ({ value: o, label: <div className='ds-text'>Level {o}</div> }))}
+							value={data.levels}
+							onChange={setLevels}
+						/>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>
@@ -1121,6 +1229,21 @@ export const FeatureEditPanel = (props: Props) => {
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 					</Space>
+				);
+			}
+			case FeatureType.Fixture: {
+				const data = feature.data as FeatureFixtureData;
+				return (
+					<div style={{ margin: '10px 0' }}>
+						<Expander title={data.fixture.name || 'Unnamed Ability'}>
+							<FixtureEditPanel
+								fixture={data.fixture}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								onChange={setFixture}
+							/>
+						</Expander>
+					</div>
 				);
 			}
 			case FeatureType.HeroicResource: {
@@ -1219,6 +1342,15 @@ export const FeatureEditPanel = (props: Props) => {
 							allowClear={true}
 							value={data.value}
 							onChange={e => setHeroicResourceGainValue(data, e.target.value)}
+						/>
+						<HeaderText>Replaces Tags</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							placeholder='Replaces tags'
+							mode='tags'
+							allowClear={true}
+							value={data.replacesTags}
+							onChange={value => setHeroicResourceGainReplacesTags(data, value)}
 						/>
 					</Space>
 				);
@@ -1461,7 +1593,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.MaliceAbility: {
 				const data = feature.data as FeatureMaliceAbilityData;
 				return (
-					<div style={{ margin: '10px 0' }}>
+					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Echelon</HeaderText>
 						<NumberSpin min={1} max={4} value={data.echelon} onChange={setEchelon} />
 						<Expander title={data.ability.name || 'Unnamed Ability'}>
@@ -1470,7 +1602,7 @@ export const FeatureEditPanel = (props: Props) => {
 								onChange={setAbility}
 							/>
 						</Expander>
-					</div>
+					</Space>
 				);
 			}
 			case FeatureType.MovementMode: {
@@ -1620,6 +1752,15 @@ export const FeatureEditPanel = (props: Props) => {
 					</Space>
 				);
 			}
+			case FeatureType.SaveThreshold: {
+				const data = feature.data as FeatureSaveThresholdData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText>Save Threshold</HeaderText>
+						<NumberSpin min={1} value={data.value} onChange={setSaveThreshold} />
+					</Space>
+				);
+			}
 			case FeatureType.Size: {
 				const data = feature.data as FeatureSizeData;
 				return (
@@ -1642,33 +1783,6 @@ export const FeatureEditPanel = (props: Props) => {
 								/>
 								: null
 						}
-					</Space>
-				);
-			}
-			case FeatureType.Skill: {
-				const data = feature.data as FeatureSkillData;
-				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Skill</HeaderText>
-						<Select
-							style={{ width: '100%' }}
-							status={data.skill === '' ? 'warning' : ''}
-							placeholder='Skill'
-							allowClear={true}
-							options={SourcebookLogic.getSkills(props.sourcebooks).map(option => ({ value: option.name, description: option.description }))}
-							optionRender={option => <Field label={option.data.value} value={option.data.description} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.value
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
-							value={data.skill || ''}
-							onChange={setSkill}
-						/>
 					</Space>
 				);
 			}
@@ -1768,22 +1882,70 @@ export const FeatureEditPanel = (props: Props) => {
 							Options
 						</HeaderText>
 						{
-							data.options.map((monster, n) => (
+							data.summons.map((summon, n) => (
 								<Expander
-									key={monster.id}
-									title={monster.name || 'Unnamed Monster'}
+									key={summon.monster.id}
+									title={summon.monster.name || 'Unnamed Monster'}
 									extra={[
 										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSummon(data, n, 'up'); }} />,
 										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSummon(data, n, 'down'); }} />,
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSummon(data, n); }} />
 									]}
 								>
+									<HeaderText>Summoning</HeaderText>
+									<Toggle label='Is signature' value={summon.info.isSignature} onChange={value => setSummonIsSignature(data, n, value)} />
+									<NumberSpin min={1} label='Cost' value={summon.info.cost} onChange={value => setSummonCost(data, n, value)} />
+									<NumberSpin min={1} label='Count' value={summon.info.count} onChange={value => setSummonCount(data, n, value)} />
 									<MonsterEditPanel
-										monster={monster}
+										monster={summon.monster}
 										sourcebooks={props.sourcebooks}
 										options={props.options}
 										similarMonsters={[]}
-										onChange={m => setSummon(data, n, m)}
+										onChange={m => setSummonMonster(data, n, m)}
+									/>
+								</Expander>
+							))
+						}
+						{
+							data.summons.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
+				);
+			}
+			case FeatureType.SummonChoice: {
+				const data = feature.data as FeatureSummonChoiceData;
+				return (
+					<Space direction='vertical' style={{ width: '100%' }}>
+						<HeaderText
+							extra={
+								<Button type='text' icon={<PlusOutlined />} onClick={() => addSummonChoice(data)} />
+							}
+						>
+							Options
+						</HeaderText>
+						{
+							data.options.map((summon, n) => (
+								<Expander
+									key={summon.monster.id}
+									title={summon.monster.name || 'Unnamed Monster'}
+									extra={[
+										<Button key='up' type='text' title='Move Up' icon={<CaretUpOutlined />} onClick={e => { e.stopPropagation(); moveSummonChoice(data, n, 'up'); }} />,
+										<Button key='down' type='text' title='Move Down' icon={<CaretDownOutlined />} onClick={e => { e.stopPropagation(); moveSummonChoice(data, n, 'down'); }} />,
+										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSummonChoice(data, n); }} />
+									]}
+								>
+									<HeaderText>Summoning</HeaderText>
+									<Toggle label='Is signature' value={summon.info.isSignature} onChange={value => setSummonChoiceIsSignature(data, n, value)} />
+									<NumberSpin min={1} label='Cost' value={summon.info.cost} onChange={value => setSummonChoiceCost(data, n, value)} />
+									<NumberSpin min={1} label='Count' value={summon.info.count} onChange={value => setSummonChoiceCount(data, n, value)} />
+									<MonsterEditPanel
+										monster={summon.monster}
+										sourcebooks={props.sourcebooks}
+										options={props.options}
+										similarMonsters={[]}
+										onChange={m => setSummonChoiceMonster(data, n, m)}
 									/>
 								</Expander>
 							))
@@ -1853,128 +2015,126 @@ export const FeatureEditPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		const featureTypes = [
-			FeatureType.Text,
-			FeatureType.Ability,
-			FeatureType.AbilityCost,
-			FeatureType.AbilityDamage,
-			FeatureType.AbilityDistance,
-			FeatureType.AncestryChoice,
-			FeatureType.AncestryFeatureChoice,
-			FeatureType.Bonus,
-			FeatureType.CharacteristicBonus,
-			FeatureType.Choice,
-			FeatureType.ClassAbility,
-			FeatureType.Companion,
-			FeatureType.ConditionImmunity,
-			FeatureType.DamageModifier,
-			FeatureType.Domain,
-			FeatureType.DomainFeature,
-			FeatureType.Follower,
-			FeatureType.HeroicResource,
-			FeatureType.HeroicResourceGain,
-			FeatureType.ItemChoice,
-			FeatureType.Kit,
-			FeatureType.Language,
-			FeatureType.LanguageChoice,
-			FeatureType.MovementMode,
-			FeatureType.Multiple,
-			FeatureType.Package,
-			FeatureType.PackageContent,
-			FeatureType.Perk,
-			FeatureType.Proficiency,
-			FeatureType.Size,
-			FeatureType.Skill,
-			FeatureType.SkillChoice,
-			FeatureType.Speed,
-			FeatureType.Summon,
-			FeatureType.TaggedFeature,
-			FeatureType.TaggedFeatureChoice,
-			FeatureType.TitleChoice
-		];
+	const featureTypes = [
+		FeatureType.Text,
+		FeatureType.Ability,
+		FeatureType.AbilityCost,
+		FeatureType.AbilityDamage,
+		FeatureType.AbilityDistance,
+		FeatureType.AncestryChoice,
+		FeatureType.AncestryFeatureChoice,
+		FeatureType.Bonus,
+		FeatureType.CharacteristicBonus,
+		FeatureType.Choice,
+		FeatureType.ClassAbility,
+		FeatureType.Companion,
+		FeatureType.ConditionImmunity,
+		FeatureType.DamageModifier,
+		FeatureType.Domain,
+		FeatureType.DomainFeature,
+		FeatureType.Follower,
+		FeatureType.HeroicResource,
+		FeatureType.HeroicResourceGain,
+		FeatureType.ItemChoice,
+		FeatureType.Kit,
+		FeatureType.Language,
+		FeatureType.LanguageChoice,
+		FeatureType.MovementMode,
+		FeatureType.Multiple,
+		FeatureType.Package,
+		FeatureType.PackageContent,
+		FeatureType.Perk,
+		FeatureType.Proficiency,
+		FeatureType.SaveThreshold,
+		FeatureType.Size,
+		FeatureType.SkillChoice,
+		FeatureType.Speed,
+		FeatureType.Summon,
+		FeatureType.TaggedFeature,
+		FeatureType.TaggedFeatureChoice,
+		FeatureType.TitleChoice
+	];
 
-		return (
-			<ErrorBoundary>
-				<div className='feature-edit-panel'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Feature',
-								children: (
-									<div>
-										<HeaderText>Name</HeaderText>
-										<Input
-											status={feature.name === '' ? 'warning' : ''}
-											placeholder='Name'
-											allowClear={true}
-											value={feature.name}
-											onChange={e => setName(e.target.value)}
-										/>
-										<HeaderText>Description</HeaderText>
-										<MultiLine value={feature.description} onChange={setDescription} />
-									</div>
-								)
-							},
-							{
-								key: '2',
-								label: 'Details',
-								children: (
-									<div>
-										{
-											(props.allowedTypes || featureTypes).length !== 1 ?
-												<>
-													<HeaderText>Feature Type</HeaderText>
-													<Flex align='center' justify='space-between'>
-														<Field label={feature.type} value={FeatureLogic.getFeatureTypeDescription(feature.type)} />
-														<Button type='text' icon={<EditOutlined />} onClick={() => setTypeSelectorVisible(true)} />
-													</Flex>
-												</>
-												: null
-										}
-										{
-											(feature as Perk).list !== undefined ?
-												<div>
-													<HeaderText>Perk List</HeaderText>
-													<Select
-														style={{ width: '100%' }}
-														placeholder='Select list'
-														options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(o => ({ value: o }))}
-														optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-														showSearch={true}
-														filterOption={(input, option) => {
-															const strings = option ?
-																[
-																	option.value
-																]
-																: [];
-															return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-														}}
-														value={(feature as Perk).list}
-														onChange={setList}
-													/>
-												</div>
-												: null
-										}
-										{getDataSection()}
-									</div>
-								)
-							}
-						]}
-					/>
-				</div>
-				<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} width='500px'>
-					<FeatureTypeSelectModal
-						types={props.allowedTypes || featureTypes}
-						onSelect={setType}
-						onClose={() => setTypeSelectorVisible(false)}
-					/>
-				</Drawer>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className='feature-edit-panel'>
+				<Tabs
+					items={[
+						{
+							key: '1',
+							label: 'Feature',
+							children: (
+								<div>
+									<HeaderText>Name</HeaderText>
+									<Input
+										status={feature.name === '' ? 'warning' : ''}
+										placeholder='Name'
+										allowClear={true}
+										value={feature.name}
+										onChange={e => setName(e.target.value)}
+									/>
+									<HeaderText>Description</HeaderText>
+									<MultiLine value={feature.description} onChange={setDescription} />
+								</div>
+							)
+						},
+						{
+							key: '2',
+							label: 'Details',
+							children: (
+								<div>
+									{
+										(props.allowedTypes || featureTypes).length !== 1 ?
+											<>
+												<HeaderText>Feature Type</HeaderText>
+												<Flex align='center' justify='space-between'>
+													<Field label={feature.type} value={FeatureLogic.getFeatureTypeDescription(feature.type)} />
+													<Button onClick={() => setTypeSelectorVisible(true)}>
+														<EditOutlined />
+														Change
+													</Button>
+												</Flex>
+											</>
+											: null
+									}
+									{
+										(feature as Perk).list !== undefined ?
+											<div>
+												<HeaderText>Perk List</HeaderText>
+												<Select
+													style={{ width: '100%' }}
+													placeholder='Select list'
+													options={[ PerkList.Crafting, PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue, PerkList.Lore, PerkList.Supernatural ].map(o => ({ value: o }))}
+													optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+													showSearch={true}
+													filterOption={(input, option) => {
+														const strings = option ?
+															[
+																option.value
+															]
+															: [];
+														return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+													}}
+													value={(feature as Perk).list}
+													onChange={setList}
+												/>
+											</div>
+											: null
+									}
+									{getDataSection()}
+								</div>
+							)
+						}
+					]}
+				/>
+			</div>
+			<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} width='500px'>
+				<FeatureTypeSelectModal
+					types={props.allowedTypes || featureTypes}
+					onSelect={type => { setType(type); setTypeSelectorVisible(false); }}
+					onClose={() => setTypeSelectorVisible(false)}
+				/>
+			</Drawer>
+		</ErrorBoundary>
+	);
 };

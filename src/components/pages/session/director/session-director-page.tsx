@@ -1,36 +1,37 @@
 import { Alert, Button, Input, Popover, Segmented, Space } from 'antd';
-import { DownOutlined, ReadOutlined, SettingOutlined } from '@ant-design/icons';
-import { AppFooter } from '../../../panels/app-footer/app-footer';
-import { AppHeader } from '../../../panels/app-header/app-header';
-import { Counter } from '../../../../models/counter';
-import { CounterRunPanel } from '../../../panels/run/counter-run/counter-run-panel';
-import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { Empty } from '../../../controls/empty/empty';
-import { Encounter } from '../../../../models/encounter';
-import { EncounterData } from '../../../../data/encounter-data';
-import { EncounterRunPanel } from '../../../panels/run/encounter-run/encounter-run-panel';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Format } from '../../../../utils/format';
-import { Hero } from '../../../../models/hero';
-import { Montage } from '../../../../models/montage';
-import { MontageData } from '../../../../data/montage-data';
-import { MontageRunPanel } from '../../../panels/run/montage-run/montage-run-panel';
-import { Negotiation } from '../../../../models/negotiation';
-import { NegotiationData } from '../../../../data/negotiation-data';
-import { NegotiationRunPanel } from '../../../panels/run/negotiation-run/negotiation-run-panel';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Options } from '../../../../models/options';
-import { OptionsPanel } from '../../../panels/options/options-panel';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { Playbook } from '../../../../models/playbook';
-import { PlaybookLogic } from '../../../../logic/playbook-logic';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { TacticalMap } from '../../../../models/tactical-map';
-import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
-import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
-import { Utils } from '../../../../utils/utils';
-import { useNavigation } from '../../../../hooks/use-navigation';
+import { DownOutlined, ReadOutlined } from '@ant-design/icons';
+import { AppFooter } from '@/components/panels/app-footer/app-footer';
+import { AppHeader } from '@/components/panels/app-header/app-header';
+import { Collections } from '@/utils/collections';
+import { Counter } from '@/models/counter';
+import { CounterRunPanel } from '@/components/panels/run/counter-run/counter-run-panel';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Empty } from '@/components/controls/empty/empty';
+import { Encounter } from '@/models/encounter';
+import { EncounterData } from '@/data/encounter-data';
+import { EncounterRunPanel } from '@/components/panels/run/encounter-run/encounter-run-panel';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Format } from '@/utils/format';
+import { Hero } from '@/models/hero';
+import { Montage } from '@/models/montage';
+import { MontageData } from '@/data/montage-data';
+import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run-panel';
+import { Negotiation } from '@/models/negotiation';
+import { NegotiationData } from '@/data/negotiation-data';
+import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { Playbook } from '@/models/playbook';
+import { PlaybookLogic } from '@/logic/playbook-logic';
+import { Sourcebook } from '@/models/sourcebook';
+import { TacticalMap } from '@/models/tactical-map';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
+import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { Utils } from '@/utils/utils';
+import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
+import { useTitle } from '@/hooks/use-title';
 
 import './session-director-page.scss';
 
@@ -41,9 +42,10 @@ interface Props {
 	session: Playbook;
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	showPlayerView: () => void;
 	startEncounter: (encounter: Encounter) => Promise<string>;
 	startMontage: (montage: Montage) => Promise<string>;
@@ -57,7 +59,6 @@ interface Props {
 	updateMap: (map: TacticalMap) => void;
 	updateCounter: (counter: Counter) => void;
 	finishSessionElement: (id: string) => string | null;
-	setOptions: (options: Options) => void;
 }
 
 export const SessionDirectorPage = (props: Props) => {
@@ -69,6 +70,7 @@ export const SessionDirectorPage = (props: Props) => {
 	const [ startElement, setStartElement ] = useState<string>('encounter');
 	const [ newCounterName, setNewCounterName ] = useState<string>('');
 	const [ newCounterValue, setNewCounterValue ] = useState<number>(0);
+	useTitle('Session');
 
 	const getSelector = () => {
 		const options = PlaybookLogic.getContentOptions(props.session).map(o => {
@@ -100,6 +102,7 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<EncounterRunPanel
+							key={encounter.id}
 							encounter={encounter}
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
@@ -115,7 +118,10 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<MontageRunPanel
+							key={montage.id}
 							montage={montage}
+							heroes={props.heroes}
+							options={props.options}
 							onChange={props.updateMontage}
 						/>
 					</div>
@@ -127,6 +133,7 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<NegotiationRunPanel
+							key={negotiation.id}
 							negotiation={negotiation}
 							onChange={props.updateNegotiation}
 						/>
@@ -139,6 +146,7 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<TacticalMapPanel
+							key={map.id}
 							map={map}
 							display={TacticalMapDisplayType.DirectorEdit}
 							options={props.options}
@@ -159,6 +167,7 @@ export const SessionDirectorPage = (props: Props) => {
 				return (
 					<div className='session-page-content-container'>
 						<CounterRunPanel
+							key={counter.id}
 							counter={counter}
 							onChange={props.updateCounter}
 						/>
@@ -241,7 +250,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your encounters:</div>
 						{
-							props.playbook.encounters.map(e => (
+							Collections.sort(props.playbook.encounters, e => e.name).map(e => (
 								<Button key={e.id} block={true} onClick={() => startEncounter(e)}>{e.name || 'Unnamed Encounter'}</Button>
 							))
 						}
@@ -270,7 +279,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your montages:</div>
 						{
-							props.playbook.montages.map(m => (
+							Collections.sort(props.playbook.montages, m => m.name).map(m => (
 								<Button key={m.id} block={true} onClick={() => startMontage(m)}>{m.name || 'Unnamed Montage'}</Button>
 							))
 						}
@@ -299,7 +308,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your negotiations:</div>
 						{
-							props.playbook.negotiations.map(n => (
+							Collections.sort(props.playbook.negotiations, n => n.name).map(n => (
 								<Button key={n.id} block={true} onClick={() => startNegotiation(n)}>{n.name || 'Unnamed Negotiation'}</Button>
 							))
 						}
@@ -328,7 +337,7 @@ export const SessionDirectorPage = (props: Props) => {
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your maps:</div>
 						{
-							props.playbook.tacticalMaps.map(tm => (
+							Collections.sort(props.playbook.tacticalMaps, m => m.name).map(tm => (
 								<Button key={tm.id} block={true} onClick={() => startMap(tm)}>{tm.name || 'Unnamed Map'}</Button>
 							))
 						}
@@ -368,61 +377,56 @@ export const SessionDirectorPage = (props: Props) => {
 		}
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='session-director-page'>
-					<AppHeader subheader='Session'>
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ width: '500px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<Segmented
-										name='startelements'
-										block={true}
-										options={[ 'encounter', 'montage', 'negotiation', 'map', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
-										value={startElement}
-										onChange={setStartElement}
-									/>
-									{getStartContent()}
-								</div>
-							)}
-						>
-							<Button type='primary'>
-								Start
-								<DownOutlined />
-							</Button>
-						</Popover>
-						{
-							selectedElementID ?
-								<DangerButton
-									label='Finish'
-									onConfirm={finish}
+	return (
+		<ErrorBoundary>
+			<div className='session-director-page'>
+				<AppHeader subheader='Session'>
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ width: '500px', display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '500px', overflowY: 'auto' }}>
+								<Segmented
+									name='startelements'
+									block={true}
+									options={[ 'encounter', 'montage', 'negotiation', 'map', 'counter' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
+									value={startElement}
+									onChange={setStartElement}
 								/>
-								: null
-						}
-						<div className='divider' />
-						<Button onClick={props.showPlayerView}>Player View</Button>
-						<Popover
-							trigger='click'
-							content={<OptionsPanel mode='session' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-						>
-							<Button icon={<SettingOutlined />}>
-								Options
-								<DownOutlined />
-							</Button>
-						</Popover>
-					</AppHeader>
+								{getStartContent()}
+							</div>
+						)}
+					>
+						<Button type='primary'>
+							Start
+							<DownOutlined />
+						</Button>
+					</Popover>
+					{
+						selectedElementID ?
+							<DangerButton
+								label='Finish'
+								onConfirm={finish}
+							/>
+							: null
+					}
+					<div className='divider' />
+					<Button onClick={props.showPlayerView}>Player View</Button>
+				</AppHeader>
+				<ErrorBoundary>
 					<div className='session-director-page-content'>
 						{getSelector()}
 						{getSelectedContent()}
 					</div>
-					<AppFooter page='session' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				</ErrorBoundary>
+				<AppFooter
+					page='session'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
+			</div>
+		</ErrorBoundary>
+	);
 };

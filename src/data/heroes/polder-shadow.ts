@@ -1,4 +1,4 @@
-import { Hero } from '../../models/hero';
+import { Hero } from '@/models/hero';
 
 export const polderShadow = {
 	id: 'DKm8hWT6X5PNSpVz',
@@ -29,7 +29,8 @@ export const polderShadow = {
 							free: false,
 							trigger: '',
 							time: '',
-							qualifiers: []
+							qualifiers: [],
+							freeStrike: false
 						},
 						keywords: [
 							'Magic'
@@ -149,7 +150,8 @@ export const polderShadow = {
 											free: true,
 											trigger: 'Whenever you are force moved',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -337,6 +339,7 @@ export const polderShadow = {
 		id: 'class-shadow',
 		name: 'Shadow',
 		description: '\nSubtlety is your art, the tip of the blade your brush. You studied at a secret college, specializing in alchemy, illusion, or shadow-magics. Your training and knowledge place you among the elite ranks of assassins, spies, and commandos. But more potent than any weapon or sorcery is your insight into your enemies’ weaknesses.\n\nAs a shadow, you possess abilities that deal significant damage, enable you to move swiftly across the battlefield and evade hazards, and allow you to fade from notice even in the midstof the most intense combat encounters. You also possess more skills than any other hero.',
+		type: 'standard',
 		subclassName: 'Shadow College',
 		subclassCount: 1,
 		primaryCharacteristicsOptions: [
@@ -459,7 +462,8 @@ export const polderShadow = {
 									free: true,
 									trigger: 'Another hero ends their turn. That hero can’t have used this ability to start their turn.',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [],
 								distance: [
@@ -547,7 +551,8 @@ export const polderShadow = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Melee',
@@ -693,7 +698,8 @@ export const polderShadow = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [],
 								distance: [
@@ -848,7 +854,8 @@ export const polderShadow = {
 									free: false,
 									trigger: 'The target takes damage from another creature’s ability while you are hidden.',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Ranged',
@@ -991,13 +998,10 @@ export const polderShadow = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
-								keywords: [],
-								distance: [],
 								target: 'Self',
-								cost: 0,
-								repeatable: false,
 								minLevel: 1,
 								sections: [
 									{
@@ -1369,7 +1373,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1426,7 +1431,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1492,7 +1498,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1558,7 +1565,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1615,7 +1623,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1672,7 +1681,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1734,7 +1744,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1791,7 +1802,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1853,7 +1865,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1915,7 +1928,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1971,7 +1985,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged',
@@ -2024,7 +2039,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2069,7 +2085,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [],
 				distance: [
@@ -2110,7 +2127,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2176,7 +2194,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged',
@@ -2229,7 +2248,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2291,7 +2311,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2335,7 +2356,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2393,7 +2415,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2450,7 +2473,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2516,7 +2540,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2573,7 +2598,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2625,7 +2651,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic'
@@ -2668,7 +2695,8 @@ export const polderShadow = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2753,7 +2781,8 @@ export const polderShadow = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic'
@@ -2811,7 +2840,8 @@ export const polderShadow = {
 											free: false,
 											trigger: 'You take damage.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic'
@@ -2882,7 +2912,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -2956,7 +2987,8 @@ export const polderShadow = {
 															free: true,
 															trigger: 'You use your In All This Confusion ability.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3057,7 +3089,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3126,7 +3159,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic'
@@ -3213,7 +3247,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3281,7 +3316,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3387,7 +3423,8 @@ export const polderShadow = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -3450,7 +3487,8 @@ export const polderShadow = {
 											free: false,
 											trigger: 'Another creature damages you.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -3477,7 +3515,7 @@ export const polderShadow = {
 												name: 'Spend',
 												value: 1,
 												repeatable: false,
-												effect: 'You reduce the potency of any effect associated with the damage reduced by 1 for you..'
+												effect: 'The potency of any effects associated with the damage are reduced by 1 for you.'
 											}
 										],
 										preEffect: '',
@@ -3519,7 +3557,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged'
@@ -3585,7 +3624,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3696,7 +3736,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged'
@@ -3750,7 +3791,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged'
@@ -3836,7 +3878,8 @@ export const polderShadow = {
 											free: true,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Area',
@@ -3908,7 +3951,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Ranged'
@@ -3974,7 +4018,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -4087,7 +4132,8 @@ export const polderShadow = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic'
@@ -4145,7 +4191,8 @@ export const polderShadow = {
 											free: false,
 											trigger: 'An enemy targets you with a strike.',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [
 											'Magic'
@@ -4209,7 +4256,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4277,7 +4325,8 @@ export const polderShadow = {
 															free: true,
 															trigger: 'Another creature targets you with a strike.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic'
@@ -4375,7 +4424,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -4430,7 +4480,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -4532,7 +4583,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -4587,7 +4639,8 @@ export const polderShadow = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',

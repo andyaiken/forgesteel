@@ -1,9 +1,8 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { SkillList } from '../../../enums/skill-list';
-import { SubClass } from '../../../models/subclass';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SubClass } from '@/models/subclass';
 
 export const causticAlchemy: SubClass = {
 	id: 'shadow-sub-2',
@@ -15,7 +14,6 @@ export const causticAlchemy: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-sub-2-1-1',
-					listOptions: [ SkillList.Crafting ],
 					selected: [ 'Alchemy' ]
 				}),
 				FactoryLogic.feature.createAbility({
@@ -55,7 +53,7 @@ export const causticAlchemy: SubClass = {
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',
 								value: 1,
-								effect: 'You reduce the potency of any effect associated with the damage reduced by 1 for you..'
+								effect: 'The potency of any effects associated with the damage are reduced by 1 for you.'
 							})
 						]
 					})

@@ -1,6 +1,6 @@
-import { CultureType } from '../enums/culture-type';
-import { FactoryLogic } from '../logic/factory-logic';
-import { SkillList } from '../enums/skill-list';
+import { CultureType } from '@/enums/culture-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SkillList } from '@/enums/skill-list';
 
 export class EnvironmentData {
 	static nomadic = FactoryLogic.feature.createSkillChoice({

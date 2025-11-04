@@ -1,4 +1,4 @@
-import { Random } from './random';
+import { Random } from '@/utils/random';
 
 export class Collections {
 	static sort = <T>(collection: T[], key: (item: T) => string) => {
@@ -13,7 +13,7 @@ export class Collections {
 			return k;
 		};
 
-		return collection.sort((a, b) => {
+		return [ ...collection ].sort((a, b) => {
 			const strA = getText(a);
 			const strB = getText(b);
 			return strA.localeCompare(strB);

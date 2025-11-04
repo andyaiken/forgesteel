@@ -1,9 +1,9 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const bredbeddle: MonsterGroup = {
 	id: 'monster-group-bredbeddle',
@@ -17,7 +17,7 @@ Although bredbeddles have no traditional sensory organs of their own, they are k
 		{
 			id: 'bredbeddle-info-1',
 			name: 'Immortal Wanderers',
-			description: 'Bredbeddles don’t age, and if they are slain, their bodies reform a few days later. Long ago, bredbeddles were giants who stood high among the nobility of giant kind. But when they declared themselves rulers of all giant kind, their kin thwarted the coup and beheaded the bredbeddles. Now these fallen nobles search the world for their missing heads, each wielding the axe that decapitated them. Many claim their heads are kept for safekeeping in a fire giant’s cellar to be returned after an indeterminate period of good behavior (which no bredbeddles has exhibited thus far).'
+			description: 'Bredbeddles don’t age, and if they are slain, their bodies reform a few days later. Long ago, bredbeddles were giants who stood high among the nobility of giant kind. But when they declared themselves rulers of all giant kind, their kin thwarted the coup and beheaded the bredbeddles. Now these fallen nobles search the world for their missing heads, each wielding the axe that decapitated them. Many claim their heads are kept for safekeeping in a fire giant’s cellar to be returned after an indeterminate period of good behavior (which no bredbeddle has exhibited thus far).'
 		},
 		{
 			id: 'bredbeddle-info-2',
@@ -38,6 +38,7 @@ Travelers warn one another of roads rumored to be haunted by “wild green knigh
 			id: 'bredbeddle-malice-1',
 			name: 'Engreen',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'The bredbeddle’s axe lengthens and turns a ghastly green, increasing the distance of the bredbeddle’s melee strikes and the dimensions of their area abilities by 1 until the end of their turn.'
 			]
@@ -46,14 +47,25 @@ Travelers warn one another of roads rumored to be haunted by “wild green knigh
 			id: 'bredbeddle-malice-2',
 			name: 'Shadow Stockade',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'A ghostly size-1L stockade seeps out from under the bredbeddle’s feet into an unoccupied square within 10 squares. When a size-1L or smaller enemy enters the stockade’s square, they are restrained (save ends). When a restrained creature frees themself, the stockade fades away. At the start of each of the bredbeddle’s subsequent turns, they can slide the stockade and any creature in it up to 3 squares.'
+			]
+		}),
+		FactoryLogic.feature.createMalice({
+			id: 'bredbeddle-malice-4',
+			name: 'Solo Action',
+			cost: 5,
+			icon: StatBlockIcon.Villain,
+			sections: [
+				'The bredbeddle takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'bredbeddle-malice-3',
 			name: 'Green Phantom',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'A phantom second bredbeddle phases into view, appearing in an unoccupied space anywhere on the encounter map, then vanishing at the end of the round. The phantom bredbeddle shares the original bredbeddle’s statistics, has 24 stamina, corruption immunity 10, and can �ly. The phantom bredbeddle can take one turn and use any of the bredbeddle’s abilities except for villain actions. Only one phantom bredbeddle can be active during an encounter.'
 			]
@@ -72,7 +84,7 @@ Travelers warn one another of roads rumored to be haunted by “wild green knigh
 			stamina: 300,
 			stability: 4,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 0, -3, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 0, -3, 1, 2),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'bredbeddle-feature-1',
@@ -140,7 +152,6 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						id: 'bredbeddle-feature-6',
 						name: 'Scramble',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf('while headless') ],
 						target: 'Self',
 						sections: [
@@ -206,7 +217,6 @@ A creature must succeed on a hard **Might test** made as a maneuver to rip a hea
 						id: 'bredbeddle-feature-10',
 						name: 'Challenge',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
 						sections: [

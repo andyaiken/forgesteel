@@ -1,11 +1,11 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const lizardfolk: MonsterGroup = {
 	id: 'monster-group-lizardfolk',
@@ -80,6 +80,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			id: 'lizardfolk-malice-2',
 			name: 'Water Pit',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'A lizardfolk acting this turn unearths a magical size 2 pit that is 2 squares deep and filled with water. Any lizardfolk who moves into, then exits the pit on their turn gains 10 temporary Stamina, regrows their tail if applicable, and ends one effect on them that can be ended by a saving throw.',
 				'While adjacent to the pit, any creature who can burrow or who has the Nature skill can make a **Might test** or a **Reason test** to drain it.',
@@ -94,6 +95,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			id: 'lizardfolk-malice-3',
 			name: 'Flood the Shores',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Waist-high water floods the entire encounter map. Any lizardfolk submerged in water gains an edge on abilities and doubles their speed while swimming. If there are no open water pits on the encounter map, the water drains away at the end of the round.'
 			]
@@ -113,7 +115,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			size: FactoryLogic.createSize(1, 'M'),
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -154,7 +156,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to Stamina',
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -196,7 +198,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			size: FactoryLogic.createSize(1, 'S'),
 			freeStrikeDamage: 2,
 			withCaptain: '+1 bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -237,7 +239,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'M'),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -296,7 +298,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'M'),
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -357,7 +359,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'S'),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -422,7 +424,7 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -473,7 +475,6 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 						id: 'lizardfolk-7-feature-3',
 						name: 'Trundle',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -512,7 +513,6 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 						id: 'lizardfolk-7-feature-6',
 						name: 'Shed Some Skin',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -525,7 +525,6 @@ With a wide array of strong grab and forced movement abilities, lizardfolk tacti
 						id: 'lizardfolk-7-feature-7',
 						name: 'Thresher Thrasher',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 10 }) ],
 						target: 'Self and each ally in the area',
 						sections: [

@@ -1,11 +1,11 @@
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { Characteristic } from '../enums/characteristic';
-import { DamageModifierType } from '../enums/damage-modifier-type';
-import { DamageType } from '../enums/damage-type';
-import { FactoryLogic } from '../logic/factory-logic';
-import { FeatureField } from '../enums/feature-field';
-import { Title } from '../models/title';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { Title } from '@/models/title';
 
 export class TitleData {
 	static ancientLoremaster: Title = {
@@ -1198,7 +1198,7 @@ You gain a small magic spy device called a boffin. Once per encounter, you can a
 			}),
 			FactoryLogic.feature.create({
 				id: 'title-sworn-hunter-3',
-				name: 'Spy Ring',
+				name: 'We\'re In This Together',
 				description: 'When you have a creature grabbed and take damage from an ability not used by that creature, the grabbed creature takes the same damage.'
 			})
 		],
@@ -1649,35 +1649,56 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 		echelon: 4,
 		prerequisites: 'You have the Godsworn title, and hundreds of worshipful mortals complete a divine ritual in your name.',
 		features: [
-			FactoryLogic.feature.create({
+			FactoryLogic.feature.createMultiple({
 				id: 'title-demigod-1',
-				name: 'Immortal Excellence',
-				description: 'A characteristic of your choice increases by 1 (to a maximum of 6).'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-2',
-				name: 'Longevity',
-				description: 'Your natural lifespan doubles and you can appear to be any age.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-3',
-				name: 'Worshippers',
-				description: 'You magically hear prayers directed to you.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-4',
-				name: 'Acolytes',
-				description: 'The number of followers you can recruit increases by two.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-5',
-				name: 'Divine Weapons',
-				description: 'Whenever you use a damage-dealing weapon ability, that ability can deal corruption or holy damage instead of its usual damage type.'
-			}),
-			FactoryLogic.feature.create({
-				id: 'title-demigod-6',
-				name: 'Missionaries',
-				description: 'You earn 2 Renown.'
+				name: 'Demigod',
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-demigod-1a',
+						name: 'Immortal Excellence',
+						description: 'A characteristic of your choice increases by 1 (to a maximum of 6).'
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-demigod-1b',
+						name: 'Longevity',
+						description: 'Your natural lifespan doubles and you can appear to be any age.'
+					}),
+					FactoryLogic.feature.create({
+						id: 'title-demigod-1c',
+						name: 'Worshippers',
+						description: 'You magically hear prayers directed to you.'
+					}),
+					FactoryLogic.feature.createChoice({
+						id: 'title-demigod-1d',
+						name: 'Option',
+						options: [
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-demigod-1da',
+									name: 'Acolytes',
+									description: 'The number of followers you can recruit increases by two.'
+								}),
+								value: 1
+							},
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-demigod-1db',
+									name: 'Divine Weapons',
+									description: 'Whenever you use a damage-dealing weapon ability, that ability can deal corruption or holy damage instead of its usual damage type.'
+								}),
+								value: 1
+							},
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-demigod-1dc',
+									name: 'Missionaries',
+									description: 'You earn 2 Renown.'
+								}),
+								value: 1
+							}
+						]
+					})
+				]
 			})
 		],
 		selectedFeatureID: ''
@@ -1860,6 +1881,134 @@ Once per day, you can spend 10 uninterrupted minutes to magically alter mundane 
 				id: 'title-unchained-3',
 				name: 'Slippery',
 				description: 'Your choice of your Might or Agility increases by 1 (to a maximum of 6). You can’t be grabbed against your will.'
+			})
+		],
+		selectedFeatureID: ''
+	};
+
+	// Summoner titles
+
+	static safeguarded: Title = {
+		id: 'title-safeguarded',
+		name: 'Safeguarded',
+		description: 'They risk their lives for me because I risk my life for theirs. This fight belongs to all of us!',
+		echelon: 1,
+		prerequisites: 'You earn a noble rank or earn the favor of a knight’s guild.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'title-safeguarded-1',
+				name: 'Effect',
+				description: `
+You start combat encounters with a squad of five minions from the specific monster band or people you earned this title from.
+
+Additionally, if you would take damage outside of a combat encounter, you can forgo one of the minions at the start of the next combat encounter to ignore the damage.`
+			})
+		],
+		selectedFeatureID: ''
+	};
+
+	static summonerSuccessor: Title = {
+		id: 'title-summoner-successor',
+		name: 'Summoner Successor',
+		description: 'When their leader fell, they started listening to me for some reason.',
+		echelon: 2,
+		prerequisites: 'You defeat a leader or solo creature with a Summon or Call Forth ability, such as a high elf ordinator.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'title-summoner-successor-1',
+				name: 'Effect',
+				description: `
+Choose a signature minion from a summoner’s portfolio that shares a keyword with one of the creatures the summoner could summon. You can summon three of that minion into a single squad (up to a maximum of eight creatures) at the start of each of your turns in combat. The distance you can command them is equal to your ranged free strike distance. You also gain the Strike for Me triggered action, which now has the Psionic keyword.
+
+Additionally, you can summon up to two of your signature minion while outside of combat to do simple tasks.`
+			})
+		],
+		selectedFeatureID: ''
+	};
+
+	static ringleader: Title = {
+		id: 'title-ringleader',
+		name: 'Ringleader',
+		description: 'Don’t worry. I’ve got a guy.',
+		echelon: 3,
+		prerequisites: 'You complete three downtime projects during the same respite with the help of followers or minions.',
+		features: [
+			FactoryLogic.feature.createMultiple({
+				id: 'title-ringleader-1',
+				features: [
+					FactoryLogic.feature.create({
+						id: 'title-ringleader-1a',
+						name: 'Effect',
+						description: 'You no longer need line of effect to give commands to any minions you can summon.'
+					}),
+					FactoryLogic.feature.createChoice({
+						id: 'title-ringleader-1b',
+						options: [
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-ringleader-1b-1',
+									name: 'Stringpuller',
+									description: 'While occupying a civilized area (such as a village, town, district, or city), you always have access to an extra follower native to the location. If the area is otherwise hostile to you, this follower is a spy in hiding who has any project points they earn halved.'
+								}),
+								value: 1
+							},
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-ringleader-1b-2',
+									name: 'Networker',
+									description: 'Your maximum follower count increases by 2.'
+								}),
+								value: 1
+							},
+							{
+								feature: FactoryLogic.feature.create({
+									id: 'title-ringleader-1b-3',
+									name: 'For the Boss',
+									description: 'Your followers gain a +3 bonus to project rolls that they make.'
+								}),
+								value: 1
+							}
+						]
+					})
+				]
+			})
+		],
+		selectedFeatureID: ''
+	};
+
+	static delegator: Title = {
+		id: 'title-delegator',
+		name: 'Delegator',
+		description: 'Your champion made a very compelling argument and have stepped in to take your place in battle.',
+		echelon: 4,
+		prerequisites: 'You are a summoner and you strike a deal with your portfolio’s champion.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'title-delegator-1',
+				name: 'Effect',
+				description: `
+At the start of a combat encounter, you can choose to unsummon yourself into your portfolio’s native plane while your champion fights and summons monsters in your place. The champion uses your Stamina, Recoveries, abilities, and features (except for your Summoner Strikes and Summoner’s Kit). You can dismiss the champion and summon yourself back into the place you left at the end of an encounter.
+
+If your champion would die while taking your place, you lose the ability to summon and unsummon yourself and any minions until you revive your champion as a respite activity.`
+			})
+		],
+		selectedFeatureID: ''
+	};
+
+	static highSummoner: Title = {
+		id: 'title-high-summoner',
+		name: 'High Summoner of the Circle',
+		description: 'As I was taught, so I pass on to you.',
+		echelon: 4,
+		prerequisites: 'You are a summoner, and you teach another person how to call forth two or more minions from your portfolio.',
+		features: [
+			FactoryLogic.feature.create({
+				id: 'title-high-summoner-1',
+				name: 'Effect',
+				description: `
+Your minions cost one fewer essence to summon (minimum cost of 1 essence).
+
+Additionally, you are considered a master that can be learned from using the Learn from a Master research project. Anyone that makes a project roll using you as the source gains a bonus to their roll equal to your Reason.`
 			})
 		],
 		selectedFeatureID: ''

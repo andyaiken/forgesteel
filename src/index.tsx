@@ -1,23 +1,28 @@
-import { FactoryLogic } from './logic/factory-logic.ts';
-import { Format } from './utils/format.ts';
+import { FactoryLogic } from '@/logic/factory-logic.ts';
+import { Format } from '@/utils/format.ts';
 import { HashRouter } from 'react-router';
-import { Hero } from './models/hero.ts';
-import { HeroUpdateLogic } from './logic/update/hero-update-logic.ts';
-import { Main } from './components/main/main.tsx';
-import { Options } from './models/options.ts';
-import { OptionsUpdateLogic } from './logic/update/options-update-logic.ts';
-import { Playbook } from './models/playbook.ts';
-import { PlaybookUpdateLogic } from './logic/update/playbook-update-logic.ts';
-import { Sourcebook } from './models/sourcebook.ts';
-import { SourcebookData } from './data/sourcebook-data.ts';
-import { SourcebookUpdateLogic } from './logic/update/sourcebook-update-logic.ts';
+import { Hero } from '@/models/hero.ts';
+import { HeroUpdateLogic } from '@/logic/update/hero-update-logic.ts';
+import { Main } from '@/components/main/main.tsx';
+import { Options } from '@/models/options.ts';
+import { OptionsUpdateLogic } from '@/logic/update/options-update-logic.ts';
+import { Playbook } from '@/models/playbook.ts';
+import { PlaybookUpdateLogic } from '@/logic/update/playbook-update-logic.ts';
+import { Sourcebook } from '@/models/sourcebook.ts';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
+import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { initializeTheme } from '@/utils/initialize-theme';
 import localforage from 'localforage';
 
+import '@ant-design/v5-patch-for-react-19';
 import './index.scss';
 import './i18n/config.ts';
-// import './i18n.tsx';
+
+initializeTheme();
+
 // Register Service Worker for PWA functionality
 if ('serviceWorker' in navigator) {
 	window.addEventListener('load', () => {
@@ -29,8 +34,8 @@ if ('serviceWorker' in navigator) {
 }
 
 const promises = [
-	localforage.getItem<Hero[]>('forgesteel-heroes'),
 	localforage.getItem<Sourcebook[]>('forgesteel-homebrew-settings'),
+	localforage.getItem<Hero[]>('forgesteel-heroes'),
 	localforage.getItem<string[]>('forgesteel-hidden-setting-ids'),
 	localforage.getItem<Playbook>('forgesteel-playbook'),
 	localforage.getItem<Playbook>('forgesteel-session'),
@@ -40,16 +45,17 @@ const promises = [
 Promise.all(promises).then(results => {
 	// #region Homebrew sourcebooks
 
-	let sourcebooks = results[1] as Sourcebook[] | null;
+	let sourcebooks = results[0] as Sourcebook[] | null;
 	if (!sourcebooks) {
 		sourcebooks = [];
 	}
 
 	sourcebooks.forEach(sourcebook => {
+		sourcebook.type = SourcebookType.Homebrew;
 		SourcebookUpdateLogic.updateSourcebook(sourcebook);
 	});
 
-	[ SourcebookData.core, SourcebookData.orden, ...sourcebooks ].forEach(sourcebook => {
+	SourcebookLogic.getSourcebooks(sourcebooks).forEach(sourcebook => {
 		sourcebook.items.forEach(item => {
 			if (item.crafting) {
 				item.crafting.id = `${item.id}-crafting`;
@@ -70,13 +76,13 @@ Promise.all(promises).then(results => {
 
 	// #region Heroes
 
-	let heroes = results[0] as Hero[] | null;
+	let heroes = results[1] as Hero[] | null;
 	if (!heroes) {
 		heroes = [];
 	}
 
 	heroes.forEach(hero => {
-		HeroUpdateLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...sourcebooks ]);
+		HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
 	});
 
 	// #endregion

@@ -1,14 +1,14 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { auteur } from './auteur';
-import { duelist } from './duelist';
-import { virtuoso } from './virtuoso';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { auteur } from '@/data/classes/troubadour/auteur';
+import { duelist } from '@/data/classes/troubadour/duelist';
+import { virtuoso } from '@/data/classes/troubadour/virtuoso';
 
 export const troubadour: HeroClass = {
 	id: '9y3Jx3koKZipiPh1',
@@ -19,6 +19,7 @@ As a troubadour, you chase drama. The insurmountable dangers of the world might 
 
 “History is a tale. Each of us is just a story we tell ourselves. Change the story, and you change the world.”
 Jackson Bootblack`,
+	type: 'standard',
 	subclassName: 'Class Act',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -42,7 +43,6 @@ Jackson Bootblack`,
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'UH5m1URtvSjZqfQb',
-					listOptions: [ SkillList.Interpersonal ],
 					selected: [ 'Read Person' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -724,8 +724,8 @@ Additionally, whenever you spend a Recovery, you can forgo regaining Stamina to 
 					FactoryLogic.createPowerRoll({
 						characteristic: [ Characteristic.Agility ],
 						tier1: '6 + A damage; P < [weak], weakened (save ends)',
-						tier2: '10 + A damage; P < [weak], weakened (save ends)',
-						tier3: '14 + A damage; P < [weak], weakened (save ends)'
+						tier2: '10 + A damage; P < [average], weakened (save ends)',
+						tier3: '14 + A damage; P < [strong], weakened (save ends)'
 					})
 				),
 				FactoryLogic.createAbilitySectionText('You can become bleeding (save ends) to deal an extra 5 corruption damage to the target.')

@@ -1,8 +1,8 @@
-import { Career } from '../../models/career';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
-import { PerkList } from '../../enums/perk-list';
-import { SkillList } from '../../enums/skill-list';
+import { Career } from '@/models/career';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
 
 export const farmer: Career = {
 	id: 'career-farmer',
@@ -11,7 +11,6 @@ export const farmer: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-farmer-feature-1',
-			listOptions: [ SkillList.Interpersonal ],
 			selected: [ 'Handle Animals' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

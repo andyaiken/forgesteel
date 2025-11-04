@@ -1,13 +1,13 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const wyvern: MonsterGroup = {
 	id: 'monster-group-wyvern',
@@ -44,6 +44,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			id: 'wyvern-malice-1',
 			name: 'Simmering Anger',
 			cost: 3,
+			icon: StatBlockIcon.Melee,
 			sections: [
 				'One wyvern in the encounter can make a free strike against each enemy adjacent to them.'
 			]
@@ -52,6 +53,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			id: 'wyvern-malice-2',
 			name: 'Boiling Fury',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, each wyvern in the encounter has a double edge on strikes and they can use their signature action instead of a free strike whenever they would make an opportunity attack.'
 			]
@@ -60,6 +62,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			id: 'wyvern-malice-3',
 			name: 'Overflowing Rage',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Each wyvern’s anger ﬁlls the encounter map with a thick miasma of hated. Each enemy in the encounter makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
@@ -84,7 +87,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, -1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, -1, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -137,7 +140,6 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 						id: 'wyvern-1-feature-3',
 						name: 'Swooping Torment',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -152,7 +154,6 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 						id: 'wyvern-1-feature-4',
 						name: 'Retaliatory Dive',
 						type: FactoryLogic.type.createTrigger('A creature within distance deals damage to the lurker with a ranged ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'Triggering creature',
 						sections: [
@@ -190,7 +191,7 @@ Though they superficially resemble dragons, wyverns are not dragons or dragon-ki
 			stability: 3,
 			size: FactoryLogic.createSize(3),
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, -1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, -1, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

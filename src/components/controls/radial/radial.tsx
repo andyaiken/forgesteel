@@ -1,4 +1,5 @@
 import { ArrowUpOutlined } from '@ant-design/icons';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './radial.scss';
 
@@ -7,8 +8,8 @@ interface Props {
 }
 
 export const Radial = (props: Props) => {
-	try {
-		return (
+	return (
+		<ErrorBoundary>
 			<div className='radial'>
 				<div className='row'>
 					<div className='cell diagonal' onClick={() => props.onChange(-1, -1)}><ArrowUpOutlined rotate={-45} /></div>
@@ -26,9 +27,6 @@ export const Radial = (props: Props) => {
 					<div className='cell diagonal' onClick={() => props.onChange(1, 1)}><ArrowUpOutlined rotate={135} /></div>
 				</div>
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+		</ErrorBoundary>
+	);
 };

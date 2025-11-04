@@ -1,36 +1,38 @@
 import { Alert, Button, Divider, Drawer, Space, Tag } from 'antd';
-import { Empty } from '../../../controls/empty/empty';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeatureConfigPanel } from '../../feature-config-panel/feature-config-panel';
-import { FeatureData } from '../../../../models/feature';
-import { FeaturePanel } from '../feature-panel/feature-panel';
-import { Field } from '../../../controls/field/field';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
-import { HeroLogic } from '../../../../logic/hero-logic';
-import { Imbuement } from '../../../../models/imbuement';
-import { Item } from '../../../../models/item';
-import { ItemType } from '../../../../enums/item-type';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { Modal } from '../../../modals/modal/modal';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
+import { CSSProperties, useState } from 'react';
+import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
+import { FeatureConfigPanel } from '@/components/panels/feature-config-panel/feature-config-panel';
+import { FeatureData } from '@/models/feature';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Imbuement } from '@/models/imbuement';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Modal } from '@/components/modals/modal/modal';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
 import { PlusOutlined } from '@ant-design/icons';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { Utils } from '../../../../utils/utils';
-import { useState } from 'react';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Utils } from '@/utils/utils';
 
 import './item-panel.scss';
 
 interface Props {
 	item: Item;
 	options: Options;
-	hero?: Hero;
+	wielder?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
+	style?: CSSProperties;
 	onChange?: (item: Item) => void;
 }
 
@@ -126,7 +128,7 @@ export const ItemPanel = (props: Props) => {
 				{
 					options.map(f => (
 						<SelectablePanel key={f.feature.id} onSelect={() => addImbuement(f)}>
-							<FeaturePanel feature={f.feature} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+							<FeaturePanel feature={f.feature} options={props.options} hero={props.wielder} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>
 					))
 				}
@@ -141,99 +143,106 @@ export const ItemPanel = (props: Props) => {
 
 	const imbueable = item.type === ItemType.ImbuedArmor || item.type === ItemType.ImbuedImplement || item.type === ItemType.ImbuedWeapon;
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? item.id : undefined}>
-					<HeaderText
-						level={1}
-						tags={[ item.type ]}
-					>
-						{item.name || 'Unnamed Item'}
-					</HeaderText>
-					{
-						props.hero && !HeroLogic.canUseItem(props.hero, item) ?
-							<Alert
-								type='warning'
-								showIcon={true}
-								message='Your kit does not allow you to use this item.'
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? item.id : undefined} style={props.style}>
+				<HeaderText
+					level={1}
+					tags={[ item.type ]}
+				>
+					{item.name || 'Unnamed Item'}
+				</HeaderText>
+				{
+					props.wielder && !HeroLogic.canUseItem(props.wielder, item) ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='Your kit does not allow you to use this item.'
+						/>
+						: null
+				}
+				<Markdown text={item.description} />
+				{
+					imbueable ?
+						<HeaderText
+							level={1}
+							extra={
+								props.onChange ?
+									<Button type='text' icon={<PlusOutlined />} onClick={() => setImbuementsOpen(true)} />
+									: null
+							}
+						>
+							Imbuements
+						</HeaderText>
+						: null
+				}
+				{
+					item.imbuements
+						.map(f => f.feature)
+						.map(f => (
+							<FeatureConfigPanel
+								key={f.id}
+								feature={f}
+								options={props.options}
+								hero={props.wielder!}
+								sourcebooks={props.sourcebooks}
+								setData={setFeatureData}
+								onDelete={props.onChange ? () => removeImbuement(f.id) : undefined}
 							/>
-							: null
-					}
-					<Markdown text={item.description} />
-					{
-						imbueable ?
-							<HeaderText
-								level={1}
-								extra={
-									props.onChange ?
-										<Button type='text' icon={<PlusOutlined />} onClick={() => setImbuementsOpen(true)} />
-										: null
-								}
-							>
-								Imbuements
-							</HeaderText>
-							: null
-					}
-					{
-						item.imbuements
-							.map(f => f.feature)
-							.map(f => (
-								<FeatureConfigPanel
-									key={f.id}
-									feature={f}
-									options={props.options}
-									hero={props.hero}
-									sourcebooks={props.sourcebooks}
-									setData={setFeatureData}
-									onDelete={props.onChange ? () => removeImbuement(f.id) : undefined}
-								/>
-							))
-					}
-					{
-						props.onChange && imbueable && (item.imbuements.length === 0) ?
-							<Empty />
-							: null
-					}
-					{
-						props.mode === PanelMode.Full ?
-							<>
-								{item.keywords.length > 0 ? <Field label='Keywords' value={item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} /> : null}
-								<Markdown text={item.effect} />
+						))
+				}
+				{
+					props.onChange && imbueable && (item.imbuements.length === 0) ?
+						<Empty />
+						: null
+				}
+				{
+					props.mode === PanelMode.Full ?
+						<>
+							{item.keywords.length > 0 ? <Field label='Keywords' value={item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} /> : null}
+							<Markdown text={item.effect} />
+							<Space direction='vertical' style={{ width: '100%' }}>
 								{
-									item.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
-										<div key={lvl.level}>
-											<HeaderText>Level {lvl.level.toString()}</HeaderText>
-											{lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
-										</div>
-									))
+									item.featuresByLevel
+										.filter(lvl => lvl.features.length > 0)
+										.map(lvl => (
+											<Expander key={lvl.level} title={`Level ${lvl.level.toString()}`}>
+												{
+													lvl.features.map(f => (
+														<FeaturePanel
+															key={f.id}
+															feature={f}
+															options={props.options}
+															mode={PanelMode.Full}
+														/>
+													))
+												}
+											</Expander>
+										))
 								}
-							</>
-							: null
+							</Space>
+						</>
+						: null
+				}
+				{
+					props.onChange && (item.type !== ItemType.Artifact) ?
+						<>
+							<Divider />
+							<NumberSpin min={1} label='Number' value={item.count} onChange={setCount} />
+						</>
+						: null
+				}
+			</div>
+			<Drawer open={imbuementsOpen} onClose={() => setImbuementsOpen(false)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						<div style={{ padding: '20px' }}>
+							{getAvailableImbuements()}
+						</div>
 					}
-					{
-						props.onChange && (item.type !== ItemType.Artifact) ?
-							<>
-								<Divider />
-								<NumberSpin min={1} label='Number' value={item.count} onChange={setCount} />
-							</>
-							: null
-					}
-				</div>
-				<Drawer open={imbuementsOpen} onClose={() => setImbuementsOpen(false)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							<div style={{ padding: '20px' }}>
-								{getAvailableImbuements()}
-							</div>
-						}
-						onClose={() => setImbuementsOpen(false)}
-					/>
-				</Drawer>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+					onClose={() => setImbuementsOpen(false)}
+				/>
+			</Drawer>
+		</ErrorBoundary>
+	);
 };

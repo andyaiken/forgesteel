@@ -1,0 +1,59 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+main#classic-sheet .negotiation-sheet {
+    table {
+        * {
+            border: 0;
+            text-align: center;
+            @include common.font-serif;
+        }
+    }
+
+    h3:has(+ .power-roll) {
+        text-align: left;
+        border-bottom: 2px solid common.$color-medium;
+        text-transform: none;
+        width: 55%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    h3 + .power-roll .power {
+        margin-left: 0;
+        margin-bottom: 5px;
+    }
+    
+    .card section.bordered {
+        div p {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        p.reference {
+            @include common.font-slab;
+            font-size: round(0.95rem, 1px);
+            font-weight: 450;
+            color: var(--color-text-lightest);
+            text-align: right;
+
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+    }
+
+    .page-1 {
+        display: grid;
+        grid-template-rows: min-content min-content min-content 1fr;
+        grid-template-columns: 7fr 3fr;
+
+        .negotiation-header.card,
+        .negotiation-patience-interest.card {
+            grid-column-end: span 2;
+        }
+
+        .negotiation-responses.card {
+            grid-row-end: span 2;
+        }
+    }
+}

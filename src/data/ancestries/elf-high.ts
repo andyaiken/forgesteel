@@ -1,7 +1,7 @@
-import { Ancestry } from '../../models/ancestry';
-import { ConditionType } from '../../enums/condition-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
+import { Ancestry } from '@/models/ancestry';
+import { ConditionType } from '@/enums/condition-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 
 export const highElf: Ancestry = {
 	id: 'ancestry-high-elf',
@@ -52,10 +52,11 @@ export const highElf: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSaveThreshold({
 						id: 'high-elf-feature-2-4',
 						name: 'Otherworldly Grace',
-						description: 'Your elf body and mind can’t be contained for long. Whenever you make a saving throw, you succeed on a roll of 5 or higher.'
+						description: 'Your elf body and mind can’t be contained for long. Whenever you make a saving throw, you succeed on a roll of 5 or higher.',
+						value: 5
 					}),
 					value: 2
 				},

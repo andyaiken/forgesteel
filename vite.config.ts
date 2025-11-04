@@ -1,6 +1,7 @@
 import { generateManifest, manifestPlugin } from './vite-plugin-manifest';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,12 +22,19 @@ export default defineConfig({
 	},
 	plugins: [
 		react(),
+		tsconfigPaths(),
 		manifestPlugin(),
 		// Dev server plugin to serve manifest.json and sw.js
 		{
 			name: 'dev-pwa-files',
 			configureServer(server) {
 				// Serve manifest.json during development
+				// Handle both possible paths due to Vite's base path resolution
+				server.middlewares.use('/forgesteel/forgesteel/manifest.json', (_, res) => {
+					const manifest = generateManifest();
+					res.setHeader('Content-Type', 'application/json');
+					res.end(JSON.stringify(manifest, null, 2));
+				});
 				server.middlewares.use('/forgesteel/manifest.json', (_, res) => {
 					const manifest = generateManifest();
 					res.setHeader('Content-Type', 'application/json');

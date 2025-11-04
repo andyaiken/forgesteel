@@ -1,11 +1,11 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const goblin: MonsterGroup = {
 	id: 'monster-group-goblin',
@@ -59,7 +59,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			cost: 3,
 			sections: [
 				'Each goblin in the encounter gains a +2 bonus to speed until the end of the round.'
-			]
+			],
+			icon: StatBlockIcon.Trait
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'goblin-malice-2',
@@ -67,7 +68,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			cost: 5,
 			sections: [
 				'Each enemy in the encounter takes 1 damage for each goblin adjacent to them.'
-			]
+			],
+			icon: StatBlockIcon.AuraBurst
 		}),
 		FactoryLogic.feature.createMalice({
 			id: 'goblin-malice-3',
@@ -81,7 +83,8 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 					tier2: 'The creature is weakened until the mist disappears.',
 					tier3: 'No effect.'
 				})
-			]
+			],
+			icon: StatBlockIcon.SpecialArea
 		})
 	],
 	monsters: [
@@ -98,7 +101,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(-2, 2, 0, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -139,7 +142,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(-2, 2, 0, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -181,7 +184,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+1 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -222,7 +225,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+3 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(-5, 2, -4, 0, -2),
+			characteristics: FactoryLogic.createCharacteristics(-5, 2, -4, 0, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -258,7 +261,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, -2),
+			characteristics: FactoryLogic.createCharacteristics(-2, 2, 0, 0, -2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -323,7 +326,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(-2, 1, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(-2, 1, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -382,7 +385,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(-2, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(-2, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -441,7 +444,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(-1, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -500,7 +503,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(-2, 2, 0, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(-2, 2, 0, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -559,7 +562,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, -4, 0, -3),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, -4, 0, -3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -671,7 +674,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stamina: 60,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, -4, 0, -3),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, -4, 0, -3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -721,7 +724,6 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 						name: 'Trample',
 						type: FactoryLogic.type.createMain(),
 						cost: 5,
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -783,7 +785,7 @@ Their long arms and prehensile toes make goblins particularly well adapted to en
 			stamina: 15,
 			stability: 1,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, -1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, -1, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

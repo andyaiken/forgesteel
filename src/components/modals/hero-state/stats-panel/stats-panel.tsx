@@ -1,15 +1,16 @@
 import { Alert, Button, Divider, Drawer, Flex, Space, notification } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
-import { FeatureType } from '../../../../enums/feature-type';
-import { Field } from '../../../controls/field/field';
-import { Format } from '../../../../utils/format';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
-import { HeroLogic } from '../../../../logic/hero-logic';
-import { Modal } from '../../modal/modal';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Random } from '../../../../utils/random';
-import { Utils } from '../../../../utils/utils';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeatureType } from '@/enums/feature-type';
+import { Field } from '@/components/controls/field/field';
+import { Format } from '@/utils/format';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Modal } from '@/components/modals/modal/modal';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Random } from '@/utils/random';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './stats-panel.scss';
@@ -327,34 +328,38 @@ export const StatsPanel = (props: Props) => {
 													);
 												})
 											}
-											<Flex align='center' justify='space-evenly' gap={10}>
-												<Button
-													key='start-encounter'
-													style={{ flex: '1 1 0' }}
-													className='tall-button'
-													onClick={() => startEncounter(hr.id)}
-												>
-													<div>
-														<div>Start Encounter</div>
-														<div className='subtext'>
-															Victories to {hr.name || 'Heroic Resource'}
-														</div>
-													</div>
-												</Button>
-												<Button
-													key='end-encounter'
-													style={{ flex: '1 1 0' }}
-													className='tall-button'
-													onClick={() => endEncounter(hr.id)}
-												>
-													<div>
-														<div>End Encounter</div>
-														<div className='subtext'>
-															+1 Victory
-														</div>
-													</div>
-												</Button>
-											</Flex>
+											{
+												hr.type === 'heroic' ?
+													<Flex align='center' justify='space-evenly' gap={10}>
+														<Button
+															key='start-encounter'
+															style={{ flex: '1 1 0' }}
+															className='tall-button'
+															onClick={() => startEncounter(hr.id)}
+														>
+															<div>
+																<div>Start Encounter</div>
+																<div className='subtext'>
+																	Victories to {hr.name || 'Heroic Resource'}
+																</div>
+															</div>
+														</Button>
+														<Button
+															key='end-encounter'
+															style={{ flex: '1 1 0' }}
+															className='tall-button'
+															onClick={() => endEncounter(hr.id)}
+														>
+															<div>
+																<div>End Encounter</div>
+																<div className='subtext'>
+																	+1 Victory
+																</div>
+															</div>
+														</Button>
+													</Flex>
+													: null
+											}
 										</>
 										: null
 								}
@@ -501,11 +506,13 @@ export const StatsPanel = (props: Props) => {
 	};
 
 	return (
-		<div className='stats-panel'>
-			{getStatsSection()}
-			{getHeroicResourceSection()}
-			{getHeroTokenSection()}
-			{notifyContext}
-		</div>
+		<ErrorBoundary>
+			<div className='stats-panel'>
+				{getStatsSection()}
+				{getHeroicResourceSection()}
+				{getHeroTokenSection()}
+				{notifyContext}
+			</div>
+		</ErrorBoundary>
 	);
 };

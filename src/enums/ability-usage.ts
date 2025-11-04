@@ -5,6 +5,7 @@ export enum AbilityUsage {
 	NoAction = 'No Action',
 	Trigger = 'Triggered Action',
 	VillainAction = 'Villain Action',
+	ChampionAction = 'Champion Action',
 	Other = 'Other',
 	FreeStrike = 'Free Strike'
 }

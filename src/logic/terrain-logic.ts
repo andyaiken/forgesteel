@@ -1,7 +1,7 @@
-import { Collections } from '../utils/collections';
-import { DamageModifierType } from '../enums/damage-modifier-type';
-import { Terrain } from '../models/terrain';
-import { TerrainFilter } from '../models/filter';
+import { Collections } from '@/utils/collections';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { Terrain } from '@/models/terrain';
+import { TerrainFilter } from '@/models/filter';
 
 export class TerrainLogic {
 	static getTerrainDescription = (terrain: Terrain) => {

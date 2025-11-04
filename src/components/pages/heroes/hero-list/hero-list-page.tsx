@@ -1,22 +1,23 @@
 import { Button, Input, Popover, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { AppFooter } from '../../../panels/app-footer/app-footer';
-import { AppHeader } from '../../../panels/app-header/app-header';
-import { Collections } from '../../../../utils/collections';
-import { Empty } from '../../../controls/empty/empty';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Hero } from '../../../../models/hero';
-import { HeroData } from '../../../../data/hero-data';
-import { HeroInfo } from '../../../panels/token/token';
-import { HeroLogic } from '../../../../logic/hero-logic';
-import { HeroPanel } from '../../../panels/hero/hero-panel';
-import { Options } from '../../../../models/options';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { Utils } from '../../../../utils/utils';
-import { useNavigation } from '../../../../hooks/use-navigation';
+import { AppFooter } from '@/components/panels/app-footer/app-footer';
+import { AppHeader } from '@/components/panels/app-header/app-header';
+import { Collections } from '@/utils/collections';
+import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Hero } from '@/models/hero';
+import { HeroData } from '@/data/hero-data';
+import { HeroInfo } from '@/components/panels/token/token';
+import { HeroLogic } from '@/logic/hero-logic';
+import { HeroPanel } from '@/components/panels/hero/hero-panel';
+import { Options } from '@/models/options';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { Utils } from '@/utils/utils';
+import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
+import { useTitle } from '@/hooks/use-title';
 
 import './hero-list-page.scss';
 
@@ -25,9 +26,10 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	addHero: (folder: string) => void;
 	importHero: (hero: Hero, folder: string) => void;
 	showParty: (folder: string) => void;
@@ -39,6 +41,7 @@ export const HeroListPage = (props: Props) => {
 	const [ previousTab, setPreviousTab ] = useState<string | undefined>(folder);
 	const [ currentTab, setCurrentTab ] = useState<string>(folder ?? '');
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
+	useTitle('Heroes');
 
 	if (folder !== previousTab) {
 		setCurrentTab(folder ?? '');
@@ -83,92 +86,92 @@ export const HeroListPage = (props: Props) => {
 		);
 	};
 
-	try {
-		const exampleHeroes = [
-			HeroData.dwarfFury,
-			HeroData.highElfTactician,
-			HeroData.humanCensor,
-			HeroData.humanNull,
-			HeroData.humanTalent,
-			HeroData.orcConduit,
-			HeroData.polderElementalist,
-			HeroData.polderShadow,
-			HeroData.wodeElfTroubadour
-		];
+	const exampleHeroes = [
+		HeroData.dwarfFury,
+		HeroData.highElfTactician,
+		HeroData.humanCensor,
+		HeroData.humanNull,
+		HeroData.humanTalent,
+		HeroData.orcConduit,
+		HeroData.polderElementalist,
+		HeroData.polderShadow,
+		HeroData.wodeElfTroubadour
+	];
 
-		return (
-			<ErrorBoundary>
-				<div className='hero-list-page'>
-					<AppHeader subheader='Heroes'>
-						<Input
-							name='search'
-							placeholder='Search'
-							allowClear={true}
-							value={searchTerm}
-							suffix={<SearchOutlined />}
-							onChange={e => setSearchTerm(e.target.value)}
-						/>
-						<div className='divider' />
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ width: '500px' }}>
-									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
-										Create a New Hero
+	return (
+		<ErrorBoundary>
+			<div className='hero-list-page'>
+				<AppHeader subheader='Heroes'>
+					<Input
+						name='search'
+						placeholder='Search'
+						allowClear={true}
+						value={searchTerm}
+						suffix={<SearchOutlined />}
+						onChange={e => setSearchTerm(e.target.value)}
+					/>
+					<div className='divider' />
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ width: '550px' }}>
+								<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
+									Create a New Hero
+								</Button>
+								<div className='ds-text centered-text'>or</div>
+								<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
+									<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
+										Generate a Random Hero
 									</Button>
-									<div className='ds-text centered-text'>or</div>
-									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
-										<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
-											Generate a Random Hero
+									<Upload
+										style={{ width: '100%' }}
+										accept='.drawsteel-hero,.ds-hero'
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const hero = JSON.parse(json) as Hero;
+													props.importHero(hero, currentTab);
+												});
+											return false;
+										}}
+									>
+										<Button block={true} icon={<DownloadOutlined />}>
+											Import a Hero File
 										</Button>
-										<Upload
-											style={{ width: '100%' }}
-											accept='.drawsteel-hero,.ds-hero'
-											showUploadList={false}
-											beforeUpload={file => {
-												file
-													.text()
-													.then(json => {
-														const hero = JSON.parse(json) as Hero;
-														props.importHero(hero, currentTab);
-													});
-												return false;
-											}}
-										>
-											<Button block={true} icon={<DownloadOutlined />}>
-												Import a Hero File
-											</Button>
-										</Upload>
-									</div>
-									<div className='ds-text centered-text'>or start with a premade example:</div>
-									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
-										{
-											exampleHeroes.map(h => (
-												<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
-													<HeroInfo hero={h} />
-												</Button>
-											))
-										}
-									</div>
+									</Upload>
 								</div>
-							)}
-						>
-							<Button type='primary'>
-								Add
-								<DownOutlined />
-							</Button>
-						</Popover>
-						{
-							getHeroes(currentTab).length > 1 ?
-								<>
-									<div className='divider' />
-									<Button onClick={() => props.showParty(currentTab)}>
-										Party Overview
-									</Button>
-								</>
-								: null
-						}
-					</AppHeader>
+								<div className='ds-text centered-text'>or start with a premade example:</div>
+								<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
+									{
+										exampleHeroes.map(h => (
+											<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
+												<HeroInfo hero={h} />
+											</Button>
+										))
+									}
+								</div>
+							</div>
+						)}
+					>
+						<Button type='primary'>
+							Add
+							<DownOutlined />
+						</Button>
+					</Popover>
+					{
+						getHeroes(currentTab).length > 1 ?
+							<>
+								<div className='divider' />
+								<Button onClick={() => props.showParty(currentTab)}>
+									Party Overview
+								</Button>
+							</>
+							: null
+					}
+				</AppHeader>
+				<ErrorBoundary>
 					<div className='hero-list-page-content'>
 						<Tabs
 							activeKey={currentTab}
@@ -185,12 +188,16 @@ export const HeroListPage = (props: Props) => {
 							onChange={navigation.goToHeroList}
 						/>
 					</div>
-					<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				</ErrorBoundary>
+				<AppFooter
+					page='heroes'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
+			</div>
+		</ErrorBoundary>
+	);
 };

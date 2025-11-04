@@ -1,13 +1,14 @@
 import { CSSProperties } from 'react';
-import { Format } from '../../../utils/format';
-import { Hero } from '../../../models/hero';
-import { HeroLogic } from '../../../logic/hero-logic';
-import { Monster } from '../../../models/monster';
-import { MonsterGroup } from '../../../models/monster-group';
-import { MonsterLogic } from '../../../logic/monster-logic';
-import { MonsterRoleType } from '../../../enums/monster-role-type';
-import { Terrain } from '../../../models/terrain';
-import { TerrainLogic } from '../../../logic/terrain-logic';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Format } from '@/utils/format';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Monster } from '@/models/monster';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Terrain } from '@/models/terrain';
+import { TerrainLogic } from '@/logic/terrain-logic';
 
 import './token.scss';
 
@@ -22,23 +23,23 @@ interface Props {
 }
 
 export const Token = (props: Props) => {
-	try {
-		const size = props.size ?? 22;
+	const size = props.size ?? 22;
 
-		let className = `token ${props.role.toLowerCase()}`;
-		if (props.onClick) {
-			className += ' clickable';
-		}
+	let className = `token ${props.role.toLowerCase()}`;
+	if (props.onClick) {
+		className += ' clickable';
+	}
 
-		let innerClassName = 'inner-token';
-		if (props.type) {
-			innerClassName += ` ${props.type}`;
-		}
-		if (props.isDefeated) {
-			innerClassName += ' defeated';
-		}
+	let innerClassName = 'inner-token';
+	if (props.type) {
+		innerClassName += ` ${props.type}`;
+	}
+	if (props.isDefeated) {
+		innerClassName += ' defeated';
+	}
 
-		return (
+	return (
+		<ErrorBoundary>
 			<div
 				className={className}
 				style={{ width: `${size}px`, height: `${size}px`, padding: `${size * 0.08}px` }}
@@ -57,11 +58,8 @@ export const Token = (props: Props) => {
 					}
 				</div>
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+		</ErrorBoundary>
+	);
 };
 
 interface HeroTokenProps {
@@ -72,15 +70,17 @@ interface HeroTokenProps {
 
 export const HeroToken = (props: HeroTokenProps) => {
 	return (
-		<Token
-			name={props.hero.name || 'Hero'}
-			picture={props.hero.picture || undefined}
-			role={MonsterRoleType.NoRole}
-			type='hero'
-			isDefeated={props.hero.state.defeated}
-			size={props.size}
-			onClick={props.onClick}
-		/>
+		<ErrorBoundary>
+			<Token
+				name={props.hero.name || 'Hero'}
+				picture={props.hero.picture || undefined}
+				role={MonsterRoleType.NoRole}
+				type='hero'
+				isDefeated={props.hero.state.defeated}
+				size={props.size}
+				onClick={props.onClick}
+			/>
+		</ErrorBoundary>
 	);
 };
 
@@ -91,13 +91,15 @@ interface HeroInfoProps {
 
 export const HeroInfo = (props: HeroInfoProps) => {
 	return (
-		<div className='combatant-button-content' style={props.style}>
-			<HeroToken hero={props.hero} size={30} />
-			<div className='combatant-button-details'>
-				<div className='combatant-name'>{props.hero.name}</div>
-				<div className='combatant-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
+		<ErrorBoundary>
+			<div className='combatant-button-content' style={props.style}>
+				<HeroToken hero={props.hero} size={30} />
+				<div className='combatant-button-details'>
+					<div className='combatant-name'>{props.hero.name}</div>
+					<div className='combatant-info'>{HeroLogic.getHeroDescription(props.hero)}</div>
+				</div>
 			</div>
-		</div>
+		</ErrorBoundary>
 	);
 };
 
@@ -110,15 +112,17 @@ interface MonsterTokenProps {
 
 export const MonsterToken = (props: MonsterTokenProps) => {
 	return (
-		<Token
-			name={MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
-			picture={props.monster.picture || props.monsterGroup?.picture || undefined}
-			role={props.monster.role.type}
-			type='monster'
-			isDefeated={props.monster.state.defeated}
-			size={props.size}
-			onClick={props.onClick}
-		/>
+		<ErrorBoundary>
+			<Token
+				name={MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
+				picture={props.monster.picture || props.monsterGroup?.picture || undefined}
+				role={props.monster.role.type}
+				type='monster'
+				isDefeated={props.monster.state.defeated}
+				size={props.size}
+				onClick={props.onClick}
+			/>
+		</ErrorBoundary>
 	);
 };
 
@@ -129,13 +133,15 @@ interface MonsterInfoProps {
 
 export const MonsterInfo = (props: MonsterInfoProps) => {
 	return (
-		<div className='combatant-button-content' style={props.style}>
-			<MonsterToken monster={props.monster} size={30} />
-			<div className='combatant-button-details'>
-				<div className='combatant-name'>{props.monster.name}</div>
-				<div className='combatant-info'>{MonsterLogic.getMonsterDescription(props.monster)}</div>
+		<ErrorBoundary>
+			<div className='combatant-button-content' style={props.style}>
+				<MonsterToken monster={props.monster} size={30} />
+				<div className='combatant-button-details'>
+					<div className='combatant-name'>{props.monster.name}</div>
+					<div className='combatant-info'>{MonsterLogic.getMonsterDescription(props.monster)}</div>
+				</div>
 			</div>
-		</div>
+		</ErrorBoundary>
 	);
 };
 
@@ -146,11 +152,13 @@ interface TerrainInfoProps {
 
 export const TerrainInfo = (props: TerrainInfoProps) => {
 	return (
-		<div className='combatant-button-content' style={props.style}>
-			<div className='combatant-button-details'>
-				<div className='combatant-name'>{props.terrain.name}</div>
-				<div className='combatant-info'>{TerrainLogic.getTerrainDescription(props.terrain)}</div>
+		<ErrorBoundary>
+			<div className='combatant-button-content' style={props.style}>
+				<div className='combatant-button-details'>
+					<div className='combatant-name'>{props.terrain.name}</div>
+					<div className='combatant-info'>{TerrainLogic.getTerrainDescription(props.terrain)}</div>
+				</div>
 			</div>
-		</div>
+		</ErrorBoundary>
 	);
 };

@@ -1,27 +1,25 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { SkillList } from '../../../enums/skill-list';
-import { SubClass } from '../../../models/subclass';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SubClass } from '@/models/subclass';
 
 export const oracle: SubClass = {
 	id: 'censor-sub-2',
 	name: 'Oracle',
-	description: 'Corruption has deep tendrils that can be missed, leading you to specialize in uncovering clandestine threats to your order. You have the Magic skill.',
+	description: 'Corruption has deep tendrils that can be missed, leading you to specialize in uncovering clandestine threats to your order.',
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-sub-2-1-1',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createPackageContent({
 					id: 'censor-sub-2-1-2',
 					name: 'Judgment Order Benefit',
-					description: 'You can deal holy damage equal to twice your Presence score to the judged creature.',
+					description: 'The first time on a turn that you use your Judgment ability to judge a creature, you can deal holy damage equal to twice your Presence score to the judged creature.',
 					tag: 'censor-judgment'
 				})
 			]

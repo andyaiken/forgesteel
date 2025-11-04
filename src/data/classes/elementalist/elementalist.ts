@@ -1,19 +1,19 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { DamageModifierType } from '../../../enums/damage-modifier-type';
-import { DamageType } from '../../../enums/damage-type';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { KitArmor } from '../../../enums/kit-armor';
-import { KitWeapon } from '../../../enums/kit-weapon';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { earth } from './earth';
-import { fire } from './fire';
-import { green } from './green';
-import { voidSubclass } from './void';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { earth } from '@/data/classes/elementalist/earth';
+import { fire } from '@/data/classes/elementalist/fire';
+import { green } from '@/data/classes/elementalist/green';
+import { voidSubclass } from '@/data/classes/elementalist/void';
 
 export const elementalist: HeroClass = {
 	id: 'class-elementalist',
@@ -22,6 +22,7 @@ export const elementalist: HeroClass = {
 Air for movement. Earth for permanence. Fire for destruction. Water for change. Green for growth. Rot for death. Void for the mystery. Years of study and practice and poring over tomes brought you the revelations that allow you to manipulate these building blocks of reality. Now you use your mastery of the seven elements to destroy, create, and warp the world with magic.
 
 As an elementalist, you can unleash your wrath across a field of foes, put an enemy exactly where you want them, debilitate foes with harmful effects, ward yourself and allies against danger, manipulate terrain, warp space, and more. Your choice of elemental specialization determines which of these things you do best.`,
+	type: 'standard',
 	subclassName: 'Elemental Specialization',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -61,7 +62,6 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'elementalist-1-1',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -74,7 +74,7 @@ As an elementalist, you can unleash your wrath across a field of foes, put an en
 						id: 'elementalist-1-4',
 						name: 'Hurl Element',
 						description: 'You hurl a ball of elemental energy at an unsuspecting foe.',
-						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a ranged free strike' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a ranged free strike' ], freeStrike: true }),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature or object',
@@ -224,46 +224,102 @@ Choose one of the following effects:
 							value: 1
 						},
 						{
-							feature: FactoryLogic.feature.createDamageModifier({
+							feature: FactoryLogic.feature.createChoice({
 								id: 'elementalist-1-8b',
 								name: 'Ward of Excellent Protection',
 								description: 'You weave a shield of all the elements around yourself, channeling their full protective power. You have immunity to acid, cold, corruption, fire, lightning, poison, or sonic damage equal to your Reason score.',
-								modifiers: [
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Acid,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Cold,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Corruption,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Fire,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Lightning,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Poison,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									}),
-									FactoryLogic.damageModifier.createCharacteristic({
-										damageType: DamageType.Sonic,
-										modifierType: DamageModifierType.Immunity,
-										characteristics: [ Characteristic.Reason ]
-									})
+								options: [
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8ba',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Acid,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bb',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Cold,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bc',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Corruption,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bd',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Fire,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8be',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Lightning,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bf',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Poison,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									},
+									{
+										feature: FactoryLogic.feature.createDamageModifier({
+											id: 'elementalist-1-8bg',
+											modifiers: [
+												FactoryLogic.damageModifier.createCharacteristic({
+													damageType: DamageType.Sonic,
+													modifierType: DamageModifierType.Immunity,
+													characteristics: [ Characteristic.Reason ]
+												})
+											]
+										}),
+										value: 1
+									}
 								]
 							}),
 							value: 1

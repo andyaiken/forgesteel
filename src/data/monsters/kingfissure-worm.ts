@@ -1,10 +1,10 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const kingfissureWorm: MonsterGroup = {
 	id: 'monster-group-kingfissure-worm',
@@ -61,6 +61,7 @@ export const kingfissureWorm: MonsterGroup = {
 			id: 'kingfissure-worm-malice-2',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The kingfissure worm takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -69,6 +70,7 @@ export const kingfissureWorm: MonsterGroup = {
 			id: 'kingfissure-worm-malice-3',
 			name: '',
 			cost: 5,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'The kingfissure worm loses 35 Stamina and regrows one tongue, to a maximum of three tongues. The worm is then dazed until the end of their turn.'
 			]
@@ -109,7 +111,7 @@ export const kingfissureWorm: MonsterGroup = {
 			stamina: 420,
 			stability: 5,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(5, 1, -5, 2, -3),
+			characteristics: FactoryLogic.createCharacteristics(5, 1, -5, 2, -3),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'kingfissure-worm-1-feature-1',

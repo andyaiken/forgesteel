@@ -8,4 +8,16 @@
 		margin-top: -10px;
 		padding: unset;
 	}
+
+	.domain-features-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 20px;
+	}
+
+	.domain-features-list {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
 }

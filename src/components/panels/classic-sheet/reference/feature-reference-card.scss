@@ -1,0 +1,24 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .hero-sheet .feature-reference.card {
+    // @include common.striped-card;
+
+    h3 {
+        text-align: left;
+        text-decoration: underline;
+        margin-bottom: 5px;
+
+        &:not(:first-of-type) {
+            margin-top: 5px;
+        }
+    }
+    li li {
+        list-style-type: disc;
+    }
+
+    &.wide, &.extra-wide {
+        display: grid;
+        grid-template-rows: min-content 1fr;
+        place-items: stretch;
+    }
+}

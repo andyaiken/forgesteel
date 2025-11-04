@@ -1,13 +1,13 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const orc: MonsterGroup = {
 	id: 'monster-group-orc',
@@ -55,6 +55,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			id: 'orc-malice-1',
 			name: 'Overwhelming March',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each orc shifts up to their speed, moving through enemy spaces if they can. Each enemy passed through during this movement makes a **Might test**.',
 				FactoryLogic.createPowerRoll({
@@ -69,6 +70,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			id: 'orc-malice-2',
 			name: 'Mohler Trench',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'An orc acting this turn summons 2 **mohlers** out of the ground, who dig a trench that is a 10 × 1 line within 10 squares when they appear. The trench is 2 squares deep and is difficult terrain. The trench can’t be created directly underneath creatures.'
 			]
@@ -77,6 +79,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			id: 'orc-malice-3',
 			name: 'Mohler Cavity',
 			cost: 7,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The ground shakes as a group of mohlers dig a 5 cube pit beneath an area where at least one creature is on the ground. The area is difficult terrain. Each orc in the area can shift into the nearest unoccupied space outside the pit before it is completed. Each nonorc in the area makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({
@@ -102,7 +105,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 1,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -4, 1, -3),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -4, 1, -3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -149,7 +152,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -191,7 +194,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+2 bonus to forced movement distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -232,7 +235,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+5 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -277,7 +280,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+1 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -318,7 +321,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 1, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -369,7 +372,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 20,
 			stability: 2,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 1, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -434,7 +437,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 20,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'orc-8-feature-1',
@@ -507,7 +510,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 1, -1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 1, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -553,9 +556,6 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						id: 'orc-9-feature-3',
 						name: 'Chroma Cloak',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
-						distance: [],
-						target: '',
 						cost: 1,
 						sections: [
 							FactoryLogic.createAbilitySectionText('The garroter turns invisible until the end of their turn. This invisibility ends early if they take damage or use an ability.')
@@ -581,7 +581,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 30,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 0, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -656,7 +656,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, -1, -1, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, -1, -1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -715,7 +715,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 59,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 2, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -780,7 +780,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 30,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 0, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 0, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -846,7 +846,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 1, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 1, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -937,7 +937,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
-						id: 'orc-14-feature-5',
+						id: 'orc-14-feature-6',
 						name: 'Familial Reinforcements',
 						type: FactoryLogic.type.createVillainAction(2),
 						keywords: [ AbilityKeyword.Ranged ],
@@ -953,7 +953,6 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 						id: 'orc-14-feature-7',
 						name: 'I’ll Do This Myself',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -985,7 +984,7 @@ When an orc community has exceptional gratitude for the deeds of one of their ow
 			stamina: 100,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, -1, -4, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(2, -1, -4, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

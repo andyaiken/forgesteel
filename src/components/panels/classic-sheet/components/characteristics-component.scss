@@ -1,0 +1,40 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet :not(.stats-resources).card .characteristics {
+    margin: 5px 0;
+    border-top: 1px solid common.$color-medium;
+    border-bottom: 1px solid common.$color-medium;
+    padding: 5px 0;
+
+    font-size: 17px;
+
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    justify-content: space-around;
+
+    .characteristic {
+        display: grid;
+        grid-template-columns: min-content 1fr;
+
+        label {
+            text-wrap: nowrap;
+            align-self: baseline;
+        }
+
+        .symbol {
+            @include common.font-glyphs;
+            display: inline-block;
+            margin-right: 1px;
+        }
+
+        .value {
+            justify-self: center;
+            align-self: baseline;
+            margin-left: 8px;
+            font-size: 20px;
+        }
+
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

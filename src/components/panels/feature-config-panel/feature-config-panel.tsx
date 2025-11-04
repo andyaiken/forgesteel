@@ -1,57 +1,61 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
-import { Feature, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeaturePerkData, FeatureSkillChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTitleChoiceData } from '../../../models/feature';
-import { Ability } from '../../../models/ability';
-import { AbilityLogic } from '../../../logic/ability-logic';
-import { AbilityModal } from '../../modals/ability/ability-modal';
-import { AbilitySelectModal } from '../../modals/select/ability-select/ability-select-modal';
-import { Ancestry } from '../../../models/ancestry';
-import { AncestryPanel } from '../elements/ancestry-panel/ancestry-panel';
-import { Collections } from '../../../utils/collections';
-import { DangerButton } from '../../controls/danger-button/danger-button';
-import { Domain } from '../../../models/domain';
-import { DomainPanel } from '../elements/domain-panel/domain-panel';
-import { Empty } from '../../controls/empty/empty';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
-import { Expander } from '../../controls/expander/expander';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureLogic } from '../../../logic/feature-logic';
-import { FeaturePanel } from '../elements/feature-panel/feature-panel';
-import { FeatureSelectModal } from '../../modals/select/feature-select/feature-select-modal';
-import { FeatureType } from '../../../enums/feature-type';
-import { Field } from '../../controls/field/field';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { Hero } from '../../../models/hero';
-import { HeroClass } from '../../../models/class';
-import { HeroLogic } from '../../../logic/hero-logic';
-import { Item } from '../../../models/item';
-import { ItemPanel } from '../elements/item-panel/item-panel';
-import { ItemSelectModal } from '../../modals/select/item-select/item-select-modal';
-import { Kit } from '../../../models/kit';
-import { KitPanel } from '../elements/kit-panel/kit-panel';
-import { KitSelectModal } from '../../modals/select/kit-select/kit-select-modal';
-import { LanguageSelectModal } from '../../modals/select/language-select/language-select-modal';
-import { Markdown } from '../../controls/markdown/markdown';
-import { Modal } from '../../modals/modal/modal';
-import { Monster } from '../../../models/monster';
-import { MonsterInfo } from '../token/token';
-import { MonsterModal } from '../../modals/monster/monster-modal';
-import { MonsterOrganizationType } from '../../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../../enums/monster-role-type';
-import { MonsterSelectModal } from '../../modals/select/monster-select/monster-select-modal';
-import { NameGenerator } from '../../../utils/name-generator';
-import { Options } from '../../../models/options';
-import { PanelMode } from '../../../enums/panel-mode';
-import { Perk } from '../../../models/perk';
-import { PerkPanel } from '../elements/perk-panel/perk-panel';
-import { PerkSelectModal } from '../../modals/select/perk-select/perk-select-modal';
-import { SkillSelectModal } from '../../modals/select/skill-select/skill-select-modal';
-import { Sourcebook } from '../../../models/sourcebook';
-import { SourcebookLogic } from '../../../logic/sourcebook-logic';
-import { Title } from '../../../models/title';
-import { TitlePanel } from '../elements/title-panel/title-panel';
-import { TitleSelectModal } from '../../modals/select/title-select/title-select-modal';
-import { Utils } from '../../../utils/utils';
+import { Feature, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeaturePerkData, FeatureSkillChoiceData, FeatureSummonChoiceData, FeatureTaggedFeatureChoiceData, FeatureTitleChoiceData } from '@/models/feature';
+import { Ability } from '@/models/ability';
+import { AbilityLogic } from '@/logic/ability-logic';
+import { AbilityModal } from '@/components/modals/ability/ability-modal';
+import { AbilitySelectModal } from '@/components/modals/select/ability-select/ability-select-modal';
+import { Ancestry } from '@/models/ancestry';
+import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
+import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Domain } from '@/models/domain';
+import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
+import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureLogic } from '@/logic/feature-logic';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { FeatureSelectModal } from '@/components/modals/select/feature-select/feature-select-modal';
+import { FeatureType } from '@/enums/feature-type';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroClass } from '@/models/class';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Item } from '@/models/item';
+import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
+import { ItemSelectModal } from '@/components/modals/select/item-select/item-select-modal';
+import { Kit } from '@/models/kit';
+import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
+import { KitSelectModal } from '@/components/modals/select/kit-select/kit-select-modal';
+import { LanguageSelectModal } from '@/components/modals/select/language-select/language-select-modal';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Modal } from '@/components/modals/modal/modal';
+import { Monster } from '@/models/monster';
+import { MonsterInfo } from '@/components/panels/token/token';
+import { MonsterModal } from '@/components/modals/monster/monster-modal';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
+import { NameGenerator } from '@/utils/name-generator';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { Perk } from '@/models/perk';
+import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
+import { PerkSelectModal } from '@/components/modals/select/perk-select/perk-select-modal';
+import { SkillSelectModal } from '@/components/modals/select/skill-select/skill-select-modal';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Summon } from '@/models/summon';
+import { SummonLogic } from '@/logic/summon-logic';
+import { SummonSelectModal } from '@/components/modals/select/summon-select/summon-select-modal';
+import { Title } from '@/models/title';
+import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
+import { TitleSelectModal } from '@/components/modals/select/title-select/title-select-modal';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './feature-config-panel.scss';
@@ -59,7 +63,7 @@ import './feature-config-panel.scss';
 interface Props {
 	feature: Feature | Perk;
 	options: Options;
-	hero?: Hero;
+	hero: Hero;
 	sourcebooks?: Sourcebook[];
 	setData: (featureID: string, data: FeatureData) => void;
 	onDelete?: () => void;
@@ -84,6 +88,7 @@ export const FeatureConfigPanel = (props: Props) => {
 	const [ selectedKit, setSelectedKit ] = useState<Kit | null>(null);
 	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
 	const [ selectedPerk, setSelectedPerk ] = useState<Perk | null>(null);
+	const [ selectedSummon, setSelectedSummon ] = useState<Summon | null>(null);
 	const [ selectedTitle, setSelectedTitle ] = useState<Title | null>(null);
 
 	// #region Selection
@@ -464,35 +469,14 @@ export const FeatureConfigPanel = (props: Props) => {
 			}
 		};
 
+		const choices = data.selected && data.selected.retainer ?
+			data.selected.retainer.featuresByLevel
+				.filter(lvl => data.selected!.retainer!.level >= lvl.level)
+				.filter(lvl => FeatureLogic.isChoice(lvl.feature))
+			: [];
+
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					data.selected && data.selected.retainer ?
-						data.selected.retainer.featuresByLevel
-							.filter(lvl => data.selected!.retainer!.level >= lvl.level)
-							.filter(lvl => FeatureLogic.isChoice(lvl.feature))
-							.map(lvl => (
-								<FeatureConfigPanel
-									key={lvl.level}
-									feature={lvl.feature}
-									options={props.options}
-									hero={props.hero}
-									sourcebooks={props.sourcebooks}
-									setData={(fID, d) => {
-										const dataCopy = Utils.copy(data);
-										dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
-											if (l.feature.id === fID) {
-												l.feature.data = d;
-											}
-										});
-										if (props.setData) {
-											props.setData(props.feature.id, dataCopy);
-										}
-									}}
-								/>
-							))
-						: null
-				}
 				{
 					data.selected ?
 						<Flex className='selection-box' align='center' gap={10}>
@@ -527,15 +511,41 @@ export const FeatureConfigPanel = (props: Props) => {
 				{
 					data.selected ?
 						<Expander title='Customize'>
-							<HeaderText>Name</HeaderText>
-							<Input
-								status={data.selected.name === '' ? 'warning' : ''}
-								placeholder='Name'
-								allowClear={true}
-								addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-								value={data.selected.name}
-								onChange={e => setName(e.target.value)}
-							/>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<div>
+									<HeaderText>Name</HeaderText>
+									<Input
+										status={data.selected.name === '' ? 'warning' : ''}
+										placeholder='Name'
+										allowClear={true}
+										addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
+										value={data.selected.name}
+										onChange={e => setName(e.target.value)}
+									/>
+								</div>
+								{
+									choices.map(lvl => (
+										<FeatureConfigPanel
+											key={lvl.level}
+											feature={lvl.feature}
+											options={props.options}
+											hero={props.hero}
+											sourcebooks={props.sourcebooks}
+											setData={(fID, d) => {
+												const dataCopy = Utils.copy(data);
+												dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
+													if (l.feature.id === fID) {
+														l.feature.data = d;
+													}
+												});
+												if (props.setData) {
+													props.setData(props.feature.id, dataCopy);
+												}
+											}}
+										/>
+									))
+								}
+							</Space>
 						</Expander>
 						: null
 				}
@@ -605,18 +615,8 @@ export const FeatureConfigPanel = (props: Props) => {
 					maxCount={data.count === 1 ? undefined : data.count}
 					allowClear={true}
 					placeholder={data.count === 1 ? 'Select a domain' : 'Select domains'}
-					options={sortedDomains.map(a => ({ label: a.name, value: a.id, desc: a.description }))}
+					options={sortedDomains.map(a => ({ value: a.id, label: a.name, desc: a.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={data.count === 1 ? (data.selected.length > 0 ? data.selected[0].id : null) : data.selected.map(k => k.id)}
 					onChange={value => {
 						let ids: string[] = [];
@@ -630,7 +630,10 @@ export const FeatureConfigPanel = (props: Props) => {
 						ids.forEach(id => {
 							const domain = domains.find(k => k.id === id);
 							if (domain) {
-								dataCopy.selected.push(domain);
+								const domainCopy = Utils.copy(domain);
+								domainCopy.featuresByLevel = domainCopy.featuresByLevel.filter(lvl => dataCopy.levels.includes(lvl.level));
+								[ ...domainCopy.defaultFeatures, ...domainCopy.featuresByLevel.flatMap(lvl => lvl.features) ].forEach(f => FeatureLogic.switchFeatureCharacteristic(f, Characteristic.Intuition, dataCopy.characteristic));
+								dataCopy.selected.push(domainCopy);
 							}
 						});
 						if (props.setData) {
@@ -1151,6 +1154,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				<Drawer open={skillSelectorOpen} onClose={() => setSkillSelectorOpen(false)} closeIcon={null} width='500px'>
 					<SkillSelectModal
 						skills={sortedSkills}
+						sourcebooks={props.sourcebooks}
 						onSelect={s => {
 							setSkillSelectorOpen(false);
 
@@ -1167,7 +1171,7 @@ export const FeatureConfigPanel = (props: Props) => {
 		);
 	};
 
-	const getSelectionSummon = (data: FeatureSummonData) => {
+	const getSelectionSummonChoice = (data: FeatureSummonChoiceData) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
@@ -1176,18 +1180,18 @@ export const FeatureConfigPanel = (props: Props) => {
 						: null
 				}
 				{
-					data.selected.map(monster => (
+					data.selected.map(summon => (
 						<Flex className='selection-box' align='center' gap={10}>
 							<MonsterInfo
 								style={{ flex: '1 1 0' }}
-								monster={monster}
+								monster={summon.monster}
 							/>
 							<div style={{ flex: '0 0 auto' }}>
 								<Button
 									type='text'
 									title='Show details'
 									icon={<InfoCircleOutlined />}
-									onClick={() => setSelectedMonster(monster)}
+									onClick={() => setSelectedSummon(summon)}
 								/>
 								<Button
 									type='text'
@@ -1195,7 +1199,7 @@ export const FeatureConfigPanel = (props: Props) => {
 									icon={<CloseOutlined />}
 									onClick={() => {
 										const dataCopy = Utils.copy(data);
-										dataCopy.selected = dataCopy.selected.filter(m => m.id !== monster.id);
+										dataCopy.selected = dataCopy.selected.filter(m => m.id !== summon.id);
 										if (props.setData) {
 											props.setData(props.feature.id, dataCopy);
 										}
@@ -1213,19 +1217,15 @@ export const FeatureConfigPanel = (props: Props) => {
 						: null
 				}
 				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
-					<MonsterSelectModal
-						monsters={
-							data.options.length > 0 ?
-								data.options
-								:
-								props.sourcebooks ? props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters) : []
-						}
+					<SummonSelectModal
+						summons={data.options}
+						hero={props.hero}
 						options={props.options}
-						onSelect={monster => {
+						onSelect={summon => {
 							setMonsterSelectorOpen(false);
 
 							const dataCopy = Utils.copy(data);
-							dataCopy.selected.push(Utils.copy(monster));
+							dataCopy.selected.push(Utils.copy(summon));
 							if (props.setData) {
 								props.setData(props.feature.id, dataCopy);
 							}
@@ -1233,8 +1233,8 @@ export const FeatureConfigPanel = (props: Props) => {
 						onClose={() => setMonsterSelectorOpen(false)}
 					/>
 				</Drawer>
-				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
-					{selectedMonster ? <MonsterModal monster={selectedMonster} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
+				<Drawer open={!!selectedSummon} onClose={() => setSelectedSummon(null)} closeIcon={null} width='500px'>
+					{selectedSummon ? <MonsterModal monster={SummonLogic.getSummonedMonster(selectedSummon.monster, props.hero)} summon={selectedSummon.info} options={props.options} onClose={() => setSelectedSummon(null)} /> : null}
 				</Drawer>
 			</Space>
 		);
@@ -1461,8 +1461,8 @@ export const FeatureConfigPanel = (props: Props) => {
 				return getSelectionPerk(props.feature.data);
 			case FeatureType.SkillChoice:
 				return getSelectionSkillChoice(props.feature.data);
-			case FeatureType.Summon:
-				return getSelectionSummon(props.feature.data);
+			case FeatureType.SummonChoice:
+				return getSelectionSummonChoice(props.feature.data);
 			case FeatureType.TaggedFeatureChoice:
 				return getSelectionTaggedFeatureChoice(props.feature.data);
 			case FeatureType.TitleChoice:
@@ -1498,45 +1498,40 @@ export const FeatureConfigPanel = (props: Props) => {
 		return desc;
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='feature-config-panel'>
-					<HeaderText
-						extra={
-							<>
-								{
-									autoCalcAvailable() ?
-										<Button
-											key='autocalc'
-											type='text'
-											title='Auto-calculate damage, potency, etc'
-											icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-											onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-										/>
-										: null
-								}
-								{
-									props.onDelete ?
-										<DangerButton
-											key='delete'
-											mode='clear'
-											onConfirm={() => props.onDelete!()}
-										/>
-										: null
-								}
-							</>
-						}
-					>
-						{props.feature.name || 'Unnamed Feature'}
-					</HeaderText>
-					<Markdown text={getDescription()} />
-					{getSelection()}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className='feature-config-panel'>
+				<HeaderText
+					extra={
+						<>
+							{
+								autoCalcAvailable() ?
+									<Button
+										key='autocalc'
+										type='text'
+										title='Auto-calculate damage, potency, etc'
+										icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+										onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
+									/>
+									: null
+							}
+							{
+								props.onDelete ?
+									<DangerButton
+										key='delete'
+										mode='clear'
+										onConfirm={() => props.onDelete!()}
+									/>
+									: null
+							}
+						</>
+					}
+				>
+					{props.feature.name || 'Unnamed Feature'}
+				</HeaderText>
+				<Markdown text={getDescription()} />
+				{getSelection()}
+			</div>
+		</ErrorBoundary>
+	);
 };

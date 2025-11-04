@@ -1,3 +1,5 @@
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+
 import './empty.scss';
 
 interface Props {
@@ -5,14 +7,11 @@ interface Props {
 }
 
 export const Empty = (props: Props) => {
-	try {
-		return (
+	return (
+		<ErrorBoundary>
 			<div className='empty'>
 				{props.text || 'None'}
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+		</ErrorBoundary>
+	);
 };

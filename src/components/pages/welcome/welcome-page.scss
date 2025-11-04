@@ -3,32 +3,25 @@
 	display: flex;
 	flex-direction: column;
 
-	&.full {
-		.welcome-page-content {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: space-around;
-
-			.welcome-column {
-				max-width: 800px;
-
-				.welcome-section {
-					height: 300px;
-				}
-			}
-		}
-	}
-
 	.welcome-page-content {
 		height: 100%;
 		background-color: rgb(230, 230, 230);
+		padding: 50px;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		justify-content: space-evenly;
+		gap: 50px;
 		overflow-y: auto;
-		padding: 0 20px 20px 20px;
+
+		&.compact {
+			padding: 20px;
+		}
 
 		.welcome-column {
+			flex: 2 2 0;
+
 			.welcome-tab-button {
-				width: 70px;
 				height: 45px;
 				display: flex;
 				flex-direction: column;
@@ -36,32 +29,59 @@
 				justify-content: center;
 
 				.title {
-					font-size: 14px;
-					font-weight: 600;
-					height: 20px;
 					line-height: 20px;
 				}
 
 				.subtitle {
 					font-size: 11px;
-					height: 18px;
 					line-height: 18px;
 				}
 			}
 
 			.welcome-section {
+				margin: -10px 0 10px 0;
+			}
+
+			.welcome-buttons {
+				border-top: 1px solid rgba(5, 5, 5, 0.06);
+				padding-top: 15px;
+
 				.ant-btn {
-					flex: 0 0 160px;
+					flex: 1 1 0;
 				}
 			}
+		}
+
+		.tip-column {
+			flex: 1 1 0;
+			padding-top: 10px;
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+		}
+	}
+
+	.logo-container {
+		margin: 5px 0 -5px 0;
+
+		>img {
+			height: 45px;
 		}
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.welcome-page {
 		.welcome-page-content {
 			background-color: rgb(55, 55, 55);
+
+			.welcome-column {
+				.logo-container {
+					>img {
+						filter: invert(1);
+					}
+				}
+			}
 		}
 	}
 }

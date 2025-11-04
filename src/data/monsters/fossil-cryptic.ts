@@ -1,10 +1,10 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const fossilCryptic: MonsterGroup = {
 	id: 'monster-group-fossil-cryptic',
@@ -38,6 +38,7 @@ export const fossilCryptic: MonsterGroup = {
 			id: 'fossil-cryptic-malice-1',
 			name: 'Floor Mosaic',
 			cost: 3,
+			icon: StatBlockIcon.Ranged,
 			sections: [
 				'The fossil cryptic slides one creature on the ground up to 5 squares. If the creature is prone, this forced movement ignores stability.'
 			]
@@ -46,6 +47,7 @@ export const fossilCryptic: MonsterGroup = {
 			id: 'fossil-cryptic-malice-2',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The fossil cryptic takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -54,6 +56,7 @@ export const fossilCryptic: MonsterGroup = {
 			id: 'fossil-cryptic-malice-3',
 			name: 'Stone Pillars ',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'Two pillars of stone 1 square wide either thrust up out of the ground or jut down from the ceiling anywhere on the encounter map, to a height of up to 5 squares. A creature in the area of a pillar before it appears is knocked prone on its surface. If the creature comes into contact with the ceiling above or the floor beneath the pillar and has M<2 they are restrained (save ends).'
 			]
@@ -62,6 +65,7 @@ export const fossilCryptic: MonsterGroup = {
 			id: 'fossil-cryptic-malice-4',
 			name: 'Choking Dust',
 			cost: 10,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'The air across the encounter map is thick with dust until the end of the encounter. Each enemy in the dust is suffocating. Additionally, at the end of each round, each enemy in the dust makes a **Might test**.',
 				FactoryLogic.createPowerRoll({
@@ -86,7 +90,7 @@ export const fossilCryptic: MonsterGroup = {
 			stamina: 250,
 			stability: 3,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 1, 1, 0),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'fossil-cryptic-feature-1',
@@ -164,7 +168,6 @@ export const fossilCryptic: MonsterGroup = {
 						id: 'fossil-cryptic-feature-8',
 						name: 'Dissipate',
 						type: FactoryLogic.type.createTrigger('The cryptic takes damage.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 1,

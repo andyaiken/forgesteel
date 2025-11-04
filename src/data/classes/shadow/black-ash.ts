@@ -1,9 +1,8 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { SkillList } from '../../../enums/skill-list';
-import { SubClass } from '../../../models/subclass';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SubClass } from '@/models/subclass';
 
 export const blackAsh: SubClass = {
 	id: 'shadow-sub-1',
@@ -15,7 +14,6 @@ export const blackAsh: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-sub-1-1-1',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Magic' ]
 				}),
 				FactoryLogic.feature.createAbility({

@@ -1,7 +1,8 @@
 import { CSSProperties, ReactNode } from 'react';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Statistic } from 'antd';
-import { Utils } from '../../../utils/utils';
+import { Utils } from '@/utils/utils';
 
 import './number-spin.scss';
 
@@ -45,8 +46,8 @@ export const NumberSpin = (props: Props) => {
 	const ascending = Utils.copy(steps).sort((a, b) => a - b);
 	const descending = Utils.copy(steps).sort((a, b) => b - a);
 
-	try {
-		return (
+	return (
+		<ErrorBoundary>
 			<div className={props.disabled ? 'number-spin disabled' : 'number-spin'} style={props.style}>
 				<div className='spin-buttons'>
 					{
@@ -84,9 +85,6 @@ export const NumberSpin = (props: Props) => {
 					}
 				</div>
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+		</ErrorBoundary>
+	);
 };

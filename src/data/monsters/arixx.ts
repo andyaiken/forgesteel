@@ -1,10 +1,10 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const arixx: MonsterGroup = {
 	id: 'monster-group-arixx',
@@ -30,6 +30,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 			id: 'arixx-malice-1',
 			name: 'Burning Maw',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'The arixx dribbles acid over their mandibles, causing the next strike they make to gain an edge and deal an extra 3 acid damage.'
 			]
@@ -38,6 +39,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 			id: 'arixx-malice-2',
 			name: 'Geyser',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The arixx’s underground tunnels swell with pressure, causing a sudden influx of hot gas to burst from a 3-square-by-3-square area anywhere on the surface. Each enemy in the area makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({
@@ -52,6 +54,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 			id: 'arixx-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The arixx takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -59,7 +62,8 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 		FactoryLogic.feature.createMalice({
 			id: 'arixx-malice-4',
 			name: 'Earth Sink',
-			cost: 10,
+			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'The encounter map suddenly quakes, then begins to sink. Each creature on the ground who has <code>A < 1</code> is knocked prone. Until the end of the encounter, each creature who starts their turn on the ground and can’t burrow must spend 1 additional square of movement to leave their starting position, or 2 squares if they start their turn prone or underground. A creature who starts and ends their turn in the same space on the ground and can’t burrow sinks 1 square into the ground.'
 			]
@@ -78,7 +82,7 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -3, 1, -4),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -3, 1, -4),
 			features: [
 				FactoryLogic.feature.createSoloMonster({
 					id: 'arixx-1-feature-0',
@@ -190,7 +194,6 @@ An arixx is a chitinous burrowing insectoid beast who stands taller than a horse
 						id: 'arixx-1-feature-8',
 						name: 'Skitter',
 						type: FactoryLogic.type.createTrigger('The arixx takes damage.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [

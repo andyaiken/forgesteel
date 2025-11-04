@@ -1,4 +1,4 @@
-import { RulesItem } from '../models/rules-item';
+import { RulesItem } from '@/models/rules-item';
 
 export class RulesData {
 	static abilityDistance: RulesItem = {
@@ -63,9 +63,11 @@ You can attempt to assist another creature with a test they make, provided you h
 
 When you attempt to assist another creature, make a test using the skill you choose, and using a characteristic chosen by the Director based on the activity you use to help. The outcome of that test determines the bonus applied to the test you’re assisting:
 
-* **11 or lower**: You get in the way or make things worse. The creature takes a bane on their test.
-* **12–16**: Your help grants the other creature an edge on their test.
-* **17+**: Your help gives the other creature a double edge on their test.
+| Roll  | Effect |
+|:------|:---------|
+| ≤ 11  | You get in the way or make things worse. The creature takes a bane on their test.|
+|12–16 | Your help grants the other creature an edge on their test.|
+|17+ | Your help gives the other creature a double edge on their test.|
 
 For example, when an ally tries to pick a jailer’s pocket, you might attempt to assist by using the Flirt skill to distract the jailer. The Director accepts this, and asks you to make a Presence test using Flirt. The outcome of that test determines the bonus you provide to the other hero’s Agility test to pick the jailer’s pocket—or whether you fumble the distraction and potentially draw attention to the attempt.`
 	};
@@ -94,9 +96,11 @@ If a creature who can’t burrow wants to dig into the ground, they can use the 
 **Claw Dirt**
 
 **Power Roll + Might**:
-* **11 or lower**: You can move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed and weakened (EoT).
-* **12–16**: You can use your main action this turn to move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed (EoT).
-* **17+**: You can move 1 square into, out of, or through ground you are touching that can be burrowed through.
+| Roll  | Effect |
+|:------|:---------|
+| ≤ 11  | You can move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed and weakened (EoT).|
+|12–16 | You can use your main action this turn to move 1 square into, out of, or through ground you are touching that can be burrowed through, and you are slowed (EoT).|
+|17+ | You can move 1 square into, out of, or through ground you are touching that can be burrowed through.|
 
 **Burrowing Forced Movement**: While a creature who is completely beneath the ground while burrowing is force moved by movement that isn’t vertical, they aren’t moved, and they take 1 damage for each square they would have been force moved. If the forced movement is vertical, the creature is moved through the dirt as if it were air.`
 	};
@@ -111,16 +115,22 @@ Creatures without those types of movement can still climb or swim when a rule al
 **Climbing other Creatures**: You can attempt to climb a creature whose size is greater than yours. If the creature is willing, you can climb them without any trouble. If the creature is unwilling, you make the following test:
 
 **Power Roll + Might or Agility**:
-* **11 or lower**: You fail to climb the creature, and they can make a free strike against you.
-* **12–16**: You fail to climb the creature.
-* **17+**: You climb the creature.
+
+| Roll  | Effect |
+|:------|:---------|
+| ≤ 11  | You fail to climb the creature, and they can make a free strike against you.|
+| 12–16 | You fail to climb the creature.|
+| 17+   | You climb the creature.|
 
 While you climb or ride a creature, you gain an edge to melee abilities used against them. The creature can use a maneuver to attempt to knock you off, forcing you to make the following test:
 
 **Power Roll + Might or Agility**:
-* **11 or lower**: You fall off the creature into an unoccupied adjacent space of your choice, taking falling damage and landing prone as usual.
-* **12–16**: You slide down the creature into an unoccupied adjacent space of your choice and don’t land prone.
-* **17+**: You continue to hold on to the creature.
+
+| Roll  | Effect |
+|:------|:---------|
+| ≤ 11  | You fall off the creature into an unoccupied adjacent space of your choice, taking falling damage and landing prone as usual.|
+| 12–16 | You slide down the creature into an unoccupied adjacent space of your choice and don’t land prone.|
+| 17+ | You continue to hold on to the creature.|
 
 If you are knocked prone while climbing or riding a creature, you fall and land prone in an adjacent space of your choice, taking damage as usual from the fall.`
 	};
@@ -157,10 +167,31 @@ You can’t score a critical hit with an ability roll made as a maneuver or any 
 Areas of acid, fire, sharp rocks, lava, or any other terrain that causes damage to creatures within it is damaging terrain. The damage dealt by damaging terrain is noted in the terrain’s description or in the description of the effect that creates the terrain.`
 	};
 
+	static damageAndEffect: RulesItem = {
+		label: 'Damage and Effect',
+		content: `
+Strikes and area abilities can deal damage and have an additional effect on a target. The damage and the strength of the effect are determined by the ability roll.
+
+To keep things moving quickly and to make abilities easy to read during play, damage and effects are separated with a semicolon in a power roll tier entry, with effects abbreviated whenever possible. An effect determined by a power roll always applies to the target unless otherwise specified. For example, the Brutal Slam ability mentioned above has the following power roll setup in the ability format:
+
+**Power Roll + Might**:
+
+* **11-**: 3 + M damage; push 1
+* **12-16**: 6 + M damage; push 2
+* **17+**: 9 + M damage; push 4
+
+Unless otherwise indicated, any effects that are determined by a power roll’s tier outcome occur after the power roll’s damage has been dealt to all targets. If an ability roll deals damage to multiple targets but its effect targets the creature using the ability or the Director, such as Muse of Fire, then the effect only occurs once, not once per target. If different tiered outcomes affect multiple targets, the creature using the ability picks which tier of rolled effect applies to them or the Director. If an ability creates multiple effects, those effects resolve in the order in which they are presented.`
+	};
+
 	static difficultTerrain: RulesItem = {
 		label: 'Difficult Terrain',
 		content: `
 Areas of thick underbrush, rubble, spiderwebs, or other obstacles to movement create difficult terrain. It costs 1 additional square of movement to enter a square of difficult terrain.`
+	};
+
+	static duringTheMove: RulesItem = {
+		label: 'During the Move',
+		content: 'Certain ability effects allow you to move and affect other creatures or objects during that move, such as the shadow’s One Hundred Throats ability. For such abilities, the move begins in the space you first leave when you start the move and ends in the last space you move into.'
 	};
 
 	static dyingAndDeath: RulesItem = {
@@ -277,9 +308,12 @@ Whenever an effect allows you to move (including using the Advance move action),
 If you want to jump even longer or higher than your baseline jump allows, make a Might or Agility test:
 
 **Power Roll + Might or Agility**:
-* **11 or lower**: You don’t jump any farther than your baseline jump allows.
-* **12–16**: You jump 1 square longer and higher than your baseline jump allows.
-* **17+**: You jump 2 squares longer and higher than your baselinejump allows.
+
+| Roll  | Effect |
+|:------|:---------|
+| ≤ 11  | You don’t jump any farther than your baseline jump allows.		 |
+| 12–16 | You jump 1 square longer and higher than your baseline jump allows.|
+| 17+   | You jump 2 squares longer and higher than your baselinejump allows.|
 
 You can’t jump farther or higher than the distance of the effect that allows you to move. You can’t jump out of difficult terrain or damaging terrain.`
 	};

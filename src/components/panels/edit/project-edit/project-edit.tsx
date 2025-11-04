@@ -1,11 +1,11 @@
 import { Input, Select } from 'antd';
-import { Characteristic } from '../../../../enums/characteristic';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { MultiLine } from '../../../controls/multi-line/multi-line';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Project } from '../../../../models/project';
-import { Utils } from '../../../../utils/utils';
+import { Characteristic } from '@/enums/characteristic';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Project } from '@/models/project';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './project-edit.scss';
@@ -68,68 +68,63 @@ export const ProjectEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='project-edit-panel'>
-					{
-						props.includeNameAndDescription ?
-							<>
-								<HeaderText>Name</HeaderText>
-								<Input
-									status={project.name === '' ? 'warning' : ''}
-									placeholder='Name'
-									allowClear={true}
-									value={project.name}
-									onChange={e => setName(e.target.value)}
-								/>
-								<HeaderText>Description</HeaderText>
-								<MultiLine value={project.description} onChange={setDescription} />
-							</>
-							: null
-					}
-					<HeaderText>Item Prerequisites</HeaderText>
-					<Input
-						placeholder='Prerequisites'
-						allowClear={true}
-						value={project.itemPrerequisites}
-						onChange={e => setPrerequisites(e.target.value)}
-					/>
-					<HeaderText>Source</HeaderText>
-					<Input
-						placeholder='Source'
-						allowClear={true}
-						value={project.source}
-						onChange={e => setSource(e.target.value)}
-					/>
-					<HeaderText>Characteristic</HeaderText>
-					<Select
-						style={{ width: '100%' }}
-						placeholder='Characteristic'
-						mode='multiple'
-						options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
-						optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.value
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
-						value={project.characteristic}
-						onChange={setCharacteristic}
-					/>
-					<HeaderText>Goal</HeaderText>
-					<NumberSpin min={0} max={500} steps={[ 5 ]} value={project.goal} onChange={setGoal} />
-					<HeaderText>Effect</HeaderText>
-					<MultiLine value={project.effect} onChange={setEffect} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className='project-edit-panel'>
+				{
+					props.includeNameAndDescription ?
+						<>
+							<HeaderText>Name</HeaderText>
+							<Input
+								status={project.name === '' ? 'warning' : ''}
+								placeholder='Name'
+								allowClear={true}
+								value={project.name}
+								onChange={e => setName(e.target.value)}
+							/>
+							<HeaderText>Description</HeaderText>
+							<MultiLine value={project.description} onChange={setDescription} />
+						</>
+						: null
+				}
+				<HeaderText>Item Prerequisites</HeaderText>
+				<Input
+					placeholder='Prerequisites'
+					allowClear={true}
+					value={project.itemPrerequisites}
+					onChange={e => setPrerequisites(e.target.value)}
+				/>
+				<HeaderText>Source</HeaderText>
+				<Input
+					placeholder='Source'
+					allowClear={true}
+					value={project.source}
+					onChange={e => setSource(e.target.value)}
+				/>
+				<HeaderText>Characteristic</HeaderText>
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Characteristic'
+					mode='multiple'
+					options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(option => ({ value: option }))}
+					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+					showSearch={true}
+					filterOption={(input, option) => {
+						const strings = option ?
+							[
+								option.value
+							]
+							: [];
+						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+					}}
+					value={project.characteristic}
+					onChange={setCharacteristic}
+				/>
+				<HeaderText>Goal</HeaderText>
+				<NumberSpin min={0} max={500} steps={[ 5 ]} value={project.goal} onChange={setGoal} />
+				<HeaderText>Effect</HeaderText>
+				<MultiLine value={project.effect} onChange={setEffect} />
+			</div>
+		</ErrorBoundary>
+	);
 };

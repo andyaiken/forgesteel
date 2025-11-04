@@ -1,13 +1,12 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
 
 export const retainer: MonsterGroup = {
 	id: 'monster-group-retainer',
@@ -29,7 +28,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -132,7 +131,7 @@ export const retainer: MonsterGroup = {
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -173,7 +172,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-2-feature-3',
 						name: 'Catcher',
 						type: FactoryLogic.type.createTrigger('A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.', { free: true }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The triggering creature or object',
 						sections: [
@@ -254,12 +252,12 @@ export const retainer: MonsterGroup = {
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 3, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 3, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
 						id: 'retainer-3-feature-1',
-						name: 'Corrupting Flame',
+						name: 'Black Flame',
 						type: FactoryLogic.type.createMain(),
 						cost: 'signature',
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
@@ -341,7 +339,7 @@ export const retainer: MonsterGroup = {
 			stamina: 66,
 			stability: 4,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 1, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 1, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -438,7 +436,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 3,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -537,7 +535,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 2, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 2, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -630,7 +628,7 @@ export const retainer: MonsterGroup = {
 			stamina: 48,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -733,7 +731,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -786,7 +784,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-8-retainer-7',
 						name: 'Magic Arrows',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -826,7 +823,7 @@ export const retainer: MonsterGroup = {
 			stamina: 30,
 			stability: 1,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -859,7 +856,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-9-retainer-3',
 						name: 'Frenzied Bite',
 						type: FactoryLogic.type.createTrigger('An enemy within 5 squares is reduced to 0 Stamina.', { qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -890,7 +886,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-9-retainer-5',
 						name: 'Horrific Feast',
 						type: FactoryLogic.type.createTrigger('The gnasher reduces a creature to 0 Stamina.', { qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -912,7 +907,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-1, 1, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(-1, 1, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -984,7 +979,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-10-retainer-10',
 						name: 'Poison Blade',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('Special') ],
 						target: 'Special',
 						sections: [
@@ -1006,7 +1000,7 @@ export const retainer: MonsterGroup = {
 			stamina: 48,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 0, 2, 1, 3),
+			characteristics: FactoryLogic.createCharacteristics(1, 0, 2, 1, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'retainer-11-feature-1',
@@ -1106,7 +1100,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 3,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 0, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1140,7 +1134,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-12-retainer-4',
 						name: '‘Scuse Me, Boss',
 						type: FactoryLogic.type.createTrigger('The warrior’s mentor is targeted by a strike while within distance.', { qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'The warrior’s mentor',
 						sections: [
@@ -1200,7 +1193,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1287,7 +1280,7 @@ export const retainer: MonsterGroup = {
 			stamina: 39,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1385,7 +1378,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1433,7 +1426,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-15-retainer-7',
 						name: 'Mow ’Em Down',
 						type: FactoryLogic.type.createMain({ qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1474,7 +1466,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1518,7 +1510,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-16-retainer-4',
 						name: 'Boost',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -1549,7 +1540,6 @@ export const retainer: MonsterGroup = {
 						id: 'retainer-16-retainer-10',
 						name: 'Triumphant Squeak',
 						type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Encounter' ] }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Self and each ally',
 						sections: [
@@ -1571,7 +1561,7 @@ export const retainer: MonsterGroup = {
 			stamina: 39,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 2, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 2, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1680,7 +1670,7 @@ export const retainer: MonsterGroup = {
 			stamina: 57,
 			stability: 4,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -1, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'retainer-18-feature-0',
@@ -1781,7 +1771,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, -1, -3, -1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, -1, -3, -1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1885,7 +1875,7 @@ export const retainer: MonsterGroup = {
 			stamina: 21,
 			stability: 1,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(-4, 1, 0, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(-4, 1, 0, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'retainer-20-feature-0',
@@ -2008,7 +1998,7 @@ export const retainer: MonsterGroup = {
 			stamina: 48,
 			stability: 0,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 0, 0, 3),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 0, 0, 3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({

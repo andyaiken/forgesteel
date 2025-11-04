@@ -1,14 +1,14 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { blackAsh } from './black-ash';
-import { causticAlchemy } from './caustic-alchemy';
-import { harlequinMask } from './harlequin-mask';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { blackAsh } from '@/data/classes/shadow/black-ash';
+import { causticAlchemy } from '@/data/classes/shadow/caustic-alchemy';
+import { harlequinMask } from '@/data/classes/shadow/harlequin-mask';
 
 export const shadow: HeroClass = {
 	id: 'class-shadow',
@@ -17,6 +17,7 @@ export const shadow: HeroClass = {
 Subtlety is your art, the tip of the blade your brush. You studied at a secret college, specializing in alchemy, illusion, or shadow-magics. Your training and knowledge place you among the elite ranks of assassins, spies, and commandos. But more potent than any weapon or sorcery is your insight into your enemies’ weaknesses.
 
 As a shadow, you possess abilities that deal significant damage, enable you to move swiftly across the battlefield and evade hazards, and allow you to fade from notice even in the midstof the most intense combat encounters. You also possess more skills than any other hero.`,
+	type: 'standard',
 	subclassName: 'Shadow College',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -60,7 +61,6 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'shadow-1-1',
-					listOptions: [ SkillList.Intrigue ],
 					count: 2,
 					selected: [ 'Hide', 'Sneak' ]
 				}),
@@ -119,7 +119,6 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 						name: 'Careful Observation',
 						description: 'A moment of focus leaves a foe firmly in your sights.',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('20 squares') ],
 						target: 'One creature',
 						sections: [
@@ -245,8 +244,6 @@ If the ability has multiple targets, the cost is reduced even if the ability has
 						name: 'Umbral Form',
 						description: 'You lose control of yourself, becoming a shadow creature dripping with ash.',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
-						distance: [],
 						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('This transformation lasts until the end of the encounter, until you are dying, or after 1 uninterrupted hour of quiet focus outside of combat. You gain the following effects while in this form:'),
@@ -688,7 +685,6 @@ Subterfuge remains until you spend it.`
 			name: 'Dancer',
 			description: 'You enter a flow state that makes you nearly impossible to pin down.',
 			type: FactoryLogic.type.createManeuver(),
-			keywords: [],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,

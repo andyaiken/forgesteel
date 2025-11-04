@@ -1,11 +1,11 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const griffon: MonsterGroup = {
 	id: 'monster-group-griffon',
@@ -39,7 +39,6 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 				name: 'Swoop',
 				type: FactoryLogic.type.createManeuver(),
 				cost: 3,
-				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
@@ -51,6 +50,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 			id: 'griffon-malice-2',
 			name: 'Piercing Cry',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'A griffon acting this turn unleashes a hideous screech at one enemy within 5 squares of them, forcing that creature to make an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
@@ -65,6 +65,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 			id: 'griffon-malice-3',
 			name: 'Wildwinds',
 			cost: 10,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Winds bluster and blow across the encounter map. Until the end of the encounter, each creature who can’t fly or isn’t mounted on a flying creature takes a −3 penalty to stability, and any forced movement effect targeting such a creature moves them an additional 5 squares.'
 			]
@@ -83,7 +84,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 			stability: 2,
 			size: FactoryLogic.createSize(2),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, -1, 1, 2),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 1, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -156,7 +157,6 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 						id: 'griffon-1-feature-4',
 						name: 'Zephyr Feint',
 						type: FactoryLogic.type.createTrigger('The griffon takes damage.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -188,7 +188,7 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 			stability: 3,
 			size: FactoryLogic.createSize(3),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, -1, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, -1, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -216,7 +216,6 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 						id: 'griffon-2-feature-2',
 						name: 'Bound Ahead',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						cost: 5,
@@ -251,7 +250,6 @@ Daring poachers sometimes attempt to steal griffon eggs from wild aeries, but su
 						id: 'griffon-2-feature-4',
 						name: 'Circle and Strike',
 						type: FactoryLogic.type.createTrigger('The griffon flies directly above a creature within distance.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'The triggering creature',
 						sections: [

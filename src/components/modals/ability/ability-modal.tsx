@@ -1,25 +1,25 @@
-import { AbilityCustomization, Hero } from '../../../models/hero';
-import { Input, Segmented, Space } from 'antd';
-import { Ability } from '../../../models/ability';
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityLogic } from '../../../logic/ability-logic';
-import { AbilityPanel } from '../../panels/elements/ability-panel/ability-panel';
-import { Characteristic } from '../../../enums/characteristic';
-import { Collections } from '../../../utils/collections';
-import { DieRollPanel } from '../../panels/die-roll/die-roll-panel';
-import { Expander } from '../../controls/expander/expander';
-import { HeaderText } from '../../controls/header-text/header-text';
-import { HeroLogic } from '../../../logic/hero-logic';
-import { Modal } from '../modal/modal';
-import { Monster } from '../../../models/monster';
-import { MonsterLogic } from '../../../logic/monster-logic';
-import { MultiLine } from '../../controls/multi-line/multi-line';
-import { NumberSpin } from '../../controls/number-spin/number-spin';
-import { PanelMode } from '../../../enums/panel-mode';
-import { RollLogic } from '../../../logic/roll-logic';
-import { RollState } from '../../../enums/roll-state';
-import { SelectablePanel } from '../../controls/selectable-panel/selectable-panel';
-import { Utils } from '../../../utils/utils';
+import { AbilityCustomization, Hero } from '@/models/hero';
+import { Input, Segmented, Select, Space } from 'antd';
+import { Ability } from '@/models/ability';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityLogic } from '@/logic/ability-logic';
+import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
+import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { DieRollPanel } from '@/components/panels/die-roll/die-roll-panel';
+import { Expander } from '@/components/controls/expander/expander';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Modal } from '@/components/modals/modal/modal';
+import { Monster } from '@/models/monster';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { PanelMode } from '@/enums/panel-mode';
+import { RollLogic } from '@/logic/roll-logic';
+import { RollState } from '@/enums/roll-state';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './ability-modal.scss';
@@ -135,6 +135,22 @@ export const AbilityModal = (props: Props) => {
 		}
 	};
 
+	const setCharacteristic = (value: Characteristic | null) => {
+		const copy = Utils.copy(hero) as Hero;
+
+		let ac = copy.abilityCustomizations.find(ac => ac.abilityID === props.ability.id);
+		if (!ac) {
+			ac = createCustomization();
+			copy.abilityCustomizations.push(ac);
+		}
+		ac.characteristic = value;
+
+		setHero(copy);
+		if (props.updateHero) {
+			props.updateHero(copy);
+		}
+	};
+
 	const createCustomization = (): AbilityCustomization => {
 		return {
 			abilityID: props.ability.id,
@@ -142,7 +158,8 @@ export const AbilityModal = (props: Props) => {
 			description: '',
 			notes: '',
 			distanceBonus: 0,
-			damageBonus: 0
+			damageBonus: 0,
+			characteristic: null
 		};
 	};
 
@@ -224,36 +241,47 @@ export const AbilityModal = (props: Props) => {
 								/>
 							</Space>
 						</Expander>
+						{
+							props.ability.sections.some(s => (s.type === 'roll')) ?
+								<Expander title='Power Roll'>
+									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+										<Select
+											style={{ width: '100%' }}
+											allowClear={true}
+											placeholder='Select a characteristic'
+											options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch, label: <div className='ds-text'>{ch}</div> }))}
+											value={customization?.characteristic}
+											onChange={setCharacteristic}
+										/>
+									</Space>
+								</Expander>
+								: null
+						}
 					</div>
 				);
 		}
 	};
 
-	try {
-		return (
-			<Modal
-				toolbar={
-					props.updateHero ?
-						<div style={{ width: '100%', textAlign: 'center' }}>
-							<Segmented
-								name='tabs'
-								options={[ 'Ability Card', 'Customize' ]}
-								value={page}
-								onChange={setPage}
-							/>
-						</div>
-						: null
-				}
-				content={
-					<div className='ability-modal'>
-						{getContent()}
+	return (
+		<Modal
+			toolbar={
+				props.updateHero ?
+					<div style={{ width: '100%', textAlign: 'center' }}>
+						<Segmented
+							name='tabs'
+							options={[ 'Ability Card', 'Customize' ]}
+							value={page}
+							onChange={setPage}
+						/>
 					</div>
-				}
-				onClose={props.onClose}
-			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+					: null
+			}
+			content={
+				<div className='ability-modal'>
+					{getContent()}
+				</div>
+			}
+			onClose={props.onClose}
+		/>
+	);
 };

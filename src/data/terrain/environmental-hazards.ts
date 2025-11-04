@@ -1,10 +1,10 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterRoleType } from '../../enums/monster-role-type';
-import { Terrain } from '../../models/terrain';
-import { TerrainCategory } from '../../enums/terrain-category';
-import { TerrainRoleType } from '../../enums/terrain-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { Terrain } from '@/models/terrain';
+import { TerrainCategory } from '@/enums/terrain-category';
+import { TerrainRoleType } from '@/enums/terrain-role-type';
 
 export const angryBeehive: Terrain = {
 	id: 'terrain-angry-beehive',
@@ -21,7 +21,7 @@ export const angryBeehive: Terrain = {
 		base: 3,
 		perSquare: 0
 	},
-	size: '1S',
+	size: FactoryLogic.createSize(1, 'S'),
 	damageMods: [],
 	sections: [
 		{

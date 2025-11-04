@@ -1,15 +1,15 @@
-import { HeroHealthPanel, MonsterHealthPanel } from '../../../health/health-panel';
-import { HeroInfo, HeroToken, MonsterInfo, MonsterToken } from '../../../token/token';
-import { ErrorBoundary } from '../../../../controls/error-boundary/error-boundary';
-import { FactoryLogic } from '../../../../../logic/factory-logic';
-import { Hero } from '../../../../../models/hero';
-import { HeroLogic } from '../../../../../logic/hero-logic';
-import { MapItemStyle } from '../tactical-map-panel';
-import { MapMini } from '../../../../../models/tactical-map';
-import { Markdown } from '../../../../controls/markdown/markdown';
-import { Monster } from '../../../../../models/monster';
+import { HeroHealthPanel, MonsterHealthPanel } from '@/components/panels/health/health-panel';
+import { HeroInfo, HeroToken, MonsterInfo, MonsterToken } from '@/components/panels/token/token';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { MapItemStyle } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { MapMini } from '@/models/tactical-map';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Monster } from '@/models/monster';
 import { Popover } from 'antd';
-import { TacticalMapDisplayType } from '../../../../../enums/tactical-map-display-type';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 
 import './map-mini.scss';
 
@@ -121,57 +121,52 @@ export const MapMiniPanel = (props: Props) => {
 		return null;
 	}
 
-	try {
-		const size = getSize();
+	const size = getSize();
 
-		let className = `map-mini-panel ${props.display} size-${size.mod.toLowerCase()}`;
-		if (props.selectable) {
-			className += ' selectable';
-		}
-		if (props.selected) {
-			className += ' selected';
-		}
-		if (props.content && props.content.state.hidden) {
-			className += ' hidden';
-		}
+	let className = `map-mini-panel ${props.display} size-${size.mod.toLowerCase()}`;
+	if (props.selectable) {
+		className += ' selectable';
+	}
+	if (props.selected) {
+		className += ' selected';
+	}
+	if (props.content && props.content.state.hidden) {
+		className += ' hidden';
+	}
 
-		return (
-			<ErrorBoundary>
-				<Popover content={getInfo()}>
-					<div
-						className={className}
-						style={props.style}
-						onClick={e => {
-							if (props.selectable) {
-								e.stopPropagation();
-								props.selectMini(props.mini);
-							}
-						}}
-						onDoubleClick={e => {
-							if (props.selectable) {
-								e.stopPropagation();
-								if (props.display === TacticalMapDisplayType.DirectorEdit) {
-									if (props.content && props.mini.content) {
-										if (props.mini.content.type === 'hero') {
-											props.selectHero(props.content as Hero);
-										}
-										if (props.mini.content.type === 'monster') {
-											props.selectMonster(props.content as Monster);
-										}
+	return (
+		<ErrorBoundary>
+			<Popover content={getInfo()}>
+				<div
+					className={className}
+					style={props.style}
+					onClick={e => {
+						if (props.selectable) {
+							e.stopPropagation();
+							props.selectMini(props.mini);
+						}
+					}}
+					onDoubleClick={e => {
+						if (props.selectable) {
+							e.stopPropagation();
+							if (props.display === TacticalMapDisplayType.DirectorEdit) {
+								if (props.content && props.mini.content) {
+									if (props.mini.content.type === 'hero') {
+										props.selectHero(props.content as Hero);
+									}
+									if (props.mini.content.type === 'monster') {
+										props.selectMonster(props.content as Monster);
 									}
 								}
 							}
-						}}
-					>
-						<div className='mini-content'>
-							{getContent()}
-						</div>
+						}
+					}}
+				>
+					<div className='mini-content'>
+						{getContent()}
 					</div>
-				</Popover>
-			</ErrorBoundary>
-		);
-	} catch (e) {
-		console.error(e);
-		return null;
-	}
+				</div>
+			</Popover>
+		</ErrorBoundary>
+	);
 };

@@ -1,13 +1,13 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const troll: MonsterGroup = {
 	id: 'monster-group-troll',
@@ -46,6 +46,7 @@ export const troll: MonsterGroup = {
 			id: 'troll-malice-1',
 			name: 'Foul Spew',
 			cost: 3,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'One troll acting this turn spews out a half-digested meal in a 5 × 1 line within 1 square of them. Each troll in the area regains 3 Stamina. Each enemy in the area makes a **Might test**.',
 				FactoryLogic.createPowerRoll({
@@ -60,6 +61,7 @@ export const troll: MonsterGroup = {
 			id: 'troll-malice-2',
 			name: 'Emergency Meal',
 			cost: 5,
+			icon: StatBlockIcon.Melee,
 			sections: [
 				'Each troll in the encounter can make a free strike against a creature adjacent to them, and regains Stamina equal to the damage dealt.'
 			]
@@ -68,6 +70,7 @@ export const troll: MonsterGroup = {
 			id: 'troll-malice-3',
 			name: 'Bloody Banquet',
 			cost: 7,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Each winded troll in the encounter disgorges the contents of their stomach onto the ground around them, creating a 1 burst of foul vomitus that lasts until the end of the encounter. Each non-troll who enters this area for the first time in a round or starts their turn there takes 5 acid damage. Each troll in the area has a double edge on power rolls.'
 			]
@@ -87,7 +90,7 @@ export const troll: MonsterGroup = {
 			stability: 0,
 			freeStrikeDamage: 3,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -2, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -2, -1, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-1-feature-0',
@@ -144,7 +147,7 @@ export const troll: MonsterGroup = {
 			stability: 3,
 			freeStrikeDamage: 3,
 			withCaptain: '+2 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -1, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-2-feature-0',
@@ -199,7 +202,7 @@ export const troll: MonsterGroup = {
 			stamina: 120,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, 1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, 1, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-3-feature-0',
@@ -309,7 +312,7 @@ export const troll: MonsterGroup = {
 			stamina: 160,
 			stability: 4,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(3, 1, -1, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 1, -1, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'troll-4-feature-0',
@@ -413,7 +416,7 @@ export const troll: MonsterGroup = {
 			stamina: 15,
 			stability: 4,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, -1, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, -1, 0, 2),
 			withCaptain: '+3 bonus to Stamina',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -470,7 +473,7 @@ export const troll: MonsterGroup = {
 			stamina: 15,
 			stability: 2,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 1, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 1, 1),
 			withCaptain: '+2 bonus to speed',
 			features: [
 				FactoryLogic.feature.createDamageModifier({

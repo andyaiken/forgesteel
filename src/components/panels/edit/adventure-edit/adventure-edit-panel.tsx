@@ -1,25 +1,25 @@
 import { Button, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Adventure } from '../../../../models/adventure';
-import { Collections } from '../../../../utils/collections';
-import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { Empty } from '../../../controls/empty/empty';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Expander } from '../../../controls/expander/expander';
-import { FactoryLogic } from '../../../../logic/factory-logic';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { Hero } from '../../../../models/hero';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { MultiLine } from '../../../controls/multi-line/multi-line';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Options } from '../../../../models/options';
-import { Playbook } from '../../../../models/playbook';
-import { PlaybookLogic } from '../../../../logic/playbook-logic';
-import { Plot } from '../../../../models/plot';
-import { PlotEditPanel } from '../plot-edit/plot-edit-panel';
-import { PlotGraphPanel } from '../../plot-graph/plot-graph-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { Utils } from '../../../../utils/utils';
+import { Adventure } from '@/models/adventure';
+import { Collections } from '@/utils/collections';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
+import { Playbook } from '@/models/playbook';
+import { PlaybookLogic } from '@/logic/playbook-logic';
+import { Plot } from '@/models/plot';
+import { PlotEditPanel } from '@/components/panels/edit/plot-edit/plot-edit-panel';
+import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './adventure-edit-panel.scss';
@@ -350,32 +350,27 @@ export const AdventureEditPanel = (props: Props) => {
 		return getAdventureEditor();
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='adventure-edit-panel'>
-					<div className='plot-workspace'>
-						<PlotGraphPanel
-							label={currentPlot === adventure.plot ? adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
-							plot={currentPlot}
-							adventure={adventure}
-							selectedPlot={selectedPlot || undefined}
-							onSelect={setSelectedPlot}
-							onOpen={plot => {
-								setSelectedPlot(null);
-								setCurrentPlot(plot);
-							}}
-							onCreate={addPlotPoint}
-						/>
-					</div>
-					<div className='plot-editor'>
-						{getEditor()}
-					</div>
+	return (
+		<ErrorBoundary>
+			<div className='adventure-edit-panel'>
+				<div className='plot-workspace'>
+					<PlotGraphPanel
+						label={currentPlot === adventure.plot ? adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
+						plot={currentPlot}
+						adventure={adventure}
+						selectedPlot={selectedPlot || undefined}
+						onSelect={setSelectedPlot}
+						onOpen={plot => {
+							setSelectedPlot(null);
+							setCurrentPlot(plot);
+						}}
+						onCreate={addPlotPoint}
+					/>
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				<div className='plot-editor'>
+					{getEditor()}
+				</div>
+			</div>
+		</ErrorBoundary>
+	);
 };

@@ -1,24 +1,27 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../models/feature';
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { AbilityUsage } from '../enums/ability-usage';
-import { Ancestry } from '../models/ancestry';
-import { Career } from '../models/career';
-import { Characteristic } from '../enums/characteristic';
-import { Collections } from '../utils/collections';
-import { Complication } from '../models/complication';
-import { Culture } from '../models/culture';
-import { DamageType } from '../enums/damage-type';
-import { FactoryLogic } from './factory-logic';
-import { FeatureAddOnType } from '../enums/feature-addon-type';
-import { FeatureField } from '../enums/feature-field';
-import { FeatureType } from '../enums/feature-type';
-import { Hero } from '../models/hero';
-import { HeroClass } from '../models/class';
-import { HeroLogic } from './hero-logic';
-import { Item } from '../models/item';
-import { ItemType } from '../enums/item-type';
-import { MonsterFeatureCategory } from '../enums/monster-feature-category';
-import { Utils } from '../utils/utils';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityUsage } from '@/enums/ability-usage';
+import { Ancestry } from '@/models/ancestry';
+import { Career } from '@/models/career';
+import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { Complication } from '@/models/complication';
+import { Culture } from '@/models/culture';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureAddOnType } from '@/enums/feature-addon-type';
+import { FeatureField } from '@/enums/feature-field';
+import { FeatureType } from '@/enums/feature-type';
+import { FollowerType } from '@/enums/follower-type';
+import { Hero } from '@/models/hero';
+import { HeroClass } from '@/models/class';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
+import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { TerrainRoleType } from '@/enums/terrain-role-type';
+import { Utils } from '@/utils/utils';
 
 export class FeatureLogic {
 	static getFeaturesFromAncestry = (ancestry: Ancestry, hero: Hero) => {
@@ -49,7 +52,7 @@ export class FeatureLogic {
 
 		features.push({
 			feature: FactoryLogic.feature.create({
-				id: `${culture.name}-culture-lore-influence`,
+				id: `${culture.name.toLocaleLowerCase().replaceAll(' ', '-')}-culture-lore-influence`,
 				name: `${culture.name} Culture`.trim(),
 				description: 'You gain an edge on tests made to recall lore about your culture, and on tests made to influence and interact with people of your culture.'
 			}),
@@ -102,7 +105,19 @@ export class FeatureLogic {
 	static getFeaturesFromCustomization = (hero: Hero) => {
 		const features: { feature: Feature, source: string }[] = [];
 
-		features.push(...hero.features.map(f => ({ feature: f, source: 'Customization' })));
+		features.push(...hero.features.map(f => {
+			let source = 'Customization';
+			switch (f.type) {
+				case FeatureType.TitleChoice:
+					source = f.data.selected.length === 1 ? f.data.selected[0].name : 'Title';
+					break;
+				case FeatureType.Companion:
+				case FeatureType.Follower:
+					source = 'Follower';
+					break;
+			}
+			return ({ feature: f, source: source });
+		}));
 
 		return FeatureLogic.simplifyFeatures(features, hero);
 	};
@@ -303,7 +318,9 @@ export class FeatureLogic {
 					break;
 				case FeatureType.Domain:
 					feature.data.selected.forEach(d => {
-						d.defaultFeatures.forEach(f => addFeature(f, `${d.name} Domain`, level));
+						if (d.defaultFeatures) {
+							d.defaultFeatures.forEach(f => addFeature(f, `${d.name} Domain`, level));
+						}
 					});
 					break;
 				case FeatureType.DomainFeature:
@@ -335,66 +352,167 @@ export class FeatureLogic {
 		return list;
 	};
 
+	// Combine Features that do the 'same thing' - e.g. multiple Stamina bonuses into one
+	static reduceFeatures = (features: Feature[]): Feature[] => {
+		const reduced: Feature[] = [];
+
+		features.forEach(f => {
+			switch (f.type) {
+				case FeatureType.Bonus: {
+					const match = reduced.find(m => m.type === FeatureType.Bonus
+							&& this.matchDataFields(m.data, f.data, [ 'field' ]));
+					if (match) {
+						(match as FeatureBonus).data.value += f.data.value;
+					} else {
+						reduced.push(Utils.copy(f));
+					}
+					break;
+				}
+				case FeatureType.AbilityDamage: {
+					const match = reduced.find(m => m.type === FeatureType.AbilityDamage
+						&& this.matchDataFields(m.data, f.data, [ 'damageType', 'keywords' ]));
+					if (match) {
+						(match as FeatureAbilityDamage).data.value += f.data.value;
+					} else {
+						reduced.push(Utils.copy(f));
+					}
+					break;
+				}
+				default:
+					reduced.push(Utils.copy(f));
+					break;
+			}
+		});
+
+		return reduced;
+	};
+
+	static matchDataFields<T>(a: T, b: T, fields: string[]): boolean {
+		return fields.every(field => {
+			if (Object.prototype.hasOwnProperty.call(a, field)
+				&& Object.prototype.hasOwnProperty.call(b, field)) {
+				const aField = a[field as keyof T];
+				const bField = b[field as keyof T];
+
+				if (aField instanceof Array && bField instanceof Array) {
+					return aField.every(x => bField.includes(x));
+				} else {
+					return aField === bField;
+				}
+			} else {
+				return false;
+			}
+		});
+	};
+
+	static switchFeatureCharacteristic = (feature: Feature, fromCharacteristic: Characteristic, toCharacteristic: Characteristic) => {
+		const fromStr = fromCharacteristic.toString();
+		const toStr = toCharacteristic.toString();
+
+		const fromChar = fromStr[0];
+		const toChar = toStr[0];
+
+		feature.description = feature.description.replaceAll(fromStr, toStr);
+
+		switch (feature.type) {
+			case FeatureType.Ability:
+				feature.data.ability.sections.forEach(s => {
+					switch (s.type) {
+						case 'text':
+							s.text = s.text.replaceAll(fromStr, toStr);
+							break;
+						case 'field':
+							s.effect = s.effect.replaceAll(fromStr, toStr);
+							break;
+						case 'roll':
+							s.roll.characteristic = [ toCharacteristic ];
+							s.roll.tier1 = s.roll.tier1.replaceAll(fromStr, toStr);
+							s.roll.tier1 = s.roll.tier1.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
+							s.roll.tier2 = s.roll.tier2.replaceAll(fromStr, toStr);
+							s.roll.tier2 = s.roll.tier2.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
+							s.roll.tier3 = s.roll.tier3.replaceAll(fromStr, toStr);
+							s.roll.tier3 = s.roll.tier3.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
+							s.roll.crit = s.roll.crit.replaceAll(fromStr, toStr);
+							s.roll.crit = s.roll.crit.replaceAll(`+ ${fromChar}`, `+ ${toChar}`);
+							break;
+					}
+				});
+				break;
+			case FeatureType.Choice:
+				[ ...feature.data.options.map(f => f.feature), ...feature.data.selected ]
+					.forEach(f => FeatureLogic.switchFeatureCharacteristic(f, fromCharacteristic, toCharacteristic));
+				break;
+			case FeatureType.Multiple:
+				feature.data.features.forEach(f => FeatureLogic.switchFeatureCharacteristic(f, fromCharacteristic, toCharacteristic));
+				break;
+		}
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getFeatureData = (type: FeatureType) => {
-		let data: FeatureData | null = null;
-
 		switch (type) {
-			case FeatureType.Ability:
-				data = {
+			case FeatureType.Ability: {
+				const data: FeatureAbilityData = {
 					ability: FactoryLogic.createAbility({
 						id: Utils.guid(),
 						name: '',
 						description: '',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: '',
 						sections: []
 					})
-				} as FeatureAbilityData;
-				break;
-			case FeatureType.AbilityCost:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.AbilityCost: {
+				const data: FeatureAbilityCostData = {
 					keywords: [],
 					modifier: -1
-				} as FeatureAbilityCostData;
-				break;
-			case FeatureType.AbilityDamage:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.AbilityDamage: {
+				const data: FeatureAbilityDamageData = {
 					keywords: [],
 					value: 0,
+					valueFromController: null,
 					valueCharacteristics: [],
 					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
 					valuePerEchelon: 0,
 					damageType: DamageType.Damage
-				} as FeatureAbilityDamageData;
-				break;
-			case FeatureType.AbilityDistance:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.AbilityDistance: {
+				const data: FeatureAbilityDistanceData = {
 					keywords: [],
 					value: 0,
+					valueFromController: null,
 					valueCharacteristics: [],
 					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
 					valuePerEchelon: 0
-				} as FeatureAbilityDistanceData;
-				break;
-			case FeatureType.AddOn:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.AddOn: {
+				const data: FeatureAddOnData = {
 					category: FeatureAddOnType.Defensive,
 					cost: 1
-				} as FeatureAddOnData;
-				break;
-			case FeatureType.AncestryChoice:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.AncestryChoice: {
+				const data: FeatureAncestryChoiceData = {
 					selected: null
-				} as FeatureAncestryChoiceData;
-				break;
-			case FeatureType.AncestryFeatureChoice:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.AncestryFeatureChoice: {
+				const data: FeatureAncestryFeatureChoiceData = {
 					source: {
 						current: true,
 						former: true,
@@ -402,219 +520,331 @@ export class FeatureLogic {
 					},
 					value: 1,
 					selected: null
-				} as FeatureAncestryFeatureChoiceData;
-				break;
-			case FeatureType.Bonus:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Bonus: {
+				const data: FeatureBonusData = {
 					field: FeatureField.Recoveries,
 					value: 0,
+					valueFromController: null,
 					valueCharacteristics: [],
 					valueCharacteristicMultiplier: 1,
 					valuePerLevel: 0,
 					valuePerEchelon: 0
-				} as FeatureBonusData;
-				break;
-			case FeatureType.CharacteristicBonus:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.CharacteristicBonus: {
+				const data: FeatureCharacteristicBonusData = {
 					characteristic: Characteristic.Might,
 					value: 1
-				} as FeatureCharacteristicBonusData;
-				break;
-			case FeatureType.Choice:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Choice: {
+				const data: FeatureChoiceData = {
 					options: [],
 					count: 1,
 					selected: []
-				} as FeatureChoiceData;
-				break;
-			case FeatureType.ClassAbility:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.ClassAbility: {
+				const data: FeatureClassAbilityData = {
 					classID: undefined,
 					cost: 1,
 					count: 1,
 					allowAnySource: false,
 					minLevel: 1,
 					selectedIDs: []
-				} as FeatureClassAbilityData;
-				break;
-			case FeatureType.ConditionImmunity:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.ConditionImmunity: {
+				const data: FeatureConditionImmunityData = {
 					conditions: []
-				} as FeatureConditionImmunityData;
-				break;
-			case FeatureType.DamageModifier:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.DamageModifier: {
+				const data: FeatureDamageModifierData = {
 					modifiers: []
-				} as FeatureDamageModifierData;
-				break;
-			case FeatureType.Domain:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Domain: {
+				const data: FeatureDomainData = {
+					characteristic: Characteristic.Intuition,
+					levels: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ],
 					count: 1,
 					selected: []
-				} as FeatureDomainData;
-				break;
-			case FeatureType.DomainFeature:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.DomainFeature: {
+				const data: FeatureDomainFeatureData = {
 					level: 1,
 					count: 1,
 					selected: []
-				} as FeatureDomainFeatureData;
-				break;
+				};
+				return data;
+			}
 			case FeatureType.Companion: {
-				data = {
+				const data: FeatureCompanionData = {
 					type: 'companion',
 					selected: null
-				} as FeatureCompanionData;
-				break;
+				};
+				return data;
 			}
-			case FeatureType.Follower:
-				data = {
-					follower: FactoryLogic.createFollower()
-				} as FeatureFollowerData;
-				break;
-			case FeatureType.HeroicResource:
-				data = {
+			case FeatureType.Fixture: {
+				const data: FeatureFixtureData = {
+					fixture: {
+						id: Utils.guid(),
+						name: '',
+						description: '',
+						role: FactoryLogic.createTerrainRole(MonsterRoleType.NoRole, TerrainRoleType.Hazard),
+						baseStamina: 20,
+						size: FactoryLogic.createSize(2),
+						featuresByLevel: [
+							{
+								level: 1,
+								features: []
+							},
+							{
+								level: 2,
+								features: []
+							},
+							{
+								level: 3,
+								features: []
+							},
+							{
+								level: 4,
+								features: []
+							},
+							{
+								level: 5,
+								features: []
+							},
+							{
+								level: 6,
+								features: []
+							},
+							{
+								level: 7,
+								features: []
+							},
+							{
+								level: 8,
+								features: []
+							},
+							{
+								level: 9,
+								features: []
+							},
+							{
+								level: 10,
+								features: []
+							}
+						]
+					}
+				};
+				return data;
+			}
+			case FeatureType.Follower: {
+				const data: FeatureFollowerData = {
+					follower: FactoryLogic.createFollower(FollowerType.Artisan)
+				};
+				return data;
+			}
+			case FeatureType.HeroicResource: {
+				const data: FeatureHeroicResourceData = {
 					type: 'heroic',
 					gains: [],
 					details: '',
 					canBeNegative: false,
 					value: 0
-				} as FeatureHeroicResourceData;
-				break;
-			case FeatureType.HeroicResourceGain:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.HeroicResourceGain: {
+				const data: FeatureHeroicResourceGainData = {
 					tag: '',
 					trigger: '',
 					value: '1',
 					replacesTags: []
-				} as FeatureHeroicResourceGainData;
-				break;
-			case FeatureType.ItemChoice:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.ItemChoice: {
+				const data: FeatureItemChoiceData = {
 					types: [],
 					count: 1,
 					selected: []
-				} as FeatureItemChoiceData;
-				break;
-			case FeatureType.Kit:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Kit: {
+				const data: FeatureKitData = {
 					types: [],
 					count: 1,
 					selected: []
-				} as FeatureKitData;
-				break;
-			case FeatureType.Language:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Language: {
+				const data: FeatureLanguageData = {
 					language: ''
-				} as FeatureLanguageData;
-				break;
-			case FeatureType.LanguageChoice:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.LanguageChoice: {
+				const data: FeatureLanguageChoiceData = {
 					options: [],
 					count: 1,
 					selected: []
-				} as FeatureLanguageChoiceData;
-				break;
-			case FeatureType.MovementMode:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.MovementMode: {
+				const data: FeatureMovementModeData = {
 					mode: ''
-				} as FeatureMovementModeData;
-				break;
-			case FeatureType.Malice:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Malice: {
+				const data: FeatureMaliceData = {
 					cost: 3,
 					repeatable: false,
-					sections: [ '' ]
-				} as FeatureMaliceData;
-				break;
-			case FeatureType.Multiple:
-				data = {
+					sections: [ '' ],
+					echelon: 1,
+					icon: undefined
+				};
+				return data;
+			}
+			case FeatureType.MaliceAbility: {
+				const data: FeatureMaliceAbilityData = {
+					ability: FactoryLogic.createAbility({
+						id: Utils.guid(),
+						name: '',
+						description: '',
+						type: FactoryLogic.type.createMain(),
+						distance: [ FactoryLogic.distance.createMelee() ],
+						target: '',
+						sections: []
+					}),
+					echelon: 1
+				};
+				return data;
+			}
+			case FeatureType.Multiple: {
+				const data: FeatureMultipleData = {
 					features: []
-				} as FeatureMultipleData;
-				break;
-			case FeatureType.Package:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Package: {
+				const data: FeaturePackageData = {
 					tag: ''
-				} as FeaturePackageData;
-				break;
-			case FeatureType.PackageContent:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.PackageContent: {
+				const data: FeaturePackageContentData = {
 					tag: ''
-				} as FeaturePackageContentData;
-				break;
-			case FeatureType.Perk:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Perk: {
+				const data: FeaturePerkData = {
 					lists: [],
 					count: 1,
 					selected: []
-				} as FeaturePerkData;
-				break;
-			case FeatureType.Proficiency:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Proficiency: {
+				const data: FeatureProficiencyData = {
 					weapons: [],
 					armor: []
-				} as FeatureProficiencyData;
-				break;
-			case FeatureType.Size:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.SaveThreshold: {
+				const data: FeatureSaveThresholdData = {
+					value: 5
+				};
+				return data;
+			}
+			case FeatureType.Size: {
+				const data: FeatureSizeData = {
 					size: {
 						value: 1,
 						mod: 'M'
 					}
-				} as FeatureSizeData;
-				break;
-			case FeatureType.Skill:
-				data = {
-					skill: ''
-				} as FeatureSkillData;
-				break;
-			case FeatureType.SkillChoice:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.SkillChoice: {
+				const data: FeatureSkillChoiceData = {
 					options: [],
 					listOptions: [],
 					count: 1,
 					selected: []
-				} as FeatureSkillChoiceData;
-				break;
-			case FeatureType.Speed:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Speed: {
+				const data: FeatureSpeedData = {
 					speed: 5
-				} as FeatureSpeedData;
-				break;
-			case FeatureType.Summon:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.Summon: {
+				const data: FeatureSummonData = {
+					summons: []
+				};
+				return data;
+			}
+			case FeatureType.SummonChoice: {
+				const data: FeatureSummonChoiceData = {
 					options: [],
 					count: 1,
 					selected: []
-				} as FeatureSummonData;
-				break;
-			case FeatureType.TaggedFeature:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.TaggedFeature: {
+				const data: FeatureTaggedFeatureData = {
 					tag: '',
 					feature: FactoryLogic.feature.create({
 						id: Utils.guid(),
 						name: '',
 						description: ''
 					})
-				} as FeatureTaggedFeatureData;
-				break;
-			case FeatureType.TaggedFeatureChoice:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.TaggedFeatureChoice: {
+				const data: FeatureTaggedFeatureChoiceData = {
 					tag: '',
 					count: 1,
 					selected: []
-				} as FeatureTaggedFeatureChoiceData;
-				break;
-			case FeatureType.TitleChoice:
-				data = {
+				};
+				return data;
+			}
+			case FeatureType.TitleChoice: {
+				const data: FeatureTitleChoiceData = {
 					echelon: 1,
 					count: 1,
 					selected: []
-				} as FeatureTitleChoiceData;
-				break;
+				};
+				return data;
+			}
 		}
 
-		return data;
+		return null;
 	};
 
 	///////////////////////////////////////////////////////////////////////////
@@ -633,7 +863,7 @@ export class FeatureLogic {
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:
 			case FeatureType.SkillChoice:
-			case FeatureType.Summon:
+			case FeatureType.SummonChoice:
 			case FeatureType.TaggedFeatureChoice:
 			case FeatureType.TitleChoice:
 				return true;
@@ -682,6 +912,8 @@ export class FeatureLogic {
 			case FeatureType.Perk:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.SkillChoice:
+				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.SummonChoice:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.TaggedFeatureChoice:
 				return feature.data.selected.length >= feature.data.count;
@@ -763,6 +995,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a domain.';
 			case FeatureType.DomainFeature:
 				return 'This feature allows you to choose a feature from your domain.';
+			case FeatureType.Fixture:
+				return 'This feature allows you to summon a fixture.';
 			case FeatureType.Follower:
 				return 'This feature grants you a follower.';
 			case FeatureType.HeroicResource:
@@ -793,15 +1027,17 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a perk.';
 			case FeatureType.Proficiency:
 				return 'This feature grants you proficiency with weapons or armor.';
+			case FeatureType.SaveThreshold:
+				return 'This feature modifies your threshold for saves.';
 			case FeatureType.Size:
 				return 'This feature sets your size.';
-			case FeatureType.Skill:
-				return 'This feature grants you a skill.';
 			case FeatureType.SkillChoice:
 				return 'This feature allows you to choose a skill.';
 			case FeatureType.Speed:
 				return 'This feature sets your base speed.';
 			case FeatureType.Summon:
+				return 'This feature specifies monsters you can summon.';
+			case FeatureType.SummonChoice:
 				return 'This feature allows you to choose monsters you can summon.';
 			case FeatureType.TaggedFeature:
 				return 'This feature describes a tagged feature.';

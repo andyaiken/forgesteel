@@ -1,10 +1,10 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Ancestry } from '../../models/ancestry';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Ancestry } from '@/models/ancestry';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
 
 export const dragonKnight: Ancestry = {
 	id: 'ancestry-dragon-knight',
@@ -83,7 +83,6 @@ export const dragonKnight: Ancestry = {
 							name: 'Draconian Guard',
 							description: 'You can swing your wings around and guard against a blow.',
 							type: FactoryLogic.type.createTrigger('You, or a creature adjacent to you, takes damage from a strike'),
-							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [

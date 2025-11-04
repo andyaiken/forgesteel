@@ -1,12 +1,12 @@
-import { dwarfFury } from './heroes/dwarf-fury';
-import { highElfTactician } from './heroes/high-elf-tactician';
-import { humanCensor } from './heroes/human-censor';
-import { humanNull } from './heroes/human-null';
-import { humanTalent } from './heroes/human-talent';
-import { orcConduit } from './heroes/orc-conduit';
-import { polderElementalist } from './heroes/polder-elementalist';
-import { polderShadow } from './heroes/polder-shadow';
-import { wodeElfTroubadour } from './heroes/wode-elf-troubadour';
+import { dwarfFury } from '@/data/heroes/dwarf-fury';
+import { highElfTactician } from '@/data/heroes/high-elf-tactician';
+import { humanCensor } from '@/data/heroes/human-censor';
+import { humanNull } from '@/data/heroes/human-null';
+import { humanTalent } from '@/data/heroes/human-talent';
+import { orcConduit } from '@/data/heroes/orc-conduit';
+import { polderElementalist } from '@/data/heroes/polder-elementalist';
+import { polderShadow } from '@/data/heroes/polder-shadow';
+import { wodeElfTroubadour } from '@/data/heroes/wode-elf-troubadour';
 
 export class HeroData {
 	static dwarfFury = dwarfFury;

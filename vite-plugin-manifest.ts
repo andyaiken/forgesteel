@@ -18,7 +18,7 @@ const BASE_MANIFEST = {
 
 // Generate manifest with icon paths
 export function generateManifest(shieldIconPath?: string) {
-	const iconPath = shieldIconPath || '/forgesteel/assets/shield.png';
+	const iconPath = shieldIconPath || '/forgesteel/src/assets/shield.png';
 
 	return {
 		...BASE_MANIFEST,

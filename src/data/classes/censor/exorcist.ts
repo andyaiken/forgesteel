@@ -1,27 +1,25 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { SkillList } from '../../../enums/skill-list';
-import { SubClass } from '../../../models/subclass';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SubClass } from '@/models/subclass';
 
 export const exorcist: SubClass = {
 	id: 'censor-sub-1',
 	name: 'Exorcist',
-	description: 'You specialize in hunting your order’s hidden enemies, knowing that an open mind is an unguarded fortress. You have the Read Person skill.',
+	description: 'You specialize in hunting your order’s hidden enemies, knowing that an open mind is an unguarded fortress.',
 	featuresByLevel: [
 		{
 			level: 1,
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'censor-sub-1-1-1',
-					listOptions: [ SkillList.Interpersonal ],
 					selected: [ 'Read Person' ]
 				}),
 				FactoryLogic.feature.createPackageContent({
 					id: 'censor-sub-1-1-2',
 					name: 'Judgment Order Benefit',
-					description: 'You can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.',
+					description: 'The first time on a turn that you use your Judgment ability to judge a creature, you can teleport up to a number of squares equal to twice your Presence score. This movement must take you closer to the judged creature. You do not need line of effect to your destination.',
 					tag: 'censor-judgment'
 				})
 			]

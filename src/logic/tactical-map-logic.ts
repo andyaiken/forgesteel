@@ -1,7 +1,7 @@
-import { MapBoundaries, MapItem, MapPosition, MapTile, MapWall, TacticalMap } from '../models/tactical-map';
-import { Collections } from '../utils/collections';
-import { FactoryLogic } from './factory-logic';
-import { Random } from '../utils/random';
+import { MapBoundaries, MapItem, MapPosition, MapTile, MapWall, TacticalMap } from '@/models/tactical-map';
+import { Collections } from '@/utils/collections';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Random } from '@/utils/random';
 
 export class TacticalMapLogic {
 	static getMapSize = (map: TacticalMap) => {

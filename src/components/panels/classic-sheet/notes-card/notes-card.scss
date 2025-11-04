@@ -1,0 +1,10 @@
+@use '../../../pages/classic-sheet/common.scss';
+#classic-sheet .notes.card .content {
+    p {
+        font-size: round(1.1rem, 1px);
+    }
+
+    h1, h2 {
+        @include common.divider-plain(common.$color-medium, 1px);
+    }
+}

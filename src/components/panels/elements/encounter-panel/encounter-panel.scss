@@ -23,12 +23,6 @@
 		}
 	}
 
-	.encounter-meta {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 20px;
-	}
-
 	.encounter-stat-blocks {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -36,11 +30,11 @@
 
 		.monster-panel,
 		.terrain-panel {
-			padding: 0;
+			padding: 5px;
 		}
 	}
 
-	.malice {
+	.encounter-malice {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 20px;

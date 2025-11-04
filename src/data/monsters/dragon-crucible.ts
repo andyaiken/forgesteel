@@ -1,12 +1,12 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const dragonCrucible: MonsterGroup = {
 	id: 'monster-group-dragon-crucible',
@@ -46,6 +46,7 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 			id: 'dragon-crucible-malice-1',
 			name: 'Swordfall',
 			cost: 3,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'While the dragon is flying, they shape themself into a blade and fall. Each creature and object in the dragon’s space when they hit the ground and in a 6 × 4 line within 1 square of the dragon takes 7 damage. A creature who takes this damage and has A<4 takes 4 extra damage per square the dragon fell and is restrained (save ends). A creature not restrained this way can move into the nearest unoccupied space.'
 			]
@@ -54,6 +55,7 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 			id: 'dragon-crucible-malice-2',
 			name: 'Shower of Blades',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'The dragon shakes loose a cloud of shattered weapons in a 6 × 4 line within 1 square of them. Each creature and object in the area makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({
@@ -68,6 +70,7 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 			id: 'dragon-crucible-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The dragon takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -76,6 +79,7 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 			id: 'dragon-crucible-malice-4',
 			name: 'Meltdown',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'The dragon superheats the ground across the encounter map until the end of the round. Any enemy who starts their turn on the ground is slagged as if affected by the dragon’s Slag Spew ability.'
 			]
@@ -94,7 +98,7 @@ All crucible dragons manage to accrue large amounts of armaments and armor in th
 			stamina: 450,
 			stability: 6,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, -1, 3, 3, 2),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, 3, 3, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'dragon-crucible-feature-1',

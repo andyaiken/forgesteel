@@ -1,11 +1,11 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const valok: MonsterGroup = {
 	id: 'monster-group-valok',
@@ -64,6 +64,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			id: 'valok-malice-1',
 			name: 'Repeater',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'One valok acting this turn takes an additional main action.'
 			]
@@ -72,6 +73,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			id: 'valok-malice-2',
 			name: 'I Was Not Commanded to Wait ',
 			cost: 5,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'At the end of each turn until the end of the round, one valok can either shift up to 2 squares or make a free strike.'
 			]
@@ -80,6 +82,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			id: 'valok-malice-3',
 			name: 'Rapid Logic Overdrive',
 			cost: 7,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each valok in the encounter can end one effect on them that can be ended by a saving throw, and can move up to their speed (making use of the bonus below). Additionally, until the end of the encounter, all valok deal an extra 5 damage on strikes and gain a +5 bonus to speed. This feature can be activated multiples times, stacking the effects.'
 			]
@@ -98,7 +101,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 240,
 			stability: 5,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, 0, -2, 1, -4),
+			characteristics: FactoryLogic.createCharacteristics(4, 0, -2, 1, -4),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -199,7 +202,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 220,
 			stability: 3,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, -2, 1, -3),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, -2, 1, -3),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -299,7 +302,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 240,
 			stability: 8,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(4, -2, -4, -1, -5),
+			characteristics: FactoryLogic.createCharacteristics(4, -2, -4, -1, -5),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -427,7 +430,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 200,
 			stability: 6,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, -2, -4, -1, -5),
+			characteristics: FactoryLogic.createCharacteristics(4, -2, -4, -1, -5),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -544,7 +547,7 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 			stamina: 260,
 			stability: 8,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(5, -2, -4, -1, -5),
+			characteristics: FactoryLogic.createCharacteristics(5, -2, -4, -1, -5),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -593,7 +596,6 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						id: 'valok-5-feature-3',
 						name: 'Destructive Rollout',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -606,7 +608,6 @@ One of the most advanced multivoks, a chief directs and coordinates other valok 
 						id: 'valok-5-feature-4',
 						name: 'Burning Oil',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 20, value2: 1, within: 1 }) ],
 						target: 'Each enemy and object in the area',
 						cost: 3,

@@ -1,12 +1,12 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const giant: MonsterGroup = {
 	id: 'monster-group-giant',
@@ -95,6 +95,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			id: 'giant-malice-2',
 			name: 'Bellow',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Each giant in the encounter takes a deep breath and yells, pushing each creature within 3 squares of them up to 10 squares. A creature who can be pushed by more than one giant is pushed by one giant of your choice.'
 			]
@@ -103,6 +104,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			id: 'giant-malice-3',
 			name: 'Titanic Tear',
 			cost: 7,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'A giant creates a fissure along the ground, either in a 15 × 2 line within 1 or a 10 × 3 line within 2, and that opens up to a depth of 6 squares. Each giant in the area can shift into the nearest unoccupied space outside the fissure. Each non-giant in the area makes an **Agility test**.',
 				FactoryLogic.createPowerRoll({
@@ -127,7 +129,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stability: 5,
 			freeStrikeDamage: 3,
 			withCaptain: '+3 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-1-1',
@@ -177,7 +179,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stability: 10,
 			freeStrikeDamage: 3,
 			withCaptain: '+6 bonus to Stamina',
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 3, 0),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 3, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -230,7 +232,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stability: 5,
 			freeStrikeDamage: 4,
 			withCaptain: '+3 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(3, -1, -1, 4, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, -1, -1, 4, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-3-1',
@@ -279,7 +281,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stability: 5,
 			freeStrikeDamage: 4,
 			withCaptain: '+3 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(4, -1, -1, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-4-1',
@@ -328,7 +330,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 207,
 			stability: 10,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 1, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 1, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -380,7 +382,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-5-feature-3',
 						name: 'Cobble Stone Shape',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -432,7 +433,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 200,
 			stability: 5,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, 3, 0, 4, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 3, 0, 4, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-6-1',
@@ -503,7 +504,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-6-feature-5',
 						name: 'Emergency Beacon',
 						type: FactoryLogic.type.createTrigger('The lightbearer takes damage.'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -537,7 +537,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 240,
 			stability: 5,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-7-1',
@@ -592,7 +592,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-7-feature-4',
 						name: 'Blazing Leap',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -605,7 +604,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-7-feature-5',
 						name: 'Heat and Pressure',
 						type: FactoryLogic.type.createTrigger('A creature within distance willingly moves or shifts away from the red fist.', { qualifiers: [ 'Free' ] }),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
@@ -625,7 +623,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-7-feature-6',
 						name: 'Guardian Block',
 						type: FactoryLogic.type.createTrigger('An ally within distance is targeted by an enemy’s ability.'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createMelee(3)
 						],
@@ -654,7 +651,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 180,
 			stability: 5,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(4, -1, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-8-1',
@@ -723,7 +720,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-8-feature-5',
 						name: 'Frozen Retribution',
 						type: FactoryLogic.type.createTrigger('The storm hurler is targeted by a ranged strike.'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -753,7 +749,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 200,
 			stability: 5,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, 4, -1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(4, 4, -1, 0, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-9-1',
@@ -789,7 +785,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						name: 'Blizzard Surge',
 						type: FactoryLogic.type.createMain(),
 						cost: 5,
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -817,7 +812,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-9-feature-5',
 						name: 'Begone, Smallfolk!',
 						type: FactoryLogic.type.createTrigger('The wind sprinter takes damage.'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -852,7 +846,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 247,
 			stability: 10,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, 1, 1, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(4, 1, 1, 2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -903,7 +897,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-10-feature-3',
 						name: 'Castle Stone Shape',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -956,7 +949,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 200,
 			stability: 5,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, -1, -1, -1, -1),
+			characteristics: FactoryLogic.createCharacteristics(4, -1, -1, -1, -1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-11-1',
@@ -1076,7 +1069,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 207,
 			stability: 10,
 			freeStrikeDamage: 8,
-			characteristics: MonsterLogic.createCharacteristics(4, 3, 0, 3, 0),
+			characteristics: FactoryLogic.createCharacteristics(4, 3, 0, 3, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -1141,7 +1134,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						name: 'Break Armor',
 						cost: 1,
 						type: FactoryLogic.type.createTrigger('The marble stone giant takes damage'),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createSelf()
 						],
@@ -1180,7 +1172,7 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 			stamina: 240,
 			stability: 10,
 			freeStrikeDamage: 9,
-			characteristics: MonsterLogic.createCharacteristics(5, 3, 0, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(5, 3, 0, 2, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'giant-13-1',
@@ -1255,7 +1247,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						name: 'Fuel the Fire',
 						type: FactoryLogic.type.createTrigger('A fire giant ally within distance makes a strike.'),
 						cost: 1,
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.createRanged(12)
 						],
@@ -1285,7 +1276,6 @@ Stone giants are made of the same kinds of rocks that form their homes—sandsto
 						id: 'giant-13-feature-7',
 						name: 'Burning Legion',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(15) ],
 						target: 'Special',
 						sections: [

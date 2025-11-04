@@ -1,14 +1,14 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { exorcist } from './exorcist';
-import { oracle } from './oracle';
-import { paragon } from './paragon';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { exorcist } from '@/data/classes/censor/exorcist';
+import { oracle } from '@/data/classes/censor/oracle';
+import { paragon } from '@/data/classes/censor/paragon';
 
 export const censor: HeroClass = {
 	id: 'class-censor',
@@ -17,6 +17,7 @@ export const censor: HeroClass = {
 Demons and deathless fear you. Criminals run from the sight of your shadow. Agents of chaos, blasphemers, and heretics tremble at the sound of your voice. You carry the power of the gods, armed with wrath and sent out into the world first to seek, then censor those whose actions—or even existence—are anathema to your church.
 
 As a censor, you’re at your best against the strongest foes. Your judgment terrifies heretics, stops enemies in their tracks, and even hurls them across the battlefield.`,
+	type: 'standard',
 	subclassName: 'Order',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -65,7 +66,9 @@ As a censor, you’re at your best against the strongest foes. Your judgment ter
 					count: 2
 				}),
 				FactoryLogic.feature.createDomainChoice({
-					id: 'censor-1-2'
+					id: 'censor-1-2',
+					characteristic: Characteristic.Presence,
+					levels: [ 1, 4, 7 ]
 				}),
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -261,7 +264,7 @@ You can choose only one free triggered action option at a time, even if multiple
 					name: 'Focused Wrath',
 					tag: 'start 2',
 					trigger: 'Start of your turn',
-					value: '2',
+					value: '3',
 					replacesTags: [ 'start' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

@@ -1,13 +1,13 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const hobgoblin: MonsterGroup = {
 	id: 'monster-group-hobgoblin',
@@ -62,6 +62,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			id: 'hobgoblin-malice-1',
 			name: 'Operation Goblin Mode',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each goblin in the encounter gains a +3 bonus to speed until the end of the round.'
 			]
@@ -70,6 +71,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			id: 'hobgoblin-malice-2',
 			name: 'Operation Tactical Swarm',
 			cost: 5,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Each hobgoblin in the encounter shifts up to their speed and can take the Defend main action.'
 			]
@@ -78,6 +80,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			id: 'hobgoblin-malice-3',
 			name: 'Operation Earthsear',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'Until the end of the round, the ground throughout the encounter map becomes blazing hot. Any enemy takes 1 fire damage for each square of the ground they enter. Any enemy who ends their turn on the ground has fire weakness 2 until the start of their next turn.'
 			]
@@ -96,7 +99,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 7,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 2, 0, 3),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 2, 0, 3),
 			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -148,7 +151,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 8,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 0, 2, 0),
 			withCaptain: '+2 damage bonus to strikes',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -199,7 +202,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 9,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 0, 0, 1),
 			withCaptain: '+4 bonus to Stamina',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -251,7 +254,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 8,
 			stability: 0,
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(-1, 3, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(-1, 3, 0, 1, 0),
 			withCaptain: '+2 bonus to speed',
 			features: [
 				FactoryLogic.feature.createDamageModifier({
@@ -304,7 +307,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 50,
 			stability: 0,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(0, 1, 2, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(0, 1, 2, 2, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-5-feature-1',
@@ -371,7 +374,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 60,
 			stability: 2,
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(3, 0, 1, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 0, 1, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-6-feature-1',
@@ -441,7 +444,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 1, 1, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-7-feature-1',
@@ -510,7 +513,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 111,
 			stability: 4,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 3, 0, 2),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 3, 0, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-8-feature-1',
@@ -586,7 +589,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 70,
 			stability: 2,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 0, 0, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-9-feature-1',
@@ -646,7 +649,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 60,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 0, 2, 1),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 0, 2, 1),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-10-feature-1',
@@ -718,7 +721,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 70,
 			stability: 4,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 2, 3, 3),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 2, 3, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-11-feature-1',
@@ -784,7 +787,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 70,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(1, 3, 2, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 3, 2, 1, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-12-feature-1',
@@ -856,7 +859,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 120,
 			stability: 0,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 3, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 3, 2, 2),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-13-feature-1',
@@ -948,7 +951,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 180,
 			stability: 2,
 			freeStrikeDamage: 7,
-			characteristics: MonsterLogic.createCharacteristics(4, 2, 2, 3, 3),
+			characteristics: FactoryLogic.createCharacteristics(4, 2, 2, 3, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-14-feature-1',
@@ -1076,7 +1079,7 @@ Devils captured the grack’tanars eons ago. Broken, these demons wait for a cal
 			stamina: 140,
 			stability: 3,
 			freeStrikeDamage: 6,
-			characteristics: MonsterLogic.createCharacteristics(3, 0, -1, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 0, -1, 1, 0),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'hobgoblin-15-feature-1',

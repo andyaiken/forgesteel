@@ -1,6 +1,6 @@
-import { Ancestry } from '../../models/ancestry';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
+import { Ancestry } from '@/models/ancestry';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 
 export const human: Ancestry = {
 	id: 'ancestry-human',
@@ -47,7 +47,6 @@ export const human: Ancestry = {
 							name: 'Resist the Unnatural',
 							description: 'Your instinctive resilience protects you from injuries beyond the routine.',
 							type: FactoryLogic.type.createTrigger('You take damage that isn’t untyped'),
-							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [
@@ -64,7 +63,6 @@ export const human: Ancestry = {
 							name: 'Determination',
 							description: 'A tolerance for pain and dsitress allows you to push through difficult situations.',
 							type: FactoryLogic.type.createManeuver(),
-							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [

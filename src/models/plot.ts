@@ -1,5 +1,5 @@
-import { Element } from './element';
-import { PowerRoll } from './power-roll';
+import { Element } from '@/models/element';
+import { PowerRoll } from '@/models/power-roll';
 
 export interface PlotContentText {
 	id: string;
@@ -28,7 +28,14 @@ export interface PlotContentReference {
 	contentID: string;
 }
 
-export type PlotContent = PlotContentText | PlotContentImage | PlotContentRoll | PlotContentReference;
+export interface PlotContentElement {
+	id: string;
+	contentType: 'element';
+	type: 'follower' | 'item' | 'monster' | 'title';
+	content: Element;
+}
+
+export type PlotContent = PlotContentText | PlotContentImage | PlotContentRoll | PlotContentReference | PlotContentElement;
 
 export interface PlotLink {
 	id: string;

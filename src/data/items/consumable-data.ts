@@ -1,8 +1,8 @@
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { Item } from '../../models/item';
-import { ItemType } from '../../enums/item-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
 
 export class ConsumableData {
 	static blackAshDart: Item = FactoryLogic.createItem({
@@ -426,7 +426,7 @@ If you pull a size 1T object adjacent to you, you can catch it.`
 		type: ItemType.Consumable,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
-			prerequisites: 'A grub steeped in voiceless talker bil',
+			prerequisites: 'A grub steeped in voiceless talker bile',
 			source: 'Texts or lore in Variac',
 			characteristic: [ Characteristic.Might, Characteristic.Intuition ],
 			goal: 180

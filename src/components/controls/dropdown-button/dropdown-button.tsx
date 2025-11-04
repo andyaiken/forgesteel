@@ -1,6 +1,7 @@
 import { Button, Dropdown } from 'antd';
 import { CSSProperties, ReactNode } from 'react';
 import { DownOutlined } from '@ant-design/icons';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './dropdown-button.scss';
 
@@ -13,8 +14,8 @@ interface Props {
 }
 
 export const DropdownButton = (props: Props) => {
-	try {
-		return (
+	return (
+		<ErrorBoundary>
 			<div className='dropdown-button' style={props.style}>
 				<Dropdown
 					menu={{
@@ -29,9 +30,6 @@ export const DropdownButton = (props: Props) => {
 					</Button>
 				</Dropdown>
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+		</ErrorBoundary>
+	);
 };

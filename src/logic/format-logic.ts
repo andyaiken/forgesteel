@@ -1,9 +1,9 @@
-import { DamageModifier, Modifier } from '../models/damage-modifier';
-import { Plot, PlotLink } from '../models/plot';
-import { AbilityType } from '../models/ability';
-import { AbilityUsage } from '../enums/ability-usage';
-import { Size } from '../models/size';
-import { Speed } from '../models/speed';
+import { DamageModifier, Modifier } from '@/models/damage-modifier';
+import { Plot, PlotLink } from '@/models/plot';
+import { AbilityType } from '@/models/ability';
+import { AbilityUsage } from '@/enums/ability-usage';
+import { Size } from '@/models/size';
+import { Speed } from '@/models/speed';
 
 export class FormatLogic {
 	static getAbilityType = (type: AbilityType) => {
@@ -26,15 +26,20 @@ export class FormatLogic {
 	};
 
 	static getSpeed = (speed: Speed) => {
-		if (speed.modes.length === 0) {
-			return speed.value.toString();
+		const modes = FormatLogic.getSpeedModes(speed.modes);
+		if (!modes) {
+			return `${speed.value}`;
 		}
 
-		if (typeof speed.modes === 'string') {
-			return `${speed.value} (${speed.modes})`;
+		return `${speed.value} (${modes})`;
+	};
+
+	static getSpeedModes = (modes: string | string[]) => {
+		if (typeof modes === 'string') {
+			return modes;
 		}
 
-		return `${speed.value} (${speed.modes.join(', ')})`;
+		return modes.join(', ');
 	};
 
 	static getDamageModifier = (mod: DamageModifier) => {
@@ -85,7 +90,7 @@ export class FormatLogic {
 	};
 
 	static getDice = (text: string) => {
-		const diceMatch = text.match(/(?<throws>\d+)d(?<sides>\d+)\s*(\+|plus)/);
+		const diceMatch = text.match(/(?<throws>\d+)d(?<sides>\d+)\s*/);
 		if (diceMatch && diceMatch.groups) {
 			let throws = 0;
 			let sides = 0;
@@ -102,7 +107,7 @@ export class FormatLogic {
 	static getConstant = (text: string) => {
 		let constant = 0;
 
-		const constantMatch = text.match(/(?<c>^d*\d+^d*)\s*(\+|plus)/);
+		const constantMatch = text.match(/(?<c>(?<!d)\d+(?!d|\s?(x|times)))\s*/);
 		if (constantMatch && constantMatch.groups) {
 			constant = parseInt(constantMatch.groups['c']);
 		}

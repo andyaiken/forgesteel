@@ -1,15 +1,15 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { ConditionType } from '../../../enums/condition-type';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { chronokinetic } from './chronokinetic';
-import { cryokinetic } from './cryokinetic';
-import { metakinetic } from './metakinetic';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { ConditionType } from '@/enums/condition-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { chronokinetic } from '@/data/classes/null/chronokinetic';
+import { cryokinetic } from '@/data/classes/null/cryokinetic';
+import { metakinetic } from '@/data/classes/null/metakinetic';
 
 export const nullClass: HeroClass = {
 	id: 'class-null',
@@ -20,6 +20,7 @@ The mind is not separate from the body. Perfection of one requires perfection of
 As a null, you resist the supernatural forces of the universe with composure and confidence. As you strive for perfect order, you are an enemy of the ultimate expression of chaos: the supernatural. Those who break the laws of nature using sorcery or psionics should fear you.
 
 *"Any weapon can be turned against the hand that wields it."* - Ardashir`,
+	type: 'standard',
 	subclassName: 'Tradition',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -64,7 +65,6 @@ As a null, you resist the supernatural forces of the universe with composure and
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'null-1-1',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Psionics' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -78,7 +78,7 @@ As a null, you resist the supernatural forces of the universe with composure and
 						name: 'Null Field',
 						description: 'You project an aura that dampens the power of your foes.',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [ AbilityKeyword.Psionic ],
+						keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic ],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 1 }) ],
 						target: 'All enemies',
 						sections: [
@@ -188,10 +188,27 @@ This ability remains active even after an encounter ends. It ends only if you ar
 						}
 					]
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createMultiple({
 					id: 'null-1-8',
-					name: 'Psionic Martial Arts',
-					description: 'Whenever you use the Knockback or Grab maneuver, you use Intuition instead of Might for the power roll and for determining if you can target creatures larger than you. Additionally, whenever you use the Knockback maneuver, you can choose to slide the target instead of pushing them.'
+					features: [
+						FactoryLogic.feature.create({
+							id: 'null-1-8a',
+							name: 'Psionic Martial Arts',
+							description: 'Whenever you use the Knockback or Grab maneuver, you use Intuition instead of Might for the power roll and for determining if you can target creatures larger than you. Additionally, whenever you use the Knockback maneuver, you can choose to slide the target instead of pushing them.'
+						}),
+						FactoryLogic.feature.createPackageContent({
+							id: 'null-1-8b',
+							name: 'Psionic Martial Arts',
+							description: 'You use Intuition instead of Might for the power roll and for determining if you can target creatures larger than you.',
+							tag: 'null-psionic-martial-arts-grab'
+						}),
+						FactoryLogic.feature.createPackageContent({
+							id: 'null-1-8c',
+							name: 'Psionic Martial Arts',
+							description: 'You use Intuition instead of Might for the power roll and you can choose to slide the target instead of pushing them.',
+							tag: 'null-psionic-martial-arts-knockback'
+						})
+					]
 				}),
 				FactoryLogic.feature.createClassAbilityChoice({
 					id: 'null-1-9',

@@ -1,11 +1,15 @@
-import { Ability } from '../../models/ability';
-import { AbilityUsage } from '../../enums/ability-usage';
-import { FactoryLogic } from '../factory-logic';
+import { Ability } from '@/models/ability';
+import { AbilityUsage } from '@/enums/ability-usage';
+import { FactoryLogic } from '@/logic/factory-logic';
 
 export class AbilityUpdateLogic {
 	static updateAbility = (ability: Ability) => {
 		if (ability.type.usage.toString() === 'Action') {
 			ability.type.usage = AbilityUsage.MainAction;
+		}
+
+		if (ability.type.freeStrike === undefined) {
+			ability.type.freeStrike = false;
 		}
 
 		if (ability.sections === undefined) {

@@ -1,13 +1,13 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureField } from '../../enums/feature-field';
-import { Item } from '../../models/item';
-import { ItemType } from '../../enums/item-type';
-import { KitWeapon } from '../../enums/kit-weapon';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
+import { KitWeapon } from '@/enums/kit-weapon';
 
 export class LeveledWeaponData {
 	static authoritysEnd: Item = FactoryLogic.createItem({
@@ -105,7 +105,7 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-blade-of-quintessence-1a',
 						name: '',
-						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Melee ],
+						keywords: [ AbilityKeyword.Weapon ],
 						value: 1
 					})
 				]
@@ -120,12 +120,6 @@ export class LeveledWeaponData {
 					}),
 					FactoryLogic.feature.createAbilityDamage({
 						id: 'item-blade-of-quintessence-5a',
-						name: '',
-						keywords: [ AbilityKeyword.Weapon, AbilityKeyword.Ranged ],
-						value: 1
-					}),
-					FactoryLogic.feature.createAbilityDamage({
-						id: 'item-blade-of-quintessence-5b',
 						name: '',
 						keywords: [ AbilityKeyword.Weapon ],
 						value: 1

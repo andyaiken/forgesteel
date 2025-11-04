@@ -1,35 +1,36 @@
 import { Button, Divider, Flex, Input, Segmented, Select, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, ImportOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { Characteristic } from '../../../../enums/characteristic';
-import { Collections } from '../../../../utils/collections';
-import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { Empty } from '../../../controls/empty/empty';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Expander } from '../../../controls/expander/expander';
-import { FactoryLogic } from '../../../../logic/factory-logic';
-import { Feature } from '../../../../models/feature';
-import { FeatureEditPanel } from '../feature-edit/feature-edit-panel';
-import { FeatureLogic } from '../../../../logic/feature-logic';
-import { FeaturePanel } from '../../elements/feature-panel/feature-panel';
-import { FeatureType } from '../../../../enums/feature-type';
-import { Field } from '../../../controls/field/field';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { HistogramPanel } from '../../histogram/histogram-panel';
-import { Monster } from '../../../../models/monster';
-import { MonsterFeatureCategory } from '../../../../enums/monster-feature-category';
-import { MonsterGroup } from '../../../../models/monster-group';
-import { MonsterLogic } from '../../../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../../../enums/monster-role-type';
-import { MultiLine } from '../../../controls/multi-line/multi-line';
-import { NameGenerator } from '../../../../utils/name-generator';
-import { NumberSpin } from '../../../controls/number-spin/number-spin';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { Pill } from '../../../controls/pill/pill';
-import { RetainerData } from '../../../../data/retainer-data';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { Utils } from '../../../../utils/utils';
+import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { DamageType } from '@/enums/damage-type';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Empty } from '@/components/controls/empty/empty';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Feature } from '@/models/feature';
+import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
+import { FeatureLogic } from '@/logic/feature-logic';
+import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
+import { FeatureType } from '@/enums/feature-type';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { HistogramPanel } from '@/components/panels/histogram/histogram-panel';
+import { Monster } from '@/models/monster';
+import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { NameGenerator } from '@/utils/name-generator';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { Pill } from '@/components/controls/pill/pill';
+import { RetainerLogic } from '@/logic/retainer-logic';
+import { Sourcebook } from '@/models/sourcebook';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './monster-edit-panel.scss';
@@ -138,15 +139,15 @@ export const MonsterEditPanel = (props: Props) => {
 			if (copy.retainer) {
 				if (copy.level >= 4) {
 					copy.retainer.level4 = undefined;
-					copy.retainer.featuresByLevel = RetainerData.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 				}
 				if (copy.level >= 7) {
 					copy.retainer.level7 = undefined;
-					copy.retainer.featuresByLevel = RetainerData.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 				}
 				if (copy.level >= 10) {
 					copy.retainer.level10 = undefined;
-					copy.retainer.featuresByLevel = RetainerData.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+					copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
 				}
 			}
 			setMonster(copy);
@@ -156,6 +157,9 @@ export const MonsterEditPanel = (props: Props) => {
 		const setRoleType = (value: MonsterRoleType) => {
 			const copy = Utils.copy(monster);
 			copy.role.type = value;
+			if (copy.retainer) {
+				copy.retainer.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer.level4, copy.retainer.level7, copy.retainer.level10);
+			}
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -202,7 +206,7 @@ export const MonsterEditPanel = (props: Props) => {
 					level4: lvl4,
 					level7: lvl7,
 					level10: lvl10,
-					featuresByLevel: RetainerData.getRetainerAdvancementFeatures(copy.level, copy.role.type, lvl4, lvl7, lvl10)
+					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, lvl4, lvl7, lvl10)
 				};
 			} else {
 				copy.retainer = null;
@@ -211,18 +215,16 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setSizeValue = (value: number) => {
+		const setEncounterValue = (value: number) => {
 			const copy = Utils.copy(monster);
-			copy.size.value = value;
+			copy.encounterValue = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
 
-		const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
-			const copy = Utils.copy(monster);
-			copy.size.mod = value;
-			setMonster(copy);
-			props.onChange(copy);
+		const selectRandomEncounterValue = () => {
+			const values = props.similarMonsters.map(m => m.encounterValue);
+			setEncounterValue(Collections.draw(values));
 		};
 
 		return (
@@ -239,49 +241,38 @@ export const MonsterEditPanel = (props: Props) => {
 				<HeaderText>Role</HeaderText>
 				<Select
 					style={{ width: '100%' }}
-					placeholder='Select role'
-					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
-					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
-					value={monster.role.type}
-					onChange={setRoleType}
-				/>
-				<Select
-					style={{ width: '100%' }}
 					placeholder='Select organization'
 					options={[ MonsterOrganizationType.NoOrganization, MonsterOrganizationType.Minion, MonsterOrganizationType.Horde, MonsterOrganizationType.Platoon, MonsterOrganizationType.Elite, MonsterOrganizationType.Leader, MonsterOrganizationType.Solo, MonsterOrganizationType.Retainer ].map(option => ({ value: option, desc: MonsterLogic.getRoleOrganizationDescription(option) }))}
 					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={monster.role.organization}
 					onChange={setRoleOrganization}
 				/>
-				<HeaderText>Size</HeaderText>
-				<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Select role'
+					options={[ MonsterRoleType.NoRole, MonsterRoleType.Ambusher, MonsterRoleType.Artillery, MonsterRoleType.Brute, MonsterRoleType.Controller, MonsterRoleType.Defender, MonsterRoleType.Harrier, MonsterRoleType.Hexer, MonsterRoleType.Mount, MonsterRoleType.Support ].map(option => ({ value: option, desc: MonsterLogic.getRoleTypeDescription(option) }))}
+					optionRender={option => <Field label={option.data.value} value={option.data.desc} />}
+					value={monster.role.type}
+					onChange={setRoleType}
+				/>
+				<HeaderText>Encounter Value</HeaderText>
+				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
 				{
-					monster.size.value === 1 ?
-						<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
-							name='sizemodtypes'
-							block={true}
-							options={[ 'T', 'S', 'M', 'L' ]}
-							value={monster.size.mod}
-							onChange={setSizeMod}
-						/>
+					props.similarMonsters.length > 0 ?
+						<Expander
+							title='Similar Monsters'
+							extra={[
+								<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomEncounterValue(); }} />
+							]}
+						>
+							<HeaderText>Encounter Value</HeaderText>
+							<HistogramPanel
+								min={0}
+								values={props.similarMonsters.map(m => m.encounterValue)}
+								selected={monster.encounterValue}
+								onSelect={setEncounterValue}
+							/>
+						</Expander>
 						: null
 				}
 			</Space>
@@ -289,9 +280,16 @@ export const MonsterEditPanel = (props: Props) => {
 	};
 
 	const getStatsSection = () => {
-		const setEncounterValue = (value: number) => {
+		const setSizeValue = (value: number) => {
 			const copy = Utils.copy(monster);
-			copy.encounterValue = value;
+			copy.size.value = value;
+			setMonster(copy);
+			props.onChange(copy);
+		};
+
+		const setSizeMod = (value: '' | 'T' | 'S' | 'M' | 'L') => {
+			const copy = Utils.copy(monster);
+			copy.size.mod = value;
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -331,9 +329,11 @@ export const MonsterEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const selectRandomEncounterValue = () => {
-			const values = props.similarMonsters.map(m => m.encounterValue);
-			setEncounterValue(Collections.draw(values));
+		const setFreeStrikeType = (value: DamageType) => {
+			const copy = Utils.copy(monster);
+			copy.freeStrikeType = value;
+			setMonster(copy);
+			props.onChange(copy);
 		};
 
 		const selectRandomSpeed = () => {
@@ -358,24 +358,17 @@ export const MonsterEditPanel = (props: Props) => {
 
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
-				<HeaderText>Encounter Value</HeaderText>
-				<NumberSpin min={1} value={monster.encounterValue} steps={[ 1, 10 ]} onChange={setEncounterValue} />
+				<HeaderText>Size</HeaderText>
+				<NumberSpin min={1} value={monster.size.value} onChange={setSizeValue} />
 				{
-					props.similarMonsters.length > 0 ?
-						<Expander
-							title='Similar Monsters'
-							extra={[
-								<Button key='random' type='text' title='Random' icon={<ThunderboltOutlined />} onClick={e => { e.stopPropagation(); selectRandomEncounterValue(); }} />
-							]}
-						>
-							<HeaderText>Encounter Value</HeaderText>
-							<HistogramPanel
-								min={0}
-								values={props.similarMonsters.map(m => m.encounterValue)}
-								selected={monster.encounterValue}
-								onSelect={setEncounterValue}
-							/>
-						</Expander>
+					monster.size.value === 1 ?
+						<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
+							name='sizemodtypes'
+							block={true}
+							options={[ 'T', 'S', 'M', 'L' ]}
+							value={monster.size.mod}
+							onChange={setSizeMod}
+						/>
 						: null
 				}
 				<HeaderText>Speed</HeaderText>
@@ -443,8 +436,16 @@ export const MonsterEditPanel = (props: Props) => {
 						</Expander>
 						: null
 				}
-				<HeaderText>Free Strike Damage</HeaderText>
-				<NumberSpin min={0} value={monster.freeStrikeDamage} steps={[ 1, 10 ]} onChange={setFreeStrikeDamage} />
+				<HeaderText>Free Strike</HeaderText>
+				<NumberSpin label='Damage' min={0} value={monster.freeStrikeDamage} steps={[ 1, 10 ]} onChange={setFreeStrikeDamage} />
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Damage type'
+					options={[ DamageType.Damage, DamageType.Acid, DamageType.Cold, DamageType.Corruption, DamageType.Fire, DamageType.Holy, DamageType.Lightning, DamageType.Poison, DamageType.Psychic, DamageType.Sonic ].map(option => ({ value: option }))}
+					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
+					value={monster.freeStrikeType}
+					onChange={setFreeStrikeType}
+				/>
 				{
 					props.similarMonsters.length > 0 ?
 						<Expander
@@ -726,7 +727,7 @@ export const MonsterEditPanel = (props: Props) => {
 					copy.retainer!.level10 = feature;
 					break;
 			}
-			copy.retainer!.featuresByLevel = RetainerData.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer!.level4, copy.retainer!.level7, copy.retainer!.level10);
+			copy.retainer!.featuresByLevel = RetainerLogic.getRetainerAdvancementFeatures(copy.level, copy.role.type, copy.retainer!.level4, copy.retainer!.level7, copy.retainer!.level10);
 			setMonster(copy);
 			props.onChange(copy);
 		};
@@ -785,74 +786,69 @@ export const MonsterEditPanel = (props: Props) => {
 		);
 	};
 
-	try {
-		const genesplice = () => {
-			const copy = Utils.copy(monster);
-			MonsterLogic.genesplice(copy, props.similarMonsters);
-			setMonster(copy);
-			props.onChange(copy);
-		};
+	const genesplice = () => {
+		const copy = Utils.copy(monster);
+		MonsterLogic.genesplice(copy, props.similarMonsters);
+		setMonster(copy);
+		props.onChange(copy);
+	};
 
-		const tabs = [
-			{
-				key: 'monster',
-				label: 'Monster',
-				children: getNameAndDescriptionSection()
-			},
-			{
-				key: 'type',
-				label: 'Type',
-				children: getTypeSection()
-			},
-			{
-				key: 'stats',
-				label: 'Stats',
-				children: getStatsSection()
-			},
-			{
-				key: 'characteristics',
-				label: 'Characteristics',
-				children: getCharacteristicsSection()
-			},
-			{
-				key: 'features',
-				label: 'Features',
-				children: getFeaturesSection()
-			}
-		];
-
-		if (monster.role.organization === MonsterOrganizationType.Minion) {
-			tabs.push({
-				key: 'minion',
-				label: 'Minion',
-				children: getMinionSection()
-			});
+	const tabs = [
+		{
+			key: 'monster',
+			label: 'Monster',
+			children: getNameAndDescriptionSection()
+		},
+		{
+			key: 'type',
+			label: 'Type',
+			children: getTypeSection()
+		},
+		{
+			key: 'stats',
+			label: 'Stats',
+			children: getStatsSection()
+		},
+		{
+			key: 'characteristics',
+			label: 'Characteristics',
+			children: getCharacteristicsSection()
+		},
+		{
+			key: 'features',
+			label: 'Features',
+			children: getFeaturesSection()
 		}
+	];
 
-		if (monster.role.organization === MonsterOrganizationType.Retainer) {
-			tabs.push({
-				key: 'retainer',
-				label: 'Retainer',
-				children: getRetainerSection()
-			});
-		}
-
-		return (
-			<ErrorBoundary>
-				<div className='monster-edit-panel'>
-					<Tabs
-						items={tabs}
-						tabBarExtraContent={
-							props.similarMonsters.length > 1 ?
-								<Button type='text' title='Genesplice' icon={<ThunderboltOutlined />} onClick={genesplice} />
-								: null
-						}
-					/>
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
+	if (monster.role.organization === MonsterOrganizationType.Minion) {
+		tabs.push({
+			key: 'minion',
+			label: 'Minion',
+			children: getMinionSection()
+		});
 	}
+
+	if (monster.role.organization === MonsterOrganizationType.Retainer) {
+		tabs.push({
+			key: 'retainer',
+			label: 'Retainer',
+			children: getRetainerSection()
+		});
+	}
+
+	return (
+		<ErrorBoundary>
+			<div className='monster-edit-panel'>
+				<Tabs
+					items={tabs}
+					tabBarExtraContent={
+						props.similarMonsters.length > 1 ?
+							<Button type='text' title='Genesplice' icon={<ThunderboltOutlined />} onClick={genesplice} />
+							: null
+					}
+				/>
+			</div>
+		</ErrorBoundary>
+	);
 };

@@ -1,0 +1,37 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .malice.card {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    place-items: stretch;
+
+    h2, h3:has(span) {
+        line-height: round(1.1rem, 1px);
+
+        span {
+            display: inline-block;
+            text-transform: none;
+            font-size: round(1rem, 1px);
+            margin-bottom: 3px;
+        }
+    }
+
+    .malice-features {
+        margin-top: 5px;
+
+        h3 {
+            text-transform: none;
+            background-image: linear-gradient(180deg, common.$color-general-monster, transparent);
+            border-radius: 6px 6px 0 0;
+        }
+
+        .feature {
+            .power-roll {
+                .header {
+                    margin-top: -5px;
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}

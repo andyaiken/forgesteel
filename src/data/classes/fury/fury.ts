@@ -1,14 +1,14 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { berserker } from './berserker';
-import { reaver } from './reaver';
-import { stormwight } from './stormwight';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { berserker } from '@/data/classes/fury/berserker';
+import { reaver } from '@/data/classes/fury/reaver';
+import { stormwight } from '@/data/classes/fury/stormwight';
 
 export const fury: HeroClass = {
 	id: 'class-fury',
@@ -17,6 +17,7 @@ export const fury: HeroClass = {
 You do not temper the heat of battle within you. You unleash it! Your experience in the wild taught you the secrets of predators, and now, like the raptor, the panther, the wolf, you channel unfettered anger into martial prowess. Primordial Chaos is your ally. Let others use finesse to clean up the wreckage left in your wake.
 
 As a fury, you devastate foes with overwhelming might, hurl yourself and enemies around the battlefield, and grow stronger as your ferocity increases. Nature has no concept of fairness — and neither do you..`,
+	type: 'standard',
 	subclassName: 'Primordial Aspect',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -61,7 +62,6 @@ As a fury, you devastate foes with overwhelming might, hurl yourself and enemies
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-1-1',
-					listOptions: [ SkillList.Lore ],
 					selected: [ 'Nature' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({

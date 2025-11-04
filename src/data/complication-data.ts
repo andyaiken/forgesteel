@@ -1,14 +1,14 @@
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { Characteristic } from '../enums/characteristic';
-import { Complication } from '../models/complication';
-import { DamageModifierType } from '../enums/damage-modifier-type';
-import { DamageType } from '../enums/damage-type';
-import { FactoryLogic } from '../logic/factory-logic';
-import { FeatureField } from '../enums/feature-field';
-import { ItemType } from '../enums/item-type';
-import { LanguageType } from '../enums/language-type';
-import { SkillList } from '../enums/skill-list';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { Complication } from '@/models/complication';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { ItemType } from '@/enums/item-type';
+import { LanguageType } from '@/enums/language-type';
+import { SkillList } from '@/enums/skill-list';
 
 export class ComplicationData {
 	static advancedStudies: Complication = {
@@ -21,10 +21,6 @@ export class ComplicationData {
 					id: 'comp-advanced-studies-1',
 					name: 'Advanced Study Benefit and Drawback',
 					description: 'As a respite activity, you can study the notebook.',
-					type: FactoryLogic.type.createNoAction(),
-					keywords: [ ],
-					distance: [ ],
-					target: 'None',
 					sections: [
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({
@@ -279,7 +275,6 @@ Each time you complete this project, your knowledge of your chosen field expands
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-crashLanded-skill',
-				listOptions: [ SkillList.Lore ],
 				selected: [ 'Timescape' ]
 			}),
 			FactoryLogic.feature.create({
@@ -544,7 +539,6 @@ Each time you complete this project, your knowledge of your chosen field expands
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-fallenImmortal-skill',
-				listOptions: [ SkillList.Lore ],
 				selected: [ 'Religion' ]
 			}),
 			FactoryLogic.feature.create({
@@ -628,7 +622,7 @@ You have a piece of magic jewelry, such as a signet ring. As a maneuver, you can
 	static followingInTheFootsteps: Complication = {
 		id: 'comp-followingInTheFootsteps',
 		name: 'Following in the Footsteps',
-		description: 'Your personal idol was a mighty hero, and you have modeled yourself after them. YFrom studying the many heroic tales told of them, you hope to someday learn their most famous battle technique.',
+		description: 'Your personal idol was a mighty hero, and you have modeled yourself after them. From studying the many heroic tales told of them, you hope to someday learn their most famous battle technique.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-followingInTheFootsteps-b',
@@ -814,7 +808,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-hostBody-b',
 				name: 'Host Body Benefit',
-				description: 'You are a fungus that inhabits a humanoid body. Your host body follows all the usual rules for a character and is considered to be alive. At any time while your host body is alive, or for 24 hours after it dies, you can use a main action to move to a dead humanoid within 10 squares of the body and use it as your new host body, provided the body belongs a playable ancestry. When you do so, your original host body dies if it was alive. Your new host body gains all your statistics except f size, ancestry traits, and other statistics related to your former host body’s ancestry, which you instead gain from your new host body. When you inhabit a new host body, you start with 1 Stamina and can immediately spend a Recovery.'
+				description: 'You are a fungus that inhabits a humanoid body. Your host body follows all the usual rules for a character and is considered to be alive. At any time while your host body is alive, or for 24 hours after it dies, you can use a main action to move to a dead humanoid within 10 squares of the body and use it as your new host body, provided the body belongs to a playable ancestry. When you do so, your original host body dies if it was alive. Your new host body gains all your statistics except for size, ancestry traits, and other statistics related to your former host body’s ancestry, which you instead gain from your new host body. When you inhabit a new host body, you start with 1 Stamina and can immediately spend a Recovery.'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-hostBody-d',
@@ -833,7 +827,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static hunted: Complication = {
 		id: 'comp-hunted',
 		name: 'Hunted',
-		description: 'You’re one step ahead of a pursuer - perhaps a bounty hunter determined to bring you to justice, a revenant, or an assassin intent on your death. Someday, you’ll be strong enough to face your pursuer head to head. Bbut for now, you live your life on the run.',
+		description: 'You’re one step ahead of a pursuer - perhaps a bounty hunter determined to bring you to justice, a revenant, or an assassin intent on your death. Someday, you’ll be strong enough to face your pursuer head to head. But for now, you live your life on the run.',
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-hunted-skill',
@@ -1032,7 +1026,7 @@ You can’t take this complication if you can’t be made dazed.`,
 	static lostInTime: Complication = {
 		id: 'comp-lostInTime',
 		name: 'Lost in Time',
-		description: 'In a long-ago age, a cataclysm overtook your city. You weren’t killed, but some arcane accident caused you to be suspended in time until now. Alone, you must navigate the world around you with a head full of outdated memories - and a few ancient secrets — and a few ancient secrets.',
+		description: 'In a long-ago age, a cataclysm overtook your city. You weren’t killed, but some arcane accident caused you to be suspended in time until now. Alone, you must navigate the world around you with a head full of outdated memories - and a few ancient secrets.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-lostInTime-b',
@@ -1099,7 +1093,6 @@ You can’t take this complication if you can’t be made dazed.`,
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-masterChef-skill',
-				listOptions: [ SkillList.Crafting ],
 				selected: [ 'Cooking' ]
 			}),
 			FactoryLogic.feature.create({
@@ -1392,7 +1385,6 @@ You can’t take this complication if you can’t be made dazed.`,
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-raisedByBeasts-skill',
-				listOptions: [ SkillList.Interpersonal ],
 				selected: [ 'Handle Animals' ]
 			}),
 			FactoryLogic.feature.create({
@@ -1615,7 +1607,7 @@ You can’t take this complication if you can’t be made dazed.`,
 			FactoryLogic.feature.create({
 				id: 'comp-sharedSpirit-b',
 				name: 'Shared Spirit',
-				description: 'At the start of each day, roll 1d6. On a 1-4, you control your body. On a 5-6, the spirit does. Alternatively, if you and the spirit are on good terms, you can choose each day who is in control. You can use those skills only while you are in control of your body. Then choose three new skills, which you have and can use only while your spirit is in control.'
+				description: 'At the start of each day, roll a d6. On a 1–4, you control your body. On a 5–6, the spirit does. Alternatively, if you and the spirit are on good terms, you can choose each day who is in control. Choose three of your skills. You can use those skills only while you are in control of your body. Then choose three new skills, which you have and can use only while your spirit is in control.'
 			})
 		]
 	};
@@ -1686,7 +1678,6 @@ You can’t take this complication if you can’t be made dazed.`,
 		features: [
 			FactoryLogic.feature.createSkillChoice({
 				id: 'comp-silentSentinel-skill1',
-				listOptions: [ SkillList.Intrigue ],
 				count: 2,
 				selected: [ 'Eavesdrop', 'Sneak' ]
 			}),
@@ -1842,7 +1833,7 @@ Note: Stormwight furies can’t take this complication.`,
 	static hearsVoices: Complication = {
 		id: 'comp-hearsVoices',
 		name: 'Voice in your Head',
-		description: 'You occasionally hear a voice in your head, giving you orders or offering advice. You don’t know who the voice is or why it comes to you, but when you’ve followed the advice, it’s usually proved to be sound',
+		description: 'You occasionally hear a voice in your head, giving you orders or offering advice. You don’t know who the voice is or why it comes to you, but when you’ve followed the advice, it’s usually proved to be sound.',
 		features: [
 			FactoryLogic.feature.create({
 				id: 'comp-hearsVoices-b',
@@ -1902,11 +1893,6 @@ Note: Stormwight furies can’t take this complication.`,
 				ability: FactoryLogic.createAbility({
 					id: 'comp-waking-dreams-ability',
 					name: 'Waking Dreams',
-					description: '',
-					type: FactoryLogic.type.createNoAction(),
-					keywords: [ ],
-					distance: [ ],
-					target: 'Self',
 					sections: [
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({

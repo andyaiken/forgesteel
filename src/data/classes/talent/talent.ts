@@ -1,19 +1,19 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { ConditionType } from '../../../enums/condition-type';
-import { DamageModifierType } from '../../../enums/damage-modifier-type';
-import { DamageType } from '../../../enums/damage-type';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { KitArmor } from '../../../enums/kit-armor';
-import { KitWeapon } from '../../../enums/kit-weapon';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { chronopathy } from './chronopathy';
-import { telekinesis } from './telekinesis';
-import { telepathy } from './telepathy';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { ConditionType } from '@/enums/condition-type';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { chronopathy } from '@/data/classes/talent/chronopathy';
+import { telekinesis } from '@/data/classes/talent/telekinesis';
+import { telepathy } from '@/data/classes/talent/telepathy';
 
 export const talent: HeroClass = {
 	id: 'class-talent',
@@ -22,6 +22,7 @@ export const talent: HeroClass = {
 A rare few people are born with the potential to harness psionic power, but only those who experience an awakening, a significant event that activates a talent’s abilities, can tap into the mind’s full potential. You are one of those people—a master of psionics and a source of incredible power created through sheer force of will. You can move and change matter, time, gravity, the laws of physics, or another creature’s mind.
 
 As a talent, you are limited only by the strength of your mind. But the ability to wield multiple powers at once and change reality at will involves a gamble. Every manifestation has a chance of harming you, and talents who use too much power too quickly pay a deadly price.`,
+	type: 'standard',
 	subclassName: 'Tradition',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -68,13 +69,8 @@ Whenever you use an ability with a strain effect outside of combat, you can take
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-skill-a',
-					listOptions: [ SkillList.Lore ],
-					selected: [ 'Psionics' ]
-				}),
-				FactoryLogic.feature.createSkillChoice({
-					id: 'talent-skill-b',
-					listOptions: [ SkillList.Interpersonal ],
-					selected: [ 'Read Person' ]
+					count: 2,
+					selected: [ 'Psionics', 'Read Person' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'talent-skill-c',
@@ -86,7 +82,7 @@ Whenever you use an ability with a strain effect outside of combat, you can take
 						id: 'talent-1-2',
 						name: 'Mind Spike',
 						description: 'A telepathic bolt instantly zaps a creature’s brain.',
-						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a ranged free strike' ] }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a ranged free strike' ], freeStrike: true }),
 						keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Telepathy ],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'One creature',
@@ -224,7 +220,6 @@ You can use light armor treasures and light weapon treasures. If you have a kit,
 									name: 'Repulsive Ward',
 									description: 'You surround yourself with an invisible ward of telekinetic energy.',
 									type: FactoryLogic.type.createTrigger('An adjacent creature deals damage to you.', { free: true }),
-									keywords: [],
 									distance: [ FactoryLogic.distance.createSelf() ],
 									target: 'Self',
 									sections: [
@@ -309,7 +304,6 @@ You can use light armor treasures and light weapon treasures. If you have a kit,
 						name: 'Mind Projection',
 						description: 'You project your mind outside your body.',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -372,47 +366,19 @@ If you are strained while flying and are force moved, the forced movement distan
 					id: 'talent-6-1',
 					lists: [ PerkList.Interpersonal, PerkList.Lore, PerkList.Supernatural ]
 				}),
-				FactoryLogic.feature.createMultiple({
+				FactoryLogic.feature.create({
 					id: 'talent-6-2',
 					name: 'Psi Boost',
-					description: 'Whenever you use an ability that is a main action or a maneuver with the Psionic keyword, you can spend additional clarity to apply a psi boost to it and enhance its effects. A psi boost’s effects only last until the end of the turn which the ability is first used. You can apply multiple psi boosts to an ability, but only one instance of each specific boost.',
-					features: [
-						FactoryLogic.feature.create({
-							id: 'talent-6-2a',
-							name: 'Psi Boost: Dynamic Power (1 Clarity)',
-							description: 'If the ability force moves a target, the forced movement distance gains a bonus equal to your Reason score.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2b',
-							name: 'Psi Boost: Expanded Power (3 Clarity)',
-							description: 'If the ability targets an area, you increase the size of the area by 1. If the area is a line, you increase the size of one dimension, not both.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2c',
-							name: 'Psi Boost: Extended Power (1 Clarity)',
-							description: 'If the ability is ranged, the distance gains a bonus equal to your Reason score. If the ability is melee, the distance gains a +2 bonus.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2d',
-							name: 'Psi Boost: Heightened Power (1 Clarity)',
-							description: 'If the ability deals rolled damage, it deals extra damage equal to your Reason score.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2e',
-							name: 'Psi Boost: Magnified Power (5 Clarity)',
-							description: 'If the ability has a potency, you increase that potency by an amount equal to your Reason score.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2f',
-							name: 'Psi Boost: Shared Power (5 Clarity)',
-							description: 'If the ability targets individual creatures or objects, you target one additional creature or object within distance.'
-						}),
-						FactoryLogic.feature.create({
-							id: 'talent-6-2g',
-							name: 'Psi Boost: Sharpened Power (1 Clarity)',
-							description: 'If the ability has any power roll, that roll gains an edge.'
-						})
-					]
+					description: `
+Whenever you use an ability that is a main action or a maneuver with the Psionic keyword, you can spend additional discipline to apply a psi boost to it and enhance its effects. A psi boost’s effects only last until the end of the turn which the ability is first used. You can apply multiple psi boosts to an ability, but only one instance of each specific boost. You can use the following psi boosts.
+
+**Dynamic Power** (1 Clarity) If the ability force moves a target, the forced movement distance gains a bonus equal to your Reason score.
+**Expanded Power** (3 Clarity) If the ability targets an area, you increase the size of the area by 1. If the area is a line, you increase the size of one dimension, not both.
+**Extended Power** (1 Clarity) If the ability is ranged, the distance gains a bonus equal to your Reason score. If the ability is melee, the distance gains a +2 bonus.
+**Heightened Power** (1 Clarity) If the ability deals rolled damage, it deals extra damage equal to your Reason score.
+**Magnified Power** (5 Clarity) If the ability has a potency, you increase that potency by an amount equal to your Reason score.
+**Shared Power** (5 Clarity) If the ability targets individual creatures or objects, you target one additional creature or object within distance.
+**Sharpened Power** (1 Clarity) If the ability has any power roll, that roll gains an edge.`
 				})
 			]
 		},
@@ -677,7 +643,7 @@ Your mind is an impenetrable palace that shields you from danger. You gain the f
 			type: FactoryLogic.type.createMain(),
 			keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Telekinesis ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
-			target: 'One size 1 creature or object',
+			target: 'One creature or object',
 			cost: 'signature',
 			sections: [
 				FactoryLogic.createAbilitySectionRoll(

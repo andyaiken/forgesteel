@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from 'react';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './pill.scss';
 
@@ -22,8 +23,10 @@ interface ResourcePillProps {
 
 export const ResourcePill = (props: ResourcePillProps) => {
 	return (
-		<Pill style={props.style}>
-			{props.value}{props.units ?? (props.value === 1 ? 'pt' : 'pts')} {props.repeatable ? '+' : ''}
-		</Pill>
+		<ErrorBoundary>
+			<Pill style={props.style}>
+				{props.value}{props.units ?? (props.value === 1 ? 'pt' : 'pts')} {props.repeatable ? '+' : ''}
+			</Pill>
+		</ErrorBoundary>
 	);
 };

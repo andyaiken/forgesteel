@@ -1,10 +1,10 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const ajax: MonsterGroup = {
 	id: 'monster-group-ajax',
@@ -43,6 +43,7 @@ His arsenal is vast and strategically picked to round out his strength. There ar
 			id: 'ajax-malice-1',
 			name: 'Reason',
 			cost: 2,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'Ajax attempts to instill doubt into a creature within line of effect through logic and reason. The creature and Ajax make an opposed **Reason test**. If Ajax wins, he chooses to either deal 11 extra damage to one target on his next strike or to gain an additional triggered action during the current round. Ajax can’t use this feature against the same creature during the same encounter.'
 			]
@@ -51,6 +52,7 @@ His arsenal is vast and strategically picked to round out his strength. There ar
 			id: 'ajax-malice-2',
 			name: 'Nexus Jewel',
 			cost: 5,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [ `
 Until the end of the round, Ajax chooses one of the following environments he has previously visited and overlays that environment on top of the encounter map, temporarily merging multiple realities.
 
@@ -64,6 +66,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 			id: 'ajax-malice-3',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'Ajax takes an additional main action on his turn. He can use this feature even if he is dazed.'
 			]
@@ -104,7 +107,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 			stamina: 700,
 			stability: 2,
 			freeStrikeDamage: 11,
-			characteristics: MonsterLogic.createCharacteristics(5, 4, 5, 5, 4),
+			characteristics: FactoryLogic.createCharacteristics(5, 4, 5, 5, 4),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'ajax-1-feature-1',
@@ -247,7 +250,6 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						id: 'ajax-1-feature-10',
 						name: 'Who’s Hesitating?',
 						type: FactoryLogic.type.createTrigger('A creature uses the Hesitation is Weakness ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -343,7 +345,7 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 			stamina: 280,
 			stability: 2,
 			freeStrikeDamage: 11,
-			characteristics: MonsterLogic.createCharacteristics(5, 4, 5, 5, 4),
+			characteristics: FactoryLogic.createCharacteristics(5, 4, 5, 5, 4),
 			features: [
 				FactoryLogic.feature.create({
 					id: 'ajax-2-feature-1',
@@ -412,7 +414,6 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						id: 'ajax-2-feature-4',
 						name: 'Strike Them Down',
 						type: FactoryLogic.type.createManeuver(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Two allies',
 						sections: [
@@ -456,7 +457,6 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						id: 'ajax-2-feature-8',
 						name: 'Who’s Hesitating?',
 						type: FactoryLogic.type.createTrigger('A creature uses the Hesitation is Weakness ability.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -516,7 +516,6 @@ Until the end of the round, Ajax chooses one of the following environments he ha
 						id: 'ajax-2-feature-12',
 						name: 'I’ve Learned Their Tricks ',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
 						target: 'Each enemy in the area',
 						sections: [

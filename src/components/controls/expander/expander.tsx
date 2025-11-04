@@ -1,4 +1,5 @@
 import { Collapse, Tag } from 'antd';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ReactNode } from 'react';
 
 import './expander.scss';
@@ -12,8 +13,8 @@ interface Props {
 }
 
 export const Expander = (props: Props) => {
-	try {
-		return (
+	return (
+		<ErrorBoundary>
 			<Collapse
 				className='expander'
 				items={[
@@ -27,9 +28,6 @@ export const Expander = (props: Props) => {
 				defaultActiveKey={props.expandedByDefault ? '1' : undefined}
 				expandIconPosition='end'
 			/>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+		</ErrorBoundary>
+	);
 };

@@ -1,11 +1,11 @@
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { Element } from './element';
-import { Feature } from './feature';
-import { Imbuement } from './imbuement';
-import { ItemType } from '../enums/item-type';
-import { KitArmor } from '../enums/kit-armor';
-import { KitWeapon } from '../enums/kit-weapon';
-import { Project } from './project';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Element } from '@/models/element';
+import { Feature } from '@/models/feature';
+import { Imbuement } from '@/models/imbuement';
+import { ItemType } from '@/enums/item-type';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { Project } from '@/models/project';
 
 export interface Item extends Element {
 	type: ItemType;

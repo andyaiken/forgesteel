@@ -1,9 +1,9 @@
-import { CraftingPerkData } from './perks/crafting';
-import { ExplorationPerkData } from './perks/exploration';
-import { InterpersonalPerkData } from './perks/interpersonal';
-import { IntriguePerkData } from './perks/intrigue';
-import { LorePerkData } from './perks/lore';
-import { SupernaturalPerkData } from './perks/supernatural';
+import { CraftingPerkData } from '@/data/perks/crafting';
+import { ExplorationPerkData } from '@/data/perks/exploration';
+import { InterpersonalPerkData } from '@/data/perks/interpersonal';
+import { IntriguePerkData } from '@/data/perks/intrigue';
+import { LorePerkData } from '@/data/perks/lore';
+import { SupernaturalPerkData } from '@/data/perks/supernatural';
 
 export class PerkData {
 	static areaOfExpertise = CraftingPerkData.areaOfExpertise;
@@ -23,6 +23,10 @@ export class PerkData {
 	static teamwork = ExplorationPerkData.teamwork;
 	static teamLeader = ExplorationPerkData.teamLeader;
 	static woodWise = ExplorationPerkData.woodWise;
+	static bornTracker = ExplorationPerkData.bornTracker;
+	static rideAlong = ExplorationPerkData.rideAlong;
+	static wildRumpus = ExplorationPerkData.wildRumpus;
+	static wildsExplorer = ExplorationPerkData.wildsExplorer;
 
 	static charmingLiar = InterpersonalPerkData.charmingLiar;
 	static dazzler = InterpersonalPerkData.dazzler;
@@ -34,6 +38,9 @@ export class PerkData {
 	static powerPlayer = InterpersonalPerkData.powerPlayer;
 	static soTellMe = InterpersonalPerkData.soTellMe;
 	static spotTheTell = InterpersonalPerkData.spotTheTell;
+	static peopleSense = InterpersonalPerkData.peopleSense;
+	static voiceOfTheWild = InterpersonalPerkData.voiceOfTheWild;
+	static youCanPetThem = InterpersonalPerkData.youCanPetThem;
 
 	static criminalContacts = IntriguePerkData.criminalContacts;
 	static forgettableFace = IntriguePerkData.forgettableFace;
@@ -41,6 +48,7 @@ export class PerkData {
 	static luckyDog = IntriguePerkData.luckyDog;
 	static masterOfDisguise = IntriguePerkData.masterOfDisguise;
 	static slippedLead = IntriguePerkData.slippedLead;
+	static trainedThief = IntriguePerkData.trainedThief;
 
 	static butIKnowWhoDoes = LorePerkData.butIKnowWhoDoes;
 	static eideticMemory = LorePerkData.eideticMemory;

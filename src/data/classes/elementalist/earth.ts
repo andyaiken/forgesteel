@@ -1,7 +1,7 @@
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { SubClass } from '../../../models/subclass';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { SubClass } from '@/models/subclass';
 
 export const earth: SubClass = {
 	id: 'elementalist-sub-1',
@@ -121,7 +121,6 @@ Additionally, whenever an ally within distance of your Hurl Element ability is f
 								id: 'elementalist-sub-1-5-1b',
 								name: 'The Mountain Does Not Move',
 								type: FactoryLogic.type.createTrigger('The target is force moved', { free: true }),
-								keywords: [],
 								distance: [ FactoryLogic.distance.createSpecial('The distance of your Hurl Element ability') ],
 								target: 'One ally',
 								sections: [

@@ -1,4 +1,4 @@
-import { Hero } from '../../models/hero';
+import { Hero } from '@/models/hero';
 
 export const humanCensor = {
 	id: 'qrjxZPFJhWdJiZyk',
@@ -29,7 +29,8 @@ export const humanCensor = {
 							free: false,
 							trigger: '',
 							time: '',
-							qualifiers: []
+							qualifiers: [],
+							freeStrike: false
 						},
 						keywords: [],
 						distance: [
@@ -106,7 +107,8 @@ export const humanCensor = {
 											free: false,
 											trigger: 'You take damage that isn’t untyped',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -158,7 +160,8 @@ export const humanCensor = {
 											free: false,
 											trigger: '',
 											time: '',
-											qualifiers: []
+											qualifiers: [],
+											freeStrike: false
 										},
 										keywords: [],
 										distance: [
@@ -229,7 +232,8 @@ export const humanCensor = {
 										free: false,
 										trigger: 'You take damage that isn’t untyped',
 										time: '',
-										qualifiers: []
+										qualifiers: [],
+										freeStrike: false
 									},
 									keywords: [],
 									distance: [
@@ -358,6 +362,7 @@ export const humanCensor = {
 		id: 'class-censor',
 		name: 'Censor',
 		description: '\nDemons and deathless fear you. Criminals run from the sight of your shadow. Agents of chaos, blasphemers, and heretics tremble at the sound of your voice. You carry the power of the gods, armed with wrath and sent out into the world first to seek, then censor those whose actions—or even existence—are anathema to your church.\n\nAs a censor, you’re at your best against the strongest foes. Your judgment terrifies heretics, stops enemies in their tracks, and even hurls them across the battlefield.',
+		type: 'standard',
 		subclassName: 'Order',
 		subclassCount: 1,
 		primaryCharacteristicsOptions: [
@@ -516,7 +521,8 @@ export const humanCensor = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Magic',
@@ -593,7 +599,8 @@ export const humanCensor = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Magic',
@@ -675,7 +682,8 @@ export const humanCensor = {
 																free: false,
 																trigger: '',
 																time: '',
-																qualifiers: []
+																qualifiers: [],
+																freeStrike: false
 															},
 															keywords: [
 																'Area',
@@ -758,7 +766,8 @@ export const humanCensor = {
 									free: false,
 									trigger: '',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Magic',
@@ -849,7 +858,8 @@ export const humanCensor = {
 														free: false,
 														trigger: '',
 														time: '',
-														qualifiers: []
+														qualifiers: [],
+														freeStrike: false
 													},
 													keywords: [
 														'Melee',
@@ -920,7 +930,8 @@ export const humanCensor = {
 									free: false,
 									trigger: 'The target starts their turn or takes damage.',
 									time: '',
-									qualifiers: []
+									qualifiers: [],
+									freeStrike: false
 								},
 								keywords: [
 									'Magic',
@@ -1488,7 +1499,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -1542,7 +1554,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1599,7 +1612,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1652,7 +1666,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1709,7 +1724,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1766,7 +1782,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -1823,7 +1840,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1881,7 +1899,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1934,7 +1953,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -1992,7 +2012,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2059,7 +2080,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2116,7 +2138,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Magic',
@@ -2183,7 +2206,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2227,7 +2251,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2271,7 +2296,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2315,7 +2341,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area',
@@ -2359,7 +2386,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged'
@@ -2402,7 +2430,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Area'
@@ -2457,7 +2486,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2514,7 +2544,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2567,7 +2598,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2624,7 +2656,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged',
@@ -2681,7 +2714,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Melee',
@@ -2738,7 +2772,8 @@ export const humanCensor = {
 					free: false,
 					trigger: '',
 					time: '',
-					qualifiers: []
+					qualifiers: [],
+					freeStrike: false
 				},
 				keywords: [
 					'Ranged',
@@ -2863,7 +2898,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -2931,7 +2967,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3023,7 +3060,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3086,7 +3124,8 @@ export const humanCensor = {
 															free: true,
 															trigger: 'The target gains a condition or effect that is ended by a saving throw or that ends at the end of their turn.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3174,7 +3213,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -3242,7 +3282,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3383,7 +3424,8 @@ export const humanCensor = {
 															free: false,
 															trigger: 'An enemy within 10 squares starts their turn.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3438,7 +3480,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3530,7 +3573,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3594,7 +3638,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3682,7 +3727,8 @@ export const humanCensor = {
 															free: false,
 															trigger: 'The target makes a power roll.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3737,7 +3783,8 @@ export const humanCensor = {
 															free: false,
 															trigger: 'You or another hero ends their turn.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -3865,7 +3912,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Area',
@@ -3920,7 +3968,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -4026,7 +4075,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -4094,7 +4144,8 @@ export const humanCensor = {
 															free: true,
 															trigger: 'A creature makes a strike against the target.',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',
@@ -4182,7 +4233,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Melee',
@@ -4250,7 +4302,8 @@ export const humanCensor = {
 															free: false,
 															trigger: '',
 															time: '',
-															qualifiers: []
+															qualifiers: [],
+															freeStrike: false
 														},
 														keywords: [
 															'Magic',

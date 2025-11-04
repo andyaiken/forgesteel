@@ -1,13 +1,13 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const angulotl: MonsterGroup = {
 	id: 'monster-group-angulotl',
@@ -54,6 +54,7 @@ Pinna, Hedge Witch, Gravesford`,
 			id: 'angulotl-malice-1',
 			name: 'Leapfrog',
 			cost: 3,
+			icon: StatBlockIcon.Trait,
 			sections: [
 				'Until the end of the round, when an angulotl moves through an inactive angulotl’s space, the inactive angulotl can use a free triggered action to jump 3 squares.'
 			]
@@ -62,6 +63,7 @@ Pinna, Hedge Witch, Gravesford`,
 			id: 'angulotl-malice-2',
 			name: 'Resonating Croak',
 			cost: 5,
+			icon: StatBlockIcon.AuraBurst,
 			sections: [
 				'Each angulotl in the encounter puffs out their throat and starts loudly droning. Any non-angulotl adjacent to an angulotl makes an **Intuition test**.',
 				FactoryLogic.createPowerRoll({
@@ -76,6 +78,7 @@ Pinna, Hedge Witch, Gravesford`,
 			id: 'angulotl-malice-3',
 			name: 'Rainfall',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				'An angulotl calls clouds to cover the encounter map and unleash rain until the end of the round. Any creature or object that is exposed to the sky is wet until the end of the encounter.'
 			]
@@ -95,7 +98,7 @@ Pinna, Hedge Witch, Gravesford`,
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+1 damage bonus to strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 0, 1, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -143,7 +146,7 @@ Pinna, Hedge Witch, Gravesford`,
 			stability: 0,
 			freeStrikeDamage: 1,
 			withCaptain: '+2 bonus to speed',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -2, -2, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -2, -2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -190,7 +193,7 @@ Pinna, Hedge Witch, Gravesford`,
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: '+4 bonus to ranged distance',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 1, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -238,7 +241,7 @@ Pinna, Hedge Witch, Gravesford`,
 			stability: 0,
 			freeStrikeDamage: 2,
 			withCaptain: 'Gain an edge on strikes',
-			characteristics: MonsterLogic.createCharacteristics(0, 2, -3, -2, 1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, -3, -2, 1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -288,7 +291,7 @@ Pinna, Hedge Witch, Gravesford`,
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(0, 2, 1, 0, -1),
+			characteristics: FactoryLogic.createCharacteristics(0, 2, 1, 0, -1),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -337,7 +340,7 @@ Pinna, Hedge Witch, Gravesford`,
 			stamina: 15,
 			stability: 0,
 			freeStrikeDamage: 2,
-			characteristics: MonsterLogic.createCharacteristics(1, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(1, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -402,7 +405,7 @@ Pinna, Hedge Witch, Gravesford`,
 			stamina: 10,
 			stability: 0,
 			freeStrikeDamage: 1,
-			characteristics: MonsterLogic.createCharacteristics(0, 0, 0, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(0, 0, 0, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -471,7 +474,7 @@ Pinna, Hedge Witch, Gravesford`,
 			stamina: 80,
 			stability: 1,
 			freeStrikeDamage: 4,
-			characteristics: MonsterLogic.createCharacteristics(3, 2, 0, 2, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, 2, 0, 2, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -539,7 +542,6 @@ Pinna, Hedge Witch, Gravesford`,
 						id: 'angulotl-8-feature-5',
 						name: 'New Dawn',
 						type: FactoryLogic.type.createVillainAction(1),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(10) ],
 						target: 'Special',
 						sections: [
@@ -552,7 +554,6 @@ Pinna, Hedge Witch, Gravesford`,
 						id: 'angulotl-8-feature-6',
 						name: 'Plague of Frogs',
 						type: FactoryLogic.type.createVillainAction(2),
-						keywords: [],
 						distance: [
 							FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 8 })
 						],
@@ -567,7 +568,6 @@ Pinna, Hedge Witch, Gravesford`,
 						id: 'angulotl-8-feature-7',
 						name: 'It Is Day',
 						type: FactoryLogic.type.createVillainAction(3),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSpecial('') ],
 						target: 'Special',
 						sections: [

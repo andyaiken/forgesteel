@@ -1,12 +1,12 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const countRhodar: MonsterGroup = {
 	id: 'monster-group-count-rhodar',
@@ -62,6 +62,7 @@ How his return might be possible is not clear, but it would surely involve the R
 			id: 'count-rhodar-malice-1',
 			name: 'Slip',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'During this turn, Rhodar can move through creatures and objects at his usual speed, but can’t end his turn inside a creature or object. Additionally, he doesn’t take damage from being force moved.'
 			]
@@ -70,6 +71,7 @@ How his return might be possible is not clear, but it would surely involve the R
 			id: 'count-rhodar-malice-2',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'Rhodar takes an additional main action on his turn. He can use this feature even if he is dazed.'
 			]
@@ -78,6 +80,7 @@ How his return might be possible is not clear, but it would surely involve the R
 			id: 'count-rhodar-malice-3',
 			name: 'Suffocating Dark',
 			cost: 5,
+			icon: StatBlockIcon.Area,
 			sections: [
 				'Rhodar throws one of his spears into an unoccupied space within 10 squares, or chooses one of his spears that he has already thrown. Until that spear returns to him or he uses this feature again, the spear emanates magical darkness in a 5 aura. Rhodar can see through this darkness, and any enemy is suffocating while in the darkness.'
 			]
@@ -86,6 +89,7 @@ How his return might be possible is not clear, but it would surely involve the R
 			id: 'count-rhodar-malice-4',
 			name: 'The Mirror Lies',
 			cost: 7,
+			icon: StatBlockIcon.Ranged,
 			sections: [
 				'Rhodar chooses two creatures or objects within 20 squares of him. The targets immediately teleport to swap places. Any enemy teleported by this feature who has I<5 is dazed until the end of their next turn.'
 			]
@@ -104,7 +108,7 @@ How his return might be possible is not clear, but it would surely involve the R
 			stamina: 650,
 			stability: 3,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(3, 5, 2, 2, 3),
+			characteristics: FactoryLogic.createCharacteristics(3, 5, 2, 2, 3),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'count-rhodar-1-1',

@@ -1,0 +1,407 @@
+@forward './_borders' as border-*;
+@forward './_dividers' as divider-*;
+@forward './_colors' as color-*;
+@forward './functions';
+
+@use './borders';
+@use './dividers';
+@use './colors';
+
+@mixin font-slab() {
+    font-family: 'Roboto Slab', Georgia, serif !important;
+    font-weight: 400;
+}
+@mixin font-serif() {
+    font-family: 'Merriweather', Georgia, serif !important;
+}
+@mixin font-glyphs() {
+    font-family: 'Draw Steel Glyphs', Arial, Helvetica, sans-serif !important;
+}
+
+@mixin striped-card() {
+    --l1: round(up, calc(1rem + 4px), 1px);
+    --ld: calc(var(--l1) + 1px);
+    --l2: round(up, calc(2 * var(--l1)), 1px);
+    background-image: linear-gradient(180deg, transparent var(--l1), #ccc var(--l1), #ccc var(--ld), #eee var(--ld), #eee var(--l2), #ccc var(--l2));
+    background-size: 100% calc(var(--l2) + 1px);
+    background-position: center top;
+    background-repeat: repeat-y;
+}
+
+main#classic-sheet {
+    background: colors.$extra-light;
+
+    &.hidden {
+        display: none;
+    }
+
+    .hero-sheet, .encounter-sheet, .montage-sheet, .negotiation-sheet {
+        height: 100%;
+        font-size: 14px;
+        padding: 5px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        overflow: auto;
+
+        label,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            @include font-slab();
+            color: var(--color-text);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            text-align: center;
+            text-transform: uppercase;
+            margin: 0;
+            margin-bottom: 10px;
+            font-weight: 450;
+            color: var(--color-text);
+        }
+
+        h2 {
+            line-height: 20px;
+            font-size: 18px;
+            padding: 5px 0;
+
+            @include dividers.fancy(colors.$medium);
+        }
+
+        h3 {
+            line-height: round(1.6rem, 1px);
+            font-size: round(1.2rem, 1px);
+        }
+
+        h4 {
+            line-height: round(1.4rem, 1px);
+            text-transform: none;
+            font-size: round(1.1rem, 1px);
+            font-weight: 450;
+        }
+
+        &,
+        li,
+        p,
+        em,
+        span {
+            @include font-serif();
+            color: var(--color-text);
+            font-weight: 300;
+        }
+
+        p,
+        .labeled-field-content span {
+            @include font-serif();
+        }
+
+        p,
+        table,
+        ul {
+            background-color: transparent;
+            color: var(--color-text);
+        }
+        
+        p strong,
+        li strong  {
+            @include font-slab;
+            font-weight: 450;
+        }
+
+        .card {
+            background: #fff;
+            border: 2px solid colors.$light;
+            border-radius: 2px;
+            margin: 5px;
+            padding: 5px 15px;
+        }
+
+        section.container,
+        .beveled {
+            @include borders.beveled(10px, 2px, colors.$light);
+            padding: round(0.5rem, 1px);
+        }
+
+        .card section.bordered {
+            @include borders.beveled(8px, 2px, colors.$light);
+            margin-bottom: 10px;
+            padding: 0 10px 10px;
+
+            h3 {
+                font-size: round(1rem, 1px);
+                line-height: round(1rem, 1px);
+                height: round(1rem, 1px);
+                font-weight: 450;
+                background: #fff;
+                display: inline-block;
+                position: relative;
+                top: -2px;
+                margin: 0 auto;
+                padding: 0 10px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+            }
+
+            p {
+                margin: 0 10px 10px;
+            }
+        }
+
+        ul.features-container,
+        ul.titles-container {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            &.two-column {
+                column-count: 2;
+                column-gap: 15px;
+
+                background-image: linear-gradient(0deg, colors.$light, colors.$light);
+                background-size: 2px 100%;
+                background-position: 50% 4px;
+                background-repeat: no-repeat;
+            }
+
+            &.three-column {
+                column-count: 3;
+                $gap: 15px;
+                column-gap: $gap;
+
+                $col-w: calc((100% - 2 * $gap)/ 3);
+                $l1-s: calc($col-w + ($gap / 2) - 1px);
+                $l1-e: calc($l1-s + 2px);
+                $l2-s: calc(2 * $col-w + (3 * $gap / 2) - 1px);
+                $l2-e: calc($l2-s + 2px);
+                background-image: linear-gradient(90deg, transparent $l1-s,
+                    colors.$light $l1-s, colors.$light $l1-e,
+                    transparent $l1-e, transparent $l2-s,
+                    colors.$light $l2-s, colors.$light $l2-e,
+                    transparent $l2-e);
+
+                background-size: 100% 100%;
+                background-position: center 4px;
+                background-repeat: no-repeat;
+            }
+
+            li {
+                break-inside: avoid-column;
+
+                .feature-description p {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+
+            li:last-of-type .feature-description {
+                margin-bottom: 0;
+            }
+
+            .feature {
+                overflow: hidden;
+            }
+
+            .feature:has(.feature-title):has(.feature-iteration) {
+                .feature-title {
+                    margin-bottom: 0;
+                }
+
+                margin-bottom: 10px;
+            }
+
+            li em {
+                @include font-serif();
+            }
+
+            li>em {
+                font-weight: 400;
+                font-size: round(1.1rem, 1px);
+            }
+        }
+
+        .power-roll {
+            display: grid;
+            grid-template-rows: min-content 1fr;
+            font-size: 15px;
+
+            .power, .symbol-text {
+                @include font-slab;
+            }
+            .power  {
+                font-weight: 600;
+                margin: 0 10px 5px;
+                .symbol-text {
+                    display: inline-block;
+                    font-size: round(1.2rem, 1px);
+                    font-weight: 500;
+                    padding: 0;
+                }
+            }
+
+            .roll-tiers {
+                display: grid;
+                grid-template-rows: min-content min-content min-content;
+                margin: 0;
+                margin-left: -7px;
+
+                .tier {
+                    display: grid;
+                    grid-template-columns: min-content 1fr;
+                    margin: 0;
+
+                    .range {
+                        width: 50px;
+                        height: 26px;
+                        margin-top: -1px;
+                    }
+
+                    .effect .potency {
+                        font-size: 15px;
+                    }
+                }
+
+            }
+        }
+
+        img.icon {
+            width: 17px;
+            height: 17px;
+            opacity: 0.85;
+            margin-right: 5px;
+            margin-top: 2px;
+        }
+
+        hr.dashed {
+            border: 0;
+            border-top: 1px dashed colors.$medium;
+            width: 100%;
+        }
+
+        .abilities.page,
+        .extra-cards.page {
+            --gap: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--gap);
+            padding: 5px;
+
+            .card {
+                margin: 0;
+            }
+        }
+
+        .page .stacked-cards {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+            justify-content: stretch;
+
+            .card {
+                flex-grow: 1;
+            }
+        }
+
+        .page {
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .page.row-cards-2 {
+            .card,
+            .stacked-cards {
+                flex-basis: calc((100% - var(--gap)) / 2);
+            }
+
+            .card.wide,
+            .card.slots-2-wide {
+                flex-basis: 100%;
+            }
+        }
+
+        .page.row-cards-3 {
+            .card,
+            .stacked-cards {
+                flex-basis: calc((100% - 2 * var(--gap)) / 3);
+            }
+
+            .card.wide,
+            .card.slots-2-wide,
+            .feature-reference {
+                flex-basis: calc(2 * ((100% - 2 * var(--gap)) / 3) + var(--gap));
+            }
+
+            .feature-reference.wide,
+            .card.slots-3-wide,
+            .table-reference.card {
+                flex-basis: 100%;
+            }
+        }
+
+        .page.row-cards-4 {
+            .card,
+            .stacked-cards,
+            .feature-reference.single {
+                flex-basis: calc((100% - 3 * var(--gap)) / 4);
+            }
+
+            .card.wide,
+            .card.slots-2-wide,
+            .feature-reference {
+                flex-basis: calc(2 * ((100% - 3 * var(--gap)) / 4) + var(--gap));
+            }
+
+            .feature-reference.wide,
+            .card.slots-3-wide {
+                flex-basis: calc(3 * ((100% - 3 * var(--gap)) / 4) + 2 * var(--gap));
+            }
+
+            .feature-reference.extra-wide,
+            .card.slots-4-wide {
+                flex-basis: 100%;
+            }
+        }
+        &.letter {
+            .page.portrait {
+                aspect-ratio: 8.5 / 11;
+                width: 1275px; // ~150dpi
+                height: 1650px;
+                max-width: 1275px;
+                max-height: 1650px;
+            }
+
+            .page.landscape {
+                aspect-ratio: 11 / 8.5;
+                width: 1650px; // ~150dpi
+                height: 1275px;
+                max-width: 1650px;
+                max-height: 1275px;
+            }
+        }
+
+        &.a4 {
+            .page.portrait {
+                aspect-ratio: 1 / 1.41;
+                width: 1240px; // ~150dpi
+                height: 1754px;
+                max-width: 1240px;
+                max-height: 1754px;
+            }
+
+            .page.landscape {
+                aspect-ratio: 1.41 / 1;
+                width: 1754px; // ~150dpi
+                height: 1240px;
+                max-width: 1754px;
+                max-height: 1240px;
+            }
+        }
+    }
+}

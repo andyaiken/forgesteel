@@ -1,12 +1,12 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const lich: MonsterGroup = {
 	id: 'monster-group-lich',
@@ -51,6 +51,7 @@ Liches know they have all the time in the world to plot against their foes, and 
 			id: 'lich-malice-1',
 			name: 'Soul Sip',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'The lich makes a free strike against one enemy within 20 squares. They then gain an edge on their next power roll.'
 			]
@@ -59,6 +60,7 @@ Liches know they have all the time in the world to plot against their foes, and 
 			id: 'lich-malice-2',
 			name: 'Solo Action',
 			cost: 5,
+			icon: StatBlockIcon.Villain,
 			sections: [
 				'The lich takes an additional main action on their turn. They can use this feature even if they are dazed.'
 			]
@@ -67,6 +69,7 @@ Liches know they have all the time in the world to plot against their foes, and 
 			id: 'lich-malice-3',
 			name: 'Spirit Shell',
 			cost: 5,
+			icon: StatBlockIcon.Self,
 			sections: [
 				'The lich summons a swirling cloud of angry spirits to surround them until the start of the next round. Any creature who deals damage to the lich with a melee strike while the spirit shell is active makes a **Presence test**.',
 				FactoryLogic.createPowerRoll({
@@ -81,6 +84,7 @@ Liches know they have all the time in the world to plot against their foes, and 
 			id: 'lich-malice-4',
 			name: 'Cloud of Deceit',
 			cost: 7,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				`
 The lich summons a mind-altering mist, turns invisible until the start of their next turn, and moves up to half their speed. Each enemy within 20 squares of the lich’s starting point who has I<4 is deceived. While deceived, a creature perceives all allies and enemies as the lich, and perceives the environment as an unfamiliar wasteland corrupted by necrotic blight. If other creatures attempt to communicate with a deceived creature, that creature interprets their words as ghastly taunts in the lich’s voice.
@@ -102,7 +106,7 @@ This effect lasts until an affected creature takes damage or an ally uses a main
 			stamina: 650,
 			stability: 1,
 			freeStrikeDamage: 10,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 5, 5, 5),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 5, 5, 5),
 			features: [
 				FactoryLogic.feature.createDamageModifier({
 					id: 'lich-1-1',

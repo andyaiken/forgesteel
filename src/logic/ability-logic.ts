@@ -1,16 +1,19 @@
-import { Ability, AbilityDistance } from '../models/ability';
-import { AbilityDistanceType } from '../enums/abiity-distance-type';
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { Characteristic } from '../enums/characteristic';
-import { Collections } from '../utils/collections';
-import { Format } from '../utils/format';
-import { FormatLogic } from './format-logic';
-import { Hero } from '../models/hero';
-import { HeroLogic } from './hero-logic';
-import { KitArmor } from '../enums/kit-armor';
-import { KitWeapon } from '../enums/kit-weapon';
-import { PowerRoll } from '../models/power-roll';
-import { Utils } from '../utils/utils';
+import { Ability, AbilityDistance } from '@/models/ability';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { CreatureLogic } from '@/logic/creature-logic';
+import { Format } from '@/utils/format';
+import { FormatLogic } from '@/logic/format-logic';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { Monster } from '@/models/monster';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { PowerRoll } from '@/models/power-roll';
+import { Utils } from '@/utils/utils';
 
 export class AbilityLogic {
 	static getKeywords = () => {
@@ -143,6 +146,14 @@ export class AbilityLogic {
 		return sections.filter(x => !!x).join(' ');
 	};
 
+	static getDistanceCreature = (distance: AbilityDistance, ability?: Ability, creature?: Hero | Monster) => {
+		if (CreatureLogic.isMonster(creature)) {
+			return AbilityLogic.getDistance(distance, ability, undefined);
+		} else {
+			return AbilityLogic.getDistance(distance, ability, creature);
+		}
+	};
+
 	static usesDamage = (ability: Ability) => {
 		return ability.sections
 			.filter(s => s.type === 'roll')
@@ -156,6 +167,51 @@ export class AbilityLogic {
 		};
 
 		return [ powerRoll.tier1, powerRoll.tier2, powerRoll.tier3 ].some(tier => match(tier));
+	};
+
+	static getPowerRollBonusValue = (ability: Ability, creature: Hero | Monster | undefined): number => {
+		const rollCharacteristics = this.getPowerRollCharacteristics(ability, creature);
+		let rollPowerAmount = 2;// echelon 1 always at least 2
+		if (rollCharacteristics.length) {
+			rollPowerAmount = Math.max(...rollCharacteristics
+				.map(c => CreatureLogic.getCharacteristic(creature, c)));
+		} else {
+			const rollSections = ability.sections.filter(s => s.type === 'roll');
+			if (rollSections.length) {
+				const rollSection = rollSections[0];
+				if (rollSections.length > 1) {
+					console.warn('More than one roll section!', ability.name, rollSections);
+				}
+
+				[ rollSection.roll.tier1, rollSection.roll.tier2, rollSection.roll.tier3 ].forEach(tier => {
+					const potency = tier.match(/[MmAaRrIiPp]<(\d)/);
+					if (potency && potency[1]) {
+						rollPowerAmount = Math.max(rollPowerAmount, Number.parseInt(potency[1]));
+					}
+				});
+			}
+		}
+		return rollPowerAmount;
+	};
+
+	static getPowerRollCharacteristics = (ability: Ability, creature: Hero | Monster | undefined): Characteristic[] => {
+		const rollSections = ability.sections.filter(s => s.type === 'roll');
+		if (rollSections.length) {
+			const rollSection = rollSections[0];
+			if (rollSections.length > 1) {
+				console.warn('More than one roll section!', ability.name, rollSections);
+			}
+
+			let rollCharacteristics = rollSection.roll.characteristic;
+			// Specific check for Grab/Knockback + Psionic Martial Arts override
+			if (CreatureLogic.isHero(creature)
+				&& ([ 'grab', 'knockback' ].includes(ability.id))
+				&& HeroLogic.getFeatures(creature as Hero).find(f => f.feature.id === 'null-1-8')) { // Psionic Martial Arts id
+				rollCharacteristics = [ Characteristic.Intuition ];
+			}
+			return rollCharacteristics;
+		}
+		return [];
 	};
 
 	static getTierEffect = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, hero: Hero | undefined) => {
@@ -205,7 +261,7 @@ export class AbilityLogic {
 						}
 					}
 
-					const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability);
+					const dmgFeatures = HeroLogic.getFeatureDamageBonuses(hero, ability, distance);
 					value += Collections.sum(dmgFeatures, x => x.value);
 
 					section.toLowerCase().split(' ').forEach(token => {
@@ -291,6 +347,62 @@ export class AbilityLogic {
 				return AbilityLogic.getTextEffect(section, hero);
 			})
 			.join('; ');
+	};
+
+	static getTierEffectRetainer = (value: string, tier: number, ability: Ability, retainer: Monster | undefined) => {
+		return value
+			.split(';')
+			.map(section => section.trim())
+			.map((section, n) => {
+				if (retainer && (n === 0) && [ 'damage', 'dmg' ].some(s => section.toLowerCase().endsWith(s))) {
+					let value = 0;
+					const types: string[] = [];
+
+					const isSignature = (ability.cost === 'signature');
+					const signatureBonus = MonsterLogic.getSignatureDamageBonus(retainer);
+
+					if (isSignature && signatureBonus) {
+						switch (tier) {
+							case 1:
+								value += signatureBonus.tier1;
+								break;
+							case 2:
+								value += signatureBonus.tier2;
+								break;
+							case 3:
+								value += signatureBonus.tier3;
+								break;
+						}
+					}
+
+					section.toLowerCase().split(' ').forEach(token => {
+						if ((token === 'damage') || (token === 'dmg')) {
+							// Damage; ignore
+						} else if (token === 'or') {
+							// Ignore
+						} else if (!isNaN(parseInt(token))) {
+							value += parseInt(token);
+						} else {
+							types.push(token);
+						}
+					});
+
+					const damage = [ types.sort().join(' or '), 'damage' ].join(' ');
+
+					return `${value} ${damage}`;
+				}
+
+				return AbilityLogic.getTextEffect(section, undefined);
+			})
+			.join('; ');
+	};
+
+	static getTierEffectCreature = (value: string, tier: number, ability: Ability, distance: AbilityDistanceType | undefined, creature: Hero | Monster | undefined): string => {
+		if (CreatureLogic.isMonster(creature)) {
+			return AbilityLogic.getTierEffectRetainer(value, tier, ability, creature);
+		} else {
+			return AbilityLogic.getTierEffect(value, tier, ability, distance, creature);
+		}
 	};
 
 	static getTextEffect = (text: string, hero: Hero | undefined) => {

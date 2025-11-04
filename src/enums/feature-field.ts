@@ -1,5 +1,7 @@
 export enum FeatureField {
 	Disengage = 'Disengage',
+	Save = 'Save',
+	FreeStrikeDamage = 'Free Strike Damage',
 	ProjectPoints = 'Project Points',
 	Recoveries = 'Recoveries',
 	RecoveryValue = 'Recovery Value',

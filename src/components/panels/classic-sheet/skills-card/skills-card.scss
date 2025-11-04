@@ -1,0 +1,46 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .skills.card {
+    display: grid;
+    grid-template-rows: min-content min-content 1fr;
+
+    .reference {
+        @include common.font-slab();
+        text-align: center;
+        font-size: round(1.1rem, 1px);
+        color: var(--color-text-lightest);
+    }
+
+    .skills-lists {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding: 0;
+    }
+
+    h3 {
+        text-align: left;
+        border-bottom: 2px solid common.$color-medium;
+        font-size: round(1.2rem, 1px);
+        margin-bottom: 5px;
+    }
+
+    ul {
+        list-style: none;
+        column-count: 2;
+        column-fill: balance;
+        margin:0;
+        padding: 0;
+
+        li {
+            padding: 3px 0;
+
+            &.spacer {
+                height: round(2rem, 1px);
+            }
+        }
+        li label{
+            font-weight: 400;
+        }
+    }
+}

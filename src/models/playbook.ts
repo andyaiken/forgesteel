@@ -1,9 +1,9 @@
-import { Adventure } from './adventure';
-import { Counter } from './counter';
-import { Encounter } from './encounter';
-import { Montage } from './montage';
-import { Negotiation } from './negotiation';
-import { TacticalMap } from './tactical-map';
+import { Adventure } from '@/models/adventure';
+import { Counter } from '@/models/counter';
+import { Encounter } from '@/models/encounter';
+import { Montage } from '@/models/montage';
+import { Negotiation } from '@/models/negotiation';
+import { TacticalMap } from '@/models/tactical-map';
 
 export interface Playbook {
 	adventures: Adventure[];

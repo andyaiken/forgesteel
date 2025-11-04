@@ -1,36 +1,40 @@
-import { Adventure, AdventurePackage } from '../../../../models/adventure';
-import { Button, Input, Popover } from 'antd';
-import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
-import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
+import { Adventure, AdventurePackage } from '@/models/adventure';
+import { Alert, Button, Input, Popover } from 'antd';
+import { DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
+import { Playbook, PlaybookElementKind } from '@/models/playbook';
 import { ReactNode, useState } from 'react';
-import { AdventurePanel } from '../../../panels/elements/adventure-panel/adventure-panel';
-import { AppFooter } from '../../../panels/app-footer/app-footer';
-import { AppHeader } from '../../../panels/app-header/app-header';
-import { CreatePanel } from './create-panel/create-panel';
-import { DangerButton } from '../../../controls/danger-button/danger-button';
-import { Element } from '../../../../models/element';
-import { Empty } from '../../../controls/empty/empty';
-import { Encounter } from '../../../../models/encounter';
-import { EncounterPanel } from '../../../panels/elements/encounter-panel/encounter-panel';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Format } from '../../../../utils/format';
-import { Hero } from '../../../../models/hero';
-import { Montage } from '../../../../models/montage';
-import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
-import { Negotiation } from '../../../../models/negotiation';
-import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '../../../../models/options';
-import { OptionsPanel } from '../../../panels/options/options-panel';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { PlaybookLogic } from '../../../../logic/playbook-logic';
-import { SelectorRow } from '../../../panels/selector-row/selector-row';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { TacticalMap } from '../../../../models/tactical-map';
-import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
-import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
-import { Utils } from '../../../../utils/utils';
-import { useNavigation } from '../../../../hooks/use-navigation';
+import { AdventurePanel } from '@/components/panels/elements/adventure-panel/adventure-panel';
+import { AppFooter } from '@/components/panels/app-footer/app-footer';
+import { AppHeader } from '@/components/panels/app-header/app-header';
+import { CreatePanel } from '@/components/pages/playbook/playbook-list/create-panel/create-panel';
+import { DangerButton } from '@/components/controls/danger-button/danger-button';
+import { Element } from '@/models/element';
+import { Empty } from '@/components/controls/empty/empty';
+import { Encounter } from '@/models/encounter';
+import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
+import { EncounterSheetPage } from '@/components/panels/classic-sheet/encounter-sheet/encounter-sheet-page';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Format } from '@/utils/format';
+import { Hero } from '@/models/hero';
+import { Montage } from '@/models/montage';
+import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
+import { MontageSheetPage } from '@/components/panels/classic-sheet/montage-sheet/montage-sheet-page';
+import { Negotiation } from '@/models/negotiation';
+import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
+import { NegotiationSheetPage } from '@/components/panels/classic-sheet/negotiation-sheet/negotiation-sheet-page';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { PlaybookLogic } from '@/logic/playbook-logic';
+import { SelectorRow } from '@/components/panels/selector-row/selector-row';
+import { Sourcebook } from '@/models/sourcebook';
+import { TacticalMap } from '@/models/tactical-map';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
+import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { Utils } from '@/utils/utils';
+import { ViewSelector } from '@/components/panels/view-selector/view-selector';
+import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
+import { useTitle } from '@/hooks/use-title';
 
 import './playbook-list-page.scss';
 
@@ -40,16 +44,17 @@ interface Props {
 	playbook: Playbook;
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	showEncounterTools: (encounter: Encounter) => void;
-	setOptions: (options: Options) => void;
 	createElement: (kind: PlaybookElementKind, element: Element | null) => void;
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
 	importAdventurePackage: (ap: AdventurePackage) => void;
 	deleteElement: (kind: PlaybookElementKind, element: Element) => void;
 	exportElement: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
+	exportElementPdf: (kind: PlaybookElementKind, element: Element, resolution: 'standard' | 'high') => void;
 	startElement: (kind: PlaybookElementKind, element: Element) => void;
 }
 
@@ -62,6 +67,10 @@ export const PlaybookListPage = (props: Props) => {
 	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
+	const [ view, setView ] = useState<string>('modern');
+	useTitle('Playbook');
+
+	const categoriesWithClassicView = [ 'encounter', 'montage', 'negotiation' ];
 
 	if (kind !== previousCategory) {
 		setCategory(kind || 'adventure');
@@ -199,16 +208,92 @@ export const PlaybookListPage = (props: Props) => {
 
 		switch (category) {
 			case 'adventure':
-				getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} playbook={props.playbook} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => (
+					<AdventurePanel
+						key={element.id}
+						adventure={element as Adventure}
+						heroes={props.heroes}
+						sourcebooks={props.sourcebooks}
+						playbook={props.playbook}
+						options={props.options}
+						mode={PanelMode.Full}
+						onStart={props.startElement}
+					/>
+				);
 				break;
 			case 'encounter':
-				getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} showTools={() => props.showEncounterTools(element as Encounter)} />;
+				getPanel = (element: Element) => {
+					if (view === 'classic') {
+						return (
+							<EncounterSheetPage
+								key={element.id}
+								encounter={element as Encounter}
+								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+							/>
+						);
+					} else {
+						return (
+							<EncounterPanel
+								key={element.id}
+								encounter={element as Encounter}
+								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								mode={PanelMode.Full}
+								showTools={() => props.showEncounterTools(element as Encounter)}
+							/>
+						);
+					}
+				};
 				break;
 			case 'montage':
-				getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => {
+					if (view === 'classic') {
+						return (
+							<MontageSheetPage
+								key={element.id}
+								montage={element as Montage}
+								heroes={props.heroes}
+								options={props.options}
+							/>
+						);
+					} else {
+						return (
+							<MontagePanel
+								key={element.id}
+								montage={element as Montage}
+								heroes={props.heroes}
+								options={props.options}
+								mode={PanelMode.Full}
+							/>
+						);
+					}
+				};
 				break;
 			case 'negotiation':
-				getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => {
+					if (view === 'classic') {
+						return (
+							<NegotiationSheetPage
+								key={element.id}
+								negotiation={element as Negotiation}
+								options={props.options}
+							/>
+						);
+					} else {
+						return (
+							<NegotiationPanel
+								key={element.id}
+								negotiation={element as Negotiation}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								mode={PanelMode.Full}
+							/>
+						);
+					}
+				};
 				break;
 			case 'tactical-map':
 				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
@@ -239,9 +324,30 @@ export const PlaybookListPage = (props: Props) => {
 								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
 							</div>
 							:
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
-								<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
+							<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+								{
+									categoriesWithClassicView.includes(category) && view !== 'classic' ?
+										<Alert
+											type='info'
+											showIcon={true}
+											message='To export as a PDF, switch to Classic view.'
+											action={<Button onClick={() => setView('classic')}>Classic</Button>}
+										/>
+										: null
+								}
+								{
+									categoriesWithClassicView.includes(category) && view === 'classic' ?
+										<>
+											<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export as PDF</Button>
+											<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export as PDF (high res)</Button>
+										</>
+										: null
+								}
+								{
+									!categoriesWithClassicView.includes(category) ?
+										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
+										: null
+								}
 								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
 							</div>
 					}
@@ -316,50 +422,45 @@ export const PlaybookListPage = (props: Props) => {
 		);
 	};
 
-	try {
-		const selected = getList(false).find(item => item.id == selectedID);
-		const getPanel = getElementPanel();
+	const selected = getList(false).find(item => item.id == selectedID);
+	const getPanel = getElementPanel();
 
-		return (
-			<ErrorBoundary>
-				<div className='playbook-list-page'>
-					<AppHeader subheader='Playbook'>
-						<Popover
-							trigger='click'
-							content={
-								<CreatePanel
-									currentTab={category}
-									createElement={props.createElement}
-									importElement={props.importElement}
-									importAdventurePackage={props.importAdventurePackage}
-								/>
-							}
-						>
-							<Button type='primary'>
-								Add
-								<DownOutlined />
-							</Button>
-						</Popover>
-						{getElementToolbar()}
-						{
-							(category === 'encounter') || (category === 'tactical-map') ?
-								<div className='divider' />
-								: null
+	return (
+		<ErrorBoundary>
+			<div className='playbook-list-page'>
+				<AppHeader subheader='Playbook'>
+					<Popover
+						trigger='click'
+						content={
+							<CreatePanel
+								currentTab={category}
+								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
+								options={props.options}
+								createElement={props.createElement}
+								importElement={props.importElement}
+								importAdventurePackage={props.importAdventurePackage}
+							/>
 						}
-						{
-							(category === 'encounter') || (category === 'tactical-map') ?
-								<Popover
-									trigger='click'
-									content={<OptionsPanel mode={category} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
-								>
-									<Button icon={<SettingOutlined />}>
-										Options
-										<DownOutlined />
-									</Button>
-								</Popover>
-								: null
-						}
-					</AppHeader>
+					>
+						<Button type='primary'>
+							Add
+							<DownOutlined />
+						</Button>
+					</Popover>
+					{getElementToolbar()}
+					{
+						!!selectedID && categoriesWithClassicView.includes(category) ?
+							<div className='divider' />
+							: null
+					}
+					{
+						!!selectedID && categoriesWithClassicView.includes(category) ?
+							<ViewSelector value={view} onChange={setView} />
+							: null
+					}
+				</AppHeader>
+				<ErrorBoundary>
 					<div className='playbook-list-page-content'>
 						{getSidebar()}
 						<div className='element-selected'>
@@ -371,12 +472,16 @@ export const PlaybookListPage = (props: Props) => {
 							}
 						</div>
 					</div>
-					<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				</ErrorBoundary>
+				<AppFooter
+					page='playbook'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
+			</div>
+		</ErrorBoundary>
+	);
 };

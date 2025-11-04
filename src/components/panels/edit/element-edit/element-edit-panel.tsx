@@ -1,9 +1,9 @@
-import { Element } from '../../../../models/element';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { HeaderText } from '../../../controls/header-text/header-text';
+import { Element } from '@/models/element';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Input } from 'antd';
-import { MultiLine } from '../../../controls/multi-line/multi-line';
-import { Utils } from '../../../../utils/utils';
+import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
 import './element-edit-panel.scss';
@@ -30,25 +30,20 @@ export const ElementEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='element-edit-panel'>
-					<HeaderText>Name</HeaderText>
-					<Input
-						status={element.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						value={element.name}
-						onChange={e => setName(e.target.value)}
-					/>
-					<HeaderText>Description</HeaderText>
-					<MultiLine value={element.description} onChange={setDescription} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+	return (
+		<ErrorBoundary>
+			<div className='element-edit-panel'>
+				<HeaderText>Name</HeaderText>
+				<Input
+					status={element.name === '' ? 'warning' : ''}
+					placeholder='Name'
+					allowClear={true}
+					value={element.name}
+					onChange={e => setName(e.target.value)}
+				/>
+				<HeaderText>Description</HeaderText>
+				<MultiLine value={element.description} onChange={setDescription} />
+			</div>
+		</ErrorBoundary>
+	);
 };

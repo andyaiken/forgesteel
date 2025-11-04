@@ -1,15 +1,19 @@
-import * as htmlToImage from 'html-to-image';
-import { Collections } from './collections';
+import { Collections } from '@/utils/collections';
 import { Converter } from 'showdown';
-import { Random } from './random';
-import { SheetPageSize } from '../enums/sheet-page-size';
+import { Random } from '@/utils/random';
+import { SheetPageSize } from '@/enums/sheet-page-size';
+import { domToImage } from 'modern-screenshot';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
 
 export class Utils {
 	static showdownConverter = new Converter({ simpleLineBreaks: true, tables: true });
 
-	static guid = (): string => {
+	static isDev = () => {
+		return window.location.hostname === 'localhost';
+	};
+
+	static guid = () => {
 		const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
 		let id = '';
 		while (id.length < 16) {
@@ -19,10 +23,20 @@ export class Utils {
 		return id;
 	};
 
+	static hashCode = (str: string): number => {
+		let h = 0;
+		for (let i = 0; i < str.length; ++i) {
+			h = (31 * h) + str.charCodeAt(i);
+		}
+		return h & 0xFFFFFFFF;
+	};
+
 	static copy = <T>(object: T) => {
-		return JSON.parse(
-			JSON.stringify(object)
-		) as T;
+		if (typeof structuredClone === 'function') {
+			return structuredClone<T>(object);
+		}
+
+		return JSON.parse(JSON.stringify(object)) as T;
 	};
 
 	static debounce = (func: () => void, delay = 500) => {
@@ -94,29 +108,23 @@ export class Utils {
 					});
 				break;
 			case 'pdf':
-				Promise.all(elements.map(this.elementToCanvas))
-					.then(canvases => {
-						Utils.savePDF(`${name}.pdf`, canvases);
+				Promise.all(elements.map(e => this.elementToImage(e, 1)))
+					.then(images => {
+						Utils.savePDF(`${name}.pdf`, images);
 						elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
 					});
 				break;
 		}
 	};
 
-	static elementToCanvas = (element: HTMLElement): Promise<HTMLCanvasElement> => {
+	static elementToImage = (element: HTMLElement, scale: number): Promise<HTMLImageElement> => {
 		const width = element.clientWidth;
 		const height = element.clientHeight;
-		// It looks like there is an issue with the library scaling properly with
-		// the devicePixelRatio in some cases. I suspect canvas also suffers from this:
-		// https://github.com/bubkoo/html-to-image/issues/553
-		// However - for the time being we're taking advantage of this to get
-		// varying output resolutions
 
-		return htmlToImage.toCanvas(element, {
+		return domToImage(element, {
 			width: width,
 			height: height,
-			canvasWidth: width,
-			canvasHeight: height
+			scale: scale
 		});
 	};
 
@@ -128,20 +136,19 @@ export class Utils {
 		if (elements.length === 0) {
 			return;
 		}
-		const prevDpr = window.devicePixelRatio;
 		let dpi = 150;
+		let scale = 1;
 		if (resolution === 'high') {
-			window.devicePixelRatio = 4;
 			dpi = 600;
+			scale = 4;
 		} else {
-			window.devicePixelRatio = 2;
 			dpi = 300;
+			scale = 2;
 		}
 
-		return Promise.all(elements.map(this.elementToCanvas))
-			.then(canvases => {
-				Utils.savePdfPages(`${filename}.pdf`, canvases, pdfPaperSize, dpi);
-				window.devicePixelRatio = prevDpr;
+		return Promise.all(elements.map(e => this.elementToImage(e, scale)))
+			.then(images => {
+				Utils.savePdfPages(`${filename}.pdf`, images, pdfPaperSize, dpi);
 			});
 	};
 
@@ -162,7 +169,7 @@ export class Utils {
 		a.click();
 	};
 
-	static savePDF = (filename: string, canvases: HTMLCanvasElement[]) => {
+	static savePDF = (filename: string, canvases: HTMLImageElement[]) => {
 		const width = Collections.max(canvases.map(c => c.width), c => c) || 0;
 		const height = Collections.max(canvases.map(c => c.height), c => c) || 0;
 
@@ -177,20 +184,21 @@ export class Utils {
 		pdf.save(filename);
 	};
 
-	static savePdfPages = async (filename: string, pageCanvases: HTMLCanvasElement[], pdfPaperSize: SheetPageSize, dpi: number) => {
-		const width = Collections.max(pageCanvases.map(c => c.width), c => c) || 0;
-		const height = Collections.max(pageCanvases.map(c => c.height), c => c) || 0;
-		const orientation = (height >= width) ? 'portrait' : 'landscape';
+	static savePdfPages = async (filename: string, pageCanvases: HTMLImageElement[], pdfPaperSize: SheetPageSize, dpi: number) => {
+		const width1 = pageCanvases[0].width || 0;
+		const height1 = pageCanvases[0].height || 0;
+		const documentOrientation = (height1 >= width1) ? 'portrait' : 'landscape';
 		const paperSize = pdfPaperSize.toString().toLowerCase();
 
 		// @ts-expect-error Undocumented
 		const pdf = new jspdf({
-			orientation: orientation,
+			orientation: documentOrientation,
 			unit: (72 / dpi), // undocumented feature to set arbitrary dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
 			format: paperSize,
 			hotfixes: [ 'px_scaling' ]
 		});
 		pageCanvases.forEach((canvas, n) => {
+			const orientation = (canvas.height >= canvas.width) ? 'portrait' : 'landscape';
 			const page = (n === 0) ? pdf : pdf.addPage(paperSize, orientation);
 			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height, undefined, 'FAST');
 		});
@@ -204,5 +212,15 @@ export class Utils {
 
 	static isNullOrEmpty = (str: string | undefined) => {
 		return (str === null || str === undefined || str.trim() === '');
+	};
+
+	static valueOrDefault = (value: string | number | undefined, defaultValue: string): string => {
+		let result = defaultValue;
+
+		if (value && !Utils.isNullOrEmpty(value.toString())) {
+			result = value.toString();
+		}
+
+		return result;
 	};
 }

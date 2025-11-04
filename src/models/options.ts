@@ -1,23 +1,29 @@
-import { PanelWidth } from '../enums/panel-width';
-import { SheetPageSize } from '../enums/sheet-page-size';
+import { PanelWidth } from '@/enums/panel-width';
+import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export interface Options {
+	// General
+	showInteractivePanels: boolean;
 	// Hero
+	shownStandardAbilities: string[];
+	// Hero: Modern Sheet
 	singlePage: boolean;
 	separateInventoryFeatures: boolean;
 	showSkillsInGroups: boolean;
-	showStandardAbilities: boolean;
 	dimUnavailableAbilities: boolean;
 	showSources: boolean;
-	includePlayState: boolean;
 	compactView: boolean;
 	abilityWidth: PanelWidth;
+	// Hero: Classic Sheet
+	includePlayState: boolean;
 	classicSheetPageSize: SheetPageSize;
 	colorSheet: boolean;
+	showPowerRollCalculation: boolean;
 	sheetTextColor: 'light' | 'default' | 'dark';
 	featuresInclude: 'minimal' | 'no-basic' | 'all';
-	abilitySort: 'size' | 'type';
 	pageOrientation: 'portrait' | 'landscape';
+	// Library
+	showMonsterGroups: boolean;
 	// Monster Builder
 	similarLevel: boolean;
 	similarRole: boolean;
@@ -26,13 +32,15 @@ export interface Options {
 	// Encounter
 	minionCount: number;
 	party: string;
-	// Encounter Difficulty
+	// Encounter: Running
+	showDefeatedCombatants: boolean;
+	// Encounter / Montage Difficulty
 	heroParty: string;
 	heroCount: number;
 	heroLevel: number;
 	heroVictories: number;
-	showDefeatedCombatants: boolean;
 	// Tactical Map
 	gridSize: number;
+	// Player View
 	playerGridSize: number;
 }

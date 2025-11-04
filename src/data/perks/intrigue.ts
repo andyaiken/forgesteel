@@ -1,7 +1,7 @@
-import { FactoryLogic } from '../../logic/factory-logic';
-import { FeatureType } from '../../enums/feature-type';
-import { Perk } from '../../models/perk';
-import { PerkList } from '../../enums/perk-list';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureType } from '@/enums/feature-type';
+import { Perk } from '@/models/perk';
+import { PerkList } from '@/enums/perk-list';
 
 export class IntriguePerkData {
 	static criminalContacts: Perk = {
@@ -33,7 +33,6 @@ export class IntriguePerkData {
 				name: 'Gum Up The Works',
 				description: 'You prevent a trap from activating.',
 				type: FactoryLogic.type.createTrigger('A mundane trap activates within 3 squares of you.'),
-				keywords: [],
 				distance: [ FactoryLogic.distance.createSelf() ],
 				target: 'Self',
 				sections: [
@@ -66,6 +65,17 @@ export class IntriguePerkData {
 		id: 'perk-slipped-lead',
 		name: 'Slipped Lead',
 		description: 'You gain an edge on tests made to escape bonds. Given 1 uninterrupted minute, you can escape any mundane bonds without making a test. Additionally, it’s not immediately obvious when you’ve escaped bonds until you do something that makes it clear you have done so (cast them off, use an ability that harms one or more creatures, and so forth).',
+		type: FeatureType.Text,
+		data: null,
+		list: PerkList.Intrigue
+	};
+
+	// Beastheart Perks
+
+	static trainedThief: Perk = {
+		id: 'perk-trained-thief',
+		name: 'Trained Thief',
+		description: '(Beastheart only) You gain the Conceal Object or Pick Pocket skill. Your companion can make a test using the gained skill as a maneuver.',
 		type: FeatureType.Text,
 		data: null,
 		list: PerkList.Intrigue

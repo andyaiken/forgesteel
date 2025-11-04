@@ -1,37 +1,37 @@
-import { Button, Popover } from 'antd';
-import { CloseOutlined, DownOutlined, SaveOutlined, SettingOutlined } from '@ant-design/icons';
-import { Playbook, PlaybookElementKind } from '../../../../models/playbook';
-import { Adventure } from '../../../../models/adventure';
-import { AdventureEditPanel } from '../../../panels/edit/adventure-edit/adventure-edit-panel';
-import { AppFooter } from '../../../panels/app-footer/app-footer';
-import { AppHeader } from '../../../panels/app-header/app-header';
-import { Element } from '../../../../models/element';
-import { Encounter } from '../../../../models/encounter';
-import { EncounterEditPanel } from '../../../panels/edit/encounter-edit/encounter-edit-panel';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { Format } from '../../../../utils/format';
-import { Hero } from '../../../../models/hero';
-import { Monster } from '../../../../models/monster';
-import { MonsterGroup } from '../../../../models/monster-group';
-import { Montage } from '../../../../models/montage';
-import { MontageEditPanel } from '../../../panels/edit/montage-edit/montage-edit-panel';
-import { MontagePanel } from '../../../panels/elements/montage-panel/montage-panel';
-import { Negotiation } from '../../../../models/negotiation';
-import { NegotiationEditPanel } from '../../../panels/edit/negotiation-edit/negotiation-edit-panel';
-import { NegotiationPanel } from '../../../panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '../../../../models/options';
-import { OptionsPanel } from '../../../panels/options/options-panel';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { SelectablePanel } from '../../../controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { TacticalMap } from '../../../../models/tactical-map';
-import { TacticalMapDisplayType } from '../../../../enums/tactical-map-display-type';
-import { TacticalMapPanel } from '../../../panels/elements/tactical-map-panel/tactical-map-panel';
-import { Terrain } from '../../../../models/terrain';
-import { Utils } from '../../../../utils/utils';
-import { useNavigation } from '../../../../hooks/use-navigation';
+import { CloseOutlined, SaveOutlined } from '@ant-design/icons';
+import { Playbook, PlaybookElementKind } from '@/models/playbook';
+import { Adventure } from '@/models/adventure';
+import { AdventureEditPanel } from '@/components/panels/edit/adventure-edit/adventure-edit-panel';
+import { AppFooter } from '@/components/panels/app-footer/app-footer';
+import { AppHeader } from '@/components/panels/app-header/app-header';
+import { Button } from 'antd';
+import { Element } from '@/models/element';
+import { Encounter } from '@/models/encounter';
+import { EncounterEditPanel } from '@/components/panels/edit/encounter-edit/encounter-edit-panel';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Format } from '@/utils/format';
+import { Hero } from '@/models/hero';
+import { Monster } from '@/models/monster';
+import { MonsterGroup } from '@/models/monster-group';
+import { Montage } from '@/models/montage';
+import { MontageEditPanel } from '@/components/panels/edit/montage-edit/montage-edit-panel';
+import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
+import { Negotiation } from '@/models/negotiation';
+import { NegotiationEditPanel } from '@/components/panels/edit/negotiation-edit/negotiation-edit-panel';
+import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { TacticalMap } from '@/models/tactical-map';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
+import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
+import { Terrain } from '@/models/terrain';
+import { Utils } from '@/utils/utils';
+import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
+import { useTitle } from '@/hooks/use-title';
 
 import './playbook-edit-page.scss';
 
@@ -41,13 +41,13 @@ interface Props {
 	playbook: Playbook;
 	options: Options;
 	highlightAbout: boolean;
-	showAbout: () => void;
-	showRoll: () => void;
 	showReference: () => void;
+	showRoll: () => void;
+	showAbout: () => void;
+	showSettings: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
-	setOptions: (options: Options) => void;
 }
 
 export const PlaybookEditPage = (props: Props) => {
@@ -75,6 +75,24 @@ export const PlaybookEditPage = (props: Props) => {
 		return Utils.copy(original);
 	});
 	const [ dirty, setDirty ] = useState<boolean>(false);
+	const [ revision, setRevision ] = useState<number>(0);
+
+	const getSubheader = () => {
+		if (kind === 'tactical-map') {
+			return 'Tactical Map';
+		}
+
+		return Format.capitalize(kind!);
+	};
+
+	useTitle(getSubheader());
+
+	const applyChanges = (element: Element) => {
+		const copy = Utils.copy(element);
+		setElement(copy);
+		setDirty(true);
+		setRevision(revision + 1);
+	};
 
 	// #region Edit
 
@@ -93,10 +111,7 @@ export const PlaybookEditPage = (props: Props) => {
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
 							options={props.options}
-							onChange={adventure => {
-								setElement(adventure);
-								setDirty(true);
-							}}
+							onChange={applyChanges}
 						/>
 					</div>
 				);
@@ -107,10 +122,7 @@ export const PlaybookEditPage = (props: Props) => {
 						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
-						onChange={encounter => {
-							setElement(encounter);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 						showMonster={props.showMonster}
 						showTerrain={props.showTerrain}
 					/>
@@ -119,20 +131,15 @@ export const PlaybookEditPage = (props: Props) => {
 				return (
 					<NegotiationEditPanel
 						negotiation={element as Negotiation}
-						onChange={negotiation => {
-							setElement(negotiation);
-							setDirty(true);
-						}}
+						sourcebooks={props.sourcebooks}
+						onChange={applyChanges}
 					/>
 				);
 			case 'montage':
 				return (
 					<MontageEditPanel
 						montage={element as Montage}
-						onChange={montage => {
-							setElement(montage);
-							setDirty(true);
-						}}
+						onChange={applyChanges}
 					/>
 				);
 			case 'tactical-map':
@@ -143,10 +150,7 @@ export const PlaybookEditPage = (props: Props) => {
 							display={TacticalMapDisplayType.DirectorEdit}
 							options={props.options}
 							mode={PanelMode.Full}
-							updateMap={map => {
-								setElement(map);
-								setDirty(true);
-							}}
+							updateMap={applyChanges}
 						/>
 					</div>
 				);
@@ -165,18 +169,22 @@ export const PlaybookEditPage = (props: Props) => {
 		switch (kind!) {
 			case 'montage':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<MontagePanel
 							montage={element as Montage}
+							heroes={props.heroes}
+							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					</SelectablePanel>
 				);
 			case 'negotiation':
 				return (
-					<SelectablePanel>
+					<SelectablePanel key={`${element.id}-${revision}`}>
 						<NegotiationPanel
 							negotiation={element as Negotiation}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					</SelectablePanel>
@@ -188,44 +196,18 @@ export const PlaybookEditPage = (props: Props) => {
 
 	// #endregion
 
-	const getSubheader = () => {
-		if (kind === 'tactical-map') {
-			return 'Tactical Map';
-		}
-
-		return Format.capitalize(kind!);
-	};
-
-	try {
-		return (
-			<ErrorBoundary>
-				<div className='playbook-edit-page'>
-					<AppHeader subheader={`${getSubheader()} Builder`}>
-						<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
-							Save Changes
-						</Button>
-						<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybook(kind!, element.id)}>
-							Cancel
-						</Button>
-						{
-							(kind === 'encounter') ?
-								<div className='divider' />
-								: null
-						}
-						{
-							(kind === 'encounter') || (kind === 'tactical-map') ?
-								<Popover
-									trigger='click'
-									content={<OptionsPanel mode={kind} options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
-								>
-									<Button icon={<SettingOutlined />}>
-										Options
-										<DownOutlined />
-									</Button>
-								</Popover>
-								: null
-						}
-					</AppHeader>
+	return (
+		<ErrorBoundary>
+			<div className='playbook-edit-page'>
+				<AppHeader subheader={`${getSubheader()} Builder`}>
+					<Button type='primary' icon={<SaveOutlined />} disabled={!dirty} onClick={() => props.saveChanges(kind!, element)}>
+						Save Changes
+					</Button>
+					<Button icon={<CloseOutlined />} onClick={() => navigation.goToPlaybook(kind!, element.id)}>
+						Cancel
+					</Button>
+				</AppHeader>
+				<ErrorBoundary>
 					<div className='playbook-edit-page-content'>
 						<div className='edit-column'>
 							{getEditHeaderSection()}
@@ -240,12 +222,16 @@ export const PlaybookEditPage = (props: Props) => {
 								: null
 						}
 					</div>
-					<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				</ErrorBoundary>
+				<AppFooter
+					page='playbook'
+					highlightAbout={props.highlightAbout}
+					showReference={props.showReference}
+					showRoll={props.showRoll}
+					showAbout={props.showAbout}
+					showSettings={props.showSettings}
+				/>
+			</div>
+		</ErrorBoundary>
+	);
 };

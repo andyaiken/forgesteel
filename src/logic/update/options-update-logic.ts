@@ -1,6 +1,6 @@
-import { Options } from '../../models/options';
-import { PanelWidth } from '../../enums/panel-width';
-import { SheetPageSize } from '../../enums/sheet-page-size';
+import { Options } from '@/models/options';
+import { PanelWidth } from '@/enums/panel-width';
+import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export class OptionsUpdateLogic {
 	static updateOptions = (options: Options) => {
@@ -24,12 +24,16 @@ export class OptionsUpdateLogic {
 			options.abilityWidth = PanelWidth.Medium;
 		}
 
-		if (options.includePlayState === undefined) {
-			options.includePlayState = false;
-		}
+		// Rather than remove this feature, disable it every session
+		// to minimize confusion for those who don't know it's even there
+		options.includePlayState = false;
 
 		if (options.colorSheet === undefined) {
 			options.colorSheet = true;
+		}
+
+		if (options.showPowerRollCalculation === undefined) {
+			options.showPowerRollCalculation = true;
 		}
 
 		if (options.sheetTextColor === undefined) {
@@ -46,6 +50,14 @@ export class OptionsUpdateLogic {
 
 		if (options.pageOrientation === undefined) {
 			options.pageOrientation = 'portrait';
+		}
+
+		if (options.showInteractivePanels === undefined) {
+			options.showInteractivePanels = true;
+		}
+
+		if (options.showMonsterGroups === undefined) {
+			options.showMonsterGroups = true;
 		}
 
 		if (options.similarLevel === undefined) {
@@ -98,6 +110,10 @@ export class OptionsUpdateLogic {
 
 		if (options.playerGridSize === undefined) {
 			options.playerGridSize = 50;
+		}
+
+		if (options.shownStandardAbilities === undefined) {
+			options.shownStandardAbilities = [];
 		}
 	};
 }

@@ -1,0 +1,109 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+.primary-reference.card * {
+    @include common.font-slab();
+}
+
+.primary-reference.card {
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px 15px;
+
+    font-size: round(1.1rem, 1px);
+    line-height: round(1.3rem, 1px);
+    strong {
+        font-weight: 500;
+    }
+
+    p {
+        color: var(--color-text-lightest);
+        margin: 7px 0;
+    }
+
+    h3 {
+        margin-bottom: 5px;
+        text-wrap: nowrap;
+    }
+
+    .hero-tokens h3,
+    .turn-reference h3 {
+        border-top: 2px solid common.$color-light;
+        padding-top: 10px;
+    }
+
+    .heroic-resource-gain {
+        display: grid;
+        grid-template-columns: min-content 3fr;
+        grid-gap: 3px;
+        margin-bottom: 10px;
+        color: var(--color-text-lightest);
+
+        .value {
+            text-align: center;
+        }
+
+        .trigger {
+            margin-bottom: 2px;
+            line-height: round(1.4re, 1px);
+        }
+
+        .header {
+            font-weight: 500;
+            margin-bottom: 4px;
+            border-bottom: 2px solid common.$color-medium;
+        }
+    }
+
+    .turn-reference {
+        & * {
+            @include common.font-slab();
+        }
+
+        p {
+            margin-top: 0;
+        }
+
+        .actions-maneuvers {
+            * {
+                color: var(--color-text-lighter);
+            }
+
+            h5 {
+                margin: 4px 20px 4px 0;
+                border-bottom: 2px solid common.$color-light;
+                font-size: round(1rem, 1px);
+                font-weight: 450;
+            }
+
+            ul {
+                margin: 4px 10px 4px 4px;
+                list-style-type: '— ';
+                list-style-position: outside;
+
+                li {
+                    margin-top: 2px;
+                }
+            }
+        }
+
+        &.condensed {
+            .actions-maneuvers {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: min-content min-content 1fr;
+            }
+
+            .main-actions,
+            .move-actions {
+                grid-column-start: 2;
+            }
+
+            .maneuvers {
+                grid-column-start: 1;
+                grid-row-start: 1;
+                grid-row-end: span 3;
+            }
+        }
+    }
+}

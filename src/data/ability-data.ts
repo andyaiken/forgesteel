@@ -1,6 +1,6 @@
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { Characteristic } from '../enums/characteristic';
-import { FactoryLogic } from '../logic/factory-logic';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
 
 export class AbilityData {
 	// #region Free Strikes
@@ -54,7 +54,6 @@ export class AbilityData {
 		name: 'Advance',
 		description: '',
 		type: FactoryLogic.type.createMove(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -67,7 +66,6 @@ export class AbilityData {
 		name: 'Disengage',
 		description: '',
 		type: FactoryLogic.type.createMove(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -80,7 +78,6 @@ export class AbilityData {
 		name: 'Ride',
 		description: '',
 		type: FactoryLogic.type.createMove(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -97,7 +94,6 @@ export class AbilityData {
 		name: 'Aid Attack',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: 'One enemy',
 		sections: [
@@ -110,7 +106,6 @@ export class AbilityData {
 		name: 'Catch Breath',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -126,7 +121,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Claw Dirt',
 		description: '',
 		type: FactoryLogic.type.createManeuver({ qualifiers: [ 'usable if your speed is at least 2' ] }),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -146,7 +140,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Escape Grab',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -168,7 +161,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Go Prone',
 		description: '',
 		type: FactoryLogic.type.createManeuver({ free: true }),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -181,7 +173,7 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Grab',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [ AbilityKeyword.Melee ],
+		keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: 'One creature',
 		sections: [
@@ -195,7 +187,8 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 				})
 			),
 			FactoryLogic.createAbilitySectionText('You can usually target only creatures of your size or smaller. If your Might score is 2 or higher, you can target any creature with a size equal to or less than your Might score.'),
-			FactoryLogic.createAbilitySectionText('Unless otherwise indicated, a creature can grab only one creature at a time.')
+			FactoryLogic.createAbilitySectionText('Unless otherwise indicated, a creature can grab only one creature at a time.'),
+			FactoryLogic.createAbilitySectionPackage('null-psionic-martial-arts-grab')
 		]
 	});
 
@@ -204,7 +197,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Hide',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -217,7 +209,7 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Knockback',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [ AbilityKeyword.Melee ],
+		keywords: [ AbilityKeyword.Melee, AbilityKeyword.Weapon ],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: 'One creature',
 		sections: [
@@ -230,7 +222,8 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 					tier3: 'Push 3'
 				})
 			),
-			FactoryLogic.createAbilitySectionText('You can usually target only creatures of your size or smaller. If your Might score is 2 or higher, you can target any creature with a size equal to or less than your Might score.')
+			FactoryLogic.createAbilitySectionText('You can usually target only creatures of your size or smaller. If your Might score is 2 or higher, you can target any creature with a size equal to or less than your Might score.'),
+			FactoryLogic.createAbilitySectionPackage('null-psionic-martial-arts-knockback')
 		]
 	});
 
@@ -239,7 +232,6 @@ A creature who is dying can’t use the Catch Breath maneuver, but other creatur
 		name: 'Make Or Assist A Test',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -255,7 +247,6 @@ Complex or time-consuming tests might require a main action if made in combat—
 		name: 'Search for Hidden Creatures',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -268,7 +259,6 @@ Complex or time-consuming tests might require a main action if made in combat—
 		name: 'Stand Up',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [
 			FactoryLogic.distance.createSelf(),
 			FactoryLogic.distance.createMelee()
@@ -284,7 +274,6 @@ Complex or time-consuming tests might require a main action if made in combat—
 		name: 'Use Consumable',
 		description: '',
 		type: FactoryLogic.type.createManeuver(),
-		keywords: [],
 		distance: [
 			FactoryLogic.distance.createSelf(),
 			FactoryLogic.distance.createMelee()
@@ -304,7 +293,6 @@ Complex or time-consuming tests might require a main action if made in combat—
 		name: 'Charge',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -320,7 +308,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Defend',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -333,7 +320,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Free Strike',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -346,7 +332,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Heal',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: 'One creature',
 		sections: [
@@ -359,7 +344,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Swap',
 		description: '',
 		type: FactoryLogic.type.createMain(),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createSelf() ],
 		target: 'Self',
 		sections: [
@@ -376,7 +360,6 @@ A creature can’t move through difficult terrain or shift when they charge. The
 		name: 'Opportunity Attack',
 		description: '',
 		type: FactoryLogic.type.createTrigger('The target willingly moves to a space that isn’t adjacent to you without shifting.', { free: true }),
-		keywords: [],
 		distance: [ FactoryLogic.distance.createMelee() ],
 		target: 'One creature',
 		sections: [
@@ -388,4 +371,32 @@ If you have a bane or double bane on the power roll against the target, you can�
 	});
 
 	// #endregion
+
+	static standardAbilities = [
+		// Main
+		AbilityData.charge,
+		AbilityData.defend,
+		AbilityData.freeStrike,
+		AbilityData.heal,
+		AbilityData.swap,
+		// Maneuver
+		AbilityData.aidAttack,
+		AbilityData.catchBreath,
+		AbilityData.clawDirt,
+		AbilityData.escapeGrab,
+		AbilityData.goProne,
+		AbilityData.grab,
+		AbilityData.hide,
+		AbilityData.knockback,
+		AbilityData.makeAssistTest,
+		AbilityData.search,
+		AbilityData.standUp,
+		AbilityData.useConsumable,
+		// Move
+		AbilityData.advance,
+		AbilityData.disengage,
+		AbilityData.ride,
+		// Trigger
+		AbilityData.opportunityAttack
+	];
 }

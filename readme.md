@@ -6,12 +6,12 @@ You can find it [here](https://andyaiken.github.io/forgesteel/).
 
 ## Heroes
 
-With this app you can create heroes using the **DRAW STEEL** backer packet.
+With this app you can create heroes using the **DRAW STEEL** core rules.
 
 ![Hero Edit](./src/assets/screenshots/hero-edit.png)
 Here is a hero being edited.
 
-![Hero Sheet](./src/assets/screenshots/hero-sheet.png)
+![Hero Sheet](./src/assets/screenshots/hero-sheet-interactive.png)
 This shows a hero's character sheet.
 
 ![Hero State](./src/assets/screenshots/hero-state.png)
@@ -24,11 +24,11 @@ The player is making the power roll for one of the hero's abilities.
 
 You can also use this app to create homebrew hero-building elements - ancestries, classes, kits, and so on.
 
-![Elements](./src/assets/screenshots/elements.png)
+![Library](./src/assets/screenshots/library.png)
 Here we can see the list of elements that can be homebrewed. To create a homebrew element you can create it from whole cloth, or copy an official element.
 
 ![Homebrew](./src/assets/screenshots/homebrew.png)
-here we can see a homebrew kit being created.
+Here we can see a homebrew kit being created.
 
 ## Legal
 
@@ -54,8 +54,10 @@ npm run start
 
 Once built, the app should then be available at `http://localhost:5173/forgesteel/`.
 
-When you've finished with your changes, make sure to appease the linter:
+When you've finished with your changes, make sure to appease the linter and run the unit tests:
 
 ```
-npm run lint
+npm run check
 ```
+
+If all is well, you can then create your pull request.

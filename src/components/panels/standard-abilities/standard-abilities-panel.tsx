@@ -1,8 +1,9 @@
-import { AbilityData } from '../../../data/ability-data';
-import { AbilityPanel } from '../elements/ability-panel/ability-panel';
+import { AbilityData } from '@/data/ability-data';
+import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { Divider } from 'antd';
-import { Hero } from '../../../models/hero';
-import { PanelMode } from '../../../enums/panel-mode';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Hero } from '@/models/hero';
+import { PanelMode } from '@/enums/panel-mode';
 
 import './standard-abilities-panel.scss';
 
@@ -11,8 +12,8 @@ interface Props {
 }
 
 export const StandardAbilitiesPanel = (props: Props) => {
-	try {
-		return (
+	return (
+		<ErrorBoundary>
 			<div className='standard-abilities-panel'>
 				<div className='standard-abilities-page' id='mains'>
 					<div className='standard-abilities-row'>
@@ -49,9 +50,6 @@ export const StandardAbilitiesPanel = (props: Props) => {
 					</div>
 				</div>
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+		</ErrorBoundary>
+	);
 };

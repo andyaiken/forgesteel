@@ -1,26 +1,27 @@
-import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '../../../../models/ability';
-import { AbilityCustomization, Hero } from '../../../../models/hero';
+import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
 import { Alert, Button, Space, Tag } from 'antd';
-import { Pill, ResourcePill } from '../../../controls/pill/pill';
+import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
-import { AbilityData } from '../../../../data/ability-data';
-import { AbilityInfoPanel } from '../../ability-info/ability-info-panel';
-import { AbilityKeyword } from '../../../../enums/ability-keyword';
-import { AbilityLogic } from '../../../../logic/ability-logic';
-import { AbilityUsage } from '../../../../enums/ability-usage';
-import { ConditionType } from '../../../../enums/condition-type';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeatureType } from '../../../../enums/feature-type';
-import { Field } from '../../../controls/field/field';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { HeroLogic } from '../../../../logic/hero-logic';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { Monster } from '../../../../models/monster';
-import { MonsterLogic } from '../../../../logic/monster-logic';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { PowerRollPanel } from '../../power-roll/power-roll-panel';
+import { AbilityData } from '@/data/ability-data';
+import { AbilityInfoPanel } from '@/components/panels/ability-info/ability-info-panel';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { AbilityLogic } from '@/logic/ability-logic';
+import { AbilityUsage } from '@/enums/ability-usage';
+import { Collections } from '@/utils/collections';
+import { ConditionType } from '@/enums/condition-type';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeatureType } from '@/enums/feature-type';
+import { Field } from '@/components/controls/field/field';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { Monster } from '@/models/monster';
+import { MonsterLogic } from '@/logic/monster-logic';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 
 import './ability-panel.scss';
 
@@ -76,9 +77,7 @@ export const AbilityPanel = (props: Props) => {
 		() => {
 			if (props.hero) {
 				const resources = HeroLogic.getHeroicResources(props.hero);
-				if (resources.length > 0) {
-					return resources[0].value;
-				}
+				return Collections.sum(resources, r => r.value);
 			}
 
 			return 0;
@@ -141,7 +140,7 @@ export const AbilityPanel = (props: Props) => {
 
 		const hasRoll = (props.ability.sections || []).some(s => s.type === 'roll');
 
-		if ((conditions.includes(ConditionType.Bleeding) || ((state === 'dying') && (props.ability.id !== AbilityData.catchBreath.id))) && ([ AbilityUsage.MainAction, AbilityUsage.Maneuver, AbilityUsage.Trigger ].includes(props.ability.type.usage) || props.ability.keywords.includes(AbilityKeyword.Strike))) {
+		if ((conditions.includes(ConditionType.Bleeding) || ((state === 'dying') && (props.ability.id !== AbilityData.catchBreath.id))) && [ AbilityUsage.MainAction, AbilityUsage.Trigger ].includes(props.ability.type.usage)) {
 			warnings.push({
 				label: ConditionType.Bleeding,
 				text: `After using this ability, you lose 1d6 + ${level} Stamina.`
@@ -198,7 +197,7 @@ export const AbilityPanel = (props: Props) => {
 		if (conditions.includes(ConditionType.Taunted) && hasRoll) {
 			warnings.push({
 				label: ConditionType.Taunted,
-				text: 'This ability takes a bane if it doesn’t target the creature who taunted you, and you have line of effect to that creature.'
+				text: 'This ability takes a double bane if it doesn’t target the creature who taunted you, and you have line of effect to that creature.'
 			});
 		}
 		if (conditions.includes(ConditionType.Weakened) && hasRoll) {
@@ -240,7 +239,7 @@ export const AbilityPanel = (props: Props) => {
 						key={index}
 						powerRoll={section.roll}
 						ability={props.ability}
-						hero={props.hero}
+						creature={props.hero || props.monster}
 						autoCalc={autoCalc}
 						highlightTier={props.highlightTier}
 						odds={props.odds}
@@ -271,89 +270,71 @@ export const AbilityPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		let className = 'ability-panel';
-		if (props.mode !== PanelMode.Full) {
-			className += ' compact';
-		}
-		if (disabled) {
-			className += ' disabled';
-		}
+	let className = 'ability-panel';
+	if (props.mode !== PanelMode.Full) {
+		className += ' compact';
+	}
+	if (disabled) {
+		className += ' disabled';
+	}
 
-		let customization: AbilityCustomization | null = null;
-		if (props.hero) {
-			customization = props.hero.abilityCustomizations.find(ac => ac.abilityID === props.ability.id) || null;
-		}
-
-		return (
-			<ErrorBoundary>
-				<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
-					<Space direction='vertical' style={{ marginTop: '15px', width: '100%' }}>
-						{
-							getWarnings().map((warn, n) => (
-								<Alert
-									key={n}
-									type='warning'
-									showIcon={true}
-									message={<div><b>{warn.label}</b>: {warn.text}</div>}
-								/>
-							))
-						}
-					</Space>
-					<HeaderText
-						ribbon={headerRibbon}
-						tags={props.tags}
-						extra={
-							autoCalcAvailable() ?
-								<Button
-									type='text'
-									title='Auto-calculate damage, potency, etc'
-									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-								/>
-								: null
-						}
-					>
-						{customization?.name || props.ability.name || 'Unnamed Ability'}
-					</HeaderText>
-					<Markdown text={customization?.description || props.ability.description} className='ability-description-text' />
+	return (
+		<ErrorBoundary>
+			<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
+				<Space direction='vertical' style={{ marginTop: '15px', width: '100%' }}>
 					{
-						props.mode === PanelMode.Full ?
-							<div>
-								{
-									props.ability.keywords.length > 0 ?
-										<div>
-											{props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
-										</div>
-										: null
-								}
-								<AbilityInfoPanel ability={props.ability} hero={props.hero} />
-								{(props.ability.sections || []).map(getSection)}
-								{
-									customization && customization.notes ?
-										<Field
-											label='Notes'
-											value={<Markdown text={parseText(customization.notes)} useSpan={true} />}
-										/>
-										: null
-								}
-								{
-									props.ability.keywords.includes(AbilityKeyword.Charge) && (props.ability.id !== AbilityData.freeStrikeMelee.id) ?
-										<Alert
-											type='info'
-											showIcon={true}
-											message='This ability can be used in place of a melee free strike when you take the Charge action.'
-										/>
-										: null
-								}
-							</div>
+						getWarnings().map((warn, n) => (
+							<Alert
+								key={n}
+								type='warning'
+								showIcon={true}
+								message={<div><b>{warn.label}</b>: {warn.text}</div>}
+							/>
+						))
+					}
+				</Space>
+				<HeaderText
+					ribbon={headerRibbon}
+					tags={props.tags}
+					extra={
+						autoCalcAvailable() ?
+							<Button
+								type='text'
+								title='Auto-calculate damage, potency, etc'
+								icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+								onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
+							/>
 							: null
 					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				>
+					{props.ability.name || 'Unnamed Ability'}
+				</HeaderText>
+				<Markdown text={props.ability.description} className='ability-description-text' />
+				{
+					props.mode === PanelMode.Full ?
+						<div>
+							{
+								props.ability.keywords.length > 0 ?
+									<div>
+										{props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
+									</div>
+									: null
+							}
+							<AbilityInfoPanel ability={props.ability} hero={props.hero} />
+							{(props.ability.sections || []).map(getSection)}
+							{
+								props.ability.keywords.includes(AbilityKeyword.Charge) && (props.ability.id !== AbilityData.freeStrikeMelee.id) ?
+									<Alert
+										type='info'
+										showIcon={true}
+										message='This ability can be used in place of a melee free strike when you take the Charge action.'
+									/>
+									: null
+							}
+						</div>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

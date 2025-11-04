@@ -49,6 +49,7 @@
 	.encounter-list-column {
 		flex: 1 1 0;
 		overflow-y: auto;
+		padding: 0 5px;
 
 		.monster-row,
 		.terrain-row {
@@ -81,7 +82,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.encounter-edit-panel {
 		.encounter-workspace-column {
 			.group-row,

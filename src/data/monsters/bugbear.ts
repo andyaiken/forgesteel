@@ -1,10 +1,10 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterLogic } from '../../logic/monster-logic';
-import { MonsterOrganizationType } from '../../enums/monster-organization-type';
-import { MonsterRoleType } from '../../enums/monster-role-type';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
 
 export const bugbear: MonsterGroup = {
 	id: 'monster-group-bugbear',
@@ -44,6 +44,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			id: 'bugbear-malice-1',
 			name: 'Goblin Malice Features',
 			cost: 1,
+			icon: StatBlockIcon.Trait,
 			repeatable: true,
 			sections: [
 				'The bugbear activates a Malice Feature available to goblins.'
@@ -53,6 +54,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			id: 'bugbear-malice-2',
 			name: 'Grab Iron Ball',
 			cost: 3,
+			icon: StatBlockIcon.Self,
 			repeatable: true,
 			sections: [
 				'For every 3 Malice spent, one non-minion bugbear acting this turn grabs an iron ball and can use a maneuver to throw it at a creature within 5 squares of them. The creature takes damage equal to  8 – the number of squares the iron ball was thrown, and if they have M<1, they are slowed (save ends).'
@@ -62,6 +64,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			id: 'bugbear-malice-3',
 			name: 'Grab Javelin',
 			cost: 5,
+			icon: StatBlockIcon.Self,
 			repeatable: true,
 			sections: [
 				' For every 5 Malice spent, one non-minion bugbear acting this turn grabs a javelin and can use a maneuver to throw it at a creature within 5 squares of them. The creature takes damage equal to  12 – the number of squares the javelin was thrown, and if they have M<1, they are bleeding (save ends). While a creature is bleeding this way, any ally of the bugbear within 2 squares of them can use a free maneuver to pull the bleeding creature up to 2 squares.'
@@ -71,6 +74,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			id: 'bugbear-malice-4',
 			name: 'Show Them the Great Fear',
 			cost: 10,
+			icon: StatBlockIcon.SpecialArea,
 			sections: [
 				' A bugbear infuses the encounter map with bu’gathic magic. Until the end of the encounter, all bugbears and allies have their speed doubled and can automatically climb at full speed while moving. Additionally, if the target of any bugbear or ally’s strike has I<1, the target is also frightened (save ends) and must move their speed in a straight line away from the creature who made the strike.'
 			]
@@ -89,7 +93,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(1, 1, 2, 2, 2),
+			characteristics: FactoryLogic.createCharacteristics(1, 1, 2, 2, 2),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -169,7 +173,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-1-feature-5',
 						name: 'Catcher',
 						type: FactoryLogic.type.createTrigger('A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.', { free: true }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The triggering creature or object',
 						sections: [
@@ -205,7 +208,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 1, 2, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 1, 2, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -232,7 +235,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-2-feature-2',
 						name: 'You Next!',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(8) ],
 						target: 'One ally',
 						sections: [
@@ -245,7 +247,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-2-feature-3',
 						name: 'Fall Back!',
 						type: FactoryLogic.type.createMain(),
-						keywords: [],
 						distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 5 }) ],
 						target: 'Each ally in the area',
 						cost: 5,
@@ -273,7 +274,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-2-feature-5',
 						name: 'Catcher',
 						type: FactoryLogic.type.createTrigger('A size 1 creature or object is force moved within distance, or a size 1 ally willingly moves within distance.', { free: true }),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createMelee() ],
 						target: 'The triggering creature or object',
 						sections: [
@@ -300,7 +300,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -392,7 +392,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-3-feature-6',
 						name: 'Flying Sawblade',
 						type: FactoryLogic.type.createTrigger('The roughneck is vertical force moved by another creature.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createSelf() ],
 						target: 'Self',
 						sections: [
@@ -414,7 +413,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 0,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 5,
-			characteristics: MonsterLogic.createCharacteristics(2, 2, 0, 0, 0),
+			characteristics: FactoryLogic.createCharacteristics(2, 2, 0, 0, 0),
 			features: [
 				FactoryLogic.feature.createAbility({
 					ability: FactoryLogic.createAbility({
@@ -507,7 +506,6 @@ When bugbears are compelled to take action, they take to the high ground and use
 						id: 'bugbear-4-feature-6',
 						name: 'Clever Trick',
 						type: FactoryLogic.type.createTrigger('The sneak is targeted by a strike.'),
-						keywords: [],
 						distance: [ FactoryLogic.distance.createRanged(5) ],
 						target: 'One enemy',
 						cost: 1,
@@ -530,7 +528,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 2,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(4, 3, 1, 1, 4),
+			characteristics: FactoryLogic.createCharacteristics(4, 3, 1, 1, 4),
 			withCaptain: 'Gain an edge on strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -577,7 +575,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 2,
 			size: FactoryLogic.createSize(3),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(3, -1, 0, 1, 0),
+			characteristics: FactoryLogic.createCharacteristics(3, -1, 0, 1, 0),
 			withCaptain: '+2 damage bonus to strikes',
 			features: [
 				FactoryLogic.feature.createAbility({
@@ -619,7 +617,7 @@ When bugbears are compelled to take action, they take to the high ground and use
 			stability: 2,
 			size: FactoryLogic.createSize(1, 'L'),
 			freeStrikeDamage: 3,
-			characteristics: MonsterLogic.createCharacteristics(2, 3, 0, 0, 1),
+			characteristics: FactoryLogic.createCharacteristics(2, 3, 0, 0, 1),
 			withCaptain: '+3 bonus to speed',
 			features: [
 				FactoryLogic.feature.createAbility({

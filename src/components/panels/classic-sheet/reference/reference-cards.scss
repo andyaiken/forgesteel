@@ -1,0 +1,61 @@
+@use '../../../pages/classic-sheet/common.scss';
+
+#classic-sheet .hero-sheet .extra-reference.card {
+    // @include common.striped-card;
+
+    *:not(h2) {
+        @include common.font-serif();
+        font-size: round(1.1rem, 1px);
+        line-height: round(1.3rem, 1px);
+        color: var(--color-text-lighter);
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    table {
+        td, th {
+            border: 0;
+        }
+        td:first-child {
+            vertical-align: baseline;
+        }
+        img {
+            width: 50px;
+            height: 26px;
+            margin-top: -1px;
+        }
+    }
+
+    .power-roll {
+        .roll-tiers .tier {
+            &:not(:last-of-type) {
+                margin-bottom: 5px;
+            }
+            
+            img {
+                margin-top: -3px;
+            }
+        }
+    }
+}
+
+#classic-sheet .hero-sheet .special-reference.card {
+    table {
+        tr {
+            border-bottom: 1px solid common.$color-light;
+            &:has(th) {
+                border-bottom: 2px solid common.$color-medium;
+            }
+
+            &:nth-child(odd) td {
+                background-color: common.$color-extra-light;
+            }
+
+            th {
+                font-weight: 600;
+            }
+        }
+    }
+}

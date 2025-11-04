@@ -1,63 +1,68 @@
-import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText, AbilityType } from '../models/ability';
-import { Encounter, EncounterGroup, EncounterObjective } from '../models/encounter';
-import { Kit, KitDamageBonus } from '../models/kit';
-import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '../models/tactical-map';
-import { MonsterFilter, TerrainFilter } from '../models/filter';
-import { Montage, MontageChallenge, MontageSection } from '../models/montage';
-import { Project, ProjectProgress } from '../models/project';
-import { Terrain, TerrainRole } from '../models/terrain';
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { Adventure } from '../models/adventure';
-import { Ancestry } from '../models/ancestry';
-import { Career } from '../models/career';
-import { Characteristic } from '../enums/characteristic';
-import { Complication } from '../models/complication';
-import { Culture } from '../models/culture';
-import { CultureType } from '../enums/culture-type';
-import { Domain } from '../models/domain';
-import { Element } from '../models/element';
-import { EncounterSlot } from '../models/encounter-slot';
-import { FactoryAbilityTypeLogic } from './factory-ability-type-logic';
-import { FactoryDamageModifierLogic } from './factory-damage-modifier-logic';
-import { FactoryDistanceLogic } from './factory-distance-logic';
-import { FactoryFeatureLogic } from './factory-feature-logic';
-import { Feature } from '../models/feature';
-import { FeatureField } from '../enums/feature-field';
-import { FeatureType } from '../enums/feature-type';
-import { Follower } from '../models/follower';
-import { FollowerType } from '../enums/follower-type';
-import { Hero } from '../models/hero';
-import { HeroClass } from '../models/class';
-import { HeroState } from '../models/hero-state';
-import { Imbuement } from '../models/imbuement';
-import { Item } from '../models/item';
-import { ItemType } from '../enums/item-type';
-import { KitArmor } from '../enums/kit-armor';
-import { KitWeapon } from '../enums/kit-weapon';
-import { Monster } from '../models/monster';
-import { MonsterGroup } from '../models/monster-group';
-import { MonsterOrganizationType } from '../enums/monster-organization-type';
-import { MonsterRole } from '../models/monster-roll';
-import { MonsterRoleType } from '../enums/monster-role-type';
-import { MonsterState } from '../models/monster-state';
-import { Negotiation } from '../models/negotiation';
-import { Options } from '../models/options';
-import { PanelWidth } from '../enums/panel-width';
-import { Perk } from '../models/perk';
-import { PerkList } from '../enums/perk-list';
-import { Playbook } from '../models/playbook';
-import { Plot } from '../models/plot';
-import { PowerRoll } from '../models/power-roll';
-import { RetainerData } from '../data/retainer-data';
-import { SheetPageSize } from '../enums/sheet-page-size';
-import { Size } from '../models/size';
-import { Sourcebook } from '../models/sourcebook';
-import { Speed } from '../models/speed';
-import { SubClass } from '../models/subclass';
-import { TerrainCategory } from '../enums/terrain-category';
-import { TerrainRoleType } from '../enums/terrain-role-type';
-import { Title } from '../models/title';
-import { Utils } from '../utils/utils';
+import { Ability, AbilityDistance, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText, AbilityType } from '@/models/ability';
+import { Encounter, EncounterGroup, EncounterObjective } from '@/models/encounter';
+import { Kit, KitDamageBonus } from '@/models/kit';
+import { MapFog, MapMini, MapTile, MapWall, MapZone, TacticalMap } from '@/models/tactical-map';
+import { MonsterFilter, TerrainFilter } from '@/models/filter';
+import { Montage, MontageChallenge, MontageSection } from '@/models/montage';
+import { Project, ProjectProgress } from '@/models/project';
+import { Terrain, TerrainRole } from '@/models/terrain';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Adventure } from '@/models/adventure';
+import { Ancestry } from '@/models/ancestry';
+import { AttitudeType } from '@/enums/attitude-type';
+import { Career } from '@/models/career';
+import { Characteristic } from '@/enums/characteristic';
+import { Complication } from '@/models/complication';
+import { Culture } from '@/models/culture';
+import { CultureType } from '@/enums/culture-type';
+import { DamageType } from '@/enums/damage-type';
+import { Domain } from '@/models/domain';
+import { Element } from '@/models/element';
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
+import { EncounterSlot } from '@/models/encounter-slot';
+import { FactoryAbilityTypeLogic } from '@/logic/factory-ability-type-logic';
+import { FactoryDamageModifierLogic } from '@/logic/factory-damage-modifier-logic';
+import { FactoryDistanceLogic } from '@/logic/factory-distance-logic';
+import { FactoryFeatureLogic } from '@/logic/factory-feature-logic';
+import { Feature } from '@/models/feature';
+import { FeatureField } from '@/enums/feature-field';
+import { FeatureType } from '@/enums/feature-type';
+import { Follower } from '@/models/follower';
+import { FollowerType } from '@/enums/follower-type';
+import { Hero } from '@/models/hero';
+import { HeroClass } from '@/models/class';
+import { HeroState } from '@/models/hero-state';
+import { Imbuement } from '@/models/imbuement';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { Monster } from '@/models/monster';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { MonsterRole } from '@/models/monster-roll';
+import { MonsterRoleType } from '@/enums/monster-role-type';
+import { MonsterState } from '@/models/monster-state';
+import { Negotiation } from '@/models/negotiation';
+import { Options } from '@/models/options';
+import { PanelWidth } from '@/enums/panel-width';
+import { Perk } from '@/models/perk';
+import { PerkList } from '@/enums/perk-list';
+import { Playbook } from '@/models/playbook';
+import { Plot } from '@/models/plot';
+import { PowerRoll } from '@/models/power-roll';
+import { RetainerLogic } from '@/logic/retainer-logic';
+import { SheetPageSize } from '@/enums/sheet-page-size';
+import { Size } from '@/models/size';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookType } from '@/enums/sourcebook-type';
+import { Speed } from '@/models/speed';
+import { SubClass } from '@/models/subclass';
+import { Summon } from '@/models/summon';
+import { TerrainCategory } from '@/enums/terrain-category';
+import { TerrainRoleType } from '@/enums/terrain-role-type';
+import { Title } from '@/models/title';
+import { Utils } from '@/utils/utils';
 
 export class FactoryLogic {
 	static createElement = (name?: string): Element => {
@@ -120,7 +125,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			isHomebrew: true,
+			type: SourcebookType.Homebrew,
 			ancestries: [],
 			cultures: [],
 			careers: [],
@@ -213,6 +218,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			type: 'standard',
 			subclassName: '',
 			subclassCount: 1,
 			primaryCharacteristicsOptions: [],
@@ -455,21 +461,22 @@ export class FactoryLogic {
 		return {
 			prerequisites: false,
 			source: false,
+			followerID: null,
 			points: 0
 		};
 	};
 
-	static createFollower = (): Follower => {
+	static createFollower = (type: FollowerType): Follower => {
 		return {
 			id: Utils.guid(),
 			name: '',
 			description: '',
-			type: FollowerType.Artisan,
+			type: type,
 			characteristics: [
-				{ characteristic: Characteristic.Might, value: 1 },
+				{ characteristic: Characteristic.Might, value: type === FollowerType.Artisan ? 1 : 0 },
 				{ characteristic: Characteristic.Agility, value: 0 },
 				{ characteristic: Characteristic.Reason, value: 1 },
-				{ characteristic: Characteristic.Intuition, value: 0 },
+				{ characteristic: Characteristic.Intuition, value: type === FollowerType.Sage ? 1 : 0 },
 				{ characteristic: Characteristic.Presence, value: 0 }
 			],
 			skills: [],
@@ -490,13 +497,15 @@ export class FactoryLogic {
 		};
 	};
 
-	static defaultMonsterChatacteristics = [
-		{ characteristic: Characteristic.Might, value: 0 },
-		{ characteristic: Characteristic.Agility, value: 0 },
-		{ characteristic: Characteristic.Reason, value: 0 },
-		{ characteristic: Characteristic.Intuition, value: 0 },
-		{ characteristic: Characteristic.Presence, value: 0 }
-	];
+	static createCharacteristics = (might: number, agility: number, reason: number, intuition: number, presence: number) => {
+		return [
+			{ characteristic: Characteristic.Might, value: might },
+			{ characteristic: Characteristic.Agility, value: agility },
+			{ characteristic: Characteristic.Reason, value: reason },
+			{ characteristic: Characteristic.Intuition, value: intuition },
+			{ characteristic: Characteristic.Presence, value: presence }
+		];
+	};
 
 	static createMonster = (data: {
 		id: string,
@@ -511,39 +520,57 @@ export class FactoryLogic {
 		stamina: number,
 		stability: number,
 		freeStrikeDamage: number,
+		freeStrikeType?: DamageType,
 		characteristics: { characteristic: Characteristic, value: number }[],
 		features: Feature[],
 		withCaptain?: string,
 		retainer?: { level4?: Feature, level7?: Feature, level10?: Feature }
 	}): Monster => {
-		const retainer = data.retainer ?
-			{
-				level: data.level,
-				level4: data.retainer.level4,
-				level7: data.retainer.level7,
-				level10: data.retainer.level10,
-				featuresByLevel: RetainerData.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
-			}
-			: null;
 		return {
-			id: data.id || Utils.guid(),
-			name: data.name || '',
+			id: data.id,
+			name: data.name,
 			description: data.description || '',
 			picture: null,
-			level: data.level || 1,
-			role: data.role || FactoryLogic.createMonsterRole(MonsterOrganizationType.Platoon, MonsterRoleType.Ambusher),
-			keywords: data.keywords || [],
-			encounterValue: data.encounterValue || 0,
-			size: data.size || FactoryLogic.createSize(1, 'M'),
-			speed: data.speed || FactoryLogic.createSpeed(5),
-			stamina: data.stamina || 5,
-			stability: data.stability || 0,
-			freeStrikeDamage: data.freeStrikeDamage || 2,
-			characteristics: data.characteristics || FactoryLogic.defaultMonsterChatacteristics,
+			level: data.level,
+			role: data.role,
+			keywords: data.keywords,
+			encounterValue: data.encounterValue,
+			size: data.size,
+			speed: data.speed,
+			stamina: data.stamina,
+			stability: data.stability,
+			freeStrikeDamage: data.freeStrikeDamage,
+			freeStrikeType: data.freeStrikeType || DamageType.Damage,
+			characteristics: data.characteristics,
+			features: data.features,
 			withCaptain: data.withCaptain || '',
-			features: data.features || [],
-			retainer: retainer,
+			retainer: data.retainer ?
+				{
+					level: data.level,
+					level4: data.retainer.level4,
+					level7: data.retainer.level7,
+					level10: data.retainer.level10,
+					featuresByLevel: RetainerLogic.getRetainerAdvancementFeatures(data.level, data.role.type, data.retainer.level4, data.retainer.level7, data.retainer.level10)
+				}
+				: null,
 			state: FactoryLogic.createMonsterState()
+		};
+	};
+
+	static createSummon = (data: { monster: Monster, isSignature?: boolean, cost: number, count: number, level3?: Feature[], level6?: Feature[], level10?: Feature[] }): Summon => {
+		return {
+			id: data.monster.id,
+			name: data.monster.name,
+			description: data.monster.description,
+			monster: data.monster,
+			info: {
+				isSignature: data.isSignature || false,
+				cost: data.cost,
+				count: data.count,
+				level3: data.level3 || [],
+				level6: data.level6 || [],
+				level10: data.level10 || []
+			}
 		};
 	};
 
@@ -610,12 +637,14 @@ export class FactoryLogic {
 			description: '',
 			groups: [],
 			terrain: [],
+			heroes: [],
 			objective: null,
 			notes: [],
 			initiative: undefined,
 			round: 0,
 			malice: 0,
-			heroes: []
+			additionalTurnsTaken: [],
+			hiddenMaliceFeatures: []
 		};
 	};
 
@@ -698,11 +727,13 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			attitude: AttitudeType.Neutral,
 			impression: 0,
 			interest: 1,
 			patience: 1,
 			motivations: [],
 			pitfalls: [],
+			languages: [],
 			outcomes: [ '', '', '', '', '', '' ]
 		};
 	};
@@ -712,6 +743,7 @@ export class FactoryLogic {
 			id: Utils.guid(),
 			name: '',
 			description: '',
+			difficulty: EncounterDifficulty.Standard,
 			scene: '',
 			sections: [ FactoryLogic.createMontageSection() ],
 			outcomes: {
@@ -787,10 +819,10 @@ export class FactoryLogic {
 		id: string,
 		name: string,
 		description?: string,
-		type: AbilityType,
+		type?: AbilityType,
 		keywords?: AbilityKeyword[],
-		distance: AbilityDistance[],
-		target: string,
+		distance?: AbilityDistance[],
+		target?: string,
 		cost?: number | 'signature',
 		repeatable?: boolean,
 		minLevel?: number,
@@ -800,7 +832,7 @@ export class FactoryLogic {
 			id: data.id,
 			name: data.name,
 			description: data.description || '',
-			type: data.type,
+			type: data.type || FactoryLogic.type.createNoAction(),
 			keywords: data.keywords || [],
 			distance: data.distance || [],
 			target: data.target || '',
@@ -808,7 +840,7 @@ export class FactoryLogic {
 			repeatable: data.repeatable ?? false,
 			minLevel: data.minLevel || 1,
 			sections: data.sections,
-
+			// These are now deprecated
 			preEffect: '',
 			powerRoll: null,
 			test: null,
@@ -861,14 +893,16 @@ export class FactoryLogic {
 		bonus?: number,
 		tier1: string,
 		tier2: string,
-		tier3: string
+		tier3: string,
+		crit?: string
 	}): PowerRoll => {
 		return {
 			characteristic: data.characteristic ? Array.isArray(data.characteristic) ? data.characteristic : [ data.characteristic ] : [],
 			bonus: data.bonus ?? 0,
 			tier1: data.tier1,
 			tier2: data.tier2,
-			tier3: data.tier3
+			tier3: data.tier3,
+			crit: data.crit || ''
 		};
 	};
 
@@ -974,29 +1008,37 @@ export class FactoryLogic {
 			singlePage: false,
 			separateInventoryFeatures: false,
 			showSkillsInGroups: true,
-			showStandardAbilities: true,
 			dimUnavailableAbilities: true,
 			showSources: true,
-			includePlayState: true,
+			compactView: false,
 			abilityWidth: PanelWidth.Medium,
+			shownStandardAbilities: [],
+			// Classic Sheet
+			includePlayState: false,
 			classicSheetPageSize: SheetPageSize.Letter,
-			pageOrientation: 'portrait',
 			colorSheet: true,
+			showPowerRollCalculation: true,
 			sheetTextColor: 'default',
 			featuresInclude: 'all',
-			abilitySort: 'size',
-			compactView: false,
+			pageOrientation: 'portrait',
+			// Library
+			showInteractivePanels: true,
+			showMonsterGroups: true,
+			// Monster Builder
 			similarLevel: true,
 			similarRole: true,
 			similarOrganization: true,
 			similarSize: true,
+			// Encounter
 			minionCount: 4,
 			party: '',
+			// Encounter Difficulty
 			heroParty: '',
 			heroCount: 4,
 			heroLevel: 1,
 			heroVictories: 0,
 			showDefeatedCombatants: false,
+			// Tactical Map
 			gridSize: 50,
 			playerGridSize: 50
 		};

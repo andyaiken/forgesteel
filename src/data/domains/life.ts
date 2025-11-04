@@ -1,8 +1,8 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Domain } from '../../models/domain';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { SkillList } from '../../enums/skill-list';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Domain } from '@/models/domain';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SkillList } from '@/enums/skill-list';
 
 export const life: Domain = {
 	id: 'domain-life',
@@ -58,7 +58,7 @@ export const life: Domain = {
 				FactoryLogic.feature.create({
 					id: 'domain-life-4',
 					name: 'Blessing of Life',
-					description: 'Your divine presence causes those you deem worthy to recover quickly from a fight. Whenever an ally within distance of your Healing Grace ability regains Stamina, they regain additional Stamina equal to your Presence (censor) or Intuition (conduit) score.'
+					description: 'Your divine presence causes those you deem worthy to recover quickly from a fight. Whenever an ally within distance of your Healing Grace ability regains Stamina, they regain additional Stamina equal to your Intuition score.'
 				})
 			]
 		},
@@ -92,7 +92,9 @@ export const life: Domain = {
 				FactoryLogic.feature.create({
 					id: 'domain-life-7',
 					name: 'Font of Grace',
-					description: 'Each time you use your Healing Grace ability, you gain 1 piety that can be spent only on that ability during the same turn. If you don’t use this piety, it is lost. Additionally, you can use your Minor Miracle feature to return a creature to life even if you don’t have their remains.'
+					description: `
+* If you are a **Conduit**: Each time you use your *Healing Grace* ability, you gain 1 piety that can be spent only on that ability during the same turn. If you don’t use this piety, it is lost. Additionally, you can use your *Minor Miracle* feature to return a creature to life even if you don’t have their remains.
+* If you are a **Censor**: Each time you use your *My Life for Yours* ability, you gain 1 wrath that can be spent only on that ability during the same turn. If you don’t use this wrath, it is lost. Additionally, the target of *My Life for Yours* gains 10 temporary Stamina.`
 				})
 			]
 		},

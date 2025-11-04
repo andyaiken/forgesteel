@@ -1,34 +1,36 @@
-import { AbilityCustomization, Hero } from '../../../../models/hero';
+import { AbilityCustomization, Hero } from '@/models/hero';
 import { Button, Flex, Space } from 'antd';
 import { CSSProperties, useState } from 'react';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSizeData, FeatureSkillChoiceData, FeatureSkillData, FeatureSpeedData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '../../../../models/feature';
-import { Pill, ResourcePill } from '../../../controls/pill/pill';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityDistanceData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResource, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
-import { Ability } from '../../../../models/ability';
-import { AbilityLogic } from '../../../../logic/ability-logic';
-import { AbilityPanel } from '../ability-panel/ability-panel';
-import { AncestryPanel } from '../ancestry-panel/ancestry-panel';
-import { Collections } from '../../../../utils/collections';
-import { DomainPanel } from '../domain-panel/domain-panel';
-import { ErrorBoundary } from '../../../controls/error-boundary/error-boundary';
-import { FeatureType } from '../../../../enums/feature-type';
-import { Field } from '../../../controls/field/field';
-import { FollowerPanel } from '../follower-panel/follower-panel';
-import { Format } from '../../../../utils/format';
-import { FormatLogic } from '../../../../logic/format-logic';
-import { HeaderText } from '../../../controls/header-text/header-text';
-import { HeroLogic } from '../../../../logic/hero-logic';
-import { ItemPanel } from '../item-panel/item-panel';
-import { KitPanel } from '../kit-panel/kit-panel';
-import { Markdown } from '../../../controls/markdown/markdown';
-import { MonsterPanel } from '../monster-panel/monster-panel';
-import { Options } from '../../../../models/options';
-import { PanelMode } from '../../../../enums/panel-mode';
-import { Perk } from '../../../../models/perk';
-import { PerkPanel } from '../perk-panel/perk-panel';
-import { PowerRollPanel } from '../../power-roll/power-roll-panel';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { TitlePanel } from '../title-panel/title-panel';
+import { Ability } from '@/models/ability';
+import { AbilityLogic } from '@/logic/ability-logic';
+import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
+import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
+import { Collections } from '@/utils/collections';
+import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FeatureType } from '@/enums/feature-type';
+import { Field } from '@/components/controls/field/field';
+import { FixturePanel } from '@/components/panels/elements/fixture-panel/fixture-panel';
+import { FollowerPanel } from '@/components/panels/elements/follower-panel/follower-panel';
+import { Format } from '@/utils/format';
+import { FormatLogic } from '@/logic/format-logic';
+import { HeaderText } from '@/components/controls/header-text/header-text';
+import { HeroLogic } from '@/logic/hero-logic';
+import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
+import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
+import { Markdown } from '@/components/controls/markdown/markdown';
+import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
+import { Options } from '@/models/options';
+import { PanelMode } from '@/enums/panel-mode';
+import { Perk } from '@/models/perk';
+import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
+import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
+import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 
 import './feature-panel.scss';
 
@@ -229,36 +231,39 @@ export const FeaturePanel = (props: Props) => {
 		return null;
 	};
 
-	const getInformationHeroicResourceFeature = (data: FeatureHeroicResourceData) => {
-		const gains = [ ...data.gains ];
+	const getInformationFixture = (data: FeatureFixtureData) => {
+		return (
+			<SelectablePanel key={data.fixture.id}>
+				<FixturePanel fixture={data.fixture} sourcebooks={props.sourcebooks} hero={props.hero} options={props.options} />
+			</SelectablePanel>
+		);
+	};
+
+	const getInformationHeroicResourceFeature = (feature: FeatureHeroicResource) => {
 		if (props.hero) {
-			HeroLogic.getFeatures(props.hero)
-				.map(f => f.feature)
-				.filter(f => f.type === FeatureType.HeroicResourceGain)
-				.forEach(f => gains.push(f.data));
-			HeroLogic.getDomains(props.hero)
-				.flatMap(d => d.resourceGains)
-				.filter(g => g.resource === props.feature.name)
-				.forEach(g => gains.push(g));
+			const resource = HeroLogic.getHeroicResources(props.hero).find(hr => hr.name === feature.name);
+			if (resource) {
+				return (
+					<>
+						<ul>
+							{
+								resource.gains.map((g, n) => (
+									<li key={n}>
+										<Flex align='center' justify='space-between' gap={10}>
+											<div className='ds-text compact-text'>{g.trigger}</div>
+											<Pill>+{g.value}</Pill>
+										</Flex>
+									</li>
+								))
+							}
+						</ul>
+						<Markdown text={resource.details} />
+					</>
+				);
+			}
 		}
 
-		return (
-			<>
-				<ul>
-					{
-						gains.map((g, n) => (
-							<li key={n}>
-								<Flex align='center' justify='space-between' gap={10}>
-									<div className='ds-text compact-text'>{g.trigger}</div>
-									<Pill>+{g.value}</Pill>
-								</Flex>
-							</li>
-						))
-					}
-				</ul>
-				<Markdown text={data.details} />
-			</>
-		);
+		return null;
 	};
 
 	const getInformationHeroicResourceGainFeature = (data: FeatureHeroicResourceGainData) => {
@@ -437,20 +442,20 @@ export const FeaturePanel = (props: Props) => {
 		);
 	};
 
-	const getInformationSize = (data: FeatureSizeData) => {
+	const getInformationSaveThreshold = (data: FeatureSaveThresholdData) => {
 		if (!props.feature.description) {
 			return (
-				<Field label='Size' value={FormatLogic.getSize(data.size)} />
+				<Field label='Value' value={`${data.value}+`} />
 			);
 		}
 
 		return null;
 	};
 
-	const getInformationSkill = (data: FeatureSkillData) => {
+	const getInformationSize = (data: FeatureSizeData) => {
 		if (!props.feature.description) {
 			return (
-				<Field label='Skill' value={data.skill} />
+				<Field label='Size' value={FormatLogic.getSize(data.size)} />
 			);
 		}
 
@@ -466,8 +471,14 @@ export const FeaturePanel = (props: Props) => {
 
 		if (!props.feature.description) {
 			const count = data.count || 1;
-			const names = (Collections.sort(data.options, o => o) || []).concat((Collections.sort(data.listOptions, o => o) || []).map(l => `the ${l} list`)).join(', ');
-			const str = (count > 1 ? `Choose ${count} skills from ${names}.` : `Choose a skill from ${names}.`);
+
+			let str = '';
+			if (data.listOptions.length === 5) {
+				str = (count > 1 ? `Choose ${count} skills.` : 'Choose a skill.');
+			} else {
+				const names = (Collections.sort(data.options, o => o) || []).concat((Collections.sort(data.listOptions, o => o) || []).map(l => `the ${l} list`)).join(', ');
+				str = (count > 1 ? `Choose ${count} skills from ${names}.` : `Choose a skill from ${names}.`);
+			}
 
 			return (
 				<div className='ds-text'>{str}</div>
@@ -488,19 +499,34 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getInformationSummon = (data: FeatureSummonData) => {
+		if (data.summons.length > 0) {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+				</Space>
+			);
+		}
+
+		return null;
+	};
+
+	const getInformationSummonChoice = (data: FeatureSummonChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
-					{
-						data.selected.map(m => <MonsterPanel key={m.id} monster={m} options={props.options} />)
-					}
+					{data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
 				</Space>
 			);
 		}
 
 		if (!props.feature.description) {
 			return (
-				<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'monsters' : 'monster'}.</div>
+				<>
+					<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'monsters' : 'monster'}.</div>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+					</Space>
+				</>
 			);
 		}
 
@@ -583,8 +609,10 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationDomain(props.feature.data);
 			case FeatureType.DomainFeature:
 				return getInformationDomainFeature(props.feature.data);
+			case FeatureType.Fixture:
+				return getInformationFixture(props.feature.data);
 			case FeatureType.HeroicResource:
-				return getInformationHeroicResourceFeature(props.feature.data);
+				return getInformationHeroicResourceFeature(props.feature);
 			case FeatureType.HeroicResourceGain:
 				return getInformationHeroicResourceGainFeature(props.feature.data);
 			case FeatureType.ItemChoice:
@@ -607,16 +635,18 @@ export const FeaturePanel = (props: Props) => {
 				return getInformationPerk(props.feature.data);
 			case FeatureType.Proficiency:
 				return getInformationProficiency(props.feature.data);
+			case FeatureType.SaveThreshold:
+				return getInformationSaveThreshold(props.feature.data);
 			case FeatureType.Size:
 				return getInformationSize(props.feature.data);
-			case FeatureType.Skill:
-				return getInformationSkill(props.feature.data);
 			case FeatureType.SkillChoice:
 				return getInformationSkillChoice(props.feature.data);
 			case FeatureType.Speed:
 				return getInformationSpeed(props.feature.data);
 			case FeatureType.Summon:
 				return getInformationSummon(props.feature.data);
+			case FeatureType.SummonChoice:
+				return getInformationSummonChoice(props.feature.data);
 			case FeatureType.TaggedFeature:
 				return getInformationTaggedFeature(props.feature.data);
 			case FeatureType.TaggedFeatureChoice:
@@ -676,87 +706,82 @@ export const FeaturePanel = (props: Props) => {
 			&& (AbilityLogic.getTextEffect(props.feature.description, props.hero) !== props.feature.description);
 	};
 
-	try {
-		if ((props.feature.type === FeatureType.Ability) || (props.feature.type === FeatureType.MaliceAbility)) {
-			return (
-				<AbilityPanel
-					ability={props.feature.data.ability}
-					hero={props.hero}
-					cost={props.cost}
-					repeatable={props.repeatable}
-					mode={props.mode}
-					tags={getTags()}
-				/>
-			);
-		}
-
-		if (props.feature.type === FeatureType.AncestryFeatureChoice) {
-			if (props.feature.data.selected) {
-				return (
-					<FeaturePanel feature={props.feature.data.selected} options={props.options} style={props.style} />
-				);
-			}
-		}
-
-		if (props.feature.type === FeatureType.Follower) {
-			return (
-				<FollowerPanel follower={props.feature.data.follower} mode={PanelMode.Full} />
-			);
-		}
-
-		let customization: AbilityCustomization | null = null;
-		if (props.hero) {
-			customization = props.hero.abilityCustomizations.find(ac => ac.abilityID === props.feature.id) || null;
-		}
-
+	if ((props.feature.type === FeatureType.Ability) || (props.feature.type === FeatureType.MaliceAbility)) {
 		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined} style={props.style}>
-					<HeaderText
-						ribbon={
-							props.cost === 'signature' ?
-								<Pill>Signature</Pill>
-								:
-								props.cost ?
-									<ResourcePill value={props.cost} repeatable={props.repeatable} />
-									: null
-						}
-						tags={getTags()}
-						extra={
-							autoCalcAvailable() ?
-								<Button
-									type='text'
-									title='Auto-calculate damage, potency, etc'
-									icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
-									onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
-								/>
+			<AbilityPanel
+				ability={props.feature.data.ability}
+				hero={props.hero}
+				cost={props.cost}
+				repeatable={props.repeatable}
+				mode={props.mode}
+				tags={getTags()}
+			/>
+		);
+	}
+
+	if (props.feature.type === FeatureType.AncestryFeatureChoice) {
+		if (props.feature.data.selected) {
+			return (
+				<FeaturePanel feature={props.feature.data.selected} options={props.options} style={props.style} />
+			);
+		}
+	}
+
+	if (props.feature.type === FeatureType.Follower) {
+		return (
+			<FollowerPanel follower={props.feature.data.follower} mode={PanelMode.Full} />
+		);
+	}
+
+	let customization: AbilityCustomization | null = null;
+	if (props.hero) {
+		customization = props.hero.abilityCustomizations.find(ac => ac.abilityID === props.feature.id) || null;
+	}
+
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined} style={props.style}>
+				<HeaderText
+					ribbon={
+						props.cost === 'signature' ?
+							<Pill>Signature</Pill>
+							:
+							props.cost ?
+								<ResourcePill value={props.cost} repeatable={props.repeatable} />
 								: null
-						}
-					>
-						{customization?.name || props.feature.name || 'Unnamed Feature'}
-					</HeaderText>
-					<Markdown
-						text={
-							(props.feature.type === FeatureType.Text) && autoCalc && props.hero ?
-								AbilityLogic.getTextEffect(customization?.description || props.feature.description, props.hero)
-								:
-								(customization?.description || props.feature.description)
-						}
-					/>
-					{props.mode === PanelMode.Full ? getInformation() : null}
-					{
-						customization && customization.notes ?
-							<Field
-								label='Notes'
-								value={<Markdown text={customization.notes} useSpan={true} />}
+					}
+					tags={getTags()}
+					extra={
+						autoCalcAvailable() ?
+							<Button
+								type='text'
+								title='Auto-calculate damage, potency, etc'
+								icon={autoCalc ? <ThunderboltFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <ThunderboltOutlined />}
+								onClick={e => { e.stopPropagation(); setAutoCalc(!autoCalc); }}
 							/>
 							: null
 					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				>
+					{customization?.name || props.feature.name || 'Unnamed Feature'}
+				</HeaderText>
+				<Markdown
+					text={
+						(props.feature.type === FeatureType.Text) && autoCalc && props.hero ?
+							AbilityLogic.getTextEffect(customization?.description || props.feature.description, props.hero)
+							:
+							(customization?.description || props.feature.description)
+					}
+				/>
+				{props.mode === PanelMode.Full ? getInformation() : null}
+				{
+					customization && customization.notes ?
+						<Field
+							label='Notes'
+							value={<Markdown text={customization.notes} useSpan={true} />}
+						/>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

@@ -1,14 +1,14 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { HeroClass } from '../../../models/class';
-import { PerkList } from '../../../enums/perk-list';
-import { SkillList } from '../../../enums/skill-list';
-import { insurgent } from './insurgent';
-import { mastermind } from './mastermind';
-import { vanguard } from './vanguard';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { HeroClass } from '@/models/class';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
+import { insurgent } from '@/data/classes/tactician/insurgent';
+import { mastermind } from '@/data/classes/tactician/mastermind';
+import { vanguard } from '@/data/classes/tactician/vanguard';
 
 export const tactician: HeroClass = {
 	id: 'class-tactician',
@@ -17,6 +17,7 @@ export const tactician: HeroClass = {
 Strategist. Defender. Leader. With sword in hand, you lead allies into the maw of battle, barking out commands that inspire your fellow heroes to move faster and strike more precisely. All the while, you stand between your compatriots and death, taunting the followers of evil to best you if they can.
 
 As a tactician, you have abilities that heal your allies and grant them increased damage, movement, and attacks.`,
+	type: 'standard',
 	subclassName: 'Tactical Doctrine',
 	subclassCount: 1,
 	primaryCharacteristicsOptions: [
@@ -61,7 +62,6 @@ As a tactician, you have abilities that heal your allies and grant them increase
 				}),
 				FactoryLogic.feature.createSkillChoice({
 					id: 'tactician-1-1',
-					listOptions: [ SkillList.Interpersonal ],
 					selected: [ 'Lead' ]
 				}),
 				FactoryLogic.feature.createSkillChoice({
@@ -105,12 +105,11 @@ While a creature marked by you is within your line of effect, you and allies wit
 								id: 'tactician-1-5b',
 								name: 'Mark: Trigger',
 								type: FactoryLogic.type.createTrigger('You or any ally uses an ability to deal rolled damage to a creature marked by you', { free: true }),
-								keywords: [],
 								distance: [ FactoryLogic.distance.createSpecial('Special') ],
 								target: 'Special',
-								cost: 1,
 								sections: [
 									FactoryLogic.createAbilitySectionText(`
+#### Spend 1:
 You gain one of the following benefits:
 
 * The ability deals extra damage equal to twice your Reason score.
@@ -207,8 +206,7 @@ You can’t gain more than one benefit from the same trigger.`),
 					id: 'tactician-4-4'
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'tactician-4-5',
-					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+					id: 'tactician-4-5'
 				})
 			]
 		},
@@ -277,8 +275,7 @@ You can’t gain more than one benefit from the same trigger.`),
 					description: 'If you are not surprised when combat begins, your side gets to go first. If an enemy has an ability that allows their side to go first, you roll as usual to determine who goes first.'
 				}),
 				FactoryLogic.feature.createSkillChoice({
-					id: 'tactician-7-4',
-					listOptions: [ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
+					id: 'tactician-7-4'
 				})
 			]
 		},
@@ -332,6 +329,31 @@ You can’t gain more than one benefit from the same trigger.`),
 Whenever you or any ally uses an ability to deal rolled damage to a creature marked by you, you can spend 1 command as a free triggered action to increase the power roll outcome for that target by one tier. Whenever an enemy marked by you makes an ability roll, you can spend 1 command as a free triggered action to decrease the power roll outcome by one tier.
 
 Command remains until you spend it.`
+				}),
+				FactoryLogic.feature.createPerk({
+					id: 'tactician-10-3',
+					name: 'Perk',
+					lists: [ PerkList.Exploration, PerkList.Interpersonal, PerkList.Intrigue ]
+				}),
+				FactoryLogic.feature.createSkillChoice({
+					id: 'tactician-10-4',
+					name: 'Skill'
+				}),
+				FactoryLogic.feature.createHeroicResourceGain({
+					id: 'tactician-10-5',
+					name: 'True Focus',
+					tag: 'start 3',
+					trigger: 'Start of your turn',
+					value: '4',
+					replacesTags: [ 'start', 'start 2' ]
+				}),
+				FactoryLogic.feature.create({
+					id: 'tactician-10-6',
+					name: 'Warmaster',
+					description: `
+You have mastered the entirety of possible strategies and tactics. Whenever you or any ally makes an ability roll against a target marked by you, the character making the roll can roll three dice and choose which two to use.
+
+Additionally, whenever an ally uses a heroic ability that targets one or more creatures marked by you, they spend 2 fewer of their Heroic Resource on that ability (minimum 1).`
 				})
 			]
 		}
@@ -470,7 +492,7 @@ Command remains until you spend it.`
 			name: 'Now!',
 			description: 'Your allies wait for your command - then unleash death!',
 			type: FactoryLogic.type.createManeuver(),
-			keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Weapon ],
+			keywords: [ AbilityKeyword.Ranged ],
 			distance: [ FactoryLogic.distance.createRanged(10) ],
 			target: 'Three allies',
 			cost: 5,
@@ -496,7 +518,6 @@ Command remains until you spend it.`
 			name: 'Frontal Assault',
 			description: 'The purpose of a charge is to break their morale and force a retreat.',
 			type: FactoryLogic.type.createManeuver(),
-			keywords: [],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
@@ -509,7 +530,6 @@ Command remains until you spend it.`
 			name: 'Hit ’Em Hard!',
 			description: 'Your allies see the advantages in attacking the targets you select.',
 			type: FactoryLogic.type.createManeuver(),
-			keywords: [],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
@@ -522,7 +542,6 @@ Command remains until you spend it.`
 			name: 'Rout',
 			description: 'The tide begins to turn.',
 			type: FactoryLogic.type.createManeuver(),
-			keywords: [],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
@@ -535,7 +554,6 @@ Command remains until you spend it.`
 			name: 'Stay Strong and Focus!',
 			description: 'We can do this! Keep faith and hold fast!',
 			type: FactoryLogic.type.createManeuver(),
-			keywords: [],
 			distance: [ FactoryLogic.distance.createSelf() ],
 			target: 'Self',
 			cost: 7,
@@ -553,6 +571,14 @@ Command remains until you spend it.`
 			target: 'One creature',
 			cost: 9,
 			sections: [
+				FactoryLogic.createAbilitySectionRoll(
+					FactoryLogic.createPowerRoll({
+						characteristic: Characteristic.Might,
+						tier1: '9 + M damage',
+						tier2: '13 + M damage',
+						tier3: '18 + M damage'
+					})
+				),
 				FactoryLogic.createAbilitySectionText('You and each ally adjacent to the target gain 10 temporary Stamina.')
 			]
 		}),

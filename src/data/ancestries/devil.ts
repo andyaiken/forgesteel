@@ -1,6 +1,6 @@
-import { Ancestry } from '../../models/ancestry';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { SkillList } from '../../enums/skill-list';
+import { Ancestry } from '@/models/ancestry';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SkillList } from '@/enums/skill-list';
 
 export const devil: Ancestry = {
 	id: 'ancestry-devil',
@@ -50,7 +50,6 @@ export const devil: Ancestry = {
 							name: 'Glowing Eyes',
 							description: 'Your eyes are a solid, vibrant color that flares to show your excitement or rage.',
 							type: FactoryLogic.type.createTrigger('You take damage from a creature'),
-							keywords: [],
 							distance: [ FactoryLogic.distance.createSelf() ],
 							target: 'Self',
 							sections: [
@@ -69,10 +68,11 @@ export const devil: Ancestry = {
 					value: 1
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createSaveThreshold({
 						id: 'devil-feature-2-5',
 						name: 'Impressive Horns',
-						description: 'Your cherished horns are larger than your average devil’s, and a hardened representation of your force of will. Whenever you make a saving throw, you succeed on a roll of 5 or higher.'
+						description: 'Your cherished horns are larger than your average devil’s, and a hardened representation of your force of will. Whenever you make a saving throw, you succeed on a roll of 5 or higher.',
+						value: 5
 					}),
 					value: 2
 				},

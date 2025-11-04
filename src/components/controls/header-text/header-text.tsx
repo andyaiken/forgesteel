@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from 'react';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Tag } from 'antd';
 
 import './header-text.scss';
@@ -13,12 +14,12 @@ interface Props {
 }
 
 export const HeaderText = (props: Props) => {
-	try {
-		if (!props.children) {
-			return null;
-		}
+	if (!props.children) {
+		return null;
+	}
 
-		return (
+	return (
+		<ErrorBoundary>
 			<div className={`header-text-panel level-${props.level || 2}`} style={props.style}>
 				<div className='header-text-content'>
 					{props.ribbon}
@@ -33,9 +34,6 @@ export const HeaderText = (props: Props) => {
 				</div>
 				{props.extra}
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+		</ErrorBoundary>
+	);
 };

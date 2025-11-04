@@ -1,19 +1,24 @@
-import { Divider, Drawer, FloatButton, Segmented, Space } from 'antd';
+import { Divider, Drawer, FloatButton, Segmented, Select, SelectProps, Space, Tag } from 'antd';
 import { useMemo, useState } from 'react';
-import { Career } from '../../../../models/career';
-import { CareerCard } from '../../../panels/hero-sheet/career-card/career-card';
-import { CharacterSheetBuilder } from '../../../../utils/sheet-builder';
-import { ComplicationCard } from '../../../panels/hero-sheet/complication-card/complication-card';
-import { FactoryLogic } from '../../../../logic/factory-logic';
-import { Hero } from '../../../../models/hero';
-import { HeroSheetPage } from './hero-sheet-page';
-import { Options } from '../../../../models/options';
+import { AbilityData } from '@/data/ability-data';
+import { Career } from '@/models/career';
+import { CareerCard } from '@/components/panels/classic-sheet/career-card/career-card';
+import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
+import { ComplicationCard } from '@/components/panels/classic-sheet/complication-card/complication-card';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Hero } from '@/models/hero';
+import { HeroLogic } from '@/logic/hero-logic';
+import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
+import { HeroSheetPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-page';
+import { Options } from '@/models/options';
 import { SettingFilled } from '@ant-design/icons';
-import { SheetPageSize } from '../../../../enums/sheet-page-size';
-import { Sourcebook } from '../../../../models/sourcebook';
-import { SourcebookLogic } from '../../../../logic/sourcebook-logic';
-import { Toggle } from '../../../controls/toggle/toggle';
-import { Utils } from '../../../../utils/utils';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { SheetPageSize } from '@/enums/sheet-page-size';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { Toggle } from '@/components/controls/toggle/toggle';
+import { Utils } from '@/utils/utils';
 import { useParams } from 'react-router';
 
 import './hero-sheet-page.scss';
@@ -91,12 +96,6 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const setAbilitySort = (value: 'size' | 'type') => {
-		const copy = Utils.copy(props.options);
-		copy.abilitySort = value;
-		props.setOptions(copy);
-	};
-
 	const setClassicSheetPageSize = (value: SheetPageSize) => {
 		const copy = Utils.copy(props.options);
 		copy.classicSheetPageSize = value;
@@ -109,17 +108,27 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		props.setOptions(copy);
 	};
 
-	const setShowStandardAbilities = (value: boolean) => {
+	const includedStandardAbilitiesChanged = (value: string | string[]) => {
 		const copy = Utils.copy(props.options);
-		copy.showStandardAbilities = value;
+		copy.shownStandardAbilities = [ value ].flat(1);
 		props.setOptions(copy);
 	};
 
+	const standardAbilityOptions: SelectProps['options'] = [];
+	const standardAbilities = HeroLogic.getAbilities(FactoryLogic.createHero([]), [], AbilityData.standardAbilities.map(a => a.id))
+		.map(a => ClassicSheetBuilder.buildAbilitySheet(a.ability, undefined));
+	standardAbilities.sort(SheetFormatter.sortAbilitiesByType);
+	standardAbilities.forEach(a => {
+		standardAbilityOptions.push({
+			value: a.id,
+			label: <div className='ds-text'>{a.name} <Tag>{a.actionType}</Tag></div>
+		});
+	});
+
 	const setDisplay = (type: 'html' | 'canvas') => {
 		setPreviewOptions(type);
-		const element = document.getElementById('hero-sheet-page');
+		const element = document.getElementById('classic-sheet');
 		const canvasElem = document.getElementById('pdf-canvas');
-		const prevDpr = window.devicePixelRatio;
 		if (element && canvasElem) {
 			const initialW = element.clientWidth;
 			switch (type) {
@@ -129,14 +138,12 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					break;
 				case 'canvas':
 					element.className = '';
-					window.devicePixelRatio = 4;
-					Utils.elementToCanvas(element)
-						.then(function (canvas) {
-							canvas.style.width = initialW + 'px';
-							canvasElem.replaceChildren(canvas);
+					Utils.elementToImage(element, 2)
+						.then(function (image) {
+							image.style.width = initialW + 'px';
+							canvasElem.replaceChildren(image);
 							canvasElem.className = '';
 							element.className = 'hidden';
-							window.devicePixelRatio = prevDpr;
 						});
 					break;
 			}
@@ -166,18 +173,18 @@ export const HeroSheetPreviewPage = (props: Props) => {
 				});
 				return withIncidents;
 			})
-			.map(CharacterSheetBuilder.buildCareerSheet);
+			.map(HeroSheetBuilder.buildCareerSheet);
 	};
 
 	const getAllComplications = () => {
 		return SourcebookLogic.getComplications(props.sourcebooks)
-			.map(CharacterSheetBuilder.buildComplicationSheet);
+			.map(HeroSheetBuilder.buildComplicationSheet);
 	};
 
 	const getPreviewPage = () => {
 		if (heroID === 'careers') {
 			return (
-				<main id='hero-sheet-page'>
+				<main id='hero-sheet-page' className='classic-sheet'>
 					<div className={getPageClasses()}>
 						<h2>All Careers</h2>
 						<div className='all-careers'>
@@ -200,7 +207,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 			);
 		} else if (heroID === 'complications') {
 			return (
-				<main id='hero-sheet-page'>
+				<main id='hero-sheet-page' className='classic-sheet'>
 					<div className={getPageClasses()}>
 						<h2>All Complications</h2>
 						<div className='all-complications'>
@@ -232,8 +239,8 @@ export const HeroSheetPreviewPage = (props: Props) => {
 		}
 	};
 
-	try {
-		return (
+	return (
+		<ErrorBoundary>
 			<div id='pdf-preview'>
 				<div className='menu'>
 					<Segmented
@@ -259,10 +266,9 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					open={drawerOpen}
 					style={{ padding: '10px' }}
 				>
-
 					<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
 					<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
-					<Divider size='small'>Text Color:</Divider>
+					<Divider size='small'>Text Color</Divider>
 					<Segmented
 						name='textColor'
 						block={true}
@@ -274,8 +280,9 @@ export const HeroSheetPreviewPage = (props: Props) => {
 						value={props.options.sheetTextColor}
 						onChange={changeTextColor}
 					/>
-					<Divider size='small'>Include Class Features:</Divider>
+					<Divider size='small'>Include Class Features</Divider>
 					<Segmented
+						style={{ width: '100%' }}
 						name='abilitySort'
 						block={true}
 						options={[
@@ -286,18 +293,12 @@ export const HeroSheetPreviewPage = (props: Props) => {
 						value={props.options.featuresInclude}
 						onChange={setFeaturesInclude}
 					/>
-					<Divider>Abilities</Divider>
-					<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
-					<Divider size='small'>Sort Abilities By</Divider>
-					<Segmented
-						name='abilitySort'
-						block={true}
-						options={[
-							{ value: 'size', label: 'Length' },
-							{ value: 'type', label: 'Action Type' }
-						]}
-						value={props.options.abilitySort}
-						onChange={setAbilitySort}
+					<Divider size='small'>Included Standard Abilities</Divider>
+					<Select
+						mode='tags'
+						placeholder='Included Standard Abilities'
+						onChange={includedStandardAbilitiesChanged}
+						options={standardAbilityOptions}
 					/>
 					<Divider>Layout</Divider>
 					<Space direction='vertical' style={{ width: '100%' }}>
@@ -321,9 +322,6 @@ export const HeroSheetPreviewPage = (props: Props) => {
 					</Space>
 				</Drawer>
 			</div>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+		</ErrorBoundary>
+	);
 };

@@ -1,10 +1,10 @@
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Characteristic } from '../../enums/characteristic';
-import { DamageModifierType } from '../../enums/damage-modifier-type';
-import { DamageType } from '../../enums/damage-type';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { Item } from '../../models/item';
-import { ItemType } from '../../enums/item-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { DamageModifierType } from '@/enums/damage-modifier-type';
+import { DamageType } from '@/enums/damage-type';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
 
 export class LeveledImplementData {
 	static abjurersBastion: Item = FactoryLogic.createItem({
@@ -88,8 +88,8 @@ export class LeveledImplementData {
 					}),
 					FactoryLogic.feature.createPackageContent({
 						id: 'item-abjurers-bastion-9c',
-						name: '9th',
-						description: 'he size of your field of protection increases to a 3 cube, and it can be placed anywhere within 10 squares of you. You and each ally in the area gain its benefits.',
+						name: '',
+						description: 'The size of your field of protection increases to a 3 cube, and it can be placed anywhere within 10 squares of you. You and each ally in the area gain its benefits.',
 						tag: 'item-abjurers-bastion-tag'
 					})
 				]

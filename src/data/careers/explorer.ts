@@ -1,7 +1,7 @@
-import { Career } from '../../models/career';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { PerkList } from '../../enums/perk-list';
-import { SkillList } from '../../enums/skill-list';
+import { Career } from '@/models/career';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
 
 export const explorer: Career = {
 	id: 'career-explorer',
@@ -10,7 +10,6 @@ export const explorer: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-explorer-feature-1',
-			listOptions: [ SkillList.Exploration ],
 			selected: [ 'Navigate' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

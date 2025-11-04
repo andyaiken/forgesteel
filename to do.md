@@ -1,5 +1,9 @@
 # Development Plans
 
+### Bugs
+
+* The Blade of Quintessence should gain the Ranged keyword at level 5.
+
 ### Heroes
 
 (nothing)
@@ -10,7 +14,6 @@
 * It should be possible to create a homebrew class ability / monster individually
 * Monster Builder:
   * Auto-create monsters
-  * Allow users to adjust monster level (monsters book pg 26)
 
 ### Playbook
 
@@ -32,7 +35,6 @@
   * Ability to set 'used reaction' flag on heroes / monsters / minions
   * Monsters:
     * Ability to duplicate / delete monsters in a slot
-    * Solo monsters have double turns
   * Terrain:
     * Show number of squares on terrain encounter row
     * Show 'should be N squares' for terrain
@@ -51,3 +53,20 @@
   * Monster building / genesplice
   * Encounter building / running
   * Map making / adding minis
+
+
+## Classic Sheet
+
+### Heroes
+
+- Add ability to create standalone 'reference sheets' with selectable 'reference cards'
+- (possibly solved along with above) Have ability to create handout sheets with items, followers, etc without being attached to a character
+- Check hero features/abilities for certain keywords and ensure relevant reference cards get put into the character sheet?
+- Add user-selectable color scheme
+
+### Encounter
+
+### Negotiation
+- Add Negotiation classic sheet
+
+### Montage

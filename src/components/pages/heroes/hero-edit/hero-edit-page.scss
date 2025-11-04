@@ -101,12 +101,14 @@
 				}
 
 				&.selected {
+					padding: 5px 20px 20px 20px;
 					display: flex;
 					flex-direction: column;
 					gap: 10px;
 				}
 
 				&.choices {
+					margin-top: 5px;
 					padding: 5px 20px 20px 20px;
 					display: flex;
 					flex-direction: column;
@@ -140,7 +142,7 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
 	.hero-edit-page {
 		.hero-edit-page-content {
 			background-color: rgb(55, 55, 55);

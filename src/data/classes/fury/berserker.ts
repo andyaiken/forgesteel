@@ -1,10 +1,9 @@
-import { AbilityDistanceType } from '../../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../../enums/ability-keyword';
-import { Characteristic } from '../../../enums/characteristic';
-import { FactoryLogic } from '../../../logic/factory-logic';
-import { FeatureField } from '../../../enums/feature-field';
-import { SkillList } from '../../../enums/skill-list';
-import { SubClass } from '../../../models/subclass';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Characteristic } from '@/enums/characteristic';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
+import { SubClass } from '@/models/subclass';
 
 export const berserker: SubClass = {
 	id: 'fury-sub-1',
@@ -16,7 +15,6 @@ export const berserker: SubClass = {
 			features: [
 				FactoryLogic.feature.createSkillChoice({
 					id: 'fury-sub-1-1-1',
-					listOptions: [ SkillList.Exploration ],
 					selected: [ 'Lift' ]
 				}),
 				FactoryLogic.feature.createKitChoice({

@@ -1,7 +1,7 @@
-import { Career } from '../../models/career';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { PerkList } from '../../enums/perk-list';
-import { SkillList } from '../../enums/skill-list';
+import { Career } from '@/models/career';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { PerkList } from '@/enums/perk-list';
+import { SkillList } from '@/enums/skill-list';
 
 export const agent: Career = {
 	id: 'career-agent',
@@ -10,7 +10,6 @@ export const agent: Career = {
 	features: [
 		FactoryLogic.feature.createSkillChoice({
 			id: 'career-agent-feature-1',
-			listOptions: [ SkillList.Intrigue ],
 			selected: [ 'Sneak' ]
 		}),
 		FactoryLogic.feature.createSkillChoice({

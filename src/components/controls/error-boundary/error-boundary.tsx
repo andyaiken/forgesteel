@@ -1,14 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Component, ReactNode } from 'react';
+import { Alert } from 'antd';
 
 interface Props {
 	children: ReactNode;
+	hideAllErrors?: boolean;
+	name?: string;
 }
 
 interface State {
 	error: unknown;
 }
+
+const getErrorMessage = (error: unknown) => {
+	if (error instanceof Error) {
+		return error.message;
+	}
+	if (typeof error === 'string') {
+		return error;
+	}
+	return JSON.stringify(error);
+};
 
 export class ErrorBoundary extends Component<Props, State> {
 	constructor(props: Props) {
@@ -18,13 +29,14 @@ export class ErrorBoundary extends Component<Props, State> {
 		};
 	}
 
-	static getDerivedStateFromError(error: any) {
+	static getDerivedStateFromError(error: unknown) {
 		return {
 			error: error
 		};
 	}
 
-	componentDidCatch(error: any, errorInfo: any) {
+	componentDidCatch(error: unknown, errorInfo: unknown) {
+		console.warn('caught error in', this.props.name ? this.props.name : 'unknown ErrorBoundary');
 		console.error(error);
 		console.error(errorInfo);
 
@@ -35,10 +47,18 @@ export class ErrorBoundary extends Component<Props, State> {
 
 	render() {
 		if (this.state.error) {
+			if (this.props.hideAllErrors) {
+				return null;
+			}
+
+			const msg = getErrorMessage(this.state.error);
 			return (
-				<div>
-					{JSON.stringify(this.state.error)}
-				</div>
+				<Alert
+					data-name={this.props.name || 'unknown'}
+					type='error'
+					showIcon={true}
+					message={msg}
+				/>
 			);
 		}
 

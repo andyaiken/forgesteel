@@ -1,5 +1,5 @@
 import { Divider, Progress } from 'antd';
-import { ErrorBoundary } from '../../controls/error-boundary/error-boundary';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 
 import './health-gauge.scss';
 

@@ -1,85 +1,85 @@
-import { Adventure, AdventurePackage } from '../../models/adventure';
+import { Adventure, AdventurePackage } from '@/models/adventure';
 import { Navigate, Route, Routes } from 'react-router';
-import { Playbook, PlaybookElementKind } from '../../models/playbook';
+import { Playbook, PlaybookElementKind } from '@/models/playbook';
 import { ReactNode, useState } from 'react';
-import { Sourcebook, SourcebookElementKind } from '../../models/sourcebook';
+import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
-import { Ability } from '../../models/ability';
-import { AbilityModal } from '../modals/ability/ability-modal';
-import { AboutModal } from '../modals/about/about-modal';
-import { Ancestry } from '../../models/ancestry';
-import { Career } from '../../models/career';
-import { CharacterSheetFormatter } from '../../utils/character-sheet-formatter';
-import { Characteristic } from '../../enums/characteristic';
-import { Collections } from '../../utils/collections';
-import { Complication } from '../../models/complication';
-import { Counter } from '../../models/counter';
-import { Culture } from '../../models/culture';
-import { CultureType } from '../../enums/culture-type';
-import { Domain } from '../../models/domain';
-import { Element } from '../../models/element';
-import { ElementModal } from '../modals/element/element-modal';
-import { Encounter } from '../../models/encounter';
-import { EncounterToolsModal } from '../modals/encounter-tools/encounter-tools-modal';
-import { ErrorBoundary } from '../controls/error-boundary/error-boundary';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { Feature } from '../../models/feature';
-import { FeatureModal } from '../modals/feature/feature-modal';
-import { Follower } from '../../models/follower';
-import { FollowerModal } from '../modals/follower/follower-modal';
-import { Format } from '../../utils/format';
-import { Hero } from '../../models/hero';
-import { HeroClass } from '../../models/class';
-import { HeroEditPage } from '../pages/heroes/hero-edit/hero-edit-page';
-import { HeroListPage } from '../pages/heroes/hero-list/hero-list-page';
-import { HeroSheetPreviewPage } from '../pages/heroes/hero-sheet/hero-sheet-preview-page';
-import { HeroStateModal } from '../modals/hero-state/hero-state-modal';
-import { HeroStatePage } from '../../enums/hero-state-page';
-import { HeroUpdateLogic } from '../../logic/update/hero-update-logic';
-import { HeroViewPage } from '../pages/heroes/hero-view/hero-view-page';
-import { Imbuement } from '../../models/imbuement';
-import { Item } from '../../models/item';
-import { ItemType } from '../../enums/item-type';
-import { Kit } from '../../models/kit';
-import { LibraryEditPage } from '../pages/library/library-edit/library-edit-page';
-import { LibraryListPage } from '../pages/library/library-list/library-list-page';
-import { MainLayout } from './main-layout';
-import { Monster } from '../../models/monster';
-import { MonsterGroup } from '../../models/monster-group';
-import { MonsterModal } from '../modals/monster/monster-modal';
-import { Montage } from '../../models/montage';
-import { Negotiation } from '../../models/negotiation';
-import { Options } from '../../models/options';
-import { PDFExport } from '../../utils/pdf-export';
-import { PartyModal } from '../modals/party/party-modal';
-import { PdfOptions } from '../../models/pdf-options';
-import { Perk } from '../../models/perk';
-import { PlaybookEditPage } from '../pages/playbook/playbook-edit/playbook-edit-page';
-import { PlaybookListPage } from '../pages/playbook/playbook-list/playbook-list-page';
-import { PlaybookLogic } from '../../logic/playbook-logic';
-import { PlaybookUpdateLogic } from '../../logic/update/playbook-update-logic';
-import { PlayerViewModal } from '../modals/player-view/player-view-modal';
-import { ReferenceModal } from '../modals/reference/reference-modal';
-import { RollModal } from '../modals/roll/roll-modal';
-import { RulesPage } from '../../enums/rules-page';
-import { SessionDirectorPage } from '../pages/session/director/session-director-page';
-import { SessionPlayerPage } from '../pages/session/player/session-player-page';
-import { SourcebookData } from '../../data/sourcebook-data';
-import { SourcebookLogic } from '../../logic/sourcebook-logic';
-import { SourcebookUpdateLogic } from '../../logic/update/sourcebook-update-logic';
-import { SourcebooksModal } from '../modals/sourcebooks/sourcebooks-modal';
-import { SubClass } from '../../models/subclass';
-import { TacticalMap } from '../../models/tactical-map';
-import { Terrain } from '../../models/terrain';
-import { TerrainModal } from '../modals/terrain/terrain-modal';
-import { Title } from '../../models/title';
-import { Utils } from '../../utils/utils';
-import { WelcomePage } from '../pages/welcome/welcome-page';
+import { Ability } from '@/models/ability';
+import { AbilityModal } from '@/components/modals/ability/ability-modal';
+import { AboutModal } from '@/components/modals/about/about-modal';
+import { Ancestry } from '@/models/ancestry';
+import { Career } from '@/models/career';
+import { Characteristic } from '@/enums/characteristic';
+import { Collections } from '@/utils/collections';
+import { Complication } from '@/models/complication';
+import { Counter } from '@/models/counter';
+import { Culture } from '@/models/culture';
+import { CultureType } from '@/enums/culture-type';
+import { Domain } from '@/models/domain';
+import { Element } from '@/models/element';
+import { ElementModal } from '@/components/modals/element/element-modal';
+import { Encounter } from '@/models/encounter';
+import { EncounterToolsModal } from '@/components/modals/encounter-tools/encounter-tools-modal';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { Feature } from '@/models/feature';
+import { FeatureModal } from '@/components/modals/feature/feature-modal';
+import { Follower } from '@/models/follower';
+import { FollowerModal } from '@/components/modals/follower/follower-modal';
+import { Format } from '@/utils/format';
+import { Hero } from '@/models/hero';
+import { HeroClass } from '@/models/class';
+import { HeroEditPage } from '@/components/pages/heroes/hero-edit/hero-edit-page';
+import { HeroListPage } from '@/components/pages/heroes/hero-list/hero-list-page';
+import { HeroSheetPreviewPage } from '@/components/pages/heroes/hero-sheet/hero-sheet-preview-page';
+import { HeroStateModal } from '@/components/modals/hero-state/hero-state-modal';
+import { HeroStatePage } from '@/enums/hero-state-page';
+import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
+import { HeroViewPage } from '@/components/pages/heroes/hero-view/hero-view-page';
+import { Imbuement } from '@/models/imbuement';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
+import { Kit } from '@/models/kit';
+import { LibraryEditPage } from '@/components/pages/library/library-edit/library-edit-page';
+import { LibraryListPage } from '@/components/pages/library/library-list/library-list-page';
+import { MainLayout } from '@/components/main/main-layout';
+import { Monster } from '@/models/monster';
+import { MonsterGroup } from '@/models/monster-group';
+import { MonsterModal } from '@/components/modals/monster/monster-modal';
+import { Montage } from '@/models/montage';
+import { Negotiation } from '@/models/negotiation';
+import { Options } from '@/models/options';
+import { PartyModal } from '@/components/modals/party/party-modal';
+import { Perk } from '@/models/perk';
+import { PlaybookEditPage } from '@/components/pages/playbook/playbook-edit/playbook-edit-page';
+import { PlaybookListPage } from '@/components/pages/playbook/playbook-list/playbook-list-page';
+import { PlaybookLogic } from '@/logic/playbook-logic';
+import { PlaybookUpdateLogic } from '@/logic/update/playbook-update-logic';
+import { PlayerViewModal } from '@/components/modals/player-view/player-view-modal';
+import { Project } from '@/models/project';
+import { ReferenceModal } from '@/components/modals/reference/reference-modal';
+import { RollModal } from '@/components/modals/roll/roll-modal';
+import { RulesPage } from '@/enums/rules-page';
+import { SessionDirectorPage } from '@/components/pages/session/director/session-director-page';
+import { SessionPlayerPage } from '@/components/pages/session/player/session-player-page';
+import { SettingsModal } from '@/components/modals/settings/settings-modal';
+import { SourcebookData } from '@/data/sourcebook-data';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
+import { SourcebooksModal } from '@/components/modals/sourcebooks/sourcebooks-modal';
+import { SubClass } from '@/models/subclass';
+import { SummoningInfo } from '@/models/summon';
+import { TacticalMap } from '@/models/tactical-map';
+import { Terrain } from '@/models/terrain';
+import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
+import { Title } from '@/models/title';
+import { Utils } from '@/utils/utils';
+import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
-import { useErrorListener } from '../../hooks/use-error-listener';
-import { useMediaQuery } from '../../hooks/use-media-query';
-import { useNavigation } from '../../hooks/use-navigation';
-import { useSyncStatus } from '../../hooks/use-sync-status';
+import { useErrorListener } from '@/hooks/use-error-listener';
+import { useIsSmall } from '@/hooks/use-is-small';
+import { useNavigation } from '@/hooks/use-navigation';
+import { useSyncStatus } from '@/hooks/use-sync-status';
 
 import './main.scss';
 
@@ -93,7 +93,7 @@ interface Props {
 }
 
 export const Main = (props: Props) => {
-	const isSmall = useMediaQuery('(max-width: 1000px)');
+	const isSmall = useIsSmall();
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();
@@ -247,18 +247,29 @@ export const Main = (props: Props) => {
 
 	// #endregion
 
-	// #region Heroes
+	// #region Welcome
 
-	const createHero = (folder: string) => {
-		const hero = FactoryLogic.createHero([
-			SourcebookData.core.id,
-			SourcebookData.orden.id
-		]);
+	const newHero = (folder: string) => {
+		const hero = FactoryLogic.createHero([ SourcebookData.core.id, SourcebookData.orden.id ]);
 		hero.folder = folder;
 
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'start'));
 	};
+
+	const newEncounter = () => {
+		const copy = Utils.copy(playbook);
+
+		const enc = FactoryLogic.createEncounter();
+		copy.encounters.push(enc);
+
+		setDrawer(null);
+		persistPlaybook(copy).then(() => navigation.goToPlaybookEdit('encounter', enc.id));
+	};
+
+	// #endregion
+
+	// #region Heroes
 
 	const deleteHero = (hero: Hero) => {
 		const copy = Utils.copy(heroes.filter(h => h.id !== hero.id));
@@ -281,7 +292,7 @@ export const Main = (props: Props) => {
 			hero.id = Utils.guid();
 		}
 		hero.folder = folder;
-		HeroUpdateLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]);
+		HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(homebrewSourcebooks));
 
 		setDrawer(null);
 		persistHero(hero).then(() => navigation.goToHeroView(hero.id));
@@ -297,29 +308,24 @@ export const Main = (props: Props) => {
 		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
 	};
 
-	const exportHeroPdf = (hero: Hero, data: PdfOptions) => {
-		const formFillable = data.formFillable || false;
-		const resolution = data.resolution || 'standard';
-
-		if (data.mode === 'html') {
-			setSpinning(true);
-			const pageIds: string[] = [];
-			let p = 1;
-			while (document.getElementById(CharacterSheetFormatter.getPageId(hero.id, p)) !== null) {
-				pageIds.push(CharacterSheetFormatter.getPageId(hero.id, p));
-				++p;
-			}
-			Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize, resolution)
-				.then(() => {
-					setSpinning(false);
-				});
-		} else {
-			PDFExport.startExport(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], data.mode, !formFillable);
-		}
+	const exportHeroPdf = (hero: Hero, resolution: 'standard' | 'high') => {
+		setSpinning(true);
+		const pageIds: string[] = [];
+		document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
+		Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize, resolution)
+			.then(() => {
+				setSpinning(false);
+			});
 	};
 
 	const exportStandardAbilities = () => {
-		Utils.export([ 'actions', 'maneuvers' ], 'Standard Abilities', null, 'hero', 'pdf');
+		setSpinning(true);
+		const pageIds: string[] = [];
+		document.querySelectorAll('[id^=hero-sheet-standard-abilities-page-abilities]').forEach(elem => pageIds.push(elem.id));
+		Utils.elementsToPdf(pageIds, 'Standard Abilities', options.classicSheetPageSize, 'high')
+			.then(() => {
+				setSpinning(false);
+			});
 	};
 
 	const setNotes = (hero: Hero, value: string) => {
@@ -334,6 +340,384 @@ export const Main = (props: Props) => {
 	// #region Library
 
 	const createLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, original: Element | null) => {
+		const createAncestry = (original: Ancestry | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let ancestry: Ancestry;
+			if (original) {
+				ancestry = Utils.copy(original);
+				ancestry.id = Utils.guid();
+			} else {
+				ancestry = FactoryLogic.createAncestry();
+			}
+
+			sourcebook.ancestries.push(ancestry);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('ancestry', sourcebook.id, ancestry.id));
+		};
+
+		const createCareer = (original: Career | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let career: Career;
+			if (original) {
+				career = Utils.copy(original);
+				career.id = Utils.guid();
+			} else {
+				career = FactoryLogic.createCareer();
+			}
+
+			sourcebook.careers.push(career);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('career', sourcebook.id, career.id));
+		};
+
+		const createClass = (original: HeroClass | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let heroClass: HeroClass;
+			if (original) {
+				heroClass = Utils.copy(original);
+				heroClass.id = Utils.guid();
+
+				// Make sure this has 10 levels
+				while (heroClass.featuresByLevel.length < 10) {
+					heroClass.featuresByLevel.push({
+						level: heroClass.featuresByLevel.length + 1,
+						features: []
+					});
+				}
+				heroClass.subclasses.forEach(sc => {
+					while (sc.featuresByLevel.length < 10) {
+						sc.featuresByLevel.push({
+							level: sc.featuresByLevel.length + 1,
+							features: []
+						});
+					}
+				});
+			} else {
+				heroClass = FactoryLogic.createClass();
+			}
+
+			sourcebook.classes.push(heroClass);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('class', sourcebook.id, heroClass.id));
+		};
+
+		const createComplication = (original: Complication | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let complication: Complication;
+			if (original) {
+				complication = Utils.copy(original);
+				complication.id = Utils.guid();
+			} else {
+				complication = FactoryLogic.createComplication();
+			}
+
+			sourcebook.complications.push(complication);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('complication', sourcebook.id, complication.id));
+		};
+
+		const createCulture = (original: Culture | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let culture: Culture;
+			if (original) {
+				culture = Utils.copy(original);
+				culture.id = Utils.guid();
+			} else {
+				culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
+			}
+
+			sourcebook.cultures.push(culture);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('culture', sourcebook.id, culture.id));
+		};
+
+		const createDomain = (original: Domain | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let domain: Domain;
+			if (original) {
+				domain = Utils.copy(original);
+				domain.id = Utils.guid();
+
+				// Make sure this has 10 levels
+				while (domain.featuresByLevel.length < 10) {
+					domain.featuresByLevel.push({
+						level: domain.featuresByLevel.length + 1,
+						features: []
+					});
+				}
+			} else {
+				domain = FactoryLogic.createDomain();
+			}
+
+			sourcebook.domains.push(domain);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('domain', sourcebook.id, domain.id));
+		};
+
+		const createImbuement = (original: Imbuement | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let imbuement: Imbuement;
+			if (original) {
+				imbuement = Utils.copy(original);
+				imbuement.id = Utils.guid();
+			} else {
+				imbuement = FactoryLogic.createImbuement({
+					type: ItemType.Consumable,
+					crafting: FactoryLogic.createProject({}),
+					level: 1,
+					feature: FactoryLogic.feature.create({
+						id: Utils.guid(),
+						name: '',
+						description: ''
+					})
+				});
+			}
+
+			sourcebook.imbuements.push(imbuement);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('imbuement', sourcebook.id, imbuement.id));
+		};
+
+		const createItem = (original: Item | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let item: Item;
+			if (original) {
+				item = Utils.copy(original);
+				item.id = Utils.guid();
+			} else {
+				item = FactoryLogic.createItem({
+					id: Utils.guid(),
+					name: '',
+					description: '',
+					type: ItemType.Consumable,
+					crafting: FactoryLogic.createProject({})
+				});
+			}
+
+			sourcebook.items.push(item);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('item', sourcebook.id, item.id));
+		};
+
+		const createKit = (original: Kit | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let kit: Kit;
+			if (original) {
+				kit = Utils.copy(original);
+				kit.id = Utils.guid();
+			} else {
+				kit = FactoryLogic.createKit();
+			}
+
+			sourcebook.kits.push(kit);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('kit', sourcebook.id, kit.id));
+		};
+
+		const createMonsterGroup = (original: MonsterGroup | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let monsterGroup: MonsterGroup;
+			if (original) {
+				monsterGroup = Utils.copy(original);
+				monsterGroup.id = Utils.guid();
+				monsterGroup.monsters.forEach(m => m.id = Utils.guid());
+			} else {
+				monsterGroup = FactoryLogic.createMonsterGroup();
+			}
+
+			sourcebook.monsterGroups.push(monsterGroup);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('monster-group', sourcebook.id, monsterGroup.id));
+		};
+
+		const createPerk = (original: Perk | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let perk: Perk;
+			if (original) {
+				perk = Utils.copy(original);
+				perk.id = Utils.guid();
+			} else {
+				perk = FactoryLogic.createPerk();
+			}
+
+			sourcebook.perks.push(perk);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('perk', sourcebook.id, perk.id));
+		};
+
+		const createProject = (original: Project | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let project: Project;
+			if (original) {
+				project = Utils.copy(original);
+				project.id = Utils.guid();
+			} else {
+				project = FactoryLogic.createProject({});
+			}
+
+			sourcebook.projects.push(project);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('project', sourcebook.id, project.id));
+		};
+
+		const createSubClass = (original: SubClass | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let sc: SubClass;
+			if (original) {
+				sc = Utils.copy(original);
+				sc.id = Utils.guid();
+
+				// Make sure this has 10 levels
+				while (sc.featuresByLevel.length < 10) {
+					sc.featuresByLevel.push({
+						level: sc.featuresByLevel.length + 1,
+						features: []
+					});
+				}
+			} else {
+				sc = FactoryLogic.createSubclass();
+			}
+
+			sourcebook.subclasses.push(sc);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('subclass', sourcebook.id, sc.id));
+		};
+
+		const createTerrain = (original: Terrain | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let terrain: Terrain;
+			if (original) {
+				terrain = Utils.copy(original);
+				terrain.id = Utils.guid();
+			} else {
+				terrain = FactoryLogic.createTerrain();
+			}
+
+			sourcebook.terrain.push(terrain);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('terrain', sourcebook.id, terrain.id));
+		};
+
+		const createTitle = (original: Title | null, sourcebook: Sourcebook | null) => {
+			const sourcebooks = Utils.copy(homebrewSourcebooks);
+			if (!sourcebook) {
+				sourcebook = FactoryLogic.createSourcebook();
+				sourcebooks.push(sourcebook);
+			} else {
+				const id = sourcebook.id;
+				sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
+			}
+
+			let title: Title;
+			if (original) {
+				title = Utils.copy(original);
+				title.id = Utils.guid();
+			} else {
+				title = FactoryLogic.createTitle();
+			}
+
+			sourcebook.titles.push(title);
+			persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('title', sourcebook.id, title.id));
+		};
+
 		const sourcebook = homebrewSourcebooks.find(cs => cs.id === sourcebookID) || null;
 		switch (kind) {
 			case 'ancestry':
@@ -362,6 +746,9 @@ export const Main = (props: Props) => {
 				break;
 			case 'perk':
 				createPerk(original as Perk | null, sourcebook);
+				break;
+			case 'project':
+				createProject(original as Project | null, sourcebook);
 				break;
 			case 'terrain':
 				createTerrain(original as Terrain | null, sourcebook);
@@ -414,6 +801,9 @@ export const Main = (props: Props) => {
 					break;
 				case 'perk':
 					sourcebook.perks = sourcebook.perks.filter(x => x.id !== element.id);
+					break;
+				case 'project':
+					sourcebook.projects = sourcebook.projects.filter(x => x.id !== element.id);
 					break;
 				case 'terrain':
 					sourcebook.terrain = sourcebook.terrain.filter(x => x.id !== element.id);
@@ -468,6 +858,9 @@ export const Main = (props: Props) => {
 				case 'perk':
 					sourcebook.perks = sourcebook.perks.map(x => x.id === element.id ? element : x) as Perk[];
 					break;
+				case 'project':
+					sourcebook.projects = sourcebook.projects.map(x => x.id === element.id ? element : x) as Project[];
+					break;
 				case 'terrain':
 					sourcebook.terrain = sourcebook.terrain.map(x => x.id === element.id ? element : x) as Terrain[];
 					break;
@@ -490,7 +883,7 @@ export const Main = (props: Props) => {
 	};
 
 	const importLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {
-		const sourcebooks = [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ];
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
 		const elements = [
 			...sourcebooks.flatMap(sb => sb.ancestries),
 			...sourcebooks.flatMap(sb => sb.careers),
@@ -504,6 +897,7 @@ export const Main = (props: Props) => {
 			...sourcebooks.flatMap(sb => sb.kits),
 			...sourcebooks.flatMap(sb => sb.monsterGroups),
 			...sourcebooks.flatMap(sb => sb.perks),
+			...sourcebooks.flatMap(sb => sb.projects),
 			...sourcebooks.flatMap(sb => sb.terrain),
 			...sourcebooks.flatMap(sb => sb.titles)
 		];
@@ -559,6 +953,10 @@ export const Main = (props: Props) => {
 				sourcebook.perks.push(element as Perk);
 				sourcebook.perks = Collections.sort<Element>(sourcebook.perks, item => item.name) as Perk[];
 				break;
+			case 'project':
+				sourcebook.projects.push(element as Project);
+				sourcebook.projects = Collections.sort<Element>(sourcebook.projects, item => item.name) as Project[];
+				break;
 			case 'terrain':
 				sourcebook.terrain.push(element as Terrain);
 				sourcebook.terrain = Collections.sort<Element>(sourcebook.terrain, item => item.name) as Terrain[];
@@ -599,362 +997,6 @@ export const Main = (props: Props) => {
 		};
 
 		Utils.export([ element.id ], element.name || name, element, extension, format);
-	};
-
-	const createAncestry = (original: Ancestry | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let ancestry: Ancestry;
-		if (original) {
-			ancestry = Utils.copy(original);
-			ancestry.id = Utils.guid();
-		} else {
-			ancestry = FactoryLogic.createAncestry();
-		}
-
-		sourcebook.ancestries.push(ancestry);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('ancestry', sourcebook.id, ancestry.id));
-	};
-
-	const createCulture = (original: Culture | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let culture: Culture;
-		if (original) {
-			culture = Utils.copy(original);
-			culture.id = Utils.guid();
-		} else {
-			culture = FactoryLogic.createCulture('', '', CultureType.Ancestral);
-		}
-
-		sourcebook.cultures.push(culture);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('culture', sourcebook.id, culture.id));
-	};
-
-	const createCareer = (original: Career | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let career: Career;
-		if (original) {
-			career = Utils.copy(original);
-			career.id = Utils.guid();
-		} else {
-			career = FactoryLogic.createCareer();
-		}
-
-		sourcebook.careers.push(career);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('career', sourcebook.id, career.id));
-	};
-
-	const createClass = (original: HeroClass | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let heroClass: HeroClass;
-		if (original) {
-			heroClass = Utils.copy(original);
-			heroClass.id = Utils.guid();
-
-			// Make sure this has 10 levels
-			while (heroClass.featuresByLevel.length < 10) {
-				heroClass.featuresByLevel.push({
-					level: heroClass.featuresByLevel.length + 1,
-					features: []
-				});
-			}
-			heroClass.subclasses.forEach(sc => {
-				while (sc.featuresByLevel.length < 10) {
-					sc.featuresByLevel.push({
-						level: sc.featuresByLevel.length + 1,
-						features: []
-					});
-				}
-			});
-		} else {
-			heroClass = FactoryLogic.createClass();
-		}
-
-		sourcebook.classes.push(heroClass);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('class', sourcebook.id, heroClass.id));
-	};
-
-	const createSubClass = (original: SubClass | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let sc: SubClass;
-		if (original) {
-			sc = Utils.copy(original);
-			sc.id = Utils.guid();
-
-			// Make sure this has 10 levels
-			while (sc.featuresByLevel.length < 10) {
-				sc.featuresByLevel.push({
-					level: sc.featuresByLevel.length + 1,
-					features: []
-				});
-			}
-		} else {
-			sc = FactoryLogic.createSubclass();
-		}
-
-		sourcebook.subclasses.push(sc);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('subclass', sourcebook.id, sc.id));
-	};
-
-	const createComplication = (original: Complication | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let complication: Complication;
-		if (original) {
-			complication = Utils.copy(original);
-			complication.id = Utils.guid();
-		} else {
-			complication = FactoryLogic.createComplication();
-		}
-
-		sourcebook.complications.push(complication);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('complication', sourcebook.id, complication.id));
-	};
-
-	const createDomain = (original: Domain | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let domain: Domain;
-		if (original) {
-			domain = Utils.copy(original);
-			domain.id = Utils.guid();
-
-			// Make sure this has 10 levels
-			while (domain.featuresByLevel.length < 10) {
-				domain.featuresByLevel.push({
-					level: domain.featuresByLevel.length + 1,
-					features: []
-				});
-			}
-		} else {
-			domain = FactoryLogic.createDomain();
-		}
-
-		sourcebook.domains.push(domain);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('domain', sourcebook.id, domain.id));
-	};
-
-	const createKit = (original: Kit | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let kit: Kit;
-		if (original) {
-			kit = Utils.copy(original);
-			kit.id = Utils.guid();
-		} else {
-			kit = FactoryLogic.createKit();
-		}
-
-		sourcebook.kits.push(kit);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('kit', sourcebook.id, kit.id));
-	};
-
-	const createPerk = (original: Perk | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let perk: Perk;
-		if (original) {
-			perk = Utils.copy(original);
-			perk.id = Utils.guid();
-		} else {
-			perk = FactoryLogic.createPerk();
-		}
-
-		sourcebook.perks.push(perk);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('perk', sourcebook.id, perk.id));
-	};
-
-	const createTitle = (original: Title | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let title: Title;
-		if (original) {
-			title = Utils.copy(original);
-			title.id = Utils.guid();
-		} else {
-			title = FactoryLogic.createTitle();
-		}
-
-		sourcebook.titles.push(title);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('title', sourcebook.id, title.id));
-	};
-
-	const createItem = (original: Item | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let item: Item;
-		if (original) {
-			item = Utils.copy(original);
-			item.id = Utils.guid();
-		} else {
-			item = FactoryLogic.createItem({
-				id: Utils.guid(),
-				name: '',
-				description: '',
-				type: ItemType.Consumable,
-				crafting: FactoryLogic.createProject({})
-			});
-		}
-
-		sourcebook.items.push(item);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('item', sourcebook.id, item.id));
-	};
-
-	const createImbuement = (original: Imbuement | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let imbuement: Imbuement;
-		if (original) {
-			imbuement = Utils.copy(original);
-			imbuement.id = Utils.guid();
-		} else {
-			imbuement = FactoryLogic.createImbuement({
-				type: ItemType.Consumable,
-				crafting: FactoryLogic.createProject({}),
-				level: 1,
-				feature: FactoryLogic.feature.create({
-					id: Utils.guid(),
-					name: '',
-					description: ''
-				})
-			});
-		}
-
-		sourcebook.imbuements.push(imbuement);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('imbuement', sourcebook.id, imbuement.id));
-	};
-
-	const createMonsterGroup = (original: MonsterGroup | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let monsterGroup: MonsterGroup;
-		if (original) {
-			monsterGroup = Utils.copy(original);
-			monsterGroup.id = Utils.guid();
-			monsterGroup.monsters.forEach(m => m.id = Utils.guid());
-		} else {
-			monsterGroup = FactoryLogic.createMonsterGroup();
-		}
-
-		sourcebook.monsterGroups.push(monsterGroup);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('monster-group', sourcebook.id, monsterGroup.id));
-	};
-
-	const createTerrain = (original: Terrain | null, sourcebook: Sourcebook | null) => {
-		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		if (!sourcebook) {
-			sourcebook = FactoryLogic.createSourcebook();
-			sourcebooks.push(sourcebook);
-		} else {
-			const id = sourcebook.id;
-			sourcebook = sourcebooks.find(cs => cs.id === id) as Sourcebook;
-		}
-
-		let terrain: Terrain;
-		if (original) {
-			terrain = Utils.copy(original);
-			terrain.id = Utils.guid();
-		} else {
-			terrain = FactoryLogic.createTerrain();
-		}
-
-		sourcebook.terrain.push(terrain);
-		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit('terrain', sourcebook.id, terrain.id));
 	};
 
 	// #endregion
@@ -1160,13 +1202,24 @@ export const Main = (props: Props) => {
 		}
 	};
 
+	const exportPlaybookElementPdf = (kind: PlaybookElementKind, element: Element, resolution: 'standard' | 'high') => {
+		setSpinning(true);
+		const pdfTitle = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+		const pageIds: string[] = [];
+		document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+		Utils.elementsToPdf(pageIds, pdfTitle, options.classicSheetPageSize, resolution)
+			.then(() => {
+				setSpinning(false);
+			});
+	};
+
 	const startPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
 		const sessionCopy = Utils.copy(session);
 		let e: Element;
 
 		switch (kind) {
 			case 'encounter': {
-				e = PlaybookLogic.startEncounter(element as Encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], heroes, options);
+				e = PlaybookLogic.startEncounter(element as Encounter, SourcebookLogic.getSourcebooks(homebrewSourcebooks), heroes, options);
 				sessionCopy.encounters.push(e as Encounter);
 				break;
 			}
@@ -1195,7 +1248,7 @@ export const Main = (props: Props) => {
 	// #region Session
 
 	const startEncounter = async (encounter: Encounter) => {
-		const copy = PlaybookLogic.startEncounter(encounter, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ], heroes, options);
+		const copy = PlaybookLogic.startEncounter(encounter, SourcebookLogic.getSourcebooks(homebrewSourcebooks), heroes, options);
 
 		const sessionCopy = Utils.copy(session);
 		sessionCopy.encounters.push(copy);
@@ -1325,16 +1378,28 @@ export const Main = (props: Props) => {
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal
+				onClose={() => setDrawer(null)}
+			/>
+		);
+	};
+
+	const showSettings = () => {
+		setDrawer(
+			<SettingsModal
+				options={options}
 				errors={errors}
+				heroes={heroes}
+				setOptions={persistOptions}
 				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
 			/>
 		);
 	};
 
-	const showRoll = () => {
+	const showRoll = (hero?: Hero) => {
 		setDrawer(
 			<RollModal
+				hero={hero}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1356,11 +1421,12 @@ export const Main = (props: Props) => {
 		);
 	};
 
-	const onSelectMonster = (monster: Monster, monsterGroup?: MonsterGroup) => {
+	const onSelectMonster = (monster: Monster, monsterGroup?: MonsterGroup, summon?: SummoningInfo) => {
 		setDrawer(
 			<MonsterModal
 				monster={monster}
 				monsterGroup={monsterGroup}
+				summon={summon}
 				options={options}
 				onClose={() => setDrawer(null)}
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
@@ -1426,7 +1492,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<HeroStateModal
 				hero={hero}
-				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				startPage={page}
 				showEncounterControls={false}
@@ -1444,7 +1510,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<PartyModal
 				heroes={heroes.filter(h => h.folder === folder)}
-				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				onClose={() => setDrawer(null)}
 			/>
@@ -1455,7 +1521,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<ReferenceModal
 				hero={hero}
-				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				startPage={page}
 				onClose={() => setDrawer(null)}
 			/>
@@ -1466,7 +1532,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<SourcebooksModal
 				heroes={heroes}
-				officialSourcebooks={[ SourcebookData.core, SourcebookData.orden ]}
+				officialSourcebooks={SourcebookLogic.getSourcebooks()}
 				homebrewSourcebooks={homebrewSourcebooks}
 				hiddenSourcebookIDs={hiddenSourcebookIDs}
 				onClose={() => setDrawer(null)}
@@ -1480,7 +1546,7 @@ export const Main = (props: Props) => {
 		setDrawer(
 			<EncounterToolsModal
 				encounter={encounter}
-				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				onClose={() => setDrawer(null)}
 			/>
@@ -1500,276 +1566,278 @@ export const Main = (props: Props) => {
 
 	// #endregion
 
-	try {
-		return (
-			<ErrorBoundary>
-				<Routes>
+	return (
+		<ErrorBoundary name='main'>
+			<Routes>
+				<Route
+					path='/'
+					element={
+						<MainLayout
+							drawer={drawer}
+							setDrawer={setDrawer}
+						/>
+					}
+				>
 					<Route
-						path='/'
+						index={true}
 						element={
-							<MainLayout
-								drawer={drawer}
-								setDrawer={setDrawer}
+							<WelcomePage
+								highlightAbout={errors.length > 0}
+								showReference={showReference}
+								showRoll={() => showRoll()}
+								showAbout={showAbout}
+								showSettings={showSettings}
+								onNewHero={() => newHero('')}
+								onNewEncounter={() => newEncounter()}
 							/>
 						}
-					>
+					/>
+					<Route path='hero'>
 						<Route
 							index={true}
+							path=':folder?'
 							element={
-								<WelcomePage
+								<HeroListPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									options={props.options}
 									highlightAbout={errors.length > 0}
-									showAbout={showAbout}
-									showRoll={showRoll}
 									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
+									addHero={newHero}
+									importHero={importHero}
+									showParty={onShowParty}
 								/>
 							}
 						/>
-						<Route path='hero'>
-							<Route
-								index={true}
-								path=':folder?'
-								element={
-									<HeroListPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										options={props.options}
-										highlightAbout={errors.length > 0}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
-										addHero={createHero}
-										importHero={importHero}
-										showParty={onShowParty}
-									/>
-								}
-							/>
-							<Route
-								path='view/:heroID'
-								element={
-									<HeroViewPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										options={options}
-										setOptions={persistOptions}
-										highlightAbout={errors.length > 0}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										exportHero={exportHero}
-										exportPdf={exportHeroPdf}
-										exportStandardAbilities={exportStandardAbilities}
-										copyHero={copyHero}
-										deleteHero={deleteHero}
-										showAncestry={ancestry => onSelectLibraryElement(ancestry, 'ancestry')}
-										showCulture={culture => onSelectLibraryElement(culture, 'culture')}
-										showCareer={career => onSelectLibraryElement(career, 'career')}
-										showClass={heroClass => onSelectLibraryElement(heroClass, 'class')}
-										showComplication={complication => onSelectLibraryElement(complication, 'complication')}
-										showDomain={domain => onSelectLibraryElement(domain, 'domain')}
-										showKit={kit => onSelectLibraryElement(kit, 'kit')}
-										showTitle={title => onSelectLibraryElement(title, 'title')}
-										showMonster={onSelectMonster}
-										showFollower={onSelectFollower}
-										showCharacteristic={onSelectCharacteristic}
-										showFeature={onSelectFeature}
-										showAbility={onSelectAbility}
-										showHeroState={onShowHeroState}
-										showReference={onShowReference}
-										setNotes={setNotes}
-									/>
-								}
-							/>
-							<Route
-								path='edit/:heroID'
-								element={<Navigate to='start' replace={true} />}
-							/>
-							<Route
-								path='edit/:heroID/:page'
-								element={
-									<HeroEditPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										options={options}
-										highlightAbout={errors.length > 0}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
-										saveChanges={saveHero}
-										importSourcebook={sourcebook => {
-											const copy = Utils.copy(homebrewSourcebooks);
-											copy.push(sourcebook);
-											persistHomebrewSourcebooks(copy);
-										}}
-									/>
-								}
-							/>
-							<Route
-								path='sheet/:heroID'
-								element={
-									<HeroSheetPreviewPage
-										heroes={heroes}
-										sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
-										options={options}
-										setOptions={persistOptions}
-									/>
-								}
-							/>
-						</Route>
-						<Route path='library'>
-							<Route
-								index={true}
-								element={<Navigate to='ancestry' replace={true} />}
-							/>
-							<Route
-								path=':kind/:elementID?'
-								element={
-									<LibraryListPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										playbook={playbook}
-										options={options}
-										hiddenSourcebookIDs={hiddenSourcebookIDs}
-										highlightAbout={errors.length > 0}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
-										showSourcebooks={showSourcebooks}
-										showSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
-										showMonster={onSelectMonster}
-										setOptions={persistOptions}
-										createElement={(kind, sourcebookID) => createLibraryElement(kind, sourcebookID, null)}
-										importElement={importLibraryElement}
-										deleteElement={deleteLibraryElement}
-										exportElement={exportLibraryElement}
-									/>
-								}
-							/>
-							<Route
-								path='edit/:kind/:sourcebookID/:elementID/:subElementID?'
-								element={
-									<LibraryEditPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										options={options}
-										highlightAbout={errors.length > 0}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
-										showMonster={onSelectMonster}
-										saveChanges={saveLibraryElement}
-										setOptions={persistOptions}
-									/>
-								}
-							/>
-						</Route>
-						<Route path='playbook'>
-							<Route
-								index={true}
-								element={<Navigate to='adventure' replace={true} />}
-							/>
-							<Route
-								path=':kind/:elementID?'
-								element={
-									<PlaybookListPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										playbook={playbook}
-										options={options}
-										highlightAbout={errors.length > 0}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
-										showEncounterTools={showEncounterTools}
-										setOptions={persistOptions}
-										createElement={createPlaybookElement}
-										importElement={(kind, element) => importPlaybookElement([ { kind: kind, element: element } ])}
-										importAdventurePackage={importAdventurePackage}
-										deleteElement={deletePlaybookElement}
-										exportElement={exportPlaybookElement}
-										startElement={startPlaybookElement}
-									/>
-								}
-							/>
-							<Route
-								path='edit/:kind/:elementID'
-								element={
-									<PlaybookEditPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										playbook={playbook}
-										options={options}
-										highlightAbout={errors.length > 0}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
-										showMonster={onSelectMonster}
-										showTerrain={onSelectTerrain}
-										saveChanges={savePlaybookElement}
-										setOptions={persistOptions}
-									/>
-								}
-							/>
-						</Route>
-						<Route path='session'>
-							<Route
-								index={true}
-								element={<Navigate to='director' replace={true} />}
-							/>
-							<Route
-								path='director'
-								element={
-									<SessionDirectorPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										playbook={playbook}
-										session={session}
-										options={options}
-										highlightAbout={errors.length > 0}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
-										showPlayerView={showPlayerView}
-										startEncounter={startEncounter}
-										startMontage={startMontage}
-										startNegotiation={startNegotiation}
-										startMap={startMap}
-										startCounter={startCounter}
-										updateHero={persistHero}
-										updateEncounter={updateEncounter}
-										updateMontage={updateMontage}
-										updateNegotiation={updateNegotiation}
-										updateMap={updateMap}
-										updateCounter={updateCounter}
-										finishSessionElement={finishSessionElement}
-										setOptions={persistOptions}
-									/>
-								}
-							/>
-							<Route
-								path='player'
-								element={
-									<SessionPlayerPage
-										heroes={heroes}
-										sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-										playbook={playbook}
-										session={session}
-										options={options}
-										highlightAbout={errors.length > 0}
-										showAbout={showAbout}
-										showRoll={showRoll}
-										showReference={showReference}
-										setOptions={persistOptions}
-									/>
-								}
-							/>
-						</Route>
+						<Route
+							path='view/:heroID'
+							element={
+								<HeroViewPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									options={options}
+									highlightAbout={errors.length > 0}
+									showReference={onShowReference}
+									showRoll={showRoll}
+									showAbout={showAbout}
+									showSettings={showSettings}
+									exportHero={exportHero}
+									exportPdf={exportHeroPdf}
+									exportStandardAbilities={exportStandardAbilities}
+									copyHero={copyHero}
+									deleteHero={deleteHero}
+									showAncestry={ancestry => onSelectLibraryElement(ancestry, 'ancestry')}
+									showCulture={culture => onSelectLibraryElement(culture, 'culture')}
+									showCareer={career => onSelectLibraryElement(career, 'career')}
+									showClass={heroClass => onSelectLibraryElement(heroClass, 'class')}
+									showComplication={complication => onSelectLibraryElement(complication, 'complication')}
+									showDomain={domain => onSelectLibraryElement(domain, 'domain')}
+									showKit={kit => onSelectLibraryElement(kit, 'kit')}
+									showTitle={title => onSelectLibraryElement(title, 'title')}
+									showMonster={(monster, summon) => onSelectMonster(monster, undefined, summon)}
+									showFollower={onSelectFollower}
+									showCharacteristic={onSelectCharacteristic}
+									showFeature={onSelectFeature}
+									showAbility={onSelectAbility}
+									showHeroState={onShowHeroState}
+									setNotes={setNotes}
+								/>
+							}
+						/>
+						<Route
+							path='edit/:heroID'
+							element={<Navigate to='start' replace={true} />}
+						/>
+						<Route
+							path='edit/:heroID/:page'
+							element={
+								<HeroEditPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									options={options}
+									highlightAbout={errors.length > 0}
+									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
+									saveChanges={saveHero}
+									importSourcebook={sourcebook => {
+										const copy = Utils.copy(homebrewSourcebooks);
+										copy.push(sourcebook);
+										persistHomebrewSourcebooks(copy);
+									}}
+								/>
+							}
+						/>
+						<Route
+							path='sheet/:heroID'
+							element={
+								<HeroSheetPreviewPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									options={options}
+									setOptions={persistOptions}
+								/>
+							}
+						/>
 					</Route>
-				</Routes>
-				{notifyContext}
-				<Spin spinning={spinning} size='large' fullscreen={true} />
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+					<Route path='library'>
+						<Route
+							index={true}
+							element={<Navigate to='ancestry' replace={true} />}
+						/>
+						<Route
+							path=':kind/:elementID?'
+							element={
+								<LibraryListPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									playbook={playbook}
+									options={options}
+									hiddenSourcebookIDs={hiddenSourcebookIDs}
+									highlightAbout={errors.length > 0}
+									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSourcebooks={showSourcebooks}
+									showSettings={showSettings}
+									showSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
+									showMonster={onSelectMonster}
+									setOptions={persistOptions}
+									createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}
+									importElement={importLibraryElement}
+									deleteElement={deleteLibraryElement}
+									exportElement={exportLibraryElement}
+								/>
+							}
+						/>
+						<Route
+							path='edit/:kind/:sourcebookID/:elementID/:subElementID?'
+							element={
+								<LibraryEditPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									options={options}
+									highlightAbout={errors.length > 0}
+									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
+									showMonster={onSelectMonster}
+									saveChanges={saveLibraryElement}
+								/>
+							}
+						/>
+					</Route>
+					<Route path='playbook'>
+						<Route
+							index={true}
+							element={<Navigate to='adventure' replace={true} />}
+						/>
+						<Route
+							path=':kind/:elementID?'
+							element={
+								<PlaybookListPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									playbook={playbook}
+									options={options}
+									highlightAbout={errors.length > 0}
+									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
+									showEncounterTools={showEncounterTools}
+									createElement={createPlaybookElement}
+									importElement={(kind, element) => importPlaybookElement([ { kind: kind, element: element } ])}
+									importAdventurePackage={importAdventurePackage}
+									deleteElement={deletePlaybookElement}
+									exportElement={exportPlaybookElement}
+									exportElementPdf={exportPlaybookElementPdf}
+									startElement={startPlaybookElement}
+								/>
+							}
+						/>
+						<Route
+							path='edit/:kind/:elementID'
+							element={
+								<PlaybookEditPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									playbook={playbook}
+									options={options}
+									highlightAbout={errors.length > 0}
+									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
+									showMonster={onSelectMonster}
+									showTerrain={onSelectTerrain}
+									saveChanges={savePlaybookElement}
+								/>
+							}
+						/>
+					</Route>
+					<Route path='session'>
+						<Route
+							index={true}
+							element={<Navigate to='director' replace={true} />}
+						/>
+						<Route
+							path='director'
+							element={
+								<SessionDirectorPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									playbook={playbook}
+									session={session}
+									options={options}
+									highlightAbout={errors.length > 0}
+									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
+									showPlayerView={showPlayerView}
+									startEncounter={startEncounter}
+									startMontage={startMontage}
+									startNegotiation={startNegotiation}
+									startMap={startMap}
+									startCounter={startCounter}
+									updateHero={persistHero}
+									updateEncounter={updateEncounter}
+									updateMontage={updateMontage}
+									updateNegotiation={updateNegotiation}
+									updateMap={updateMap}
+									updateCounter={updateCounter}
+									finishSessionElement={finishSessionElement}
+								/>
+							}
+						/>
+						<Route
+							path='player'
+							element={
+								<SessionPlayerPage
+									heroes={heroes}
+									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+									playbook={playbook}
+									session={session}
+									options={options}
+									highlightAbout={errors.length > 0}
+									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
+								/>
+							}
+						/>
+					</Route>
+				</Route>
+			</Routes>
+			{notifyContext}
+			<Spin spinning={spinning} size='large' fullscreen={true} />
+		</ErrorBoundary>
+	);
 };

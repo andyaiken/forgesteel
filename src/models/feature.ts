@@ -1,28 +1,31 @@
-import { DamageModifier, Modifier } from './damage-modifier';
-import { Ability } from './ability';
-import { AbilityKeyword } from '../enums/ability-keyword';
-import { Ancestry } from './ancestry';
-import { Characteristic } from '../enums/characteristic';
-import { ConditionType } from '../enums/condition-type';
-import { DamageType } from '../enums/damage-type';
-import { Domain } from './domain';
-import { Element } from './element';
-import { FeatureAddOnType } from '../enums/feature-addon-type';
-import { FeatureField } from '../enums/feature-field';
-import { FeatureType } from '../enums/feature-type';
-import { Follower } from './follower';
-import { Item } from './item';
-import { ItemType } from '../enums/item-type';
-import { Kit } from './kit';
-import { KitArmor } from '../enums/kit-armor';
-import { KitWeapon } from '../enums/kit-weapon';
-import { Monster } from './monster';
-import { Perk } from './perk';
-import { PerkList } from '../enums/perk-list';
-import { PowerRoll } from './power-roll';
-import { Size } from './size';
-import { SkillList } from '../enums/skill-list';
-import { Title } from './title';
+import { DamageModifier, Modifier } from '@/models/damage-modifier';
+import { Ability } from '@/models/ability';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Ancestry } from '@/models/ancestry';
+import { Characteristic } from '@/enums/characteristic';
+import { ConditionType } from '@/enums/condition-type';
+import { DamageType } from '@/enums/damage-type';
+import { Domain } from '@/models/domain';
+import { Element } from '@/models/element';
+import { FeatureAddOnType } from '@/enums/feature-addon-type';
+import { FeatureField } from '@/enums/feature-field';
+import { FeatureType } from '@/enums/feature-type';
+import { Fixture } from '@/models/fixture';
+import { Follower } from '@/models/follower';
+import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
+import { Kit } from '@/models/kit';
+import { KitArmor } from '@/enums/kit-armor';
+import { KitWeapon } from '@/enums/kit-weapon';
+import { Monster } from '@/models/monster';
+import { Perk } from '@/models/perk';
+import { PerkList } from '@/enums/perk-list';
+import { PowerRoll } from '@/models/power-roll';
+import { Size } from '@/models/size';
+import { SkillList } from '@/enums/skill-list';
+import { StatBlockIcon } from '@/enums/stat-block-icon';
+import { Summon } from '@/models/summon';
+import { Title } from '@/models/title';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface _FeatureData { }
@@ -118,6 +121,8 @@ export interface FeatureDamageModifierData extends _FeatureData {
 export type FeatureDamageModifier = FeatureOf<FeatureType.DamageModifier, FeatureDamageModifierData>;
 
 export interface FeatureDomainData extends _FeatureData {
+	characteristic: Characteristic;
+	levels: number[];
 	count: number;
 	selected: Domain[];
 };
@@ -129,6 +134,11 @@ export interface FeatureDomainFeatureData extends _FeatureData {
 	selected: Feature[];
 };
 export type FeatureDomainFeature = FeatureOf<FeatureType.DomainFeature, FeatureDomainFeatureData>;
+
+export interface FeatureFixtureData extends _FeatureData {
+	fixture: Fixture;
+};
+export type FeatureFixture = FeatureOf<FeatureType.Fixture, FeatureFixtureData>;
 
 export interface FeatureFollowerData extends _FeatureData {
 	follower: Follower;
@@ -183,6 +193,7 @@ export interface FeatureMaliceData extends _FeatureData {
 	repeatable?: boolean;
 	sections: (string | PowerRoll)[];
 	echelon: number;
+	icon?: StatBlockIcon;
 };
 export type FeatureMalice = FeatureOf<FeatureType.Malice, FeatureMaliceData>;
 
@@ -225,15 +236,15 @@ export interface FeatureProficiencyData extends _FeatureData {
 };
 export type FeatureProficiency = FeatureOf<FeatureType.Proficiency, FeatureProficiencyData>;
 
+export interface FeatureSaveThresholdData extends _FeatureData {
+	value: number;
+};
+export type FeatureSaveThreshold = FeatureOf<FeatureType.SaveThreshold, FeatureSaveThresholdData>;
+
 export interface FeatureSizeData extends _FeatureData {
 	size: Size;
 };
 export type FeatureSize = FeatureOf<FeatureType.Size, FeatureSizeData>;
-
-export interface FeatureSkillData extends _FeatureData {
-	skill: string;
-};
-export type FeatureSkill = FeatureOf<FeatureType.Skill, FeatureSkillData>;
 
 export interface FeatureSkillChoiceData extends _FeatureData {
 	options: string[];
@@ -249,11 +260,16 @@ export interface FeatureSpeedData extends _FeatureData {
 export type FeatureSpeed = FeatureOf<FeatureType.Speed, FeatureSpeedData>;
 
 export interface FeatureSummonData extends _FeatureData {
-	options: Monster[];
-	count: number;
-	selected: Monster[];
+	summons: Summon[];
 };
 export type FeatureSummon = FeatureOf<FeatureType.Summon, FeatureSummonData>;
+
+export interface FeatureSummonChoiceData extends _FeatureData {
+	options: Summon[];
+	count: number;
+	selected: Summon[];
+};
+export type FeatureSummonChoice = FeatureOf<FeatureType.SummonChoice, FeatureSummonChoiceData>;
 
 export interface FeatureTaggedFeatureData extends _FeatureData {
 	tag: string;
@@ -294,6 +310,7 @@ export type Feature =
 	| FeatureDamageModifier
 	| FeatureDomain
 	| FeatureDomainFeature
+	| FeatureFixture
 	| FeatureFollower
 	| FeatureHeroicResource
 	| FeatureHeroicResourceGain
@@ -309,11 +326,12 @@ export type Feature =
 	| FeaturePackageContent
 	| FeaturePerk
 	| FeatureProficiency
+	| FeatureSaveThreshold
 	| FeatureSize
-	| FeatureSkill
 	| FeatureSkillChoice
 	| FeatureSpeed
 	| FeatureSummon
+	| FeatureSummonChoice
 	| FeatureText
 	| FeatureTaggedFeature
 	| FeatureTaggedFeatureChoice

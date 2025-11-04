@@ -1,8 +1,8 @@
-import { AbilityDistanceType } from '../../enums/abiity-distance-type';
-import { AbilityKeyword } from '../../enums/ability-keyword';
-import { Domain } from '../../models/domain';
-import { FactoryLogic } from '../../logic/factory-logic';
-import { SkillList } from '../../enums/skill-list';
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
+import { AbilityKeyword } from '@/enums/ability-keyword';
+import { Domain } from '@/models/domain';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { SkillList } from '@/enums/skill-list';
 
 export const trickery: Domain = {
 	id: 'domain-trickery',
@@ -18,7 +18,7 @@ export const trickery: Domain = {
 						FactoryLogic.feature.create({
 							id: 'domain-trickery-1-1',
 							name: 'Inspired Deception',
-							description: 'The gods favor your thievery with magic. Whenever you make a test that uses a skill you have from the intrigue skill group, you can use Presence on the test instead of another characteristic.'
+							description: 'The gods favor your thievery with magic. Whenever you make a test that uses a skill you have from the intrigue skill group, you can use Intuition on the test instead of another characteristic.'
 						}),
 						FactoryLogic.feature.createSkillChoice({
 							id: 'domain-trickery-1-2',

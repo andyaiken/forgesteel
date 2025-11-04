@@ -1,8 +1,10 @@
-import { EncounterObjectiveData } from '../../data/encounter-objective-data';
-import { FactoryLogic } from '../factory-logic';
-import { MonsterUpdateLogic } from './monster-update-logic';
-import { Playbook } from '../../models/playbook';
-import { PlotContentReference } from '../../models/plot';
+import { AttitudeType } from '@/enums/attitude-type';
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
+import { EncounterObjectiveData } from '@/data/encounter-objective-data';
+import { FactoryLogic } from '@/logic/factory-logic';
+import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
+import { Playbook } from '@/models/playbook';
+import { PlotContentReference } from '@/models/plot';
 
 export class PlaybookUpdateLogic {
 	static updatePlaybook = (playbook: Playbook) => {
@@ -123,19 +125,41 @@ export class PlaybookUpdateLogic {
 			if (e.malice === undefined) {
 				e.malice = 0;
 			}
+
+			if (e.additionalTurnsTaken === undefined) {
+				e.additionalTurnsTaken = [];
+			}
+
+			if (e.hiddenMaliceFeatures === undefined) {
+				e.hiddenMaliceFeatures = [];
+			}
 		});
 
 		if (playbook.montages === undefined) {
 			playbook.montages = [];
 		}
 
+		playbook.montages.forEach(m => {
+			if (m.difficulty === undefined) {
+				m.difficulty = EncounterDifficulty.Standard;
+			}
+		});
+
 		if (playbook.negotiations === undefined) {
 			playbook.negotiations = [];
 		}
 
 		playbook.negotiations.forEach(n => {
+			if (n.attitude === undefined) {
+				n.attitude = AttitudeType.Open;
+			}
+
 			if (n.impression === undefined) {
 				n.impression = 1;
+			}
+
+			if (n.languages === undefined) {
+				n.languages = [];
 			}
 
 			if (n.outcomes === undefined) {

@@ -1,7 +1,8 @@
-import { AbilityUpdateLogic } from './ability-update-logic';
-import { Feature } from '../../models/feature';
-import { FeatureType } from '../../enums/feature-type';
-import { ItemUpdateLogic } from './item-update-logic';
+import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
+import { Characteristic } from '@/enums/characteristic';
+import { Feature } from '@/models/feature';
+import { FeatureType } from '@/enums/feature-type';
+import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
 
 export class FeatureUpdateLogic {
 	static updateFeature = (feature: Feature) => {
@@ -42,6 +43,12 @@ export class FeatureUpdateLogic {
 				});
 				break;
 			case FeatureType.Domain:
+				if (feature.data.characteristic === undefined) {
+					feature.data.characteristic = Characteristic.Intuition;
+				}
+				if (feature.data.levels === undefined) {
+					feature.data.levels = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+				}
 				feature.data.selected.forEach(d => {
 					if (d.resourceGains === undefined) {
 						d.resourceGains = [];
@@ -79,6 +86,11 @@ export class FeatureUpdateLogic {
 				}
 				break;
 			case FeatureType.Malice:
+				if (feature.data.echelon === undefined) {
+					feature.data.echelon = 1;
+				}
+				break;
+			case FeatureType.MaliceAbility:
 				if (feature.data.echelon === undefined) {
 					feature.data.echelon = 1;
 				}

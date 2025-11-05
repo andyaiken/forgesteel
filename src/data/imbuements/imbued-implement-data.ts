@@ -1,4 +1,3 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureField } from '@/enums/feature-field';
@@ -84,8 +83,6 @@ export class ImbuedImplementData {
 				id: 'imbuement-rat-form',
 				name: 'Rat Form',
 				type: FactoryLogic.type.createManeuver(),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You transform into a rat. Your equipment transforms with you. As a rat, you have speed 5 and can automatically climb at full speed while moving, your size is 1T, and you can see in the dark. You can speak and keep your skills while in rat form, but your Might is −5 and you lose all your regular abilities, features, and benefits. You can revert to your natural form as a maneuver, and do so automatically if you take any damage.')
 				]
@@ -188,8 +185,6 @@ export class ImbuedImplementData {
 				id: 'imbuement-celestine',
 				name: 'Celestine',
 				type: FactoryLogic.type.createMain(),
-				distance: [ FactoryLogic.distance.createSpecial('') ],
-				target: 'Special; see below',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You conjure up to three stars, which hover in unoccupied squares of your choice within 5 squares of you. The stars remain in place, and disappear if you create more stars. When an enemy enters any star’s space, the star detonates and is destroyed, and the enemy takes 10 fire damage. If you have line of effect to the enemy, you can also slide them 1 square. Otherwise, the enemy slides 1 square in a random direction.')
 				]
@@ -259,10 +254,8 @@ export class ImbuedImplementData {
 				id: 'imbuement-hallucinatory',
 				name: 'Hallucinatory',
 				type: FactoryLogic.type.createManeuver(),
-				distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Aura, value: 2 }) ],
-				target: 'Each enemy in the area',
 				sections: [
-					FactoryLogic.createAbilitySectionText('The area is difficult terrain for your enemies until the end of the encounter.')
+					FactoryLogic.createAbilitySectionText('You create an area of sensory instability in a 2 aura centered on yourself. The area is difficult terrain for your enemies until the end of the encounter.')
 				]
 			})
 		})

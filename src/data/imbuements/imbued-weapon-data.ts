@@ -20,8 +20,6 @@ export class ImbuedWeaponData {
 				id: 'imbuement-blood-bargain',
 				name: 'Blood Bargain',
 				type: FactoryLogic.type.createManeuver(),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You harm yourself with the weapon, taking 1d6 damage that can’t be reduced in any way. An ally within 5 squares can then spend a Recovery.')
 				]
@@ -243,8 +241,6 @@ export class ImbuedWeaponData {
 				id: 'imbuement-metamorphic',
 				name: 'Metamorphic',
 				type: FactoryLogic.type.createManeuver(),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText(`
 You can change this weapon’s shape and form, granting one of the following benefits of your choice:

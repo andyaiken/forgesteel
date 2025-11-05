@@ -50,10 +50,8 @@ export const devil: Ancestry = {
 							name: 'Glowing Eyes',
 							description: 'Your eyes are a solid, vibrant color that flares to show your excitement or rage.',
 							type: FactoryLogic.type.createTrigger('You take damage from a creature'),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You curse your attacker for daring to do you harm. The creature takes 1d10 + your level psychic damage.')
+								FactoryLogic.createAbilitySectionText('Whenever you take damage from a creature, you can use a triggered action to deal that creature psychic damage equal to 1d10 + your level.')
 							]
 						})
 					}),

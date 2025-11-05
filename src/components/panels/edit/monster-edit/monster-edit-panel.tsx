@@ -81,14 +81,16 @@ export const MonsterEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={monster.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={setRandomName} />}
-					value={monster.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact>
+					<Input
+						status={monster.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={monster.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={setRandomName} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
 				<MultiLine value={monster.description} onChange={setDescription} />
 				<HeaderText>Portrait</HeaderText>

@@ -1,6 +1,7 @@
 import { Segmented, Space } from 'antd';
 import { Ancestry } from '@/models/ancestry';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Feature } from '@/models/feature';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
@@ -29,6 +30,14 @@ export const AncestryPanel = (props: Props) => {
 
 	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
 
+	const isSignatureFeature = (feature: Feature) => {
+		return !isPurchasedFeature(feature);
+	};
+
+	const isPurchasedFeature = (feature: Feature) => {
+		return (feature.type === FeatureType.Choice) && (feature.data.count === 'ancestry');
+	};
+
 	const getOverview = () => {
 		return (
 			<Markdown text={props.ancestry.description} />
@@ -39,7 +48,7 @@ export const AncestryPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
-					props.ancestry.features.filter(f => f.type !== FeatureType.Choice).map(f => (
+					props.ancestry.features.filter(isSignatureFeature).map(f => (
 						<SelectablePanel key={f.id}>
 							<FeaturePanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>
@@ -54,7 +63,7 @@ export const AncestryPanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<Field label='Ancestry Points' value={props.ancestry.ancestryPoints} />
 				{
-					props.ancestry.features.filter(f => f.type === FeatureType.Choice).map(f => (
+					props.ancestry.features.filter(isPurchasedFeature).map(f => (
 						<SelectablePanel key={f.id}>
 							<FeaturePanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 						</SelectablePanel>

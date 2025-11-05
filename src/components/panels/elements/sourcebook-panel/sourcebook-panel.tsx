@@ -188,14 +188,16 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 
 		content = (
 			<Space direction='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
-				<Input
-					status={sourcebook.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={sourcebook.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact>
+					<Input
+						status={sourcebook.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={sourcebook.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<Expander title='Description'>
 					<HeaderText>Description</HeaderText>
 					<MultiLine value={sourcebook.description} onChange={setDescription} />
@@ -219,14 +221,16 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%' }}>
-										<Input
-											status={lang.name === '' ? 'warning' : ''}
-											placeholder='Name'
-											allowClear={true}
-											addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setLanguageName(n, NameGenerator.generateName())} />}
-											value={lang.name}
-											onChange={e => setLanguageName(n, e.target.value)}
-										/>
+										<Space.Compact>
+											<Input
+												status={lang.name === '' ? 'warning' : ''}
+												placeholder='Name'
+												allowClear={true}
+												value={lang.name}
+												onChange={e => setLanguageName(n, e.target.value)}
+											/>
+											<Button icon={<ThunderboltOutlined />} onClick={() => setLanguageName(n, NameGenerator.generateName())} />
+										</Space.Compact>
 										<MultiLine placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
 										<Segmented
 											block={true}
@@ -284,14 +288,16 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%' }}>
-										<Input
-											status={skill.name === '' ? 'warning' : ''}
-											placeholder='Name'
-											allowClear={true}
-											addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setSkillName(n, NameGenerator.generateName())} />}
-											value={skill.name}
-											onChange={e => setSkillName(n, e.target.value)}
-										/>
+										<Space.Compact>
+											<Input
+												status={skill.name === '' ? 'warning' : ''}
+												placeholder='Name'
+												allowClear={true}
+												value={skill.name}
+												onChange={e => setSkillName(n, e.target.value)}
+											/>
+											<Button icon={<ThunderboltOutlined />} onClick={() => setSkillName(n, NameGenerator.generateName())} />
+										</Space.Compact>
 										<MultiLine placeholder='Description' value={skill.description} onChange={value => setSkillDescription(n, value)} />
 										<Select
 											style={{ width: '100%' }}

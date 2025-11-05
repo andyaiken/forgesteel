@@ -45,6 +45,7 @@ import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
+import { StatsSidebarPanel } from './stats-sidebar/stats-sidebar-panel';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
 import { useIsSmall } from '@/hooks/use-is-small';
@@ -101,12 +102,6 @@ export const HeroPanel = (props: Props) => {
 		const onShowVitals = () => {
 			if (props.onShowState) {
 				props.onShowState(HeroStatePage.Vitals);
-			}
-		};
-
-		const onShowProjects = () => {
-			if (props.onShowState) {
-				props.onShowState(HeroStatePage.Projects);
 			}
 		};
 
@@ -367,32 +362,6 @@ export const HeroPanel = (props: Props) => {
 							:
 							getSkills('Skills', HeroLogic.getSkills(props.hero, props.sourcebooks))
 					}
-					{
-						props.hero.state.projects.length > 0 ?
-							useRows ?
-								<div className='selectable-row clickable' onClick={onShowProjects}>
-									<div>Projects: <b>{props.hero.state.projects.map(p => p.name).join(', ')}</b></div>
-								</div>
-								:
-								<div className='overview-tile clickable' onClick={onShowProjects}>
-									<HeaderText>Projects</HeaderText>
-									{
-										props.hero.state.projects.map(p => (
-											<Flex key={p.id} align='center' justify='space-between' gap={10}>
-												<div className='ds-text compact-text'>{p.name}</div>
-												{
-													p.progress ?
-														<div className='ds-text compact-text'>
-															{p.goal > 0 ? `${Math.round(100 * p.progress.points / p.goal)}%` : `${p.goal}`}
-														</div>
-														: null
-												}
-											</Flex>
-										))
-									}
-								</div>
-							: null
-					}
 				</div>
 			</ErrorBoundary>
 		);
@@ -568,6 +537,12 @@ export const HeroPanel = (props: Props) => {
 			}
 		};
 
+		const onSelectProject = () => {
+			if (props.onShowState) {
+				props.onShowState(HeroStatePage.Projects);
+			}
+		};
+
 		let incitingIncident: Element | null = null;
 		if (props.hero.career) {
 			incitingIncident = props.hero.career.incitingIncidents.selected;
@@ -723,6 +698,23 @@ export const HeroPanel = (props: Props) => {
 									<HeaderText>Complication</HeaderText>
 									<Field label='Complication' value={props.hero.complication.name} />
 								</div>
+							:
+							null
+					}
+					{
+						props.hero.state.projects.length > 0 ?
+							props.hero.state.projects.map(project =>
+								useRows ?
+									<div key={project.id} className='selectable-row clickable' onClick={onSelectProject}>
+										<div>Project: <b>{project.name}</b></div>
+									</div>
+									:
+									<div key={project.id} className='overview-tile clickable' onClick={onSelectProject}>
+										<HeaderText>Project</HeaderText>
+										<Field label='Project' value={project.name} />
+										{project.progress ? <Field label='Progress' value={project.goal > 0 ? `${Math.round(100 * project.progress.points / project.goal)}%` : `${project.goal}`} /> : null}
+									</div>
+							)
 							:
 							null
 					}
@@ -1157,6 +1149,7 @@ export const HeroPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='hero-panel' id={props.hero.id}>
 				<div className='hero-main-section'>
+					{!isSmall && !props.options.singlePage ? <StatsSidebarPanel hero={props.hero} showStats={tab !== 'Hero'} /> : null}
 					<div className='hero-center-column'>
 						{
 							props.options.singlePage ?

@@ -25,7 +25,7 @@ export const ViewSelector = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<Flex gap={3} className='view-selector'>
+			<Flex className='view-selector'>
 				<Segmented
 					options={[
 						createOption('modern', 'Interactive View (for on screen use)', <DesktopOutlined />),
@@ -49,7 +49,7 @@ export const ViewSelector = (props: Props) => {
 								</Space>
 							}
 						>
-							<Button icon={<DownOutlined />} />
+							<Button icon={<DownOutlined />} style={{ borderColor: 'transparent', backgroundColor: '#f5f5f5' }} />
 						</Popover>
 						: null
 				}

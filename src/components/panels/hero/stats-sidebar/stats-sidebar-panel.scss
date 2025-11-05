@@ -1,0 +1,50 @@
+.stats-sidebar-panel {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+
+	.stats-info,
+	.stats-section {
+		width: 40px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-evenly;
+		background: linear-gradient(rgb(255, 255, 255), rgb(250, 250, 250));
+		border-radius: 6px;
+		opacity: 1;
+		transition: opacity ease-in-out 0.25s;
+
+		&.ghost {
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+
+	.stats-info {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		font-size: 10px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 3px;
+		opacity: 0.5;
+		writing-mode: sideways-lr;
+		text-orientation: sideways;
+	}
+
+	.stats-section {
+		flex: 1 1 0;
+	}
+}
+
+html[data-theme="dark"] {
+	.stats-sidebar-panel {
+		.stats-section {
+			background: linear-gradient(rgb(25, 25, 25), rgb(0, 0, 0));
+		}
+	}
+}

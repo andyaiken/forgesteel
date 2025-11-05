@@ -39,10 +39,8 @@ export class TrinketData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-color-cloak-blue-2',
-							name: 'Item Ability',
+							name: 'Use Cloak',
 							type: FactoryLogic.type.createTrigger('You are targeted by any effect that deals cold damage'),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('Shift a number of squares equal to your level. The cold immunity granted by the cloak becomes cold weakness equal to your level until the end of the next round. You can\'t use this triggered action again until this weakness ends.')
 							]
@@ -82,10 +80,8 @@ export class TrinketData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-color-cloak-red-2',
-							name: 'Item Ability',
+							name: 'Use Cloak',
 							type: FactoryLogic.type.createTrigger('You are targeted by any effect that deals fire damage'),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('Reduce the damage to 0. The fire immunity granted by the cloak becomes fire weakness equal to your level until the end of the next round. You can\'t use this triggered action again until this weakness ends.')
 							]
@@ -125,10 +121,8 @@ export class TrinketData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-color-cloak-yellow-2',
-							name: 'Item Ability',
+							name: 'Use Cloak',
 							type: FactoryLogic.type.createTrigger('You are targeted by any effect that deals lightning damage'),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('The next damage-dealing ability you use to deal extra lightning damage equal to your level. The lightning immunity granted by the cloak becomes ightning immunity equal to your level until the end of the next round. You can\'t use this triggered action again until this weakness ends.')
 							]
@@ -192,12 +186,10 @@ export class TrinketData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-displacing-replacement-bracer-1',
-							name: 'Item Ability',
+							name: 'Use Displacing Replacement Bracer',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createRanged(10) ],
-							target: 'Special',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You transfer an object of size 1S or 1T held in one hand with another object of the same size that is within range. The objects change locations instantaneously and without creating any auditory or visual disturbance. If another creature is wearing or holding the object you transfer to your hand and they have I < 4, they fail to notice the transfer.')
+								FactoryLogic.createAbilitySectionText('You transfer an object of size 1S or 1T held in one hand with another object of the same size that is within 10 squares. The objects change locations instantaneously and without creating any auditory or visual disturbance. If another creature is wearing or holding the object you transfer to your hand and they have I < 4, they fail to notice the transfer.')
 							]
 						})
 					})
@@ -325,10 +317,8 @@ If the object is too thick or has no open space on the other side, your hand bec
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-mask-of-the-many-1',
-							name: 'Item Ability',
+							name: 'Use Mask of the Many',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You transform into any humanoid of equivalent size that you have previously seen. The humanoid’s appearance reflects the last time you saw them, including whatever they were wearing. Your clothing and gear are transformed into the figure’s clothing and gear, absorbed into your body, or retain their original forms, as you determine. If the figure possessed any treasures when you last saw them, they are duplicated as mundane copies while you are transformed.')
 							]
@@ -421,12 +411,10 @@ If the object is too thick or has no open space on the other side, your hand bec
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-evilest-eye-1',
-							name: 'Item Ability',
+							name: 'Use Evilest Eye',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createRanged(10) ],
-							target: 'One enemy',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You and each ally within 2 squares of the target each gain 1 surge.')
+								FactoryLogic.createAbilitySectionText('You target one enemy within 10 squares. You and each ally within 2 squares of the target each gain 1 surge.')
 							]
 						})
 					})
@@ -469,12 +457,10 @@ If the object is too thick or has no open space on the other side, your hand bec
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-key-of-inquiry-1',
-							name: 'Item Ability',
+							name: 'Use Key of Inquiry',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSpecial('Adjecent') ],
-							target: 'One willing, grabbed, or restrained creature',
 							sections: [
-								FactoryLogic.createAbilitySectionText('Twist the key 90 degrees clockwise. The target must answer the next three questions they are asked truthfully and fully. If twisted 90 degrees counterclockwise instead, the target forgets the last 30 minutes they experienced. A creature affected by the key can’t be affected again by any Key of Inquiry for 1 year. If the key is ever destroyed, all the memories it has erased are restored. Memories erased by the key can’t be restored in any other way.')
+								FactoryLogic.createAbilitySectionText('You touch the key to an adjacent willing, grabbed, or restrained creature and twist the key 90 degrees clockwise. The target must answer the next three questions they are asked truthfully and fully. If twisted 90 degrees counterclockwise instead, the target forgets the last 30 minutes they experienced. A creature affected by the key can’t be affected again by any Key of Inquiry for 1 year. If the key is ever destroyed, all the memories it has erased are restored. Memories erased by the key can’t be restored in any other way.')
 							]
 						})
 					})
@@ -547,10 +533,8 @@ If the object is too thick or has no open space on the other side, your hand bec
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-stop-n-go-coin-1',
-							name: 'Item Ability',
+							name: 'Use Stop-’n-Go Coin',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSpecial('') ],
-							target: 'Special; see below',
 							sections: [
 								FactoryLogic.createAbilitySectionText(`
 You toss the coin in the air and let it fall to the ground in front of you. Roll a d3 to determine the coin’s effect, depending on which face shows when it lands:
@@ -617,10 +601,8 @@ The coin must be picked up before it can be used again. If any creature picks up
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-mask-of-oversight-1',
-							name: 'Item Ability',
+							name: 'Use Mask of Oversight',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You cause your eyes to erupt from their sockets and multiply until six eyes orbit your head. This grants you a 360-degree arc of vision and prevents you from being surprised. Additionally, you have a double edge on tests made to discover hidden creatures, items, or mechanisms, but you have a double bane on Presence tests that don’t use the Intimidate skill. As a maneuver, you can return your eyes to your head and make the additional eyes disappear.')
 							]
@@ -730,12 +712,10 @@ The coin must be picked up before it can be used again. If any creature picks up
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-shifting-ring-1',
-							name: 'Item Ability',
+							name: 'Use Shifting Ring Teleport',
 							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Once per turn' ] }),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
-								FactoryLogic.createAbilitySectionText('Teleport up to 3 squares.')
+								FactoryLogic.createAbilitySectionText('Teleport up to 3 squares. Additionally, when targeted by any other effect that causes you to teleport, you can teleport up to 3 additional squares.')
 							]
 						})
 					})
@@ -790,10 +770,8 @@ A trapped spirit remains in the lantern for 10 minutes. They remember being trap
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-psi-blade-1',
-							name: 'Activate Blade',
+							name: 'Activate Psi Blade',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You project a glowing blade of rippling psychic energy that extends parallel to your arm.')
 							]
@@ -802,10 +780,8 @@ A trapped spirit remains in the lantern for 10 minutes. They remember being trap
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-psi-blade-2',
-							name: 'Item Ability',
+							name: 'Psi Blade Strike',
 							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'The blade is active', 'Once per turn' ] }),
-							distance: [ FactoryLogic.distance.createMelee() ],
-							target: 'One enemy',
 							sections: [
 								FactoryLogic.createAbilitySectionText('Make a melee weapon free strike that deals an extra 3 psychic damage.')
 							]

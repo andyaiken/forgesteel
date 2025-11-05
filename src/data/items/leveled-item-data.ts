@@ -204,13 +204,11 @@ export class LeveledItemData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-lightning-treads-9b',
-							name: 'Item Ability',
+							name: 'Use Lightning Treads',
 							description: 'Perform a flying lightning kick',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
-							target: 'One enemy',
 							sections: [
-								FactoryLogic.createAbilitySectionText('The target is pushed up to 5 squares, and you can move to any square adjacent to the target after the push.')
+								FactoryLogic.createAbilitySectionText('One adjacent creature is pushed up to 5 squares, and you can move to any square adjacent to the target after the push.')
 							]
 						})
 					})
@@ -284,12 +282,10 @@ export class LeveledItemData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-thief-of-joy-1',
-							name: 'Item Ability',
+							name: 'Use Thief of Joy',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSpecial('Line of effect') ],
-							target: 'One creature',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You learn the target\'s level. If their level is higher than yours, the torque grants you envy. If their level is equal to or lower than yours, the torque grants you disdain. You can have both envy and disdain from different creatures, but not more than one instance of either.'),
+								FactoryLogic.createAbilitySectionText('Choose a creature in your line of effect. You learn the target\'s level. If their level is higher than yours, the torque grants you envy. If their level is equal to or lower than yours, the torque grants you disdain. You can have both envy and disdain from different creatures, but not more than one instance of either.'),
 								FactoryLogic.createAbilitySectionPackage('item-thief-of-joy-tag')
 							]
 						})
@@ -298,9 +294,7 @@ export class LeveledItemData {
 						ability: FactoryLogic.createAbility({
 							id: 'item-thief-of-joy-1a',
 							name: 'Item Ability',
-							type: FactoryLogic.type.createTrigger('The target deals damage to another creature'),
-							distance: [ FactoryLogic.distance.createRanged(10) ],
-							target: 'One creature',
+							type: FactoryLogic.type.createTrigger('A creature within 10 squares of you deals damage to another creature'),
 							sections: [
 								FactoryLogic.createAbilitySectionText('You expend your envy or disdain. If you expend envy, you deal damage equal to the triggering damage to a creature adjacent to you. If you expend disdain, you reduce the triggering damage by half. At the end of the encounter, you lose any envy or disdain granted by the torque.')
 							]

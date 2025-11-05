@@ -44,14 +44,16 @@ export const MontageEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={montage.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={montage.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact>
+					<Input
+						status={montage.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={montage.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
 				<MultiLine value={montage.description} onChange={setDescription} />
 			</Space>

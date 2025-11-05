@@ -93,14 +93,16 @@ export const CultureSection = (props: CultureSectionProps) => {
 				<SelectablePanel key='bespoke'>
 					<HeaderText>Bespoke Culture</HeaderText>
 					<div className='ds-text'>Choose a name for your culture.</div>
-					<Input
-						status={props.hero.culture.name === '' ? 'warning' : ''}
-						placeholder='Name'
-						allowClear={true}
-						addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-						value={props.hero.culture.name}
-						onChange={e => setName(e.target.value)}
-					/>
+					<Space.Compact>
+						<Input
+							status={props.hero.culture.name === '' ? 'warning' : ''}
+							placeholder='Name'
+							allowClear={true}
+							value={props.hero.culture.name}
+							onChange={e => setName(e.target.value)}
+						/>
+						<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+					</Space.Compact>
 					<Divider />
 					<div className='ds-text'>Choose your Environment, Organization, and Upbringing.</div>
 					<Space direction='vertical' style={{ width: '100%' }}>

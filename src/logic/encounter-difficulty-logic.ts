@@ -54,8 +54,8 @@ export class EncounterDifficultyLogic {
 		const heroValue = EncounterDifficultyLogic.getHeroValue(heroLevel);
 
 		return {
-			maxTrivial: (effectiveHeroCount - 1) * heroValue,
-			maxEasy: effectiveHeroCount * heroValue,
+			maxTrivial: ((effectiveHeroCount - 1) * heroValue) - 1,
+			maxEasy: (effectiveHeroCount * heroValue) - 1,
 			maxStandard: (effectiveHeroCount + 1) * heroValue,
 			maxHard: (effectiveHeroCount + 3) * heroValue
 		};

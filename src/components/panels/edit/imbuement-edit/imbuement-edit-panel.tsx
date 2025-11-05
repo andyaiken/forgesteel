@@ -1,4 +1,4 @@
-import { Input, Select, Space, Tabs } from 'antd';
+import { Button, Input, Select, Space, Tabs } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
@@ -48,14 +48,16 @@ export const ImbuementEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={imbuement.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={imbuement.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact>
+					<Input
+						status={imbuement.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={imbuement.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
 				<MultiLine value={imbuement.description} onChange={setDescription} />
 			</Space>

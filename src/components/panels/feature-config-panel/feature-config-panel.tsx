@@ -514,14 +514,16 @@ export const FeatureConfigPanel = (props: Props) => {
 							<Space direction='vertical' style={{ width: '100%' }}>
 								<div>
 									<HeaderText>Name</HeaderText>
-									<Input
-										status={data.selected.name === '' ? 'warning' : ''}
-										placeholder='Name'
-										allowClear={true}
-										addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-										value={data.selected.name}
-										onChange={e => setName(e.target.value)}
-									/>
+									<Space.Compact>
+										<Input
+											status={data.selected.name === '' ? 'warning' : ''}
+											placeholder='Name'
+											allowClear={true}
+											value={data.selected.name}
+											onChange={e => setName(e.target.value)}
+										/>
+										<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+									</Space.Compact>
 								</div>
 								{
 									choices.map(lvl => (

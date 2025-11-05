@@ -49,14 +49,16 @@ export const AncestryEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={ancestry.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={ancestry.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact>
+					<Input
+						status={ancestry.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={ancestry.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
 				<MultiLine value={ancestry.description} onChange={setDescription} />
 			</Space>

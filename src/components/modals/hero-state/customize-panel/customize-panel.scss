@@ -3,10 +3,6 @@
 	flex-direction: column;
 	gap: 10px;
 	padding-bottom: 20px;
-
-	.random-btn {
-		color: rgba(0, 0, 0, 0.88);
-	}
 }
 
 .customize-option-section {
@@ -14,12 +10,4 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: 10px;
-}
-
-html[data-theme="dark"] {
-	.customize-panel {
-		.random-btn {
-			color: rgba(255, 255, 255, 0.88);
-		}
-	}
 }

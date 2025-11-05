@@ -59,14 +59,16 @@ export const ClassEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={heroClass.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={heroClass.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact>
+					<Input
+						status={heroClass.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={heroClass.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
 				<MultiLine value={heroClass.description} onChange={setDescription} />
 			</Space>

@@ -1,5 +1,5 @@
+import { Button, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
-import { Input, Segmented, Select, Space, Tabs } from 'antd';
 import { Culture } from '@/models/culture';
 import { CultureType } from '@/enums/culture-type';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -43,14 +43,16 @@ export const CultureEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Input
-					status={culture.name === '' ? 'warning' : ''}
-					placeholder='Name'
-					allowClear={true}
-					addonAfter={<ThunderboltOutlined className='random-btn' onClick={() => setName(NameGenerator.generateName())} />}
-					value={culture.name}
-					onChange={e => setName(e.target.value)}
-				/>
+				<Space.Compact>
+					<Input
+						status={culture.name === '' ? 'warning' : ''}
+						placeholder='Name'
+						allowClear={true}
+						value={culture.name}
+						onChange={e => setName(e.target.value)}
+					/>
+					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+				</Space.Compact>
 				<HeaderText>Description</HeaderText>
 				<MultiLine value={culture.description} onChange={setDescription} />
 			</Space>

@@ -1,4 +1,3 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -12,7 +11,7 @@ import { KitWeapon } from '@/enums/kit-weapon';
 export class LeveledWeaponData {
 	static authoritysEnd: Item = FactoryLogic.createItem({
 		id: 'item-authoritys-end',
-		name: 'Authority\'s End',
+		name: 'Authority’s End',
 		description: 'This long, sinuous chain is composed entirely of broken links held together by unseen power.',
 		type: ItemType.LeveledWeapon,
 		keywords: [ AbilityKeyword.Psionic, KitWeapon.Whip ],
@@ -29,12 +28,10 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-authoritys-end-1',
-							name: 'Weapon Ability',
-							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you damage a creature with the weapon' ] }),
-							distance: [ FactoryLogic.distance.createRanged(5) ],
-							target: 'Self or one creature',
+							name: 'Use Authority’s End',
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'Immediately after you damage a creature with the weapon' ] }),
 							sections: [
-								FactoryLogic.createAbilitySectionText('End one effect imposed on the target by the damaged creature.')
+								FactoryLogic.createAbilitySectionText('End one effect imposed by the damaged creature on you or another creature within 5 squares of you.')
 							]
 						})
 					}),
@@ -259,12 +256,10 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-displacer-1',
-							name: 'Weapon Ability',
+							name: 'Use Displacer',
 							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you deal rolled damage' ] }),
-							distance: [ FactoryLogic.distance.createSpecial('') ],
-							target: 'Special',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You teleport you and the damaged creature, letting you trade places provided you both fit into each other’s spaces.'),
+								FactoryLogic.createAbilitySectionText('You teleport yourself and the damaged creature, letting you trade places provided you both fit into each other’s spaces.'),
 								FactoryLogic.createAbilitySectionPackage('item-displacer-tag')
 							]
 						})
@@ -403,12 +398,10 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-icemaker-maul-1',
-							name: 'Weapon Ability',
+							name: 'Use Icemaker Maul',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 3 }) ],
-							target: 'Special',
 							sections: [
-								FactoryLogic.createAbilitySectionText('The ground in this area is difficult terrain for enemies, and lasts until the end of the encounter or when you use this ability again.'),
+								FactoryLogic.createAbilitySectionText('You create an ice field in a 3 burst. The ground in this area is difficult terrain for enemies, and lasts until the end of the encounter or when you use this ability again.'),
 								FactoryLogic.createAbilitySectionPackage('item-icemaker-maul-tag')
 							]
 						})
@@ -495,10 +488,8 @@ export class LeveledWeaponData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-knife-of-nine-5a',
-							name: 'Weapon Ability',
+							name: 'Use Knife of Nine',
 							type: FactoryLogic.type.createTrigger('Use a signature ability using the weapon'),
-							distance: [ FactoryLogic.distance.createSpecial('') ],
-							target: 'Special',
 							sections: [
 								FactoryLogic.createAbilitySectionText('Expend any number of bright-glowing indentations, with the ability dealing extra psychic damage equal to the number of indentations. The expended indentations then return to a dim glow.')
 							]

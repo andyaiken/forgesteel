@@ -24,10 +24,8 @@ export const highElf: Ancestry = {
 							name: 'Glamor of Terror',
 							description: 'When a foe strikes, you reverse the magic of your glamor to instill fear into their heart.',
 							type: FactoryLogic.type.createTrigger('You take damage from a creature'),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You make the triggering creature frightened of you until the end of their next turn.')
+								FactoryLogic.createAbilitySectionText('Whenever you take damage from a creature, you can use a triggered action to make that creature frightened of you until the end of their next turn.')
 							]
 						})
 					}),

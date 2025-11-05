@@ -60,8 +60,6 @@ export const memonek: Ancestry = {
 							name: 'Keeper of Order',
 							description: 'Your connection to Axiom, the plane of Uttermost Law, allows you to manage chaos around you.',
 							type: FactoryLogic.type.createTrigger('You, or a creature adjacent to you, makes a power roll', { free: true }),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You can remove an edge or a bane on the roll, turn a double edge into an edge, or turn a double bane into a bane. You can only use this benefit once per round.')
 							]

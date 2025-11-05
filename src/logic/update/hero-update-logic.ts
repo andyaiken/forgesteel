@@ -323,6 +323,22 @@ export class HeroUpdateLogic {
 			console.error(ex);
 		}
 
+		try {
+			if (hero.state.inventory) {
+				hero.state.inventory = hero.state.inventory.map(origItem => {
+					const id = origItem.id;
+					const item = SourcebookLogic.getItems(sourcebooks).find(itm => itm.id === id);
+					if (item) {
+						return Utils.copy(item);
+					} else {
+						return origItem;
+					}
+				});
+			}
+		} catch (ex) {
+			console.error(ex);
+		}
+
 		// We have to make sure we handle Domain features before we handle Domain Feature features
 		// That's why we do the below logic twice
 

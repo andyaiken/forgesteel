@@ -466,10 +466,11 @@ describe('calculateProjectsOverviewCardSize', () => {
 
 describe('calculateAbilitySize', () => {
 	test.each([
-		[ AbilityData.heal, 14.7 ],
-		[ AbilityData.freeStrike, 11 ],
+		[ AbilityData.heal, 11.2 ],
+		[ AbilityData.freeStrike, 7.2 ],
 		[ AbilityData.escapeGrab, 26.1 ],
-		[ AbilityData.clawDirt, 23.1 ]
+		[ AbilityData.clawDirt, 23.1 ],
+		[ AbilityData.advance, 9 ]
 	])('calculates size properly for standard abilities', (ability: Ability, expected: number) => {
 		const hero = FactoryLogic.createHero([]);
 		const sheet = ClassicSheetBuilder.buildAbilitySheet(ability, hero);

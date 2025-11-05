@@ -182,8 +182,6 @@ export class ImbuedArmorData {
 				id: 'imbuement-disguise',
 				name: 'Disguise',
 				type: FactoryLogic.type.createManeuver(),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You cause this armor to take the form of any type of clothing that you have been in the presence of—a noble’s dress, a guard’s uniform, a cultist’s robes, and so forth. The armor loses none of its protective qualities while transformed into other clothing.')
 				]
@@ -205,8 +203,6 @@ export class ImbuedArmorData {
 				id: 'imbuement-iridescent',
 				name: 'Iridescent',
 				type: FactoryLogic.type.createTrigger('You are the sole target of an ability', { free: true }),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You reveal that the ability was targeting an afterimage of you in the same space as you. The power roll for the ability is treated as an 11. You can’t use this enhancement again until you earn 1 or more Victories.')
 				]
@@ -310,8 +306,6 @@ export class ImbuedArmorData {
 				name: 'Tempest I',
 				description: 'You infuse you armor with the essence of a storm.',
 				type: FactoryLogic.type.createManeuver(),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('The first time an adjacent creature deals damage to you before the end of your next turn, they take lightning damage equal to your highest characteristic score and you can push them 1 square.'),
 					FactoryLogic.createAbilitySectionPackage('tempest-tag')
@@ -334,8 +328,6 @@ export class ImbuedArmorData {
 				id: 'imbuement-absorption',
 				name: 'Absorption',
 				type: FactoryLogic.type.createTrigger('You are targeted by a magic or psionic ability that targets only one creature', { free: true }),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText(`
 You cause this armor to absorb the ability after the ability’s effects resolve. While the armor has an ability absorbed, you can’t absorb another.
@@ -487,9 +479,8 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 				id: 'imbuement-dragon-soul-i',
 				name: 'Dragon Soul I',
 				type: FactoryLogic.type.createTrigger('Another creature causes you to be winded or dying', { free: true }),
-				distance: [ FactoryLogic.distance.createSpecial('') ],
-				target: 'The triggering creature',
 				sections: [
+					FactoryLogic.createAbilitySectionText('You cause the soul of a dragon to emerge from the armor and hurtle toward the creature'),
 					FactoryLogic.createAbilitySectionRoll(
 						FactoryLogic.createPowerRoll({
 							characteristic: [ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ],
@@ -597,8 +588,6 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 				id: 'imbuement-second-wind',
 				name: 'Second Wind',
 				type: FactoryLogic.type.createTrigger('You become winded', { free: true }),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('Spend a recovery.')
 				]
@@ -717,8 +706,6 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 				id: 'imbuement-leyline-walker',
 				name: 'Leyline Walker',
 				type: FactoryLogic.type.createMove({ qualifiers: [ 'Once per turn' ] }),
-				distance: [ FactoryLogic.distance.createSelf() ],
-				target: 'Self',
 				sections: [
 					FactoryLogic.createAbilitySectionText('You can spend any amount of your movement to instead teleport that distance.')
 				]
@@ -809,8 +796,6 @@ You can use an absorbed ability as if you knew it, making power rolls for the ab
 						id: 'temporal-flux-a',
 						name: 'Temporal Flux',
 						type: FactoryLogic.type.createManeuver({ free: true }),
-						distance: [ FactoryLogic.distance.createSpecial('') ],
-						target: 'Self',
 						sections: [
 							FactoryLogic.createAbilitySectionText('You teleport to the imprint’s space')
 						]

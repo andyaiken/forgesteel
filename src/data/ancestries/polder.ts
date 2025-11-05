@@ -75,8 +75,6 @@ If the surface you are flattened against is destroyed, this ability ends and you
 							name: 'Reactive Tumble',
 							description: 'Staying light on your feet lets you quickly get back into position.',
 							type: FactoryLogic.type.createTrigger('Whenever you are force moved', { free: true }),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You shift 1 square after the forced movement is resolved.')
 							]

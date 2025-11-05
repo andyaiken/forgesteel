@@ -3,6 +3,7 @@ export interface AbilitySheet {
 	name: string;
 	cost: number;
 	isSignature: boolean;
+	isNotTrueAbility: boolean;
 	abilityType?: string;
 	actionType?: string;
 	description?: string;

@@ -1,6 +1,9 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
+import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
+import { AbilityLogic } from '../ability-logic';
 import { ArtifactData } from '@/data/items/artifact-data';
+import { Characteristic } from '@/enums/characteristic';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeroLogic } from '../hero-logic';
@@ -69,5 +72,49 @@ describe('buildAbilitySheet', () => {
 
 		const result = ClassicSheetBuilder.buildAbilitySheet(ability, hero, undefined, options);
 		expect(result.rollPower).toBe('4');
+	});
+
+	test.each([
+		[ AbilityData.advance, true ],
+		[ AbilityData.escapeGrab, false ]
+	])('properly sets isNotTrueAbility for non-ability abilities', (ability: Ability, expected: boolean) => {
+		const hero = FactoryLogic.createHero([]);
+		const options = {} as Options;
+
+		const result = ClassicSheetBuilder.buildAbilitySheet(ability, hero, undefined, options);
+		expect(result.isNotTrueAbility).toBe(expected);
+	});
+
+	test('power roll is displayed properly', () => {
+		const ability = AbilityData.escapeGrab;
+		vi.spyOn(AbilityLogic, 'getPowerRollCharacteristics').mockReturnValue([
+			Characteristic.Reason,
+			Characteristic.Presence
+		]);
+		const hero = FactoryLogic.createHero([]);
+		const options = {
+			showPowerRollCalculation: false
+		} as Options;
+
+		const result = ClassicSheetBuilder.buildAbilitySheet(ability, hero, undefined, options);
+		expect(result.rollPower).toBe('R or P');
+	});
+
+	test('if a power roll can use any characteristic, clean up the text', () => {
+		const ability = AbilityData.escapeGrab;
+		vi.spyOn(AbilityLogic, 'getPowerRollCharacteristics').mockReturnValue([
+			Characteristic.Reason,
+			Characteristic.Intuition,
+			Characteristic.Presence,
+			Characteristic.Agility,
+			Characteristic.Might
+		]);
+		const hero = FactoryLogic.createHero([]);
+		const options = {
+			showPowerRollCalculation: false
+		} as Options;
+
+		const result = ClassicSheetBuilder.buildAbilitySheet(ability, hero, undefined, options);
+		expect(result.rollPower).toBe('Highest Characteristic');
 	});
 });

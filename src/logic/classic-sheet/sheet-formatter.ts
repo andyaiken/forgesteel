@@ -749,7 +749,7 @@ export class SheetFormatter {
 		if (ability) {
 			size += 4; // title
 			size += this.countLines(ability.description, lineWidth);
-			size += 2.5; // keywords, distance, etc
+			size += ability.isNotTrueAbility ? 1 : 2.5; // keywords, distance, etc
 			size += ability.hasPowerRoll ? 2 : 0;
 			if (ability.hasPowerRoll) {
 				size += 0.3 + this.countLines(ability.rollT1Effect, rollLineLen);
@@ -763,7 +763,7 @@ export class SheetFormatter {
 					size += 0.5; // extra padding when effect follows power roll
 				}
 				const effectSize = this.countLines(ability.effect, lineWidth, 1);
-				size += 2 + effectSize;
+				size += (ability.isNotTrueAbility ? 0 : 2) + effectSize;
 			}
 		}
 		return size;

@@ -114,6 +114,7 @@ export class ClassicSheetBuilder {
 			name: ability.name,
 			description: ability.description,
 			isSignature: false,
+			isNotTrueAbility: false,
 			cost: Number(ability.cost) || 0,
 			actionType: ability.type.usage.toString(),
 			keywords: ability.keywords.join(', '),
@@ -145,6 +146,11 @@ export class ClassicSheetBuilder {
 				sheet.abilityType = 'Move Action';
 			} else if (ability.keywords.includes('Performance')) {
 				sheet.abilityType = 'Performance';
+			}
+
+			// non-ability 'abilities' won't have distance, keywords, or targets
+			if (!ability.distance.length && !ability.keywords.length && !ability.target.length) {
+				sheet.isNotTrueAbility = true;
 			}
 		}
 
@@ -212,8 +218,14 @@ export class ClassicSheetBuilder {
 					sheet.rollPower = AbilityLogic.getPowerRollBonusValue(ability, refCreature).toString();
 				}
 			} else {
-				sheet.rollPower = SheetFormatter.joinCommasOr(AbilityLogic.getPowerRollCharacteristics(ability, undefined)
-					.map(c => c.toString().slice(0, 1)));
+				const characteristics = AbilityLogic.getPowerRollCharacteristics(ability, undefined).sort(SheetFormatter.sortCharacteristics);
+				const allCharacteristics = Object.values(Characteristic).sort(SheetFormatter.sortCharacteristics);
+				const isAllCharacteristics = allCharacteristics.every((c, i) => characteristics[i] === c);
+				if (isAllCharacteristics) {
+					sheet.rollPower = 'Highest Characteristic';
+				} else {
+					sheet.rollPower = SheetFormatter.joinCommasOr(characteristics.map(c => c.toString().slice(0, 1)));
+				}
 			}
 
 			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, refCreature);

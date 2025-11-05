@@ -1,4 +1,3 @@
-import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
@@ -84,10 +83,8 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-adaptive-second-skin-9b',
-							name: 'Armor Ability',
+							name: 'Use Adaptive Second Skin of Toxins',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Cube, value: 2, within: 1 }) ],
-							target: 'Liquid or gas in the area',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You transmute a 2-cube area of liquid or gas adjacent to you into liquid acid or poison gas until the start of your next turn. Any creature who enters the area for the first time in a combat round or starts their turn there takes 6 acid or poison damage, as appropriate.')
 							]
@@ -242,7 +239,7 @@ export class LeveledArmorData {
 
 	static kingsRoar: Item = FactoryLogic.createItem({
 		id: 'item-kings-roar',
-		name: 'King\'s Roar',
+		name: 'King’s Roar',
 		description: 'A sunmetal kite shield bears the face of a lion on its front, its mouth opening wider over the course of battle.',
 		type: ItemType.LeveledArmor,
 		keywords: [ AbilityKeyword.Magic, KitArmor.Shield ],
@@ -259,13 +256,11 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-kings-roar-1',
-							name: 'Armor Ability',
+							name: 'King’s Roar',
 							description: 'You make the shield’s lion face roar.',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
-							target: 'One creature or object',
 							sections: [
-								FactoryLogic.createAbilitySectionText('Push the target up to 3 squares.'),
+								FactoryLogic.createAbilitySectionText('You can use a maneuver to make the shield’s lion face roar, choosing one adjacent creature or object and pushing that target up to 3 squares'),
 								FactoryLogic.createAbilitySectionPackage('item-kings-roar-tag')
 							]
 						})
@@ -282,7 +277,7 @@ export class LeveledArmorData {
 				features: [
 					FactoryLogic.feature.createPackageContent({
 						id: 'item-kings-roar-5',
-						name: '5th',
+						name: '5th Level',
 						description: 'Instead, target one creature or object within 3 squares and push that target up to 4 squares.',
 						tag: 'item-kings-roar-tag'
 					}),
@@ -298,8 +293,8 @@ export class LeveledArmorData {
 				features: [
 					FactoryLogic.feature.createPackageContent({
 						id: 'item-kings-roar-9',
-						name: '9th',
-						description: 'Instead, target one creature or object within 6 squares, you push that target up to 5 squares, and the target is slowed until the end of their turn.',
+						name: '9th Level',
+						description: 'Instead, target one creature or object within 6 squares, you push that target up to 5 squares, and the target is slowed until the end of their next turn.',
 						tag: 'item-kings-roar-tag'
 					}),
 					FactoryLogic.feature.createBonus({
@@ -314,7 +309,7 @@ export class LeveledArmorData {
 
 	static kuranzoiPrismscale: Item = FactoryLogic.createItem({
 		id: 'item-kuranzoi-prismscale',
-		name: 'Kuran\'zoi Prismscale',
+		name: 'Kuran’zoi Prismscale',
 		description: 'Each scale of this iridescent armor shimmers with the faint image of a frozen moment of time.',
 		type: ItemType.LeveledArmor,
 		keywords: [ KitArmor.Medium, AbilityKeyword.Psionic ],
@@ -331,13 +326,11 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-kuranzoi-prismscale-1',
-							name: 'Armor Ability',
+							name: 'Use Kuran’zoi Prismscale',
 							description: 'You capture a moment of time in the armor.',
-							type: FactoryLogic.type.createTrigger('The target deals damage to you'),
-							distance: [ FactoryLogic.distance.createRanged(5) ],
-							target: 'One creature',
+							type: FactoryLogic.type.createTrigger('A creature within 5 squares deals damage to you'),
 							sections: [
-								FactoryLogic.createAbilitySectionText('The target is slowed until the end of their next turn.'),
+								FactoryLogic.createAbilitySectionText('That creature is slowed until the end of their next turn.'),
 								FactoryLogic.createAbilitySectionPackage('item-kuranzoi-prismscale-tag')
 							]
 						})
@@ -403,10 +396,8 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-paper-trappings-1',
-							name: 'Armor Ability',
+							name: 'Paper Trappings - Fold',
 							type: FactoryLogic.type.createMain(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You fold in on yourself until you and your gear are paper thin. This effect lasts for 1 minute, letting you easily slip through any opening that is 1 inch wide or more. When you return to your three-dimensional form, you are dazed for 1 minute. If you return to your true form while in a space that is too small for you, you are violently expelled into the nearest open space of your choice and take 3d6 damage.'),
 								FactoryLogic.createAbilitySectionPackage('item-paper-trappings-tag')
@@ -437,12 +428,10 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-paper-trappings-5b',
-							name: 'Armor Ability',
+							name: 'Paper Trappings - Wrap',
 							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You are paper thin' ] }),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'One creature who is the same size or smaller than you',
 							sections: [
-								FactoryLogic.createAbilitySectionText('The target is grabbed by you.')
+								FactoryLogic.createAbilitySectionText('You wrap yourself around an adjacent target who is the same size or smaller than you, automatically grabbing them')
 							]
 						})
 					})
@@ -465,10 +454,8 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-paper-trappings-9b',
-							name: 'Armor Ability',
-							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You are paper thin' ] }),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'One creature who is grabbed by you',
+							name: 'Paper Trappings - Constrict',
+							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'You are paper thin and have a target grabbed' ] }),
 							sections: [
 								FactoryLogic.createAbilitySectionText('You constrict the target, dealing 10 damage to them. A creature damaged this way takes a bane when using the Escape Grab maneuver against you and when making strikes against you.')
 							]
@@ -513,12 +500,10 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-shrouded-memory-5',
-							name: 'Armor Ability',
+							name: 'Use Shrouded Memory',
 							type: FactoryLogic.type.createTrigger('You take damage'),
-							distance: [ FactoryLogic.distance.createRanged(5) ],
-							target: 'Self',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You teleport within range. You create an illusion of you dying in your previous space, which fades at the end of your next turn.'),
+								FactoryLogic.createAbilitySectionText('You teleport up to 5 squares. If you do, you create an illusion of you dying in your previous space, which fades at the end of your next turn.'),
 								FactoryLogic.createAbilitySectionPackage('item-shrouded-memory-tag')
 							]
 						})
@@ -568,12 +553,10 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-spiny-turtle-1',
-							name: 'Armor Ability',
+							name: 'Use Spiny Turtle',
 							type: FactoryLogic.type.createMain(),
-							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Wall, value: 4, within: 1 }) ],
-							target: 'Special',
 							sections: [
-								FactoryLogic.createAbilitySectionText('You expand the armor on your back to create a wall of metal behind you. The wall is an object that retracts if you move, or if it takes 15 damage. It the requires a main action to recalibrate before it can be deployed again.'),
+								FactoryLogic.createAbilitySectionText('You expand the armor on your back to create a 4 wall of metal behind you. The wall is an object that retracts if you move, or if it takes 15 damage. It the requires a main action to recalibrate before it can be deployed again.'),
 								FactoryLogic.createAbilitySectionPackage('item-spiny-turtle-tag')
 							]
 						})
@@ -648,10 +631,8 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-star-hunter-1b',
-							name: 'Armor Ability',
+							name: 'Use Star-Hunter',
 							type: FactoryLogic.type.createManeuver(),
-							distance: [ FactoryLogic.distance.createSelf() ],
-							target: 'Self',
 							sections: [
 								FactoryLogic.createAbilitySectionText('You turn invisible. Your invisibility ends if you take damage or use an ability, or at the end of your next turn.'),
 								FactoryLogic.createAbilitySectionPackage('item-star-hunter-tag')
@@ -744,10 +725,8 @@ export class LeveledArmorData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-telekinetic-bulwark-1',
-							name: 'Armor Ability',
-							type: FactoryLogic.type.createTrigger('Target uses an ability', { free: true }),
-							distance: [ FactoryLogic.distance.createSpecial('Adjacent') ],
-							target: 'One enemy',
+							name: 'Use Telekinetic Bulwark',
+							type: FactoryLogic.type.createTrigger('An adjacent enemy uses an ability', { free: true, qualifiers: [ 'Once per turn' ] }),
 							sections: [
 								FactoryLogic.createAbilitySectionText('Use the Grab maneuver against that enemy. You can have any number of enemies grabbed in this way.'),
 								FactoryLogic.createAbilitySectionPackage('item-telekinetic-bulwark-tag')

@@ -9,7 +9,7 @@ import { ItemType } from '@/enums/item-type';
 export class LeveledImplementData {
 	static abjurersBastion: Item = FactoryLogic.createItem({
 		id: 'item-abjurers-bastion',
-		name: 'Abjurer\'s Bastion',
+		name: 'Abjurer’s Bastion',
 		description: 'An ornate ring is set with a large diamond that swirls with blue light, and whose inner surface is etched with protective runes.',
 		type: ItemType.LeveledImplement,
 		keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic ],
@@ -46,12 +46,10 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-abjurers-bastion-5',
-							name: 'Implement Ability',
+							name: 'Use Abjurer’s Bastion',
 							type: FactoryLogic.type.createManeuver({ qualifiers: [ 'After you deal rolled damage using a magic or psionic ability' ] }),
-							distance: [ FactoryLogic.distance.createRanged(5) ],
-							target: 'Self or one ally',
 							sections: [
-								FactoryLogic.createAbilitySectionText('Create an immobile field of protection that is a 1 cube around the target. While in the area, the target has damage immunity 5. The field disappears at the start of your next turn.'),
+								FactoryLogic.createAbilitySectionText('Create an immobile field of protection that is a 1 cube around the yourself or around an ally within 5 squares. While in the area, the target has damage immunity 5. The field disappears at the start of your next turn.'),
 								FactoryLogic.createAbilitySectionPackage('item-abjurers-bastion-tag')
 							]
 						})
@@ -458,10 +456,8 @@ export class LeveledImplementData {
 					FactoryLogic.feature.createAbility({
 						ability: FactoryLogic.createAbility({
 							id: 'item-words-become-wonders-5',
-							name: 'Implement Ability',
-							type: FactoryLogic.type.createTrigger('Target uses a magic or psionic ability'),
-							distance: [ FactoryLogic.distance.createSpecial('Line of effect') ],
-							target: 'Self or one creature',
+							name: 'Words Become Wonders',
+							type: FactoryLogic.type.createTrigger('You or a creature you have line of effect to uses a magic or psionic ability'),
 							sections: [
 								FactoryLogic.createAbilitySectionText('You grant a +3 bonus to the power roll.')
 							]

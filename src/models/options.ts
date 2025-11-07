@@ -30,7 +30,6 @@ export interface Options {
 	similarOrganization: boolean;
 	similarSize: boolean;
 	// Encounter
-	minionCount: number;
 	party: string;
 	// Encounter: Running
 	showDefeatedCombatants: boolean;

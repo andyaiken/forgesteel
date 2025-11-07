@@ -1039,7 +1039,6 @@ export class FactoryLogic {
 			similarOrganization: true,
 			similarSize: true,
 			// Encounter
-			minionCount: 4,
 			party: '',
 			// Encounter Difficulty
 			heroParty: '',

@@ -8,13 +8,12 @@ import { FeatureType } from '@/enums/feature-type';
 import { MonsterData } from '@/data/monster-data';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 
 export class EncounterLogic {
-	static getMonsterCount = (encounter: Encounter, sourcebooks: Sourcebook[], options: Options) => {
+	static getMonsterCount = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
 		let total = 0;
 
 		encounter.groups.forEach(g => {
@@ -23,7 +22,7 @@ export class EncounterLogic {
 
 				const monster = SourcebookLogic.getMonster(sourcebooks, s.monsterID);
 				if (monster) {
-					count *= MonsterLogic.getRoleMultiplier(monster.role.organization, options);
+					count *= MonsterLogic.getRoleMultiplier(monster.role.organization);
 				}
 
 				total += count;

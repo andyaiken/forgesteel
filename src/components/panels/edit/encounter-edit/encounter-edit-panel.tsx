@@ -1042,7 +1042,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 					<div className='actions'>
 						<NumberSpin
 							value={props.slot.count}
-							format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)).toString()}
+							format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
 							onChange={value => props.setSlotCount(props.group.id, props.slot.id, value)}
 						/>
 						<Divider />

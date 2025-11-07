@@ -76,10 +76,6 @@ export class OptionsUpdateLogic {
 			options.similarSize = true;
 		}
 
-		if (options.minionCount === undefined) {
-			options.minionCount = 4;
-		}
-
 		if (options.party === undefined) {
 			options.party = '';
 		}

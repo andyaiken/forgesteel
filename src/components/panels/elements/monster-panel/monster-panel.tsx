@@ -93,7 +93,7 @@ export const MonsterPanel = (props: Props) => {
 								label='EV'
 								value={
 									props.monster.role.organization === MonsterOrganizationType.Minion ?
-										`${props.monster.encounterValue} for ${props.options.minionCount} minions`
+										`${props.monster.encounterValue} for 4 minions`
 										:
 										((props.monster.encounterValue === 0) ? '-' : props.monster.encounterValue)
 								}

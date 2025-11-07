@@ -433,23 +433,6 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getEncounterBuilder = () => {
-		const setMinionCount = (value: number) => {
-			const copy = Utils.copy(options);
-			copy.minionCount = value;
-			setOptions(copy);
-			props.setOptions(copy);
-		};
-
-		return (
-			<Expander title='Encounter Builder'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-					<NumberSpin label='Minions per group' min={1} value={options.minionCount} onChange={setMinionCount} />
-				</Space>
-			</Expander>
-		);
-	};
-
 	const getEncounterRunner = () => {
 		const setParty = (value: string) => {
 			const copy = Utils.copy(options);
@@ -738,7 +721,6 @@ export const SettingsModal = (props: Props) => {
 						{getHeroesClassic()}
 						{getClassicView()}
 						{getMonsterBuilder()}
-						{getEncounterBuilder()}
 						{getEncounterRunner()}
 						{getDifficulty()}
 						{getTacticalMaps()}

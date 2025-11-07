@@ -32,7 +32,10 @@ interface Props {
 export const WelcomePage = (props: Props) => {
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const [ page, setPage ] = useState<WelcomeType>('player');
-	const [ tips ] = useState<Tip[]>(Collections.shuffle(TipData.getTips()));
+	const [ tips ] = useState<Tip[]>([
+		...Collections.shuffle(TipData.getTips().filter(t => t.isNew)),
+		...Collections.shuffle(TipData.getTips().filter(t => !t.isNew))
+	]);
 	const [ tipIndex, setTipIndex ] = useState<number>(0);
 
 	const prevTip = () => {

@@ -64,7 +64,7 @@ interface Props {
 	feature: Feature | Perk;
 	options: Options;
 	hero: Hero;
-	sourcebooks?: Sourcebook[];
+	sourcebooks: Sourcebook[];
 	setData: (featureID: string, data: FeatureData) => void;
 	onDelete?: () => void;
 }
@@ -94,7 +94,7 @@ export const FeatureConfigPanel = (props: Props) => {
 	// #region Selection
 
 	const getSelectionAncestryChoice = (data: FeatureAncestryChoiceData) => {
-		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks || []);
+		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks);
 		const sortedAncestries = Collections.sort(ancestries, a => a.name);
 
 		if (sortedAncestries.length === 0) {
@@ -125,7 +125,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					value={data.selected ? data.selected.id : null}
 					onChange={value => {
 						const dataCopy = Utils.copy(data);
-						dataCopy.selected = SourcebookLogic.getAncestries(props.sourcebooks || []).find(a => a.id === value) || null;
+						dataCopy.selected = SourcebookLogic.getAncestries(props.sourcebooks).find(a => a.id === value) || null;
 						if (props.setData) {
 							props.setData(props.feature.id, dataCopy);
 						}
@@ -151,7 +151,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				}
 				<Drawer open={!!selectedAncestry} onClose={() => setSelectedAncestry(null)} closeIcon={null} width='500px'>
 					<Modal
-						content={selectedAncestry ? <AncestryPanel ancestry={selectedAncestry} options={props.options} mode={PanelMode.Full} /> : null}
+						content={selectedAncestry ? <AncestryPanel ancestry={selectedAncestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedAncestry(null)}
 					/>
 				</Drawer>
@@ -555,7 +555,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					<MonsterSelectModal
 						monsters={
 							SourcebookLogic
-								.getMonsterGroups(props.sourcebooks || [])
+								.getMonsterGroups(props.sourcebooks)
 								.flatMap(g => g.monsters)
 								.filter(m => {
 									switch (data.type) {
@@ -568,6 +568,7 @@ export const FeatureConfigPanel = (props: Props) => {
 								})
 						}
 						subset={((data.type === 'mount') || (data.type === 'retainer')) ? data.type : undefined}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={monster => {
 							setMonsterSelectorOpen(false);
@@ -587,7 +588,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					/>
 				</Drawer>
 				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
-					{selectedMonster ? <MonsterModal monster={selectedMonster} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
+					{selectedMonster ? <MonsterModal monster={selectedMonster} sourcebooks={props.sourcebooks} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
 				</Drawer>
 			</Space>
 		);
@@ -663,7 +664,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				}
 				<Drawer open={!!selectedDomain} onClose={() => setSelectedDomain(null)} closeIcon={null} width='500px'>
 					<Modal
-						content={selectedDomain ? <DomainPanel domain={selectedDomain} options={props.options} mode={PanelMode.Full} /> : null}
+						content={selectedDomain ? <DomainPanel domain={selectedDomain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedDomain(null)}
 					/>
 				</Drawer>
@@ -819,7 +820,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				</Drawer>
 				<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} width='500px'>
 					<Modal
-						content={selectedItem ? <ItemPanel item={selectedItem} options={props.options} /> : null}
+						content={selectedItem ? <ItemPanel item={selectedItem} sourcebooks={props.sourcebooks} options={props.options} /> : null}
 						onClose={() => setSelectedItem(null)}
 					/>
 				</Drawer>
@@ -895,6 +896,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					<KitSelectModal
 						kits={sortedKits}
 						hero={props.hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={kit => {
 							setKitSelectorOpen(false);
@@ -912,7 +914,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				</Drawer>
 				<Drawer open={!!selectedKit} onClose={() => setSelectedKit(null)} closeIcon={null} width='500px'>
 					<Modal
-						content={selectedKit ? <KitPanel kit={selectedKit} options={props.options} mode={PanelMode.Full} /> : null}
+						content={selectedKit ? <KitPanel kit={selectedKit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedKit(null)}
 					/>
 				</Drawer>
@@ -1062,6 +1064,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					<PerkSelectModal
 						perks={sortedPerks.filter(p => !currentPerkIDs.includes(p.id))}
 						hero={props.hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={perk => {
 							setPerkSelectorOpen(false);
@@ -1077,7 +1080,7 @@ export const FeatureConfigPanel = (props: Props) => {
 				</Drawer>
 				<Drawer open={!!selectedPerk} onClose={() => setSelectedPerk(null)} closeIcon={null} width='500px'>
 					<Modal
-						content={selectedPerk ? <PerkPanel perk={selectedPerk} options={props.options} mode={PanelMode.Full} /> : null}
+						content={selectedPerk ? <PerkPanel perk={selectedPerk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedPerk(null)}
 					/>
 				</Drawer>
@@ -1222,6 +1225,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					<SummonSelectModal
 						summons={data.options}
 						hero={props.hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={summon => {
 							setMonsterSelectorOpen(false);
@@ -1236,7 +1240,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					/>
 				</Drawer>
 				<Drawer open={!!selectedSummon} onClose={() => setSelectedSummon(null)} closeIcon={null} width='500px'>
-					{selectedSummon ? <MonsterModal monster={SummonLogic.getSummonedMonster(selectedSummon.monster, props.hero)} summon={selectedSummon.info} options={props.options} onClose={() => setSelectedSummon(null)} /> : null}
+					{selectedSummon ? <MonsterModal monster={SummonLogic.getSummonedMonster(selectedSummon.monster, props.hero)} summon={selectedSummon.info} sourcebooks={props.sourcebooks} options={props.options} onClose={() => setSelectedSummon(null)} /> : null}
 				</Drawer>
 			</Space>
 		);
@@ -1396,6 +1400,7 @@ export const FeatureConfigPanel = (props: Props) => {
 					<TitleSelectModal
 						titles={[ customTitle, ...sortedTitles ]}
 						hero={props.hero}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={title => {
 							setTitleSelectorOpen(false);
@@ -1416,6 +1421,7 @@ export const FeatureConfigPanel = (props: Props) => {
 								<TitlePanel
 									title={selectedTitle}
 									options={props.options}
+									sourcebooks={props.sourcebooks}
 									mode={PanelMode.Full}
 									onChange={title => {
 										const dataCopy = Utils.copy(data);

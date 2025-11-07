@@ -61,7 +61,7 @@ interface Props {
 	options: Options;
 	heroes?: Hero[];
 	encounters?: Encounter[];
-	sourcebooks?: Sourcebook[];
+	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
 	updateMap?: (map: TacticalMap) => void;
 	updateHero?: (hero: Hero) => void;
@@ -1541,6 +1541,7 @@ export const TacticalMapPanel = (props: Props) => {
 							monster={selectedMonster.monster}
 							monsterGroup={selectedMonster.monsterGroup}
 							encounter={selectedMonster.encounter}
+							sourcebooks={props.sourcebooks}
 							options={props.options}
 							onClose={() => setSelectedMonster(null)}
 							updateMonster={monster => {

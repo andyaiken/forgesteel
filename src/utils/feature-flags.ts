@@ -18,15 +18,9 @@ export class FeatureFlags {
 		description: 'Access to playtest material'
 	};
 
-	static ratcatcher: FeatureFlag = {
-		code: Utils.hashCode('Heden'),
-		description: 'Access to material from Ratcatcher Magazine'
-	};
-
 	private static all = [
 		FeatureFlags.interactiveContent,
-		FeatureFlags.playtest,
-		FeatureFlags.ratcatcher
+		FeatureFlags.playtest
 	];
 
 	// #endregion

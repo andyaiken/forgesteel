@@ -334,6 +334,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 							<MonsterPanel
 								monster={m}
 								monsterGroup={monsterGroup}
+								sourcebooks={props.sourcebooks}
 								options={props.options}
 							/>
 						</Expander>
@@ -374,6 +375,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={monster => {
 							copyMonster(monster);

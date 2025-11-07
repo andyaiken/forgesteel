@@ -12,12 +12,14 @@ import heroSheetState from '@/assets/screenshots/hero-state.png';
 import heroSheetVitals from '@/assets/screenshots/hero-vitals.png';
 
 import heroBuilderEdit from '@/assets/screenshots/hero-edit.png';
+import heroBuilderFolder from '@/assets/screenshots/hero-folder.png';
 import heroBuilderPregens from '@/assets/screenshots/hero-pregens.png';
 import heroBuilderRandom from '@/assets/screenshots/hero-random.png';
 import heroBuilderSourcebooks from '@/assets/screenshots/hero-edit-sourcebooks.png';
 
 import libraryMain from '@/assets/screenshots/library.png';
 import librarySourcebooks from '@/assets/screenshots/sourcebooks.png';
+import libraryThirdParty from '@/assets/screenshots/third-party.png';
 
 import homebrewEditor from '@/assets/screenshots/homebrew.png';
 import homebrewMonsterBuilder from '@/assets/screenshots/monster-builder.png';
@@ -88,9 +90,8 @@ export class TipData {
 			},
 			{
 				image: heroSheetRetinue,
-				content: 'If your hero has a mount, a retainer, or can summon monsters, you\'ll see them in your **Retinue**s tab.'
+				content: 'If your hero has a mount, a retainer, or can summon monsters, you\'ll see them in your **Retinue** tab.'
 			},
-			// TODO: Hero folders
 			// #endregion
 
 			// #region Hero Builder
@@ -110,6 +111,10 @@ export class TipData {
 				image: heroBuilderRandom,
 				content: 'If you don\'t want to build a hero, you can create an entirely random one.'
 			},
+			{
+				image: heroBuilderFolder,
+				content: 'If you have built a lot of heroes, you organize them by adding them to folders.'
+			},
 			// #endregion
 
 			// #region Library
@@ -120,6 +125,10 @@ export class TipData {
 			{
 				image: librarySourcebooks,
 				content: 'Everything in the Library comes from a sourcebook - you can create your own sourcebooks for homebrew content.'
+			},
+			{
+				image: libraryThirdParty,
+				content: 'You can use third-party content from Ratcatcher magazine directly in Forge Steel.'
 			},
 			// #endregion
 

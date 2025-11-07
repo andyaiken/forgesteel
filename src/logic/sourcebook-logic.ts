@@ -121,6 +121,10 @@ export class SourcebookLogic {
 		return sourcebooks.find(s => s.projects.find(p => p.id === project.id));
 	};
 
+	static getSubclassSourcebook = (sourcebooks: Sourcebook[], subclass: SubClass) => {
+		return sourcebooks.find(s => s.subclasses.find(s => s.id === subclass.id));
+	};
+
 	static getTerrainSourcebook = (sourcebooks: Sourcebook[], terrain: Terrain) => {
 		return sourcebooks.find(s => s.terrain.find(t => t.id === terrain.id));
 	};
@@ -130,15 +134,12 @@ export class SourcebookLogic {
 	static getSourcebooks = (homebrew: Sourcebook[] = []) => {
 		const list: Sourcebook[] = [
 			SourcebookData.core,
-			SourcebookData.orden
+			SourcebookData.orden,
+			SourcebookData.ratcatcher
 		];
 
 		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
 			list.push(SourcebookData.playtest);
-		}
-
-		if (FeatureFlags.hasFlag(FeatureFlags.ratcatcher.code)) {
-			list.push(SourcebookData.ratcatcher);
 		}
 
 		list.push(...Collections.sort(homebrew, cs => cs.name));

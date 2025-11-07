@@ -30,6 +30,8 @@ import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 
 import './feature-panel.scss';
@@ -77,6 +79,7 @@ export const FeaturePanel = (props: Props) => {
 		return (
 			<AncestryPanel
 				ancestry={data.selected}
+				sourcebooks={props.sourcebooks || []}
 				options={props.options}
 			/>
 		);
@@ -172,7 +175,7 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
-		return <MonsterPanel monster={data.selected} options={props.options} />;
+		return <MonsterPanel monster={data.selected} sourcebooks={props.sourcebooks || []} options={props.options} />;
 	};
 
 	const getInformationConditionImmunity = (data: FeatureConditionImmunityData) => {
@@ -198,7 +201,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(d => <DomainPanel key={d.id} domain={d} options={props.options} />)
+						data.selected.map(d => <DomainPanel key={d.id} domain={d} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -283,7 +286,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(i => <ItemPanel key={i.id} item={i} options={props.options} />)
+						data.selected.map(i => <ItemPanel key={i.id} item={i} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -313,7 +316,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(k => <KitPanel key={k.id} kit={k} options={props.options} />)
+						data.selected.map(k => <KitPanel key={k.id} kit={k} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -418,7 +421,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(p => <PerkPanel key={p.id} perk={p} options={props.options} />)
+						data.selected.map(p => <PerkPanel key={p.id} perk={p} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -502,7 +505,7 @@ export const FeaturePanel = (props: Props) => {
 		if (data.summons.length > 0) {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
-					{data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+					{data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
 				</Space>
 			);
 		}
@@ -514,7 +517,7 @@ export const FeaturePanel = (props: Props) => {
 		if (data.selected.length > 0) {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
-					{data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+					{data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
 				</Space>
 			);
 		}
@@ -524,7 +527,7 @@ export const FeaturePanel = (props: Props) => {
 				<>
 					<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'monsters' : 'monster'}.</div>
 					<Space direction='vertical' style={{ width: '100%' }}>
-						{data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} options={props.options} /></SelectablePanel>)}
+						{data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
 					</Space>
 				</>
 			);
@@ -564,7 +567,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						data.selected.map(t => <TitlePanel key={t.id} title={t} options={props.options} />)
+						data.selected.map(t => <TitlePanel key={t.id} title={t} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
 				</Space>
 			);
@@ -669,6 +672,13 @@ export const FeaturePanel = (props: Props) => {
 
 		const list = (props.feature as Perk).list;
 		if (list !== undefined) {
+			if (props.sourcebooks && (props.sourcebooks.length > 0)) {
+				const sourcebookType = SourcebookLogic.getPerkSourcebook(props.sourcebooks, props.feature as Perk)?.type || SourcebookType.Homebrew;
+				if (sourcebookType !== SourcebookType.Official) {
+					tags.push(sourcebookType);
+				}
+			}
+
 			tags.push(list);
 		}
 

@@ -59,7 +59,7 @@ export const ComplicationSection = (props: Props) => {
 				props.selectComplication(c);
 			}}
 		>
-			<ComplicationPanel complication={c} options={props.options} />
+			<ComplicationPanel complication={c} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 
@@ -92,7 +92,7 @@ export const ComplicationSection = (props: Props) => {
 				props.hero.complication && (!isSmall || (choices.length === 0)) ?
 					<div className={columnClassName} id='complication-selected'>
 						<SelectablePanel>
-							<ComplicationPanel complication={props.hero.complication} options={props.options} mode={PanelMode.Full} />
+							<ComplicationPanel complication={props.hero.complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					: null

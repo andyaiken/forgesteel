@@ -296,7 +296,7 @@ export const PlaybookListPage = (props: Props) => {
 				};
 				break;
 			case 'tactical-map':
-				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} sourcebooks={props.sourcebooks} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
 				break;
 		}
 

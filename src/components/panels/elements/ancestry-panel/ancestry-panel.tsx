@@ -13,15 +13,17 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { useState } from 'react';
 
 import './ancestry-panel.scss';
 
 interface Props {
 	ancestry: Ancestry;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -115,10 +117,18 @@ export const AncestryPanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getAncestrySourcebook(props.sourcebooks, props.ancestry)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='ancestry-panel compact'>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.ancestry.name || 'Unnamed Ancestry'}
 				</HeaderText>
 				<Markdown text={props.ancestry.description} />
@@ -134,7 +144,7 @@ export const AncestryPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className={className} id={props.ancestry.id}>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.ancestry.name || 'Unnamed Ancestry'}
 				</HeaderText>
 				{getContent()}

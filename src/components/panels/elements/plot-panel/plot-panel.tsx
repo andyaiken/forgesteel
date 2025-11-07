@@ -151,6 +151,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 										<TacticalMapPanel
 											map={map}
 											display={TacticalMapDisplayType.Thumbnail}
+											sourcebooks={props.sourcebooks}
 											options={props.options}
 										/>
 									</div>
@@ -179,6 +180,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 							<SelectablePanel style={{ overflow: 'hidden' }}>
 								<ItemPanel
 									item={content.content as Item}
+									sourcebooks={props.sourcebooks}
 									options={props.options}
 								/>
 								<SashPanel monogram='Item' />
@@ -189,6 +191,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 							<SelectablePanel style={{ overflow: 'hidden' }}>
 								<MonsterPanel
 									monster={content.content as Monster}
+									sourcebooks={props.sourcebooks}
 									options={props.options}
 								/>
 								<SashPanel monogram='Monster' />
@@ -200,6 +203,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 								<TitlePanel
 									title={content.content as Title}
 									options={props.options}
+									sourcebooks={props.sourcebooks}
 								/>
 								<SashPanel monogram='Title' />
 							</SelectablePanel>
@@ -409,6 +413,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						selectedItem ?
 							<ItemPanel
 								item={selectedItem}
+								sourcebooks={props.sourcebooks}
 								options={props.options}
 								mode={PanelMode.Full}
 							/>
@@ -423,6 +428,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						selectedMonster ?
 							<MonsterPanel
 								monster={selectedMonster}
+								sourcebooks={props.sourcebooks}
 								options={props.options}
 								mode={PanelMode.Full}
 							/>
@@ -438,6 +444,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 							<TitlePanel
 								title={selectedTitle}
 								options={props.options}
+								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
 							/>
 							: null

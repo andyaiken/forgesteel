@@ -478,7 +478,7 @@ export const ClassEditPanel = (props: Props) => {
 									<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
 								]}
 							>
-								<SubclassPanel subclass={sc} options={props.options} />
+								<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} />
 							</Expander>
 						))
 					}
@@ -503,7 +503,7 @@ export const ClassEditPanel = (props: Props) => {
 													setDrawerOpen(false);
 												}}
 											>
-												<SubclassPanel subclass={sc} options={props.options} />
+												<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} />
 											</SelectablePanel>
 										))
 									}

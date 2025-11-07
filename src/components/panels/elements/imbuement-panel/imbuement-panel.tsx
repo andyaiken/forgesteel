@@ -7,25 +7,35 @@ import { Imbuement } from '@/models/imbuement';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 
 import './imbuement-panel.scss';
 
 interface Props {
 	imbuement: Imbuement;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 	onChange?: (imbuement: Imbuement) => void;
 }
 
 export const ImbuementPanel = (props: Props) => {
+	const tags = [ `Level ${props.imbuement.level}` ];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getImbuementSourcebook(props.sourcebooks, props.imbuement)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	return (
 		<ErrorBoundary>
 			<div className={props.mode === PanelMode.Full ? 'imbuement-panel' : 'imbuement-panel compact'} id={props.mode === PanelMode.Full ? props.imbuement.id : undefined}>
 				<HeaderText
 					level={1}
-					tags={[ `Level ${props.imbuement.level}` ]}
+					tags={tags}
 				>
 					{props.imbuement.name || 'Unnamed Imbuement'}
 				</HeaderText>

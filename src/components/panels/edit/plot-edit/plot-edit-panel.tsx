@@ -519,7 +519,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Tactical Map';
 											content = (
-												<TacticalMapPanel map={element} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+												<TacticalMapPanel map={element} display={TacticalMapDisplayType.Thumbnail} sourcebooks={props.sourcebooks} options={props.options} />
 											);
 										}
 										break;
@@ -793,7 +793,7 @@ export const PlotEditPanel = (props: Props) => {
 								{
 									props.playbook.tacticalMaps.map(tm =>
 										<SelectablePanel key={tm.id} onSelect={() => addContentReference('map', tm.id)}>
-											<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+											<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} sourcebooks={props.sourcebooks} options={props.options} />
 										</SelectablePanel>
 									)
 								}
@@ -812,7 +812,7 @@ export const PlotEditPanel = (props: Props) => {
 								{
 									SourcebookLogic.getItems(props.sourcebooks).map(i =>
 										<SelectablePanel key={i.id} onSelect={() => addContentElement('item', i)}>
-											<ItemPanel item={i} options={props.options} />
+											<ItemPanel item={i} sourcebooks={props.sourcebooks} options={props.options} />
 										</SelectablePanel>
 									)
 								}
@@ -831,7 +831,7 @@ export const PlotEditPanel = (props: Props) => {
 								{
 									SourcebookLogic.getMonsters(props.sourcebooks).map(m =>
 										<SelectablePanel key={m.id} onSelect={() => addContentElement('monster', m)}>
-											<MonsterPanel monster={m} options={props.options} />
+											<MonsterPanel monster={m} sourcebooks={props.sourcebooks} options={props.options} />
 										</SelectablePanel>
 									)
 								}
@@ -850,7 +850,7 @@ export const PlotEditPanel = (props: Props) => {
 								{
 									SourcebookLogic.getTitles(props.sourcebooks).map(t =>
 										<SelectablePanel key={t.id} onSelect={() => addContentElement('title', t)}>
-											<TitlePanel title={t} options={props.options} />
+											<TitlePanel title={t} sourcebooks={props.sourcebooks} options={props.options} />
 										</SelectablePanel>
 									)
 								}

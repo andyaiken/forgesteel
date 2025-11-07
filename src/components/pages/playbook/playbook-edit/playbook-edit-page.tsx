@@ -148,6 +148,7 @@ export const PlaybookEditPage = (props: Props) => {
 						<TacticalMapPanel
 							map={element as TacticalMap}
 							display={TacticalMapDisplayType.DirectorEdit}
+							sourcebooks={props.sourcebooks}
 							options={props.options}
 							mode={PanelMode.Full}
 							updateMap={applyChanges}

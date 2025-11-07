@@ -12,6 +12,7 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { MonsterToken } from '@/components/panels/token/token';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { Sourcebook } from '@/models/sourcebook';
 import { SummoningInfo } from '@/models/summon';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -23,6 +24,7 @@ interface Props {
 	monsterGroup?: MonsterGroup;
 	encounter?: Encounter;
 	summon?: SummoningInfo;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
 	export?: (format: 'image' | 'pdf' | 'json') => void;
@@ -93,6 +95,7 @@ export const MonsterModal = (props: Props) => {
 						monster={monster}
 						monsterGroup={props.monsterGroup}
 						summon={props.summon}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						mode={PanelMode.Full}
 					/>

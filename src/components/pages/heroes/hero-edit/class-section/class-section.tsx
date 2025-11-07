@@ -250,7 +250,7 @@ export const ClassSection = (props: Props) => {
 	const classes = SourcebookLogic.getClasses(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 	const options = classes.map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
-			<ClassPanel heroClass={c} options={props.options} />
+			<ClassPanel heroClass={c} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 
@@ -290,7 +290,7 @@ export const ClassSection = (props: Props) => {
 				props.hero.class && (!isSmall || (choicesByLevel.length === 0)) ?
 					<div className={columnClassName} id='class-selected'>
 						<SelectablePanel>
-							<ClassPanel heroClass={props.hero.class} hero={props.hero} options={props.options} mode={PanelMode.Full} />
+							<ClassPanel heroClass={props.hero.class} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					: null
@@ -341,7 +341,7 @@ export const ClassSection = (props: Props) => {
 			}
 			<Drawer open={!!selectedSubClass} onClose={() => setSelectedSubClass(null)} closeIcon={null} width='500px'>
 				<Modal
-					content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} options={props.options} mode={PanelMode.Full} /> : null}
+					content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 					onClose={() => setSelectedSubClass(null)}
 				/>
 			</Drawer>

@@ -75,7 +75,7 @@ export const SubClassSelectModal = (props: Props) => {
 									key={sc.id}
 									onSelect={() => props.onSelect(sc)}
 								>
-									<SubclassPanel subclass={sc} options={props.options} mode={PanelMode.Compact} />
+									<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
 								</SelectablePanel>
 							))
 						}
@@ -95,7 +95,7 @@ export const SubClassSelectModal = (props: Props) => {
 													key={sc.id}
 													onSelect={() => props.onSelect(sc)}
 												>
-													<SubclassPanel subclass={sc} options={props.options} mode={PanelMode.Compact} />
+													<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
 												</SelectablePanel>
 											))
 										}
@@ -120,7 +120,7 @@ export const SubClassSelectModal = (props: Props) => {
 														key={sc.id}
 														onSelect={() => props.onSelect(sc)}
 													>
-														<SubclassPanel subclass={sc} options={props.options} mode={PanelMode.Compact} />
+														<SubclassPanel subclass={sc} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Compact} />
 													</SelectablePanel>
 												))
 											}

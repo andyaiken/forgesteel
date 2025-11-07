@@ -1028,6 +1028,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 						<MonsterPanel
 							monster={monster}
 							monsterGroup={monsterGroup}
+							sourcebooks={props.sourcebooks}
 							options={props.options}
 							extra={
 								<Flex align='center'>
@@ -1096,7 +1097,11 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 			<ErrorBoundary>
 				<div className='terrain-row'>
 					<div className='content'>
-						<TerrainPanel terrain={terrain} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />} />
+						<TerrainPanel
+							terrain={terrain}
+							sourcebooks={props.sourcebooks}
+							extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />}
+						/>
 						{
 							terrain.upgrades.length > 0 ?
 								<Expander title='Customize'>

@@ -22,15 +22,16 @@ import { PlusOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { Utils } from '@/utils/utils';
 
 import './item-panel.scss';
 
 interface Props {
 	item: Item;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	wielder?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 	style?: CSSProperties;
 	onChange?: (item: Item) => void;
@@ -143,12 +144,20 @@ export const ItemPanel = (props: Props) => {
 
 	const imbueable = item.type === ItemType.ImbuedArmor || item.type === ItemType.ImbuedImplement || item.type === ItemType.ImbuedWeapon;
 
+	const tags: string[] = [ item.type ];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getItemSourcebook(props.sourcebooks, item)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	return (
 		<ErrorBoundary>
 			<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? item.id : undefined} style={props.style}>
 				<HeaderText
 					level={1}
-					tags={[ item.type ]}
+					tags={tags}
 				>
 					{item.name || 'Unnamed Item'}
 				</HeaderText>

@@ -7,24 +7,34 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 
 import './culture-panel.scss';
 
 interface Props {
 	culture: Culture;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
 export const CulturePanel = (props: Props) => {
+	const tags: string[] = [ props.culture.type ];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getCultureSourcebook(props.sourcebooks, props.culture)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	return (
 		<ErrorBoundary>
 			<div className={props.mode === PanelMode.Full ? 'culture-panel' : 'culture-panel compact'} id={props.mode === PanelMode.Full ? props.culture.id : undefined}>
 				<HeaderText
 					level={1}
-					tags={[ props.culture.type ]}
+					tags={tags}
 				>
 					{props.culture.name || 'Unnamed Culture'}
 				</HeaderText>

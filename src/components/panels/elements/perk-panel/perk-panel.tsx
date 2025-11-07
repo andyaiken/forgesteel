@@ -10,9 +10,9 @@ import './perk-panel.scss';
 
 interface Props {
 	perk: Perk;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 

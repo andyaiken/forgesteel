@@ -250,6 +250,7 @@ export const LibraryEditPage = (props: Props) => {
 								<MonsterPanel
 									monster={m}
 									monsterGroup={monsterGroup}
+									sourcebooks={props.sourcebooks}
 									options={props.options}
 								/>
 							</SelectablePanel>
@@ -264,6 +265,7 @@ export const LibraryEditPage = (props: Props) => {
 				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={monster => {
 							const copy = Utils.copy(scratchpadMonsters) as Monster[];
@@ -554,26 +556,26 @@ export const LibraryEditPage = (props: Props) => {
 			case 'ancestry':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<AncestryPanel ancestry={element as Ancestry} options={props.options} mode={PanelMode.Full} />
+						<AncestryPanel ancestry={element as Ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'culture':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<CulturePanel culture={element as Culture} options={props.options} mode={PanelMode.Full} />
+						<CulturePanel culture={element as Culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'career':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<CareerPanel career={element as Career} options={props.options} mode={PanelMode.Full} />
+						<CareerPanel career={element as Career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'class':
 				if (!subElementID) {
 					return (
 						<SelectablePanel key={`${element.id}-${revision}`}>
-							<ClassPanel heroClass={element as HeroClass} options={props.options} mode={PanelMode.Full} />
+							<ClassPanel heroClass={element as HeroClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				} else {
@@ -582,68 +584,68 @@ export const LibraryEditPage = (props: Props) => {
 
 					return (
 						<SelectablePanel key={`${subclass.id}-${revision}`}>
-							<SubclassPanel subclass={subclass} options={props.options} mode={PanelMode.Full} />
+							<SubclassPanel subclass={subclass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				}
 			case 'complication':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<ComplicationPanel complication={element as Complication} options={props.options} mode={PanelMode.Full} />
+						<ComplicationPanel complication={element as Complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'domain':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<DomainPanel domain={element as Domain} options={props.options} mode={PanelMode.Full} />
+						<DomainPanel domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'kit':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<KitPanel kit={element as Kit} options={props.options} mode={PanelMode.Full} />
+						<KitPanel kit={element as Kit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'perk':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<PerkPanel perk={element as Perk} options={props.options} mode={PanelMode.Full} />
+						<PerkPanel perk={element as Perk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'project':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<ProjectPanel project={element as Project} mode={PanelMode.Full} />
+						<ProjectPanel project={element as Project} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'subclass':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<SubclassPanel subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />
+						<SubclassPanel subclass={element as SubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'terrain':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<TerrainPanel terrain={element as Terrain} showCustomizations={true} mode={PanelMode.Full} />
+						<TerrainPanel terrain={element as Terrain} showCustomizations={true} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'title':
 				return (
 					<SelectablePanel key={`${element.id}-${revision}`}>
-						<TitlePanel title={element as Title} options={props.options} mode={PanelMode.Full} />
+						<TitlePanel title={element as Title} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'item':
 				return (
 					<>
 						<SelectablePanel key={`${element.id}-${revision}`}>
-							<ItemPanel item={element as Item} options={props.options} mode={PanelMode.Full} />
+							<ItemPanel item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
 							(element as Item).crafting ?
 								<SelectablePanel>
-									<ProjectPanel project={(element as Item).crafting!} mode={PanelMode.Full} />
+									<ProjectPanel project={(element as Item).crafting!} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								</SelectablePanel>
 								: null
 						}
@@ -653,12 +655,12 @@ export const LibraryEditPage = (props: Props) => {
 				return (
 					<>
 						<SelectablePanel key={`${element.id}-${revision}`}>
-							<ImbuementPanel imbuement={element as Imbuement} options={props.options} mode={PanelMode.Full} />
+							<ImbuementPanel imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
 							(element as Imbuement).crafting ?
 								<SelectablePanel>
-									<ProjectPanel project={(element as Imbuement).crafting!} mode={PanelMode.Full} />
+									<ProjectPanel project={(element as Imbuement).crafting!} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 								</SelectablePanel>
 								: null
 						}
@@ -668,7 +670,7 @@ export const LibraryEditPage = (props: Props) => {
 				if (!subElementID) {
 					return (
 						<SelectablePanel key={`${element.id}-${revision}`}>
-							<MonsterGroupPanel monsterGroup={element as MonsterGroup} options={props.options} mode={PanelMode.Full} />
+							<MonsterGroupPanel monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				} else {
@@ -683,7 +685,7 @@ export const LibraryEditPage = (props: Props) => {
 									label: 'Preview',
 									children: (
 										<SelectablePanel key={`${monster.id}-${revision}`}>
-											<MonsterPanel monster={monster} monsterGroup={monsterGroup} options={props.options} mode={PanelMode.Full} />
+											<MonsterPanel monster={monster} monsterGroup={monsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 										</SelectablePanel>
 									)
 								},

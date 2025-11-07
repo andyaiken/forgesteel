@@ -10,15 +10,17 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { Space } from 'antd';
 
 import './domain-panel.scss';
 
 interface Props {
 	domain: Domain;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -64,10 +66,18 @@ export const DomainPanel = (props: Props) => {
 		));
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getDomainSourcebook(props.sourcebooks, props.domain)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='domain-panel compact'>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.domain.name || 'Unnamed Domain'}
 				</HeaderText>
 				<Markdown text={props.domain.description} />
@@ -83,7 +93,7 @@ export const DomainPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className={className} id={props.domain.id}>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.domain.name || 'Unnamed Domain'}
 				</HeaderText>
 				<Markdown text={props.domain.description} />

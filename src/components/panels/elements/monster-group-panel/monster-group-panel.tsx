@@ -12,6 +12,9 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { useState } from 'react';
 
 import './monster-group-panel.scss';
@@ -19,6 +22,7 @@ import './monster-group-panel.scss';
 interface Props {
 	monsterGroup: MonsterGroup;
 	options: Options;
+	sourcebooks: Sourcebook[];
 	mode?: PanelMode;
 	onSelectMonster?: (monster: Monster) => void;
 }
@@ -83,7 +87,7 @@ export const MonsterGroupPanel = (props: Props) => {
 				{
 					props.monsterGroup.monsters.map(m =>
 						<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
-							<MonsterPanel monster={m} monsterGroup={props.monsterGroup} options={props.options} />
+							<MonsterPanel monster={m} monsterGroup={props.monsterGroup} sourcebooks={props.sourcebooks} options={props.options} />
 						</SelectablePanel>
 					)
 				}
@@ -165,10 +169,18 @@ export const MonsterGroupPanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, props.monsterGroup)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='monster-group-panel compact'>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.monsterGroup.name || 'Unnamed Monster Group'}
 				</HeaderText>
 				<Markdown text={props.monsterGroup.description} />
@@ -184,7 +196,7 @@ export const MonsterGroupPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className={className} id={props.monsterGroup.id}>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.monsterGroup.name || 'Unnamed Monster Group'}
 				</HeaderText>
 				{getContent()}

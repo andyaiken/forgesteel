@@ -63,17 +63,17 @@ export const CultureSection = (props: CultureSectionProps) => {
 	const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 	const optionsAncestral = cultures.filter(c => c.type === CultureType.Ancestral).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 	const optionsProfessional = cultures.filter(c => c.type === CultureType.Professional).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 	const optionsBespoke = cultures.filter(c => c.type === CultureType.Bespoke).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-			<CulturePanel culture={c} options={props.options} />
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 
@@ -193,7 +193,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 					props.hero.culture && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='culture-selected'>
 							<SelectablePanel>
-								<CulturePanel culture={props.hero.culture} options={props.options} mode={PanelMode.Full} />
+								<CulturePanel culture={props.hero.culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null

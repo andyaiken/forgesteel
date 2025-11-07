@@ -146,6 +146,7 @@ export const EncounterPanel = (props: Props) => {
 										key={monster.id}
 										monster={monster}
 										monsterGroup={monsterGroup}
+										sourcebooks={props.sourcebooks}
 										options={props.options}
 										mode={PanelMode.Full}
 									/>
@@ -164,6 +165,7 @@ export const EncounterPanel = (props: Props) => {
 										key={terrain.id}
 										terrain={terrain}
 										upgradeIDs={slot.upgradeIDs}
+										sourcebooks={props.sourcebooks}
 										mode={PanelMode.Full}
 									/>
 								);

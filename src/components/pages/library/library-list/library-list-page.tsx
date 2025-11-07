@@ -425,54 +425,54 @@ export const LibraryListPage = (props: Props) => {
 
 		switch (category) {
 			case 'ancestry':
-				getPanel = (element: Element) => <AncestryPanel key={element.id} ancestry={element as Ancestry} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <AncestryPanel key={element.id} ancestry={element as Ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'career':
-				getPanel = (element: Element) => <CareerPanel key={element.id} career={element as Career} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <CareerPanel key={element.id} career={element as Career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'class':
-				getPanel = (element: Element) => <ClassPanel key={element.id} heroClass={element as HeroClass} options={props.options} mode={PanelMode.Full} onSelectSubclass={props.showSubclass} />;
+				getPanel = (element: Element) => <ClassPanel key={element.id} heroClass={element as HeroClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} onSelectSubclass={props.showSubclass} />;
 				break;
 			case 'complication':
-				getPanel = (element: Element) => <ComplicationPanel key={element.id} complication={element as Complication} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <ComplicationPanel key={element.id} complication={element as Complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'culture':
-				getPanel = (element: Element) => <CulturePanel key={element.id} culture={element as Culture} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <CulturePanel key={element.id} culture={element as Culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'domain':
-				getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'imbuement':
-				getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'item':
-				getPanel = (element: Element) => <ItemPanel key={element.id} item={element as Item} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <ItemPanel key={element.id} item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'kit':
-				getPanel = (element: Element) => <KitPanel key={element.id} kit={element as Kit} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <KitPanel key={element.id} kit={element as Kit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'monster-group':
 				getPanel = (element: Element) => {
 					return props.options.showMonsterGroups ?
-						<MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} options={props.options} mode={PanelMode.Full} onSelectMonster={props.showMonster} />
+						<MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} onSelectMonster={props.showMonster} />
 						:
-						<MonsterPanel key={element.id} monster={element as Monster} options={props.options} mode={PanelMode.Full} />;
+						<MonsterPanel key={element.id} monster={element as Monster} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				};
 				break;
 			case 'perk':
-				getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'project':
-				getPanel = (element: Element) => <ProjectPanel key={element.id} project={element as Project} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <ProjectPanel key={element.id} project={element as Project} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 				break;
 			case 'subclass':
-				getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 			case 'terrain':
-				getPanel = (element: Element) => <TerrainPanel key={element.id} terrain={element as Terrain} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <TerrainPanel key={element.id} terrain={element as Terrain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
 				break;
 			case 'title':
-				getPanel = (element: Element) => <TitlePanel key={element.id} title={element as Title} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <TitlePanel key={element.id} title={element as Title} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 				break;
 		}
 

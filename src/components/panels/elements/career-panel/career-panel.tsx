@@ -11,15 +11,17 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { useState } from 'react';
 
 import './career-panel.scss';
 
 interface Props {
 	career: Career;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 }
 
@@ -106,10 +108,18 @@ export const CareerPanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getCareerSourcebook(props.sourcebooks, props.career)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='career-panel compact'>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.career.name || 'Unnamed Career'}
 				</HeaderText>
 				<Markdown text={props.career.description} />
@@ -125,7 +135,7 @@ export const CareerPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className={className} id={props.career.id}>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.career.name || 'Unnamed Career'}
 				</HeaderText>
 				{getContent()}

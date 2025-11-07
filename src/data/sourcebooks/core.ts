@@ -350,7 +350,8 @@ export const core: Sourcebook = {
 		TitleData.unchained,
 		// Special
 		TitleData.angler,
-		TitleData.goldenrod
+		TitleData.goldenrod,
+		TitleData.masterOfReels
 	],
 	items: [
 		ConsumableData.blackAshDart,

@@ -24,6 +24,9 @@ import { MonsterToken } from '@/components/panels/token/token';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { SummoningInfo } from '@/models/summon';
 
@@ -33,6 +36,7 @@ interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
 	summon?: SummoningInfo;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	mode?: PanelMode;
 	style?: CSSProperties;
@@ -57,13 +61,24 @@ export const MonsterPanel = (props: Props) => {
 	const features = MonsterLogic.getFeatures(props.monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
 	const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
 
+	const tags = [];
+	if (props.summon && props.summon.isSignature) {
+		tags.push('Signature');
+	}
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getMonsterSourcebook(props.sourcebooks, props.monster)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	return (
 		<ErrorBoundary>
 			<div className={props.mode === PanelMode.Full ? 'monster-panel' : 'monster-panel compact'} id={props.mode === PanelMode.Full ? props.monster.id : undefined} style={props.style}>
 				<HeaderText
 					level={1}
 					ribbon={<MonsterToken monster={props.monster} monsterGroup={props.monsterGroup} size={28} />}
-					tags={props.summon && props.summon.isSignature ? [ 'Signature' ] : []}
+					tags={tags}
 					extra={props.extra}
 				>
 					{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}

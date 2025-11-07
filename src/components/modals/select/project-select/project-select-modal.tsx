@@ -57,7 +57,7 @@ export const ProjectSelectModal = (props: Props) => {
 									key={project.id}
 									onSelect={() => props.onSelect(project)}
 								>
-									<ProjectPanel project={project} />
+									<ProjectPanel project={project} sourcebooks={props.sourcebooks} />
 								</SelectablePanel>
 							))
 						}

@@ -488,6 +488,7 @@ export const EncounterRunPanel = (props: Props) => {
 									<MonsterPanel
 										key={m.monster.id}
 										monster={m.monster}
+										sourcebooks={props.sourcebooks}
 										options={props.options}
 										mode={PanelMode.Full}
 										style={{ padding: '0 5px' }}
@@ -662,6 +663,7 @@ export const EncounterRunPanel = (props: Props) => {
 									<ItemPanel
 										key={`${s.id} ${copy.id}`}
 										item={copy}
+										sourcebooks={props.sourcebooks}
 										options={props.options}
 										mode={PanelMode.Full}
 										style={{ paddingLeft: '0', paddingRight: '0' }}
@@ -789,6 +791,7 @@ export const EncounterRunPanel = (props: Props) => {
 			<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} width='500px'>
 				<MonsterSelectModal
 					monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
+					sourcebooks={props.sourcebooks}
 					options={props.options}
 					onClose={() => setAddingMonsters(false)}
 					onSelect={m => {
@@ -818,6 +821,7 @@ export const EncounterRunPanel = (props: Props) => {
 							monster={selectedMonster.monster}
 							monsterGroup={selectedMonster.monsterGroup}
 							encounter={selectedMonster.isTeamHero ? undefined : encounter}
+							sourcebooks={props.sourcebooks}
 							options={props.options}
 							onClose={() => setSelectedMonster(null)}
 							updateMonster={monster => {
@@ -888,6 +892,7 @@ export const EncounterRunPanel = (props: Props) => {
 						<TerrainModal
 							terrain={selectedTerrain}
 							upgradeIDs={[]}
+							sourcebooks={props.sourcebooks}
 							onClose={() => setSelectedTerrain(null)}
 							updateTerrain={terrain => {
 								const copy = Utils.copy(encounter);

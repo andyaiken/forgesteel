@@ -14,6 +14,8 @@ import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { SubClass } from '@/models/subclass';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 import { useState } from 'react';
@@ -22,9 +24,9 @@ import './class-panel.scss';
 
 interface Props {
 	heroClass: HeroClass;
+	sourcebooks: Sourcebook[];
 	options: Options;
 	hero?: Hero;
-	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
 	onSelectSubclass?: (subclass: SubClass) => void;
 }
@@ -33,14 +35,6 @@ export const ClassPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
 
 	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
-
-	const getTags = () => {
-		if (props.heroClass.type === 'master') {
-			return [ 'Master Class' ];
-		}
-
-		return [];
-	};
 
 	const getOverview = () => {
 		return (
@@ -152,7 +146,7 @@ export const ClassPanel = (props: Props) => {
 					{
 						subclasses.map(sc => (
 							<Expander key={sc.id} title={sc.name}>
-								<SubclassPanel key={sc.id} subclass={sc} options={props.options} hero={props.hero} mode={PanelMode.Full} style={{ padding: '5px' }} />
+								<SubclassPanel key={sc.id} subclass={sc} sourcebooks={props.sourcebooks} options={props.options} hero={props.hero} mode={PanelMode.Full} style={{ padding: '5px' }} />
 							</Expander>
 						))
 					}
@@ -168,7 +162,7 @@ export const ClassPanel = (props: Props) => {
 		return (
 			<div className='class-subclasses-grid'>
 				{
-					subclasses.map(sc => <SubclassPanel key={sc.id} subclass={sc} options={props.options} hero={props.hero} mode={PanelMode.Full} />)
+					subclasses.map(sc => <SubclassPanel key={sc.id} subclass={sc} sourcebooks={props.sourcebooks} options={props.options} hero={props.hero} mode={PanelMode.Full} />)
 				}
 				{
 					props.heroClass.subclasses.length === 0 ?
@@ -234,10 +228,21 @@ export const ClassPanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.heroClass.type === 'master') {
+		tags.push('Master Class');
+	}
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getClassSourcebook(props.sourcebooks, props.heroClass)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='class-panel compact'>
-				<HeaderText level={1} tags={getTags()}>
+				<HeaderText level={1} tags={tags}>
 					{props.heroClass.name || 'Unnamed Class'}
 				</HeaderText>
 				<Markdown text={props.heroClass.description} />
@@ -253,7 +258,7 @@ export const ClassPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className={className} id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
-				<HeaderText level={1} tags={getTags()}>
+				<HeaderText level={1} tags={tags}>
 					{props.heroClass.name || 'Unnamed Class'}
 				</HeaderText>
 				{getContent()}

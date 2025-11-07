@@ -13,6 +13,7 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { Options } from '@/models/options';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -21,6 +22,7 @@ import './monster-select-modal.scss';
 interface Props {
 	monsters: Monster[];
 	subset?: 'mount' | 'retainer';
+	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
 	onSelect: (monster: Monster) => void;
@@ -78,7 +80,7 @@ export const MonsterSelectModal = (props: Props) => {
 									key={m.id}
 									onSelect={() => props.onSelect(m)}
 								>
-									<MonsterPanel monster={m} options={props.options} />
+									<MonsterPanel monster={m} sourcebooks={props.sourcebooks} options={props.options} />
 								</SelectablePanel>
 							))
 						}

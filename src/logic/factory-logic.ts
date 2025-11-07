@@ -61,6 +61,7 @@ import { SubClass } from '@/models/subclass';
 import { Summon } from '@/models/summon';
 import { TerrainCategory } from '@/enums/terrain-category';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
+import { Tip } from '@/models/tip';
 import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 
@@ -1000,6 +1001,14 @@ export class FactoryLogic {
 				y: 0,
 				z: 0
 			}
+		};
+	};
+
+	static createTip = (data: { content: string, image: string, isNew?: boolean }): Tip => {
+		return {
+			content: data.content,
+			image: data.image,
+			isNew: data.isNew || false
 		};
 	};
 

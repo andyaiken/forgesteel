@@ -6,7 +6,6 @@
 
 ### Heroes
 
-* Allow XP per level to be an option, default to 16
 * Classic Sheet
   * Add ability to create standalone 'reference sheets' with selectable 'reference cards'
   * (possibly solved along with above) Have ability to create handout sheets with items, followers, etc without being attached to a character

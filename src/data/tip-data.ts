@@ -23,6 +23,7 @@ import librarySourcebooks from '@/assets/screenshots/sourcebooks.png';
 import libraryThirdParty from '@/assets/screenshots/third-party.png';
 
 import homebrewEditor from '@/assets/screenshots/homebrew.png';
+import homebrewKitTuning from '@/assets/screenshots/homebrew-kit-tuning.png';
 import homebrewMonsterBuilder from '@/assets/screenshots/monster-builder.png';
 
 import playbookEncounter from '@/assets/screenshots/playbook-encounter.png';
@@ -143,6 +144,11 @@ export class TipData {
 			FactoryLogic.createTip({
 				image: homebrewMonsterBuilder,
 				content: 'When you\'re creating a homebrew monster, Forge Steel shows you similar monsters to help you choose your new monster\'s stat values.'
+			}),
+			FactoryLogic.createTip({
+				image: homebrewKitTuning,
+				content: 'When you\'re creating a homebrew kit, Forge Steel helps you to make sure your kit isn\'t overpowered.',
+				isNew: true
 			}),
 			// TODO: Monster builder - genesplice
 			// #endregion

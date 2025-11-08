@@ -330,7 +330,7 @@ export const PlaybookListPage = (props: Props) => {
 										<Alert
 											type='info'
 											showIcon={true}
-											message='To export as a PDF, switch to Classic view.'
+											message='If you want to export as a PDF, switch to Classic view.'
 											action={<Button onClick={() => setView('classic')}>Classic</Button>}
 										/>
 										: null

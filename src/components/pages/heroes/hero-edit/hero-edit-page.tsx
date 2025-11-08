@@ -276,7 +276,7 @@ export const HeroEditPage = (props: Props) => {
 		const heroCopy = Utils.copy(hero);
 		if (heroCopy.class) {
 			heroCopy.class.level = level;
-			heroCopy.state.xp = HeroLogic.getMinXP(level);
+			heroCopy.state.xp = HeroLogic.getMinXP(level, props.options);
 		}
 		HeroLogic
 			.getCompanions(heroCopy)

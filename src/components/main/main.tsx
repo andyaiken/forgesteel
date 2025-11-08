@@ -1707,7 +1707,6 @@ export const Main = (props: Props) => {
 									showAbout={showAbout}
 									showSourcebooks={showSourcebooks}
 									showSettings={showSettings}
-									showSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
 									showMonster={onSelectMonster}
 									setOptions={persistOptions}
 									createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}

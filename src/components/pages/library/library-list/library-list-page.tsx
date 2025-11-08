@@ -18,6 +18,7 @@ import { DangerButton } from '@/components/controls/danger-button/danger-button'
 import { Domain } from '@/models/domain';
 import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Element } from '@/models/element';
+import { ElementSheet } from '@/components/panels/classic-sheet/element-sheet/element-sheet';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -58,6 +59,7 @@ import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain
 import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Utils } from '@/utils/utils';
+import { ViewSelector } from '@/components/panels/view-selector/view-selector';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useTitle } from '@/hooks/use-title';
@@ -76,7 +78,6 @@ interface Props {
 	showAbout: () => void;
 	showSettings: () => void;
 	showSourcebooks: () => void;
-	showSubclass: (subclass: SubClass) => void;
 	showMonster: (monster: Monster) => void;
 	setOptions: (options: Options) => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element | null) => void;
@@ -94,6 +95,7 @@ export const LibraryListPage = (props: Props) => {
 	const [ previousSelectedID, setPreviousSelectedID ] = useState<string | null | undefined>(elementID);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
+	const [ view, setView ] = useState<string>('modern');
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew)[0].id : null);
@@ -423,57 +425,73 @@ export const LibraryListPage = (props: Props) => {
 	const getElementPanel = () => {
 		let getPanel: (element: Element) => ReactNode = () => null;
 
-		switch (category) {
-			case 'ancestry':
-				getPanel = (element: Element) => <AncestryPanel key={element.id} ancestry={element as Ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'career':
-				getPanel = (element: Element) => <CareerPanel key={element.id} career={element as Career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'class':
-				getPanel = (element: Element) => <ClassPanel key={element.id} heroClass={element as HeroClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} onSelectSubclass={props.showSubclass} />;
-				break;
-			case 'complication':
-				getPanel = (element: Element) => <ComplicationPanel key={element.id} complication={element as Complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'culture':
-				getPanel = (element: Element) => <CulturePanel key={element.id} culture={element as Culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'domain':
-				getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'imbuement':
-				getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'item':
-				getPanel = (element: Element) => <ItemPanel key={element.id} item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'kit':
-				getPanel = (element: Element) => <KitPanel key={element.id} kit={element as Kit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'monster-group':
-				getPanel = (element: Element) => {
-					return props.options.showMonsterGroups ?
-						<MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} onSelectMonster={props.showMonster} />
-						:
-						<MonsterPanel key={element.id} monster={element as Monster} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				};
-				break;
-			case 'perk':
-				getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'project':
-				getPanel = (element: Element) => <ProjectPanel key={element.id} project={element as Project} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
-				break;
-			case 'subclass':
-				getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
-			case 'terrain':
-				getPanel = (element: Element) => <TerrainPanel key={element.id} terrain={element as Terrain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
-				break;
-			case 'title':
-				getPanel = (element: Element) => <TitlePanel key={element.id} title={element as Title} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
-				break;
+		if (view === 'classic') {
+			getPanel = (element: Element) => {
+				return (
+					<div style={{ padding: '20px', overflow: 'auto' }}>
+						<ElementSheet
+							key={element.id}
+							type={category}
+							element={element}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+						/>
+					</div>
+				);
+			};
+		} else {
+			switch (category) {
+				case 'ancestry':
+					getPanel = (element: Element) => <AncestryPanel key={element.id} ancestry={element as Ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'career':
+					getPanel = (element: Element) => <CareerPanel key={element.id} career={element as Career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'class':
+					getPanel = (element: Element) => <ClassPanel key={element.id} heroClass={element as HeroClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'complication':
+					getPanel = (element: Element) => <ComplicationPanel key={element.id} complication={element as Complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'culture':
+					getPanel = (element: Element) => <CulturePanel key={element.id} culture={element as Culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'domain':
+					getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'imbuement':
+					getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'item':
+					getPanel = (element: Element) => <ItemPanel key={element.id} item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'kit':
+					getPanel = (element: Element) => <KitPanel key={element.id} kit={element as Kit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'monster-group':
+					getPanel = (element: Element) => {
+						return props.options.showMonsterGroups ?
+							<MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} onSelectMonster={props.showMonster} />
+							:
+							<MonsterPanel key={element.id} monster={element as Monster} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					};
+					break;
+				case 'perk':
+					getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'project':
+					getPanel = (element: Element) => <ProjectPanel key={element.id} project={element as Project} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
+					break;
+				case 'subclass':
+					getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'terrain':
+					getPanel = (element: Element) => <TerrainPanel key={element.id} terrain={element as Terrain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
+					break;
+				case 'title':
+					getPanel = (element: Element) => <TitlePanel key={element.id} title={element as Title} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+			}
 		}
 
 		return getPanel;
@@ -694,9 +712,25 @@ export const LibraryListPage = (props: Props) => {
 				<Popover
 					trigger='click'
 					content={(
-						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-							<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
-							<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
+						<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							{
+								view !== 'classic' ?
+									<Alert
+										type='info'
+										showIcon={true}
+										message='If you want to export as an image or PDF, switch to Classic view.'
+										action={<Button onClick={() => setView('classic')}>Classic</Button>}
+									/>
+									: null
+							}
+							{
+								view === 'classic' ?
+									<>
+										<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
+										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
+									</>
+									: null
+							}
 							<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
 						</div>
 					)}
@@ -935,6 +969,16 @@ export const LibraryListPage = (props: Props) => {
 							</Popover>
 					}
 					{getElementToolbar()}
+					{
+						selectedID ?
+							<div className='divider' />
+							: null
+					}
+					{
+						selectedID ?
+							<ViewSelector value={view} onChange={setView} />
+							: null
+					}
 				</AppHeader>
 				<ErrorBoundary>
 					<div className='library-list-page-content'>

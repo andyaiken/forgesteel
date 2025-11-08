@@ -25,6 +25,7 @@ import { ModifierLogic } from '@/logic/modifier-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NameGenerator } from '@/utils/name-generator';
+import { Options } from '@/models/options';
 import { Size } from '@/models/size';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
@@ -955,16 +956,16 @@ export class HeroLogic {
 		return 'healthy';
 	};
 
-	static getMinXP = (level: number) => {
-		return Math.max(0, (level - 1) * 16);
+	static getMinXP = (level: number, options: Options) => {
+		return Math.max(0, (level - 1) * options.xpPerLevel);
 	};
 
-	static canLevelUp = (hero: Hero) => {
+	static canLevelUp = (hero: Hero, options: Options) => {
 		if (!hero.class) {
 			return false;
 		}
 
-		return hero.state.xp >= HeroLogic.getMinXP(hero.class.level + 1);
+		return hero.state.xp >= HeroLogic.getMinXP(hero.class.level + 1, options);
 	};
 
 	static takeRespite = (hero: Hero) => {

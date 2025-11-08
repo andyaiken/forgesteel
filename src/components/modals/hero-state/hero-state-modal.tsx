@@ -41,6 +41,7 @@ export const HeroStateModal = (props: Props) => {
 				return (
 					<StatsPanel
 						hero={hero}
+						options={props.options}
 						onChange={onChange}
 						onLevelUp={props.onLevelUp}
 					/>

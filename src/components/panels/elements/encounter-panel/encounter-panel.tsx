@@ -8,7 +8,6 @@ import { EncounterDifficultyPanel } from '@/components/panels/encounter-difficul
 import { EncounterLogic } from '@/logic/encounter-logic';
 import { EncounterObjectivePanel } from '@/components/panels/elements/encounter-objective-panel/encounter-objective-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -40,8 +39,6 @@ interface Props {
 
 export const EncounterPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
-
-	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
 
 	const getOverview = () => {
 		return (
@@ -226,50 +223,37 @@ export const EncounterPanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		if (isInteractive) {
-			let content = null;
-			switch (page) {
-				case 'overview':
-					content = getOverview();
-					break;
-				case 'groups':
-					content = getEncounterGroups();
-					break;
-				case 'statblocks':
-					content = getStatBlocks();
-					break;
-				case 'malice':
-					content = getMalice();
-					break;
-			}
-
-			return (
-				<>
-					<Segmented
-						style={{ marginBottom: '20px' }}
-						block={true}
-						options={[
-							{ value: 'overview', label: 'Overview' },
-							{ value: 'groups', label: 'Groups' },
-							{ value: 'statblocks', label: 'Stat Blocks' },
-							{ value: 'malice', label: 'Malice' }
-						]}
-						value={page}
-						onChange={setPage}
-					/>
-					{content}
-				</>
-			);
+		let content = null;
+		switch (page) {
+			case 'overview':
+				content = getOverview();
+				break;
+			case 'groups':
+				content = getEncounterGroups();
+				break;
+			case 'statblocks':
+				content = getStatBlocks();
+				break;
+			case 'malice':
+				content = getMalice();
+				break;
 		}
 
 		return (
 			<>
-				{getOverview()}
-				<HeaderText level={1}>Encounter Groups</HeaderText>
-				{getEncounterGroups()}
-				<HeaderText level={1}>Stat Blocks</HeaderText>
-				{getStatBlocks()}
-				{getMalice()}
+				<Segmented
+					style={{ marginBottom: '20px' }}
+					block={true}
+					options={[
+						{ value: 'overview', label: 'Overview' },
+						{ value: 'groups', label: 'Groups' },
+						{ value: 'statblocks', label: 'Stat Blocks' },
+						{ value: 'malice', label: 'Malice' }
+					]}
+					value={page}
+					onChange={setPage}
+				/>
+				{content}
 			</>
 		);
 	};
@@ -283,11 +267,6 @@ export const EncounterPanel = (props: Props) => {
 				<HeaderText
 					level={1}
 					tags={[ difficulty ]}
-					extra={
-						props.showTools ?
-							<Button type='text' icon={<InfoCircleOutlined />} onClick={props.showTools} />
-							: null
-					}
 				>
 					{props.encounter.name || 'Unnamed Encounter'}
 				</HeaderText>

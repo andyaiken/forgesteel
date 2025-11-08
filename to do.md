@@ -6,7 +6,12 @@
 
 ### Heroes
 
-(nothing)
+* Allow XP per level to be an option, default to 16
+* Classic Sheet
+  * Add ability to create standalone 'reference sheets' with selectable 'reference cards'
+  * (possibly solved along with above) Have ability to create handout sheets with items, followers, etc without being attached to a character
+  * Check hero features/abilities for certain keywords and ensure relevant reference cards get put into the character sheet?
+  * Add user-selectable color scheme
 
 ### Library
 
@@ -22,7 +27,6 @@
   * Encounters should pull in monsters, rather than storing monster / group IDs
   * Set number of squares for per-square terrain
   * Use encounter templates
-  * Auto-create encounters
 * Tactical Maps:
   * Switch map Z level
     * Show (blurred, translucent, no pointer events) levels below / above
@@ -54,20 +58,3 @@
   * Monster building / genesplice
   * Encounter building / running
   * Map making / adding minis
-
-
-## Classic Sheet
-
-### Heroes
-
-- Add ability to create standalone 'reference sheets' with selectable 'reference cards'
-- (possibly solved along with above) Have ability to create handout sheets with items, followers, etc without being attached to a character
-- Check hero features/abilities for certain keywords and ensure relevant reference cards get put into the character sheet?
-- Add user-selectable color scheme
-
-### Encounter
-
-### Negotiation
-- Add Negotiation classic sheet
-
-### Montage

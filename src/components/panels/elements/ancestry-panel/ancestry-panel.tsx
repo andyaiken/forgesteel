@@ -2,7 +2,6 @@ import { Segmented, Space } from 'antd';
 import { Ancestry } from '@/models/ancestry';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
@@ -29,8 +28,6 @@ interface Props {
 
 export const AncestryPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
-
-	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
 
 	const isSignatureFeature = (feature: Feature) => {
 		return !isPurchasedFeature(feature);
@@ -76,43 +73,33 @@ export const AncestryPanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		if (isInteractive) {
-			let content = null;
-			switch (page) {
-				case 'overview':
-					content = getOverview();
-					break;
-				case 'signature':
-					content = getSignatureFeatures();
-					break;
-				case 'purchased':
-					content = getPurchasedFeatures();
-					break;
-			}
-
-			return (
-				<>
-					<Segmented
-						style={{ marginBottom: '20px' }}
-						block={true}
-						options={[
-							{ value: 'overview', label: 'Overview' },
-							{ value: 'signature', label: 'Signature' },
-							{ value: 'purchased', label: 'Purchased' }
-						]}
-						value={page}
-						onChange={setPage}
-					/>
-					{content}
-				</>
-			);
+		let content = null;
+		switch (page) {
+			case 'overview':
+				content = getOverview();
+				break;
+			case 'signature':
+				content = getSignatureFeatures();
+				break;
+			case 'purchased':
+				content = getPurchasedFeatures();
+				break;
 		}
 
 		return (
 			<>
-				{getOverview()}
-				{getSignatureFeatures()}
-				{getPurchasedFeatures()}
+				<Segmented
+					style={{ marginBottom: '20px' }}
+					block={true}
+					options={[
+						{ value: 'overview', label: 'Overview' },
+						{ value: 'signature', label: 'Signature' },
+						{ value: 'purchased', label: 'Purchased' }
+					]}
+					value={page}
+					onChange={setPage}
+				/>
+				{content}
 			</>
 		);
 	};
@@ -136,14 +123,9 @@ export const AncestryPanel = (props: Props) => {
 		);
 	}
 
-	let className = 'ancestry-panel';
-	if (isInteractive) {
-		className += ' interactive';
-	}
-
 	return (
 		<ErrorBoundary>
-			<div className={className} id={props.ancestry.id}>
+			<div className='ancestry-panel' id={props.ancestry.id}>
 				<HeaderText level={1} tags={tags}>
 					{props.ancestry.name || 'Unnamed Ancestry'}
 				</HeaderText>

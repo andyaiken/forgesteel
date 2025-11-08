@@ -1,7 +1,6 @@
 import { Segmented, Space } from 'antd';
 import { Career } from '@/models/career';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -27,8 +26,6 @@ interface Props {
 
 export const CareerPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
-
-	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
 
 	const getOverview = () => {
 		return (
@@ -66,44 +63,33 @@ export const CareerPanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		if (isInteractive) {
-			let content = null;
-			switch (page) {
-				case 'overview':
-					content = getOverview();
-					break;
-				case 'features':
-					content = getFeatures();
-					break;
-				case 'incidents':
-					content = getIncidents();
-					break;
-			}
-
-			return (
-				<>
-					<Segmented
-						style={{ marginBottom: '20px' }}
-						block={true}
-						options={[
-							{ value: 'overview', label: 'Overview' },
-							{ value: 'features', label: 'Features' },
-							{ value: 'incidents', label: 'Inciting Incidents' }
-						]}
-						value={page}
-						onChange={setPage}
-					/>
-					{content}
-				</>
-			);
+		let content = null;
+		switch (page) {
+			case 'overview':
+				content = getOverview();
+				break;
+			case 'features':
+				content = getFeatures();
+				break;
+			case 'incidents':
+				content = getIncidents();
+				break;
 		}
 
 		return (
 			<>
-				{getOverview()}
-				{getFeatures()}
-				<HeaderText>{props.career.incitingIncidents.selected ? 'Inciting Incident' : 'Inciting Incidents'}</HeaderText>
-				{getIncidents()}
+				<Segmented
+					style={{ marginBottom: '20px' }}
+					block={true}
+					options={[
+						{ value: 'overview', label: 'Overview' },
+						{ value: 'features', label: 'Features' },
+						{ value: 'incidents', label: 'Inciting Incidents' }
+					]}
+					value={page}
+					onChange={setPage}
+				/>
+				{content}
 			</>
 		);
 	};
@@ -127,14 +113,9 @@ export const CareerPanel = (props: Props) => {
 		);
 	}
 
-	let className = 'class-panel';
-	if (isInteractive) {
-		className += ' interactive';
-	}
-
 	return (
 		<ErrorBoundary>
-			<div className={className} id={props.career.id}>
+			<div className='class-panel' id={props.career.id}>
 				<HeaderText level={1} tags={tags}>
 					{props.career.name || 'Unnamed Career'}
 				</HeaderText>

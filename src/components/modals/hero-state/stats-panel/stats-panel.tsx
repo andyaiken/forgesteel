@@ -9,6 +9,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+import { Options } from '@/models/options';
 import { Random } from '@/utils/random';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -26,6 +27,7 @@ interface Expression {
 
 interface Props {
 	hero: Hero;
+	options: Options;
 	onChange: (hero: Hero) => void;
 	onLevelUp?: (hero: Hero) => void;
 }
@@ -76,7 +78,7 @@ export const StatsPanel = (props: Props) => {
 			if (props.onLevelUp) {
 				const copy = Utils.copy(hero);
 				if (copy.class) {
-					while (HeroLogic.canLevelUp(copy)) {
+					while (HeroLogic.canLevelUp(copy, props.options)) {
 						copy.class.level += 1;
 					}
 				}
@@ -155,7 +157,7 @@ export const StatsPanel = (props: Props) => {
 						: null
 				}
 				{
-					HeroLogic.canLevelUp(hero) ?
+					HeroLogic.canLevelUp(hero, props.options) ?
 						<Alert
 							type='info'
 							showIcon={true}

@@ -621,33 +621,6 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getFeatureFlagControls = () => {
-		const flags = [
-			FeatureFlags.interactiveContent
-		];
-		if (!flags.some(f => FeatureFlags.hasFlag(f.code))) {
-			return null;
-		}
-
-		const setShowInteractivePanels = (value: boolean) => {
-			const copy = Utils.copy(options);
-			copy.showInteractivePanels = value;
-			props.setOptions(copy);
-		};
-
-		return (
-			<Expander title='Features'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-					{
-						FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) ?
-							<Toggle label='Show content interactively' value={options.showInteractivePanels} onChange={setShowInteractivePanels} />
-							: null
-					}
-				</Space>
-			</Expander>
-		);
-	};
-
 	const getErrors = () => {
 		const clearErrors = () => {
 			props.clearErrors();
@@ -730,7 +703,6 @@ export const SettingsModal = (props: Props) => {
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
-						{getFeatureFlagControls()}
 						{getErrors()}
 					</Space>
 				);

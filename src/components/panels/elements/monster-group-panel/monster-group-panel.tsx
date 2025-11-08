@@ -1,6 +1,5 @@
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -29,8 +28,6 @@ interface Props {
 
 export const MonsterGroupPanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
-
-	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
 
 	const getOverview = () => {
 		return (
@@ -114,57 +111,43 @@ export const MonsterGroupPanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		if (isInteractive) {
-			let content = null;
-			switch (page) {
-				case 'overview':
-					content = getOverview();
-					break;
-				case 'malice':
-					content = getMalice();
-					break;
-				case 'monsters':
-					content = getMonsters();
-					break;
-				case 'customization':
-					content = getCustomization();
-					break;
-			}
+		let content = null;
+		switch (page) {
+			case 'overview':
+				content = getOverview();
+				break;
+			case 'malice':
+				content = getMalice();
+				break;
+			case 'monsters':
+				content = getMonsters();
+				break;
+			case 'customization':
+				content = getCustomization();
+				break;
+		}
 
-			const options: { value: string, label: string }[] = [
-				{ value: 'overview', label: 'Overview' }
-			];
-			if (props.monsterGroup.malice.length > 0) {
-				options.push({ value: 'malice', label: 'Malice' });
-			}
-			options.push({ value: 'monsters', label: 'Monsters' });
-			if (props.monsterGroup.addOns.length > 0) {
-				options.push({ value: 'customization', label: 'Customization' });
-			}
-
-			return (
-				<>
-					<Segmented
-						style={{ marginBottom: '20px' }}
-						block={true}
-						options={options}
-						value={page}
-						onChange={setPage}
-					/>
-					{content}
-				</>
-			);
+		const options: { value: string, label: string }[] = [
+			{ value: 'overview', label: 'Overview' }
+		];
+		if (props.monsterGroup.malice.length > 0) {
+			options.push({ value: 'malice', label: 'Malice' });
+		}
+		options.push({ value: 'monsters', label: 'Monsters' });
+		if (props.monsterGroup.addOns.length > 0) {
+			options.push({ value: 'customization', label: 'Customization' });
 		}
 
 		return (
 			<>
-				{getOverview()}
-				{props.monsterGroup.malice.length > 0 ? <HeaderText level={1}>Malice</HeaderText> : null}
-				{getMalice()}
-				{props.monsterGroup.monsters.length > 0 ? <HeaderText level={1}>Monsters</HeaderText> : null}
-				{getMonsters()}
-				{props.monsterGroup.addOns.length > 0 ? <HeaderText level={1}>Customization</HeaderText> : null}
-				{getCustomization()}
+				<Segmented
+					style={{ marginBottom: '20px' }}
+					block={true}
+					options={options}
+					value={page}
+					onChange={setPage}
+				/>
+				{content}
 			</>
 		);
 	};
@@ -188,14 +171,9 @@ export const MonsterGroupPanel = (props: Props) => {
 		);
 	}
 
-	let className = 'monster-group-panel';
-	if (isInteractive) {
-		className += ' interactive';
-	}
-
 	return (
 		<ErrorBoundary>
-			<div className={className} id={props.monsterGroup.id}>
+			<div className='monster-group-panel' id={props.monsterGroup.id}>
 				<HeaderText level={1} tags={tags}>
 					{props.monsterGroup.name || 'Unnamed Monster Group'}
 				</HeaderText>

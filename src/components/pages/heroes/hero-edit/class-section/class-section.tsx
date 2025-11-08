@@ -79,7 +79,7 @@ export const ClassSection = (props: Props) => {
 		const options = {
 			level: 0,
 			choices: [] as ReactNode[],
-			completed: !HeroLogic.canLevelUp(props.hero)
+			completed: !HeroLogic.canLevelUp(props.hero, props.options)
 				&& (heroClass.primaryCharacteristics.length > 0)
 				&& heroClass.characteristics.some(ch => ch.value !== 0)
 				&& (heroClass.subclasses.filter(sc => sc.selected).length >= heroClass.subclassCount)
@@ -96,7 +96,7 @@ export const ClassSection = (props: Props) => {
 				/>
 				<Field label='XP' value={props.hero.state.xp} />
 				{
-					HeroLogic.canLevelUp(props.hero) ?
+					HeroLogic.canLevelUp(props.hero, props.options) ?
 						<Button
 							className='status-warning'
 							onClick={() => props.setLevel(heroClass.level + 1)}

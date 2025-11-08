@@ -1014,6 +1014,10 @@ export class FactoryLogic {
 
 	static createOptions = (): Options => {
 		return {
+			// Hero
+			shownStandardAbilities: [],
+			xpPerLevel: 16,
+			// Hero: Modern Sheet
 			singlePage: false,
 			separateInventoryFeatures: false,
 			showSkillsInGroups: true,
@@ -1021,8 +1025,7 @@ export class FactoryLogic {
 			showSources: true,
 			compactView: false,
 			abilityWidth: PanelWidth.Medium,
-			shownStandardAbilities: [],
-			// Classic Sheet
+			// Hero: Classic Sheet
 			includePlayState: false,
 			classicSheetPageSize: SheetPageSize.Letter,
 			colorSheet: true,
@@ -1031,7 +1034,6 @@ export class FactoryLogic {
 			featuresInclude: 'all',
 			pageOrientation: 'portrait',
 			// Library
-			showInteractivePanels: true,
 			showMonsterGroups: true,
 			// Monster Builder
 			similarLevel: true,
@@ -1040,12 +1042,13 @@ export class FactoryLogic {
 			similarSize: true,
 			// Encounter
 			party: '',
-			// Encounter Difficulty
+			// Encounter: Running
+			showDefeatedCombatants: false,
+			// Encounter / Montage Difficulty
 			heroParty: '',
 			heroCount: 4,
 			heroLevel: 1,
 			heroVictories: 0,
-			showDefeatedCombatants: false,
 			// Tactical Map
 			gridSize: 50,
 			playerGridSize: 50

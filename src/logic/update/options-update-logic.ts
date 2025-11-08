@@ -4,6 +4,10 @@ import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export class OptionsUpdateLogic {
 	static updateOptions = (options: Options) => {
+		if (options.xpPerLevel === undefined) {
+			options.xpPerLevel = 16;
+		}
+
 		if (options.singlePage === undefined) {
 			options.singlePage = false;
 		}
@@ -50,10 +54,6 @@ export class OptionsUpdateLogic {
 
 		if (options.pageOrientation === undefined) {
 			options.pageOrientation = 'portrait';
-		}
-
-		if (options.showInteractivePanels === undefined) {
-			options.showInteractivePanels = true;
 		}
 
 		if (options.showMonsterGroups === undefined) {

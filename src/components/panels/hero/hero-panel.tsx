@@ -370,7 +370,7 @@ export const HeroPanel = (props: Props) => {
 	const getStatsSection = () => {
 		const useRows = props.options.compactView;
 
-		const xpSuffix = HeroLogic.canLevelUp(props.hero) ? <ArrowUpOutlined /> : undefined;
+		const xpSuffix = HeroLogic.canLevelUp(props.hero, props.options) ? <ArrowUpOutlined /> : undefined;
 
 		const size = HeroLogic.getSize(props.hero);
 		const sizeSuffix = size.mod || undefined;

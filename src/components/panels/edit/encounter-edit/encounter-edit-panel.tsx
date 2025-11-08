@@ -146,8 +146,9 @@ export const EncounterEditPanel = (props: Props) => {
 						if (remove) {
 							fromGroup.slots = fromGroup.slots.filter(s => s.id !== slotID);
 						}
-						slot.id = Utils.guid();
-						toGroup.slots.push(slot);
+						const slotCopy = Utils.copy(slot);
+						slotCopy.id = Utils.guid();
+						toGroup.slots.push(slotCopy);
 					}
 				}
 				setEncounter(copy);

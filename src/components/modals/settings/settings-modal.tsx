@@ -70,6 +70,12 @@ export const SettingsModal = (props: Props) => {
 	};
 
 	const getHeroesGeneral = () => {
+		const setXPPerLevel = (value: number) => {
+			const copy = Utils.copy(options);
+			copy.xpPerLevel = value;
+			props.setOptions(copy);
+		};
+
 		const setShownStandardAbilities = (value: string | string[]) => {
 			const copy = Utils.copy(options);
 			copy.shownStandardAbilities = [ value ].flat(1);
@@ -107,6 +113,7 @@ export const SettingsModal = (props: Props) => {
 		return (
 			<Expander title='Heroes - General'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+					<NumberSpin label='XP per level' min={1} value={options.xpPerLevel} onChange={setXPPerLevel} />
 					<div>
 						<LabelControl
 							label='Show standard abilities'

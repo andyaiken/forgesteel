@@ -25,12 +25,16 @@ import libraryThirdParty from '@/assets/screenshots/third-party.png';
 import homebrewEditor from '@/assets/screenshots/homebrew.png';
 import homebrewKitTuning from '@/assets/screenshots/homebrew-kit-tuning.png';
 import homebrewMonsterBuilder from '@/assets/screenshots/monster-builder.png';
+import homebrewMonsterBuilderGenesplice from '@/assets/screenshots/monster-builder-genesplice.png';
 
+import playbookAdventure from '@/assets/screenshots/playbook-adventure.png';
 import playbookEncounter from '@/assets/screenshots/playbook-encounter.png';
 import playbookEncounterBuilder from '@/assets/screenshots/playbook-encounter-builder.png';
 import playbookEncounterClassic from '@/assets/screenshots/playbook-encounter-classic.png';
 import playbookEncounterRandom from '@/assets/screenshots/playbook-encounter-random.png';
 import playbookEncounterTools from '@/assets/screenshots/playbook-encounter-tools.png';
+import playbookMap from '@/assets/screenshots/playbook-map.png';
+import playbookMapAutobuild from '@/assets/screenshots/playbook-map-autobuild.png';
 import playbookMontage from '@/assets/screenshots/playbook-montage.png';
 import playbookMontageBuilder from '@/assets/screenshots/playbook-montage-builder.png';
 import playbookMontageClassic from '@/assets/screenshots/playbook-montage-classic.png';
@@ -150,11 +154,18 @@ export class TipData {
 				content: 'When you\'re creating a homebrew kit, Forge Steel helps you to make sure your kit isn\'t overpowered.',
 				isNew: true
 			}),
-			// TODO: Monster builder - genesplice
+			FactoryLogic.createTip({
+				image: homebrewMonsterBuilderGenesplice,
+				content: 'When you\'re creating a homebrew monster, you can use the **Genesplice** tool to quickly jumble existing creatures together to create something new.',
+				isNew: true
+			}),
 			// #endregion
 
 			// #region Adventures
-			// TODO: Adventures
+			FactoryLogic.createTip({
+				image: playbookAdventure,
+				content: 'You can design adventures in the **Playbook**.'
+			}),
 			// #endregion
 
 			// #region Encounters
@@ -213,10 +224,14 @@ export class TipData {
 			// #endregion
 
 			// #region Maps
-			// TODO: Map
-			// TODO: Map autobuild
-			// TODO: Map runner
-			// TODO: Map - adding minis
+			FactoryLogic.createTip({
+				image: playbookMap,
+				content: 'You can design tactical maps in the **Playbook**.'
+			}),
+			FactoryLogic.createTip({
+				image: playbookMapAutobuild,
+				content: 'If you\'re in a hurry, you can get Forge Steel to generate a random tactical map for your encounters.'
+			}),
 			// #endregion
 
 			// #region Session
@@ -236,7 +251,6 @@ export class TipData {
 				image: sessionNegotiation,
 				content: 'In the **Session** screen you can run negotiations, tracking the NPC\'s interest and patience.'
 			}),
-			// TODO: Run a predefined encounter / montage / negotiation
 			FactoryLogic.createTip({
 				image: sessionMultiple,
 				content: 'If you\'re running more than one encounter (or montage, or negotiation) you can switch between them at the top of the **Session** screen.'

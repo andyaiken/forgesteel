@@ -8,6 +8,7 @@ import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -74,7 +75,7 @@ export const SubclassPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='subclass-panel' id={props.subclass.id} style={props.style}>
+			<div className='subclass-panel' id={SheetFormatter.getPageId('subclass', props.subclass.id)} style={props.style}>
 				<HeaderText level={1} tags={tags}>
 					{props.subclass.name || 'Unnamed Subclass'}
 				</HeaderText>

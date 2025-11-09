@@ -334,8 +334,8 @@ export const HeroSheetPage = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<main id='classic-sheet'>
-				<div className={sheetClasses.join(' ')} id={hero.id}>
-					<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, 'main')}>
+				<div className={sheetClasses.join(' ')} id={SheetFormatter.getPageId('hero', hero.id)}>
+					<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id)}>
 						<HeroHeaderCard
 							character={character}
 							options={props.options}

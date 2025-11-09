@@ -44,7 +44,7 @@ export const FollowerEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Space.Compact>
+				<Space.Compact style={{ width: '100%' }}>
 					<Input
 						status={follower.name === '' ? 'warning' : ''}
 						placeholder='Name'

@@ -83,7 +83,9 @@ interface Props {
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	deleteElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
-	exportElement: (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
+	exportElementData: (kind: SourcebookElementKind, element: Element) => void;
+	exportElementImage: (kind: SourcebookElementKind, element: Element) => void;
+	exportElementPdf: (kind: SourcebookElementKind, element: Element, resolution: 'standard' | 'high') => void;
 }
 
 export const LibraryListPage = (props: Props) => {
@@ -726,12 +728,13 @@ export const LibraryListPage = (props: Props) => {
 							{
 								view === 'classic' ?
 									<>
-										<Button onClick={() => props.exportElement(category, element, 'image')}>Export As Image</Button>
-										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
+										<Button onClick={() => props.exportElementImage(category, element)}>Export As Image</Button>
+										<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export As PDF</Button>
+										<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export As PDF (high res)</Button>
 									</>
 									: null
 							}
-							<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
+							<Button onClick={() => props.exportElementData(category, element)}>Export as Data</Button>
 						</div>
 					)}
 				>

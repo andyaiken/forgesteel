@@ -12,6 +12,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Segmented } from 'antd';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -181,7 +182,7 @@ export const ClassPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='class-panel' id={props.heroClass.id}>
+			<div className='class-panel' id={SheetFormatter.getPageId('class', props.heroClass.id)}>
 				<HeaderText level={1} tags={tags}>
 					{props.heroClass.name || 'Unnamed Class'}
 				</HeaderText>

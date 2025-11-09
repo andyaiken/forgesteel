@@ -53,7 +53,8 @@ interface Props {
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
 	importAdventurePackage: (ap: AdventurePackage) => void;
 	deleteElement: (kind: PlaybookElementKind, element: Element) => void;
-	exportElement: (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => void;
+	exportElementData: (kind: PlaybookElementKind, element: Element) => void;
+	exportElementImage: (kind: PlaybookElementKind, element: Element) => void;
 	exportElementPdf: (kind: PlaybookElementKind, element: Element, resolution: 'standard' | 'high') => void;
 	startElement: (kind: PlaybookElementKind, element: Element) => void;
 }
@@ -321,12 +322,12 @@ export const PlaybookListPage = (props: Props) => {
 					content={
 						category === 'adventure' ?
 							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
+								<Button onClick={() => props.exportElementData(category, element)}>Export as Data</Button>
 							</div>
 							:
-							<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							<div style={{ width: '325px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 								{
-									categoriesWithClassicView.includes(category) && view !== 'classic' ?
+									categoriesWithClassicView.includes(category) && (view !== 'classic') ?
 										<Alert
 											type='info'
 											showIcon={true}
@@ -336,19 +337,14 @@ export const PlaybookListPage = (props: Props) => {
 										: null
 								}
 								{
-									categoriesWithClassicView.includes(category) && view === 'classic' ?
+									categoriesWithClassicView.includes(category) && (view === 'classic') ?
 										<>
 											<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export as PDF</Button>
 											<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export as PDF (high res)</Button>
 										</>
 										: null
 								}
-								{
-									!categoriesWithClassicView.includes(category) ?
-										<Button onClick={() => props.exportElement(category, element, 'pdf')}>Export As PDF</Button>
-										: null
-								}
-								<Button onClick={() => props.exportElement(category, element, 'json')}>Export as Data</Button>
+								<Button onClick={() => props.exportElementData(category, element)}>Export as Data</Button>
 							</div>
 					}
 				>

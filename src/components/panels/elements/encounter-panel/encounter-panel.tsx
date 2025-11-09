@@ -21,6 +21,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
@@ -277,7 +278,7 @@ export const EncounterPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='encounter-panel' id={props.encounter.id}>
+			<div className='encounter-panel' id={SheetFormatter.getPageId('encounter', props.encounter.id)}>
 				<HeaderText
 					level={1}
 					tags={[ difficulty ]}

@@ -41,6 +41,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { RulesPage } from '@/enums/rules-page';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
@@ -1147,7 +1148,7 @@ export const HeroPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='hero-panel' id={props.hero.id}>
+			<div className='hero-panel' id={SheetFormatter.getPageId('hero', props.hero.id)}>
 				<div className='hero-main-section'>
 					{!isSmall && !props.options.singlePage ? <StatsSidebarPanel hero={props.hero} showStats={tab !== 'Hero'} /> : null}
 					<div className='hero-center-column'>

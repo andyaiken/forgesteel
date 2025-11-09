@@ -1,5 +1,5 @@
-import { Button, Divider, Flex, Input, Popover, Segmented, Space } from 'antd';
-import { DownOutlined, EditFilled, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Divider, Flex, Input, Segmented, Space } from 'antd';
+import { EditFilled, EditOutlined } from '@ant-design/icons';
 import { Encounter } from '@/models/encounter';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MalicePanel } from '@/components/panels/malice/malice-panel';
@@ -27,7 +27,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
-	export?: (format: 'image' | 'pdf' | 'json') => void;
 	updateMonster?: (monster: Monster) => void;
 	updateEncounter?: (encounter: Encounter) => void;
 }
@@ -146,25 +145,6 @@ export const MonsterModal = (props: Props) => {
 									onChange={setPage}
 								/>
 							</Flex>
-							: null
-					}
-					{
-						props.export ?
-							<Popover
-								trigger='click'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-										<Button onClick={() => props.export!('image')}>Export As Image</Button>
-										<Button onClick={() => props.export!('pdf')}>Export As PDF</Button>
-										<Button onClick={() => props.export!('json')}>Export as Data</Button>
-									</div>
-								)}
-							>
-								<Button icon={<UploadOutlined />}>
-									Export
-									<DownOutlined />
-								</Button>
-							</Popover>
 							: null
 					}
 				</>

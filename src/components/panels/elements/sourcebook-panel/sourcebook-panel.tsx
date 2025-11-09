@@ -13,6 +13,7 @@ import { LanguageType } from '@/enums/language-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -188,7 +189,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 
 		content = (
 			<Space direction='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
-				<Space.Compact>
+				<Space.Compact style={{ width: '100%' }}>
 					<Input
 						status={sourcebook.name === '' ? 'warning' : ''}
 						placeholder='Name'
@@ -221,7 +222,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%' }}>
-										<Space.Compact>
+										<Space.Compact style={{ width: '100%' }}>
 											<Input
 												status={lang.name === '' ? 'warning' : ''}
 												placeholder='Name'
@@ -288,7 +289,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%' }}>
-										<Space.Compact>
+										<Space.Compact style={{ width: '100%' }}>
 											<Input
 												status={skill.name === '' ? 'warning' : ''}
 												placeholder='Name'
@@ -337,7 +338,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 				<Button key='edit' type='text' title='Edit' icon={<EditOutlined />} onClick={() => setIsEditing(true)} />
 			);
 			buttons.push(
-				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={() => Utils.export([ sourcebook.id ], sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook', 'json')} />
+				<Button key='export' type='text' title='Export' icon={<UploadOutlined />} onClick={() => Utils.exportData(sourcebook.name || 'Unnamed Sourcebook', sourcebook, 'sourcebook')} />
 			);
 			buttons.push(
 				<DangerButton key='delete' disabled={props.heroes.some(h => h.settingIDs.includes(sourcebook.id))} mode='clear' onConfirm={() => props.onDelete(sourcebook)} />
@@ -347,7 +348,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='sourcebook-panel' id={sourcebook.id}>
+			<div className='sourcebook-panel' id={SheetFormatter.getPageId('sourcebook', sourcebook.id)}>
 				<HeaderText
 					tags={[ sourcebook.type ]}
 					extra={<Flex>{buttons}</Flex>}

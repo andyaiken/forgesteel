@@ -10,6 +10,7 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -68,7 +69,7 @@ export const TitlePanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? title.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'title-panel' : 'title-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('title', title.id) : undefined}>
 				<HeaderText
 					level={1}
 					tags={tags}

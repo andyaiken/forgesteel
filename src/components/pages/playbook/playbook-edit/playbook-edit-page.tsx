@@ -170,7 +170,7 @@ export const PlaybookEditPage = (props: Props) => {
 		switch (kind!) {
 			case 'montage':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<MontagePanel
 							montage={element as Montage}
 							heroes={props.heroes}
@@ -181,7 +181,7 @@ export const PlaybookEditPage = (props: Props) => {
 				);
 			case 'negotiation':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<NegotiationPanel
 							negotiation={element as Negotiation}
 							sourcebooks={props.sourcebooks}

@@ -42,7 +42,8 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
-	export: (format: 'image' | 'pdf' | 'json') => void;
+	exportData: () => void;
+	exportImage: () => void;
 }
 
 export const ElementModal = (props: Props) => {
@@ -185,9 +186,8 @@ export const ElementModal = (props: Props) => {
 						trigger='click'
 						content={(
 							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => props.export('image')}>Export As Image</Button>
-								<Button onClick={() => props.export('pdf')}>Export As PDF</Button>
-								<Button onClick={() => props.export('json')}>Export As Data</Button>
+								<Button onClick={() => props.exportImage()}>Export As Image</Button>
+								<Button onClick={() => props.exportData()}>Export As Data</Button>
 							</div>
 						)}
 					>

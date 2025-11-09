@@ -29,6 +29,7 @@ import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -750,7 +751,7 @@ export const FeaturePanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? props.feature.id : undefined} style={props.style}>
+			<div className={props.mode === PanelMode.Full ? 'feature-panel' : 'feature-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('feaure', props.feature.id) : undefined} style={props.style}>
 				<HeaderText
 					ribbon={
 						props.cost === 'signature' ?

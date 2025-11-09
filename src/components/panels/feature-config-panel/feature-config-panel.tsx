@@ -514,7 +514,7 @@ export const FeatureConfigPanel = (props: Props) => {
 							<Space direction='vertical' style={{ width: '100%' }}>
 								<div>
 									<HeaderText>Name</HeaderText>
-									<Space.Compact>
+									<Space.Compact style={{ width: '100%' }}>
 										<Input
 											status={data.selected.name === '' ? 'warning' : ''}
 											placeholder='Name'

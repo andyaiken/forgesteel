@@ -33,7 +33,7 @@ import triggerIcon from '@/assets/icons/trigger-solid.svg';
 
 export class SheetFormatter {
 	// #region Text & Feature Manipulation
-	static getPageId = (kind: string, id: string, key: string) => {
+	static getPageId = (kind: string, id: string, key: string = 'main') => {
 		return `${kind}-${id}-page-${key}`;
 	};
 

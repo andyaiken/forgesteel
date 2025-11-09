@@ -6,6 +6,7 @@ import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -31,7 +32,7 @@ export const ComplicationPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'complication-panel' : 'complication-panel compact'} id={props.mode === PanelMode.Full ? props.complication.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'complication-panel' : 'complication-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('complication', props.complication.id) : undefined}>
 				<HeaderText level={1} tags={tags}>
 					{props.complication.name || 'Unnamed Complication'}
 				</HeaderText>

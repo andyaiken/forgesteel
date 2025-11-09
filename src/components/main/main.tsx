@@ -304,28 +304,39 @@ export const Main = (props: Props) => {
 		importHero(hero, hero.folder, true);
 	};
 
-	const exportHero = (hero: Hero, format: 'image' | 'pdf' | 'json') => {
-		Utils.export([ hero.id ], hero.name || 'Unnamed Hero', hero, 'hero', format);
+	const exportHeroData = (hero: Hero) => {
+		const name = hero.name || 'Unnamed Hero';
+
+		Utils.exportData(name, hero, 'hero');
+	};
+
+	const exportHeroImage = (hero: Hero) => {
+		const name = hero.name || 'Unnamed Hero';
+
+		const pageIds: string[] = [];
+		document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
+
+		Utils.exportImage(pageIds, name);
 	};
 
 	const exportHeroPdf = (hero: Hero, resolution: 'standard' | 'high') => {
-		setSpinning(true);
+		const name = hero.name || 'Unnamed Hero';
+
 		const pageIds: string[] = [];
 		document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
-		Utils.elementsToPdf(pageIds, hero.name || 'Unnamed Hero', options.classicSheetPageSize, resolution)
-			.then(() => {
-				setSpinning(false);
-			});
+
+		setSpinning(true);
+		Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
+			.then(() => setSpinning(false));
 	};
 
 	const exportStandardAbilities = () => {
-		setSpinning(true);
 		const pageIds: string[] = [];
 		document.querySelectorAll('[id^=hero-sheet-standard-abilities-page-abilities]').forEach(elem => pageIds.push(elem.id));
+
+		setSpinning(true);
 		Utils.elementsToPdf(pageIds, 'Standard Abilities', options.classicSheetPageSize, 'high')
-			.then(() => {
-				setSpinning(false);
-			});
+			.then(() => setSpinning(false));
 	};
 
 	const setNotes = (hero: Hero, value: string) => {
@@ -985,18 +996,30 @@ export const Main = (props: Props) => {
 		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibrary(kind));
 	};
 
-	const exportLibraryElement = (kind: SourcebookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
-		let name = Format.capitalize(kind);
-		let extension = kind.toString();
+	const exportLibraryElementData = (kind: SourcebookElementKind, element: Element) => {
+		const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
 
-		switch (kind) {
-			case 'monster-group':
-				name = 'Monster Group';
-				extension = 'monster-group';
-				break;
-		};
+		Utils.exportData(name, element, kind);
+	};
 
-		Utils.export([ element.id ], element.name || name, element, extension, format);
+	const exportLibraryElementImage = (kind: SourcebookElementKind, element: Element) => {
+		const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+
+		const pageIds: string[] = [];
+		document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+
+		Utils.exportImage(pageIds, name);
+	};
+
+	const exportLibraryElementPdf = (kind: SourcebookElementKind, element: Element, resolution: 'standard' | 'high') => {
+		const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+
+		const pageIds: string[] = [];
+		document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+
+		setSpinning(true);
+		Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
+			.then(() => setSpinning(false));
 	};
 
 	// #endregion
@@ -1193,24 +1216,42 @@ export const Main = (props: Props) => {
 		]);
 	};
 
-	const exportPlaybookElement = (kind: PlaybookElementKind, element: Element, format: 'image' | 'pdf' | 'json') => {
+	const exportPlaybookElementData = (kind: PlaybookElementKind, element: Element) => {
 		if (kind === 'adventure') {
 			const ap = PlaybookLogic.getAdventurePackage(element as Adventure, playbook);
-			Utils.export([ ap.adventure.id ], ap.adventure.name || 'Adventure', ap, 'adventure', 'json');
+			const name = ap.adventure.name || 'Adventure';
+			Utils.exportData(name, ap, 'adventure');
 		} else {
-			Utils.export([ element.id ], element.name || Format.capitalize(kind), element, kind, format);
+			const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+
+			Utils.exportData(name, element, kind);
+		}
+	};
+
+	const exportPlaybookElementImage = (kind: PlaybookElementKind, element: Element) => {
+		if (kind === 'adventure') {
+			const ap = PlaybookLogic.getAdventurePackage(element as Adventure, playbook);
+			const name = ap.adventure.name || 'Adventure';
+			Utils.exportImage([ ap.adventure.id ], name);
+		} else {
+			const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+
+			const pageIds: string[] = [];
+			document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+
+			Utils.exportImage(pageIds, name);
 		}
 	};
 
 	const exportPlaybookElementPdf = (kind: PlaybookElementKind, element: Element, resolution: 'standard' | 'high') => {
-		setSpinning(true);
-		const pdfTitle = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+		const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+
 		const pageIds: string[] = [];
 		document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
-		Utils.elementsToPdf(pageIds, pdfTitle, options.classicSheetPageSize, resolution)
-			.then(() => {
-				setSpinning(false);
-			});
+
+		setSpinning(true);
+		Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
+			.then(() => setSpinning(false));
 	};
 
 	const startPlaybookElement = (kind: PlaybookElementKind, element: Element) => {
@@ -1417,7 +1458,8 @@ export const Main = (props: Props) => {
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				onClose={() => setDrawer(null)}
-				export={format => exportLibraryElement(kind, element, format)}
+				exportData={() => exportLibraryElementData(kind, element)}
+				exportImage={() => exportLibraryElementImage(kind, element)}
 			/>
 		);
 	};
@@ -1431,7 +1473,6 @@ export const Main = (props: Props) => {
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				onClose={() => setDrawer(null)}
-				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
 			/>
 		);
 	};
@@ -1443,7 +1484,6 @@ export const Main = (props: Props) => {
 				upgradeIDs={upgradeIDs}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				onClose={() => setDrawer(null)}
-				export={format => Utils.export([ terrain.id ], terrain.name || 'Terrain', terrain, 'terrain', format)}
 			/>
 		);
 	};
@@ -1627,8 +1667,9 @@ export const Main = (props: Props) => {
 									showRoll={showRoll}
 									showAbout={showAbout}
 									showSettings={showSettings}
-									exportHero={exportHero}
-									exportPdf={exportHeroPdf}
+									exportHeroData={exportHeroData}
+									exportHeroImage={exportHeroImage}
+									exportHeroPdf={exportHeroPdf}
 									exportStandardAbilities={exportStandardAbilities}
 									copyHero={copyHero}
 									deleteHero={deleteHero}
@@ -1712,7 +1753,9 @@ export const Main = (props: Props) => {
 									createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}
 									importElement={importLibraryElement}
 									deleteElement={deleteLibraryElement}
-									exportElement={exportLibraryElement}
+									exportElementData={exportLibraryElementData}
+									exportElementImage={exportLibraryElementImage}
+									exportElementPdf={exportLibraryElementPdf}
 								/>
 							}
 						/>
@@ -1757,7 +1800,8 @@ export const Main = (props: Props) => {
 									importElement={(kind, element) => importPlaybookElement([ { kind: kind, element: element } ])}
 									importAdventurePackage={importAdventurePackage}
 									deleteElement={deletePlaybookElement}
-									exportElement={exportPlaybookElement}
+									exportElementData={exportPlaybookElementData}
+									exportElementImage={exportPlaybookElementImage}
 									exportElementPdf={exportPlaybookElementPdf}
 									startElement={startPlaybookElement}
 								/>

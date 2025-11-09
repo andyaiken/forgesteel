@@ -35,6 +35,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { Pill } from '@/components/controls/pill/pill';
 import { Project } from '@/models/project';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { StatsRow } from '../../stats-row/stats-row';
 import { SubClass } from '@/models/subclass';
 import { TerrainLogic } from '@/logic/terrain-logic';
@@ -195,7 +196,7 @@ export const ElementSheet = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className={`element-sheet ${props.options.classicSheetPageSize.toLowerCase()} ${props.options.pageOrientation}`} id={props.element.id}>
+			<div className={`element-sheet ${props.options.classicSheetPageSize.toLowerCase()} ${props.options.pageOrientation}`} id={SheetFormatter.getPageId(props.type, props.element.id)}>
 				{content}
 			</div>
 		</ErrorBoundary>

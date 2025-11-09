@@ -46,8 +46,9 @@ interface Props {
 	showRoll: (hero: Hero) => void;
 	showAbout: () => void;
 	showSettings: () => void;
-	exportHero: (hero: Hero, format: 'image' | 'json') => void;
-	exportPdf: (hero: Hero, resolution: 'standard' | 'high') => void;
+	exportHeroData: (hero: Hero) => void;
+	exportHeroImage: (hero: Hero) => void;
+	exportHeroPdf: (hero: Hero, resolution: 'standard' | 'high') => void;
 	exportStandardAbilities: () => void;
 	copyHero: (hero: Hero) => void;
 	deleteHero: (hero: Hero) => void;
@@ -161,8 +162,8 @@ export const HeroViewPage = (props: Props) => {
 								{
 									view === 'classic' ?
 										<>
-											<Button onClick={() => props.exportPdf(hero, 'standard')}>Export as PDF</Button>
-											<Button onClick={() => props.exportPdf(hero, 'high')}>Export as PDF (high res)</Button>
+											<Button onClick={() => props.exportHeroPdf(hero, 'standard')}>Export as PDF</Button>
+											<Button onClick={() => props.exportHeroPdf(hero, 'high')}>Export as PDF (high res)</Button>
 										</>
 										: null
 								}
@@ -172,7 +173,7 @@ export const HeroViewPage = (props: Props) => {
 										: null
 								}
 								<Divider />
-								<Button onClick={() => props.exportHero(hero, 'json')}>Export as Data</Button>
+								<Button onClick={() => props.exportHeroData(hero)}>Export as Data</Button>
 							</div>
 						)}
 					>

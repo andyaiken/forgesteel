@@ -39,7 +39,7 @@ export const NegotiationSheetPage = (props: Props) => {
 	return (
 		<main id='classic-sheet'>
 			<div className={sheetClasses.join(' ')}>
-				<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('negotiation', negotiation.id, 'main')}>
+				<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('negotiation', negotiation.id)}>
 					<NegotiationHeaderCard negotiation={negotiation} />
 					<PatienceInterestCard negotiation={negotiation} />
 					<NegotiationNpcCard negotiation={negotiation} />

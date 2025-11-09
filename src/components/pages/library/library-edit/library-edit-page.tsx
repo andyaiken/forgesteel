@@ -672,20 +672,20 @@ export const LibraryEditPage = (props: Props) => {
 		switch (kind) {
 			case 'ancestry':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<AncestryPanel ancestry={element as Ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'career':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<CareerPanel career={element as Career} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'class':
 				if (!subElementID) {
 					return (
-						<SelectablePanel key={`${element.id}-${revision}`}>
+						<SelectablePanel>
 							<ClassPanel heroClass={element as HeroClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
@@ -694,33 +694,33 @@ export const LibraryEditPage = (props: Props) => {
 					const subclass = heroClass.subclasses.find(sc => sc.id === subElementID) as SubClass;
 
 					return (
-						<SelectablePanel key={`${subclass.id}-${revision}`}>
+						<SelectablePanel>
 							<SubclassPanel subclass={subclass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
 				}
 			case 'complication':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<ComplicationPanel complication={element as Complication} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'culture':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<CulturePanel culture={element as Culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'domain':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<DomainPanel domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'imbuement':
 				return (
 					<>
-						<SelectablePanel key={`${element.id}-${revision}`}>
+						<SelectablePanel>
 							<ImbuementPanel imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
@@ -735,7 +735,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'item':
 				return (
 					<>
-						<SelectablePanel key={`${element.id}-${revision}`}>
+						<SelectablePanel>
 							<ItemPanel item={element as Item} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 						{
@@ -755,7 +755,7 @@ export const LibraryEditPage = (props: Props) => {
 								key: '1',
 								label: 'Preview',
 								children: (
-									<SelectablePanel key={`${element.id}-${revision}`}>
+									<SelectablePanel>
 										<KitPanel kit={element as Kit} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 									</SelectablePanel>
 								)
@@ -771,7 +771,7 @@ export const LibraryEditPage = (props: Props) => {
 			case 'monster-group':
 				if (!subElementID) {
 					return (
-						<SelectablePanel key={`${element.id}-${revision}`}>
+						<SelectablePanel>
 							<MonsterGroupPanel monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					);
@@ -786,7 +786,7 @@ export const LibraryEditPage = (props: Props) => {
 									key: '1',
 									label: 'Preview',
 									children: (
-										<SelectablePanel key={`${monster.id}-${revision}`}>
+										<SelectablePanel>
 											<MonsterPanel monster={monster} monsterGroup={monsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 										</SelectablePanel>
 									)
@@ -807,31 +807,31 @@ export const LibraryEditPage = (props: Props) => {
 				}
 			case 'perk':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<PerkPanel perk={element as Perk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'project':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<ProjectPanel project={element as Project} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'subclass':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<SubclassPanel subclass={element as SubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'terrain':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<TerrainPanel terrain={element as Terrain} showCustomizations={true} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);
 			case 'title':
 				return (
-					<SelectablePanel key={`${element.id}-${revision}`}>
+					<SelectablePanel>
 						<TitlePanel title={element as Title} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 					</SelectablePanel>
 				);

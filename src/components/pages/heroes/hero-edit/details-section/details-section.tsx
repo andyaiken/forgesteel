@@ -37,7 +37,7 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 		<div className='hero-edit-content details-section'>
 			<div className='hero-edit-content-column single-column choices' id='details-main'>
 				<HeaderText>Name</HeaderText>
-				<Space.Compact>
+				<Space.Compact style={{ width: '100%' }}>
 					<Input
 						status={props.hero.name === '' ? 'warning' : ''}
 						placeholder='Name'

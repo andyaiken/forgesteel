@@ -11,6 +11,7 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -125,7 +126,7 @@ export const AncestryPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='ancestry-panel' id={props.ancestry.id}>
+			<div className='ancestry-panel' id={SheetFormatter.getPageId('ancestry', props.ancestry.id)}>
 				<HeaderText level={1} tags={tags}>
 					{props.ancestry.name || 'Unnamed Ancestry'}
 				</HeaderText>

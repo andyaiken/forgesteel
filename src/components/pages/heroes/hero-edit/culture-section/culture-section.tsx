@@ -93,7 +93,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 				<SelectablePanel key='bespoke'>
 					<HeaderText>Bespoke Culture</HeaderText>
 					<div className='ds-text'>Choose a name for your culture.</div>
-					<Space.Compact>
+					<Space.Compact style={{ width: '100%' }}>
 						<Input
 							status={props.hero.culture.name === '' ? 'warning' : ''}
 							placeholder='Name'

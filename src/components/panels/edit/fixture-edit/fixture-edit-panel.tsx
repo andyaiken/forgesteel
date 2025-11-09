@@ -53,7 +53,7 @@ export const FixtureEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Space.Compact>
+				<Space.Compact style={{ width: '100%' }}>
 					<Input
 						status={fixture.name === '' ? 'warning' : ''}
 						placeholder='Name'

@@ -22,6 +22,7 @@ import { MonsterLogic } from '@/logic/monster-logic';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 
 import './ability-panel.scss';
 
@@ -280,7 +281,7 @@ export const AbilityPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className={className} id={props.mode === PanelMode.Full ? props.ability.id : undefined}>
+			<div className={className} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('ability', props.ability.id) : undefined}>
 				<Space direction='vertical' style={{ marginTop: '15px', width: '100%' }}>
 					{
 						getWarnings().map((warn, n) => (

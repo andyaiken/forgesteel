@@ -7,6 +7,7 @@ import { Kit } from '@/models/kit';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -35,7 +36,7 @@ export const KitPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'kit-panel' : 'kit-panel compact'} id={props.mode === PanelMode.Full ? props.kit.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'kit-panel' : 'kit-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('kit', props.kit.id) : undefined}>
 				<HeaderText level={1} tags={tags}>{props.kit.name || 'Unnamed Kit'}</HeaderText>
 				<Markdown text={props.kit.description} />
 				{

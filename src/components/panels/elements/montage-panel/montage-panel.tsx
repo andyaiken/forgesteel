@@ -10,6 +10,7 @@ import { MontageLogic } from '@/logic/montage-logic';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { useState } from 'react';
 
@@ -157,7 +158,7 @@ export const MontagePanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='montage-panel' id={props.montage.id}>
+			<div className='montage-panel' id={SheetFormatter.getPageId('montage', props.montage.id)}>
 				<HeaderText level={1}>{props.montage.name || 'Unnamed Montage'}</HeaderText>
 				{getContent()}
 			</div>

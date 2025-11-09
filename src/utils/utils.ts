@@ -1,4 +1,3 @@
-import { Collections } from '@/utils/collections';
 import { Converter } from 'showdown';
 import { Random } from '@/utils/random';
 import { SheetPageSize } from '@/enums/sheet-page-size';
@@ -70,19 +69,11 @@ export class Utils {
 		}
 	};
 
-	static export = (elementIDs: string[], name: string, obj: unknown, ext: string, format: 'image' | 'pdf' | 'json') => {
-		switch (format) {
-			case 'json':
-				Utils.saveFile(obj, name, ext);
-				break;
-			case 'image':
-			case 'pdf':
-				Utils.takeScreenshot(elementIDs, name, format);
-				break;
-		}
+	static exportData = (name: string, obj: unknown, ext: string) => {
+		Utils.saveFile(obj, name, ext);
 	};
 
-	static takeScreenshot = (elementIDs: string[], name: string, format: 'image' | 'pdf') => {
+	static exportImage = (elementIDs: string[], name: string) => {
 		const elements = elementIDs
 			.map(id => document.getElementById(id))
 			.filter(element => !!element);
@@ -99,22 +90,14 @@ export class Utils {
 			}
 		});
 
-		switch (format) {
-			case 'image':
-				html2canvas(elements[0])
-					.then(canvas => {
-						Utils.saveImage(`${name}.png`, canvas);
-						elements[0].style.backgroundColor = originalBackgroundColors[elements[0].id];
-					});
-				break;
-			case 'pdf':
-				Promise.all(elements.map(e => this.elementToImage(e, 1)))
-					.then(images => {
-						Utils.savePDF(`${name}.pdf`, images);
-						elements.forEach(element => element.style.backgroundColor = originalBackgroundColors[element.id]);
-					});
-				break;
-		}
+		elements.forEach((element, n) => {
+			html2canvas(element)
+				.then(canvas => {
+					const filename = (elements.length > 1) ? `${name} ${n + 1}.png` : `${name}.png`;
+					Utils.saveImage(filename, canvas);
+					element.style.backgroundColor = originalBackgroundColors[element.id];
+				});
+		});
 	};
 
 	static elementToImage = (element: HTMLElement, scale: number): Promise<HTMLImageElement> => {
@@ -167,21 +150,6 @@ export class Utils {
 		a.download = filename;
 		a.href = canvas.toDataURL('image/png').replace(/^data:image\/png/, 'data:application/octet-stream');
 		a.click();
-	};
-
-	static savePDF = (filename: string, canvases: HTMLImageElement[]) => {
-		const width = Collections.max(canvases.map(c => c.width), c => c) || 0;
-		const height = Collections.max(canvases.map(c => c.height), c => c) || 0;
-
-		const orientation = (height >= width) ? 'portrait' : 'landscape';
-
-		const pdf = new jspdf(orientation, 'pt', [ width, height ]);
-		canvases.forEach((canvas, n) => {
-			const page = (n === 0) ? pdf : pdf.addPage([ width, height ], orientation);
-			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
-		});
-
-		pdf.save(filename);
 	};
 
 	static savePdfPages = async (filename: string, pageCanvases: HTMLImageElement[], pdfPaperSize: SheetPageSize, dpi: number) => {

@@ -11,6 +11,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { Plot } from '@/models/plot';
 import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';
 import { PlotPanel } from '@/components/panels/elements/plot-panel/plot-panel';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { useState } from 'react';
 
@@ -99,7 +100,7 @@ export const AdventurePanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='adventure-panel' id={props.adventure.id}>
+			<div className='adventure-panel' id={SheetFormatter.getPageId('adventure', props.adventure.id)}>
 				<div className='plot-workspace'>
 					<PlotGraphPanel
 						label={currentPlot === props.adventure.plot ? props.adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}

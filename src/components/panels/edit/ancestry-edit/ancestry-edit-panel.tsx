@@ -49,7 +49,7 @@ export const AncestryEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
-				<Space.Compact>
+				<Space.Compact style={{ width: '100%' }}>
 					<Input
 						status={ancestry.name === '' ? 'warning' : ''}
 						placeholder='Name'

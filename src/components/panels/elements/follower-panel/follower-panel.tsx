@@ -4,6 +4,7 @@ import { Follower } from '@/models/follower';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { PanelMode } from '@/enums/panel-mode';
+import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 
 import './follower-panel.scss';
@@ -16,7 +17,7 @@ interface Props {
 export const FollowerPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'follower-panel' : 'follower-panel compact'} id={props.mode === PanelMode.Full ? props.follower.id : undefined}>
+			<div className={props.mode === PanelMode.Full ? 'follower-panel' : 'follower-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('follower', props.follower.id) : undefined}>
 				<HeaderText
 					level={1}
 					tags={[ props.follower.type ]}

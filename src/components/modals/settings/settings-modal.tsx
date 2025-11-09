@@ -70,6 +70,12 @@ export const SettingsModal = (props: Props) => {
 	};
 
 	const getHeroesGeneral = () => {
+		const setXPPerLevel = (value: number) => {
+			const copy = Utils.copy(options);
+			copy.xpPerLevel = value;
+			props.setOptions(copy);
+		};
+
 		const setShownStandardAbilities = (value: string | string[]) => {
 			const copy = Utils.copy(options);
 			copy.shownStandardAbilities = [ value ].flat(1);
@@ -107,6 +113,7 @@ export const SettingsModal = (props: Props) => {
 		return (
 			<Expander title='Heroes - General'>
 				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+					<NumberSpin label='XP per level' min={1} value={options.xpPerLevel} onChange={setXPPerLevel} />
 					<div>
 						<LabelControl
 							label='Show standard abilities'
@@ -433,23 +440,6 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getEncounterBuilder = () => {
-		const setMinionCount = (value: number) => {
-			const copy = Utils.copy(options);
-			copy.minionCount = value;
-			setOptions(copy);
-			props.setOptions(copy);
-		};
-
-		return (
-			<Expander title='Encounter Builder'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-					<NumberSpin label='Minions per group' min={1} value={options.minionCount} onChange={setMinionCount} />
-				</Space>
-			</Expander>
-		);
-	};
-
 	const getEncounterRunner = () => {
 		const setParty = (value: string) => {
 			const copy = Utils.copy(options);
@@ -638,33 +628,6 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
-	const getFeatureFlagControls = () => {
-		const flags = [
-			FeatureFlags.interactiveContent
-		];
-		if (!flags.some(f => FeatureFlags.hasFlag(f.code))) {
-			return null;
-		}
-
-		const setShowInteractivePanels = (value: boolean) => {
-			const copy = Utils.copy(options);
-			copy.showInteractivePanels = value;
-			props.setOptions(copy);
-		};
-
-		return (
-			<Expander title='Features'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-					{
-						FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) ?
-							<Toggle label='Show content interactively' value={options.showInteractivePanels} onChange={setShowInteractivePanels} />
-							: null
-					}
-				</Space>
-			</Expander>
-		);
-	};
-
 	const getErrors = () => {
 		const clearErrors = () => {
 			props.clearErrors();
@@ -738,7 +701,6 @@ export const SettingsModal = (props: Props) => {
 						{getHeroesClassic()}
 						{getClassicView()}
 						{getMonsterBuilder()}
-						{getEncounterBuilder()}
 						{getEncounterRunner()}
 						{getDifficulty()}
 						{getTacticalMaps()}
@@ -748,7 +710,6 @@ export const SettingsModal = (props: Props) => {
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
-						{getFeatureFlagControls()}
 						{getErrors()}
 					</Space>
 				);

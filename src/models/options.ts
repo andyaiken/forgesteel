@@ -2,10 +2,9 @@ import { PanelWidth } from '@/enums/panel-width';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 
 export interface Options {
-	// General
-	showInteractivePanels: boolean;
 	// Hero
 	shownStandardAbilities: string[];
+	xpPerLevel: number;
 	// Hero: Modern Sheet
 	singlePage: boolean;
 	separateInventoryFeatures: boolean;
@@ -30,7 +29,6 @@ export interface Options {
 	similarOrganization: boolean;
 	similarSize: boolean;
 	// Encounter
-	minionCount: number;
 	party: string;
 	// Encounter: Running
 	showDefeatedCombatants: boolean;
@@ -41,6 +39,5 @@ export interface Options {
 	heroVictories: number;
 	// Tactical Map
 	gridSize: number;
-	// Player View
 	playerGridSize: number;
 }

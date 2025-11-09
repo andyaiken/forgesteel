@@ -146,8 +146,9 @@ export const EncounterEditPanel = (props: Props) => {
 						if (remove) {
 							fromGroup.slots = fromGroup.slots.filter(s => s.id !== slotID);
 						}
-						slot.id = Utils.guid();
-						toGroup.slots.push(slot);
+						const slotCopy = Utils.copy(slot);
+						slotCopy.id = Utils.guid();
+						toGroup.slots.push(slotCopy);
 					}
 				}
 				setEncounter(copy);
@@ -1028,6 +1029,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 						<MonsterPanel
 							monster={monster}
 							monsterGroup={monsterGroup}
+							sourcebooks={props.sourcebooks}
 							options={props.options}
 							extra={
 								<Flex align='center'>
@@ -1041,7 +1043,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 					<div className='actions'>
 						<NumberSpin
 							value={props.slot.count}
-							format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)).toString()}
+							format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
 							onChange={value => props.setSlotCount(props.group.id, props.slot.id, value)}
 						/>
 						<Divider />
@@ -1096,7 +1098,11 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 			<ErrorBoundary>
 				<div className='terrain-row'>
 					<div className='content'>
-						<TerrainPanel terrain={terrain} extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />} />
+						<TerrainPanel
+							terrain={terrain}
+							sourcebooks={props.sourcebooks}
+							extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />}
+						/>
 						{
 							terrain.upgrades.length > 0 ?
 								<Expander title='Customize'>

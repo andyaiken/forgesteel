@@ -42,7 +42,7 @@ export const AncestrySection = (props: Props) => {
 	const ancestries = SourcebookLogic.getAncestries(props.sourcebooks).map(Utils.copy).filter(a => matchElement(a, props.searchTerm));
 	const options = ancestries.map(a => (
 		<SelectablePanel key={a.id} onSelect={() => props.selectAncestry(a)}>
-			<AncestryPanel ancestry={a} options={props.options} />
+			<AncestryPanel ancestry={a} sourcebooks={props.sourcebooks} options={props.options} />
 		</SelectablePanel>
 	));
 
@@ -69,7 +69,7 @@ export const AncestrySection = (props: Props) => {
 				props.hero.ancestry && (!isSmall || (choices.length === 0)) ?
 					<div className={columnClassName} id='ancestry-selected'>
 						<SelectablePanel>
-							<AncestryPanel ancestry={props.hero.ancestry} options={props.options} mode={PanelMode.Full} />
+							<AncestryPanel ancestry={props.hero.ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 						</SelectablePanel>
 					</div>
 					: null

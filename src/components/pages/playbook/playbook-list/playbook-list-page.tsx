@@ -296,7 +296,7 @@ export const PlaybookListPage = (props: Props) => {
 				};
 				break;
 			case 'tactical-map':
-				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} sourcebooks={props.sourcebooks} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
 				break;
 		}
 
@@ -330,7 +330,7 @@ export const PlaybookListPage = (props: Props) => {
 										<Alert
 											type='info'
 											showIcon={true}
-											message='To export as a PDF, switch to Classic view.'
+											message='If you want to export as a PDF, switch to Classic view.'
 											action={<Button onClick={() => setView('classic')}>Classic</Button>}
 										/>
 										: null

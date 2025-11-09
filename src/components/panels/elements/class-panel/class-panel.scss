@@ -9,12 +9,6 @@
 		padding: unset;
 	}
 
-	&.interactive {
-		.class-abilities-grid {
-			padding-top: 15px;
-		}
-	}
-
 	.class-features-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -22,6 +16,7 @@
 	}
 
 	.class-abilities-grid {
+		padding-top: 15px;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 20px;

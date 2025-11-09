@@ -11,6 +11,9 @@ import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -19,6 +22,7 @@ import './project-panel.scss';
 
 interface Props {
 	project: Project;
+	sourcebooks: Sourcebook[]
 	hero?: Hero;
 	mode?: PanelMode;
 	onChange?: (project: Project) => void;
@@ -149,11 +153,20 @@ export const ProjectPanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getProjectSourcebook(props.sourcebooks, project)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	return (
 		<ErrorBoundary>
 			<div className={props.mode === PanelMode.Full ? 'project-panel' : 'project-panel compact'} id={props.mode === PanelMode.Full ? props.project.id : undefined}>
 				<HeaderText
 					level={1}
+					tags={tags}
 					extra={
 						project.isCustom && (props.mode === PanelMode.Full) ?
 							<Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} />

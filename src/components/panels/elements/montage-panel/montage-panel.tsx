@@ -2,7 +2,6 @@ import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Flex, Segmented, Space } from 'antd';
 import { Montage, MontageChallenge, MontageSection } from '@/models/montage';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -25,8 +24,6 @@ interface Props {
 
 export const MontagePanel = (props: Props) => {
 	const [ page, setPage ] = useState<string>('overview');
-
-	const isInteractive = FeatureFlags.hasFlag(FeatureFlags.interactiveContent.code) && props.options.showInteractivePanels;
 
 	const getOverview = () => {
 		return (
@@ -116,53 +113,33 @@ export const MontagePanel = (props: Props) => {
 	};
 
 	const getContent = () => {
-		if (isInteractive) {
-			let content = null;
-			switch (page) {
-				case 'overview':
-					content = getOverview();
-					break;
-				case 'outcomes':
-					content = getOutcomes();
-					break;
-				default:
-					content = getSection(props.montage.sections.find(s => s.id === page) as MontageSection);
-					break;
-			}
-
-			return (
-				<>
-					<Segmented
-						style={{ marginBottom: '20px' }}
-						block={true}
-						options={[
-							{ value: 'overview', label: 'Overview' },
-							...props.montage.sections.map(s => ({ value: s.id, label: s.name })),
-							{ value: 'outcomes', label: 'Outcomes' }
-						]}
-						value={page}
-						onChange={setPage}
-					/>
-					{content}
-				</>
-			);
+		let content = null;
+		switch (page) {
+			case 'overview':
+				content = getOverview();
+				break;
+			case 'outcomes':
+				content = getOutcomes();
+				break;
+			default:
+				content = getSection(props.montage.sections.find(s => s.id === page) as MontageSection);
+				break;
 		}
 
 		return (
 			<>
-				{getOverview()}
-				<HeaderText level={1}>Outcomes</HeaderText>
-				{
-					props.montage.sections.map(s => {
-						return (
-							<>
-								<HeaderText>{s.name}</HeaderText>
-								{getSection(s)}
-							</>
-						);
-					})
-				}
-				{getOutcomes()}
+				<Segmented
+					style={{ marginBottom: '20px' }}
+					block={true}
+					options={[
+						{ value: 'overview', label: 'Overview' },
+						...props.montage.sections.map(s => ({ value: s.id, label: s.name })),
+						{ value: 'outcomes', label: 'Outcomes' }
+					]}
+					value={page}
+					onChange={setPage}
+				/>
+				{content}
 			</>
 		);
 	};

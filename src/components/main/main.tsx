@@ -1414,6 +1414,7 @@ export const Main = (props: Props) => {
 			<ElementModal
 				kind={kind}
 				element={element}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				onClose={() => setDrawer(null)}
 				export={format => exportLibraryElement(kind, element, format)}
@@ -1427,6 +1428,7 @@ export const Main = (props: Props) => {
 				monster={monster}
 				monsterGroup={monsterGroup}
 				summon={summon}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				options={options}
 				onClose={() => setDrawer(null)}
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
@@ -1439,6 +1441,7 @@ export const Main = (props: Props) => {
 			<TerrainModal
 				terrain={terrain}
 				upgradeIDs={upgradeIDs}
+				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 				onClose={() => setDrawer(null)}
 				export={format => Utils.export([ terrain.id ], terrain.name || 'Terrain', terrain, 'terrain', format)}
 			/>
@@ -1704,7 +1707,6 @@ export const Main = (props: Props) => {
 									showAbout={showAbout}
 									showSourcebooks={showSourcebooks}
 									showSettings={showSettings}
-									showSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
 									showMonster={onSelectMonster}
 									setOptions={persistOptions}
 									createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}

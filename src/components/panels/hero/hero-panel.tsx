@@ -370,7 +370,7 @@ export const HeroPanel = (props: Props) => {
 	const getStatsSection = () => {
 		const useRows = props.options.compactView;
 
-		const xpSuffix = HeroLogic.canLevelUp(props.hero) ? <ArrowUpOutlined /> : undefined;
+		const xpSuffix = HeroLogic.canLevelUp(props.hero, props.options) ? <ArrowUpOutlined /> : undefined;
 
 		const size = HeroLogic.getSize(props.hero);
 		const sizeSuffix = size.mod || undefined;
@@ -929,7 +929,7 @@ export const HeroPanel = (props: Props) => {
 												</div>
 												:
 												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
-													<MonsterPanel monster={monster} options={props.options} />
+													<MonsterPanel monster={monster} sourcebooks={props.sourcebooks} options={props.options} />
 												</SelectablePanel>
 										)
 									}
@@ -971,7 +971,7 @@ export const HeroPanel = (props: Props) => {
 												</div>
 												:
 												<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster)}>
-													<MonsterPanel monster={summon.monster} summon={summon.info} options={props.options} />
+													<MonsterPanel monster={summon.monster} summon={summon.info} sourcebooks={props.sourcebooks} options={props.options} />
 												</SelectablePanel>
 										)
 									}

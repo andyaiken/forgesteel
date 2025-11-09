@@ -35,7 +35,7 @@ export const EncounterToolsModal = (props: Props) => {
 				if (monster) {
 					monsters.push({
 						monster: monster,
-						count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)
+						count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization)
 					});
 				}
 			}

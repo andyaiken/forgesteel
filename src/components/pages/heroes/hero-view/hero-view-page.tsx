@@ -147,7 +147,7 @@ export const HeroViewPage = (props: Props) => {
 					<Popover
 						trigger='click'
 						content={(
-							<div style={{ width: '315px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							<div style={{ width: '325px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 								{
 									![ 'classic', 'abilities' ].includes(view) ?
 										<Alert

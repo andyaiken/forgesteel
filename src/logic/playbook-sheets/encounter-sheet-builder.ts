@@ -37,7 +37,7 @@ export class EncounterSheetBuilder {
 		sheet.successCondition = encounter.objective?.successCondition;
 		sheet.failureCondition = encounter.objective?.failureCondition;
 
-		sheet.groups = encounter.groups.map(g => this.buildEncounterGroupSheet(g, sourcebooks, options));
+		sheet.groups = encounter.groups.map(g => this.buildEncounterGroupSheet(g, sourcebooks));
 
 		const terrain = encounter.terrain.map(slot => SourcebookLogic.getTerrains(sourcebooks).find(t => t.id === slot.terrainID)).filter(t => !!t);
 		sheet.terrain = terrain;
@@ -64,8 +64,8 @@ export class EncounterSheetBuilder {
 		return sheet;
 	};
 
-	static buildEncounterGroupSheet = (group: EncounterGroup, sourcebooks: Sourcebook[], options: Options): EncounterGroupSheet => {
-		const slots = group.slots.map(s => this.buildEncounterSlotSheet(s, sourcebooks, options)).filter(s => !!s);
+	static buildEncounterGroupSheet = (group: EncounterGroup, sourcebooks: Sourcebook[]): EncounterGroupSheet => {
+		const slots = group.slots.map(s => this.buildEncounterSlotSheet(s, sourcebooks)).filter(s => !!s);
 		const adjustedSlots: EncounterSlotSheet[] = [];
 		slots.forEach(slot => {
 			const existingMinion = adjustedSlots.filter(s => s.isMinion).find(s => s.monster.id === slot.monster.id);
@@ -103,13 +103,13 @@ export class EncounterSheetBuilder {
 		return sheet;
 	};
 
-	static buildEncounterSlotSheet = (slot: EncounterSlot, sourcebooks: Sourcebook[], options: Options): EncounterSlotSheet | null => {
+	static buildEncounterSlotSheet = (slot: EncounterSlot, sourcebooks: Sourcebook[]): EncounterSlotSheet | null => {
 		const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, sourcebooks);
 		if (!monster) {
 			console.error('Failed to get monster for encounter slot:', slot);
 			return null;
 		}
-		const roleMult = MonsterLogic.getRoleMultiplier(monster.role.organization, options);
+		const roleMult = MonsterLogic.getRoleMultiplier(monster.role.organization);
 		const sheet: EncounterSlotSheet = {
 			id: slot.id,
 			monster: monster,

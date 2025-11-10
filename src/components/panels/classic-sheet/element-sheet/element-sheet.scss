@@ -47,3 +47,9 @@
 		max-height: 1240px;
 	}
 }
+
+html[data-theme="dark"] {
+	.element-sheet {
+		background-color: rgb(0, 0, 0);
+	}
+}

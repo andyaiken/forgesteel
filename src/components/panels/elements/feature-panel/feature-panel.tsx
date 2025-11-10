@@ -132,9 +132,7 @@ export const FeaturePanel = (props: Props) => {
 							`Choose ${data.count} of the following options:`
 					}
 				</div>
-				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />)}
-				</Space>
+				{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />)}
 			</div>
 		);
 	};
@@ -387,9 +385,7 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div>
-				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
-					{data.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={props.mode} />)}
-				</Space>
+				{data.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={props.mode} />)}
 			</div>
 		);
 	};

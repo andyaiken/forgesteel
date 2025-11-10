@@ -73,6 +73,27 @@ export const MonsterPanel = (props: Props) => {
 		}
 	}
 
+	let rightOfTags = null;
+	if (props.summon) {
+		if (props.summon.cost > 0) {
+			rightOfTags = (
+				<div className='ds-text'>
+					{`${props.summon.cost} essence ${props.summon.count === 1 ? 'per minion summoned' : `for ${props.summon.count} minions`}`}
+				</div>
+			);
+		}
+	} else {
+		if (props.monster.role.organization === MonsterOrganizationType.Minion) {
+			rightOfTags = (
+				<Field label='EV' value={`${props.monster.encounterValue} for 4 minions`} />
+			);
+		} else if (props.monster.encounterValue > 0) {
+			rightOfTags = (
+				<Field label='EV' value={props.monster.encounterValue} />
+			);
+		}
+	}
+
 	return (
 		<ErrorBoundary>
 			<div className={props.mode === PanelMode.Full ? 'monster-panel' : 'monster-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('monster', props.monster.id) : undefined} style={props.style}>
@@ -88,31 +109,7 @@ export const MonsterPanel = (props: Props) => {
 				<Markdown text={props.monster.description} />
 				<Flex align='center' justify='space-between'>
 					<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-					{
-						!props.summon ?
-							<Field
-								label='EV'
-								value={
-									props.monster.role.organization === MonsterOrganizationType.Minion ?
-										`${props.monster.encounterValue} for 4 minions`
-										:
-										((props.monster.encounterValue === 0) ? '-' : props.monster.encounterValue)
-								}
-							/>
-							: null
-					}
-					{
-						props.summon && (props.summon.cost > 0) ?
-							<div className='ds-text'>
-								{
-									props.summon.count === 1 ?
-										`${props.summon.cost} essence per minion summoned`
-										:
-										`${props.summon.cost} essence for ${props.summon.count} minions`
-								}
-							</div>
-							: null
-					}
+					{rightOfTags}
 				</Flex>
 				{
 					props.mode === PanelMode.Full ?

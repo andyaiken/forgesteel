@@ -722,13 +722,13 @@ export class SheetFormatter {
 
 	static calculateProjectComponentSize = (project: ProjectSheet, lineWidth: number): number => {
 		let size = 0;
+		size += this.countLines(project.description, lineWidth, 0);
 		size += this.countLines(`Item Prerequisite ${project.prerequisites}`, lineWidth);
 		size += 1.8; // Prerequisites box
 		size += this.countLines(`Project Source ${project.source}`, lineWidth);
 		size += 1.8; // Source box
 		size += this.countLines(`Project Roll Characteristic ${project.characteristic}`, lineWidth);
 		size += 1; // points goal
-		size += this.countLines(project.effect, lineWidth, 0);
 		return size;
 	};
 

@@ -701,7 +701,6 @@ export class HeroSheetBuilder {
 			characteristic: characteristics,
 			assignee: assignee,
 			description: project.description,
-			effect: project.effect,
 			prerequisites: project.itemPrerequisites,
 			havePrerequisites: project.progress?.prerequisites ?? false,
 			source: project.source,

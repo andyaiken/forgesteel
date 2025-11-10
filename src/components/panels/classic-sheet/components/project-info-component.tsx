@@ -41,7 +41,6 @@ export const ProjectInfoComponent = (props: Props) => {
 					<label>Project Goal:</label>
 					<span>{project.pointsGoal}</span>
 				</div>
-				<p>{project.effect}</p>
 			</div>
 		</div>
 	);

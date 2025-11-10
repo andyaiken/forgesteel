@@ -412,11 +412,11 @@ describe('calculateProjectDetailCardSize', () => {
 	test('calculates card size correctly', () => {
 		const sheet = {
 			name: 'Craft Black Ash Dart',
+			description: 'Yields 1d3 darts, or three darts if crafted by a shadow',
 			prerequisites: 'Three vials of black ash from the College of Black Ash',
 			source: 'Texts or lore in Szetch',
 			characteristic: 'A or I',
-			pointsGoal: 45,
-			effect: 'Yields 1d3 darts, or three darts if crafted by a shadow'
+			pointsGoal: 45
 		} as ProjectSheet;
 
 		const result = SheetFormatter.calculateProjectDetailCardSize(sheet, 54);// 54 is equivalent to the Letter/Portrait cardLineLen
@@ -460,7 +460,7 @@ describe('calculateProjectsOverviewCardSize', () => {
 		const sheets = projects.map(p => p as ProjectSheet);
 
 		const result = SheetFormatter.calculateProjectsOverviewCardSize(sheets, 54);
-		expect(result).toBeCloseTo(50.5, 0.2);
+		expect(result).toBeCloseTo(48.3, 0.2);
 	});
 });
 

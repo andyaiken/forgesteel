@@ -731,7 +731,6 @@ const ProjectSheet = (props: ProjectProps) => {
 			{props.project.source ? <Field label='Source' value={props.project.source} /> : null}
 			<Field label='Characteristic' value={props.project.characteristic.length === 5 ? 'highest characteristic' : props.project.characteristic.join(' or ')} />
 			<Field label='Goal' value={props.project.goal || '(varies)'} />
-			<Markdown text={props.project.effect} />
 		</>
 	);
 };

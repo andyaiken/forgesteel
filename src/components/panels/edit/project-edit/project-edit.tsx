@@ -61,13 +61,6 @@ export const ProjectEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const setEffect = (value: string) => {
-		const copy = Utils.copy(project);
-		copy.effect = value;
-		setProject(copy);
-		props.onChange(copy);
-	};
-
 	return (
 		<ErrorBoundary>
 			<div className='project-edit-panel'>
@@ -122,8 +115,6 @@ export const ProjectEditPanel = (props: Props) => {
 				/>
 				<HeaderText>Goal</HeaderText>
 				<NumberSpin min={0} max={500} steps={[ 5 ]} value={project.goal} onChange={setGoal} />
-				<HeaderText>Effect</HeaderText>
-				<MultiLine value={project.effect} onChange={setEffect} />
 			</div>
 		</ErrorBoundary>
 	);

@@ -12,11 +12,11 @@ export class ConsumableData {
 		type: ItemType.Consumable,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
+			description: 'Yields 1d3 darts, or three darts if crafted by a shadow',
 			prerequisites: 'Three vials of black ash from the College of Black Ash',
 			source: 'Texts or lore in Szetch',
 			characteristic: [ Characteristic.Agility, Characteristic.Intuition ],
-			goal: 45,
-			effect: 'Yields 1d3 darts, or three darts if crafted by a shadow'
+			goal: 45
 		}),
 		effect: `
 As a maneuver, you can make a ranged free strike using a black ash dart. The strike deals an extra 1 damage and adds the following effects to the tier outcomes of the power roll:
@@ -143,11 +143,10 @@ Any fire caused by the oil is extinguished after burning for 1 hour.`
 		type: ItemType.Consumable,
 		keywords: [ AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
+			description: 'Yields 1d3 teeth',
 			prerequisites: 'A leftover carcass of a lachomp meal',
 			source: 'Texts or lore in Caelian',
-			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 45,
-			effect: 'Yields 1d3 teeth'
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ]
 		}),
 		effect: `
 As a maneuver, you attach a lachomp tooth to a weapon, allowing that weapon to supernaturally flicker in and out of reality. Your next strike that uses the weapon can tear through multiple targets in a line (for a ranged strike) or surrounding you (for a melee strike). The strike adds the following effects to the tier outcomes of the power roll:
@@ -263,11 +262,11 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		type: ItemType.Consumable,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
+			description: 'Yields 1d6 + 1 snapdragons',
 			prerequisites: 'Fifty snapdragon seeds',
 			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 45,
-			effect: 'Yields 1d6 + 1 snapdragons'
+			goal: 45
 		}),
 		effect: 'As a maneuver, you sniff a magic snapdragon blossom, causing it to whither and making your movements more forceful and explosive. The next damage-dealing ability you use deals an extra 5 damage and gains a +2 bonus to the distance of any forced movement it imposes. If the ability does not impose forced movement, you can push each creature targeted by the ability up to 2 squares.'
 	});
@@ -339,11 +338,11 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		type: ItemType.Consumable,
 		keywords: [ AbilityKeyword.Magic ],
 		crafting: FactoryLogic.createProject({
+			description: 'Yields 1d3 vials',
 			prerequisites: 'Several strands of hag hair',
 			source: 'Texts or lore in Khelt',
 			characteristic: [ Characteristic.Intuition, Characteristic.Presence ],
-			goal: 90,
-			effect: 'Yields 1d3 vials'
+			goal: 90
 		}),
 		effect: 'Dousing yourself in this powder as a maneuver causes you to weightlessly float off the ground. For 1 hour, your stability is reduced to 0, and you can fly and hover. Additionally, the hag that the powder is sourced from knows exactly where and when you use it.'
 	});
@@ -355,11 +354,11 @@ Small lightning bolts arc around the black cloud in this sphere, which creates a
 		type: ItemType.Consumable,
 		keywords: [ AbilityKeyword.Potion, AbilityKeyword.Psionic ],
 		crafting: FactoryLogic.createProject({
+			description: 'Yields 1d3 doses',
 			prerequisites: 'A cup of algae from glacial water',
 			source: 'Texts or lore in Yllyric',
 			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
-			goal: 90,
-			effect: 'Yields 1d3 doses'
+			goal: 90
 		}),
 		effect: 'Consuming this potion as a maneuver causes your skin to shimmer and a set of tiny gills to appear on your neck or shoulders. For 1 hour, you can breathe in any environment, and you ignore the effects of harmful gases, vapors, and inhaled poisons.'
 	});

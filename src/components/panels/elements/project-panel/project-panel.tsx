@@ -2,10 +2,12 @@ import { Button, Divider, Progress, Select, Space } from 'antd';
 import { CheckCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { Characteristic } from '@/enums/characteristic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { Item } from '@/models/item';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
@@ -27,73 +29,80 @@ interface Props {
 	hero?: Hero;
 	mode?: PanelMode;
 	onChange?: (project: Project) => void;
+	addItemAndDeleteProject?: (item: Item, project: Project) => void;
 }
 
 export const ProjectPanel = (props: Props) => {
 	const [ project, setProject ] = useState<Project>(Utils.copy(props.project));
 	const [ editing, setEditing ] = useState<boolean>(false);
 
-	const setPrerequisites = (value: boolean) => {
-		const copy = Utils.copy(project);
-		copy.progress!.prerequisites = value;
-		setProject(copy);
-		if (props.onChange) {
-			props.onChange(copy);
+	const getPrerequisitesMet = () => {
+		if (project.itemPrerequisites && project.progress && !project.progress.prerequisites) {
+			return false;
 		}
+
+		if (project.source && project.progress && !project.progress.source) {
+			return false;
+		}
+
+		return true;
 	};
 
-	const setSource = (value: boolean) => {
-		const copy = Utils.copy(project);
-		copy.progress!.source = value;
-		setProject(copy);
-		if (props.onChange) {
-			props.onChange(copy);
-		}
-	};
+	const getPreparation = () => {
+		const setPrerequisites = (value: boolean) => {
+			const copy = Utils.copy(project);
+			copy.progress!.prerequisites = value;
+			setProject(copy);
+			if (props.onChange) {
+				props.onChange(copy);
+			}
+		};
 
-	const setFollowerID = (value: string | null) => {
-		const copy = Utils.copy(project);
-		copy.progress!.followerID = value;
-		setProject(copy);
-		if (props.onChange) {
-			props.onChange(copy);
-		}
-	};
+		const setSource = (value: boolean) => {
+			const copy = Utils.copy(project);
+			copy.progress!.source = value;
+			setProject(copy);
+			if (props.onChange) {
+				props.onChange(copy);
+			}
+		};
 
-	const setPoints = (value: number) => {
-		const copy = Utils.copy(project);
-		copy.progress!.points = value;
-		setProject(copy);
-		if (props.onChange) {
-			props.onChange(copy);
-		}
+		return (
+			<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				{project.itemPrerequisites ? <Field label='Item Prerequisites' value={props.project.itemPrerequisites} /> : null}
+				{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
+				{project.source ? <Field label='Source' value={props.project.source} /> : null}
+				{project.source && project.progress ? <Toggle label='Obtained Source' value={project.progress.source} onChange={setSource} /> : null}
+			</Space>
+		);
 	};
-
-	const onChange = (value: Project) => {
-		const copy = Utils.copy(value);
-		setProject(copy);
-		if (props.onChange) {
-			props.onChange(copy);
-		}
-	};
-
-	let itemOK = true;
-	if (project.itemPrerequisites && project.progress && !project.progress.prerequisites) {
-		itemOK = false;
-	}
-	let sourceOK = true;
-	if (project.source && project.progress && !project.progress.source) {
-		sourceOK = false;
-	}
 
 	const getProgress = () => {
-		if (!project.progress || !props.hero) {
+		if (!project.progress || !props.hero || !getPrerequisitesMet()) {
 			return null;
 		}
 
+		const setFollowerID = (value: string | null) => {
+			const copy = Utils.copy(project);
+			copy.progress!.followerID = value;
+			setProject(copy);
+			if (props.onChange) {
+				props.onChange(copy);
+			}
+		};
+
+		const setPoints = (value: number) => {
+			const copy = Utils.copy(project);
+			copy.progress!.points = value;
+			setProject(copy);
+			if (props.onChange) {
+				props.onChange(copy);
+			}
+		};
+
 		const follower = HeroLogic.getFollowers(props.hero).find(f => f.id === project.progress!.followerID);
 
-		const getChar = (characteristic: Characteristic) => {
+		const getCharacteristic = (characteristic: Characteristic) => {
 			if (!follower) {
 				return 0;
 			}
@@ -102,8 +111,10 @@ export const ProjectPanel = (props: Props) => {
 			return c ? c.value : 0;
 		};
 
+		const item = SourcebookLogic.getItems(props.sourcebooks).find(i => i.crafting && (i.crafting.id === project.id));
+
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 				{
 					HeroLogic.getFollowers(props.hero).length > 0 ?
 						<Select
@@ -120,27 +131,23 @@ export const ProjectPanel = (props: Props) => {
 					follower ?
 						<div>
 							<HeaderText tags={[ follower.type ]}>{follower.name}</HeaderText>
-							<Field label='Characteristics' value={`Might ${getChar(Characteristic.Might)}, Agility ${getChar(Characteristic.Agility)}, Reason ${getChar(Characteristic.Reason)}, Intuition ${getChar(Characteristic.Intuition)}, Presence ${getChar(Characteristic.Presence)}`} />
+							<Field label='Characteristics' value={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => `${ch} ${getCharacteristic(ch)}`).join(', ')} />
 							<Field label='Skills' value={follower.skills.join(', ')} />
 							<Field label='Languages' value={follower.languages.join(', ')} />
 						</div>
 						: null
 				}
+				<NumberSpin
+					label='Progress'
+					min={0}
+					max={project.goal || undefined}
+					steps={[ 1, 10 ]}
+					value={project.progress.points}
+					suffix={props.project.goal ? `/ ${props.project.goal}` : undefined}
+					onChange={setPoints}
+				/>
 				{
-					itemOK && sourceOK ?
-						<NumberSpin
-							label='Progress'
-							min={0}
-							max={project.goal || undefined}
-							steps={[ 1, 10 ]}
-							value={project.progress.points}
-							suffix={props.project.goal ? `/ ${props.project.goal}` : undefined}
-							onChange={setPoints}
-						/>
-						: null
-				}
-				{
-					itemOK && sourceOK && (project.goal > 0) ?
+					project.goal > 0 ?
 						<div className='project-progress-gauge'>
 							<Progress
 								type='dashboard'
@@ -150,26 +157,89 @@ export const ProjectPanel = (props: Props) => {
 						</div>
 						: null
 				}
+				{
+					(project.goal > 0) && (project.progress.points >= project.goal) && item && props.addItemAndDeleteProject ?
+						<>
+							<Divider />
+							<Button
+								block={true}
+								type='primary'
+								className='tall-button'
+								onClick={() => props.addItemAndDeleteProject!(item, project)}
+							>
+								<div>
+									<div>Finish</div>
+									<div className='subtext'>
+										Add {item.name || 'Unnamed Item'} to your inventory, then close this project
+									</div>
+								</div>
+							</Button>
+						</>
+						: null
+				}
 			</Space>
+		);
+	};
+
+	const getEditor = () => {
+		const onChange = (value: Project) => {
+			const copy = Utils.copy(value);
+			setProject(copy);
+			if (props.onChange) {
+				props.onChange(copy);
+			}
+		};
+
+		return (
+			<ProjectEditPanel
+				project={project}
+				includeNameAndDescription={true}
+				onChange={onChange}
+			/>
 		);
 	};
 
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getProjectSourcebook(props.sourcebooks, project)?.type || SourcebookType.Homebrew;
+		let sourcebook = SourcebookLogic.getProjectSourcebook(props.sourcebooks, project);
+		if (!sourcebook) {
+			// This might be a crafting project from an item
+			sourcebook = props.sourcebooks.find(sb => sb.items.some(i => i.crafting && i.crafting.id === project.id));
+		}
+		if (!sourcebook) {
+			// This might be a crafting project from an imbuement
+			sourcebook = props.sourcebooks.find(sb => sb.imbuements.some(i => i.crafting && i.crafting.id === project.id));
+		}
+		const sourcebookType = sourcebook ? sourcebook.type : SourcebookType.Homebrew;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}
 	}
 
+	if (props.mode !== PanelMode.Full) {
+		return (
+			<ErrorBoundary>
+				<div className='project-panel compact'>
+					<HeaderText
+						level={1}
+						tags={tags}
+					>
+						{props.project.name || 'Unnamed Project'}
+					</HeaderText>
+					<Markdown text={props.project.description} />
+				</div>
+			</ErrorBoundary>
+		);
+	}
+
 	return (
 		<ErrorBoundary>
-			<div className={props.mode === PanelMode.Full ? 'project-panel' : 'project-panel compact'} id={props.mode === PanelMode.Full ? SheetFormatter.getPageId('project', props.project.id) : undefined}>
+			<div className='project-panel' id={SheetFormatter.getPageId('project', props.project.id)}>
 				<HeaderText
 					level={1}
 					tags={tags}
 					extra={
-						project.isCustom && (props.mode === PanelMode.Full) ?
+						project.isCustom ?
 							<Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
 							: null
 					}
@@ -177,30 +247,33 @@ export const ProjectPanel = (props: Props) => {
 					{props.project.name || 'Unnamed Project'}
 				</HeaderText>
 				<Markdown text={props.project.description} />
-				{
-					(props.mode === PanelMode.Full) && !editing ?
-						<>
-							{project.itemPrerequisites ? <Field label='Item Prerequisites' value={props.project.itemPrerequisites} /> : null}
-							{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
-							{project.source ? <Field label='Source' value={props.project.source} /> : null}
-							{project.source && project.progress ? <Toggle label='Obtained Source' value={project.progress.source} onChange={setSource} /> : null}
-							<Field label='Characteristic' value={props.project.characteristic.length === 5 ? 'highest characteristic' : props.project.characteristic.join(' or ')} />
-							<Field label='Goal' value={props.project.goal || '(varies)'} />
-							<Markdown text={props.project.effect} />
-							{project.progress ? <Divider /> : null}
-							{getProgress()}
-						</>
-						: null
-				}
-				{
-					(props.mode === PanelMode.Full) && editing ?
-						<ProjectEditPanel
-							project={project}
-							includeNameAndDescription={true}
-							onChange={onChange}
+				<Space direction='vertical' style={{ width: '100%' }}>
+					{
+						!editing ?
+							<Expander title='Preparation' expandedByDefault={!getPrerequisitesMet()}>
+								{getPreparation()}
+							</Expander>
+							: null
+					}
+					<div>
+						<Field
+							label='Characteristic'
+							value={props.project.characteristic.length === 5 ? 'highest characteristic' : props.project.characteristic.join(' or ')}
 						/>
-						: null
-				}
+						<Field
+							label='Goal'
+							value={props.project.goal || '(varies)'}
+						/>
+					</div>
+					{
+						!editing && props.hero ?
+							<Expander title='Progress' expandedByDefault={getPrerequisitesMet()}>
+								{getProgress()}
+							</Expander>
+							: null
+					}
+					{editing ? getEditor() : null}
+				</Space>
 			</div>
 		</ErrorBoundary>
 	);

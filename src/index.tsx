@@ -59,14 +59,14 @@ Promise.all(promises).then(results => {
 			if (item.crafting) {
 				item.crafting.id = `${item.id}-crafting`;
 				item.crafting.name = `Craft ${item.name}`;
-				item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}`;
+				item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}.`;
 			}
 		});
 		sourcebook.imbuements.forEach(imbuement => {
 			if (imbuement.crafting) {
 				imbuement.crafting.id = `${imbuement.id}-crafting`;
 				imbuement.crafting.name = `Imbue ${imbuement.name}`;
-				imbuement.crafting.description = `Imbue an item with ${imbuement.name}`;
+				imbuement.crafting.description = `Imbue an item with ${imbuement.name}.`;
 			}
 		});
 	});

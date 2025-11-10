@@ -39,6 +39,7 @@ import { Monster } from '@/models/monster';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
+import { ProjectLogic } from '@/logic/project-logic';
 import { RulesPage } from '@/enums/rules-page';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
@@ -713,7 +714,7 @@ export const HeroPanel = (props: Props) => {
 									<div key={project.id} className='overview-tile clickable' onClick={onSelectProject}>
 										<HeaderText>Project</HeaderText>
 										<Field label='Project' value={project.name} />
-										{project.progress ? <Field label='Progress' value={project.goal > 0 ? `${Math.round(100 * project.progress.points / project.goal)}%` : `${project.goal}`} /> : null}
+										{project.progress ? <Field label='State' value={ProjectLogic.getStatus(project)} /> : null}
 									</div>
 							)
 							:

@@ -1,6 +1,5 @@
 import { Divider, Flex, Space, Tag } from 'antd';
 import { MonsterLabel, TerrainLabel } from '@/components/panels/monster-label/monster-label';
-import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Terrain, TerrainSection } from '@/models/terrain';
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
 import { AbilityUsage } from '@/enums/ability-usage';
@@ -36,6 +35,8 @@ import { Perk } from '@/models/perk';
 import { Pill } from '@/components/controls/pill/pill';
 import { Project } from '@/models/project';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { StatsRow } from '../../stats-row/stats-row';
 import { SubClass } from '@/models/subclass';
 import { TerrainLogic } from '@/logic/terrain-logic';
@@ -44,7 +45,7 @@ import { Title } from '@/models/title';
 import './element-sheet.scss';
 
 interface Props {
-	type: SourcebookElementKind;
+	type: string;
 	element: Element;
 	sourcebooks: Sourcebook[];
 	options: Options;
@@ -138,6 +139,16 @@ export const ElementSheet = (props: Props) => {
 			content = (
 				<MonsterGroupSheet
 					monsterGroup={props.element as MonsterGroup}
+					sourcebooks={props.sourcebooks}
+					options={props.options}
+				/>
+			);
+			break;
+		case 'monster':
+			content = (
+				<MonsterSheet
+					monster={props.element as Monster}
+					monsterGroup={SourcebookLogic.getMonsterGroup(props.sourcebooks, props.element.id) as MonsterGroup}
 					sourcebooks={props.sourcebooks}
 					options={props.options}
 				/>
@@ -566,6 +577,17 @@ const MonsterSheet = (props: MonsterProps) => {
 	const features = MonsterLogic.getFeatures(props.monster).filter(f => (f.type === FeatureType.Text) || (f.type === FeatureType.AddOn));
 	const abilities = MonsterLogic.getFeatures(props.monster).filter(f => f.type === FeatureType.Ability).map(f => f.data.ability);
 
+	let rightOfTags = null;
+	if (props.monster.role.organization === MonsterOrganizationType.Minion) {
+		rightOfTags = (
+			<Field label='EV' value={`${props.monster.encounterValue} for 4 minions`} />
+		);
+	} else if (props.monster.encounterValue > 0) {
+		rightOfTags = (
+			<Field label='EV' value={props.monster.encounterValue} />
+		);
+	}
+
 	return (
 		<>
 			<HeaderText level={1}>
@@ -575,15 +597,7 @@ const MonsterSheet = (props: MonsterProps) => {
 			<Markdown text={props.monster.description} />
 			<Flex align='center' justify='space-between'>
 				<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-				<Field
-					label='EV'
-					value={
-						props.monster.role.organization === MonsterOrganizationType.Minion ?
-							`${props.monster.encounterValue} for 4 minions`
-							:
-							((props.monster.encounterValue === 0) ? '-' : props.monster.encounterValue)
-					}
-				/>
+				{rightOfTags}
 			</Flex>
 			<StatsRow>
 				<Field orientation='vertical' label='Size' value={FormatLogic.getSize(props.monster.size)} />
@@ -741,13 +755,11 @@ const SubclassSheet = (props: SubclassProps) => {
 					.map(lvl => (
 						<Space key={lvl.level} direction='vertical'>
 							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
-							<div className='subclass-features-grid'>
-								{
-									lvl.features.map(f => (
-										<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
-									))
-								}
-							</div>
+							{
+								lvl.features.map(f => (
+									<FeaturePanel key={f.id} feature={f} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+								))
+							}
 						</Space>
 					))
 			}
@@ -764,7 +776,7 @@ interface TerrainProps {
 const TerrainSheet = (props: TerrainProps) => {
 	const getSection = (section: TerrainSection, index: number) => {
 		return (
-			<div key={index} className='terrain-section'>
+			<div key={index}>
 				<Divider />
 				{
 					section.content.map(content => {

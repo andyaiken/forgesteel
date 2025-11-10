@@ -428,12 +428,17 @@ export const LibraryListPage = (props: Props) => {
 		let getPanel: (element: Element) => ReactNode = () => null;
 
 		if (view === 'classic') {
+			let cat: string = category;
+			if ((category === 'monster-group') && !props.options.showMonsterGroups) {
+				cat = 'monster';
+			}
+
 			getPanel = (element: Element) => {
 				return (
 					<div style={{ padding: '20px', overflow: 'auto' }}>
 						<ElementSheet
 							key={element.id}
-							type={category}
+							type={cat}
 							element={element}
 							sourcebooks={props.sourcebooks}
 							options={props.options}

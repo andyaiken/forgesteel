@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
-import { AbilityLogic } from '../ability-logic';
+import { AbilityLogic } from '@/logic/ability-logic';
 import { ArtifactData } from '@/data/items/artifact-data';
 import { Characteristic } from '@/enums/characteristic';
 import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { HeroLogic } from '../hero-logic';
+import { HeroLogic } from '@/logic/hero-logic';
 import { Options } from '@/models/options';
 import { goblin } from '@/data/monsters/goblin';
 

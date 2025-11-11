@@ -1,4 +1,4 @@
-import { AncestryData } from '../ancestry-data';
+import { AncestryData } from '@/data/ancestry-data';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
 
@@ -11,20 +11,20 @@ export const ratcatcher: Sourcebook = {
 		AncestryData.anthousai,
 		AncestryData.dryad
 	],
-	cultures: [],
 	careers: [],
-	classes: [],
-	subclasses: [],
 	complications: [],
+	cultures: [],
+	classes: [],
 	domains: [],
-	kits: [],
-	perks: [],
-	titles: [],
-	items: [],
 	imbuements: [],
+	items: [],
+	kits: [],
 	monsterGroups: [],
-	skills: [],
-	languages: [],
+	perks: [],
 	projects: [],
-	terrain: []
+	subclasses: [],
+	terrain: [],
+	titles: [],
+	skills: [],
+	languages: []
 };

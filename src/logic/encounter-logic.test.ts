@@ -1,7 +1,7 @@
 import { FeatureMalice, FeatureMaliceAbility } from '@/models/feature';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Encounter } from '@/models/encounter';
-import { EncounterLogic } from './encounter-logic';
+import { EncounterLogic } from '@/logic/encounter-logic';
 import { MonsterData } from '@/data/monster-data';
 import { MonsterGroup } from '@/models/monster-group';
 

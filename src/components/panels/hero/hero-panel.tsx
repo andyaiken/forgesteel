@@ -47,7 +47,7 @@ import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
-import { StatsSidebarPanel } from './stats-sidebar/stats-sidebar-panel';
+import { StatsSidebarPanel } from '@/components/panels/hero/stats-sidebar/stats-sidebar-panel';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
 import { useIsSmall } from '@/hooks/use-is-small';

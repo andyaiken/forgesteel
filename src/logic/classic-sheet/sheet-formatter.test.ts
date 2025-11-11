@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { Ability } from '@/models/ability';
 import { AbilityData } from '@/data/ability-data';
-import { ClassicSheetBuilder } from './classic-sheet-builder';
+import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';

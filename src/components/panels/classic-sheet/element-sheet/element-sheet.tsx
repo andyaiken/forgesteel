@@ -37,7 +37,7 @@ import { Project } from '@/models/project';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
-import { StatsRow } from '../../stats-row/stats-row';
+import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { SubClass } from '@/models/subclass';
 import { TerrainLogic } from '@/logic/terrain-logic';
 import { Title } from '@/models/title';

@@ -512,10 +512,10 @@ export const HeroEditPage = (props: Props) => {
 			case 'start':
 				return (
 					<StartSection
-						hero={hero}
+						settingIDs={hero.settingIDs}
 						sourcebooks={props.sourcebooks}
 						setSettingIDs={setSettingIDs}
-						importSourcebook={props.importSourcebook}
+						onImportSourcebook={props.importSourcebook}
 					/>
 				);
 			case 'ancestry':

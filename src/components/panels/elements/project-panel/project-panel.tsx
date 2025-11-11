@@ -7,7 +7,9 @@ import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
+import { ImbuedItemData } from '@/data/items/imbued-item-data';
 import { Item } from '@/models/item';
+import { ItemType } from '@/enums/item-type';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { PanelMode } from '@/enums/panel-mode';
@@ -49,6 +51,10 @@ export const ProjectPanel = (props: Props) => {
 	};
 
 	const getPreparation = () => {
+		if (editing) {
+			return null;
+		}
+
 		const setPrerequisites = (value: boolean) => {
 			const copy = Utils.copy(project);
 			copy.progress!.prerequisites = value;
@@ -78,6 +84,10 @@ export const ProjectPanel = (props: Props) => {
 	};
 
 	const getProgress = () => {
+		if (editing) {
+			return null;
+		}
+
 		if (!project.progress || !props.hero || !getPrerequisitesMet()) {
 			return null;
 		}
@@ -110,8 +120,6 @@ export const ProjectPanel = (props: Props) => {
 			const c = follower.characteristics.find(ch => ch.characteristic === characteristic);
 			return c ? c.value : 0;
 		};
-
-		const item = SourcebookLogic.getItems(props.sourcebooks).find(i => i.crafting && (i.crafting.id === project.id));
 
 		return (
 			<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
@@ -157,27 +165,61 @@ export const ProjectPanel = (props: Props) => {
 						</div>
 						: null
 				}
-				{
-					(project.goal > 0) && (project.progress.points >= project.goal) && item && props.addItemAndDeleteProject ?
-						<>
-							<Divider />
-							<Button
-								block={true}
-								type='primary'
-								className='tall-button'
-								onClick={() => props.addItemAndDeleteProject!(item, project)}
-							>
-								<div>
-									<div>Finish</div>
-									<div className='subtext'>
-										Add {item.name || 'Unnamed Item'} to your inventory, then close this project
-									</div>
-								</div>
-							</Button>
-						</>
-						: null
-				}
 			</Space>
+		);
+	};
+
+	const getItem = () => {
+		if (editing) {
+			return null;
+		}
+
+		if ((project.goal === 0) || !project.progress || (project.progress.points < project.goal) || !props.hero || !props.addItemAndDeleteProject || !getPrerequisitesMet()) {
+			return null;
+		}
+
+		let item = SourcebookLogic.getItems(props.sourcebooks).find(i => i.crafting && (i.crafting.id === project.id));
+		if (!item) {
+			const imbuement = SourcebookLogic.getImbuements(props.sourcebooks).find(i => i.crafting && (i.crafting.id === project.id));
+			if (imbuement) {
+				switch (imbuement.type) {
+					case ItemType.ImbuedArmor:
+						item = Utils.copy(ImbuedItemData.imbuedArmor);
+						break;
+					case ItemType.ImbuedImplement:
+						item = Utils.copy(ImbuedItemData.imbuedImplement);
+						break;
+					case ItemType.ImbuedWeapon:
+						item = Utils.copy(ImbuedItemData.imbuedWeapon);
+						break;
+				}
+
+				if (item) {
+					item.imbuements.push(Utils.copy(imbuement));
+				}
+			}
+		} else {
+			item = Utils.copy(item);
+		}
+
+		if (!item) {
+			return null;
+		}
+
+		return (
+			<Button
+				block={true}
+				type='primary'
+				className='tall-button'
+				onClick={() => props.addItemAndDeleteProject!(item, project)}
+			>
+				<div>
+					<div>Finish</div>
+					<div className='subtext'>
+						Add {item.name || 'Unnamed Item'} to your inventory, then close this project
+					</div>
+				</div>
+			</Button>
 		);
 	};
 
@@ -198,6 +240,10 @@ export const ProjectPanel = (props: Props) => {
 			/>
 		);
 	};
+
+	const preparation = getPreparation();
+	const progress = getProgress();
+	const item = getItem();
 
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
@@ -249,9 +295,9 @@ export const ProjectPanel = (props: Props) => {
 				<Markdown text={props.project.description} />
 				<Space direction='vertical' style={{ width: '100%' }}>
 					{
-						!editing ?
+						preparation ?
 							<Expander title='Preparation' expandedByDefault={!getPrerequisitesMet()}>
-								{getPreparation()}
+								{preparation}
 							</Expander>
 							: null
 					}
@@ -266,12 +312,14 @@ export const ProjectPanel = (props: Props) => {
 						/>
 					</div>
 					{
-						!editing && props.hero ?
+						progress ?
 							<Expander title='Progress' expandedByDefault={getPrerequisitesMet()}>
-								{getProgress()}
+								{progress}
 							</Expander>
 							: null
 					}
+					{item ? <Divider /> : null}
+					{item}
 					{editing ? getEditor() : null}
 				</Space>
 			</div>

@@ -1,4 +1,4 @@
-import { LabeledBooleanField } from '../components/labeled-field';
+import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
 
 import rollT1Icon from '@/assets/icons/power-roll-t1.svg';
 import rollT2Icon from '@/assets/icons/power-roll-t2.svg';

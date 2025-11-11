@@ -1,7 +1,7 @@
-import { anthousai } from './ancestries/anthousai';
+import { anthousai } from '@/data/ancestries/anthousai';
 import { devil } from '@/data/ancestries/devil';
 import { dragonKnight } from '@/data/ancestries/dragon-knight';
-import { dryad } from './ancestries/dryad';
+import { dryad } from '@/data/ancestries/dryad';
 import { dwarf } from '@/data/ancestries/dwarf';
 import { hakaan } from '@/data/ancestries/hakaan';
 import { highElf } from '@/data/ancestries/elf-high';

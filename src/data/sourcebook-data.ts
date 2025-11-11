@@ -1,7 +1,7 @@
 import { core } from '@/data/sourcebooks/core';
 import { orden } from '@/data/sourcebooks/orden';
 import { playtest } from '@/data/sourcebooks/playtest';
-import { ratcatcher } from './sourcebooks/ratcatcher';
+import { ratcatcher } from '@/data/sourcebooks/ratcatcher';
 
 export class SourcebookData {
 	static core = core;

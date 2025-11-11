@@ -1,23 +1,35 @@
-import { Button, Drawer } from 'antd';
+import { Button, Divider, Flex, Upload } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Hero } from '@/models/hero';
+import { Markdown } from '@/components/controls/markdown/markdown';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
-import { SourcebookSelectModal } from '@/components/modals/select/sourcebook-select/sourcebook-select-modal';
-import { useState } from 'react';
+import { SourcebookType } from '@/enums/sourcebook-type';
+import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
+import { Toggle } from '@/components/controls/toggle/toggle';
+import { Utils } from '@/utils/utils';
 
 import './start-section.scss';
 
 interface Props {
-	hero: Hero;
+	settingIDs: string[];
 	sourcebooks: Sourcebook[];
 	setSettingIDs: (settingIDs: string[]) => void;
-	importSourcebook: (sourcebook: Sourcebook) => void;
+	onImportSourcebook: (sourcebook: Sourcebook) => void;
 }
 
 export const StartSection = (props: Props) => {
-	const [ sourcebookSelectOpen, setSourcebookSelectOpen ] = useState<boolean>(false);
+	const toggleSourcebook = (include: boolean, id: string) => {
+		if (include) {
+			const copy = Utils.copy(props.settingIDs);
+			copy.push(id);
+			props.setSettingIDs(copy);
+		} else {
+			const copy = props.settingIDs.filter(x => x !== id);
+			props.setSettingIDs(copy);
+		}
+	};
 
 	return (
 		<div className='hero-edit-content start-section'>
@@ -48,42 +60,51 @@ export const StartSection = (props: Props) => {
 					<div className='ds-text'>
 						This hero can use content from the following sourcebooks:
 					</div>
-					<ul>
-						{
-							props.hero.settingIDs.map(id => {
-								const sb = props.sourcebooks.find(x => x.id === id);
-								return sb ?
-									<li key={sb.id}>
-										<Field label={sb.name || 'Unnamed Sourcebook'} value={sb.description} />
-									</li>
-									: null;
-							})
-						}
-						{
-							props.hero.settingIDs.length === 0 ?
-								<li key='empty'>
-									None
-								</li>
-								: null
-						}
-					</ul>
-					<div className='ds-text'>
-						If you have a homebrew sourcebook you'd like to use for this hero, you should include it here.
-					</div>
-					<Button block={true} onClick={() => setSourcebookSelectOpen(true)}>
-						Select Sourcebooks
-					</Button>
+					{
+						[ SourcebookType.Official, SourcebookType.ThirdParty, SourcebookType.Homebrew ].map(type => (
+							<div key={type}>
+								<HeaderText level={3}>{type} Sourcebooks</HeaderText>
+								{
+									props.sourcebooks
+										.filter(sb => sb.type === type)
+										.map(sb => (
+											<Toggle
+												key={sb.id}
+												label={<Field label={sb.name || 'Unnamed Sourcebook'} value={<Markdown text={sb.description} useSpan={true} />} />}
+												value={props.settingIDs.includes(sb.id)}
+												onChange={value => toggleSourcebook(value, sb.id)}
+											/>
+										))
+								}
+							</div>
+						))
+					}
+					<Divider />
+					<Flex align='center' gap={10}>
+						<div className='ds-text'>
+							If you have a homebrew sourcebook you want to use, and it isn't listed here, you can import it now.
+						</div>
+						<Upload
+							style={{ width: '100%' }}
+							accept='.drawsteel-sourcebook,.ds-sourcebook'
+							showUploadList={false}
+							beforeUpload={file => {
+								file
+									.text()
+									.then(json => {
+										const sourcebook = JSON.parse(json) as Sourcebook;
+										sourcebook.id = Utils.guid();
+										SourcebookUpdateLogic.updateSourcebook(sourcebook);
+										props.onImportSourcebook(sourcebook);
+									});
+								return false;
+							}}
+						>
+							<Button title='Import a sourcebook' icon={<DownloadOutlined />} />
+						</Upload>
+					</Flex>
 				</SelectablePanel>
 			</div>
-			<Drawer open={sourcebookSelectOpen} onClose={() => setSourcebookSelectOpen(false)} closeIcon={null} width='500px'>
-				<SourcebookSelectModal
-					selectedIDs={props.hero.settingIDs}
-					sourcebooks={props.sourcebooks}
-					onSelect={props.setSettingIDs}
-					onImport={props.importSourcebook}
-					onClose={() => setSourcebookSelectOpen(false)}
-				/>
-			</Drawer>
 		</div>
 	);
 };

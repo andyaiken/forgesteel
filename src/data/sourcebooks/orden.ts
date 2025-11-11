@@ -3,6 +3,7 @@ import { AncestryData } from '@/data/ancestry-data';
 import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { LanguageType } from '@/enums/language-type';
+import { MonsterData } from '@/data/monster-data';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -17,6 +18,9 @@ export const orden: Sourcebook = {
 		AncestryData.memonek,
 		AncestryData.timeRaider
 	],
+	careers: [],
+	classes: [],
+	complications: [],
 	cultures: [
 		FactoryLogic.createCulture('Devil', 'Urban, bureaucratic, academic.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic, 'Anjali'),
 		FactoryLogic.createCulture('Dragon Knight', 'Secluded, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial, 'Vastariax'),
@@ -30,17 +34,21 @@ export const orden: Sourcebook = {
 		FactoryLogic.createCulture('Polder', 'Urban, communal, creative.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.communal, UpbringingData.creative, 'Khoursirian'),
 		FactoryLogic.createCulture('Time Raider', 'Nomadic, communal, martial.', CultureType.Ancestral, EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.martial, 'Voll')
 	],
-	careers: [],
-	classes: [],
-	subclasses: [],
-	complications: [],
 	domains: [],
-	kits: [],
-	perks: [],
-	titles: [],
-	items: [],
 	imbuements: [],
-	monsterGroups: [],
+	items: [],
+	kits: [],
+	monsterGroups: [
+		MonsterData.ajax,
+		MonsterData.countRhodar,
+		MonsterData.lordSyuul,
+		MonsterData.xorannox
+	],
+	perks: [],
+	projects: [],
+	subclasses: [],
+	terrain: [],
+	titles: [],
 	skills: [
 		{
 			name: 'Timescape',
@@ -305,7 +313,5 @@ export const orden: Sourcebook = {
 			type: LanguageType.Dead,
 			related: [ 'Hyrallic', 'Yllyric' ]
 		}
-	],
-	projects: [],
-	terrain: []
+	]
 };

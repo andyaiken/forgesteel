@@ -7,7 +7,7 @@ import './toggle.scss';
 interface Props {
 	style?: CSSProperties;
 	disabled?: boolean;
-	label: string;
+	label: ReactNode;
 	text?: {
 		unchecked: ReactNode;
 		checked: ReactNode;

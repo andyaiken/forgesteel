@@ -318,7 +318,7 @@ export const LibraryListPage = (props: Props) => {
 
 	const getSubclasses = () => {
 		try {
-			const subclasses = SourcebookLogic.getSubClasses(getSourcebooks());
+			const subclasses = SourcebookLogic.getSubclasses(getSourcebooks());
 			if (showAllSubclasses) {
 				subclasses.push(...SourcebookLogic.getClasses(getSourcebooks()).flatMap(c => c.subclasses));
 			}
@@ -549,7 +549,7 @@ export const LibraryListPage = (props: Props) => {
 				sourcebook = SourcebookLogic.getProjectSourcebook(props.sourcebooks, element as Project);
 				break;
 			case 'subclass':
-				sourcebook = SourcebookLogic.getSubClassSourcebook(props.sourcebooks, element as SubClass);
+				sourcebook = SourcebookLogic.getSubclassSourcebook(props.sourcebooks, element as SubClass);
 				break;
 			case 'terrain':
 				sourcebook = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, element as Terrain);

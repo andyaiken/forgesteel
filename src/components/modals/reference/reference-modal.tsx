@@ -59,6 +59,7 @@ export const ReferenceModal = (props: Props) => {
 			RulesData.forcedMovement,
 			RulesData.hiding,
 			RulesData.highGround,
+			RulesData.hover,
 			RulesData.invisibility,
 			RulesData.jumping,
 			RulesData.mainAction,

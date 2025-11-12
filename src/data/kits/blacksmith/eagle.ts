@@ -24,7 +24,7 @@ export const eagle: Kit = {
 			ability: FactoryLogic.createAbility({
 				id: 'kit-eagle-signature',
 				name: 'Downtown Delivery',
-				description: 'You fire a an unbelievably long range shot.',
+				description: 'You fire an unbelievably long range shot.',
 				type: FactoryLogic.type.createMain(),
 				keywords: [ AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 				distance: [ FactoryLogic.distance.createRanged(10) ],

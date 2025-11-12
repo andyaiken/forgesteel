@@ -58,6 +58,7 @@ import { Terrain } from '@/models/terrain';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
 import { useNavigation } from '@/hooks/use-navigation';
@@ -98,6 +99,8 @@ export const LibraryListPage = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 	const [ view, setView ] = useState<string>('modern');
+	const [ showMonsters, setShowMonsters ] = useState<boolean>(false);
+	const [ showAllSubclasses, setShowAllSubclasses ] = useState<boolean>(false);
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew)[0].id : null);
@@ -112,12 +115,6 @@ export const LibraryListPage = (props: Props) => {
 		setSelectedID(elementID || null);
 		setPreviousSelectedID(elementID);
 	}
-
-	const setShowMonsterGroups = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.showMonsterGroups = value;
-		props.setOptions(copy);
-	};
 
 	const getSourcebooks = () => {
 		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
@@ -321,8 +318,12 @@ export const LibraryListPage = (props: Props) => {
 
 	const getSubclasses = () => {
 		try {
-			return SourcebookLogic
-				.getSubClasses(getSourcebooks())
+			const subclasses = SourcebookLogic.getSubClasses(getSourcebooks());
+			if (showAllSubclasses) {
+				subclasses.push(...SourcebookLogic.getClasses(getSourcebooks()).flatMap(c => c.subclasses));
+			}
+
+			return subclasses
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -396,7 +397,7 @@ export const LibraryListPage = (props: Props) => {
 				list = getKits();
 				break;
 			case 'monster-group':
-				list = props.options.showMonsterGroups ? getMonsterGroups() : getMonsters();
+				list = showMonsters ? getMonsters() : getMonsterGroups();
 				break;
 			case 'perk':
 				list = getPerks();
@@ -429,7 +430,7 @@ export const LibraryListPage = (props: Props) => {
 
 		if (view === 'classic') {
 			let cat: string = category;
-			if ((category === 'monster-group') && !props.options.showMonsterGroups) {
+			if ((category === 'monster-group') && showMonsters) {
 				cat = 'monster';
 			}
 
@@ -477,10 +478,10 @@ export const LibraryListPage = (props: Props) => {
 					break;
 				case 'monster-group':
 					getPanel = (element: Element) => {
-						return props.options.showMonsterGroups ?
-							<MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} onSelectMonster={props.showMonster} />
+						return showMonsters ?
+							<MonsterPanel key={element.id} monster={element as Monster} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
 							:
-							<MonsterPanel key={element.id} monster={element as Monster} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+							<MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} onSelectMonster={props.showMonster} />;
 					};
 					break;
 				case 'perk':
@@ -536,10 +537,10 @@ export const LibraryListPage = (props: Props) => {
 				sourcebook = SourcebookLogic.getKitSourcebook(props.sourcebooks, element as Kit);
 				break;
 			case 'monster-group':
-				sourcebook = props.options.showMonsterGroups ?
-					SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, element as MonsterGroup)
+				sourcebook = showMonsters ?
+					SourcebookLogic.getMonsterSourcebook(props.sourcebooks, element as Monster)
 					:
-					SourcebookLogic.getMonsterSourcebook(props.sourcebooks, element as Monster);
+					SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, element as MonsterGroup);
 				break;
 			case 'perk':
 				sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, element as Perk);
@@ -562,7 +563,7 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	const getInfo = (element: Element) => {
-		if ((category === 'monster-group') && props.options.showMonsterGroups) {
+		if ((category === 'monster-group') && !showMonsters) {
 			return (element as MonsterGroup).monsters.length;
 		}
 
@@ -608,6 +609,13 @@ export const LibraryListPage = (props: Props) => {
 			return 'Misc';
 		}
 
+		if (category === 'subclass') {
+			const c = SourcebookLogic.getClasses(getSourcebooks()).find(c => c.subclasses.some(sc => sc.id === element.id));
+			if (c) {
+				return c.name;
+			}
+		}
+
 		if (category === 'title') {
 			const title = element as Title;
 			return `Echelon ${title.echelon}`;
@@ -624,13 +632,24 @@ export const LibraryListPage = (props: Props) => {
 
 		const sourcebook = getSourcebook(element);
 		if (!sourcebook) {
+			if (category === 'subclass') {
+				const c = SourcebookLogic.getClasses(getSourcebooks()).find(c => c.subclasses.some(sc => sc.id === element.id));
+				if (c) {
+					return (
+						<Button onClick={() => navigation.goToLibrary('class', c.id)}>
+							Open {c.name}
+						</Button>
+					);
+				}
+			}
+
 			return null;
 		}
 
 		const homebrewSourcebooks = props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew);
 
 		const getCreateHomebrew = () => {
-			if ((category === 'monster-group') && !props.options.showMonsterGroups) {
+			if ((category === 'monster-group') && showMonsters) {
 				return (
 					<Popover
 						trigger='click'
@@ -639,7 +658,7 @@ export const LibraryListPage = (props: Props) => {
 								type='info'
 								showIcon={true}
 								message='To create a homebrew version of this monster, switch to Group view.'
-								action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsterGroups(true)}>Switch</Button>}
+								action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsters(false)}>Switch</Button>}
 							/>
 						)}
 					>
@@ -763,36 +782,43 @@ export const LibraryListPage = (props: Props) => {
 
 	const getSidebar = () => {
 		const getElementListHeader = () => {
-			if (category === 'monster-group') {
-				return (
-					<div className='list-header'>
-						<Flex align='center' justify='space-between' gap={5}>
-							<Segmented
-								style={{ flex: '1 1 0' }}
-								block={true}
-								options={[
-									{ value: true, label: 'Groups' },
-									{ value: false, label: 'Monsters' }
-								]}
-								value={props.options.showMonsterGroups}
-								onChange={setShowMonsterGroups}
-							/>
-							<Button
-								type='text'
-								disabled={props.options.showMonsterGroups}
-								icon={showMonsterFilter ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
-								onClick={() => setShowMonsterFilter(!showMonsterFilter)}
-							/>
-						</Flex>
-						{
-							!props.options.showMonsterGroups && showMonsterFilter ?
-								<SelectablePanel style={{ padding: '15px 10px 10px 10px' }}>
-									<MonsterFilterPanel monsterFilter={monsterFilter} monsters={SourcebookLogic.getMonsters(props.sourcebooks)} includeNameFilter={false} onChange={setMonsterFilter} />
-								</SelectablePanel>
-								: null
-						}
-					</div>
-				);
+			switch (category) {
+				case 'monster-group':
+					return (
+						<div className='list-header'>
+							<Flex align='center' justify='space-between' gap={5}>
+								<Segmented
+									style={{ flex: '1 1 0' }}
+									block={true}
+									options={[
+										{ value: false, label: 'Groups' },
+										{ value: true, label: 'Monsters' }
+									]}
+									value={showMonsters}
+									onChange={setShowMonsters}
+								/>
+								<Button
+									type='text'
+									disabled={!showMonsters}
+									icon={showMonsterFilter ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
+									onClick={() => setShowMonsterFilter(!showMonsterFilter)}
+								/>
+							</Flex>
+							{
+								showMonsters && showMonsterFilter ?
+									<SelectablePanel style={{ padding: '15px 10px 10px 10px' }}>
+										<MonsterFilterPanel monsterFilter={monsterFilter} monsters={SourcebookLogic.getMonsters(props.sourcebooks)} includeNameFilter={false} onChange={setMonsterFilter} />
+									</SelectablePanel>
+									: null
+							}
+						</div>
+					);
+				case 'subclass':
+					return (
+						<div className='list-header'>
+							<Toggle style={{ margin: '0' }} label='Show all' value={showAllSubclasses} onChange={setShowAllSubclasses} />
+						</div>
+					);
 			}
 
 			return null;
@@ -817,7 +843,7 @@ export const LibraryListPage = (props: Props) => {
 						<SelectorRow
 							key={a.id}
 							selected={selectedID === a.id}
-							content={(category === 'monster-group') && !props.options.showMonsterGroups ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category)}`}
+							content={(category === 'monster-group') && showMonsters ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category)}`}
 							info={getInfo(a)}
 							onSelect={() => navigation.goToLibrary(category, a.id)}
 						/>
@@ -871,7 +897,7 @@ export const LibraryListPage = (props: Props) => {
 								<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
 								<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
 								<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
-								<SelectorRow selected={category === 'monster-group'} content='Monsters' info={props.options.showMonsterGroups ? getMonsterGroups().length : getMonsters().length} onSelect={() => navigation.goToLibrary('monster-group')} />
+								<SelectorRow selected={category === 'monster-group'} content='Monsters' info={showMonsters ? getMonsters().length : getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
 								<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
 								<SelectorRow selected={category === 'project'} content='Projects' info={getProjects().length} onSelect={() => navigation.goToLibrary('project')} />
 								<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
@@ -901,7 +927,7 @@ export const LibraryListPage = (props: Props) => {
 			<div className='library-list-page'>
 				<AppHeader subheader='Library'>
 					{
-						(category === 'monster-group') && !props.options.showMonsterGroups ?
+						(category === 'monster-group') && showMonsters ?
 							<Popover
 								trigger='click'
 								content={(
@@ -909,7 +935,7 @@ export const LibraryListPage = (props: Props) => {
 										type='info'
 										showIcon={true}
 										message='To create a new monster, switch to Group view.'
-										action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsterGroups(true)}>Switch</Button>}
+										action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsters(false)}>Switch</Button>}
 									/>
 								)}
 							>

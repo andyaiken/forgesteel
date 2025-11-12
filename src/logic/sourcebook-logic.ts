@@ -29,6 +29,29 @@ import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
 
 export class SourcebookLogic {
+	static getSourcebooks = (homebrew: Sourcebook[] = []) => {
+		const list: Sourcebook[] = [
+			// Official
+			SourcebookData.core,
+			SourcebookData.orden,
+
+			// Third Party
+			SourcebookData.ratcatcher
+		];
+
+		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
+			list.push(SourcebookData.playtest);
+		}
+
+		if (FeatureFlags.hasFlag(FeatureFlags.blacksmith.code)) {
+			list.push(SourcebookData.blacksmith);
+		}
+
+		list.push(...homebrew);
+
+		return list;
+	};
+
 	static getElements = (sourcebook: Sourcebook): { element: Element, type: string }[] => {
 		return [
 			...sourcebook.ancestries.map(x => ({ element: x, type: 'ancestry' })),
@@ -130,22 +153,6 @@ export class SourcebookLogic {
 	};
 
 	///////////////////////////////////////////////////////////////////////////
-
-	static getSourcebooks = (homebrew: Sourcebook[] = []) => {
-		const list: Sourcebook[] = [
-			SourcebookData.core,
-			SourcebookData.orden,
-			SourcebookData.ratcatcher
-		];
-
-		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
-			list.push(SourcebookData.playtest);
-		}
-
-		list.push(...Collections.sort(homebrew, cs => cs.name));
-
-		return list;
-	};
 
 	static getAncestries = (sourcebooks: Sourcebook[]) => {
 		const list: Ancestry[] = [];

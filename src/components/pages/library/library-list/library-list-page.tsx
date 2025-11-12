@@ -950,7 +950,7 @@ export const LibraryListPage = (props: Props) => {
 								content={(
 									<div style={{ display: 'flex', flexDirection: 'column', minWidth: '150px' }}>
 										{
-											sourcebookOptions.length > 1 ?
+											sourcebookOptions.length > 0 ?
 												<div>
 													<div className='ds-text'>Where do you want it to live?</div>
 													<Select
@@ -973,7 +973,7 @@ export const LibraryListPage = (props: Props) => {
 												</div>
 												: null
 										}
-										{sourcebookOptions.length > 1 ? <Divider /> : null}
+										{sourcebookOptions.length > 0 ? <Divider /> : null}
 										<Space direction='vertical' style={{ width: '100%' }}>
 											<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.createElement(category, sourcebookID, null)}>Create</Button>
 											<Upload

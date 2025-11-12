@@ -1,11 +1,16 @@
 import { arcaneArcher } from '@/data/kits/arcane-archer';
+import { barnacle } from '@/data/kits/blacksmith/barnacle';
 import { battlemind } from '@/data/kits/battlemind';
 import { boren } from '@/data/kits/stormwight/boren';
 import { cloakAndDagger } from '@/data/kits/cloak-and-dagger';
+import { condor } from '@/data/kits/blacksmith/condor';
 import { corven } from '@/data/kits/stormwight/corven';
 import { dualWielder } from '@/data/kits/dual-wielder';
+import { eagle } from '@/data/kits/blacksmith/eagle';
 import { guisarmier } from '@/data/kits/guisarmier';
+import { juggernaut } from '@/data/kits/blacksmith/juggernaut';
 import { martialArtist } from '@/data/kits/martial-artist';
+import { mauler } from '@/data/kits/blacksmith/mauler';
 import { mountain } from '@/data/kits/mountain';
 import { outrider } from '@/data/kits/beastheart/outrider';
 import { panther } from '@/data/kits/panther';
@@ -21,7 +26,9 @@ import { sniper } from '@/data/kits/sniper';
 import { spellsword } from '@/data/kits/spellsword';
 import { stickAndRobe } from '@/data/kits/stick-and-robe';
 import { stormcrow } from '@/data/kits/beastheart/stormcrow';
+import { sunWukong } from '@/data/kits/blacksmith/sun-wukong';
 import { swashbuckler } from '@/data/kits/swashbuckler';
+import { swift } from '@/data/kits/blacksmith/swift';
 import { swordAndBoard } from '@/data/kits/sword-and-board';
 import { vuken } from '@/data/kits/stormwight/vuken';
 import { warBeast } from '@/data/kits/beastheart/war-beast';
@@ -60,4 +67,12 @@ export class KitData {
 	static predator = predator;
 	static stormcrow = stormcrow;
 	static warBeast = warBeast;
+
+	static barnacle = barnacle;
+	static condor = condor;
+	static eagle = eagle;
+	static juggernaut = juggernaut;
+	static mauler = mauler;
+	static sunWukong = sunWukong;
+	static swift = swift;
 }

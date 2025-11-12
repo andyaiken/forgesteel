@@ -4,6 +4,7 @@ import { Characteristic } from '@/enums/characteristic';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
+import { Follower } from '@/models/follower';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
@@ -110,16 +111,43 @@ export const ProjectPanel = (props: Props) => {
 			}
 		};
 
-		const follower = HeroLogic.getFollowers(props.hero).find(f => f.id === project.progress!.followerID);
+		const getFollower = (follower: Follower, project: Project) => {
+			const getCharacteristic = (characteristic: Characteristic) => {
+				if (!follower) {
+					return 0;
+				}
 
-		const getCharacteristic = (characteristic: Characteristic) => {
-			if (!follower) {
-				return 0;
-			}
+				const c = follower.characteristics.find(ch => ch.characteristic === characteristic);
+				return c ? c.value : 0;
+			};
 
-			const c = follower.characteristics.find(ch => ch.characteristic === characteristic);
-			return c ? c.value : 0;
+			return (
+				<div>
+					<HeaderText tags={[ follower.type ]}>
+						{follower.name || 'Unnamed Follower'}
+					</HeaderText>
+					<Field
+						label='Characteristics'
+						value={
+							[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ]
+								.filter(ch => project.characteristic.includes(ch))
+								.map(ch => `${ch} ${getCharacteristic(ch)}`)
+								.join(', ')
+						}
+					/>
+					<Field
+						label='Skills'
+						value={follower.skills.join(', ')}
+					/>
+					<Field
+						label='Languages'
+						value={follower.languages.join(', ')}
+					/>
+				</div>
+			);
 		};
+
+		const follower = HeroLogic.getFollowers(props.hero).find(f => f.id === project.progress!.followerID);
 
 		return (
 			<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
@@ -129,22 +157,20 @@ export const ProjectPanel = (props: Props) => {
 							style={{ width: '100%' }}
 							placeholder='Choose a follower'
 							allowClear={true}
-							options={HeroLogic.getFollowers(props.hero).map(f => ({ value: f.id, label: <div className='ds-text'>{f.name}</div> }))}
+							options={
+								HeroLogic.getFollowers(props.hero).map(f => ({
+									value: f.id,
+									label: f.name,
+									follower: f
+								}))
+							}
+							optionRender={option => getFollower(option.data.follower, project)}
 							value={project.progress.followerID}
 							onChange={setFollowerID}
 						/>
 						: null
 				}
-				{
-					follower ?
-						<div>
-							<HeaderText tags={[ follower.type ]}>{follower.name}</HeaderText>
-							<Field label='Characteristics' value={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => `${ch} ${getCharacteristic(ch)}`).join(', ')} />
-							<Field label='Skills' value={follower.skills.join(', ')} />
-							<Field label='Languages' value={follower.languages.join(', ')} />
-						</div>
-						: null
-				}
+				{follower ? getFollower(follower, project) : null}
 				<NumberSpin
 					label='Progress'
 					min={0}

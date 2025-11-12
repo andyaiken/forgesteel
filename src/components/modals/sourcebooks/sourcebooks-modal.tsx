@@ -1,5 +1,6 @@
 import { Button, Flex, Space, Upload } from 'antd';
 import { DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -110,7 +111,7 @@ export const SourcebooksModal = (props: Props) => {
 					</HeaderText>
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{
-							thirdPartySourcebooks.map(s => (
+							Collections.sort(thirdPartySourcebooks, sb => sb.name).map(s => (
 								<SelectablePanel key={s.id}>
 									<SourcebookEditorPanel
 										sourcebook={s}
@@ -160,7 +161,7 @@ export const SourcebooksModal = (props: Props) => {
 					</HeaderText>
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{
-							homebrewSourcebooks.map(s => (
+							Collections.sort(homebrewSourcebooks, sb => sb.name).map(s => (
 								<SelectablePanel key={s.id}>
 									<SourcebookEditorPanel
 										sourcebook={s}

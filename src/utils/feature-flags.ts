@@ -1,3 +1,5 @@
+import { Utils } from './utils';
+
 interface FeatureFlag {
 	code: number;
 	description: string;
@@ -11,8 +13,14 @@ export class FeatureFlags {
 		description: 'Access to playtest material'
 	};
 
+	static blacksmith: FeatureFlag = {
+		code: Utils.hashCode('blacksmith'),
+		description: 'Access to the Blacksmith\'s Guild sourcebook'
+	};
+
 	private static all = [
-		FeatureFlags.playtest
+		FeatureFlags.playtest,
+		FeatureFlags.blacksmith
 	];
 
 	// #endregion

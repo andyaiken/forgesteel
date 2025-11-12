@@ -1,9 +1,11 @@
 export enum AbilityKeyword {
+	Air = 'Air',
 	Animal = 'Animal',
 	Animapathy = 'Animapathy',
 	Area = 'Area',
 	Arms = 'Arms',
 	Beastheart = 'Beastheart',
+	Belt = 'Belt',
 	Champion = 'Champion',
 	Charge = 'Charge',
 	Chronopathy = 'Chronopathy',
@@ -40,5 +42,6 @@ export enum AbilityKeyword {
 	Void = 'Void',
 	Waist = 'Waist',
 	Wand = 'Wand',
+	Water = 'Water',
 	Weapon = 'Weapon'
 }

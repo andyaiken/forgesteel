@@ -227,7 +227,7 @@ You must have line of effect to the enemy and be able to take triggered actions 
 	static flying: RulesItem = {
 		label: 'Flying',
 		content: `
-A creature who has “hover” in their speed entry (most commonly alongside “fly” or “teleport”), or who gains the temporary ability to hover, can remain motionless in midair. They don’t fall even if they are knocked prone or their speed is reduced to 0.`
+A creature who has “fly” in their speed entry, or who gains the temporary ability to fly, can move through the air vertically or horizontally at full speed and remain in midair. If a flying creature is knocked prone or has their speed reduced to 0, they fall.`
 	};
 
 	static forcedMovement: RulesItem = {
@@ -291,7 +291,7 @@ A creature can gain this benefit while climbing only if they have “climb” in
 	static hover: RulesItem = {
 		label: 'Hover',
 		content: `
-A creature who has “fly” in their speed entry, or who gains the temporary ability to fly, can move through the air vertically or horizon- tally at full speed and remain in midair. If a flying creature is knocked prone or has their speed reduced to 0, they fall.`
+A creature who has “hover” in their speed entry (most commonly alongside “fly” or “teleport”), or who gains the temporary ability to hover, can remain motionless in midair. They don’t fall even if they are knocked prone or their speed is reduced to 0.`
 	};
 
 	static invisibility: RulesItem = {

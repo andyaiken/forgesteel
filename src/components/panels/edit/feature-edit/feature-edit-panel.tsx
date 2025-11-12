@@ -1387,8 +1387,7 @@ export const FeatureEditPanel = (props: Props) => {
 			}
 			case FeatureType.Kit: {
 				const data = feature.data as FeatureKitData;
-				const types = SourcebookLogic.getKitTypes(props.sourcebooks);
-				const options = types.map(type => ({ value: type, label: !type ? 'Standard' : type }));
+				const options = Collections.sort(Collections.distinct(SourcebookLogic.getKits(props.sourcebooks).map(k => k.type), x => x), x => x).map(type => ({ value: type, label: !type ? 'Standard' : type }));
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Types</HeaderText>

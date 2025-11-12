@@ -1,3 +1,4 @@
+import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -389,6 +390,129 @@ export class BlacksmithItemData {
 						id: 'item-winged-sandals-9',
 						name: 'Level 9',
 						description: 'While wearing these sandals, you ignore the Slowed condition while flying. Additionally, the reduction of fall height increases to 6 squares.'
+					})
+				]
+			}
+		]
+	});
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static arachnianImplants: Item = FactoryLogic.createItem({
+		id: 'item-arachnian-implants',
+		name: 'Arachnian Implants',
+		description: 'This black metal implant replaces your spine with a set of extendable blades.',
+		type: ItemType.Trinket1st,
+		keywords: [ AbilityKeyword.Implant, AbilityKeyword.Psionic, AbilityKeyword.Spine ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'Eight zodiakol tipped blades',
+			source: 'Texts or lore in Voll',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 150
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.create({
+						id: 'item-item-arachnian-implants-1',
+						name: 'Arachnian Implants',
+						description: 'While extended, you can automatically climb at full speed. You also gain an edge on tests that use the Climb or Gymnastics skills. As a Triggered Action, when you use an ability with the Strike keyword, you can choose to deal damage equal to your Reason score to all adjacent enemies.'
+					})
+				]
+			}
+		]
+	});
+
+	static internalSuspension: Item = FactoryLogic.createItem({
+		id: 'item-internal-suspension',
+		name: 'Internal Suspension',
+		description: 'This neural implant causes a numb sensation at the base of your neck.',
+		type: ItemType.Trinket1st,
+		keywords: [ AbilityKeyword.Implant, AbilityKeyword.Psionic, AbilityKeyword.Neck ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'Poison from an axiomatic scorpion',
+			source: 'Texts or lore in Axiomatic',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 150
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.create({
+						id: 'item-internal-suspension-1',
+						name: 'Internal Suspension',
+						description: 'Whenever you become dying all conditions affecting you end. Additionally as a manoeuvre you can enter a state of suspension that is indiscernible from death. This also removes all conditions. You can only exit your suspension if another hero uses their action to reactivate your body.'
+					})
+				]
+			}
+		]
+	});
+
+	static opticalMoteFocuser: Item = FactoryLogic.createItem({
+		id: 'item-optical-mote-focuser',
+		name: 'Optical Mote Focuser',
+		description: 'This bulky crystalline implant replaces your eye with a singular bead of red.',
+		type: ItemType.Trinket1st,
+		keywords: [ AbilityKeyword.Implant, AbilityKeyword.Psionic, AbilityKeyword.Eye ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'A polished fire quartz from Quintessence',
+			source: 'Texts or lore in Voll',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 150
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'item-optical-mote-focuser-1',
+							name: 'Laser Eye!',
+							description: 'A pinprick of fire extends across the battlefield.',
+							type: FactoryLogic.type.createMain(),
+							keywords: [ AbilityKeyword.Area, AbilityKeyword.Psionic, AbilityKeyword.Ranged ],
+							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Line, value: 10, value2: 1, within: 1 }) ],
+							target: 'Each enemy in the area',
+							cost: 0,
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [],
+										tier1: '3 fire damage',
+										tier2: '5 fire damage',
+										tier3: '7 fire damage'
+									})
+								)
+							]
+						})
+					})
+				]
+			}
+		]
+	});
+
+	static psionicBackup: Item = FactoryLogic.createItem({
+		id: 'item-psionic-backup',
+		name: 'Psionic Backup',
+		description: 'Just in case…',
+		type: ItemType.Trinket1st,
+		keywords: [ AbilityKeyword.Implant, AbilityKeyword.Psionic, AbilityKeyword.Brain ],
+		crafting: FactoryLogic.createProject({
+			prerequisites: 'A flake of prismacore, synlirii cerebral fluid',
+			source: 'Texts or lore in Variac',
+			characteristic: [ Characteristic.Reason, Characteristic.Intuition ],
+			goal: 300
+		}),
+		featuresByLevel: [
+			{
+				level: 1,
+				features: [
+					FactoryLogic.feature.create({
+						id: 'item-psionic-backup-1',
+						name: 'Psionic Backup',
+						description: 'You have a constantly updating psionic backup of your personality installed in your brain. This version of you carries your memories and is designed to continue where you left off, but it can deviate from who you truly are. The backup may be uploaded into any body or corpse using the Install Implement downtime project, fully taking over as the primary consciousness. It can also be uploaded into any psionically sufficient database. A backup may be created while the original is still alive, though its memories begin to diverge the moment it is activated. When you transfer into a new body, you lose all your current traits and gain the traits of that body.'
 					})
 				]
 			}

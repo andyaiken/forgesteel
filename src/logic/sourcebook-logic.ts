@@ -84,12 +84,10 @@ export class SourcebookLogic {
 		return Collections.sort(samples, s => s);
 	};
 
+	///////////////////////////////////////////////////////////////////////////
+
 	static getAncestrySourcebook = (sourcebooks: Sourcebook[], ancestry: Ancestry) => {
 		return sourcebooks.find(s => s.ancestries.find(a => a.id === ancestry.id));
-	};
-
-	static getCultureSourcebook = (sourcebooks: Sourcebook[], culture: Culture) => {
-		return sourcebooks.find(s => s.cultures.find(c => c.id === culture.id));
 	};
 
 	static getCareerSourcebook = (sourcebooks: Sourcebook[], career: Career) => {
@@ -100,28 +98,16 @@ export class SourcebookLogic {
 		return sourcebooks.find(s => s.classes.find(c => c.id === heroClass.id));
 	};
 
-	static getSubClassSourcebook = (sourcebooks: Sourcebook[], subclass: SubClass) => {
-		return sourcebooks.find(s => s.subclasses.find(sc => sc.id === subclass.id));
-	};
-
 	static getComplicationSourcebook = (sourcebooks: Sourcebook[], complication: Complication) => {
 		return sourcebooks.find(s => s.complications.find(c => c.id === complication.id));
 	};
 
-	static getKitSourcebook = (sourcebooks: Sourcebook[], kit: Kit) => {
-		return sourcebooks.find(s => s.kits.find(k => k.id === kit.id));
+	static getCultureSourcebook = (sourcebooks: Sourcebook[], culture: Culture) => {
+		return sourcebooks.find(s => s.cultures.find(c => c.id === culture.id));
 	};
 
 	static getDomainSourcebook = (sourcebooks: Sourcebook[], domain: Domain) => {
 		return sourcebooks.find(s => s.domains.find(d => d.id === domain.id));
-	};
-
-	static getPerkSourcebook = (sourcebooks: Sourcebook[], perk: Perk) => {
-		return sourcebooks.find(s => s.perks.find(p => p.id === perk.id));
-	};
-
-	static getTitleSourcebook = (sourcebooks: Sourcebook[], title: Title) => {
-		return sourcebooks.find(s => s.titles.find(t => t.id === title.id));
 	};
 
 	static getImbuementSourcebook = (sourcebooks: Sourcebook[], imbuement: Imbuement) => {
@@ -132,12 +118,20 @@ export class SourcebookLogic {
 		return sourcebooks.find(s => s.items.find(i => i.id === item.id));
 	};
 
+	static getKitSourcebook = (sourcebooks: Sourcebook[], kit: Kit) => {
+		return sourcebooks.find(s => s.kits.find(k => k.id === kit.id));
+	};
+
 	static getMonsterGroupSourcebook = (sourcebooks: Sourcebook[], monsterGroup: MonsterGroup) => {
 		return sourcebooks.find(s => s.monsterGroups.find(mg => mg.id === monsterGroup.id));
 	};
 
 	static getMonsterSourcebook = (sourcebooks: Sourcebook[], monster: Monster) => {
 		return sourcebooks.find(s => s.monsterGroups.find(mg => mg.monsters.some(m => m.id === monster.id)));
+	};
+
+	static getPerkSourcebook = (sourcebooks: Sourcebook[], perk: Perk) => {
+		return sourcebooks.find(s => s.perks.find(p => p.id === perk.id));
 	};
 
 	static getProjectSourcebook = (sourcebooks: Sourcebook[], project: Project) => {
@@ -152,6 +146,10 @@ export class SourcebookLogic {
 		return sourcebooks.find(s => s.terrain.find(t => t.id === terrain.id));
 	};
 
+	static getTitleSourcebook = (sourcebooks: Sourcebook[], title: Title) => {
+		return sourcebooks.find(s => s.titles.find(t => t.id === title.id));
+	};
+
 	///////////////////////////////////////////////////////////////////////////
 
 	static getAncestries = (sourcebooks: Sourcebook[]) => {
@@ -159,16 +157,6 @@ export class SourcebookLogic {
 
 		sourcebooks.forEach(sourcebook => {
 			list.push(...sourcebook.ancestries);
-		});
-
-		return Collections.sort(list, item => item.name);
-	};
-
-	static getCultures = (sourcebooks: Sourcebook[]) => {
-		const list: Culture[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.cultures);
 		});
 
 		return Collections.sort(list, item => item.name);
@@ -194,16 +182,6 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
-	static getSubClasses = (sourcebooks: Sourcebook[]) => {
-		const list: SubClass[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.subclasses);
-		});
-
-		return Collections.sort(list, item => item.name);
-	};
-
 	static getComplications = (sourcebooks: Sourcebook[]) => {
 		const list: Complication[] = [];
 
@@ -214,24 +192,14 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
-	static getKits = (sourcebooks: Sourcebook[]) => {
-		const list: Kit[] = [];
+	static getCultures = (sourcebooks: Sourcebook[]) => {
+		const list: Culture[] = [];
 
 		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.kits);
+			list.push(...sourcebook.cultures);
 		});
 
 		return Collections.sort(list, item => item.name);
-	};
-
-	static getKitTypes = (sourcebooks: Sourcebook[]) => {
-		const getTypesFromSourcebook = (sourcebook: Sourcebook) => {
-			return sourcebook.kits.map(kit => kit.type);
-		};
-
-		const list = [ ...new Set(sourcebooks.flatMap(sourcebook => getTypesFromSourcebook(sourcebook))) ];
-
-		return Collections.sort(list, item => item);
 	};
 
 	static getDomains = (sourcebooks: Sourcebook[]) => {
@@ -244,21 +212,11 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
-	static getPerks = (sourcebooks: Sourcebook[]) => {
-		const list: Perk[] = [];
+	static getImbuements = (sourcebooks: Sourcebook[]) => {
+		const list: Imbuement[] = [];
 
 		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.perks);
-		});
-
-		return Collections.sort(list, item => item.name);
-	};
-
-	static getTitles = (sourcebooks: Sourcebook[]) => {
-		const list: Title[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.titles);
+			list.push(...sourcebook.imbuements);
 		});
 
 		return Collections.sort(list, item => item.name);
@@ -274,11 +232,11 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
-	static getImbuements = (sourcebooks: Sourcebook[]) => {
-		const list: Imbuement[] = [];
+	static getKits = (sourcebooks: Sourcebook[]) => {
+		const list: Kit[] = [];
 
 		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.imbuements);
+			list.push(...sourcebook.kits);
 		});
 
 		return Collections.sort(list, item => item.name);
@@ -304,6 +262,58 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
+	static getPerks = (sourcebooks: Sourcebook[]) => {
+		const list: Perk[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.perks);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getProjects = (sourcebooks: Sourcebook[]) => {
+		const list: Project[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.projects);
+			list.push(...sourcebook.items.map(i => i.crafting).filter(p => !!p));
+			list.push(...sourcebook.imbuements.map(i => i.crafting).filter(p => !!p));
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getSubclasses = (sourcebooks: Sourcebook[]) => {
+		const list: SubClass[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.subclasses);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getTerrains = (sourcebooks: Sourcebook[]) => {
+		const list: Terrain[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.terrain);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getTitles = (sourcebooks: Sourcebook[]) => {
+		const list: Title[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.titles);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
 	static getSkills = (sourcebooks: Sourcebook[]) => {
 		const list: Skill[] = [];
 
@@ -324,28 +334,6 @@ export class SourcebookLogic {
 
 		const distinct = Collections.distinct(list, item => item.name);
 		return Collections.sort(distinct, item => item.name);
-	};
-
-	static getProjects = (sourcebooks: Sourcebook[]) => {
-		const list: Project[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.projects);
-			list.push(...sourcebook.items.map(i => i.crafting).filter(p => !!p));
-			list.push(...sourcebook.imbuements.map(i => i.crafting).filter(p => !!p));
-		});
-
-		return Collections.sort(list, item => item.name);
-	};
-
-	static getTerrains = (sourcebooks: Sourcebook[]) => {
-		const list: Terrain[] = [];
-
-		sourcebooks.forEach(sourcebook => {
-			list.push(...sourcebook.terrain);
-		});
-
-		return Collections.sort(list, item => item.name);
 	};
 
 	///////////////////////////////////////////////////////////////////////////

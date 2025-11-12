@@ -10,6 +10,7 @@ import { human } from '@/data/ancestries/human';
 import { memonek } from '@/data/ancestries/memonek';
 import { orc } from '@/data/ancestries/orc';
 import { polder } from '@/data/ancestries/polder';
+import { psiBorg } from './ancestries/psi-borg';
 import { revenant } from '@/data/ancestries/revenant';
 import { timeRaider } from '@/data/ancestries/time-raider';
 import { wodeElf } from '@/data/ancestries/elf-wode';
@@ -31,4 +32,5 @@ export class AncestryData {
 	static anthousai = anthousai;
 	static dryad = dryad;
 	static goblinSquad = goblinSquad;
+	static psiBorg = psiBorg;
 }

@@ -1,6 +1,6 @@
 import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryFeatureChoiceData, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
 import { AbilityKeyword } from '@/enums/ability-keyword';
@@ -184,12 +184,6 @@ export const FeatureEditPanel = (props: Props) => {
 		const setRepeatable = (value: boolean) => {
 			const copy = Utils.copy(feature.data) as FeatureMaliceData;
 			copy.repeatable = value;
-			setData(copy);
-		};
-
-		const setCompanionType = (value: 'companion' | 'mount' | 'retainer') => {
-			const copy = Utils.copy(feature.data) as FeatureCompanionData;
-			copy.type = value;
 			setData(copy);
 		};
 
@@ -1065,21 +1059,6 @@ export const FeatureEditPanel = (props: Props) => {
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 						<HeaderText>Minimum Level</HeaderText>
 						<NumberSpin min={1} value={data.minLevel} onChange={setMinLevel} />
-					</Space>
-				);
-			}
-			case FeatureType.Companion: {
-				const data = feature.data as FeatureCompanionData;
-				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Companion Type</HeaderText>
-						<Segmented
-							name='companiontypes'
-							block={true}
-							options={[ 'companion', 'mount', 'retainer' ].map(o => ({ value: o, label: Format.capitalize(o) }))}
-							value={data.type}
-							onChange={s => setCompanionType(s as 'companion' | 'mount' | 'retainer')}
-						/>
 					</Space>
 				);
 			}
@@ -2014,46 +1993,6 @@ export const FeatureEditPanel = (props: Props) => {
 		}
 	};
 
-	const featureTypes = [
-		FeatureType.Text,
-		FeatureType.Ability,
-		FeatureType.AbilityCost,
-		FeatureType.AbilityDamage,
-		FeatureType.AbilityDistance,
-		FeatureType.AncestryChoice,
-		FeatureType.AncestryFeatureChoice,
-		FeatureType.Bonus,
-		FeatureType.CharacteristicBonus,
-		FeatureType.Choice,
-		FeatureType.ClassAbility,
-		FeatureType.Companion,
-		FeatureType.ConditionImmunity,
-		FeatureType.DamageModifier,
-		FeatureType.Domain,
-		FeatureType.DomainFeature,
-		FeatureType.Follower,
-		FeatureType.HeroicResource,
-		FeatureType.HeroicResourceGain,
-		FeatureType.ItemChoice,
-		FeatureType.Kit,
-		FeatureType.Language,
-		FeatureType.LanguageChoice,
-		FeatureType.MovementMode,
-		FeatureType.Multiple,
-		FeatureType.Package,
-		FeatureType.PackageContent,
-		FeatureType.Perk,
-		FeatureType.Proficiency,
-		FeatureType.SaveThreshold,
-		FeatureType.Size,
-		FeatureType.SkillChoice,
-		FeatureType.Speed,
-		FeatureType.Summon,
-		FeatureType.TaggedFeature,
-		FeatureType.TaggedFeatureChoice,
-		FeatureType.TitleChoice
-	];
-
 	return (
 		<ErrorBoundary>
 			<div className='feature-edit-panel'>
@@ -2083,7 +2022,7 @@ export const FeatureEditPanel = (props: Props) => {
 							children: (
 								<div>
 									{
-										(props.allowedTypes || featureTypes).length !== 1 ?
+										(props.allowedTypes || FeatureLogic.getSelectableFeatureTypes()).length !== 1 ?
 											<>
 												<HeaderText>Feature Type</HeaderText>
 												<Flex align='center' justify='space-between'>
@@ -2129,7 +2068,7 @@ export const FeatureEditPanel = (props: Props) => {
 			</div>
 			<Drawer open={typeSelectorVisible} onClose={() => setTypeSelectorVisible(false)} closeIcon={null} width='500px'>
 				<FeatureTypeSelectModal
-					types={props.allowedTypes || featureTypes}
+					types={props.allowedTypes || FeatureLogic.getSelectableFeatureTypes()}
 					onSelect={type => { setType(type); setTypeSelectorVisible(false); }}
 					onClose={() => setTypeSelectorVisible(false)}
 				/>

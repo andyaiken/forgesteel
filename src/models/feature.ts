@@ -110,7 +110,6 @@ export interface FeatureConditionImmunityData extends _FeatureData {
 export type FeatureConditionImmunity = FeatureOf<FeatureType.ConditionImmunity, FeatureConditionImmunityData>;
 
 export interface FeatureCompanionData extends _FeatureData {
-	type: 'companion' | 'mount' | 'retainer';
 	selected: Monster | null;
 }
 export type FeatureCompanion = FeatureOf<FeatureType.Companion, FeatureCompanionData>;
@@ -236,6 +235,11 @@ export interface FeatureProficiencyData extends _FeatureData {
 };
 export type FeatureProficiency = FeatureOf<FeatureType.Proficiency, FeatureProficiencyData>;
 
+export interface FeatureRetainerData extends _FeatureData {
+	selected: Monster | null;
+}
+export type FeatureRetainer = FeatureOf<FeatureType.Retainer, FeatureRetainerData>;
+
 export interface FeatureSaveThresholdData extends _FeatureData {
 	value: number;
 };
@@ -326,6 +330,7 @@ export type Feature =
 	| FeaturePackageContent
 	| FeaturePerk
 	| FeatureProficiency
+	| FeatureRetainer
 	| FeatureSaveThreshold
 	| FeatureSize
 	| FeatureSkillChoice

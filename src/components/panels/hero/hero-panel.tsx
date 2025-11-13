@@ -913,6 +913,7 @@ export const HeroPanel = (props: Props) => {
 
 		const companions = HeroLogic.getCompanions(props.hero);
 		const followers = HeroLogic.getFollowers(props.hero);
+		const retainers = HeroLogic.getRetainers(props.hero);
 		const summons = HeroLogic.getSummons(props.hero);
 
 		return (
@@ -953,6 +954,27 @@ export const HeroPanel = (props: Props) => {
 												:
 												<SelectablePanel key={follower.id} onSelect={() => onSelectFollower(follower)}>
 													<FollowerPanel follower={follower} />
+												</SelectablePanel>
+										)
+									}
+								</div>
+							</>
+							: null
+					}
+					{
+						retainers.length > 0 ?
+							<>
+								<HeaderText level={props.options.compactView ? 3 : 1}>Retainers</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+									{
+										retainers.map(monster =>
+											useRows ?
+												<div key={monster.id} className='selectable-row clickable' onClick={() => onSelectMonster(monster)}>
+													<div>Companion: <b>{monster.name}</b></div>
+												</div>
+												:
+												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
+													<MonsterPanel monster={monster} sourcebooks={props.sourcebooks} options={props.options} />
 												</SelectablePanel>
 										)
 									}
@@ -1022,7 +1044,7 @@ export const HeroPanel = (props: Props) => {
 			tabs.push('Free Strikes');
 		}
 
-		const retinue = HeroLogic.getCompanions(props.hero).length + HeroLogic.getFollowers(props.hero).length + HeroLogic.getSummons(props.hero).length;
+		const retinue = HeroLogic.getCompanions(props.hero).length + HeroLogic.getFollowers(props.hero).length + HeroLogic.getRetainers(props.hero).length + HeroLogic.getSummons(props.hero).length;
 		if (retinue > 0) {
 			tabs.push('Retinue');
 		}

@@ -1,6 +1,6 @@
 import { Alert, Button, Drawer, Flex, Input, Select, Space } from 'antd';
 import { CloseOutlined, InfoCircleOutlined, ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
-import { Feature, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeaturePerkData, FeatureSkillChoiceData, FeatureSummonChoiceData, FeatureTaggedFeatureChoiceData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureData, FeatureDomainData, FeatureDomainFeatureData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeaturePerkData, FeatureRetainerData, FeatureSkillChoiceData, FeatureSummonChoiceData, FeatureTaggedFeatureChoiceData, FeatureTitleChoiceData } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
@@ -37,8 +37,6 @@ import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
-import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
@@ -46,6 +44,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
 import { PerkSelectModal } from '@/components/modals/select/perk-select/perk-select-modal';
+import { RetainerSelectModal } from '@/components/modals/select/retainer-select/retainer-select-modal';
 import { SkillSelectModal } from '@/components/modals/select/skill-select/skill-select-modal';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -469,12 +468,6 @@ export const FeatureConfigPanel = (props: Props) => {
 			}
 		};
 
-		const choices = data.selected && data.selected.retainer ?
-			data.selected.retainer.featuresByLevel
-				.filter(lvl => data.selected!.retainer!.level >= lvl.level)
-				.filter(lvl => FeatureLogic.isChoice(lvl.feature))
-			: [];
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
@@ -511,73 +504,29 @@ export const FeatureConfigPanel = (props: Props) => {
 				{
 					data.selected ?
 						<Expander title='Customize'>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								<div>
-									<HeaderText>Name</HeaderText>
-									<Space.Compact style={{ width: '100%' }}>
-										<Input
-											status={data.selected.name === '' ? 'warning' : ''}
-											placeholder='Name'
-											allowClear={true}
-											value={data.selected.name}
-											onChange={e => setName(e.target.value)}
-										/>
-										<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
-									</Space.Compact>
-								</div>
-								{
-									choices.map(lvl => (
-										<FeatureConfigPanel
-											key={lvl.level}
-											feature={lvl.feature}
-											options={props.options}
-											hero={props.hero}
-											sourcebooks={props.sourcebooks}
-											setData={(fID, d) => {
-												const dataCopy = Utils.copy(data);
-												dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
-													if (l.feature.id === fID) {
-														l.feature.data = d;
-													}
-												});
-												if (props.setData) {
-													props.setData(props.feature.id, dataCopy);
-												}
-											}}
-										/>
-									))
-								}
-							</Space>
+							<HeaderText>Name</HeaderText>
+							<Space.Compact style={{ width: '100%' }}>
+								<Input
+									status={data.selected.name === '' ? 'warning' : ''}
+									placeholder='Name'
+									allowClear={true}
+									value={data.selected.name}
+									onChange={e => setName(e.target.value)}
+								/>
+								<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+							</Space.Compact>
 						</Expander>
 						: null
 				}
 				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
 					<MonsterSelectModal
-						monsters={
-							SourcebookLogic
-								.getMonsterGroups(props.sourcebooks)
-								.flatMap(g => g.monsters)
-								.filter(m => {
-									switch (data.type) {
-										case 'mount':
-											return m.role.type === MonsterRoleType.Mount;
-										case 'retainer':
-											return m.role.organization === MonsterOrganizationType.Retainer;
-									}
-									return true;
-								})
-						}
-						subset={((data.type === 'mount') || (data.type === 'retainer')) ? data.type : undefined}
+						monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
 						sourcebooks={props.sourcebooks}
 						options={props.options}
 						onSelect={monster => {
 							setMonsterSelectorOpen(false);
 
 							const monsterCopy = Utils.copy(monster) as Monster;
-							if (monsterCopy.retainer) {
-								// Retainers match hero level
-								monsterCopy.retainer.level = Math.max(monsterCopy.level, props.hero?.class?.level || 1);
-							}
 							const dataCopy = Utils.copy(data);
 							dataCopy.selected = monsterCopy;
 							if (props.setData) {
@@ -1088,6 +1037,126 @@ export const FeatureConfigPanel = (props: Props) => {
 		);
 	};
 
+	const getSelectionRetainer = (data: FeatureRetainerData) => {
+		const setName = (value: string) => {
+			const dataCopy = Utils.copy(data);
+			dataCopy.selected!.name = value;
+			if (props.setData) {
+				props.setData(props.feature.id, dataCopy);
+			}
+		};
+
+		const choices = data.selected && data.selected.retainer ?
+			data.selected.retainer.featuresByLevel
+				.filter(lvl => data.selected!.retainer!.level >= lvl.level)
+				.filter(lvl => FeatureLogic.isChoice(lvl.feature))
+			: [];
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{
+					data.selected ?
+						<Flex className='selection-box' align='center' gap={10}>
+							<MonsterInfo
+								style={{ flex: '1 1 0' }}
+								monster={data.selected}
+							/>
+							<div style={{ flex: '0 0 auto' }}>
+								<Button
+									type='text'
+									title='Show details'
+									icon={<InfoCircleOutlined />}
+									onClick={() => setSelectedMonster(data.selected)}
+								/>
+								<Button
+									type='text'
+									title='Remove'
+									icon={<CloseOutlined />}
+									onClick={() => {
+										const dataCopy = Utils.copy(data);
+										dataCopy.selected = null;
+										if (props.setData) {
+											props.setData(props.feature.id, dataCopy);
+										}
+									}}
+								/>
+							</div>
+						</Flex>
+						:
+						<Button block={true} className='status-warning' onClick={() => setMonsterSelectorOpen(true)}>Select</Button>
+				}
+				{
+					data.selected ?
+						<Expander title='Customize'>
+							<Space direction='vertical' style={{ width: '100%' }}>
+								<div>
+									<HeaderText>Name</HeaderText>
+									<Space.Compact style={{ width: '100%' }}>
+										<Input
+											status={data.selected.name === '' ? 'warning' : ''}
+											placeholder='Name'
+											allowClear={true}
+											value={data.selected.name}
+											onChange={e => setName(e.target.value)}
+										/>
+										<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
+									</Space.Compact>
+								</div>
+								{
+									choices.map(lvl => (
+										<FeatureConfigPanel
+											key={lvl.level}
+											feature={lvl.feature}
+											options={props.options}
+											hero={props.hero}
+											sourcebooks={props.sourcebooks}
+											setData={(fID, d) => {
+												const dataCopy = Utils.copy(data);
+												dataCopy.selected!.retainer!.featuresByLevel.forEach(l => {
+													if (l.feature.id === fID) {
+														l.feature.data = d;
+													}
+												});
+												if (props.setData) {
+													props.setData(props.feature.id, dataCopy);
+												}
+											}}
+										/>
+									))
+								}
+							</Space>
+						</Expander>
+						: null
+				}
+				<Drawer open={monsterSelectorOpen} onClose={() => setMonsterSelectorOpen(false)} closeIcon={null} width='500px'>
+					<RetainerSelectModal
+						monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onSelect={monster => {
+							setMonsterSelectorOpen(false);
+
+							const monsterCopy = Utils.copy(monster) as Monster;
+							if (monsterCopy.retainer) {
+								// Retainers match hero level
+								monsterCopy.retainer.level = Math.max(monsterCopy.level, props.hero?.class?.level || 1);
+							}
+							const dataCopy = Utils.copy(data);
+							dataCopy.selected = monsterCopy;
+							if (props.setData) {
+								props.setData(props.feature.id, dataCopy);
+							}
+						}}
+						onClose={() => setMonsterSelectorOpen(false)}
+					/>
+				</Drawer>
+				<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+					{selectedMonster ? <MonsterModal monster={selectedMonster} sourcebooks={props.sourcebooks} options={props.options} onClose={() => setSelectedMonster(null)} /> : null}
+				</Drawer>
+			</Space>
+		);
+	};
+
 	const getSelectionSkillChoice = (data: FeatureSkillChoiceData) => {
 		if (!props.hero || !props.sourcebooks) {
 			return null;
@@ -1467,6 +1536,8 @@ export const FeatureConfigPanel = (props: Props) => {
 				return getSelectionLanguageChoice(props.feature.data);
 			case FeatureType.Perk:
 				return getSelectionPerk(props.feature.data);
+			case FeatureType.Retainer:
+				return getSelectionRetainer(props.feature.data);
 			case FeatureType.SkillChoice:
 				return getSelectionSkillChoice(props.feature.data);
 			case FeatureType.SummonChoice:

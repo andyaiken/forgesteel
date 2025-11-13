@@ -651,6 +651,8 @@ export const EncounterEditPanel = (props: Props) => {
 							monsterFilter={monsterFilter}
 							monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 							includeNameFilter={false}
+							includeOrgFilter={true}
+							includeEVFilter={true}
 							onChange={setMonsterFilter}
 						/>
 						: null

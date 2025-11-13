@@ -2,8 +2,9 @@ import { Characteristic } from '@/enums/characteristic';
 import { DamageType } from '@/enums/damage-type';
 import { Element } from '@/models/element';
 import { Feature } from '@/models/feature';
-import { MonsterRole } from '@/models/monster-roll';
+import { MonsterRole } from '@/models/monster-role';
 import { MonsterState } from '@/models/monster-state';
+import { RetainerInfo } from '@/models/retainer';
 import { Size } from '@/models/size';
 import { Speed } from '@/models/speed';
 
@@ -25,15 +26,6 @@ export interface Monster extends Element {
 	}[];
 	withCaptain: string;
 	features: Feature[];
-	retainer: {
-		level: number;
-		level4?: Feature;
-		level7?: Feature;
-		level10?: Feature;
-		featuresByLevel: {
-			level: number,
-			feature: Feature;
-		}[];
-	} | null;
+	retainer: RetainerInfo | null;
 	state: MonsterState;
 };

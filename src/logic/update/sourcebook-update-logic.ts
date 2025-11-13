@@ -15,23 +15,23 @@ export class SourcebookUpdateLogic {
 		if (sourcebook.items === undefined) {
 			sourcebook.items = [];
 		}
-		if (sourcebook.perks === undefined) {
-			sourcebook.perks = [];
-		}
-		if (sourcebook.titles === undefined) {
-			sourcebook.titles = [];
-		}
 		if (sourcebook.monsterGroups === undefined) {
 			sourcebook.monsterGroups = [];
+		}
+		if (sourcebook.perks === undefined) {
+			sourcebook.perks = [];
 		}
 		if (sourcebook.projects === undefined) {
 			sourcebook.projects = [];
 		}
+		if (sourcebook.subclasses === undefined) {
+			sourcebook.subclasses = [];
+		}
 		if (sourcebook.terrain === undefined) {
 			sourcebook.terrain = [];
 		}
-		if (sourcebook.subclasses === undefined) {
-			sourcebook.subclasses = [];
+		if (sourcebook.titles === undefined) {
+			sourcebook.titles = [];
 		}
 
 		sourcebook.classes.forEach(c => {

@@ -1,4 +1,4 @@
-import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureSaveThreshold, FeatureSize, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '@/models/feature';
+import { Feature, FeatureAbility, FeatureAbilityCost, FeatureAbilityDamage, FeatureAbilityData, FeatureAbilityDistance, FeatureAddOn, FeatureAncestryChoice, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureChoice, FeatureClassAbility, FeatureCompanion, FeatureConditionImmunity, FeatureDamageModifier, FeatureDomain, FeatureDomainFeature, FeatureFixture, FeatureFollower, FeatureHeroicResource, FeatureHeroicResourceGain, FeatureItemChoice, FeatureKit, FeatureLanguage, FeatureLanguageChoice, FeatureMalice, FeatureMaliceAbility, FeatureMovementMode, FeatureMultiple, FeaturePackage, FeaturePackageContent, FeaturePerk, FeatureProficiency, FeatureRetainer, FeatureSaveThreshold, FeatureSize, FeatureSkillChoice, FeatureSpeed, FeatureSummon, FeatureSummonChoice, FeatureTaggedFeature, FeatureTaggedFeatureChoice, FeatureText, FeatureTitleChoice } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Characteristic } from '@/enums/characteristic';
@@ -200,14 +200,13 @@ export class FactoryFeatureLogic {
 		};
 	};
 
-	createCompanion = (data: { id: string, name?: string, description?: string, type: 'companion' | 'mount' | 'retainer' }): FeatureCompanion => {
+	createCompanion = (data: { id: string, name?: string, description?: string }): FeatureCompanion => {
 		return {
 			id: data.id,
-			name: data.name || Format.capitalize(data.type),
+			name: data.name || 'Companion / Mount',
 			description: data.description || '',
 			type: FeatureType.Companion,
 			data: {
-				type: data.type,
 				selected: null
 			}
 		};
@@ -482,6 +481,18 @@ export class FactoryFeatureLogic {
 			data: {
 				weapons: data.weapons || [],
 				armor: data.armor || []
+			}
+		};
+	};
+
+	createRetainer = (data: { id: string, name?: string, description?: string }): FeatureRetainer => {
+		return {
+			id: data.id,
+			name: data.name || 'Retainer',
+			description: data.description || '',
+			type: FeatureType.Retainer,
+			data: {
+				selected: null
 			}
 		};
 	};

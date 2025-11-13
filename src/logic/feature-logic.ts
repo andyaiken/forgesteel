@@ -1,4 +1,4 @@
-import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
+import { Feature, FeatureAbilityCostData, FeatureAbilityDamage, FeatureAbilityDamageData, FeatureAbilityData, FeatureAbilityDistanceData, FeatureAddOnData, FeatureAncestryChoiceData, FeatureAncestryFeatureChoiceData, FeatureBonus, FeatureBonusData, FeatureCharacteristicBonusData, FeatureChoiceData, FeatureClassAbilityData, FeatureCompanionData, FeatureConditionImmunityData, FeatureDamageModifierData, FeatureDomainData, FeatureDomainFeatureData, FeatureFixtureData, FeatureFollowerData, FeatureHeroicResourceData, FeatureHeroicResourceGainData, FeatureItemChoiceData, FeatureKitData, FeatureLanguageChoiceData, FeatureLanguageData, FeatureMaliceAbilityData, FeatureMaliceData, FeatureMovementModeData, FeatureMultipleData, FeaturePackageContentData, FeaturePackageData, FeaturePerkData, FeatureProficiencyData, FeatureRetainerData, FeatureSaveThresholdData, FeatureSizeData, FeatureSkillChoiceData, FeatureSpeedData, FeatureSummonChoiceData, FeatureSummonData, FeatureTaggedFeatureChoiceData, FeatureTaggedFeatureData, FeatureTitleChoiceData } from '@/models/feature';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityUsage } from '@/enums/ability-usage';
 import { Ancestry } from '@/models/ancestry';
@@ -450,6 +450,49 @@ export class FeatureLogic {
 
 	///////////////////////////////////////////////////////////////////////////
 
+	static getSelectableFeatureTypes = () => {
+		return [
+			FeatureType.Text,
+			FeatureType.Ability,
+			FeatureType.AbilityCost,
+			FeatureType.AbilityDamage,
+			FeatureType.AbilityDistance,
+			FeatureType.AncestryChoice,
+			FeatureType.AncestryFeatureChoice,
+			FeatureType.Bonus,
+			FeatureType.CharacteristicBonus,
+			FeatureType.Choice,
+			FeatureType.ClassAbility,
+			FeatureType.Companion,
+			FeatureType.ConditionImmunity,
+			FeatureType.DamageModifier,
+			FeatureType.Domain,
+			FeatureType.DomainFeature,
+			FeatureType.Follower,
+			FeatureType.HeroicResource,
+			FeatureType.HeroicResourceGain,
+			FeatureType.ItemChoice,
+			FeatureType.Kit,
+			FeatureType.Language,
+			FeatureType.LanguageChoice,
+			FeatureType.MovementMode,
+			FeatureType.Multiple,
+			FeatureType.Package,
+			FeatureType.PackageContent,
+			FeatureType.Perk,
+			FeatureType.Proficiency,
+			FeatureType.Retainer,
+			FeatureType.SaveThreshold,
+			FeatureType.Size,
+			FeatureType.SkillChoice,
+			FeatureType.Speed,
+			FeatureType.Summon,
+			FeatureType.TaggedFeature,
+			FeatureType.TaggedFeatureChoice,
+			FeatureType.TitleChoice
+		];
+	};
+
 	static getFeatureData = (type: FeatureType) => {
 		switch (type) {
 			case FeatureType.Ability: {
@@ -561,6 +604,12 @@ export class FeatureLogic {
 				};
 				return data;
 			}
+			case FeatureType.Companion: {
+				const data: FeatureCompanionData = {
+					selected: null
+				};
+				return data;
+			}
 			case FeatureType.ConditionImmunity: {
 				const data: FeatureConditionImmunityData = {
 					conditions: []
@@ -587,13 +636,6 @@ export class FeatureLogic {
 					level: 1,
 					count: 1,
 					selected: []
-				};
-				return data;
-			}
-			case FeatureType.Companion: {
-				const data: FeatureCompanionData = {
-					type: 'companion',
-					selected: null
 				};
 				return data;
 			}
@@ -771,6 +813,12 @@ export class FeatureLogic {
 				};
 				return data;
 			}
+			case FeatureType.Retainer: {
+				const data: FeatureRetainerData = {
+					selected: null
+				};
+				return data;
+			}
 			case FeatureType.SaveThreshold: {
 				const data: FeatureSaveThresholdData = {
 					value: 5
@@ -862,6 +910,7 @@ export class FeatureLogic {
 			case FeatureType.Kit:
 			case FeatureType.LanguageChoice:
 			case FeatureType.Perk:
+			case FeatureType.Retainer:
 			case FeatureType.SkillChoice:
 			case FeatureType.SummonChoice:
 			case FeatureType.TaggedFeatureChoice:
@@ -911,6 +960,8 @@ export class FeatureLogic {
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.Perk:
 				return feature.data.selected.length >= feature.data.count;
+			case FeatureType.Retainer:
+				return feature.data.selected !== null;
 			case FeatureType.SkillChoice:
 				return feature.data.selected.length >= feature.data.count;
 			case FeatureType.SummonChoice:
@@ -986,7 +1037,7 @@ export class FeatureLogic {
 			case FeatureType.ClassAbility:
 				return 'This feature allows you to choose an ability from your class.';
 			case FeatureType.Companion:
-				return 'This feature grants you a companion, mount, or retainer.';
+				return 'This feature grants you a companion or mount.';
 			case FeatureType.ConditionImmunity:
 				return 'This feature grants you immunity to one or more condition types.';
 			case FeatureType.DamageModifier:
@@ -1027,6 +1078,8 @@ export class FeatureLogic {
 				return 'This feature allows you to choose a perk.';
 			case FeatureType.Proficiency:
 				return 'This feature grants you proficiency with weapons or armor.';
+			case FeatureType.Retainer:
+				return 'This feature grants you a retainer.';
 			case FeatureType.SaveThreshold:
 				return 'This feature modifies your threshold for saves.';
 			case FeatureType.Size:

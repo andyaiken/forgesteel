@@ -40,7 +40,7 @@ import { KitWeapon } from '@/enums/kit-weapon';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MonsterRole } from '@/models/monster-roll';
+import { MonsterRole } from '@/models/monster-role';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterState } from '@/models/monster-state';
 import { Negotiation } from '@/models/negotiation';

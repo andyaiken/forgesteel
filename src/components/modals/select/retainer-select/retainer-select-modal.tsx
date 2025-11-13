@@ -9,6 +9,7 @@ import { Monster } from '@/models/monster';
 import { MonsterFilter } from '@/models/filter';
 import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-filter-panel';
 import { MonsterLogic } from '@/logic/monster-logic';
+import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { Options } from '@/models/options';
 import { SearchOutlined } from '@ant-design/icons';
@@ -17,7 +18,7 @@ import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
-import './monster-select-modal.scss';
+import './retainer-select-modal.scss';
 
 interface Props {
 	monsters: Monster[];
@@ -27,11 +28,12 @@ interface Props {
 	onSelect: (monster: Monster) => void;
 }
 
-export const MonsterSelectModal = (props: Props) => {
+export const RetainerSelectModal = (props: Props) => {
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ filter, setFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 
 	const monsters = props.monsters
+		.filter(m => m.role.organization === MonsterOrganizationType.Retainer)
 		.filter(m => MonsterLogic.matches(m, filter))
 		.filter(m => Utils.textMatches([
 			m.name,
@@ -54,7 +56,7 @@ export const MonsterSelectModal = (props: Props) => {
 				/>
 			}
 			content={
-				<div className='monster-select-modal'>
+				<div className='retainer-select-modal'>
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<Expander title='Filter'>
 							<HeaderText>Filter</HeaderText>
@@ -62,8 +64,8 @@ export const MonsterSelectModal = (props: Props) => {
 								monsterFilter={filter}
 								monsters={props.monsters}
 								includeNameFilter={false}
-								includeOrgFilter={true}
-								includeEVFilter={true}
+								includeOrgFilter={false}
+								includeEVFilter={false}
 								onChange={setFilter}
 							/>
 						</Expander>

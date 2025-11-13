@@ -807,7 +807,14 @@ export const LibraryListPage = (props: Props) => {
 							{
 								showMonsters && showMonsterFilter ?
 									<SelectablePanel style={{ padding: '15px 10px 10px 10px' }}>
-										<MonsterFilterPanel monsterFilter={monsterFilter} monsters={SourcebookLogic.getMonsters(props.sourcebooks)} includeNameFilter={false} onChange={setMonsterFilter} />
+										<MonsterFilterPanel
+											monsterFilter={monsterFilter}
+											monsters={SourcebookLogic.getMonsters(props.sourcebooks)}
+											includeNameFilter={false}
+											includeOrgFilter={true}
+											includeEVFilter={true}
+											onChange={setMonsterFilter}
+										/>
 									</SelectablePanel>
 									: null
 							}

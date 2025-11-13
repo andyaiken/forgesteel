@@ -247,12 +247,11 @@ export const CustomizePanel = (props: Props) => {
 								onClick={() => {
 									setMenuOpen(false);
 									addFeature(FactoryLogic.feature.createCompanion({
-										id: Utils.guid(),
-										type: 'companion'
+										id: Utils.guid()
 									}));
 								}}
 							>
-								Companion
+								Companion / Mount
 							</Button>
 							<Button
 								block={true}
@@ -266,6 +265,18 @@ export const CustomizePanel = (props: Props) => {
 								}}
 							>
 								Follower
+							</Button>
+							<Button
+								block={true}
+								type='text'
+								onClick={() => {
+									setMenuOpen(false);
+									addFeature(FactoryLogic.feature.createRetainer({
+										id: Utils.guid()
+									}));
+								}}
+							>
+								Retainer
 							</Button>
 							<Button
 								block={true}

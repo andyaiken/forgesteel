@@ -23,7 +23,6 @@ import { Language } from '@/models/language';
 import { LanguageType } from '@/enums/language-type';
 import { ModifierLogic } from '@/logic/modifier-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MonsterRoleType } from '@/enums/monster-role-type';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Size } from '@/models/size';
@@ -243,6 +242,15 @@ export class HeroLogic {
 			.map(f => f.feature)
 			.filter(f => f.type === FeatureType.Follower)
 			.map(f => f.data.follower)
+			.filter(a => !!a)
+			.sort((a, b) => a.name.localeCompare(b.name));
+	};
+
+	static getRetainers = (hero: Hero) => {
+		return HeroLogic.getFeatures(hero)
+			.map(f => f.feature)
+			.filter(f => f.type === FeatureType.Retainer)
+			.map(f => f.data.selected)
 			.filter(a => !!a)
 			.sort((a, b) => a.name.localeCompare(b.name));
 	};
@@ -1064,25 +1072,25 @@ export class HeroLogic {
 						break;
 					}
 					case FeatureType.Companion: {
-						const options = SourcebookLogic.getMonsterGroups(sourcebooks)
+						const options = SourcebookLogic
+							.getMonsterGroups(sourcebooks)
+							.flatMap(mg => mg.monsters);
+						feature.data.selected = Collections.draw(Utils.copy(options));
+						break;
+					}
+					case FeatureType.Retainer: {
+						const options = SourcebookLogic
+							.getMonsterGroups(sourcebooks)
 							.flatMap(mg => mg.monsters)
-							.filter(m => {
-								switch (feature.data.type) {
-									case 'companion':
-										return true;
-									case 'mount':
-										return m.role.type === MonsterRoleType.Mount;
-									case 'retainer':
-										return m.role.organization === MonsterOrganizationType.Retainer;
-								}
-							});
+							.filter(m => m.role.organization === MonsterOrganizationType.Retainer);
 						feature.data.selected = Collections.draw(Utils.copy(options));
 						break;
 					}
 					case FeatureType.Domain: {
 						while (feature.data.selected.length < feature.data.count) {
 							const currentIDs = HeroLogic.getDomains(hero).map(d => d.id);
-							const options = SourcebookLogic.getDomains(sourcebooks)
+							const options = SourcebookLogic
+								.getDomains(sourcebooks)
 								.filter(a => !currentIDs.includes(a.id));
 							feature.data.selected.push(Collections.draw(options));
 						}
@@ -1103,7 +1111,8 @@ export class HeroLogic {
 					case FeatureType.ItemChoice: {
 						while (feature.data.selected.length < feature.data.count) {
 							const currentIDs = feature.data.selected.map(d => d.id);
-							const options = SourcebookLogic.getItems(sourcebooks)
+							const options = SourcebookLogic
+								.getItems(sourcebooks)
 								.filter(i => !currentIDs.includes(i.id))
 								.filter(i => (feature.data.types.length === 0) || feature.data.types.includes(i.type));
 							feature.data.selected.push(Collections.draw(options));
@@ -1113,7 +1122,8 @@ export class HeroLogic {
 					case FeatureType.Kit: {
 						while (feature.data.selected.length < feature.data.count) {
 							const currentIDs = HeroLogic.getKits(hero).map(k => k.id);
-							const options = SourcebookLogic.getKits(sourcebooks)
+							const options = SourcebookLogic
+								.getKits(sourcebooks)
 								.filter(k => !currentIDs.includes(k.id))
 								.filter(k => (feature.data.types.length === 0) || feature.data.types.includes(k.type));
 							feature.data.selected.push(Collections.draw(options));
@@ -1123,7 +1133,8 @@ export class HeroLogic {
 					case FeatureType.LanguageChoice: {
 						while (feature.data.selected.length < feature.data.count) {
 							const current = HeroLogic.getLanguages(hero, sourcebooks).map(l => l.name);
-							const options = SourcebookLogic.getLanguages(sourcebooks)
+							const options = SourcebookLogic
+								.getLanguages(sourcebooks)
 								.filter(l => !current.includes(l.name));
 							feature.data.selected.push(Collections.draw(options).name);
 						}
@@ -1132,7 +1143,8 @@ export class HeroLogic {
 					case FeatureType.Perk: {
 						while (feature.data.selected.length < feature.data.count) {
 							const currentIDs = HeroLogic.getPerks(hero).map(p => p.id);
-							const options = SourcebookLogic.getPerks(sourcebooks)
+							const options = SourcebookLogic
+								.getPerks(sourcebooks)
 								.filter(p => !currentIDs.includes(p.id))
 								.filter(p => (feature.data.lists.length === 0) || feature.data.lists.includes(p.list));
 							feature.data.selected.push(Collections.draw(options));
@@ -1144,7 +1156,8 @@ export class HeroLogic {
 							const current = HeroLogic.getSkills(hero, sourcebooks).map(s => s.name);
 							const allOptions = [ ...feature.data.options ];
 							feature.data.listOptions.forEach(list => {
-								SourcebookLogic.getSkills(sourcebooks)
+								SourcebookLogic
+									.getSkills(sourcebooks)
 									.filter(s => s.list === list)
 									.map(s => s.name)
 									.forEach(s => allOptions.push(s));
@@ -1175,7 +1188,8 @@ export class HeroLogic {
 					case FeatureType.TitleChoice: {
 						while (feature.data.selected.length < feature.data.count) {
 							const currentIDs = HeroLogic.getTitles(hero).map(t => t.id);
-							const options = SourcebookLogic.getTitles(sourcebooks)
+							const options = SourcebookLogic
+								.getTitles(sourcebooks)
 								.filter(t => !currentIDs.includes(t.id))
 								.filter(t => feature.data.echelon === t.echelon);
 							feature.data.selected.push(Collections.draw(options));

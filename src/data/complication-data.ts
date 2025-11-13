@@ -1113,9 +1113,8 @@ You can’t take this complication if you can’t be made dazed.`,
 		name: 'Meddling Butler',
 		description: 'You’re not sure what you did to deserve it, but for some reason your family saddled you with an old, trusted, and extremely irritating family servant. They’re supremely competent, of course, but they sometimes seem to forget who’s in charge.',
 		features: [
-			FactoryLogic.feature.createCompanion({
-				id: 'comp-meddlingButler-b',
-				type: 'retainer'
+			FactoryLogic.feature.createRetainer({
+				id: 'comp-meddlingButler-b'
 			}),
 			FactoryLogic.feature.create({
 				id: 'comp-meddlingButler-d',

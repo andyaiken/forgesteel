@@ -1,5 +1,6 @@
 import { Alert, Button, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { DndContext, DragOverlay, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
 import { MonsterFilter, TerrainFilter } from '@/models/filter';
@@ -58,6 +59,30 @@ export const EncounterEditPanel = (props: Props) => {
 	const [ filterVisible, setFilterVisible ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ terrainFilter, setTerrainFilter ] = useState<TerrainFilter>(FactoryLogic.createTerrainFilter());
+	const [ draggedMonster, setDraggedMonster ] = useState<Monster | null>(null);
+
+	const addMonster = (monster: Monster, encounterGroupID: string | null) => {
+		const copy = Utils.copy(encounter);
+
+		if (encounterGroupID) {
+			const group = copy.groups.find(g => g.id === encounterGroupID);
+			if (group) {
+				const slot = group.slots.find(s => s.monsterID === monster.id);
+				if (slot) {
+					slot.count += 1;
+				} else {
+					group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
+				}
+			};
+		} else {
+			const group = FactoryLogic.createEncounterGroup();
+			group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
+			copy.groups.push(group);
+		}
+
+		setEncounter(copy);
+		props.onChange(copy);
+	};
 
 	const getNameAndDescriptionSection = () => {
 		const setName = (value: string) => {
@@ -276,6 +301,7 @@ export const EncounterEditPanel = (props: Props) => {
 							index={n}
 							sourcebooks={props.sourcebooks}
 							options={props.options}
+							draggedMonster={draggedMonster}
 							setName={setName}
 							deleteGroup={deleteGroup}
 							getSlot={getSlot}
@@ -624,29 +650,6 @@ export const EncounterEditPanel = (props: Props) => {
 			setMonsterFilter(copy);
 		};
 
-		const addMonster = (monster: Monster, encounterGroupID: string | null) => {
-			const copy = Utils.copy(encounter);
-
-			if (encounterGroupID) {
-				const group = copy.groups.find(g => g.id === encounterGroupID);
-				if (group) {
-					const slot = group.slots.find(s => s.monsterID === monster.id);
-					if (slot) {
-						slot.count += 1;
-					} else {
-						group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
-					}
-				};
-			} else {
-				const group = FactoryLogic.createEncounterGroup();
-				group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
-				copy.groups.push(group);
-			}
-
-			setEncounter(copy);
-			props.onChange(copy);
-		};
-
 		const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
 
 		return (
@@ -674,43 +677,16 @@ export const EncounterEditPanel = (props: Props) => {
 						<Expander key={g.id} title={g.name}>
 							<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 								{
-									Collections.sort(g.monsters.filter(m => m.role.organization !== MonsterOrganizationType.Retainer).filter(m => MonsterLogic.matches(m, monsterFilter)), m => m.name).map(m => {
-										const monsterGroup = SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup;
-
-										let addBtn: ReactNode;
-										if (encounter.groups.length === 0) {
-											addBtn = (
-												<Button type='text' icon={<PlusOutlined />} onClick={() => addMonster(m, null)} />
-											);
-										} else {
-											addBtn = (
-												<Popover
-													content={
-														<Space direction='vertical'>
-															{
-																encounter.groups.map((group, n) => (
-																	<Button key={group.id} type='text' block={true} onClick={() => addMonster(m, group.id)}>Group {n + 1}</Button>
-																))
-															}
-															<Button key='' type='text' block={true} onClick={() => addMonster(m, null)}>New Group</Button>
-														</Space>
-													}
-												>
-													<Button type='text' icon={<PlusOutlined />} />
-												</Popover>
-											);
-										}
-
-										return (
-											<div key={m.id} className='monster-row'>
-												<MonsterInfo monster={m} />
-												<Flex>
-													<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(m, monsterGroup)} />
-													{addBtn}
-												</Flex>
-											</div>
-										);
-									})
+									Collections.sort(g.monsters.filter(m => m.role.organization !== MonsterOrganizationType.Retainer).filter(m => MonsterLogic.matches(m, monsterFilter)), m => m.name).map(m => (
+										<MonsterListItem
+											key={m.id}
+											monster={m}
+											monsterGroup={SourcebookLogic.getMonsterGroup(props.sourcebooks, m.id) as MonsterGroup}
+											encounter={encounter}
+											addMonster={addMonster}
+											showMonster={props.showMonster}
+										/>
+									))
 								}
 							</Space>
 						</Expander>
@@ -814,68 +790,86 @@ export const EncounterEditPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='encounter-edit-panel'>
-				<div className='encounter-workspace-column'>
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Encounter',
-								children: getNameAndDescriptionSection()
-							},
-							{
-								key: '2',
-								label: 'Monsters',
-								children: getMonstersSection()
-							},
-							{
-								key: '3',
-								label: 'Terrain',
-								children: getTerrainSection()
-							},
-							{
-								key: '4',
-								label: 'Objective',
-								children: getObjectiveSection()
-							},
-							{
-								key: '5',
-								label: 'Notes',
-								children: getNotesSection()
-							},
-							{
-								key: '6',
-								label: 'Malice',
-								children: getMaliceSection()
-							}
-						]}
-					/>
-				</div>
-				<div className='encounter-list-column'>
-					{getDifficultySection()}
-					<Tabs
-						items={[
-							{
-								key: '1',
-								label: 'Monsters',
-								children: getMonsterListSection()
-							},
-							{
-								key: '2',
-								label: 'Terrain',
-								children: getTerrainListSection()
-							}
-						]}
-						tabBarExtraContent={
-							<Button
-								className='filter-button'
-								type='text'
-								icon={filterVisible ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
-								onClick={() => setFilterVisible(!filterVisible)}
-							/>
+				<DndContext
+					onDragStart={e => {
+						setDraggedMonster(e.active.data.current as Monster);
+					}}
+					onDragCancel={() => setDraggedMonster(null)}
+					onDragAbort={() => setDraggedMonster(null)}
+					onDragEnd={e => {
+						if (draggedMonster && e.over) {
+							const groupID = e.over.id.toString();
+							addMonster(draggedMonster, groupID);
 						}
-					/>
+						setDraggedMonster(null);
+					}}
+				>
+					<div className='encounter-workspace-column'>
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Encounter',
+									children: getNameAndDescriptionSection()
+								},
+								{
+									key: '2',
+									label: 'Monsters',
+									children: getMonstersSection()
+								},
+								{
+									key: '3',
+									label: 'Terrain',
+									children: getTerrainSection()
+								},
+								{
+									key: '4',
+									label: 'Objective',
+									children: getObjectiveSection()
+								},
+								{
+									key: '5',
+									label: 'Notes',
+									children: getNotesSection()
+								},
+								{
+									key: '6',
+									label: 'Malice',
+									children: getMaliceSection()
+								}
+							]}
+						/>
+					</div>
+					<div className='encounter-list-column'>
+						{getDifficultySection()}
+						<Tabs
+							items={[
+								{
+									key: '1',
+									label: 'Monsters',
+									children: getMonsterListSection()
+								},
+								{
+									key: '2',
+									label: 'Terrain',
+									children: getTerrainListSection()
+								}
+							]}
+							tabBarExtraContent={
+								<Button
+									className='filter-button'
+									type='text'
+									icon={filterVisible ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
+									onClick={() => setFilterVisible(!filterVisible)}
+								/>
+							}
+						/>
 
-				</div>
+					</div>
+					<DragOverlay>
+						{draggedMonster ? <MonsterListItem monster={draggedMonster} /> : null}
+					</DragOverlay>
+				</DndContext>
 			</div>
 		</ErrorBoundary>
 	);
@@ -886,6 +880,7 @@ interface GroupPanelProps {
 	index: number;
 	sourcebooks: Sourcebook[];
 	options: Options;
+	draggedMonster: Monster | null;
 	setName: (group: EncounterGroup, value: string) => void;
 	deleteGroup: (group: EncounterGroup) => void;
 	getSlot: (slot: EncounterSlot, group: EncounterGroup) => ReactNode;
@@ -893,10 +888,19 @@ interface GroupPanelProps {
 
 const GroupPanel = (props: GroupPanelProps) => {
 	const [ editing, setEditing ] = useState<boolean>(false);
+	const { isOver, setNodeRef } = useDroppable({ id: props.group.id });
+
+	const classNames = [ 'encounter-group-panel' ];
+	if (props.draggedMonster) {
+		classNames.push('drag-target');
+	}
+	if (isOver) {
+		classNames.push('drag-over');
+	}
 
 	return (
 		<ErrorBoundary>
-			<div className='encounter-group-panel'>
+			<div className={classNames.join(' ')} ref={setNodeRef}>
 				<HeaderText
 					level={3}
 					extra={
@@ -1151,6 +1155,61 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 	return (
 		<div className='terrain-row'>
 			Unknown terrain
+		</div>
+	);
+};
+
+interface MonsterListItemProps {
+	monster: Monster;
+	monsterGroup?: MonsterGroup;
+	encounter?: Encounter;
+	addMonster?: (monster: Monster, groupID: string | null) => void;
+	showMonster?: (monster: Monster, monsterGroup: MonsterGroup) => void;
+}
+
+const MonsterListItem = (props: MonsterListItemProps) => {
+	const { attributes, listeners, setNodeRef } = useDraggable({ id: props.monster.id, data: props.monster });
+
+	let showBtn: ReactNode | null = null;
+	if (props.monsterGroup && props.showMonster) {
+		showBtn = (
+			<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showMonster!(props.monster, props.monsterGroup!)} />
+		);
+	}
+
+	let addBtn: ReactNode | null = null;
+	if (props.encounter && props.addMonster) {
+		if (props.encounter.groups.length === 0) {
+			addBtn = (
+				<Button type='text' icon={<PlusOutlined />} onClick={() => props.addMonster!(props.monster, null)} />
+			);
+		} else {
+			addBtn = (
+				<Popover
+					content={
+						<Space direction='vertical'>
+							{
+								props.encounter.groups.map((group, n) => (
+									<Button key={group.id} type='text' block={true} onClick={() => props.addMonster!(props.monster, group.id)}>Group {n + 1}</Button>
+								))
+							}
+							<Button key='' type='text' block={true} onClick={() => props.addMonster!(props.monster, null)}>New Group</Button>
+						</Space>
+					}
+				>
+					<Button type='text' icon={<PlusOutlined />} />
+				</Popover>
+			);
+		}
+	}
+
+	return (
+		<div className='monster-list-item' ref={setNodeRef} {...listeners} {...attributes}>
+			<MonsterInfo monster={props.monster} />
+			<Flex>
+				{showBtn}
+				{addBtn}
+			</Flex>
 		</div>
 	);
 };

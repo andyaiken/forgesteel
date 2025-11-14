@@ -8,7 +8,7 @@ import './dropdown-button.scss';
 interface Props {
 	className?: string;
 	style?: CSSProperties;
-	label: string;
+	label: ReactNode;
 	items: { key: string, label: ReactNode }[];
 	onClick: (key: string) => void;
 }

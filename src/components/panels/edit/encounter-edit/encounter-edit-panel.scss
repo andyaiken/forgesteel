@@ -13,9 +13,6 @@
 			display: flex;
 			flex-direction: column;
 			gap: 8px;
-			padding: 0 5px 10px 5px;
-			border: 1px solid transparent;
-			border-radius: 5px;
 
 			.slot-row,
 			.terrain-row {
@@ -40,12 +37,18 @@
 				}
 			}
 
-			&.drag-target {
-				background-color: rgb(230, 244, 255);
-			}
+			.drag-target {
+				padding: 5px;
+				border: 1px solid transparent;
+				border-radius: 15px;
 
-			&.drag-over {
-				border-color: rgb(22, 119, 255);
+				&.drag-highlight {
+					background-color: rgb(230, 244, 255);
+				}
+
+				&.drag-over {
+					border-color: rgb(22, 119, 255);
+				}
 			}
 		}
 	}
@@ -57,16 +60,8 @@
 	}
 }
 
-.monster-list-item {
-	cursor: grab;
-
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.05);
-	}
-}
-
 .monster-list-item,
-.terrain-row {
+.terrain-list-item {
 	border: 1px solid rgb(220, 220, 220);
 	border-radius: 10px;
 	background-color: rgba(255, 255, 255);
@@ -76,12 +71,17 @@
 	align-items: center;
 	justify-content: space-between;
 
-	.combatant-button-content {
+	.info-container {
 		flex: 1 1 0;
+		cursor: grab;
 	}
 
 	.add-btn {
 		border: none;
+	}
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.05);
 	}
 }
 
@@ -113,7 +113,7 @@ html[data-theme="dark"] {
 		}
 
 		.monster-list-item,
-		.terrain-row {
+		.terrain-list-item {
 			background-color: rgba(0, 0, 0);
 			color: rgba(255, 255, 255, 0.88);
 		}

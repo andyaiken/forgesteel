@@ -1,6 +1,6 @@
 import { Alert, Button, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { DndContext, DragOverlay, useDraggable, useDroppable } from '@dnd-kit/core';
+import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
 import { MonsterFilter, TerrainFilter } from '@/models/filter';
@@ -60,6 +60,7 @@ export const EncounterEditPanel = (props: Props) => {
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ terrainFilter, setTerrainFilter ] = useState<TerrainFilter>(FactoryLogic.createTerrainFilter());
 	const [ draggedMonster, setDraggedMonster ] = useState<Monster | null>(null);
+	const [ draggedTerrain, setDraggedTerrain ] = useState<Terrain | null>(null);
 
 	const addMonster = (monster: Monster, encounterGroupID: string | null) => {
 		const copy = Utils.copy(encounter);
@@ -78,6 +79,26 @@ export const EncounterEditPanel = (props: Props) => {
 			const group = FactoryLogic.createEncounterGroup();
 			group.slots.push(FactoryLogic.createEncounterSlot(monster.id));
 			copy.groups.push(group);
+		}
+
+		setEncounter(copy);
+		props.onChange(copy);
+	};
+
+	const addTerrain = (terrain: Terrain) => {
+		const copy = Utils.copy(encounter);
+
+		const data = copy.terrain.find(t => t.terrainID === terrain.id);
+		if (data) {
+			data.count += 1;
+		} else {
+			copy.terrain.push({
+				id: Utils.guid(),
+				terrainID: terrain.id,
+				upgradeIDs: [],
+				count: 1,
+				terrain: []
+			});
 		}
 
 		setEncounter(copy);
@@ -345,6 +366,7 @@ export const EncounterEditPanel = (props: Props) => {
 
 			return (
 				<TerrainSlotPanel
+					key={slot.id}
 					slot={slot}
 					sourcebooks={props.sourcebooks}
 					showTerrain={props.showTerrain}
@@ -355,20 +377,13 @@ export const EncounterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
-				{
-					encounter.terrain.map(slot => (
-						<div key={`${slot.terrainID}-container`} className='encounter-terrain-panel'>
-							{getTerrain(slot)}
-						</div>
-					))
-				}
-				{
-					encounter.terrain.length === 0 ?
-						<div className='ds-text dimmed-text centered-text'>None</div>
-						: null
-				}
-			</Space>
+			<div className='encounter-terrain-panel'>
+				<TerrainDropTarget
+					encounter={encounter}
+					draggedTerrain={draggedTerrain}
+					getSlot={getTerrain}
+				/>
+			</div>
 		);
 	};
 
@@ -708,26 +723,6 @@ export const EncounterEditPanel = (props: Props) => {
 			setTerrainFilter(copy);
 		};
 
-		const addTerrain = (terrain: Terrain) => {
-			const copy = Utils.copy(encounter);
-
-			const data = copy.terrain.find(t => t.terrainID === terrain.id);
-			if (data) {
-				data.count += 1;
-			} else {
-				copy.terrain.push({
-					id: Utils.guid(),
-					terrainID: terrain.id,
-					upgradeIDs: [],
-					count: 1,
-					terrain: []
-				});
-			}
-
-			setEncounter(copy);
-			props.onChange(copy);
-		};
-
 		const allTerrains = SourcebookLogic.getTerrains(props.sourcebooks);
 		const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
 
@@ -750,17 +745,14 @@ export const EncounterEditPanel = (props: Props) => {
 						: null
 				}
 				{
-					terrains.map(t => {
-						return (
-							<div key={t.id} className='terrain-row'>
-								<TerrainInfo terrain={t} />
-								<Flex>
-									<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(t, [])} />
-									<Button type='text' icon={<PlusOutlined />} onClick={() => addTerrain(t)} />
-								</Flex>
-							</div>
-						);
-					})
+					terrains.map(t => (
+						<TerrainListItem
+							key={t.id}
+							terrain={t}
+							showTerrain={props.showTerrain}
+							addTerrain={addTerrain}
+						/>
+					))
 				}
 				{
 					terrains.length === 0 ?
@@ -787,22 +779,44 @@ export const EncounterEditPanel = (props: Props) => {
 		);
 	};
 
+	const onDragStart = (event: DragStartEvent) => {
+		const data = event.active.data.current as { type: string, element: Element };
+		switch (data.type) {
+			case 'monster':
+				setDraggedMonster(data.element as Monster);
+				break;
+			case 'terrain':
+				setDraggedTerrain(data.element as Terrain);
+				break;
+		}
+	};
+
+	const onDragCancel = () => {
+		setDraggedMonster(null);
+		setDraggedTerrain(null);
+	};
+
+	const onDragEnd = (event: DragEndEvent) => {
+		if (draggedMonster && event.over) {
+			const groupID = event.over.id.toString();
+			addMonster(draggedMonster, groupID);
+		}
+
+		if (draggedTerrain && event.over) {
+			addTerrain(draggedTerrain);
+		}
+
+		setDraggedMonster(null);
+		setDraggedTerrain(null);
+	};
+
 	return (
 		<ErrorBoundary>
 			<div className='encounter-edit-panel'>
 				<DndContext
-					onDragStart={e => {
-						setDraggedMonster(e.active.data.current as Monster);
-					}}
-					onDragCancel={() => setDraggedMonster(null)}
-					onDragAbort={() => setDraggedMonster(null)}
-					onDragEnd={e => {
-						if (draggedMonster && e.over) {
-							const groupID = e.over.id.toString();
-							addMonster(draggedMonster, groupID);
-						}
-						setDraggedMonster(null);
-					}}
+					onDragStart={onDragStart}
+					onDragCancel={onDragCancel}
+					onDragEnd={onDragEnd}
 				>
 					<div className='encounter-workspace-column'>
 						<Tabs
@@ -868,6 +882,7 @@ export const EncounterEditPanel = (props: Props) => {
 					</div>
 					<DragOverlay>
 						{draggedMonster ? <MonsterListItem monster={draggedMonster} /> : null}
+						{draggedTerrain ? <TerrainListItem terrain={draggedTerrain} /> : null}
 					</DragOverlay>
 				</DndContext>
 			</div>
@@ -888,19 +903,10 @@ interface GroupPanelProps {
 
 const GroupPanel = (props: GroupPanelProps) => {
 	const [ editing, setEditing ] = useState<boolean>(false);
-	const { isOver, setNodeRef } = useDroppable({ id: props.group.id });
-
-	const classNames = [ 'encounter-group-panel' ];
-	if (props.draggedMonster) {
-		classNames.push('drag-target');
-	}
-	if (isOver) {
-		classNames.push('drag-over');
-	}
 
 	return (
 		<ErrorBoundary>
-			<div className={classNames.join(' ')} ref={setNodeRef}>
+			<div className='encounter-group-panel'>
 				<HeaderText
 					level={3}
 					extra={
@@ -922,12 +928,11 @@ const GroupPanel = (props: GroupPanelProps) => {
 							(props.group.name || `Group ${props.index + 1}`)
 					}
 				</HeaderText>
-				{props.group.slots.map(slot => props.getSlot(slot, props.group))}
-				{
-					props.group.slots.length === 0 ?
-						<div className='ds-text dimmed-text centered-text'>No monsters</div>
-						: null
-				}
+				<MonsterDropTarget
+					group={props.group}
+					draggedMonster={props.draggedMonster}
+					getSlot={props.getSlot}
+				/>
 				{
 					(props.group.slots.length > 0) && (EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel)) ?
 						<Alert
@@ -948,6 +953,66 @@ const GroupPanel = (props: GroupPanelProps) => {
 				}
 			</div>
 		</ErrorBoundary>
+	);
+};
+
+interface MonsterDropTargetProps {
+	group: EncounterGroup;
+	draggedMonster: Monster | null;
+	getSlot: (slot: EncounterSlot, group: EncounterGroup) => ReactNode;
+}
+
+const MonsterDropTarget = (props: MonsterDropTargetProps) => {
+	const { isOver, setNodeRef } = useDroppable({ id: props.group.id });
+
+	const classNames = [ 'drag-target' ];
+	if (props.draggedMonster) {
+		classNames.push('drag-highlight');
+
+		if (isOver) {
+			classNames.push('drag-over');
+		}
+	}
+
+	return (
+		<Space className={classNames.join(' ')} ref={setNodeRef} direction='vertical' style={{ width: '100%' }}>
+			{props.group.slots.map(slot => props.getSlot(slot, props.group))}
+			{
+				props.group.slots.length === 0 ?
+					<div className='ds-text dimmed-text centered-text'>No monsters</div>
+					: null
+			}
+		</Space>
+	);
+};
+
+interface TerrainDropTargetProps {
+	encounter: Encounter;
+	draggedTerrain: Terrain | null;
+	getSlot: (slot: TerrainSlot) => ReactNode;
+}
+
+const TerrainDropTarget = (props: TerrainDropTargetProps) => {
+	const { isOver, setNodeRef } = useDroppable({ id: 'terrain' });
+
+	const classNames = [ 'drag-target' ];
+	if (props.draggedTerrain) {
+		classNames.push('drag-highlight');
+
+		if (isOver) {
+			classNames.push('drag-over');
+		}
+	}
+
+	return (
+		<Space className={classNames.join(' ')} ref={setNodeRef} direction='vertical' style={{ width: '100%' }}>
+			{props.encounter.terrain.map(slot => props.getSlot(slot))}
+			{
+				props.encounter.terrain.length === 0 ?
+					<div className='ds-text dimmed-text centered-text'>No terrain</div>
+					: null
+			}
+		</Space>
 	);
 };
 
@@ -1168,7 +1233,7 @@ interface MonsterListItemProps {
 }
 
 const MonsterListItem = (props: MonsterListItemProps) => {
-	const { attributes, listeners, setNodeRef } = useDraggable({ id: props.monster.id, data: props.monster });
+	const { attributes, listeners, setNodeRef } = useDraggable({ id: props.monster.id, data: { type: 'monster', element: props.monster } });
 
 	let showBtn: ReactNode | null = null;
 	if (props.monsterGroup && props.showMonster) {
@@ -1204,8 +1269,46 @@ const MonsterListItem = (props: MonsterListItemProps) => {
 	}
 
 	return (
-		<div className='monster-list-item' ref={setNodeRef} {...listeners} {...attributes}>
-			<MonsterInfo monster={props.monster} />
+		<div className='monster-list-item'>
+			<div className='info-container' ref={setNodeRef} {...listeners} {...attributes}>
+				<MonsterInfo monster={props.monster} />
+			</div>
+			<Flex>
+				{showBtn}
+				{addBtn}
+			</Flex>
+		</div>
+	);
+};
+
+interface TerrainListItemProps {
+	terrain: Terrain;
+	addTerrain?: (terrain: Terrain) => void;
+	showTerrain?: (terrain: Terrain, upgradeIDs: string[]) => void;
+}
+
+const TerrainListItem = (props: TerrainListItemProps) => {
+	const { attributes, listeners, setNodeRef } = useDraggable({ id: props.terrain.id, data: { type: 'terrain', element: props.terrain } });
+
+	let showBtn: ReactNode | null = null;
+	if (props.showTerrain) {
+		showBtn = (
+			<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain!(props.terrain, [])} />
+		);
+	}
+
+	let addBtn: ReactNode | null = null;
+	if (props.addTerrain) {
+		addBtn = (
+			<Button type='text' icon={<PlusOutlined />} onClick={() => props.addTerrain!(props.terrain)} />
+		);
+	}
+
+	return (
+		<div className='terrain-list-item'>
+			<div className='info-container' ref={setNodeRef} {...listeners} {...attributes}>
+				<TerrainInfo terrain={props.terrain} />
+			</div>
 			<Flex>
 				{showBtn}
 				{addBtn}

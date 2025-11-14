@@ -1,5 +1,5 @@
-import { Alert, Button, Divider, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditFilled, EditOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { Alert, Button, Flex, Input, Popover, Select, Space, Tabs } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, DownOutlined, EditFilled, EditOutlined, EllipsisOutlined, FilterFilled, FilterOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusCircleOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Encounter, EncounterGroup, EncounterObjective, TerrainSlot } from '@/models/encounter';
 import { Fragment, ReactNode, useState } from 'react';
 import { MonsterFilter, TerrainFilter } from '@/models/filter';
@@ -27,7 +27,6 @@ import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-f
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
@@ -39,7 +38,6 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Terrain } from '@/models/terrain';
 import { TerrainFilterPanel } from '@/components/panels/terrain-filter/terrain-filter-panel';
 import { TerrainLogic } from '@/logic/terrain-logic';
-import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 
@@ -99,6 +97,13 @@ export const EncounterEditPanel = (props: Props) => {
 		const setName = (group: EncounterGroup, value: string) => {
 			const copy = Utils.copy(encounter);
 			copy.groups.filter(g => g.id === group.id).forEach(g => g.name = value);
+			setEncounter(copy);
+			props.onChange(copy);
+		};
+
+		const addGroup = () => {
+			const copy = Utils.copy(encounter);
+			copy.groups.push(FactoryLogic.createEncounterGroup());
 			setEncounter(copy);
 			props.onChange(copy);
 		};
@@ -256,6 +261,13 @@ export const EncounterEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{warnings}
+				<HeaderText
+					extra={
+						<Button type='text' icon={<PlusOutlined />} onClick={addGroup} />
+					}
+				>
+					Monsters
+				</HeaderText>
 				{
 					encounter.groups.map((group, n) => (
 						<GroupPanel
@@ -320,7 +332,7 @@ export const EncounterEditPanel = (props: Props) => {
 			<Space direction='vertical' style={{ width: '100%' }}>
 				{
 					encounter.terrain.map(slot => (
-						<div key={`${slot.terrainID}-container`} className='terrain-container-row'>
+						<div key={`${slot.terrainID}-container`} className='encounter-terrain-panel'>
 							{getTerrain(slot)}
 						</div>
 					))
@@ -668,31 +680,32 @@ export const EncounterEditPanel = (props: Props) => {
 										let addBtn: ReactNode;
 										if (encounter.groups.length === 0) {
 											addBtn = (
-												<Button icon={<PlusOutlined />} onClick={() => addMonster(m, null)}>Add</Button>
+												<Button type='text' icon={<PlusOutlined />} onClick={() => addMonster(m, null)} />
 											);
 										} else {
-											const groups = encounter.groups.map((group, n) => ({
-												key: group.id,
-												label: <div className='ds-text centered-text'>Group {n + 1}</div>
-											}));
-											groups.push({
-												key: '',
-												label: <div className='ds-text centered-text'>New Group</div>
-											});
 											addBtn = (
-												<DropdownButton
-													label='Add'
-													items={groups}
-													onClick={groupID => addMonster(m, groupID !== '' ? groupID : null)}
-												/>
+												<Popover
+													content={
+														<Space direction='vertical'>
+															{
+																encounter.groups.map((group, n) => (
+																	<Button key={group.id} type='text' block={true} onClick={() => addMonster(m, group.id)}>Group {n + 1}</Button>
+																))
+															}
+															<Button key='' type='text' block={true} onClick={() => addMonster(m, null)}>New Group</Button>
+														</Space>
+													}
+												>
+													<Button type='text' icon={<PlusOutlined />} />
+												</Popover>
 											);
 										}
 
 										return (
 											<div key={m.id} className='monster-row'>
 												<MonsterInfo monster={m} />
-												<Flex gap={10}>
-													<Button onClick={() => props.showMonster(m, monsterGroup)}>Details</Button>
+												<Flex>
+													<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(m, monsterGroup)} />
 													{addBtn}
 												</Flex>
 											</div>
@@ -765,9 +778,9 @@ export const EncounterEditPanel = (props: Props) => {
 						return (
 							<div key={t.id} className='terrain-row'>
 								<TerrainInfo terrain={t} />
-								<Flex gap={10}>
-									<Button onClick={() => props.showTerrain(t, [])}>Details</Button>
-									<Button icon={<PlusOutlined />} onClick={() => addTerrain(t)}>Add</Button>
+								<Flex>
+									<Button type='text' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(t, [])} />
+									<Button type='text' icon={<PlusOutlined />} onClick={() => addTerrain(t)} />
 								</Flex>
 							</div>
 						);
@@ -883,8 +896,9 @@ const GroupPanel = (props: GroupPanelProps) => {
 
 	return (
 		<ErrorBoundary>
-			<div className='group-row'>
+			<div className='encounter-group-panel'>
 				<HeaderText
+					level={3}
 					extra={
 						<Flex>
 							<Button key='edit' type='text' icon={editing ? <EditFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
@@ -907,11 +921,11 @@ const GroupPanel = (props: GroupPanelProps) => {
 				{props.group.slots.map(slot => props.getSlot(slot, props.group))}
 				{
 					props.group.slots.length === 0 ?
-						<Empty />
+						<div className='ds-text dimmed-text centered-text'>No monsters</div>
 						: null
 				}
 				{
-					EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) ?
+					(props.group.slots.length > 0) && (EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel)) ?
 						<Alert
 							type='warning'
 							showIcon={true}
@@ -920,7 +934,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 						: null
 				}
 				{
-					EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2) ?
+					(props.group.slots.length > 0) && (EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2)) ?
 						<Alert
 							type='warning'
 							showIcon={true}
@@ -970,15 +984,6 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 								mode='multiple'
 								options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
 								optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
-								showSearch={true}
-								filterOption={(input, option) => {
-									const strings = option ?
-										[
-											option.label
-										]
-										: [];
-									return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-								}}
 								value={props.slot.customization.addOnIDs}
 								onChange={ids => props.setSlotAddOnIDs(props.group.id, props.slot.id, ids)}
 							/>
@@ -1024,22 +1029,49 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 			);
 		};
 
+		const getMenu = () => {
+			return (
+				<Space direction='vertical'>
+					<DropdownButton
+						label='Move To'
+						items={[
+							...props.encounter.groups
+								.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+								.filter(g => g.id !== props.group.id)
+								.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+							{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+						]}
+						onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, true)}
+					/>
+					<DropdownButton
+						label='Copy To'
+						items={[
+							...props.encounter.groups
+								.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
+								.filter(g => g.id !== props.group.id)
+								.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
+							{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
+						]}
+						onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, false)}
+					/>
+				</Space>
+			);
+		};
+
 		return (
 			<ErrorBoundary>
 				<div className='slot-row'>
 					<div className='content'>
-						<MonsterPanel
-							monster={monster}
-							monsterGroup={monsterGroup}
-							sourcebooks={props.sourcebooks}
-							options={props.options}
-							extra={
-								<Flex align='center'>
-									<Button type='text' title='Customize' icon={<EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />
-									<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />
-								</Flex>
-							}
-						/>
+						<Flex align='center' justify='space-between'>
+							<MonsterInfo monster={monster} />
+							<Flex align='center'>
+								<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showMonster(monster, monsterGroup)} />
+								<Button type='text' title='Customize' icon={showCustomize ? <EditFilled /> : <EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />
+								<Popover content={getMenu()}>
+									<Button type='text' icon={<EllipsisOutlined />} />
+								</Popover>
+							</Flex>
+						</Flex>
 						{showCustomize ? getCustomizePanel() : null}
 					</div>
 					<div className='actions'>
@@ -1047,29 +1079,6 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 							value={props.slot.count}
 							format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization)).toString()}
 							onChange={value => props.setSlotCount(props.group.id, props.slot.id, value)}
-						/>
-						<Divider />
-						<DropdownButton
-							label='Move To'
-							items={[
-								...props.encounter.groups
-									.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
-									.filter(g => g.id !== props.group.id)
-									.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
-								{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
-							]}
-							onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, true)}
-						/>
-						<DropdownButton
-							label='Copy To'
-							items={[
-								...props.encounter.groups
-									.map((g, n) => ({ id: g.id, name: `Group ${n + 1}` }))
-									.filter(g => g.id !== props.group.id)
-									.map(g => ({ key: g.id, label: <div className='ds-text centered-text'>{g.name}</div> })),
-								{ key: '', label: <div className='ds-text centered-text'>New Group</div> }
-							]}
-							onClick={toGroupID => props.moveSlot(props.slot.id, props.group.id, toGroupID, false)}
 						/>
 					</div>
 				</div>
@@ -1093,43 +1102,40 @@ interface TerrainSlotPanelProps {
 }
 
 const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
+	const [ showCustomize, setShowCustomize ] = useState<boolean>(false);
+
 	const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === props.slot.terrainID);
 
 	if (terrain) {
+		const getCustomizePanel = () => {
+			return (
+				<Space direction='vertical' style={{ width: '100%' }}>
+					<HeaderText>Customize</HeaderText>
+					<Select
+						style={{ width: '100%' }}
+						placeholder='Select'
+						mode='multiple'
+						options={Collections.sort(terrain.upgrades, a => a.label).map(a => ({ value: a.id, label: a.label, cost: a.cost }))}
+						optionRender={option => <Flex align='center' gap={8}><div className='ds-text'>{option.data.label}</div><Pill>+{option.data.cost} EV</Pill></Flex>}
+						value={props.slot.upgradeIDs}
+						onChange={ids => props.setTerrainUpgradeIDs(props.slot.id, ids)}
+					/>
+				</Space>
+			);
+		};
+
 		return (
 			<ErrorBoundary>
 				<div className='terrain-row'>
 					<div className='content'>
-						<TerrainPanel
-							terrain={terrain}
-							sourcebooks={props.sourcebooks}
-							extra={<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />}
-						/>
-						{
-							terrain.upgrades.length > 0 ?
-								<Expander title='Customize'>
-									<HeaderText>Customize</HeaderText>
-									<Select
-										style={{ width: '100%' }}
-										placeholder='Select'
-										mode='multiple'
-										options={Collections.sort(terrain.upgrades, a => a.label).map(a => ({ value: a.id, label: a.label, cost: a.cost }))}
-										optionRender={option => <Flex align='center' gap={8}><div className='ds-text'>{option.data.label}</div><Pill>+{option.data.cost} EV</Pill></Flex>}
-										showSearch={true}
-										filterOption={(input, option) => {
-											const strings = option ?
-												[
-													option.label
-												]
-												: [];
-											return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-										}}
-										value={props.slot.upgradeIDs}
-										onChange={ids => props.setTerrainUpgradeIDs(props.slot.id, ids)}
-									/>
-								</Expander>
-								: null
-						}
+						<Flex align='center' justify='space-between'>
+							<TerrainInfo terrain={terrain} />
+							<Flex align='center'>
+								<Button type='text' title='Show stat block' icon={<InfoCircleOutlined />} onClick={() => props.showTerrain(terrain, props.slot.upgradeIDs)} />
+								{terrain.upgrades.length > 0 ? <Button type='text' title='Customize' icon={showCustomize ? <EditFilled /> : <EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} /> : null}
+							</Flex>
+						</Flex>
+						{showCustomize ? getCustomizePanel() : null}
 					</div>
 					<div className='actions'>
 						<NumberSpin

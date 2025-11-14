@@ -1,4 +1,5 @@
 import { AbilityPanel } from '@/components/panels/elements/ability-panel/ability-panel';
+import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
@@ -73,29 +74,36 @@ export const ClassPanel = (props: Props) => {
 	};
 
 	const getAbilities = () => {
+		const costs = Collections.distinct(
+			props.heroClass.abilities
+				.map(a => a.cost)
+				.filter(c => c !== 'signature')
+				.sort((a, b) => a - b),
+			x => x
+		);
+
 		return (
 			<div className='class-abilities-list'>
 				{
-					[ 'signature', 3, 5, 7, 9, 11 ]
-						.map(cost => {
-							const abilities = props.heroClass.abilities.filter(a => a.cost === cost);
-							if (abilities.length === 0) {
-								return null;
-							}
-							return (
-								<Expander key={cost} title={cost === 'signature' ? 'Signature Abilities' : `${cost}pt Abilities`}>
-									<div className='class-abilities-grid'>
-										{
-											abilities.map(a => (
-												<SelectablePanel key={a.id}>
-													<AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} />
-												</SelectablePanel>
-											))
-										}
-									</div>
-								</Expander>
-							);
-						})
+					[ 'signature', ...costs ].map(cost => {
+						const abilities = props.heroClass.abilities.filter(a => a.cost === cost);
+						if (abilities.length === 0) {
+							return null;
+						}
+						return (
+							<Expander key={cost} title={cost === 'signature' ? 'Signature Abilities' : `${cost}pt Abilities`}>
+								<div className='class-abilities-grid'>
+									{
+										abilities.map(a => (
+											<SelectablePanel key={a.id}>
+												<AbilityPanel ability={a} hero={props.hero} mode={PanelMode.Full} />
+											</SelectablePanel>
+										))
+									}
+								</div>
+							</Expander>
+						);
+					})
 				}
 			</div>
 		);

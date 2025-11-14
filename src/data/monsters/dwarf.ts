@@ -801,7 +801,7 @@ Legends speak of stone singers, dwarves who could move mountains with their song
 		}),
 		FactoryLogic.createMonster({
 			id: 'dwarf-13',
-			name: 'Servitor War Worker',
+			name: 'Servitor War Walker',
 			level: 1,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Elite, MonsterRoleType.Mount),
 			keywords: [ 'Construct', 'Dwarf' ],

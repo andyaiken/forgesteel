@@ -8,39 +8,33 @@
 		flex: 1 1 0;
 		overflow-y: auto;
 
-		.group-row,
-		.terrain-container-row {
+		.encounter-group-panel,
+		.encounter-terrain-panel {
 			display: flex;
 			flex-direction: column;
 			gap: 8px;
 
 			.slot-row,
 			.terrain-row {
+				margin: 0 5px;
 				border: 1px solid rgb(220, 220, 220);
 				border-radius: 10px;
 				background-color: rgba(255, 255, 255);
-				padding: 10px 20px 20px 20px;
+				padding: 10px;
 				display: flex;
 				flex-direction: row;
-				gap: 20px;
+				align-items: center;
+				gap: 10px;
+				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
 
 				.content {
 					flex: 1 1 0;
 					border-right: 1px solid rgb(220, 220, 220);
-					padding-right: 20px;
+					padding-right: 10px;
 				}
 
 				.actions {
-					margin-top: 5px;
-					flex: 0 0 130px;
-					display: flex;
-					flex-direction: column;
-					gap: 5px;
-
-					.ant-divider {
-						margin: 4px 0 15px 0;
-						border-block-start-width: 5px;
-					}
+					flex: 0 0 120px;
 				}
 			}
 		}
@@ -62,17 +56,12 @@
 			align-items: center;
 			justify-content: space-between;
 
-			.monster-panel,
-			.terrain-panel {
+			.combatant-button-content {
 				flex: 1 1 0;
 			}
 
-			.actions {
-				margin-top: 10px;
-				flex: 0 0 130px;
-				display: flex;
-				flex-direction: column;
-				gap: 5px;
+			.add-btn {
+				border: none;
 			}
 
 			&:hover {

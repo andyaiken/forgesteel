@@ -1,16 +1,12 @@
-import { anthousai } from '@/data/ancestries/anthousai';
 import { devil } from '@/data/ancestries/devil';
 import { dragonKnight } from '@/data/ancestries/dragon-knight';
-import { dryad } from '@/data/ancestries/dryad';
 import { dwarf } from '@/data/ancestries/dwarf';
-import { goblinSquad } from './ancestries/goblin-squad';
 import { hakaan } from '@/data/ancestries/hakaan';
 import { highElf } from '@/data/ancestries/elf-high';
 import { human } from '@/data/ancestries/human';
 import { memonek } from '@/data/ancestries/memonek';
 import { orc } from '@/data/ancestries/orc';
 import { polder } from '@/data/ancestries/polder';
-import { psiBorg } from './ancestries/psi-borg';
 import { revenant } from '@/data/ancestries/revenant';
 import { timeRaider } from '@/data/ancestries/time-raider';
 import { wodeElf } from '@/data/ancestries/elf-wode';
@@ -28,9 +24,4 @@ export class AncestryData {
 	static polder = polder;
 	static revenant = revenant;
 	static timeRaider = timeRaider;
-
-	static anthousai = anthousai;
-	static dryad = dryad;
-	static goblinSquad = goblinSquad;
-	static psiBorg = psiBorg;
 }

@@ -27,6 +27,7 @@
   * Set number of squares for per-square terrain
   * Use encounter templates
 * Tactical Maps:
+  * Add / move minis using drag-and-drop
   * Switch map Z level
     * Show (blurred, translucent, no pointer events) levels below / above
   * Ability to destroy tile squares / wall sections

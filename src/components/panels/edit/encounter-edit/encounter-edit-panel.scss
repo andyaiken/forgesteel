@@ -38,16 +38,46 @@
 			}
 
 			.drag-target {
+				position: relative;
 				padding: 5px;
 				border: 1px solid transparent;
 				border-radius: 15px;
 
-				&.drag-highlight {
-					background-color: rgb(230, 244, 255);
+				.drop-info-container {
+					opacity: 1 !important;
+					position: absolute;
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					.drop-info {
+						background: white;
+						padding: 5px 10px;
+						border-radius: 5px;
+						box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+					}
 				}
 
-				&.drag-over {
-					border-color: rgb(22, 119, 255);
+				&.drag-highlight {
+					background-color: rgb(230, 244, 255);
+
+					.ant-space {
+						opacity: 0.2;
+					}
+
+					&.drag-over {
+						border-color: rgb(22, 119, 255);
+
+						.drop-info-container {
+							.drop-info {
+								font-weight: 600;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -74,6 +104,7 @@
 	.info-container {
 		flex: 1 1 0;
 		cursor: grab;
+		touch-action: none;
 	}
 
 	.add-btn {

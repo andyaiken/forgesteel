@@ -36,15 +36,17 @@ export class SourcebookLogic {
 			SourcebookData.orden,
 
 			// Third Party
-			SourcebookData.ratcatcher
+			// SourcebookData.community,
+			SourcebookData.magazineBlacksmith,
+			SourcebookData.magazineRatcatcher
 		];
 
 		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {
 			list.push(SourcebookData.playtest);
 		}
 
-		if (FeatureFlags.hasFlag(FeatureFlags.blacksmith.code)) {
-			list.push(SourcebookData.blacksmith);
+		if (FeatureFlags.hasFlag(FeatureFlags.community.code)) {
+			list.push(SourcebookData.communityPrerelease);
 		}
 
 		list.push(...homebrew);

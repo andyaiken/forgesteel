@@ -13,10 +13,12 @@
 			display: flex;
 			flex-direction: column;
 			gap: 8px;
+			padding: 0 5px 10px 5px;
+			border: 1px solid transparent;
+			border-radius: 5px;
 
 			.slot-row,
 			.terrain-row {
-				margin: 0 5px;
 				border: 1px solid rgb(220, 220, 220);
 				border-radius: 10px;
 				background-color: rgba(255, 255, 255);
@@ -37,6 +39,14 @@
 					flex: 0 0 120px;
 				}
 			}
+
+			&.drag-target {
+				background-color: rgb(230, 244, 255);
+			}
+
+			&.drag-over {
+				border-color: rgb(22, 119, 255);
+			}
 		}
 	}
 
@@ -44,42 +54,54 @@
 		flex: 1 1 0;
 		overflow-y: auto;
 		padding: 0 5px;
+	}
+}
 
-		.monster-row,
-		.terrain-row {
-			border: 1px solid rgb(220, 220, 220);
-			border-radius: 10px;
-			background-color: rgba(255, 255, 255);
-			padding: 5px 10px;
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-between;
+.monster-list-item {
+	cursor: grab;
 
-			.combatant-button-content {
-				flex: 1 1 0;
-			}
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.05);
+	}
+}
 
-			.add-btn {
-				border: none;
-			}
+.monster-list-item,
+.terrain-row {
+	border: 1px solid rgb(220, 220, 220);
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255);
+	padding: 5px 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 
-			&:hover {
-				background-color: rgba(0, 0, 0, 0.05);
-			}
-		}
+	.combatant-button-content {
+		flex: 1 1 0;
+	}
+
+	.add-btn {
+		border: none;
 	}
 }
 
 html[data-theme="dark"] {
 	.encounter-edit-panel {
 		.encounter-workspace-column {
-			.group-row,
-			.terrain-container-row {
+			.encounter-group-panel,
+			.encounter-terrain-panel {
 				.slot-row,
 				.terrain-row {
 					background-color: rgba(0, 0, 0);
 					color: rgba(255, 255, 255, 0.88);
+				}
+
+				&.drag-target {
+					background: rgb(80, 80, 80);
+				}
+
+				&.drag-over {
+					border-color: rgb(217, 217, 217);
 				}
 			}
 		}
@@ -88,12 +110,12 @@ html[data-theme="dark"] {
 			.filter-button {
 				color: rgba(255, 255, 255, 0.88);
 			}
+		}
 
-			.monster-row,
-			.terrain-row {
-				background-color: rgba(0, 0, 0);
-				color: rgba(255, 255, 255, 0.88);
-			}
+		.monster-list-item,
+		.terrain-row {
+			background-color: rgba(0, 0, 0);
+			color: rgba(255, 255, 255, 0.88);
 		}
 	}
 }

@@ -135,7 +135,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: libraryThirdParty,
-				content: 'You can use third-party content from **Ratcatcher magazine** directly in Forge Steel.',
+				content: 'You can use third-party content from the **Blacksmith\'s Guild** and **Ratcatcher** magazines directly in Forge Steel.',
 				isNew: true
 			}),
 			// #endregion

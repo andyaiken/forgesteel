@@ -975,14 +975,23 @@ const MonsterDropTarget = (props: MonsterDropTargetProps) => {
 	}
 
 	return (
-		<Space className={classNames.join(' ')} ref={setNodeRef} direction='vertical' style={{ width: '100%' }}>
-			{props.group.slots.map(slot => props.getSlot(slot, props.group))}
+		<div className={classNames.join(' ')} ref={setNodeRef}>
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{props.group.slots.map(slot => props.getSlot(slot, props.group))}
+				{
+					props.group.slots.length === 0 ?
+						<div className='ds-text dimmed-text centered-text'>No monsters</div>
+						: null
+				}
+			</Space>
 			{
-				props.group.slots.length === 0 ?
-					<div className='ds-text dimmed-text centered-text'>No monsters</div>
+				props.draggedMonster ?
+					<div className='drop-info-container'>
+						<div className='drop-info'>Drop here</div>
+					</div>
 					: null
 			}
-		</Space>
+		</div>
 	);
 };
 
@@ -1005,14 +1014,23 @@ const TerrainDropTarget = (props: TerrainDropTargetProps) => {
 	}
 
 	return (
-		<Space className={classNames.join(' ')} ref={setNodeRef} direction='vertical' style={{ width: '100%' }}>
-			{props.encounter.terrain.map(slot => props.getSlot(slot))}
+		<div className={classNames.join(' ')} ref={setNodeRef}>
+			<Space direction='vertical' style={{ width: '100%' }}>
+				{props.encounter.terrain.map(slot => props.getSlot(slot))}
+				{
+					props.encounter.terrain.length === 0 ?
+						<div className='ds-text dimmed-text centered-text'>No terrain</div>
+						: null
+				}
+			</Space>
 			{
-				props.encounter.terrain.length === 0 ?
-					<div className='ds-text dimmed-text centered-text'>No terrain</div>
+				props.draggedTerrain ?
+					<div className='drop-info-container'>
+						<div className='drop-info'>Drop here</div>
+					</div>
 					: null
 			}
-		</Space>
+		</div>
 	);
 };
 

@@ -10,17 +10,17 @@ export class FeatureFlags {
 
 	static playtest: FeatureFlag = {
 		code: -1755389952,
-		description: 'Access to playtest material'
+		description: 'Access to the Playtest sourcebook'
 	};
 
-	static blacksmith: FeatureFlag = {
-		code: Utils.hashCode('blacksmith'),
-		description: 'Access to the Blacksmith\'s Guild sourcebook'
+	static community: FeatureFlag = {
+		code: Utils.hashCode('community'),
+		description: 'Access to the (pre-release) Community sourcebook'
 	};
 
 	private static all = [
 		FeatureFlags.playtest,
-		FeatureFlags.blacksmith
+		FeatureFlags.community
 	];
 
 	// #endregion

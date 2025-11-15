@@ -41,6 +41,7 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 		}),
 		FactoryLogic.feature.createChoice({
 			id: 'solar-2',
+			name: 'Solar Traits',
 			options: [
 				{
 					feature: FactoryLogic.feature.create({
@@ -176,7 +177,7 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 };
 
 export const communityPrerelease: Sourcebook = {
-	id: 'community',
+	id: 'community-prerelease',
 	name: 'Community (pre-release)',
 	description: 'Selected community creations',
 	type: SourcebookType.ThirdParty,

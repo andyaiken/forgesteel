@@ -36,7 +36,7 @@ export class SourcebookLogic {
 			SourcebookData.orden,
 
 			// Third Party
-			// SourcebookData.community,
+			SourcebookData.community,
 			SourcebookData.magazineBlacksmith,
 			SourcebookData.magazineRatcatcher
 		];

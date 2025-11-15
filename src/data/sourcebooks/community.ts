@@ -180,9 +180,7 @@ export const communityPrerelease: Sourcebook = {
 	name: 'Community (pre-release)',
 	description: 'Selected community creations',
 	type: SourcebookType.ThirdParty,
-	ancestries: [
-		solar
-	],
+	ancestries: [],
 	careers: [],
 	classes: [],
 	complications: [],
@@ -206,7 +204,9 @@ export const community: Sourcebook = {
 	name: 'Community',
 	description: 'Selected community creations',
 	type: SourcebookType.ThirdParty,
-	ancestries: [],
+	ancestries: [
+		solar
+	],
 	careers: [],
 	classes: [],
 	complications: [],

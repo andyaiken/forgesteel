@@ -84,9 +84,9 @@ interface Props {
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	deleteElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
-	exportElementData: (kind: SourcebookElementKind, element: Element) => void;
-	exportElementImage: (kind: SourcebookElementKind, element: Element) => void;
-	exportElementPdf: (kind: SourcebookElementKind, element: Element, resolution: 'standard' | 'high') => void;
+	exportElementData: (category: string, element: Element) => void;
+	exportElementImage: (category: string, element: Element) => void;
+	exportElementPdf: (category: string, element: Element, resolution: 'standard' | 'high') => void;
 }
 
 export const LibraryListPage = (props: Props) => {
@@ -752,13 +752,13 @@ export const LibraryListPage = (props: Props) => {
 							{
 								view === 'classic' ?
 									<>
-										<Button onClick={() => props.exportElementImage(category, element)}>Export As Image</Button>
-										<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export As PDF</Button>
-										<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export As PDF (high res)</Button>
+										<Button onClick={() => props.exportElementImage(((category === 'monster-group') && showMonsters) ? 'monster' : category, element)}>Export As Image</Button>
+										<Button onClick={() => props.exportElementPdf(((category === 'monster-group') && showMonsters) ? 'monster' : category, element, 'standard')}>Export As PDF</Button>
+										<Button onClick={() => props.exportElementPdf(((category === 'monster-group') && showMonsters) ? 'monster' : category, element, 'high')}>Export As PDF (high res)</Button>
 									</>
 									: null
 							}
-							<Button onClick={() => props.exportElementData(category, element)}>Export as Data</Button>
+							<Button onClick={() => props.exportElementData(((category === 'monster-group') && showMonsters) ? 'monster' : category, element)}>Export as Data</Button>
 						</div>
 					)}
 				>

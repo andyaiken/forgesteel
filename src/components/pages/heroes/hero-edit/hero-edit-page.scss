@@ -116,23 +116,6 @@
 					background-color: rgb(245, 245, 245);
 					border-radius: 10px;
 				}
-
-				.characteristic-row {
-					display: flex;
-					gap: 10px;
-
-					.characteristic-item {
-						flex: 1 1 0;
-						display: flex;
-						flex-direction: column;
-						align-items: center;
-
-						&.characteristic-heading {
-							margin-top: 10px;
-							font-size: 16px;
-						}
-					}
-				}
 			}
 		}
 	}
@@ -147,10 +130,6 @@ html[data-theme="dark"] {
 				.hero-edit-content-column {
 					&.choices {
 						background-color: rgb(10, 10, 10);
-					}
-
-					.characteristic-heading {
-						color: rgba(255, 255, 255, 0.88);
 					}
 				}
 			}

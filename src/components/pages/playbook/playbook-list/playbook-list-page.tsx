@@ -53,9 +53,9 @@ interface Props {
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
 	importAdventurePackage: (ap: AdventurePackage) => void;
 	deleteElement: (kind: PlaybookElementKind, element: Element) => void;
-	exportElementData: (kind: PlaybookElementKind, element: Element) => void;
-	exportElementImage: (kind: PlaybookElementKind, element: Element) => void;
-	exportElementPdf: (kind: PlaybookElementKind, element: Element, resolution: 'standard' | 'high') => void;
+	exportElementData: (category: string, element: Element) => void;
+	exportElementImage: (category: string, element: Element) => void;
+	exportElementPdf: (category: string, element: Element, resolution: 'standard' | 'high') => void;
 	startElement: (kind: PlaybookElementKind, element: Element) => void;
 }
 

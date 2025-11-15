@@ -996,26 +996,26 @@ export const Main = (props: Props) => {
 		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibrary(kind));
 	};
 
-	const exportLibraryElementData = (kind: SourcebookElementKind, element: Element) => {
-		const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+	const exportLibraryElementData = (category: string, element: Element) => {
+		const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
 
-		Utils.exportData(name, element, kind);
+		Utils.exportData(name, element, category);
 	};
 
-	const exportLibraryElementImage = (kind: SourcebookElementKind, element: Element) => {
-		const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+	const exportLibraryElementImage = (category: string, element: Element) => {
+		const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
 
 		const pageIds: string[] = [];
-		document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+		document.querySelectorAll(`[id^=${category.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
 
 		Utils.exportImage(pageIds, name);
 	};
 
-	const exportLibraryElementPdf = (kind: SourcebookElementKind, element: Element, resolution: 'standard' | 'high') => {
-		const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+	const exportLibraryElementPdf = (category: string, element: Element, resolution: 'standard' | 'high') => {
+		const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
 
 		const pageIds: string[] = [];
-		document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+		document.querySelectorAll(`[id^=${category.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
 
 		setSpinning(true);
 		Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)
@@ -1216,38 +1216,38 @@ export const Main = (props: Props) => {
 		]);
 	};
 
-	const exportPlaybookElementData = (kind: PlaybookElementKind, element: Element) => {
-		if (kind === 'adventure') {
+	const exportPlaybookElementData = (category: string, element: Element) => {
+		if (category === 'adventure') {
 			const ap = PlaybookLogic.getAdventurePackage(element as Adventure, playbook);
 			const name = ap.adventure.name || 'Adventure';
 			Utils.exportData(name, ap, 'adventure');
 		} else {
-			const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+			const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
 
-			Utils.exportData(name, element, kind);
+			Utils.exportData(name, element, category);
 		}
 	};
 
-	const exportPlaybookElementImage = (kind: PlaybookElementKind, element: Element) => {
-		if (kind === 'adventure') {
+	const exportPlaybookElementImage = (category: string, element: Element) => {
+		if (category === 'adventure') {
 			const ap = PlaybookLogic.getAdventurePackage(element as Adventure, playbook);
 			const name = ap.adventure.name || 'Adventure';
 			Utils.exportImage([ ap.adventure.id ], name);
 		} else {
-			const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+			const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
 
 			const pageIds: string[] = [];
-			document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+			document.querySelectorAll(`[id^=${category.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
 
 			Utils.exportImage(pageIds, name);
 		}
 	};
 
-	const exportPlaybookElementPdf = (kind: PlaybookElementKind, element: Element, resolution: 'standard' | 'high') => {
-		const name = element.name || `Unnamed ${Format.capitalize(kind.split('-').join(' '))}`;
+	const exportPlaybookElementPdf = (category: string, element: Element, resolution: 'standard' | 'high') => {
+		const name = element.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`;
 
 		const pageIds: string[] = [];
-		document.querySelectorAll(`[id^=${kind.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
+		document.querySelectorAll(`[id^=${category.toLowerCase()}-${element.id}-page]`).forEach(elem => pageIds.push(elem.id));
 
 		setSpinning(true);
 		Utils.elementsToPdf(pageIds, name, options.classicSheetPageSize, resolution)

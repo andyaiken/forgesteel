@@ -19,7 +19,7 @@
 		}
 
 		.welcome-column {
-			flex: 2 2 0;
+			flex: 1 1 0;
 
 			.welcome-tab-button {
 				height: 45px;
@@ -53,7 +53,7 @@
 		}
 
 		.tip-column {
-			flex: 1 1 0;
+			flex: 0 0 300px;
 			padding-top: 10px;
 			display: flex;
 			flex-direction: column;

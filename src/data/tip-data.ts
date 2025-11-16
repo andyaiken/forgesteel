@@ -135,7 +135,7 @@ export class TipData {
 			}),
 			FactoryLogic.createTip({
 				image: libraryThirdParty,
-				content: 'You can use third-party content from the **Blacksmith\'s Guild** and **Ratcatcher** magazines directly in Forge Steel.',
+				content: 'Forge Steel now includes third-party content from the Blacksmith\'s Guild, Ratcatcher magazine, and the Draw Steel homebrew community.',
 				isNew: true
 			}),
 			// #endregion

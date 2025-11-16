@@ -14,16 +14,16 @@ export const TipPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='tip-panel'>
 				{
-					props.tip.image ?
-						<img className='tip-panel-image' src={props.tip.image} />
-						: null
-				}
-				{
 					props.tip.content ?
 						<div>
 							{props.tip.isNew ? <Tag color='red'>NEW</Tag> : null}
 							<Markdown text={props.tip.content} useSpan={true} />
 						</div>
+						: null
+				}
+				{
+					props.tip.image ?
+						<img className='tip-panel-image' src={props.tip.image} />
 						: null
 				}
 			</div>

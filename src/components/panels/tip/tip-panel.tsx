@@ -1,12 +1,15 @@
+import { Button, Flex, Tag } from 'antd';
+import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Tag } from 'antd';
 import { Tip } from '@/models/tip';
 
 import './tip-panel.scss';
 
 interface Props {
 	tip: Tip;
+	onPrevious?: () => void;
+	onNext?: () => void;
 };
 
 export const TipPanel = (props: Props) => {
@@ -14,18 +17,20 @@ export const TipPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='tip-panel'>
 				{
-					props.tip.content ?
-						<div>
-							{props.tip.isNew ? <Tag color='red'>NEW</Tag> : null}
-							<Markdown text={props.tip.content} useSpan={true} />
+					props.tip.isNew ?
+						<div style={{ textAlign: 'center' }}>
+							<Tag color='red'>NEW!</Tag>
 						</div>
 						: null
 				}
-				{
-					props.tip.image ?
-						<img className='tip-panel-image' src={props.tip.image} />
-						: null
-				}
+				<Flex justify='space-between' gap={10}>
+					<Button disabled={!props.onPrevious} style={{ marginTop: '12px' }} type='text' icon={<DoubleLeftOutlined />} onClick={props.onPrevious} />
+					<div style={{ flex: '1 1 0' }}>
+						<Markdown text={props.tip.content} useSpan={true} />
+					</div>
+					<Button disabled={!props.onNext} style={{ marginTop: '12px' }} type='text' icon={<DoubleRightOutlined />} onClick={props.onNext} />
+				</Flex>
+				<img className='tip-panel-image' src={props.tip.image} />
 			</div>
 		</ErrorBoundary>
 	);

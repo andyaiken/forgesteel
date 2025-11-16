@@ -1,5 +1,5 @@
 import { Alert, Button, Flex, Segmented } from 'antd';
-import { BookOutlined, DoubleLeftOutlined, DoubleRightOutlined, PlayCircleOutlined, PlusOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, PlayCircleOutlined, PlusOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Collections } from '@/utils/collections';
@@ -363,17 +363,11 @@ const Tips = () => {
 
 	return (
 		<ErrorBoundary>
-			<Flex justify='space-evenly'>
-				<Button disabled={tipIndex === 0} onClick={prevTip}>
-					<DoubleLeftOutlined />
-					Prev Tip
-				</Button>
-				<Button disabled={tipIndex === tips.length - 1} onClick={nextTip}>
-					Next Tip
-					<DoubleRightOutlined />
-				</Button>
-			</Flex>
-			<TipPanel tip={tips[tipIndex]} />
+			<TipPanel
+				tip={tips[tipIndex]}
+				onPrevious={tipIndex === 0 ? undefined : prevTip}
+				onNext={tipIndex === tips.length - 1 ? undefined : nextTip}
+			/>
 		</ErrorBoundary>
 	);
 };

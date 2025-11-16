@@ -160,6 +160,7 @@ export const FeatureEditPanel = (props: Props) => {
 		const setAbilityCost = (value: number | 'signature') => {
 			const copy = Utils.copy(feature.data) as FeatureClassAbilityData;
 			copy.cost = value;
+			copy.allowAnySource = value === 0;
 			setData(copy);
 		};
 
@@ -1020,41 +1021,41 @@ export const FeatureEditPanel = (props: Props) => {
 				const data = feature.data as FeatureClassAbilityData;
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
-						<HeaderText>Class</HeaderText>
+						<HeaderText>Ability Options</HeaderText>
+						<Select
+							style={{ width: '100%' }}
+							options={[
+								{ value: 'signature', label: 'Choose a signature ability' },
+								{ value: 3, label: 'Choose a 3pt ability' },
+								{ value: 5, label: 'Choose a 5pt ability' },
+								{ value: 7, label: 'Choose a 7pt ability' },
+								{ value: 9, label: 'Choose a 9pt ability' },
+								{ value: 11, label: 'Choose a 11pt ability' },
+								{ value: 1, label: 'Choose a 1pt ability' },
+								{ value: 2, label: 'Choose a 2pt ability' },
+								{ value: 4, label: 'Choose a 4pt ability' },
+								{ value: 6, label: 'Choose a 6pt ability' },
+								{ value: 8, label: 'Choose a 8pt ability' },
+								{ value: 10, label: 'Choose a 10pt ability' },
+								{ value: 12, label: 'Choose a 12pt ability' },
+								{ value: 0, label: 'Choose any ability defined in the class' }
+							]}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+							value={feature.data.cost}
+							onChange={setAbilityCost}
+						/>
 						<Select
 							style={{ width: '100%' }}
 							allowClear={!!data.classID}
 							placeholder='Select class'
-							options={[ { id: '', name: 'Your Class', description: 'An ability from your own class.' }, ...SourcebookLogic.getClasses(props.sourcebooks) ].map(o => ({ value: o.id, label: o.name, description: o.description }))}
-							optionRender={option => <Field label={option.data.label} value={option.data.description} />}
-							showSearch={true}
-							filterOption={(input, option) => {
-								const strings = option ?
-									[
-										option.label
-									]
-									: [];
-								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-							}}
+							options={[
+								{ value: '', label: 'From your class' },
+								...SourcebookLogic.getClasses(props.sourcebooks).map(o => ({ value: o.id, label: `From the ${o.name}` }))
+							]}
+							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							value={data.classID || ''}
 							onChange={setAbilityClassID}
 						/>
-						<HeaderText>Signature / Cost</HeaderText>
-						<Flex align='center' justify='center'>
-							<Segmented<'signature' | number>
-								options={[
-									{ value: 'signature', label: 'Signature' },
-									{ value: 3, label: '3pts' },
-									{ value: 5, label: '5pts' },
-									{ value: 7, label: '7pts' },
-									{ value: 9, label: '9pts' },
-									{ value: 11, label: '11pts' },
-									{ value: 0, label: 'Other' }
-								]}
-								value={feature.data.cost}
-								onChange={setAbilityCost}
-							/>
-						</Flex>
 						<HeaderText>Count</HeaderText>
 						<NumberSpin min={1} value={data.count} onChange={setCount} />
 						<HeaderText>Minimum Level</HeaderText>

@@ -5,8 +5,103 @@ import { Characteristic } from '@/enums/characteristic';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureField } from '@/enums/feature-field';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
+
+const aranox: Ancestry = {
+	id: 'aranox',
+	name: 'Aranox',
+	description: `
+*By Thul*
+
+Smaller than their Minotaur ancestors, the Aranox are large, muscular, cloven-hooved humanoids who are covered with patches of thick hair, ranging from dark (black or brown) to light (tawny or white) or combinations of these. Their massive bovine heads, adorned with a pair of horns, have thoughtful eyes that speak of wisdom, yet harbor a barely contained, smoldering fury. They ever seek to balance and control their inner beast and instinctive rage in order to retain their sense of self.`,
+	features: [
+		FactoryLogic.feature.createSize({
+			id: 'aranox-1',
+			name: 'Beast Within',
+			description: 'Your Minotaur forebears were consumed by the beast, giving them their monstrous size. Your tenuous control has made you smaller by comparison, but the beast within is still there, waiting.',
+			sizeValue: 1,
+			sizeMod: 'L'
+		}),
+		FactoryLogic.feature.createChoice({
+			id: 'aranox-2',
+			name: 'Aranox Traits',
+			options: [
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'aranox-2a',
+						name: 'Always Angry',
+						description: 'The beast rages within you, and its anger makes you incredibly strong. You gain an edge on tests made to lift and haul heavy objects. In addition, whenever you force move a creature or object, the forced movement distance gains a +1 bonus.'
+					}),
+					value: 2
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'aranox-2b',
+						name: 'Goring Horns',
+						description: 'Your horns aren\'t just imposing, they\'re also sharp. Once per round when you make a melee strike, you can deal extra damage with the strike equal to your highest characteristic score.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createSpeed({
+						id: 'aranox-2c',
+						name: 'Leaping Strides',
+						description: 'Your powerful legs make you faster.',
+						speed: 6
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createBonus({
+						id: 'aranox-2d',
+						name: 'Stubborn Resolve',
+						description: 'You\'ll move when you want to, and not a moment sooner.',
+						field: FeatureField.Stability,
+						value: 1
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.create({
+						id: 'aranox-2e',
+						name: 'That Tickles',
+						description: 'You are able to shrug off the puny blows of your enemies. Your Might score is treated as 1 higher for the purpose of resisting potencies, and you gain an edge on Might tests when called for to resist environmental effects or a creature\'s traits or abilities.'
+					}),
+					value: 1
+				},
+				{
+					feature: FactoryLogic.feature.createAbility({
+						ability: FactoryLogic.createAbility({
+							id: 'aranox-2f',
+							name: 'Unleash',
+							description: 'With a ferocious roar, you strike out with fist and hoof.',
+							type: FactoryLogic.type.createMain(),
+							keywords: [ AbilityKeyword.Area, AbilityKeyword.Melee ],
+							distance: [ FactoryLogic.distance.create({ type: AbilityDistanceType.Burst, value: 1 }) ],
+							target: 'Each enemy in the area',
+							cost: 'signature',
+							sections: [
+								FactoryLogic.createAbilitySectionRoll(
+									FactoryLogic.createPowerRoll({
+										characteristic: [ Characteristic.Might, Characteristic.Presence ],
+										tier1: '2 damage',
+										tier2: '5 damage; push 1',
+										tier3: '7 damage; push 2'
+									})
+								)
+							]
+						})
+					}),
+					value: 2
+				}
+			],
+			count: 'ancestry'
+		})
+	],
+	ancestryPoints: 3
+};
 
 const solar: Ancestry = {
 	id: 'solar',
@@ -137,10 +232,20 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 					value: 2
 				},
 				{
-					feature: FactoryLogic.feature.create({
+					feature: FactoryLogic.feature.createMultiple({
 						id: 'solar-2-9',
 						name: 'Flight',
-						description: 'You possess wings made of fire and light powerful enough to take you airborne. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While using your wings to fly at 3rd level or lower, you have damage weakness 5.'
+						features: [
+							FactoryLogic.feature.create({
+								id: 'solar-2-9a',
+								name: 'Flight',
+								description: 'You possess wings made of fire and light powerful enough to take you airborne. While using your wings to fly, you can stay aloft for a number of rounds equal to your Might score (minimum 1 round) before you fall. While using your wings to fly at 3rd level or lower, you have damage weakness 5.'
+							}),
+							FactoryLogic.feature.createMovementMode({
+								id: 'solar-2-9b',
+								mode: 'Fly'
+							})
+						]
 					}),
 					value: 2
 				},
@@ -181,7 +286,9 @@ export const communityPrerelease: Sourcebook = {
 	name: 'Community (pre-release)',
 	description: 'Selected community creations',
 	type: SourcebookType.ThirdParty,
-	ancestries: [],
+	ancestries: [
+		aranox
+	],
 	careers: [],
 	classes: [],
 	complications: [],

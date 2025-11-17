@@ -890,7 +890,13 @@ export const Main = (props: Props) => {
 			}
 		}
 
-		persistHomebrewSourcebooks(copy).then(() => navigation.goToLibrary(kind, element.id));
+		persistHomebrewSourcebooks(copy)
+			.then(() => {
+				const heroesCopy = Utils.copy(heroes);
+				heroesCopy.forEach(hero => HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(copy)));
+				persistHeroes(heroesCopy);
+			})
+			.then(() => navigation.goToLibrary(kind, element.id));
 	};
 
 	const importLibraryElement = (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => {

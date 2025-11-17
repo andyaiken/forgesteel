@@ -154,10 +154,18 @@ export const FeaturePanel = (props: Props) => {
 			);
 		}
 
+		let className = '';
+		if (data.classID && props.sourcebooks) {
+			const heroClass = SourcebookLogic.getClasses(props.sourcebooks).find(c => c.id === data.classID);
+			if (heroClass && heroClass.name) {
+				className = heroClass.name;
+			}
+		}
+
 		if (!props.feature.description) {
 			return (
 				<div className='ds-text'>
-					Choose {data.count > 1 ? data.count : 'a'} {(data.cost === 'signature') || (data.cost === 0) ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}.
+					Choose {data.count > 1 ? data.count : 'a'} {(data.cost === 'signature') || (data.cost === 0) ? 'signature' : `${data.cost}pt`} {data.count > 1 ? 'abilities' : 'ability'}{className ? ` from the ${className}` : ''}.
 				</div>
 			);
 		}
@@ -465,13 +473,9 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getInformationSize = (data: FeatureSizeData) => {
-		if (!props.feature.description) {
-			return (
-				<Field label='Size' value={FormatLogic.getSize(data.size)} />
-			);
-		}
-
-		return null;
+		return (
+			<Field label='Size' value={FormatLogic.getSize(data.size)} />
+		);
 	};
 
 	const getInformationSkillChoice = (data: FeatureSkillChoiceData) => {
@@ -501,13 +505,9 @@ export const FeaturePanel = (props: Props) => {
 	};
 
 	const getInformationSpeed = (data: FeatureSpeedData) => {
-		if (!props.feature.description) {
-			return (
-				<Field label='Speed' value={data.speed} />
-			);
-		}
-
-		return null;
+		return (
+			<Field label='Speed' value={data.speed} />
+		);
 	};
 
 	const getInformationSummon = (data: FeatureSummonData) => {

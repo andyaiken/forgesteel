@@ -26,7 +26,7 @@
 		"html2canvas": "^1.4.1",
 		"jspdf": "^3.0.3",
 		"localforage": "^1.10.0",
-		"modern-screenshot": "^4.6.6",
+		"modern-screenshot": "^4.6.7",
 		"pdf-lib": "^1.17.1",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0",

@@ -11,7 +11,7 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
 
-const boggitAncestry: Ancestry = {
+const boggit: Ancestry = {
 	id: 'boggit',
 	name: 'Boggit',
 	description: `
@@ -305,10 +305,9 @@ Years of traversing swamps have taught you how to deal with terrain obstacles an
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Boggit', 'Wilderness, communal, labor.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.labor, 'Boggish')
 };
-
-const boggitCulture = FactoryLogic.createCulture('Boggit', 'Wilderness, communal, labor.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.communal, UpbringingData.labor, 'Boggish');
 
 export const triglav: Sourcebook = {
 	id: 'triglav',
@@ -316,14 +315,12 @@ export const triglav: Sourcebook = {
 	description: 'Third-party content from Triglav Games.',
 	type: SourcebookType.ThirdParty,
 	ancestries: [
-		boggitAncestry
+		boggit
 	],
 	careers: [],
 	classes: [],
 	complications: [],
-	cultures: [
-		boggitCulture
-	],
+	cultures: [],
 	domains: [],
 	imbuements: [],
 	items: [],

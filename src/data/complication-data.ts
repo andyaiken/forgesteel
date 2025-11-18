@@ -1445,12 +1445,11 @@ You can’t take this complication if you can’t be made dazed.`,
 					id: 'comp-rogueTalent-b',
 					name: 'Telekinetic Grasp',
 					description: 'You reach out with your mind to move a creature or object.',
-					type: FactoryLogic.type.createManeuver(),
+					type: FactoryLogic.type.createManeuver({ qualifiers: [ 'can be used as a ranged free strike' ], freeStrike: true }),
 					keywords: [ AbilityKeyword.Psionic, AbilityKeyword.Ranged, AbilityKeyword.Strike ],
 					distance: [ FactoryLogic.distance.createRanged(10) ],
 					target: 'One creature or object',
 					sections: [
-						FactoryLogic.createAbilitySectionText('Note: you can use this ability as a ranged free strike.'),
 						FactoryLogic.createAbilitySectionRoll(
 							FactoryLogic.createPowerRoll({
 								characteristic: [ Characteristic.Might, Characteristic.Intuition, Characteristic.Presence ],

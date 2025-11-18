@@ -11,7 +11,7 @@ import { FeatureField } from '@/enums/feature-field';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
 
-const aranoxAncestry: Ancestry = {
+const aranox: Ancestry = {
 	id: 'aranox',
 	name: 'Aranox',
 	description: `
@@ -110,12 +110,11 @@ It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Aranox', 'Secluded, communal, labor.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.communal, UpbringingData.labor, 'Khamish')
 };
 
-const aranoxCulture = FactoryLogic.createCulture('Aranox', 'Secluded, communal, labor.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.communal, UpbringingData.labor, 'Khamish');
-
-const solarAncestry: Ancestry = {
+const solar: Ancestry = {
 	id: 'solar',
 	name: 'Solar',
 	description: `
@@ -290,25 +289,20 @@ Solars have a strong moral code, but a simple one. Treat one with kindness, and 
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Solar', 'Urban, bureaucratic, noble.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.noble, 'Axiomatic')
 };
-
-const solarCulture = FactoryLogic.createCulture('Solar', 'Urban, bureaucratic, noble.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.noble, 'Axiomatic');
 
 export const communityPrerelease: Sourcebook = {
 	id: 'community-prerelease',
 	name: 'Community (pre-release)',
 	description: 'Selected community creations (pre-release).',
 	type: SourcebookType.Community,
-	ancestries: [
-		aranoxAncestry
-	],
+	ancestries: [],
 	careers: [],
 	classes: [],
 	complications: [],
-	cultures: [
-		aranoxCulture
-	],
+	cultures: [],
 	domains: [],
 	imbuements: [],
 	items: [],
@@ -329,14 +323,13 @@ export const community: Sourcebook = {
 	description: 'Selected community creations.',
 	type: SourcebookType.Community,
 	ancestries: [
-		solarAncestry
+		aranox,
+		solar
 	],
 	careers: [],
 	classes: [],
 	complications: [],
-	cultures: [
-		solarCulture
-	],
+	cultures: [],
 	domains: [],
 	imbuements: [],
 	items: [],

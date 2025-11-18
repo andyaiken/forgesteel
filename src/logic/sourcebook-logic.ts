@@ -52,7 +52,7 @@ export class SourcebookLogic {
 
 		list.push(...homebrew);
 
-		return list;
+		return list.filter(sb => SourcebookLogic.getElements(sb).length > 0);
 	};
 
 	static getElements = (sourcebook: Sourcebook): { element: Element, type: string }[] => {

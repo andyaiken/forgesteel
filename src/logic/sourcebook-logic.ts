@@ -38,7 +38,8 @@ export class SourcebookLogic {
 			// Third Party
 			SourcebookData.community,
 			SourcebookData.magazineBlacksmith,
-			SourcebookData.magazineRatcatcher
+			SourcebookData.magazineRatcatcher,
+			SourcebookData.triglav
 		];
 
 		if (FeatureFlags.hasFlag(FeatureFlags.playtest.code)) {

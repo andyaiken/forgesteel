@@ -1050,7 +1050,7 @@ You can install a psionic implant into either yourself or another hero. Implants
 export const blacksmith: Sourcebook = {
 	id: 'blacksmith',
 	name: 'Blacksmith\'s Guild',
-	description: 'Community-created content from the [Blacksmith\'s Guild](https://tabletopnonsenseverse.myshopify.com/).',
+	description: 'Third-party content from the [Blacksmith\'s Guild](https://tabletopnonsenseverse.myshopify.com/).',
 	type: SourcebookType.ThirdParty,
 	ancestries: [
 		goblinSquad,

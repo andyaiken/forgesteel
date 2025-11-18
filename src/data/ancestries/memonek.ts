@@ -1,5 +1,7 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Ancestry } from '@/models/ancestry';
 import { ConditionType } from '@/enums/condition-type';
+import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 
 export const memonek: Ancestry = {
@@ -89,5 +91,6 @@ export const memonek: Ancestry = {
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 4
+	ancestryPoints: 4,
+	culture: FactoryLogic.createCulture('Memonek', 'Nomadic, communal, academic.', CultureType.Ancestral, EnvironmentData.nomadic, OrganizationData.communal, UpbringingData.academic, 'Axiomatic')
 };

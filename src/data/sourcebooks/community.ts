@@ -1,7 +1,9 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '../culture-data';
 import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
+import { CultureType } from '@/enums/culture-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -9,13 +11,21 @@ import { FeatureField } from '@/enums/feature-field';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
 
-const aranox: Ancestry = {
+const aranoxAncestry: Ancestry = {
 	id: 'aranox',
 	name: 'Aranox',
 	description: `
-*By Thul*
+*By Marc Aranha*
 
-Smaller than their Minotaur ancestors, the Aranox are large, muscular, cloven-hooved humanoids who are covered with patches of thick hair, ranging from dark (black or brown) to light (tawny or white) or combinations of these. Their massive bovine heads, adorned with a pair of horns, have thoughtful eyes that speak of wisdom, yet harbor a barely contained, smoldering fury. They ever seek to balance and control their inner beast and instinctive rage in order to retain their sense of self.`,
+The Aranox are direct decendents of Minotaurs. After the rebellion against the Beast Lords of Kham, most Minotaurs scattered, driven by a bestial urge to hunt and settle on labyrinthine terrain. Wandering alone or in small tribes, the Minotaurs were slowly consumed by the beast within, until little remained but a constant hunger and rage, turning them into the monstrous creatures many know today.
+
+However, some Minotaur resisted this hunger, seeking to find balance with their inner beast in order to retain their sense of self and their human origins. Bonded by purpose and community, these Minotaur formed larger clans, far from the eyes of civilization, and became the Aranox.
+
+The Aranox ability to stave off the beast for so long is attributed to their Life Oath. While Minotaurs possess a fierce loyalty to those they bond with, the Aranox discovered a means to tap into that bond, pledging themselves to another with ritual and Shamanic ceremony. The beast in each was stifled by sharing it with another. Together, two souls became a shield and a salvation.
+
+Aranox generally look upon Minotaurs with sadness, often referring to them as 'those who are lost'. Aranox shun their forebears and some even hunt solitary Minotaur, considering death a mercy. This belief may be explained by rumors suggesting that when an Aranox loses their bonded partner, the loss of the Life Oath begins an irreversible descent into madness and rage.
+
+It is whispered that, with the Life Oath broken, it is not a matter of 'if' but 'when' the beast takes hold again, for each Aranox can only ever have one Life Oath. Thus, an afflicted Aranox will go into self-exile to spare the larger community. It is a fate no Aranox will speak of, that each will one day become Minotaur once again. In the end, the beast within is always there. Waiting.`,
 	features: [
 		FactoryLogic.feature.createSize({
 			id: 'aranox-1',
@@ -103,7 +113,9 @@ Smaller than their Minotaur ancestors, the Aranox are large, muscular, cloven-ho
 	ancestryPoints: 3
 };
 
-const solar: Ancestry = {
+const aranoxCulture = FactoryLogic.createCulture('Aranox', 'Secluded, communal, labor.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.communal, UpbringingData.labor, 'Khamish');
+
+const solarAncestry: Ancestry = {
 	id: 'solar',
 	name: 'Solar',
 	description: `
@@ -287,12 +299,14 @@ export const communityPrerelease: Sourcebook = {
 	description: 'Selected community creations',
 	type: SourcebookType.ThirdParty,
 	ancestries: [
-		aranox
+		aranoxAncestry
 	],
 	careers: [],
 	classes: [],
 	complications: [],
-	cultures: [],
+	cultures: [
+		aranoxCulture
+	],
 	domains: [],
 	imbuements: [],
 	items: [],
@@ -313,7 +327,7 @@ export const community: Sourcebook = {
 	description: 'Selected community creations',
 	type: SourcebookType.ThirdParty,
 	ancestries: [
-		solar
+		solarAncestry
 	],
 	careers: [],
 	classes: [],

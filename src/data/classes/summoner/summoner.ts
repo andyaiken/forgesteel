@@ -128,7 +128,7 @@ When combat begins, any of your minions who were summoned outside of combat fini
 						id: 'summoner-1-3',
 						name: 'Summoner Strike',
 						description: 'A sudden burst of energy erupts from your implement and shocks your foes’ nerves.',
-						type: FactoryLogic.type.createMain({ freeStrike: true }),
+						type: FactoryLogic.type.createMain({ qualifiers: [ 'can be used as a free strike' ], freeStrike: true }),
 						keywords: [ AbilityKeyword.Magic, AbilityKeyword.Melee, AbilityKeyword.Ranged, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [
 							FactoryLogic.distance.createMelee(),

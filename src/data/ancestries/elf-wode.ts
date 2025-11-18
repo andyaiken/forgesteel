@@ -1,6 +1,8 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
+import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 
 export const wodeElf: Ancestry = {
@@ -87,5 +89,6 @@ export const wodeElf: Ancestry = {
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Wode Elf', 'Wilderness, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.wilderness, OrganizationData.bureaucratic, UpbringingData.martial, 'Yllyric')
 };

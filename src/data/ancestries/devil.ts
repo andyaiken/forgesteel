@@ -1,4 +1,6 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { Ancestry } from '@/models/ancestry';
+import { CultureType } from '@/enums/culture-type';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { SkillList } from '@/enums/skill-list';
 
@@ -94,5 +96,6 @@ export const devil: Ancestry = {
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Devil', 'Urban, bureaucratic, academic.', CultureType.Ancestral, EnvironmentData.urban, OrganizationData.bureaucratic, UpbringingData.academic, 'Anjali')
 };

@@ -90,67 +90,67 @@ export class SourcebookLogic {
 	///////////////////////////////////////////////////////////////////////////
 
 	static getAncestrySourcebook = (sourcebooks: Sourcebook[], ancestry: Ancestry) => {
-		return sourcebooks.find(s => s.ancestries.find(a => a.id === ancestry.id));
+		return sourcebooks.find(s => SourcebookLogic.getAncestries([ s ]).some(a => a.id === ancestry.id));
 	};
 
 	static getCareerSourcebook = (sourcebooks: Sourcebook[], career: Career) => {
-		return sourcebooks.find(s => s.careers.find(c => c.id === career.id));
+		return sourcebooks.find(s => SourcebookLogic.getCareers([ s ]).some(c => c.id === career.id));
 	};
 
 	static getClassSourcebook = (sourcebooks: Sourcebook[], heroClass: HeroClass) => {
-		return sourcebooks.find(s => s.classes.find(c => c.id === heroClass.id));
+		return sourcebooks.find(s => SourcebookLogic.getClasses([ s ]).some(c => c.id === heroClass.id));
 	};
 
 	static getComplicationSourcebook = (sourcebooks: Sourcebook[], complication: Complication) => {
-		return sourcebooks.find(s => s.complications.find(c => c.id === complication.id));
+		return sourcebooks.find(s => SourcebookLogic.getComplications([ s ]).some(c => c.id === complication.id));
 	};
 
 	static getCultureSourcebook = (sourcebooks: Sourcebook[], culture: Culture) => {
-		return sourcebooks.find(s => s.cultures.find(c => c.id === culture.id));
+		return sourcebooks.find(s => SourcebookLogic.getCultures([ s ]).some(c => c.id === culture.id));
 	};
 
 	static getDomainSourcebook = (sourcebooks: Sourcebook[], domain: Domain) => {
-		return sourcebooks.find(s => s.domains.find(d => d.id === domain.id));
+		return sourcebooks.find(s => SourcebookLogic.getDomains([ s ]).some(d => d.id === domain.id));
 	};
 
 	static getImbuementSourcebook = (sourcebooks: Sourcebook[], imbuement: Imbuement) => {
-		return sourcebooks.find(s => s.imbuements.find(i => i.id === imbuement.id));
+		return sourcebooks.find(s => SourcebookLogic.getImbuements([ s ]).some(i => i.id === imbuement.id));
 	};
 
 	static getItemSourcebook = (sourcebooks: Sourcebook[], item: Item) => {
-		return sourcebooks.find(s => s.items.find(i => i.id === item.id));
+		return sourcebooks.find(s => SourcebookLogic.getItems([ s ]).some(i => i.id === item.id));
 	};
 
 	static getKitSourcebook = (sourcebooks: Sourcebook[], kit: Kit) => {
-		return sourcebooks.find(s => s.kits.find(k => k.id === kit.id));
+		return sourcebooks.find(s => SourcebookLogic.getKits([ s ]).some(k => k.id === kit.id));
 	};
 
 	static getMonsterGroupSourcebook = (sourcebooks: Sourcebook[], monsterGroup: MonsterGroup) => {
-		return sourcebooks.find(s => s.monsterGroups.find(mg => mg.id === monsterGroup.id));
+		return sourcebooks.find(s => SourcebookLogic.getMonsterGroups([ s ]).some(mg => mg.id === monsterGroup.id));
 	};
 
 	static getMonsterSourcebook = (sourcebooks: Sourcebook[], monster: Monster) => {
-		return sourcebooks.find(s => s.monsterGroups.find(mg => mg.monsters.some(m => m.id === monster.id)));
+		return sourcebooks.find(s => SourcebookLogic.getMonsters([ s ]).some(m => m.id === monster.id));
 	};
 
 	static getPerkSourcebook = (sourcebooks: Sourcebook[], perk: Perk) => {
-		return sourcebooks.find(s => s.perks.find(p => p.id === perk.id));
+		return sourcebooks.find(s => SourcebookLogic.getPerks([ s ]).some(p => p.id === perk.id));
 	};
 
 	static getProjectSourcebook = (sourcebooks: Sourcebook[], project: Project) => {
-		return sourcebooks.find(s => s.projects.find(p => p.id === project.id));
+		return sourcebooks.find(s => SourcebookLogic.getProjects([ s ]).some(p => p.id === project.id));
 	};
 
 	static getSubclassSourcebook = (sourcebooks: Sourcebook[], subclass: SubClass) => {
-		return sourcebooks.find(s => s.subclasses.find(s => s.id === subclass.id));
+		return sourcebooks.find(s => SourcebookLogic.getSubclasses([ s ]).some(s => s.id === subclass.id));
 	};
 
 	static getTerrainSourcebook = (sourcebooks: Sourcebook[], terrain: Terrain) => {
-		return sourcebooks.find(s => s.terrain.find(t => t.id === terrain.id));
+		return sourcebooks.find(s => SourcebookLogic.getTerrains([ s ]).some(t => t.id === terrain.id));
 	};
 
 	static getTitleSourcebook = (sourcebooks: Sourcebook[], title: Title) => {
-		return sourcebooks.find(s => s.titles.find(t => t.id === title.id));
+		return sourcebooks.find(s => SourcebookLogic.getTitles([ s ]).some(t => t.id === title.id));
 	};
 
 	///////////////////////////////////////////////////////////////////////////
@@ -199,6 +199,7 @@ export class SourcebookLogic {
 		const list: Culture[] = [];
 
 		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.ancestries.map(a => a.culture).filter(c => !!c));
 			list.push(...sourcebook.cultures);
 		});
 

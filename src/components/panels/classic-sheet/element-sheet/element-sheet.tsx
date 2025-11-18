@@ -246,6 +246,11 @@ const AncestrySheet = (props: AncestryProps) => {
 					<FeaturePanel key={f.id} feature={f} options={props.options} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 				))
 			}
+			{
+				props.ancestry.culture ?
+					<CultureSheet culture={props.ancestry.culture} sourcebooks={props.sourcebooks} options={props.options} />
+					: null
+			}
 		</>
 	);
 };

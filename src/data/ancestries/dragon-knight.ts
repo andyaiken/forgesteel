@@ -1,7 +1,9 @@
+import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/culture-data';
 import { AbilityDistanceType } from '@/enums/abiity-distance-type';
 import { AbilityKeyword } from '@/enums/ability-keyword';
 import { Ancestry } from '@/models/ancestry';
 import { Characteristic } from '@/enums/characteristic';
+import { CultureType } from '@/enums/culture-type';
 import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { FactoryLogic } from '@/logic/factory-logic';
@@ -245,5 +247,6 @@ As a maneuver, you can recite the following oath. Until the start of your next t
 			count: 'ancestry'
 		})
 	],
-	ancestryPoints: 3
+	ancestryPoints: 3,
+	culture: FactoryLogic.createCulture('Dragon Knight', 'Secluded, bureaucratic, martial.', CultureType.Ancestral, EnvironmentData.secluded, OrganizationData.bureaucratic, UpbringingData.martial, 'Vastariax')
 };

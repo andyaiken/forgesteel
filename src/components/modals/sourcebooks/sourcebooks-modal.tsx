@@ -76,6 +76,7 @@ export const SourcebooksModal = (props: Props) => {
 
 	const officialSourcebooks = props.officialSourcebooks.filter(s => s.type === SourcebookType.Official);
 	const thirdPartySourcebooks = props.officialSourcebooks.filter(s => s.type === SourcebookType.ThirdParty);
+	const communitySourcebooks = props.officialSourcebooks.filter(s => s.type === SourcebookType.Community);
 
 	return (
 		<Modal
@@ -127,6 +128,31 @@ export const SourcebooksModal = (props: Props) => {
 						}
 						{
 							thirdPartySourcebooks.length === 0 ?
+								<Empty />
+								: null
+						}
+					</Space>
+					<HeaderText level={1}>
+						Community Sourcebooks
+					</HeaderText>
+					<Space direction='vertical' style={{ width: '100%' }}>
+						{
+							Collections.sort(communitySourcebooks, sb => sb.name).map(s => (
+								<SelectablePanel key={s.id}>
+									<SourcebookEditorPanel
+										sourcebook={s}
+										sourcebooks={[ ...props.officialSourcebooks, ...homebrewSourcebooks ]}
+										visible={!hiddenSourcebookIDs.includes(s.id)}
+										heroes={props.heroes}
+										onSetVisible={setVisibility}
+										onChange={changeSourcebook}
+										onDelete={deleteSourcebook}
+									/>
+								</SelectablePanel>
+							))
+						}
+						{
+							communitySourcebooks.length === 0 ?
 								<Empty />
 								: null
 						}

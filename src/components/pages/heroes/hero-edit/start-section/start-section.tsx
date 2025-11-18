@@ -33,7 +33,7 @@ export const StartSection = (props: Props) => {
 
 	return (
 		<div className='hero-edit-content start-section'>
-			<div className='hero-edit-content-column single-column selected'>
+			<div className='hero-edit-content-column selected'>
 				<SelectablePanel>
 					<HeaderText>Creating a Hero</HeaderText>
 					<div className='ds-text'>
@@ -55,55 +55,55 @@ export const StartSection = (props: Props) => {
 						When you're done, click <code>Save Changes</code> in the toolbar at the top, and you'll see your hero sheet.
 					</div>
 				</SelectablePanel>
-				<SelectablePanel>
-					<HeaderText>Sourcebooks</HeaderText>
-					<div className='ds-text'>
-						This hero can use content from the following sourcebooks:
-					</div>
-					{
-						[ SourcebookType.Official, SourcebookType.ThirdParty, SourcebookType.Homebrew ].map(type => (
-							<div key={type}>
-								<HeaderText level={3}>{type} Sourcebooks</HeaderText>
-								{
-									props.sourcebooks
-										.filter(sb => sb.type === type)
-										.map(sb => (
-											<Toggle
-												key={sb.id}
-												label={<Field label={sb.name || 'Unnamed Sourcebook'} value={<Markdown text={sb.description} useSpan={true} />} />}
-												value={props.settingIDs.includes(sb.id)}
-												onChange={value => toggleSourcebook(value, sb.id)}
-											/>
-										))
-								}
-							</div>
-						))
-					}
-					<Divider />
-					<Flex align='center' gap={10}>
-						<div className='ds-text'>
-							If you have a homebrew sourcebook you want to use, and it isn't listed here, you can import it now.
+			</div>
+			<div className='hero-edit-content-column choices'>
+				<HeaderText>Sourcebooks</HeaderText>
+				<div className='ds-text'>
+					This hero can use content from the following sourcebooks:
+				</div>
+				{
+					[ SourcebookType.Official, SourcebookType.ThirdParty, SourcebookType.Community, SourcebookType.Homebrew ].map(type => (
+						<div key={type}>
+							<HeaderText level={3}>{type} Sourcebooks</HeaderText>
+							{
+								props.sourcebooks
+									.filter(sb => sb.type === type)
+									.map(sb => (
+										<Toggle
+											key={sb.id}
+											label={<Field label={sb.name || 'Unnamed Sourcebook'} value={<Markdown text={sb.description} useSpan={true} />} />}
+											value={props.settingIDs.includes(sb.id)}
+											onChange={value => toggleSourcebook(value, sb.id)}
+										/>
+									))
+							}
 						</div>
-						<Upload
-							style={{ width: '100%' }}
-							accept='.drawsteel-sourcebook,.ds-sourcebook'
-							showUploadList={false}
-							beforeUpload={file => {
-								file
-									.text()
-									.then(json => {
-										const sourcebook = JSON.parse(json) as Sourcebook;
-										sourcebook.id = Utils.guid();
-										SourcebookUpdateLogic.updateSourcebook(sourcebook);
-										props.onImportSourcebook(sourcebook);
-									});
-								return false;
-							}}
-						>
-							<Button title='Import a sourcebook' icon={<DownloadOutlined />} />
-						</Upload>
-					</Flex>
-				</SelectablePanel>
+					))
+				}
+				<Divider />
+				<Flex align='center' gap={10}>
+					<div className='ds-text'>
+						If you have a homebrew sourcebook you want to use, and it isn't listed here, you can import it now.
+					</div>
+					<Upload
+						style={{ width: '100%' }}
+						accept='.drawsteel-sourcebook,.ds-sourcebook'
+						showUploadList={false}
+						beforeUpload={file => {
+							file
+								.text()
+								.then(json => {
+									const sourcebook = JSON.parse(json) as Sourcebook;
+									sourcebook.id = Utils.guid();
+									SourcebookUpdateLogic.updateSourcebook(sourcebook);
+									props.onImportSourcebook(sourcebook);
+								});
+							return false;
+						}}
+					>
+						<Button title='Import a sourcebook' icon={<DownloadOutlined />} />
+					</Upload>
+				</Flex>
 			</div>
 		</div>
 	);

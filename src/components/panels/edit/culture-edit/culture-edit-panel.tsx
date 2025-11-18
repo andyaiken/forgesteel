@@ -3,7 +3,6 @@ import { EnvironmentData, OrganizationData, UpbringingData } from '@/data/cultur
 import { Culture } from '@/models/culture';
 import { CultureType } from '@/enums/culture-type';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Feature } from '@/models/feature';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
@@ -104,23 +103,11 @@ export const CultureEditPanel = (props: Props) => {
 					placeholder='Select environment'
 					options={EnvironmentData.getEnvironments().map(s => ({ value: s.id, label: s.name }))}
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={culture.environment ? culture.environment.id : null}
 					onChange={value => {
 						const copy = Utils.copy(culture);
 						const env = EnvironmentData.getEnvironments().find(e => e.id === value);
-						if (env) {
-							const envCopy = Utils.copy(env) as Feature;
-							copy.environment = envCopy;
-						}
+						copy.environment = env ? Utils.copy(env) : null;
 						setCulture(copy);
 						props.onChange(copy);
 					}}
@@ -132,23 +119,11 @@ export const CultureEditPanel = (props: Props) => {
 					placeholder='Select organization'
 					options={OrganizationData.getOrganizations().map(s => ({ value: s.id, label: s.name }))}
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={culture.organization ? culture.organization.id : null}
 					onChange={value => {
 						const copy = Utils.copy(culture);
 						const org = OrganizationData.getOrganizations().find(o => o.id === value);
-						if (org) {
-							const orgCopy = Utils.copy(org) as Feature;
-							copy.organization = orgCopy;
-						}
+						copy.organization = org ? Utils.copy(org) : null;
 						setCulture(copy);
 						props.onChange(copy);
 					}}
@@ -160,23 +135,11 @@ export const CultureEditPanel = (props: Props) => {
 					placeholder='Select upbringing'
 					options={UpbringingData.getUpbringings().map(s => ({ value: s.id, label: s.name }))}
 					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={culture.upbringing ? culture.upbringing.id : null}
 					onChange={value => {
 						const copy = Utils.copy(culture);
 						const ub = UpbringingData.getUpbringings().find(u => u.id === value);
-						if (ub) {
-							const ubCopy = Utils.copy(ub) as Feature;
-							copy.upbringing = ubCopy;
-						}
+						copy.upbringing = ub ? Utils.copy(ub) : null;
 						setCulture(copy);
 						props.onChange(copy);
 					}}

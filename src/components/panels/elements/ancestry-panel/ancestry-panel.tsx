@@ -1,5 +1,7 @@
 import { Segmented, Space } from 'antd';
 import { Ancestry } from '@/models/ancestry';
+import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
+import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -73,6 +75,13 @@ export const AncestryPanel = (props: Props) => {
 		);
 	};
 
+	const getCulture = () => {
+		return props.ancestry.culture ?
+			<CulturePanel culture={props.ancestry.culture} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />
+			:
+			<Empty />;
+	};
+
 	const getContent = () => {
 		let content = null;
 		switch (page) {
@@ -85,6 +94,9 @@ export const AncestryPanel = (props: Props) => {
 			case 'purchased':
 				content = getPurchasedFeatures();
 				break;
+			case 'culture':
+				content = getCulture();
+				break;
 		}
 
 		return (
@@ -95,7 +107,8 @@ export const AncestryPanel = (props: Props) => {
 					options={[
 						{ value: 'overview', label: 'Overview' },
 						{ value: 'signature', label: 'Signature' },
-						{ value: 'purchased', label: 'Purchased' }
+						{ value: 'purchased', label: 'Purchased' },
+						{ value: 'culture', label: 'Culture' }
 					]}
 					value={page}
 					onChange={setPage}

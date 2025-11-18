@@ -298,8 +298,8 @@ const solarCulture = FactoryLogic.createCulture('Solar', 'Urban, bureaucratic, n
 export const communityPrerelease: Sourcebook = {
 	id: 'community-prerelease',
 	name: 'Community (pre-release)',
-	description: 'Selected community creations',
-	type: SourcebookType.ThirdParty,
+	description: 'Selected community creations (pre-release).',
+	type: SourcebookType.Community,
 	ancestries: [
 		aranoxAncestry
 	],
@@ -326,8 +326,8 @@ export const communityPrerelease: Sourcebook = {
 export const community: Sourcebook = {
 	id: 'community',
 	name: 'Community',
-	description: 'Selected community creations',
-	type: SourcebookType.ThirdParty,
+	description: 'Selected community creations.',
+	type: SourcebookType.Community,
 	ancestries: [
 		solarAncestry
 	],

@@ -2,6 +2,9 @@ import { Button, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, PlusOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Ancestry } from '@/models/ancestry';
 import { Collections } from '@/utils/collections';
+import { Culture } from '@/models/culture';
+import { CultureEditPanel } from '@/components/panels/edit/culture-edit/culture-edit-panel';
+import { CultureType } from '@/enums/culture-type';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -16,6 +19,7 @@ import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
+import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -157,6 +161,34 @@ export const AncestryEditPanel = (props: Props) => {
 		);
 	};
 
+	const getCultureEditSection = () => {
+		const setHasCulture = (value: boolean) => {
+			const copy = Utils.copy(ancestry);
+			copy.culture = value ? FactoryLogic.createCulture(ancestry.name, '', CultureType.Ancestral) : undefined;
+			setAncestry(copy);
+			props.onChange(copy);
+		};
+
+		const setCulture = (value: Culture) => {
+			const copy = Utils.copy(ancestry);
+			copy.culture = value;
+			setAncestry(copy);
+			props.onChange(copy);
+		};
+
+		return (
+			<Space direction='vertical' style={{ width: '100%' }}>
+				<HeaderText>Culture</HeaderText>
+				<Toggle label='Include a culture' value={!!ancestry.culture} onChange={setHasCulture} />
+				{
+					ancestry.culture ?
+						<CultureEditPanel culture={ancestry.culture} sourcebooks={props.sourcebooks} onChange={setCulture} />
+						: null
+				}
+			</Space>
+		);
+	};
+
 	return (
 		<ErrorBoundary>
 			<div className='ancestry-edit-panel'>
@@ -176,6 +208,11 @@ export const AncestryEditPanel = (props: Props) => {
 							key: '3',
 							label: 'Ancestry Points',
 							children: getAncestryPointsEditSection()
+						},
+						{
+							key: '4',
+							label: 'Culture',
+							children: getCultureEditSection()
 						}
 					]}
 				/>

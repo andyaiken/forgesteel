@@ -257,7 +257,7 @@ export class HeroUpdateLogic {
 		try {
 			if (original.culture) {
 				const id = original.culture.id;
-				const culture = SourcebookLogic.getCultures(sourcebooks).find(c => c.id === id);
+				const culture = SourcebookLogic.getCultures(sourcebooks, true).find(c => c.id === id);
 				if (culture) {
 					hero.culture = Utils.copy(culture);
 				}

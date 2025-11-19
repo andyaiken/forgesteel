@@ -100,7 +100,10 @@ export const LibraryListPage = (props: Props) => {
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
 	const [ view, setView ] = useState<string>('modern');
 	const [ showMonsters, setShowMonsters ] = useState<boolean>(false);
-	const [ showAllSubclasses, setShowAllSubclasses ] = useState<boolean>(false);
+	const [ showCulturesFromAncestries, setShowCulturesFromAncestries ] = useState<boolean>(false);
+	const [ showSubclassesFromClasses, setShowSubclassesFromClasses ] = useState<boolean>(false);
+	const [ showProjectsFromImbuements, setShowProjectsFromImbuements ] = useState<boolean>(false);
+	const [ showProjectsFromItems, setShowProjectsFromItems ] = useState<boolean>(false);
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew)[0].id : null);
@@ -187,7 +190,7 @@ export const LibraryListPage = (props: Props) => {
 	const getCultures = () => {
 		try {
 			return SourcebookLogic
-				.getCultures(getSourcebooks())
+				.getCultures(getSourcebooks(), showCulturesFromAncestries)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -305,7 +308,7 @@ export const LibraryListPage = (props: Props) => {
 	const getProjects = () => {
 		try {
 			return SourcebookLogic
-				.getProjects(getSourcebooks())
+				.getProjects(getSourcebooks(), showProjectsFromImbuements, showProjectsFromItems)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -318,12 +321,8 @@ export const LibraryListPage = (props: Props) => {
 
 	const getSubclasses = () => {
 		try {
-			const subclasses = SourcebookLogic.getSubclasses(getSourcebooks());
-			if (showAllSubclasses) {
-				subclasses.push(...SourcebookLogic.getClasses(getSourcebooks()).flatMap(c => c.subclasses));
-			}
-
-			return subclasses
+			return SourcebookLogic
+				.getSubclasses(getSourcebooks(), showSubclassesFromClasses)
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -820,10 +819,23 @@ export const LibraryListPage = (props: Props) => {
 							}
 						</div>
 					);
+				case 'culture':
+					return (
+						<div className='list-header'>
+							<Toggle style={{ margin: '0' }} label='Include cultures from ancestries' value={showCulturesFromAncestries} onChange={setShowCulturesFromAncestries} />
+						</div>
+					);
+				case 'project':
+					return (
+						<div className='list-header'>
+							<Toggle style={{ margin: '0' }} label='Include projects from imbuements' value={showProjectsFromImbuements} onChange={setShowProjectsFromImbuements} />
+							<Toggle style={{ margin: '0' }} label='Include projects from items' value={showProjectsFromItems} onChange={setShowProjectsFromItems} />
+						</div>
+					);
 				case 'subclass':
 					return (
 						<div className='list-header'>
-							<Toggle style={{ margin: '0' }} label='Show all' value={showAllSubclasses} onChange={setShowAllSubclasses} />
+							<Toggle style={{ margin: '0' }} label='Include subclasses from classes' value={showSubclassesFromClasses} onChange={setShowSubclassesFromClasses} />
 						</div>
 					);
 			}

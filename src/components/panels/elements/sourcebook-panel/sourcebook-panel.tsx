@@ -28,9 +28,9 @@ const getSourcebookContent = (sourcebook: Sourcebook) => {
 		<>
 			<Markdown text={sourcebook.description} />
 			{
-				elementCount < 3 ?
+				elementCount <= 3 ?
 					<div className='ds-text'>
-						{elementCount} elements
+						{SourcebookLogic.getExampleContent(sourcebook).join(', ')}
 					</div>
 					:
 					<div className='ds-text'>

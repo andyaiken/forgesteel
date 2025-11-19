@@ -60,7 +60,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 		props.selectCulture(copy);
 	};
 
-	const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
+	const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks, true) ].map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 	const optionsAncestral = cultures.filter(c => c.type === CultureType.Ancestral).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
 			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />

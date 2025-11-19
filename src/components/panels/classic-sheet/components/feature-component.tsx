@@ -229,7 +229,7 @@ const ClassAbilityFeatureComponent = (feature: FeatureClassAbility) => {
 		});
 	} else {
 		selectedOptions = [
-			<div className='feature-iteration no-selection'>Unselected</div>
+			<div className='feature-iteration no-selection' key='unselected'>Unselected</div>
 		];
 	}
 	return (

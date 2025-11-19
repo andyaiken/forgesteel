@@ -27,7 +27,7 @@ export const ProjectSelectModal = (props: Props) => {
 			name: 'Custom Project',
 			isCustom: true
 		}),
-		...SourcebookLogic.getProjects(props.sourcebooks)
+		...SourcebookLogic.getProjects(props.sourcebooks, true, true)
 	]
 		.filter(item => Utils.textMatches([
 			item.name,

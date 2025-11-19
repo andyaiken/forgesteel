@@ -132,7 +132,13 @@ export const FeaturePanel = (props: Props) => {
 							`Choose ${data.count} of the following options:`
 					}
 				</div>
-				{data.options.map(o => <FeaturePanel key={o.feature.id} feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />)}
+				{
+					data.options.map(o => (
+						<div key={o.feature.id} className='container'>
+							<FeaturePanel feature={o.feature} options={props.options} cost={showCosts ? o.value : undefined} mode={PanelMode.Full} />
+						</div>
+					))
+				}
 			</div>
 		);
 	};
@@ -393,7 +399,13 @@ export const FeaturePanel = (props: Props) => {
 
 		return (
 			<div>
-				{data.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={props.mode} />)}
+				{
+					data.features.map(f => (
+						<div key={f.id} className='container'>
+							<FeaturePanel feature={f} options={props.options} mode={props.mode} />
+						</div>
+					))
+				}
 			</div>
 		);
 	};

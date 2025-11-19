@@ -1002,7 +1002,7 @@ export class HeroLogic {
 		const hero = FactoryLogic.createHero(sourcebooks.map(sb => sb.id));
 		hero.name = NameGenerator.generateName();
 		hero.ancestry = Collections.draw(SourcebookLogic.getAncestries(sourcebooks));
-		hero.culture = Collections.draw(SourcebookLogic.getCultures(sourcebooks));
+		hero.culture = Collections.draw(SourcebookLogic.getCultures(sourcebooks, true));
 		hero.career = Collections.draw(SourcebookLogic.getCareers(sourcebooks));
 		hero.class = Collections.draw(SourcebookLogic.getClasses(sourcebooks));
 

@@ -149,7 +149,10 @@ In combat, any goblin who is out of range of the Boss (ignoring LoE) can only us
 const psiBorg: Ancestry = {
 	id: 'ancestry-psi-borg',
 	name: 'Psi-Borg',
-	description: 'Flesh and blood fused with crystal and technology, a union disdained by most timescape governance. Whether implanted through black markets or created under the tight leash of UNISOL, the life of a Psi-borg is far from comfortable. It is not uncommon for Psi-borgs to flee to lower-energy worlds in search of escape. They were outlawed in the earliest days of UNISOL, following their devastating use in the First Psychic War.',
+	description: `
+*By Jacob Taylor*
+
+Flesh and blood fused with crystal and technology, a union disdained by most timescape governance. Whether implanted through black markets or created under the tight leash of UNISOL, the life of a Psi-borg is far from comfortable. It is not uncommon for Psi-borgs to flee to lower-energy worlds in search of escape. They were outlawed in the earliest days of UNISOL, following their devastating use in the First Psychic War.`,
 	features: [
 		FactoryLogic.feature.createAncestry({
 			id: 'psi-borg-feature-1',
@@ -220,7 +223,10 @@ The enhancements are largely hidden with artificial skin and minor illusions alt
 const abundanceOfLoveAndReticence: Item = FactoryLogic.createItem({
 	id: 'item-abundance',
 	name: 'Abundance of Love and Reticence',
-	description: 'A wand made of twisted flower stems with three colourful petals sprouting from the tip.',
+	description: `
+*By Anna / Nathan Lee*
+
+A wand made of twisted flower stems with three colourful petals sprouting from the tip.`,
 	type: ItemType.Leveled,
 	keywords: [ AbilityKeyword.Green, AbilityKeyword.Magic, AbilityKeyword.Wand ],
 	crafting: FactoryLogic.createProject({
@@ -291,7 +297,10 @@ const abundanceOfLoveAndReticence: Item = FactoryLogic.createItem({
 const braidedDecay: Item = FactoryLogic.createItem({
 	id: 'item-braided-decay',
 	name: 'Braided Decay',
-	description: 'This belt, always damp to the touch, growls and barks in reaction to the vital energies of battle.',
+	description: `
+*By Anna / Nathan Lee*
+
+This belt, always damp to the touch, growls and barks in reaction to the vital energies of battle.`,
 	type: ItemType.LeveledArmor,
 	keywords: [ AbilityKeyword.Belt, AbilityKeyword.Magic, AbilityKeyword.Rot ],
 	crafting: FactoryLogic.createProject({
@@ -347,7 +356,10 @@ const braidedDecay: Item = FactoryLogic.createItem({
 const darkStarPlate: Item = FactoryLogic.createItem({
 	id: 'item-dark-star-plate',
 	name: 'Dark Star Plate',
-	description: 'Light does not reflect off of this full suit of armour.',
+	description: `
+*By Anna / Nathan Lee*
+
+Light does not reflect off of this full suit of armour.`,
 	type: ItemType.LeveledArmor,
 	keywords: [ KitArmor.Heavy, AbilityKeyword.Void ],
 	crafting: FactoryLogic.createProject({
@@ -393,7 +405,10 @@ const darkStarPlate: Item = FactoryLogic.createItem({
 const shiftingTides: Item = FactoryLogic.createItem({
 	id: 'item-shifting-tides',
 	name: 'Shifting Tides',
-	description: 'The water in this clear staff is constantly moving and shifting between ice, water, and steam. The movement continues even as the staff is held still.',
+	description: `
+*By Anna / Nathan Lee*
+
+The water in this clear staff is constantly moving and shifting between ice, water, and steam. The movement continues even as the staff is held still.`,
 	type: ItemType.LeveledImplement,
 	keywords: [ AbilityKeyword.Implement, AbilityKeyword.Magic, AbilityKeyword.Water ],
 	crafting: FactoryLogic.createProject({
@@ -439,7 +454,10 @@ const shiftingTides: Item = FactoryLogic.createItem({
 const siegeEnder: Item = FactoryLogic.createItem({
 	id: 'item-siege-ender',
 	name: 'Siege Ender',
-	description: 'This morning star has a glowing, cylindrical head that emits a flare-up whenever it strikes.',
+	description: `
+*By Anna / Nathan Lee*
+
+This morning star has a glowing, cylindrical head that emits a flare-up whenever it strikes.`,
 	type: ItemType.LeveledWeapon,
 	keywords: [ AbilityKeyword.Fire, KitWeapon.Heavy, AbilityKeyword.Magic ],
 	crafting: FactoryLogic.createProject({
@@ -485,7 +503,10 @@ const siegeEnder: Item = FactoryLogic.createItem({
 const titanShield: Item = FactoryLogic.createItem({
 	id: 'item-titan-shield',
 	name: 'Titan Shield',
-	description: 'This tower shield has a projection of Orden seen from a great height across its face. The projection slowly moves over time.',
+	description: `
+*By Anna / Nathan Lee*
+
+This tower shield has a projection of Orden seen from a great height across its face. The projection slowly moves over time.`,
 	type: ItemType.Leveled,
 	keywords: [ AbilityKeyword.Earth, AbilityKeyword.Magic, KitArmor.Shield ],
 	crafting: FactoryLogic.createProject({
@@ -551,7 +572,10 @@ const titanShield: Item = FactoryLogic.createItem({
 const wingedSandals: Item = FactoryLogic.createItem({
 	id: 'item-winged-sandals',
 	name: 'Winged Sandals',
-	description: 'Tiny, fluttering wings decorate the sides of these sandals.',
+	description: `
+*By Anna / Nathan Lee*
+
+Tiny, fluttering wings decorate the sides of these sandals.`,
 	type: ItemType.Leveled,
 	keywords: [ AbilityKeyword.Air, AbilityKeyword.Feet, AbilityKeyword.Magic ],
 	crafting: FactoryLogic.createProject({
@@ -609,7 +633,10 @@ const wingedSandals: Item = FactoryLogic.createItem({
 const arachnianImplants: Item = FactoryLogic.createItem({
 	id: 'item-arachnian-implants',
 	name: 'Arachnian Implants',
-	description: 'This black metal implant replaces your spine with a set of extendable blades.',
+	description: `
+*By Jacob Taylor*
+
+This black metal implant replaces your spine with a set of extendable blades.`,
 	type: ItemType.Trinket1st,
 	keywords: [ AbilityKeyword.Implant, AbilityKeyword.Psionic, AbilityKeyword.Spine ],
 	crafting: FactoryLogic.createProject({
@@ -635,7 +662,10 @@ const arachnianImplants: Item = FactoryLogic.createItem({
 const internalSuspension: Item = FactoryLogic.createItem({
 	id: 'item-internal-suspension',
 	name: 'Internal Suspension',
-	description: 'This neural implant causes a numb sensation at the base of your neck.',
+	description: `
+*By Jacob Taylor*
+
+This neural implant causes a numb sensation at the base of your neck.`,
 	type: ItemType.Trinket1st,
 	keywords: [ AbilityKeyword.Implant, AbilityKeyword.Psionic, AbilityKeyword.Neck ],
 	crafting: FactoryLogic.createProject({
@@ -661,7 +691,10 @@ const internalSuspension: Item = FactoryLogic.createItem({
 const opticalMoteFocuser: Item = FactoryLogic.createItem({
 	id: 'item-optical-mote-focuser',
 	name: 'Optical Mote Focuser',
-	description: 'This bulky crystalline implant replaces your eye with a singular bead of red.',
+	description: `
+*By Jacob Taylor*
+
+This bulky crystalline implant replaces your eye with a singular bead of red.`,
 	type: ItemType.Trinket1st,
 	keywords: [ AbilityKeyword.Implant, AbilityKeyword.Psionic, AbilityKeyword.Eye ],
 	crafting: FactoryLogic.createProject({
@@ -704,7 +737,10 @@ const opticalMoteFocuser: Item = FactoryLogic.createItem({
 const psionicBackup: Item = FactoryLogic.createItem({
 	id: 'item-psionic-backup',
 	name: 'Psionic Backup',
-	description: 'Just in case…',
+	description: `
+*By Jacob Taylor*
+
+Just in case…`,
 	type: ItemType.Trinket1st,
 	keywords: [ AbilityKeyword.Implant, AbilityKeyword.Psionic, AbilityKeyword.Brain ],
 	crafting: FactoryLogic.createProject({
@@ -734,7 +770,10 @@ const psionicBackup: Item = FactoryLogic.createItem({
 const barnacle: Kit = {
 	id: 'kit-barnacle',
 	name: 'Barnacle',
-	description: 'You are like a barnacle: You have a tough exterior and are damn near impossible to get rid of. You are tough, sticky, and are a real pain in the enemy’s collective rear end.',
+	description: `
+*By Harmonic Hewell*
+
+You are like a barnacle: You have a tough exterior and are damn near impossible to get rid of. You are tough, sticky, and are a real pain in the enemy’s collective rear end.`,
 	type: '',
 	armor: [ KitArmor.Heavy, KitArmor.Shield ],
 	weapon: [ KitWeapon.Medium ],
@@ -775,7 +814,10 @@ const barnacle: Kit = {
 const condor: Kit = {
 	id: 'kit-condor',
 	name: 'Condor',
-	description: 'The Condor kit grants you the sturdiness of a front liner with the safety of mid-range fighting. With a ranged weapon and heavy armour, you fight like a gun turret!',
+	description: `
+*By Harmonic Hewell*
+
+The Condor kit grants you the sturdiness of a front liner with the safety of mid-range fighting. With a ranged weapon and heavy armour, you fight like a gun turret!`,
 	type: '',
 	armor: [ KitArmor.Heavy ],
 	weapon: [ KitWeapon.Bow ],
@@ -816,7 +858,10 @@ const condor: Kit = {
 const eagle: Kit = {
 	id: 'kit-eagle',
 	name: 'Eagle',
-	description: 'The Eagle kit makes you a sharp-eyed dead-shot. You fire upon your opponents from incredible distances, hitting your mark every single time.',
+	description: `
+*By Harmonic Hewell*
+
+The Eagle kit makes you a sharp-eyed dead-shot. You fire upon your opponents from incredible distances, hitting your mark every single time.`,
 	type: '',
 	armor: [],
 	weapon: [ KitWeapon.Bow ],
@@ -857,7 +902,10 @@ const eagle: Kit = {
 const juggernaut: Kit = {
 	id: 'kit-juggernaut',
 	name: 'Juggernaut',
-	description: 'The Juggernaut kit allows you to act as a one person riot. With a heavy weapon, you carve a canyon through your foes.',
+	description: `
+*By Harmonic Hewell*
+
+The Juggernaut kit allows you to act as a one person riot. With a heavy weapon, you carve a canyon through your foes.`,
 	type: '',
 	armor: [ KitArmor.Heavy ],
 	weapon: [ KitWeapon.Heavy ],
@@ -898,7 +946,10 @@ const juggernaut: Kit = {
 const mauler: Kit = {
 	id: 'kit-mauler',
 	name: 'Mauler',
-	description: 'Heroes using the Mauler Kit charge headfirst into battle, undaunted by the dangers ahead. Wielding nothing but a medium weapon and your audacity, you are as fearsome as you are fearless.',
+	description: `
+*By Harmonic Hewell*
+
+Heroes using the Mauler Kit charge headfirst into battle, undaunted by the dangers ahead. Wielding nothing but a medium weapon and your audacity, you are as fearsome as you are fearless.`,
 	type: '',
 	armor: [],
 	weapon: [ KitWeapon.Medium ],
@@ -939,7 +990,10 @@ const mauler: Kit = {
 const sunWukong: Kit = {
 	id: 'kit-sun-wukong',
 	name: 'Sun Wukong',
-	description: 'Heroes using the Sun Wukong kit are highly mobile thanks to their lack of armour. They strike with long poles from just out of reach, harrying enemies with far-off attacks.',
+	description: `
+*By Harmonic Hewell*
+
+Heroes using the Sun Wukong kit are highly mobile thanks to their lack of armour. They strike with long poles from just out of reach, harrying enemies with far-off attacks.`,
 	type: '',
 	armor: [],
 	weapon: [ KitWeapon.Polearm ],
@@ -981,7 +1035,10 @@ const sunWukong: Kit = {
 const swift: Kit = {
 	id: 'kit-swift',
 	name: 'Swift',
-	description: 'The Swift kit makes you a mid-range, lightning fast archer. It allows you to be a ranged fighter that sprints across the battlefield, pestering your foes with arrows and drawing their focus.',
+	description: `
+*By Harmonic Hewell*
+
+The Swift kit makes you a mid-range, lightning fast archer. It allows you to be a ranged fighter that sprints across the battlefield, pestering your foes with arrows and drawing their focus.`,
 	type: '',
 	armor: [],
 	weapon: [ KitWeapon.Bow ],
@@ -1028,6 +1085,8 @@ const installImplant = FactoryLogic.createProject({
 	id: 'project-install-implant',
 	name: 'Install Implant',
 	description: `
+*By Jacob Taylor*
+
 You can install a psionic implant into either yourself or another hero. Implants are rare and hard to create with the main hurdle being the prolonged process of installation. When this project is complete you gain the effect of the Psionic Implant.
 
 | D6 | Event |

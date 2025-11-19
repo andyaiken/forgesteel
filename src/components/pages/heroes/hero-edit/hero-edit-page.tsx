@@ -395,7 +395,7 @@ export const HeroEditPage = (props: Props) => {
 				setAncestry(Collections.draw(SourcebookLogic.getAncestries(props.sourcebooks)));
 				break;
 			case 'culture':
-				setCulture(Collections.draw([ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ]));
+				setCulture(Collections.draw([ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks, true) ]));
 				break;
 			case 'career':
 				setCareer(Collections.draw(SourcebookLogic.getCareers(props.sourcebooks)));

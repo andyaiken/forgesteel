@@ -1,4 +1,5 @@
 import { Ability } from '@/models/ability';
+import { AbilityKeyword } from '@/enums/ability-keyword';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { AbilityUsage } from '@/enums/ability-usage';
@@ -231,6 +232,58 @@ export class ClassicSheetBuilder {
 			sheet.rollT1Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier1, 1, ability, refCreature);
 			sheet.rollT2Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier2, 2, ability, refCreature);
 			sheet.rollT3Effect = SheetFormatter.formatAbilityTier(rollSection.roll.tier3, 3, ability, refCreature);
+
+			if (CreatureLogic.isHero(creature)) {
+				const isMelee = ability.keywords.includes(AbilityKeyword.Melee) && ability.keywords.includes(AbilityKeyword.Weapon);
+				const isRanged = ability.keywords.includes(AbilityKeyword.Ranged) && ability.keywords.includes(AbilityKeyword.Weapon);
+
+				const meleeKits = HeroLogic
+					.getKitDamageBonuses(creature)
+					.filter(dmg => dmg.type === 'melee');
+
+				const rangedKits = HeroLogic
+					.getKitDamageBonuses(creature)
+					.filter(dmg => dmg.type === 'ranged');
+
+				if (isMelee && meleeKits.length > 1) {
+					const bestT1 = Math.max(...meleeKits.map(k => k.tier1));
+					const bestT2 = Math.max(...meleeKits.map(k => k.tier2));
+					const bestT3 = Math.max(...meleeKits.map(k => k.tier3));
+
+					const meleeBonuses = meleeKits
+						.filter(k => k.tier1 >= bestT1 || k.tier2 >= bestT2 || k.tier3 >= bestT3)
+						.map(k => {
+							return {
+								name: k.name,
+								type: k.type,
+								tier1: SheetFormatter.addSign(k.tier1) || '',
+								tier2: SheetFormatter.addSign(k.tier2) || '',
+								tier3: SheetFormatter.addSign(k.tier3) || ''
+							};
+						});
+					if (meleeBonuses.length > 1)
+						sheet.rollBonuses = (sheet.rollBonuses ?? []).concat(meleeBonuses);
+				}
+				if (isRanged && rangedKits.length > 1) {
+					const bestT1 = Math.max(...rangedKits.map(k => k.tier1));
+					const bestT2 = Math.max(...rangedKits.map(k => k.tier2));
+					const bestT3 = Math.max(...rangedKits.map(k => k.tier3));
+
+					const rangedBonuses = rangedKits
+						.filter(k => k.tier1 >= bestT1 || k.tier2 >= bestT2 || k.tier3 >= bestT3)
+						.map(k => {
+							return {
+								name: k.name,
+								type: k.type,
+								tier1: SheetFormatter.addSign(k.tier1) || '',
+								tier2: SheetFormatter.addSign(k.tier2) || '',
+								tier3: SheetFormatter.addSign(k.tier3) || ''
+							};
+						});
+					if (rangedBonuses.length > 1)
+						sheet.rollBonuses = (sheet.rollBonuses ?? []).concat(rangedBonuses);
+				}
+			}
 		}
 
 		return sheet;

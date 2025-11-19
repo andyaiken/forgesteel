@@ -141,9 +141,17 @@
             margin: 0 10px;
 
             .tier {
-                margin: 5px 0;
+                margin: 0 0 3px;
             }
 
+        }
+
+        .roll-bonuses {
+            margin-top: 5px;
+            p {
+                margin-top: 0;
+                margin-bottom: 3px;
+            }
         }
     }
 

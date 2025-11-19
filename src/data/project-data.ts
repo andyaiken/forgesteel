@@ -165,17 +165,13 @@ When you start this project, you choose a recipe for a specific type of dish. Th
 
 When you complete the project, you can make five servings of food from the recipe as a respite activity whenever you have access to the ingredients. You and other creatures taking a respite with you can eat a serving of the food and gain its benefits (see below).
 
-A creature who eats a serving of food from a particular type of recipe gains one of the following benefits, which lasts until the creature takes another respite. 
+A creature who eats a serving of food from a particular type of recipe gains the listed benefit, which lasts until the creature takes another respite. 
 
-* **Comforting**: When the creature fails a saving throw, they can choose to succeed instead. This benefit then ends.
-* **Hearty**: The creature increases their Recoveries by 1 at the end of the respite in which the food is consumed.
-* **Supernatural Power**: The creature temporarily increases one of their characteristic scores by 1 (to a maximum of 6).
-
-| Type of Recipe  | Item Prerequisites                                                    | Benefits           |
-|:----------------|:----------------------------------------------------------------------|:-------------------|
-| Modern          | Common ingredients (flour, carrots, beef, and so forth)               | Hearty             |
-| Vintage or home | Key ingredients (starfruit, kindleseeds, oarfish, and so forth)       | Comforting         |
-| Ancient or lost | Rare or extinct ingredients (honeylilies, steel apples, and so forth) | Supernatural Power |`,
+| Type of Recipe  | Item Prerequisites                                                    | Benefit                                                                                                             |
+|:----------------|:----------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
+| Modern          | Common ingredients (flour, carrots, beef, and so forth)               | Hearty: The creature increases their Recoveries by 1 at the end of the respite in which the food is consumed.       |
+| Vintage or home | Key ingredients (starfruit, kindleseeds, oarfish, and so forth)       | Comforting: When the creature fails a saving throw, they can choose to succeed instead. This benefit then ends.     |
+| Ancient or lost | Rare or extinct ingredients (honeylilies, steel apples, and so forth) | Supernatural Power: The creature temporarily increases one of their characteristic scores by 1 (to a maximum of 6). |`,
 		prerequisites: 'Varies',
 		source: 'A recipe in a language you know, or someone who can tutor you in that recipe',
 		characteristic: [ Characteristic.Reason, Characteristic.Intuition ],

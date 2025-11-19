@@ -286,11 +286,11 @@ export class SourcebookLogic {
 			list.push(...sourcebook.projects);
 
 			if (includeFromImbuements) {
-				list.push(...sourcebook.items.map(i => i.crafting).filter(p => !!p));
+				list.push(...sourcebook.imbuements.map(i => i.crafting).filter(p => !!p));
 			}
 
 			if (includeFromItems) {
-				list.push(...sourcebook.imbuements.map(i => i.crafting).filter(p => !!p));
+				list.push(...sourcebook.items.map(i => i.crafting).filter(p => !!p));
 			}
 		});
 

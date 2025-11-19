@@ -301,7 +301,7 @@ const braidedDecay: Item = FactoryLogic.createItem({
 *By Anna / Nathan Lee*
 
 This belt, always damp to the touch, growls and barks in reaction to the vital energies of battle.`,
-	type: ItemType.LeveledArmor,
+	type: ItemType.Leveled,
 	keywords: [ AbilityKeyword.Belt, AbilityKeyword.Magic, AbilityKeyword.Rot ],
 	crafting: FactoryLogic.createProject({
 		prerequisites: 'Pelts from three partially-decomposed beasts, each from a different world',
@@ -317,6 +317,11 @@ This belt, always damp to the touch, growls and barks in reaction to the vital e
 					id: 'item-braided-decay-1',
 					name: 'Level 1',
 					description: 'At the end of each of your turns, each enemy adjacent to you takes 2 poison damage. Damage from this belt is doubled against enemies with temporary stamina.'
+				}),
+				FactoryLogic.feature.createBonus({
+					id: 'item-braided-decay-1a',
+					field: FeatureField.Stamina,
+					value: 6
 				})
 			]
 		},
@@ -326,12 +331,12 @@ This belt, always damp to the touch, growls and barks in reaction to the vital e
 				FactoryLogic.feature.create({
 					id: 'item-braided-decay-5',
 					name: 'Level 5',
-					description: 'Enemies damaged by this belt can’t regain stamina until the end of their next turn. Additionally, you can instantly wither mundane plants that come adjacent to you.'
+					description: 'The belt’s poison damage increases to 4. Enemies damaged by this belt can’t regain stamina until the end of their next turn. Additionally, you can instantly wither mundane plants that come adjacent to you.'
 				}),
-				FactoryLogic.feature.create({
+				FactoryLogic.feature.createBonus({
 					id: 'item-braided-decay-5a',
-					name: '',
-					description: 'The belt’s poison damage increases to 4.'
+					field: FeatureField.Stamina,
+					value: 6
 				})
 			]
 		},
@@ -341,12 +346,12 @@ This belt, always damp to the touch, growls and barks in reaction to the vital e
 				FactoryLogic.feature.create({
 					id: 'item-braided-decay-9',
 					name: 'Level 9',
-					description: 'Enemies damaged by this belt are weakened and can’t regain stamina until the end of their next turn. Damage from this belt can’t be reduced in any way.'
+					description: 'The belt’s poison damage increases to 6. Enemies damaged by this belt are weakened and can’t regain stamina until the end of their next turn. Damage from this belt can’t be reduced in any way.'
 				}),
-				FactoryLogic.feature.create({
-					id: 'item-braided-decay-9a',
-					name: '',
-					description: 'The belt’s poison damage increases to 6.'
+				FactoryLogic.feature.createBonus({
+					id: 'item-braided-decay-9b',
+					field: FeatureField.Stamina,
+					value: 9
 				})
 			]
 		}

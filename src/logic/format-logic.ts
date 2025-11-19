@@ -49,19 +49,19 @@ export class FormatLogic {
 	static getModifier = (mod: Modifier) => {
 		const sections: string[] = [];
 		if (mod.value && mod.valuePerLevel && (mod.value === mod.valuePerLevel)) {
-			sections.push(`${mod.value >= 0 ? '+' : ''} ${mod.value} per level`);
+			sections.push(`${mod.value >= 0 ? '+' : ''}${mod.value} per level`);
 		} else {
 			if (mod.value) {
-				sections.push(`${mod.value >= 0 ? '+' : ''} ${mod.value}`);
+				sections.push(`${mod.value >= 0 ? '+' : ''}${mod.value}`);
 			}
 
 			if (mod.valuePerLevel) {
-				sections.push(`${mod.valuePerLevel >= 0 ? '+' : ''} ${mod.valuePerLevel} per level after 1st`);
+				sections.push(`${mod.valuePerLevel >= 0 ? '+' : ''}${mod.valuePerLevel} per level after 1st`);
 			}
 		}
 
 		if (mod.valuePerEchelon) {
-			sections.push(`${mod.valuePerEchelon >= 0 ? '+' : ''} ${mod.valuePerEchelon} per echelon`);
+			sections.push(`${mod.valuePerEchelon >= 0 ? '+' : ''}${mod.valuePerEchelon} per echelon`);
 		}
 
 		if (mod.valueCharacteristics.length > 0) {

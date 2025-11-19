@@ -56,6 +56,10 @@ export const ProjectPanel = (props: Props) => {
 			return null;
 		}
 
+		if (!project.itemPrerequisites && !project.source) {
+			return null;
+		}
+
 		const setPrerequisites = (value: boolean) => {
 			const copy = Utils.copy(project);
 			copy.progress!.prerequisites = value;

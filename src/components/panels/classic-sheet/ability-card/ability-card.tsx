@@ -76,6 +76,17 @@ export const AbilityCard = (props: Props) => {
 							</span>
 						</div>
 					</div>
+					{
+						ability.rollBonuses ?
+							<div className='roll-bonuses'>
+								{ability.rollBonuses.map(bonus => (
+									<p key={bonus.name}>
+										<strong>{bonus.name}</strong>: {bonus.tier1} | {bonus.tier2} | {bonus.tier3} {bonus.type} damage
+									</p>
+								))}
+							</div>
+							: null
+					}
 				</div>
 			);
 		}

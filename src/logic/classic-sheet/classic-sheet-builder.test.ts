@@ -117,4 +117,52 @@ describe('buildAbilitySheet', () => {
 		const result = ClassicSheetBuilder.buildAbilitySheet(ability, hero, undefined, options);
 		expect(result.rollPower).toBe('Highest Characteristic');
 	});
+
+	test('if a Hero does NOT has multiple kits that apply, rollBonuses is empty', () => {
+		const hero = FactoryLogic.createHero([]);
+		const options = {} as Options;
+
+		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.escapeGrab, hero, undefined, options);
+		expect(result.rollBonuses).toBeNullable();
+	});
+
+	test('if a Hero has multiple kits that apply, rollBonuses gets populated', () => {
+		const hero = FactoryLogic.createHero([]);
+		const options = {} as Options;
+
+		vi.spyOn(HeroLogic, 'getKitDamageBonuses').mockReturnValue([
+			{ name: 'Melee 1', type: 'melee', tier1: 1, tier2: 1, tier3: 1 },
+			{ name: 'Melee 2', type: 'melee', tier1: 0, tier2: 0, tier3: 4 }
+		]);
+
+		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeMelee, hero, undefined, options);
+		expect(result.rollBonuses?.length).toBe(2);
+	});
+
+	test('if a Hero has multiple kits that apply, rollBonuses gets populated', () => {
+		const hero = FactoryLogic.createHero([]);
+		const options = {} as Options;
+
+		vi.spyOn(HeroLogic, 'getKitDamageBonuses').mockReturnValue([
+			{ name: 'Melee 1', type: 'ranged', tier1: 1, tier2: 1, tier3: 1 },
+			{ name: 'Melee 1', type: 'melee', tier1: 1, tier2: 1, tier3: 1 },
+			{ name: 'Melee 2', type: 'ranged', tier1: 0, tier2: 0, tier3: 4 }
+		]);
+
+		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeRanged, hero, undefined, options);
+		expect(result.rollBonuses?.length).toBe(2);
+	});
+
+	test('if a Hero has multiple kits but one is always worse, rollBonuses stays empty', () => {
+		const hero = FactoryLogic.createHero([]);
+		const options = {} as Options;
+
+		vi.spyOn(HeroLogic, 'getKitDamageBonuses').mockReturnValue([
+			{ name: 'Melee 1', type: 'melee', tier1: 1, tier2: 1, tier3: 1 },
+			{ name: 'Melee 2', type: 'melee', tier1: 0, tier2: 0, tier3: 0 }
+		]);
+
+		const result = ClassicSheetBuilder.buildAbilitySheet(AbilityData.freeStrikeMelee, hero, undefined, options);
+		expect(result.rollBonuses).toBeNullable();
+	});
 });

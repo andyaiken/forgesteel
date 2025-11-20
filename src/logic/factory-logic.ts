@@ -13,6 +13,7 @@ import { AttitudeType } from '@/enums/attitude-type';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
 import { Complication } from '@/models/complication';
+import { ConnectionSettings } from '@/models/connection-settings';
 import { Culture } from '@/models/culture';
 import { CultureType } from '@/enums/culture-type';
 import { DamageType } from '@/enums/damage-type';
@@ -1048,6 +1049,14 @@ export class FactoryLogic {
 			// Tactical Map
 			gridSize: 50,
 			playerGridSize: 50
+		};
+	};
+
+	static createConnectionSettings = (): ConnectionSettings => {
+		return {
+			useWarehouse: false,
+			warehouseHost: '',
+			warehouseToken: ''
 		};
 	};
 

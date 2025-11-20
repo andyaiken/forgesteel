@@ -12,9 +12,11 @@ import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { Complication } from '@/models/complication';
+import { ConnectionSettings } from '@/models/connection-settings';
 import { Counter } from '@/models/counter';
 import { Culture } from '@/models/culture';
 import { CultureType } from '@/enums/culture-type';
+import { DataService } from '@/utils/data-service';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { ElementModal } from '@/components/modals/element/element-modal';
@@ -84,12 +86,14 @@ import { useSyncStatus } from '@/hooks/use-sync-status';
 import './main.scss';
 
 interface Props {
-	heroes: Hero[];
-	playbook: Playbook;
-	session: Playbook;
-	homebrewSourcebooks: Sourcebook[];
-	hiddenSourcebookIDs: string[];
-	options: Options;
+	heroes: Hero[]; // from DataService
+	playbook: Playbook; // from DataService
+	session: Playbook; // from DataService
+	homebrewSourcebooks: Sourcebook[]; // from DataService
+	hiddenSourcebookIDs: string[]; // from DataService
+	options: Options; // from DataService
+	connectionSettings: ConnectionSettings;
+	dataService: DataService;
 }
 
 export const Main = (props: Props) => {
@@ -109,6 +113,7 @@ export const Main = (props: Props) => {
 		}
 		return opts;
 	});
+	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(props.connectionSettings);
 	const [ errors, setErrors ] = useState<Event[]>([]);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
@@ -135,8 +140,8 @@ export const Main = (props: Props) => {
 	};
 
 	const persistHeroes = (heroes: Hero[]) => {
-		return localforage
-			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
+		return props.dataService
+			.saveHeroes(Collections.sort(heroes, h => h.name))
 			.then(
 				setHeroes,
 				err => {
@@ -155,8 +160,8 @@ export const Main = (props: Props) => {
 	};
 
 	const persistPlaybook = (playbook: Playbook) => {
-		return localforage
-			.setItem<Playbook>('forgesteel-playbook', playbook)
+		return props.dataService
+			.savePlaybook(playbook)
 			.then(
 				setPlaybook,
 				err => {
@@ -175,8 +180,8 @@ export const Main = (props: Props) => {
 	};
 
 	const persistSession = (session: Playbook) => {
-		return localforage
-			.setItem<Playbook>('forgesteel-session', session)
+		return props.dataService
+			.saveSession(session)
 			.then(
 				setSession,
 				err => {
@@ -198,8 +203,8 @@ export const Main = (props: Props) => {
 	};
 
 	const persistHomebrewSourcebooks = (homebrew: Sourcebook[]) => {
-		return localforage
-			.setItem<Sourcebook[]>('forgesteel-homebrew-settings', homebrew)
+		return props.dataService
+			.saveHomebrew(homebrew)
 			.then(
 				setHomebrewSourcebooks,
 				err => {
@@ -214,8 +219,8 @@ export const Main = (props: Props) => {
 	};
 
 	const persistHiddenSourcebookIDs = (ids: string[]) => {
-		return localforage
-			.setItem<string[]>('forgesteel-hidden-setting-ids', ids)
+		return props.dataService
+			.saveHiddenSettingIds(ids)
 			.then(
 				setHiddenSourcebookIDs,
 				err => {
@@ -230,14 +235,30 @@ export const Main = (props: Props) => {
 	};
 
 	const persistOptions = (options: Options) => {
-		return localforage
-			.setItem<Options>('forgesteel-options', options)
+		return props.dataService
+			.saveOptions(options)
 			.then(
 				setOptions,
 				err => {
 					console.error(err);
 					notify.error({
 						message: 'Error saving options',
+						description: err,
+						placement: 'top'
+					});
+				}
+			);
+	};
+
+	const persistConnectionSettings = (connectionSettings: ConnectionSettings) => {
+		return localforage
+			.setItem<ConnectionSettings>('forgesteel-connection-settings', connectionSettings)
+			.then(
+				setConnectionSettings,
+				err => {
+					console.error(err);
+					notify.error({
+						message: 'Error saving connection settings',
 						description: err,
 						placement: 'top'
 					});
@@ -1437,6 +1458,8 @@ export const Main = (props: Props) => {
 				errors={errors}
 				heroes={heroes}
 				setOptions={persistOptions}
+				connectionSettings={connectionSettings}
+				setConnectionSettings={persistConnectionSettings}
 				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
 			/>

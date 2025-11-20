@@ -633,14 +633,16 @@ export const SettingsModal = (props: Props) => {
 	};
 
 	const getConnectionSettings = () => {
-		return (
-			<Expander title='Forge Steel Warehouse'>
-				<FsWarehouseConnectionSettingsPanel
-					connectionSettings={props.connectionSettings}
-					setConnectionSettings={props.setConnectionSettings}
-				/>
-			</Expander>
-		);
+		if (FeatureFlags.hasFlag(FeatureFlags.warehouse.code)) {
+			return (
+				<Expander title='Forge Steel Warehouse'>
+					<FsWarehouseConnectionSettingsPanel
+						connectionSettings={props.connectionSettings}
+						setConnectionSettings={props.setConnectionSettings}
+					/>
+				</Expander>
+			);
+		}
 	};
 
 	const getErrors = () => {

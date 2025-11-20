@@ -47,10 +47,14 @@ export const FsWarehouseConnectionSettingsPanel = (props: Props) => {
 				setTestStatusAlert(<Alert message='Success!' type='success' showIcon closable />);
 			})
 			.catch(err => {
-				console.error('Error connecting to Warehouse', err.response);
-				const code = err.response.status;
-				const msg = err.response.data.message ?? err.response.data;
-				setTestStatusAlert(<Alert message={`${code} Error: ${msg}`} type='error' showIcon closable />);
+				console.error('Error connecting to Warehouse', err);
+				if (err.response) {
+					const code = err.response.status;
+					const msg = err.response.data.message ?? err.response.data;
+					setTestStatusAlert(<Alert message={`${code} Error: ${msg}`} type='error' showIcon closable />);
+				} else {
+					setTestStatusAlert(<Alert message={`Unable to connect to warehouse: ${err.message}`} type='error' showIcon closable />);
+				}
 			})
 			.finally(() => {
 				setTestingWarehouseConnection(false);

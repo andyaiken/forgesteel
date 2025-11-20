@@ -47,10 +47,7 @@ export const DataLoader = (props: Props) => {
 
 	// Load connection settings and create DataService
 	async function getDataService() {
-		await new Promise(res => setTimeout(res, 2000));
-
 		let settings = await localforage.getItem<ConnectionSettings>('forgesteel-connection-settings');
-
 		if (!settings) {
 			settings = FactoryLogic.createConnectionSettings();
 		}

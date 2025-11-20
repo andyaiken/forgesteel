@@ -2,11 +2,13 @@ import { Button, Divider, Drawer, Flex, Input, Segmented, Select, Space } from '
 import { CopyOutlined, FlagFilled, FlagOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { AbilityData } from '@/data/ability-data';
 import { Collections } from '@/utils/collections';
+import { ConnectionSettings } from '@/models/connection-settings';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Field } from '@/components/controls/field/field';
+import { FsWarehouseConnectionSettingsPanel } from '@/components/panels/fs-warehouse-connection-settings-panel/fs-warehouse-connection-settings';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { LabelControl } from '@/components/controls/label-control/label-control';
@@ -29,6 +31,8 @@ interface Props {
 	errors: Event[];
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
+	connectionSettings: ConnectionSettings;
+	setConnectionSettings: (settings: ConnectionSettings) => void
 	clearErrors: () => void;
 	onClose: () => void;
 }
@@ -628,6 +632,17 @@ export const SettingsModal = (props: Props) => {
 		);
 	};
 
+	const getConnectionSettings = () => {
+		return (
+			<Expander title='Forge Steel Warehouse'>
+				<FsWarehouseConnectionSettingsPanel
+					connectionSettings={props.connectionSettings}
+					setConnectionSettings={props.setConnectionSettings}
+				/>
+			</Expander>
+		);
+	};
+
 	const getErrors = () => {
 		const clearErrors = () => {
 			props.clearErrors();
@@ -710,6 +725,7 @@ export const SettingsModal = (props: Props) => {
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
+						{getConnectionSettings()}
 						{getErrors()}
 					</Space>
 				);

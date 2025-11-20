@@ -45,214 +45,217 @@ export const DataLoader = (props: Props) => {
 
 	const [ errors, setErrors ] = useState<string[]>([]);
 
-	// Load connection settings and create DataService
-	async function getDataService() {
-		let settings = await localforage.getItem<ConnectionSettings>('forgesteel-connection-settings');
-		if (!settings) {
-			settings = FactoryLogic.createConnectionSettings();
-		}
-		ConnectionSettingsUpdateLogic.updateSettings(settings);
-
-		return new DataService(settings);
-	};
-
-	const loadData = () => {
-		setErrors([]);
-		setConnectionSettingsState('loading');
-
-		setGetHomebrewState(null);
-		setGetHeroesState(null);
-		setGetPlaybookState(null);
-		setGetSessionState(null);
-		setGetOptionsState(null);
-		setGetHiddenSettingsState(null);
-
-		getDataService().then(dataService => {
-			setConnectionSettingsState('success');
-
-			const promises = [
-				dataService.getHomebrew()
-					.then(result => {
-						setGetHomebrewState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetHomebrewState('error');
-						throw reason;
-					}),
-				dataService.getHeroes()
-					.then(result => {
-						setGetHeroesState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetHeroesState('error');
-						throw reason;
-					}),
-				dataService.getHiddenSettingIds()
-					.then(result => {
-						setGetHiddenSettingsState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetHiddenSettingsState('error');
-						throw reason;
-					}),
-				dataService.getPlaybook()
-					.then(result => {
-						setGetPlaybookState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetPlaybookState('error');
-						throw reason;
-					}),
-				dataService.getSession()
-					.then(result => {
-						setGetSessionState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetSessionState('error');
-						throw reason;
-					}),
-				dataService.getOptions()
-					.then(result => {
-						setGetOptionsState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetOptionsState('error');
-						throw reason;
-					})
-			];
-
-			setGetHomebrewState('loading');
-			setGetHeroesState('loading');
-			setGetPlaybookState('loading');
-			setGetSessionState('loading');
-			setGetOptionsState('loading');
-			setGetHiddenSettingsState('loading');
-			Promise.all(promises).then(results => {
-				// #region Homebrew sourcebooks
-				let sourcebooks = results[0] as Sourcebook[] | null;
-
-				if (!sourcebooks) {
-					sourcebooks = [];
-				}
-
-				sourcebooks.forEach(sourcebook => {
-					sourcebook.type = SourcebookType.Homebrew;
-					SourcebookUpdateLogic.updateSourcebook(sourcebook);
-				});
-
-				SourcebookLogic.getSourcebooks(sourcebooks).forEach(sourcebook => {
-					sourcebook.items.forEach(item => {
-						if (item.crafting) {
-							item.crafting.id = `${item.id}-crafting`;
-							item.crafting.name = `Craft ${item.name}`;
-							item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}.`;
-						}
-					});
-					sourcebook.imbuements.forEach(imbuement => {
-						if (imbuement.crafting) {
-							imbuement.crafting.id = `${imbuement.id}-crafting`;
-							imbuement.crafting.name = `Imbue ${imbuement.name}`;
-							imbuement.crafting.description = `Imbue an item with ${imbuement.name}.`;
-						}
-					});
-				});
-
-				// #endregion
-
-				// #region Heroes
-				let heroes = results[1] as Hero[] | null;
-
-				if (!heroes) {
-					heroes = [];
-				}
-
-				heroes.forEach(hero => {
-					HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
-				});
-
-				// #endregion
-
-				// #region Hidden sourcebook IDs
-
-				let hiddenSourcebookIDs = results[2] as string[] | null;
-				if (!hiddenSourcebookIDs) {
-					hiddenSourcebookIDs = [];
-				}
-
-				// #endregion
-
-				// #region Playbook
-
-				let playbook = results[3] as Playbook | null;
-				if (!playbook) {
-					playbook = FactoryLogic.createPlaybook();
-				}
-
-				PlaybookUpdateLogic.updatePlaybook(playbook);
-
-				// #endregion
-
-				// #region Session
-
-				let session = results[4] as Playbook | null;
-				if (!session) {
-					session = FactoryLogic.createPlaybook();
-				}
-
-				PlaybookUpdateLogic.updatePlaybook(session);
-
-				// #endregion
-
-				// #region Options
-
-				let options = results[5] as Options | null;
-				if (!options) {
-					options = FactoryLogic.createOptions();
-				}
-
-				OptionsUpdateLogic.updateOptions(options);
-
-				// #endregion
-				const loadedData: LoadedData = {
-					connectionSettings: dataService.settings,
-					service: dataService,
-					heroes: heroes,
-					homebrew: sourcebooks,
-					hiddenSourcebookIDs: hiddenSourcebookIDs,
-					playbook: playbook,
-					session: session,
-					options: options
-				};
-
-				setTimeout(() => {
-					props.onComplete(loadedData);
-				}, 150);// veeeery small timeout so user gets at least a _chance_ to see everything loaded
-			}).catch(reason => {
-				const newErr = [ ...errors ];
-				newErr.push(reason);
-				setErrors(newErr);
-			});
-		});
-	};
-
 	useEffect(() => {
+		// Load connection settings and create DataService
+		async function getDataService() {
+			let settings = await localforage.getItem<ConnectionSettings>('forgesteel-connection-settings');
+			if (!settings) {
+				settings = FactoryLogic.createConnectionSettings();
+			}
+			ConnectionSettingsUpdateLogic.updateSettings(settings);
+
+			return new DataService(settings);
+		};
+
+		const loadData = () => {
+			setErrors([]);
+			setConnectionSettingsState('loading');
+
+			setGetHomebrewState(null);
+			setGetHeroesState(null);
+			setGetPlaybookState(null);
+			setGetSessionState(null);
+			setGetOptionsState(null);
+			setGetHiddenSettingsState(null);
+
+			getDataService().then(dataService => {
+				setConnectionSettingsState('success');
+
+				const promises = [
+					dataService.getHomebrew()
+						.then(result => {
+							setGetHomebrewState('success');
+							return result;
+						})
+						.catch(reason => {
+							setGetHomebrewState('error');
+							throw reason;
+						}),
+					dataService.getHeroes()
+						.then(result => {
+							setGetHeroesState('success');
+							return result;
+						})
+						.catch(reason => {
+							setGetHeroesState('error');
+							throw reason;
+						}),
+					dataService.getHiddenSettingIds()
+						.then(result => {
+							setGetHiddenSettingsState('success');
+							return result;
+						})
+						.catch(reason => {
+							setGetHiddenSettingsState('error');
+							throw reason;
+						}),
+					dataService.getPlaybook()
+						.then(result => {
+							setGetPlaybookState('success');
+							return result;
+						})
+						.catch(reason => {
+							setGetPlaybookState('error');
+							throw reason;
+						}),
+					dataService.getSession()
+						.then(result => {
+							setGetSessionState('success');
+							return result;
+						})
+						.catch(reason => {
+							setGetSessionState('error');
+							throw reason;
+						}),
+					dataService.getOptions()
+						.then(result => {
+							setGetOptionsState('success');
+							return result;
+						})
+						.catch(reason => {
+							setGetOptionsState('error');
+							throw reason;
+						})
+				];
+
+				setGetHomebrewState('loading');
+				setGetHeroesState('loading');
+				setGetPlaybookState('loading');
+				setGetSessionState('loading');
+				setGetOptionsState('loading');
+				setGetHiddenSettingsState('loading');
+
+				Promise.all(promises).then(results => {
+					// #region Homebrew sourcebooks
+
+					let sourcebooks = results[0] as Sourcebook[] | null;
+
+					if (!sourcebooks) {
+						sourcebooks = [];
+					}
+
+					sourcebooks.forEach(sourcebook => {
+						sourcebook.type = SourcebookType.Homebrew;
+						SourcebookUpdateLogic.updateSourcebook(sourcebook);
+					});
+
+					SourcebookLogic.getSourcebooks(sourcebooks).forEach(sourcebook => {
+						sourcebook.items.forEach(item => {
+							if (item.crafting) {
+								item.crafting.id = `${item.id}-crafting`;
+								item.crafting.name = `Craft ${item.name}`;
+								item.crafting.description = `Craft ${Format.startsWithVowel(item.name) ? 'an' : 'a'} ${item.name}.`;
+							}
+						});
+						sourcebook.imbuements.forEach(imbuement => {
+							if (imbuement.crafting) {
+								imbuement.crafting.id = `${imbuement.id}-crafting`;
+								imbuement.crafting.name = `Imbue ${imbuement.name}`;
+								imbuement.crafting.description = `Imbue an item with ${imbuement.name}.`;
+							}
+						});
+					});
+
+					// #endregion
+
+					// #region Heroes
+
+					let heroes = results[1] as Hero[] | null;
+
+					if (!heroes) {
+						heroes = [];
+					}
+
+					heroes.forEach(hero => {
+						HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
+					});
+
+					// #endregion
+
+					// #region Hidden sourcebook IDs
+
+					let hiddenSourcebookIDs = results[2] as string[] | null;
+					if (!hiddenSourcebookIDs) {
+						hiddenSourcebookIDs = [];
+					}
+
+					// #endregion
+
+					// #region Playbook
+
+					let playbook = results[3] as Playbook | null;
+					if (!playbook) {
+						playbook = FactoryLogic.createPlaybook();
+					}
+
+					PlaybookUpdateLogic.updatePlaybook(playbook);
+
+					// #endregion
+
+					// #region Session
+
+					let session = results[4] as Playbook | null;
+					if (!session) {
+						session = FactoryLogic.createPlaybook();
+					}
+
+					PlaybookUpdateLogic.updatePlaybook(session);
+
+					// #endregion
+
+					// #region Options
+
+					let options = results[5] as Options | null;
+					if (!options) {
+						options = FactoryLogic.createOptions();
+					}
+
+					OptionsUpdateLogic.updateOptions(options);
+
+					// #endregion
+
+					const loadedData: LoadedData = {
+						connectionSettings: dataService.settings,
+						service: dataService,
+						heroes: heroes,
+						homebrew: sourcebooks,
+						hiddenSourcebookIDs: hiddenSourcebookIDs,
+						playbook: playbook,
+						session: session,
+						options: options
+					};
+
+					setTimeout(() => {
+						props.onComplete(loadedData);
+					}, 500); // veeeery small timeout so user gets at least a _chance_ to see everything loaded
+				}).catch(reason => {
+					const newErr = [ ...errors ];
+					newErr.push(reason);
+					setErrors(newErr);
+				});
+			});
+		};
+
 		loadData();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [ errors, props ]);
 
 	return (
 		<Result
 			icon={<LoadingOutlined />}
 			title='Loading data...'
 		>
-			<Flex gap='middle' align='center' justify='center' vertical>
-				<Flex gap='small' justify='space-between' vertical>
+			<Flex gap='middle' align='center' justify='center' vertical={true}>
+				<Flex gap='small' justify='space-between' vertical={true}>
 					<Flex gap='small' justify='flex-start'>
 						<LoadingSuccessError state={connectionSettingsState} />
 						Connection Settings
@@ -283,9 +286,14 @@ export const DataLoader = (props: Props) => {
 					</Flex>
 				</Flex>
 				{
-					errors.map((reason, i) => {
+					errors.map((reason, n) => {
 						return (
-							<Alert type='error' message={reason} key={`data-load-alert-${i}`} />
+							<Alert
+								key={`data-load-alert-${n}`}
+								type='error'
+								showIcon={true}
+								message={reason}
+							/>
 						);
 					})
 				}

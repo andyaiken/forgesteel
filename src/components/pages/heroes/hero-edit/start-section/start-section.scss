@@ -1,3 +1,17 @@
 .start-section {
 	display: block;
+
+	.sourcebook-type-section {
+		background-color: rgb(255, 255, 255);
+		padding: 0 10px 10px 10px;
+		border-radius: 10px;
+	}
+}
+
+html[data-theme="dark"] {
+	.start-section {
+		.sourcebook-type-section {
+			background-color: rgb(55, 55, 55);
+		}
+	}
 }

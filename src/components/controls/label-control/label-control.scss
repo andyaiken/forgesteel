@@ -5,6 +5,8 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 10px;
+	border-radius: 6px;
+	padding: 5px 10px;
 
 	.label-control-label {
 		flex: 2 2 0;
@@ -20,6 +22,10 @@
 		pointer-events: none;
 	}
 
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.06);
+	}
+
 	.label-control-control {
 		flex: 3 3 0;
 		color: rgba(0, 0, 0, 0.88);
@@ -28,6 +34,10 @@
 
 html[data-theme="dark"] {
 	.label-control {
+		&:hover {
+			background-color: rgba(250, 250, 250, 0.3);
+		}
+
 		.label-control-label {
 			color: rgb(255, 255, 255);
 		}

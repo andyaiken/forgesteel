@@ -63,7 +63,7 @@ export const StartSection = (props: Props) => {
 				</div>
 				{
 					[ SourcebookType.Official, SourcebookType.ThirdParty, SourcebookType.Community, SourcebookType.Homebrew ].map(type => (
-						<div key={type}>
+						<div key={type} className='sourcebook-type-section'>
 							<HeaderText level={3}>{type} Sourcebooks</HeaderText>
 							{
 								props.sourcebooks

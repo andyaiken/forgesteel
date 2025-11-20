@@ -60,7 +60,14 @@ export const CultureSection = (props: CultureSectionProps) => {
 		props.selectCulture(copy);
 	};
 
-	const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks, true) ].map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
+	const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks, true) ]
+		.map(Utils.copy)
+		.filter(c => matchElement(c, props.searchTerm));
+	const optionsYourAncestry = cultures.filter(c => c.id === (props.hero.ancestry?.culture?.id || '')).map(c => (
+		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
+			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
+		</SelectablePanel>
+	));
 	const optionsAncestral = cultures.filter(c => c.type === CultureType.Ancestral).map(c => (
 		<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
 			<CulturePanel culture={c} sourcebooks={props.sourcebooks} options={props.options} />
@@ -201,14 +208,36 @@ export const CultureSection = (props: CultureSectionProps) => {
 				{
 					!props.hero.culture && ([ ...optionsAncestral, ...optionsProfessional, ...optionsBespoke ].length > 0) ?
 						<div className='hero-edit-content-column list' id='culture-list'>
-							<HeaderText level={1}>Ancestral Cultures</HeaderText>
-							<div className='grid'>
-								{optionsAncestral}
-							</div>
-							<HeaderText level={1}>Professional Cultures</HeaderText>
-							<div className='grid'>
-								{optionsProfessional}
-							</div>
+							{
+								optionsYourAncestry.length > 0 ?
+									<>
+										<HeaderText level={1}>Your Ancestry</HeaderText>
+										<div className='grid'>
+											{optionsYourAncestry}
+										</div>
+									</>
+									: null
+							}
+							{
+								optionsAncestral.length > 0 ?
+									<>
+										<HeaderText level={1}>Ancestral Cultures</HeaderText>
+										<div className='grid'>
+											{optionsAncestral}
+										</div>
+									</>
+									: null
+							}
+							{
+								optionsProfessional.length > 0 ?
+									<>
+										<HeaderText level={1}>Professional Cultures</HeaderText>
+										<div className='grid'>
+											{optionsProfessional}
+										</div>
+									</>
+									: null
+							}
 							<HeaderText level={1}>Bespoke Cultures</HeaderText>
 							<div className='grid'>
 								{optionsBespoke}

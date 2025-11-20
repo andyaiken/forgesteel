@@ -220,7 +220,7 @@ export const ReferenceModal = (props: Props) => {
 												/>
 												{
 													l.related.length > 0 ?
-														<div style={{ marginTop: '-5px', paddingLeft: '10px' }}>
+														<div style={{ padding: '0 0 5px 10px' }}>
 															Related to: {l.related.join(', ')}
 														</div>
 														: null

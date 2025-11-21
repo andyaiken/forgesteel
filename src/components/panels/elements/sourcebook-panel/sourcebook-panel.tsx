@@ -50,6 +50,7 @@ export const SourcebookPanel = (props: Props) => {
 		<ErrorBoundary>
 			<div className='sourcebook-panel' id={props.sourcebook.id}>
 				<HeaderText
+					level={1}
 					tags={[ props.sourcebook.type ]}
 				>
 					{props.sourcebook.name || 'Unnamed Sourcebook'}

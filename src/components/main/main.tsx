@@ -23,6 +23,7 @@ import { ElementModal } from '@/components/modals/element/element-modal';
 import { Encounter } from '@/models/encounter';
 import { EncounterToolsModal } from '@/components/modals/encounter-tools/encounter-tools-modal';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { ExportPage } from '../pages/export/export-page';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
@@ -326,18 +327,14 @@ export const Main = (props: Props) => {
 	};
 
 	const exportHeroData = (hero: Hero) => {
-		const name = hero.name || 'Unnamed Hero';
-
-		Utils.exportData(name, hero, 'hero');
+		Utils.exportData(hero.name || 'Unnamed Hero', hero, 'hero');
 	};
 
 	const exportHeroImage = (hero: Hero) => {
-		const name = hero.name || 'Unnamed Hero';
-
 		const pageIds: string[] = [];
 		document.querySelectorAll(`[id^=hero-sheet-${hero.id}-page]`).forEach(elem => pageIds.push(elem.id));
 
-		Utils.exportImage(pageIds, name);
+		Utils.exportImage(pageIds, hero.name || 'Unnamed Hero');
 	};
 
 	const exportHeroPdf = (hero: Hero, resolution: 'standard' | 'high') => {
@@ -1664,6 +1661,24 @@ export const Main = (props: Props) => {
 							/>
 						}
 					/>
+					<Route path='export'>
+						<Route
+							index={true}
+							element={
+								<ExportPage
+									heroes={heroes}
+									homebrewSourcebooks={homebrewSourcebooks}
+									playbook={playbook}
+									options={options}
+									highlightAbout={errors.length > 0}
+									showReference={showReference}
+									showRoll={() => showRoll()}
+									showAbout={showAbout}
+									showSettings={showSettings}
+								/>
+							}
+						/>
+					</Route>
 					<Route path='hero'>
 						<Route
 							index={true}

@@ -395,7 +395,7 @@ export const PlaybookListPage = (props: Props) => {
 							<div className='selection-list categories'>
 								<SelectorRow selected={category === 'adventure'} content='Adventures' info={getAdventures().length} onSelect={() => navigation.goToPlaybook('adventure')} />
 								<SelectorRow selected={category === 'encounter'} content='Encounters' info={getEncounters(true).length} onSelect={() => navigation.goToPlaybook('encounter')} />
-								<SelectorRow selected={category === 'montage'} content='Montage' info={getMontages(true).length} onSelect={() => navigation.goToPlaybook('montage')} />
+								<SelectorRow selected={category === 'montage'} content='Montages' info={getMontages(true).length} onSelect={() => navigation.goToPlaybook('montage')} />
 								<SelectorRow selected={category === 'negotiation'} content='Negotiations' info={getNegotiations(true).length} onSelect={() => navigation.goToPlaybook('negotiation')} />
 								<SelectorRow selected={category === 'tactical-map'} content='Tactical Maps' info={getTacticalMaps(true).length} onSelect={() => navigation.goToPlaybook('tactical-map')} />
 							</div>

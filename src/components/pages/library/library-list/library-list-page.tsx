@@ -797,7 +797,6 @@ export const LibraryListPage = (props: Props) => {
 									onChange={setShowMonsters}
 								/>
 								<Button
-									type='text'
 									disabled={!showMonsters}
 									icon={showMonsterFilter ? <FilterFilled style={{ color: 'rgb(22, 119, 255)' }} /> : <FilterOutlined />}
 									onClick={() => setShowMonsterFilter(!showMonsterFilter)}
@@ -907,6 +906,9 @@ export const LibraryListPage = (props: Props) => {
 					showSidebar ?
 						<div className='selection-content'>
 							<div className='selection-list categories'>
+								<div className='selection-list-group-header'>
+									<HeaderText level={3}>For Players</HeaderText>
+								</div>
 								<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => navigation.goToLibrary('ancestry')} />
 								<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => navigation.goToLibrary('career')} />
 								<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => navigation.goToLibrary('class')} />
@@ -916,12 +918,15 @@ export const LibraryListPage = (props: Props) => {
 								<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
 								<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
 								<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
-								<SelectorRow selected={category === 'monster-group'} content='Monsters' info={showMonsters ? getMonsters().length : getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
 								<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
 								<SelectorRow selected={category === 'project'} content='Projects' info={getProjects().length} onSelect={() => navigation.goToLibrary('project')} />
 								<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
-								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
 								<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
+								<div className='selection-list-group-header'>
+									<HeaderText level={3}>For Directors</HeaderText>
+								</div>
+								<SelectorRow selected={category === 'monster-group'} content='Monsters' info={showMonsters ? getMonsters().length : getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
+								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
 							</div>
 							<div className='selection-list elements'>
 								{getElementListHeader()}

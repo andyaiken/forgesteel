@@ -2,6 +2,7 @@ import { ConnectionSettings } from '@/models/connection-settings';
 import { Hero } from '@/models/hero';
 import { Options } from '@/models/options';
 import { Playbook } from '@/models/playbook';
+import { Session } from '@/models/session';
 import { Sourcebook } from '@/models/sourcebook';
 import localforage from 'localforage';
 
@@ -44,12 +45,12 @@ export class DataService {
 		return localforage.setItem<Playbook>('forgesteel-playbook', playbook);
 	}
 
-	async getSession(): Promise<Playbook | null> {
-		return localforage.getItem<Playbook>('forgesteel-session');
+	async getSession(): Promise<Session | null> {
+		return localforage.getItem<Session>('forgesteel-session');
 	}
 
-	async saveSession(session: Playbook): Promise<Playbook> {
-		return localforage.setItem<Playbook>('forgesteel-session', session);
+	async saveSession(session: Session): Promise<Session> {
+		return localforage.setItem<Session>('forgesteel-session', session);
 	}
 
 	async getHiddenSettingIds(): Promise<string[] | null> {

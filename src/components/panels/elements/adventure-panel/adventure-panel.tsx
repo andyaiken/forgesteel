@@ -1,4 +1,4 @@
-import { Playbook, PlaybookElementKind } from '@/models/playbook';
+import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Adventure } from '@/models/adventure';
 import { Divider } from 'antd';
 import { Element } from '@/models/element';
@@ -12,19 +12,17 @@ import { Plot } from '@/models/plot';
 import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';
 import { PlotPanel } from '@/components/panels/elements/plot-panel/plot-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
-import { Sourcebook } from '@/models/sourcebook';
 import { useState } from 'react';
 
 import './adventure-panel.scss';
 
 interface Props {
 	adventure: Adventure;
-	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
 	options: Options;
 	mode?: PanelMode;
-	onStart?: (kind: PlaybookElementKind, element: Element, party: string) => void;
+	onStart?: (kind: SourcebookElementKind, element: Element, party: string) => void;
 }
 
 export const AdventurePanel = (props: Props) => {
@@ -37,7 +35,6 @@ export const AdventurePanel = (props: Props) => {
 				<PlotPanel
 					plot={selectedPlot}
 					adventure={props.adventure}
-					playbook={props.playbook}
 					sourcebooks={props.sourcebooks}
 					heroes={props.heroes}
 					options={props.options}
@@ -53,7 +50,6 @@ export const AdventurePanel = (props: Props) => {
 				<PlotPanel
 					plot={currentPlot}
 					adventure={props.adventure}
-					playbook={props.playbook}
 					sourcebooks={props.sourcebooks}
 					heroes={props.heroes}
 					options={props.options}

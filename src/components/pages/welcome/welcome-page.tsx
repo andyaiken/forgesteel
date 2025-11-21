@@ -1,5 +1,5 @@
 import { Alert, Button, Flex, Segmented } from 'antd';
-import { BookOutlined, PlayCircleOutlined, PlusOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, PlayCircleOutlined, PlusOutlined, TeamOutlined } from '@ant-design/icons';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Collections } from '@/utils/collections';
@@ -27,7 +27,6 @@ interface Props {
 	showAbout: () => void;
 	showSettings: () => void;
 	onNewHero: () => void;
-	onNewEncounter: () => void;
 }
 
 export const WelcomePage = (props: Props) => {
@@ -43,7 +42,6 @@ export const WelcomePage = (props: Props) => {
 							<div className='welcome-column'>
 								<Welcome
 									onNewHero={props.onNewHero}
-									onNewEncounter={props.onNewEncounter}
 								/>
 							</div>
 						</div>
@@ -75,7 +73,6 @@ export const WelcomePage = (props: Props) => {
 					<div className='welcome-column'>
 						<Welcome
 							onNewHero={props.onNewHero}
-							onNewEncounter={props.onNewEncounter}
 						/>
 					</div>
 					<div className='tip-column'>
@@ -97,7 +94,6 @@ export const WelcomePage = (props: Props) => {
 
 interface WelcomeProps {
 	onNewHero: () => void;
-	onNewEncounter: () => void;
 }
 
 const Welcome = (props: WelcomeProps) => {
@@ -156,7 +152,7 @@ const Welcome = (props: WelcomeProps) => {
 								For Directors: Prep Time
 							</HeaderText>
 							<div className='ds-text'>
-								In your <b>PLAYBOOK</b>, you can build anything you might need for your games:
+								In your <b>LIBRARY</b>, you can build anything you might need for your games:
 							</div>
 							<ul>
 								<li>
@@ -184,8 +180,7 @@ const Welcome = (props: WelcomeProps) => {
 						</div>
 						<div className='welcome-buttons'>
 							<Flex align='center' justify='center' gap={10}>
-								<Button type='primary' icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('adventure')}>Playbook</Button>
-								<Button icon={<PlusOutlined />} onClick={props.onNewEncounter}>New Encounter</Button>
+								<Button type='primary' icon={<BookOutlined />} onClick={() => navigation.goToLibrary('encounter')}>Library</Button>
 							</Flex>
 						</div>
 					</div>

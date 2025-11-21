@@ -1,6 +1,7 @@
 import { Button, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Adventure } from '@/models/adventure';
+import { AdventureLogic } from '@/logic/adventure-logic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
@@ -13,8 +14,6 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
-import { Playbook } from '@/models/playbook';
-import { PlaybookLogic } from '@/logic/playbook-logic';
 import { Plot } from '@/models/plot';
 import { PlotEditPanel } from '@/components/panels/edit/plot-edit/plot-edit-panel';
 import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';
@@ -26,7 +25,6 @@ import './adventure-edit-panel.scss';
 
 interface Props {
 	adventure: Adventure;
-	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
 	options: Options;
@@ -40,7 +38,7 @@ export const AdventureEditPanel = (props: Props) => {
 
 	const addPlotPoint = (previousID?: string) => {
 		const copy = Utils.copy(adventure);
-		const currentPlotCopy = PlaybookLogic.getPlotPoint(copy.plot, currentPlot.id);
+		const currentPlotCopy = AdventureLogic.getPlotPoint(copy.plot, currentPlot.id);
 
 		if (currentPlotCopy) {
 			const plot = FactoryLogic.createAdventurePlot();
@@ -68,7 +66,7 @@ export const AdventureEditPanel = (props: Props) => {
 
 	const deletePlotPoint = (id: string) => {
 		const copy = Utils.copy(adventure);
-		const currentPlotCopy = PlaybookLogic.getPlotPoint(copy.plot, currentPlot.id);
+		const currentPlotCopy = AdventureLogic.getPlotPoint(copy.plot, currentPlot.id);
 
 		if (currentPlotCopy) {
 			currentPlotCopy.plots = currentPlotCopy.plots.filter(p => p.id !== id);
@@ -303,7 +301,7 @@ export const AdventureEditPanel = (props: Props) => {
 	const getPlotEditor = (plot: Plot) => {
 		const changePlotPoint = (plot: Plot) => {
 			const copy = Utils.copy(adventure);
-			const currentPlotCopy = PlaybookLogic.getPlotPoint(copy.plot, currentPlot.id);
+			const currentPlotCopy = AdventureLogic.getPlotPoint(copy.plot, currentPlot.id);
 
 			if (currentPlotCopy) {
 				const index = currentPlotCopy.plots.findIndex(p => p.id === plot.id);
@@ -327,7 +325,6 @@ export const AdventureEditPanel = (props: Props) => {
 				key={plot.id}
 				plot={plot}
 				adventure={adventure}
-				playbook={props.playbook}
 				sourcebooks={props.sourcebooks}
 				heroes={props.heroes}
 				options={props.options}

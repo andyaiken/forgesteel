@@ -1,7 +1,10 @@
 import { Alert, Button, Divider, Flex, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
-import { CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, DownloadOutlined, EditOutlined, FilterFilled, FilterOutlined, PlusOutlined, SearchOutlined, UploadOutlined } from '@ant-design/icons';
+import { CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, DownloadOutlined, EditOutlined, FilterFilled, FilterOutlined, PlusOutlined, SearchOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
+import { Adventure } from '@/models/adventure';
+import { AdventureLogic } from '@/logic/adventure-logic';
+import { AdventurePanel } from '@/components/panels/elements/adventure-panel/adventure-panel';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
@@ -20,8 +23,16 @@ import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-pa
 import { Element } from '@/models/element';
 import { ElementSheet } from '@/components/panels/classic-sheet/element-sheet/element-sheet';
 import { Empty } from '@/components/controls/empty/empty';
+import { Encounter } from '@/models/encounter';
+import { EncounterData } from '@/data/encounter-data';
+import { EncounterDifficulty } from '@/enums/encounter-difficulty';
+import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
+import { EncounterLogic } from '@/logic/encounter-logic';
+import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -40,12 +51,15 @@ import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-pa
 import { MonsterInfo } from '@/components/panels/token/token';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
+import { Montage } from '@/models/montage';
+import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
+import { Negotiation } from '@/models/negotiation';
+import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
+import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
-import { Playbook } from '@/models/playbook';
-import { PlaybookLogic } from '@/logic/playbook-logic';
 import { Project } from '@/models/project';
 import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -54,6 +68,10 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SubClass } from '@/models/subclass';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
+import { TacticalMap } from '@/models/tactical-map';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
+import { TacticalMapLogic } from '@/logic/tactical-map-logic';
+import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
 import { Terrain } from '@/models/terrain';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 import { Title } from '@/models/title';
@@ -70,7 +88,6 @@ import './library-list-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	playbook: Playbook;
 	options: Options;
 	hiddenSourcebookIDs: string[];
 	highlightAbout: boolean;
@@ -80,9 +97,9 @@ interface Props {
 	showSettings: () => void;
 	showSourcebooks: () => void;
 	showMonster: (monster: Monster) => void;
-	setOptions: (options: Options) => void;
-	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element | null) => void;
-	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
+	showEncounterTools: (encounter: Encounter) => void;
+	createElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element | null) => void;
+	importElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	deleteElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	exportElementData: (category: string, element: Element) => void;
 	exportElementImage: (category: string, element: Element) => void;
@@ -106,7 +123,15 @@ export const LibraryListPage = (props: Props) => {
 	const [ showProjectsFromItems, setShowProjectsFromItems ] = useState<boolean>(false);
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
-	const [ sourcebookID, setSourcebookID ] = useState<string | null>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew)[0].id : null);
+	const [ sourcebookID, setSourcebookID ] = useState<string>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew)[0].id : '');
+	const [ difficulty, setDifficulty ] = useState<EncounterDifficulty>(EncounterDifficulty.Standard);
+	const [ keywords, setKeywords ] = useState<string[]>([]);
+	const [ mapImportType, setMapImportType ] = useState<'image' | 'video'>('image');
+	const [ mapImportData, setMapImportData ] = useState<string>('');
+	const [ mapImportWidth, setMapImportWidth ] = useState<number>(10);
+	const [ mapImportHeight, setMapImportHeight ] = useState<number>(5);
+	const [ mapGenerateType, setMapGenerateType ] = useState<'dungeon' | 'cavern'>('dungeon');
+	const [ mapGenerateSize, setMapGenerateSize ] = useState<number>(5);
 	useTitle('Library');
 
 	if (kind !== previousCategory) {
@@ -124,6 +149,20 @@ export const LibraryListPage = (props: Props) => {
 	};
 
 	// #region Get Elements
+
+	const getAdventures = () => {
+		try {
+			return SourcebookLogic
+				.getAdventures(getSourcebooks())
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
 
 	const getAncestries = () => {
 		try {
@@ -216,6 +255,28 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
+	const getEncounters = () => {
+		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(props.sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
+			return SourcebookLogic
+				.getEncounters(getSourcebooks())
+				.filter(item => !adventureContentIDs.includes(item.id))
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
 	const getImbuements = () => {
 		try {
 			return SourcebookLogic
@@ -291,6 +352,50 @@ export const LibraryListPage = (props: Props) => {
 		}
 	};
 
+	const getMontages = () => {
+		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(props.sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
+			return SourcebookLogic
+				.getMontages(getSourcebooks())
+				.filter(item => !!adventureContentIDs.includes(item.id))
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
+	const getNegotiations = () => {
+		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(props.sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
+			return SourcebookLogic
+				.getNegotiations(getSourcebooks())
+				.filter(item => !adventureContentIDs.includes(item.id))
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
 	const getPerks = () => {
 		try {
 			return SourcebookLogic
@@ -323,6 +428,28 @@ export const LibraryListPage = (props: Props) => {
 		try {
 			return SourcebookLogic
 				.getSubclasses(getSourcebooks(), showSubclassesFromClasses)
+				.filter(item => Utils.textMatches([
+					item.name,
+					item.description
+				], searchTerm));
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
+	const getTacticalMaps = () => {
+		try {
+			const adventureContentIDs = SourcebookLogic
+				.getAdventures(props.sourcebooks)
+				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
+				.flatMap(p => p.content)
+				.filter(c => c.contentType === 'reference')
+				.map(c => c.contentID);
+
+			return SourcebookLogic
+				.getTacticalMaps(getSourcebooks())
+				.filter(item => !adventureContentIDs.includes(item.id))
 				.filter(item => Utils.textMatches([
 					item.name,
 					item.description
@@ -368,6 +495,9 @@ export const LibraryListPage = (props: Props) => {
 		let list: Element[] = [];
 
 		switch (category) {
+			case 'adventure':
+				list = getAdventures();
+				break;
 			case 'ancestry':
 				list = getAncestries();
 				break;
@@ -386,6 +516,9 @@ export const LibraryListPage = (props: Props) => {
 			case 'domain':
 				list = getDomains();
 				break;
+			case 'encounter':
+				list = getEncounters();
+				break;
 			case 'imbuement':
 				list = getImbuements();
 				break;
@@ -398,6 +531,12 @@ export const LibraryListPage = (props: Props) => {
 			case 'monster-group':
 				list = showMonsters ? getMonsters() : getMonsterGroups();
 				break;
+			case 'montage':
+				list = getMontages();
+				break;
+			case 'negotiation':
+				list = getNegotiations();
+				break;
 			case 'perk':
 				list = getPerks();
 				break;
@@ -407,6 +546,9 @@ export const LibraryListPage = (props: Props) => {
 			case 'subclass':
 				list = getSubclasses();
 				break;
+			case 'tactical-map':
+				list = getTacticalMaps();
+				break;
 			case 'terrain':
 				list = getTerrainObjects();
 				break;
@@ -415,7 +557,7 @@ export const LibraryListPage = (props: Props) => {
 				break;
 		}
 
-		return list;
+		return Collections.distinct(list, x => x.id);
 	};
 
 	const getGroupHeaders = () => {
@@ -441,6 +583,7 @@ export const LibraryListPage = (props: Props) => {
 							type={cat}
 							element={element}
 							sourcebooks={props.sourcebooks}
+							heroes={props.heroes}
 							options={props.options}
 						/>
 					</div>
@@ -448,6 +591,9 @@ export const LibraryListPage = (props: Props) => {
 			};
 		} else {
 			switch (category) {
+				case 'adventure':
+					getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
 				case 'ancestry':
 					getPanel = (element: Element) => <AncestryPanel key={element.id} ancestry={element as Ancestry} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 					break;
@@ -466,6 +612,9 @@ export const LibraryListPage = (props: Props) => {
 				case 'domain':
 					getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 					break;
+				case 'encounter':
+					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
 				case 'imbuement':
 					getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 					break;
@@ -483,6 +632,12 @@ export const LibraryListPage = (props: Props) => {
 							<MonsterGroupPanel key={element.id} monsterGroup={element as MonsterGroup} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} onSelectMonster={props.showMonster} />;
 					};
 					break;
+				case 'montage':
+					getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} heroes={props.heroes} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'negotiation':
+					getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
 				case 'perk':
 					getPanel = (element: Element) => <PerkPanel key={element.id} perk={element as Perk} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 					break;
@@ -491,6 +646,9 @@ export const LibraryListPage = (props: Props) => {
 					break;
 				case 'subclass':
 					getPanel = (element: Element) => <SubclassPanel key={element.id} subclass={element as SubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					break;
+				case 'tactical-map':
+					getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} sourcebooks={props.sourcebooks} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
 					break;
 				case 'terrain':
 					getPanel = (element: Element) => <TerrainPanel key={element.id} terrain={element as Terrain} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />;
@@ -508,6 +666,9 @@ export const LibraryListPage = (props: Props) => {
 		let sourcebook: Sourcebook | undefined;
 
 		switch (category) {
+			case 'adventure':
+				sourcebook = SourcebookLogic.getAdventureSourcebook(props.sourcebooks, element as Adventure);
+				break;
 			case 'ancestry':
 				sourcebook = SourcebookLogic.getAncestrySourcebook(props.sourcebooks, element as Ancestry);
 				break;
@@ -526,6 +687,9 @@ export const LibraryListPage = (props: Props) => {
 			case 'domain':
 				sourcebook = SourcebookLogic.getDomainSourcebook(props.sourcebooks, element as Domain);
 				break;
+			case 'encounter':
+				sourcebook = SourcebookLogic.getEncounterSourcebook(props.sourcebooks, element as Encounter);
+				break;
 			case 'imbuement':
 				sourcebook = SourcebookLogic.getImbuementSourcebook(props.sourcebooks, element as Imbuement);
 				break;
@@ -541,6 +705,12 @@ export const LibraryListPage = (props: Props) => {
 					:
 					SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, element as MonsterGroup);
 				break;
+			case 'montage':
+				sourcebook = SourcebookLogic.getMontageSourcebook(props.sourcebooks, element as Montage);
+				break;
+			case 'negotiation':
+				sourcebook = SourcebookLogic.getNegotiationSourcebook(props.sourcebooks, element as Negotiation);
+				break;
 			case 'perk':
 				sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, element as Perk);
 				break;
@@ -549,6 +719,9 @@ export const LibraryListPage = (props: Props) => {
 				break;
 			case 'subclass':
 				sourcebook = SourcebookLogic.getSubclassSourcebook(props.sourcebooks, element as SubClass);
+				break;
+			case 'tactical-map':
+				sourcebook = SourcebookLogic.getTacticalMapSourcebook(props.sourcebooks, element as TacticalMap);
 				break;
 			case 'terrain':
 				sourcebook = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, element as Terrain);
@@ -623,6 +796,270 @@ export const LibraryListPage = (props: Props) => {
 		return null;
 	};
 
+	const getDestinationSelector = () => {
+		const sourcebookOptions: { label: string, value: string }[] = props.sourcebooks
+			.filter(cs => cs.type === SourcebookType.Homebrew)
+			.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
+
+		sourcebookOptions.push({ label: 'In a new sourcebook', value: '' });
+
+		return (
+			<div>
+				<div className='ds-text'>Where do you want it to live?</div>
+				<Select
+					style={{ width: '100%' }}
+					placeholder='Select'
+					options={sourcebookOptions}
+					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+					value={sourcebookID}
+					onChange={setSourcebookID}
+				/>
+			</div>
+		);
+	};
+
+	const getAddBtn = () => {
+		if ((category === 'monster-group') && showMonsters) {
+			return (
+				<Popover
+					trigger='click'
+					content={(
+						<Alert
+							type='info'
+							showIcon={true}
+							message='To create a new monster, switch to Group view.'
+							action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsters(false)}>Switch</Button>}
+						/>
+					)}
+				>
+					<Button type='primary'>
+						Add
+						<DownOutlined />
+					</Button>
+				</Popover>
+			);
+		}
+
+		const exampleEncounters = [
+			EncounterData.goblinAmbush,
+			EncounterData.dragonAttack
+		];
+
+		const generateEncounter = () => {
+			const enc = FactoryLogic.createEncounter();
+
+			let heroLevel = props.options.heroLevel;
+			if (props.options.heroParty) {
+				const party = props.heroes.filter(h => h.folder === props.options.heroParty);
+				heroLevel = Math.round(Collections.mean(party, h => h.class ? h.class.level : 1));
+			}
+
+			const budgets = EncounterDifficultyLogic.getBudgets(props.options, props.heroes);
+			switch (difficulty) {
+				case EncounterDifficulty.Easy:
+					EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxTrivial, heroLevel, heroLevel + 1);
+					break;
+				case EncounterDifficulty.Standard:
+					EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxEasy, heroLevel, heroLevel + 1);
+					break;
+				case EncounterDifficulty.Hard:
+					EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxStandard, heroLevel, heroLevel + 2);
+					break;
+			}
+
+			props.createElement(category, sourcebookID, enc);
+		};
+
+		const createImageMap = () => {
+			const map = FactoryLogic.createTacticalMap();
+			const tile = FactoryLogic.createMapTile();
+			tile.dimensions.width = mapImportWidth;
+			tile.dimensions.height = mapImportHeight;
+			switch (mapImportType) {
+				case 'image':
+					tile.content = { type: 'image', imageData: mapImportData };
+					break;
+				case 'video':
+					tile.content = { type: 'video', videoData: mapImportData };
+			}
+			map.items.push(tile);
+			props.createElement(category, sourcebookID, map);
+		};
+
+		const generateMap = () => {
+			const map = FactoryLogic.createTacticalMap();
+			switch (mapGenerateType) {
+				case 'dungeon':
+					TacticalMapLogic.generateDungeon(mapGenerateSize, map);
+					break;
+				case 'cavern':
+					TacticalMapLogic.generateCavern(mapGenerateSize * 50, map);
+					break;
+			}
+			props.createElement(category, sourcebookID, map);
+		};
+
+		const getOptions = () => {
+			switch (category) {
+				case 'encounter':
+					return [
+						<Expander key='premade' title='Use a premade example'>
+							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px', paddingTop: '15px' }}>
+								{
+									exampleEncounters.map(e => (
+										<Button key={e.id} block={true} onClick={() => props.createElement(category, sourcebookID, e)}>{e.name}</Button>
+									))
+								}
+							</div>
+						</Expander>,
+						<Expander key='random' title='Generate a random encounter'>
+							<Segmented
+								style={{ marginTop: '15px' }}
+								block={true}
+								options={[ EncounterDifficulty.Easy, EncounterDifficulty.Standard, EncounterDifficulty.Hard ]}
+								value={difficulty}
+								onChange={setDifficulty}
+							/>
+							<Select
+								style={{ width: '100%', margin: '10px 0' }}
+								mode='multiple'
+								placeholder='Use monsters with any keywords'
+								options={Collections.sort(Collections.distinct(SourcebookLogic.getMonsters(props.sourcebooks).flatMap(m => m.keywords), kw => kw), kw => kw).map(kw => ({ value: kw, label: <div className='ds-text'>{kw}</div> }))}
+								value={keywords}
+								onChange={setKeywords}
+
+							/>
+							<Button block={true} type='primary' icon={<ThunderboltOutlined />} onClick={generateEncounter}>Generate</Button>
+						</Expander>
+
+					];
+				case 'tactical-map':
+					return [
+						<Expander key='image' title='Use a battlemap'>
+							<Space direction='vertical' style={{ width: '100%', marginTop: '15px' }}>
+								<Segmented
+									block={true}
+									options={[
+										{ value: 'image', label: 'Image' },
+										{ value: 'video', label: 'Animated' }
+									]}
+									value={mapImportType}
+									onChange={setMapImportType}
+								/>
+								<Upload
+									style={{ width: '100%' }}
+									accept={mapImportType === 'image' ? '.png,.webp,.gif,.jpg,.jpeg,.svg' : '.mp4,.webm'}
+									showUploadList={false}
+									beforeUpload={file => {
+										const reader = new FileReader();
+										reader.onload = progress => {
+											if (progress.target) {
+												const content = progress.target.result as string;
+												setMapImportData(content);
+											}
+										};
+										reader.readAsDataURL(file);
+										return false;
+									}}
+								>
+									<Button block={true}>
+										<DownloadOutlined />
+										Choose file
+									</Button>
+								</Upload>
+								{
+									mapImportData ?
+										<>
+											{
+												mapImportType === 'image' ?
+													<img
+														style={{ width: '100%' }}
+														src={mapImportData}
+													/>
+													:
+													<video
+														style={{ width: '100%' }}
+														src={mapImportData}
+														autoPlay={true}
+														controls={false}
+														loop={true}
+														muted={true}
+													/>
+											}
+											<Flex align='center' justify='space-between' gap={10}>
+												<NumberSpin min={1} value={mapImportWidth} onChange={setMapImportWidth}>
+													<Field orientation='vertical' label='Width' value={mapImportWidth} />
+												</NumberSpin>
+												<NumberSpin min={1} value={mapImportHeight} onChange={setMapImportHeight}>
+													<Field orientation='vertical' label='Height' value={mapImportHeight} />
+												</NumberSpin>
+											</Flex>
+											<Button block={true} type='primary' onClick={createImageMap}>Create</Button>
+										</>
+										: null
+								}
+							</Space>
+						</Expander>,
+						<Expander key='random' title='Generate a random map'>
+							<Segmented
+								style={{ marginTop: '15px' }}
+								block={true}
+								options={[
+									{ value: 'dungeon', label: 'Dungeon' },
+									{ value: 'cavern', label: 'Cavern' }
+								]}
+								value={mapGenerateType}
+								onChange={setMapGenerateType}
+							/>
+							<NumberSpin min={1} value={mapGenerateSize} onChange={setMapGenerateSize}>
+								<Field orientation='vertical' label={mapGenerateType === 'dungeon' ? 'Rooms' : 'Size'} value={mapGenerateSize} />
+							</NumberSpin>
+							<Button block={true} type='primary' icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
+						</Expander>
+					];
+				default:
+					return [];
+			}
+		};
+
+		return (
+			<Popover
+				trigger='click'
+				content={(
+					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
+						{getDestinationSelector()}
+						<Divider />
+						<Space direction='vertical' style={{ width: '100%' }}>
+							<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.createElement(category, sourcebookID, null)}>Create</Button>
+							<Upload
+								style={{ width: '100%' }}
+								accept={`.drawsteel-${category.toLowerCase()},.ds-${category.toLowerCase()}`}
+								showUploadList={false}
+								beforeUpload={file => {
+									file
+										.text()
+										.then(json => {
+											const e = JSON.parse(json) as Element;
+											props.importElement(category, sourcebookID, e);
+										});
+									return false;
+								}}
+							>
+								<Button block={true} icon={<DownloadOutlined />}>Import</Button>
+							</Upload>
+							{getOptions()}
+						</Space>
+					</div>
+				)}
+			>
+				<Button type='primary'>
+					Add
+					<DownOutlined />
+				</Button>
+			</Popover>
+		);
+	};
+
 	const getElementToolbar = () => {
 		const element = getList().find(item => item.id == selectedID);
 		if (!element) {
@@ -644,8 +1081,6 @@ export const LibraryListPage = (props: Props) => {
 
 			return null;
 		}
-
-		const homebrewSourcebooks = props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew);
 
 		const getCreateHomebrew = () => {
 			if ((category === 'monster-group') && showMonsters) {
@@ -669,24 +1104,14 @@ export const LibraryListPage = (props: Props) => {
 				);
 			}
 
-			if ((sourcebook.type !== SourcebookType.Homebrew) && (homebrewSourcebooks.length === 0)) {
-				return (
-					<Button icon={<CopyOutlined />} onClick={() => props.createElement(category, null, element)}>
-						Create Homebrew Version
-					</Button>
-				);
-			}
-
-			if ((sourcebook.type !== SourcebookType.Homebrew) && (homebrewSourcebooks.length > 0)) {
+			if (sourcebook.type !== SourcebookType.Homebrew) {
 				return (
 					<Popover
 						trigger='click'
 						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<ErrorBoundary>
-									{homebrewSourcebooks.map(sb => <Button key={sb.id} onClick={() => props.createElement(category, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)}
-								</ErrorBoundary>
-								<Button onClick={() => props.createElement(category, null, element)}>In a new sourcebook</Button>
+							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
+								{getDestinationSelector()}
+								<Button type='primary' onClick={() => props.createElement(category, sourcebookID, element)}>Create</Button>
 							</div>
 						)}
 					>
@@ -701,49 +1126,59 @@ export const LibraryListPage = (props: Props) => {
 			return null;
 		};
 
-		return (
-			<>
-				{getCreateHomebrew()}
-				{
-					sourcebook.type === SourcebookType.Homebrew ?
-						<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(category, sourcebook.id, element.id)}>
-							Edit
-						</Button>
-						: null
-				}
-				{
-					sourcebook.type === SourcebookType.Homebrew ?
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-									<ErrorBoundary>
-										{
-											props.sourcebooks
-												.filter(sb => sb.type === SourcebookType.Homebrew)
-												.map(sb => <Button key={sb.id} onClick={() => props.createElement(category, sb.id, element)}>In {sb.name || 'Unnamed Sourcebook'}</Button>)
-										}
-									</ErrorBoundary>
-									<Button onClick={() => props.createElement(category, null, element)}>In a new sourcebook</Button>
-								</div>
-							)}
-						>
-							<Button icon={<CopyOutlined />}>
-								Copy
-							</Button>
-						</Popover>
-						: null
-				}
+		const getEdit = () => {
+			return sourcebook.type === SourcebookType.Homebrew ?
+				<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(category, sourcebook.id, element.id)}>
+					Edit
+				</Button>
+				: null;
+		};
+
+		const getCopy = () => {
+			return sourcebook.type === SourcebookType.Homebrew ?
 				<Popover
 					trigger='click'
 					content={(
-						<div style={{ width: '300px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
+							{getDestinationSelector()}
+							<Button type='primary' onClick={() => props.createElement(category, sourcebookID, element)}>In a new sourcebook</Button>
+						</div>
+					)}
+				>
+					<Button icon={<CopyOutlined />}>
+						Copy
+						<DownOutlined />
+					</Button>
+				</Popover>
+				: null;
+		};
+
+		const getExport = () => {
+			let content = null;
+			switch (category) {
+				case 'ancestry':
+				case 'career':
+				case 'class':
+				case 'complication':
+				case 'culture':
+				case 'domain':
+				case 'imbuement':
+				case 'item':
+				case 'kit':
+				case 'monster-group':
+				case 'perk':
+				case 'project':
+				case 'subclass':
+				case 'terrain':
+				case 'title':
+					content = (
+						<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 							{
 								view !== 'classic' ?
 									<Alert
 										type='info'
 										showIcon={true}
-										message='If you want to export as an image or PDF, switch to Classic view.'
+										message='If you want to export as a PDF, switch to Classic view.'
 										action={<Button onClick={() => setView('classic')}>Classic</Button>}
 									/>
 									: null
@@ -759,22 +1194,75 @@ export const LibraryListPage = (props: Props) => {
 							}
 							<Button onClick={() => props.exportElementData(((category === 'monster-group') && showMonsters) ? 'monster' : category, element)}>Export as Data</Button>
 						</div>
-					)}
+					);
+					break;
+				case 'encounter':
+				case 'montage':
+				case 'negotiation':
+					content = (
+						<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							{
+								view !== 'classic' ?
+									<Alert
+										type='info'
+										showIcon={true}
+										message='If you want to export as a PDF, switch to Classic view.'
+										action={<Button onClick={() => setView('classic')}>Classic</Button>}
+									/>
+									: null
+							}
+							{
+								view === 'classic' ?
+									<>
+										<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export As PDF</Button>
+										<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export As PDF (high res)</Button>
+									</>
+									: null
+							}
+							<Button onClick={() => props.exportElementData(category, element)}>Export as Data</Button>
+						</div>
+					);
+					break;
+				case 'adventure':
+				case 'tactical-map':
+					content = (
+						<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+							<Button onClick={() => props.exportElementData(category, element)}>Export as Data</Button>
+						</div>
+					);
+					break;
+			}
+
+			return (
+				<Popover
+					trigger='click'
+					content={content}
 				>
 					<Button icon={<UploadOutlined />}>
 						Export
 						<DownOutlined />
 					</Button>
 				</Popover>
-				{
-					sourcebook.type === SourcebookType.Homebrew ?
-						<DangerButton
-							mode='block'
-							disabled={PlaybookLogic.getUsedIn(props.playbook, element.id).length !== 0}
-							onConfirm={() => props.deleteElement(category, sourcebook.id, element)}
-						/>
-						: null
-				}
+			);
+		};
+
+		const getDelete = () => {
+			return sourcebook.type === SourcebookType.Homebrew ?
+				<DangerButton
+					mode='block'
+					disabled={SourcebookLogic.getUsedIn(props.sourcebooks, element.id).length !== 0}
+					onConfirm={() => props.deleteElement(category, sourcebook.id, element)}
+				/>
+				: null;
+		};
+
+		return (
+			<>
+				{getCreateHomebrew()}
+				{getEdit()}
+				{getCopy()}
+				{getExport()}
+				{getDelete()}
 			</>
 		);
 	};
@@ -861,7 +1349,7 @@ export const LibraryListPage = (props: Props) => {
 						<SelectorRow
 							key={a.id}
 							selected={selectedID === a.id}
-							content={(category === 'monster-group') && showMonsters ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category)}`}
+							content={(category === 'monster-group') && showMonsters ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`}
 							info={getInfo(a)}
 							onSelect={() => navigation.goToLibrary(category, a.id)}
 						/>
@@ -874,6 +1362,12 @@ export const LibraryListPage = (props: Props) => {
 					);
 				}
 			});
+
+			if (listItems.length === 0) {
+				listItems.push(
+					<Empty key='empty' />
+				);
+			}
 
 			return listItems;
 		};
@@ -925,7 +1419,12 @@ export const LibraryListPage = (props: Props) => {
 								<div className='selection-list-group-header'>
 									<HeaderText level={3}>For Directors</HeaderText>
 								</div>
+								<SelectorRow selected={category === 'adventure'} content='Adventures' info={getAdventures().length} onSelect={() => navigation.goToLibrary('adventure')} />
+								<SelectorRow selected={category === 'encounter'} content='Encounters' info={getEncounters().length} onSelect={() => navigation.goToLibrary('encounter')} />
 								<SelectorRow selected={category === 'monster-group'} content='Monsters' info={showMonsters ? getMonsters().length : getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
+								<SelectorRow selected={category === 'montage'} content='Montages' info={getMontages().length} onSelect={() => navigation.goToLibrary('montage')} />
+								<SelectorRow selected={category === 'negotiation'} content='Negotiations' info={getNegotiations().length} onSelect={() => navigation.goToLibrary('negotiation')} />
+								<SelectorRow selected={category === 'tactical-map'} content='Tactical Maps' info={getTacticalMaps().length} onSelect={() => navigation.goToLibrary('tactical-map')} />
 								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
 							</div>
 							<div className='selection-list elements'>
@@ -942,98 +1441,21 @@ export const LibraryListPage = (props: Props) => {
 	const selected = getList().find(item => item.id == selectedID);
 	const getPanel = getElementPanel();
 
-	const sourcebookOptions = props.sourcebooks
-		.filter(cs => cs.type === SourcebookType.Homebrew)
-		.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
+	const showViewSelector = !!selectedID && (category !== 'adventure') && (category !== 'tactical-map');
 
 	return (
 		<ErrorBoundary>
 			<div className='library-list-page'>
 				<AppHeader subheader='Library'>
-					{
-						(category === 'monster-group') && showMonsters ?
-							<Popover
-								trigger='click'
-								content={(
-									<Alert
-										type='info'
-										showIcon={true}
-										message='To create a new monster, switch to Group view.'
-										action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsters(false)}>Switch</Button>}
-									/>
-								)}
-							>
-								<Button type='primary'>
-									Add
-									<DownOutlined />
-								</Button>
-							</Popover>
-							:
-							<Popover
-								trigger='click'
-								content={(
-									<div style={{ display: 'flex', flexDirection: 'column', minWidth: '150px' }}>
-										{
-											sourcebookOptions.length > 0 ?
-												<div>
-													<div className='ds-text'>Where do you want it to live?</div>
-													<Select
-														style={{ width: '100%' }}
-														placeholder='Select'
-														options={sourcebookOptions}
-														optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-														showSearch={true}
-														filterOption={(input, option) => {
-															const strings = option ?
-																[
-																	option.label
-																]
-																: [];
-															return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-														}}
-														value={sourcebookID}
-														onChange={setSourcebookID}
-													/>
-												</div>
-												: null
-										}
-										{sourcebookOptions.length > 0 ? <Divider /> : null}
-										<Space direction='vertical' style={{ width: '100%' }}>
-											<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.createElement(category, sourcebookID, null)}>Create</Button>
-											<Upload
-												style={{ width: '100%' }}
-												accept={`.drawsteel-${category.toLowerCase()},.ds-${category.toLowerCase()}`}
-												showUploadList={false}
-												beforeUpload={file => {
-													file
-														.text()
-														.then(json => {
-															const e = JSON.parse(json) as Element;
-															props.importElement(category, sourcebookID, e);
-														});
-													return false;
-												}}
-											>
-												<Button block={true} icon={<DownloadOutlined />}>Import</Button>
-											</Upload>
-										</Space>
-									</div>
-								)}
-							>
-								<Button type='primary'>
-									Add
-									<DownOutlined />
-								</Button>
-							</Popover>
-					}
+					{getAddBtn()}
 					{getElementToolbar()}
 					{
-						selectedID ?
+						showViewSelector ?
 							<div className='divider' />
 							: null
 					}
 					{
-						selectedID ?
+						showViewSelector ?
 							<ViewSelector value={view} onChange={setView} />
 							: null
 					}

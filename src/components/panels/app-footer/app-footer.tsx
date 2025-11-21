@@ -1,5 +1,5 @@
 import { Badge, Button, Divider, Flex } from 'antd';
-import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, ReadOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
+import { BookOutlined, InfoCircleOutlined, PlayCircleOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { SyncStatus } from '@/components/panels/sync-status/sync-status';
 import { useIsSmall } from '@/hooks/use-is-small';
@@ -10,7 +10,7 @@ import './app-footer.scss';
 import shield from '@/assets/shield.png';
 
 interface Props {
-	page: 'welcome' | 'heroes' | 'library' | 'playbook' | 'session' | 'player-view';
+	page: 'welcome' | 'heroes' | 'library' | 'session' | 'player-view';
 	highlightAbout: boolean;
 	showReference: () => void;
 	showRoll: () => void;
@@ -38,10 +38,6 @@ export const AppFooter = (props: Props) => {
 							<Divider type='vertical' />
 							<Button type='text' className={props.page === 'library' ? 'selected' : ''} icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>
 								{isSmall ? null : 'Library'}
-							</Button>
-							<Divider type='vertical' />
-							<Button type='text' className={props.page === 'playbook' ? 'selected' : ''} icon={<ReadOutlined />} onClick={() => navigation.goToPlaybook('adventure')}>
-								{isSmall ? null : 'Playbook'}
 							</Button>
 							<Divider type='vertical' />
 							<Button type='text' className={props.page === 'session' ? 'selected' : ''} icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>

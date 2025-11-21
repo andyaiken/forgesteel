@@ -12,6 +12,8 @@ import { DamageModifierType } from '@/enums/damage-modifier-type';
 import { DamageType } from '@/enums/damage-type';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
+import { Encounter } from '@/models/encounter';
+import { EncounterSheetPage } from '../encounter-sheet/encounter-sheet-page';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
@@ -20,6 +22,7 @@ import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { Item } from '@/models/item';
@@ -29,6 +32,10 @@ import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
+import { Montage } from '@/models/montage';
+import { MontageSheetPage } from '../montage-sheet/montage-sheet-page';
+import { Negotiation } from '@/models/negotiation';
+import { NegotiationSheetPage } from '../negotiation-sheet/negotiation-sheet-page';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
@@ -48,10 +55,38 @@ interface Props {
 	type: string;
 	element: Element;
 	sourcebooks: Sourcebook[];
+	heroes: Hero[];
 	options: Options;
 }
 
 export const ElementSheet = (props: Props) => {
+	switch (props.type) {
+		case 'encounter':
+			return (
+				<EncounterSheetPage
+					encounter={props.element as Encounter}
+					sourcebooks={props.sourcebooks}
+					heroes={props.heroes}
+					options={props.options}
+				/>
+			);
+		case 'montage':
+			return (
+				<MontageSheetPage
+					montage={props.element as Montage}
+					heroes={props.heroes}
+					options={props.options}
+				/>
+			);
+		case 'negotiation':
+			return (
+				<NegotiationSheetPage
+					negotiation={props.element as Negotiation}
+					options={props.options}
+				/>
+			);
+	}
+
 	let content = null;
 	switch (props.type) {
 		case 'ancestry':

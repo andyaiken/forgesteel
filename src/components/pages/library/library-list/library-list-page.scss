@@ -11,7 +11,7 @@
 		overflow: hidden;
 
 		.selection-sidebar {
-			flex: 0 0 420px;
+			flex: 0 0 450px;
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
@@ -38,7 +38,6 @@
 				overflow: hidden;
 
 				.selection-list {
-					flex: 0 0 150px;
 					display: flex;
 					flex-direction: column;
 					gap: 5px;
@@ -48,7 +47,7 @@
 					overflow-y: auto;
 
 					&.categories {
-						flex: 0 0 150px;
+						flex: 0 0 180px;
 					}
 
 					&.elements {

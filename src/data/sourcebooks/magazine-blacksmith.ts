@@ -1116,6 +1116,7 @@ export const blacksmith: Sourcebook = {
 	name: 'Blacksmith\'s Guild',
 	description: 'Third-party content from the [Blacksmith\'s Guild](https://tabletopnonsenseverse.myshopify.com/).',
 	type: SourcebookType.ThirdParty,
+	adventures: [],
 	ancestries: [
 		goblinSquad,
 		psiBorg
@@ -1125,6 +1126,7 @@ export const blacksmith: Sourcebook = {
 	cultures: [],
 	classes: [],
 	domains: [],
+	encounters: [],
 	imbuements: [],
 	items: [
 		abundanceOfLoveAndReticence,
@@ -1150,11 +1152,14 @@ export const blacksmith: Sourcebook = {
 		swift
 	],
 	monsterGroups: [],
+	montages: [],
+	negotiations: [],
 	perks: [],
 	projects: [
 		installImplant
 	],
 	subclasses: [],
+	tacticalMaps: [],
 	terrain: [],
 	titles: [],
 	skills: [],

@@ -10,6 +10,7 @@ export const orden: Sourcebook = {
 	name: 'Orden',
 	description: 'The default setting for Draw Steel.',
 	type: SourcebookType.Official,
+	adventures: [],
 	ancestries: [
 		AncestryData.hakaan,
 		AncestryData.memonek,
@@ -20,6 +21,7 @@ export const orden: Sourcebook = {
 	complications: [],
 	cultures: [],
 	domains: [],
+	encounters: [],
 	imbuements: [],
 	items: [],
 	kits: [],
@@ -29,9 +31,12 @@ export const orden: Sourcebook = {
 		MonsterData.lordSyuul,
 		MonsterData.xorannox
 	],
+	montages: [],
+	negotiations: [],
 	perks: [],
 	projects: [],
 	subclasses: [],
+	tacticalMaps: [],
 	terrain: [],
 	titles: [],
 	skills: [

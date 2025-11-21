@@ -1,34 +1,12 @@
 import { AttitudeType } from '@/enums/attitude-type';
 import { EncounterDifficulty } from '@/enums/encounter-difficulty';
 import { EncounterObjectiveData } from '@/data/encounter-objective-data';
-import { FactoryLogic } from '@/logic/factory-logic';
 import { MonsterUpdateLogic } from '@/logic/update/monster-update-logic';
-import { Playbook } from '@/models/playbook';
-import { PlotContentReference } from '@/models/plot';
+import { Session } from '@/models/session';
 
-export class PlaybookUpdateLogic {
-	static updatePlaybook = (playbook: Playbook) => {
-		if (playbook.adventures === undefined) {
-			playbook.adventures = [];
-		}
-
-		playbook.adventures.forEach(a => {
-			if (a.plot === undefined) {
-				a.plot = FactoryLogic.createAdventurePlot('');
-			}
-
-			if (a.plot.plots === undefined) {
-				a.plot.plots = [];
-			}
-
-			a.plot.plots.flatMap(p => p.content).forEach(c => {
-				if (c.contentType === undefined) {
-					(c as PlotContentReference).contentType = 'reference';
-				}
-			});
-		});
-
-		playbook.encounters.forEach(e => {
+export class SessionUpdateLogic {
+	static updateSession = (session: Session) => {
+		session.encounters.forEach(e => {
 			e.groups.forEach(g => {
 				if (g.name === undefined) {
 					g.name = '';
@@ -135,21 +113,21 @@ export class PlaybookUpdateLogic {
 			}
 		});
 
-		if (playbook.montages === undefined) {
-			playbook.montages = [];
+		if (session.montages === undefined) {
+			session.montages = [];
 		}
 
-		playbook.montages.forEach(m => {
+		session.montages.forEach(m => {
 			if (m.difficulty === undefined) {
 				m.difficulty = EncounterDifficulty.Standard;
 			}
 		});
 
-		if (playbook.negotiations === undefined) {
-			playbook.negotiations = [];
+		if (session.negotiations === undefined) {
+			session.negotiations = [];
 		}
 
-		playbook.negotiations.forEach(n => {
+		session.negotiations.forEach(n => {
 			if (n.attitude === undefined) {
 				n.attitude = AttitudeType.Open;
 			}
@@ -167,11 +145,11 @@ export class PlaybookUpdateLogic {
 			}
 		});
 
-		if (playbook.tacticalMaps === undefined) {
-			playbook.tacticalMaps = [];
+		if (session.tacticalMaps === undefined) {
+			session.tacticalMaps = [];
 		}
 
-		playbook.tacticalMaps.forEach(tm => {
+		session.tacticalMaps.forEach(tm => {
 			if (tm.items === undefined) {
 				tm.items = [];
 			}

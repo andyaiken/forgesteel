@@ -18,6 +18,8 @@ import { LeveledImplementData } from '@/data/items/leveled-implement-data';
 import { LeveledItemData } from '@/data/items/leveled-item-data';
 import { LeveledWeaponData } from '@/data/items/leveled-weapon-data';
 import { MonsterData } from '@/data/monster-data';
+import { MontageData } from '@/data/montage-data';
+import { NegotiationData } from '@/data/negotiation-data';
 import { PerkData } from '@/data/perk-data';
 import { ProjectData } from '@/data/project-data';
 import { SkillList } from '@/enums/skill-list';
@@ -28,10 +30,11 @@ import { TitleData } from '@/data/title-data';
 import { TrinketData } from '@/data/items/trinket-data';
 
 export const core: Sourcebook = {
-	id: '',
+	id: 'core',
 	name: 'Core',
 	description: 'Core game elements.',
 	type: SourcebookType.Official,
+	adventures: [],
 	ancestries: [
 		AncestryData.devil,
 		AncestryData.dragonKnight,
@@ -208,6 +211,7 @@ export const core: Sourcebook = {
 		DomainData.trickery,
 		DomainData.war
 	],
+	encounters: [],
 	imbuements: [
 		ImbuedArmorData.aweCharming,
 		ImbuedArmorData.aweThreatening,
@@ -485,6 +489,27 @@ export const core: Sourcebook = {
 		MonsterData.werewolf,
 		MonsterData.wyvern
 	],
+	montages: [
+		MontageData.fightFire,
+		MontageData.infiltrateThePalace,
+		MontageData.prepareForBattle,
+		MontageData.trackTheFugitive,
+		MontageData.wildernessRace
+	],
+	negotiations: [
+		NegotiationData.banditChief,
+		NegotiationData.knight,
+		NegotiationData.guildmaster,
+		NegotiationData.warlord,
+		NegotiationData.burgomaster,
+		NegotiationData.virtuoso,
+		NegotiationData.highPriest,
+		NegotiationData.duke,
+		NegotiationData.dragon,
+		NegotiationData.monarch,
+		NegotiationData.lich,
+		NegotiationData.deity
+	],
 	perks: [
 		PerkData.areaOfExpertise,
 		PerkData.expertArtisan,
@@ -551,6 +576,7 @@ export const core: Sourcebook = {
 		ProjectData.spendTimeWithLovedOnes
 	],
 	subclasses: [],
+	tacticalMaps: [],
 	terrain: [
 		TerrainData.angryBeehive,
 		TerrainData.brambles,

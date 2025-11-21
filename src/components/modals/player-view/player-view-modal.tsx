@@ -2,7 +2,7 @@ import { Alert, Button, Space } from 'antd';
 import { Empty } from '@/components/controls/empty/empty';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Modal } from '@/components/modals/modal/modal';
-import { Playbook } from '@/models/playbook';
+import { Session } from '@/models/session';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -10,14 +10,14 @@ import { useState } from 'react';
 import './player-view-modal.scss';
 
 interface Props {
-	session: Playbook;
-	updateSession: (session: Playbook) => void;
+	session: Session;
+	updateSession: (session: Session) => void;
 	openPlayerView: (playerView: Window | null) => void;
 	onClose: () => void;
 }
 
 export const PlayerViewModal = (props: Props) => {
-	const [ session, setSession ] = useState<Playbook>(Utils.copy(props.session));
+	const [ session, setSession ] = useState<Session>(Utils.copy(props.session));
 
 	const setPlayerViewID = (value: string | null) => {
 		const copy = Utils.copy(session);

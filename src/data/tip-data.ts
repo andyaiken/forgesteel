@@ -164,14 +164,14 @@ export class TipData {
 			// #region Adventures
 			FactoryLogic.createTip({
 				image: playbookAdventure,
-				content: 'You can design adventures in the **Playbook**.'
+				content: 'You can design adventures in the **Library**.'
 			}),
 			// #endregion
 
 			// #region Encounters
 			FactoryLogic.createTip({
 				image: playbookEncounter,
-				content: 'You can design encounters in the **Playbook**.'
+				content: 'You can design encounters in the **Library**.'
 			}),
 			FactoryLogic.createTip({
 				image: playbookEncounterTools,
@@ -196,7 +196,7 @@ export class TipData {
 			// #region Montages
 			FactoryLogic.createTip({
 				image: playbookMontage,
-				content: 'You can design montages in the **Playbook**.'
+				content: 'You can design montages in the **Library**.'
 			}),
 			FactoryLogic.createTip({
 				image: playbookMontageClassic,
@@ -211,7 +211,7 @@ export class TipData {
 			// #region Negotiations
 			FactoryLogic.createTip({
 				image: playbookNegotiation,
-				content: 'You can design negotiations in the **Playbook**.'
+				content: 'You can design negotiations in the **Library**.'
 			}),
 			FactoryLogic.createTip({
 				image: playbookNegotiationClassic,
@@ -226,7 +226,7 @@ export class TipData {
 			// #region Maps
 			FactoryLogic.createTip({
 				image: playbookMap,
-				content: 'You can design tactical maps in the **Playbook**.'
+				content: 'You can design tactical maps in the **Library**.'
 			}),
 			FactoryLogic.createTip({
 				image: playbookMapAutobuild,

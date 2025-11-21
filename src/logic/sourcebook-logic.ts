@@ -1,4 +1,6 @@
 import { Ability } from '@/models/ability';
+import { Adventure } from '@/models/adventure';
+import { AdventureLogic } from './adventure-logic';
 import { Ancestry } from '@/models/ancestry';
 import { Career } from '@/models/career';
 import { Collections } from '@/utils/collections';
@@ -6,6 +8,8 @@ import { Complication } from '@/models/complication';
 import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
+import { Encounter } from '@/models/encounter';
+import { EncounterLogic } from './encounter-logic';
 import { Feature } from '@/models/feature';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { FeatureType } from '@/enums/feature-type';
@@ -16,6 +20,8 @@ import { Kit } from '@/models/kit';
 import { Language } from '@/models/language';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
+import { Montage } from '@/models/montage';
+import { Negotiation } from '@/models/negotiation';
 import { Options } from '@/models/options';
 import { Perk } from '@/models/perk';
 import { Project } from '@/models/project';
@@ -25,6 +31,7 @@ import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookData } from '@/data/sourcebook-data';
 import { SubClass } from '@/models/subclass';
+import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
 import { Title } from '@/models/title';
 
@@ -57,19 +64,24 @@ export class SourcebookLogic {
 
 	static getElements = (sourcebook: Sourcebook): { element: Element, type: string }[] => {
 		return [
+			...sourcebook.adventures.map(x => ({ element: x, type: 'adventure' })),
 			...sourcebook.ancestries.map(x => ({ element: x, type: 'ancestry' })),
 			...sourcebook.careers.map(x => ({ element: x, type: 'career' })),
 			...sourcebook.classes.map(x => ({ element: x, type: 'class' })),
 			...sourcebook.complications.map(x => ({ element: x, type: 'complication' })),
 			...sourcebook.cultures.map(x => ({ element: x, type: 'culture' })),
 			...sourcebook.domains.map(x => ({ element: x, type: 'domain' })),
+			...sourcebook.encounters.map(x => ({ element: x, type: 'encounter' })),
 			...sourcebook.imbuements.map(x => ({ element: x, type: 'imbuement' })),
 			...sourcebook.items.map(x => ({ element: x, type: 'item' })),
 			...sourcebook.kits.map(x => ({ element: x, type: 'kit' })),
 			...sourcebook.monsterGroups.map(x => ({ element: x, type: 'monster group' })),
+			...sourcebook.montages.map(x => ({ element: x, type: 'montage' })),
+			...sourcebook.negotiations.map(x => ({ element: x, type: 'negotiation' })),
 			...sourcebook.perks.map(x => ({ element: x, type: 'perk' })),
 			...sourcebook.projects.map(x => ({ element: x, type: 'project' })),
 			...sourcebook.subclasses.map(x => ({ element: x, type: 'subclass' })),
+			...sourcebook.tacticalMaps.map(x => ({ element: x, type: 'tactical map' })),
 			...sourcebook.terrain.map(x => ({ element: x, type: 'terrain' })),
 			...sourcebook.titles.map(x => ({ element: x, type: 'title' }))
 		];
@@ -88,6 +100,10 @@ export class SourcebookLogic {
 	};
 
 	///////////////////////////////////////////////////////////////////////////
+
+	static getAdventureSourcebook = (sourcebooks: Sourcebook[], adventure: Adventure) => {
+		return sourcebooks.find(s => SourcebookLogic.getAdventures([ s ]).some(a => a.id === adventure.id));
+	};
 
 	static getAncestrySourcebook = (sourcebooks: Sourcebook[], ancestry: Ancestry) => {
 		return sourcebooks.find(s => SourcebookLogic.getAncestries([ s ]).some(a => a.id === ancestry.id));
@@ -113,6 +129,10 @@ export class SourcebookLogic {
 		return sourcebooks.find(s => SourcebookLogic.getDomains([ s ]).some(d => d.id === domain.id));
 	};
 
+	static getEncounterSourcebook = (sourcebooks: Sourcebook[], encounter: Encounter) => {
+		return sourcebooks.find(s => SourcebookLogic.getEncounters([ s ]).some(e => e.id === encounter.id));
+	};
+
 	static getImbuementSourcebook = (sourcebooks: Sourcebook[], imbuement: Imbuement) => {
 		return sourcebooks.find(s => SourcebookLogic.getImbuements([ s ]).some(i => i.id === imbuement.id));
 	};
@@ -133,6 +153,14 @@ export class SourcebookLogic {
 		return sourcebooks.find(s => SourcebookLogic.getMonsters([ s ]).some(m => m.id === monster.id));
 	};
 
+	static getMontageSourcebook = (sourcebooks: Sourcebook[], montage: Montage) => {
+		return sourcebooks.find(s => SourcebookLogic.getMontages([ s ]).some(m => m.id === montage.id));
+	};
+
+	static getNegotiationSourcebook = (sourcebooks: Sourcebook[], negotiation: Negotiation) => {
+		return sourcebooks.find(s => SourcebookLogic.getNegotiations([ s ]).some(n => n.id === negotiation.id));
+	};
+
 	static getPerkSourcebook = (sourcebooks: Sourcebook[], perk: Perk) => {
 		return sourcebooks.find(s => SourcebookLogic.getPerks([ s ]).some(p => p.id === perk.id));
 	};
@@ -145,6 +173,10 @@ export class SourcebookLogic {
 		return sourcebooks.find(s => SourcebookLogic.getSubclasses([ s ], true).some(s => s.id === subclass.id));
 	};
 
+	static getTacticalMapSourcebook = (sourcebooks: Sourcebook[], map: TacticalMap) => {
+		return sourcebooks.find(s => SourcebookLogic.getTacticalMaps([ s ]).some(tm => tm.id === map.id));
+	};
+
 	static getTerrainSourcebook = (sourcebooks: Sourcebook[], terrain: Terrain) => {
 		return sourcebooks.find(s => SourcebookLogic.getTerrains([ s ]).some(t => t.id === terrain.id));
 	};
@@ -154,6 +186,16 @@ export class SourcebookLogic {
 	};
 
 	///////////////////////////////////////////////////////////////////////////
+
+	static getAdventures = (sourcebooks: Sourcebook[]) => {
+		const list: Adventure[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.adventures);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
 
 	static getAncestries = (sourcebooks: Sourcebook[]) => {
 		const list: Ancestry[] = [];
@@ -219,6 +261,16 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
+	static getEncounters = (sourcebooks: Sourcebook[]) => {
+		const list: Encounter[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.encounters);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
 	static getImbuements = (sourcebooks: Sourcebook[]) => {
 		const list: Imbuement[] = [];
 
@@ -269,6 +321,26 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
+	static getMontages = (sourcebooks: Sourcebook[]) => {
+		const list: Montage[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.montages);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
+	static getNegotiations = (sourcebooks: Sourcebook[]) => {
+		const list: Negotiation[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.negotiations);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
 	static getPerks = (sourcebooks: Sourcebook[]) => {
 		const list: Perk[] = [];
 
@@ -311,6 +383,16 @@ export class SourcebookLogic {
 		return Collections.sort(list, item => item.name);
 	};
 
+	static getTacticalMaps = (sourcebooks: Sourcebook[]) => {
+		const list: TacticalMap[] = [];
+
+		sourcebooks.forEach(sourcebook => {
+			list.push(...sourcebook.tacticalMaps);
+		});
+
+		return Collections.sort(list, item => item.name);
+	};
+
 	static getTerrains = (sourcebooks: Sourcebook[]) => {
 		const list: Terrain[] = [];
 
@@ -330,6 +412,8 @@ export class SourcebookLogic {
 
 		return Collections.sort(list, item => item.name);
 	};
+
+	///////////////////////////////////////////////////////////////////////////
 
 	static getSkills = (sourcebooks: Sourcebook[]) => {
 		const list: Skill[] = [];
@@ -433,5 +517,14 @@ export class SourcebookLogic {
 			.filter(m => !options.similarRole || (m.role.type === monster.role.type))
 			.filter(m => !options.similarOrganization || (m.role.organization === monster.role.organization))
 			.filter(m => !options.similarSize || ((m.size.value === monster.size.value) && (m.size.mod === monster.size.mod)));
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static getUsedIn = (sourcebooks: Sourcebook[], elementID: string) => {
+		return [
+			...SourcebookLogic.getEncounters(sourcebooks).filter(enc => EncounterLogic.getMonsterData(enc).map(data => data.monsterID).includes(elementID)),
+			...SourcebookLogic.getAdventures(sourcebooks).filter(adv => AdventureLogic.getContentIDs(adv.plot).includes(elementID))
+		];
 	};
 }

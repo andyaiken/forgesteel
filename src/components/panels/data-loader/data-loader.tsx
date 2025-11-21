@@ -13,6 +13,8 @@ import { Options } from '@/models/options';
 import { OptionsUpdateLogic } from '@/logic/update/options-update-logic';
 import { Playbook } from '@/models/playbook';
 import { PlaybookUpdateLogic } from '@/logic/update/playbook-update-logic';
+import { Session } from '@/models/session';
+import { SessionUpdateLogic } from '@/logic/update/session-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -30,7 +32,7 @@ export interface LoadedData {
 	homebrew: Sourcebook[];
 	hiddenSourcebookIDs: string[];
 	playbook: Playbook;
-	session: Playbook;
+	session: Session;
 	options: Options;
 };
 
@@ -200,16 +202,35 @@ export const DataLoader = (props: Props) => {
 
 					PlaybookUpdateLogic.updatePlaybook(playbook);
 
+					if ((playbook.adventures.length > 0) || (playbook.encounters.length > 0) || (playbook.montages.length > 0) || (playbook.negotiations.length > 0) || (playbook.tacticalMaps.length > 0)) {
+						// Copy everything from the playbook into a homebrew sourcebook
+						if (sourcebooks.length === 0) {
+							const sb = FactoryLogic.createSourcebook();
+							sb.name = 'Playbook';
+							sourcebooks.push(sb);
+						}
+
+						const sb = sourcebooks[0];
+
+						sb.adventures.push(...playbook.adventures.filter(adventure => !sb.adventures.some(a => a.id === adventure.id)));
+						sb.encounters.push(...playbook.encounters.filter(encounter => !sb.encounters.some(e => e.id === encounter.id)));
+						sb.montages.push(...playbook.montages.filter(montage => !sb.montages.some(m => m.id === montage.id)));
+						sb.negotiations.push(...playbook.negotiations.filter(negotiation => !sb.negotiations.some(n => n.id === negotiation.id)));
+						sb.tacticalMaps.push(...playbook.tacticalMaps.filter(map => !sb.tacticalMaps.some(tm => tm.id === map.id)));
+
+						SourcebookUpdateLogic.updateSourcebook(sb);
+					};
+
 					// #endregion
 
 					// #region Session
 
-					let session = results[4] as Playbook | null;
+					let session = results[4] as Session | null;
 					if (!session) {
-						session = FactoryLogic.createPlaybook();
+						session = FactoryLogic.createSession();
 					}
 
-					PlaybookUpdateLogic.updatePlaybook(session);
+					SessionUpdateLogic.updateSession(session);
 
 					// #endregion
 

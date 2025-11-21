@@ -1,4 +1,5 @@
 import { AbilityUpdateLogic } from '@/logic/update/ability-update-logic';
+import { Collections } from '@/utils/collections';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureUpdateLogic } from '@/logic/update/feature-update-logic';
 import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
@@ -9,14 +10,26 @@ import { Utils } from '@/utils/utils';
 
 export class SourcebookUpdateLogic {
 	static updateSourcebook = (sourcebook: Sourcebook) => {
+		if (sourcebook.adventures === undefined) {
+			sourcebook.adventures = [];
+		}
 		if (sourcebook.domains === undefined) {
 			sourcebook.domains = [];
+		}
+		if (sourcebook.encounters === undefined) {
+			sourcebook.encounters = [];
 		}
 		if (sourcebook.items === undefined) {
 			sourcebook.items = [];
 		}
 		if (sourcebook.monsterGroups === undefined) {
 			sourcebook.monsterGroups = [];
+		}
+		if (sourcebook.montages === undefined) {
+			sourcebook.montages = [];
+		}
+		if (sourcebook.negotiations === undefined) {
+			sourcebook.negotiations = [];
 		}
 		if (sourcebook.perks === undefined) {
 			sourcebook.perks = [];
@@ -27,12 +40,36 @@ export class SourcebookUpdateLogic {
 		if (sourcebook.subclasses === undefined) {
 			sourcebook.subclasses = [];
 		}
+		if (sourcebook.tacticalMaps === undefined) {
+			sourcebook.tacticalMaps = [];
+		}
 		if (sourcebook.terrain === undefined) {
 			sourcebook.terrain = [];
 		}
 		if (sourcebook.titles === undefined) {
 			sourcebook.titles = [];
 		}
+
+		sourcebook.adventures = Collections.distinct(sourcebook.adventures, a => a.id);
+		sourcebook.ancestries = Collections.distinct(sourcebook.ancestries, a => a.id);
+		sourcebook.careers = Collections.distinct(sourcebook.careers, a => a.id);
+		sourcebook.classes = Collections.distinct(sourcebook.classes, a => a.id);
+		sourcebook.complications = Collections.distinct(sourcebook.complications, a => a.id);
+		sourcebook.cultures = Collections.distinct(sourcebook.cultures, a => a.id);
+		sourcebook.domains = Collections.distinct(sourcebook.domains, a => a.id);
+		sourcebook.encounters = Collections.distinct(sourcebook.encounters, a => a.id);
+		sourcebook.imbuements = Collections.distinct(sourcebook.imbuements, a => a.id);
+		sourcebook.items = Collections.distinct(sourcebook.items, a => a.id);
+		sourcebook.kits = Collections.distinct(sourcebook.kits, a => a.id);
+		sourcebook.monsterGroups = Collections.distinct(sourcebook.monsterGroups, a => a.id);
+		sourcebook.montages = Collections.distinct(sourcebook.montages, a => a.id);
+		sourcebook.negotiations = Collections.distinct(sourcebook.negotiations, a => a.id);
+		sourcebook.perks = Collections.distinct(sourcebook.perks, a => a.id);
+		sourcebook.projects = Collections.distinct(sourcebook.projects, a => a.id);
+		sourcebook.subclasses = Collections.distinct(sourcebook.subclasses, a => a.id);
+		sourcebook.tacticalMaps = Collections.distinct(sourcebook.tacticalMaps, a => a.id);
+		sourcebook.terrain = Collections.distinct(sourcebook.terrain, a => a.id);
+		sourcebook.titles = Collections.distinct(sourcebook.titles, a => a.id);
 
 		sourcebook.classes.forEach(c => {
 			if (c.type === undefined) {

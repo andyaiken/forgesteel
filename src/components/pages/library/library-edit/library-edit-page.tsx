@@ -2,6 +2,8 @@ import { Button, Drawer, Flex, Select, Slider, Space, Tabs } from 'antd';
 import { CheckCircleFilled, CloseCircleFilled, CloseOutlined, LeftOutlined, SaveOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
+import { Adventure } from '@/models/adventure';
+import { AdventureEditPanel } from '@/components/panels/edit/adventure-edit/adventure-edit-panel';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryEditPanel } from '@/components/panels/edit/ancestry-edit/ancestry-edit-panel';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
@@ -24,6 +26,8 @@ import { DomainEditPanel } from '@/components/panels/edit/domain-edit/domain-edi
 import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Element } from '@/models/element';
 import { Empty } from '@/components/controls/empty/empty';
+import { Encounter } from '@/models/encounter';
+import { EncounterEditPanel } from '@/components/panels/edit/encounter-edit/encounter-edit-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
@@ -49,6 +53,12 @@ import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-pa
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
+import { Montage } from '@/models/montage';
+import { MontageEditPanel } from '@/components/panels/edit/montage-edit/montage-edit-panel';
+import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
+import { Negotiation } from '@/models/negotiation';
+import { NegotiationEditPanel } from '@/components/panels/edit/negotiation-edit/negotiation-edit-panel';
+import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
@@ -62,6 +72,9 @@ import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { SubClass } from '@/models/subclass';
 import { SubClassEditPanel } from '@/components/panels/edit/subclass-edit/subclass-edit-panel';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
+import { TacticalMap } from '@/models/tactical-map';
+import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
+import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
 import { Terrain } from '@/models/terrain';
 import { TerrainEditPanel } from '@/components/panels/edit/terrain-edit/terrain-edit-panel';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
@@ -85,6 +98,7 @@ interface Props {
 	showAbout: () => void;
 	showSettings: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
+	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 }
 
@@ -95,6 +109,9 @@ export const LibraryEditPage = (props: Props) => {
 		const sourcebook = props.sourcebooks.find(s => s.id === sourcebookID)!;
 		let original: Element;
 		switch (kind!) {
+			case 'adventure':
+				original = sourcebook.adventures.find(e => e.id === elementID)!;
+				break;
 			case 'ancestry':
 				original = sourcebook.ancestries.find(e => e.id === elementID)!;
 				break;
@@ -113,6 +130,9 @@ export const LibraryEditPage = (props: Props) => {
 			case 'domain':
 				original = sourcebook.domains.find(e => e.id === elementID)!;
 				break;
+			case 'encounter':
+				original = sourcebook.encounters.find(e => e.id === elementID)!;
+				break;
 			case 'item':
 				original = sourcebook.items.find(e => e.id === elementID)!;
 				break;
@@ -125,6 +145,12 @@ export const LibraryEditPage = (props: Props) => {
 			case 'monster-group':
 				original = sourcebook.monsterGroups.find(e => e.id === elementID)!;
 				break;
+			case 'montage':
+				original = sourcebook.montages.find(e => e.id === elementID)!;
+				break;
+			case 'negotiation':
+				original = sourcebook.negotiations.find(e => e.id === elementID)!;
+				break;
 			case 'perk':
 				original = sourcebook.perks.find(e => e.id === elementID)!;
 				break;
@@ -133,6 +159,9 @@ export const LibraryEditPage = (props: Props) => {
 				break;
 			case 'subclass':
 				original = sourcebook.subclasses.find(e => e.id === elementID)!;
+				break;
+			case 'tactical-map':
+				original = sourcebook.tacticalMaps.find(e => e.id === elementID)!;
 				break;
 			case 'terrain':
 				original = sourcebook.terrain.find(e => e.id === elementID)!;
@@ -160,11 +189,9 @@ export const LibraryEditPage = (props: Props) => {
 			if (subElementID) {
 				return 'Monster Builder';
 			}
-
-			return 'Monster Group Builder';
 		}
 
-		return `${Format.capitalize(kind!)} Builder`;
+		return `${Format.capitalize(kind!.split('-').join(' '))} Builder`;
 	};
 
 	useTitle(getSubheader());
@@ -442,6 +469,18 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getEditSection = () => {
 		switch (kind) {
+			case 'adventure':
+				return (
+					<div className='adventure-container'>
+						<AdventureEditPanel
+							adventure={element as Adventure}
+							sourcebooks={props.sourcebooks}
+							heroes={props.heroes}
+							options={props.options}
+							onChange={applyChanges}
+						/>
+					</div>
+				);
 			case 'ancestry':
 				return (
 					<AncestryEditPanel
@@ -524,6 +563,18 @@ export const LibraryEditPage = (props: Props) => {
 						onChange={applyChanges}
 					/>
 				);
+			case 'encounter':
+				return (
+					<EncounterEditPanel
+						encounter={element as Encounter}
+						heroes={props.heroes}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						onChange={applyChanges}
+						showMonster={props.showMonster}
+						showTerrain={props.showTerrain}
+					/>
+				);
 			case 'subclass':
 				return (
 					<SubClassEditPanel
@@ -599,6 +650,21 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
+			case 'montage':
+				return (
+					<MontageEditPanel
+						montage={element as Montage}
+						onChange={applyChanges}
+					/>
+				);
+			case 'negotiation':
+				return (
+					<NegotiationEditPanel
+						negotiation={element as Negotiation}
+						sourcebooks={props.sourcebooks}
+						onChange={applyChanges}
+					/>
+				);
 			case 'perk':
 				return (
 					<FeatureEditPanel
@@ -617,6 +683,19 @@ export const LibraryEditPage = (props: Props) => {
 						includeNameAndDescription={true}
 						onChange={applyChanges}
 					/>
+				);
+			case 'tactical-map':
+				return (
+					<div className='tactical-map-container'>
+						<TacticalMapPanel
+							map={element as TacticalMap}
+							display={TacticalMapDisplayType.DirectorEdit}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							mode={PanelMode.Full}
+							updateMap={applyChanges}
+						/>
+					</div>
 				);
 			case 'terrain':
 				return (
@@ -805,6 +884,28 @@ export const LibraryEditPage = (props: Props) => {
 						/>
 					);
 				}
+			case 'montage':
+				return (
+					<SelectablePanel>
+						<MontagePanel
+							montage={element as Montage}
+							heroes={props.heroes}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					</SelectablePanel>
+				);
+			case 'negotiation':
+				return (
+					<SelectablePanel>
+						<NegotiationPanel
+							negotiation={element as Negotiation}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							mode={PanelMode.Full}
+						/>
+					</SelectablePanel>
+				);
 			case 'perk':
 				return (
 					<SelectablePanel>
@@ -857,10 +958,14 @@ export const LibraryEditPage = (props: Props) => {
 							{getEditHeaderSection()}
 							{getEditSection()}
 						</div>
-						<div className='preview-column'>
-							{getPreviewHeaderSection()}
-							{getPreview()}
-						</div>
+						{
+							(kind !== 'adventure') && (kind !== 'encounter') && (kind !== 'tactical-map') ?
+								<div className='preview-column'>
+									{getPreviewHeaderSection()}
+									{getPreview()}
+								</div>
+								: null
+						}
 					</div>
 				</ErrorBoundary>
 				<AppFooter

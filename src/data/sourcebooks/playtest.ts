@@ -11,6 +11,7 @@ export const playtest: Sourcebook = {
 	name: 'Playtest',
 	description: 'Unreleased game content.',
 	type: SourcebookType.Official,
+	adventures: [],
 	ancestries: [],
 	careers: [],
 	classes: [
@@ -20,6 +21,7 @@ export const playtest: Sourcebook = {
 	complications: [],
 	cultures: [],
 	domains: [],
+	encounters: [],
 	imbuements: [],
 	items: [],
 	kits: [
@@ -29,6 +31,8 @@ export const playtest: Sourcebook = {
 		KitData.warBeast
 	],
 	monsterGroups: [],
+	montages: [],
+	negotiations: [],
 	perks: [
 		PerkData.bornTracker,
 		PerkData.rideAlong,
@@ -41,6 +45,7 @@ export const playtest: Sourcebook = {
 	],
 	projects: [],
 	subclasses: [],
+	tacticalMaps: [],
 	terrain: [],
 	titles: [
 		TitleData.safeguarded,

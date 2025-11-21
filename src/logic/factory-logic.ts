@@ -53,6 +53,7 @@ import { Playbook } from '@/models/playbook';
 import { Plot } from '@/models/plot';
 import { PowerRoll } from '@/models/power-roll';
 import { RetainerLogic } from '@/logic/retainer-logic';
+import { Session } from '@/models/session';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { Size } from '@/models/size';
 import { Sourcebook } from '@/models/sourcebook';
@@ -128,23 +129,28 @@ export class FactoryLogic {
 			name: '',
 			description: '',
 			type: SourcebookType.Homebrew,
+			adventures: [],
 			ancestries: [],
-			cultures: [],
 			careers: [],
 			classes: [],
-			subclasses: [],
-			domains: [],
-			kits: [],
 			complications: [],
-			perks: [],
-			titles: [],
-			items: [],
+			cultures: [],
+			domains: [],
+			encounters: [],
 			imbuements: [],
+			items: [],
+			kits: [],
 			monsterGroups: [],
-			skills: [],
-			languages: [],
+			montages: [],
+			negotiations: [],
+			perks: [],
 			projects: [],
-			terrain: []
+			subclasses: [],
+			tacticalMaps: [],
+			terrain: [],
+			titles: [],
+			skills: [],
+			languages: []
 		};
 	};
 
@@ -154,8 +160,17 @@ export class FactoryLogic {
 			encounters: [],
 			montages: [],
 			negotiations: [],
-			tacticalMaps: [],
+			tacticalMaps: []
+		};
+	};
+
+	static createSession = (): Session => {
+		return {
 			counters: [],
+			encounters: [],
+			montages: [],
+			negotiations: [],
+			tacticalMaps: [],
 			playerViewID: null
 		};
 	};

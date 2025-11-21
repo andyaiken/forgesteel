@@ -2,6 +2,7 @@ import { Button, Divider, Drawer, Flex, Input, Popover, Select, Space, Tabs, Upl
 import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
 import { Plot, PlotContent, PlotContentElement, PlotContentImage, PlotContentReference, PlotContentRoll, PlotContentText, PlotLink } from '@/models/plot';
 import { Adventure } from '@/models/adventure';
+import { AdventureLogic } from '@/logic/adventure-logic';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -28,8 +29,6 @@ import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { Playbook } from '@/models/playbook';
-import { PlaybookLogic } from '@/logic/playbook-logic';
 import { PlotPanel } from '@/components/panels/elements/plot-panel/plot-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -47,7 +46,6 @@ import './plot-edit-panel.scss';
 interface Props {
 	plot: Plot;
 	adventure: Adventure;
-	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
 	options: Options;
@@ -68,8 +66,8 @@ export const PlotEditPanel = (props: Props) => {
 	const [ addingMonster, setAddingMonster ] = useState<boolean>(false);
 	const [ addingTitle, setAddingTitle ] = useState<boolean>(false);
 
-	const parentPlot = PlaybookLogic.getPlotPointParent(props.adventure.plot, plot.id) as Plot;
-	const upstreamIDs = PlaybookLogic.getUpstreamPlotPoints(parentPlot, plot.id).map(p => p.id);
+	const parentPlot = AdventureLogic.getPlotPointParent(props.adventure.plot, plot.id) as Plot;
+	const upstreamIDs = AdventureLogic.getUpstreamPlotPoints(parentPlot, plot.id).map(p => p.id);
 	const linkTargets = parentPlot.plots.filter(p => !plot.links.map(x => x.plotID).includes(p.id) && !upstreamIDs.includes(p.id));
 
 	const addContentText = () => {
@@ -481,7 +479,7 @@ export const PlotEditPanel = (props: Props) => {
 							case 'reference': {
 								switch (c.type) {
 									case 'encounter': {
-										const element = props.playbook.encounters.find(e => e.id === c.contentID);
+										const element = SourcebookLogic.getEncounters(props.sourcebooks).find(e => e.id === c.contentID);
 										if (element) {
 											name = element.name;
 											tag = 'Encounter';
@@ -492,7 +490,7 @@ export const PlotEditPanel = (props: Props) => {
 										break;
 									}
 									case 'montage': {
-										const element = props.playbook.montages.find(m => m.id === c.contentID);
+										const element = SourcebookLogic.getMontages(props.sourcebooks).find(m => m.id === c.contentID);
 										if (element) {
 											name = element.name;
 											tag = 'Montage';
@@ -503,7 +501,7 @@ export const PlotEditPanel = (props: Props) => {
 										break;
 									}
 									case 'negotiation': {
-										const element = props.playbook.negotiations.find(n => n.id === c.contentID);
+										const element = SourcebookLogic.getNegotiations(props.sourcebooks).find(n => n.id === c.contentID);
 										if (element) {
 											name = element.name;
 											tag = 'Negotiation';
@@ -514,7 +512,7 @@ export const PlotEditPanel = (props: Props) => {
 										break;
 									}
 									case 'map': {
-										const element = props.playbook.tacticalMaps.find(tm => tm.id === c.contentID);
+										const element = SourcebookLogic.getTacticalMaps(props.sourcebooks).find(tm => tm.id === c.contentID);
 										if (element) {
 											name = element.name;
 											tag = 'Tactical Map';
@@ -683,7 +681,6 @@ export const PlotEditPanel = (props: Props) => {
 			<PlotPanel
 				plot={plot}
 				adventure={props.adventure}
-				playbook={props.playbook}
 				sourcebooks={props.sourcebooks}
 				heroes={props.heroes}
 				options={props.options}
@@ -734,13 +731,13 @@ export const PlotEditPanel = (props: Props) => {
 						<div style={{ padding: '20px' }}>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								{
-									props.playbook.encounters.map(e =>
+									SourcebookLogic.getEncounters(props.sourcebooks).map(e =>
 										<SelectablePanel key={e.id} onSelect={() => addContentReference('encounter', e.id)}>
 											<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
 										</SelectablePanel>
 									)
 								}
-								{props.playbook.encounters.length === 0 ? <Empty /> : null}
+								{SourcebookLogic.getEncounters(props.sourcebooks).length === 0 ? <Empty /> : null}
 							</Space>
 						</div>
 					}
@@ -753,13 +750,13 @@ export const PlotEditPanel = (props: Props) => {
 						<div style={{ padding: '20px' }}>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								{
-									props.playbook.montages.map(m =>
+									SourcebookLogic.getMontages(props.sourcebooks).map(m =>
 										<SelectablePanel key={m.id} onSelect={() => addContentReference('montage', m.id)}>
 											<MontagePanel montage={m} heroes={props.heroes} options={props.options} />
 										</SelectablePanel>
 									)
 								}
-								{props.playbook.montages.length === 0 ? <Empty /> : null}
+								{SourcebookLogic.getMontages(props.sourcebooks).length === 0 ? <Empty /> : null}
 							</Space>
 						</div>
 					}
@@ -772,13 +769,13 @@ export const PlotEditPanel = (props: Props) => {
 						<div style={{ padding: '20px' }}>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								{
-									props.playbook.negotiations.map(n =>
+									SourcebookLogic.getNegotiations(props.sourcebooks).map(n =>
 										<SelectablePanel key={n.id} onSelect={() => addContentReference('negotiation', n.id)}>
 											<NegotiationPanel negotiation={n} sourcebooks={props.sourcebooks} options={props.options} />
 										</SelectablePanel>
 									)
 								}
-								{props.playbook.negotiations.length === 0 ? <Empty /> : null}
+								{SourcebookLogic.getNegotiations(props.sourcebooks).length === 0 ? <Empty /> : null}
 							</Space>
 						</div>
 					}
@@ -791,13 +788,13 @@ export const PlotEditPanel = (props: Props) => {
 						<div style={{ padding: '20px' }}>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								{
-									props.playbook.tacticalMaps.map(tm =>
+									SourcebookLogic.getTacticalMaps(props.sourcebooks).map(tm =>
 										<SelectablePanel key={tm.id} onSelect={() => addContentReference('map', tm.id)}>
 											<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} sourcebooks={props.sourcebooks} options={props.options} />
 										</SelectablePanel>
 									)
 								}
-								{props.playbook.tacticalMaps.length === 0 ? <Empty /> : null}
+								{SourcebookLogic.getTacticalMaps(props.sourcebooks).length === 0 ? <Empty /> : null}
 							</Space>
 						</div>
 					}

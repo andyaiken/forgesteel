@@ -1,7 +1,7 @@
 import { Alert, Button, Drawer, Flex, Space } from 'antd';
 import { EditOutlined, InfoCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
-import { Playbook, PlaybookElementKind } from '@/models/playbook';
 import { Plot, PlotContent } from '@/models/plot';
+import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Adventure } from '@/models/adventure';
 import { Element } from '@/models/element';
 import { Empty } from '@/components/controls/empty/empty';
@@ -28,7 +28,7 @@ import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SashPanel } from '@/components/panels/sash/sash-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
 import { Title } from '@/models/title';
@@ -41,13 +41,12 @@ import './plot-panel.scss';
 interface PlotPanelProps {
 	plot: Plot;
 	adventure: Adventure;
-	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
 	options: Options;
 	mode?: PanelMode;
 	onSelect: (plot: Plot) => void;
-	onStart: (kind: PlaybookElementKind, element: Element, party: string) => void;
+	onStart: (kind: SourcebookElementKind, element: Element, party: string) => void;
 }
 
 export const PlotPanel = (props: PlotPanelProps) => {
@@ -93,10 +92,10 @@ export const PlotPanel = (props: PlotPanelProps) => {
 			case 'reference': {
 				switch (content.type) {
 					case 'encounter': {
-						const encounter = props.playbook.encounters.find(e => e.id === content.contentID);
+						const encounter = SourcebookLogic.getEncounters(props.sourcebooks).find(e => e.id === content.contentID);
 						if (encounter) {
 							return (
-								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('encounter', encounter.id)}>
+								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToLibrary('encounter', encounter.id)}>
 									<EncounterPanel
 										encounter={encounter}
 										sourcebooks={props.sourcebooks}
@@ -110,10 +109,10 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						break;
 					}
 					case 'montage': {
-						const montage = props.playbook.montages.find(m => m.id === content.contentID);
+						const montage = SourcebookLogic.getMontages(props.sourcebooks).find(m => m.id === content.contentID);
 						if (montage) {
 							return (
-								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('montage', montage.id)}>
+								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToLibrary('montage', montage.id)}>
 									<MontagePanel
 										montage={montage}
 										heroes={props.heroes}
@@ -126,10 +125,10 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						break;
 					}
 					case 'negotiation': {
-						const negotiation = props.playbook.negotiations.find(n => n.id === content.contentID);
+						const negotiation = SourcebookLogic.getNegotiations(props.sourcebooks).find(n => n.id === content.contentID);
 						if (negotiation) {
 							return (
-								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('negotiation', negotiation.id)}>
+								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToLibrary('negotiation', negotiation.id)}>
 									<NegotiationPanel
 										negotiation={negotiation}
 										sourcebooks={props.sourcebooks}
@@ -142,10 +141,10 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						break;
 					}
 					case 'map': {
-						const map = props.playbook.tacticalMaps.find(tm => tm.id === content.contentID);
+						const map = SourcebookLogic.getTacticalMaps(props.sourcebooks).find(tm => tm.id === content.contentID);
 						if (map) {
 							return (
-								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToPlaybook('tactical-map', map.id)}>
+								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToLibrary('tactical-map', map.id)}>
 									<HeaderText level={1}>{map.name || 'Unnamed Map'}</HeaderText>
 									<div className='tactical-map-container'>
 										<TacticalMapPanel
@@ -226,51 +225,51 @@ export const PlotPanel = (props: PlotPanelProps) => {
 			case 'reference': {
 				switch (content.type) {
 					case 'encounter': {
-						const encounter = props.playbook.encounters.find(e => e.id === content.contentID);
+						const encounter = SourcebookLogic.getEncounters(props.sourcebooks).find(e => e.id === content.contentID);
 						if (encounter) {
 							return (
 								<Flex vertical={true} gap={5}>
 									<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedEncounter(encounter)} />
 									<Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('encounter', encounter, '')} />
-									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('encounter', encounter.id)} />
+									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit('encounter', SourcebookLogic.getEncounterSourcebook(props.sourcebooks, encounter)!.id, encounter.id)} />
 								</Flex>
 							);
 						}
 						break;
 					}
 					case 'montage': {
-						const montage = props.playbook.montages.find(m => m.id === content.contentID);
+						const montage = SourcebookLogic.getMontages(props.sourcebooks).find(m => m.id === content.contentID);
 						if (montage) {
 							return (
 								<Flex vertical={true} gap={5}>
 									<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedMontage(montage)} />
 									<Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('montage', montage, '')} />
-									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('montage', montage.id)} />
+									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit('montage', SourcebookLogic.getMontageSourcebook(props.sourcebooks, montage)!.id, montage.id)} />
 								</Flex>
 							);
 						}
 						break;
 					}
 					case 'negotiation': {
-						const negotiation = props.playbook.negotiations.find(n => n.id === content.contentID);
+						const negotiation = SourcebookLogic.getNegotiations(props.sourcebooks).find(n => n.id === content.contentID);
 						if (negotiation) {
 							return (
 								<Flex vertical={true} gap={5}>
 									<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedNegotiation(negotiation)} />
 									<Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('negotiation', negotiation, '')} />
-									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('negotiation', negotiation.id)} />
+									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit('negotiation', SourcebookLogic.getNegotiationSourcebook(props.sourcebooks, negotiation)!.id, negotiation.id)} />
 								</Flex>
 							);
 						}
 						break;
 					}
 					case 'map': {
-						const map = props.playbook.tacticalMaps.find(tm => tm.id === content.contentID);
+						const map = SourcebookLogic.getTacticalMaps(props.sourcebooks).find(tm => tm.id === content.contentID);
 						if (map) {
 							return (
 								<Flex vertical={true} gap={5}>
 									<Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('tactical-map', map, '')} />
-									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToPlaybookEdit('tactical-map', map.id)} />
+									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit('tactical-map', SourcebookLogic.getTacticalMapSourcebook(props.sourcebooks, map)!.id, map.id)} />
 								</Flex>
 							);
 						}

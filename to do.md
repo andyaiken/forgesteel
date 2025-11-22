@@ -14,13 +14,13 @@
 
 ### Library
 
+* PRIORITY: It should be possible to move library content between homebrew libraries
+* Encounters should show if everything inside (monsters, items, terrain) is from official or that sourcebook (so it can be shared safely)
+  * Same for adventures
 * It should be possible to add custom keywords to abilities / custom weapon or armor types in kits
 * It should be possible to create a homebrew class ability / monster individually
 * Monster Builder:
   * Auto-create monsters
-
-### Playbook
-
 * Encounter Builder:
   * When an encounter has monsters with items, this should be noted in the encounter info (monster info and running encounter notes)
   * Encounters should pull in monsters, rather than storing monster / group IDs

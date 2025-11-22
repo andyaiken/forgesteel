@@ -11,6 +11,9 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { useState } from 'react';
 
@@ -19,6 +22,7 @@ import './montage-panel.scss';
 interface Props {
 	montage: Montage;
 	heroes: Hero[];
+	sourcebooks: Sourcebook[];
 	options: Options;
 	mode?: PanelMode;
 }
@@ -145,10 +149,18 @@ export const MontagePanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getMontageSourcebook(props.sourcebooks, props.montage)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='montage-panel compact'>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.montage.name || 'Unnamed Montage'}
 				</HeaderText>
 				<Markdown text={props.montage.description} />
@@ -159,7 +171,7 @@ export const MontagePanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='montage-panel' id={SheetFormatter.getPageId('montage', props.montage.id)}>
-				<HeaderText level={1}>{props.montage.name || 'Unnamed Montage'}</HeaderText>
+				<HeaderText level={1} tags={tags}>{props.montage.name || 'Unnamed Montage'}</HeaderText>
 				{getContent()}
 			</div>
 		</ErrorBoundary>

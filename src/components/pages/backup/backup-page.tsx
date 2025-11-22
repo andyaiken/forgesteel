@@ -10,7 +10,7 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookPanel } from '@/components/panels/elements/sourcebook-panel/sourcebook-panel';
 import { Utils } from '@/utils/utils';
 
-import './export-page.scss';
+import './backup-page.scss';
 
 interface Props {
 	heroes: Hero[];
@@ -23,13 +23,13 @@ interface Props {
 	showSettings: () => void;
 }
 
-export const ExportPage = (props: Props) => {
+export const BackupPage = (props: Props) => {
 	return (
 		<ErrorBoundary>
-			<div className='export-page'>
+			<div className='backup-page'>
 				<AppHeader />
 				<ErrorBoundary>
-					<div className='export-page-content'>
+					<div className='backup-page-content'>
 						{
 							props.heroes.map(hero => (
 								<SelectablePanel key={hero.id} onSelect={() => Utils.exportData(hero.name || 'Unnamed Hero', hero, 'hero')}>

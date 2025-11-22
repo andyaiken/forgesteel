@@ -890,6 +890,7 @@ export const LibraryEditPage = (props: Props) => {
 						<MontagePanel
 							montage={element as Montage}
 							heroes={props.heroes}
+							sourcebooks={props.sourcebooks}
 							options={props.options}
 							mode={PanelMode.Full}
 						/>

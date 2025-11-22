@@ -10,6 +10,7 @@ import { Segmented } from 'antd';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { StatsRow } from '@/components/panels/stats-row/stats-row';
 import { useState } from 'react';
 
@@ -119,10 +120,18 @@ export const NegotiationPanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getNegotiationSourcebook(props.sourcebooks, props.negotiation)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='negotiation-panel compact'>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.negotiation.name || 'Unnamed Negotiation'}
 				</HeaderText>
 				<Markdown text={props.negotiation.description} />
@@ -133,7 +142,7 @@ export const NegotiationPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='negotiation-panel' id={SheetFormatter.getPageId('negotiation', props.negotiation.id)}>
-				<HeaderText level={1}>
+				<HeaderText level={1} tags={tags}>
 					{props.negotiation.name || 'Unnamed Negotiation'}
 				</HeaderText>
 				{getContent()}

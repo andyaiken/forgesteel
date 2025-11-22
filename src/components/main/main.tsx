@@ -8,6 +8,7 @@ import { AboutModal } from '@/components/modals/about/about-modal';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { Ancestry } from '@/models/ancestry';
+import { BackupPage } from '@/components/pages/backup/backup-page';
 import { Career } from '@/models/career';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
@@ -23,7 +24,6 @@ import { ElementModal } from '@/components/modals/element/element-modal';
 import { Encounter } from '@/models/encounter';
 import { EncounterToolsModal } from '@/components/modals/encounter-tools/encounter-tools-modal';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { ExportPage } from '../pages/export/export-page';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureModal } from '@/components/modals/feature/feature-modal';
@@ -1355,23 +1355,6 @@ export const Main = (props: Props) => {
 							/>
 						}
 					/>
-					<Route path='export'>
-						<Route
-							index={true}
-							element={
-								<ExportPage
-									heroes={heroes}
-									homebrewSourcebooks={homebrewSourcebooks}
-									options={options}
-									highlightAbout={errors.length > 0}
-									showReference={showReference}
-									showRoll={() => showRoll()}
-									showAbout={showAbout}
-									showSettings={showSettings}
-								/>
-							}
-						/>
-					</Route>
 					<Route path='hero'>
 						<Route
 							index={true}
@@ -1566,6 +1549,24 @@ export const Main = (props: Props) => {
 						/>
 					</Route>
 				</Route>
+				<Route path='backup'>
+					<Route
+						index={true}
+						element={
+							<BackupPage
+								heroes={heroes}
+								homebrewSourcebooks={homebrewSourcebooks}
+								options={options}
+								highlightAbout={errors.length > 0}
+								showReference={showReference}
+								showRoll={() => showRoll()}
+								showAbout={showAbout}
+								showSettings={showSettings}
+							/>
+						}
+					/>
+				</Route>
+				<Route path='*' element={<Navigate to='/' replace={true} />} />
 			</Routes>
 			{notifyContext}
 			<Spin spinning={spinning} size='large' fullscreen={true} />

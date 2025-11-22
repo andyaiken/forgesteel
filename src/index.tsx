@@ -1,5 +1,5 @@
-import { DataLoader, LoadedData } from './components/panels/data-loader/data-loader';
-import { ErrorBoundary } from './components/controls/error-boundary/error-boundary';
+import { DataLoader, LoadedData } from '@/components/panels/data-loader/data-loader';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HashRouter } from 'react-router';
 import { Main } from '@/components/main/main.tsx';
 import { StrictMode } from 'react';

@@ -12,6 +12,8 @@ import { Plot } from '@/models/plot';
 import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';
 import { PlotPanel } from '@/components/panels/elements/plot-panel/plot-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { useState } from 'react';
 
 import './adventure-panel.scss';
@@ -85,10 +87,20 @@ export const AdventurePanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getAdventureSourcebook(props.sourcebooks, props.adventure)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='adventure-panel compact'>
-				<HeaderText level={1}>{props.adventure.name || 'Unnamed Adventure'}</HeaderText>
+				<HeaderText level={1} tags={tags}>
+					{props.adventure.name || 'Unnamed Adventure'}
+				</HeaderText>
 				<Markdown text={props.adventure.description} />
 			</div>
 		);
@@ -100,6 +112,7 @@ export const AdventurePanel = (props: Props) => {
 				<div className='plot-workspace'>
 					<PlotGraphPanel
 						label={currentPlot === props.adventure.plot ? props.adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
+						tags={tags}
 						plot={currentPlot}
 						adventure={props.adventure}
 						selectedPlot={selectedPlot || undefined}

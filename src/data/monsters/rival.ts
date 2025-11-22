@@ -339,7 +339,7 @@ Rivals are NPCs built around the mechanics of seven of the classes in Draw Steel
 					ability: FactoryLogic.createAbility({
 						id: 'rival-1st-4-feature-2',
 						name: 'Numb',
-						type: FactoryLogic.type.createMain(),
+						type: FactoryLogic.type.createManeuver(),
 						keywords: [ AbilityKeyword.Melee, AbilityKeyword.Psionic, AbilityKeyword.Strike, AbilityKeyword.Weapon ],
 						distance: [ FactoryLogic.distance.createMelee(1) ],
 						target: 'One creature or object',

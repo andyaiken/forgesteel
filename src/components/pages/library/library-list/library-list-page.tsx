@@ -95,6 +95,10 @@ interface Props {
 	exportElementData: (category: string, element: Element) => void;
 	exportElementImage: (category: string, element: Element) => void;
 	exportElementPdf: (category: string, element: Element, resolution: 'standard' | 'high') => void;
+	startEncounter: (encounter: Encounter) => Promise<string>;
+	startMontage: (montage: Montage) => Promise<string>;
+	startNegotiation: (negotiation: Negotiation) => Promise<string>;
+	startMap: (map: TacticalMap) => Promise<string>;
 }
 
 export const LibraryListPage = (props: Props) => {
@@ -512,6 +516,22 @@ export const LibraryListPage = (props: Props) => {
 								exportElementData={props.exportElementData}
 								exportElementImage={props.exportElementImage}
 								exportElementPdf={props.exportElementPdf}
+								startElement={() => {
+									switch (category) {
+										case 'encounter':
+											props.startEncounter(selected as Encounter);
+											break;
+										case 'montage':
+											props.startMontage(selected as Montage);
+											break;
+										case 'negotiation':
+											props.startNegotiation(selected as Negotiation);
+											break;
+										case 'tactical-map':
+											props.startMap(selected as TacticalMap);
+											break;
+									}
+								}}
 							/>
 							: null
 					}

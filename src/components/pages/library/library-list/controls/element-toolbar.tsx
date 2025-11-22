@@ -1,5 +1,5 @@
 import { Alert, Button, Popover } from 'antd';
-import { CopyOutlined, DownOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
+import { CopyOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DestinationSelector } from '@/components/pages/library/library-list/controls/destination-selector';
@@ -25,6 +25,7 @@ interface Props {
 	exportElementData: (category: string, element: Element) => void;
 	exportElementImage: (category: string, element: Element) => void;
 	exportElementPdf: (category: string, element: Element, resolution: 'standard' | 'high') => void;
+	startElement: (category: string, element: Element) => void;
 }
 
 export const ElementToolbar = (props: Props) => {
@@ -45,6 +46,22 @@ export const ElementToolbar = (props: Props) => {
 
 		return null;
 	}
+
+	const getStart = () => {
+		switch (props.category) {
+			case 'encounter':
+			case 'montage':
+			case 'negotiation':
+			case 'tactical-map':
+				return (
+					<Button icon={<PlayCircleOutlined />} onClick={() => props.startElement(props.category, props.element)}>
+						Start
+					</Button>
+				);
+		}
+
+		return null;
+	};
 
 	const getCreateHomebrew = () => {
 		if ((props.category === 'monster-group') && props.showMonsters) {
@@ -222,6 +239,7 @@ export const ElementToolbar = (props: Props) => {
 
 	return (
 		<>
+			{getStart()}
 			{getCreateHomebrew()}
 			{getEdit()}
 			{getCopy()}

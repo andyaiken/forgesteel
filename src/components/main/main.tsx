@@ -1014,6 +1014,7 @@ export const Main = (props: Props) => {
 		sessionCopy.encounters.push(copy);
 
 		await persistSession(sessionCopy);
+		await navigation.goToSession();
 		return copy.id;
 	};
 
@@ -1024,6 +1025,7 @@ export const Main = (props: Props) => {
 		sessionCopy.montages.push(copy);
 
 		await persistSession(sessionCopy);
+		await navigation.goToSession();
 		return copy.id;
 	};
 
@@ -1034,6 +1036,7 @@ export const Main = (props: Props) => {
 		sessionCopy.negotiations.push(copy);
 
 		await persistSession(sessionCopy);
+		await navigation.goToSession();
 		return copy.id;
 	};
 
@@ -1044,6 +1047,7 @@ export const Main = (props: Props) => {
 		sessionCopy.tacticalMaps.push(copy);
 
 		await persistSession(sessionCopy);
+		await navigation.goToSession();
 		return copy.id;
 	};
 
@@ -1054,6 +1058,7 @@ export const Main = (props: Props) => {
 		sessionCopy.counters.push(copy);
 
 		await persistSession(sessionCopy);
+		await navigation.goToSession();
 		return copy.id;
 	};
 
@@ -1475,6 +1480,10 @@ export const Main = (props: Props) => {
 									exportElementData={exportLibraryElementData}
 									exportElementImage={exportLibraryElementImage}
 									exportElementPdf={exportLibraryElementPdf}
+									startEncounter={startEncounter}
+									startMontage={startMontage}
+									startNegotiation={startNegotiation}
+									startMap={startMap}
 								/>
 							}
 						/>

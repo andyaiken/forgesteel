@@ -1,5 +1,5 @@
 import { Alert, Flex, Result } from 'antd';
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { ConnectionSettingsUpdateLogic } from '@/logic/update/connection-settings-update-logic';
 import { DataService } from '@/utils/data-service';
@@ -35,13 +35,14 @@ export interface LoadedData {
 };
 
 export const DataLoader = (props: Props) => {
-	const [ connectionSettingsState, setConnectionSettingsState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getHeroesState, setGetHeroesState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getHomebrewState, setGetHomebrewState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getOptionsState, setGetOptionsState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getPlaybookState, setGetPlaybookState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getSessionState, setGetSessionState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getHiddenSettingsState, setGetHiddenSettingsState ] = useState<'loading' | 'success' | 'error' | null>(null);
+	type LoadingStatus = 'loading' | 'success' | 'error' | null;
+	const [ connectionSettingsState, setConnectionSettingsState ] = useState<LoadingStatus>(null);
+	const [ getHeroesState, setGetHeroesState ] = useState<LoadingStatus>(null);
+	const [ getHomebrewState, setGetHomebrewState ] = useState<LoadingStatus>(null);
+	const [ getOptionsState, setGetOptionsState ] = useState<LoadingStatus>(null);
+	const [ getPlaybookState, setGetPlaybookState ] = useState<LoadingStatus>(null);
+	const [ getSessionState, setGetSessionState ] = useState<LoadingStatus>(null);
+	const [ getHiddenSettingsState, setGetHiddenSettingsState ] = useState<LoadingStatus>(null);
 
 	const [ errors, setErrors ] = useState<string[]>([]);
 
@@ -54,6 +55,18 @@ export const DataLoader = (props: Props) => {
 		ConnectionSettingsUpdateLogic.updateSettings(settings);
 
 		return new DataService(settings);
+	};
+
+	async function updateLoadingStatus<T>(getFunc: () => Promise<T>, setStateFunc: (value: SetStateAction<LoadingStatus>) => void): Promise<T> {
+		return getFunc()
+			.then(result => {
+				setStateFunc('success');
+				return result;
+			})
+			.catch(reason => {
+				setStateFunc('error');
+				throw reason;
+			});
 	};
 
 	const loadData = () => {
@@ -70,63 +83,6 @@ export const DataLoader = (props: Props) => {
 		getDataService().then(dataService => {
 			setConnectionSettingsState('success');
 
-			const promises = [
-				dataService.getHomebrew()
-					.then(result => {
-						setGetHomebrewState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetHomebrewState('error');
-						throw reason;
-					}),
-				dataService.getHeroes()
-					.then(result => {
-						setGetHeroesState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetHeroesState('error');
-						throw reason;
-					}),
-				dataService.getHiddenSettingIds()
-					.then(result => {
-						setGetHiddenSettingsState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetHiddenSettingsState('error');
-						throw reason;
-					}),
-				dataService.getPlaybook()
-					.then(result => {
-						setGetPlaybookState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetPlaybookState('error');
-						throw reason;
-					}),
-				dataService.getSession()
-					.then(result => {
-						setGetSessionState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetSessionState('error');
-						throw reason;
-					}),
-				dataService.getOptions()
-					.then(result => {
-						setGetOptionsState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetOptionsState('error');
-						throw reason;
-					})
-			];
-
 			setGetHomebrewState('loading');
 			setGetHeroesState('loading');
 			setGetPlaybookState('loading');
@@ -134,9 +90,17 @@ export const DataLoader = (props: Props) => {
 			setGetOptionsState('loading');
 			setGetHiddenSettingsState('loading');
 
+			const promises = [
+				updateLoadingStatus(dataService.getHomebrew, setGetHomebrewState),
+				updateLoadingStatus(dataService.getHeroes, setGetHeroesState),
+				updateLoadingStatus(dataService.getHiddenSettingIds, setGetHiddenSettingsState),
+				updateLoadingStatus(dataService.getPlaybook, setGetPlaybookState),
+				updateLoadingStatus(dataService.getSession, setGetSessionState),
+				updateLoadingStatus(dataService.getOptions, setGetOptionsState)
+			];
+
 			Promise.all(promises).then(results => {
 				// #region Homebrew sourcebooks
-
 				let sourcebooks = results[0] as Sourcebook[] | null;
 
 				if (!sourcebooks) {
@@ -259,6 +223,8 @@ export const DataLoader = (props: Props) => {
 
 	useEffect(() => {
 		loadData();
+	// dependencies here needs to be an empty array so that it only runs once
+	// otherwise, it runs several times as things change
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

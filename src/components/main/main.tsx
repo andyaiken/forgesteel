@@ -85,11 +85,11 @@ import { useSyncStatus } from '@/hooks/use-sync-status';
 import './main.scss';
 
 interface Props {
-	heroes: Hero[]; // from DataService
-	session: Session; // from DataService
-	homebrewSourcebooks: Sourcebook[]; // from DataService
-	hiddenSourcebookIDs: string[]; // from DataService
-	options: Options; // from DataService
+	heroes: Hero[];
+	session: Session;
+	homebrewSourcebooks: Sourcebook[];
+	hiddenSourcebookIDs: string[];
+	options: Options;
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
 }

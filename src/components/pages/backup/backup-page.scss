@@ -1,9 +1,9 @@
-.export-page {
+.backup-page {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 
-	.export-page-content {
+	.backup-page-content {
 		height: 100%;
 		background-color: rgb(230, 230, 230);
 		padding: 50px;
@@ -16,8 +16,8 @@
 }
 
 html[data-theme="dark"] {
-	.export-page {
-		.export-page-content {
+	.backup-page {
+		.backup-page-content {
 			background-color: rgb(55, 55, 55);
 		}
 	}

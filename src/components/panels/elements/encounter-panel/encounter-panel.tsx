@@ -24,6 +24,7 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 import { useState } from 'react';
 
@@ -259,15 +260,24 @@ export const EncounterPanel = (props: Props) => {
 		);
 	};
 
+	const tags = [];
+	if (props.sourcebooks.length > 0) {
+		const sourcebookType = SourcebookLogic.getEncounterSourcebook(props.sourcebooks, props.encounter)?.type || SourcebookType.Homebrew;
+		if (sourcebookType !== SourcebookType.Official) {
+			tags.push(sourcebookType);
+		}
+	}
+
 	const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
 	const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+	tags.push(difficulty);
 
 	if (props.mode !== PanelMode.Full) {
 		return (
 			<div className='encounter-panel compact'>
 				<HeaderText
 					level={1}
-					tags={[ difficulty ]}
+					tags={tags}
 				>
 					{props.encounter.name || 'Unnamed Encounter'}
 				</HeaderText>
@@ -281,7 +291,7 @@ export const EncounterPanel = (props: Props) => {
 			<div className='encounter-panel' id={SheetFormatter.getPageId('encounter', props.encounter.id)}>
 				<HeaderText
 					level={1}
-					tags={[ difficulty ]}
+					tags={tags}
 					extra={
 						props.showTools ?
 							<Button type='text' icon={<InfoCircleOutlined />} onClick={props.showTools} />

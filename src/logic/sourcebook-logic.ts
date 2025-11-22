@@ -1,6 +1,6 @@
 import { Ability } from '@/models/ability';
 import { Adventure } from '@/models/adventure';
-import { AdventureLogic } from './adventure-logic';
+import { AdventureLogic } from '@/logic/adventure-logic';
 import { Ancestry } from '@/models/ancestry';
 import { Career } from '@/models/career';
 import { Collections } from '@/utils/collections';
@@ -9,7 +9,7 @@ import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
-import { EncounterLogic } from './encounter-logic';
+import { EncounterLogic } from '@/logic/encounter-logic';
 import { Feature } from '@/models/feature';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { FeatureType } from '@/enums/feature-type';

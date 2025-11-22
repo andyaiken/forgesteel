@@ -7,7 +7,7 @@ import { Hero } from '@/models/hero';
 import { Imbuement } from '@/models/imbuement';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
-import { ProjectPanel } from '../project-panel/project-panel';
+import { ProjectPanel } from '@/components/panels/elements/project-panel/project-panel';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';

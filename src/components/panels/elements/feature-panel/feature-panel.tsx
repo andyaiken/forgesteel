@@ -689,10 +689,6 @@ export const FeaturePanel = (props: Props) => {
 	const getTags = () => {
 		const tags = [];
 
-		if (props.source) {
-			tags.push(props.source);
-		}
-
 		const list = (props.feature as Perk).list;
 		if (list !== undefined) {
 			if (props.sourcebooks && (props.sourcebooks.length > 0)) {
@@ -703,6 +699,10 @@ export const FeaturePanel = (props: Props) => {
 			}
 
 			tags.push(list);
+		}
+
+		if (props.source) {
+			tags.push(props.source);
 		}
 
 		if (props.feature.type === FeatureType.AddOn) {

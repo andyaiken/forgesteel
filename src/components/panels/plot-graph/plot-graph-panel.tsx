@@ -12,6 +12,7 @@ import './plot-graph-panel.scss';
 
 interface Props {
 	label: string;
+	tags: string[];
 	plot: Plot;
 	adventure: Adventure;
 	selectedPlot?: Plot;
@@ -172,6 +173,7 @@ export const PlotGraphPanel = (props: Props) => {
 					<HeaderText
 						level={1}
 						style={{ margin: '0' }}
+						tags={props.tags}
 						extra={
 							<Flex gap={5}>
 								{canGoOut ? <Button type='text' icon={<LogoutOutlined rotate={210} />} onClick={() => openPlotPoint(parentPlot)} /> : null}

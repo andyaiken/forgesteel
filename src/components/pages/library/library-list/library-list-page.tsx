@@ -1,9 +1,9 @@
-import { Alert, Button, Divider, Flex, Input, Popover, Segmented, Select, Space, Upload } from 'antd';
-import { CopyOutlined, DoubleLeftOutlined, DoubleRightOutlined, DownOutlined, DownloadOutlined, EditOutlined, FilterFilled, FilterOutlined, PlusOutlined, SearchOutlined, ThunderboltOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Flex, Input, Segmented } from 'antd';
+import { DoubleLeftOutlined, DoubleRightOutlined, FilterFilled, FilterOutlined, SearchOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
+import { AddBtn } from '@/components/pages/library/library-list/controls/add-btn';
 import { Adventure } from '@/models/adventure';
-import { AdventureLogic } from '@/logic/adventure-logic';
 import { AdventurePanel } from '@/components/panels/elements/adventure-panel/adventure-panel';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
@@ -17,22 +17,16 @@ import { Complication } from '@/models/complication';
 import { ComplicationPanel } from '@/components/panels/elements/complication-panel/complication-panel';
 import { Culture } from '@/models/culture';
 import { CulturePanel } from '@/components/panels/elements/culture-panel/culture-panel';
-import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Domain } from '@/models/domain';
 import { DomainPanel } from '@/components/panels/elements/domain-panel/domain-panel';
 import { Element } from '@/models/element';
 import { ElementSheet } from '@/components/panels/classic-sheet/element-sheet/element-sheet';
+import { ElementToolbar } from '@/components/pages/library/library-list/controls/element-toolbar';
 import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
-import { EncounterData } from '@/data/encounter-data';
-import { EncounterDifficulty } from '@/enums/encounter-difficulty';
-import { EncounterDifficultyLogic } from '@/logic/encounter-difficulty-logic';
-import { EncounterLogic } from '@/logic/encounter-logic';
 import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { Field } from '@/components/controls/field/field';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
@@ -43,19 +37,18 @@ import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { Kit } from '@/models/kit';
 import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
+import { LibraryLogic } from '@/logic/library-logic';
 import { Monster } from '@/models/monster';
 import { MonsterFilter } from '@/models/filter';
 import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-filter-panel';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-panel/monster-group-panel';
 import { MonsterInfo } from '@/components/panels/token/token';
-import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
-import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
@@ -70,14 +63,12 @@ import { SubClass } from '@/models/subclass';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 import { TacticalMap } from '@/models/tactical-map';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
-import { TacticalMapLogic } from '@/logic/tactical-map-logic';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
 import { Terrain } from '@/models/terrain';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 import { Title } from '@/models/title';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
-import { Utils } from '@/utils/utils';
 import { ViewSelector } from '@/components/panels/view-selector/view-selector';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
@@ -124,14 +115,6 @@ export const LibraryListPage = (props: Props) => {
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
 	const [ sourcebookID, setSourcebookID ] = useState<string>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew)[0].id : '');
-	const [ difficulty, setDifficulty ] = useState<EncounterDifficulty>(EncounterDifficulty.Standard);
-	const [ keywords, setKeywords ] = useState<string[]>([]);
-	const [ mapImportType, setMapImportType ] = useState<'image' | 'video'>('image');
-	const [ mapImportData, setMapImportData ] = useState<string>('');
-	const [ mapImportWidth, setMapImportWidth ] = useState<number>(10);
-	const [ mapImportHeight, setMapImportHeight ] = useState<number>(5);
-	const [ mapGenerateType, setMapGenerateType ] = useState<'dungeon' | 'cavern'>('dungeon');
-	const [ mapGenerateSize, setMapGenerateSize ] = useState<number>(5);
 	useTitle('Library');
 
 	if (kind !== previousCategory) {
@@ -144,426 +127,80 @@ export const LibraryListPage = (props: Props) => {
 		setPreviousSelectedID(elementID);
 	}
 
-	const getSourcebooks = () => {
-		return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
-	};
-
-	// #region Get Elements
-
-	const getAdventures = () => {
-		try {
-			return SourcebookLogic
-				.getAdventures(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getAncestries = () => {
-		try {
-			return SourcebookLogic
-				.getAncestries(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.features.map(f => f.name)
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getCareers = () => {
-		try {
-			return SourcebookLogic
-				.getCareers(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.features.map(f => f.name)
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getClasses = () => {
-		try {
-			return SourcebookLogic
-				.getClasses(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)),
-					...item.abilities.flatMap(a => a.name),
-					...item.subclasses.map(sc => sc.name),
-					...item.subclasses.flatMap(sc => sc.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name)))
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getComplications = () => {
-		try {
-			return SourcebookLogic
-				.getComplications(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getCultures = () => {
-		try {
-			return SourcebookLogic
-				.getCultures(getSourcebooks(), showCulturesFromAncestries)
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getDomains = () => {
-		try {
-			return SourcebookLogic
-				.getDomains(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getEncounters = () => {
-		try {
-			const adventureContentIDs = SourcebookLogic
-				.getAdventures(props.sourcebooks)
-				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
-				.flatMap(p => p.content)
-				.filter(c => c.contentType === 'reference')
-				.map(c => c.contentID);
-
-			return SourcebookLogic
-				.getEncounters(getSourcebooks())
-				.filter(item => !adventureContentIDs.includes(item.id))
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getImbuements = () => {
-		try {
-			return SourcebookLogic
-				.getImbuements(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getItems = () => {
-		try {
-			return SourcebookLogic
-				.getItems(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.keywords,
-					...item.featuresByLevel.flatMap(lvl => lvl.features.map(f => f.name))
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getKits = () => {
-		try {
-			return SourcebookLogic
-				.getKits(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.features.map(f => f.name)
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getMonsterGroups = () => {
-		try {
-			return SourcebookLogic
-				.getMonsterGroups(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.monsters.map(m => m.name)
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getMonsters = () => {
-		try {
-			return SourcebookLogic
-				.getMonsters(getSourcebooks())
-				.filter(item => MonsterLogic.matches(item, monsterFilter))
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getMontages = () => {
-		try {
-			const adventureContentIDs = SourcebookLogic
-				.getAdventures(props.sourcebooks)
-				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
-				.flatMap(p => p.content)
-				.filter(c => c.contentType === 'reference')
-				.map(c => c.contentID);
-
-			return SourcebookLogic
-				.getMontages(getSourcebooks())
-				.filter(item => !!adventureContentIDs.includes(item.id))
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getNegotiations = () => {
-		try {
-			const adventureContentIDs = SourcebookLogic
-				.getAdventures(props.sourcebooks)
-				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
-				.flatMap(p => p.content)
-				.filter(c => c.contentType === 'reference')
-				.map(c => c.contentID);
-
-			return SourcebookLogic
-				.getNegotiations(getSourcebooks())
-				.filter(item => !adventureContentIDs.includes(item.id))
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getPerks = () => {
-		try {
-			return SourcebookLogic
-				.getPerks(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getProjects = () => {
-		try {
-			return SourcebookLogic
-				.getProjects(getSourcebooks(), showProjectsFromImbuements, showProjectsFromItems)
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getSubclasses = () => {
-		try {
-			return SourcebookLogic
-				.getSubclasses(getSourcebooks(), showSubclassesFromClasses)
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getTacticalMaps = () => {
-		try {
-			const adventureContentIDs = SourcebookLogic
-				.getAdventures(props.sourcebooks)
-				.flatMap(a => AdventureLogic.getAllPlotPoints(a.plot))
-				.flatMap(p => p.content)
-				.filter(c => c.contentType === 'reference')
-				.map(c => c.contentID);
-
-			return SourcebookLogic
-				.getTacticalMaps(getSourcebooks())
-				.filter(item => !adventureContentIDs.includes(item.id))
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getTerrainObjects = () => {
-		try {
-			return SourcebookLogic
-				.getTerrains(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	const getTitles = () => {
-		try {
-			return SourcebookLogic
-				.getTitles(getSourcebooks())
-				.filter(item => Utils.textMatches([
-					item.name,
-					item.description,
-					...item.features.map(f => f.name)
-				], searchTerm));
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
-	};
-
-	// #endregion
-
-	const getList = () => {
+	const getList = (type: string) => {
 		let list: Element[] = [];
 
-		switch (category) {
+		const getSourcebooks = () => {
+			return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
+		};
+
+		switch (type) {
 			case 'adventure':
-				list = getAdventures();
+				list = LibraryLogic.getAdventures(getSourcebooks(), searchTerm);
 				break;
 			case 'ancestry':
-				list = getAncestries();
+				list = LibraryLogic.getAncestries(getSourcebooks(), searchTerm);
 				break;
 			case 'career':
-				list = getCareers();
+				list = LibraryLogic.getCareers(getSourcebooks(), searchTerm);
 				break;
 			case 'class':
-				list = getClasses();
+				list = LibraryLogic.getClasses(getSourcebooks(), searchTerm);
 				break;
 			case 'complication':
-				list = getComplications();
+				list = LibraryLogic.getComplications(getSourcebooks(), searchTerm);
 				break;
 			case 'culture':
-				list = getCultures();
+				list = LibraryLogic.getCultures(getSourcebooks(), searchTerm, showCulturesFromAncestries);
 				break;
 			case 'domain':
-				list = getDomains();
+				list = LibraryLogic.getDomains(getSourcebooks(), searchTerm);
 				break;
 			case 'encounter':
-				list = getEncounters();
+				list = LibraryLogic.getEncounters(getSourcebooks(), searchTerm);
 				break;
 			case 'imbuement':
-				list = getImbuements();
+				list = LibraryLogic.getImbuements(getSourcebooks(), searchTerm);
 				break;
 			case 'item':
-				list = getItems();
+				list = LibraryLogic.getItems(getSourcebooks(), searchTerm);
 				break;
 			case 'kit':
-				list = getKits();
+				list = LibraryLogic.getKits(getSourcebooks(), searchTerm);
 				break;
 			case 'monster-group':
-				list = showMonsters ? getMonsters() : getMonsterGroups();
+				list = showMonsters ?
+					LibraryLogic.getMonsters(getSourcebooks(), searchTerm, monsterFilter)
+					:
+					LibraryLogic.getMonsterGroups(getSourcebooks(), searchTerm);
 				break;
 			case 'montage':
-				list = getMontages();
+				list = LibraryLogic.getMontages(getSourcebooks(), searchTerm);
 				break;
 			case 'negotiation':
-				list = getNegotiations();
+				list = LibraryLogic.getNegotiations(getSourcebooks(), searchTerm);
 				break;
 			case 'perk':
-				list = getPerks();
+				list = LibraryLogic.getPerks(getSourcebooks(), searchTerm);
 				break;
 			case 'project':
-				list = getProjects();
+				list = LibraryLogic.getProjects(getSourcebooks(), searchTerm, showProjectsFromImbuements, showProjectsFromItems);
 				break;
 			case 'subclass':
-				list = getSubclasses();
+				list = LibraryLogic.getSubclasses(getSourcebooks(), searchTerm, showSubclassesFromClasses);
 				break;
 			case 'tactical-map':
-				list = getTacticalMaps();
+				list = LibraryLogic.getTacticalMaps(getSourcebooks(), searchTerm);
 				break;
 			case 'terrain':
-				list = getTerrainObjects();
+				list = LibraryLogic.getTerrainObjects(getSourcebooks(), searchTerm);
 				break;
 			case 'title':
-				list = getTitles();
+				list = LibraryLogic.getTitles(getSourcebooks(), searchTerm);
 				break;
 		}
 
 		return Collections.distinct(list, x => x.id);
-	};
-
-	const getGroupHeaders = () => {
-		const headers = getList().map(getGroupHeader);
-		const distinct = Collections.distinct(headers, x => x);
-		return Collections.sort(distinct, x => x || '');
 	};
 
 	const getElementPanel = () => {
@@ -613,7 +250,7 @@ export const LibraryListPage = (props: Props) => {
 					getPanel = (element: Element) => <DomainPanel key={element.id} domain={element as Domain} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 					break;
 				case 'encounter':
-					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <EncounterPanel key={element.id} encounter={element as Encounter} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} showTools={() => props.showEncounterTools(element as Encounter)} />;
 					break;
 				case 'imbuement':
 					getPanel = (element: Element) => <ImbuementPanel key={element.id} imbuement={element as Imbuement} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
@@ -633,7 +270,7 @@ export const LibraryListPage = (props: Props) => {
 					};
 					break;
 				case 'montage':
-					getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} heroes={props.heroes} options={props.options} mode={PanelMode.Full} />;
+					getPanel = (element: Element) => <MontagePanel key={element.id} montage={element as Montage} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
 					break;
 				case 'negotiation':
 					getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} />;
@@ -660,611 +297,6 @@ export const LibraryListPage = (props: Props) => {
 		}
 
 		return getPanel;
-	};
-
-	const getSourcebook = (element: Element) => {
-		let sourcebook: Sourcebook | undefined;
-
-		switch (category) {
-			case 'adventure':
-				sourcebook = SourcebookLogic.getAdventureSourcebook(props.sourcebooks, element as Adventure);
-				break;
-			case 'ancestry':
-				sourcebook = SourcebookLogic.getAncestrySourcebook(props.sourcebooks, element as Ancestry);
-				break;
-			case 'career':
-				sourcebook = SourcebookLogic.getCareerSourcebook(props.sourcebooks, element as Career);
-				break;
-			case 'class':
-				sourcebook = SourcebookLogic.getClassSourcebook(props.sourcebooks, element as HeroClass);
-				break;
-			case 'complication':
-				sourcebook = SourcebookLogic.getComplicationSourcebook(props.sourcebooks, element as Complication);
-				break;
-			case 'culture':
-				sourcebook = SourcebookLogic.getCultureSourcebook(props.sourcebooks, element as Culture);
-				break;
-			case 'domain':
-				sourcebook = SourcebookLogic.getDomainSourcebook(props.sourcebooks, element as Domain);
-				break;
-			case 'encounter':
-				sourcebook = SourcebookLogic.getEncounterSourcebook(props.sourcebooks, element as Encounter);
-				break;
-			case 'imbuement':
-				sourcebook = SourcebookLogic.getImbuementSourcebook(props.sourcebooks, element as Imbuement);
-				break;
-			case 'item':
-				sourcebook = SourcebookLogic.getItemSourcebook(props.sourcebooks, element as Item);
-				break;
-			case 'kit':
-				sourcebook = SourcebookLogic.getKitSourcebook(props.sourcebooks, element as Kit);
-				break;
-			case 'monster-group':
-				sourcebook = showMonsters ?
-					SourcebookLogic.getMonsterSourcebook(props.sourcebooks, element as Monster)
-					:
-					SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, element as MonsterGroup);
-				break;
-			case 'montage':
-				sourcebook = SourcebookLogic.getMontageSourcebook(props.sourcebooks, element as Montage);
-				break;
-			case 'negotiation':
-				sourcebook = SourcebookLogic.getNegotiationSourcebook(props.sourcebooks, element as Negotiation);
-				break;
-			case 'perk':
-				sourcebook = SourcebookLogic.getPerkSourcebook(props.sourcebooks, element as Perk);
-				break;
-			case 'project':
-				sourcebook = SourcebookLogic.getProjectSourcebook(props.sourcebooks, element as Project);
-				break;
-			case 'subclass':
-				sourcebook = SourcebookLogic.getSubclassSourcebook(props.sourcebooks, element as SubClass);
-				break;
-			case 'tactical-map':
-				sourcebook = SourcebookLogic.getTacticalMapSourcebook(props.sourcebooks, element as TacticalMap);
-				break;
-			case 'terrain':
-				sourcebook = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, element as Terrain);
-				break;
-			case 'title':
-				sourcebook = SourcebookLogic.getTitleSourcebook(props.sourcebooks, element as Title);
-				break;
-		}
-
-		return sourcebook || null;
-	};
-
-	const getInfo = (element: Element) => {
-		if ((category === 'monster-group') && !showMonsters) {
-			return (element as MonsterGroup).monsters.length;
-		}
-
-		return undefined;
-	};
-
-	const getGroupHeader = (element: Element) => {
-		if (category === 'culture') {
-			const culture = element as Culture;
-			return culture.type;
-		}
-
-		if (category === 'item') {
-			const item = element as Item;
-			return item.type;
-		}
-
-		if (category === 'imbuement') {
-			const imbuement = element as Imbuement;
-			return `Level ${imbuement.level}`;
-		}
-
-		if (category === 'kit') {
-			const kit = element as Kit;
-			if (kit.type) {
-				return kit.type;
-			}
-		}
-
-		if (category === 'perk') {
-			const perk = element as Perk;
-			return perk.list;
-		}
-
-		if (category === 'project') {
-			const project = element as Project;
-			if (project.name.startsWith('Craft')) {
-				return 'Crafting';
-			}
-			if (project.name.startsWith('Imbue')) {
-				return 'Imbuing';
-			}
-			return 'Misc';
-		}
-
-		if (category === 'subclass') {
-			const c = SourcebookLogic.getClasses(getSourcebooks()).find(c => c.subclasses.some(sc => sc.id === element.id));
-			if (c) {
-				return c.name;
-			}
-		}
-
-		if (category === 'title') {
-			const title = element as Title;
-			return `Echelon ${title.echelon}`;
-		}
-
-		return null;
-	};
-
-	const getDestinationSelector = () => {
-		const sourcebookOptions: { label: string, value: string }[] = props.sourcebooks
-			.filter(cs => cs.type === SourcebookType.Homebrew)
-			.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
-
-		sourcebookOptions.push({ label: 'In a new sourcebook', value: '' });
-
-		return (
-			<div>
-				<div className='ds-text'>Where do you want it to live?</div>
-				<Select
-					style={{ width: '100%' }}
-					placeholder='Select'
-					options={sourcebookOptions}
-					optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-					value={sourcebookID}
-					onChange={setSourcebookID}
-				/>
-			</div>
-		);
-	};
-
-	const getAddBtn = () => {
-		if ((category === 'monster-group') && showMonsters) {
-			return (
-				<Popover
-					trigger='click'
-					content={(
-						<Alert
-							type='info'
-							showIcon={true}
-							message='To create a new monster, switch to Group view.'
-							action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsters(false)}>Switch</Button>}
-						/>
-					)}
-				>
-					<Button type='primary'>
-						Add
-						<DownOutlined />
-					</Button>
-				</Popover>
-			);
-		}
-
-		const exampleEncounters = [
-			EncounterData.goblinAmbush,
-			EncounterData.dragonAttack
-		];
-
-		const generateEncounter = () => {
-			const enc = FactoryLogic.createEncounter();
-
-			let heroLevel = props.options.heroLevel;
-			if (props.options.heroParty) {
-				const party = props.heroes.filter(h => h.folder === props.options.heroParty);
-				heroLevel = Math.round(Collections.mean(party, h => h.class ? h.class.level : 1));
-			}
-
-			const budgets = EncounterDifficultyLogic.getBudgets(props.options, props.heroes);
-			switch (difficulty) {
-				case EncounterDifficulty.Easy:
-					EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxTrivial, heroLevel, heroLevel + 1);
-					break;
-				case EncounterDifficulty.Standard:
-					EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxEasy, heroLevel, heroLevel + 1);
-					break;
-				case EncounterDifficulty.Hard:
-					EncounterLogic.generateEncounter(enc, props.sourcebooks, keywords, budgets.maxStandard, heroLevel, heroLevel + 2);
-					break;
-			}
-
-			props.createElement(category, sourcebookID, enc);
-		};
-
-		const createImageMap = () => {
-			const map = FactoryLogic.createTacticalMap();
-			const tile = FactoryLogic.createMapTile();
-			tile.dimensions.width = mapImportWidth;
-			tile.dimensions.height = mapImportHeight;
-			switch (mapImportType) {
-				case 'image':
-					tile.content = { type: 'image', imageData: mapImportData };
-					break;
-				case 'video':
-					tile.content = { type: 'video', videoData: mapImportData };
-			}
-			map.items.push(tile);
-			props.createElement(category, sourcebookID, map);
-		};
-
-		const generateMap = () => {
-			const map = FactoryLogic.createTacticalMap();
-			switch (mapGenerateType) {
-				case 'dungeon':
-					TacticalMapLogic.generateDungeon(mapGenerateSize, map);
-					break;
-				case 'cavern':
-					TacticalMapLogic.generateCavern(mapGenerateSize * 50, map);
-					break;
-			}
-			props.createElement(category, sourcebookID, map);
-		};
-
-		const getOptions = () => {
-			switch (category) {
-				case 'encounter':
-					return [
-						<Expander key='premade' title='Use a premade example'>
-							<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px', paddingTop: '15px' }}>
-								{
-									exampleEncounters.map(e => (
-										<Button key={e.id} block={true} onClick={() => props.createElement(category, sourcebookID, e)}>{e.name}</Button>
-									))
-								}
-							</div>
-						</Expander>,
-						<Expander key='random' title='Generate a random encounter'>
-							<Segmented
-								style={{ marginTop: '15px' }}
-								block={true}
-								options={[ EncounterDifficulty.Easy, EncounterDifficulty.Standard, EncounterDifficulty.Hard ]}
-								value={difficulty}
-								onChange={setDifficulty}
-							/>
-							<Select
-								style={{ width: '100%', margin: '10px 0' }}
-								mode='multiple'
-								placeholder='Use monsters with any keywords'
-								options={Collections.sort(Collections.distinct(SourcebookLogic.getMonsters(props.sourcebooks).flatMap(m => m.keywords), kw => kw), kw => kw).map(kw => ({ value: kw, label: <div className='ds-text'>{kw}</div> }))}
-								value={keywords}
-								onChange={setKeywords}
-
-							/>
-							<Button block={true} type='primary' icon={<ThunderboltOutlined />} onClick={generateEncounter}>Generate</Button>
-						</Expander>
-
-					];
-				case 'tactical-map':
-					return [
-						<Expander key='image' title='Use a battlemap'>
-							<Space direction='vertical' style={{ width: '100%', marginTop: '15px' }}>
-								<Segmented
-									block={true}
-									options={[
-										{ value: 'image', label: 'Image' },
-										{ value: 'video', label: 'Animated' }
-									]}
-									value={mapImportType}
-									onChange={setMapImportType}
-								/>
-								<Upload
-									style={{ width: '100%' }}
-									accept={mapImportType === 'image' ? '.png,.webp,.gif,.jpg,.jpeg,.svg' : '.mp4,.webm'}
-									showUploadList={false}
-									beforeUpload={file => {
-										const reader = new FileReader();
-										reader.onload = progress => {
-											if (progress.target) {
-												const content = progress.target.result as string;
-												setMapImportData(content);
-											}
-										};
-										reader.readAsDataURL(file);
-										return false;
-									}}
-								>
-									<Button block={true}>
-										<DownloadOutlined />
-										Choose file
-									</Button>
-								</Upload>
-								{
-									mapImportData ?
-										<>
-											{
-												mapImportType === 'image' ?
-													<img
-														style={{ width: '100%' }}
-														src={mapImportData}
-													/>
-													:
-													<video
-														style={{ width: '100%' }}
-														src={mapImportData}
-														autoPlay={true}
-														controls={false}
-														loop={true}
-														muted={true}
-													/>
-											}
-											<Flex align='center' justify='space-between' gap={10}>
-												<NumberSpin min={1} value={mapImportWidth} onChange={setMapImportWidth}>
-													<Field orientation='vertical' label='Width' value={mapImportWidth} />
-												</NumberSpin>
-												<NumberSpin min={1} value={mapImportHeight} onChange={setMapImportHeight}>
-													<Field orientation='vertical' label='Height' value={mapImportHeight} />
-												</NumberSpin>
-											</Flex>
-											<Button block={true} type='primary' onClick={createImageMap}>Create</Button>
-										</>
-										: null
-								}
-							</Space>
-						</Expander>,
-						<Expander key='random' title='Generate a random map'>
-							<Segmented
-								style={{ marginTop: '15px' }}
-								block={true}
-								options={[
-									{ value: 'dungeon', label: 'Dungeon' },
-									{ value: 'cavern', label: 'Cavern' }
-								]}
-								value={mapGenerateType}
-								onChange={setMapGenerateType}
-							/>
-							<NumberSpin min={1} value={mapGenerateSize} onChange={setMapGenerateSize}>
-								<Field orientation='vertical' label={mapGenerateType === 'dungeon' ? 'Rooms' : 'Size'} value={mapGenerateSize} />
-							</NumberSpin>
-							<Button block={true} type='primary' icon={<ThunderboltOutlined />} onClick={generateMap}>Generate</Button>
-						</Expander>
-					];
-				default:
-					return [];
-			}
-		};
-
-		return (
-			<Popover
-				trigger='click'
-				content={(
-					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
-						{getDestinationSelector()}
-						<Divider />
-						<Space direction='vertical' style={{ width: '100%' }}>
-							<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.createElement(category, sourcebookID, null)}>Create</Button>
-							<Upload
-								style={{ width: '100%' }}
-								accept={`.drawsteel-${category.toLowerCase()},.ds-${category.toLowerCase()}`}
-								showUploadList={false}
-								beforeUpload={file => {
-									file
-										.text()
-										.then(json => {
-											const e = JSON.parse(json) as Element;
-											props.importElement(category, sourcebookID, e);
-										});
-									return false;
-								}}
-							>
-								<Button block={true} icon={<DownloadOutlined />}>Import</Button>
-							</Upload>
-							{getOptions()}
-						</Space>
-					</div>
-				)}
-			>
-				<Button type='primary'>
-					Add
-					<DownOutlined />
-				</Button>
-			</Popover>
-		);
-	};
-
-	const getElementToolbar = () => {
-		const element = getList().find(item => item.id == selectedID);
-		if (!element) {
-			return null;
-		}
-
-		const sourcebook = getSourcebook(element);
-		if (!sourcebook) {
-			if (category === 'subclass') {
-				const c = SourcebookLogic.getClasses(getSourcebooks()).find(c => c.subclasses.some(sc => sc.id === element.id));
-				if (c) {
-					return (
-						<Button onClick={() => navigation.goToLibrary('class', c.id)}>
-							Open {c.name}
-						</Button>
-					);
-				}
-			}
-
-			return null;
-		}
-
-		const getCreateHomebrew = () => {
-			if ((category === 'monster-group') && showMonsters) {
-				return (
-					<Popover
-						trigger='click'
-						content={(
-							<Alert
-								type='info'
-								showIcon={true}
-								message='To create a homebrew version of this monster, switch to Group view.'
-								action={<Button style={{ marginLeft: '5px' }} onClick={() => setShowMonsters(false)}>Switch</Button>}
-							/>
-						)}
-					>
-						<Button icon={<CopyOutlined />}>
-							Create Homebrew Version
-							<DownOutlined />
-						</Button>
-					</Popover>
-				);
-			}
-
-			if (sourcebook.type !== SourcebookType.Homebrew) {
-				return (
-					<Popover
-						trigger='click'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
-								{getDestinationSelector()}
-								<Button type='primary' onClick={() => props.createElement(category, sourcebookID, element)}>Create</Button>
-							</div>
-						)}
-					>
-						<Button icon={<CopyOutlined />}>
-							Create Homebrew Version
-							<DownOutlined />
-						</Button>
-					</Popover>
-				);
-			}
-
-			return null;
-		};
-
-		const getEdit = () => {
-			return sourcebook.type === SourcebookType.Homebrew ?
-				<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(category, sourcebook.id, element.id)}>
-					Edit
-				</Button>
-				: null;
-		};
-
-		const getCopy = () => {
-			return sourcebook.type === SourcebookType.Homebrew ?
-				<Popover
-					trigger='click'
-					content={(
-						<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
-							{getDestinationSelector()}
-							<Button type='primary' onClick={() => props.createElement(category, sourcebookID, element)}>In a new sourcebook</Button>
-						</div>
-					)}
-				>
-					<Button icon={<CopyOutlined />}>
-						Copy
-						<DownOutlined />
-					</Button>
-				</Popover>
-				: null;
-		};
-
-		const getExport = () => {
-			let content = null;
-			switch (category) {
-				case 'ancestry':
-				case 'career':
-				case 'class':
-				case 'complication':
-				case 'culture':
-				case 'domain':
-				case 'imbuement':
-				case 'item':
-				case 'kit':
-				case 'monster-group':
-				case 'perk':
-				case 'project':
-				case 'subclass':
-				case 'terrain':
-				case 'title':
-					content = (
-						<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-							{
-								view !== 'classic' ?
-									<Alert
-										type='info'
-										showIcon={true}
-										message='If you want to export as a PDF, switch to Classic view.'
-										action={<Button onClick={() => setView('classic')}>Classic</Button>}
-									/>
-									: null
-							}
-							{
-								view === 'classic' ?
-									<>
-										<Button onClick={() => props.exportElementImage(((category === 'monster-group') && showMonsters) ? 'monster' : category, element)}>Export As Image</Button>
-										<Button onClick={() => props.exportElementPdf(((category === 'monster-group') && showMonsters) ? 'monster' : category, element, 'standard')}>Export As PDF</Button>
-										<Button onClick={() => props.exportElementPdf(((category === 'monster-group') && showMonsters) ? 'monster' : category, element, 'high')}>Export As PDF (high res)</Button>
-									</>
-									: null
-							}
-							<Button onClick={() => props.exportElementData(((category === 'monster-group') && showMonsters) ? 'monster' : category, element)}>Export as Data</Button>
-						</div>
-					);
-					break;
-				case 'encounter':
-				case 'montage':
-				case 'negotiation':
-					content = (
-						<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-							{
-								view !== 'classic' ?
-									<Alert
-										type='info'
-										showIcon={true}
-										message='If you want to export as a PDF, switch to Classic view.'
-										action={<Button onClick={() => setView('classic')}>Classic</Button>}
-									/>
-									: null
-							}
-							{
-								view === 'classic' ?
-									<>
-										<Button onClick={() => props.exportElementPdf(category, element, 'standard')}>Export As PDF</Button>
-										<Button onClick={() => props.exportElementPdf(category, element, 'high')}>Export As PDF (high res)</Button>
-									</>
-									: null
-							}
-							<Button onClick={() => props.exportElementData(category, element)}>Export as Data</Button>
-						</div>
-					);
-					break;
-				case 'adventure':
-				case 'tactical-map':
-					content = (
-						<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-							<Button onClick={() => props.exportElementData(category, element)}>Export as Data</Button>
-						</div>
-					);
-					break;
-			}
-
-			return (
-				<Popover
-					trigger='click'
-					content={content}
-				>
-					<Button icon={<UploadOutlined />}>
-						Export
-						<DownOutlined />
-					</Button>
-				</Popover>
-			);
-		};
-
-		const getDelete = () => {
-			return sourcebook.type === SourcebookType.Homebrew ?
-				<DangerButton
-					mode='block'
-					disabled={SourcebookLogic.getUsedIn(props.sourcebooks, element.id).length !== 0}
-					onConfirm={() => props.deleteElement(category, sourcebook.id, element)}
-				/>
-				: null;
-		};
-
-		return (
-			<>
-				{getCreateHomebrew()}
-				{getEdit()}
-				{getCopy()}
-				{getExport()}
-				{getDelete()}
-			</>
-		);
 	};
 
 	const getSidebar = () => {
@@ -1333,7 +365,10 @@ export const LibraryListPage = (props: Props) => {
 		const getElementListItems = () => {
 			const listItems: ReactNode[] = [];
 
-			getGroupHeaders().forEach(header => {
+			const headers = getList(category).map(item => LibraryLogic.getGroupHeader(item, category, props.sourcebooks));
+			const distinctHeaders = Collections.distinct(headers, x => x);
+			const sortedHeaders = Collections.sort(distinctHeaders, x => x || '');
+			sortedHeaders.forEach(header => {
 				if (header) {
 					listItems.push(
 						<div key={`${header}-header`} className='selection-list-group-header'>
@@ -1342,7 +377,7 @@ export const LibraryListPage = (props: Props) => {
 					);
 				}
 
-				const items = getList().filter(item => getGroupHeader(item) === header);
+				const items = getList(category).filter(item => LibraryLogic.getGroupHeader(item, category, props.sourcebooks) === header);
 
 				items.forEach(a => {
 					listItems.push(
@@ -1350,7 +385,7 @@ export const LibraryListPage = (props: Props) => {
 							key={a.id}
 							selected={selectedID === a.id}
 							content={(category === 'monster-group') && showMonsters ? <MonsterInfo monster={a as Monster} /> : a.name || `Unnamed ${Format.capitalize(category.split('-').join(' '))}`}
-							info={getInfo(a)}
+							info={LibraryLogic.getInfo(a, category, showMonsters)}
 							onSelect={() => navigation.goToLibrary(category, a.id)}
 						/>
 					);
@@ -1403,29 +438,29 @@ export const LibraryListPage = (props: Props) => {
 								<div className='selection-list-group-header'>
 									<HeaderText level={3}>For Players</HeaderText>
 								</div>
-								<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getAncestries().length} onSelect={() => navigation.goToLibrary('ancestry')} />
-								<SelectorRow selected={category === 'career'} content='Careers' info={getCareers().length} onSelect={() => navigation.goToLibrary('career')} />
-								<SelectorRow selected={category === 'class'} content='Classes' info={getClasses().length} onSelect={() => navigation.goToLibrary('class')} />
-								<SelectorRow selected={category === 'complication'} content='Complications' info={getComplications().length} onSelect={() => navigation.goToLibrary('complication')} />
-								<SelectorRow selected={category === 'culture'} content='Cultures' info={getCultures().length} onSelect={() => navigation.goToLibrary('culture')} />
-								<SelectorRow selected={category === 'domain'} content='Domains' info={getDomains().length} onSelect={() => navigation.goToLibrary('domain')} />
-								<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getImbuements().length} onSelect={() => navigation.goToLibrary('imbuement')} />
-								<SelectorRow selected={category === 'item'} content='Items' info={getItems().length} onSelect={() => navigation.goToLibrary('item')} />
-								<SelectorRow selected={category === 'kit'} content='Kits' info={getKits().length} onSelect={() => navigation.goToLibrary('kit')} />
-								<SelectorRow selected={category === 'perk'} content='Perks' info={getPerks().length} onSelect={() => navigation.goToLibrary('perk')} />
-								<SelectorRow selected={category === 'project'} content='Projects' info={getProjects().length} onSelect={() => navigation.goToLibrary('project')} />
-								<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getSubclasses().length} onSelect={() => navigation.goToLibrary('subclass')} />
-								<SelectorRow selected={category === 'title'} content='Titles' info={getTitles().length} onSelect={() => navigation.goToLibrary('title')} />
+								<SelectorRow selected={category === 'ancestry'} content='Ancestries' info={getList('ancestry').length} onSelect={() => navigation.goToLibrary('ancestry')} />
+								<SelectorRow selected={category === 'career'} content='Careers' info={getList('career').length} onSelect={() => navigation.goToLibrary('career')} />
+								<SelectorRow selected={category === 'class'} content='Classes' info={getList('class').length} onSelect={() => navigation.goToLibrary('class')} />
+								<SelectorRow selected={category === 'complication'} content='Complications' info={getList('complication').length} onSelect={() => navigation.goToLibrary('complication')} />
+								<SelectorRow selected={category === 'culture'} content='Cultures' info={getList('culture').length} onSelect={() => navigation.goToLibrary('culture')} />
+								<SelectorRow selected={category === 'domain'} content='Domains' info={getList('domain').length} onSelect={() => navigation.goToLibrary('domain')} />
+								<SelectorRow selected={category === 'imbuement'} content='Imbuements' info={getList('imbuement').length} onSelect={() => navigation.goToLibrary('imbuement')} />
+								<SelectorRow selected={category === 'item'} content='Items' info={getList('item').length} onSelect={() => navigation.goToLibrary('item')} />
+								<SelectorRow selected={category === 'kit'} content='Kits' info={getList('kit').length} onSelect={() => navigation.goToLibrary('kit')} />
+								<SelectorRow selected={category === 'perk'} content='Perks' info={getList('perk').length} onSelect={() => navigation.goToLibrary('perk')} />
+								<SelectorRow selected={category === 'project'} content='Projects' info={getList('project').length} onSelect={() => navigation.goToLibrary('project')} />
+								<SelectorRow selected={category === 'subclass'} content='Subclasses' info={getList('subclass').length} onSelect={() => navigation.goToLibrary('subclass')} />
+								<SelectorRow selected={category === 'title'} content='Titles' info={getList('title').length} onSelect={() => navigation.goToLibrary('title')} />
 								<div className='selection-list-group-header'>
 									<HeaderText level={3}>For Directors</HeaderText>
 								</div>
-								<SelectorRow selected={category === 'adventure'} content='Adventures' info={getAdventures().length} onSelect={() => navigation.goToLibrary('adventure')} />
-								<SelectorRow selected={category === 'encounter'} content='Encounters' info={getEncounters().length} onSelect={() => navigation.goToLibrary('encounter')} />
-								<SelectorRow selected={category === 'monster-group'} content='Monsters' info={showMonsters ? getMonsters().length : getMonsterGroups().length} onSelect={() => navigation.goToLibrary('monster-group')} />
-								<SelectorRow selected={category === 'montage'} content='Montages' info={getMontages().length} onSelect={() => navigation.goToLibrary('montage')} />
-								<SelectorRow selected={category === 'negotiation'} content='Negotiations' info={getNegotiations().length} onSelect={() => navigation.goToLibrary('negotiation')} />
-								<SelectorRow selected={category === 'tactical-map'} content='Tactical Maps' info={getTacticalMaps().length} onSelect={() => navigation.goToLibrary('tactical-map')} />
-								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getTerrainObjects().length} onSelect={() => navigation.goToLibrary('terrain')} />
+								<SelectorRow selected={category === 'adventure'} content='Adventures' info={getList('adventure').length} onSelect={() => navigation.goToLibrary('adventure')} />
+								<SelectorRow selected={category === 'encounter'} content='Encounters' info={getList('encounter').length} onSelect={() => navigation.goToLibrary('encounter')} />
+								<SelectorRow selected={category === 'monster-group'} content={showMonsters ? 'Monsters' : 'Monster Groups'} info={showMonsters ? getList('monster').length : getList('monster-group').length} onSelect={() => navigation.goToLibrary('monster-group')} />
+								<SelectorRow selected={category === 'montage'} content='Montages' info={getList('montage').length} onSelect={() => navigation.goToLibrary('montage')} />
+								<SelectorRow selected={category === 'negotiation'} content='Negotiations' info={getList('negotiation').length} onSelect={() => navigation.goToLibrary('negotiation')} />
+								<SelectorRow selected={category === 'tactical-map'} content='Tactical Maps' info={getList('tactical-map').length} onSelect={() => navigation.goToLibrary('tactical-map')} />
+								<SelectorRow selected={category === 'terrain'} content='Terrain' info={getList('terrain').length} onSelect={() => navigation.goToLibrary('terrain')} />
 							</div>
 							<div className='selection-list elements'>
 								{getElementListHeader()}
@@ -1438,7 +473,7 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
-	const selected = getList().find(item => item.id == selectedID);
+	const selected = getList(category).find(item => item.id == selectedID);
 	const getPanel = getElementPanel();
 
 	const showViewSelector = !!selectedID && (category !== 'adventure') && (category !== 'tactical-map');
@@ -1447,8 +482,39 @@ export const LibraryListPage = (props: Props) => {
 		<ErrorBoundary>
 			<div className='library-list-page'>
 				<AppHeader subheader='Library'>
-					{getAddBtn()}
-					{getElementToolbar()}
+					<AddBtn
+						category={category}
+						heroes={props.heroes}
+						sourcebooks={props.sourcebooks}
+						options={props.options}
+						showMonsters={showMonsters}
+						sourcebookID={sourcebookID}
+						setShowMonsters={setShowMonsters}
+						setSourcebookID={setSourcebookID}
+						createElement={props.createElement}
+						importElement={props.importElement}
+					/>
+					{
+						selected ?
+							<ElementToolbar
+								element={selected}
+								category={category}
+								sourcebooks={props.sourcebooks}
+								showMonsters={showMonsters}
+								sourcebookID={sourcebookID}
+								view={view}
+								setShowMonsters={setShowMonsters}
+								setSourcebookID={setSourcebookID}
+								setView={setView}
+								createElement={props.createElement}
+								importElement={props.importElement}
+								deleteElement={props.deleteElement}
+								exportElementData={props.exportElementData}
+								exportElementImage={props.exportElementImage}
+								exportElementPdf={props.exportElementPdf}
+							/>
+							: null
+					}
 					{
 						showViewSelector ?
 							<div className='divider' />

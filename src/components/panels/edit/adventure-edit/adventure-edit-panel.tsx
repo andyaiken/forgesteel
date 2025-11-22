@@ -353,6 +353,7 @@ export const AdventureEditPanel = (props: Props) => {
 				<div className='plot-workspace'>
 					<PlotGraphPanel
 						label={currentPlot === adventure.plot ? adventure.name || 'Unnamed Adventure' : currentPlot.name || 'Unnamed Plot Point'}
+						tags={[]}
 						plot={currentPlot}
 						adventure={adventure}
 						selectedPlot={selectedPlot || undefined}

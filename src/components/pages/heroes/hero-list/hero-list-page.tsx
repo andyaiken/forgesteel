@@ -1,10 +1,11 @@
-import { Button, Input, Popover, Tabs, Upload } from 'antd';
+import { Button, Divider, Input, Popover, Space, Tabs, Upload } from 'antd';
 import { DownOutlined, DownloadOutlined, PlusOutlined, SearchOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { AppFooter } from '@/components/panels/app-footer/app-footer';
 import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Collections } from '@/utils/collections';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
+import { Expander } from '@/components/controls/expander/expander';
 import { Hero } from '@/models/hero';
 import { HeroData } from '@/data/hero-data';
 import { HeroInfo } from '@/components/panels/token/token';
@@ -114,45 +115,44 @@ export const HeroListPage = (props: Props) => {
 					<Popover
 						trigger='click'
 						content={(
-							<div style={{ width: '550px' }}>
+							<Space direction='vertical' style={{ width: '300px' }}>
 								<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
 									Create a New Hero
 								</Button>
-								<div className='ds-text centered-text'>or</div>
-								<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
-									<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
-										Generate a Random Hero
+								<Divider />
+								<Upload
+									style={{ width: '100%' }}
+									accept='.drawsteel-hero,.ds-hero'
+									showUploadList={false}
+									beforeUpload={file => {
+										file
+											.text()
+											.then(json => {
+												const hero = JSON.parse(json) as Hero;
+												props.importHero(hero, currentTab);
+											});
+										return false;
+									}}
+								>
+									<Button block={true} icon={<DownloadOutlined />}>
+										Import a Hero File
 									</Button>
-									<Upload
-										style={{ width: '100%' }}
-										accept='.drawsteel-hero,.ds-hero'
-										showUploadList={false}
-										beforeUpload={file => {
-											file
-												.text()
-												.then(json => {
-													const hero = JSON.parse(json) as Hero;
-													props.importHero(hero, currentTab);
-												});
-											return false;
-										}}
-									>
-										<Button block={true} icon={<DownloadOutlined />}>
-											Import a Hero File
-										</Button>
-									</Upload>
-								</div>
-								<div className='ds-text centered-text'>or start with a premade example:</div>
-								<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
-									{
-										exampleHeroes.map(h => (
-											<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
-												<HeroInfo hero={h} />
-											</Button>
-										))
-									}
-								</div>
-							</div>
+								</Upload>
+								<Button block={true} icon={<ThunderboltOutlined />} onClick={() => props.importHero(HeroLogic.createRandomHero(), currentTab)}>
+									Generate a Random Hero
+								</Button>
+								<Expander title='Use a premade example'>
+									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px', maxHeight: '200px', overflowY: 'auto' }}>
+										{
+											exampleHeroes.map(h => (
+												<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>
+													<HeroInfo hero={h} />
+												</Button>
+											))
+										}
+									</Space>
+								</Expander>
+							</Space>
 						)}
 					>
 						<Button type='primary'>

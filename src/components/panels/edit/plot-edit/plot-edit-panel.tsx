@@ -495,7 +495,7 @@ export const PlotEditPanel = (props: Props) => {
 											name = element.name;
 											tag = 'Montage';
 											content = (
-												<MontagePanel montage={element} heroes={props.heroes} options={props.options} />
+												<MontagePanel montage={element} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} />
 											);
 										}
 										break;
@@ -752,7 +752,7 @@ export const PlotEditPanel = (props: Props) => {
 								{
 									SourcebookLogic.getMontages(props.sourcebooks).map(m =>
 										<SelectablePanel key={m.id} onSelect={() => addContentReference('montage', m.id)}>
-											<MontagePanel montage={m} heroes={props.heroes} options={props.options} />
+											<MontagePanel montage={m} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} />
 										</SelectablePanel>
 									)
 								}

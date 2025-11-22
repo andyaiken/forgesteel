@@ -116,6 +116,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 									<MontagePanel
 										montage={montage}
 										heroes={props.heroes}
+										sourcebooks={props.sourcebooks}
 										options={props.options}
 									/>
 									<SashPanel monogram='Montage' />
@@ -370,6 +371,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 							<MontagePanel
 								montage={selectedMontage}
 								heroes={props.heroes}
+								sourcebooks={props.sourcebooks}
 								options={props.options}
 								mode={PanelMode.Full}
 							/>

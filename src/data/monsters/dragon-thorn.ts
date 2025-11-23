@@ -92,7 +92,7 @@ Despite this, the folk of certain settlements manage to avoid being driven from 
 			level: 2,
 			role: FactoryLogic.createMonsterRole(MonsterOrganizationType.Solo),
 			keywords: [ 'Dragon', 'Elemental' ],
-			encounterValue: 40,
+			encounterValue: 48,
 			size: FactoryLogic.createSize(3),
 			speed: FactoryLogic.createSpeed(8, 'fly'),
 			stamina: 250,

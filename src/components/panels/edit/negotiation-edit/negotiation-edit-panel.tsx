@@ -8,7 +8,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationLogic } from '@/logic/negotiation-logic';
@@ -59,7 +59,7 @@ export const NegotiationEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={negotiation.description} onChange={setDescription} />
+				<MarkdownEditor value={negotiation.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -195,7 +195,7 @@ export const NegotiationEditPanel = (props: Props) => {
 									value={m.trait}
 									onChange={t => setMotivationTrait(n, t)}
 								/>
-								<MultiLine placeholder='Description' value={m.description} onChange={value => setMotivationDescription(n, value)} />
+								<MarkdownEditor placeholder='Description' value={m.description} onChange={value => setMotivationDescription(n, value)} />
 							</Space>
 						</Expander>
 					))
@@ -290,7 +290,7 @@ export const NegotiationEditPanel = (props: Props) => {
 									value={p.trait}
 									onChange={t => setPitfallTrait(n, t)}
 								/>
-								<MultiLine placeholder='Description' value={p.description} onChange={value => setPitfallDescription(n, value)} />
+								<MarkdownEditor placeholder='Description' value={p.description} onChange={value => setPitfallDescription(n, value)} />
 							</Space>
 						</Expander>
 					))
@@ -321,7 +321,7 @@ export const NegotiationEditPanel = (props: Props) => {
 							title={n}
 						>
 							<HeaderText>Outcome {n}</HeaderText>
-							<MultiLine value={o} onChange={value => setOutcome(n, value)} />
+							<MarkdownEditor value={o} onChange={value => setOutcome(n, value)} />
 						</Expander>
 					))
 				}

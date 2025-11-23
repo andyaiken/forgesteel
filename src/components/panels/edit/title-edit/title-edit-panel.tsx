@@ -10,7 +10,7 @@ import { Feature } from '@/models/feature';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -60,7 +60,7 @@ export const TitleEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={title.description} onChange={setDescription} />
+				<MarkdownEditor value={title.description} onChange={setDescription} />
 			</Space>
 		);
 	};

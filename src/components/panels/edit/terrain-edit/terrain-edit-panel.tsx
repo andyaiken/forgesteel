@@ -14,9 +14,9 @@ import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -69,7 +69,7 @@ export const TerrainEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={terrain.description} onChange={setDescription} />
+				<MarkdownEditor value={terrain.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -641,7 +641,7 @@ export const TerrainEditPanel = (props: Props) => {
 									onChange={e => setUpgradeLabel(upgradeIndex, e.target.value)}
 								/>
 								<HeaderText>Text</HeaderText>
-								<MultiLine value={upgrade.text} onChange={value => setUpgradeText(upgradeIndex, value)} />
+								<MarkdownEditor value={upgrade.text} onChange={value => setUpgradeText(upgradeIndex, value)} />
 								<HeaderText>Cost</HeaderText>
 								<NumberSpin min={1} value={upgrade.cost} onChange={value => setUpgradeCost(upgradeIndex, value)} />
 								<HeaderText

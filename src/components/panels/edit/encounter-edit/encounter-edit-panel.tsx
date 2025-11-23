@@ -23,12 +23,12 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-filter-panel';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -134,7 +134,7 @@ export const EncounterEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={encounter.description} onChange={setDescription} />
+				<MarkdownEditor value={encounter.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -493,15 +493,15 @@ export const EncounterEditPanel = (props: Props) => {
 								onChange={e => setObjectiveName(e.target.value)}
 							/>
 							<HeaderText>Description</HeaderText>
-							<MultiLine value={encounter.objective.description} onChange={setObjectiveDescription} />
+							<MarkdownEditor value={encounter.objective.description} onChange={setObjectiveDescription} />
 							<HeaderText>Difficulty Modifier</HeaderText>
-							<MultiLine value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
+							<MarkdownEditor value={encounter.objective.difficultyModifier} onChange={setObjectiveDifficultyModifier} />
 							<HeaderText>Success Condition</HeaderText>
-							<MultiLine value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
+							<MarkdownEditor value={encounter.objective.successCondition} onChange={setObjectiveSuccessCondition} />
 							<HeaderText>Failure Condition</HeaderText>
-							<MultiLine value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
+							<MarkdownEditor value={encounter.objective.failureCondition} onChange={setObjectiveFailureCondition} />
 							<HeaderText>Victories</HeaderText>
-							<MultiLine value={encounter.objective.victories} onChange={setObjectiveVictories} />
+							<MarkdownEditor value={encounter.objective.victories} onChange={setObjectiveVictories} />
 						</>
 						: null
 				}

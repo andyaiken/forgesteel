@@ -6,7 +6,7 @@ import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Imbuement } from '@/models/imbuement';
 import { ItemType } from '@/enums/item-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -59,7 +59,7 @@ export const ImbuementEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={imbuement.description} onChange={setDescription} />
+				<MarkdownEditor value={imbuement.description} onChange={setDescription} />
 			</Space>
 		);
 	};

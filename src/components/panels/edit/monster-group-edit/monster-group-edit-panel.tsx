@@ -13,6 +13,7 @@ import { FeatureAddOnType } from '@/enums/feature-addon-type';
 import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-edit-panel';
 import { FeatureType } from '@/enums/feature-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
@@ -20,7 +21,6 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
@@ -112,7 +112,7 @@ export const MonsterGroupEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={monsterGroup.description} onChange={setDescription} />
+				<MarkdownEditor value={monsterGroup.description} onChange={setDescription} />
 				{picture}
 			</Space>
 		);

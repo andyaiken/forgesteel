@@ -1,10 +1,9 @@
 import { Button, Divider, Input, Space } from 'antd';
+import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Element } from '@/models/element';
 import { Expander } from '@/components/controls/expander/expander';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { Markdown } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Utils } from '@/utils/utils';
@@ -77,7 +76,7 @@ export const ElementSelectModal = (props: Props) => {
 								onChange={e => setCustomName(e.target.value)}
 							/>
 							<HeaderText>Description</HeaderText>
-							<MultiLine value={customElement.description} onChange={setCustomDescription} />
+							<MarkdownEditor value={customElement.description} onChange={setCustomDescription} />
 							<Button block={true} disabled={!customElement.name} onClick={() => props.onSelect(customElement)}>Select</Button>
 						</Space>
 					</Expander>

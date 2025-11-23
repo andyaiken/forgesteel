@@ -1177,11 +1177,13 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
+
 		setDrawer(
 			<ElementModal
 				kind={kind}
 				element={element}
-				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				sourcebooks={sourcebooks}
 				options={options}
 				onClose={() => setDrawer(null)}
 				exportData={() => exportLibraryElementData(kind, element)}
@@ -1191,12 +1193,14 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectMonster = (monster: Monster, monsterGroup?: MonsterGroup, summon?: SummoningInfo) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
+
 		setDrawer(
 			<MonsterModal
 				monster={monster}
 				monsterGroup={monsterGroup}
 				summon={summon}
-				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				sourcebooks={sourcebooks}
 				options={options}
 				onClose={() => setDrawer(null)}
 			/>
@@ -1204,11 +1208,13 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectTerrain = (terrain: Terrain, upgradeIDs: string[]) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
+
 		setDrawer(
 			<TerrainModal
 				terrain={terrain}
 				upgradeIDs={upgradeIDs}
-				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				sourcebooks={sourcebooks}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1234,11 +1240,14 @@ export const Main = (props: Props) => {
 	};
 
 	const onSelectFeature = (feature: Feature, hero: Hero) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+			.filter(sb => hero.settingIDs.includes(sb.id));
+
 		setDrawer(
 			<FeatureModal
 				feature={feature}
 				hero={hero}
-				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				sourcebooks={sourcebooks}
 				options={options}
 				onClose={() => setDrawer(null)}
 				updateHero={persistHero}
@@ -1258,10 +1267,13 @@ export const Main = (props: Props) => {
 	};
 
 	const onShowHeroState = (hero: Hero, page: HeroStatePage) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks)
+			.filter(sb => hero.settingIDs.includes(sb.id));
+
 		setDrawer(
 			<HeroStateModal
 				hero={hero}
-				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				sourcebooks={sourcebooks}
 				options={options}
 				startPage={page}
 				showEncounterControls={false}
@@ -1287,10 +1299,12 @@ export const Main = (props: Props) => {
 	};
 
 	const onShowReference = (hero: Hero | null, page?: RulesPage) => {
+		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
+
 		setDrawer(
 			<ReferenceModal
 				hero={hero}
-				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
+				sourcebooks={sourcebooks}
 				startPage={page}
 				onClose={() => setDrawer(null)}
 			/>

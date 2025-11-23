@@ -1,5 +1,6 @@
 import { Button, Input, Space, Tabs } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { Collections } from '@/utils/collections';
@@ -10,8 +11,6 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Markdown } from '@/components/controls/markdown/markdown';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Plot } from '@/models/plot';
@@ -196,7 +195,7 @@ export const AdventureEditPanel = (props: Props) => {
 									onChange={e => setName(e.target.value)}
 								/>
 								<HeaderText>Description</HeaderText>
-								<MultiLine value={adventure.description} onChange={setDescription} />
+								<MarkdownEditor value={adventure.description} onChange={setDescription} />
 							</Space>
 						)
 					},
@@ -243,7 +242,7 @@ export const AdventureEditPanel = (props: Props) => {
 													value={section.name}
 													onChange={e => setSectionName(n, e.target.value)}
 												/>
-												<MultiLine placeholder='Description' value={section.description} onChange={value => setSectionDescription(n, value)} />
+												<MarkdownEditor placeholder='Description' value={section.description} onChange={value => setSectionDescription(n, value)} />
 											</Space>
 										</Expander>
 									))

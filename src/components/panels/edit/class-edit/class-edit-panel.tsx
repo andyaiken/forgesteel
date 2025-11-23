@@ -14,8 +14,8 @@ import { FeatureEditPanel } from '@/components/panels/edit/feature-edit/feature-
 import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { HeroClass } from '@/models/class';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -70,7 +70,7 @@ export const ClassEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={heroClass.description} onChange={setDescription} />
+				<MarkdownEditor value={heroClass.description} onChange={setDescription} />
 			</Space>
 		);
 	};

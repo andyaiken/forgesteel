@@ -6,7 +6,7 @@ import { Follower } from '@/models/follower';
 import { FollowerLogic } from '@/logic/follower-logic';
 import { FollowerType } from '@/enums/follower-type';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
@@ -55,7 +55,7 @@ export const FollowerEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={follower.description} onChange={setDescription} />
+				<MarkdownEditor value={follower.description} onChange={setDescription} />
 			</Space>
 		);
 	};

@@ -4,8 +4,8 @@ import { Expander } from '@/components/controls/expander/expander';
 import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
@@ -119,11 +119,11 @@ export const FeatureModal = (props: Props) => {
 								onChange={e => setName(e.target.value)}
 							/>
 							<HeaderText>Description</HeaderText>
-							<MultiLine value={customization?.description || ''} onChange={setDescription} />
+							<MarkdownEditor value={customization?.description || ''} onChange={setDescription} />
 						</Expander>
 						<Expander title='Notes'>
 							<HeaderText>Notes</HeaderText>
-							<MultiLine value={customization?.notes || ''} onChange={setNotes} />
+							<MarkdownEditor value={customization?.notes || ''} onChange={setNotes} />
 						</Expander>
 					</div>
 				);

@@ -124,7 +124,6 @@ export const HeroViewPage = (props: Props) => {
 						style={{ height: '100%', flex: '1 1 0' }}
 						inputStyle={{ flex: '1 1 0', resize: 'none' }}
 						value={hero.state.notes}
-						showMarkdownPrompt={false}
 						onChange={value => props.setNotes(hero, value)}
 					/>
 				);

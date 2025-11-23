@@ -29,11 +29,11 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { Perk } from '@/models/perk';
@@ -1292,7 +1292,7 @@ export const FeatureEditPanel = (props: Props) => {
 						<Divider />
 						<Toggle label='Can be negative' value={data.canBeNegative} onChange={setCanBeNegative} />
 						<HeaderText>Details</HeaderText>
-						<MultiLine value={data.details} onChange={setDetails} />
+						<MarkdownEditor value={data.details} onChange={setDetails} />
 					</Space>
 				);
 			}
@@ -1505,7 +1505,7 @@ export const FeatureEditPanel = (props: Props) => {
 												(typeof section === 'string') ?
 													<div>
 														<HeaderText>Text</HeaderText>
-														<MultiLine value={section} onChange={value => setMaliceSectionText(data, n, value)} />
+														<MarkdownEditor value={section} onChange={value => setMaliceSectionText(data, n, value)} />
 													</div>
 													:
 													<Space direction='vertical' style={{ width: '100%' }}>
@@ -2013,7 +2013,7 @@ export const FeatureEditPanel = (props: Props) => {
 										onChange={e => setName(e.target.value)}
 									/>
 									<HeaderText>Description</HeaderText>
-									<MultiLine value={feature.description} onChange={setDescription} />
+									<MarkdownEditor value={feature.description} onChange={setDescription} />
 								</div>
 							)
 						},

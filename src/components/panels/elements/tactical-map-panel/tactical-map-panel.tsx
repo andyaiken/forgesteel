@@ -21,11 +21,11 @@ import { MapTilePanel } from '@/components/panels/elements/tactical-map-panel/ma
 import { MapWallPanel } from '@/components/panels/elements/tactical-map-panel/map-wall/map-wall';
 import { MapWallVertexPanel } from '@/components/panels/elements/tactical-map-panel/map-wall-vertex/map-wall-vertex';
 import { MapZonePanel } from '@/components/panels/elements/tactical-map-panel/map-zone/map-zone';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
@@ -1084,7 +1084,7 @@ export const TacticalMapPanel = (props: Props) => {
 					}
 					<Popover
 						content={
-							<MultiLine
+							<MarkdownEditor
 								placeholder='Notes'
 								value={(item as MapTile | MapWall | MapZone | MapMini).notes}
 								onChange={setNotes}

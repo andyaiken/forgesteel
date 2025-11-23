@@ -20,12 +20,12 @@ import { Hero } from '@/models/hero';
 import { Item } from '@/models/item';
 import { ItemEditPanel } from '@/components/panels/edit/item-edit/item-edit-panel';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
@@ -190,7 +190,7 @@ export const PlotEditPanel = (props: Props) => {
 					onChange={e => setName(e.target.value)}
 				/>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={plot.description} onChange={setDescription} />
+				<MarkdownEditor value={plot.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -384,7 +384,7 @@ export const PlotEditPanel = (props: Props) => {
 											value={c.format}
 											onChange={value => setTextFormat(c.id, value)}
 										/>
-										<MultiLine value={c.text} onChange={value => setText(c.id, value)} />
+										<MarkdownEditor value={c.text} onChange={value => setText(c.id, value)} />
 									</Space>
 								);
 								break;

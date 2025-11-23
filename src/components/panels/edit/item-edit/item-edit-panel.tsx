@@ -16,7 +16,7 @@ import { Item } from '@/models/item';
 import { ItemType } from '@/enums/item-type';
 import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
 import { Options } from '@/models/options';
 import { Project } from '@/models/project';
@@ -67,7 +67,7 @@ export const ItemEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={item.description} onChange={setDescription} />
+				<MarkdownEditor value={item.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -135,7 +135,7 @@ export const ItemEditPanel = (props: Props) => {
 					onChange={setKeywords}
 				/>
 				<HeaderText>Effect</HeaderText>
-				<MultiLine value={item.effect} onChange={setEffect} />
+				<MarkdownEditor value={item.effect} onChange={setEffect} />
 			</Space>
 		);
 	};

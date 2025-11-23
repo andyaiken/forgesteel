@@ -12,9 +12,9 @@ import { FeatureLogic } from '@/logic/feature-logic';
 import { Field } from '@/components/controls/field/field';
 import { Fixture } from '@/models/fixture';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterRoleType } from '@/enums/monster-role-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -64,7 +64,7 @@ export const FixtureEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={fixture.description} onChange={setDescription} />
+				<MarkdownEditor value={fixture.description} onChange={setDescription} />
 			</Space>
 		);
 	};

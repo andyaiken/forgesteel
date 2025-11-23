@@ -12,7 +12,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
@@ -383,7 +383,7 @@ export const AbilityEditPanel = (props: Props) => {
 										onChange={e => setName(e.target.value)}
 									/>
 									<HeaderText>Description</HeaderText>
-									<MultiLine value={ability.description} onChange={setDescription} />
+									<MarkdownEditor value={ability.description} onChange={setDescription} />
 								</div>
 							)
 						},
@@ -628,7 +628,7 @@ export const AbilityEditPanel = (props: Props) => {
 														section.type === 'text' ?
 															<Space direction='vertical' style={{ width: '100%' }}>
 																<HeaderText>Text</HeaderText>
-																<MultiLine value={section.text} onChange={value => setTextSectionText(n, value)} />
+																<MarkdownEditor value={section.text} onChange={value => setTextSectionText(n, value)} />
 															</Space>
 															: null
 													}
@@ -644,7 +644,7 @@ export const AbilityEditPanel = (props: Props) => {
 																	onChange={e => setFieldSectionName(n, e.target.value)}
 																/>
 																<HeaderText>Effect</HeaderText>
-																<MultiLine value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
+																<MarkdownEditor value={section.effect} onChange={value => setFieldSectionEffect(n, value)} />
 																<HeaderText>Cost</HeaderText>
 																<NumberSpin min={0} value={section.value} onChange={value => setFieldSectionValue(n, value)} />
 																<Toggle label='Repeatable' value={section.repeatable} onChange={value => setFieldSectionRepeatable(n, value)} />

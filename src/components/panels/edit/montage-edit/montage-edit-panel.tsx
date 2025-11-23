@@ -9,8 +9,8 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Montage } from '@/models/montage';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Utils } from '@/utils/utils';
@@ -55,7 +55,7 @@ export const MontageEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={() => setName(NameGenerator.generateName())} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={montage.description} onChange={setDescription} />
+				<MarkdownEditor value={montage.description} onChange={setDescription} />
 			</Space>
 		);
 	};
@@ -86,7 +86,7 @@ export const MontageEditPanel = (props: Props) => {
 					onChange={setDifficulty}
 				/>
 				<HeaderText>Setting the Scene</HeaderText>
-				<MultiLine value={montage.scene} onChange={setScene} />
+				<MarkdownEditor value={montage.scene} onChange={setScene} />
 			</Space>
 		);
 	};
@@ -329,9 +329,9 @@ export const MontageEditPanel = (props: Props) => {
 										children: (
 											<div>
 												<HeaderText>Name</HeaderText>
-												<MultiLine value={s.name} onChange={value => setSectionName(sectionIndex, value)} />
+												<MarkdownEditor value={s.name} onChange={value => setSectionName(sectionIndex, value)} />
 												<HeaderText>Description</HeaderText>
-												<MultiLine value={s.description} onChange={value => setSectionDescription(sectionIndex, value)} />
+												<MarkdownEditor value={s.description} onChange={value => setSectionDescription(sectionIndex, value)} />
 											</div>
 										)
 									},
@@ -367,7 +367,7 @@ export const MontageEditPanel = (props: Props) => {
 																onChange={e => setChallengeName(sectionIndex, challengeIndex, e.target.value)}
 															/>
 															<HeaderText>Description</HeaderText>
-															<MultiLine value={c.description} onChange={value => setChallengeDescription(sectionIndex, challengeIndex, value)} />
+															<MarkdownEditor value={c.description} onChange={value => setChallengeDescription(sectionIndex, challengeIndex, value)} />
 															<HeaderText>Characteristics</HeaderText>
 															<Select
 																style={{ width: '100%' }}
@@ -429,7 +429,7 @@ export const MontageEditPanel = (props: Props) => {
 												>
 													Twists
 												</HeaderText>
-												<MultiLine value={s.twistInfo} onChange={value => setSectionTwistInfo(sectionIndex, value)} />
+												<MarkdownEditor value={s.twistInfo} onChange={value => setSectionTwistInfo(sectionIndex, value)} />
 												{
 													s.twists.map((t, twistIndex) => (
 														<Expander
@@ -450,7 +450,7 @@ export const MontageEditPanel = (props: Props) => {
 																onChange={e => setTwistName(sectionIndex, twistIndex, e.target.value)}
 															/>
 															<HeaderText>Description</HeaderText>
-															<MultiLine value={t.description} onChange={value => setTwistDescription(sectionIndex, twistIndex, value)} />
+															<MarkdownEditor value={t.description} onChange={value => setTwistDescription(sectionIndex, twistIndex, value)} />
 															<HeaderText>Characteristics</HeaderText>
 															<Select
 																style={{ width: '100%' }}
@@ -539,11 +539,11 @@ export const MontageEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>Total Success</HeaderText>
-				<MultiLine value={montage.outcomes.totalSuccess} onChange={setSuccess} />
+				<MarkdownEditor value={montage.outcomes.totalSuccess} onChange={setSuccess} />
 				<HeaderText>Partial Success</HeaderText>
-				<MultiLine value={montage.outcomes.partialSuccess} onChange={setPartial} />
+				<MarkdownEditor value={montage.outcomes.partialSuccess} onChange={setPartial} />
 				<HeaderText>Total Failure</HeaderText>
-				<MultiLine value={montage.outcomes.totalFailure} onChange={setFailure} />
+				<MarkdownEditor value={montage.outcomes.totalFailure} onChange={setFailure} />
 			</Space>
 		);
 	};

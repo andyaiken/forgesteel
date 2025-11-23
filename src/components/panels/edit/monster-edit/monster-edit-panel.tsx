@@ -16,13 +16,13 @@ import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { HistogramPanel } from '@/components/panels/histogram/histogram-panel';
+import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterFeatureCategory } from '@/enums/monster-feature-category';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
-import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
 import { Options } from '@/models/options';
@@ -92,7 +92,7 @@ export const MonsterEditPanel = (props: Props) => {
 					<Button icon={<ThunderboltOutlined />} onClick={setRandomName} />
 				</Space.Compact>
 				<HeaderText>Description</HeaderText>
-				<MultiLine value={monster.description} onChange={setDescription} />
+				<MarkdownEditor value={monster.description} onChange={setDescription} />
 				<HeaderText>Portrait</HeaderText>
 				{
 					monster.picture ?
@@ -694,7 +694,7 @@ export const MonsterEditPanel = (props: Props) => {
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText>With Captain</HeaderText>
-				<MultiLine value={monster.withCaptain} onChange={setWithCaptain} />
+				<MarkdownEditor value={monster.withCaptain} onChange={setWithCaptain} />
 				{
 					props.similarMonsters.length > 0 ?
 						<Expander title='Similar Monsters'>

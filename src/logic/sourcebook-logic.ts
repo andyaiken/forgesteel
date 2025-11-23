@@ -89,14 +89,13 @@ export class SourcebookLogic {
 
 	static getExampleContent = (sourcebook: Sourcebook) => {
 		const elements = SourcebookLogic
-			.getElements(sourcebook)
-			.map(x => `${x.element.name} (${x.type})`);
+			.getElements(sourcebook);
 
 		const rng = Random.getSeededRNG(sourcebook.name);
 		const shuffled = Collections.shuffle(elements, rng);
 		const samples = shuffled.slice(0, 3);
 
-		return Collections.sort(samples, s => s);
+		return Collections.sort(samples, s => s.element.name);
 	};
 
 	///////////////////////////////////////////////////////////////////////////

@@ -29,6 +29,7 @@ export const orden: Sourcebook = {
 		MonsterData.ajax,
 		MonsterData.countRhodar,
 		MonsterData.lordSyuul,
+		MonsterData.warDog,
 		MonsterData.xorannox
 	],
 	montages: [],

@@ -28,15 +28,22 @@ const getSourcebookContent = (sourcebook: Sourcebook) => {
 		<>
 			<Markdown text={sourcebook.description} />
 			{
-				elementCount <= 3 ?
+				elementCount > 3 ?
 					<div className='ds-text'>
-						{SourcebookLogic.getExampleContent(sourcebook).join(', ')}
+						{elementCount} elements, including:
 					</div>
-					:
-					<div className='ds-text'>
-						{elementCount} elements, including {SourcebookLogic.getExampleContent(sourcebook).join(', ')}
-					</div>
+					: null
 			}
+			<ul>
+				{
+					SourcebookLogic.getExampleContent(sourcebook)
+						.map(x => (
+							<li key={x.element.id}>
+								{x.element.name} <span style={{ opacity: '0.5' }}>({x.type})</span>
+							</li>
+						))
+				}
+			</ul>
 		</>
 	);
 };

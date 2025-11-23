@@ -485,7 +485,6 @@ export const core: Sourcebook = {
 		MonsterData.undead,
 		MonsterData.valok,
 		MonsterData.voicelessTalker,
-		MonsterData.warDog,
 		MonsterData.werewolf,
 		MonsterData.wyvern
 	],

@@ -13,6 +13,7 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { ItemUpdateLogic } from '@/logic/update/item-update-logic';
 import { Sourcebook } from '@/models/sourcebook';
+import { SourcebookData } from '@/data/sourcebook-data';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Utils } from '@/utils/utils';
 
@@ -34,6 +35,8 @@ export class HeroUpdateLogic {
 		if (hero.settingIDs === undefined) {
 			hero.settingIDs = SourcebookLogic.getSourcebooks().map(sb => sb.id);
 		}
+
+		hero.settingIDs = hero.settingIDs.map(id => id === '' ? SourcebookData.core.id : id);
 
 		if (hero.ancestry) {
 			hero.ancestry.features

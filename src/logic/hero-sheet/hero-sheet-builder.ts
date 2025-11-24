@@ -395,7 +395,7 @@ export class HeroSheetBuilder {
 			.map(f => f.feature.id));
 		// #endregion
 
-		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Companion, FeatureType.Summon, FeatureType.SummonChoice ].includes(f.feature.type))
+		const retinue = allFeatures.filter(f => [ FeatureType.Follower, FeatureType.Retainer, FeatureType.Summon, FeatureType.SummonChoice ].includes(f.feature.type))
 			.map(f => f.feature);
 		sheet.followers = retinue.flatMap(f => this.buildFollowerCompanionSheet(f, hero)).filter(s => !!s);
 		sheet.summons = retinue.filter(f => f.type === FeatureType.SummonChoice).flatMap(f => f.data.selected)
@@ -496,7 +496,7 @@ export class HeroSheetBuilder {
 	static buildFollowerCompanionSheet = (feature: Feature, hero: Hero) => {
 		if (feature.type === FeatureType.Follower) {
 			return this.buildFollowerSheet(feature.data.follower);
-		} else if (feature.type === FeatureType.Companion && feature.data.selected) {
+		} else if (feature.type === FeatureType.Retainer && feature.data.selected) {
 			return this.buildRetainerSheet(feature.data.selected);
 		} else if (feature.type === FeatureType.SummonChoice && feature.data.selected) {
 			return feature.data.selected.filter(CreatureLogic.isCompanion).map(s => this.buildCompanionSheet(s, hero));

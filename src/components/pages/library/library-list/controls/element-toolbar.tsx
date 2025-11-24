@@ -1,5 +1,5 @@
-import { Alert, Button, Popover } from 'antd';
-import { CopyOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
+import { Alert, Button, Divider, Popover } from 'antd';
+import { ArrowRightOutlined, CopyOutlined, DownOutlined, EditOutlined, PlayCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DestinationSelector } from '@/components/pages/library/library-list/controls/destination-selector';
@@ -21,6 +21,7 @@ interface Props {
 	setView: (value: string) => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
+	moveElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	deleteElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	exportElementData: (category: string, element: Element) => void;
 	exportElementImage: (category: string, element: Element) => void;
@@ -108,21 +109,29 @@ export const ElementToolbar = (props: Props) => {
 	};
 
 	const getEdit = () => {
-		return sourcebook.type === SourcebookType.Homebrew ?
+		if (sourcebook.type !== SourcebookType.Homebrew) {
+			return null;
+		}
+
+		return (
 			<Button icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit(props.category, sourcebook.id, props.element.id)}>
 				Edit
 			</Button>
-			: null;
+		);
 	};
 
 	const getCopy = () => {
-		return sourcebook.type === SourcebookType.Homebrew ?
+		if (sourcebook.type !== SourcebookType.Homebrew) {
+			return null;
+		}
+
+		return (
 			<Popover
 				trigger='click'
 				content={(
 					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
 						<DestinationSelector sourcebooks={props.sourcebooks} sourcebookID={props.sourcebookID} setSourcebookID={props.setSourcebookID} />
-						<Button type='primary' onClick={() => props.createElement(props.category, props.sourcebookID, props.element)}>In a new sourcebook</Button>
+						<Button type='primary' onClick={() => props.createElement(props.category, props.sourcebookID, props.element)}>Create a Copy</Button>
 					</div>
 				)}
 			>
@@ -131,12 +140,39 @@ export const ElementToolbar = (props: Props) => {
 					<DownOutlined />
 				</Button>
 			</Popover>
-			: null;
+		);
+	};
+
+	const getMove = () => {
+		if (sourcebook.type !== SourcebookType.Homebrew) {
+			return null;
+		}
+
+		return (
+			<Popover
+				trigger='click'
+				content={(
+					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
+						<div>This currently lives in <b>{sourcebook.name || 'Unnamed Sourcebook'}</b>.</div>
+						<DestinationSelector sourcebooks={props.sourcebooks} sourcebookID={props.sourcebookID} setSourcebookID={props.setSourcebookID} />
+						<Button type='primary' disabled={sourcebook.id === props.sourcebookID} onClick={() => props.moveElement(props.category, props.sourcebookID, props.element)}>Move</Button>
+					</div>
+				)}
+			>
+				<Button icon={<ArrowRightOutlined />}>
+					Move
+					<DownOutlined />
+				</Button>
+			</Popover>
+		);
 	};
 
 	const getExport = () => {
-		let content = null;
-		switch (props.category) {
+		const category = ((props.category === 'monster-group') && props.showMonsters) ? 'monster' : props.category;
+
+		let canExportAsImage = false;
+		let canExportAsPDF = false;
+		switch (category) {
 			case 'ancestry':
 			case 'career':
 			case 'class':
@@ -147,77 +183,82 @@ export const ElementToolbar = (props: Props) => {
 			case 'item':
 			case 'kit':
 			case 'monster-group':
+			case 'monster':
 			case 'perk':
 			case 'project':
 			case 'subclass':
 			case 'terrain':
 			case 'title':
-				content = (
-					<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-						{
-							props.view !== 'classic' ?
-								<Alert
-									type='info'
-									showIcon={true}
-									message='If you want to export as a PDF, switch to Classic view.'
-									action={<Button onClick={() => props.setView('classic')}>Classic</Button>}
-								/>
-								: null
-						}
-						{
-							props.view === 'classic' ?
-								<>
-									<Button onClick={() => props.exportElementImage(((props.category === 'monster-group') && props.showMonsters) ? 'monster' : props.category, props.element)}>Export As Image</Button>
-									<Button onClick={() => props.exportElementPdf(((props.category === 'monster-group') && props.showMonsters) ? 'monster' : props.category, props.element, 'standard')}>Export As PDF</Button>
-									<Button onClick={() => props.exportElementPdf(((props.category === 'monster-group') && props.showMonsters) ? 'monster' : props.category, props.element, 'high')}>Export As PDF (high res)</Button>
-								</>
-								: null
-						}
-						<Button onClick={() => props.exportElementData(((props.category === 'monster-group') && props.showMonsters) ? 'monster' : props.category, props.element)}>Export as Data</Button>
-					</div>
-				);
+				canExportAsImage = true;
+				canExportAsPDF = true;
 				break;
 			case 'encounter':
 			case 'montage':
 			case 'negotiation':
-				content = (
-					<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-						{
-							props.view !== 'classic' ?
-								<Alert
-									type='info'
-									showIcon={true}
-									message='If you want to export as a PDF, switch to Classic view.'
-									action={<Button onClick={() => props.setView('classic')}>Classic</Button>}
-								/>
-								: null
-						}
-						{
-							props.view === 'classic' ?
-								<>
-									<Button onClick={() => props.exportElementPdf(props.category, props.element, 'standard')}>Export As PDF</Button>
-									<Button onClick={() => props.exportElementPdf(props.category, props.element, 'high')}>Export As PDF (high res)</Button>
-								</>
-								: null
-						}
-						<Button onClick={() => props.exportElementData(props.category, props.element)}>Export as Data</Button>
-					</div>
-				);
-				break;
-			case 'adventure':
-			case 'tactical-map':
-				content = (
-					<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-						<Button onClick={() => props.exportElementData(props.category, props.element)}>Export as Data</Button>
-					</div>
-				);
+				canExportAsImage = false;
+				canExportAsPDF = true;
 				break;
 		}
+
+		const imageOrPDF = canExportAsImage || canExportAsPDF ?
+			props.view === 'classic' ?
+				<>
+					{
+						canExportAsImage ?
+							<>
+								<Button onClick={() => props.exportElementImage(category, props.element)}>
+									Export As Image
+								</Button>
+							</>
+							: null
+					}
+					{canExportAsImage && canExportAsPDF ? <Divider /> : null}
+					{
+						canExportAsPDF ?
+							<>
+								<Button onClick={() => props.exportElementPdf(category, props.element, 'standard')}>
+									Export As PDF
+								</Button>
+								<Button onClick={() => props.exportElementPdf(category, props.element, 'high')}>
+									Export As PDF (high res)
+								</Button>
+							</>
+							: null
+					}
+				</>
+				:
+				<Alert
+					type='info'
+					showIcon={true}
+					message='If you want to export as a PDF, switch to Classic view.'
+					action={<Button onClick={() => props.setView('classic')}>Classic</Button>}
+				/>
+			: null;
+
+		const externalContent = LibraryLogic.getExternalContent(props.element, props.category, props.sourcebooks);
 
 		return (
 			<Popover
 				trigger='click'
-				content={content}
+				content={
+					<div style={{ width: '310px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+						{imageOrPDF}
+						{imageOrPDF ? <Divider /> : null}
+						{
+							externalContent.length > 0 ?
+								<>
+									<div className='ds-text'>External content:</div>
+									<ul>
+										{externalContent.map(ec => <li key={ec.element.id}>{ec.element.name} in {ec.sourcebook.name}</li>)}
+									</ul>
+								</>
+								: null
+						}
+						<Button onClick={() => props.exportElementData(category, props.element)}>
+							Export as Data
+						</Button>
+					</div>
+				}
 			>
 				<Button icon={<UploadOutlined />}>
 					Export
@@ -243,6 +284,7 @@ export const ElementToolbar = (props: Props) => {
 			{getCreateHomebrew()}
 			{getEdit()}
 			{getCopy()}
+			{getMove()}
 			{getExport()}
 			{getDelete()}
 		</>

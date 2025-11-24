@@ -1,9 +1,5 @@
 # Development Plans
 
-### Bugs
-
-* The Blade of Quintessence should gain the Ranged keyword at level 5.
-
 ### Heroes
 
 * Classic Sheet
@@ -14,9 +10,7 @@
 
 ### Library
 
-* PRIORITY: It should be possible to move library content between homebrew libraries
-* Encounters should show if everything inside (monsters, items, terrain) is from official or that sourcebook (so it can be shared safely)
-  * Same for adventures
+* PRIORITY: It should warn if the user is trying to export an encounter or adventure as data, if that element contains elements that are NOT official or from that sourcebook
 * It should be possible to add custom keywords to abilities / custom weapon or armor types in kits
 * It should be possible to create a homebrew class ability / monster individually
 * Monster Builder:

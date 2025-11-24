@@ -646,10 +646,8 @@ export const Main = (props: Props) => {
 		};
 
 		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		let sourcebook = homebrewSourcebooks.find(cs => cs.id === sourcebookID) || null;
-		if (sourcebook) {
-			sourcebook = sourcebooks.find(cs => cs.id === sourcebook!.id) as Sourcebook;
-		} else {
+		let sourcebook = sourcebooks.find(cs => cs.id === sourcebookID) || null;
+		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
 		}
@@ -719,6 +717,150 @@ export const Main = (props: Props) => {
 		}
 
 		persistHomebrewSourcebooks(sourcebooks).then(() => navigation.goToLibraryEdit(kind, sourcebook.id, id));
+	};
+
+	const moveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
+		const sourcebooks = Utils.copy(homebrewSourcebooks);
+
+		let sourceSourcebook: Sourcebook | undefined = undefined;
+		switch (kind) {
+			case 'adventure':
+				sourceSourcebook = SourcebookLogic.getAdventureSourcebook(sourcebooks, element as Adventure);
+				break;
+			case 'ancestry':
+				sourceSourcebook = SourcebookLogic.getAncestrySourcebook(sourcebooks, element as Ancestry);
+				break;
+			case 'career':
+				sourceSourcebook = SourcebookLogic.getCareerSourcebook(sourcebooks, element as Career);
+				break;
+			case 'class':
+				sourceSourcebook = SourcebookLogic.getClassSourcebook(sourcebooks, element as HeroClass);
+				break;
+			case 'complication':
+				sourceSourcebook = SourcebookLogic.getComplicationSourcebook(sourcebooks, element as Complication);
+				break;
+			case 'culture':
+				sourceSourcebook = SourcebookLogic.getCultureSourcebook(sourcebooks, element as Culture);
+				break;
+			case 'domain':
+				sourceSourcebook = SourcebookLogic.getDomainSourcebook(sourcebooks, element as Domain);
+				break;
+			case 'encounter':
+				sourceSourcebook = SourcebookLogic.getEncounterSourcebook(sourcebooks, element as Encounter);
+				break;
+			case 'imbuement':
+				sourceSourcebook = SourcebookLogic.getImbuementSourcebook(sourcebooks, element as Imbuement);
+				break;
+			case 'item':
+				sourceSourcebook = SourcebookLogic.getItemSourcebook(sourcebooks, element as Item);
+				break;
+			case 'kit':
+				sourceSourcebook = SourcebookLogic.getKitSourcebook(sourcebooks, element as Kit);
+				break;
+			case 'perk':
+				sourceSourcebook = SourcebookLogic.getPerkSourcebook(sourcebooks, element as Perk);
+				break;
+			case 'project':
+				sourceSourcebook = SourcebookLogic.getProjectSourcebook(sourcebooks, element as Project);
+				break;
+			case 'monster-group':
+				sourceSourcebook = SourcebookLogic.getMonsterGroupSourcebook(sourcebooks, element as MonsterGroup);
+				break;
+			case 'montage':
+				sourceSourcebook = SourcebookLogic.getMontageSourcebook(sourcebooks, element as Montage);
+				break;
+			case 'negotiation':
+				sourceSourcebook = SourcebookLogic.getNegotiationSourcebook(sourcebooks, element as Negotiation);
+				break;
+			case 'subclass':
+				sourceSourcebook = SourcebookLogic.getSubclassSourcebook(sourcebooks, element as SubClass);
+				break;
+			case 'tactical-map':
+				sourceSourcebook = SourcebookLogic.getTacticalMapSourcebook(sourcebooks, element as TacticalMap);
+				break;
+			case 'terrain':
+				sourceSourcebook = SourcebookLogic.getTerrainSourcebook(sourcebooks, element as Terrain);
+				break;
+			case 'title':
+				sourceSourcebook = SourcebookLogic.getTitleSourcebook(sourcebooks, element as Title);
+				break;
+		}
+
+		if (!sourceSourcebook) {
+			return;
+		}
+
+		// Get destination sourcebook
+		let destinationSourcebook = sourcebooks.find(cs => cs.id === sourcebookID) || null;
+		if (!destinationSourcebook) {
+			destinationSourcebook = FactoryLogic.createSourcebook();
+			sourcebooks.push(destinationSourcebook);
+		}
+
+		switch (kind) {
+			case 'adventure':
+				destinationSourcebook.adventures.push(element as Adventure);
+				break;
+			case 'ancestry':
+				destinationSourcebook.ancestries.push(element as Ancestry);
+				break;
+			case 'career':
+				destinationSourcebook.careers.push(element as Career);
+				break;
+			case 'class':
+				destinationSourcebook.classes.push(element as HeroClass);
+				break;
+			case 'complication':
+				destinationSourcebook.complications.push(element as Complication);
+				break;
+			case 'culture':
+				destinationSourcebook.cultures.push(element as Culture);
+				break;
+			case 'domain':
+				destinationSourcebook.domains.push(element as Domain);
+				break;
+			case 'encounter':
+				destinationSourcebook.encounters.push(element as Encounter);
+				break;
+			case 'imbuement':
+				destinationSourcebook.imbuements.push(element as Imbuement);
+				break;
+			case 'item':
+				destinationSourcebook.items.push(element as Item);
+				break;
+			case 'kit':
+				destinationSourcebook.kits.push(element as Kit);
+				break;
+			case 'perk':
+				destinationSourcebook.perks.push(element as Perk);
+				break;
+			case 'project':
+				destinationSourcebook.projects.push(element as Project);
+				break;
+			case 'monster-group':
+				destinationSourcebook.monsterGroups.push(element as MonsterGroup);
+				break;
+			case 'montage':
+				destinationSourcebook.montages.push(element as Montage);
+				break;
+			case 'negotiation':
+				destinationSourcebook.negotiations.push(element as Negotiation);
+				break;
+			case 'subclass':
+				destinationSourcebook.subclasses.push(element as SubClass);
+				break;
+			case 'tactical-map':
+				destinationSourcebook.tacticalMaps.push(element as TacticalMap);
+				break;
+			case 'terrain':
+				destinationSourcebook.terrain.push(element as Terrain);
+				break;
+			case 'title':
+				destinationSourcebook.titles.push(element as Title);
+				break;
+		}
+
+		persistHomebrewSourcebooks(sourcebooks).then(() => deleteLibraryElement(kind, sourceSourcebook.id, element));
 	};
 
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
@@ -1176,18 +1318,16 @@ export const Main = (props: Props) => {
 		onShowReference(null);
 	};
 
-	const onSelectLibraryElement = (element: Element, kind: SourcebookElementKind) => {
+	const onSelectLibraryElement = (element: Element, category: SourcebookElementKind) => {
 		const sourcebooks = SourcebookLogic.getSourcebooks(homebrewSourcebooks);
 
 		setDrawer(
 			<ElementModal
-				kind={kind}
+				category={category}
 				element={element}
 				sourcebooks={sourcebooks}
 				options={options}
 				onClose={() => setDrawer(null)}
-				exportData={() => exportLibraryElementData(kind, element)}
-				exportImage={() => exportLibraryElementImage(kind, element)}
 			/>
 		);
 	};
@@ -1490,6 +1630,7 @@ export const Main = (props: Props) => {
 									showEncounterTools={showEncounterTools}
 									createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}
 									importElement={importLibraryElement}
+									moveElement={moveLibraryElement}
 									deleteElement={deleteLibraryElement}
 									exportElementData={exportLibraryElementData}
 									exportElementImage={exportLibraryElementImage}

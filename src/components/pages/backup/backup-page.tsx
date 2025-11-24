@@ -1,5 +1,3 @@
-import { AppFooter } from '@/components/panels/app-footer/app-footer';
-import { AppHeader } from '@/components/panels/app-header/app-header';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Hero } from '@/models/hero';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
@@ -27,33 +25,22 @@ export const BackupPage = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='backup-page'>
-				<AppHeader />
-				<ErrorBoundary>
-					<div className='backup-page-content'>
-						{
-							props.heroes.map(hero => (
-								<SelectablePanel key={hero.id} onSelect={() => Utils.exportData(hero.name || 'Unnamed Hero', hero, 'hero')}>
-									<HeroPanel hero={hero} sourcebooks={SourcebookLogic.getSourcebooks(props.homebrewSourcebooks)} options={props.options} />
-								</SelectablePanel>
-							))
-						}
-						{
-							props.homebrewSourcebooks.map(sb => (
-								<SelectablePanel key={sb.id} onSelect={() => Utils.exportData(sb.name || 'Unnamed Sourcebook', sb, 'sourcebook')}>
-									<SourcebookPanel sourcebook={sb} />
-								</SelectablePanel>
-							))
-						}
-					</div>
-				</ErrorBoundary>
-				<AppFooter
-					page='welcome'
-					highlightAbout={props.highlightAbout}
-					showReference={props.showReference}
-					showRoll={props.showRoll}
-					showAbout={props.showAbout}
-					showSettings={props.showSettings}
-				/>
+				<div className='backup-page-content'>
+					{
+						props.heroes.map(hero => (
+							<SelectablePanel key={hero.id} onSelect={() => Utils.exportData(hero.name || 'Unnamed Hero', hero, 'hero')}>
+								<HeroPanel hero={hero} sourcebooks={SourcebookLogic.getSourcebooks(props.homebrewSourcebooks)} options={props.options} />
+							</SelectablePanel>
+						))
+					}
+					{
+						props.homebrewSourcebooks.map(sb => (
+							<SelectablePanel key={sb.id} onSelect={() => Utils.exportData(sb.name || 'Unnamed Sourcebook', sb, 'sourcebook')}>
+								<SourcebookPanel sourcebook={sb} />
+							</SelectablePanel>
+						))
+					}
+				</div>
 			</div>
 		</ErrorBoundary>
 	);

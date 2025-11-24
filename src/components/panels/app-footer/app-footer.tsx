@@ -54,11 +54,13 @@ export const AppFooter = (props: Props) => {
 						Roll
 					</Button>
 					<Button onClick={props.showAbout}>
-						{ isSmall ? <InfoCircleOutlined /> : 'About' }
+						<InfoCircleOutlined />
+						{ isSmall ? '' : 'About' }
 					</Button>
 					<Badge dot={props.highlightAbout}>
 						<Button onClick={props.showSettings}>
-							{ isSmall ? <SettingOutlined /> : 'Settings' }
+							<SettingOutlined />
+							{ isSmall ? '' : 'Settings' }
 						</Button>
 					</Badge>
 				</div>

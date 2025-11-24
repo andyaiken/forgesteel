@@ -8,6 +8,7 @@ import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
+import { EncounterLogic } from './encounter-logic';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { Item } from '@/models/item';
@@ -21,6 +22,7 @@ import { Negotiation } from '@/models/negotiation';
 import { Perk } from '@/models/perk';
 import { Project } from '@/models/project';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { SourcebookType } from '@/enums/sourcebook-type';
 import { SubClass } from '@/models/subclass';
 import { TacticalMap } from '@/models/tactical-map';
 import { Terrain } from '@/models/terrain';
@@ -501,5 +503,56 @@ export class LibraryLogic {
 		}
 
 		return null;
+	};
+
+	///////////////////////////////////////////////////////////////////////////
+
+	static getExternalContent = (element: Element, category: SourcebookElementKind, sourcebooks: Sourcebook[]) => {
+		// Which sourcebooks do we care about?
+		const data = sourcebooks
+			.filter(sb => sb.type === SourcebookType.Homebrew)
+			.filter(sb => !SourcebookLogic.getElements(sb).map(e => e.element.id).includes(element.id))
+			.map(sb => {
+				const elements = SourcebookLogic.getElements(sb);
+				return {
+					sourcebook: sb,
+					elements: elements,
+					elementIDs: elements.map(e => e.element.id)
+				};
+			});
+
+		const external: { element: Element, sourcebook: Sourcebook }[] = [];
+
+		const contentIDs: string[] = [];
+		switch (category) {
+			case 'adventure': {
+				const adventure = element as Adventure;
+				contentIDs.push(...AdventureLogic.getContentIDs(adventure.plot));
+				break;
+			}
+			case 'encounter': {
+				const encounter = element as Encounter;
+				contentIDs.push(...EncounterLogic.getContentIDs(encounter, sourcebooks));
+				break;
+			}
+		}
+		contentIDs.forEach(id => {
+			const sourcebookData = data.find(sb => sb.elementIDs.includes(id));
+			if (sourcebookData) {
+				const elementData = sourcebookData.elements.find(e => e.element.id === id);
+				if (elementData) {
+					external.push({
+						element: elementData.element,
+						sourcebook: sourcebookData.sourcebook
+					});
+
+					if (elementData.type === 'encounter') {
+						external.push(...LibraryLogic.getExternalContent(elementData.element, 'encounter', sourcebooks));
+					}
+				}
+			}
+		});
+
+		return external;
 	};
 };

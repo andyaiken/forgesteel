@@ -89,6 +89,34 @@ export class EncounterLogic {
 		return Collections.distinct(groups, item => item.id);
 	};
 
+	static getContentIDs = (encounter: Encounter, sourcebooks: Sourcebook[]) => {
+		const ids: string[] = [];
+
+		encounter.groups.forEach(g => {
+			g.slots.forEach(s => {
+				const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, s.monsterID);
+				if (monsterGroup) {
+					if (!ids.includes(monsterGroup.id)) {
+						ids.push(monsterGroup.id);
+					}
+				}
+				s.customization.itemIDs.forEach(id => {
+					if (!ids.includes(id)) {
+						ids.push(id);
+					}
+				});
+			});
+		});
+
+		encounter.terrain.forEach(ts => {
+			if (!ids.includes(ts.terrainID)) {
+				ids.push(ts.terrainID);
+			}
+		});
+
+		return ids;
+	};
+
 	static getCustomizedMonster = (monsterID: string, customization: EncounterSlotCustomization, sourcebooks: Sourcebook[]) => {
 		const monster = SourcebookLogic.getMonster(sourcebooks, monsterID);
 		const monsterGroup = SourcebookLogic.getMonsterGroup(sourcebooks, monsterID);

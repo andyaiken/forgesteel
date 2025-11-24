@@ -1,27 +1,19 @@
 import { Alert, Button, Drawer, Flex, Space } from 'antd';
 import { EditOutlined, InfoCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
-import { Plot, PlotContent } from '@/models/plot';
+import { Plot, PlotContent, PlotContentReference } from '@/models/plot';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Adventure } from '@/models/adventure';
 import { Element } from '@/models/element';
+import { ElementModal } from '@/components/modals/element/element-modal';
 import { Empty } from '@/components/controls/empty/empty';
-import { Encounter } from '@/models/encounter';
 import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
-import { Follower } from '@/models/follower';
-import { FollowerPanel } from '@/components/panels/elements/follower-panel/follower-panel';
+import { Format } from '@/utils/format';
 import { FormatLogic } from '@/logic/format-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Item } from '@/models/item';
-import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Modal } from '@/components/modals/modal/modal';
-import { Monster } from '@/models/monster';
-import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
-import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
@@ -31,8 +23,6 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
-import { Title } from '@/models/title';
-import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useState } from 'react';
 
@@ -51,13 +41,7 @@ interface PlotPanelProps {
 
 export const PlotPanel = (props: PlotPanelProps) => {
 	const navigation = useNavigation();
-	const [ selectedEncounter, setSelectedEncounter ] = useState<Encounter | null>(null);
-	const [ selectedMontage, setSelectedMontage ] = useState<Montage | null>(null);
-	const [ selectedNegotiation, setSelectedNegotiation ] = useState<Negotiation | null>(null);
-	const [ selectedFollower, setSelectedFollower ] = useState<Follower | null>(null);
-	const [ selectedItem, setSelectedItem ] = useState<Item | null>(null);
-	const [ selectedMonster, setSelectedMonster ] = useState<Monster | null>(null);
-	const [ selectedTitle, setSelectedTitle ] = useState<Title | null>(null);
+	const [ selectedReference, setSelectedReference ] = useState<PlotContentReference | null>(null);
 
 	const getContent = (content: PlotContent) => {
 		switch (content.contentType) {
@@ -141,7 +125,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						}
 						break;
 					}
-					case 'map': {
+					case 'tactical-map': {
 						const map = SourcebookLogic.getTacticalMaps(props.sourcebooks).find(tm => tm.id === content.contentID);
 						if (map) {
 							return (
@@ -161,54 +145,21 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						}
 						break;
 					}
+					default: {
+						const element = SourcebookLogic.getElement(content.contentID, props.sourcebooks);
+						if (element) {
+							return (
+								<SelectablePanel style={{ overflow: 'hidden' }} onSelect={() => navigation.goToLibrary(content.type, element.id)}>
+									<HeaderText level={1}>{element.name || 'Unnamed Element'}</HeaderText>
+									<div className='ds-text'>{element.description}</div>
+									<SashPanel monogram={Format.capitalize(content.type.split('-').join(' '))} />
+								</SelectablePanel>
+							);
+						}
+						break;
+					}
 				}
 				break;
-			}
-			case 'element': {
-				switch (content.type) {
-					case 'follower':
-						return (
-							<SelectablePanel style={{ overflow: 'hidden' }}>
-								<FollowerPanel
-									follower={content.content as Follower}
-								/>
-								<SashPanel monogram='Follower' />
-							</SelectablePanel>
-						);
-					case 'item':
-						return (
-							<SelectablePanel style={{ overflow: 'hidden' }}>
-								<ItemPanel
-									item={content.content as Item}
-									sourcebooks={props.sourcebooks}
-									options={props.options}
-								/>
-								<SashPanel monogram='Item' />
-							</SelectablePanel>
-						);
-					case 'monster':
-						return (
-							<SelectablePanel style={{ overflow: 'hidden' }}>
-								<MonsterPanel
-									monster={content.content as Monster}
-									sourcebooks={props.sourcebooks}
-									options={props.options}
-								/>
-								<SashPanel monogram='Monster' />
-							</SelectablePanel>
-						);
-					case 'title':
-						return (
-							<SelectablePanel style={{ overflow: 'hidden' }}>
-								<TitlePanel
-									title={content.content as Title}
-									options={props.options}
-									sourcebooks={props.sourcebooks}
-								/>
-								<SashPanel monogram='Title' />
-							</SelectablePanel>
-						);
-				}
 			}
 		}
 
@@ -230,7 +181,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						if (encounter) {
 							return (
 								<Flex vertical={true} gap={5}>
-									<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedEncounter(encounter)} />
+									<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedReference(content)} />
 									<Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('encounter', encounter, '')} />
 									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit('encounter', SourcebookLogic.getEncounterSourcebook(props.sourcebooks, encounter)!.id, encounter.id)} />
 								</Flex>
@@ -243,7 +194,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						if (montage) {
 							return (
 								<Flex vertical={true} gap={5}>
-									<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedMontage(montage)} />
+									<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedReference(content)} />
 									<Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('montage', montage, '')} />
 									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit('montage', SourcebookLogic.getMontageSourcebook(props.sourcebooks, montage)!.id, montage.id)} />
 								</Flex>
@@ -256,7 +207,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						if (negotiation) {
 							return (
 								<Flex vertical={true} gap={5}>
-									<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedNegotiation(negotiation)} />
+									<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedReference(content)} />
 									<Button title='Run' icon={<PlayCircleOutlined />} onClick={() => props.onStart!('negotiation', negotiation, '')} />
 									<Button title='Edit' icon={<EditOutlined />} onClick={() => navigation.goToLibraryEdit('negotiation', SourcebookLogic.getNegotiationSourcebook(props.sourcebooks, negotiation)!.id, negotiation.id)} />
 								</Flex>
@@ -264,7 +215,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						}
 						break;
 					}
-					case 'map': {
+					case 'tactical-map': {
 						const map = SourcebookLogic.getTacticalMaps(props.sourcebooks).find(tm => tm.id === content.contentID);
 						if (map) {
 							return (
@@ -276,36 +227,15 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						}
 						break;
 					}
+					default: {
+						return (
+							<Flex vertical={true} gap={5}>
+								<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedReference(content)} />
+							</Flex>
+						);
+					}
 				}
 				break;
-			}
-			case 'element': {
-				switch (content.type) {
-					case 'follower':
-						return (
-							<Flex vertical={true} gap={5}>
-								<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedFollower(content.content as Follower)} />
-							</Flex>
-						);
-					case 'item':
-						return (
-							<Flex vertical={true} gap={5}>
-								<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedItem(content.content as Item)} />
-							</Flex>
-						);
-					case 'monster':
-						return (
-							<Flex vertical={true} gap={5}>
-								<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedMonster(content.content as Monster)} />
-							</Flex>
-						);
-					case 'title':
-						return (
-							<Flex vertical={true} gap={5}>
-								<Button title='Info' icon={<InfoCircleOutlined />} onClick={() => setSelectedTitle(content.content as Title)} />
-							</Flex>
-						);
-				}
 			}
 		}
 
@@ -348,110 +278,18 @@ export const PlotPanel = (props: PlotPanelProps) => {
 					}
 				</Space>
 			</div>
-			<Drawer open={!!selectedEncounter} onClose={() => setSelectedEncounter(null)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						selectedEncounter ?
-							<EncounterPanel
-								encounter={selectedEncounter}
-								sourcebooks={props.sourcebooks}
-								heroes={props.heroes}
-								options={props.options}
-								mode={PanelMode.Full}
-							/>
-							: null
-					}
-					onClose={() => setSelectedEncounter(null)}
-				/>
-			</Drawer>
-			<Drawer open={!!selectedMontage} onClose={() => setSelectedMontage(null)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						selectedMontage ?
-							<MontagePanel
-								montage={selectedMontage}
-								heroes={props.heroes}
-								sourcebooks={props.sourcebooks}
-								options={props.options}
-								mode={PanelMode.Full}
-							/>
-							: null
-					}
-					onClose={() => setSelectedMontage(null)}
-				/>
-			</Drawer>
-			<Drawer open={!!selectedNegotiation} onClose={() => setSelectedNegotiation(null)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						selectedNegotiation ?
-							<NegotiationPanel
-								negotiation={selectedNegotiation}
-								sourcebooks={props.sourcebooks}
-								options={props.options}
-								mode={PanelMode.Full}
-							/>
-							: null
-					}
-					onClose={() => setSelectedNegotiation(null)}
-				/>
-			</Drawer>
-			<Drawer open={!!selectedFollower} onClose={() => setSelectedFollower(null)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						selectedFollower ?
-							<FollowerPanel
-								follower={selectedFollower}
-								mode={PanelMode.Full}
-							/>
-							: null
-					}
-					onClose={() => setSelectedFollower(null)}
-				/>
-			</Drawer>
-			<Drawer open={!!selectedItem} onClose={() => setSelectedItem(null)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						selectedItem ?
-							<ItemPanel
-								item={selectedItem}
-								sourcebooks={props.sourcebooks}
-								options={props.options}
-								mode={PanelMode.Full}
-							/>
-							: null
-					}
-					onClose={() => setSelectedItem(null)}
-				/>
-			</Drawer>
-			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						selectedMonster ?
-							<MonsterPanel
-								monster={selectedMonster}
-								sourcebooks={props.sourcebooks}
-								options={props.options}
-								mode={PanelMode.Full}
-							/>
-							: null
-					}
-					onClose={() => setSelectedMonster(null)}
-				/>
-			</Drawer>
-			<Drawer open={!!selectedTitle} onClose={() => setSelectedTitle(null)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						selectedTitle ?
-							<TitlePanel
-								title={selectedTitle}
-								options={props.options}
-								sourcebooks={props.sourcebooks}
-								mode={PanelMode.Full}
-							/>
-							: null
-					}
-					onClose={() => setSelectedTitle(null)}
-				/>
+			<Drawer open={!!selectedReference} onClose={() => setSelectedReference(null)} closeIcon={null} width='500px'>
+				{
+					selectedReference ?
+						<ElementModal
+							category={selectedReference.type}
+							element={SourcebookLogic.getElement(selectedReference.contentID, props.sourcebooks) as Element}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+							onClose={() => setSelectedReference(null)}
+						/>
+						: null
+				}
 			</Drawer>
 		</ErrorBoundary>
 	);

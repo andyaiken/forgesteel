@@ -1,5 +1,3 @@
-import { Adventure } from '@/models/adventure';
-import { Playbook } from '@/models/playbook';
 import { Plot } from '@/models/plot';
 import { Session } from '@/models/session';
 
@@ -70,23 +68,5 @@ export class AdventureLogic {
 		session.counters.forEach(c => options.push({ type: 'counter', id: c.id, name: c.name || 'Unnamed Counter' }));
 
 		return options;
-	};
-
-	static getAdventurePackage = (adventure: Adventure, playbook: Playbook) => {
-		const contentIDs = AdventureLogic.getAllPlotPoints(adventure.plot)
-			.flatMap(p => p.content)
-			.filter(c => c.contentType === 'reference')
-			.map(c => c.contentID)
-			.filter(id => id !== null);
-
-		return {
-			adventure: adventure,
-			elements: [
-				...playbook.encounters.filter(e => contentIDs.includes(e.id)).map(e => ({ type: 'encounter' as const, data: e })),
-				...playbook.montages.filter(m => contentIDs.includes(m.id)).map(m => ({ type: 'montage' as const, data: m })),
-				...playbook.negotiations.filter(n => contentIDs.includes(n.id)).map(n => ({ type: 'negotiation' as const, data: n })),
-				...playbook.tacticalMaps.filter(tm => contentIDs.includes(tm.id)).map(tm => ({ type: 'map' as const, data: tm }))
-			]
-		};
 	};
 }

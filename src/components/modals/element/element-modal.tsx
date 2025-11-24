@@ -1,6 +1,3 @@
-import { Button, Popover } from 'antd';
-import { DownOutlined, UploadOutlined } from '@ant-design/icons';
-import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Ancestry } from '@/models/ancestry';
 import { AncestryPanel } from '@/components/panels/elements/ancestry-panel/ancestry-panel';
 import { Career } from '@/models/career';
@@ -27,6 +24,7 @@ import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
+import { Sourcebook } from '@/models/sourcebook';
 import { SubClass } from '@/models/subclass';
 import { SubclassPanel } from '@/components/panels/elements/subclass-panel/subclass-panel';
 import { Terrain } from '@/models/terrain';
@@ -37,18 +35,16 @@ import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel
 import './element-modal.scss';
 
 interface Props {
-	kind: SourcebookElementKind;
+	category: string;
 	element: Element;
 	sourcebooks: Sourcebook[];
 	options: Options;
 	onClose: () => void;
-	exportData: () => void;
-	exportImage: () => void;
 }
 
 export const ElementModal = (props: Props) => {
 	const getPanel = () => {
-		switch (props.kind) {
+		switch (props.category) {
 			case 'ancestry':
 				return (
 					<AncestryPanel
@@ -180,24 +176,6 @@ export const ElementModal = (props: Props) => {
 
 	return (
 		<Modal
-			toolbar={
-				<>
-					<Popover
-						trigger='click'
-						content={(
-							<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-								<Button onClick={() => props.exportImage()}>Export As Image</Button>
-								<Button onClick={() => props.exportData()}>Export As Data</Button>
-							</div>
-						)}
-					>
-						<Button icon={<UploadOutlined />}>
-							Export
-							<DownOutlined />
-						</Button>
-					</Popover>
-				</>
-			}
 			content={
 				<div className='element-modal'>
 					{getPanel()}

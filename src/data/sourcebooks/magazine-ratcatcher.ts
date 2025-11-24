@@ -256,7 +256,7 @@ Dryads have forms as varied as the trees they resemble. Smooth skinned or rough,
 export const ratcatcher: Sourcebook = {
 	id: 'ratcatcher',
 	name: 'Ratcatcher Magazine',
-	description: 'Third-party content from [Ratcatcher Magazine](https://tidalwavegames.itch.io/ratcatcher-magazine).',
+	description: 'A selection of content from [Ratcatcher Magazine](https://tidalwavegames.itch.io/ratcatcher-magazine).',
 	type: SourcebookType.ThirdParty,
 	adventures: [],
 	ancestries: [

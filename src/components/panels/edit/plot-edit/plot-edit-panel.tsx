@@ -1,43 +1,31 @@
-import { Button, Divider, Drawer, Flex, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
+import { Button, Drawer, Flex, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
-import { Plot, PlotContent, PlotContentElement, PlotContentImage, PlotContentReference, PlotContentRoll, PlotContentText, PlotLink } from '@/models/plot';
+import { Plot, PlotContent, PlotContentImage, PlotContentReference, PlotContentRoll, PlotContentText, PlotLink } from '@/models/plot';
+import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
 import { Characteristic } from '@/enums/characteristic';
 import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
-import { Element } from '@/models/element';
 import { Empty } from '@/components/controls/empty/empty';
 import { EncounterPanel } from '@/components/panels/elements/encounter-panel/encounter-panel';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
-import { Follower } from '@/models/follower';
-import { FollowerEditPanel } from '@/components/panels/edit/follower-edit/follower-edit-panel';
-import { FollowerType } from '@/enums/follower-type';
+import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Item } from '@/models/item';
-import { ItemEditPanel } from '@/components/panels/edit/item-edit/item-edit-panel';
-import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
-import { Monster } from '@/models/monster';
-import { MonsterEditPanel } from '@/components/panels/edit/monster-edit/monster-edit-panel';
-import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlotPanel } from '@/components/panels/elements/plot-panel/plot-panel';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
-import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TacticalMapDisplayType } from '@/enums/tactical-map-display-type';
 import { TacticalMapPanel } from '@/components/panels/elements/tactical-map-panel/tactical-map-panel';
-import { Title } from '@/models/title';
-import { TitleEditPanel } from '@/components/panels/edit/title-edit/title-edit-panel';
-import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
 
@@ -57,14 +45,8 @@ interface Props {
 export const PlotEditPanel = (props: Props) => {
 	const [ plot, setPlot ] = useState<Plot>(props.plot);
 	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
-	const [ addingEncounter, setAddingEncounter ] = useState<boolean>(false);
-	const [ addingMontage, setAddingMontage ] = useState<boolean>(false);
-	const [ addingNegotiation, setAddingNegotiation ] = useState<boolean>(false);
-	const [ addingMap, setAddingMap ] = useState<boolean>(false);
 
-	const [ addingItem, setAddingItem ] = useState<boolean>(false);
-	const [ addingMonster, setAddingMonster ] = useState<boolean>(false);
-	const [ addingTitle, setAddingTitle ] = useState<boolean>(false);
+	const [ addingReference, setAddingReference ] = useState<boolean>(false);
 
 	const parentPlot = AdventureLogic.getPlotPointParent(props.adventure.plot, plot.id) as Plot;
 	const upstreamIDs = AdventureLogic.getUpstreamPlotPoints(parentPlot, plot.id).map(p => p.id);
@@ -116,7 +98,7 @@ export const PlotEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
-	const addContentReference = (type: 'encounter' | 'montage' | 'negotiation' | 'map', id: string) => {
+	const addContentReference = (type: SourcebookElementKind, id: string) => {
 		const content: PlotContentReference = {
 			id: Utils.guid(),
 			contentType: 'reference',
@@ -129,28 +111,7 @@ export const PlotEditPanel = (props: Props) => {
 		setPlot(copy);
 		props.onChange(copy);
 
-		setAddingEncounter(false);
-		setAddingMontage(false);
-		setAddingNegotiation(false);
-		setAddingMap(false);
-	};
-
-	const addContentElement = (type: 'follower' | 'item' | 'monster' | 'title', element: Element) => {
-		const content: PlotContentElement = {
-			id: Utils.guid(),
-			contentType: 'element',
-			type: type,
-			content: element
-		};
-
-		const copy = Utils.copy(plot);
-		copy.content.push(content);
-		setPlot(copy);
-		props.onChange(copy);
-
-		setAddingItem(false);
-		setAddingMonster(false);
-		setAddingTitle(false);
+		setAddingReference(false);
 	};
 
 	const addLink = (target: Plot) => {
@@ -291,16 +252,6 @@ export const PlotEditPanel = (props: Props) => {
 			props.onChange(copy);
 		};
 
-		const setElement = (contentID: string, value: Element) => {
-			const copy = Utils.copy(plot);
-			copy.content
-				.filter(c => c.contentType === 'element')
-				.filter(c => c.id === contentID)
-				.forEach(c => c.content = value);
-			setPlot(copy);
-			props.onChange(copy);
-		};
-
 		return (
 			<Space direction='vertical' style={{ width: '100%' }}>
 				<HeaderText
@@ -308,30 +259,12 @@ export const PlotEditPanel = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={
-								<div style={{ width: '210px' }}>
-									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentText(); }}>Text</Button>
-									</div>
-									<Divider>Common Elements</Divider>
-									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentImage(); }}>Picture</Button>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentRoll(); }}>Power Roll</Button>
-									</div>
-									<Divider>Playbook Elements</Divider>
-									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingEncounter(true); }}>Encounter</Button>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingMontage(true); }}>Montage</Button>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingNegotiation(true); }}>Negotiation</Button>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingMap(true); }}>Tactical Map</Button>
-									</div>
-									<Divider>Library Elements</Divider>
-									<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentElement('follower', FactoryLogic.createFollower(FollowerType.Artisan)); }}>Follower</Button>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingItem(true); }}>Item</Button>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingMonster(true); }}>Monster</Button>
-										<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingTitle(true); }}>Title</Button>
-									</div>
-								</div>
+								<Space direction='vertical' style={{ width: '120px' }}>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentText(); }}>Text</Button>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentImage(); }}>Picture</Button>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentRoll(); }}>Power Roll</Button>
+									<Button block={true} type='text' onClick={() => { setMenuOpen(false); setAddingReference(true); }}>Library Element</Button>
+								</Space>
 							}
 							open={menuOpen}
 							onOpenChange={setMenuOpen}
@@ -511,7 +444,7 @@ export const PlotEditPanel = (props: Props) => {
 										}
 										break;
 									}
-									case 'map': {
+									case 'tactical-map': {
 										const element = SourcebookLogic.getTacticalMaps(props.sourcebooks).find(tm => tm.id === c.contentID);
 										if (element) {
 											name = element.name;
@@ -522,41 +455,18 @@ export const PlotEditPanel = (props: Props) => {
 										}
 										break;
 									}
-								}
-								break;
-							}
-							case 'element': {
-								switch (c.type) {
-									case 'follower': {
-										name = c.content.name || 'Unnamed Follower';
-										tag = 'Follower';
-										content = (
-											<FollowerEditPanel follower={c.content as Follower} sourcebooks={props.sourcebooks} options={props.options} onChange={f => setElement(c.id, f)} />
-										);
-										break;
-									}
-									case 'item': {
-										name = c.content.name || 'Unnamed Item';
-										tag = 'Item';
-										content = (
-											<ItemEditPanel item={c.content as Item} sourcebooks={props.sourcebooks} options={props.options} onChange={i => setElement(c.id, i)} />
-										);
-										break;
-									}
-									case 'monster': {
-										name = c.content.name || 'Unnamed Monster';
-										tag = 'Monster';
-										content = (
-											<MonsterEditPanel monster={c.content as Monster} similarMonsters={[]} sourcebooks={props.sourcebooks} options={props.options} onChange={m => setElement(c.id, m)} />
-										);
-										break;
-									}
-									case 'title': {
-										name = c.content.name || 'Unnamed Title';
-										tag = 'Title';
-										content = (
-											<TitleEditPanel title={c.content as Title} sourcebooks={props.sourcebooks} options={props.options} onChange={t => setElement(c.id, t)} />
-										);
+									default: {
+										const element = SourcebookLogic.getElement(c.contentID, props.sourcebooks);
+										if (element) {
+											name = element.name;
+											tag = Format.capitalize(c.type.split('-').join(' '));
+											content = (
+												<>
+													<HeaderText>{element.name}</HeaderText>
+													<div className='ds-text'>{element.description}</div>
+												</>
+											);
+										}
 										break;
 									}
 								}
@@ -725,137 +635,25 @@ export const PlotEditPanel = (props: Props) => {
 					}
 				/>
 			</div>
-			<Drawer open={addingEncounter} onClose={() => setAddingEncounter(false)} closeIcon={null} width='500px'>
+			<Drawer open={addingReference} onClose={() => setAddingReference(false)} closeIcon={null} width='500px'>
 				<Modal
 					content={
 						<div style={{ padding: '20px' }}>
 							<Space direction='vertical' style={{ width: '100%' }}>
 								{
-									SourcebookLogic.getEncounters(props.sourcebooks).map(e =>
-										<SelectablePanel key={e.id} onSelect={() => addContentReference('encounter', e.id)}>
-											<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
-										</SelectablePanel>
-									)
+									props.sourcebooks
+										.flatMap(sb => SourcebookLogic.getElements(sb))
+										.map(e => (
+											<SelectablePanel key={e.element.id} onSelect={() => addContentReference(e.type, e.element.id)}>
+												<HeaderText tags={[ Format.capitalize(e.type.split('-').join(' ')) ]}>{e.element.name}</HeaderText>
+												<div className='ds-text'>{e.element.description}</div>
+											</SelectablePanel>
+										))
 								}
-								{SourcebookLogic.getEncounters(props.sourcebooks).length === 0 ? <Empty /> : null}
 							</Space>
 						</div>
 					}
-					onClose={() => setAddingEncounter(false)}
-				/>
-			</Drawer>
-			<Drawer open={addingMontage} onClose={() => setAddingMontage(false)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						<div style={{ padding: '20px' }}>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								{
-									SourcebookLogic.getMontages(props.sourcebooks).map(m =>
-										<SelectablePanel key={m.id} onSelect={() => addContentReference('montage', m.id)}>
-											<MontagePanel montage={m} heroes={props.heroes} sourcebooks={props.sourcebooks} options={props.options} />
-										</SelectablePanel>
-									)
-								}
-								{SourcebookLogic.getMontages(props.sourcebooks).length === 0 ? <Empty /> : null}
-							</Space>
-						</div>
-					}
-					onClose={() => setAddingMontage(false)}
-				/>
-			</Drawer>
-			<Drawer open={addingNegotiation} onClose={() => setAddingNegotiation(false)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						<div style={{ padding: '20px' }}>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								{
-									SourcebookLogic.getNegotiations(props.sourcebooks).map(n =>
-										<SelectablePanel key={n.id} onSelect={() => addContentReference('negotiation', n.id)}>
-											<NegotiationPanel negotiation={n} sourcebooks={props.sourcebooks} options={props.options} />
-										</SelectablePanel>
-									)
-								}
-								{SourcebookLogic.getNegotiations(props.sourcebooks).length === 0 ? <Empty /> : null}
-							</Space>
-						</div>
-					}
-					onClose={() => setAddingNegotiation(false)}
-				/>
-			</Drawer>
-			<Drawer open={addingMap} onClose={() => setAddingMap(false)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						<div style={{ padding: '20px' }}>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								{
-									SourcebookLogic.getTacticalMaps(props.sourcebooks).map(tm =>
-										<SelectablePanel key={tm.id} onSelect={() => addContentReference('map', tm.id)}>
-											<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} sourcebooks={props.sourcebooks} options={props.options} />
-										</SelectablePanel>
-									)
-								}
-								{SourcebookLogic.getTacticalMaps(props.sourcebooks).length === 0 ? <Empty /> : null}
-							</Space>
-						</div>
-					}
-					onClose={() => setAddingMap(false)}
-				/>
-			</Drawer>
-			<Drawer open={addingItem} onClose={() => setAddingItem(false)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						<div style={{ padding: '20px' }}>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								{
-									SourcebookLogic.getItems(props.sourcebooks).map(i =>
-										<SelectablePanel key={i.id} onSelect={() => addContentElement('item', i)}>
-											<ItemPanel item={i} sourcebooks={props.sourcebooks} options={props.options} />
-										</SelectablePanel>
-									)
-								}
-								{SourcebookLogic.getItems(props.sourcebooks).length === 0 ? <Empty /> : null}
-							</Space>
-						</div>
-					}
-					onClose={() => setAddingItem(false)}
-				/>
-			</Drawer>
-			<Drawer open={addingMonster} onClose={() => setAddingMonster(false)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						<div style={{ padding: '20px' }}>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								{
-									SourcebookLogic.getMonsters(props.sourcebooks).map(m =>
-										<SelectablePanel key={m.id} onSelect={() => addContentElement('monster', m)}>
-											<MonsterPanel monster={m} sourcebooks={props.sourcebooks} options={props.options} />
-										</SelectablePanel>
-									)
-								}
-								{SourcebookLogic.getMonsters(props.sourcebooks).length === 0 ? <Empty /> : null}
-							</Space>
-						</div>
-					}
-					onClose={() => setAddingMonster(false)}
-				/>
-			</Drawer>
-			<Drawer open={addingTitle} onClose={() => setAddingTitle(false)} closeIcon={null} width='500px'>
-				<Modal
-					content={
-						<div style={{ padding: '20px' }}>
-							<Space direction='vertical' style={{ width: '100%' }}>
-								{
-									SourcebookLogic.getTitles(props.sourcebooks).map(t =>
-										<SelectablePanel key={t.id} onSelect={() => addContentElement('title', t)}>
-											<TitlePanel title={t} sourcebooks={props.sourcebooks} options={props.options} />
-										</SelectablePanel>
-									)
-								}
-								{SourcebookLogic.getItems(props.sourcebooks).length === 0 ? <Empty /> : null}
-							</Space>
-						</div>
-					}
-					onClose={() => setAddingTitle(false)}
+					onClose={() => setAddingReference(false)}
 				/>
 			</Drawer>
 		</ErrorBoundary>

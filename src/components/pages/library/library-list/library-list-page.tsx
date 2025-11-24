@@ -91,6 +91,7 @@ interface Props {
 	showEncounterTools: (encounter: Encounter) => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
+	moveElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	deleteElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
 	exportElementData: (category: string, element: Element) => void;
 	exportElementImage: (category: string, element: Element) => void;
@@ -512,6 +513,7 @@ export const LibraryListPage = (props: Props) => {
 								setView={setView}
 								createElement={props.createElement}
 								importElement={props.importElement}
+								moveElement={props.moveElement}
 								deleteElement={props.deleteElement}
 								exportElementData={props.exportElementData}
 								exportElementImage={props.exportElementImage}

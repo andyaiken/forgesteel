@@ -1,3 +1,4 @@
+import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Ability } from '@/models/ability';
 import { Adventure } from '@/models/adventure';
 import { AdventureLogic } from '@/logic/adventure-logic';
@@ -28,7 +29,6 @@ import { Project } from '@/models/project';
 import { Random } from '@/utils/random';
 import { Skill } from '@/models/skill';
 import { SkillList } from '@/enums/skill-list';
-import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookData } from '@/data/sourcebook-data';
 import { SubClass } from '@/models/subclass';
 import { TacticalMap } from '@/models/tactical-map';
@@ -62,28 +62,28 @@ export class SourcebookLogic {
 		return list;
 	};
 
-	static getElements = (sourcebook: Sourcebook): { element: Element, type: string }[] => {
+	static getElements = (sourcebook: Sourcebook): { element: Element, type: SourcebookElementKind }[] => {
 		return [
-			...sourcebook.adventures.map(x => ({ element: x, type: 'adventure' })),
-			...sourcebook.ancestries.map(x => ({ element: x, type: 'ancestry' })),
-			...sourcebook.careers.map(x => ({ element: x, type: 'career' })),
-			...sourcebook.classes.map(x => ({ element: x, type: 'class' })),
-			...sourcebook.complications.map(x => ({ element: x, type: 'complication' })),
-			...sourcebook.cultures.map(x => ({ element: x, type: 'culture' })),
-			...sourcebook.domains.map(x => ({ element: x, type: 'domain' })),
-			...sourcebook.encounters.map(x => ({ element: x, type: 'encounter' })),
-			...sourcebook.imbuements.map(x => ({ element: x, type: 'imbuement' })),
-			...sourcebook.items.map(x => ({ element: x, type: 'item' })),
-			...sourcebook.kits.map(x => ({ element: x, type: 'kit' })),
-			...sourcebook.monsterGroups.map(x => ({ element: x, type: 'monster group' })),
-			...sourcebook.montages.map(x => ({ element: x, type: 'montage' })),
-			...sourcebook.negotiations.map(x => ({ element: x, type: 'negotiation' })),
-			...sourcebook.perks.map(x => ({ element: x, type: 'perk' })),
-			...sourcebook.projects.map(x => ({ element: x, type: 'project' })),
-			...sourcebook.subclasses.map(x => ({ element: x, type: 'subclass' })),
-			...sourcebook.tacticalMaps.map(x => ({ element: x, type: 'tactical map' })),
-			...sourcebook.terrain.map(x => ({ element: x, type: 'terrain' })),
-			...sourcebook.titles.map(x => ({ element: x, type: 'title' }))
+			...sourcebook.adventures.map(x => ({ element: x, type: 'adventure' as SourcebookElementKind })),
+			...sourcebook.ancestries.map(x => ({ element: x, type: 'ancestry' as SourcebookElementKind })),
+			...sourcebook.careers.map(x => ({ element: x, type: 'career' as SourcebookElementKind })),
+			...sourcebook.classes.map(x => ({ element: x, type: 'class' as SourcebookElementKind })),
+			...sourcebook.complications.map(x => ({ element: x, type: 'complication' as SourcebookElementKind })),
+			...sourcebook.cultures.map(x => ({ element: x, type: 'culture' as SourcebookElementKind })),
+			...sourcebook.domains.map(x => ({ element: x, type: 'domain' as SourcebookElementKind })),
+			...sourcebook.encounters.map(x => ({ element: x, type: 'encounter' as SourcebookElementKind })),
+			...sourcebook.imbuements.map(x => ({ element: x, type: 'imbuement' as SourcebookElementKind })),
+			...sourcebook.items.map(x => ({ element: x, type: 'item' as SourcebookElementKind })),
+			...sourcebook.kits.map(x => ({ element: x, type: 'kit' as SourcebookElementKind })),
+			...sourcebook.monsterGroups.map(x => ({ element: x, type: 'monster-group' as SourcebookElementKind })),
+			...sourcebook.montages.map(x => ({ element: x, type: 'montage' as SourcebookElementKind })),
+			...sourcebook.negotiations.map(x => ({ element: x, type: 'negotiation' as SourcebookElementKind })),
+			...sourcebook.perks.map(x => ({ element: x, type: 'perk' as SourcebookElementKind })),
+			...sourcebook.projects.map(x => ({ element: x, type: 'project' as SourcebookElementKind })),
+			...sourcebook.subclasses.map(x => ({ element: x, type: 'subclass' as SourcebookElementKind })),
+			...sourcebook.tacticalMaps.map(x => ({ element: x, type: 'tactical-map' as SourcebookElementKind })),
+			...sourcebook.terrain.map(x => ({ element: x, type: 'terrain' as SourcebookElementKind })),
+			...sourcebook.titles.map(x => ({ element: x, type: 'title' as SourcebookElementKind }))
 		];
 	};
 
@@ -96,6 +96,11 @@ export class SourcebookLogic {
 		const samples = shuffled.slice(0, 3);
 
 		return Collections.sort(samples, s => s.element.name);
+	};
+
+	static getElement = (elementID: string, sourcebooks: Sourcebook[]) => {
+		const elements = sourcebooks.flatMap(sb => SourcebookLogic.getElements(sb)).map(e => e.element);
+		return elements.find(e => e.id === elementID) || null;
 	};
 
 	///////////////////////////////////////////////////////////////////////////

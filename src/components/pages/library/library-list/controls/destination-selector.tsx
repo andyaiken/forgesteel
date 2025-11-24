@@ -1,4 +1,4 @@
-import { Divider, Select } from 'antd';
+import { Divider, Select, Space } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
 
@@ -20,8 +20,8 @@ export const DestinationSelector = (props: Props) => {
 	sourcebookOptions.push({ label: 'In a new sourcebook', value: '' });
 
 	return (
-		<div>
-			<div className='ds-text'>Where do you want it to live?</div>
+		<Space direction='vertical' style={{ width: '100%' }}>
+			<div>Where do you want it to live?</div>
 			<Select
 				style={{ width: '100%' }}
 				placeholder='Select'
@@ -31,6 +31,6 @@ export const DestinationSelector = (props: Props) => {
 				onChange={props.setSourcebookID}
 			/>
 			<Divider />
-		</div>
+		</Space>
 	);
 };

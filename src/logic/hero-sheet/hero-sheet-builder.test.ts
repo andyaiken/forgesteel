@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { FeatureFollower, FeatureRetainer, FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
+import { FeatureCompanion, FeatureFollower, FeatureRetainer, FeatureSummonChoice, FeatureSummonChoiceData } from '@/models/feature';
 import { afterEach, describe, expect, expectTypeOf, test, vi } from 'vitest';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -8,6 +8,7 @@ import { FollowerType } from '@/enums/follower-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
+import { MonsterData } from '@/data/monster-data';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
@@ -76,6 +77,16 @@ const mockFeatureFollower = {
 	}
 } as FeatureFollower;
 
+const testCompanionMonster = MonsterData.undead.monsters[0];
+const mockFeatureCompanion = {
+	id: 'mock-companion',
+	name: 'Mock Companion',
+	type: FeatureType.Companion,
+	data: {
+		selected: testCompanionMonster
+	}
+} as FeatureCompanion;
+
 const retainer1 = retainer.monsters[0];
 const mockFeatureRetainer = {
 	id: 'mock-retainer',
@@ -112,6 +123,16 @@ describe('buildFollowerCompanionSheet()', () => {
 		const result = HeroSheetBuilder.buildFollowerCompanionSheet(mockFeatureFollower, mockHero);
 
 		expect(mockBuilderMethod).toHaveBeenCalledExactlyOnceWith(mockArtisan);
+		expect(result).toBe(mockResult);
+	});
+
+	test('it should call the correct builder method for Companion features', () => {
+		const mockResult = { id: 'bar' } as FollowerSheet;
+		const mockBuilderMethod = vi.spyOn(HeroSheetBuilder, 'buildRetainerSheet').mockReturnValueOnce(mockResult);
+
+		const result = HeroSheetBuilder.buildFollowerCompanionSheet(mockFeatureCompanion, mockHero);
+
+		expect(mockBuilderMethod).toHaveBeenCalledExactlyOnceWith(testCompanionMonster);
 		expect(result).toBe(mockResult);
 	});
 
@@ -157,6 +178,7 @@ describe('buildHeroSheet', () => {
 		vi.spyOn(HeroLogic, 'getFeatures').mockReturnValue([
 			{ feature: mockFeatureRetainer, source: 'test' },
 			{ feature: mockFeatureFollower, source: 'test' },
+			{ feature: mockFeatureCompanion, source: 'test' },
 			{ feature: mockSummonChoiceFeature, source: 'test' }
 		]);
 
@@ -164,6 +186,6 @@ describe('buildHeroSheet', () => {
 
 		expect(result).toBeDefined();
 		expect(result).not.toBeNullable();
-		expect(result.followers.length).toBe(3);
+		expect(result.followers.length).toBe(4);
 	});
 });

@@ -38,7 +38,7 @@ const getSourcebookContent = (sourcebook: Sourcebook) => {
 					SourcebookLogic.getExampleContent(sourcebook)
 						.map(x => (
 							<li key={x.element.id}>
-								{x.element.name} <span style={{ opacity: '0.5' }}>({x.type})</span>
+								{x.element.name} <span style={{ opacity: '0.5' }}>({x.type.split('-').join(' ')})</span>
 							</li>
 						))
 				}

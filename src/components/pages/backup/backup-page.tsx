@@ -1,3 +1,4 @@
+import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Hero } from '@/models/hero';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
@@ -39,6 +40,11 @@ export const BackupPage = (props: Props) => {
 								<SourcebookPanel sourcebook={sb} />
 							</SelectablePanel>
 						))
+					}
+					{
+						props.heroes.length + props.homebrewSourcebooks.length === 0 ?
+							<Empty text='Nothing to back up' />
+							: null
 					}
 				</div>
 			</div>

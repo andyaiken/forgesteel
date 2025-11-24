@@ -270,54 +270,57 @@ export const DataLoader = (props: Props) => {
 	}, []);
 
 	return (
-		<Result
-			icon={<LoadingOutlined />}
-			title='Loading data...'
-		>
-			<Flex gap='middle' align='center' justify='center' vertical={true}>
-				<Flex gap='small' justify='space-between' vertical={true}>
-					<Flex gap='small' justify='flex-start'>
-						<LoadingSuccessError state={connectionSettingsState} />
-						Connection Settings
+		<Flex align='center' justify='center' style={{ width: '100%', height: '100%' }}>
+			<Result
+				style={{ width: '250px', padding: '0' }}
+				icon={<LoadingOutlined />}
+				title='Loading data...'
+			>
+				<Flex gap='middle' align='center' justify='center' vertical={true}>
+					<Flex gap='small' justify='space-between' vertical={true}>
+						<Flex justify='flex-start' gap={10}>
+							<LoadingSuccessError state={connectionSettingsState} />
+							Connection Settings
+						</Flex>
+						<Flex gap={10}>
+							<LoadingSuccessError state={getHeroesState} />
+							Heroes
+						</Flex>
+						<Flex gap={10}>
+							<LoadingSuccessError state={getHomebrewState} />
+							Homebrew Content
+						</Flex>
+						<Flex gap={10}>
+							<LoadingSuccessError state={getPlaybookState} />
+							Playbook
+						</Flex>
+						<Flex gap={10}>
+							<LoadingSuccessError state={getSessionState} />
+							Session
+						</Flex>
+						<Flex gap={10}>
+							<LoadingSuccessError state={getOptionsState} />
+							Options
+						</Flex>
+						<Flex gap={10}>
+							<LoadingSuccessError state={getHiddenSettingsState} />
+							Identifying Manifold
+						</Flex>
 					</Flex>
-					<Flex gap='small' justify='flex-start'>
-						<LoadingSuccessError state={getHeroesState} />
-						Heroes
-					</Flex>
-					<Flex gap='small' justify='flex-start'>
-						<LoadingSuccessError state={getHomebrewState} />
-						Homebrew Content
-					</Flex>
-					<Flex gap='small' justify='flex-start'>
-						<LoadingSuccessError state={getPlaybookState} />
-						Playbook
-					</Flex>
-					<Flex gap='small' justify='flex-start'>
-						<LoadingSuccessError state={getSessionState} />
-						Session
-					</Flex>
-					<Flex gap='small' justify='flex-start'>
-						<LoadingSuccessError state={getOptionsState} />
-						Options
-					</Flex>
-					<Flex gap='small' justify='flex-start'>
-						<LoadingSuccessError state={getHiddenSettingsState} />
-						Identifying Manifold
-					</Flex>
+					{
+						errors.map((reason, n) => {
+							return (
+								<Alert
+									key={`data-load-alert-${n}`}
+									type='error'
+									showIcon={true}
+									message={reason}
+								/>
+							);
+						})
+					}
 				</Flex>
-				{
-					errors.map((reason, n) => {
-						return (
-							<Alert
-								key={`data-load-alert-${n}`}
-								type='error'
-								showIcon={true}
-								message={reason}
-							/>
-						);
-					})
-				}
-			</Flex>
-		</Result>
+			</Result>
+		</Flex>
 	);
 };

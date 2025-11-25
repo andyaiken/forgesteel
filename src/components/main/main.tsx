@@ -54,7 +54,6 @@ import { Negotiation } from '@/models/negotiation';
 import { Options } from '@/models/options';
 import { PartyModal } from '@/components/modals/party/party-modal';
 import { Perk } from '@/models/perk';
-import { Playbook } from '@/models/playbook';
 import { PlayerViewModal } from '@/components/modals/player-view/player-view-modal';
 import { Project } from '@/models/project';
 import { ReferenceModal } from '@/components/modals/reference/reference-modal';
@@ -87,7 +86,6 @@ import './main.scss';
 
 interface Props {
 	heroes: Hero[]; // from DataService
-	playbook: Playbook; // from DataService
 	session: Session; // from DataService
 	homebrewSourcebooks: Sourcebook[]; // from DataService
 	hiddenSourcebookIDs: string[]; // from DataService

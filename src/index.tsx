@@ -29,7 +29,6 @@ const onDataLoaded = (data: LoadedData) => {
 					heroes={data.heroes}
 					homebrewSourcebooks={data.homebrew}
 					hiddenSourcebookIDs={data.hiddenSourcebookIDs}
-					playbook={data.playbook}
 					session={data.session}
 					options={data.options}
 					connectionSettings={data.connectionSettings}

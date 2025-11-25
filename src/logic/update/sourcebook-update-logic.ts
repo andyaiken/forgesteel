@@ -17,14 +17,35 @@ export class SourcebookUpdateLogic {
 		if (sourcebook.adventures === undefined) {
 			sourcebook.adventures = [];
 		}
+		if (sourcebook.ancestries === undefined) {
+			sourcebook.ancestries = [];
+		}
+		if (sourcebook.careers === undefined) {
+			sourcebook.careers = [];
+		}
+		if (sourcebook.classes === undefined) {
+			sourcebook.classes = [];
+		}
+		if (sourcebook.complications === undefined) {
+			sourcebook.complications = [];
+		}
+		if (sourcebook.cultures === undefined) {
+			sourcebook.cultures = [];
+		}
 		if (sourcebook.domains === undefined) {
 			sourcebook.domains = [];
 		}
 		if (sourcebook.encounters === undefined) {
 			sourcebook.encounters = [];
 		}
+		if (sourcebook.imbuements === undefined) {
+			sourcebook.imbuements = [];
+		}
 		if (sourcebook.items === undefined) {
 			sourcebook.items = [];
+		}
+		if (sourcebook.kits === undefined) {
+			sourcebook.kits = [];
 		}
 		if (sourcebook.monsterGroups === undefined) {
 			sourcebook.monsterGroups = [];
@@ -75,6 +96,22 @@ export class SourcebookUpdateLogic {
 		sourcebook.terrain = Collections.distinct(sourcebook.terrain, a => a.id);
 		sourcebook.titles = Collections.distinct(sourcebook.titles, a => a.id);
 
+		sourcebook.adventures.forEach(a => {
+			if (a.plot === undefined) {
+				a.plot = FactoryLogic.createAdventurePlot('');
+			}
+
+			if (a.plot.plots === undefined) {
+				a.plot.plots = [];
+			}
+
+			a.plot.plots.flatMap(p => p.content).forEach(c => {
+				if (c.contentType === undefined) {
+					(c as PlotContentReference).contentType = 'reference';
+				}
+			});
+		});
+
 		sourcebook.ancestries.forEach(a => {
 			if (a.ancestryPoints === undefined) {
 				a.ancestryPoints = 0;
@@ -118,70 +155,9 @@ export class SourcebookUpdateLogic {
 			/* eslint-enable @typescript-eslint/no-deprecated */
 		});
 
-		sourcebook.monsterGroups.forEach(group => {
-			MonsterUpdateLogic.updateMonsterGroup(group);
-			group.monsters.forEach(MonsterUpdateLogic.updateMonster);
-		});
-
 		sourcebook.domains.forEach(domain => {
 			domain.featuresByLevel.forEach(lvl => {
 				lvl.features.forEach(FeatureUpdateLogic.updateFeature);
-			});
-		});
-
-		sourcebook.perks.forEach(FeatureUpdateLogic.updateFeature);
-
-		sourcebook.titles.forEach(title => {
-			title.features.forEach(FeatureUpdateLogic.updateFeature);
-		});
-
-		if (sourcebook.imbuements === undefined) {
-			sourcebook.imbuements = [];
-		}
-
-		/* eslint-disable @typescript-eslint/no-deprecated */
-		sourcebook.items.forEach(item => {
-			if (item.customizationsByLevel && (item.customizationsByLevel.length > 0)) {
-				item.customizationsByLevel.forEach(level => {
-					level.features.forEach(feature => {
-						if (!sourcebook.imbuements.find(imbuement => imbuement.id === feature.feature.id)) {
-							sourcebook.imbuements.push(FactoryLogic.createImbuement({
-								type: item.type,
-								level: level.level,
-								feature: feature.feature
-							}));
-						};
-					});
-				});
-			}
-			ItemUpdateLogic.updateItem(item);
-		});
-		/* eslint-enable @typescript-eslint/no-deprecated */
-
-		sourcebook.kits.forEach(kit => {
-			if (kit.type === 'Standard') {
-				kit.type = '';
-			}
-			kit.features.forEach(FeatureUpdateLogic.updateFeature);
-		});
-
-		if (sourcebook.adventures === undefined) {
-			sourcebook.adventures = [];
-		}
-
-		sourcebook.adventures.forEach(a => {
-			if (a.plot === undefined) {
-				a.plot = FactoryLogic.createAdventurePlot('');
-			}
-
-			if (a.plot.plots === undefined) {
-				a.plot.plots = [];
-			}
-
-			a.plot.plots.flatMap(p => p.content).forEach(c => {
-				if (c.contentType === undefined) {
-					(c as PlotContentReference).contentType = 'reference';
-				}
 			});
 		});
 
@@ -292,19 +268,42 @@ export class SourcebookUpdateLogic {
 			}
 		});
 
-		if (sourcebook.montages === undefined) {
-			sourcebook.montages = [];
-		}
+		/* eslint-disable @typescript-eslint/no-deprecated */
+		sourcebook.items.forEach(item => {
+			if (item.customizationsByLevel && (item.customizationsByLevel.length > 0)) {
+				item.customizationsByLevel.forEach(level => {
+					level.features.forEach(feature => {
+						if (!sourcebook.imbuements.find(imbuement => imbuement.id === feature.feature.id)) {
+							sourcebook.imbuements.push(FactoryLogic.createImbuement({
+								type: item.type,
+								level: level.level,
+								feature: feature.feature
+							}));
+						};
+					});
+				});
+			}
+			ItemUpdateLogic.updateItem(item);
+		});
+		/* eslint-enable @typescript-eslint/no-deprecated */
+
+		sourcebook.kits.forEach(kit => {
+			if (kit.type === 'Standard') {
+				kit.type = '';
+			}
+			kit.features.forEach(FeatureUpdateLogic.updateFeature);
+		});
+
+		sourcebook.monsterGroups.forEach(group => {
+			MonsterUpdateLogic.updateMonsterGroup(group);
+			group.monsters.forEach(MonsterUpdateLogic.updateMonster);
+		});
 
 		sourcebook.montages.forEach(m => {
 			if (m.difficulty === undefined) {
 				m.difficulty = EncounterDifficulty.Standard;
 			}
 		});
-
-		if (sourcebook.negotiations === undefined) {
-			sourcebook.negotiations = [];
-		}
 
 		sourcebook.negotiations.forEach(n => {
 			if (n.attitude === undefined) {
@@ -324,9 +323,9 @@ export class SourcebookUpdateLogic {
 			}
 		});
 
-		if (sourcebook.tacticalMaps === undefined) {
-			sourcebook.tacticalMaps = [];
-		}
+		sourcebook.perks.forEach(p => {
+			FeatureUpdateLogic.updateFeature(p);
+		});
 
 		sourcebook.tacticalMaps.forEach(tm => {
 			if (tm.items === undefined) {
@@ -349,6 +348,10 @@ export class SourcebookUpdateLogic {
 					staminaDamage: 0
 				};
 			}
+		});
+
+		sourcebook.titles.forEach(title => {
+			title.features.forEach(FeatureUpdateLogic.updateFeature);
 		});
 
 		sourcebook.languages.forEach(language => {

@@ -150,6 +150,14 @@ export const Main = (props: Props) => {
 					});
 				}
 			)
+			.catch(err => {
+				console.error(err);
+				notify.error({
+					message: 'Error saving heroes',
+					description: err,
+					placement: 'top'
+				});
+			})
 			.then(() => {
 				// Trigger sync when data changes
 				triggerSyncOnChange();

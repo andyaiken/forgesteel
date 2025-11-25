@@ -510,6 +510,9 @@ export const EncounterRunPanel = (props: Props) => {
 							label: 'Malice',
 							children: (
 								<Space direction='vertical' style={{ width: '100%', padding: '0 5px 10px 5px' }}>
+									<div className='ds-text'>
+										At the beginning of this turn, spend malice to activate one of these options.
+									</div>
 									{
 										MonsterLogic.getMaliceOptions(active[0].monster, active[0].monsterGroup)
 											.map(malice => (

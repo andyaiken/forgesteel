@@ -1,5 +1,7 @@
 # Development Plans
 
+Custom titles are cleared on load
+
 ### Heroes
 
 * Classic Sheet
@@ -10,7 +12,6 @@
 
 ### Library
 
-* PRIORITY: It should warn if the user is trying to export an encounter or adventure as data, if that element contains elements that are NOT official or from that sourcebook
 * It should be possible to add custom keywords to abilities / custom weapon or armor types in kits
 * It should be possible to create a homebrew class ability / monster individually
 * Monster Builder:

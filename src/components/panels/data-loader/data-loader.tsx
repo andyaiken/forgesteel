@@ -53,6 +53,7 @@ export const DataLoader = (props: Props) => {
 	const [ error, setError ] = useState<string | null>(null);
 
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
+
 	// Load connection settings and create DataService
 	async function getDataService() {
 		let settings = await localforage.getItem<ConnectionSettings>('forgesteel-connection-settings');
@@ -73,7 +74,7 @@ export const DataLoader = (props: Props) => {
 				err => {
 					console.error(err);
 				}
-			).then(() => window.location.reload());// reload page on save to apply changes
+			).then(loadData);// reload data
 	};
 
 	async function updateLoadingStatus<T>(getterPromise: Promise<T>, setStateFunc: (value: SetStateAction<LoadingStatus>) => void): Promise<T> {
@@ -122,7 +123,6 @@ export const DataLoader = (props: Props) => {
 			Promise.all(promises).then(results => {
 				// #region Homebrew sourcebooks
 				let sourcebooks = results[0] as Sourcebook[] | null;
-
 				if (!sourcebooks) {
 					sourcebooks = [];
 				}
@@ -148,13 +148,10 @@ export const DataLoader = (props: Props) => {
 						}
 					});
 				});
-
 				// #endregion
 
 				// #region Heroes
-
 				let heroes = results[1] as Hero[] | null;
-
 				if (!heroes) {
 					heroes = [];
 				}
@@ -162,20 +159,16 @@ export const DataLoader = (props: Props) => {
 				heroes.forEach(hero => {
 					HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
 				});
-
 				// #endregion
 
 				// #region Hidden sourcebook IDs
-
 				let hiddenSourcebookIDs = results[2] as string[] | null;
 				if (!hiddenSourcebookIDs) {
 					hiddenSourcebookIDs = [];
 				}
-
 				// #endregion
 
 				// #region Playbook
-
 				const playbook = results[3] as Playbook | null;
 				if (playbook) {
 					if ((playbook.adventures.length > 0) || (playbook.encounters.length > 0) || (playbook.montages.length > 0) || (playbook.negotiations.length > 0) || (playbook.tacticalMaps.length > 0)) {
@@ -197,29 +190,24 @@ export const DataLoader = (props: Props) => {
 						SourcebookUpdateLogic.updateSourcebook(sb);
 					};
 				}
-
 				// #endregion
 
 				// #region Session
-
 				let session = results[4] as Session | null;
 				if (!session) {
 					session = FactoryLogic.createSession();
 				}
 
 				SessionUpdateLogic.updateSession(session);
-
 				// #endregion
 
 				// #region Options
-
 				let options = results[5] as Options | null;
 				if (!options) {
 					options = FactoryLogic.createOptions();
 				}
 
 				OptionsUpdateLogic.updateOptions(options);
-
 				// #endregion
 
 				const loadedData: LoadedData = {
@@ -251,7 +239,6 @@ export const DataLoader = (props: Props) => {
 
 	return (
 		<Flex align='center' justify='center' style={{ width: '100%', height: '100%' }} vertical={true}>
-			{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 60 }} spin />} /> */}
 			<div className='overall-state'>
 				<LoadingSuccessError state={overallLoadState} />
 			</div>

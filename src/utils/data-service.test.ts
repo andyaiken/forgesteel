@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { DataService } from './data-service';

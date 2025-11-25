@@ -27,7 +27,7 @@ export class DataService {
 			if (error.response) {
 				const code = error.response.status;
 				const respMsg = error.response.data.message ?? error.response.data;
-				msg = `${code} Error: ${respMsg}`;
+				msg = `FS Warehouse Error: [${code}] ${respMsg}`;
 			}
 		}
 		return msg;
@@ -40,8 +40,7 @@ export class DataService {
 				this.jwt = response.data.access_token;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
-				console.error('Error communicating with FS Warehouse', error);
-				throw new Error(this.getErrorMessage(error));
+				throw new Error(this.getErrorMessage(error), { cause: error });
 			}
 		}
 
@@ -58,7 +57,7 @@ export class DataService {
 				return response.data.data;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
-				throw new Error(this.getErrorMessage(error));
+				throw new Error(this.getErrorMessage(error), { cause: error });
 			}
 		} else {
 			return localforage.getItem<T>(key);
@@ -76,7 +75,7 @@ export class DataService {
 				return value;
 			} catch (error) {
 				console.error('Error communicating with FS Warehouse', error);
-				throw new Error(this.getErrorMessage(error));
+				throw new Error(this.getErrorMessage(error), { cause: error });
 			}
 		} else {
 			return localforage.setItem<T>(key, value);
@@ -100,34 +99,40 @@ export class DataService {
 	}
 
 	async getHomebrew(): Promise<Sourcebook[] | null> {
-		return localforage.getItem<Sourcebook[]>('forgesteel-homebrew-settings');
+		return this.getLocalOrWarehouse<Sourcebook[]>('forgesteel-homebrew-settings');
 	}
 
 	async saveHomebrew(sourcebooks: Sourcebook[]): Promise<Sourcebook[]> {
-		return localforage.setItem<Sourcebook[]>('forgesteel-homebrew-settings', sourcebooks);
+		return this.putLocalOrWarehouse<Sourcebook[]>('forgesteel-homebrew-settings', sourcebooks);
 	}
 
+	/**
+	 * On load will be combined into the homebrew sourcebooks, will eventually be deprecated and removed
+	 */
 	async getPlaybook(): Promise<Playbook | null> {
 		return localforage.getItem<Playbook>('forgesteel-playbook');
 	}
 
+	/**
+	 * @deprecated Playbook has been combined with homebrew sourcebooks - will eventually be removed
+	 */
 	async savePlaybook(playbook: Playbook): Promise<Playbook> {
 		return localforage.setItem<Playbook>('forgesteel-playbook', playbook);
 	}
 
 	async getSession(): Promise<Session | null> {
-		return localforage.getItem<Session>('forgesteel-session');
+		return this.getLocalOrWarehouse<Session>('forgesteel-session');
 	}
 
 	async saveSession(session: Session): Promise<Session> {
-		return localforage.setItem<Session>('forgesteel-session', session);
+		return this.putLocalOrWarehouse<Session>('forgesteel-session', session);
 	}
 
 	async getHiddenSettingIds(): Promise<string[] | null> {
-		return localforage.getItem<string[]>('forgesteel-hidden-setting-ids');
+		return this.getLocalOrWarehouse<string[]>('forgesteel-hidden-setting-ids');
 	}
 
 	async saveHiddenSettingIds(ids: string[]): Promise<string[]> {
-		return localforage.setItem<string[]>('forgesteel-hidden-setting-ids', ids);
+		return this.putLocalOrWarehouse<string[]>('forgesteel-hidden-setting-ids', ids);
 	}
 };

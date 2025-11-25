@@ -1,13 +1,15 @@
-import { Alert, Flex, Result } from 'antd';
-import { useEffect, useState } from 'react';
+import { Alert, Flex } from 'antd';
+import { SetStateAction, useEffect, useState } from 'react';
 import { ConnectionSettings } from '@/models/connection-settings';
 import { ConnectionSettingsUpdateLogic } from '@/logic/update/connection-settings-update-logic';
 import { DataService } from '@/utils/data-service';
+import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
+import { FeatureFlags } from '@/utils/feature-flags';
 import { Format } from '@/utils/format';
+import { FsWarehouseConnectionSettingsPanel } from '../fs-warehouse-connection-settings-panel/fs-warehouse-connection-settings';
 import { Hero } from '@/models/hero';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';
-import { LoadingOutlined } from '@ant-design/icons';
 import { LoadingSuccessError } from '@/components/controls/loading-success-error/loading-success-error';
 import { Options } from '@/models/options';
 import { OptionsUpdateLogic } from '@/logic/update/options-update-logic';
@@ -19,6 +21,8 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
 import { SourcebookUpdateLogic } from '@/logic/update/sourcebook-update-logic';
 import localforage from 'localforage';
+
+import './data-loader.scss';
 
 interface Props {
 	onComplete: (data: LoadedData) => void;
@@ -35,15 +39,20 @@ export interface LoadedData {
 };
 
 export const DataLoader = (props: Props) => {
-	const [ connectionSettingsState, setConnectionSettingsState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getHeroesState, setGetHeroesState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getHomebrewState, setGetHomebrewState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getOptionsState, setGetOptionsState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getPlaybookState, setGetPlaybookState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getSessionState, setGetSessionState ] = useState<'loading' | 'success' | 'error' | null>(null);
-	const [ getHiddenSettingsState, setGetHiddenSettingsState ] = useState<'loading' | 'success' | 'error' | null>(null);
+	type LoadingStatus = 'loading' | 'success' | 'error' | null;
+	const [ connectionSettingsState, setConnectionSettingsState ] = useState<LoadingStatus>(null);
+	const [ getHeroesState, setGetHeroesState ] = useState<LoadingStatus>(null);
+	const [ getHomebrewState, setGetHomebrewState ] = useState<LoadingStatus>(null);
+	const [ getOptionsState, setGetOptionsState ] = useState<LoadingStatus>(null);
+	const [ getPlaybookState, setGetPlaybookState ] = useState<LoadingStatus>(null);
+	const [ getSessionState, setGetSessionState ] = useState<LoadingStatus>(null);
+	const [ getHiddenSettingsState, setGetHiddenSettingsState ] = useState<LoadingStatus>(null);
 
-	const [ errors, setErrors ] = useState<string[]>([]);
+	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('loading');
+
+	const [ error, setError ] = useState<string | null>(null);
+
+	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
 
 	// Load connection settings and create DataService
 	async function getDataService() {
@@ -53,11 +62,36 @@ export const DataLoader = (props: Props) => {
 		}
 		ConnectionSettingsUpdateLogic.updateSettings(settings);
 
+		setConnectionSettings(settings);
 		return new DataService(settings);
 	};
 
+	const persistConnectionSettings = (connectionSettings: ConnectionSettings) => {
+		return localforage
+			.setItem<ConnectionSettings>('forgesteel-connection-settings', connectionSettings)
+			.then(
+				setConnectionSettings,
+				err => {
+					console.error(err);
+				}
+			).then(loadData);// reload data
+	};
+
+	async function updateLoadingStatus<T>(getterPromise: Promise<T>, setStateFunc: (value: SetStateAction<LoadingStatus>) => void): Promise<T> {
+		return getterPromise
+			.then(result => {
+				setStateFunc('success');
+				return result;
+			})
+			.catch(reason => {
+				setStateFunc('error');
+				throw reason;
+			});
+	};
+
 	const loadData = () => {
-		setErrors([]);
+		setError(null);
+		setOverallLoadState('loading');
 		setConnectionSettingsState('loading');
 
 		setGetHomebrewState(null);
@@ -70,63 +104,6 @@ export const DataLoader = (props: Props) => {
 		getDataService().then(dataService => {
 			setConnectionSettingsState('success');
 
-			const promises = [
-				dataService.getHomebrew()
-					.then(result => {
-						setGetHomebrewState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetHomebrewState('error');
-						throw reason;
-					}),
-				dataService.getHeroes()
-					.then(result => {
-						setGetHeroesState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetHeroesState('error');
-						throw reason;
-					}),
-				dataService.getHiddenSettingIds()
-					.then(result => {
-						setGetHiddenSettingsState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetHiddenSettingsState('error');
-						throw reason;
-					}),
-				dataService.getPlaybook()
-					.then(result => {
-						setGetPlaybookState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetPlaybookState('error');
-						throw reason;
-					}),
-				dataService.getSession()
-					.then(result => {
-						setGetSessionState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetSessionState('error');
-						throw reason;
-					}),
-				dataService.getOptions()
-					.then(result => {
-						setGetOptionsState('success');
-						return result;
-					})
-					.catch(reason => {
-						setGetOptionsState('error');
-						throw reason;
-					})
-			];
-
 			setGetHomebrewState('loading');
 			setGetHeroesState('loading');
 			setGetPlaybookState('loading');
@@ -134,11 +111,18 @@ export const DataLoader = (props: Props) => {
 			setGetOptionsState('loading');
 			setGetHiddenSettingsState('loading');
 
+			const promises = [
+				updateLoadingStatus(dataService.getHomebrew(), setGetHomebrewState),
+				updateLoadingStatus(dataService.getHeroes(), setGetHeroesState),
+				updateLoadingStatus(dataService.getHiddenSettingIds(), setGetHiddenSettingsState),
+				updateLoadingStatus(dataService.getPlaybook(), setGetPlaybookState),
+				updateLoadingStatus(dataService.getSession(), setGetSessionState),
+				updateLoadingStatus(dataService.getOptions(), setGetOptionsState)
+			];
+
 			Promise.all(promises).then(results => {
 				// #region Homebrew sourcebooks
-
 				let sourcebooks = results[0] as Sourcebook[] | null;
-
 				if (!sourcebooks) {
 					sourcebooks = [];
 				}
@@ -164,13 +148,10 @@ export const DataLoader = (props: Props) => {
 						}
 					});
 				});
-
 				// #endregion
 
 				// #region Heroes
-
 				let heroes = results[1] as Hero[] | null;
-
 				if (!heroes) {
 					heroes = [];
 				}
@@ -178,20 +159,16 @@ export const DataLoader = (props: Props) => {
 				heroes.forEach(hero => {
 					HeroUpdateLogic.updateHero(hero, SourcebookLogic.getSourcebooks(sourcebooks));
 				});
-
 				// #endregion
 
 				// #region Hidden sourcebook IDs
-
 				let hiddenSourcebookIDs = results[2] as string[] | null;
 				if (!hiddenSourcebookIDs) {
 					hiddenSourcebookIDs = [];
 				}
-
 				// #endregion
 
 				// #region Playbook
-
 				const playbook = results[3] as Playbook | null;
 				if (playbook) {
 					if ((playbook.adventures.length > 0) || (playbook.encounters.length > 0) || (playbook.montages.length > 0) || (playbook.negotiations.length > 0) || (playbook.tacticalMaps.length > 0)) {
@@ -213,29 +190,24 @@ export const DataLoader = (props: Props) => {
 						SourcebookUpdateLogic.updateSourcebook(sb);
 					};
 				}
-
 				// #endregion
 
 				// #region Session
-
 				let session = results[4] as Session | null;
 				if (!session) {
 					session = FactoryLogic.createSession();
 				}
 
 				SessionUpdateLogic.updateSession(session);
-
 				// #endregion
 
 				// #region Options
-
 				let options = results[5] as Options | null;
 				if (!options) {
 					options = FactoryLogic.createOptions();
 				}
 
 				OptionsUpdateLogic.updateOptions(options);
-
 				// #endregion
 
 				const loadedData: LoadedData = {
@@ -248,72 +220,88 @@ export const DataLoader = (props: Props) => {
 					options: options
 				};
 
+				setOverallLoadState('success');
 				setTimeout(() => props.onComplete(loadedData), 1000);
 			}).catch(reason => {
-				const newErr = [ ...errors ];
-				newErr.push(reason);
-				setErrors(newErr);
+				console.error(reason);
+				setError(reason.message);
+				setOverallLoadState('error');
 			});
 		});
 	};
 
 	useEffect(() => {
 		loadData();
+	// dependencies here needs to be an empty array so that it only runs once
+	// otherwise, it runs several times as things change
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
-		<Flex align='center' justify='center' style={{ width: '100%', height: '100%' }}>
-			<Result
-				style={{ width: '250px', padding: '0' }}
-				icon={<LoadingOutlined />}
-				title='Loading data...'
-			>
-				<Flex gap='middle' align='center' justify='center' vertical={true}>
-					<Flex gap='small' justify='space-between' vertical={true}>
-						<Flex justify='flex-start' gap={10}>
-							<LoadingSuccessError state={connectionSettingsState} />
-							Connection Settings
-						</Flex>
-						<Flex gap={10}>
-							<LoadingSuccessError state={getHeroesState} />
-							Heroes
-						</Flex>
-						<Flex gap={10}>
-							<LoadingSuccessError state={getHomebrewState} />
-							Homebrew Content
-						</Flex>
-						<Flex gap={10}>
-							<LoadingSuccessError state={getPlaybookState} />
-							Playbook
-						</Flex>
-						<Flex gap={10}>
-							<LoadingSuccessError state={getSessionState} />
-							Session
-						</Flex>
-						<Flex gap={10}>
-							<LoadingSuccessError state={getOptionsState} />
-							Options
-						</Flex>
-						<Flex gap={10}>
-							<LoadingSuccessError state={getHiddenSettingsState} />
-							Identifying Manifold
-						</Flex>
+		<Flex align='center' justify='center' style={{ width: '100%', height: '100%' }} vertical={true}>
+			<div className='overall-state'>
+				<LoadingSuccessError state={overallLoadState} />
+			</div>
+			<h1>Loading Data</h1>
+			<Flex gap='middle' align='center' justify='center' vertical={true}>
+				<Flex gap='small' justify='space-between' vertical={true}>
+					<Flex justify='flex-start' gap={10}>
+						<LoadingSuccessError state={connectionSettingsState} />
+						Connection Settings
 					</Flex>
-					{
-						errors.map((reason, n) => {
-							return (
-								<Alert
-									key={`data-load-alert-${n}`}
-									type='error'
-									showIcon={true}
-									message={reason}
-								/>
-							);
-						})
-					}
+					<Flex gap={10}>
+						<LoadingSuccessError state={getHeroesState} />
+						Heroes
+					</Flex>
+					<Flex gap={10}>
+						<LoadingSuccessError state={getHomebrewState} />
+						Homebrew Content
+					</Flex>
+					<Flex gap={10}>
+						<LoadingSuccessError state={getPlaybookState} />
+						Playbook
+					</Flex>
+					<Flex gap={10}>
+						<LoadingSuccessError state={getSessionState} />
+						Session
+					</Flex>
+					<Flex gap={10}>
+						<LoadingSuccessError state={getOptionsState} />
+						Options
+					</Flex>
+					<Flex gap={10}>
+						<LoadingSuccessError state={getHiddenSettingsState} />
+						Identifying Manifold
+					</Flex>
 				</Flex>
-			</Result>
+				{
+					error ?
+						<Alert
+							type='error'
+							showIcon={true}
+							message='Data load error'
+							description={error}
+						/>
+						: null
+				}
+				{
+					error && connectionSettings?.useWarehouse && FeatureFlags.hasFlag(FeatureFlags.warehouse.code) ?
+						<Flex gap='small' justify='space-between' style={{ width: '500px' }} vertical={true}>
+							<Alert
+								type='info'
+								showIcon={true}
+								message='Update Warehouse settings below, if necessary.'
+							/>
+							<Expander title='Forge Steel Warehouse Settings'>
+								<FsWarehouseConnectionSettingsPanel
+									connectionSettings={connectionSettings}
+									setConnectionSettings={persistConnectionSettings}
+								/>
+							</Expander>
+						</Flex>
+						: null
+				}
+			</Flex>
 		</Flex>
 	);
 };

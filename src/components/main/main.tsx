@@ -85,11 +85,11 @@ import { useSyncStatus } from '@/hooks/use-sync-status';
 import './main.scss';
 
 interface Props {
-	heroes: Hero[]; // from DataService
-	session: Session; // from DataService
-	homebrewSourcebooks: Sourcebook[]; // from DataService
-	hiddenSourcebookIDs: string[]; // from DataService
-	options: Options; // from DataService
+	heroes: Hero[];
+	session: Session;
+	homebrewSourcebooks: Sourcebook[];
+	hiddenSourcebookIDs: string[];
+	options: Options;
 	connectionSettings: ConnectionSettings;
 	dataService: DataService;
 }
@@ -150,6 +150,14 @@ export const Main = (props: Props) => {
 					});
 				}
 			)
+			.catch(err => {
+				console.error(err);
+				notify.error({
+					message: 'Error saving heroes',
+					description: err,
+					placement: 'top'
+				});
+			})
 			.then(() => {
 				// Trigger sync when data changes
 				triggerSyncOnChange();

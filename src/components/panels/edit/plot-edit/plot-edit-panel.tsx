@@ -45,8 +45,8 @@ interface Props {
 export const PlotEditPanel = (props: Props) => {
 	const [ plot, setPlot ] = useState<Plot>(props.plot);
 	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
-
 	const [ addingReference, setAddingReference ] = useState<boolean>(false);
+	const [ referenceType, setReferenceType ] = useState<SourcebookElementKind>('encounter');
 
 	const parentPlot = AdventureLogic.getPlotPointParent(props.adventure.plot, plot.id) as Plot;
 	const upstreamIDs = AdventureLogic.getUpstreamPlotPoints(parentPlot, plot.id).map(p => p.id);
@@ -601,6 +601,11 @@ export const PlotEditPanel = (props: Props) => {
 		);
 	};
 
+	const elements = props.sourcebooks
+		.flatMap(sb => SourcebookLogic.getElements(sb))
+		.filter(e => e.element.id !== props.adventure.id)
+		.filter(e => e.type === referenceType);
+
 	return (
 		<ErrorBoundary>
 			<div className='plot-edit-panel'>
@@ -640,16 +645,44 @@ export const PlotEditPanel = (props: Props) => {
 					content={
 						<div style={{ padding: '20px' }}>
 							<Space direction='vertical' style={{ width: '100%' }}>
+								<Select
+									style={{ width: '100%' }}
+									options={
+										[
+											'adventure',
+											'ancestry',
+											'career',
+											'class',
+											'complication',
+											'culture',
+											'domain',
+											'encounter',
+											'imbuement',
+											'item',
+											'kit',
+											'monster-group',
+											'montage',
+											'negotiation',
+											'perk',
+											'project',
+											'subclass',
+											'tactical-map',
+											'terrain',
+											'title'
+										].map(opt => ({ value: opt, label: <div className='ds-text'>{Format.capitalize(opt.split('-').join(' '))}</div> }))
+									}
+									value={referenceType}
+									onChange={setReferenceType}
+								/>
 								{
-									props.sourcebooks
-										.flatMap(sb => SourcebookLogic.getElements(sb))
-										.map(e => (
-											<SelectablePanel key={e.element.id} onSelect={() => addContentReference(e.type, e.element.id)}>
-												<HeaderText tags={[ Format.capitalize(e.type.split('-').join(' ')) ]}>{e.element.name}</HeaderText>
-												<div className='ds-text'>{e.element.description}</div>
-											</SelectablePanel>
-										))
+									elements.map(e => (
+										<SelectablePanel key={e.element.id} onSelect={() => addContentReference(e.type, e.element.id)}>
+											<HeaderText tags={[ Format.capitalize(e.type.split('-').join(' ')) ]}>{e.element.name}</HeaderText>
+											<div className='ds-text'>{e.element.description}</div>
+										</SelectablePanel>
+									))
 								}
+								{elements.length === 0 ? <Empty /> : null}
 							</Space>
 						</div>
 					}

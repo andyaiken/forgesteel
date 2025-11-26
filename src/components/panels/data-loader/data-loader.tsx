@@ -47,12 +47,9 @@ export const DataLoader = (props: Props) => {
 	const [ getPlaybookState, setGetPlaybookState ] = useState<LoadingStatus>(null);
 	const [ getSessionState, setGetSessionState ] = useState<LoadingStatus>(null);
 	const [ getHiddenSettingsState, setGetHiddenSettingsState ] = useState<LoadingStatus>(null);
-
 	const [ overallLoadState, setOverallLoadState ] = useState<LoadingStatus>('loading');
-
-	const [ error, setError ] = useState<string | null>(null);
-
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings | null>(null);
+	const [ error, setError ] = useState<string | null>(null);
 
 	// Load connection settings and create DataService
 	async function getDataService() {
@@ -171,6 +168,22 @@ export const DataLoader = (props: Props) => {
 				// #region Playbook
 				const playbook = results[3] as Playbook | null;
 				if (playbook) {
+					if (!playbook.adventures) {
+						playbook.adventures = [];
+					}
+					if (!playbook.encounters) {
+						playbook.encounters = [];
+					}
+					if (!playbook.montages) {
+						playbook.montages = [];
+					}
+					if (!playbook.negotiations) {
+						playbook.negotiations = [];
+					}
+					if (!playbook.tacticalMaps) {
+						playbook.tacticalMaps = [];
+					}
+
 					if ((playbook.adventures.length > 0) || (playbook.encounters.length > 0) || (playbook.montages.length > 0) || (playbook.negotiations.length > 0) || (playbook.tacticalMaps.length > 0)) {
 						// Copy everything from the playbook into a homebrew sourcebook
 						if (sourcebooks.length === 0) {
@@ -180,22 +193,6 @@ export const DataLoader = (props: Props) => {
 						}
 
 						const sb = sourcebooks[0];
-
-						if (!playbook.adventures) {
-							playbook.adventures = [];
-						}
-						if (!playbook.encounters) {
-							playbook.encounters = [];
-						}
-						if (!playbook.montages) {
-							playbook.montages = [];
-						}
-						if (!playbook.negotiations) {
-							playbook.negotiations = [];
-						}
-						if (!playbook.tacticalMaps) {
-							playbook.tacticalMaps = [];
-						}
 
 						sb.adventures.push(...playbook.adventures.filter(adventure => !sb.adventures.some(a => a.id === adventure.id)));
 						sb.encounters.push(...playbook.encounters.filter(encounter => !sb.encounters.some(e => e.id === encounter.id)));

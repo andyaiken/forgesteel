@@ -1,4 +1,5 @@
 import { Divider, Select, Space } from 'antd';
+import { Collections } from '@/utils/collections';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookType } from '@/enums/sourcebook-type';
 
@@ -9,7 +10,7 @@ interface Props {
 }
 
 export const DestinationSelector = (props: Props) => {
-	const sourcebookOptions: { label: string, value: string }[] = props.sourcebooks
+	const sourcebookOptions: { label: string, value: string }[] = Collections.sort(props.sourcebooks, sb => sb.name || 'Unnamed Sourcebook')
 		.filter(cs => cs.type === SourcebookType.Homebrew)
 		.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 

@@ -1,5 +1,6 @@
-import { Button, Drawer, Flex, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
-import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Divider, Drawer, Flex, Input, Popover, Select, Space, Tabs, Upload } from 'antd';
+import { CaretDownOutlined, CaretUpOutlined, DownloadOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { Markdown, MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Plot, PlotContent, PlotContentImage, PlotContentReference, PlotContentRoll, PlotContentText, PlotLink } from '@/models/plot';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Adventure } from '@/models/adventure';
@@ -15,7 +16,6 @@ import { FactoryLogic } from '@/logic/factory-logic';
 import { Format } from '@/utils/format';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { MarkdownEditor } from '@/components/controls/markdown/markdown';
 import { Modal } from '@/components/modals/modal/modal';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
@@ -47,6 +47,7 @@ export const PlotEditPanel = (props: Props) => {
 	const [ menuOpen, setMenuOpen ] = useState<boolean>(false);
 	const [ addingReference, setAddingReference ] = useState<boolean>(false);
 	const [ referenceType, setReferenceType ] = useState<SourcebookElementKind>('encounter');
+	const [ searchTerm, setSearchTerm ] = useState<string>('');
 
 	const parentPlot = AdventureLogic.getPlotPointParent(props.adventure.plot, plot.id) as Plot;
 	const upstreamIDs = AdventureLogic.getUpstreamPlotPoints(parentPlot, plot.id).map(p => p.id);
@@ -604,7 +605,8 @@ export const PlotEditPanel = (props: Props) => {
 	const elements = props.sourcebooks
 		.flatMap(sb => SourcebookLogic.getElements(sb))
 		.filter(e => e.element.id !== props.adventure.id)
-		.filter(e => e.type === referenceType);
+		.filter(e => e.type === referenceType)
+		.filter(e => Utils.textMatches([ e.element.name, e.element.description ], searchTerm));
 
 	return (
 		<ErrorBoundary>
@@ -674,13 +676,23 @@ export const PlotEditPanel = (props: Props) => {
 									value={referenceType}
 									onChange={setReferenceType}
 								/>
+								<Input
+									name='search'
+									placeholder='Search'
+									allowClear={true}
+									value={searchTerm}
+									suffix={<SearchOutlined />}
+									onChange={e => setSearchTerm(e.target.value)}
+								/>
+								<Divider />
 								{
-									elements.map(e => (
-										<SelectablePanel key={e.element.id} onSelect={() => addContentReference(e.type, e.element.id)}>
-											<HeaderText tags={[ Format.capitalize(e.type.split('-').join(' ')) ]}>{e.element.name}</HeaderText>
-											<div className='ds-text'>{e.element.description}</div>
-										</SelectablePanel>
-									))
+									Collections.sort(elements, e => e.element.name)
+										.map(e => (
+											<SelectablePanel key={e.element.id} onSelect={() => addContentReference(e.type, e.element.id)}>
+												<HeaderText tags={[ Format.capitalize(e.type.split('-').join(' ')) ]}>{e.element.name}</HeaderText>
+												<Markdown text={e.element.description} />
+											</SelectablePanel>
+										))
 								}
 								{elements.length === 0 ? <Empty /> : null}
 							</Space>

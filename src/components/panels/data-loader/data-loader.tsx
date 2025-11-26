@@ -181,6 +181,22 @@ export const DataLoader = (props: Props) => {
 
 						const sb = sourcebooks[0];
 
+						if (!playbook.adventures) {
+							playbook.adventures = [];
+						}
+						if (!playbook.encounters) {
+							playbook.encounters = [];
+						}
+						if (!playbook.montages) {
+							playbook.montages = [];
+						}
+						if (!playbook.negotiations) {
+							playbook.negotiations = [];
+						}
+						if (!playbook.tacticalMaps) {
+							playbook.tacticalMaps = [];
+						}
+
 						sb.adventures.push(...playbook.adventures.filter(adventure => !sb.adventures.some(a => a.id === adventure.id)));
 						sb.encounters.push(...playbook.encounters.filter(encounter => !sb.encounters.some(e => e.id === encounter.id)));
 						sb.montages.push(...playbook.montages.filter(montage => !sb.montages.some(m => m.id === montage.id)));

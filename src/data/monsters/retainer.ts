@@ -1098,7 +1098,7 @@ export const retainer: MonsterGroup = {
 			size: FactoryLogic.createSize(1, 'M'),
 			speed: FactoryLogic.createSpeed(5),
 			stamina: 21,
-			stability: 3,
+			stability: 0,
 			freeStrikeDamage: 2,
 			characteristics: FactoryLogic.createCharacteristics(2, 0, 0, 0, 1),
 			features: [

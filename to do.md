@@ -1,7 +1,5 @@
 # Development Plans
 
-Custom titles are cleared on load
-
 ### Heroes
 
 * Classic Sheet

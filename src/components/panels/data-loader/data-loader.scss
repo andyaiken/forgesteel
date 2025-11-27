@@ -1,4 +1,24 @@
-.overall-state svg {
-    width: 80px;
-    height: 80px;
+.data-loader {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(230, 230, 230);
+
+    .data-loader-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: rgb(255, 255, 255);
+	    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.12);
+
+        .overall-state svg {
+            width: 75px;
+            height: 75px;
+        }
+    }
 }

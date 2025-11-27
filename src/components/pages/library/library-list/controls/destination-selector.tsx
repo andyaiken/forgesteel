@@ -11,8 +11,8 @@ interface Props {
 
 export const DestinationSelector = (props: Props) => {
 	const sourcebookOptions: { label: string, value: string }[] = Collections.sort(props.sourcebooks, sb => sb.name || 'Unnamed Sourcebook')
-		.filter(cs => cs.type === SourcebookType.Homebrew)
-		.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
+		.filter(sb => sb.type === SourcebookType.Homebrew)
+		.map(sb => ({ label: sb.name || 'Unnamed Sourcebook', value: sb.id }));
 
 	if (sourcebookOptions.length === 0) {
 		return null;

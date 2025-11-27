@@ -1,0 +1,17 @@
+.check-icon {
+    &.none .anticon {
+        opacity: 0.1;
+    }
+
+    &.pending .anticon {
+        opacity: 0.5;
+    }
+
+    &.success .anticon {
+        color: rgb(0, 120, 0);
+    }
+
+    &.failure .anticon {
+        color: rgb(200, 0, 0);
+    }
+}

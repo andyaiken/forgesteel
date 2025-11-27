@@ -1,6 +1,6 @@
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Flex, Segmented, Space } from 'antd';
 import { Montage, MontageChallenge, MontageSection } from '@/models/montage';
+import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -46,7 +46,7 @@ export const MontagePanel = (props: Props) => {
 						value={(
 							<Space>
 								{MontageLogic.getSuccessLimit(props.montage, props.heroes, props.options)}
-								<CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} />
+								<CheckIcon state='success' />
 							</Space>
 						)}
 					/>
@@ -56,7 +56,7 @@ export const MontagePanel = (props: Props) => {
 						value={(
 							<Space>
 								{MontageLogic.getFailureLimit(props.montage, props.heroes, props.options)}
-								<CloseCircleFilled style={{ color: 'rgb(200, 0, 0)' }} />
+								<CheckIcon state='failure' />
 							</Space>
 						)}
 					/>

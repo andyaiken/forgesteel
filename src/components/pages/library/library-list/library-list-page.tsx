@@ -136,7 +136,7 @@ export const LibraryListPage = (props: Props) => {
 		let list: Element[] = [];
 
 		const getSourcebooks = () => {
-			return props.sourcebooks.filter(cs => !props.hiddenSourcebookIDs.includes(cs.id));
+			return props.sourcebooks.filter(sb => !props.hiddenSourcebookIDs.includes(sb.id));
 		};
 
 		switch (type) {

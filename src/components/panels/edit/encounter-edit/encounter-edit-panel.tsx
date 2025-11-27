@@ -587,8 +587,7 @@ export const EncounterEditPanel = (props: Props) => {
 
 		const removeMaliceFeatureIds = (ids: string[]) => {
 			const copy = Utils.copy(encounter);
-			const newList = [ ...copy.hiddenMaliceFeatures, ...ids.filter(id => !copy.hiddenMaliceFeatures.includes(id)) ];
-			copy.hiddenMaliceFeatures = newList;
+			copy.hiddenMaliceFeatures = [ ...copy.hiddenMaliceFeatures, ...ids.filter(id => !copy.hiddenMaliceFeatures.includes(id)) ];
 
 			setEncounter(copy);
 			props.onChange(copy);
@@ -596,9 +595,7 @@ export const EncounterEditPanel = (props: Props) => {
 
 		const addMaliceFeatureIds = (ids: string[]) => {
 			const copy = Utils.copy(encounter);
-			const encounterMalice = copy.hiddenMaliceFeatures;
-			const newList = encounterMalice.filter(f => !ids.includes(f));
-			copy.hiddenMaliceFeatures = newList;
+			copy.hiddenMaliceFeatures = copy.hiddenMaliceFeatures.filter(f => !ids.includes(f));
 
 			setEncounter(copy);
 			props.onChange(copy);

@@ -1,7 +1,8 @@
 import { Button, Drawer, Flex, Select, Space } from 'antd';
-import { CheckCircleFilled, CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Characteristic } from '@/enums/characteristic';
+import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { ClassPanel } from '@/components/panels/elements/class-panel/class-panel';
 import { Collections } from '@/utils/collections';
 import { Element } from '@/models/element';
@@ -240,7 +241,7 @@ export const ClassSection = (props: Props) => {
 									expandedByDefault={!lvl.completed}
 									extra={[
 										lvl.completed ?
-											<CheckCircleFilled key='completed' title='Completed' style={{ color: 'rgb(0, 120, 0)' }} />
+											<CheckIcon key='completed' state='success' />
 											: null
 									]}
 								>

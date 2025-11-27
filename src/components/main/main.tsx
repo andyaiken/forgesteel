@@ -652,7 +652,7 @@ export const Main = (props: Props) => {
 		};
 
 		const sourcebooks = Utils.copy(homebrewSourcebooks);
-		let sourcebook = sourcebooks.find(cs => cs.id === sourcebookID) || null;
+		let sourcebook = sourcebooks.find(sb => sb.id === sourcebookID) || null;
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(sourcebook);
@@ -797,7 +797,7 @@ export const Main = (props: Props) => {
 		}
 
 		// Get destination sourcebook
-		let destinationSourcebook = sourcebooks.find(cs => cs.id === sourcebookID) || null;
+		let destinationSourcebook = sourcebooks.find(sb => sb.id === sourcebookID) || null;
 		if (!destinationSourcebook) {
 			destinationSourcebook = FactoryLogic.createSourcebook();
 			sourcebooks.push(destinationSourcebook);
@@ -871,7 +871,7 @@ export const Main = (props: Props) => {
 
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
 		const copy = Utils.copy(homebrewSourcebooks);
-		const sourcebook = copy.find(cs => cs.id === sourcebookID);
+		const sourcebook = copy.find(sb => sb.id === sourcebookID);
 		if (sourcebook) {
 			switch (kind) {
 				case 'adventure':
@@ -943,7 +943,7 @@ export const Main = (props: Props) => {
 
 	const saveLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
 		const copy = Utils.copy(homebrewSourcebooks);
-		const sourcebook = copy.find(cs => cs.id === sourcebookID);
+		const sourcebook = copy.find(sb => sb.id === sourcebookID);
 		if (sourcebook) {
 			switch (kind) {
 				case 'adventure':
@@ -1030,7 +1030,7 @@ export const Main = (props: Props) => {
 		}
 
 		const copy = Utils.copy(homebrewSourcebooks);
-		let sourcebook = copy.find(cs => cs.id === sourcebookID);
+		let sourcebook = copy.find(sb => sb.id === sourcebookID);
 		if (!sourcebook) {
 			sourcebook = FactoryLogic.createSourcebook();
 			copy.push(sourcebook);

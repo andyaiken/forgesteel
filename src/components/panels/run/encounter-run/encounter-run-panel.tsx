@@ -515,6 +515,7 @@ export const EncounterRunPanel = (props: Props) => {
 									</div>
 									{
 										MonsterLogic.getMaliceOptions(active[0].monster, active[0].monsterGroup)
+											.filter(malice => !encounter.hiddenMaliceFeatures.includes(malice.id))
 											.map(malice => (
 												<MalicePanel
 													malice={malice}

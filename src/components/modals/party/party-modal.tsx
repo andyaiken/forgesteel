@@ -1,5 +1,5 @@
 import { Characteristic } from '@/enums/characteristic';
-import { CheckCircleFilled } from '@ant-design/icons';
+import { CheckIcon } from '@/components/controls/check-icon/check-icon';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { HeaderText } from '@/components/controls/header-text/header-text';
@@ -51,7 +51,7 @@ export const PartyModal = (props: Props) => {
 												{
 													props.heroes.map(h => (
 														<td key={h.id} className='row-cell'>
-															{HeroLogic.getLanguages(h, props.sourcebooks).some(x => x.name === l) ? <CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} /> : null}
+															{HeroLogic.getLanguages(h, props.sourcebooks).some(x => x.name === l) ? <CheckIcon state='success' /> : null}
 														</td>
 													))
 												}
@@ -78,7 +78,7 @@ export const PartyModal = (props: Props) => {
 												{
 													props.heroes.map(h => (
 														<td key={h.id} className='row-cell'>
-															{HeroLogic.getSkills(h, props.sourcebooks).some(x => x.name === s) ? <CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} /> : null}
+															{HeroLogic.getSkills(h, props.sourcebooks).some(x => x.name === s) ? <CheckIcon state='success' /> : null}
 														</td>
 													))
 												}
@@ -105,7 +105,7 @@ export const PartyModal = (props: Props) => {
 												{
 													props.heroes.map(h => (
 														<td key={h.id} className='row-cell'>
-															{HeroLogic.getProficiencies(h).includes(i) ? <CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} /> : null}
+															{HeroLogic.getProficiencies(h).includes(i) ? <CheckIcon state='success' /> : null}
 														</td>
 													))
 												}

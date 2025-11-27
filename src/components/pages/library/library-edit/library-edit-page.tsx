@@ -1,5 +1,5 @@
 import { Button, Drawer, Flex, Select, Slider, Space, Tabs } from 'antd';
-import { CheckCircleFilled, CloseCircleFilled, CloseOutlined, LeftOutlined, SaveOutlined } from '@ant-design/icons';
+import { CloseOutlined, LeftOutlined, SaveOutlined } from '@ant-design/icons';
 import { ReactNode, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Adventure } from '@/models/adventure';
@@ -12,6 +12,7 @@ import { AppHeader } from '@/components/panels/app-header/app-header';
 import { Career } from '@/models/career';
 import { CareerEditPanel } from '@/components/panels/edit/career-edit/career-edit-panel';
 import { CareerPanel } from '@/components/panels/elements/career-panel/career-panel';
+import { CheckLabel } from '@/components/controls/check-label/check-label';
 import { ClassEditPanel } from '@/components/panels/edit/class-edit/class-edit-panel';
 import { ClassPanel } from '@/components/panels/elements/class-panel/class-panel';
 import { Collections } from '@/utils/collections';
@@ -312,19 +313,17 @@ export const LibraryEditPage = (props: Props) => {
 				<HeaderText>Constraints</HeaderText>
 				{
 					constraints.map((c, n) => (
-						<Flex key={n} gap={10}>
-							{c.value ? <CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} /> : <CloseCircleFilled style={{ color: 'rgb(200, 0, 0)' }} />}
+						<CheckLabel key={n} state={c.value ? 'success' : 'failure'}>
 							<div style={{ fontWeight: c.value ? '400' : '600', opacity: c.value ? '0.5' : '1' }}>{c.name}</div>
-						</Flex>
+						</CheckLabel>
 					))
 				}
 				<HeaderText>Suggested Proficiencies</HeaderText>
 				{
 					gear.map((c, n) => (
-						<Flex key={n} gap={10}>
-							{c.value ? <CheckCircleFilled style={{ color: 'rgb(0, 120, 0)' }} /> : <CloseCircleFilled style={{ color: 'rgb(200, 0, 0)' }} />}
+						<CheckLabel key={n} state={c.value ? 'success' : 'failure'}>
 							<div style={{ fontWeight: c.value ? '600' : '400', opacity: c.value ? '1' : '0.5' }}>{c.name}</div>
-						</Flex>
+						</CheckLabel>
 					))
 				}
 			</div>

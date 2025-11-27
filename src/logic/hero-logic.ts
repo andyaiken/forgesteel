@@ -321,7 +321,7 @@ export class HeroLogic {
 				languageNames.push(...selected);
 			});
 
-		const allLanguages = sourcebooks.flatMap(cs => cs.languages);
+		const allLanguages = sourcebooks.flatMap(sb => sb.languages);
 
 		const languages: Language[] = [];
 		Collections.distinct(languageNames, l => l)

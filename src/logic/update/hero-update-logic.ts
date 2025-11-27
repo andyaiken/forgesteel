@@ -566,13 +566,15 @@ export class HeroUpdateLogic {
 				case FeatureType.TitleChoice: {
 					const oFeature = originalFeature as FeatureTitleChoice;
 
-					const selectedIDs = oFeature.data.selected.map(p => p.id);
-					feature.data.selected = SourcebookLogic.getTitles(sourcebooks)
-						.filter(t => selectedIDs.includes(t.id))
-						.map(t => Utils.copy(t));
-					feature.data.selected.forEach(title => {
-						const originalTitle = oFeature.data.selected.find(t => t.id === title.id);
-						title.selectedFeatureID = originalTitle ? originalTitle.selectedFeatureID : '';
+					feature.data.selected = oFeature.data.selected.map(oTitle => {
+						const title = SourcebookLogic.getTitles(sourcebooks).find(t => t.id === oTitle.id);
+						if (title) {
+							const copy = Utils.copy(title);
+							copy.selectedFeatureID = oTitle.selectedFeatureID;
+							return copy;
+						}
+
+						return oTitle;
 					});
 					break;
 				}

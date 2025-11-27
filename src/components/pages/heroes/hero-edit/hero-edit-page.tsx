@@ -145,7 +145,7 @@ export const HeroEditPage = (props: Props) => {
 	};
 
 	const clearRedundantSelections = (hero: Hero, features: Feature[]) => {
-		const sourcebooks = props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id));
+		const sourcebooks = props.sourcebooks.filter(sb => hero.settingIDs.includes(sb.id));
 		const knownLanguages = HeroLogic.getLanguages(hero, sourcebooks).map(language => language.name);
 		const knownSkills = HeroLogic.getSkills(hero, sourcebooks).map(skill => skill.name);
 		features.forEach(feature => {
@@ -522,7 +522,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<AncestrySection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+						sourcebooks={props.sourcebooks.filter(sb => hero.settingIDs.includes(sb.id))}
 						options={props.options}
 						searchTerm={searchTerm}
 						selectAncestry={setAncestry}
@@ -533,7 +533,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<CultureSection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+						sourcebooks={props.sourcebooks.filter(sb => hero.settingIDs.includes(sb.id))}
 						options={props.options}
 						searchTerm={searchTerm}
 						selectCulture={setCulture}
@@ -547,7 +547,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<CareerSection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+						sourcebooks={props.sourcebooks.filter(sb => hero.settingIDs.includes(sb.id))}
 						options={props.options}
 						searchTerm={searchTerm}
 						selectCareer={setCareer}
@@ -559,7 +559,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<ClassSection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+						sourcebooks={props.sourcebooks.filter(sb => hero.settingIDs.includes(sb.id))}
 						options={props.options}
 						searchTerm={searchTerm}
 						selectClass={setClass}
@@ -575,7 +575,7 @@ export const HeroEditPage = (props: Props) => {
 				return (
 					<ComplicationSection
 						hero={hero}
-						sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+						sourcebooks={props.sourcebooks.filter(sb => hero.settingIDs.includes(sb.id))}
 						options={props.options}
 						searchTerm={searchTerm}
 						selectComplication={setComplication}
@@ -587,7 +587,7 @@ export const HeroEditPage = (props: Props) => {
 					<DetailsSection
 						hero={hero}
 						allHeroes={props.heroes}
-						sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
+						sourcebooks={props.sourcebooks.filter(sb => hero.settingIDs.includes(sb.id))}
 						options={props.options}
 						setName={setName}
 						setPicture={setPicture}

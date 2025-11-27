@@ -1,4 +1,4 @@
-import { Alert, Drawer, Flex, Tag } from 'antd';
+import { Alert, Drawer } from 'antd';
 import { CSSProperties, ReactNode, useState } from 'react';
 import { Ability } from '@/models/ability';
 import { AbilityModal } from '@/components/modals/ability/ability-modal';
@@ -105,12 +105,8 @@ export const MonsterPanel = (props: Props) => {
 				>
 					{MonsterLogic.getMonsterName(props.monster, props.monsterGroup)}
 				</HeaderText>
-				<MonsterLabel monster={props.monster} />
+				<MonsterLabel monster={props.monster} extra={rightOfTags} />
 				<Markdown text={props.monster.description} />
-				<Flex align='center' justify='space-between'>
-					<div>{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</div>
-					{rightOfTags}
-				</Flex>
 				{
 					props.mode === PanelMode.Full ?
 						<>

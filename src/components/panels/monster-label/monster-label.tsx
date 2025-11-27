@@ -1,8 +1,10 @@
+import { Flex, Tag } from 'antd';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Fixture } from '@/models/fixture';
 import { FixtureLogic } from '@/logic/fixture-logic';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
+import { ReactNode } from 'react';
 import { Terrain } from '@/models/terrain';
 import { TerrainLogic } from '@/logic/terrain-logic';
 
@@ -10,6 +12,7 @@ import './monster-label.scss';
 
 interface MonsterLabelProps {
 	monster: Monster;
+	extra?: ReactNode;
 }
 
 export const MonsterLabel = (props: MonsterLabelProps) => {
@@ -22,7 +25,13 @@ export const MonsterLabel = (props: MonsterLabelProps) => {
 	return (
 		<ErrorBoundary>
 			<div className={`monster-label ${type}`}>
-				{desc}
+				<Flex justify='center'>
+					{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
+				</Flex>
+				<Flex align='center' justify='space-between'>
+					<div>{desc}</div>
+					{props.extra}
+				</Flex>
 			</div>
 		</ErrorBoundary>
 	);

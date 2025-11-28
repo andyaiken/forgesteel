@@ -693,12 +693,6 @@ export const Main = (props: Props) => {
 			case 'kit':
 				id = createKit(original as Kit | null, sourcebook);
 				break;
-			case 'perk':
-				id = createPerk(original as Perk | null, sourcebook);
-				break;
-			case 'project':
-				id = createProject(original as Project | null, sourcebook);
-				break;
 			case 'monster-group':
 				id = createMonsterGroup(original as MonsterGroup | null, sourcebook);
 				break;
@@ -707,6 +701,12 @@ export const Main = (props: Props) => {
 				break;
 			case 'negotiation':
 				id = createNegotiation(original as Negotiation | null, sourcebook);
+				break;
+			case 'perk':
+				id = createPerk(original as Perk | null, sourcebook);
+				break;
+			case 'project':
+				id = createProject(original as Project | null, sourcebook);
 				break;
 			case 'subclass':
 				id = createSubClass(original as SubClass | null, sourcebook);
@@ -763,12 +763,6 @@ export const Main = (props: Props) => {
 			case 'kit':
 				sourceSourcebook = SourcebookLogic.getKitSourcebook(sourcebooks, element as Kit);
 				break;
-			case 'perk':
-				sourceSourcebook = SourcebookLogic.getPerkSourcebook(sourcebooks, element as Perk);
-				break;
-			case 'project':
-				sourceSourcebook = SourcebookLogic.getProjectSourcebook(sourcebooks, element as Project);
-				break;
 			case 'monster-group':
 				sourceSourcebook = SourcebookLogic.getMonsterGroupSourcebook(sourcebooks, element as MonsterGroup);
 				break;
@@ -777,6 +771,12 @@ export const Main = (props: Props) => {
 				break;
 			case 'negotiation':
 				sourceSourcebook = SourcebookLogic.getNegotiationSourcebook(sourcebooks, element as Negotiation);
+				break;
+			case 'perk':
+				sourceSourcebook = SourcebookLogic.getPerkSourcebook(sourcebooks, element as Perk);
+				break;
+			case 'project':
+				sourceSourcebook = SourcebookLogic.getProjectSourcebook(sourcebooks, element as Project);
 				break;
 			case 'subclass':
 				sourceSourcebook = SourcebookLogic.getSubclassSourcebook(sourcebooks, element as SubClass);
@@ -806,67 +806,87 @@ export const Main = (props: Props) => {
 		switch (kind) {
 			case 'adventure':
 				destinationSourcebook.adventures.push(element as Adventure);
+				sourceSourcebook.adventures = sourceSourcebook.adventures.filter(x => x.id !== element.id);
 				break;
 			case 'ancestry':
 				destinationSourcebook.ancestries.push(element as Ancestry);
+				sourceSourcebook.ancestries = sourceSourcebook.ancestries.filter(x => x.id !== element.id);
 				break;
 			case 'career':
 				destinationSourcebook.careers.push(element as Career);
+				sourceSourcebook.careers = sourceSourcebook.careers.filter(x => x.id !== element.id);
 				break;
 			case 'class':
 				destinationSourcebook.classes.push(element as HeroClass);
+				sourceSourcebook.classes = sourceSourcebook.classes.filter(x => x.id !== element.id);
 				break;
 			case 'complication':
 				destinationSourcebook.complications.push(element as Complication);
+				sourceSourcebook.complications = sourceSourcebook.complications.filter(x => x.id !== element.id);
 				break;
 			case 'culture':
 				destinationSourcebook.cultures.push(element as Culture);
+				sourceSourcebook.cultures = sourceSourcebook.cultures.filter(x => x.id !== element.id);
 				break;
 			case 'domain':
 				destinationSourcebook.domains.push(element as Domain);
+				sourceSourcebook.domains = sourceSourcebook.domains.filter(x => x.id !== element.id);
 				break;
 			case 'encounter':
 				destinationSourcebook.encounters.push(element as Encounter);
+				sourceSourcebook.encounters = sourceSourcebook.encounters.filter(x => x.id !== element.id);
 				break;
 			case 'imbuement':
 				destinationSourcebook.imbuements.push(element as Imbuement);
+				sourceSourcebook.imbuements = sourceSourcebook.imbuements.filter(x => x.id !== element.id);
 				break;
 			case 'item':
 				destinationSourcebook.items.push(element as Item);
+				sourceSourcebook.items = sourceSourcebook.items.filter(x => x.id !== element.id);
 				break;
 			case 'kit':
 				destinationSourcebook.kits.push(element as Kit);
-				break;
-			case 'perk':
-				destinationSourcebook.perks.push(element as Perk);
-				break;
-			case 'project':
-				destinationSourcebook.projects.push(element as Project);
+				sourceSourcebook.kits = sourceSourcebook.kits.filter(x => x.id !== element.id);
 				break;
 			case 'monster-group':
 				destinationSourcebook.monsterGroups.push(element as MonsterGroup);
+				sourceSourcebook.monsterGroups = sourceSourcebook.monsterGroups.filter(x => x.id !== element.id);
 				break;
 			case 'montage':
 				destinationSourcebook.montages.push(element as Montage);
+				sourceSourcebook.montages = sourceSourcebook.montages.filter(x => x.id !== element.id);
 				break;
 			case 'negotiation':
 				destinationSourcebook.negotiations.push(element as Negotiation);
+				sourceSourcebook.negotiations = sourceSourcebook.negotiations.filter(x => x.id !== element.id);
+				break;
+			case 'perk':
+				destinationSourcebook.perks.push(element as Perk);
+				sourceSourcebook.perks = sourceSourcebook.perks.filter(x => x.id !== element.id);
+				break;
+			case 'project':
+				destinationSourcebook.projects.push(element as Project);
+				sourceSourcebook.projects = sourceSourcebook.projects.filter(x => x.id !== element.id);
 				break;
 			case 'subclass':
 				destinationSourcebook.subclasses.push(element as SubClass);
+				sourceSourcebook.subclasses = sourceSourcebook.subclasses.filter(x => x.id !== element.id);
 				break;
 			case 'tactical-map':
 				destinationSourcebook.tacticalMaps.push(element as TacticalMap);
+				sourceSourcebook.tacticalMaps = sourceSourcebook.tacticalMaps.filter(x => x.id !== element.id);
 				break;
 			case 'terrain':
 				destinationSourcebook.terrain.push(element as Terrain);
+				sourceSourcebook.terrain = sourceSourcebook.terrain.filter(x => x.id !== element.id);
 				break;
 			case 'title':
 				destinationSourcebook.titles.push(element as Title);
+				sourceSourcebook.titles = sourceSourcebook.titles.filter(x => x.id !== element.id);
 				break;
 		}
 
-		persistHomebrewSourcebooks(sourcebooks).then(() => deleteLibraryElement(kind, sourceSourcebook.id, element));
+		persistHomebrewSourcebooks(sourcebooks);
 	};
 
 	const deleteLibraryElement = (kind: SourcebookElementKind, sourcebookID: string, element: Element) => {
@@ -907,12 +927,6 @@ export const Main = (props: Props) => {
 				case 'kit':
 					sourcebook.kits = sourcebook.kits.filter(x => x.id !== element.id);
 					break;
-				case 'perk':
-					sourcebook.perks = sourcebook.perks.filter(x => x.id !== element.id);
-					break;
-				case 'project':
-					sourcebook.projects = sourcebook.projects.filter(x => x.id !== element.id);
-					break;
 				case 'monster-group':
 					sourcebook.monsterGroups = sourcebook.monsterGroups.filter(x => x.id !== element.id);
 					break;
@@ -921,6 +935,12 @@ export const Main = (props: Props) => {
 					break;
 				case 'negotiation':
 					sourcebook.negotiations = sourcebook.negotiations.filter(x => x.id !== element.id);
+					break;
+				case 'perk':
+					sourcebook.perks = sourcebook.perks.filter(x => x.id !== element.id);
+					break;
+				case 'project':
+					sourcebook.projects = sourcebook.projects.filter(x => x.id !== element.id);
 					break;
 				case 'subclass':
 					sourcebook.subclasses = sourcebook.subclasses.filter(x => x.id !== element.id);

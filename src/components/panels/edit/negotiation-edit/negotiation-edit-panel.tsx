@@ -46,7 +46,7 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
@@ -89,7 +89,7 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Attitude</HeaderText>
 				<Select
 					style={{ width: '100%' }}
@@ -156,7 +156,7 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addMotivation} />
@@ -176,22 +176,12 @@ export const NegotiationEditPanel = (props: Props) => {
 							]}
 						>
 							<HeaderText>Motivation</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<Select
 									style={{ width: '100%' }}
 									placeholder='Trait'
 									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getMotivationDescription(nt) }))}
 									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-									showSearch={true}
-									filterOption={(input, option) => {
-										const strings = option ?
-											[
-												option.label,
-												option.desc
-											]
-											: [];
-										return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-									}}
 									value={m.trait}
 									onChange={t => setMotivationTrait(n, t)}
 								/>
@@ -251,7 +241,7 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addPitfall} />
@@ -271,22 +261,12 @@ export const NegotiationEditPanel = (props: Props) => {
 							]}
 						>
 							<HeaderText>Pitfall</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<Select
 									style={{ width: '100%' }}
 									placeholder='Trait'
 									options={[ NegotiationTrait.Benevolence, NegotiationTrait.Discovery, NegotiationTrait.Freedom, NegotiationTrait.Greed, NegotiationTrait.HigherAuthority, NegotiationTrait.Justice, NegotiationTrait.Legacy, NegotiationTrait.Peace, NegotiationTrait.Power, NegotiationTrait.Protection, NegotiationTrait.Revelry, NegotiationTrait.Vengeance ].map(nt => ({ label: nt, value: nt, desc: NegotiationLogic.getPitfallDescription(nt) }))}
 									optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-									showSearch={true}
-									filterOption={(input, option) => {
-										const strings = option ?
-											[
-												option.label,
-												option.desc
-											]
-											: [];
-										return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-									}}
 									value={p.trait}
 									onChange={t => setPitfallTrait(n, t)}
 								/>
@@ -313,7 +293,7 @@ export const NegotiationEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					negotiation.outcomes.map((o, n) => (
 						<Expander

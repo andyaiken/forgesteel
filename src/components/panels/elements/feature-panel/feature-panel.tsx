@@ -111,7 +111,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationChoice = (data: FeatureChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
+				<Space orientation='vertical' style={{ width: '100%', padding: '0 20px', borderLeft: '5px solid rgb(200 200 200)' }}>
 					{data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
 				</Space>
 			);
@@ -147,7 +147,7 @@ export const FeaturePanel = (props: Props) => {
 		if ((data.selectedIDs.length > 0) && props.hero && props.hero.class) {
 			const abilities = props.hero.class.abilities.filter(a => a.cost === data.cost) || [];
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selectedIDs.map(id => {
 							const ability = abilities.find(a => a.id === id) as Ability;
@@ -212,7 +212,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationDomain = (data: FeatureDomainData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selected.map(d => <DomainPanel key={d.id} domain={d} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
@@ -236,7 +236,7 @@ export const FeaturePanel = (props: Props) => {
 
 		if (!props.feature.description) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)
 					}
@@ -297,7 +297,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationItemChoice = (data: FeatureItemChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selected.map(i => <ItemPanel key={i.id} item={i} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
@@ -327,7 +327,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationKit = (data: FeatureKitData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selected.map(k => <KitPanel key={k.id} kit={k} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
@@ -436,7 +436,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationPerk = (data: FeaturePerkData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selected.map(p => <PerkPanel key={p.id} perk={p} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
@@ -525,7 +525,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationSummon = (data: FeatureSummonData) => {
 		if (data.summons.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{data.summons.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
 				</Space>
 			);
@@ -537,7 +537,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationSummonChoice = (data: FeatureSummonChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{data.selected.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
 				</Space>
 			);
@@ -547,7 +547,7 @@ export const FeaturePanel = (props: Props) => {
 			return (
 				<>
 					<div className='ds-text'>Choose {data.count > 1 ? data.count : 'a'} {data.count > 1 ? 'monsters' : 'monster'}.</div>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{data.options.map(s => <SelectablePanel key={s.id}><MonsterPanel monster={s.monster} summon={s.info} sourcebooks={props.sourcebooks || []} options={props.options} /></SelectablePanel>)}
 					</Space>
 				</>
@@ -566,7 +566,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationTaggedFeatureChoice = (data: FeatureTaggedFeatureChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selected.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} />)
 					}
@@ -586,7 +586,7 @@ export const FeaturePanel = (props: Props) => {
 	const getInformationTitleChoice = (data: FeatureTitleChoiceData) => {
 		if (data.selected.length > 0) {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						data.selected.map(t => <TitlePanel key={t.id} title={t} sourcebooks={props.sourcebooks || []} options={props.options} />)
 					}
@@ -692,7 +692,7 @@ export const FeaturePanel = (props: Props) => {
 		const list = (props.feature as Perk).list;
 		if (list !== undefined) {
 			if (props.sourcebooks && (props.sourcebooks.length > 0)) {
-				const sourcebookType = SourcebookLogic.getPerkSourcebook(props.sourcebooks, props.feature as Perk)?.type || SourcebookType.Homebrew;
+				const sourcebookType = SourcebookLogic.getPerkSourcebook(props.sourcebooks, props.feature as Perk)?.type || SourcebookType.Official;
 				if (sourcebookType !== SourcebookType.Official) {
 					tags.push(sourcebookType);
 				}

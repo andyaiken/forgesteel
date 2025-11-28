@@ -48,7 +48,7 @@ export const AncestryPanel = (props: Props) => {
 
 	const getSignatureFeatures = () => {
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					props.ancestry.features.filter(isSignatureFeature).map(f => (
 						<SelectablePanel key={f.id}>
@@ -62,7 +62,7 @@ export const AncestryPanel = (props: Props) => {
 
 	const getPurchasedFeatures = () => {
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Field label='Ancestry Points' value={props.ancestry.ancestryPoints} />
 				{
 					props.ancestry.features.filter(isPurchasedFeature).map(f => (
@@ -120,7 +120,7 @@ export const AncestryPanel = (props: Props) => {
 
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getAncestrySourcebook(props.sourcebooks, props.ancestry)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getAncestrySourcebook(props.sourcebooks, props.ancestry)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

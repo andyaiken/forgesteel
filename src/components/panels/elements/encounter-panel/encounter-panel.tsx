@@ -71,7 +71,7 @@ export const EncounterPanel = (props: Props) => {
 									:
 									<HeaderText>Monsters</HeaderText>
 							}
-							<Space direction='vertical'>
+							<Space orientation='vertical'>
 								{
 									group.slots.map(slot => {
 										const monster = EncounterLogic.getCustomizedMonster(slot.monsterID, slot.customization, props.sourcebooks);
@@ -102,7 +102,7 @@ export const EncounterPanel = (props: Props) => {
 					props.encounter.terrain.length > 0 ?
 						<SelectablePanel key='terrain' style={{ paddingTop: '0' }}>
 							<HeaderText>Terrain</HeaderText>
-							<Space direction='vertical'>
+							<Space orientation='vertical'>
 								{
 									props.encounter.terrain.map(slot => {
 										const terrain = SourcebookLogic.getTerrains(props.sourcebooks).find(t => t.id === slot.terrainID);
@@ -184,7 +184,7 @@ export const EncounterPanel = (props: Props) => {
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					monsterGroups.filter(group => group.malice.length > 0).map(group => {
 						let maxEchelon = 1;
@@ -262,7 +262,7 @@ export const EncounterPanel = (props: Props) => {
 
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getEncounterSourcebook(props.sourcebooks, props.encounter)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getEncounterSourcebook(props.sourcebooks, props.encounter)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

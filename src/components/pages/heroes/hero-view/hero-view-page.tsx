@@ -153,7 +153,7 @@ export const HeroViewPage = (props: Props) => {
 										<Alert
 											type='info'
 											showIcon={true}
-											message='If you want to export your hero as a PDF, switch to Classic view.'
+											title='If you want to export your hero as a PDF, switch to Classic view.'
 											action={<Button onClick={() => setView('classic')}>Classic</Button>}
 										/>
 										: null

@@ -84,13 +84,11 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 					placeholder='Folder'
 					onSelect={value => props.setFolder(value)}
 					onChange={value => props.setFolder(value)}
-					showSearch={true}
-					filterOption={(value, option) => value.toLowerCase().split(' ').every(token => option!.value.toLowerCase().indexOf(token.toLowerCase()) !== -1)}
 				/>
 				<Alert
 					type='info'
 					showIcon={true}
-					message='You can add your hero to a folder to group it with other heroes.'
+					title='You can add your hero to a folder to group it with other heroes.'
 				/>
 				<Divider />
 				<Expander title='Language Choices'>

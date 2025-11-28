@@ -168,7 +168,7 @@ export const EncounterRunPanel = (props: Props) => {
 							className='initiative-button'
 							type='info'
 							showIcon={true}
-							message={(
+							title={(
 								<div>
 									The <b>{victory}</b> have won this encounter.
 								</div>
@@ -176,7 +176,7 @@ export const EncounterRunPanel = (props: Props) => {
 						/>
 						:
 						<Button className='initiative-button' type='primary' disabled={encounter.heroes.length === 0} onClick={nextTurn}>
-							<Space direction='vertical'>
+							<Space orientation='vertical'>
 								<div className='maintext'>
 									{getMainText()}
 								</div>
@@ -509,7 +509,7 @@ export const EncounterRunPanel = (props: Props) => {
 							key: 'malice',
 							label: 'Malice',
 							children: (
-								<Space direction='vertical' style={{ width: '100%', padding: '0 5px 10px 5px' }}>
+								<Space orientation='vertical' style={{ width: '100%', padding: '0 5px 10px 5px' }}>
 									<div className='ds-text'>
 										At the beginning of this turn, spend malice to activate one of these options.
 									</div>
@@ -594,11 +594,11 @@ export const EncounterRunPanel = (props: Props) => {
 			.filter(s => s.customization.itemIDs.length > 0);
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Alert
 					type='info'
 					showIcon={true}
-					message='Here are some things you might need to remember during this encounter.'
+					title='Here are some things you might need to remember during this encounter.'
 				/>
 				{
 					triggerMonsters.map(m => (
@@ -780,7 +780,7 @@ export const EncounterRunPanel = (props: Props) => {
 					}
 				</Flex>
 			</div>
-			<Drawer open={addingHeroes} onClose={() => setAddingHeroes(false)} closeIcon={null} width='500px'>
+			<Drawer open={addingHeroes} onClose={() => setAddingHeroes(false)} closeIcon={null} size={500}>
 				<HeroSelectModal
 					heroes={props.heroes}
 					sourcebooks={props.sourcebooks}
@@ -792,7 +792,7 @@ export const EncounterRunPanel = (props: Props) => {
 					}}
 				/>
 			</Drawer>
-			<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} width='500px'>
+			<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} size={500}>
 				<MonsterSelectModal
 					monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 					sourcebooks={props.sourcebooks}
@@ -804,7 +804,7 @@ export const EncounterRunPanel = (props: Props) => {
 					}}
 				/>
 			</Drawer>
-			<Drawer open={selectingGroup} onClose={() => setSelectingGroup(false)} closeIcon={null} width='500px'>
+			<Drawer open={selectingGroup} onClose={() => setSelectingGroup(false)} closeIcon={null} size={500}>
 				{
 					selectingGroup ?
 						<EncounterTurnModal
@@ -818,7 +818,7 @@ export const EncounterRunPanel = (props: Props) => {
 						: null
 				}
 			</Drawer>
-			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} size={500}>
 				{
 					selectedMonster ?
 						<MonsterModal
@@ -867,7 +867,7 @@ export const EncounterRunPanel = (props: Props) => {
 						: null
 				}
 			</Drawer>
-			<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} size={500}>
 				{
 					selectedHero ?
 						<HeroStateModal
@@ -890,7 +890,7 @@ export const EncounterRunPanel = (props: Props) => {
 						: null
 				}
 			</Drawer>
-			<Drawer open={!!selectedTerrain} onClose={() => setSelectedTerrain(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedTerrain} onClose={() => setSelectedTerrain(null)} closeIcon={null} size={500}>
 				{
 					selectedTerrain ?
 						<TerrainModal
@@ -913,7 +913,7 @@ export const EncounterRunPanel = (props: Props) => {
 						: null
 				}
 			</Drawer>
-			<Drawer open={!!selectedMinionSlot} onClose={() => setSelectedMinionSlot(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedMinionSlot} onClose={() => setSelectedMinionSlot(null)} closeIcon={null} size={500}>
 				{
 					selectedMinionSlot ?
 						<Modal

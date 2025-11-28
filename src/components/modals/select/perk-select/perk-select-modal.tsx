@@ -58,7 +58,7 @@ export const PerkSelectModal = (props: Props) => {
 							}
 
 							return (
-								<Space key={list} direction='vertical' style={{ width: '100%' }}>
+								<Space key={list} orientation='vertical' style={{ width: '100%' }}>
 									<HeaderText level={1}>{list}</HeaderText>
 									{
 										subset.map((p, n) => (

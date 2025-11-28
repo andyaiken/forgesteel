@@ -67,7 +67,7 @@ export const MonsterPanel = (props: Props) => {
 		tags.push('Signature');
 	}
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getMonsterSourcebook(props.sourcebooks, props.monster)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getMonsterSourcebook(props.sourcebooks, props.monster)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}
@@ -122,7 +122,7 @@ export const MonsterPanel = (props: Props) => {
 									<Alert
 										type='warning'
 										showIcon={true}
-										message={`${MonsterLogic.getMonsterName(props.monster, props.monsterGroup)} is ${MonsterLogic.getCombatState(props.monster)}.`}
+										title={`${MonsterLogic.getMonsterName(props.monster, props.monsterGroup)} is ${MonsterLogic.getCombatState(props.monster)}.`}
 									/>
 									: null
 							}
@@ -227,7 +227,7 @@ export const MonsterPanel = (props: Props) => {
 						</>
 						: null
 				}
-				<Drawer open={selectedAbility !== null} onClose={() => setSelectedAbility(null)} closeIcon={null} width='500px'>
+				<Drawer open={selectedAbility !== null} onClose={() => setSelectedAbility(null)} closeIcon={null} size={500}>
 					{
 						selectedAbility ?
 							<AbilityModal

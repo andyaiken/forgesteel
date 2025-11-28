@@ -151,7 +151,7 @@ export const MontagePanel = (props: Props) => {
 
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getMontageSourcebook(props.sourcebooks, props.montage)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getMontageSourcebook(props.sourcebooks, props.montage)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

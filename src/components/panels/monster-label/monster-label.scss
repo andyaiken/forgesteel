@@ -6,7 +6,7 @@
 .fixture-label {
 	margin: 5px 0;
 	border-radius: 10px;
-	padding: 10px;
+	padding: 0 10px;
 	color: rgb(0, 0, 0);
 	background-color: colors.$monster-default;
 
@@ -44,6 +44,20 @@
 
 	&.support {
 		background: linear-gradient(color.scale(colors.$monster-support, $lightness: 10%), color.scale(colors.$monster-support, $lightness: -10%));
+	}
+
+	.ds-text {
+		color: rgba(0, 0, 0, 0.88) !important;
+	}
+
+	.field {
+		.field-label {
+			color: rgb(0, 0, 0) !important;
+		}
+
+		.field-value {
+			color: rgba(0, 0, 0, 0.88) !important;
+		}
 	}
 }
 

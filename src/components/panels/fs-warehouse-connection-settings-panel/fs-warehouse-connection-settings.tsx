@@ -44,16 +44,16 @@ export const FsWarehouseConnectionSettingsPanel = (props: Props) => {
 		const connectUrl = `${connectionSettings.warehouseHost}/connect`;
 		axios.get(connectUrl, { headers: { Authorization: `Bearer ${connectionSettings.warehouseToken}` } })
 			.then(() => {
-				setTestStatusAlert(<Alert message='Success!' type='success' showIcon closable />);
+				setTestStatusAlert(<Alert title='Success!' type='success' showIcon closable />);
 			})
 			.catch(err => {
 				console.error('Error connecting to Warehouse', err);
 				if (err.response) {
 					const code = err.response.status;
 					const msg = err.response.data.message ?? err.response.data;
-					setTestStatusAlert(<Alert message={`${code} Error: ${msg}`} type='error' showIcon closable />);
+					setTestStatusAlert(<Alert title={`${code} Error: ${msg}`} type='error' showIcon closable />);
 				} else {
-					setTestStatusAlert(<Alert message={`Unable to connect to warehouse: ${err.message}`} type='error' showIcon closable />);
+					setTestStatusAlert(<Alert title={`Unable to connect to warehouse: ${err.message}`} type='error' showIcon closable />);
 				}
 			})
 			.finally(() => {
@@ -70,7 +70,7 @@ export const FsWarehouseConnectionSettingsPanel = (props: Props) => {
 	};
 
 	return (
-		<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+		<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 			<Toggle
 				label='Connect with Forge Steel Warehouse'
 				value={connectionSettings.useWarehouse}

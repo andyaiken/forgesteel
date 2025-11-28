@@ -35,14 +35,14 @@ export const PlayerViewModal = (props: Props) => {
 		<Modal
 			content={
 				<div className='player-view-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<Button block={true} onClick={openPlayerView}>
 							Open Player View
 						</Button>
 						<Alert
 							type='info'
 							showIcon={true}
-							message={
+							title={
 								<div>
 									<p>
 										Player View opens in a new window.

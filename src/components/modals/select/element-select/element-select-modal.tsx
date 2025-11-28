@@ -55,7 +55,7 @@ export const ElementSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='element-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							elements.map(e => (
 								<SelectablePanel key={e.id} onSelect={() => props.onSelect(e)}>
@@ -67,7 +67,7 @@ export const ElementSelectModal = (props: Props) => {
 					</Space>
 					<Divider />
 					<Expander title='Add a custom element'>
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Name</HeaderText>
 							<Input
 								placeholder='Name'

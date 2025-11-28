@@ -357,9 +357,9 @@ export const LibraryEditPage = (props: Props) => {
 		const similarMonsters = getSimilarMonsters(monster);
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Expander title='Modify This List'>
-					<Space direction='vertical' style={{ paddingTop: '15px', width: '100%' }}>
+					<Space orientation='vertical' style={{ paddingTop: '15px', width: '100%' }}>
 						<Button block={true} onClick={() => setDrawerOpen(true)}>Add a Monster</Button>
 						<Button block={true} disabled={hiddenMonsterIDs.length === 0} onClick={() => setHiddenMonsterIDs([])}>Restore Hidden Monsters</Button>
 					</Space>
@@ -405,7 +405,7 @@ export const LibraryEditPage = (props: Props) => {
 						<Empty text='No similar monsters.' />
 						: null
 				}
-				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
+				<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} size={500}>
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
 						sourcebooks={props.sourcebooks}

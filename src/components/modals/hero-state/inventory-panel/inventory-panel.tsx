@@ -78,14 +78,14 @@ export const InventoryPanel = (props: Props) => {
 			<Alert
 				type='warning'
 				showIcon={true}
-				message='You can only use 3 leveled items at a time.'
+				title='You can only use 3 leveled items at a time.'
 			/>
 		);
 	}
 
 	return (
 		<ErrorBoundary>
-			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
+			<Space orientation='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={() => setShopVisible(true)} />
@@ -143,7 +143,7 @@ export const InventoryPanel = (props: Props) => {
 						<Empty text='Your inventory is empty.' />
 						: null
 				}
-				<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} width='500px'>
+				<Drawer open={shopVisible} onClose={() => setShopVisible(false)} closeIcon={null} size={500}>
 					<ItemSelectModal
 						types={[ ItemType.Artifact, ItemType.Consumable, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ]}
 						sourcebooks={props.sourcebooks}

@@ -185,7 +185,7 @@ export const AdventureEditPanel = (props: Props) => {
 						key: '1',
 						label: 'Adventure',
 						children: (
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText>Name</HeaderText>
 								<Input
 									status={adventure.name === '' ? 'warning' : ''}
@@ -203,7 +203,7 @@ export const AdventureEditPanel = (props: Props) => {
 						key: '2',
 						label: 'Party',
 						children: (
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText>Party</HeaderText>
 								<NumberSpin label='Number of Heroes' min={1} value={adventure.party.count} onChange={setCount} />
 								<NumberSpin label='Hero Level' min={1} max={10} value={adventure.party.level} onChange={setLevel} />
@@ -214,7 +214,7 @@ export const AdventureEditPanel = (props: Props) => {
 						key: '3',
 						label: 'Sections',
 						children: (
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText
 									extra={
 										<Button type='text' icon={<PlusOutlined />} onClick={addSection} />
@@ -234,7 +234,7 @@ export const AdventureEditPanel = (props: Props) => {
 											]}
 										>
 											<HeaderText>Section</HeaderText>
-											<Space direction='vertical' style={{ width: '100%' }}>
+											<Space orientation='vertical' style={{ width: '100%' }}>
 												<Input
 													status={section.name === '' ? 'warning' : ''}
 													placeholder='Name'
@@ -259,7 +259,7 @@ export const AdventureEditPanel = (props: Props) => {
 						key: '4',
 						label: 'Plot Points',
 						children: (
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText
 									extra={
 										<Button type='text' icon={<PlusOutlined />} onClick={() => addPlotPoint()} />

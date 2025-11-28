@@ -301,7 +301,7 @@ export const HeroSheetPreviewPage = (props: Props) => {
 						options={standardAbilityOptions}
 					/>
 					<Divider>Layout</Divider>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<Segmented
 							name='pagesize'
 							block={true}

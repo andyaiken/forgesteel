@@ -51,7 +51,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 						<Alert
 							type='info'
 							showIcon={true}
-							message={content.text}
+							title={content.text}
 							style={{ width: '100%' }}
 						/>
 					);
@@ -268,7 +268,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 				}
 				{!props.plot.description && (props.plot.content.length === 0) ? <Empty text='No details' /> : null}
 				{props.plot.links.length > 0 ? <HeaderText>Links</HeaderText> : null}
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						props.plot.links.map(l => (
 							<Button key={l.id} block={true} onClick={() => props.onSelect(props.adventure.plot.plots.find(p => p.id === l.plotID)!)}>
@@ -278,7 +278,7 @@ export const PlotPanel = (props: PlotPanelProps) => {
 					}
 				</Space>
 			</div>
-			<Drawer open={!!selectedReference} onClose={() => setSelectedReference(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedReference} onClose={() => setSelectedReference(null)} closeIcon={null} size={500}>
 				{
 					selectedReference ?
 						<ElementModal

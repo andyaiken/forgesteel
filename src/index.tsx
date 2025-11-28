@@ -6,7 +6,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from '@/utils/initialize-theme';
 
-import '@ant-design/v5-patch-for-react-19';
 import './index.scss';
 
 initializeTheme();

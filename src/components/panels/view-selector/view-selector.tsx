@@ -39,7 +39,7 @@ export const ViewSelector = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={
-								<Space direction='vertical'>
+								<Space orientation='vertical'>
 									<Button block={true} onClick={() => props.onChange('abilities')}>
 										Standard Abilities
 									</Button>

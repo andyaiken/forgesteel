@@ -42,7 +42,7 @@ export const MontageEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
@@ -76,7 +76,7 @@ export const MontageEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Difficulty</HeaderText>
 				<Select
 					style={{ width: '100%' }}
@@ -302,7 +302,7 @@ export const MontageEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addSection} />
@@ -339,7 +339,7 @@ export const MontageEditPanel = (props: Props) => {
 										key: '2',
 										label: 'Challenges',
 										children: (
-											<Space direction='vertical' style={{ width: '100%' }}>
+											<Space orientation='vertical' style={{ width: '100%' }}>
 												<HeaderText
 													extra={
 														<Button type='text' icon={<PlusOutlined />} onClick={() => addChallenge(sectionIndex)} />
@@ -376,15 +376,6 @@ export const MontageEditPanel = (props: Props) => {
 																placeholder='Select characteristics'
 																options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch }))}
 																optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-																showSearch={true}
-																filterOption={(input, option) => {
-																	const strings = option ?
-																		[
-																			option.value
-																		]
-																		: [];
-																	return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-																}}
 																value={c.characteristics}
 																onChange={value => setChallengeCharacteristics(sectionIndex, challengeIndex, value)}
 															/>
@@ -421,7 +412,7 @@ export const MontageEditPanel = (props: Props) => {
 										key: '3',
 										label: 'Twists',
 										children: (
-											<Space direction='vertical' style={{ width: '100%' }}>
+											<Space orientation='vertical' style={{ width: '100%' }}>
 												<HeaderText
 													extra={
 														<Button type='text' icon={<PlusOutlined />} onClick={() => addTwist(sectionIndex)} />
@@ -459,15 +450,6 @@ export const MontageEditPanel = (props: Props) => {
 																placeholder='Select characteristics'
 																options={[ Characteristic.Might, Characteristic.Agility, Characteristic.Reason, Characteristic.Intuition, Characteristic.Presence ].map(ch => ({ value: ch }))}
 																optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-																showSearch={true}
-																filterOption={(input, option) => {
-																	const strings = option ?
-																		[
-																			option.value
-																		]
-																		: [];
-																	return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-																}}
 																value={t.characteristics}
 																onChange={value => setTwistCharacteristics(sectionIndex, twistIndex, value)}
 															/>
@@ -537,7 +519,7 @@ export const MontageEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Total Success</HeaderText>
 				<MarkdownEditor value={montage.outcomes.totalSuccess} onChange={setSuccess} />
 				<HeaderText>Partial Success</HeaderText>

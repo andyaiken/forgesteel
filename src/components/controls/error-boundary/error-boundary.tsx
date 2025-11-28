@@ -57,7 +57,7 @@ export class ErrorBoundary extends Component<Props, State> {
 					data-name={this.props.name || 'unknown'}
 					type='error'
 					showIcon={true}
-					message={msg}
+					title={msg}
 				/>
 			);
 		}

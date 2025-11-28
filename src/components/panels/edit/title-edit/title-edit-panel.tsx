@@ -47,7 +47,7 @@ export const TitleEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
@@ -81,7 +81,7 @@ export const TitleEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Echelon</HeaderText>
 				<NumberSpin min={1} max={4} value={title.echelon} onChange={setEchelon} />
 				<HeaderText>Prerequisites</HeaderText>
@@ -133,7 +133,7 @@ export const TitleEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addFeature} />

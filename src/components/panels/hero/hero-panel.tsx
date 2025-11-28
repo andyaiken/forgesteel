@@ -296,7 +296,7 @@ export const HeroPanel = (props: Props) => {
 								:
 								<div className='overview-tile clickable' onClick={() => setTab('Triggers')}>
 									<HeaderText>Triggered Actions</HeaderText>
-									<Space direction='vertical'>
+									<Space orientation='vertical'>
 										{triggers.map(t => getTrigger(t.ability))}
 									</Space>
 								</div>

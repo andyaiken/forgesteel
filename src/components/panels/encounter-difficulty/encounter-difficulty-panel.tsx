@@ -49,7 +49,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 				key='too-high-level'
 				type='warning'
 				showIcon={true}
-				message={`This encounter contains a monster of level ${Math.max(...levels)}; for this party, anything above level ${props.options.heroLevel + 2} may cause problems.`}
+				title={`This encounter contains a monster of level ${Math.max(...levels)}; for this party, anything above level ${props.options.heroLevel + 2} may cause problems.`}
 			/>
 		);
 	}

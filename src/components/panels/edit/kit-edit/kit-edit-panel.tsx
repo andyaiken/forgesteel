@@ -50,7 +50,7 @@ export const KitEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
@@ -91,7 +91,7 @@ export const KitEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Type</HeaderText>
 				<Input
 					placeholder='Type'
@@ -102,7 +102,7 @@ export const KitEditPanel = (props: Props) => {
 				<Alert
 					type='info'
 					showIcon={true}
-					message='If your kit has a Type, it can only be selected from a kit feature that specifies this value.'
+					title='If your kit has a Type, it can only be selected from a kit feature that specifies this value.'
 				/>
 				<HeaderText>Armor</HeaderText>
 				<Select
@@ -113,15 +113,6 @@ export const KitEditPanel = (props: Props) => {
 					placeholder='Select armor'
 					options={[ KitArmor.Light, KitArmor.Medium, KitArmor.Heavy, KitArmor.Shield ].map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={kit.armor}
 					onChange={setArmor}
 				/>
@@ -134,15 +125,6 @@ export const KitEditPanel = (props: Props) => {
 					placeholder='Select weapon'
 					options={[ KitWeapon.Bow, KitWeapon.Ensnaring, KitWeapon.Heavy, KitWeapon.Light, KitWeapon.Medium, KitWeapon.Polearm, KitWeapon.Unarmed, KitWeapon.Whip ].map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={kit.weapon}
 					onChange={setWeapon}
 				/>
@@ -194,7 +176,7 @@ export const KitEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Stamina</HeaderText>
 				<NumberSpin
 					min={0}
@@ -306,7 +288,7 @@ export const KitEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Melee Damage</HeaderText>
 				<Toggle label='Melee damage' value={!!kit.meleeDamage} onChange={setMeleeDamage} />
 				{kit.meleeDamage ? <NumberSpin label='Tier 1' min={0} value={kit.meleeDamage.tier1} onChange={setMeleeDamage1} /> : null}
@@ -359,7 +341,7 @@ export const KitEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addFeature} />

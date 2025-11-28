@@ -94,7 +94,7 @@ export const StatsPanel = (props: Props) => {
 			props.onChange(copy);
 
 			notify.info({
-				message: 'Respite',
+				title: 'Respite',
 				description: 'You\'ve taken a respite. Your hero\'s stats have been reset.',
 				placement: 'top'
 			});
@@ -103,7 +103,7 @@ export const StatsPanel = (props: Props) => {
 		return (
 			<>
 				<Flex gap={20}>
-					<Space direction='vertical' style={{ flex: '1 1 0' }}>
+					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
 						<NumberSpin
 							label='Surges'
 							value={hero.state.surges}
@@ -123,7 +123,7 @@ export const StatsPanel = (props: Props) => {
 							onChange={setXP}
 						/>
 					</Space>
-					<Space direction='vertical' style={{ flex: '1 1 0' }}>
+					<Space orientation='vertical' style={{ flex: '1 1 0' }}>
 						<NumberSpin
 							label='Renown'
 							value={hero.state.renown}
@@ -145,7 +145,7 @@ export const StatsPanel = (props: Props) => {
 					hero.state.surges > 0 ?
 						<Alert
 							type='info'
-							message={
+							title={
 								<>
 									<div className='alert-text'>
 										Spend <b>1 - 3 surges</b> to add {hero.class ? Math.max(...hero.class.characteristics.map(ch => ch.value)) : 0} damage per surge to one target.
@@ -161,15 +161,15 @@ export const StatsPanel = (props: Props) => {
 						<Alert
 							type='info'
 							showIcon={true}
-							message='You have enough XP to level up.'
+							title='You have enough XP to level up.'
 							action={props.onLevelUp ? <Button icon={<ArrowUpOutlined />} onClick={levelUp}>Level Up</Button> : null}
 						/>
 						: null
 				}
-				<Drawer open={respiteVisible} onClose={() => setRespiteVisible(false)} closeIcon={null} width='500px'>
+				<Drawer open={respiteVisible} onClose={() => setRespiteVisible(false)} closeIcon={null} size={500}>
 					<Modal
 						content={
-							<Space direction='vertical' style={{ width: '100%', padding: '0 20px' }}>
+							<Space orientation='vertical' style={{ width: '100%', padding: '0 20px' }}>
 								<HeaderText>Respite</HeaderText>
 								<div className='ds-text'>
 									Taking a respite has the following effects:
@@ -280,7 +280,7 @@ export const StatsPanel = (props: Props) => {
 				{
 					HeroLogic.getHeroicResources(hero)
 						.map(hr => (
-							<Space key={hr.id} direction='vertical' style={{ width: '100%' }}>
+							<Space key={hr.id} orientation='vertical' style={{ width: '100%' }}>
 								<HeaderText>{Format.capitalize(hr.type)} Resource: {hr.name}</HeaderText>
 								<NumberSpin
 									value={hr.value}
@@ -368,11 +368,11 @@ export const StatsPanel = (props: Props) => {
 							</Space>
 						))
 				}
-				<Drawer open={!!expression} onClose={() => setExpression(null)} closeIcon={null} width='500px'>
+				<Drawer open={!!expression} onClose={() => setExpression(null)} closeIcon={null} size={500}>
 					<Modal
 						content={
 							expression ?
-								<Space direction='vertical' style={{ width: '100%', padding: '0 20px' }}>
+								<Space orientation='vertical' style={{ width: '100%', padding: '0 20px' }}>
 									<HeaderText level={1}>
 										Roll
 									</HeaderText>
@@ -457,8 +457,8 @@ export const StatsPanel = (props: Props) => {
 				/>
 				<Alert
 					type='info'
-					message={
-						<Space direction='vertical'>
+					title={
+						<Space orientation='vertical'>
 							<div className='alert-text'>
 								Hero tokens are a resource shared by your party; they typically refresh at the beginning of each game session.
 							</div>

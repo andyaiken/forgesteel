@@ -71,7 +71,7 @@ export const TitleSelectModal = (props: Props) => {
 				<div className='title-select-modal'>
 					{
 						selectedTitle === null ?
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									titles.map(t => (
 										<SelectablePanel
@@ -89,14 +89,14 @@ export const TitleSelectModal = (props: Props) => {
 								}
 							</Space>
 							:
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<SelectablePanel action={{ label: 'Unselect', onClick: () => setSelectedTitle(null) }}>
 									<TitlePanel title={selectedTitle} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />
 								</SelectablePanel>
 								<Alert
 									type='info'
 									showIcon={true}
-									message='This title has multiple options; choose one of them.'
+									title='This title has multiple options; choose one of them.'
 								/>
 								{
 									selectedTitle.features.map(f => (

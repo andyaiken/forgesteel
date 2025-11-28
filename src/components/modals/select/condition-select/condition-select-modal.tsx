@@ -31,7 +31,7 @@ export const ConditionSelectModal = (props: Props) => {
 		<Modal
 			content={
 				<div className='condition-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							conditions.map(c => (
 								<SelectablePanel

@@ -27,7 +27,7 @@ interface Props {
 export const ImbuementPanel = (props: Props) => {
 	const tags = [ `Level ${props.imbuement.level}` ];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getImbuementSourcebook(props.sourcebooks, props.imbuement)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getImbuementSourcebook(props.sourcebooks, props.imbuement)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

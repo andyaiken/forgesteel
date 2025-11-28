@@ -622,7 +622,7 @@ const HealthPanel = (props: Props) => {
 
 	const getHealthControls = () => {
 		return (
-			<Space direction='vertical' style={{ flex: '1 1 0', width: '100%' }}>
+			<Space orientation='vertical' style={{ flex: '1 1 0', width: '100%' }}>
 				{
 					props.stamina && props.recoveries ?
 						<Segmented
@@ -638,7 +638,7 @@ const HealthPanel = (props: Props) => {
 				}
 				{
 					page === 'stamina' ?
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							<NumberSpin
 								style={{ flex: '1 1 0' }}
 								min={0}
@@ -656,7 +656,7 @@ const HealthPanel = (props: Props) => {
 				}
 				{
 					page === 'recoveries' ?
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							<Button
 								block={true}
 								className='tall-button'
@@ -758,7 +758,7 @@ const HealthPanel = (props: Props) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message={`You are ${props.stamina.state}.`}
+							title={`You are ${props.stamina.state}.`}
 						/>
 						: null
 				}
@@ -767,7 +767,7 @@ const HealthPanel = (props: Props) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message={
+							title={
 								<Markdown
 									text={`
 You are dying.
@@ -867,7 +867,7 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 							<Popover
 								trigger='click'
 								content={
-									<Space direction='vertical'>
+									<Space orientation='vertical'>
 										<Button block={true} type='text' onClick={() => addSpecial('Judged')}>Judged</Button>
 										<Button block={true} type='text' onClick={() => addSpecial('Marked')}>Marked</Button>
 										<Button block={true} type='text' onClick={() => addSpecial('Surprised')}>Surprised</Button>
@@ -900,7 +900,7 @@ Your allies can help you spend Recoveries in combat, and you can spend Recoverie
 						<Empty text='You are not affected by any conditions.' />
 						: null
 				}
-				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} width='500px'>
+				<Drawer open={conditionsVisible} onClose={() => setConditionsVisible(false)} closeIcon={null} size={500}>
 					<ConditionSelectModal immunities={props.conditions.immunities} onSelect={addCondition} onClose={() => setConditionsVisible(false)} />
 				</Drawer>
 			</div>

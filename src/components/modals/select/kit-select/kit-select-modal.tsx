@@ -48,7 +48,7 @@ export const KitSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='kit-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							kits.map(k => (
 								<SelectablePanel

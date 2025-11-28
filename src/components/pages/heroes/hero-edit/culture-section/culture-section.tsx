@@ -112,7 +112,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 					</Space.Compact>
 					<Divider />
 					<div className='ds-text'>Choose your Environment, Organization, and Upbringing.</div>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							props.hero.culture.environment ?
 								<Flex className='selection-box' align='center' gap={10}>
@@ -261,7 +261,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 						: null
 				}
 			</div>
-			<Drawer open={showEnvironment} onClose={() => setShowEnvironment(false)} closeIcon={null} width='500px'>
+			<Drawer open={showEnvironment} onClose={() => setShowEnvironment(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={EnvironmentData.getEnvironments().map(f => ({ feature: f, value: 1 }))}
 					options={props.options}
@@ -272,7 +272,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 					onClose={() => setShowEnvironment(false)}
 				/>
 			</Drawer>
-			<Drawer open={showOrganization} onClose={() => setShowOrganization(false)} closeIcon={null} width='500px'>
+			<Drawer open={showOrganization} onClose={() => setShowOrganization(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={OrganizationData.getOrganizations().map(f => ({ feature: f, value: 1 }))}
 					options={props.options}
@@ -283,7 +283,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 					onClose={() => setShowOrganization(false)}
 				/>
 			</Drawer>
-			<Drawer open={showUpbringing} onClose={() => setShowUpbringing(false)} closeIcon={null} width='500px'>
+			<Drawer open={showUpbringing} onClose={() => setShowUpbringing(false)} closeIcon={null} size={500}>
 				<FeatureSelectModal
 					features={UpbringingData.getUpbringings().map(f => ({ feature: f, value: 1 }))}
 					options={props.options}

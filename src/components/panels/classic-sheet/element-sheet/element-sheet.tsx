@@ -422,7 +422,7 @@ const DomainSheet = (props: DomainProps) => {
 				props.domain.featuresByLevel
 					.filter(lvl => lvl.features.length > 0)
 					.map(lvl => (
-						<Space key={lvl.level} direction='vertical'>
+						<Space key={lvl.level} orientation='vertical'>
 							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 							{
 								lvl.features.map(f => (
@@ -792,7 +792,7 @@ const SubclassSheet = (props: SubclassProps) => {
 				props.subclass.featuresByLevel
 					.filter(lvl => lvl.features.length > 0)
 					.map(lvl => (
-						<Space key={lvl.level} direction='vertical'>
+						<Space key={lvl.level} orientation='vertical'>
 							<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 							{
 								lvl.features.map(f => (

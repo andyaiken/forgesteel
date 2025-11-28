@@ -87,7 +87,7 @@ export const SourcebooksModal = (props: Props) => {
 						<HeaderText level={1}>
 							Official Sourcebooks
 						</HeaderText>
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							{
 								officialSourcebooks.map(s => (
 									<SelectablePanel key={s.id}>
@@ -117,7 +117,7 @@ export const SourcebooksModal = (props: Props) => {
 						<HeaderText level={1}>
 							Third-Party Sourcebooks
 						</HeaderText>
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							{
 								Collections.sort(thirdPartySourcebooks, sb => sb.name).map(s => (
 									<SelectablePanel key={s.id}>
@@ -147,7 +147,7 @@ export const SourcebooksModal = (props: Props) => {
 						<HeaderText level={1}>
 							Community Sourcebooks
 						</HeaderText>
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							{
 								Collections.sort(communitySourcebooks, sb => sb.name).map(s => (
 									<SelectablePanel key={s.id}>
@@ -202,7 +202,7 @@ export const SourcebooksModal = (props: Props) => {
 						>
 							Homebrew Sourcebooks
 						</HeaderText>
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							{
 								Collections.sort(homebrewSourcebooks, sb => sb.name).map(s => (
 									<SelectablePanel key={s.id}>

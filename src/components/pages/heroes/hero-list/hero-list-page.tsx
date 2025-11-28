@@ -115,7 +115,7 @@ export const HeroListPage = (props: Props) => {
 					<Popover
 						trigger='click'
 						content={(
-							<Space direction='vertical' style={{ width: '300px' }}>
+							<Space orientation='vertical' style={{ width: '300px' }}>
 								<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.addHero(currentTab)}>
 									Create a New Hero
 								</Button>
@@ -142,7 +142,7 @@ export const HeroListPage = (props: Props) => {
 									Generate a Random Hero
 								</Button>
 								<Expander title='Use a premade example'>
-									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px', maxHeight: '200px', overflowY: 'auto' }}>
+									<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px', maxHeight: '200px', overflowY: 'auto' }}>
 										{
 											exampleHeroes.map(h => (
 												<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>

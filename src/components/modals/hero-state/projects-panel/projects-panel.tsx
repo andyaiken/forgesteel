@@ -85,7 +85,7 @@ export const ProjectsPanel = (props: Props) => {
 
 	return (
 		<ErrorBoundary>
-			<Space direction='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
+			<Space orientation='vertical' style={{ width: '100%', paddingBottom: '20px' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={() => setProjectsVisible(true)} />
@@ -129,7 +129,7 @@ export const ProjectsPanel = (props: Props) => {
 						<Empty text='You have no projects underway.' />
 						: null
 				}
-				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} width='500px'>
+				<Drawer open={projectsVisible} onClose={() => setProjectsVisible(false)} closeIcon={null} size={500}>
 					<ProjectSelectModal sourcebooks={props.sourcebooks} onSelect={addProject} onClose={() => setProjectsVisible(false)} />
 				</Drawer>
 			</Space>

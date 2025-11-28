@@ -73,7 +73,7 @@ export const ElementToolbar = (props: Props) => {
 						<Alert
 							type='info'
 							showIcon={true}
-							message='To create a homebrew version of this monster, switch to Group view.'
+							title='To create a homebrew version of this monster, switch to Group view.'
 							action={<Button style={{ marginLeft: '5px' }} onClick={() => props.setShowMonsters(false)}>Switch</Button>}
 						/>
 					)}
@@ -230,7 +230,7 @@ export const ElementToolbar = (props: Props) => {
 				<Alert
 					type='info'
 					showIcon={true}
-					message='If you want to export as a PDF, switch to Classic view.'
+					title='If you want to export as a PDF, switch to Classic view.'
 					action={<Button onClick={() => props.setView('classic')}>Classic</Button>}
 				/>
 			: null;

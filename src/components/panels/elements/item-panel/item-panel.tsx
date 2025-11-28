@@ -127,7 +127,7 @@ export const ItemPanel = (props: Props) => {
 			});
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					options.map(f => (
 						<SelectablePanel key={f.feature.id} onSelect={() => addImbuement(f)}>
@@ -148,7 +148,7 @@ export const ItemPanel = (props: Props) => {
 
 	const tags: string[] = [ item.type ];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getItemSourcebook(props.sourcebooks, item)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getItemSourcebook(props.sourcebooks, item)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}
@@ -168,7 +168,7 @@ export const ItemPanel = (props: Props) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message='Your kit does not allow you to use this item.'
+							title='Your kit does not allow you to use this item.'
 						/>
 						: null
 				}
@@ -212,7 +212,7 @@ export const ItemPanel = (props: Props) => {
 						<>
 							{item.keywords.length > 0 ? <Field label='Keywords' value={item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} /> : null}
 							<Markdown text={item.effect} />
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									item.featuresByLevel
 										.filter(lvl => lvl.features.length > 0)
@@ -251,7 +251,7 @@ export const ItemPanel = (props: Props) => {
 						: null
 				}
 			</div>
-			<Drawer open={imbuementsOpen} onClose={() => setImbuementsOpen(false)} closeIcon={null} width='500px'>
+			<Drawer open={imbuementsOpen} onClose={() => setImbuementsOpen(false)} closeIcon={null} size={500}>
 				<Modal
 					content={
 						<div style={{ padding: '20px' }}>

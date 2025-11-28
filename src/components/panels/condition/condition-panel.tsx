@@ -41,7 +41,7 @@ export const ConditionPanel = (props: Props) => {
 	return (
 		<ErrorBoundary>
 			<div className='condition-panel'>
-				<Space direction='vertical' style={{ width: '100%', margin: '5px 0' }}>
+				<Space orientation='vertical' style={{ width: '100%', margin: '5px 0' }}>
 					{
 						condition.type === ConditionType.Custom ?
 							<MarkdownEditor placeholder='Custom Condition Text' value={condition.text} onChange={setConditionText} />

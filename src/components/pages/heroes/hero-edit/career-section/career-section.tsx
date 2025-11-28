@@ -135,7 +135,7 @@ export const CareerSection = (props: Props) => {
 						: null
 				}
 			</div>
-			<Drawer open={showIncitingIncidents} onClose={() => setShowIncitingIncidents(false)} closeIcon={null} width='500px'>
+			<Drawer open={showIncitingIncidents} onClose={() => setShowIncitingIncidents(false)} closeIcon={null} size={500}>
 				<ElementSelectModal
 					elements={props.hero.career ? props.hero.career.incitingIncidents.options : []}
 					onSelect={e => {

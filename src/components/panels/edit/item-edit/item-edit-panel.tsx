@@ -54,7 +54,7 @@ export const ItemEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
@@ -95,22 +95,13 @@ export const ItemEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Item Type</HeaderText>
 				<Select
 					style={{ width: '100%' }}
 					placeholder='Type'
 					options={[ ItemType.Artifact, ItemType.Consumable, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Leveled, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ].map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={item.type}
 					onChange={setType}
 				/>
@@ -122,15 +113,6 @@ export const ItemEditPanel = (props: Props) => {
 					allowClear={true}
 					options={AbilityLogic.getKeywords().map(option => ({ value: option }))}
 					optionRender={option => <div className='ds-text'>{option.data.value}</div>}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.value
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={item.keywords}
 					onChange={setKeywords}
 				/>
@@ -194,7 +176,7 @@ export const ItemEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					item.featuresByLevel.map(lvl => (
 						<div key={lvl.level}>
@@ -205,7 +187,7 @@ export const ItemEditPanel = (props: Props) => {
 							>
 								Level {lvl.level.toString()}
 							</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									lvl.features.map(f => (
 										<Expander
@@ -258,7 +240,7 @@ export const ItemEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Toggle label='Can be crafted' value={!!item.crafting} onChange={setCraftable} />
 				{
 					item.crafting ?

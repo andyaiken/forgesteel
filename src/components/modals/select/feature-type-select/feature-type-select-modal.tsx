@@ -18,7 +18,7 @@ export const FeatureTypeSelectModal = (props: Props) => {
 		<Modal
 			content={
 				<div className='feature-type-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							props.types.map(ft => (
 								<SelectablePanel

@@ -46,7 +46,7 @@ export const HeroSelectModal = (props: Props) => {
 						<Alert
 							type='info'
 							showIcon={true}
-							message='Select a folder to add all the heroes within it.'
+							title='Select a folder to add all the heroes within it.'
 						/>
 						{
 							folders.map(f => (
@@ -55,7 +55,7 @@ export const HeroSelectModal = (props: Props) => {
 									onSelect={() => props.onSelect(props.heroes.filter(h => h.folder === f))}
 								>
 									<HeaderText level={1}>{f}</HeaderText>
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										{
 											props.heroes
 												.filter(h => h.folder === f)
@@ -98,11 +98,11 @@ export const HeroSelectModal = (props: Props) => {
 			}
 			case 'simple': {
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<Alert
 							type='info'
 							showIcon={true}
-							message={(
+							title={(
 								<>
 									<div>
 										If you don't have your party in Forge Steel, you can just add their names.
@@ -157,7 +157,7 @@ export const HeroSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='hero-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getContent()}
 					</Space>
 				</div>

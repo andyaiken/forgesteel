@@ -49,7 +49,7 @@ export const AddBtn = (props: Props) => {
 					<Alert
 						type='info'
 						showIcon={true}
-						message='To create a new monster, switch to Group view.'
+						title='To create a new monster, switch to Group view.'
 						action={<Button style={{ marginLeft: '5px' }} onClick={() => props.setShowMonsters(false)}>Switch</Button>}
 					/>
 				)}
@@ -158,7 +158,7 @@ export const AddBtn = (props: Props) => {
 			case 'tactical-map':
 				return [
 					<Expander key='image' title='Use a battlemap'>
-						<Space direction='vertical' style={{ width: '100%', marginTop: '15px' }}>
+						<Space orientation='vertical' style={{ width: '100%', marginTop: '15px' }}>
 							<Segmented
 								block={true}
 								options={[
@@ -250,7 +250,7 @@ export const AddBtn = (props: Props) => {
 			content={(
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '300px' }}>
 					<DestinationSelector sourcebooks={props.sourcebooks} sourcebookID={props.sourcebookID} setSourcebookID={props.setSourcebookID} />
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.createElement(props.category, props.sourcebookID, null)}>Create</Button>
 						<Upload
 							style={{ width: '100%' }}

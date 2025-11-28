@@ -24,7 +24,7 @@ interface Props {
 export const ComplicationPanel = (props: Props) => {
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getComplicationSourcebook(props.sourcebooks, props.complication)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getComplicationSourcebook(props.sourcebooks, props.complication)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

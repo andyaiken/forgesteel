@@ -99,7 +99,7 @@ export const ReferenceModal = (props: Props) => {
 					onChange={e => setSearchTerm(e.target.value)}
 				/>
 				<Flex gap={20} style={{ flex: '1 1 0', overflowY: 'hidden' }}>
-					<Space direction='vertical' style={{ flex: '0 0 180px', marginTop: '20px', overflowY: 'auto' }}>
+					<Space orientation='vertical' style={{ flex: '0 0 180px', marginTop: '20px', overflowY: 'auto' }}>
 						{
 							filteredRules.length > 0 ?
 								filteredRules.map((r, n) => (
@@ -169,7 +169,7 @@ export const ReferenceModal = (props: Props) => {
 					].map((sl, n1) => (
 						<div key={n1}>
 							<HeaderText>{sl}</HeaderText>
-							<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
+							<Space orientation='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 								{
 									allSkills
 										.filter(s => s.list === sl)
@@ -206,7 +206,7 @@ export const ReferenceModal = (props: Props) => {
 					].map((type, n1) => (
 						<div key={n1}>
 							<HeaderText>{type} Languages</HeaderText>
-							<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
+							<Space orientation='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 								{
 									allLanguages
 										.filter(l => l.type === type)
@@ -244,7 +244,7 @@ export const ReferenceModal = (props: Props) => {
 						key: 'mains',
 						label: 'Main Actions',
 						children:
-							<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
+							<Space orientation='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 								{
 									[
 										AbilityData.charge,
@@ -262,7 +262,7 @@ export const ReferenceModal = (props: Props) => {
 						key: 'maneuvers',
 						label: 'Maneuvers',
 						children:
-							<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
+							<Space orientation='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 								{
 									[
 										AbilityData.aidAttack,
@@ -287,7 +287,7 @@ export const ReferenceModal = (props: Props) => {
 						key: 'moves',
 						label: 'Move Actions',
 						children:
-							<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
+							<Space orientation='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 								{
 									[
 										AbilityData.advance,
@@ -303,7 +303,7 @@ export const ReferenceModal = (props: Props) => {
 						key: 'triggers',
 						label: 'Triggers',
 						children:
-							<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
+							<Space orientation='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 								{
 									[
 										AbilityData.opportunityAttack
@@ -317,7 +317,7 @@ export const ReferenceModal = (props: Props) => {
 						key: 'free',
 						label: 'Free Strikes',
 						children:
-							<Space direction='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
+							<Space orientation='vertical' style={{ paddingBottom: '20px', width: '100%' }}>
 								{
 									[
 										AbilityData.freeStrikeMelee,

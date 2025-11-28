@@ -29,7 +29,7 @@ export const MonsterLabel = (props: MonsterLabelProps) => {
 					{props.monster.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
 				</Flex>
 				<Flex align='center' justify='space-between'>
-					<div>{desc}</div>
+					<div className='ds-text'>{desc}</div>
 					{props.extra}
 				</Flex>
 			</div>
@@ -51,7 +51,7 @@ export const TerrainLabel = (props: TerrainLabelProps) => {
 	return (
 		<ErrorBoundary>
 			<div className={`terrain-label ${type}`}>
-				{desc}
+				<div className='ds-text'>{desc}</div>
 			</div>
 		</ErrorBoundary>
 	);
@@ -71,7 +71,7 @@ export const FixtureLabel = (props: FixtureLabelProps) => {
 	return (
 		<ErrorBoundary>
 			<div className={`fixture-label ${type}`}>
-				{desc}
+				<div className='ds-text'>{desc}</div>
 			</div>
 		</ErrorBoundary>
 	);

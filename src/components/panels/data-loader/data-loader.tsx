@@ -277,7 +277,7 @@ export const DataLoader = (props: Props) => {
 							<Alert
 								type='error'
 								showIcon={true}
-								message='Data load error'
+								title='Data load error'
 								description={error}
 							/>
 							: null
@@ -288,7 +288,7 @@ export const DataLoader = (props: Props) => {
 								<Alert
 									type='info'
 									showIcon={true}
-									message='Update Warehouse settings below, if necessary.'
+									title='Update Warehouse settings below, if necessary.'
 								/>
 								<Expander title='Forge Steel Warehouse Settings'>
 									<FsWarehouseConnectionSettingsPanel

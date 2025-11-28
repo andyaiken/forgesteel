@@ -62,7 +62,7 @@ export const RollModal = (props: Props) => {
 									key={n}
 									type='warning'
 									showIcon={true}
-									message={<div><b>{warn.label}</b>: {warn.text}</div>}
+									title={<div><b>{warn.label}</b>: {warn.text}</div>}
 								/>
 							))
 						}

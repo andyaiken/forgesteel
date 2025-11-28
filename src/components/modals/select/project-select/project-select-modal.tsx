@@ -50,7 +50,7 @@ export const ProjectSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='project-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							projects.map(project => (
 								<SelectablePanel

@@ -75,7 +75,7 @@ export const TerrainPanel = (props: Props) => {
 
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, terrain)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getTerrainSourcebook(props.sourcebooks, terrain)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

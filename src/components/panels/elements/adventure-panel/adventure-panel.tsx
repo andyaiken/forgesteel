@@ -89,7 +89,7 @@ export const AdventurePanel = (props: Props) => {
 
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getAdventureSourcebook(props.sourcebooks, props.adventure)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getAdventureSourcebook(props.sourcebooks, props.adventure)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

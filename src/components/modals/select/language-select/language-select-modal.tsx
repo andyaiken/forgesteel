@@ -52,7 +52,7 @@ export const LanguageSelectModal = (props: Props) => {
 							}
 
 							return (
-								<Space key={type} direction='vertical' style={{ width: '100%' }}>
+								<Space key={type} orientation='vertical' style={{ width: '100%' }}>
 									<HeaderText level={1}>{type}</HeaderText>
 									{
 										subset.map((l, n) => (
@@ -68,7 +68,7 @@ export const LanguageSelectModal = (props: Props) => {
 					}
 					<Divider />
 					<Expander title='Add a custom language'>
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Custom Language</HeaderText>
 							<Input
 								placeholder='Custom Language Name'

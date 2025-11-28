@@ -31,15 +31,15 @@ export const AppFooter = (props: Props) => {
 						:
 						<Flex className='navigation-buttons-panel' align='center' gap={2}>
 							<Button type='text' className={props.page === 'welcome' ? 'selected' : ''} icon={<img className='logo-icon' src={shield} />} onClick={() => navigation.goToWelcome()} />
-							<Divider type='vertical' />
+							<Divider orientation='vertical' />
 							<Button type='text' className={props.page === 'heroes' ? 'selected' : ''} icon={<TeamOutlined />} onClick={() => navigation.goToHeroList()}>
 								{isSmall ? null : 'Heroes'}
 							</Button>
-							<Divider type='vertical' />
+							<Divider orientation='vertical' />
 							<Button type='text' className={props.page === 'library' ? 'selected' : ''} icon={<BookOutlined />} onClick={() => navigation.goToLibrary('ancestry')}>
 								{isSmall ? null : 'Library'}
 							</Button>
-							<Divider type='vertical' />
+							<Divider orientation='vertical' />
 							<Button type='text' className={props.page === 'session' ? 'selected' : ''} icon={<PlayCircleOutlined />} onClick={() => navigation.goToSession()}>
 								{isSmall ? null : 'Session'}
 							</Button>

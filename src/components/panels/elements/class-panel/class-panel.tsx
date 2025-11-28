@@ -171,7 +171,7 @@ export const ClassPanel = (props: Props) => {
 		tags.push('Master Class');
 	}
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getClassSourcebook(props.sourcebooks, props.heroClass)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getClassSourcebook(props.sourcebooks, props.heroClass)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

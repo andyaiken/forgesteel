@@ -165,7 +165,7 @@ export const DieRollPanel = (props: Props) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message={tierMessage}
+							title={tierMessage}
 						/>
 						: null
 				}
@@ -174,7 +174,7 @@ export const DieRollPanel = (props: Props) => {
 						<Alert
 							type='success'
 							showIcon={true}
-							message='Critical hit!'
+							title='Critical hit!'
 						/>
 						: null
 				}
@@ -183,12 +183,12 @@ export const DieRollPanel = (props: Props) => {
 						<Alert
 							type='info'
 							showIcon={true}
-							message={`This roll would usually indicate a ${total >= (props.hero ? HeroLogic.getSaveThreshold(props.hero) : 6) ? 'success' : 'failure'}.`}
+							title={`This roll would usually indicate a ${total >= (props.hero ? HeroLogic.getSaveThreshold(props.hero) : 6) ? 'success' : 'failure'}.`}
 						/>
 						: null
 				}
 			</div>
-			<Drawer open={showOdds} onClose={() => setShowOdds(false)} closeIcon={null} width='500px'>
+			<Drawer open={showOdds} onClose={() => setShowOdds(false)} closeIcon={null} size={500}>
 				<Modal
 					content={
 						<div style={{ padding: '0 20px 20px 20px' }}>

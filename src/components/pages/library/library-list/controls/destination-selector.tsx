@@ -21,7 +21,7 @@ export const DestinationSelector = (props: Props) => {
 	sourcebookOptions.push({ label: 'In a new sourcebook', value: '' });
 
 	return (
-		<Space direction='vertical' style={{ width: '100%' }}>
+		<Space orientation='vertical' style={{ width: '100%' }}>
 			<div>Where do you want it to live?</div>
 			<Select
 				style={{ width: '100%' }}

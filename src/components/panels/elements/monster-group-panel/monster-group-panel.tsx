@@ -155,7 +155,7 @@ export const MonsterGroupPanel = (props: Props) => {
 
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, props.monsterGroup)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getMonsterGroupSourcebook(props.sourcebooks, props.monsterGroup)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

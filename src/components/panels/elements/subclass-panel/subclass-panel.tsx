@@ -56,7 +56,7 @@ export const SubclassPanel = (props: Props) => {
 
 	const tags = [];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getSubclassSourcebook(props.sourcebooks, props.subclass)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getSubclassSourcebook(props.sourcebooks, props.subclass)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

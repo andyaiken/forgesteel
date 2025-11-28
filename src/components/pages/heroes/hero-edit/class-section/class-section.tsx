@@ -147,7 +147,7 @@ export const ClassSection = (props: Props) => {
 							</Button>
 							: null
 					}
-					<Drawer open={subclassSelectorOpen} onClose={() => setSubclassSelectorOpen(false)} closeIcon={null} width='500px'>
+					<Drawer open={subclassSelectorOpen} onClose={() => setSubclassSelectorOpen(false)} closeIcon={null} size={500}>
 						<SubClassSelectModal
 							subClasses={heroClass.subclasses.filter(sc => !sc.selected)}
 							classID={heroClass.id}
@@ -245,7 +245,7 @@ export const ClassSection = (props: Props) => {
 											: null
 									]}
 								>
-									<Space direction='vertical' size={20} style={{ width: '100%', paddingTop: '15px' }}>
+									<Space orientation='vertical' size={20} style={{ width: '100%', paddingTop: '15px' }}>
 										{lvl.choices}
 										{
 											lvl.choices.length === 0 ?
@@ -259,7 +259,7 @@ export const ClassSection = (props: Props) => {
 					</div>
 					: null
 			}
-			<Drawer open={!!selectedSubClass} onClose={() => setSelectedSubClass(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedSubClass} onClose={() => setSelectedSubClass(null)} closeIcon={null} size={500}>
 				<Modal
 					content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} sourcebooks={props.sourcebooks} options={props.options} mode={PanelMode.Full} /> : null}
 					onClose={() => setSelectedSubClass(null)}
@@ -318,7 +318,7 @@ const Characteristics = (props: CharacteristicsProps) => {
 
 	if (!array) {
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<div className='ds-text'>
 					You start with a 2 in <b>{props.heroClass.primaryCharacteristics.join(' and ')}</b>. Choose the set of values you'd like for your other characteristics.
 				</div>
@@ -343,7 +343,7 @@ const Characteristics = (props: CharacteristicsProps) => {
 
 	if (!values) {
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<div className='ds-text'>
 					Choose your characteristics.
 				</div>
@@ -378,7 +378,7 @@ const Characteristics = (props: CharacteristicsProps) => {
 	}
 
 	return (
-		<Space direction='vertical' style={{ width: '100%' }}>
+		<Space orientation='vertical' style={{ width: '100%' }}>
 			<StatsRow>
 				{
 					props.heroClass.characteristics.map(ch => (

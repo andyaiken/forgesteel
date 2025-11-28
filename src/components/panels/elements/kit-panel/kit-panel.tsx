@@ -28,7 +28,7 @@ export const KitPanel = (props: Props) => {
 		tags.push(props.kit.type);
 	}
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getKitSourcebook(props.sourcebooks, props.kit)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getKitSourcebook(props.sourcebooks, props.kit)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

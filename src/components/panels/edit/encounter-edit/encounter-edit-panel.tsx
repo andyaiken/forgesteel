@@ -121,7 +121,7 @@ export const EncounterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
@@ -299,13 +299,13 @@ export const EncounterEditPanel = (props: Props) => {
 					key='too-many-statblocks'
 					type='warning'
 					showIcon={true}
-					message={`You shouldn't generally have more than 6 different types of monster in an encounter (this encounter has ${statblocks}).`}
+					title={`You shouldn't generally have more than 6 different types of monster in an encounter (this encounter has ${statblocks}).`}
 				/>
 			);
 		}
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{warnings}
 				<HeaderText
 					extra={
@@ -450,7 +450,7 @@ export const EncounterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Flex align='center' justify='space-between' gap={10}>
 					<Toggle label='Specify an encounter objective' value={!!encounter.objective} onChange={value => setObjective(value ? FactoryLogic.createEncounterObjective() : null)} />
 					<Popover
@@ -547,7 +547,7 @@ export const EncounterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Button type='text' icon={<PlusOutlined />} onClick={addNote} />
@@ -602,7 +602,7 @@ export const EncounterEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					maliceFeatures.map((groupMalice, i) => {
 						return (
@@ -665,7 +665,7 @@ export const EncounterEditPanel = (props: Props) => {
 		const groups = Collections.sort(props.sourcebooks.flatMap(sb => sb.monsterGroups).filter(g => g.monsters.some(m => (m.role.organization !== MonsterOrganizationType.Retainer) && MonsterLogic.matches(m, monsterFilter))), g => g.name);
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Input
 					placeholder='Search'
 					allowClear={true}
@@ -687,7 +687,7 @@ export const EncounterEditPanel = (props: Props) => {
 				{
 					groups.map(g => (
 						<Expander key={g.id} title={g.name}>
-							<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+							<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 								{
 									Collections.sort(g.monsters.filter(m => m.role.organization !== MonsterOrganizationType.Retainer).filter(m => MonsterLogic.matches(m, monsterFilter)), m => m.name).map(m => (
 										<MonsterListItem
@@ -724,7 +724,7 @@ export const EncounterEditPanel = (props: Props) => {
 		const terrains = Collections.sort(allTerrains.filter(m => TerrainLogic.matches(m, terrainFilter)), t => t.name);
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Input
 					placeholder='Search'
 					allowClear={true}
@@ -935,7 +935,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message='This group is probably not strong enough; you might want to add more monsters'
+							title='This group is probably not strong enough; you might want to add more monsters'
 						/>
 						: null
 				}
@@ -944,7 +944,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message='This group is probably too strong; you might want to split it into smaller groups'
+							title='This group is probably too strong; you might want to split it into smaller groups'
 						/>
 						: null
 				}
@@ -973,7 +973,7 @@ const MonsterDropTarget = (props: MonsterDropTargetProps) => {
 
 	return (
 		<div className={classNames.join(' ')} ref={setNodeRef}>
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{props.group.slots.map(slot => props.getSlot(slot, props.group))}
 				{
 					props.group.slots.length === 0 ?
@@ -1012,7 +1012,7 @@ const TerrainDropTarget = (props: TerrainDropTargetProps) => {
 
 	return (
 		<div className={classNames.join(' ')} ref={setNodeRef}>
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{props.encounter.terrain.map(slot => props.getSlot(slot))}
 				{
 					props.encounter.terrain.length === 0 ?
@@ -1057,7 +1057,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 	if (originalMonster && monster && monsterGroup) {
 		const getCustomizePanel = () => {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<HeaderText>Customize</HeaderText>
 					<NumberSpin label='Adjust level' value={props.slot.customization.levelAdjustment} onChange={value => props.setSlotLevelAdjustment(props.group.id, props.slot.id, value)} />
 					{
@@ -1097,16 +1097,6 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 						style={{ width: '100%' }}
 						placeholder='Add an item'
 						options={SourcebookLogic.getItems(props.sourcebooks).map(i => ({ value: i.id, label: <Field label={i.name} value={i.description} />, data: i }))}
-						showSearch={true}
-						filterOption={(input, option) => {
-							const strings = option ?
-								[
-									option.data.name,
-									option.data.description
-								]
-								: [];
-							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-						}}
 						onChange={id => props.addItem(props.group.id, props.slot.id, id)}
 					/>
 				</Space>
@@ -1115,7 +1105,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 
 		const getMenu = () => {
 			return (
-				<Space direction='vertical'>
+				<Space orientation='vertical'>
 					<DropdownButton
 						label='Move To'
 						items={[
@@ -1193,7 +1183,7 @@ const TerrainSlotPanel = (props: TerrainSlotPanelProps) => {
 	if (terrain) {
 		const getCustomizePanel = () => {
 			return (
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<HeaderText>Customize</HeaderText>
 					<Select
 						style={{ width: '100%' }}
@@ -1267,7 +1257,7 @@ const MonsterListItem = (props: MonsterListItemProps) => {
 			addBtn = (
 				<Popover
 					content={
-						<Space direction='vertical'>
+						<Space orientation='vertical'>
 							{
 								props.encounter.groups.map((group, n) => (
 									<Button key={group.id} type='text' block={true} onClick={() => props.addMonster!(props.monster, group.id)}>Group {n + 1}</Button>

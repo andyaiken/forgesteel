@@ -46,7 +46,7 @@ export const SubClassEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
@@ -118,7 +118,7 @@ export const SubClassEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					subClass.featuresByLevel.map(lvl => (
 						<div key={lvl.level}>
@@ -129,7 +129,7 @@ export const SubClassEditPanel = (props: Props) => {
 							>
 								Level {lvl.level.toString()}
 							</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									lvl.features.map(f => (
 										<Expander

@@ -57,7 +57,7 @@ export const ClassEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
@@ -130,7 +130,7 @@ export const ClassEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Type</HeaderText>
 				<Segmented
 					block={true}
@@ -177,7 +177,7 @@ export const ClassEditPanel = (props: Props) => {
 								<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteCharacteristicSet(n); }} />
 							]}
 						>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<Toggle label={Characteristic.Might} value={o.includes(Characteristic.Might)} onChange={() => toggleCharacteristic(n, Characteristic.Might)} />
 								<Toggle label={Characteristic.Agility} value={o.includes(Characteristic.Agility)} onChange={() => toggleCharacteristic(n, Characteristic.Agility)} />
 								<Toggle label={Characteristic.Reason} value={o.includes(Characteristic.Reason)} onChange={() => toggleCharacteristic(n, Characteristic.Reason)} />
@@ -188,7 +188,7 @@ export const ClassEditPanel = (props: Props) => {
 										<Alert
 											type='warning'
 											showIcon={true}
-											message='One or two characteristics must be selected.'
+											title='One or two characteristics must be selected.'
 										/>
 										: null
 								}
@@ -201,7 +201,7 @@ export const ClassEditPanel = (props: Props) => {
 						<Alert
 							type='warning'
 							showIcon={true}
-							message='A class must have one or two primary characteristics.'
+							title='A class must have one or two primary characteristics.'
 						/>
 						: null
 				}
@@ -274,7 +274,7 @@ export const ClassEditPanel = (props: Props) => {
 							>
 								Level {lvl.level.toString()}
 							</HeaderText>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									lvl.features.map(f => (
 										<Expander
@@ -360,7 +360,7 @@ export const ClassEditPanel = (props: Props) => {
 				>
 					Abilities
 				</HeaderText>
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						heroClass.abilities.map(a => (
 							<Expander
@@ -430,7 +430,7 @@ export const ClassEditPanel = (props: Props) => {
 						<Popover
 							trigger='click'
 							content={
-								<Space direction='vertical' style={{ width: '100%' }}>
+								<Space orientation='vertical' style={{ width: '100%' }}>
 									<Button block={true} icon={<PlusOutlined />} onClick={addSubclass}>
 										Add a new subclass
 									</Button>
@@ -465,7 +465,7 @@ export const ClassEditPanel = (props: Props) => {
 				>
 					Subclasses
 				</HeaderText>
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					{
 						heroClass.subclasses.map(sc => (
 							<Expander
@@ -487,10 +487,10 @@ export const ClassEditPanel = (props: Props) => {
 							<Empty />
 							: null
 					}
-					<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
+					<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} size={500}>
 						<Modal
 							content={
-								<Space direction='vertical' style={{ width: '100%', padding: '20px' }}>
+								<Space orientation='vertical' style={{ width: '100%', padding: '20px' }}>
 									{
 										[
 											...props.sourcebooks.flatMap(sb => sb.classes).flatMap(c => c.subclasses),

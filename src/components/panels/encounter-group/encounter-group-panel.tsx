@@ -351,7 +351,7 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 				<Alert
 					type='warning'
 					showIcon={true}
-					message={`There should be ${minionsExpected} active minions, not ${minionsAlive}.`}
+					title={`There should be ${minionsExpected} active minions, not ${minionsAlive}.`}
 				/>
 			);
 		}

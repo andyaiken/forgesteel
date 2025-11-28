@@ -29,7 +29,7 @@ export const MaliceFeatureSelectModal = (props: Props) => {
 		<Modal
 			content={
 				<div className='malice-feature-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							Collections
 								.distinct(AbilityData.standardAbilities.map(a => a.type.usage), usage => usage)

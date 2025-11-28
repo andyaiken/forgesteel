@@ -57,7 +57,7 @@ export const SettingsModal = (props: Props) => {
 	const getAppearance = () => {
 		return (
 			<Expander title='Appearance'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Segmented
 						block={true}
 						value={themeMode}
@@ -116,7 +116,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Heroes - General'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<NumberSpin label='XP per level' min={1} value={options.xpPerLevel} onChange={setXPPerLevel} />
 					<div>
 						<LabelControl
@@ -141,7 +141,7 @@ export const SettingsModal = (props: Props) => {
 						}
 					</div>
 				</Space>
-				<Drawer open={showAbilitySelector} onClose={closeStandardAbilitiesModal} closeIcon={null} width='500px'>
+				<Drawer open={showAbilitySelector} onClose={closeStandardAbilitiesModal} closeIcon={null} size={500}>
 					<StandardAbilitySelectModal
 						abilityIDs={options.shownStandardAbilities}
 						onSelect={setShownStandardAbilities}
@@ -204,7 +204,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Heroes - Interactive View'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Toggle label='Separate inventory features' value={options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
 					<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
 					<Toggle label='Dim unavailable abilities' value={options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
@@ -268,7 +268,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Heroes - Classic View'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Toggle label='Show play state' value={options.includePlayState} onChange={setIncludePlayState} />
 					<Toggle label='Calculate Power Roll bonuses' value={options.showPowerRollCalculation} onChange={setShowPowerRollCalculation} />
 					<Toggle label='Use color' value={options.colorSheet} onChange={setColorSheet} />
@@ -353,7 +353,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Classic View'>
-				<Space direction='vertical' style={{ width: '100%' }}>
+				<Space orientation='vertical' style={{ width: '100%' }}>
 					<LabelControl
 						label='Page size'
 						control={
@@ -433,7 +433,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Monster Builder'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<div className='ds-text'>Show data from similar monsters using these fields:</div>
 					<Toggle label='Monster level' value={options.similarLevel} onChange={setSimilarLevel} />
 					<Toggle label='Monster role' value={options.similarRole} onChange={setSimilarRole} />
@@ -466,7 +466,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Encounter Runner'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Toggle label='Show defeated combatants' value={options.showDefeatedCombatants} onChange={setShowDefeatedCombatants} />
 					{
 						parties.length > 0 ?
@@ -526,7 +526,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Encounter / Montage Difficulty'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<LabelControl
 						label='Calculate difficulty based on these heroes'
 						control={
@@ -571,7 +571,7 @@ export const SettingsModal = (props: Props) => {
 
 		return (
 			<Expander title='Tactical Maps'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<NumberSpin label='Director Map Grid Size' min={5} steps={[ 5 ]} value={options.gridSize} onChange={setGridSize} />
 					<NumberSpin label='Player Map Grid Size' min={5} steps={[ 5 ]} value={options.playerGridSize} onChange={setPlayerGridSize} />
 				</Space>
@@ -582,7 +582,7 @@ export const SettingsModal = (props: Props) => {
 	const getFeatureFlags = () => {
 		return (
 			<Expander title='Feature Flags'>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					<Flex align='center' justify='space-between' gap={10}>
 						<Input
 							placeholder='Enter a feature flag code'
@@ -700,7 +700,7 @@ export const SettingsModal = (props: Props) => {
 					<DangerButton key='clear' mode='clear' onConfirm={clearErrors} />
 				]}
 			>
-				<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+				<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 					{props.errors.map(getError)}
 				</Space>
 			</Expander>
@@ -711,7 +711,7 @@ export const SettingsModal = (props: Props) => {
 		switch (page) {
 			case 'Settings':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getAppearance()}
 						{getHeroesGeneral()}
 						{getHeroesInteractive()}
@@ -725,7 +725,7 @@ export const SettingsModal = (props: Props) => {
 				);
 			case 'Admin':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getFeatureFlags()}
 						{getConnectionSettings()}
 						{getErrors()}

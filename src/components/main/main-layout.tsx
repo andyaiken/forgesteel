@@ -14,7 +14,7 @@ export const MainLayout = (props: Props) => {
 			<div className='main'>
 				<Outlet />
 			</div>
-			<Drawer open={props.drawer !== null} onClose={() => props.setDrawer(null)} closeIcon={null} width='500px'>
+			<Drawer open={props.drawer !== null} onClose={() => props.setDrawer(null)} closeIcon={null} size={500}>
 				{props.drawer}
 			</Drawer>
 		</ErrorBoundary>

@@ -101,7 +101,7 @@ export const MonsterModal = (props: Props) => {
 				);
 			case 'Malice':
 				return (
-					<Space direction='vertical' style={{ width: '100%', padding: '20px' }}>
+					<Space orientation='vertical' style={{ width: '100%', padding: '20px' }}>
 						{
 							MonsterLogic.getMaliceOptions(monster, props.monsterGroup)
 								.map(malice => (

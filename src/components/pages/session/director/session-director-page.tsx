@@ -246,7 +246,7 @@ export const SessionDirectorPage = (props: Props) => {
 		switch (startElement) {
 			case 'encounter':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your encounters:</div>
 						{
 							SourcebookLogic.getEncounters(props.sourcebooks).map(e => (
@@ -258,7 +258,7 @@ export const SessionDirectorPage = (props: Props) => {
 								<Alert
 									type='warning'
 									showIcon={true}
-									message='You have not created any encounters.'
+									title='You have not created any encounters.'
 									action={<Button type='text' title='Encounters' icon={<ReadOutlined />} onClick={() => navigation.goToLibrary('encounter')} />}
 								/>
 								: null
@@ -275,7 +275,7 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			case 'montage':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your montages:</div>
 						{
 							SourcebookLogic.getMontages(props.sourcebooks).map(m => (
@@ -287,7 +287,7 @@ export const SessionDirectorPage = (props: Props) => {
 								<Alert
 									type='warning'
 									showIcon={true}
-									message='You have not created any montages.'
+									title='You have not created any montages.'
 									action={<Button type='text' title='Montages' icon={<ReadOutlined />} onClick={() => navigation.goToLibrary('montage')} />}
 								/>
 								: null
@@ -304,7 +304,7 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			case 'negotiation':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your negotiations:</div>
 						{
 							SourcebookLogic.getNegotiations(props.sourcebooks).map(n => (
@@ -316,7 +316,7 @@ export const SessionDirectorPage = (props: Props) => {
 								<Alert
 									type='warning'
 									showIcon={true}
-									message='You have not created any negotiations.'
+									title='You have not created any negotiations.'
 									action={<Button type='text' title='Negotiations' icon={<ReadOutlined />} onClick={() => navigation.goToLibrary('negotiation')} />}
 								/>
 								: null
@@ -333,7 +333,7 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			case 'map':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Your maps:</div>
 						{
 							SourcebookLogic.getTacticalMaps(props.sourcebooks).map(tm => (
@@ -345,7 +345,7 @@ export const SessionDirectorPage = (props: Props) => {
 								<Alert
 									type='warning'
 									showIcon={true}
-									message='You have not created any maps.'
+									title='You have not created any maps.'
 									action={<Button type='text' title='Maps' icon={<ReadOutlined />} onClick={() => navigation.goToLibrary('tactical-map')} />}
 								/>
 								: null
@@ -354,7 +354,7 @@ export const SessionDirectorPage = (props: Props) => {
 				);
 			case 'counter':
 				return (
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<div className='ds-text bold-text'>Create a new counter:</div>
 						<Input
 							placeholder='Counter Name'

@@ -142,7 +142,7 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Input
 					status={plot.name === '' ? 'warning' : ''}
@@ -254,13 +254,13 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						<Popover
 							trigger='click'
 							content={
-								<Space direction='vertical' style={{ width: '120px' }}>
+								<Space orientation='vertical' style={{ width: '120px' }}>
 									<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentText(); }}>Text</Button>
 									<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentImage(); }}>Picture</Button>
 									<Button block={true} type='text' onClick={() => { setMenuOpen(false); addContentRoll(); }}>Power Roll</Button>
@@ -296,7 +296,7 @@ export const PlotEditPanel = (props: Props) => {
 										break;
 								}
 								content = (
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<HeaderText>Text</HeaderText>
 										<Select
 											style={{ width: '100%' }}
@@ -327,7 +327,7 @@ export const PlotEditPanel = (props: Props) => {
 								name = c.title || 'Picture';
 								tag = 'Picture';
 								content = (
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<HeaderText>Picture</HeaderText>
 										{
 											c.data ?
@@ -373,7 +373,7 @@ export const PlotEditPanel = (props: Props) => {
 							case 'roll': {
 								name = 'Power Roll';
 								content = (
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<HeaderText>Roll</HeaderText>
 										<Select
 											style={{ width: '100%' }}
@@ -527,14 +527,14 @@ export const PlotEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText
 					extra={
 						linkTargets.length > 0 ?
 							<Popover
 								trigger='click'
 								content={
-									<Space direction='vertical' style={{ width: '100%', padding: '0 5px' }}>
+									<Space orientation='vertical' style={{ width: '100%', padding: '0 5px' }}>
 										{
 											linkTargets.map(p => (
 												<Button
@@ -642,11 +642,11 @@ export const PlotEditPanel = (props: Props) => {
 					}
 				/>
 			</div>
-			<Drawer open={addingReference} onClose={() => setAddingReference(false)} closeIcon={null} width='500px'>
+			<Drawer open={addingReference} onClose={() => setAddingReference(false)} closeIcon={null} size={500}>
 				<Modal
 					content={
 						<div style={{ padding: '20px' }}>
-							<Space direction='vertical' style={{ width: '100%' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								<Select
 									style={{ width: '100%' }}
 									options={

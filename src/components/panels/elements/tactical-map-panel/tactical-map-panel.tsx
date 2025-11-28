@@ -576,7 +576,7 @@ export const TacticalMapPanel = (props: Props) => {
 					value={editMode}
 					onChange={changeEditMode}
 				/>
-				<Divider type='vertical' />
+				<Divider orientation='vertical' />
 				{
 					editMode === TacticalMapEditMode.Map ?
 						<Button disabled={map.items.length === 0} icon={<RotateRightOutlined />} onClick={rotateMap}>Rotate</Button>
@@ -596,7 +596,7 @@ export const TacticalMapPanel = (props: Props) => {
 				}
 				{
 					(editMode === TacticalMapEditMode.Tiles) || (editMode === TacticalMapEditMode.Walls) || (editMode === TacticalMapEditMode.Zones) || (editMode === TacticalMapEditMode.Minis) ?
-						<Divider type='vertical' />
+						<Divider orientation='vertical' />
 						: null
 				}
 				{
@@ -950,7 +950,7 @@ export const TacticalMapPanel = (props: Props) => {
 									item.content.type === 'link' ?
 										<Popover
 											content={
-												<Space direction='vertical' style={{ width: '100%' }}>
+												<Space orientation='vertical' style={{ width: '100%' }}>
 													<Input
 														placeholder={item.content.isVideo ? 'URL of video' : 'URL of image'}
 														allowClear={true}
@@ -1107,7 +1107,7 @@ export const TacticalMapPanel = (props: Props) => {
 						<div>
 							Select a square to place this mini
 						</div>
-						<Divider type='vertical' />
+						<Divider orientation='vertical' />
 						<Button icon={<CloseOutlined />} onClick={() => setSelectedMini(null)}>
 							Cancel
 						</Button>
@@ -1241,12 +1241,12 @@ export const TacticalMapPanel = (props: Props) => {
 						value={miniSource}
 						onChange={setMiniSource}
 					/>
-					<Divider type='vertical' />
+					<Divider orientation='vertical' />
 					{
 						tokens.length > 0 ?
 							<>
 								{tokens}
-								<Divider type='vertical' />
+								<Divider orientation='vertical' />
 								<Button onClick={scatterMinis}>Scatter</Button>
 							</>
 							:
@@ -1535,7 +1535,7 @@ export const TacticalMapPanel = (props: Props) => {
 				</div>
 			</div>
 			{getBottomToolbar()}
-			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedMonster} onClose={() => setSelectedMonster(null)} closeIcon={null} size={500}>
 				{
 					selectedMonster ?
 						<MonsterModal
@@ -1586,7 +1586,7 @@ export const TacticalMapPanel = (props: Props) => {
 						: null
 				}
 			</Drawer>
-			<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} width='500px'>
+			<Drawer open={!!selectedHero} onClose={() => setSelectedHero(null)} closeIcon={null} size={500}>
 				{
 					selectedHero ?
 						<HeroStateModal

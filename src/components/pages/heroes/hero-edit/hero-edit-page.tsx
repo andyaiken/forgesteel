@@ -482,7 +482,7 @@ export const HeroEditPage = (props: Props) => {
 							onChange={value => navigation.goToHeroEdit(heroID!, value)}
 						/>
 				}
-				<Space direction='vertical' size={4}>
+				<Space orientation='vertical' size={4}>
 					{!isSmall ? <Button disabled={!allowRandom || !!searchTerm} icon={<ThunderboltOutlined />} onClick={selectRandom}>Random</Button> : null}
 					<Button disabled={!unselect} icon={<CloseOutlined />} onClick={unselect}>Unselect</Button>
 				</Space>

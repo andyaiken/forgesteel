@@ -195,7 +195,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 		};
 
 		content = (
-			<Space direction='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
+			<Space orientation='vertical' style={{ width: '100%', paddingBottom: '5px' }}>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
 						status={sourcebook.name === '' ? 'warning' : ''}
@@ -216,7 +216,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 					>
 						Languages
 					</HeaderText>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							sourcebook.languages.map((lang, n) => (
 								<Expander
@@ -228,7 +228,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteLanguage(n); }} />
 									]}
 								>
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<Space.Compact style={{ width: '100%' }}>
 											<Input
 												status={lang.name === '' ? 'warning' : ''}
@@ -253,16 +253,6 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 											placeholder='Select related languages'
 											options={sortedLanguages.filter(l => l.name !== lang.name).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 											optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-											showSearch={true}
-											filterOption={(input, option) => {
-												const strings = option ?
-													[
-														option.label,
-														option.desc
-													]
-													: [];
-												return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-											}}
 											value={lang.related}
 											onChange={value => setLanguageRelated(n, value)}
 										/>
@@ -283,7 +273,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 					>
 						Skills
 					</HeaderText>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							sourcebook.skills.map((skill, n) => (
 								<Expander
@@ -295,7 +285,7 @@ export const SourcebookEditorPanel = (props: EditorProps) => {
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSkill(n); }} />
 									]}
 								>
-									<Space direction='vertical' style={{ width: '100%' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										<Space.Compact style={{ width: '100%' }}>
 											<Input
 												status={skill.name === '' ? 'warning' : ''}

@@ -264,7 +264,7 @@ const Welcome = (props: WelcomeProps) => {
 						<Alert
 							type='info'
 							showIcon={true}
-							message={
+							title={
 								<Markdown
 									text={`
 Forge Steel now includes third-party content from the Blacksmith's Guild, Ratcatcher magazine, and the Draw Steel homebrew community.

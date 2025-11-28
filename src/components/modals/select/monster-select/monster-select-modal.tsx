@@ -55,7 +55,7 @@ export const MonsterSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='monster-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						<Expander title='Filter'>
 							<HeaderText>Filter</HeaderText>
 							<MonsterFilterPanel

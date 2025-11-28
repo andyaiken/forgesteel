@@ -40,7 +40,7 @@ export const CultureEditPanel = (props: Props) => {
 		};
 
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<HeaderText>Name</HeaderText>
 				<Space.Compact style={{ width: '100%' }}>
 					<Input
@@ -60,7 +60,7 @@ export const CultureEditPanel = (props: Props) => {
 
 	const getDetailsEditSection = () => {
 		return (
-			<Space direction='vertical' style={{ width: '100%' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				<Segmented
 					block={true}
 					options={[ CultureType.Ancestral, CultureType.Professional ]}
@@ -78,16 +78,6 @@ export const CultureEditPanel = (props: Props) => {
 					placeholder='Select language'
 					options={SourcebookLogic.getLanguages(props.sourcebooks).map(l => ({ label: l.name, value: l.name, desc: l.description }))}
 					optionRender={option => <Field label={option.data.label} value={option.data.desc} />}
-					showSearch={true}
-					filterOption={(input, option) => {
-						const strings = option ?
-							[
-								option.label,
-								option.desc
-							]
-							: [];
-						return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-					}}
 					value={culture.language.data.selected.length > 0 ? culture.language.data.selected[0] : null}
 					onChange={value => {
 						const copy = Utils.copy(culture);

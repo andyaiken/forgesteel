@@ -60,7 +60,7 @@ export const TitlePanel = (props: Props) => {
 
 	const tags = [ `Echelon ${title.echelon}` ];
 	if (props.sourcebooks.length > 0) {
-		const sourcebookType = SourcebookLogic.getTitleSourcebook(props.sourcebooks, title)?.type || SourcebookType.Homebrew;
+		const sourcebookType = SourcebookLogic.getTitleSourcebook(props.sourcebooks, title)?.type || SourcebookType.Official;
 		if (sourcebookType !== SourcebookType.Official) {
 			tags.push(sourcebookType);
 		}

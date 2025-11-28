@@ -224,7 +224,7 @@ export const AbilityModal = (props: Props) => {
 							<MarkdownEditor value={customization?.notes || ''} onChange={setNotes} />
 						</Expander>
 						<Expander title='Modifiers'>
-							<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+							<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 								<NumberSpin
 									disabled={!hasRange}
 									label='Distance'
@@ -244,7 +244,7 @@ export const AbilityModal = (props: Props) => {
 						{
 							props.ability.sections.some(s => (s.type === 'roll')) ?
 								<Expander title='Power Roll'>
-									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+									<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
 										<Select
 											style={{ width: '100%' }}
 											allowClear={true}

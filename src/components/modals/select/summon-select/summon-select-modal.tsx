@@ -52,7 +52,7 @@ export const SummonSelectModal = (props: Props) => {
 			}
 			content={
 				<div className='summon-select-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							sortedSummons.map(s => (
 								<SelectablePanel

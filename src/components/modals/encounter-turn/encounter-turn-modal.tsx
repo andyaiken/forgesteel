@@ -146,7 +146,7 @@ export const EncounterTurnModal = (props: Props) => {
 					<HeaderText style={{ marginTop: '-5px' }}>
 						{group.name ? group.name : `Group ${encounter.groups.indexOf(group) + 1}`}
 					</HeaderText>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{
 							group.slots
 								.flatMap(s => s.monsters)
@@ -222,7 +222,7 @@ export const EncounterTurnModal = (props: Props) => {
 						<div className='ds-text'>
 							Select a {encounter.initiative === 'monsters' ? 'monster group' : 'hero'} to start the round and gain <b>{EncounterLogic.getMaliceGained(encounter)} malice</b>.
 						</div>
-						<Space direction='vertical' style={{ width: '100%' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							{
 								encounter.initiative === 'monsters' ?
 									activeGroups
@@ -263,7 +263,7 @@ export const EncounterTurnModal = (props: Props) => {
 					};
 
 					content.push(
-						<Space key='select-group' direction='vertical' style={{ width: '100%' }}>
+						<Space key='select-group' orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Select a Group</HeaderText>
 							{
 								activeGroups
@@ -274,7 +274,7 @@ export const EncounterTurnModal = (props: Props) => {
 					);
 
 					content.push(
-						<Space key='select-hero' direction='vertical' style={{ width: '100%' }}>
+						<Space key='select-hero' orientation='vertical' style={{ width: '100%' }}>
 							<HeaderText>Select a Hero</HeaderText>
 							{
 								activeHeroes
@@ -296,7 +296,7 @@ export const EncounterTurnModal = (props: Props) => {
 					const heroButtons = heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(group.id, h.id)));
 
 					content.push(
-						<Space key={group.id} direction='vertical' style={{ width: '100%' }}>
+						<Space key={group.id} orientation='vertical' style={{ width: '100%' }}>
 							{group.slots.map(s => getConditions(s.id, EncounterLogic.getSlotName(s), s.state.conditions))}
 							{
 								group.slots
@@ -340,7 +340,7 @@ export const EncounterTurnModal = (props: Props) => {
 					const heroButtons = heroes.map(h => getHeroButton(h, () => endTurnAndStartNext(hero.id, h.id)));
 
 					content.push(
-						<Space key={hero.id} direction='vertical' style={{ width: '100%' }}>
+						<Space key={hero.id} orientation='vertical' style={{ width: '100%' }}>
 							{getConditions(hero.id, hero.name, hero.state.conditions)}
 							<HeaderText>{hero.name}: End Turn</HeaderText>
 							<div className='ds-text'>
@@ -380,7 +380,7 @@ export const EncounterTurnModal = (props: Props) => {
 		<Modal
 			content={
 				<div className='encounter-turn-modal'>
-					<Space direction='vertical' style={{ width: '100%' }}>
+					<Space orientation='vertical' style={{ width: '100%' }}>
 						{getContent()}
 					</Space>
 				</div>

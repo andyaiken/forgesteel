@@ -119,7 +119,7 @@ export const LibraryListPage = (props: Props) => {
 	const [ showProjectsFromItems, setShowProjectsFromItems ] = useState<boolean>(false);
 	const [ showMonsterFilter, setShowMonsterFilter ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
-	const [ sourcebookID, setSourcebookID ] = useState<string>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew)[0].id : '');
+	const [ sourcebookID, setSourcebookID ] = useState<string>(props.sourcebooks.filter(sb => sb.type === SourcebookType.Homebrew).length > 0 ? Collections.sort(props.sourcebooks, sb => sb.name).filter(sb => sb.type === SourcebookType.Homebrew)[0].id : '');
 	useTitle('Library');
 
 	if (kind !== previousCategory) {

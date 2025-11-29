@@ -470,7 +470,8 @@ html[data-theme="dark"] {
 
 	.ant-popover {
 		.ant-popover-arrow:after,
-		.ant-popover-inner {
+		.ant-popover-inner,
+		.ant-popover-container {
 			background-color: rgb(100, 100, 100);
 		}
 	}

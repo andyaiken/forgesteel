@@ -5,3 +5,9 @@
 	justify-content: center;
 	opacity: 0.5;
 }
+
+html[data-theme="dark"] {
+	.empty {
+		color: rgb(255, 255, 255);
+	}
+}

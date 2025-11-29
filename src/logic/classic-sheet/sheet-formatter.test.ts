@@ -38,8 +38,15 @@ describe.concurrent('Test markdown enhancement', () => {
 		[ 'A < Average', '<span class="potency">a&lt;v]</span>' ],
 		[ 'R < weak', '<span class="potency">r&lt;w]</span>' ],
 		[ 'I < [strong]', '<span class="potency">i&lt;s]</span>' ],
-		[ 'P < [weak]', '<span class="potency">p&lt;w]</span>' ]
+		[ 'P < [weak]', '<span class="potency">p&lt;w]</span>' ],
+		[ 'M<Strong', '<span class="potency">m&lt;s]</span>' ]
 	])('converts potency text to glyph form', (inStr, expected) => {
+		expect(SheetFormatter.enhanceMarkdown(inStr)).toBe(expected);
+	});
+
+	test.each([
+		[ '`M < Strong`', '<span class="potency">m&lt;s]</span>' ]
+	])('Removes extra/bad markdown characters', (inStr, expected) => {
 		expect(SheetFormatter.enhanceMarkdown(inStr)).toBe(expected);
 	});
 });

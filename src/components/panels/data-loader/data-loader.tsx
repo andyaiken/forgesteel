@@ -9,7 +9,7 @@ import { Expander } from '@/components/controls/expander/expander';
 import { FactoryLogic } from '@/logic/factory-logic';
 import { FeatureFlags } from '@/utils/feature-flags';
 import { Format } from '@/utils/format';
-import { FsWarehouseConnectionSettingsPanel } from '../fs-warehouse-connection-settings-panel/fs-warehouse-connection-settings';
+import { FsWarehouseConnectionSettingsPanel } from '@/components/panels/fs-warehouse-connection-settings-panel/fs-warehouse-connection-settings';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic';

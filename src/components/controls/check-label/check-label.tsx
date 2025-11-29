@@ -1,5 +1,5 @@
-import { CheckIcon } from '../check-icon/check-icon';
-import { ErrorBoundary } from '../error-boundary/error-boundary';
+import { CheckIcon } from '@/components/controls/check-icon/check-icon';
+import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { ReactNode } from 'react';
 
 import './check-label.scss';

@@ -8,7 +8,7 @@ import { Culture } from '@/models/culture';
 import { Domain } from '@/models/domain';
 import { Element } from '@/models/element';
 import { Encounter } from '@/models/encounter';
-import { EncounterLogic } from './encounter-logic';
+import { EncounterLogic } from '@/logic/encounter-logic';
 import { HeroClass } from '@/models/class';
 import { Imbuement } from '@/models/imbuement';
 import { Item } from '@/models/item';

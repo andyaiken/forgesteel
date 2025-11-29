@@ -142,7 +142,7 @@ export const HeroListPage = (props: Props) => {
 									Generate a Random Hero
 								</Button>
 								<Expander title='Use a premade example'>
-									<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px', maxHeight: '200px', overflowY: 'auto' }}>
+									<Space orientation='vertical' style={{ width: '100%', maxHeight: '200px', overflowY: 'auto' }}>
 										{
 											exampleHeroes.map(h => (
 												<Button key={h.id} className='container-button' block={true} onClick={() => props.importHero(h, currentTab)}>

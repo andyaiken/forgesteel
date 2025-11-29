@@ -81,7 +81,7 @@ export const SkillSelectModal = (props: Props) => {
 							<>
 								<Divider />
 								<Expander title='Other skills'>
-									<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+									<Space orientation='vertical' style={{ width: '100%' }}>
 										{
 											otherSkills.map((s, n) => (
 												<SelectablePanel key={n} onSelect={() => props.onSelect(s)}>

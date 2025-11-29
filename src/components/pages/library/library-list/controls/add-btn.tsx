@@ -126,7 +126,7 @@ export const AddBtn = (props: Props) => {
 			case 'encounter':
 				return [
 					<Expander key='premade' title='Use a premade example'>
-						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px', paddingTop: '15px' }}>
+						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
 							{
 								exampleEncounters.map(e => (
 									<Button key={e.id} block={true} onClick={() => props.createElement(props.category, props.sourcebookID, e)}>{e.name}</Button>

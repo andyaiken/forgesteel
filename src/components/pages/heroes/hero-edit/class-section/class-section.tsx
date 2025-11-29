@@ -245,7 +245,7 @@ export const ClassSection = (props: Props) => {
 											: null
 									]}
 								>
-									<Space orientation='vertical' size={20} style={{ width: '100%', paddingTop: '15px' }}>
+									<Space orientation='vertical' size={20} style={{ width: '100%' }}>
 										{lvl.choices}
 										{
 											lvl.choices.length === 0 ?

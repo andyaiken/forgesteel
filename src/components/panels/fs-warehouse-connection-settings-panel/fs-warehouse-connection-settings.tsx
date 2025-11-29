@@ -70,7 +70,7 @@ export const FsWarehouseConnectionSettingsPanel = (props: Props) => {
 	};
 
 	return (
-		<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+		<Space orientation='vertical' style={{ width: '100%' }}>
 			<Toggle
 				label='Connect with Forge Steel Warehouse'
 				value={connectionSettings.useWarehouse}

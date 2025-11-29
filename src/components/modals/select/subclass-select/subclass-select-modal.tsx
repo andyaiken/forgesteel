@@ -108,7 +108,7 @@ export const SubClassSelectModal = (props: Props) => {
 								<>
 									<Divider />
 									<Expander title='From other classes'>
-										<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+										<Space orientation='vertical' style={{ width: '100%' }}>
 											<Alert
 												type='warning'
 												showIcon={true}

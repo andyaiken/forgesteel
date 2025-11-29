@@ -687,7 +687,7 @@ export const EncounterEditPanel = (props: Props) => {
 				{
 					groups.map(g => (
 						<Expander key={g.id} title={g.name}>
-							<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+							<Space orientation='vertical' style={{ width: '100%' }}>
 								{
 									Collections.sort(g.monsters.filter(m => m.role.organization !== MonsterOrganizationType.Retainer).filter(m => MonsterLogic.matches(m, monsterFilter)), m => m.name).map(m => (
 										<MonsterListItem

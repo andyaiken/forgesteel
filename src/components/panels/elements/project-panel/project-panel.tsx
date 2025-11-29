@@ -79,7 +79,7 @@ export const ProjectPanel = (props: Props) => {
 		};
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{project.itemPrerequisites ? <Field label='Item Prerequisites' value={props.project.itemPrerequisites} /> : null}
 				{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
 				{project.source ? <Field label='Source' value={props.project.source} /> : null}
@@ -154,7 +154,7 @@ export const ProjectPanel = (props: Props) => {
 		const follower = HeroLogic.getFollowers(props.hero).find(f => f.id === project.progress!.followerID);
 
 		return (
-			<Space orientation='vertical' style={{ width: '100%', paddingTop: '15px' }}>
+			<Space orientation='vertical' style={{ width: '100%' }}>
 				{
 					HeroLogic.getFollowers(props.hero).length > 0 ?
 						<Select

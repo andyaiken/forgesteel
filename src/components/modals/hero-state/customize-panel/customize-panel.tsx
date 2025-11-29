@@ -1,4 +1,4 @@
-import { Button, Divider, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
+import { Button, Flex, Input, Popover, Segmented, Select, Space } from 'antd';
 import { Feature, FeatureAbility, FeatureAncestryFeatureChoice, FeatureBonus, FeatureCharacteristicBonus, FeatureClassAbility, FeatureConditionImmunity, FeatureDamageModifier, FeatureData, FeatureFollower, FeatureMovementMode, FeaturePerk, FeatureProficiency, FeatureTitleChoice } from '@/models/feature';
 import { Ability } from '@/models/ability';
 import { AbilityEditPanel } from '@/components/panels/edit/ability-edit/ability-edit-panel';
@@ -87,7 +87,7 @@ export const CustomizePanel = (props: Props) => {
 				trigger='click'
 				content={
 					<>
-						<Divider>Abilities</Divider>
+						<HeaderText level={3}>Abilities</HeaderText>
 						<div className='customize-option-section'>
 							<Button
 								block={true}
@@ -123,7 +123,7 @@ export const CustomizePanel = (props: Props) => {
 								Custom Ability
 							</Button>
 						</div>
-						<Divider>Bonuses</Divider>
+						<HeaderText level={3}>Bonuses</HeaderText>
 						<div className='customize-option-section'>
 							<Button
 								block={true}
@@ -182,7 +182,7 @@ export const CustomizePanel = (props: Props) => {
 								Stat Bonus
 							</Button>
 						</div>
-						<Divider>Game Content</Divider>
+						<HeaderText level={3}>Game Content</HeaderText>
 						<div className='customize-option-section'>
 							<Button
 								block={true}
@@ -239,7 +239,7 @@ export const CustomizePanel = (props: Props) => {
 								Title
 							</Button>
 						</div>
-						<Divider>NPCs</Divider>
+						<HeaderText level={3}>NPCs</HeaderText>
 						<div className='customize-option-section'>
 							<Button
 								block={true}
@@ -292,7 +292,7 @@ export const CustomizePanel = (props: Props) => {
 								Summon
 							</Button>
 						</div>
-						<Divider>Miscellaneous</Divider>
+						<HeaderText level={3}>Miscellaneous</HeaderText>
 						<div className='customize-option-section'>
 							<Button
 								block={true}

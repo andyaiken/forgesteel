@@ -1,6 +1,6 @@
 import { Element } from '@/models/element';
 import { PowerRoll } from '@/models/power-roll';
-import { SourcebookElementKind } from './sourcebook';
+import { SourcebookElementKind } from '@/models/sourcebook';
 
 export interface PlotContentText {
 	id: string;

@@ -4,6 +4,7 @@ import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { DestinationSelector } from '@/components/pages/library/library-list/controls/destination-selector';
 import { Element } from '@/models/element';
+import { HeaderText } from '@/components/controls/header-text/header-text';
 import { LibraryLogic } from '@/logic/library-logic';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { SourcebookType } from '@/enums/sourcebook-type';
@@ -246,12 +247,19 @@ export const ElementToolbar = (props: Props) => {
 						{imageOrPDF ? <Divider /> : null}
 						{
 							externalContent.length > 0 ?
-								<>
-									<div className='ds-text'>External content:</div>
-									<ul>
-										{externalContent.map(ec => <li key={ec.element.id}>{ec.element.name} in {ec.sourcebook.name}</li>)}
-									</ul>
-								</>
+								<Alert
+									type='warning'
+									title={
+										<>
+											<HeaderText level={3}>External Content</HeaderText>
+											<div>Some homebrew content used in this {category} is located in a different sourcebook.</div>
+											<div>The exported file won't contain the following items:</div>
+											<ul>
+												{externalContent.map(ec => <li key={ec.element.id}><b>{ec.element.name}</b> in {ec.sourcebook.name}</li>)}
+											</ul>
+										</>
+									}
+								/>
 								: null
 						}
 						<Button onClick={() => props.exportElementData(category, props.element)}>

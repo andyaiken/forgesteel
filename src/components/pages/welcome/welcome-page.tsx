@@ -31,6 +31,7 @@ interface Props {
 }
 
 export const WelcomePage = (props: Props) => {
+	const { t, i18n } = useTranslation([ 'common', 'welcomePage' ]);
 	const isSmall = useMediaQuery('(max-width: 1000px)');
 	const [ page, setPage ] = useState<WelcomeType>('player');
 	const [ tips ] = useState<Tip[]>(Collections.shuffle(TipData.getTips()));
@@ -55,7 +56,13 @@ export const WelcomePage = (props: Props) => {
 						<div className='welcome-page-content compact'>
 							<div className='welcome-column'>
 								<div className='ds-text centered-text'>
-									<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
+									<Trans
+										i18n={i18n}
+										ns='welcomePage'
+										i18nKey='welcomePage:description'
+										components={{ bold: <b /> }}
+										defaults='<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.'
+									/>
 								</div>
 								<Segmented
 									style={{ margin: '15px 0' }}
@@ -65,7 +72,7 @@ export const WelcomePage = (props: Props) => {
 											value: 'player',
 											label: (
 												<div className='welcome-tab-button'>
-													<div className='title'>Players</div>
+													<div className='title'>{t('Players')}</div>
 												</div>
 											)
 										},
@@ -73,8 +80,8 @@ export const WelcomePage = (props: Props) => {
 											value: 'director-prep',
 											label: (
 												<div className='welcome-tab-button'>
-													<div className='title'>Directors</div>
-													<div className='subtitle'>Prep Time</div>
+													<div className='title'>{t('Directors')}</div>
+													<div className='subtitle'>{t('Prep Time')}</div>
 												</div>
 											)
 										},
@@ -82,8 +89,8 @@ export const WelcomePage = (props: Props) => {
 											value: 'director-run',
 											label: (
 												<div className='welcome-tab-button'>
-													<div className='title'>Directors</div>
-													<div className='subtitle'>Game Time</div>
+													<div className='title'>{t('Directors')}</div>
+													<div className='subtitle'>{t('Game Time')}</div>
 												</div>
 											)
 										},
@@ -91,7 +98,7 @@ export const WelcomePage = (props: Props) => {
 											value: 'creator',
 											label: (
 												<div className='welcome-tab-button'>
-													<div className='title'>Creators</div>
+													<div className='title'>{t('Creators')}</div>
 												</div>
 											)
 										}
@@ -139,7 +146,13 @@ export const WelcomePage = (props: Props) => {
 					<div className='welcome-page-content'>
 						<div className='welcome-column'>
 							<div className='ds-text centered-text'>
-								<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.
+								<Trans
+									i18n={i18n}
+									ns='welcomePage'
+									i18nKey='welcomePage:description'
+									components={{ bold: <b /> }}
+									defaults='<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.'
+								/>
 							</div>
 							<Segmented
 								style={{ margin: '15px 0' }}
@@ -149,7 +162,7 @@ export const WelcomePage = (props: Props) => {
 										value: 'player',
 										label: (
 											<div className='welcome-tab-button'>
-												<div className='title'>Players</div>
+												<div className='title'>{t('Players')}</div>
 											</div>
 										)
 									},
@@ -157,8 +170,8 @@ export const WelcomePage = (props: Props) => {
 										value: 'director-prep',
 										label: (
 											<div className='welcome-tab-button'>
-												<div className='title'>Directors</div>
-												<div className='subtitle'>Prep Time</div>
+												<div className='title'>{t('Directors')}</div>
+												<div className='subtitle'>{t('Prep Time')}</div>
 											</div>
 										)
 									},
@@ -166,8 +179,8 @@ export const WelcomePage = (props: Props) => {
 										value: 'director-run',
 										label: (
 											<div className='welcome-tab-button'>
-												<div className='title'>Directors</div>
-												<div className='subtitle'>Game Time</div>
+												<div className='title'>{t('Directors')}</div>
+												<div className='subtitle'>{t('Game Time')}</div>
 											</div>
 										)
 									},
@@ -175,7 +188,7 @@ export const WelcomePage = (props: Props) => {
 										value: 'creator',
 										label: (
 											<div className='welcome-tab-button'>
-												<div className='title'>Creators</div>
+												<div className='title'>{t('Creators')}</div>
 											</div>
 										)
 									}
@@ -198,10 +211,10 @@ export const WelcomePage = (props: Props) => {
 							<Flex justify='space-evenly'>
 								<Button disabled={tipIndex === 0} onClick={prevTip}>
 									<DoubleLeftOutlined />
-									Prev Tip
+									{t('Prev Tip', { ns: 'welcomePage' })}
 								</Button>
 								<Button disabled={tipIndex === tips.length - 1} onClick={nextTip}>
-									Next Tip
+									{t('Next Tip', { ns: 'welcomePage' })}
 									<DoubleRightOutlined />
 								</Button>
 							</Flex>
@@ -227,18 +240,29 @@ interface WelcomeContentProps {
 }
 
 const WelcomeContent = (props: WelcomeContentProps) => {
+	const { t, i18n } = useTranslation([ 'common', 'welcomePage' ]);
 	switch (props.type) {
 		case 'player':
 			return (
 				<div className='welcome-section'>
 					<HeaderText>
-						For Players
+						{t('For Players', { ns: 'welcomePage' })}
 					</HeaderText>
 					<div className='ds-text'>
-						If you're a <b>DRAW STEEL</b> player, you've come to the right place.
+						<Trans
+							i18n={i18n}
+							i18nKey='welcomePage:theRightPlace'
+							components={{ bold: <b /> }}
+							defaults="If you're a <bold>DRAW STEEL</bold> player, you've come to the right place."
+						/>
 					</div>
 					<div className='ds-text'>
-						In the <b>HEROES</b> screen you can easily create your characters; the hero builder leads you through the process step-by-step.
+						<Trans
+							i18n={i18n}
+							i18nKey='welcomePage:heroesScreenDescription'
+							components={{ bold: <b /> }}
+							defaults='In the <b>HEROES</b> screen you can easily create your characters; the hero builder leads you through the process step-by-step.'
+						/>
 					</div>
 					<ul>
 						<li>
@@ -258,7 +282,13 @@ const WelcomeContent = (props: WelcomeContentProps) => {
 						</li>
 					</ul>
 					<div className='ds-text'>
-						In addition, you can quickly look up rules at any time using the Reference button at the bottom right of the screen.
+						<Trans
+							i18n={i18n}
+							ns='welcomePage'
+							i18nKey='rulesLookup'
+							components={{ bold: <b /> }}
+							defaults='In addition, you can quickly look up rules at any time using the Reference button at the bottom right of the screen.'
+						/>
 					</div>
 				</div>
 			);

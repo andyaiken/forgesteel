@@ -69,7 +69,11 @@ export const DieRollPanel = (props: Props) => {
 		}
 	};
 
-	const getTierMessage = (rollState: RollState) => {
+	const getTierMessage = (rollState: RollState, type: string = 'Power Roll') => {
+		if (type == 'Saving Throw') {
+			return null;
+		}
+
 		switch (rollState) {
 			case RollState.DoubleEdge:
 				return 'Move the result up one tier.';
@@ -80,8 +84,8 @@ export const DieRollPanel = (props: Props) => {
 		return null;
 	};
 
-	const bonus = RollLogic.getBonus(props.rollState);
-	const tierMessage = getTierMessage(props.rollState);
+	const bonus = RollLogic.getBonus(props.rollState, props.type);
+	const tierMessage = getTierMessage(props.rollState, props.type);
 
 	const total = Collections.sum([ ...results, ...props.modifiers, bonus ], r => r);
 
@@ -206,7 +210,7 @@ export const DieRollPanel = (props: Props) => {
 							</div>
 							<HistogramPanel
 								min={1}
-								values={RollLogic.getOdds(props.modifiers, props.rollState)}
+								values={RollLogic.getOdds(props.modifiers, props.rollState, props.type)}
 								showPercentages={true}
 								getLabel={x => {
 									switch (x) {

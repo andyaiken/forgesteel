@@ -262,7 +262,7 @@ export const DataLoader = (props: Props) => {
 					<CheckIcon state={overallLoadState} />
 				</div>
 				<HeaderText level={1}>Loading Data</HeaderText>
-				<Flex gap='middle' align='center' justify='center' vertical={true}>
+				<Flex vertical={true}>
 					<Flex vertical={true}>
 						<CheckLabel state={connectionSettingsState}>Connection Settings</CheckLabel>
 						<CheckLabel state={heroesState}>Heroes</CheckLabel>
@@ -284,7 +284,7 @@ export const DataLoader = (props: Props) => {
 					}
 					{
 						error && connectionSettings?.useWarehouse && FeatureFlags.hasFlag(FeatureFlags.warehouse.code) ?
-							<Flex gap='small' justify='space-between' style={{ width: '500px' }} vertical={true}>
+							<Flex gap='small' justify='space-between' vertical={true}>
 								<Alert
 									type='info'
 									showIcon={true}

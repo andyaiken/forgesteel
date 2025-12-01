@@ -66,15 +66,15 @@ export const MontageRunPanel = (props: Props) => {
 			const icons = [];
 
 			for (let n = 0; n < challenge.successes; ++n) {
-				icons.push(<CheckIcon key={n} state='success' />);
+				icons.push(<CheckIcon key={`success-${n}`} state='success' />);
 			}
 
 			for (let n = 0; n < challenge.failures; ++n) {
-				icons.push(<CheckIcon key={n} state='failure' />);
+				icons.push(<CheckIcon key={`failure-${n}`} state='failure' />);
 			}
 
 			while (icons.length < challenge.uses) {
-				icons.push(<CheckIcon key={`${icons.length}`} />);
+				icons.push(<CheckIcon key={`pending-${icons.length}`} />);
 			}
 
 			return icons;

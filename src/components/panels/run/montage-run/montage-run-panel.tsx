@@ -74,7 +74,7 @@ export const MontageRunPanel = (props: Props) => {
 			}
 
 			while (icons.length < challenge.uses) {
-				icons.push(<CheckIcon key={`x${icons.length}`} />);
+				icons.push(<CheckIcon key={`${icons.length}`} />);
 			}
 
 			return icons;

@@ -2,7 +2,7 @@ import { Collections } from '@/utils/collections';
 import { RollState } from '@/enums/roll-state';
 
 export class RollLogic {
-	static getOdds = (modifiers: number[], rollState: RollState) => {
+	static getOdds = (modifiers: number[], rollState: RollState, rollType: string = 'Power Roll') => {
 		const results = [];
 
 		for (let a = 1; a <= 10; ++a) {
@@ -10,7 +10,7 @@ export class RollLogic {
 				if (a + b >= 19) {
 					results.push(4);
 				} else {
-					const total = Collections.sum([ a, b, ...modifiers, RollLogic.getBonus(rollState) ], r => r);
+					const total = Collections.sum([ a, b, ...modifiers, RollLogic.getBonus(rollState, rollType) ], r => r);
 					if (total >= 17) {
 						// Tier 3
 						switch (rollState) {
@@ -52,7 +52,11 @@ export class RollLogic {
 		return results;
 	};
 
-	static getBonus = (rollState: RollState) => {
+	static getBonus = (rollState: RollState, type: string = 'Power Roll') => {
+		if (type == 'Saving Throw') {
+			return 0;
+		}
+
 		switch (rollState) {
 			case RollState.Edge:
 				return 2;

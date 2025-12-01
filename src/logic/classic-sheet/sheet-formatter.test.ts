@@ -503,10 +503,10 @@ describe('calculateFollowerSize()', () => {
 	const humanWarrior = retainer.monsters.find(m => m.id === 'retainer-12') as Monster;
 
 	test.each([
-		[ 1, 37 ],
+		[ 1, 37.5 ],
 		[ 4, 48 ],
-		[ 7, 60 ],
-		[ 10, 69 ]
+		[ 7, 61 ],
+		[ 10, 70 ]
 	])('properly calculates the size of a retainer at different levels of advancement', (level, expectedSize) => {
 		const followerSheet = HeroSheetBuilder.buildRetainerSheet(humanWarrior, level);
 		expect(SheetFormatter.calculateFollowerSize(followerSheet, 54)).toBeCloseTo(expectedSize, 0);

@@ -668,7 +668,7 @@ export class SheetFormatter {
 
 	static calculateMonsterSize = (monster: MonsterSheet, lineWidth: number): number => {
 		let size = 0;
-		size = 12; // name, stats, characteristics
+		size = 12.5; // name, stats, characteristics
 		monster.abilities?.forEach(ability => {
 			size += this.calculateAbilityComponentSize(ability, lineWidth - 5);
 		});
@@ -676,7 +676,7 @@ export class SheetFormatter {
 			size += this.calculateFeatureSize(f, null, lineWidth, false);
 		});
 		// ability/feature dividers
-		size += 0.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
+		size += 1.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
 		return size;
 	};
 
@@ -703,6 +703,9 @@ export class SheetFormatter {
 			size += this.countLines(ability.trigger, lineWidth);
 
 		if (ability.effect) {
+			if (ability.hasPowerRoll) {
+				size += 0.5; // extra padding when effect follows power roll
+			}
 			const effectSize = this.countLines(ability.effect, lineWidth);
 			size += effectSize;
 		}

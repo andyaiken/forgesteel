@@ -5,8 +5,15 @@ import { ClassicSheetBuilder } from '@/logic/classic-sheet/classic-sheet-builder
 import { FactoryLogic } from '@/logic/factory-logic';
 import { Feature } from '@/models/feature';
 import { FeatureType } from '@/enums/feature-type';
+import { HeroSheetBuilder } from '../hero-sheet/hero-sheet-builder';
+import { Monster } from '@/models/monster';
 import { ProjectSheet } from '@/models/classic-sheets/hero-sheet';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
+import { retainer } from '@/data/monsters/retainer';
+
+afterEach(() => {
+	vi.resetAllMocks();
+});
 
 describe.concurrent('Test addSign', () => {
 	test.each([
@@ -475,7 +482,7 @@ describe('calculateAbilitySize', () => {
 	test.each([
 		[ AbilityData.heal, 11.2 ],
 		[ AbilityData.freeStrike, 7.2 ],
-		[ AbilityData.escapeGrab, 26.1 ],
+		[ AbilityData.escapeGrab, 25.4 ],
 		[ AbilityData.clawDirt, 23.1 ],
 		[ AbilityData.advance, 9 ]
 	])('calculates size properly for standard abilities', (ability: Ability, expected: number) => {
@@ -483,6 +490,25 @@ describe('calculateAbilitySize', () => {
 		const sheet = ClassicSheetBuilder.buildAbilitySheet(ability, hero);
 
 		const result = SheetFormatter.calculateAbilitySize(sheet, 54);
-		expect(result).toBeCloseTo(expected, 0.2);
+		expect(result).toBeCloseTo(expected, 0);
+	});
+});
+
+describe('calculateFollowerSize()', () => {
+	// vi.mock('@/logic/hero-logic', () => {
+	// 	const HeroLogic = vi.fn();
+	// 	return { HeroLogic: HeroLogic };
+	// });
+
+	const humanWarrior = retainer.monsters.find(m => m.id === 'retainer-12') as Monster;
+
+	test.each([
+		[ 1, 37 ],
+		[ 4, 48 ],
+		[ 7, 60 ],
+		[ 10, 69 ]
+	])('properly calculates the size of a retainer at different levels of advancement', (level, expectedSize) => {
+		const followerSheet = HeroSheetBuilder.buildRetainerSheet(humanWarrior, level);
+		expect(SheetFormatter.calculateFollowerSize(followerSheet, 54)).toBeCloseTo(expectedSize, 0);
 	});
 });

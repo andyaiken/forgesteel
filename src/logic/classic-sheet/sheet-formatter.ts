@@ -644,7 +644,7 @@ export class SheetFormatter {
 			size += this.countLines(`Languages: ${follower.languages?.join(', ')}`, lineWidth);
 			size += 0.5;
 		} else {
-			size = 22; // name, stats, characteristics, stamina
+			size = 21.5; // name, stats, characteristics, stamina
 			follower.abilities?.forEach(ability => {
 				size += this.calculateAbilityComponentSize(ability, lineWidth) + 1;
 			});
@@ -668,7 +668,7 @@ export class SheetFormatter {
 
 	static calculateMonsterSize = (monster: MonsterSheet, lineWidth: number): number => {
 		let size = 0;
-		size = 12; // name, stats, characteristics
+		size = 12.5; // name, stats, characteristics
 		monster.abilities?.forEach(ability => {
 			size += this.calculateAbilityComponentSize(ability, lineWidth - 5);
 		});
@@ -676,7 +676,7 @@ export class SheetFormatter {
 			size += this.calculateFeatureSize(f, null, lineWidth, false);
 		});
 		// ability/feature dividers
-		size += 0.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
+		size += 1.6 * Math.max(0, ((monster.abilities?.length || 0) + (monster.features?.length || 0) - 1));
 		return size;
 	};
 
@@ -690,7 +690,7 @@ export class SheetFormatter {
 
 	// COMPACT Ability display - e.g. for Retainers & Monsters
 	static calculateAbilityComponentSize = (ability: AbilitySheet, lineWidth: number): number => {
-		let size = 2; // name, usage
+		let size = 1.5; // name, usage
 		size += this.countLines(`${ability.keywords} ${ability.actionType}`, lineWidth);
 		size += this.countLines(`${ability.distance} ${ability.target}`, lineWidth);
 
@@ -703,6 +703,9 @@ export class SheetFormatter {
 			size += this.countLines(ability.trigger, lineWidth);
 
 		if (ability.effect) {
+			if (ability.hasPowerRoll) {
+				size += 0.5; // extra padding when effect follows power roll
+			}
 			const effectSize = this.countLines(ability.effect, lineWidth);
 			size += effectSize;
 		}
@@ -764,7 +767,7 @@ export class SheetFormatter {
 					size += 0.5; // extra padding when effect follows power roll
 				}
 				const effectSize = this.countLines(ability.effect, lineWidth, 1);
-				size += (ability.isNotTrueAbility ? 0 : 2) + effectSize;
+				size += (ability.isNotTrueAbility ? 0 : 1.5) + effectSize;
 			}
 		}
 		return size;

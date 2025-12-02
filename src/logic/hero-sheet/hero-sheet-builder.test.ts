@@ -8,6 +8,7 @@ import { FollowerType } from '@/enums/follower-type';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroSheetBuilder } from '@/logic/hero-sheet/hero-sheet-builder';
+import { Monster } from '@/models/monster';
 import { MonsterData } from '@/data/monster-data';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { Options } from '@/models/options';
@@ -132,7 +133,7 @@ describe('buildFollowerCompanionSheet()', () => {
 
 		const result = HeroSheetBuilder.buildFollowerCompanionSheet(mockFeatureCompanion, mockHero);
 
-		expect(mockBuilderMethod).toHaveBeenCalledExactlyOnceWith(testCompanionMonster);
+		expect(mockBuilderMethod).toHaveBeenCalledExactlyOnceWith(testCompanionMonster, undefined);
 		expect(result).toBe(mockResult);
 	});
 
@@ -142,7 +143,7 @@ describe('buildFollowerCompanionSheet()', () => {
 
 		const result = HeroSheetBuilder.buildFollowerCompanionSheet(mockFeatureRetainer, mockHero);
 
-		expect(mockBuilderMethod).toHaveBeenCalledExactlyOnceWith(retainer1);
+		expect(mockBuilderMethod).toHaveBeenCalledExactlyOnceWith(retainer1, undefined);
 		expect(result).toBe(mockResult);
 	});
 
@@ -164,6 +165,20 @@ describe('buildFollowerCompanionSheet()', () => {
 		expect(result.length).toBe(1);
 		// @ts-ignore
 		expect(result[0]).toBe(mockSheet1);
+	});
+});
+
+describe('buildRetainerSheet', () => {
+	const humanWarrior = retainer.monsters.find(m => m.id === 'retainer-12') as Monster;
+
+	test.each([
+		[ 1, 0 ],
+		[ 4, 1 ],
+		[ 7, 2 ],
+		[ 10, 3 ]
+	])('should limit advancement features included based on level', (level, numAdvancements) => {
+		const sheet = HeroSheetBuilder.buildRetainerSheet(humanWarrior, level);
+		expect(sheet.advancement?.length).toBe(numAdvancements);
 	});
 });
 

@@ -1049,7 +1049,7 @@ Humans see unrealized potential everywhere, whether envisioning an untamed fores
 								bonus: 3,
 								tier1: 'Push 1; M<1 prone',
 								tier2: 'Push 2; M<2 prone',
-								tier3: 'Push 3; M<3 prone'
+								tier3: 'Push 4; M<3 prone'
 							})),
 							FactoryLogic.createAbilitySectionField({
 								name: 'Spend',

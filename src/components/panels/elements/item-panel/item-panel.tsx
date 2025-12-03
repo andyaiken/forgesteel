@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Drawer, Space, Tag } from 'antd';
+import { Alert, Button, Divider, Drawer, Flex, Space, Tag } from 'antd';
 import { CSSProperties, useState } from 'react';
 import { Empty } from '@/components/controls/empty/empty';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
@@ -210,7 +210,7 @@ export const ItemPanel = (props: Props) => {
 				{
 					props.mode === PanelMode.Full ?
 						<>
-							{item.keywords.length > 0 ? <Field label='Keywords' value={item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} /> : null}
+							{item.keywords.length > 0 ? <Field label='Keywords' value={<Flex gap={5}>{item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}</Flex>} /> : null}
 							<Markdown text={item.effect} />
 							<Space orientation='vertical' style={{ width: '100%' }}>
 								{

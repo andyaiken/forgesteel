@@ -1,5 +1,5 @@
 import { Ability, AbilitySectionField, AbilitySectionPackage, AbilitySectionRoll, AbilitySectionText } from '@/models/ability';
-import { Alert, Button, Space, Tag } from 'antd';
+import { Alert, Button, Flex, Space, Tag } from 'antd';
 import { Pill, ResourcePill } from '@/components/controls/pill/pill';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { useMemo, useState } from 'react';
@@ -316,9 +316,9 @@ export const AbilityPanel = (props: Props) => {
 						<div>
 							{
 								props.ability.keywords.length > 0 ?
-									<div>
+									<Flex gap={5}>
 										{props.ability.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)}
-									</div>
+									</Flex>
 									: null
 							}
 							<AbilityInfoPanel ability={props.ability} hero={props.hero} />

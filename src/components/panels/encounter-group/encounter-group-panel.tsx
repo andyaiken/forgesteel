@@ -161,9 +161,11 @@ export const EncounterGroupHero = (props: EncounterGroupHeroProps) => {
 									: null
 							}
 							<div className='conditions-column'>
-								{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
-								{props.hero.state.hidden ? <Tag>Hidden</Tag> : null}
-								{props.hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								<Flex gap={5}>
+									{[ 'healthy', 'injured' ].includes(HeroLogic.getCombatState(props.hero)) ? null : <Tag>{Format.capitalize(HeroLogic.getCombatState(props.hero))}</Tag>}
+									{props.hero.state.hidden ? <Tag>Hidden</Tag> : null}
+									{props.hero.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								</Flex>
 							</div>
 							{
 								HeroLogic.getCompanions(props.hero).length + HeroLogic.getSummons(props.hero).length > 0 ?
@@ -441,8 +443,10 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 									: null
 							}
 							<div className='conditions-column'>
-								{getMinionCaptainTag()}
-								{props.slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								<Flex gap={5}>
+									{getMinionCaptainTag()}
+									{props.slot.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+								</Flex>
 							</div>
 							<Button
 								type='text'
@@ -521,9 +525,11 @@ export const MonsterSlot = (props: MonsterSlotProps) => {
 										: null
 								}
 								<div className='conditions-column'>
-									{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
-									{monster.state.hidden ? <Tag>Hidden</Tag> : null}
-									{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+									<Flex gap={5}>
+										{[ 'healthy', 'injured' ].includes(MonsterLogic.getCombatState(monster)) ? null : <Tag>{Format.capitalize(MonsterLogic.getCombatState(monster))}</Tag>}
+										{monster.state.hidden ? <Tag>Hidden</Tag> : null}
+										{monster.state.conditions.map(c => <Tag key={c.id}>{ConditionLogic.getFullDescription(c)}</Tag>)}
+									</Flex>
 								</div>
 							</div>
 						))

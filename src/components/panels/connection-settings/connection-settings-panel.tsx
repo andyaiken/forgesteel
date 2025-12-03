@@ -12,7 +12,7 @@ interface Props {
 	setConnectionSettings: (settings: ConnectionSettings) => void
 }
 
-export const FsWarehouseConnectionSettingsPanel = (props: Props) => {
+export const ConnectionSettingsPanel = (props: Props) => {
 	const [ connectionSettings, setConnectionSettings ] = useState<ConnectionSettings>(Utils.copy(props.connectionSettings));
 	const [ connectionSettingsChanged, setConnectionSettingsChanged ] = useState<boolean>(false);
 	const [ testingWarehouseConnection, setTestingWarehouseConnection ] = useState<boolean>(false);

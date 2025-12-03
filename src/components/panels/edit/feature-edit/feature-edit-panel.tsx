@@ -1,44 +1,7 @@
 import { Button, Drawer, Flex, Input, Select, Tabs } from 'antd';
 import { Feature, FeatureData } from '@/models/feature';
-import { EditAbilityCost } from '@/components/panels/feature-data/ability-cost';
-import { EditAbilityDamage } from '@/components/panels/feature-data/ability-damage';
-import { EditAbilityData } from '@/components/panels/feature-data/ability';
-import { EditAbilityDistance } from '@/components/panels/feature-data/ability-distance';
-import { EditAddOn } from '@/components/panels/feature-data/addon';
-import { EditAncestryFeatureChoice } from '@/components/panels/feature-data/ancestry-feature-choice';
-import { EditBonus } from '@/components/panels/feature-data/bonus';
-import { EditCharacteristicBonus } from '@/components/panels/feature-data/characteristic-bonus';
-import { EditChoice } from '@/components/panels/feature-data/choice';
-import { EditClassAbility } from '@/components/panels/feature-data/class-ability';
-import { EditConditionImmunity } from '@/components/panels/feature-data/condition-immunity';
-import { EditDamageModifier } from '@/components/panels/feature-data/damage-modifier';
-import { EditDomain } from '@/components/panels/feature-data/domain';
-import { EditDomainFeature } from '@/components/panels/feature-data/domain-feature';
-import { EditFixture } from '@/components/panels/feature-data/fixture';
-import { EditHeroicResource } from '@/components/panels/feature-data/heroic-resource';
-import { EditHeroicResourceGain } from '@/components/panels/feature-data/heroic-resource-gain';
-import { EditItemChoice } from '@/components/panels/feature-data/item-choice';
-import { EditKit } from '@/components/panels/feature-data/kit';
-import { EditLanguage } from '@/components/panels/feature-data/language';
-import { EditLanguageChoice } from '@/components/panels/feature-data/language-choice';
-import { EditMalice } from '@/components/panels/feature-data/malice';
-import { EditMaliceAbility } from '@/components/panels/feature-data/malice-ability';
-import { EditMovementMode } from '@/components/panels/feature-data/movement-mode';
-import { EditMultiple } from '@/components/panels/feature-data/multiple';
+import { EditFeature } from '@/components/features/feature';
 import { EditOutlined } from '@ant-design/icons';
-import { EditPackage } from '@/components/panels/feature-data/package';
-import { EditPackageContent } from '@/components/panels/feature-data/package-content';
-import { EditPerk } from '@/components/panels/feature-data/perk';
-import { EditProficiency } from '@/components/panels/feature-data/proficiency';
-import { EditSaveThreshold } from '@/components/panels/feature-data/save-threshold';
-import { EditSize } from '@/components/panels/feature-data/size';
-import { EditSkillChoice } from '@/components/panels/feature-data/skill-choice';
-import { EditSpeed } from '@/components/panels/feature-data/speed';
-import { EditSummon } from '@/components/panels/feature-data/summon';
-import { EditSummonChoice } from '@/components/panels/feature-data/summon-choice';
-import { EditTaggedFeature } from '@/components/panels/feature-data/tagged-feature';
-import { EditTaggedFeatureChoice } from '@/components/panels/feature-data/tagged-feature-choice';
-import { EditTitleChoice } from '@/components/panels/feature-data/title-choice';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { FeatureType } from '@/enums/feature-type';
@@ -89,103 +52,18 @@ export const FeatureEditPanel = (props: Props) => {
 		props.onChange(copy);
 	};
 
+	const setData = (value: FeatureData) => {
+		const copy = Utils.copy(feature);
+		copy.data = value;
+		setFeature(copy);
+		props.onChange(copy);
+	};
+
 	const setList = (value: PerkList) => {
 		const copy = Utils.copy(feature) as Perk;
 		copy.list = value;
 		setFeature(copy);
 		props.onChange(copy);
-	};
-
-	const getDataSection = () => {
-		const setData = (value: FeatureData) => {
-			const copy = Utils.copy(feature);
-			copy.data = value;
-			setFeature(copy);
-			props.onChange(copy);
-		};
-
-		switch (feature.type) {
-			case FeatureType.Ability:
-				return <EditAbilityData data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.AbilityCost:
-				return <EditAbilityCost data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.AbilityDamage:
-				return <EditAbilityDamage data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.AbilityDistance:
-				return <EditAbilityDistance data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.AddOn:
-				return <EditAddOn data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.AncestryChoice:
-				return null;
-			case FeatureType.AncestryFeatureChoice:
-				return <EditAncestryFeatureChoice data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Bonus:
-				return <EditBonus data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.CharacteristicBonus:
-				return <EditCharacteristicBonus data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Choice:
-				return <EditChoice data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.ClassAbility:
-				return <EditClassAbility data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.ConditionImmunity:
-				return <EditConditionImmunity data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.DamageModifier:
-				return <EditDamageModifier data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Domain:
-				return <EditDomain data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.DomainFeature:
-				return <EditDomainFeature data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Fixture:
-				return <EditFixture data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.HeroicResource:
-				return <EditHeroicResource data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.HeroicResourceGain:
-				return <EditHeroicResourceGain data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.ItemChoice:
-				return <EditItemChoice data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Kit:
-				return <EditKit data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Language:
-				return <EditLanguage data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.LanguageChoice:
-				return <EditLanguageChoice data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Malice:
-				return <EditMalice data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.MaliceAbility:
-				return <EditMaliceAbility data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.MovementMode:
-				return <EditMovementMode data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Multiple:
-				return <EditMultiple data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Package:
-				return <EditPackage data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.PackageContent:
-				return <EditPackageContent data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Perk:
-				return <EditPerk data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Proficiency:
-				return <EditProficiency data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.SaveThreshold:
-				return <EditSaveThreshold data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Size:
-				return <EditSize data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.SkillChoice:
-				return <EditSkillChoice data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Speed:
-				return <EditSpeed data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Summon:
-				return <EditSummon data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.SummonChoice:
-				return <EditSummonChoice data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.TaggedFeature:
-				return <EditTaggedFeature data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.TaggedFeatureChoice:
-				return <EditTaggedFeatureChoice data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-			case FeatureType.Text:
-				return null;
-			case FeatureType.TitleChoice:
-				return <EditTitleChoice data={feature.data} sourcebooks={props.sourcebooks} options={props.options} setData={setData} />;
-		}
 	};
 
 	return (
@@ -245,7 +123,12 @@ export const FeatureEditPanel = (props: Props) => {
 											</div>
 											: null
 									}
-									{getDataSection()}
+									<EditFeature
+										feature={feature}
+										sourcebooks={props.sourcebooks}
+										options={props.options}
+										setData={setData}
+									/>
 								</div>
 							)
 						}

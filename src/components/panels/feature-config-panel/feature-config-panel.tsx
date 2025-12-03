@@ -2,22 +2,7 @@ import { Feature, FeatureData } from '@/models/feature';
 import { ThunderboltFilled, ThunderboltOutlined } from '@ant-design/icons';
 import { AbilityLogic } from '@/logic/ability-logic';
 import { Button } from 'antd';
-import { ConfigAncestryChoice } from '@/components/panels/feature-data/ancestry-choice';
-import { ConfigAncestryFeatureChoice } from '@/components/panels/feature-data/ancestry-feature-choice';
-import { ConfigChoice } from '@/components/panels/feature-data/choice';
-import { ConfigClassAbility } from '@/components/panels/feature-data/class-ability';
-import { ConfigCompanion } from '@/components/panels/feature-data/companion';
-import { ConfigDomain } from '@/components/panels/feature-data/domain';
-import { ConfigDomainFeature } from '@/components/panels/feature-data/domain-feature';
-import { ConfigItemChoice } from '@/components/panels/feature-data/item-choice';
-import { ConfigKit } from '@/components/panels/feature-data/kit';
-import { ConfigLanguageChoice } from '@/components/panels/feature-data/language-choice';
-import { ConfigPerk } from '@/components/panels/feature-data/perk';
-import { ConfigRetainer } from '@/components/panels/feature-data/retainer';
-import { ConfigSkillChoice } from '@/components/panels/feature-data/skill-choice';
-import { ConfigSummonChoice } from '@/components/panels/feature-data/summon-choice';
-import { ConfigTaggedFeatureChoice } from '@/components/panels/feature-data/tagged-feature-choice';
-import { ConfigTitleChoice } from '@/components/panels/feature-data/title-choice';
+import { ConfigFeature } from '@/components/features/feature';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { FeatureLogic } from '@/logic/feature-logic';
@@ -43,45 +28,6 @@ interface Props {
 
 export const FeatureConfigPanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
-
-	const getConfig = () => {
-		switch (props.feature.type) {
-			case FeatureType.AncestryChoice:
-				return <ConfigAncestryChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.AncestryFeatureChoice:
-				return <ConfigAncestryFeatureChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.Choice:
-				return <ConfigChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.ClassAbility:
-				return <ConfigClassAbility data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.Companion:
-				return <ConfigCompanion data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.Domain:
-				return <ConfigDomain data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.DomainFeature:
-				return <ConfigDomainFeature data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.ItemChoice:
-				return <ConfigItemChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.Kit:
-				return <ConfigKit data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.LanguageChoice:
-				return <ConfigLanguageChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.Perk:
-				return <ConfigPerk data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.Retainer:
-				return <ConfigRetainer data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.SkillChoice:
-				return <ConfigSkillChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.SummonChoice:
-				return <ConfigSummonChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.TaggedFeatureChoice:
-				return <ConfigTaggedFeatureChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-			case FeatureType.TitleChoice:
-				return <ConfigTitleChoice data={props.feature.data} hero={props.hero} feature={props.feature} sourcebooks={props.sourcebooks} options={props.options} setData={data => props.setData(props.feature.id, data)} />;
-		}
-
-		return null;
-	};
 
 	const autoCalcAvailable = () => {
 		return (props.feature.type === FeatureType.Text) && (AbilityLogic.getTextEffect(props.feature.description, props.hero) !== props.feature.description);
@@ -139,7 +85,13 @@ export const FeatureConfigPanel = (props: Props) => {
 					{props.feature.name || 'Unnamed Feature'}
 				</HeaderText>
 				<Markdown text={getDescription()} />
-				{getConfig()}
+				<ConfigFeature
+					feature={props.feature}
+					hero={props.hero}
+					sourcebooks={props.sourcebooks}
+					options={props.options}
+					setData={data => props.setData(props.feature.id, data)}
+				/>
 			</div>
 		</ErrorBoundary>
 	);

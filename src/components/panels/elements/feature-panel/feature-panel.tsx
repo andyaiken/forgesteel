@@ -11,43 +11,7 @@ import { FeatureType } from '@/enums/feature-type';
 import { Field } from '@/components/controls/field/field';
 import { FollowerPanel } from '@/components/panels/elements/follower-panel/follower-panel';
 import { HeaderText } from '@/components/controls/header-text/header-text';
-import { InfoAbilityCost } from '@/components/panels/feature-data/ability-cost';
-import { InfoAbilityDamage } from '@/components/panels/feature-data/ability-damage';
-import { InfoAbilityDistance } from '@/components/panels/feature-data/ability-distance';
-import { InfoAncestryChoice } from '@/components/panels/feature-data/ancestry-choice';
-import { InfoAncestryFeatureChoice } from '@/components/panels/feature-data/ancestry-feature-choice';
-import { InfoBonus } from '@/components/panels/feature-data/bonus';
-import { InfoCharacteristicBonus } from '@/components/panels/feature-data/characteristic-bonus';
-import { InfoChoice } from '@/components/panels/feature-data/choice';
-import { InfoClassAbility } from '@/components/panels/feature-data/class-ability';
-import { InfoCompanion } from '@/components/panels/feature-data/companion';
-import { InfoConditionImmunity } from '@/components/panels/feature-data/condition-immunity';
-import { InfoDamageModifier } from '@/components/panels/feature-data/damage-modifier';
-import { InfoDomain } from '@/components/panels/feature-data/domain';
-import { InfoDomainFeature } from '@/components/panels/feature-data/domain-feature';
-import { InfoFixture } from '@/components/panels/feature-data/fixture';
-import { InfoHeroicResource } from '@/components/panels/feature-data/heroic-resource';
-import { InfoHeroicResourceGain } from '@/components/panels/feature-data/heroic-resource-gain';
-import { InfoItemChoice } from '@/components/panels/feature-data/item-choice';
-import { InfoKit } from '@/components/panels/feature-data/kit';
-import { InfoLanguage } from '@/components/panels/feature-data/language';
-import { InfoLanguageChoice } from '@/components/panels/feature-data/language-choice';
-import { InfoMalice } from '@/components/panels/feature-data/malice';
-import { InfoMovementMode } from '@/components/panels/feature-data/movement-mode';
-import { InfoMultiple } from '@/components/panels/feature-data/multiple';
-import { InfoPackage } from '@/components/panels/feature-data/package';
-import { InfoPerk } from '@/components/panels/feature-data/perk';
-import { InfoProficiency } from '@/components/panels/feature-data/proficiency';
-import { InfoRetainer } from '@/components/panels/feature-data/retainer';
-import { InfoSaveThreshold } from '@/components/panels/feature-data/save-threshold';
-import { InfoSize } from '@/components/panels/feature-data/size';
-import { InfoSkillChoice } from '@/components/panels/feature-data/skill-choice';
-import { InfoSpeed } from '@/components/panels/feature-data/speed';
-import { InfoSummon } from '@/components/panels/feature-data/summon';
-import { InfoSummonChoice } from '@/components/panels/feature-data/summon-choice';
-import { InfoTaggedFeature } from '@/components/panels/feature-data/tagged-feature';
-import { InfoTaggedFeatureChoice } from '@/components/panels/feature-data/tagged-feature-choice';
-import { InfoTitleChoice } from '@/components/panels/feature-data/title-choice';
+import { InfoFeature } from '@/components/features/feature';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
@@ -73,87 +37,6 @@ interface Props {
 
 export const FeaturePanel = (props: Props) => {
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
-
-	const getInformation = () => {
-		switch (props.feature.type) {
-			case FeatureType.AbilityCost:
-				return <InfoAbilityCost data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.AbilityDamage:
-				return <InfoAbilityDamage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.AbilityDistance:
-				return <InfoAbilityDistance data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.AncestryChoice:
-				return <InfoAncestryChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.AncestryFeatureChoice:
-				return <InfoAncestryFeatureChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Bonus:
-				return <InfoBonus data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.CharacteristicBonus:
-				return <InfoCharacteristicBonus data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Choice:
-				return <InfoChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.ClassAbility:
-				return <InfoClassAbility data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Companion:
-				return <InfoCompanion data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.ConditionImmunity:
-				return <InfoConditionImmunity data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.DamageModifier:
-				return <InfoDamageModifier data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Domain:
-				return <InfoDomain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.DomainFeature:
-				return <InfoDomainFeature data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Fixture:
-				return <InfoFixture data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.HeroicResource:
-				return <InfoHeroicResource data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.HeroicResourceGain:
-				return <InfoHeroicResourceGain data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.ItemChoice:
-				return <InfoItemChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Kit:
-				return <InfoKit data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Language:
-				return <InfoLanguage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.LanguageChoice:
-				return <InfoLanguageChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Malice:
-				return <InfoMalice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.MovementMode:
-				return <InfoMovementMode data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Multiple:
-				return <InfoMultiple data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Package:
-				return <InfoPackage data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Perk:
-				return <InfoPerk data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Proficiency:
-				return <InfoProficiency data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Retainer:
-				return <InfoRetainer data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.SaveThreshold:
-				return <InfoSaveThreshold data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Size:
-				return <InfoSize data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.SkillChoice:
-				return <InfoSkillChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Speed:
-				return <InfoSpeed data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.Summon:
-				return <InfoSummon data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.SummonChoice:
-				return <InfoSummonChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.TaggedFeature:
-				return <InfoTaggedFeature data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.TaggedFeatureChoice:
-				return <InfoTaggedFeatureChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-			case FeatureType.TitleChoice:
-				return <InfoTitleChoice data={props.feature.data} feature={props.feature} hero={props.hero} sourcebooks={props.sourcebooks} options={props.options} />;
-		}
-
-		return null;
-	};
 
 	const getTags = () => {
 		const tags = [];
@@ -274,7 +157,16 @@ export const FeaturePanel = (props: Props) => {
 							(customization?.description || props.feature.description)
 					}
 				/>
-				{props.mode === PanelMode.Full ? getInformation() : null}
+				{
+					props.mode === PanelMode.Full ?
+						<InfoFeature
+							feature={props.feature}
+							hero={props.hero}
+							sourcebooks={props.sourcebooks}
+							options={props.options}
+						/>
+						: null
+				}
 				{
 					customization && customization.notes ?
 						<Field

@@ -159,7 +159,7 @@ export const AddBtn = (props: Props) => {
 			case 'tactical-map':
 				return [
 					<Expander key='image' title='Use a battlemap'>
-						<Space orientation='vertical' style={{ width: '100%', marginTop: '15px' }}>
+						<Space orientation='vertical' style={{ width: '100%' }}>
 							<Segmented
 								block={true}
 								options={[

@@ -60,7 +60,7 @@ export const WelcomePage = (props: Props) => {
 										i18n={i18n}
 										ns='welcomePage'
 										i18nKey='welcomePage:description'
-										components={{ bold: <b /> }}
+										components={{ b: <b /> }}
 										defaults='<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.'
 									/>
 								</div>
@@ -150,7 +150,7 @@ export const WelcomePage = (props: Props) => {
 									i18n={i18n}
 									ns='welcomePage'
 									i18nKey='welcomePage:description'
-									components={{ bold: <b /> }}
+									components={{ b: <b /> }}
 									defaults='<b>FORGE STEEL</b> is an app for <b>DRAW STEEL</b> players, directors, and content creators.'
 								/>
 							</div>
@@ -252,33 +252,33 @@ const WelcomeContent = (props: WelcomeContentProps) => {
 						<Trans
 							i18n={i18n}
 							i18nKey='welcomePage:theRightPlace'
-							components={{ bold: <b /> }}
-							defaults="If you're a <bold>DRAW STEEL</bold> player, you've come to the right place."
+							components={{ b: <b /> }}
+							defaults="If you're a <b>DRAW STEEL</b> player, you've come to the right place."
 						/>
 					</div>
 					<div className='ds-text'>
 						<Trans
 							i18n={i18n}
 							i18nKey='welcomePage:heroesScreenDescription'
-							components={{ bold: <b /> }}
+							components={{ b: <b /> }}
 							defaults='In the <b>HEROES</b> screen you can easily create your characters; the hero builder leads you through the process step-by-step.'
 						/>
 					</div>
 					<ul>
 						<li>
-							All the official content is included, and you can also use any homebrew content your director has created.
+							{t('welcomePage:includedContent')}
 						</li>
 						<li>
-							You can use the app to track your hero's stamina, conditions, surges, and so on.
+							{t('welcomePage:heroesTracking')}
 						</li>
 						<li>
-							If you're playing offline, you can export your heroes in PNG or PDF formats (either portrait or landscape).
+							{t('welcomePage:offlinePlay')}
 						</li>
 						<li>
-							Want something a little different? You can customize any of your abilities to make them more unique to your hero.
+							{t('welcomePage:customizeAbilities')}
 						</li>
 						<li>
-							Need to tweak your hero in a way that's not strictly by the book? No problem! You can customize your hero in any number of ways - an extra ability, bonuses to your characteristics, extra skills, retainers, etc.
+							{t('welcomePage:heroCustomization')}
 						</li>
 					</ul>
 					<div className='ds-text'>
@@ -286,7 +286,6 @@ const WelcomeContent = (props: WelcomeContentProps) => {
 							i18n={i18n}
 							ns='welcomePage'
 							i18nKey='rulesLookup'
-							components={{ bold: <b /> }}
 							defaults='In addition, you can quickly look up rules at any time using the Reference button at the bottom right of the screen.'
 						/>
 					</div>

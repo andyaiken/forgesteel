@@ -2,13 +2,15 @@
   "For Players": "Per i Giocatori",
   "Prev Tip": "Sugg. Precedente",
   "Next Tip": "Sugg. Successivo",
-  "theRightPlace": "Se sei un giocatore di <bold>DRAW STEEL</bold>, sei nel posto giusto.",
-  "heroScreenDescription": "Nella schermata <bold>EROI</bold> puoi creare facilmente i tuoi personaggi; il creatore di eroi ti guida passo dopo passo nel processo.",
+  "theRightPlace": "Se sei un giocatore di <b>DRAW STEEL</b>, sei nel posto giusto.",
+  "heroScreenDescription": "Nella schermata <b>EROI</b> puoi creare facilmente i tuoi personaggi; il creatore di eroi ti guida passo dopo passo nel processo.",
   "appUses": "Puoi utilizzare l'app per tenere traccia della stamina, delle condizioni, delle ondate e così via del tuo eroe.",
   "appOfflineUses": "Se stai giocando offline, puoi esportare i tuoi eroi in formati PNG o PDF (sia in verticale che in orizzontale).",
-  "customizeAbilities": "Vuoi qualcosa di un po' diverso? Puoi personalizzare qualsiasi delle tue abilità per renderle più uniche per il tuo eroe.",
-  "heroCustomization": "Hai bisogno di modificare il tuo eroe in un modo che non è strettamente secondo le regole? Nessun problema! Puoi personalizzare il tuo eroe in molti modi - un'abilità extra, bonus alle tue caratteristiche, abilità extra, assistenti, ecc.",
   "rulesLookup": "Inoltre, puoi cercare rapidamente le regole in qualsiasi momento utilizzando il pulsante Riferimento in basso a destra dello schermo.",
   "description": "<b>FORGE STEEL</b> è una app per giocatori, registi e creatori di <b>DRAW STEEL</b>",
-  "heroesScreenDescription": "Nella schermata <b>EROI</b> puoi facilmente creare i tuoi personaggi; il costruttore di eroi ti guiderà passo passo nel processo"
+  "heroesScreenDescription": "Nella schermata <b>EROI</b> puoi facilmente creare i tuoi personaggi; il costruttore di eroi ti guiderà passo passo nel processo",
+  "includedContent": "Tutto il contenuto ufficiale è incluso, inoltre puoi usare contenuti personalizzati pensati dal tuo regista.",
+  "offlinePlay": "Se stai giocando offlline puoi esportare i tuoi eroi in formato PNG o PDF (con orientamento vertical o orizzontale)",
+  "customizeAbilities": "Vuoi qualcosa di un po' diverso? Puoi personalizzare qualsiasi delle tue $t(ability_other) per renderle più uniche per il tuo eroe.",
+  "heroCustomization": "Hai bisogno di modificare il tuo eroe in un modo che non è strettamente secondo le regole? Nessun problema! Puoi personalizzare il tuo eroe in molti modi - un'$t(ability_one) extra, bonus alle tue $t(characteristic_other), $t(skill_other) extra, $t(retainer_other), ecc."
 }

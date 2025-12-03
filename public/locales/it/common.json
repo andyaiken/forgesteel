@@ -4,5 +4,17 @@
   "Directors": "Registi",
   "Prep Time": "Preparazione",
   "Game Time": "Giocare",
-  "Creators": "Creatori"
+  "Creators": "Creatori",
+  "ability_one":"abilità",
+  "ability_other":"abilità",
+  "abilityWithCount_one":"{{count}} abilità",
+  "abilityWithCount_other":"{{count}} abilità",
+  "characteristic_one":"caratteristica",
+  "characteristic_other":"caratteristiche",
+  "skill_one":"competenza",
+  "skill_other":"competenze",
+  "skillWithCount_one":"{{count}} competenza",
+  "skillWithCount_other":"{{count}} competenze",
+  "retainer_one":"assistente",
+  "retainer_other":"assistenti"
 }
